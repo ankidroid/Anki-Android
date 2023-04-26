@@ -167,7 +167,7 @@
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Finn kortstokk</string>
     <string name="invalid_deck_name">Ugyldig navn</string>
     <string name="studyoptions_empty">Denne kortstokken er tom. Bruk +-knappen for å legge til nytt innhold.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
+    <string name="studyoptions_limit_reached">Grensen for daglig studie er nådd</string>
     <string name="studyoptions_empty_schedule">Ingen kort planlagt for i dag</string>
     <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
     <string name="studyoptions_congrats_more_rev">Du har nådd grensen for gjennomgang i dag, men det er fortsatt kort du ikke har gått gjennom. For best mulig effekt, bør du vurdere å øke grensen i alternativene.</string>
@@ -194,11 +194,11 @@
     <string name="card_template_editor_styling">Formgivning</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
+    <string name="card_template_editor_insert_field">Legg til felt</string>
     <string name="card_template_editor_select_field">Velg felt</string>
     <string name="card_template_editor_cant_delete">Minst én korttype kreves.</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="one">Dette vil lage %1$d kort. Fortsett?</item>
         <item quantity="other">This will create %1$d cards. Proceed?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">

@@ -63,7 +63,7 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Ενημέρωση πεδίων</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
-    <string name="model_clone_suffix">copy</string>
+    <string name="model_clone_suffix">αντίγραφο</string>
     <!--Warnings-->
     <string name="model_delete_warning">Θέλετε σίγουρα να διαγράψετε αυτό τον τύπο σημείωσης;</string>
     <string name="field_delete_warning">Θέλετε σίγουρα να διαγράψετε αυτό το πεδίο;</string>

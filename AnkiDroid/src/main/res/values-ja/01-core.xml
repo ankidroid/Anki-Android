@@ -53,7 +53,7 @@
     <string name="drawing">手書き</string>
     <string name="send_feedback">フィードバックを送信</string>
     <string name="studyoptions_due_today">今日の課題:</string>
-    <string name="studyoptions_new_total">新しいカードの枚数:</string>
+    <string name="studyoptions_new_total">新規カード:</string>
     <string name="studyoptions_total_cards">カード総数:</string>
     <string name="studyoptions_eta">推定学習時間 (分):</string>
     <string name="studyoptions_start">学習開始</string>
@@ -117,7 +117,7 @@
     <string name="menu_flag_card_three">緑フラグ</string>
     <string name="menu_flag_card_four">青フラグ</string>
     <string name="menu_flag_card_five">ピンクフラグ</string>
-    <string name="menu_flag_card_six">青緑フラグ</string>
+    <string name="menu_flag_card_six">ターコイズフラグ</string>
     <string name="menu_flag_card_seven">紫フラグ</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
@@ -208,24 +208,24 @@
     <!-- card Info -->
     <string name="card_info_title">カード情報</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">AnkiDroid データベースの読み書き</string>
+    <string name="read_write_permission_label">AnkiDroidデータベースの読み取りと書き込み</string>
     <string name="read_write_permission_description">ノート、カード、ノートタイプ、デッキへのアクセスや、それらの新規作成を行います。</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">AnkiDroid検索</string>
     <string name="context_menu_anki_card_label">Ankiカード</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$sに問題があります:<br/>%2$s</string>
     <string name="more_information">詳細</string>
-    <string name="no_field">「{{%1$s}}」と入力されていますが、このノートタイプには「%1$s」というフィールドが存在しません。</string>
-    <string name="closed_tag_not_open">{{/%1$s}}\'は見つかりましたが、{{#%1$s}}\'または{{^%1$s }}\'がありません。</string>
+    <string name="no_field">「{{%1$s}}」と記入されていますが、このノートタイプには「%1$s」というフィールドが存在しません。</string>
+    <string name="closed_tag_not_open">終了タグ「{{/%1$s}}」が記入されていますが、対となる開始タグ（「{{#%1$s}}」または「{{^%1$s }}」）が記入されていません。</string>
     <string name="missing_closing_bracket">\'%s\' の \'}}\' がありません。</string>
     <string name="open_tag_not_closed">\'{{%s }}\' がありません。</string>
-    <string name="wrong_tag_closed">{{/%1$s}}\'が見つかりましたが、期待されていた \'{{/%2$s}}\'</string>
+    <string name="wrong_tag_closed">「{{/%1$s}}」と記入されていますが、記入されている開始タグの対となる終了タグは「{{/%2$s}}」です</string>
     <string name="filter_error">フィルター %s にエラーがあります</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">コレクションを統合できません。\nどちらのコレクションを維持しますか？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">AnkiDroidのコレクションをAnkiWebのコレクションに置き換えますか？</string>
+    <string name="sync_conflict_remote_confirm_new">AnkiDroid内のコレクションのデータを、AnkiWeb上のコレクションのデータで上書きしますか？</string>
     <string name="sync_conflict_local_confirm_new">AnkiWeb上のコレクションのデータを、AnkiDroid内のコレクションのデータで上書きしますか？</string>
     <string name="sync_conflict_title_new">保持するコレクションを選択</string>
     <string name="sync_conflict_replace_title">コレクションを上書き</string>
@@ -236,24 +236,24 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_data">データを移動中です</string>
+    <string name="migration__migrating_data">データ移動</string>
     <string name="migration__calculating_transfer_size">移動するデータのサイズを計算中&#8230;</string>
-    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">%2$s のうち %1$s を移動しました</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">%2$s 中 %1$s 移動済み</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">移行に成功しました</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
-        AnkiDroid is fully functional again, and you can sync.
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        データの移動が完了しました。
+        同期などAnkiDroidの全機能が使用できます。
         \n
-        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
-        Please make sure that your data is safe by regularly syncing or exporting backups.
+        \n注意：現在あなたのコレクションは、AnkiDroidをアンインストールすると削除されるフォルダに保管されています。
+        誤ってデータを失うことのないよう、コレクションの同期またはエクスポートを定期的に行うことを強くおすすめします。
     </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">移行に失敗しました</string>
     <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">移行に失敗しました: %s</string>
-    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        ストレージ移行は次のエラーにより中断されています: %1$s
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space, or-reconnect the missing media.
+        移行を再試行してください。
+        問題を解決しない場合は、ディスクの空き容量を増やす、欠落しているメディアを回復する、などの対処が必要な場合があります。
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">詳細とサポート</a>
     ]]></string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid"> Playストアのプライバシーポリシーの変更により、AnkiDroidはアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>

@@ -61,8 +61,8 @@
     <string name="updated_version">Aggiornato alla versione %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Salva lavagna</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Abilita la modalità stilo</string>
+    <string name="disable_stylus">Disabilita la modalità stilo</string>
     <string name="enable_whiteboard">Abilita la lavagna</string>
     <string name="disable_whiteboard">Disabilita la lavagna</string>
     <string name="show_whiteboard">Mostra lavagna</string>
@@ -379,7 +379,7 @@
     <string name="scoped_storage_postpone">Posticipa</string>
     <string name="scoped_storage_migrate">Migra</string>
     <string name="search_card_js_api_no_results">La ricerca non ha restituito nessun risultato</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid ha bisogno di migrare i propri dati per rispettare la politica di sicurezza di Android 10.\n\nQuesto migliorerà le prestazioni di sincronizzazione dei media.&lt;br&gt;&lt;br&gt;Durante la migrazione non sarai in grado di sincronizzare e alcune impostazioni saranno disabilitate. Una sincronizzazione multimediale avverrà prima che la migrazione inizi a mantenere i tuoi dati al sicuro.&lt;br&gt;&lt;br&gt;È sicuro usare o chiudere AnkiDroid durante questo processo.</string>
     <string name="start_migration_progress_message">Avvio migrazione dell\'archivio. Potrai riprendere a usare AnkiDroid a breve.</string>
     <string name="migration_part_1_done_resume">Puoi riprendere l\'uso di AnkiDroid. \n La migrazione dell\'archivio continuerà in background.</string>
     <!--  JS Addons  -->

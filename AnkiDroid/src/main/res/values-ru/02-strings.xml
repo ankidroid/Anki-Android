@@ -407,7 +407,7 @@
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Ничего не найдено</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid должен перенести свое хранилище в соответствии с политикой безопасности Android 10.\n\nЭто улучшит производительность синхронизации медиафайлов.&lt;br&gt;&lt;br&gt;Во время переноса вы не сможете синхронизироваться и некоторые настройки будут недоступны. Чтобы ваши данные не потерялись, перед переносом хранилища произойдёт синхронизация медиафайлов.&lt;br&gt;&lt;br&gt;Использовать или закрывать AnkiDroid в ходе этого процесса безопасно</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid должен перенести свое файловое хранилище в соответствии с политикой безопасности Android 10.\n\nБлагодаря этому повысится производительность синхронизации медиафайлов.&lt;br&gt;&lt;br&gt;Во время процесса вы не сможете синхронизироваться и некоторые настройки будут недоступны. Чтобы ваши данные не потерялись, перед переносом хранилища произойдёт синхронизация медиафайлов.&lt;br&gt;&lt;br&gt;Во время переноса вы можете безопасно использовать или закрывать AnkiDroid.</string>
     <string name="start_migration_progress_message">Начался перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Вы можете продолжить учёбу с AnkiDroid.
 \nПеренос хранилища будет продолжаться в фоновом режиме.</string>

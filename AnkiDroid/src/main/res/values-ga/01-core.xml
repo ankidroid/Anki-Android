@@ -50,7 +50,7 @@
     <string name="statistics">Staitisticí</string>
     <string name="settings">Socruithe</string>
     <string name="help">Cabhair</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Tarraing pictiúr</string>
     <string name="send_feedback">Seol aiseolas</string>
     <string name="studyoptions_due_today">Athbhreithnigh inniu:</string>
     <string name="studyoptions_new_total">Cártaí nua iomlán:</string>
@@ -58,22 +58,22 @@
     <string name="studyoptions_eta">Am meastar (noim):</string>
     <string name="studyoptions_start">Staidéar</string>
     <!-- DeckPicker.kt -->
-    <string name="expand">Expand</string>
-    <string name="collapse">Collapse</string>
-    <string name="study_more">Study more</string>
+    <string name="expand">Méadaigh</string>
+    <string name="collapse">Cuir i gceilt</string>
+    <string name="study_more">Breis staidéir</string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
         <item quantity="two">%1$d cards due (%2$s)</item>
         <item quantity="few">%1$d cards due (%2$s)</item>
         <item quantity="many">%1$d cards due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">%1$d (g)cinn de chártaí le hathbhreithniú (%2$s) </item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="two">%d minutes left</item>
         <item quantity="few">%d minutes left</item>
         <item quantity="many">%d minutes left</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="other">%d nóiméad fágtha </item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>

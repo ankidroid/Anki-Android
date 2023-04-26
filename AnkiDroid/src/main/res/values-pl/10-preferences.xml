@@ -231,10 +231,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Własny serwer synchronizacji</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nie używane</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        Jako alternatywa dla synchronizacji z AnkiWeb,
+        możesz użyć własnego serwera do synchronizacji.
+        Jeśli nie jest ustawiony, zamiast tego zostanie użyty domyślny serwer AnkiWeb.
+        <a href="%s">Dowiedz się więcej</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Adres url synchronizacji</string>
     <!-- Key Bindings -->
@@ -356,31 +356,31 @@
     <string name="experimental_pref_confirmation" maxLength="41">Włącz „%s”</string>
     <string name="use_rust_backend_title" maxLength="41">Użyj nowego backendu</string>
     <string name="use_rust_backend_summary">Włącza nowsze funkcje Anki, takie jak silnik v3\nNIESTABILNY. Nie używaj na kolekcji, której nie możesz stracić. NIE cofaj po zamknięciu aplikacji</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="use_rust_backend_warning">Jest szansa, że instalacja może całkowicie uszkodzić, wymagać odinstalowania i usunięcia folderu AnkiDroid oraz ma szansę propagować uszkodzenie poprzez synchronizację z AnkiWeb.\n\nChętnie przyjmujemy testerów, ale upewnij się, że masz prawidłową kopię zapasową spoza AnkiWeb.</string>
     <string name="enable_v3_sched_title" maxLength="41">Użyj harmonogramu v3</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Ustawienia programisty</string>
     <string name="dev_options_enabled_pref" maxLength="41">Włącz opcje dla programistów</string>
     <string name="disable_dev_options">Wyłącz opcje dla programistów </string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="dev_options_warning">        Przed włączeniem opcji deweloperskich upewnij się, że wiesz co robisz. Te opcje są niebezpieczne i mogą zniszczyć aplikację lub uszkodzić kolekcję.\n\nZauważ, że te opcje nie są odpowiednie dla większości użytkowników i dlatego nie są przetłumaczone, więc są w języku angielskim.
     </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
     <string name="pref__backup_options__title" maxLength="41">Opcje kopii zapasowej</string>
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid okresowo wykonuje kopię zapasową twojej kolekcji.
+        Po utworzeniu kopii zapasowych starsze niż dwa dni,
+        AnkiDroid rozpocznie usuwanie niektórych z nich, aby zwolnić miejsce na dysku.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Zauważ, że pliki multimedialne nie wchodzą w skład są kopii zapasowej.
+        Aby być bezpiecznym, synchronizuj swoją kolekcję lub wykonaj kopię zapasową - eksport.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        Możesz przywrócić z kopię zapasową i eksportować swoją kolekcję w menu listy talii.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minuty między automatycznymi kopiami zapasowymi</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Codzienne kopie zapasowe do utrzymania</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Tygodniowe kopie zapasowe do utrzymania</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Miesięczne kopie zapasowe do utrzymania</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->

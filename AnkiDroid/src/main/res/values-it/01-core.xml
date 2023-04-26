@@ -244,24 +244,24 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Impossibile scrivere su o creare il file %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_data">Migrating data</string>
-    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
-    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
+    <string name="migration__migrating_data">Migrazione dati</string>
+    <string name="migration__calculating_transfer_size">Calcolo della dimensione del trasferimento&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Trasferiti %1$s di %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migrazione riuscita</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
-        AnkiDroid is fully functional again, and you can sync.
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        I tuoi dati sono stati migrati con successo.
+        AnkiDroid è completamente funzionante di nuove, e si può sincronizzare.
         \n
-        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
-        Please make sure that your data is safe by regularly syncing or exporting backups.
+        \nNota che la tua collezione si trova ora in una cartella che viene rimossa durante la disinstallazione dell\'app.
+        Assicurati che i tuoi dati siano al sicuro sincronizzando o esportando regolarmente i backup.
     </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Migration failed: %s</string>
-    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migrazione non riuscita</string>
+    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Migrazione non riuscita: %s</string>
+    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        La migrazione all\'archivio è in pausa dopo aver fallito con l\'errore: %1$s.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space, or-reconnect the missing media.
+        Prova a rieseguire la migrazione.
+        Per risolvere il problema, potrebbe essere necessario liberare dello spazio su disco, o riconnettere i supporti mancanti.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Per saperne di più e ottenere aiuto</a>
     ]]></string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Collezione inaccessibile</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Non è possibile accedere alla tua collezione dopo che AnkiDroid è stato disinstallato a causa di un cambiamento della politica del Google Play Store\n\nI tuoi dati sono al sicuro e possono essere ripristinati. Si trovano \n%s\n\nSelezione un\'opzione tra quelle qui sotto per ripristinare:</string>

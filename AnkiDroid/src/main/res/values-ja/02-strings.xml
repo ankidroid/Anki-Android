@@ -308,16 +308,16 @@
     <string name="menu_font_size">フォントサイズ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ツールバーを表示</string>
     <string name="format_insert_bold">太字</string>
-    <string name="format_insert_italic">イタリック文字</string>
-    <string name="format_insert_underline">下線文字</string>
-    <string name="insert_horizontal_line">ラインを挿入</string>
-    <string name="insert_heading">テキスト挿入</string>
+    <string name="format_insert_italic">斜体</string>
+    <string name="format_insert_underline">下線</string>
+    <string name="insert_horizontal_line">横罫線</string>
+    <string name="insert_heading">見出し</string>
     <string name="format_font_size">フォントサイズ変更</string>
     <string name="insert_mathjax">MathJax 式を挿入</string>
     <string name="insert_cloze">穴埋め部分の挿入</string>
     <string name="note_editor_toolbar_icon">ボタンに表示する文字</string>
     <string name="before_text">選択部分の前のHTML</string>
-    <string name="after_text">選択部分の後ろのHTML</string>
+    <string name="after_text">選択部分の後のHTML</string>
     <string name="add_toolbar_item">ツールバーアイテムを作成</string>
     <string name="edit_toolbar_item">ツールバーアイテムを編集</string>
     <string name="toolbar_item_explain_edit_or_remove">選択した文字列の前後に挿入するHTMLをそれぞれ入力してください\n\n作成したツールバーアイテムを編集または削除したい場合は、そのアイテムのボタンを長押ししてください</string>
