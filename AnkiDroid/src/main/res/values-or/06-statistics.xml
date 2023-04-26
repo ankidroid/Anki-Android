@@ -71,7 +71,7 @@
     <string name="stats_period_lifetime">ତାସଖଣ୍ଡ ବୟସ</string>
     <string name="stats_deck_collection">ସଂଗ୍ରହ</string>
     <string name="stats_time_of_day">ଦିନର ସମୟ</string>
-    <string name="stats_day_of_week">ସପ୍ତାହର ଦିନ</string>
+    <string name="stats_day_of_week">ସପ୍ତାହର ଵାର</string>
     <string formatted="false" name="stats_percentage_correct">% ସଠିକ୍</string>
     <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">ସମୀକ୍ଷା</string>
     <string name="stats_answer_type">ଉତ୍ତର ପ୍ରକାର</string>

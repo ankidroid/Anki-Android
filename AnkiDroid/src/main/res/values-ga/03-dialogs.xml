@@ -45,9 +45,9 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Déan seic ar an bunachar sonraí?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="check_db_acknowledge">Database checked</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_warning">B\'fhéidir go dtógfadh sé seo tamall</string>
+    <string name="check_db_acknowledge">Seic déanta ar an bhunachar </string>
+    <string name="check_db_acknowledge_shrunk">Seic is optamú déanta ar an bhunachar. \nLaghdaíodh é faoi cheann %d MB</string>
     <string name="contextmenu_deckpicker_delete_deck">Scrios deic</string>
     <string name="delete_deck_default_deck">Ní feidir leat an deic faillí a scriosadh</string>
     <string name="delete_deck_title">Scrios an deic seo?</string>
@@ -60,29 +60,29 @@ Scrios gach carta as %1$s? Tá cartaí %2$d aige.</item>
         <item quantity="many">Delete all cards in %1$s? It contains %2$d cards.</item>
         <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
     </plurals>
-    <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-    <string name="no_tts_available_message">No text-to-speech language available</string>
-    <string name="initializing_tts">Initializing TTS&#8230;</string>
-    <string name="tts_no_tts">Don’t speak</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="delete_cram_deck_message">Seol na cártaí in %s ar ais chuig na deiceanna arbh as iad? </string>
+    <string name="no_tts_available_message">Níl TTS ar fáil sa teanga seo </string>
+    <string name="initializing_tts">TTS á thosú&#8230;</string>
+    <string name="tts_no_tts">Teanga ar bith</string>
+    <string name="unused_strings">\n\nComhaid gan úsáid:\n</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Réamhamharc</string>
+    <string name="reposition_card_dialog_title">Athlonnaigh cárta nua</string>
+    <string name="reposition_card_dialog_message">Láthair thosaithe</string>
+    <string name="reposition_card_not_new_error">Ní féidir ach cártaí nua a athlonnú </string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d card repositioned</item>
         <item quantity="two">%d cards repositioned</item>
         <item quantity="few">%d cards repositioned</item>
         <item quantity="many">%d cards repositioned</item>
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="other">%d (g)cinn de chártaí athlonnaithe </item>
     </plurals>
-    <string name="reset_card_dialog_title">Reset card progress</string>
-    <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
+    <string name="reset_card_dialog_title">Glan stair an chárta maidir le do dhul ar aghaidh? </string>
+    <string name="reset_card_dialog_message">Cuirfear an cárta seo ar chúl na scuaine</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="two">%d cards reset</item>
         <item quantity="few">%d cards reset</item>
-        <item quantity="many">%d cards reset</item>
+        <item quantity="many">%d (g)cinn de chártaí athshocraithe</item>
         <item quantity="other">%d cards reset</item>
     </plurals>
     <!-- Reschedule Card Dialog -->

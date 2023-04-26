@@ -45,78 +45,78 @@
 -->
 <resources>
     <!-- Navigation drawer items-->
-    <string name="decks">Komplekti</string>
+    <string name="decks">Kavas</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kāršu pārlūks</string>
     <string name="statistics">Statistika</string>
     <string name="settings">Iestatījumi</string>
     <string name="help">Palīdzība</string>
-    <string name="drawing">Zīmēšana</string>
-    <string name="send_feedback">Nosūtīt atsauksmes</string>
-    <string name="studyoptions_due_today">Šodien:</string>
-    <string name="studyoptions_new_total">Kopējais jauno kāršu skaits:</string>
-    <string name="studyoptions_total_cards">Kopējais kāršu skaits:</string>
-    <string name="studyoptions_eta">Paredzētais laiks (min):</string>
-    <string name="studyoptions_start">Studēt</string>
+    <string name="drawing">Zīmējums</string>
+    <string name="send_feedback">Sūtīt atsauksmes</string>
+    <string name="studyoptions_due_today">Paredzēts šodienai:</string>
+    <string name="studyoptions_new_total">Kopskaits jauno kāršu:</string>
+    <string name="studyoptions_total_cards">Kopskaits kāršu:</string>
+    <string name="studyoptions_eta">Aptuvenais laiks (min):</string>
+    <string name="studyoptions_start">Mācīties</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Paplašināt</string>
     <string name="collapse">Sakļaut</string>
     <string name="study_more">Studēt vairāk</string>
     <plurals name="deckpicker_title">
-        <item quantity="zero">%1$d kārts paredzēta veikt (%2$s)</item>
-        <item quantity="one">%1$d kārtis paredzētas veikt (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="zero">%1$d kārtis pārpalikumā (%2$s)</item>
+        <item quantity="one">%1$d kārts pārpalikusi (%2$s)</item>
+        <item quantity="other">%1$d kārtis pārpalikušas (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="zero">%d minutes left</item>
-        <item quantity="one">%d minūtes atstājas</item>
-        <item quantity="other">%d minutes left</item>
+        <item quantity="zero">%d minūtes atlikušas</item>
+        <item quantity="one">%d minūte atlikusi</item>
+        <item quantity="other">%d minūtes atlikušas</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="zero">%1$d stunda %2$d pagāja</item>
-        <item quantity="one">%1$d stunda %2$d pagāja</item>
-        <item quantity="other">%1$d stundās %2$d pagāja</item>
+        <item quantity="zero">%1$d stundas %2$d atlikušas</item>
+        <item quantity="one">%1$d stunda %2$d atlikusi</item>
+        <item quantity="other">%1$d stundas %2$d atlikušas</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="zero">%1$d days %2$d left</item>
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="zero">%1$d dienas %2$d atlikušas</item>
+        <item quantity="one">%1$d diena %2$d atlikusi</item>
+        <item quantity="other">%1$d dienas %2$d atlikušas</item>
     </plurals>
-    <string name="no_cards_placeholder_title">Kolekcija ir tukša</string>
-    <string name="no_cards_placeholder_description">Lai pievienot kartēs \nizmantojiet \"+\" pogu</string>
+    <string name="no_cards_placeholder_title">Nekā te nav</string>
+    <string name="no_cards_placeholder_description">Sāc pievienot jaunas kārtis, n\spiežot + pogu</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="zero">Iemācītas {%1$d} kartēs {%2$s} laika</item>
-        <item quantity="one">Iemācītas %1$d kartēs %2$s laikā</item>
-        <item quantity="other">Iemācītas %1$d kartēs %2$s laikā</item>
+        <item quantity="zero">Izlasītas %1$d kārtis šodien (pagāja %2$s) </item>
+        <item quantity="one">Izlasīta %1$d kārts šodien (pagāja %2$s) </item>
+        <item quantity="other">Izlasītas %1$d kārtis šodien (pagāja %2$s) </item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Atbilde</string>
+    <string name="type_answer_hint">Ieraksti atbildi</string>
     <string name="show_answer">Parādīt atbildi</string>
-    <string name="hide_answer">Parādīt atbildi</string>
-    <string name="ease_button_again">Vēlreiz</string>
+    <string name="hide_answer">Paslēpt atbildi</string>
+    <string name="ease_button_again">Vēlkārt</string>
     <string name="ease_button_hard">Grūti</string>
     <string name="ease_button_good">Labi</string>
     <string name="ease_button_easy">Viegli</string>
-    <string name="studyoptions_congrats_undo">Anulēt %s</string>
+    <string name="studyoptions_congrats_undo">Atsaukt %s</string>
     <string name="menu_import">Ienest</string>
     <string name="undo">Atsaukt</string>
-    <string name="undo_action_review">Pēdējā izmaiņa</string>
-    <string name="undo_action_change_deck_multi">Mainīt klājus</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
-    <string name="move_all_to_deck">Pārvietot visu klajā</string>
-    <string name="unbury">Atgriezt</string>
-    <string name="rename_deck">Pārdēvēt klāju</string>
+    <string name="undo_action_review">pēdējo pārskati</string>
+    <string name="undo_action_change_deck_multi">kavu maiņu</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Atsaukt vilkumu</string>
+    <string name="move_all_to_deck">Pārnest visu uz kavu</string>
+    <string name="unbury">Atklāt</string>
+    <string name="rename_deck">Pārdēvēt kavu</string>
     <string name="create_shortcut">Izveidot saīsni</string>
-    <string name="browse_cards">Parādīt sarakstu</string>
+    <string name="browse_cards">Pārlūkot kārtis</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Pievienot</string>
-    <string name="menu_add_note">Pievienot piezīmi</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sinhronizēt kontu</string>
-    <string name="menu_dismiss_note">Paslēpt / dzēst</string>
-    <string name="menu_bury_card">Atlikt piezīmi</string>
-    <string name="menu_bury_note">Apglabāt piezīmi</string>
-    <string name="menu_suspend_card">Apturēt kārti</string>
-    <string name="menu_suspend_note">Apturēt piezīmi</string>
-    <string name="menu_bury">Atlikt</string>
+    <string name="menu_add_note">Pievienot rakstu</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Saskaņot kóntu</string>
+    <string name="menu_dismiss_note">Slēpt / dzēst</string>
+    <string name="menu_bury_card">Slēpt kārti</string>
+    <string name="menu_bury_note">Slēpt rakstu</string>
+    <string name="menu_suspend_card">Nolikt kārti malā</string>
+    <string name="menu_suspend_note">Nolikt rakstu malā</string>
+    <string name="menu_bury">Slēpt</string>
     <string name="menu_suspend">Izslēgt</string>
     <string name="menu_delete_note">Dzēst piezīmi</string>
     <string name="menu_flag">Karogs</string>
@@ -134,16 +134,16 @@
     <string name="menu_search">Meklēt iekš %1$s</string>
     <string name="menu_mark_note">Atzīmēt piezīmi</string>
     <string name="menu_unmark_note">Atzīmēt piezīmi</string>
-    <string name="menu_toggle_mic_tool_bar">Pārbaudīt izsteiksi</string>
-    <string name="new_deck">Izveidot klāju</string>
-    <string name="new_dynamic_deck">Jauns filtrēts klājs</string>
-    <string name="directory_inaccessible">Mape AnikiDroid nav pieejama</string>
+    <string name="menu_toggle_mic_tool_bar">Pārbaudīt izrunu</string>
+    <string name="new_deck">Izveidot kavu</string>
+    <string name="new_dynamic_deck">Izveidot pielāgotu kavu</string>
+    <string name="directory_inaccessible">AnkiDroid krātuve nav pieejama</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Lai turpinātu, atļaujiet AnkiDroid izmantot atmiņu</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_no_storage_permission">Lai turpinātu, dodiet AnkiDroid piekļuvi krātuvei</string>
+    <string name="startup_all_files_access_permission">Lai turpinātu, dodiet AnkiDroid piekļuvi krātuvei</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -151,53 +151,53 @@
         not be translated, at least not for languages using the Latin
         alphabet.
     -->
-    <string name="time_quantity_seconds">%d sec</string>
+    <string name="time_quantity_seconds">%d sek</string>
     <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d s %2$d m</string>
-    <string name="time_quantity_hours">%d s</string>
+    <string name="time_quantity_hours_minutes">%1$d st %2$d min</string>
+    <string name="time_quantity_hours">%d st</string>
     <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d s</string>
-    <string name="time_quantity_months">%.1f men</string>
+    <string name="time_quantity_days_hours">%1$d d %2$d st</string>
+    <string name="time_quantity_months">%.1f mēn</string>
     <string name="time_quantity_years">%.1f g</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Filtrēts klājs mainās</string>
-    <string name="rebuild_cram_label">Atjaunot</string>
+    <string name="rebuild_filtered_deck">Pārveido pielāgoto kavu&#8230;</string>
+    <string name="rebuild_cram_label">Pārveidot</string>
     <string name="empty_cram_label">Tukšs</string>
-    <string name="create_subdeck">Izveidot zemklāju</string>
-    <string name="empty_filtered_deck">Filtrēts klājs tīras</string>
-    <string name="custom_study_deck_name">Pielāgota pētījuma sesija</string>
+    <string name="create_subdeck">Izveidot apakškavu</string>
+    <string name="empty_filtered_deck">Iztukšo pielāgoto kavu</string>
+    <string name="custom_study_deck_name">Pielāgota mācība</string>
     <string name="custom_study_deck_exists">Lūdzu vispirms pārsauciet eksistējošo Pielāgoto pētījuma Deku.</string>
     <string name="empty_deck">Šis klājs ir tukš</string>
     <string name="search_deck" comment="Deck search for selecting it">Atrast klāju</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Atrast klāju</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="invalid_deck_name">Nederīgs kavas nosaukums</string>
+    <string name="studyoptions_empty">Šī kava ir tukša. Spied +, lai pievienotu kārtis</string>
+    <string name="studyoptions_limit_reached">Ikdienas ierobežojums sasniegts</string>
+    <string name="studyoptions_empty_schedule">Nav nekas paredzēts</string>
     <string name="studyoptions_congrats_finished">Apsveicu! Patreiz visu esat pabeidzis.</string>
     <string name="studyoptions_congrats_more_rev">Šodienas vērtēšanas limits ir sasniegts, bet vēl ir kārtis kas ir jāizvērtē. Optimālai atmiņai apsveriet iespēju palielināt dienas limitu (iestatījumos).</string>
     <string name="studyoptions_congrats_more_new">Ir pieejamas vairākas jaunas kārtis, bet dienas limits ir sasniegts. Jūs vara palielināt šo limitu iestatījumos, bet ņemiet vērā, ka tas palielinās Jūsu īstermiņa pārskatīšanas darba slodzi.</string>
     <string name="studyoptions_congrats_custom">Lai studētu ārpus normālā darba laika, nospiediet uz Pielāgotā Pētījuma pogas zemāk.</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="studyoptions_no_cards_due">Nav nekas pārpalicis</string>
+    <string name="sd_card_not_mounted">Ierīces krātuve nav uzstādīta</string>
+    <string name="empty_cloze_warning">Izmaini šo rakstu un pievieno kādu \"vārdu atņemi\". (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinhronizācija</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Continue sync</string>
-    <string name="sync_cancelled">Sync cancelled</string>
-    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="export">Export</string>
-    <string name="export_collection">Export collection</string>
-    <string name="export_deck">Export deck</string>
-    <string name="nothing">Nothing</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Saskaņošana pagaidu izslēgta</string>
+    <string name="button_upgrade" comment="Text of the sync button">Pārvietot uz ierobežoto krātuvi</string>
+    <string name="cancel_sync_confirm">Vai pārtraukt saskaņošanu?</string>
+    <string name="continue_sync">Turpināt darbību</string>
+    <string name="sync_cancelled">Darbība atcelta</string>
+    <string name="sync_cancel_message">Darbības atcelšana&#8230;\nLūdzu uzgaidiet!</string>
+    <string name="export">Pārvietošana</string>
+    <string name="export_collection">Pārvietot krājumu</string>
+    <string name="export_deck">ekspórtēt kavu</string>
+    <string name="nothing">Nekā</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Card types</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
-    <string name="card_template_editor_styling">Styling</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
+    <string name="title_activity_template_editor">Kāršu veidi</string>
+    <string name="card_template_editor_front">Priekšas veidne</string>
+    <string name="card_template_editor_back">Aizmugures veidne</string>
+    <string name="card_template_editor_styling">Izskata veidošana</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Kāršu pārlūka izskats</string>
     <string name="card_template_editor_deck_override">Deck override</string>
     <string name="card_template_editor_insert_field">Insert field</string>
     <string name="card_template_editor_select_field">Select field</string>

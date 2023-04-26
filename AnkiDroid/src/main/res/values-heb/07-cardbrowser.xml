@@ -52,14 +52,14 @@
         <item quantity="other">מוצגים %d קלפים</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">הפתק %d מוצג</item>
+        <item quantity="one">הרשומה %d מוצגת</item>
         <item quantity="two">מוצגים שני קלפים</item>
         <item quantity="many">מוצגים %d קלפים</item>
         <item quantity="other">מוצגים %d כרטיסים</item>
     </plurals>
     <string name="card_browser_all_decks">כל החפיסות</string>
     <string name="card_browser_delete_card">מחיקת הערות</string>
-    <string name="card_browser_suspend_card">השהיית קלפים</string>
+    <string name="card_browser_suspend_card">השהיית כרטיסים</string>
     <string name="card_browser_change_deck">החלפת חפיסה</string>
     <string name="card_browser_unsuspend_card">ביטול השהיית קלפים</string>
     <string name="card_browser_mark_card">סימון רשומות</string>
@@ -104,10 +104,10 @@
     <string name="card_browser_unknown_deck_name">לא ידוע</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">חתוך תוכן</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">ייצוא קלף</item>
-        <item quantity="two">יצוא קלפים</item>
-        <item quantity="many">יצוא קלפים</item>
-        <item quantity="other">יצוא קלפים</item>
+        <item quantity="one">ייצוא כרטיס</item>
+        <item quantity="two">יצוא כרטיסים</item>
+        <item quantity="many">יצוא כרטיסים</item>
+        <item quantity="other">יצוא כרטיסים</item>
     </plurals>
     <plurals name="card_browser_export_notes">
         <item quantity="one">יצוא פתק</item>
@@ -116,10 +116,10 @@
         <item quantity="other">יצוא פתקים</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">קלף אחד נמחק.</item>
-        <item quantity="two">%d קלפים נמחקו.</item>
-        <item quantity="many">%d קלפים נמחקו.</item>
-        <item quantity="other">%d קלפים נמחקו.</item>
+        <item quantity="one">כרטיס אחד נמחק.</item>
+        <item quantity="two">%d כרטיסים נמחקו.</item>
+        <item quantity="many">%d כרטיסים נמחקו.</item>
+        <item quantity="other">%d כרטיסים נמחקו.</item>
     </plurals>
     <!-- Card Info subscreen -->
     <string name="card_info_added" comment="Label of the information showing at which date a card was added.">התווסף</string>

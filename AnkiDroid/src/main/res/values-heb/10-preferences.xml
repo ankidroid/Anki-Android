@@ -69,7 +69,7 @@
     <string name="pref_cat_plugins" maxLength="41">תוספים</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">עובי הקו</string>
-    <string name="use_input_tag" maxLength="41">הקלדת התשובה אל הקלף</string>
+    <string name="use_input_tag" maxLength="41">הקלד את התשובה אל הכרטיס</string>
     <string name="use_input_tag_summ">להשתמש בתיבת הטקסט שבתוך הקלף כדי להקליד בה את התשובה</string>
     <string name="reset_languages" maxLength="41">איפוס שפות</string>
     <string name="reset_languages_summ">אפס משימות השפה (לטקסט לדיבור ולמילונים) לכל החפיסות</string>
@@ -79,7 +79,7 @@
     <string name="image_zoom" maxLength="41">הגדלת תצוגת התמונות</string>
     <string name="button_size" maxLength="41">גודל כפתורי התשובה</string>
     <string name="card_browser_font_size" maxLength="41">קנה מידה להגדלת גופן הקלפים</string>
-    <string name="card_browser_hide_media" maxLength="41">הצגת שמות הקבצים בדפדפן הקלפים</string>
+    <string name="card_browser_hide_media" maxLength="41">הצגת שמות הקבצים בדפדפן הכרטיסים</string>
     <string name="card_browser_hide_media_summary">הצג שמות קבצים של מדיה בשדות השאלה / תשובה של דפדפן הכרטיס</string>
     <string name="col_path" maxLength="41">ספריית AnkiDroid</string>
     <string name="fullscreen_review" maxLength="41">מצב מסך מלא</string>
@@ -159,14 +159,14 @@
     <string name="timeout_question_seconds" maxLength="41">הגיע הזמן להציג את השאלה הבאה</string>
     <string name="select_locale_title">בחר שפה</string>
     <string name="software_render" maxLength="41">השבת את עיבוד החומרה של הכרטיס</string>
-    <string name="software_render_summ">עיבוד החומרה מהיר יותר אך עשוי להיות בעיות, במיוחד באנדרואיד 8/8.1. אם אינך יכול לראות חלקים מממשק המשתמש של סקירת הכרטיסים, נסה את ההגדרה הזו.</string>
+    <string name="software_render_summ">עיבוד החומרה מהיר יותר אך עשוי ליצור בעיות, במיוחד באנדרואיד 8/8.1. אם אינך יכול לראות חלקים מממשק המשתמש של סקירת הכרטיסים, נסה את ההגדרה הזו.</string>
     <string name="safe_display" maxLength="41">מצב תצוגה בטוח</string>
-    <string name="safe_display_summ">השבת את כל האנימציות והשתמש בשיטה בטוחה יותר לציור קלפים. התקני דיו אלקטרוני עשויים לדרוש זאת.</string>
+    <string name="safe_display_summ">השבת את כל האנימציות והשתמש בשיטה בטוחה יותר לציור כרטיסים. התקני דיו אלקטרוני עשויים לדרוש זאת.</string>
     <string name="disable_extended_text_ui" maxLength="41">השבת את מצב עריכה של שדה יחיד</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">מאפשר תפריט ההקשר \'מחיקת Cloze\' במצב לרוחב.</string>
     <string name="vertical_centering" maxLength="41">מירכוז</string>
-    <string name="vertical_centering_summ">מרכז את תוכן הקלפים בצורה אנכית</string>
+    <string name="vertical_centering_summ">מרכז את תוכן הכרטיסים בצורה אנכית</string>
     <string name="pref_backup_max" maxLength="41">מספר גיבויים מרבי</string>
     <string name="pref_double_tap_time_interval" maxLength="41">מרווח זמן של לחיצה כפולה (מילישניות)</string>
     <string name="pref_double_tap_time_interval_summary">לחיצה שנייה על כפתורי התשובה תתעלם אם הזמן הזה לא חלף. זה מונע הקשה כפולה בשוגג</string>
@@ -175,13 +175,13 @@
     <string name="show_large_answer_buttons" maxLength="41">לחצני תשובה גדולים</string>
     <string name="show_large_answer_buttons_summ">הצג כפתורי תשובה בשתי שורות</string>
     <string name="show_top_bar" maxLength="41">הצג סרגל עליון</string>
-    <string name="show_top_bar_summ">הצג ספירת קלפים, דגל וסמן בסרגל העליון</string>
+    <string name="show_top_bar_summ">הצג ספירת כרטיסים, דגל וסמן בסרגל העליון</string>
     <string name="show_progress" maxLength="41">הצג נותרים</string>
-    <string name="show_progress_summ">הצג את מספר הקלפים שנותרו</string>
+    <string name="show_progress_summ">הצג את מספר הכרטיסים שנותרו</string>
     <string name="show_eta" maxLength="41">הצג הערכת זמן לסיום</string>
     <string name="show_eta_summ">הצג זמן שנותר</string>
-    <string name="use_current" maxLength="41">חפיסה לקלפים חדשים</string>
-    <string name="new_spread" maxLength="41">מיקום קלפים חדשים</string>
+    <string name="use_current" maxLength="41">חפיסה לכרטיסים חדשים</string>
+    <string name="new_spread" maxLength="41">מיקום כרטיסים חדשים</string>
     <string name="learn_cutoff" maxLength="41">לימוד מעבר למכסה</string>
     <string name="time_limit" maxLength="41">מגבלת זמן בתיבת-זמן</string>
     <string name="new_timezone" maxLength="41">טיפול באזור זמן חדש</string>
@@ -253,7 +253,7 @@
         <item quantity="many">%1$s\n%2$d חפיסות משתמשות בקבוצה זו</item>
         <item quantity="other">%1$s\n%2$d חפיסות משתמשות בקבוצה זו</item>
     </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">קלפים חדשים</string>
+    <string name="deck_conf_new_cards" maxLength="41">כרטיסים חדשים</string>
     <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">סקירות</string>
     <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">שגיאות</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">כללי</string>

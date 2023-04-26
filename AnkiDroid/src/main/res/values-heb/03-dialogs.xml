@@ -57,7 +57,7 @@
         <item quantity="many">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה %2$d קלפים.</item>
         <item quantity="other">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה %2$d קלפים.</item>
     </plurals>
-    <string name="delete_cram_deck_message">שלח כל הקלפים ב־ %s חזרה לחפיסות המקוריות?‏</string>
+    <string name="delete_cram_deck_message">שלח כל הכרטיסים ב־ %s חזרה לחפיסות המקוריות?‏</string>
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
     <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
@@ -65,7 +65,7 @@
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">תצוגה מקדימה</string>
     <string name="reposition_card_dialog_title">שינוי מיקום כרטיס חדש</string>
     <string name="reposition_card_dialog_message">מיקום התחלתי:</string>
-    <string name="reposition_card_not_new_error">ניתן לשנות מיקום לקלפים חדשים בלבד</string>
+    <string name="reposition_card_not_new_error">ניתן לשנות מיקום לכרטיסים חדשים בלבד</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">כרטיס %d הושם מחדש</item>
         <item quantity="two">%d כרטיסים הושמו מחדש</item>
@@ -73,12 +73,12 @@
         <item quantity="other">%d כרטיסים הושמו מחדש</item>
     </plurals>
     <string name="reset_card_dialog_title">איפוס התקדמות הקלף</string>
-    <string name="reset_card_dialog_message">קלף זה יוצב בסוף תור של הקלפים החדשים.</string>
+    <string name="reset_card_dialog_message">כרטיס זה יוצב בסוף תור של הכרטיסים החדשים.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">קלף אחד אופס</item>
-        <item quantity="two">%d קלפים אופסו</item>
-        <item quantity="many">%d קלפים אופסו</item>
-        <item quantity="other">%d קלפים אופסו</item>
+        <item quantity="one">כרטיס אחד אופס</item>
+        <item quantity="two">%d כרטיסים אופסו</item>
+        <item quantity="many">%d כרטיסים אופסו</item>
+        <item quantity="other">%d כרטיסים אופסו</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
@@ -95,10 +95,10 @@
     </plurals>
     <string name="reschedule_card_dialog_message">תזמן לשינון מחדש בעוד x ימים</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d קלף תוזמן מחדש</item>
-        <item quantity="two">%d קלפים תוזמנו מחדש</item>
-        <item quantity="many">%d קלפים תוזמנו מחדש</item>
-        <item quantity="other">%d קלפים תוזמנו מחדש</item>
+        <item quantity="one">%d כרטיס תוזמן מחדש</item>
+        <item quantity="two">%d כרטיסים תוזמנו מחדש</item>
+        <item quantity="many">%d כרטיסים תוזמנו מחדש</item>
+        <item quantity="other">%d כרטיסים תוזמנו מחדש</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">כרטיס חדש מתוזמן מחדש. תזמון מחדש הופך גם כרטיסים חדשים לכרטיסי ביקורת. השתמש באפשרות \'מיקום כרטיס מחדש\' כדי לשנות את מיקומו של כרטיס חדש בתור החדש</string>
     <string name="reschedule_card_dialog_warning_ease_reset">תזמון מחדש מאפס גם את האופן שבו מתזמן מתייחס לכרטיס בעתיד (הקלות תוגדר ל-%d%%)</string>
@@ -111,14 +111,14 @@
 לפני תחילת ניסיון התיקון, יתבצע שמירת העתק בתקייה %s</string>
     <string name="intent_aedict_empty">הקטגוריה \'ברירת מחדל\' ריקה</string>
     <string name="intent_aedict_category">כדי להוסיף כרטיסים ל-AnkiDroid הסר את כל קטגוריות פנקס הרשימות או הוסף אחת בשם \"ברירת מחדל\"</string>
-    <string name="custom_study_new_total_new">קלפים חדשים בחפיסה: %d</string>
+    <string name="custom_study_new_total_new">כרטיסים חדשים בחפיסה: %d</string>
     <string name="custom_study_rev_total_rev">שינונים מועדים בחפיסות: %d</string>
     <string name="custom_study_new_extend">הוספה/הורדה(“-3”) הגבלת כרטיסים חדשים להיום ב</string>
     <string name="custom_study_rev_extend">הוספה/הורדה(“-3”) הגבלת חזרות להיום ב</string>
-    <string name="custom_study_forgotten">חזרה על קלפים נשכחים בx ימים האחרונים </string>
+    <string name="custom_study_forgotten">חזרה על כרטיסים נשכחים בx ימים האחרונים </string>
     <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>
     <string name="custom_study_random">נא לבחור כמות מסוימת של קלפים מהחפיסה באקראי:</string>
-    <string name="custom_study_preview">צפייה ראשונית בקלפים חדשים שנוספו בx ימים האחרונים:</string>
+    <string name="custom_study_preview">צפייה ראשונית בכרטיסים חדשים שנוספו בx ימים האחרונים:</string>
     <string name="custom_study_rebuild_deck_corrupt">לא ניתן היה לבנות מחדש חפיסות לימוד מותאם אישית</string>
     <string name="importing_collection">אוסף מיובא&#8230;</string>
     <string name="import_media_count">מייבא קבצי מדיה %1$d%%...</string>
@@ -177,15 +177,15 @@
         <item quantity="other">%d קבצים נמחקו</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">כל הקלפים</string>
+    <string name="tags_dialog_option_all_cards">כל הכרטיסים</string>
     <string name="tags_dialog_option_new_cards">חדש</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">מיועד</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">מתבצע איתור קלפים ריקים&#8230;</string>
+    <string name="emtpy_cards_finding">מתבצע איתור כרטיסים ריקים&#8230;</string>
     <string name="confirm_cancel">לבטל?</string>
-    <string name="empty_cards_none">אין קלפים ריקים</string>
-    <string name="empty_cards_count">קלפים למחיקה: %d</string>
-    <string name="empty_cards_deleted">קלפים נמחקו: %d</string>
+    <string name="empty_cards_none">אין כרטיסים ריקים</string>
+    <string name="empty_cards_count">כרטיסים למחיקה: %d</string>
+    <string name="empty_cards_deleted">כרטיסים נמחקו: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">לא מצליח לקבל הרשאת מיקרופון </string>
     <string name="multimedia_editor_camera_permission_refused">לא מצליח לקבל הרשאת מצלמה. פונקציונליות בוטלה.</string>
@@ -199,7 +199,7 @@
     <string name="integrity_check_continue_anyway">המשך בכל זאת</string>
     <string name="integrity_check_insufficient_space">״בדוק מסד נתונים״ משתמש בכמות גדולה של אחסון זמני.\n\nמומלץ מאוד שיהיה לך לפחות %s שטח פנוי במכשיר שלך לפני שתמשיך.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n כרגע יש לך %s פנוי.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d קלפים עם חפיסות ביתיות שגויות שוחזרו. אנא עיין במדריך למידע נוסף.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d כרטיסים עם חפיסות ביתיות שגויות שוחזרו. אנא עיין במדריך למידע נוסף.</string>
     <string name="video_creation_error">לא ניתן להפעיל וידאו</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">לא ניתן להחליף חפיסה</string>
@@ -226,7 +226,7 @@
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">חסרה הרשאת אחסון נדרשת. אנא הענק הרשאת אחסון ולאחר מכן נסה שוב להפעיל.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">לא ניתן לטעון תצוגת דפדפן קלפים</string>
+    <string name="card_template_editor_card_browser_appearance_failed">לא ניתן לטעון תצוגת דפדפן כרטיסים</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">לא ניתן היה לתזמן תזכורות</string>
     <string name="boot_service_too_many_notifications">תזמנו יותר מדי תזכורות. חלקם לא יופיעו</string>
@@ -267,13 +267,13 @@
         <item quantity="other">סינכרון אוטומטי עשוי להיות מופעל בעוד %d שניות</item>
     </plurals>
     <string name="metered_sync_warning">החיבור שלך נמדד. העברת נתונים עשויה לעלות כסף</string>
-    <string name="deck_picker_new">מספר הקלפים החדשים שניתן לראות היום בחפיסה זו.</string>
-    <string name="deck_picker_rev">מספר הקלפים ללימוד היום בחפיסה זו.</string>
-    <string name="deck_picker_lrn">מספר הקלפים בלמידה בחפיסה זו.</string>
+    <string name="deck_picker_new">מספר הכרטיסים החדשים שניתן לראות היום בחפיסה זו.</string>
+    <string name="deck_picker_rev">מספר הכרטיסים ללימוד היום בחפיסה זו.</string>
+    <string name="deck_picker_lrn">מספר הכרטיסים בלמידה בחפיסה זו.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">פתח את דף סקירת החפיסה המכיל את מספר הקלפים שניתן לראות היום.</string>
+    <string name="deck_picker_counts">פתח את דף סקירת החפיסה המכיל את מספר הכרטיסים שניתן לראות היום.</string>
     <string name="import_deck_package">חבילת חפיסות(.apkg)</string>
     <string name="import_collection_package">חבילת אוסף (.colpkg)</string>
     <string name="import_csv">קובץ טקסט (.txt, .csv)</string>

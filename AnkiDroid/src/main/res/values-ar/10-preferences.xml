@@ -200,8 +200,8 @@
     <string name="custom_buttons_setting_if_room">إظهار إذا كانت هناك مساحة</string>
     <string name="custom_buttons_setting_menu_only">القائمة فقط</string>
     <string name="reset_custom_buttons" maxLength="41">استعادة الافتراضيات</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">إعادة تعيين الإعدادات إلى الافتراضي</string>
+    <string name="reset">إعادة ضبط</string>
     <string name="thirdparty_apps_title" maxLength="41">تطبيقات الطرف الثالث التي تستخدم واجهة البرمجة</string>
     <string name="thirdparty_apps_summary">اطلع على قائمة تطبيقات تستخدم واجهة برمجة أنكيدرويد مثل القواميس، والأدوات.</string>
     <string name="html_javascript_debugging" maxLength="41">تصحيح أخطاء HTML / جافا سكريبت</string>

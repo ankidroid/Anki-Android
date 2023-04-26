@@ -47,17 +47,17 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">קלפים שנותרו</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">נותר קלף AnkiDroid %d</item>
-        <item quantity="two">נותרו %d קלפי AnkiDroid</item>
-        <item quantity="many">נותרו %d קלפי AnkiDroid</item>
-        <item quantity="other">נותרו %d קלפי AnkiDroid</item>
+        <item quantity="one">נותר כרטיס AnkiDroid %d</item>
+        <item quantity="two">נותרו %d כרטיסי AnkiDroid</item>
+        <item quantity="many">נותרו %d כרטיסי AnkiDroid</item>
+        <item quantity="other">נותרו %d כרטיסי AnkiDroid</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid קטן</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">נותר קלף אחד</item>
-        <item quantity="two">נותרו %d קלפים</item>
-        <item quantity="many">נותרו %d קלפים</item>
-        <item quantity="other">נותרו %d קלפים</item>
+        <item quantity="one">נותר כרטיס אחד</item>
+        <item quantity="two">נותרו %d כרטיסים</item>
+        <item quantity="many">נותרו %d כרטיסים</item>
+        <item quantity="other">נותרו %d כרטיסים</item>
     </plurals>
     <plurals name="widget_eta">
         <item quantity="one">נותרה דקה</item>

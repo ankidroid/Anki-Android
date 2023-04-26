@@ -244,24 +244,24 @@
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_data">Migrating data</string>
-    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
-    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
+    <string name="migration__migrating_data">Migrando datos</string>
+    <string name="migration__calculating_transfer_size">Calculando el tamaño de transferencia&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transfiriendo %1$s de %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migración exitosa</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
-        AnkiDroid is fully functional again, and you can sync.
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Se han migrado sus datos con éxito
+        AnkiDroid es completamente funcional de nuevo y ya puede sincronizar.
         \n
-        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
-        Please make sure that your data is safe by regularly syncing or exporting backups.
+        \nTenga en cuenta que ahora su colección se encuentra en una carpeta que se eliminará al desinstalar la aplicación.
+        Por favor, mantenga sus datos seguros sincronizando o exportando copias de seguridad de forma regular.
     </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Migration failed: %s</string>
-    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migración fallida</string>
+    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Migración fallida: %s</string>
+    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        La migración de almacenamiento se ha pausado después de fallar con el error: %1$s.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space, or-reconnect the missing media.
+        Por favor, intente ejecutar la migración nuevamente.
+        Para resolver el problema, es posible que necesite liberar algo de espacio en el disco o volver a conectar los medios faltantes.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Obtenga más información y ayuda</a>
     ]]></string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Colección inaccesible</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">No podemos acceder a tu colección después de desinstalar AnkiDroid debido a un cambio en la política de Play Store\n\nTus datos están seguros y pueden ser restaurados. Están ubicados en\n%s\n\nSelecciona una opción debajo para restaurar:</string>

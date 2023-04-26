@@ -392,12 +392,12 @@
     <string name="home">Strona główna</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Karta zakopana.</string>
     <plurals name="note_suspended">
         <item quantity="one">%d card suspended.</item>
         <item quantity="few">%d cards suspended.</item>
         <item quantity="many">%d cards suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="other">%d kart zawieszonych.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Przypnij pole %s</string>
@@ -407,7 +407,7 @@
     <string name="scoped_storage_postpone">Opóźnienie</string>
     <string name="scoped_storage_migrate">Migruj</string>
     <string name="search_card_js_api_no_results">Wyszukiwanie nie zwróciło żadnych wyników</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid musi zmigrować swoją pamięć, aby zachować zgodność z polityką bezpieczeństwa Androida 10.\n\nTo poprawi wydajność synchronizacji multimediów.&lt;br&gt;&lt;br&gt;Podczas migracji nie będziesz w stanie synchronizować, a niektóre ustawienia zostaną wyłączone. Synchronizacja multimediów nastąpi przed migracją, aby Twoje dane były bezpieczne.&lt;br&gt;&lt;br&gt;Podczas tego procesu można bezpiecznie używać lub zamknąć AnkiDroid.</string>
     <string name="start_migration_progress_message">Rozpoczęcie migracji pamięci. Wkrótce będziesz mógł wznowić korzystanie z AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Możesz wznowić korzystanie z AnkiDroid.
 \nMigracja pamięci masowej będzie kontynuowana w tle.</string>
@@ -445,5 +445,5 @@
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Naciśnij, aby rozpocząć przenoszenie pamięci masowej</string>
     <string name="media_sync_required_title">Wymagana jest synchronizacja mediów</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="media_sync_unavailable_message">Synchronizacja multimediów jest wyłączona w ustawieniach. Proszę zsynchronizować i wykonać kopię zapasową multimediów, które nie zostały zsynchronizowane przed kontynuowaniem</string>
 </resources>

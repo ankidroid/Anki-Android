@@ -53,11 +53,11 @@
     <string name="CardEditorTags">Ετικέτες:%1$s</string>
     <string name="CardEditorCards">Κάρτες %1$s</string>
     <string name="tag_name">Όνομα ετικέτας</string>
-    <string name="add_new_filter_tags">Add/filter tags</string>
+    <string name="add_new_filter_tags">Προσθήκη/φιλτράρισμα ετικετών</string>
     <string name="add_tag">Προσθήκη ετικέτας</string>
     <string name="check_all_tags">Check/uncheck all tags</string>
-    <string name="filter_tags">Filter tags</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
+    <string name="filter_tags">Φιλτράρισμα ετικετών</string>
+    <string name="no_tags">Δεν έχετε προσθέσει καμία ετικέτα ακόμα</string>
     <string name="updated_version">Updated to version %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
@@ -68,7 +68,7 @@
     <string name="show_whiteboard">Εμφάνιση πίνακα</string>
     <string name="hide_whiteboard">Απόκρυψη πίνακα</string>
     <string name="clear_whiteboard">Καθαρίσμός πίνακα</string>
-    <string name="replay_audio">Replay audio</string>
+    <string name="replay_audio">Επανάληψη ήχου</string>
     <string name="leech_suspend_notification">Η κάρτα χαρακτηρίστηκε βδέλλα και αναστάλθηκε</string>
     <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>
     <string name="corrupt_font">Κατεστραμμένο αρχείο γραμματοσειράς %s</string>
@@ -95,22 +95,22 @@
         <item>Lapses</item>
         <item>Reviews</item>
         <item>Interval</item>
-        <item>Ease</item>
+        <item>Ευκολία</item>
         <item>Due</item>
         <item>Card Modified</item>
-        <item>Created</item>
+        <item>Δημιουργήθηκε</item>
         <item>Note Modified</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
+    <string name="apply_filter">Εφαρμογή</string>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
     <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">Review forgotten cards</string>
     <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
+    <string name="custom_study_random_selection">Μελέτη μιας τυχαίας επιλογής καρτών</string>
+    <string name="custom_study_preview_new">Προεπισκόπηση νέων καρτών</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
@@ -121,7 +121,7 @@
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Αποθήκευση σημείωσης</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Αποθήκευση τύπου σημείωσης</string>
     <string name="save">Αποθήκευση</string>
     <string name="close">Κλείσιμο</string>
     <string name="select">Επιλέξτε</string>
