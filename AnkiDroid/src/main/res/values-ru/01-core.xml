@@ -267,7 +267,7 @@
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Ваши данные успешно перенесены.
         AnkiDroid теперь полностью готов к работе, и вы можете полноценно использовать синхронизацию.
         \n
-        \Обратите внимание, что ваша коллекция теперь находится в папке, которая автоматически удаляется при удалении приложения.
+        \nОбратите внимание, что ваша коллекция теперь находится в папке, которая автоматически удаляется при удалении приложения.
         Пожалуйста, позаботьтесь о сохранности ваших данных и регулярно синхронизируйте или экспортируйте резервные копии.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Не удалось перенести файлы</string>

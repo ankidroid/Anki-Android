@@ -97,7 +97,7 @@
     <string name="custom_study_new_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_rev_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_forgotten">過去 x 日以内に忘却したカードを復習する</string>
-    <string name="custom_study_ahead">先取りする日数</string>
+    <string name="custom_study_ahead">先取りする範囲（日数）</string>
     <string name="custom_study_random">デッキからランダムに x 枚のカードを抽出する</string>
     <string name="custom_study_preview">過去 x 日間に追加された新規カードをプレビュー</string>
     <string name="custom_study_rebuild_deck_corrupt">カスタムデッキを再構築できませんでした</string>

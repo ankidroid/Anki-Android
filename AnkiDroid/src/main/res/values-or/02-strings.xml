@@ -98,7 +98,7 @@
         <item>ସହଜତା</item>
         <item>ବାକି</item>
         <item>ପତ୍ର ସଂଶୋଧିତ</item>
-        <item>ସୃଷ୍ଟି ହୋଇଛି</item>
+        <item>ତିଆରି କରାଯାଇଅଛି</item>
         <item>ନୋଟ୍ ସଂଶୋଧିତ</item>
     </string-array>
     <!-- Filter Sheet -->
@@ -331,7 +331,7 @@
     <string name="note_editor_toolbar_icon">ବଟନ୍ ର ନା‍ଁ</string>
     <string name="before_text">ଚୟନ ପୂର୍ବର HTML</string>
     <string name="after_text">ଚୟନ ପରେ HTML</string>
-    <string name="add_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="add_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ସୃଷ୍ଟି କରିବା</string>
     <string name="edit_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକା ସମ୍ପାଦନା</string>
     <string name="toolbar_item_explain_edit_or_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବା ଲାଗି HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ କୁ ସମ୍ପାଦନ ବା ହଟାଇବା ପାଇଁ ତା\' ଉପରେ ଲମ୍ବା ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="remove_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ହଟାଇବେ?</string>
@@ -402,7 +402,7 @@
     <string name="already_logged_in">ଆଗରୁ ଲଗ୍ ଇନ୍ କରିସାରିଛନ୍ତି</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">ତାସଖଣ୍ଡଟି ଵିଦ୍ୟମାନ ଅଛି</string>
-    <string name="deck_created">Deck created</string>
+    <string name="deck_created">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରାଗଲା</string>
     <string name="deck_renamed">ତାସଖଣ୍ଡ ନାମ ବଦଳାଗଲା</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>

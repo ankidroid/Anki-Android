@@ -130,8 +130,8 @@
     <string name="menu_mark_note">ନୋଟ ଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_unmark_note">ନୋଟ ଅଣଚିନ୍ହିତ କରନ୍ତୁ</string>
     <string name="menu_toggle_mic_tool_bar">ଉଚ୍ଚାରଣ ଯାଞ୍ଚ କରନ୍ତୁ</string>
-    <string name="new_deck">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରନ୍ତୁ</string>
-    <string name="new_dynamic_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="new_deck">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିବା</string>
+    <string name="new_dynamic_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିବା</string>
     <string name="directory_inaccessible">AnkiDroid directory ଅପ୍ରବେଶନୀୟ ଅଟେ</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
@@ -158,7 +158,7 @@
     <string name="rebuild_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡର ପୁନଃନିର୍ମାଣ&#8230;</string>
     <string name="rebuild_cram_label">ପୁନଃନିର୍ମାଣ</string>
     <string name="empty_cram_label">ଖାଲି</string>
-    <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ନିର୍ମାଣ</string>
+    <string name="create_subdeck">ଉପତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିବା</string>
     <string name="empty_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡ ଖାଲି ହଉଛି&#8230;</string>
     <string name="custom_study_deck_name">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ଅଧିବେଶନ</string>
     <string name="custom_study_deck_exists">ପ୍ରଥମେ ଵିଦ୍ୟମାନ କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ର ନାମ ବଦଳାନ୍ତୁ</string>
@@ -242,7 +242,7 @@
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s ନକଲ</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">%s ଫାଇଲ୍‌ରେ ଲେଖିହେଉନି କିମ୍ୱା ସୃଷ୍ଟି କରିହେଉନି</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Migrating data</string>
     <string name="migration__calculating_transfer_size">ଅନ୍ତରଣ ଆକାର ଗଣନା ଚାଲିଛି&#8230;</string>
@@ -269,6 +269,6 @@
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
     <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
+    <string name="create_new_collection">ଗୋଟେ ନୂଆ ସଂଗ୍ରହ ସୃଷ୍ଟି କରିବା</string>
     <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
 </resources>

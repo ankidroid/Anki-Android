@@ -45,7 +45,7 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Periksa pangkalan data?</string>
-    <string name="check_db_warning">Ini mungkin mengambil waktu yang lama</string>
+    <string name="check_db_warning">Mungkin mengambil masa lama</string>
     <string name="check_db_acknowledge">Pangkalan data telah diperiksa</string>
     <string name="check_db_acknowledge_shrunk">Pangkalan data telah diperiksa dan dioptimumkan.\nKecilkan sebanyak %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Padam dek</string>
@@ -54,7 +54,7 @@
     <plurals name="delete_deck_message">
         <item quantity="other">Padam semua kad dalam %1$s? Ia mengandungi %2$d kad.</item>
     </plurals>
-    <string name="delete_cram_deck_message">Hantar semua kad dalam %s kembali kepada dek-dek asal?</string>
+    <string name="delete_cram_deck_message">Hantar semua kad dalam %s kembali ke dek-dek asal?</string>
     <string name="no_tts_available_message">Tidak ada teks-untuk-ucapan bahasa yang tersedia</string>
     <string name="initializing_tts">Memulakan TTS&#8230;</string>
     <string name="tts_no_tts">Jangan bercakap</string>
@@ -67,7 +67,7 @@
         <item quantity="other">%d kad telah alih posisi</item>
     </plurals>
     <string name="reset_card_dialog_title">Set semula kemajuan kad</string>
-    <string name="reset_card_dialog_message">Kartu ini akan diletakkan pada akhir yang baru kad barisan</string>
+    <string name="reset_card_dialog_message">Kad ini akan diletakkan pada hujung aturan kad baru</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d kad diset semula</item>
     </plurals>
@@ -90,8 +90,8 @@
     <string name="answering_error_report">Lapor ralat</string>
     <string name="storage_full_message">Kehabisan ruang storan kosong untuk membuka AnkiDroid. Kosongkan sedikit ruang untuk teruskan. </string>
     <string name="repair_deck_dialog">Apakah anda benar-benar ingin untuk cuba membaiki pangkalan data?\n\nsebelum memulai usaha, salinan akan diwujudkan dalam subfolder \"%s\".</string>
-    <string name="intent_aedict_empty">Kategori “asal” adalah kosong</string>
-    <string name="intent_aedict_category">Untuk menambah kad untuk apa yang anda perlu lakukan membuang semua Nota kategori atau menambah satu yang bernama \"default\"</string>
+    <string name="intent_aedict_empty">Kategori “lalai” kosong</string>
+    <string name="intent_aedict_category">Untuk tambah kad ke AnkiDroid buang semua kategori Notepad atau tambah satu bernama \"default\"</string>
     <string name="custom_study_new_total_new">Kad baru dalam dek: %d</string>
     <string name="custom_study_rev_total_rev">Semakan tunggak dalam dek: %d</string>
     <string name="custom_study_new_extend">Tambahkan/Kurangkan (“-3”) had kad baru hari ini sebanyak</string>
@@ -136,14 +136,14 @@
     <string name="dialog_collection_path_not_dir">Laluan yang telah ditentukan bukan direktori yang sah</string>
     <!-- Media checking -->
     <string name="check_media_title">Periksa media?</string>
-    <string name="check_media_warning">Ini mungkin mengambil masa lama dengan koleksi media besar</string>
+    <string name="check_media_warning">Mungkin mengambil masa lama dengan koleksi media besar</string>
     <string name="check_media_message">Memeriksa media&#8230;</string>
     <string name="check_media_acknowledge">Media telah diperiksa</string>
     <string name="check_media_failed">Periksa media gagal</string>
     <string name="check_media_invalid">Fail dengan pengekodan tidak sah: %d</string>
     <string name="check_media_unused">Fail-fail dalam folder media namun tidak digunakan oleh mana-mana kad: %d</string>
     <string name="check_media_nohave">Fail-fail digunakan pada kad namun bukan dalam folder media: %d</string>
-    <string name="check_media_no_unused_missing">Tiada fail yang tidak digunakan or hilang dikenal pasti</string>
+    <string name="check_media_no_unused_missing">Tiada fail tidak digunakan or hilang dijumpai</string>
     <string name="check_media_db_updated">Pangkalan data media telah dibina semula</string>
     <string name="check_media_delete_unused">Padam yang tidak digunakan</string>
     <string name="delete_media_message">Memadam media&#8230;</string>
@@ -170,7 +170,7 @@
     <string name="mutimedia_editor_assertion_failed">Ralat tidak diketahui berlaku semasa memaparkan Penyunting Lanjut</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Dinaik Taraf</string>
-    <string name="integrity_check_startup_content">AnkiDroid telah dinaik taraf. Naik taraf ini mungkin termasuk pembaikan untuk kesulitan pangkalan data, dan kami nasihatkan anda menjalankan periksa pangkalan data sekarang.</string>
+    <string name="integrity_check_startup_content">AnkiDroid telah dinaik taraf. Naik taraf ini mungkin termasuk pembaikan kesulitan pangkalan data, dan kami nasihatkan anda menjalankan periksa pangkalan data sekarang.</string>
     <string name="integrity_check_continue_anyway">Teruskan Juga</string>
     <string name="integrity_check_insufficient_space">Periksa Pangkalan Data menggunakan storan sementara yang besar.\n\nSangat digalakkan anda sekurang-kurangnya mempunyai %s ruang kosong pada peranti anda dahulu.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAnda kini mempunyai %s ruang kosong.</string>
@@ -255,12 +255,12 @@
     <string name="backup_your_collection">Backup your collection</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
     <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="button_disable_reminder">Lumpuhkan peringatan</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
     <string name="dismiss_backup_warning_title">Data loss warning</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        Akibat perubahan privasi Android, data anda dan sandaran automatik tidak akan dapat dicapai jika aplikasi dinyahpasang
     </string>
 </resources>
