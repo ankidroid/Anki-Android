@@ -161,7 +161,7 @@
     <string name="create_subdeck">Criar sub-baralho</string>
     <string name="empty_filtered_deck">Esvaziando baralho filtrado&#8230;</string>
     <string name="custom_study_deck_name">Sessão de estudo personalizado</string>
-    <string name="custom_study_deck_exists">Por favor renomeie o baralho de estudo personalizado existente primeiro</string>
+    <string name="custom_study_deck_exists">Renomeie o baralho de estudo personalizado existente primeiro</string>
     <string name="empty_deck">Este baralho está vazio</string>
     <string name="search_deck" comment="Deck search for selecting it">Pesquisar baralho</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pesquisar baralho</string>

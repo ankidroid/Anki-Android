@@ -190,7 +190,7 @@
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="pref_keep_screen_on" maxLength="41">ସ୍କ୍ରୀନ୍ ସଚଳ ରଖିବା</string>
     <string name="pref_keep_screen_on_summ">ସ୍କ୍ରୀନ୍ ସମୟ-ସମାପ୍ତି ଅକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="convert_fen_text" maxLength="41">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ </string>
+    <string name="convert_fen_text" maxLength="41">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ</string>
     <string name="convert_fen_text_summ">Forsyth–Edwards ଅଙ୍କନରୁ ଚେସବୋର୍ଡ ଅଙ୍କନ କର। ଅଙ୍କନ ନିଶ୍ଚିତ ଭାବରେ [fen][/fen] ଟ୍ୟାଗରେ ଆବଦ୍ଧ ହେବା ଆବଶ୍ୟକ।</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="enable_api_summary">ଅନ୍ୟ ଆପସ୍ କୁ AnkiDroid ସହିତ ସଂଯୋଗ କରି ଆପଣଙ୍କ ହସ୍ତକ୍ଷେପ ବିନା ତଥ୍ୟ ପଢ଼ିବା/ଲେଖିବାକୁ ଦିଅନ୍ତୁ</string>
@@ -352,7 +352,7 @@
     <string name="experimental_pref_confirmation" maxLength="41">‘%s’ ସକ୍ଷମ କରିବା</string>
     <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ଵ୍ୟଵହାର କରିବା</string>
     <string name="use_rust_backend_summary">ନୂଆ Anki ଵୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ ସକ୍ଷମ କରେ, ଯେପରିକି v3 scheduler\nଅସ୍ଥିର ଅଟେ। ଆପଣଙ୍କ କୌଣସି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ସଂଗ୍ରହ ଉପରେ ଵ୍ୟଵହାର କରନ୍ତୁନି। ଆପ୍ ବନ୍ଦ କଲେ ପ୍ରତ୍ୟାଵର୍ତ୍ତନ ହୁଏନାହିଁ</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="use_rust_backend_warning">ଏମିତି ବି ସମ୍ଭାଵନା ଅଛି ଯେ ଏହା ଆପଣଙ୍କ ଅଧିସ୍ଥାପନକୁ ସମ୍ପୂର୍ଣ୍ଣ ଭାଵରେ ଦୁର୍ନୀତିଗ୍ରସ୍ତ କରି ଛାଡ଼ିଦେବ, ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ଓ AnkiDroid ଫୋଲ୍ଡରକୁ ଵିଲୋପ କରିବା ଆଵଶ୍ୟକତା ପଡ଼ିପାରେ, ଆଉ AnkiWebରେ ସୀଙ୍କ୍ ମାଧ୍ୟମରେ ଦୁର୍ନୀତି ପ୍ରଚାର କରିବାର ସୁଯୋଗ ରହିଛି।\n\nଆମେ ପରୀକ୍ଷଣକୁ ସ୍ୱାଗତ କରୁ, କିନ୍ତୁ ଦୟାକରି ସୁନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ପାଖରେ ଏକ ଵୈଧ ଅଣ-AnkiWeb ବ୍ୟାକଅପ୍ ଅଛି।</string>
     <string name="enable_v3_sched_title" maxLength="41">v3 ଅନୁସୂଚକ ଵ୍ୟଵହାର କରିବା</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ଵିକଳ୍ପ</string>

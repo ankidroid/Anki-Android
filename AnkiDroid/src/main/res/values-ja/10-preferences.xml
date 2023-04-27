@@ -181,7 +181,7 @@
     <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの追加先デッキ</string>
     <string name="new_spread" maxLength="41">新規カードの位置</string>
-    <string name="learn_cutoff" maxLength="41">習得ステップの前倒しの限度</string>
+    <string name="learn_cutoff" maxLength="41">習得学習の先取りの限度</string>
     <string name="time_limit" maxLength="41">タイムボックスの時間枠</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>

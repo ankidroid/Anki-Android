@@ -353,7 +353,7 @@
     <string name="home">首页</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">埋葬卡片</string>
+    <string name="card_buried">卡片暫時隱藏。</string>
     <plurals name="note_suspended">
         <item quantity="other">%d cards suspended.</item>
     </plurals>

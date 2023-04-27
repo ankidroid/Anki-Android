@@ -44,54 +44,54 @@
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
     <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_never_report">کبھی رپورٹ نہ کریں</string>
+    <string name="error_reporting_choice_ask_user">مجھ سے پوچھیں</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tag only</string>
+    <string name="leech_action_tag_only">صرف ٹیگ کریں</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">New cards in random order</string>
-    <string name="new_order_order_added">New cards in order added</string>
+    <string name="new_order_random">بے ترتیب میں نئے کارڈ</string>
+    <string name="new_order_order_added">ترتیب میں نئے کارڈز شامل کیے گئے</string>
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">سب سے پرانا پہلے دیکھا گیا۔</string>
+    <string name="cram_deck_conf_order_random">بے ترتیب</string>
+    <string name="cram_deck_conf_order_increasing_intervals">وقفوں میں اضافہ</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">وقفوں کو کم کرنا</string>
+    <string name="cram_deck_conf_order_most_lapsed">زیادہ تر لیپس</string>
+    <string name="cram_deck_conf_order_order_added">آرڈر شامل کیا گیا۔</string>
+    <string name="cram_deck_conf_order_order_due">آرڈر واجب الادا</string>
+    <string name="cram_deck_conf_order_latest_added_first">تازہ ترین پہلے شامل کیا گیا</string>
+    <string name="cram_deck_conf_order_relative_overdueness">نسبتاً زائد المیعاد</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
+    <string name="add_to_deck_use_current_deck">موجودہ ڈیک استعمال کریں</string>
+    <string name="add_to_deck_decide_by_note_type">نوٹ کی قسم کے مطابق فیصلہ کریں</string>
     <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mix new cards and reviews</string>
-    <string name="new_spread_new_after_review">New cards after reviews</string>
-    <string name="new_spread_new_before_review">New cards before reviews</string>
+    <string name="new_spread_mix_new_and_review">نئے کارڈز اور تجزیوں کو مکس کریں</string>
+    <string name="new_spread_new_after_review">جائزوں کے بعد نئے کارڈز</string>
+    <string name="new_spread_new_before_review">جائزوں سے پہلے نئے کارڈز</string>
     <!-- override_font_labels -->
-    <string name="override_font_if_missing">When no font specified on flashcards</string>
-    <string name="override_font_always" comment="Option to always override font">Always</string>
+    <string name="override_font_if_missing">جب فلیش کارڈز پر کوئی فونٹ متعین نہ ہو</string>
+    <string name="override_font_always" comment="Option to always override font">ہمیشہ</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">سسٹم پر عمل کریں۔</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_light">روشنی</string>
+    <string name="day_theme_plain">سادہ</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">سیاہ</string>
+    <string name="night_theme_dark">اندھیرا</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">xx-چھوٹا</string>
+    <string name="html_size_code_x_small">x-چھوٹا</string>
+    <string name="html_size_code_small">چھوٹا</string>
+    <string name="html_size_code_medium">درمیانہ</string>
+    <string name="html_size_code_large">بڑا</string>
+    <string name="html_size_code_x_large">x-بڑا</string>
+    <string name="html_size_code_xx_large">xx-بڑا</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Answer button 1</string>
-    <string name="gesture_answer_2">Answer button 2</string>
-    <string name="gesture_answer_3">Answer button 3</string>
+    <string name="gesture_answer_1">جواب بٹن ایک</string>
+    <string name="gesture_answer_2">جواب بٹن دو</string>
+    <string name="gesture_answer_3">جواب بٹن تین</string>
     <string name="gesture_answer_4">Answer button 4</string>
     <string name="gesture_answer_green">Answer recommended (green)</string>
     <string name="gesture_answer_better_recommended">Answer better than recommended</string>
