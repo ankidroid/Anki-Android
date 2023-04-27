@@ -134,10 +134,10 @@ private suspend fun Context.getUserDataAndCacheSizeUsingGetPackageSizeInfo(): Lo
 fun File.isInsideDirectoriesRemovedWithTheApp(context: Context): Boolean {
     infix fun File.isInsideOf(parent: File) = this.canonicalFile.startsWith(parent.canonicalFile)
 
-    return context.getExternalFilesDirs(null).any { this isInsideOf it } ||
-        context.externalCacheDirs.any { this isInsideOf it } ||
-        context.externalMediaDirs.any { this isInsideOf it } ||
-        context.obbDirs.any { this isInsideOf it } ||
+    return context.getExternalFilesDirs(null).filterNotNull().any { this isInsideOf it } ||
+        context.externalCacheDirs.filterNotNull().any { this isInsideOf it } ||
+        context.externalMediaDirs.filterNotNull().any { this isInsideOf it } ||
+        context.obbDirs.filterNotNull().any { this isInsideOf it } ||
         context.externalDirs.any { this isInsideOf it }
 }
 
@@ -149,6 +149,7 @@ fun File.isInsideDirectoriesRemovedWithTheApp(context: Context): Boolean {
  */
 private val Context.externalDirs: Set<File> get() =
     (getExternalFilesDirs(null) + externalCacheDirs)
+        .filterNotNull()
         .mapNotNullTo(mutableSetOf()) { externalFilesOrCacheDir ->
             externalFilesOrCacheDir.parentFile?.let { parentDir ->
                 if (parentDir.name == packageName) parentDir else null
