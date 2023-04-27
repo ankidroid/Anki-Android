@@ -20,8 +20,6 @@ import com.ichi2.utils.TagsUtil.getTagAncestors
 import com.ichi2.utils.TagsUtil.getTagRoot
 import com.ichi2.utils.UniqueArrayList
 import com.ichi2.utils.UniqueArrayList.Companion.from
-import org.apache.commons.collections4.CollectionUtils.addAll
-import org.slf4j.MDC.clear
 import java.util.*
 
 /**
