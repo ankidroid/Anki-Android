@@ -39,6 +39,7 @@ import android.widget.*
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
@@ -614,11 +615,6 @@ open class DeckPicker :
      * TODO Investigate whether we can stop recreating the menu,
      *   relying instead on modifying it directly and/or using [onPrepareOptionsMenu].
      *   Note an issue with the latter: https://github.com/ankidroid/Anki-Android/issues/7755
-     *
-     * TODO BEFORE-RELEASE Add tooltip text to the image button.
-     *   Menu items normally have titles that are shown on long tap.
-     *   As this menu item delegates the UI to the action view, it is up to that to handle presses.
-     *   When we decide on the text, use `TooltipCompat.setTooltipText` on the button to set it.
      */
     private fun setupMigrationProgressMenuItem(menu: Menu, migrationInProgress: Boolean) {
         val migrationProgressMenuItem = menu.findItem(R.id.action_migration_progress)
@@ -652,8 +648,10 @@ open class DeckPicker :
                     .findViewById<CircularProgressIndicator>(R.id.progress_indicator)
                     .apply { max = Int.MAX_VALUE }
 
-                actionView.findViewById<ImageButton>(R.id.button)
-                    .setOnClickListener { warnNoSyncDuringMigration() }
+                actionView.findViewById<ImageButton>(R.id.button).also { button ->
+                    button.setOnClickListener { warnNoSyncDuringMigration() }
+                    TooltipCompat.setTooltipText(button, getText(R.string.show_migration_progress))
+                }
 
                 migrationProgressPublishingJob = lifecycleScope.launch {
                     withBoundTo<MigrationService> { service ->
