@@ -321,6 +321,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Carrigamentu de su matzu ‘%s’ fallidu</string>
     <string name="search_decks">Chirca matzos</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Faddina fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid si basat in subrade sa WebView de sistema chi no est a disponimentu. Custu podet acontèssere si su sistema est installende atualizatziones. Torra a proare a pustis de una paja de minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
