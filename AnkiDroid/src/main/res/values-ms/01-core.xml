@@ -104,10 +104,10 @@
     <string name="menu_dismiss_note">Sorok / padam</string>
     <string name="menu_bury_card">Sorok kad</string>
     <string name="menu_bury_note">Sorok nota</string>
-    <string name="menu_suspend_card">Gantung kad</string>
-    <string name="menu_suspend_note">Gantung nota</string>
+    <string name="menu_suspend_card">Bekukan kad</string>
+    <string name="menu_suspend_note">Bekukan nota</string>
     <string name="menu_bury">Sorok</string>
-    <string name="menu_suspend">Gantung</string>
+    <string name="menu_suspend">Bekukan</string>
     <string name="menu_delete_note">Padam nota</string>
     <string name="menu_flag">Tanda</string>
     <string name="menu_flag_card">Tanda kad</string>

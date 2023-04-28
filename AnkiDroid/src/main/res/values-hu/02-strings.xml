@@ -315,6 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">A(z) \'%s\' pakli betöltése nem sikerült</string>
     <string name="search_decks">Keresés a paklikban</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Végzetes hiba</string>
     <string name="ankidroid_init_failed_webview">Az AnkiDroid a System WebView-t használja, ami jelenleg nem elérhető. Lehetséges, hogy a rendszer frissítéseket telepít. Próbáld újra pár perc múlva.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->

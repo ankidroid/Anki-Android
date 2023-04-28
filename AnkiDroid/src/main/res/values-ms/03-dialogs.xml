@@ -166,7 +166,7 @@
     <string name="multimedia_editor_camera_permission_refused">Tidak dapat memperoleh kebenaran kamera. Fungsinya telah dilumpuhkan.</string>
     <string name="multimedia_editor_failed">Gagal membuka Penyunting Multimedia</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Kebenaran merekod audio ditolak</string>
+    <string name="multimedia_editor_audio_permission_denied">Kebenaran rakam audio ditolak</string>
     <string name="mutimedia_editor_assertion_failed">Ralat tidak diketahui berlaku semasa memaparkan Penyunting Lanjutan</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroid Dinaik Taraf</string>
@@ -245,7 +245,7 @@
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Buka halaman tinjauan keseluruhan dek yang mengandungi bilangan kad untuk lihat hari ini.</string>
+    <string name="deck_picker_counts">Buka halaman ringkasan dek yang mengandungi bilangan kad untuk lihat hari ini.</string>
     <string name="import_deck_package">Pakej Dek (.apkg)</string>
     <string name="import_collection_package">Pakej koleksi (.colpkg)</string>
     <string name="import_csv">Fail teks (.txt, .csv)</string>

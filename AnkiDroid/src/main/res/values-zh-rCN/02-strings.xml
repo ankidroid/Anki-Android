@@ -302,6 +302,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">加载牌组“%s”失败</string>
     <string name="search_decks">搜索牌组</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">严重错误</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid 依赖的系统 WebView 不可用。如果系统正在安装更新，可能会发生这种情况。请几分钟后再试。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->

@@ -91,7 +91,7 @@
     <string name="sync_deletions_message">Menyegerakkan padaman&#8230;</string>
     <string name="sync_small_objects_message">Menyegerakkan benda kecil&#8230;</string>
     <string name="sync_finish_message">Menyelesaikan penyegerakan&#8230;</string>
-    <string name="sync_log_finish_error">Error while sending finish direction to server</string>
+    <string name="sync_log_finish_error">Ralat ketika menghantar arahan selesai ke pelayan</string>
     <string name="sync_writing_db">Menulis perubahan dalam pangkalan data&#8230;</string>
     <string name="sync_download_chunk">Memuat turun perubahan&#8230;</string>
     <string name="sync_upload_chunk">Memuat naik perubahan&#8230;</string>

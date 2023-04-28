@@ -315,6 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">डेक ‘%s’ लोड करण्यात अयशस्वी</string>
     <string name="search_decks">शोध डेक</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">गंभीर त्रुटी</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid अनुपलब्ध सिस्टम वेब दृश्यावर अवलंबून आहे. सिस्टम अद्यतने स्थापित करीत असल्यास हे होऊ शकते. कृपया काही मिनिटांत पुन्हा प्रयत्न करा.. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->

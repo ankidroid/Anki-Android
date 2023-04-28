@@ -198,43 +198,43 @@
     <string name="card_template_editor_back">Aizmugures veidne</string>
     <string name="card_template_editor_styling">Izskata veidošana</string>
     <string name="card_template_editor_menu_card_browser_appearance">Kāršu pārlūka izskats</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
-    <string name="card_template_editor_cant_delete">At least one card type is required</string>
+    <string name="card_template_editor_deck_override">Kavas izvēle</string>
+    <string name="card_template_editor_insert_field">Pievienot lauku</string>
+    <string name="card_template_editor_select_field">Atlasīt lauciņu</string>
+    <string name="card_template_editor_cant_delete">Vismaz viens veids nepieciešams</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="zero">This will create %1$d cards. Proceed?</item>
-        <item quantity="one">This will create %1$d card. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="zero">Izveidos %1$d kārtis. Turpināt?</item>
+        <item quantity="one">Izveidos %1$d kārti. Turpināt?</item>
+        <item quantity="other">Izveidos %1$d kārtis. Turpināt?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="zero">Delete the “%2$s” card type, and its %1$d cards?</item>
-        <item quantity="one">Delete the “%2$s” card type, and its %1$d card?</item>
-        <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
+        <item quantity="zero">Izdzēst “%2$s” veidu un tā %1$d kārtis?</item>
+        <item quantity="one">Izdzēst “%2$s” veidu un tā %1$d kārti?</item>
+        <item quantity="other">Izdzēst “%2$s” veidu un tā %1$d kārtis?</item>
     </plurals>
-    <string name="invalid_template">A card could not be generated</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
-    <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
+    <string name="invalid_template">Neizdevās izveidot</string>
+    <string name="card_template_editor_would_delete_note">Izdzēšot šo kāršu veidu, daži raksti var tikt dzēsti līdzi. Lūdzu, vispirms izveidojiet jaunu kāršu veidu.</string>
+    <string name="card_template_editor_save_error">Neizdevās saglabāt veidnes izmaiņas: %s</string>
+    <string name="template_for_current_card_deleted">Šīs kārts veids tika izdzēsts</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">Browser appearance</string>
+    <string name="card_template_browser_appearance_title">Pārlūka izskats</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">kārts apkopojums</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
-    <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
+    <string name="read_write_permission_label">Lasīt un rakstīt AnkiDroid datubāzei</string>
+    <string name="read_write_permission_description">Piekļūt esošajiem rakstiem, kārtīm, veidiem un kavām, kā arī veidot jaunas</string>
     <!-- Context Menu -->
-    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kāršu pārlūks</string>
+    <string name="context_menu_anki_card_label">Anki kārts</string>
+    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s: atradās kļūda:<br/>%2$s</string>
+    <string name="more_information">Papildus infórmācija</string>
+    <string name="no_field">\'{{%1$s}}\' atrasts, bet lauciņš \'%1$s\' nepastāv.</string>
+    <string name="closed_tag_not_open">\'{{/%1$s}}\' atrasts, bet \'{{#%1$s}}\' vai \'{{^%1$s}}\' trūkst.</string>
+    <string name="missing_closing_bracket">\'%s\': trūkst \'}}\'.</string>
+    <string name="open_tag_not_closed">Trūkst \'{{%s}}\'.</string>
+    <string name="wrong_tag_closed">\'{{/%1$s}}\' atrasts, bet gaidīts \'{{/%2$s}}\' </string>
+    <string name="filter_error">Kļūda filtrā %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
