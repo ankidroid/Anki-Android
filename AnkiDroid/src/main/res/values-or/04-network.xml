@@ -56,7 +56,7 @@
     <string name="login_create_account_message">କ୍ଲାଉଡ୍ ସିଙ୍କ୍ ସେଵା ଵ୍ୟଵହାର କରିବାକୁ ଆପଣ ଏକ ତୃତୀୟ ପକ୍ଷ ଆକାଉଣ୍ଟକୁ ଲଗ୍ ଇନ୍ କରିନେବା ଆଵଶ୍ୟକ। ଆପଣ ପରଵର୍ତ୍ତୀ ପଦକ୍ଷେପରେ ଗୋଟିଏ ସୃଷ୍ଟି କରିପାରିବେ।</string>
     <!-- MyAccount.kt -->
     <string name="username">ଇମେଲ୍ ଠିକଣା</string>
-    <string name="password">ପାସ୍‍ୱର୍ଡ଼</string>
+    <string name="password">ପାସ୍‌ୱର୍ଡ଼</string>
     <string name="log_in">ଲଗ୍‌ ଇନ୍‌</string>
     <string name="sign_up_description">AnkiWeb ଖାତା ନାହିଁ କି? ଏହା ମାଗଣା ଅଟେ!</string>
     <string name="sign_up_not_affiliated">ସୂଚନା: AnkiWeb AnkiDroid ସହିତ ଜଡ଼ିତ ନୁହେଁ</string>
@@ -64,8 +64,8 @@
     <string name="logged_as">ଭାବେ ଲଗ୍ ଇନ୍ କରିଛନ୍ତି </string>
     <string name="log_out">ଲଗ୍ ଆଉଟ୍</string>
     <string name="alert_logging_message">ଲଗ୍ ହେଉଛି&#8230;</string>
-    <string name="invalid_username_password">ଅଵୈଧ ଇମେଲ୍ ଠିକଣା କିମ୍ବା ପାସ୍‍ୱର୍ଡ଼</string>
-    <string name="reset_password">ପାସ୍‍ୱର୍ଡ଼ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="invalid_username_password">ଅଵୈଧ ଇମେଲ୍ ଠିକଣା କିମ୍ବା ପାସ୍‌ୱର୍ଡ଼</string>
+    <string name="reset_password">ପାସ୍‌ୱର୍ଡ଼ ପୁନଃସେଟ୍ କର</string>
     <string name="lost_mail_instructions">ଇମେଲ୍ ଭୁଲିଗଲେ କି?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>

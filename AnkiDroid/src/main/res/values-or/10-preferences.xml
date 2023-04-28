@@ -79,12 +79,12 @@
     <string name="image_zoom" maxLength="41">ଛବି ଜୁମ୍</string>
     <string name="button_size" maxLength="41">ଉତ୍ତର ବଟନ ଆକାର</string>
     <string name="card_browser_font_size" maxLength="41">ପତ୍ର ବ୍ରାଉଜର୍ ଫଣ୍ଟ ସ୍କେଲିଂ</string>
-    <string name="card_browser_hide_media" maxLength="41">ପତ୍ର ବ୍ରାଉଜରରେ ଫାଇଲନାମ ଗୁଡ଼ିକୁ ଦର୍ଶାନ୍ତୁ</string>
-    <string name="card_browser_hide_media_summary">ପତ୍ର ବ୍ରାଉଜରର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍ ନାମ ଦର୍ଶାନ୍ତୁ</string>
+    <string name="card_browser_hide_media" maxLength="41">ପତ୍ର ବ୍ରାଉଜର୍‌ର ଫାଇଲ୍‌ନାମ ସବୁ ଦର୍ଶାଇବା</string>
+    <string name="card_browser_hide_media_summary">ପତ୍ର ବ୍ରାଉଜର୍‌ର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍‌ନାମ ସବୁ ଦର୍ଶାଇବା</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
     <string name="fullscreen_review" maxLength="41">ପୂର୍ଣ୍ଣସ୍କ୍ରୀନ୍ ମୋଡ୍</string>
     <string name="full_screen_off">ବନ୍ଦ</string>
-    <string name="full_screen_system">ସିଷ୍ଟମ୍ ବାରଗୁଡିକ ଲୁଚାନ୍ତୁ</string>
+    <string name="full_screen_system">ସିଷ୍ଟମ୍ ଦଣ୍ଡିକାଗୁଡ଼ିକ ଲୁଚାଇବା</string>
     <string name="full_screen_complete">ସିଷ୍ଟମ୍ ଦଣ୍ଡିକା ଏଵଂ ଉତ୍ତର ବଟନ୍ ଲୁଚାଇବା</string>
     <string name="answer_buttons_position" maxLength="41">ଉତ୍ତର ବଟନ୍ ଅଵସ୍ଥାନ</string>
     <string-array name="answer_buttons_position_labels">
@@ -97,7 +97,7 @@
     <string name="gestures_corner_touch" maxLength="41">୯-ଅଙ୍କ ସ୍ପର୍ଶ</string>
     <string name="gestures_corner_touch_summary">ସ୍କ୍ରୀନ୍ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">ପୂର୍ଣ୍ଣ ସ୍କ୍ରୀନ୍ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">ସ୍କ୍ରୀନ୍‍ର ଯେକୌଣସି ସ୍ଥାନରୁ ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରିବା ମାତ୍ରେ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍ ଖୋଲନ୍ତୁ</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">ସ୍କ୍ରୀନ୍‌ର ଯେକୌଣସି ସ୍ଥାନରୁ ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରିବା ମାତ୍ରେ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍ ଖୋଲନ୍ତୁ</string>
     <string name="gestures_none" maxLength="41">None</string>
     <string name="gestures_swipe_up" maxLength="41">ଉପରକୁ ସ୍ଵାଇପ୍ କଲେ</string>
     <string name="gestures_swipe_down" maxLength="41">ତଳକୁ ସ୍ଵାଇପ୍ କଲେ</string>
@@ -115,7 +115,7 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ତଳ ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">ସ୍କ୍ରୋଲିଂରେ kanji/katakana, emoji/kao-moji ବଟନ୍‍ଗୁଡ଼ିକ ମଧ୍ୟ ଵ୍ୟଵହାର କରିବା</string>
+    <string name="more_scrolling_buttons_summ">ସ୍କ୍ରୋଲିଂରେ kanji/katakana, emoji/kao-moji ବଟନ୍‌ଗୁଡ଼ିକ ମଧ୍ୟ ଵ୍ୟଵହାର କରିବା</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ ମେନୁ</string>
     <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ</string>
     <string name="double_scrolling_gap" maxLength="41">ଦ୍ୱିଗୁଣ ସ୍କ୍ରୋଲିଂ</string>
@@ -128,7 +128,7 @@
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="automatic_sync_choice" maxLength="41">ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
-    <string name="automatic_sync_choice_summ">ଯଦି ଗତ ସୀଙ୍କ୍ ୧୦ ମିନିଟ୍‍ରୁ ଅଧିକ ଆଗରୁ ହୋଇଥିଲା ତେବେ ଆପ୍ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱଚାଳିତ ଭାଵେ ସୀଙ୍କ୍ କରିବା।</string>
+    <string name="automatic_sync_choice_summ">ଯଦି ଗତ ସୀଙ୍କ୍ ୧୦ ମିନିଟ୍‌ରୁ ଅଧିକ ଆଗରୁ ହୋଇଥିଲା ତେବେ ଆପ୍ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱଚାଳିତ ଭାଵେ ସୀଙ୍କ୍ କରିବା।</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">ସର୍ଵଦା</string>
     <string name="sync_media_only_unmetered">କେଵଳ ମିଟର୍ ନଥିବା ସଂଯୋଜନାଗୁଡ଼ିକରେ</string>
     <string name="sync_media_never">କଦାପି ନୁହେଁ</string>
@@ -170,7 +170,7 @@
     <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ (ମିଲିସେକେଣ୍ଡ)</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
     <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାଇବା</string>
-    <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍‍ଗୁଡ଼ିକରେ ପରଵର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦର୍ଶାଇବା</string>
+    <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍‌ଗୁଡ଼ିକରେ ପରଵର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦର୍ଶାଇବା</string>
     <string name="show_large_answer_buttons" maxLength="41">ବଡ଼ ଉତ୍ତର ବଟନ୍ ଦେଖାଇବା</string>
     <string name="show_large_answer_buttons_summ">୨ଟି ଧାଡ଼ିରେ ଉତ୍ତର ବଟନ୍ ଦେଖାଇବା</string>
     <string name="show_top_bar" maxLength="41">ଶୀର୍ଷ ଦଣ୍ଡିକା ଦେଖାଇବା</string>

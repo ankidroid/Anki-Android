@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</string>
     <string name="override_font_always" comment="Option to always override font">ସର୍ଵଦା</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">ସିଷ୍ଟମ୍‍କୁ ଅନୁସରଣ କରିବା</string>
+    <string name="theme_follow_system">ସିଷ୍ଟମ୍‌କୁ ଅନୁସରଣ କରିବା</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ହାଲୁକା</string>
     <string name="day_theme_plain">ସାଧା</string>

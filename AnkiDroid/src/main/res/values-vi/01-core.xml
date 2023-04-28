@@ -247,7 +247,7 @@
         Hãy chắc chán rằng dữ liệu của bạn an toàn bằng việc đồng bộ dữ liệu hoặc tạo các bản sao lưu.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Chuyển không thành công</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Chuyển %s không thành công.</string>
+    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Chuyển không thành công: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Di chuyển nơi lưu trữ được tạm dừng sau khi bị lỗi: %1$s.
         <br><br>
         Hãy chạy thử lại quy trình chuyển đổi
