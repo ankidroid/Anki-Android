@@ -52,6 +52,20 @@ import kotlin.properties.ReadOnlyProperty
  * A foreground service responsible for migrating the collection
  * from a public directory to an app-private directory.
  *
+ * Notes on behavior:
+ *
+ *   * As the app can be killed at any time, to make sure that the service shows consistent
+ *     progress after it is restarted, we save the initial size of data to be transferred.
+ *     When resuming migration, we can calculate transferred size
+ *     by subtracting the size of remaining data from the stored value.
+ *
+ *   * We are not rate-limiting publication of the notifications in the code,
+ *     as the files do not seem to be transferred so fast as to cause any problems.
+ *     The system performs its own rate-limiting, dropping updates if they are published too quickly.
+ *     An exception is is made for "completed progress notifications". See:
+ *     https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/services/core/java/com/android/server/notification/NotificationManagerService.java
+ *     https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/services/core/java/com/android/server/notification/RateEstimator.java
+ *
  * TODO BEFORE-RELEASE Decide if this needs a wake lock.
  *   Copying files might take a long time.
  *   The user might decide to not use the phone for a while to let the migration run,
