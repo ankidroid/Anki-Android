@@ -91,7 +91,7 @@
     <string name="sync_deletions_message">データの削除を同期しています...</string>
     <string name="sync_small_objects_message">小さなオブジェクトを同期しています...</string>
     <string name="sync_finish_message">同期を終了しています...</string>
-    <string name="sync_log_finish_error">同期終了の指示をAnkiWebに送信中にエラーが発生しました</string>
+    <string name="sync_log_finish_error">同期終了の指示をサーバーへ送信中にエラーが発生しました</string>
     <string name="sync_writing_db">データベースに変更を記録しています...</string>
     <string name="sync_download_chunk">変更内容をダウンロードしています...</string>
     <string name="sync_upload_chunk">変更内容をアップロードしています...</string>

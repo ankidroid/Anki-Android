@@ -43,7 +43,7 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
+    <string name="error_reporting_choice_always_report">ہمیشہ رپورٹ کریں</string>
     <string name="error_reporting_choice_never_report">کبھی رپورٹ نہ کریں</string>
     <string name="error_reporting_choice_ask_user">مجھ سے پوچھیں</string>
     <!-- leech_action_labels -->
@@ -92,26 +92,26 @@
     <string name="gesture_answer_1">جواب بٹن ایک</string>
     <string name="gesture_answer_2">جواب بٹن دو</string>
     <string name="gesture_answer_3">جواب بٹن تین</string>
-    <string name="gesture_answer_4">Answer button 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
+    <string name="gesture_answer_4">جواب بٹن چار</string>
+    <string name="gesture_answer_green">جواب تجویز کیا گیا (سبز)</string>
+    <string name="gesture_answer_better_recommended">تجویز کردہ سے بہتر جواب دیں۔</string>
+    <string name="gesture_play">میڈیا چلائیں۔</string>
+    <string name="gesture_abort_learning">سیکھنے کو روکنا</string>
+    <string name="gesture_flag_red">سرخ پرچم ٹوگل کریں۔</string>
+    <string name="gesture_flag_orange">اورنج فلیگ ٹوگل کریں</string>
+    <string name="gesture_flag_green">سبز پرچم ٹوگل کریں</string>
+    <string name="gesture_flag_blue">بلیو فلیگ ٹوگل کریں</string>
+    <string name="gesture_flag_pink">گلابی پرچم ٹوگل کریں</string>
+    <string name="gesture_flag_turquoise">فیروزی پرچم ٹوگل کریں</string>
+    <string name="gesture_flag_purple">جامنی پرچم کو ٹوگل کریں</string>
+    <string name="gesture_flag_remove">جھنڈا ہٹا دیں</string>
+    <string name="gesture_page_up">صفحہ اوپر</string>
+    <string name="gesture_page_down">نیچے صفحہ</string>
+    <string name="gesture_abort_sync">سیکھنے اور مطابقت پذیری کو ختم کریں۔</string>
+    <string name="gesture_toggle_whiteboard">وائٹ بورڈ کو ٹوگل کریں۔</string>
+    <string name="gesture_show_hint">اشارہ دکھائیں</string>
+    <string name="gesture_show_all_hints">تمام اشارے دکھائیں</string>
+    <string name="record_voice">آواز ریکارڈ کریں</string>
     <string name="replay_voice">Replay Voice</string>
     <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
     <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>

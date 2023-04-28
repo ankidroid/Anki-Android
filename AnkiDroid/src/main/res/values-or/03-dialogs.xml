@@ -193,7 +193,7 @@
     <string name="deck_options_corrupt">ତାସଖଣ୍ଡ ବିକଳ୍ପଗୁଡ଼ିକ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ବିଫଳ : %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">ଡାଟାବେସ୍ ଲକ୍ ହୋଇଛି</string>
-    <string name="database_locked_summary">AnkiDroid ଡାଟାବେସ୍ ଅନ୍ୟ ଏକ ଆପ୍ ଦ୍ୱାରା ଵ୍ୟଵହାର ହେଉଛି। ଦୟାକରି ଅନ୍ୟ ଆପ୍‍ଟିକୁ ବନ୍ଦ କରି AnkiDroid ଖୋଲନ୍ତୁ।</string>
+    <string name="database_locked_summary">AnkiDroid ଡାଟାବେସ୍ ଅନ୍ୟ ଏକ ଆପ୍ ଦ୍ୱାରା ଵ୍ୟଵହାର ହେଉଛି। ଦୟାକରି ଅନ୍ୟ ଆପ୍‌ଟିକୁ ବନ୍ଦ କରି AnkiDroid ଖୋଲନ୍ତୁ।</string>
     <string name="incompatible_database_version_title">ଅସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ </string>
     <string name="incompatible_database_version_summary">AnkiDroid ର ଏହି ସଂସ୍କରଣ ଡାଟାବେସ୍ ସହିତ କାମ କରିପାରିବନାହିଁ। ଏହାକୁ ଖୋଲିବା ପାଇଁ AnkiDroid କୁ ଅଦ୍ୟତନ କରନ୍ତୁ କିମ୍ବା ଡାଟାବେସ୍ କୁ ଡାଉନଗ୍ରେଡ୍ କରନ୍ତୁ\n\nସମର୍ଥିତ ସଂସ୍କରଣ: %1$d\nଡାଟାବେସ୍ ସଂସ୍କରଣ: %2$d\n\nନିମ୍ନଲିଖିତ ପୁନରୁଦ୍ଧାର ବିକଳ୍ପଗୁଡ଼ିକ ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହକୁ ନବଲିଖନ କରିବ, ସମ୍ଭବତଃ ଏକ ସୁସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ ସହିତ:</string>
     <!-- Deck Picker Background-->

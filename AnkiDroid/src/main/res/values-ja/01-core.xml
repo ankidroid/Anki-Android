@@ -73,7 +73,7 @@
     <plurals name="reviewer_window_title_days_new">
         <item quantity="other">残り約%1$d日と%2$d時間</item>
     </plurals>
-    <string name="no_cards_placeholder_title">まだデッキがありません</string>
+    <string name="no_cards_placeholder_title">まだカードがありません</string>
     <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加してください</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
@@ -101,7 +101,7 @@
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
-    <string name="menu_dismiss_note">延期、保留、削除</string>
+    <string name="menu_dismiss_note">非表示 / 削除</string>
     <string name="menu_bury_card">カードを延期</string>
     <string name="menu_bury_note">ノートを延期</string>
     <string name="menu_suspend_card">カードを保留</string>
@@ -160,7 +160,7 @@
     <string name="empty_deck">このデッキにはカードがありません</string>
     <string name="search_deck" comment="Deck search for selecting it">デッキ検索</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">デッキを検索</string>
-    <string name="invalid_deck_name">無効なデッキ名です。</string>
+    <string name="invalid_deck_name">無効なデッキ名です</string>
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
     <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
     <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
@@ -187,10 +187,10 @@
     <string name="card_template_editor_front">表面のテンプレート</string>
     <string name="card_template_editor_back">裏面のテンプレート</string>
     <string name="card_template_editor_styling">書式</string>
-    <string name="card_template_editor_menu_card_browser_appearance">カードの表示設定</string>
-    <string name="card_template_editor_deck_override">デッキの上書き</string>
+    <string name="card_template_editor_menu_card_browser_appearance">カードブラウザー用の表示設定</string>
+    <string name="card_template_editor_deck_override">デッキ選択を上書き</string>
     <string name="card_template_editor_insert_field">フィールドを挿入</string>
-    <string name="card_template_editor_select_field">フィールドを選択</string>
+    <string name="card_template_editor_select_field">挿入するフィールドを選択してください</string>
     <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="other">%1$d 枚のカードを作成します。続行しますか？</item>
@@ -203,7 +203,7 @@
     <string name="card_template_editor_save_error">カードテンプレートの変更を保存できません: %s</string>
     <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">カードの表示設定</string>
+    <string name="card_template_browser_appearance_title">ブラウザー用の表示設定</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">カード情報</string>
