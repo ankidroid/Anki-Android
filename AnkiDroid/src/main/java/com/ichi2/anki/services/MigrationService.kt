@@ -54,6 +54,14 @@ import kotlin.properties.ReadOnlyProperty
  *
  * Notes on behavior:
  *
+ *   * To show a progress bar, we first calculate the total size of the data to be transferred,
+ *     and then, as the files are transferred by recursing into the directories,
+ *     we add the size of each transferred file to a sum of transferred files.
+ *     As the number of files and file sizes can change after the initial calculation,
+ *     we can end up with the final ratio of transferred size to the estimate
+ *     being less or greater to 1. This, however, is very unlikely, so we simply
+ *     make sure than in the UI code transferred size never exceeds the estimate.
+ *
  *   * As the app can be killed at any time, to make sure that the service shows consistent
  *     progress after it is restarted, we save the initial size of data to be transferred.
  *     When resuming migration, we can calculate transferred size
@@ -130,7 +138,12 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
                 migrateUserDataTask.migrateFiles(progressListener = { deltaTransferredBytes ->
                     transferredBytes += deltaTransferredBytes
-                    flowOfProgress.tryEmit(Progress.Transferring(transferredBytes, totalBytesToTransfer))
+                    flowOfProgress.tryEmit(
+                        Progress.Transferring(
+                            transferredBytes = transferredBytes.coerceIn(0, totalBytesToTransfer),
+                            totalBytes = totalBytesToTransfer
+                        )
+                    )
                 })
 
                 // TODO BEFORE-RELEASE Consolidate setting/removing migration-related preferences.
@@ -181,8 +194,6 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
         return START_STICKY
     }
 
-    // TODO BEFORE-RELEASE! Between this call and the subsequent migration
-    //   the contents of the folder can change. This can lead to inconsistent readings in the UI.
     private fun getRemainingTransferSize(task: MigrateUserData): Long {
         val ignoredFiles = MigrateEssentialFiles.iterateEssentialFiles(task.source) +
             File(task.source.directory, MoveConflictedFile.CONFLICT_DIRECTORY)
