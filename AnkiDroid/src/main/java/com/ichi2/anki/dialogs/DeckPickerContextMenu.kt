@@ -123,6 +123,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             DeckPickerContextMenuOption.RENAME_DECK -> {
                 Timber.i("Rename deck selected")
                 (activity as DeckPicker).renameDeckDialog(deckId)
+                (activity as AnkiActivity).dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.EXPORT_DECK -> {
                 Timber.i("Export deck selected")
@@ -147,11 +148,13 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             DeckPickerContextMenuOption.CREATE_SUBDECK -> {
                 Timber.i("Create Subdeck selected")
                 (activity as DeckPicker).createSubDeckDialog(deckId)
+                (activity as AnkiActivity).dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
                 collection.decks.select(deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
                 (activity as DeckPicker).startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
+                (activity as AnkiActivity).dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.ADD_CARD -> {
                 Timber.i("Add selected")
@@ -160,7 +163,6 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 (activity as AnkiActivity).dismissAllDialogFragments()
             }
         }
-        dismiss()
     }
 
     private enum class DeckPickerContextMenuOption(val itemId: Int, @StringRes val optionName: Int) {
