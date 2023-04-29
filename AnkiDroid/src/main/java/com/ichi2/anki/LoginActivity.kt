@@ -44,7 +44,6 @@ import timber.log.Timber
  * TODO: Move this to a fragment
  */
 @NeedsTest("check result codes based on login result")
-@NeedsTest("activity is closed if started when logged in")
 class LoginActivity : MyAccount() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
