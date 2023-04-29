@@ -39,6 +39,7 @@ import android.widget.*
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
@@ -261,11 +262,11 @@ open class DeckPicker :
     // LISTENERS
     // ----------------------------------------------------------------------------
     private val mDeckExpanderClickListener = View.OnClickListener { view: View ->
-        toggleDeckExpand(view.tag as Long)
+        launchCatchingTask { toggleDeckExpand(view.tag as Long) }
     }
-    private val mDeckClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.DEFAULT) }
-    private val mCountsClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) }
-    private fun onDeckClick(v: View, selectionType: DeckSelectionType) {
+    private val mDeckClickListener = View.OnClickListener { v: View -> launchCatchingTask { onDeckClick(v, DeckSelectionType.DEFAULT) } }
+    private val mCountsClickListener = View.OnClickListener { v: View -> launchCatchingTask { onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) } }
+    private suspend fun onDeckClick(v: View, selectionType: DeckSelectionType) {
         val deckId = v.tag as Long
         Timber.i("DeckPicker:: Selected deck with id %d", deckId)
         var collectionIsOpen = false
@@ -614,11 +615,6 @@ open class DeckPicker :
      * TODO Investigate whether we can stop recreating the menu,
      *   relying instead on modifying it directly and/or using [onPrepareOptionsMenu].
      *   Note an issue with the latter: https://github.com/ankidroid/Anki-Android/issues/7755
-     *
-     * TODO BEFORE-RELEASE Add tooltip text to the image button.
-     *   Menu items normally have titles that are shown on long tap.
-     *   As this menu item delegates the UI to the action view, it is up to that to handle presses.
-     *   When we decide on the text, use `TooltipCompat.setTooltipText` on the button to set it.
      */
     private fun setupMigrationProgressMenuItem(menu: Menu, migrationInProgress: Boolean) {
         val migrationProgressMenuItem = menu.findItem(R.id.action_migration_progress)
@@ -652,8 +648,10 @@ open class DeckPicker :
                     .findViewById<CircularProgressIndicator>(R.id.progress_indicator)
                     .apply { max = Int.MAX_VALUE }
 
-                actionView.findViewById<ImageButton>(R.id.button)
-                    .setOnClickListener { warnNoSyncDuringMigration() }
+                actionView.findViewById<ImageButton>(R.id.button).also { button ->
+                    button.setOnClickListener { warnNoSyncDuringMigration() }
+                    TooltipCompat.setTooltipText(button, getText(R.string.show_migration_progress))
+                }
 
                 migrationProgressPublishingJob = lifecycleScope.launch {
                     withBoundTo<MigrationService> { service ->
@@ -1081,7 +1079,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                handleDeckSelection(col.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
+                launchCatchingTask { handleDeckSelection(col.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS) }
             }
             else -> {}
         }
@@ -1139,7 +1137,7 @@ open class DeckPicker :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     @RustCleanup("make mDueTree a concrete DeckDueTreeNode")
     @Suppress("UNCHECKED_CAST")
-    fun toggleDeckExpand(did: DeckId) {
+    suspend fun toggleDeckExpand(did: DeckId) {
         if (!col.decks.children(did).isEmpty()) {
             // update DB
             col.decks.collapse(did)
@@ -1725,7 +1723,7 @@ open class DeckPicker :
         }
     }
 
-    private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
+    private suspend fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
         // Clear the undo history when selecting a new deck
         if (col.decks.selected() != did) {
             col.clearUndo()
@@ -1820,7 +1818,7 @@ open class DeckPicker :
      *
      * @param did The deck ID of the deck to select.
      */
-    private fun scrollDecklistToDeck(did: DeckId) {
+    private suspend fun scrollDecklistToDeck(did: DeckId) {
         val position = mDeckListAdapter.findDeckPosition(did)
         mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
     }
@@ -1883,7 +1881,7 @@ open class DeckPicker :
         }
         @Suppress("UNCHECKED_CAST")
         dueTree = result as List<TreeNode<AbstractDeckTreeNode>>?
-        renderPage(collectionIsEmpty)
+        launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
         launchCatchingTask {
             val reviewSummaryStatsSting = AnkiStatsTaskHandler.getReviewSummaryStatisticsString(this@DeckPicker)
@@ -1896,7 +1894,7 @@ open class DeckPicker :
         Timber.d("Startup - Deck List UI Completed")
     }
 
-    private fun renderPage(collectionIsEmpty: Boolean) {
+    private suspend fun renderPage(collectionIsEmpty: Boolean) {
         if (dueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
@@ -1945,32 +1943,32 @@ open class DeckPicker :
             // We're done here
             return
         }
-        mDeckListAdapter.buildDeckList(dueTree!!, col, currentFilter)
+        mDeckListAdapter.buildDeckList(dueTree!!, currentFilter)
 
         // Set the "x due in y minutes" subtitle
         try {
-            val eta = mDeckListAdapter.eta
+            val eta = mDeckListAdapter.eta()
             val due = mDeckListAdapter.due
             val res = resources
-            if (col.cardCount() != -1) {
-                val time: String = if (eta != -1 && eta != null) {
-                    Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
+
+            val time: String = if (eta != -1 && eta != null) {
+                Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
+            } else {
+                "-"
+            }
+            if (due != null && supportActionBar != null) {
+                val cardCount = withCol { cardCount() }
+                val subTitle: String = if (due == 0) {
+                    res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
                 } else {
-                    "-"
+                    res.getQuantityString(R.plurals.deckpicker_title, due, due, time)
                 }
-                if (due != null && supportActionBar != null) {
-                    val subTitle: String = if (due == 0) {
-                        res.getQuantityString(R.plurals.deckpicker_title_zero_due, col.cardCount(), col.cardCount())
-                    } else {
-                        res.getQuantityString(R.plurals.deckpicker_title, due, due, time)
-                    }
-                    supportActionBar!!.subtitle = subTitle
-                }
+                supportActionBar!!.subtitle = subTitle
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "RuntimeException setting time remaining")
         }
-        val current = col.decks.current().optLong("id")
+        val current = withCol { decks.current().optLong("id") }
         if (mFocusedDeck != current) {
             scrollDecklistToDeck(current)
             mFocusedDeck = current

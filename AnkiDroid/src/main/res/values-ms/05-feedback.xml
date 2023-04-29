@@ -47,13 +47,13 @@
     <!-- Feedback.java -->
     <string name="empty_string"></string>
     <string name="error_reporting_choice">Mod laporan ralat</string>
-    <string name="feedback_disclaimer">Penafian: Kita tidak mengambil apa-apa maklumat peribadi seperti alamat email anda, nomor telepon, atau telefon BERFUNGSI. Kami mengumpulkan beberapa informasi tentang anda peranti itu sebagai pengilang, model dan versi Android, serta sifat melaporkan kesilapan diri sendiri dan langkah-langkah yang dipimpin untuk mereka yang berlaku.</string>
-    <string name="feedback_title">Maklumbalas AnkiDroid</string>
-    <string name="feedback_default_text">Masukkan maklum balas atau maklumat tentang sifat apa-apa kesilapan kau laporan.</string>
-    <string name="feedback_auto_toast_text">NkiDroid telah mengalami masalah; laporan sedang dihantar ke pembangun&#8230;</string>
-    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
+    <string name="feedback_disclaimer">Penafian: Kami tidak mengumpul apa-apa maklumat peribadi seperti alamat e-mail anda, nombor telefon, atau telefon IMEI anda. Kami mengumpul beberapa informasi tentang peranti anda seperti pengilang, model dan versi Android, serta sifat tersendiri ralat yang dilaporkan dan langkah menyebabkan mereka berlaku.</string>
+    <string name="feedback_title">Maklum balas AnkiDroid</string>
+    <string name="feedback_default_text">Masukkan maklum balas anda atau maklumat tentang sifat apa-apa ralat yang anda melaporkan.</string>
+    <string name="feedback_auto_toast_text">AnkiDroid menghadapi masalah; laporan sedang dihantar ke para pengusaha&#8230;</string>
+    <string name="feedback_for_manual_toast_text">Laporan ralat sedang disediakan untuk para pengusaha&#8230;</string>
     <string name="feedback_copy_debug">Salin maklumat nyahpepijat</string>
     <string name="feedback_report">Lapor</string>
-    <string name="feedback_report_automatically">Menghantar ralat laporan secara automatik</string>
-    <string name="feedback_no_suitable_app_found">Tiada aplikasi yang sesuai dijumpai</string>
+    <string name="feedback_report_automatically">Menghantar laporan ralat secara automatik</string>
+    <string name="feedback_no_suitable_app_found">Tiada aplikasi bersesuaian dijumpa</string>
 </resources>

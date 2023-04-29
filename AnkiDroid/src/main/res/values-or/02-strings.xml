@@ -98,7 +98,7 @@
         <item>ସହଜତା</item>
         <item>ବାକି</item>
         <item>ପତ୍ର ସଂଶୋଧିତ</item>
-        <item>ସୃଷ୍ଟି ହୋଇଛି</item>
+        <item>ତିଆରି କରାଯାଇଅଛି</item>
         <item>ନୋଟ୍ ସଂଶୋଧିତ</item>
     </string-array>
     <!-- Filter Sheet -->
@@ -195,8 +195,8 @@
         <item quantity="other">Export %d selected cards as apkg file?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">ମନୋନୀତ ନୋଟ୍‍କୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
-        <item quantity="other">ମନୋନୀତ ନୋଟ୍‍ଗୁଡ଼ିକୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
+        <item quantity="one">ମନୋନୀତ ନୋଟ୍‌କୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
+        <item quantity="other">ମନୋନୀତ ନୋଟ୍‌ଗୁଡ଼ିକୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
     </plurals>
     <string name="export_in_progress">Anki package ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
     <string name="export_success_title">ସଂଗ୍ରହ ସଫଳତାର ସହିତ ରପ୍ତାନି ହେଲା</string>
@@ -316,7 +316,7 @@
     <string name="deck_picker_failed_deck_load">ଡେକ୍ ‘%s’ ଲୋଡ୍ ହବାରେ ବିଫଳ ହେଲା</string>
     <string name="search_decks">ତାସଖଣ୍ଡ ଖୋଜନ୍ତୁ</string>
     <string name="ankidroid_init_failed_webview_title">ସାଂଘାତିକ ତ୍ରୁଟି</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid ସିଷ୍ଟମ୍ ୱେବ୍‍ଵ୍ୟୁ ଉପରେ ନିର୍ଭର କରେ ଯାହା ଅନୁପଲବ୍ଧ ଅଟେ। ଯଦି ସିଷ୍ଟମ୍ ଅପଡେଟ୍ ଅଧିସ୍ଥାପନ କରୁଥାଏ ତେବେ ଏହା ଘଟିପାରେ। ଦୟାକରି କିଛି ମିନିଟରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid ସିଷ୍ଟମ୍ ୱେବ୍‌ଵ୍ୟୁ ଉପରେ ନିର୍ଭର କରେ ଯାହା ଅନୁପଲବ୍ଧ ଅଟେ। ଯଦି ସିଷ୍ଟମ୍ ଅପଡେଟ୍ ଅଧିସ୍ଥାପନ କରୁଥାଏ ତେବେ ଏହା ଘଟିପାରେ। ଦୟାକରି କିଛି ମିନିଟ୍‌ରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">ଫଣ୍ଟ ଆକାର</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ଉପକରଣ-ଦଣ୍ଡିକା ଦେଖାଇବା</string>
@@ -331,7 +331,7 @@
     <string name="note_editor_toolbar_icon">ବଟନ୍ ର ନା‍ଁ</string>
     <string name="before_text">ଚୟନ ପୂର୍ବର HTML</string>
     <string name="after_text">ଚୟନ ପରେ HTML</string>
-    <string name="add_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="add_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ସୃଷ୍ଟି କରିବା</string>
     <string name="edit_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକା ସମ୍ପାଦନା</string>
     <string name="toolbar_item_explain_edit_or_remove">ମନୋନୀତ ପାଠ୍ୟ ପୂର୍ବରୁ ଏବଂ ପରେ ସନ୍ନିବେଶ କରିବା ଲାଗି HTML ପ୍ରବେଶ କରନ୍ତୁ\n\nଗୋଟିଏ ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ କୁ ସମ୍ପାଦନ ବା ହଟାଇବା ପାଇଁ ତା\' ଉପରେ ଲମ୍ବା ସ୍ପର୍ଶ କରନ୍ତୁ</string>
     <string name="remove_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ହଟାଇବେ?</string>
@@ -347,7 +347,7 @@
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">ଇମେଲ୍ ଠିକଣା ଆଵଶ୍ୟକ ଅଟେ</string>
-    <string name="password_empty">ପାସ୍‍ୱର୍ଡ଼ ଆଵଶ୍ୟକ ଅଟେ</string>
+    <string name="password_empty">ପାସ୍‌ୱର୍ଡ଼ ଆଵଶ୍ୟକ ଅଟେ</string>
     <string name="back_pressed_once">ପ୍ରସ୍ଥାନ କରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <string name="back_pressed_once_reviewer">ଫେରିବା ପାଇଁ ପୁଣି ବ୍ୟାକ୍ ଦବାନ୍ତୁ</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
@@ -379,7 +379,7 @@
     <string name="scoped_storage_postpone">ପୋଷ୍ଟପୋନ୍ କର</string>
     <string name="scoped_storage_migrate">ସ୍ଥାନାନ୍ତର କରିବା</string>
     <string name="search_card_js_api_no_results">ସନ୍ଧାନ କୌଣସି ଫଳାଫଳ ଫେରସ୍ତ କଲା ନାହିଁ</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">ଆଣ୍ଡ୍ରଏଡ୍ 10 ସୁରକ୍ଷା ନୀତି ପାଳନ କରିବା ଲାଗି AnkiDroid ଏହାର ଷ୍ଟୋରେଜ୍‍କୁ ସ୍ଥାନାନ୍ତର କରିବା ଆଵଶ୍ୟକ।\n\nଏହା ମିଡ଼ିଆ ସୀଙ୍କ୍ କାର୍ଯ୍ୟଦକ୍ଷତାରେ ଉନ୍ନତି ଆଣିବ।&lt;br&gt;&lt;br&gt;ସ୍ଥାନାନ୍ତରଣ ସମୟରେ ଆପଣ ସୀଙ୍କ୍ କରିବାକୁ ଅସମର୍ଥ ହେବେ ଏଵଂ କିଛିଟା ସେଟିଂ ଅକ୍ଷମ ହେବ। ଆପଣଙ୍କ ଡାଟାକୁ ସୁରକ୍ଷିତ ରଖିବାକୁ ସ୍ଥାନାନ୍ତରଣ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ ଏକ ମିଡ଼ିଆ ସୀଙ୍କ୍ ଘଟିବ।&lt;br&gt;&lt;br&gt;ଏହି ପ୍ରକ୍ରିୟା ସମୟରେ AnkiDroid ଵ୍ୟଵହାର କିମ୍ବା ବନ୍ଦ କରିବା ନିରାପଦ ଅଟେ।</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">ଆଣ୍ଡ୍ରଏଡ୍ 10 ସୁରକ୍ଷା ନୀତି ପାଳନ କରିବା ଲାଗି AnkiDroid ଏହାର ଷ୍ଟୋରେଜ୍‌କୁ ସ୍ଥାନାନ୍ତର କରିବା ଆଵଶ୍ୟକ।\n\nଏହା ମିଡ଼ିଆ ସୀଙ୍କ୍ କାର୍ଯ୍ୟଦକ୍ଷତାରେ ଉନ୍ନତି ଆଣିବ।&lt;br&gt;&lt;br&gt;ସ୍ଥାନାନ୍ତରଣ ସମୟରେ ଆପଣ ସୀଙ୍କ୍ କରିବାକୁ ଅସମର୍ଥ ହେବେ ଏଵଂ କିଛିଟା ସେଟିଂ ଅକ୍ଷମ ହେବ। ଆପଣଙ୍କ ଡାଟାକୁ ସୁରକ୍ଷିତ ରଖିବାକୁ ସ୍ଥାନାନ୍ତରଣ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ ଏକ ମିଡ଼ିଆ ସୀଙ୍କ୍ ଘଟିବ।&lt;br&gt;&lt;br&gt;ଏହି ପ୍ରକ୍ରିୟା ସମୟରେ AnkiDroid ଵ୍ୟଵହାର କିମ୍ବା ବନ୍ଦ କରିବା ନିରାପଦ ଅଟେ।</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
 \nStorage migration will continue in the background.</string>
@@ -402,7 +402,7 @@
     <string name="already_logged_in">ଆଗରୁ ଲଗ୍ ଇନ୍ କରିସାରିଛନ୍ତି</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">ତାସଖଣ୍ଡଟି ଵିଦ୍ୟମାନ ଅଛି</string>
-    <string name="deck_created">Deck created</string>
+    <string name="deck_created">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରାଗଲା</string>
     <string name="deck_renamed">ତାସଖଣ୍ଡ ନାମ ବଦଳାଗଲା</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>

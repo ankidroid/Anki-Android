@@ -80,7 +80,7 @@ class SharedDecksDownloadFragment : Fragment() {
     private var mDownloadCancelConfirmationDialog: MaterialDialog? = null
 
     companion object {
-        const val DOWNLOAD_PROGRESS_CHECK_DELAY = 100L
+        const val DOWNLOAD_PROGRESS_CHECK_DELAY = 1000L
 
         const val DOWNLOAD_STARTED_PROGRESS_PERCENTAGE = "0"
         const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
@@ -293,9 +293,13 @@ class SharedDecksDownloadFragment : Fragment() {
     private val mDownloadProgressChecker: Runnable by lazy {
         object : Runnable {
             override fun run() {
+                if (!isVisible) {
+                    stopDownloadProgressChecker()
+                    return
+                }
                 checkDownloadProgress()
 
-                // Keep checking download progress at intervals of 0.1 second.
+                // Keep checking download progress at intervals of 1 second.
                 mHandler.postDelayed(this, DOWNLOAD_PROGRESS_CHECK_DELAY)
             }
         }

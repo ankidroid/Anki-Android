@@ -70,17 +70,16 @@
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">複製: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">カードブラウザーがカードを表示するために使用するテンプレートを入力します。これを使用すると、より簡潔な答えを表示できます。\n\n\nのフロントテンプレート「 {{Country}} の資本金は:」\nカードブラウザで\n「資本金: {{Country}}」に圧縮できます。</string>
+    <string name="card_template_browser_appearance_summary">カードブラウザーがカードを表示するために使用するテンプレートを設定できます。これを使用すると、内容をより簡潔に表示できます。\n\n例えば、\n「 {{Country}} の首都はどこですか」\nという内容の表面テンプレートを、カードブラウザーで\n「首都: {{Country}}」\nのように短縮して表示できます。</string>
     <string name="card_template_browser_appearance_question_format">質問の表示形式</string>
     <string name="card_template_browser_appearance_answer_format">解答の表示形式</string>
     <string name="card_template_browser_appearance_restore_default_dialog">デフォルト値を復元しますか？</string>
     <string name="card_template_browser_appearance_saving_note">変更内容は、カードテンプレートが保存された後に適用されます</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">デッキの上書き (オン)</string>
-    <string name="card_template_editor_deck_override_off">デッキの上書き (オフ)</string>
-    <string name="model_manager_deck_override_added_message"> ‘%1$s’をデフォルトデッキとして‘%2$s’に設定します
-「%1$s」のデフォルトデッキを「%2$s」に設定</string>
-    <string name="model_manager_deck_override_removed_message">%sのデフォルトデッキを削除しました</string>
-    <string name="deck_override_explanation">選択したデッキに新しいカード「%s」を設定する</string>
+    <string name="card_template_editor_deck_override_on">デッキ選択を上書き (指定済み)</string>
+    <string name="card_template_editor_deck_override_off">デッキ選択を上書き (未指定)</string>
+    <string name="model_manager_deck_override_added_message">「%2$s」を「%1$s」のデフォルトデッキに指定しました</string>
+    <string name="model_manager_deck_override_removed_message">「%s」のデフォルトデッキの指定を解除しました</string>
+    <string name="deck_override_explanation">「%s」のカードの追加先デッキを選択（追加画面でのデッキ選択を無視）</string>
     <string name="deck_picker_dialog_filter_decks">デッキ名検索</string>
 </resources>

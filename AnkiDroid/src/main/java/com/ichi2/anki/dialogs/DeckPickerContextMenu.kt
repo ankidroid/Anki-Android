@@ -163,6 +163,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 (activity as AnkiActivity).dismissAllDialogFragments()
             }
         }
+        dismiss()
     }
 
     private enum class DeckPickerContextMenuOption(val itemId: Int, @StringRes val optionName: Int) {

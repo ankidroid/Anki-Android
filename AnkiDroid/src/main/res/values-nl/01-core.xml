@@ -246,7 +246,7 @@
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Migrating data</string>
     <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
-    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">%1$s van  %2$s overgedragen</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">%1$s van %2$s overgedragen</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migratie succesvol</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Uw data is succesvol overgedragen.
         Ankidroid is weer volledig functioneel, en u kan weer synchroniseren.

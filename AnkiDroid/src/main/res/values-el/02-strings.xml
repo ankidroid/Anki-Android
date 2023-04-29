@@ -58,7 +58,7 @@
     <string name="check_all_tags">Check/uncheck all tags</string>
     <string name="filter_tags">Φιλτράρισμα ετικετών</string>
     <string name="no_tags">Δεν έχετε προσθέσει καμία ετικέτα ακόμα</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="updated_version">Αναβαθμίστηκε στην εκδοχή %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_stylus">Enable stylus mode</string>
@@ -153,7 +153,7 @@
         <item quantity="other">%d cards added</item>
     </plurals>
     <string name="check_db">Έλεγχος βάσης δεδομένων</string>
-    <string name="check_media">Check media</string>
+    <string name="check_media">Έλεγχος πολυμέσων </string>
     <string name="empty_cards">Κενές κάρτες</string>
     <string name="check_db_message">Έλεγχος βάσης δεδομένων.\nΠαρακαλούμε περιμένετε...</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
@@ -164,8 +164,8 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Προσθήκη</string>
     <string name="import_message_replace_confirm">Αυτό θα διαγράψει την υπάρχουσα συλλογή σας και θα την αντικαταστήσει με τα δεδομένα του αρχείου %s. Είστε σίγουροι?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">Προσθήκη \"%s\" στη συλλογή; Μπορεί να διαρκέσει πολύ χρόνο</item>
+        <item quantity="other">Θες να εισάγεις το ακόλουθο αρχείο :\n%s\n ; Αυτό μπορεί να διαρκέσει πολύ χρόνο.</item>
     </plurals>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>

@@ -176,21 +176,21 @@
     <string name="studyoptions_empty_schedule">Nav nekas paredzēts</string>
     <string name="studyoptions_congrats_finished">Apsveicu! Patreiz visu esat pabeidzis.</string>
     <string name="studyoptions_congrats_more_rev">Šodienas vērtēšanas limits ir sasniegts, bet vēl ir kārtis kas ir jāizvērtē. Optimālai atmiņai apsveriet iespēju palielināt dienas limitu (iestatījumos).</string>
-    <string name="studyoptions_congrats_more_new">Ir pieejamas vairākas jaunas kārtis, bet dienas limits ir sasniegts. Jūs vara palielināt šo limitu iestatījumos, bet ņemiet vērā, ka tas palielinās Jūsu īstermiņa pārskatīšanas darba slodzi.</string>
-    <string name="studyoptions_congrats_custom">Lai studētu ārpus normālā darba laika, nospiediet uz Pielāgotā Pētījuma pogas zemāk.</string>
-    <string name="studyoptions_no_cards_due">Nav nekas pārpalicis</string>
+    <string name="studyoptions_congrats_more_new">Šodienas ierobežojums sasniegts. Ir pieejamas vēl kārtis; Ir iespējams mainīt ierobežojumu iestatījumos, bet tas arī palielinās īstermiņa darba slodzi.</string>
+    <string name="studyoptions_congrats_custom">Lai mācītos ārpus parastā laika, spiediet \"pielāgotās mācības\" pogu.</string>
+    <string name="studyoptions_no_cards_due">Nav gaidāmu kāršu</string>
     <string name="sd_card_not_mounted">Ierīces krātuve nav uzstādīta</string>
     <string name="empty_cloze_warning">Izmaini šo rakstu un pievieno kādu \"vārdu atņemi\". (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinhronizācija</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Saskaņošana pagaidu izslēgta</string>
     <string name="button_upgrade" comment="Text of the sync button">Pārvietot uz ierobežoto krātuvi</string>
     <string name="cancel_sync_confirm">Vai pārtraukt saskaņošanu?</string>
-    <string name="continue_sync">Turpināt darbību</string>
-    <string name="sync_cancelled">Darbība atcelta</string>
-    <string name="sync_cancel_message">Darbības atcelšana&#8230;\nLūdzu uzgaidiet!</string>
-    <string name="export">Pārvietošana</string>
-    <string name="export_collection">Pārvietot krājumu</string>
-    <string name="export_deck">ekspórtēt kavu</string>
+    <string name="continue_sync">Turpināt</string>
+    <string name="sync_cancelled">Saskaņošana atcelta</string>
+    <string name="sync_cancel_message">Pārtrauc&#8230;\nTas var aizņemt labu laiku.</string>
+    <string name="export">Izrakstīt</string>
+    <string name="export_collection">Izrakstīt krājumu</string>
+    <string name="export_deck">izrakstīt kavu</string>
     <string name="nothing">Nekā</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">Kāršu veidi</string>
