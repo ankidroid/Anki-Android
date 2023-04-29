@@ -268,9 +268,6 @@
     <string name="migration__failed__title"
         comment="A title for a dialog, or a short message shown in a notification,
         when storage migration fails">Migration failed</string>
-    <string name="migration__failed"
-        comment="A short message shown in a notification when storage migration fails"
-        >Migration failed: %s</string>
     <string name="migration__failed__message"
         comment="A more detailed message shown when storage migration fails"><![CDATA[
         Storage migration is paused after failing with the error: %1$s.
