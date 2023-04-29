@@ -460,12 +460,4 @@
 
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-
-    <plurals name="aggregate_exception_user_facing_message" comment="This is a summary of a collection of errors (to show a user) The first parameter is the message of the collection of errors
-     The second parameter is the number of errors the collection contains (2 or more)
-     The third parameter is the error message of the 'final' error of the collection.
-     Defined as a plural: Lithuanian defines the form of a count noun by the final digits of the number">
-        <item quantity="one">%2$d error: \'%3$s\' [%1$s]</item>
-        <item quantity="other">%2$d errors, the last being: \'%3$s\' [%1$s]</item>
-    </plurals>
 </resources>

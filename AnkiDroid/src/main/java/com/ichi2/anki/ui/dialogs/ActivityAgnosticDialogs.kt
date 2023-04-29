@@ -28,7 +28,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager.getDefaultSharedPreferences
 import com.ichi2.anki.R
-import com.ichi2.anki.ui.windows.managespace.getUserFriendlyErrorText
+import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.utils.copyToClipboardAndShowConfirmation
 import makeLinksClickable
 

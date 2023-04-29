@@ -27,6 +27,7 @@ import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.requirePreference
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.windows.managespace.*
+import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.preferences.HtmlHelpPreference
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.preferences.NumberRangePreferenceCompat.ShouldShowDialog

@@ -22,7 +22,7 @@ import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrationProgressListener
-import com.ichi2.exceptions.AggregateException
+import com.ichi2.anki.utils.AggregateException
 import com.ichi2.testutils.*
 import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
@@ -117,7 +117,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
         val aggregatedException = assertFailsWith<AggregateException> { underTest.execTask() }
 
-        val testExceptions = aggregatedException.exceptions.filter { it !is DirectoryNotEmptyException }
+        val testExceptions = aggregatedException.causes.filter { it !is DirectoryNotEmptyException }
 
         assertThat("two failed files means two exceptions", testExceptions.size, equalTo(2))
 

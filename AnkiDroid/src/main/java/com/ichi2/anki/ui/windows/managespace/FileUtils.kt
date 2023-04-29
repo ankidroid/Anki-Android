@@ -23,6 +23,7 @@ import android.os.storage.StorageVolume
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.TranslatableException
 import kotlinx.coroutines.*
 import java.io.File
 import java.util.*
@@ -178,8 +179,10 @@ fun File.canWriteToOrCreate(): Boolean =
 
 interface CollectionDirectoryProvider { val collectionDirectory: File }
 
-class CanNotWriteToOrCreateFileException(val file: File) : Exception() {
+class CanNotWriteToOrCreateFileException(val file: File) : Exception(), TranslatableException {
     override val message get() = "Can not write to or create file: $file"
+    override fun getMessage(context: Context) =
+        context.getString(R.string.error__etc__cannot_write_to_or_create_file, file)
 }
 
 suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirectory() {
@@ -190,15 +193,3 @@ suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirect
 
 suspend fun CollectionDirectoryProvider.collectionDirectoryExists() =
     withContext(Dispatchers.IO) { collectionDirectory.exists() }
-
-/********************************************* Etc ************************************************/
-
-fun Context.getUserFriendlyErrorText(e: Exception): CharSequence =
-    if (e is CanNotWriteToOrCreateFileException) {
-        getString(R.string.error__etc__cannot_write_to_or_create_file, e.file)
-    } else {
-        e.localizedMessage
-            ?: e.message
-            ?: e::class.simpleName
-            ?: getString(R.string.error__etc__unknown_error)
-    }
