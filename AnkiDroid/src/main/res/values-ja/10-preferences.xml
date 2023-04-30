@@ -72,9 +72,9 @@
     <string name="use_input_tag" maxLength="41">カード内にキーボード入力で解答する</string>
     <string name="use_input_tag_summ">解答をキーボード入力で行うよう設定されているカードの内部に文字入力欄を表示します</string>
     <string name="reset_languages" maxLength="41">言語設定をリセット</string>
-    <string name="reset_languages_summ">全てのデッキの（テキスト読み上げ用および辞書用の）言語設定をリセットします</string>
+    <string name="reset_languages_summ">すべてのデッキの（テキスト読み上げ用および辞書用の）言語設定をリセットします</string>
     <string name="reset_languages_question">言語の割り当てをリセットしますか？</string>
-    <string name="reset_confirmation">全ての状態をリセット</string>
+    <string name="reset_confirmation">すべての状態をリセット</string>
     <string name="card_zoom" maxLength="41">カードの拡大・縮小</string>
     <string name="image_zoom" maxLength="41">画像の拡大・縮小</string>
     <string name="button_size" maxLength="41">解答表示ボタン・回答ボタンのサイズ</string>
@@ -215,12 +215,12 @@
     <string name="exit_via_double_tap_back" maxLength="41">バックキー２度押しで 戻る/終了</string>
     <string name="exit_via_double_tap_back_summ">学習やアプリを誤って終了してしまうことを防ぎます</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">全てのファイルをメディアインポートの対象として許可</string>
+    <string name="media_import_allow_all_files" maxLength="41">すべてのファイルをメディアインポートの対象として許可</string>
     <string name="media_import_allow_all_files_summ">Androidがメディアファイルを認識しない場合に試してみてください</string>
     <!-- Statistics settings -->
     <string name="stats_default_deck_title" maxLength="41">統計情報を開く際の既定デッキ</string>
     <string name="stats_default_deck_current">直近で使用したデッキ</string>
-    <string name="stats_default_deck_all">全てのデッキ</string>
+    <string name="stats_default_deck_all">すべてのデッキ</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">高度な統計</string>
     <string name="enable_advanced_statistics_title" maxLength="41">高度な統計を有効にする</string>
@@ -263,10 +263,10 @@
     <string name="deck_conf_easy_ivl" maxLength="41">簡単と回答してから復習開始までの間隔</string>
     <string name="deck_conf_start_ease" maxLength="41">復習開始時の「易しさ」（復習間隔の伸び率）</string>
     <string name="deck_conf_max_rev" maxLength="41">一日あたりの復習カード出題枚数の上限</string>
-    <string name="deck_conf_new_bury" maxLength="41">新規の関連カードの学習を延期</string>
-    <string name="deck_conf_new_bury_summ">新規の関連カード（同じノートから作られた別のカード。例：裏表反転カード）の学習を翌日まで延期します</string>
-    <string name="deck_conf_rev_bury" maxLength="41">関連カードの復習を延期</string>
-    <string name="deck_conf_rev_bury_summ">関連カード（同じノートから作られた別のカード。例：裏表反転カード）の復習を翌日まで延期します</string>
+    <string name="deck_conf_new_bury" maxLength="41">兄弟関係の新規カードの学習を延期</string>
+    <string name="deck_conf_new_bury_summ">兄弟関係の（＝同じノートから作成された）新規カードの学習を翌日まで延期します</string>
+    <string name="deck_conf_rev_bury" maxLength="41">兄弟関係のカードの復習を延期</string>
+    <string name="deck_conf_rev_bury_summ">兄弟関係の（＝同じノートから作成された）カードの復習を翌日まで延期します</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">一般設定を使用する</string>
     <string name="deck_conf_use_general_timeout_settings_summ">このグループ独自の設定は行わず、ドロワーメニューの[設定]>[カードの学習]>[解答の自動表示]での一般的な設定をそのまま使用します。</string>
     <string name="deck_conf_easy_bonus" maxLength="41">簡単と答えた時のボーナス（復習間隔の伸び率の割り増し）</string>
@@ -293,11 +293,11 @@
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">追加</string>
     <string name="deck_conf_add_summ">このオプショングループのコピーを作成します</string>
     <string name="deck_conf_remove_message">このオプショングループを削除しますか？</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">全てのサブデッキに適用</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">すべてのサブデッキに適用</string>
     <plurals name="deck_conf_set_subdecks_summ">
         <item quantity="other">この設定を行うと、このデッキの中にある%s個のサブデッキにもこのオプショングループを適用します</item>
     </plurals>
-    <string name="deck_conf_set_subdecks_message">このオプショングループをこのデッキ内の全てのサブデッキにも適用しますか？</string>
+    <string name="deck_conf_set_subdecks_message">このオプショングループをこのデッキ内のすべてのサブデッキにも適用しますか？</string>
     <string name="pref_browser_editor_font" maxLength="41">ブラウザとノート編集のフォント</string>
     <string name="deck_conf_cram_filter" maxLength="41">フィルター</string>
     <string name="deck_conf_cram_search" maxLength="41">検索</string>

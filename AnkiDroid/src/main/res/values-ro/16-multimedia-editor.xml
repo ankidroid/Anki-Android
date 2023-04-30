@@ -40,15 +40,15 @@
 -->
 <resources>
     <!-- Main editor popup menu items -->
-    <string name="multimedia_editor_popup_image">Add image</string>
-    <string name="multimedia_editor_popup_audio_clip">Add audio clip</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
-    <string name="multimedia_editor_popup_audio">Record audio</string>
-    <string name="multimedia_editor_popup_text">Advanced editor</string>
+    <string name="multimedia_editor_popup_image">Adaugă imagine</string>
+    <string name="multimedia_editor_popup_audio_clip">Adaugă clip audio</string>
+    <string name="multimedia_editor_popup_video_clip">Adaugă videoclip</string>
+    <string name="multimedia_editor_popup_audio">Înregistrează audio</string>
+    <string name="multimedia_editor_popup_text">Editor avansat</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
     <string name="multimedia_editor_popup_clear_field">Clear field</string>
     <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Load</string>
+    <string name="multimedia_editor_pron_load">Încarcă</string>
     <string name="multimedia_editor_pron_looking_up">Looking up pronunciation</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Pronunciation failed</string>

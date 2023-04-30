@@ -60,7 +60,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">Paplašināt</string>
     <string name="collapse">Sakļaut</string>
-    <string name="study_more">Studēt vairāk</string>
+    <string name="study_more">Mācīties vairāk</string>
     <plurals name="deckpicker_title">
         <item quantity="zero">%1$d kārtis pārpalikumā (%2$s)</item>
         <item quantity="one">%1$d kārts pārpalikusi (%2$s)</item>
@@ -132,8 +132,8 @@
     <string name="menu_edit_tags">Mainīt tegus</string>
     <string name="delete_note_message">Tiešām dzēst šo piezīmi un visas pievienotās kārtis?\n%s</string>
     <string name="menu_search">Meklēt iekš %1$s</string>
-    <string name="menu_mark_note">Atzīmēt piezīmi</string>
-    <string name="menu_unmark_note">Atzīmēt piezīmi</string>
+    <string name="menu_mark_note">Atzīmēt rakstu</string>
+    <string name="menu_unmark_note">Neatzīmēt rakstu</string>
     <string name="menu_toggle_mic_tool_bar">Pārbaudīt izrunu</string>
     <string name="new_deck">Izveidot kavu</string>
     <string name="new_dynamic_deck">Izveidot pielāgotu kavu</string>
@@ -166,22 +166,22 @@
     <string name="create_subdeck">Izveidot apakškavu</string>
     <string name="empty_filtered_deck">Iztukšo pielāgoto kavu</string>
     <string name="custom_study_deck_name">Pielāgota mācība</string>
-    <string name="custom_study_deck_exists">Lūdzu vispirms pārsauciet eksistējošo Pielāgoto pētījuma Deku.</string>
-    <string name="empty_deck">Šis klājs ir tukš</string>
-    <string name="search_deck" comment="Deck search for selecting it">Atrast klāju</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Atrast klāju</string>
+    <string name="custom_study_deck_exists">Vispirms pārsauciet esošo pielāgoto kavu</string>
+    <string name="empty_deck">Šī kava ir tukša</string>
+    <string name="search_deck" comment="Deck search for selecting it">Kavu pārlūks</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Kavu meklētājs</string>
     <string name="invalid_deck_name">Nederīgs kavas nosaukums</string>
     <string name="studyoptions_empty">Šī kava ir tukša. Spied +, lai pievienotu kārtis</string>
     <string name="studyoptions_limit_reached">Ikdienas ierobežojums sasniegts</string>
     <string name="studyoptions_empty_schedule">Nav nekas paredzēts</string>
-    <string name="studyoptions_congrats_finished">Apsveicu! Patreiz visu esat pabeidzis.</string>
-    <string name="studyoptions_congrats_more_rev">Šodienas vērtēšanas limits ir sasniegts, bet vēl ir kārtis kas ir jāizvērtē. Optimālai atmiņai apsveriet iespēju palielināt dienas limitu (iestatījumos).</string>
+    <string name="studyoptions_congrats_finished">Apsveicu! Pagaidām viss pabeigts</string>
+    <string name="studyoptions_congrats_more_rev">Šodienas ierobežojums sasniegts. Ir pieejamas vēl kārtis atkārotšanai. Ierobežojumu var mainīt iestatījumos.</string>
     <string name="studyoptions_congrats_more_new">Šodienas ierobežojums sasniegts. Ir pieejamas vēl kārtis; Ir iespējams mainīt ierobežojumu iestatījumos, bet tas arī palielinās īstermiņa darba slodzi.</string>
     <string name="studyoptions_congrats_custom">Lai mācītos ārpus parastā laika, spiediet \"pielāgotās mācības\" pogu.</string>
     <string name="studyoptions_no_cards_due">Nav gaidāmu kāršu</string>
     <string name="sd_card_not_mounted">Ierīces krātuve nav uzstādīta</string>
     <string name="empty_cloze_warning">Izmaini šo rakstu un pievieno kādu \"vārdu atņemi\". (%1$s)</string>
-    <string name="button_sync" comment="Text of the sync button">Sinhronizācija</string>
+    <string name="button_sync" comment="Text of the sync button">Saskaņošana</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">Saskaņošana pagaidu izslēgta</string>
     <string name="button_upgrade" comment="Text of the sync button">Pārvietot uz ierobežoto krātuvi</string>
     <string name="cancel_sync_confirm">Vai pārtraukt saskaņošanu?</string>
@@ -236,47 +236,47 @@
     <string name="wrong_tag_closed">\'{{/%1$s}}\' atrasts, bet gaidīts \'{{/%2$s}}\' </string>
     <string name="filter_error">Kļūda filtrā %s</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">Krājumus nevar apvienot. \nKuru vēlies paturēt?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">Aizstāt AnkiDroid krājumu ar AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Aizstāt AnkiWeb krājumu ar AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Izvēlies krājumu, kuru paturēt</string>
+    <string name="sync_conflict_replace_title">Aizstāt krājumu</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="zero">%1$d cards (0 due)</item>
-        <item quantity="one">%1$d card (0 due)</item>
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="zero">%1$d kārtis (0 paredzētas)</item>
+        <item quantity="one">%1$d kārts (0 paredzētas)</item>
+        <item quantity="other">%1$d kārtis (0 paredzētas)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
+    <string name="copy_note_type_name" comment="The new name of a copied note type">%s kópija</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Nespēj uzrakstīt vai izveidot dotni %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_data">Migrating data</string>
-    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
-    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migration successful</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
-        AnkiDroid is fully functional again, and you can sync.
+    <string name="migration__migrating_data">Pārnes datus</string>
+    <string name="migration__calculating_transfer_size">Apsver pārnešanas izmērus&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Pārnesti %1$s no %2$s</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Pārnešana izdevās</string>
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Tavi dati tika veiksmīgi pārnesti.
+        AnkiDroid darbojas izcilā stāvoklī atkal un spēj saskaņoties.
         \n
-        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
-        Please make sure that your data is safe by regularly syncing or exporting backups.
+        \nZini, ka tavs krājums atrodas dotnē, kura tiks dzēsta atstādot lietotni.
+        Pārliecinies, ka tavi dati ir drošībā, saskaņojot vai izrakstot rezerves kópiju.
     </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Migration failed: %s</string>
-    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Pārnešana neizdevās</string>
+    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Pārnešana neizdevās: %s</string>
+    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Krātuves pārnešana apstādināta dēļ ķļūdas: %1$s.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space, or-reconnect the missing media.
+        Lūdzu, mēģiniet vēlkārt.
+        Lai atrisinātu kļūdu, varbūt vajadzēs atbrīvot vietu krātuvē, vai savienot zudušās dotnes.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Lasi par to vairāk šeit</a>
     ]]></string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Nepieejams krājums</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Mēs nespējam piekļūt jūsu krājumam pēc  AnkiDroid atstādīšanas dēļ Play Store noteikumiem\n\nTavi dati ir drošībā un var tikt atgūti. Tie atrodas\n%s\n\nIzvēlies atgūšanas veidu:</string>
+    <string name="restore_data_from_ankiweb">Atgūt no AnkiWeb (ieteikts)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Atgūt dotņu pieeju (ieteikts)</string>
+    <string name="install_non_play_store_ankidroid">Atgūt dotņu pieeju (sarežģīti)</string>
+    <string name="restore_data_from_backup">Atgūt no .colpkg rezerves (sarežģīti)</string>
+    <string name="create_new_collection">Izveidot jaunu krājumu</string>
+    <string name="new_unsafe_collection">Jaunais krājums tiks izdzēsts no tālruņa, ja AnkiDroid tiks atstādīts</string>
 </resources>

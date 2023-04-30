@@ -115,7 +115,7 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Sunting nota</string>
     <string name="discard_unsaved_changes">Tutup dan buang input ini?</string>
-    <string name="note_editor_no_cards_created">Tiada kad dikenal pasti. Sila isikan lebih banyak medan</string>
+    <string name="note_editor_no_cards_created">Tiada kad dicipta. Sila isikan lebih banyak medan</string>
     <string name="note_editor_no_first_field">Medan pertama kosong</string>
     <string name="note_editor_no_cloze_delations">Jenis nota memerlukan penghapusan kloz</string>
     <string name="note_editor_no_cards_created_all_fields">Jenis nota ini tidak mencipta apa-apa kad.\nSila pilih jenis nota lain atau tekan \'Kad\' dan tambah medan penggantian.</string>
@@ -127,7 +127,7 @@
     <string name="select">Pilih</string>
     <string name="reordering_cards">Menyusun semula kad&#8230;</string>
     <string name="field_remapping">%1$s (daripada “%2$s”)</string>
-    <string name="confirm_map_cards_to_nothing">Mana-mana kad yang dipetakan ke \"tiada\" akan dihapuskan. Jika suatu nota tiada baki kad, ia akan dibuang. Adakah anda mahu teruskan?</string>
+    <string name="confirm_map_cards_to_nothing">Mana-mana kad yang dipetakan ke \"tiada\" akan dipadam. Jika suatu nota tiada baki kad, ia akan dipadam. Adakah anda mahu teruskan?</string>
     <string name="timebox_reached_title">Kotak masa tercapai</string>
     <plurals name="timebox_reached">
         <item quantity="other">%1$d kad dipelajari dalam %2$s</item>
@@ -159,7 +159,7 @@
     <string name="info_rate">Nilaikan AnkiDroid</string>
     <string name="import_title">Mengimport</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
-    <string name="import_message_replace_confirm">Ini akan memadam koleksi sedia ada anda dan menggantikannya dengan data fail %s</string>
+    <string name="import_message_replace_confirm">Ini akan membuang koleksi sedia ada anda dan menggantikannya dengan data fail %s</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="other">Adakah anda mahu import fail ini:\n%s\nMungkin ambil masa lama</item>
     </plurals>
@@ -168,10 +168,10 @@
     <string name="import_log_failed_unzip">Gagal membuka zip apkg: %s</string>
     <string name="import_log_failed_copy_to">Gagal menyalin apkg ke %s</string>
     <string name="import_log_failed_validate">Pengesahan apkg gagal</string>
-    <string name="import_log_insufficient_space_error">Tiada ruang untuk mengimport pakej.\nPerlukan - %1$s \nTersedia - %2$s.\n\nAlami kesulitan? Cuba kosongkan ruang telefon anda jika mampu. Secara alternatif, penyegerakan memerlukan kurang ruangan berbanding import. Anda boleh cuba mengimport pakej menggunakan peranti ruangan lebih besar (seperti Anki Desktop) dan kemudian menyegerakkannya ke peranti ini.</string>
+    <string name="import_log_insufficient_space_error">Tiada ruang untuk mengimport pakej.\nPerlukan - %1$s \nTersedia - %2$s.\n\nAlami kesulitan? Cuba kosongkan ruang telefon anda jika mampu. Sebagai alternatif, penyegerakan memerlukan kurang ruangan berbanding import. Anda boleh cuba mengimport pakej menggunakan peranti ruangan lebih besar (seperti Anki Desktop) dan kemudian menyegerakkannya ke peranti ini.</string>
     <string name="import_log_file_cache_cleared">Ralat mengimport fail, mungkin penghapusan cache ketika memproses.\nSila cuba lagi</string>
     <string name="import_succeeded_but_check_database">Import data berjaya namun pembersihan selepas import gagal. Lakukan pemeriksaan pangkalan data nanti. Punca: %s</string>
-    <string name="import_error_corrupt_zip">Fail apkg rosak. Sila padam dan muat turun semula.\n\nPunca: %s</string>
+    <string name="import_error_corrupt_zip">Fail apkg rosak. Sila buang dan muat turun semula.\n\nPunca: %s</string>
     <string name="import_error_handle_exception">Gagal mengimport fail\n\n%s</string>
     <string name="import_error_not_apkg_extension">Nama fail “%s” tiada sambungan .apkg atau .colpkg</string>
     <string name="import_error_load_imported_database">Penggantian pangkalan data Anki (.anki2) belum disokong lagi. Sila lihat panduan bagi langkah penggantian.</string>
@@ -219,9 +219,9 @@
     <string name="steps_error">Setiap langkah hendaklah lebih besar daripada 0</string>
     <string name="steps_min_error">Sekurang-kurangnya satu langkah diperlukan</string>
     <string name="sched_end">(tamat)</string>
-    <string name="sched_unbury_action">Untuk lihatnya sekarang tekan pilihan “Tampil” dalam menu</string>
+    <string name="sched_unbury_action">Untuk lihatnya sekarang sentuh pilihan “Tampil” dalam menu</string>
     <string name="sched_has_buried">Beberapa kad berkaitan atau kad tersorok telah ditunda sehingga esok</string>
-    <string name="tag_editor_add_feedback">Tekan “%2$s” untuk sahkan tambah “%1$s”</string>
+    <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk sahkan tambah “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Tag “%1$s” sedia ada dipilih</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
@@ -251,8 +251,8 @@
          than. -->
     <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Dek itu sudah wujud</string>
-    <string name="decks_rename_filtered_nosubdecks">Dek tapisan tidak boleh ada subdek</string>
-    <string name="filtered_deck_name">Dek Tapisan</string>
+    <string name="decks_rename_filtered_nosubdecks">Dek ditapis tidak boleh ada subdek</string>
+    <string name="filtered_deck_name">Dek Ditapis</string>
     <string name="reminder_title">Janngan lupa ulang kaji hari ini!</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d kad untuk disemak dalam %1$s</item>
@@ -263,7 +263,7 @@
     <string name="export_v2_dummy_note">Fail ini perlu versi Anki baru</string>
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi dipasang yang boleh melakukan tindakan ini.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Anda mungkin mahu memampatkan dan ubah saiz gambar dalam direktori media]]></string>
-    <string name="no_browser_notification">Tiada pelayar dijumpa，sila lawat laman web melalui PC atau telefon: </string>
+    <string name="no_browser_notification">Tiada pelayar ditemui，sila lawat laman web melalui PC atau telefon: </string>
     <string name="web_page_error">Ralat memuatkan halaman: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Pautan halaman luar dalam kad tidak disokong</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
@@ -302,7 +302,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Gagal memuatkan dek ‘%s’</string>
     <string name="search_decks">Cari dek</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Tunjuk kemajuan penghijrahan</string>
     <string name="ankidroid_init_failed_webview_title">Ralat Maut</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid bergantung kepada WebView Sistem yang tidak tersedia. Ini boleh berlaku jika sistem sedang kemas kini. Sila cuba lagi dalam beberapa minit.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->

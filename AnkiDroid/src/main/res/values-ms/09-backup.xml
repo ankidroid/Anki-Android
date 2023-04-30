@@ -48,8 +48,8 @@
     <string name="storage_warning">Tinggal kurang dari %d MB ruang pada storan anda.\nKosongkan sedikit ruang untuk mengelakkan kehilangan data.</string>
     <string name="backup_restore">Pulih dari sandaran</string>
     <string name="backup_new_collection">Koleksi baru</string>
-    <string name="backup_del_collection">Padam koleksi dan cipta yang baharu</string>
-    <string name="backup_del_collection_question">Padamkan koleksi dan cipta yang baharu? Ini akan buang semua kemajuan pembelajaran anda dan memadam semua kad.</string>
+    <string name="backup_del_collection">Buang koleksi dan cipta yang baharu</string>
+    <string name="backup_del_collection_question">Buang koleksi dan cipta yang baharu? Ini akan lepaskan semua kemajuan pembelajaran anda dan memadam semua kad.</string>
     <string name="backup_full_sync_from_server">Penyegerakan penuh dari pelayan</string>
     <string name="backup_full_sync_from_server_question">Ganti tulis koleksi anda dengan yang dari AnkiWeb? Ini akan buang semua kemajuan pembelajaran dan maklumat yang ditambah sejak penyegerakan terakhir.</string>
     <string name="error_handling_title">Pengendalian ralat</string>
@@ -62,7 +62,7 @@
     <string name="backup_restore_select_title">Pilih sandaran untuk memulihkan</string>
     <string name="backup_restore_no_backups">Tiada sandaran tersedia pada peranti ini. Jika anda mempunyai sandara pada komputer desktop, salin secara manual ke dalam folder AnkiDroid.</string>
     <string name="open_collection_failed_title">Koleksi tidak dibuka</string>
-    <string name="corrupt_db_message">Koleksi anda rosak.\n\nTekan “pilihan” untuk pulihkan dari sandaran, atau jika tidak berjaya, lihat lengkah seterusnya untuk membaiki pangkalan data secara manual:\n%1$s</string>
-    <string name="access_collection_failed_message">Ralat berlaku semasa mencapai koleksi anda. Ia mungkin disebabkan oleh pepijat tidak berisiko, atau mungkin ia terdapat kesulitan. \n\nCuba lakukan pemeriksaan pangkalan data, atau pulihkan dari sandaran dengan menekan butang “pilihan”. Jika anda masih melihat pesanan ini, sila failkan laporan pepijat:\n%1$s</string>
+    <string name="corrupt_db_message">Koleksi anda rosak.\n\nSentuh “pilihan” untuk pulihkan dari sandaran, atau jika tidak berjaya, lihat lengkah seterusnya untuk membaiki pangkalan data secara manual:\n%1$s</string>
+    <string name="access_collection_failed_message">Ralat berlaku semasa mencapai koleksi anda. Ia mungkin disebabkan oleh pepijat tidak berisiko, atau mungkin terdapat kesulitan. \n\nCuba lakukan pemeriksaan pangkalan data, atau pulihkan dari sandaran dengan menekan butang “pilihan”. Jika anda masih melihat pesanan ini, sila failkan laporan pepijat:\n%1$s</string>
     <string name="deck_repair_error">Koleksi tidak dapat dibaiki</string>
 </resources>

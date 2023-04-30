@@ -51,7 +51,7 @@
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="other">%d枚のノート</item>
     </plurals>
-    <string name="card_browser_all_decks">全てのデッキ</string>
+    <string name="card_browser_all_decks">すべてのデッキ</string>
     <string name="card_browser_delete_card">ノートを削除</string>
     <string name="card_browser_suspend_card">カードを保留</string>
     <string name="card_browser_change_deck">デッキを変更</string>
@@ -88,8 +88,8 @@
         <item>回答回数順</item>
         <item>忘却回数順</item>
     </string-array>
-    <string name="card_browser_select_all">全て選択</string>
-    <string name="card_browser_select_none">選択を全て解除</string>
+    <string name="card_browser_select_all">すべて選択</string>
+    <string name="card_browser_select_none">選択をすべて解除</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新規)</string>
     <string name="card_browser_due_filtered_card">(フィルター)</string>
     <string name="card_browser_interval_learning_card">(習得中)</string>

@@ -77,7 +77,7 @@
     <string name="stats_answer_type">Jenis jawapan</string>
     <string name="stats_today_again_count">Bilangan ulang: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; betul)</string>
-    <string name="stats_today_type_breakdown">Belajar: &lt;b&gt;%1$d&lt;/b&gt;, semak: &lt;b&gt;%2$d&lt;/b&gt;, belajar semula: &lt;b&gt;%3$d&lt;/b&gt;, tapisan: &lt;b&gt;%4$d&lt;/b&gt;</string>
+    <string name="stats_today_type_breakdown">Belajar: &lt;b&gt;%1$d&lt;/b&gt;, semak: &lt;b&gt;%2$d&lt;/b&gt;, belajar semula: &lt;b&gt;%3$d&lt;/b&gt;, ditapis: &lt;b&gt;%4$d&lt;/b&gt;</string>
     <string name="stats_today_mature_cards">Jawaban betul pada kad matang: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">Tiada kad matang yang diulang kaji hari ini</string>
     <string name="stats_overview_forecast_total">Jumlah: &lt;b&gt;%1$d&lt;/b&gt; semakan</string>

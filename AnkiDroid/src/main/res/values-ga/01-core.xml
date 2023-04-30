@@ -76,7 +76,7 @@
         <item quantity="other">%d nóiméad fágtha </item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
+        <item quantity="one">%1$d uair %2$d fagtha</item>
         <item quantity="two">%1$d hours %2$d left</item>
         <item quantity="few">%1$d hours %2$d left</item>
         <item quantity="many">%1$d hours %2$d left</item>
@@ -93,52 +93,52 @@
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="two">Studied %1$d cards in %2$s today</item>
+        <item quantity="one">Staidéar déanta ar %1$d cárta taobh istigh de %2$s inniu</item>
+        <item quantity="two">Staidéar déanta ar %1$d cártaí taobh istigh de %2$s inniu</item>
         <item quantity="few">Studied %1$d cards in %2$s today</item>
         <item quantity="many">Studied %1$d cards in %2$s today</item>
         <item quantity="other">Studied %1$d cards in %2$s today</item>
     </plurals>
     <!-- flashcard_portrait.xml -->
-    <string name="type_answer_hint">Type answer</string>
-    <string name="show_answer">Show answer</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="type_answer_hint">Clóscríobh freagra </string>
+    <string name="show_answer">Taispeáin freagra</string>
+    <string name="hide_answer">Cuir freagra i bhfolach </string>
     <string name="ease_button_again">Arís</string>
     <string name="ease_button_hard">Deacair</string>
     <string name="ease_button_good">Maith</string>
     <string name="ease_button_easy">Éasca</string>
-    <string name="studyoptions_congrats_undo">Undo %s</string>
-    <string name="menu_import">Import</string>
-    <string name="undo">Undo</string>
+    <string name="studyoptions_congrats_undo">Cealaigh %s</string>
+    <string name="menu_import">Iompórtáil</string>
+    <string name="undo">Cealaigh</string>
     <string name="undo_action_review">last review</string>
     <string name="undo_action_change_deck_multi">change decks</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Cuir stríoc ar ceal</string>
     <string name="move_all_to_deck">Move all to deck</string>
-    <string name="unbury">Unbury</string>
-    <string name="rename_deck">Rename deck</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="unbury">Tarraing amach</string>
+    <string name="rename_deck">Athainmnigh paca</string>
+    <string name="create_shortcut">Cruthaigh aicearra</string>
+    <string name="browse_cards">Brabhsáil cártaí</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Cuir leis</string>
-    <string name="menu_add_note">Add note</string>
+    <string name="menu_add_note">Cuir nóta leis</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
     <string name="menu_dismiss_note">Cuir i bhfolach / scrios</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
-    <string name="menu_suspend_card">Suspend card</string>
-    <string name="menu_suspend_note">Suspend note</string>
+    <string name="menu_suspend_card">Cuir cárta ar fionraí</string>
+    <string name="menu_suspend_note">Cuir nóta ar fionraí</string>
     <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
-    <string name="menu_delete_note">Delete note</string>
-    <string name="menu_flag">Flag</string>
+    <string name="menu_suspend">Cuir ar fionraí</string>
+    <string name="menu_delete_note">Scrios nóta</string>
+    <string name="menu_flag">Bratach</string>
     <string name="menu_flag_card">Flag card</string>
     <string name="menu_flag_card_zero">Gan brat</string>
     <string name="menu_flag_card_one">Brat dhearg</string>
     <string name="menu_flag_card_two">Brat oráiste</string>
     <string name="menu_flag_card_three">Brat uaine</string>
     <string name="menu_flag_card_four">Brat ghorm</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_five">Bratach bhándearg</string>
+    <string name="menu_flag_card_six">Bratach turcaid</string>
+    <string name="menu_flag_card_seven">Bratach chorcra</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Really delete this note and all its cards?\n%s</string>
     <string name="menu_search">Lookup in %1$s</string>
@@ -171,11 +171,11 @@
     <string name="time_quantity_years">%.1f bl</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
-    <string name="rebuild_cram_label">Rebuild</string>
+    <string name="rebuild_cram_label">Tóg arís </string>
     <string name="empty_cram_label">Folamh</string>
     <string name="create_subdeck">Create subdeck</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
-    <string name="custom_study_deck_name">Custom study session</string>
+    <string name="custom_study_deck_name">Staidéar ar leith</string>
     <string name="custom_study_deck_exists">Rename the existing custom study deck first</string>
     <string name="empty_deck">This deck is empty</string>
     <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>

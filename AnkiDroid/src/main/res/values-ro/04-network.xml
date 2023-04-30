@@ -46,9 +46,9 @@
 -->
 <resources>
     <string name="youre_offline">Ești deconectat</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
+    <string name="sync_even_if_offline">Încearcă oricum</string>
     <string name="sync_error">Eroare de sincronizare</string>
-    <string name="vague_error" comment="Network error dialog title">Error</string>
+    <string name="vague_error" comment="Network error dialog title">Eroare</string>
     <string name="retry">Reincearca</string>
     <string name="menu_get_shared_decks">Obţinerea punţilor comune</string>
     <string name="connection_error_message">A network error has ocurred.</string>
@@ -66,7 +66,7 @@
     <string name="alert_logging_message">Autentificare în curs&#8230;</string>
     <string name="invalid_username_password">Adresă de e-mail sau parolă incorectă</string>
     <string name="reset_password">Resetare parolă</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">Ai uitat email-ul?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opţiuni pentru XXX</string>
     <string name="sync_prepare_syncing">Pregăteste sincronizarea&#8230;</string>
@@ -88,15 +88,15 @@
     <string name="sync_connection_error">Conexiunea a expirat. Conexiunea la internet se confruntă cu probleme, fie ai un fisier foarte mare în folderul de mass-media.</string>
     <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
     <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Syncing deletions&#8230;</string>
-    <string name="sync_small_objects_message">Syncing small objects&#8230;</string>
+    <string name="sync_deletions_message">Se sincronizează ștergerile&#8230;</string>
+    <string name="sync_small_objects_message">Se sincronizează obiectele mici&#8230;</string>
     <string name="sync_finish_message">Finishing syncing&#8230;</string>
     <string name="sync_log_finish_error">Error while sending finish direction to server</string>
     <string name="sync_writing_db">Writing changes into database&#8230;</string>
     <string name="sync_download_chunk">Downloading changes&#8230;</string>
     <string name="sync_upload_chunk">Uploading changes&#8230;</string>
     <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
-    <string name="sync_generic_error">An error has occurred. Try again later.</string>
+    <string name="sync_generic_error">A apărut o eroare. Încearcă din nou mai târziu.</string>
     <string name="sync_check_upload_file">Checking file before upload&#8230;</string>
     <string name="sync_check_download_file">Checking downloaded file&#8230;</string>
     <string name="sync_media_find">Finding changed media&#8230;</string>

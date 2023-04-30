@@ -60,10 +60,10 @@
     <string name="card_browser_unmark_card">Buang cap nota</string>
     <string name="delete_card_title">Padam Nota?</string>
     <string name="changed_deck_message">Dipindah ke %s</string>
-    <string name="card_browser_show_marked">Tapisan ditanda</string>
-    <string name="card_browser_show_suspended">Tapisan dibekukan</string>
-    <string name="card_browser_search_by_tag">Tapis menggunakan tag</string>
-    <string name="card_browser_search_by_flag">Tapis menggunakan tanda</string>
+    <string name="card_browser_show_marked">Tapis dicap</string>
+    <string name="card_browser_show_suspended">Tapis dibekukan</string>
+    <string name="card_browser_search_by_tag">Tapis dengan tag</string>
+    <string name="card_browser_search_by_flag">Tapis dengan tanda</string>
     <string name="card_browser_list_my_searches">Carian saya</string>
     <string name="card_browser_list_my_searches_save">Simpan carian</string>
     <string name="card_browser_list_my_searches_title">Pilih carian yang disimpan</string>
@@ -83,7 +83,7 @@
         <item>Ikut masa ubah nota</item>
         <item>Ikut masa ubah kad</item>
         <item>Ikut masa tunggakan</item>
-        <item>Ikut seling</item>
+        <item>Ikut selingan</item>
         <item>Ikut longgaran</item>
         <item>Ikut semakan</item>
         <item>Ikut cuaian</item>
@@ -91,9 +91,9 @@
     <string name="card_browser_select_all">Pilih semua</string>
     <string name="card_browser_select_none">Pilih tiada</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(baru)</string>
-    <string name="card_browser_due_filtered_card">(tapisan)</string>
+    <string name="card_browser_due_filtered_card">(ditapis)</string>
     <string name="card_browser_interval_learning_card">(belajar)</string>
-    <string name="card_browser_no_cards_in_deck">Tiada kad dijumpai dalam dek ‘%s’</string>
+    <string name="card_browser_no_cards_in_deck">Tiada kad ditemui dalam dek ‘%s’</string>
     <string name="card_browser_search_all_decks">Cari semua dek</string>
     <string name="card_browser_unknown_deck_name">Tidak diketahui</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Pendekkan kandungan</string>
@@ -128,6 +128,6 @@
     <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Belajar</string>
     <string name="card_info_revlog_review">Semakan</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Belajar semula</string>
-    <string name="card_info_revlog_filtered">Tapisan</string>
+    <string name="card_info_revlog_filtered">Ditapis</string>
     <string name="card_info_ease_not_applicable">T/A</string>
 </resources>
