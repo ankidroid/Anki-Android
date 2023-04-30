@@ -199,7 +199,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
         // Set material dialog parameters
         val dialog = MaterialDialog(requireActivity())
-            .customView(view = v, scrollable = true, noVerticalPadding = true, horizontalPadding = true)
+            .customView(view = v, scrollable = true, noVerticalPadding = false, horizontalPadding = true)
             .positiveButton(R.string.dialog_ok) {
                 // Get the value selected by user
                 val n: Int = try {
