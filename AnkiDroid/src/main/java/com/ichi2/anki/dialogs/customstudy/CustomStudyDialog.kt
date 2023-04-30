@@ -393,7 +393,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     private val text1: String
         get() {
-            val res = AnkiDroidApp.appResources
+            val res = resources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched.totalNewForCurrentDeck())
                 STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched.totalRevForCurrentDeck())
@@ -402,7 +402,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
     private val text2: String
         get() {
-            val res = AnkiDroidApp.appResources
+            val res = resources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
                 STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
