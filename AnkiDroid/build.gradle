@@ -26,6 +26,8 @@ idea {
 
 def homePath = System.properties['user.home']
 android {
+    namespace "com.ichi2.anki"
+
     compileSdkVersion 33 // change api compileSdkVersion at the same time
 
     defaultConfig {
