@@ -51,7 +51,7 @@
     <string name="backup_del_collection">コレクションの削除と新規作成</string>
     <string name="backup_del_collection_question">コレクションを削除して、新しいコレクションを作成しますか？　作成すると、これまでの回答履歴および全カードが削除されます</string>
     <string name="backup_full_sync_from_server">AnkiWeb側コレクションによる完全同期</string>
-    <string name="backup_full_sync_from_server_question">このコレクションを、AnkiWeb上にあるコレクションで上書きしますか？　上書きすると、直近の同期より後にカードに回答した履歴や追加入力した情報は全て失われます</string>
+    <string name="backup_full_sync_from_server_question">このコレクションを、AnkiWeb上にあるコレクションで上書きしますか？　上書きすると、直近の同期より後にカードに回答した履歴や追加入力した情報はすべて失われます</string>
     <string name="error_handling_title">エラー処理</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">オプション</string>
     <string name="backup_retry_opening">起動画面の再試行</string>

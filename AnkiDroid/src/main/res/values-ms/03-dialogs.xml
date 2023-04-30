@@ -86,7 +86,7 @@
     <string name="reschedule_card_dialog_warning_ease_reset">Penjadualan semula juga tetap semula cara penjadual mengolah kard pada masa hadapan (longgaran akan ditetapkan ke %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Pilih dek dalam pengurus fail anda atau lawat halaman about:downloads untuk mengimportnya</string>
     <string name="answering_error_title">Ralat pangkalan data</string>
-    <string name="answering_error_message">Menulis ke koleksi gagal. Pangkalan data mungkin rosak atau kehabisan ruang kosong pada cakera.\n\nJika ini berlaku kerap, cuba periksa pangkalan data, baiki koleksi atau pulih dari suatu sandaran. Tekan \"tetapan\" untuk lakukannya.\n\Atau ia mungkin pepijat AnkiDroid; sila laporkannya agar kami boleh memeriksa ralat tersebut.</string>
+    <string name="answering_error_message">Menulis ke koleksi gagal. Pangkalan data mungkin rosak atau kehabisan ruang kosong pada cakera.\n\nJika ini berlaku kerap, cuba periksa pangkalan data, baiki koleksi atau pulih dari suatu sandaran. Sentuh \"tetapan\" untuk lakukannya.\n\Atau ia mungkin pepijat AnkiDroid; sila laporkannya agar kami boleh memeriksa ralat tersebut.</string>
     <string name="answering_error_report">Lapor ralat</string>
     <string name="storage_full_message">Kehabisan ruang storan kosong untuk membuka AnkiDroid. Kosongkan sedikit ruang untuk teruskan. </string>
     <string name="repair_deck_dialog">Adakah anda pasti mahu membaiki pangkalan data?\n\nSebelum mencuba, satu salinan akan dibuat dalam subfolder “%s”.</string>
@@ -143,13 +143,13 @@
     <string name="check_media_invalid">Fail dengan pengekodan tidak sah: %d</string>
     <string name="check_media_unused">Fail dalam folder media namun tidak digunakan oleh mana-mana kad: %d</string>
     <string name="check_media_nohave">Fail digunakan pada kad namun bukan dalam folder media: %d</string>
-    <string name="check_media_no_unused_missing">Tiada fail tidak digunakan or hilang dijumpai</string>
+    <string name="check_media_no_unused_missing">Tiada fail tidak digunakan or hilang ditemui</string>
     <string name="check_media_db_updated">Pangkalan data media telah dibina semula</string>
     <string name="check_media_delete_unused">Padam yang tidak digunakan</string>
     <string name="delete_media_message">Memadam media&#8230;</string>
     <string name="delete_media_result_title">Keputusan pemadaman</string>
     <plurals name="delete_media_result_message">
-        <item quantity="other">%d fail telah dipadam</item>
+        <item quantity="other">%d fail telah dibuang</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Semua kad</string>
@@ -259,7 +259,7 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Kemudian</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Jangan tunjukkan lagi</string>
     <string name="dismiss_backup_warning_title">Amaran kehilangan data</string>
-    <string name="dismiss_backup_warning_new_user">        Akibat perubahan privasi Android, data anda dan sandaran automatik akan dipadam dari telefon anda jika aplikasi dinyahpasang
+    <string name="dismiss_backup_warning_new_user">        Akibat perubahan privasi Android, data anda dan sandaran automatik akan dibuang dari telefon anda jika aplikasi dinyahpasang
     </string>
     <string name="dismiss_backup_warning_upgrade">        Akibat perubahan privasi Android, data anda dan sandaran automatik tidak akan dapat dicapai jika aplikasi dinyahpasang
     </string>

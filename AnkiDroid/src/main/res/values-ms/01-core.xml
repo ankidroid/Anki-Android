@@ -150,11 +150,11 @@
     <string name="time_quantity_months">%.1f b</string>
     <string name="time_quantity_years">%.1f t</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Membina semula dek tapisan&#8230;</string>
+    <string name="rebuild_filtered_deck">Membina semula dek ditapis&#8230;</string>
     <string name="rebuild_cram_label">Bina semula</string>
     <string name="empty_cram_label">Kosongkan</string>
     <string name="create_subdeck">Cipta subdek</string>
-    <string name="empty_filtered_deck">Mengosongkan dek tapisan&#8230;</string>
+    <string name="empty_filtered_deck">Mengosongkan dek ditapis&#8230;</string>
     <string name="custom_study_deck_name">Sesi ulang kaji tersuai</string>
     <string name="custom_study_deck_exists">Nama semula dek ulang kaji tersuai sedia ada dahulu</string>
     <string name="empty_deck">Dek kosong</string>
@@ -165,9 +165,9 @@
     <string name="studyoptions_limit_reached">Had ulang kaji harian tercapai</string>
     <string name="studyoptions_empty_schedule">Tiada kad untuk ulang kaji</string>
     <string name="studyoptions_congrats_finished">Tahniah! Kini anda telah selesai.</string>
-    <string name="studyoptions_congrats_more_rev">Had hari ini tercapai, namun masih ada kad untuk semak. Anda boleh tingkatkan had dalam tetapan dek.</string>
+    <string name="studyoptions_congrats_more_rev">Had hari ini tercapai, namun masih terdapat kad untuk semak. Anda boleh tingkatkan had dalam tetapan dek.</string>
     <string name="studyoptions_congrats_more_new">Had hari ini tercapai. Terdapat lebih kad baru; anda boleh tingkatkan had dalam tetapan dek, namun ia akan tambah beban kerja semakan anda dalam jangka pendek.</string>
-    <string name="studyoptions_congrats_custom">Untuk belajar di luar jadual biasa, tekan butang “ulang kaji tersuai”</string>
+    <string name="studyoptions_congrats_custom">Untuk belajar di luar jadual biasa, sentuh butang “ulang kaji tersuai”</string>
     <string name="studyoptions_no_cards_due">Tiada kad tertunggak lagi</string>
     <string name="sd_card_not_mounted">Peranti storan tidak dipasang</string>
     <string name="empty_cloze_warning">Sunting nota ini dan tambah penghapusan kloz. (%1$s)</string>
@@ -199,7 +199,7 @@
         <item quantity="other">Padam jenis kad “%2$s”, dan %1$d kad-kadnya?</item>
     </plurals>
     <string name="invalid_template">Kad tidak dapat dihasilkan</string>
-    <string name="card_template_editor_would_delete_note">Memadam jenis kad ini akan akibatkan satu atau lebih nota turut dipadam. Sila cipta dan simpan jenis kad yang baru dahulu.</string>
+    <string name="card_template_editor_would_delete_note">Membuang jenis kad ini akan akibatkan satu atau lebih nota turut dipadam. Sila cipta dan simpan jenis kad yang baru dahulu.</string>
     <string name="card_template_editor_save_error">Gagal simpan suntingan templat kad: %s</string>
     <string name="template_for_current_card_deleted">Jenis kad bagi kad ini telah dipadam.</string>
     <!-- Card Browser Appearance -->
@@ -220,7 +220,7 @@
     <string name="missing_closing_bracket">Tiada \'}}\' dalam \'%s\'.</string>
     <string name="open_tag_not_closed">Tiada \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">Jumpa \'{{/%1$s}}\', namun menjangka \'{{/%2$s}}\'</string>
-    <string name="filter_error">Ralat dalam tapisan %s</string>
+    <string name="filter_error">Ralat dalam tapis %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Koleksi tidak boleh digabungkan .\nKoleksi mana yang anda ingin simpan?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -262,5 +262,5 @@
     <string name="install_non_play_store_ankidroid">Pulih capaian folder (lanjutan)</string>
     <string name="restore_data_from_backup">Pulih dari sandaran .colpkg (lanjutan)</string>
     <string name="create_new_collection">Cipta koleksi baharu</string>
-    <string name="new_unsafe_collection">Koleksi baru ini akan dipadam dari fon anda jika anda nyahpasang AnkiDroid</string>
+    <string name="new_unsafe_collection">Koleksi baru ini akan dibuang dari fon anda jika anda nyahpasang AnkiDroid</string>
 </resources>
