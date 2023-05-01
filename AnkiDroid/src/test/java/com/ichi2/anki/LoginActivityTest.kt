@@ -1,25 +1,45 @@
 package com.ichi2.anki
 
+import android.app.Activity
 import androidx.lifecycle.Lifecycle
-import androidx.test.core.app.ActivityScenario.launch
+import androidx.test.core.app.ActivityScenario.launchActivityForResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.MyAccount.Companion.STATE_LOGGED_IN
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertEquals
 
 @RunWith(AndroidJUnit4::class)
 class LoginActivityTest : RobolectricTest() {
     @Test
     fun activityIsClosedIfStartedWhenLoggedIn() {
-        val scenario = launch(LoginActivity::class.java)
+        // Effectively mocks isLoggedIn() to return true.
+        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit()
+            .putString(SyncPreferences.HKEY, "anything not null")
+            .apply()
 
-        scenario.moveToState(Lifecycle.State.CREATED)
+        val scenario = launchActivityForResult(LoginActivity::class.java)
 
-        scenario.onActivity { activity ->
-            run {
-                activity.switchToState(STATE_LOGGED_IN)
-                assert(activity.isFinishing)
-            }
-        }
+        // When the user is logged in, we expect the activity to call finish() from onCreate().
+        // Since this is expected behaviour, we also expect the result to be "OK".
+        assertEquals(Activity.RESULT_OK, scenario.result.resultCode)
+        assertEquals(Lifecycle.State.DESTROYED, scenario.state)
+    }
+
+    @Test
+    fun activityIsNotFinishedOnStartupIfNotLoggedIn() {
+        // Effectively mocks isLoggedIn() to return false.
+        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit()
+            .putString(SyncPreferences.HKEY, "")
+            .apply()
+
+        val scenario = launchActivityForResult(LoginActivity::class.java)
+
+        // Since the activity state is different than STATE_LOGGED_IN, we *don't* expect the
+        // activity to finish immediately.
+        assertEquals(Lifecycle.State.RESUMED, scenario.state)
+
+        // Now we close the activity and check the result.
+        scenario.close()
+        assertEquals(Activity.RESULT_CANCELED, scenario.result.resultCode)
     }
 }
