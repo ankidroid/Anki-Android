@@ -23,7 +23,6 @@ import android.view.View
 import android.view.View.GONE
 import androidx.lifecycle.Lifecycle
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
 /**
@@ -43,7 +42,7 @@ import timber.log.Timber
  *
  * TODO: Move this to a fragment
  */
-@NeedsTest("check result codes based on login result")
+
 class LoginActivity : MyAccount() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
