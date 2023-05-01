@@ -74,12 +74,12 @@
     <string name="sync_uploading_message">ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_title">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
-    <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ କରାଗଲା</string>
+    <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ କରାଗଲା</string>
     <string name="sync_log_clocks_unsynchronized">ଆପଣଙ୍କର ଘଣ୍ଟା %1$d ସେକେଣ୍ଡ%2$s ଆଗପଛ ଅଛି। ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ଫୋନରେ ତାରିଖ, ସମୟ, ଏବଂ ସମୟମଣ୍ଡଳ ସଠିକ୍ ଭାବରେ ସେଟ୍ ହୋଇଛି, ତାପରେ ପୁନର୍ବାର ସିଙ୍କ୍ କରନ୍ତୁ।</string>
     <string name="sync_log_clocks_unsynchronized_tz">, ସମୟ ମଣ୍ଡଳ ସମ୍ଭଵତଃ ଭୁଲ୍ ଅଟେ</string>
     <string name="sync_log_clocks_unsynchronized_date">, ତାରିଖ ସମ୍ଭଵତଃ ଭୁଲ୍ ଅଟେ</string>
     <string name="sync_no_changes_message">କୌଣସି ପରିବର୍ତ୍ତନ ମିଳିଲା ନାହିଁ</string>
-    <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସିଙ୍କ୍ରୋନାଇଜ୍ ହୋଇଛି</string>
+    <string name="sync_database_acknowledge">ସଂଗ୍ରହ ସୀଙ୍କ୍ରୋନାଇଜ୍ ହୋଇଛି</string>
     <string name="sync_log_error_specific">ସୀଙ୍କ୍ ତ୍ରୁଟି, ପ୍ରକାର: %1$s, ଵାର୍ତ୍ତା: %2$s</string>
     <string name="sync_corrupt_database">ଆପଣଙ୍କର ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ଅଟେ। ସିଙ୍କ୍ କରିବାକୁ ପୁନର୍ବାର ଚେଷ୍ଟା କରିବା ପୂର୍ବରୁ ଦୟାକରି ଏହାକୁ ଠିକ୍ କରନ୍ତୁ।\n\nଆପଣଙ୍କର ଡାଟାବେସ୍ ମରାମତି ବିଷୟରେ ସୂଚନା ପାଇଁ %s ଦେଖନ୍ତୁ।</string>
     <string name="sync_too_busy">ସର୍ଵର୍ ଵ୍ୟସ୍ତ ଅଛି। ପରେ ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ।</string>

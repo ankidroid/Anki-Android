@@ -44,14 +44,14 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">სარეზერვო ასლი ვერ შეინახა. მეხსიერებაში არ არის დარჩენილი საკმარისი ადგილი. შეამცირეთ სარეზერვო ასლის სიღრმე ან გაათავისუფლეთ მეხსიერება.</string>
+    <string name="storage_warning">თქვენს მეხსიერებაში დარჩენილია %d MB-ზე ნაკლები ადგილი.\nმონაცემების დაკარგვის თავიდან აცილების მიზნით გთხოვთ გაათავისუფლოთ მეხსიერება.</string>
     <string name="backup_restore">აღდგენა სარეზერვო ასლიდან</string>
     <string name="backup_new_collection">ახალი კოლექცია</string>
     <string name="backup_del_collection">კოლექციის წაშლა და ახლის შექმნა</string>
-    <string name="backup_del_collection_question">Delete the collection and create a new one? This will drop all your learning progress and delete all cards.</string>
+    <string name="backup_del_collection_question">გსურთ კოლექციის წაშლა და ახლის შექმნა? დადასტურების შემთხვევაში წაიშლება როგორც მთელი სწავლის პროგრესი, ასევე ყველა ბარათი.</string>
     <string name="backup_full_sync_from_server">სრული სინქრონიზაცია სერვერიდან</string>
-    <string name="backup_full_sync_from_server_question">Overwrite your collection with the one from AnkiWeb? This will drop all your learning progress and added information since your last sync.</string>
+    <string name="backup_full_sync_from_server_question">ჩანაცვლდეს კოლექცია AnkiWeb-ზე შენახული ვერსიით? დადასტურების შემთხვევაში წაიშლება როგორც მთელი სწავლის პროგრესი, ასევე ბოლო სინქრონიზაციის შემდეგ დამატებული ინფორმაცია.</string>
     <string name="error_handling_title">შეცდომის გამართვა</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">პარამეტრები</string>
     <string name="backup_retry_opening">გახსნის ხელახლა ცდა</string>
