@@ -19,7 +19,7 @@
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki" >
 
     <PreferenceCategory android:title="@string/deck_conf_cram_filter" >
-        <EditTextPreference
+        <com.ichi2.preferences.AutoFocusEditTextPreference
             android:key="@string/filtered_deck_search_key"
             android:title="@string/deck_conf_cram_search" />
 
