@@ -69,7 +69,7 @@
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
     <string name="clear_whiteboard">ホワイトボードの内容を消去</string>
     <string name="replay_audio">音声・動画を再生</string>
-    <string name="leech_suspend_notification">このカードは \"leech\" （無駄、習得困難） というタグが付けられ、保留されました</string>
+    <string name="leech_suspend_notification">このカードに \"leech\"  (無駄、習得困難) というタグを付け、学習を休止しました</string>
     <string name="leech_notification">このカードに \"leech\" （無駄、習得困難） というタグを付けました</string>
     <string name="corrupt_font">使用できないフォントファイル %s</string>
     <string name="webview_crash_unknown">原因不明のエラー</string>
@@ -128,9 +128,9 @@
     <string name="reordering_cards">カードを並べ替えています...</string>
     <string name="field_remapping">%1$s (\'%2$s\'から)</string>
     <string name="confirm_map_cards_to_nothing">割り当て先のないカードは削除されます。カードがすべて削除されたノートは、そのノート自体が削除されます。続行してもよろしいですか？</string>
-    <string name="timebox_reached_title">タイムボックスの時間です</string>
+    <string name="timebox_reached_title">目標時間の学習達成</string>
     <plurals name="timebox_reached">
-        <item quantity="other">%1$d枚のカードを%2$sで学習しました</item>
+        <item quantity="other">%2$sで%1$d枚のカードを学習しました</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
@@ -144,7 +144,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
     <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">名前の変更</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">名前を変更</string>
     <string name="default_conf_delete_error">デフォルトのオプショングループは削除できません</string>
     <plurals name="factadder_cards_added">
         <item quantity="other">%d枚のカードを追加しました</item>
@@ -237,7 +237,7 @@
         <item quantity="other">%s日間</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="other">%sヵ月</item>
+        <item quantity="other">%sか月</item>
     </plurals>
     <plurals name="time_span_years">
         <item quantity="other">%s年</item>
@@ -272,7 +272,7 @@
     <string name="background_image_title">デッキリスト画面の背景</string>
     <string name="choose_an_image">画像を選択</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">デフォルトに戻す</string>
+    <string name="restore_default">既定値に戻す</string>
     <string name="cloze_sample_text">これは穴埋め問題の{{%1$s::サンプル}}です。</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">an example</string>
@@ -381,8 +381,8 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">コレクションにアクセスできませんでした。もう一度試してみてください</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">小さな努力で</string>
-    <string name="intro_ankidroid_tagline_two">大きな成果を</string>
+    <string name="intro_ankidroid_tagline_one">負担は小さく</string>
+    <string name="intro_ankidroid_tagline_two">成果は大きく</string>
     <string name="intro_short_ankidroid_explanation">Ankiは、記憶を定着させ強化するのに適したスケジュールでカードを表示する間隔反復学習システムです。AnkiDroidで効率的な学習をお楽しみください</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">開始する</string>
     <string name="intro_sync_from_ankiweb">AnkiWebから同期</string>

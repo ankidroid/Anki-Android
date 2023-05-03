@@ -69,8 +69,8 @@
     <string name="hide_whiteboard">隐藏白板</string>
     <string name="clear_whiteboard">清空白板</string>
     <string name="replay_audio">重新播放</string>
-    <string name="leech_suspend_notification">卡片被标记为“水蛭”并暂停复习</string>
-    <string name="leech_notification">卡片被标记为“水蛭”</string>
+    <string name="leech_suspend_notification">卡片被标记为「记忆难点」并暂停复习</string>
+    <string name="leech_notification">卡片被标记为「记忆难点」</string>
     <string name="corrupt_font">字体文件 %s 已损坏</string>
     <string name="webview_crash_unknown">未知错误</string>
     <string name="webview_crash_unknwon_detailed">这是由 WebView 内部错误导致的</string>
@@ -103,7 +103,7 @@
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">应用</string>
-    <string name="filter_by_flags">标志</string>
+    <string name="filter_by_flags">旗标</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>
     <string name="custom_study_increase_review_limit">修改今天的复习卡片数量限制</string>

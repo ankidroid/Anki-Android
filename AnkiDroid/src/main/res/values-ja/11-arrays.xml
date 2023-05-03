@@ -50,8 +50,8 @@
     <!-- 01-core:menu_suspend_card -->
     <string name="leech_action_tag_only">タグを付けるだけ</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">新規カードを無作為に選んで表示する</string>
-    <string name="new_order_order_added">新規カードを追加順に表示する</string>
+    <string name="new_order_random">ランダム</string>
+    <string name="new_order_order_added">追加順</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">前回表示日時が古い順</string>
     <string name="cram_deck_conf_order_random">ランダム</string>
@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">フォントが指定されていない場合</string>
     <string name="override_font_always" comment="Option to always override font">すべて</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">端末の設定に従う</string>
+    <string name="theme_follow_system">システムの設定に従う</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ライトブルー</string>
     <string name="day_theme_plain">プレーン</string>
@@ -102,7 +102,7 @@
     <string name="gesture_flag_green">緑フラグを付ける/取り外す</string>
     <string name="gesture_flag_blue">青フラグを付ける/取り外す</string>
     <string name="gesture_flag_pink">ピンクフラグを付ける/取り外す</string>
-    <string name="gesture_flag_turquoise">青緑フラグを付ける/取り外す</string>
+    <string name="gesture_flag_turquoise">ターコイズフラグを付ける/取り外す</string>
     <string name="gesture_flag_purple">紫フラグを付ける/取り外す</string>
     <string name="gesture_flag_remove">フラグを取り外す</string>
     <string name="gesture_page_up">１画面分上へスクロール</string>
