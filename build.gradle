@@ -5,17 +5,17 @@ import org.gradle.internal.jvm.Jvm
 buildscript {
     // The version for the Kotlin plugin and dependencies
     ext.kotlin_version = '1.8.21'
-    ext.lint_version = '31.0.0'
+    ext.lint_version = '31.0.1'
     ext.acra_version = '5.9.7'
     ext.ankidroid_backend_version = '0.1.21-anki2.1.61'
     ext.hamcrest_version = '2.2'
-    ext.junit_version = '5.9.2'
+    ext.junit_version = '5.9.3'
     ext.coroutines_version = '1.6.4'
     ext.fragments_version = "1.5.7"
     ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
     ext.androidx_test_junit_version = '1.1.5'
-    ext.robolectric_version = '4.9.2'
+    ext.robolectric_version = '4.10.1'
 
     repositories {
         google()
@@ -30,7 +30,7 @@ buildscript {
         classpath "app.brant:amazonappstorepublisher:0.1.0"
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.3.1"
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.3.2"
     }
 }
 
