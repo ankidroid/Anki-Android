@@ -35,7 +35,7 @@
             android:title="@string/deck_conf_cram_order" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/deck_conf_cram_filter" android:key="@string/filtered_deck_secondFilter_key" android:enabled="false">
-        <EditTextPreference
+        <com.ichi2.preferences.AutoFocusEditTextPreference
             android:key="@string/filtered_deck_search_2_key"
             android:title="@string/deck_conf_cram_search" />
 
