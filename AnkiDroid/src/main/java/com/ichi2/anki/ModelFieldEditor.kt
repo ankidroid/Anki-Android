@@ -29,9 +29,12 @@ import android.widget.EditText
 import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -65,6 +68,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private lateinit var mModel: Model
     private lateinit var mNoteFields: JSONArray
     private lateinit var mFieldsLabels: List<String>
+    private lateinit var textWatcher: TextWatcher
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -81,6 +85,13 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             subtitle = intent.getStringExtra("title")
         }
         startLoadingCollection()
+        textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {}
+        }
     }
 
     override fun onStop() {
@@ -160,31 +171,26 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private fun addFieldDialog() {
         fieldNameInput = FixedEditText(this)
         fieldNameInput?.let { _fieldNameInput ->
-            // Add a text change listener to show a warning for duplicate
-            val textWatcher = object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    val fieldName = s.toString().trim()
-                    if (mFieldsLabels.any { fieldName == it }) {
-                        _fieldNameInput.error = getString(R.string.toast_duplicate_field)
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {}
-            }
             _fieldNameInput.isSingleLine = true
             _fieldNameInput.addTextChangedListener(textWatcher)
             MaterialDialog(this).show {
                 customView(view = _fieldNameInput, horizontalPadding = true)
                 title(R.string.model_field_editor_add)
+                _fieldNameInput.doOnTextChanged { text, _, _, _ ->
+                    val fieldName = text.toString().trim()
+                    if (fieldName.isEmpty()) {
+                        _fieldNameInput.error = getString(R.string.toast_empty_name)
+                        getActionButton(WhichButton.POSITIVE).isEnabled = false
+                    } else if (mFieldsLabels.any { fieldName == it }) {
+                        _fieldNameInput.error = getString(R.string.toast_duplicate_field)
+                        getActionButton(WhichButton.POSITIVE).isEnabled = false
+                    } else {
+                        getActionButton(WhichButton.POSITIVE).isEnabled = true
+                    }
+                }
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
                     val fieldName = uniqueName(_fieldNameInput)
-                    if (fieldName!!.isEmpty()) {
-                        _fieldNameInput.error = getString(R.string.toast_empty_name)
-                        return@positiveButton
-                    }
                     try {
                         addField(fieldName, true)
                     } catch (e: ConfirmModSchemaException) {
@@ -304,22 +310,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     private fun renameFieldDialog() {
         fieldNameInput = FixedEditText(this)
         fieldNameInput?.let { _fieldNameInput ->
-            // Add a text change listener to show a warning for duplicate
-            val textWatcher = object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    val fieldName = s.toString().trim()
-                    if (mFieldsLabels.any { fieldName == it }) {
-                        _fieldNameInput.error = getString(R.string.toast_duplicate_field)
-                    }
-                    if (fieldName.isEmpty()) {
-                        _fieldNameInput.error = getString(R.string.toast_empty_name)
-                    }
-                }
-
-                override fun afterTextChanged(s: Editable?) {}
-            }
             _fieldNameInput.isSingleLine = true
             _fieldNameInput.setText(mFieldsLabels[currentPos])
             _fieldNameInput.setSelection(_fieldNameInput.text!!.length)
@@ -327,6 +317,18 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             MaterialDialog(this).show {
                 customView(view = _fieldNameInput, horizontalPadding = true)
                 title(R.string.model_field_editor_rename)
+                _fieldNameInput.doOnTextChanged { text, _, _, _ ->
+                    val fieldName = text.toString().trim()
+                    if (mFieldsLabels.any { fieldName == it }) {
+                        _fieldNameInput.error = getString(R.string.toast_duplicate_field)
+                        getActionButton(WhichButton.POSITIVE).isEnabled = false
+                    } else if (fieldName.isEmpty()) {
+                        _fieldNameInput.error = getString(R.string.toast_empty_name)
+                        getActionButton(WhichButton.POSITIVE).isEnabled = false
+                    } else {
+                        getActionButton(WhichButton.POSITIVE).isEnabled = true
+                    }
+                }
                 positiveButton(R.string.rename) {
                     // Field is valid, now rename
                     try {
