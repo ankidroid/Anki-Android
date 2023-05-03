@@ -46,8 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Kontroller database</string>
     <string name="check_db_warning">Dette kan ta et øyeblikk</string>
-    <string name="check_db_acknowledge">Database checked</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge">Database kontrollert</string>
+    <string name="check_db_acknowledge_shrunk">Databasen er kontrollert og optimalisert.\nKrympet med %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Slett kortleiken</string>
     <string name="delete_deck_default_deck">Den forvalde kortleiken kan ikkje verta sletta</string>
     <string name="delete_deck_title">Slett kortleiken?</string>
@@ -98,7 +98,7 @@
     <string name="repair_deck_dialog">Vil du virkelig prøve å reparere databasen?\n\nEn kopi vil bli opprettet i undermappen \'%s\' før forsøket starter.</string>
     <string name="intent_aedict_empty">Kategorien \'standard\' er tom</string>
     <string name="intent_aedict_category">For å legge kort til AnkiDroid, fjern alle notisblokk-kategorier eller legg til en som heter \'default\'</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
+    <string name="custom_study_new_total_new">Nye kort i stokken: %d</string>
     <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
     <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
     <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>

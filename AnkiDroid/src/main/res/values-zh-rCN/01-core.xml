@@ -65,7 +65,7 @@
         <item quantity="other">%1$d张卡片待复习 (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
-        <item quantity="other">剩余%d分钟</item>
+        <item quantity="other">剩余 %d 分钟</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="other">剩余 %1$d 小时 %2$d</item>
@@ -85,7 +85,7 @@
     <string name="hide_answer">隐藏答案</string>
     <string name="ease_button_again">重来</string>
     <string name="ease_button_hard">困难</string>
-    <string name="ease_button_good">一般</string>
+    <string name="ease_button_good">良好</string>
     <string name="ease_button_easy">简单</string>
     <string name="studyoptions_congrats_undo">撤消%s</string>
     <string name="menu_import">导入牌组</string>
@@ -117,7 +117,7 @@
     <string name="menu_flag_card_three">绿色旗标</string>
     <string name="menu_flag_card_four">蓝色旗标</string>
     <string name="menu_flag_card_five">粉色旗标</string>
-    <string name="menu_flag_card_six">蓝绿色旗标</string>
+    <string name="menu_flag_card_six">青色旗标</string>
     <string name="menu_flag_card_seven">紫色旗标</string>
     <string name="menu_edit_tags">编辑标签​​​​​</string>
     <string name="delete_note_message">确定要删除此笔记及生成的卡片？\n%s</string>

@@ -58,7 +58,7 @@
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
     <string name="initializing_tts">テキスト読み上げ（TTS）機能を初期化しています...</string>
     <string name="tts_no_tts">発声なし</string>
-    <string name="unused_strings">\n\n使用されていないファイル:\n</string>
+    <string name="unused_strings">\n\n(1) のファイルのリスト:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>
     <string name="reposition_card_dialog_title">新規カードの表示順序を変更</string>
     <string name="reposition_card_dialog_message">開始位置</string>
@@ -82,7 +82,7 @@
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d枚のカードのスケジュールを変更しました</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">新規カードのスケジュールを変更しようとしています。 スケジュールを変更すると、新規カードは習得ステップを飛ばして復習カードに移行します。新規カードのまま表示の順序を変更したい場合は、カードブラウザーの 「新規カードの表示順序を変更」機能を使用してください。</string>
+    <string name="reschedule_card_dialog_new_card_warning">新規カードのスケジュールを変更しようとしています。 スケジュールを変更すると、新規カードは習得ステップを飛ばして復習カードに移行します。新規カードのまま表示の順序を変更したい場合は、カードブラウザーの 「新規カードの表示順序を変更」機能を使用してください</string>
     <string name="reschedule_card_dialog_warning_ease_reset">スケジュール変更を行うと、そのカードの復習履歴に基づいて間隔を調整する指標がリセットされます（易しさが初期値の%d%%に戻ります）</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">ファイルマネージャーでデッキを選択するか、「about:downloads」ページに移動してデッキをインポートしてください</string>
     <string name="answering_error_title">データベース エラー</string>
@@ -96,10 +96,10 @@
     <string name="custom_study_rev_total_rev">デッキ内の、期日に達している復習カード: %d枚</string>
     <string name="custom_study_new_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_rev_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
-    <string name="custom_study_forgotten">過去 x 日以内に間違えた（＝「やり直し」を選んだ）カードを再学習する</string>
+    <string name="custom_study_forgotten">直近 x 日間で間違えた（＝「やり直し」を選んだ）カードを再学習する</string>
     <string name="custom_study_ahead"> x 日先までの復習カードを予習</string>
     <string name="custom_study_random">デッキからランダムに x 枚のカードを選んで学習</string>
-    <string name="custom_study_preview">直近 x 日間に追加された新規カード（のうち通常のスケジュールで未学習のもの）を予習</string>
+    <string name="custom_study_preview">直近 x 日間で追加された新規カード（のうち通常のスケジュールで未学習のもの）を予習</string>
     <string name="custom_study_rebuild_deck_corrupt">カスタムデッキを再構築できませんでした</string>
     <string name="importing_collection">コレクションをインポートしています&#8230;</string>
     <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
@@ -141,8 +141,8 @@
     <string name="check_media_acknowledge">メディアのチェックの完了</string>
     <string name="check_media_failed">メディアのチェック時にエラーが発生しました</string>
     <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
-    <string name="check_media_unused">(1) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d 個</string>
-    <string name="check_media_nohave">(2) カードに表示するよう指定されているが、メディア用フォルダ内に存在しないファイル: %d 個</string>
+    <string name="check_media_unused">(1) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d個</string>
+    <string name="check_media_nohave">(2) カードに表示するよう記載されているが、メディア用フォルダ内に存在しないファイル: %d個</string>
     <string name="check_media_no_unused_missing">使用されていないファイル、不足しているファイルはありません</string>
     <string name="check_media_db_updated">メディアのデータベースを再構築しました</string>
     <string name="check_media_delete_unused">(1) のファイルを削除</string>
@@ -164,10 +164,10 @@
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">マイクの権限を取得できませんでした。</string>
     <string name="multimedia_editor_camera_permission_refused">カメラの権限を取得できませんでした。機能が無効になっています。</string>
-    <string name="multimedia_editor_failed">マルチメディアエディターを開けませんでした</string>
+    <string name="multimedia_editor_failed">マルチメディアエディタを開けませんでした</string>
     <!-- Multimedia - Audio View -->
     <string name="multimedia_editor_audio_permission_denied">音声録音の権限が付与されませんでした</string>
-    <string name="mutimedia_editor_assertion_failed">エディターの表示中に不明なエラーが発生しました</string>
+    <string name="mutimedia_editor_assertion_failed">エディタの表示中に不明なエラーが発生しました</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>
     <string name="integrity_check_startup_content">AnkiDroidをアップグレードしました。このアップグレードには、データベースに関する不具合の修正が含まれています。今すぐ「データベースをチェック」を実行することをおすすめします。</string>
@@ -201,13 +201,13 @@
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">必要なストレージ権限がありません。ストレージ権限を付与してから、アクションを再試行してください。</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">カードブラウザー用の表示設定を読み込めませんでした</string>
+    <string name="card_template_editor_card_browser_appearance_failed">カードブラウザ用の表示設定を読み込めませんでした</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">リマインダーのスケジュールに失敗しました</string>
     <string name="boot_service_too_many_notifications">スケジュールされたリマインダーが多すぎます。一部のリマインダーは表示されません</string>
     <!-- Locale Selection Dialog -->
     <string name="locale_selection_dialog_title">キーボード言語の選択</string>
-    <string name="locale_selection_dialog_summary">Gboardなどの多言語入力対応キーボードでは、文字入力の際にキーボードの言語を変更することができます\n\n使用しているキーボードで言語の変更ができない場合は、キーボードの製作者に「setImeHintLocales」機能をリクエストしてください</string>
+    <string name="locale_selection_dialog_summary">Gboardなどの多言語入力対応キーボードでは、文字編集のために各フィールドを選択した際にキーボードの言語を自動的に切り替えることができます\n\n使用しているキーボードで言語の変更ができない場合は、キーボードアプリの開発者に「setImeHintLocales」機能をリクエストしてください</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使い方</string>
     <string name="help_item_ankidroid_manual">AnkiDroidマニュアル</string>

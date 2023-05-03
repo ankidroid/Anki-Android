@@ -99,11 +99,11 @@
     <string name="gesture_abort_learning">终止学习</string>
     <string name="gesture_flag_red">切换红色旗标</string>
     <string name="gesture_flag_orange">切换橙色旗标</string>
-    <string name="gesture_flag_green">切换绿色标识</string>
+    <string name="gesture_flag_green">切换绿色旗标</string>
     <string name="gesture_flag_blue">切换蓝色旗标</string>
-    <string name="gesture_flag_pink">切换粉色标志</string>
-    <string name="gesture_flag_turquoise">切换蓝绿色标志</string>
-    <string name="gesture_flag_purple">切换紫色标志</string>
+    <string name="gesture_flag_pink">切换粉色旗标</string>
+    <string name="gesture_flag_turquoise">切换青色旗标</string>
+    <string name="gesture_flag_purple">切换紫色旗标</string>
     <string name="gesture_flag_remove">移除旗标</string>
     <string name="gesture_page_up">向上翻页</string>
     <string name="gesture_page_down">向下翻页</string>

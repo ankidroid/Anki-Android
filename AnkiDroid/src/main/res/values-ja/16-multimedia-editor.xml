@@ -43,10 +43,10 @@
     <string name="multimedia_editor_popup_image">画像を追加</string>
     <string name="multimedia_editor_popup_audio_clip">音声ファイルを追加</string>
     <string name="multimedia_editor_popup_video_clip">動画ファイルを追加</string>
-    <string name="multimedia_editor_popup_audio">録音音声</string>
+    <string name="multimedia_editor_popup_audio">録音</string>
     <string name="multimedia_editor_popup_text">高度な編集</string>
     <string name="multimedia_editor_popup_cloze">穴埋め問題</string>
-    <string name="multimedia_editor_popup_clear_field">フィールドを消去</string>
+    <string name="multimedia_editor_popup_clear_field">フィールドの内容を消去</string>
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">読み込み</string>
     <string name="multimedia_editor_pron_looking_up">発音を検索しています...</string>
@@ -59,7 +59,7 @@
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">テキスト</string>
     <string name="multimedia_editor_field_editing_image">画像</string>
-    <string name="multimedia_editor_field_editing_audio">音声を録音</string>
+    <string name="multimedia_editor_field_editing_audio">録音</string>
     <string name="multimedia_editor_field_editing_audio_clip">音声・動画のファイルを添付</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">完了</string>
     <!-- Text field editing -->
@@ -96,7 +96,7 @@
     <string name="multimedia_editor_svg_preview">SVG形式のファイルはプレビューできません</string>
     <string name="multimedia_editor_png_paste_error">クリップボードの画像をPNG形式に変換中にエラーが発生しました: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">ﾌｨｰﾙﾄﾞ「%1$s」にﾏﾙﾁﾒﾃﾞｨｱｺﾝﾃﾝﾂを添付</string>
-    <string name="multimedia_editor_attach_media">メディアを貼付け</string>
+    <string name="multimedia_editor_attach_media">メディアを追加</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">録音に失敗しました</string>
@@ -108,9 +108,9 @@
     <string name="network_no_connection">ネットワークに接続されていません</string>
     <!-- Crop function-->
     <string name="crop_image">この画像をトリミングしますか？</string>
-    <string name="crop_button">画像のトリミング</string>
-    <string name="save_dialog_content">現在の画像サイズは %sMB です。画像サイズ制限は 1MB です。トリミングしますか？</string>
-    <string name="select_image_failed">"画像の選択に失敗しました。再試行してください。"</string>
+    <string name="crop_button">画像の回転とトリミング</string>
+    <string name="save_dialog_content">現在の画像サイズは%sMBですが、1MB未満にすることを推奨します。画像サイズを減らすためトリミングしますか？</string>
+    <string name="select_image_failed">"画像の選択に失敗しました。もう一度試してください"</string>
     <string name="activity_result_unexpected">予期しないエラーが発生しました。別のアプリを使用する必要があるかもしれません。</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">フィールドの内容</string>
 </resources>

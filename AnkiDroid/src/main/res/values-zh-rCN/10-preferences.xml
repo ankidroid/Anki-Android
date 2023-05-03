@@ -71,17 +71,17 @@
     <string name="whiteboard_stroke_width" maxLength="41">笔画粗细</string>
     <string name="use_input_tag" maxLength="41">在卡片中输入答案</string>
     <string name="use_input_tag_summ">在卡片里使用文本框输入答案</string>
-    <string name="reset_languages" maxLength="41">重设语言</string>
-    <string name="reset_languages_summ">重置指定牌组语言(TTS和字典)</string>
+    <string name="reset_languages" maxLength="41">重置语言</string>
+    <string name="reset_languages_summ">重置全部牌组语言（TTS和字典）</string>
     <string name="reset_languages_question">要重置所有牌组指定的语言吗？</string>
-    <string name="reset_confirmation">重置所有状态</string>
+    <string name="reset_confirmation">所有牌组的语言已重置</string>
     <string name="card_zoom" maxLength="41">卡片缩放</string>
     <string name="image_zoom" maxLength="41">图片缩放</string>
-    <string name="button_size" maxLength="41">“显示答案”按钮大小</string>
+    <string name="button_size" maxLength="41">「显示答案」按钮大小</string>
     <string name="card_browser_font_size" maxLength="41">卡片浏览器字体缩放</string>
     <string name="card_browser_hide_media" maxLength="41">在卡牌浏览器中显示文件名</string>
     <string name="card_browser_hide_media_summary">在卡牌浏览器问题/回答字段中显示媒体文件名</string>
-    <string name="col_path" maxLength="41">AnkiDroid路径</string>
+    <string name="col_path" maxLength="41">AnkiDroid 路径</string>
     <string name="fullscreen_review" maxLength="41">全屏显示</string>
     <string name="full_screen_off">关闭</string>
     <string name="full_screen_system">隐藏系统状态栏</string>
@@ -275,9 +275,9 @@
     <string name="deck_conf_max_ivl" maxLength="41">最大时间间隔</string>
     <string name="deck_conf_new_lps_ivl" maxLength="41">新的时间间隔</string>
     <string name="deck_conf_min_ivl" maxLength="41">最小时间间隔</string>
-    <string name="deck_conf_leech_thres" maxLength="41">“水蛭”阈值</string>
+    <string name="deck_conf_leech_thres" maxLength="41">「记忆难点」阈值</string>
     <string name="deck_conf_fails">XXX 失败</string>
-    <string name="deck_conf_leech_action" maxLength="41">“水蛭”处置</string>
+    <string name="deck_conf_leech_action" maxLength="41">对「记忆难点」的处理</string>
     <string name="deck_conf_max_time" maxLength="41">最大的回答时间</string>
     <string name="deck_conf_seconds">XXX 秒</string>
     <string name="deck_conf_timer" maxLength="41">显示计时器</string>

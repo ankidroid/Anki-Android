@@ -47,7 +47,7 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">課題</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="other">あと%d枚</item>
+        <item quantity="other">課題のカードが%d枚あります</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid 小</string>
     <plurals name="widget_cards_due">
@@ -56,5 +56,5 @@
     <plurals name="widget_eta">
         <item quantity="other">残り%d分</item>
     </plurals>
-    <string name="widget_add_note_button">AnkiDroid の新規ノートを追加</string>
+    <string name="widget_add_note_button">AnkiDroidの新規ノートを追加</string>
 </resources>
