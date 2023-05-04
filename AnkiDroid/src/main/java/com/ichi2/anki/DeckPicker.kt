@@ -1574,6 +1574,9 @@ open class DeckPicker :
                 message(R.string.metered_sync_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
+                checkBoxPrompt(R.string.remember_sync_metered_checkbox_msg) { isCheckboxChecked ->
+                    preferences.edit { putBoolean(getString(R.string.metered_sync_key), isCheckboxChecked) }
+                }
             }
         } else {
             doSync()
