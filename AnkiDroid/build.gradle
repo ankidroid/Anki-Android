@@ -299,7 +299,7 @@ dependencies {
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     implementation 'com.google.android.material:material:1.8.0'
     // noinspection GradleDependency jackson-databind 2.13 requires SDK 24+: https://github.com/FasterXML/jackson-databind#compatibility
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
 
