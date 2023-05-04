@@ -42,7 +42,6 @@ import timber.log.Timber
  *
  * TODO: Move this to a fragment
  */
-
 class LoginActivity : MyAccount() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
