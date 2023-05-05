@@ -383,7 +383,7 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">負担は小さく</string>
     <string name="intro_ankidroid_tagline_two">成果は大きく</string>
-    <string name="intro_short_ankidroid_explanation">Ankiは、記憶を定着させ強化するのに適したスケジュールでカードを表示する間隔反復学習システムです。AnkiDroidで効率的な学習をお楽しみください</string>
+    <string name="intro_short_ankidroid_explanation">Ankiは、記憶を定着させ強化するのに適したスケジュールでカードを表示する間隔反復学習システムです。AnkiDroidでAnkiの効率的な学習をお楽しみください</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">開始する</string>
     <string name="intro_sync_from_ankiweb">AnkiWebから同期</string>
     <string name="already_logged_in">既にログイン済みです</string>
