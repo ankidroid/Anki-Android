@@ -16,6 +16,7 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
@@ -39,7 +40,6 @@ import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendFactory
-import org.apache.commons.io.FileUtils
 import timber.log.Timber
 import java.io.Closeable
 import java.io.File
@@ -164,11 +164,12 @@ internal constructor(
         }
     }
 
+    @SuppressLint("NewApi") // contentEquals is API 26, we're guaranteed to be above this if performing a migration
     @NeedsTest("untested, needs documentation")
     private fun throwIfEssentialFilesAreMutated(sourceDirectory: AnkiDroidDirectory, destinationDirectory: ScopedAnkiDroidDirectory) {
         // TODO: For Arthur to improve
         for ((source, destination) in iterateEssentialFiles(sourceDirectory).zip(iterateEssentialFiles(destinationDirectory.path))) {
-            if (!FileUtils.contentEquals(source, destination)) {
+            if (!contentEquals(source, destination)) {
                 throw IllegalStateException("files not equal: $source, $destination")
             }
         }
