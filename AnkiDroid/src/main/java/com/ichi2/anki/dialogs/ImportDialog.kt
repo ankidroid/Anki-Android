@@ -18,8 +18,6 @@ package com.ichi2.anki.dialogs
 
 import android.os.Bundle
 import com.afollestad.materialdialogs.MaterialDialog
-import com.ichi2.anki.DeckPicker.Companion.asyncMessageContent
-import com.ichi2.anki.DeckPicker.Companion.asyncMessageTitle
 import com.ichi2.anki.R
 import timber.log.Timber
 import java.net.URLDecoder
@@ -80,12 +78,12 @@ class ImportDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String
         get() {
-            return asyncMessageContent
+            return resources.getString(R.string.import_interrupted)
         }
 
     override val notificationTitle: String
         get() {
-            return asyncMessageTitle
+            return resources.getString(R.string.import_title)
         }
 
     fun dismissAllDialogFragments() {

@@ -320,10 +320,6 @@ open class DeckPicker :
         super.onCreate(savedInstanceState)
 
         startupStoragePermissionManager = StartupStoragePermissionManager.register(this, useCallbackIfActivityRecreated = false)
-
-        asyncMessageContent = resources.getString(R.string.import_interrupted)
-        asyncMessageTitle = resources.getString(R.string.import_title)
-
         // handle the first load: display the app introduction
         if (!hasShownAppIntro()) {
             val appIntro = Intent(this, IntroductionActivity::class.java)
@@ -2373,12 +2369,6 @@ open class DeckPicker :
     companion object {
 
         private const val ONE_DAY_IN_SECONDS: Int = 60 * 60 * 24
-
-        /** Import Error variable so to access the resource directory without
-         * causing a crash
-         */
-        lateinit var asyncMessageContent: String
-        lateinit var asyncMessageTitle: String
 
         /**
          * Result codes from other activities
