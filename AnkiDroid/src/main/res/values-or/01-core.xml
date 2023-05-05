@@ -179,7 +179,7 @@
     <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">ସୀଙ୍କ୍ ଅସ୍ଥାୟୀ ଭାଵେ ଅକ୍ଷମ ହୋଇଅଛି</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">ଆପଣ ସିଙ୍କ୍ କୁ ବାତିଲ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="cancel_sync_confirm">ଆପଣ ସୀଙ୍କ୍‌ଟିକୁ ବାତିଲ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="continue_sync">ସୀଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
     <string name="sync_cancelled">ସୀଙ୍କ୍ ବାତିଲ୍ ହେଲା</string>
     <string name="sync_cancel_message">ବାତିଲ ହେଉଛି&#8230;\nଏହା କିଛି ସମୟ ନେଇପାରେ।</string>
@@ -265,8 +265,8 @@
     ]]></string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ଅଗମ୍ୟ ସଂଗ୍ରହ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store ନୀତିରେ ପରିଵର୍ତ୍ତନ ହେତୁ AnkiDroid ଅନଇନଷ୍ଟଲ୍ ହେବା ପରେ ଆମେ ଆପଣଙ୍କ ସଂଗ୍ରହ ପାଖରେ ପହଞ୍ଚିବାରେ ଅସମର୍ଥ\n\nଆପଣଙ୍କ ଡାଟା ସୁରକ୍ଷିତ ଅଛି ଏଵଂ ପୁନରୁଦ୍ଧାର କରାଯାଇପାରିବ। ଯାହା ଏଠି ଗଚ୍ଛିତ ଅଛି\n%s\n\nପୁନରୁଦ୍ଧାର କରିବାକୁ ହେଲେ ତଳେ ଏକ ଵିକଳ୍ପ ବାଛନ୍ତୁ:</string>
-    <string name="restore_data_from_ankiweb">AnkiWebରୁ ପୁନରୁଦ୍ଧାର କରିବା (ଜିଜ୍ଞାସିତ)</string>
-    <string name="install_non_play_store_ankidroid_recommended">ଫୋଲ୍ଡର୍ ପ୍ରଵେଶାଧିକାର ପୁନଃସ୍ଥାପନ କରିବା (ଜିଜ୍ଞାସିତ)</string>
+    <string name="restore_data_from_ankiweb">AnkiWebରୁ ପୁନରୁଦ୍ଧାର କରିବା (ସୁପାରିଶିତ)</string>
+    <string name="install_non_play_store_ankidroid_recommended">ଫୋଲ୍ଡର୍ ପ୍ରଵେଶାଧିକାର ପୁନଃସ୍ଥାପନ କରିବା (ସୁପାରିଶିତ)</string>
     <string name="install_non_play_store_ankidroid">ଫୋଲ୍ଡର୍ ପ୍ରଵେଶାଧିକାର ପୁନଃସ୍ଥାପନ କରିବା (ଵିକଶିତ)</string>
     <string name="restore_data_from_backup">.colpkg ବ୍ୟାକଅପ୍‌ରୁ ପୁନରୁଦ୍ଧାର କରିବା (ଵିକଶିତ)</string>
     <string name="create_new_collection">ଗୋଟେ ନୂଆ ସଂଗ୍ରହ ସୃଷ୍ଟି କରିବା</string>

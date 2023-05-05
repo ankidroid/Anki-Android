@@ -107,10 +107,10 @@
     <!-- Network failure -->
     <string name="network_no_connection">No connection</string>
     <!-- Crop function-->
-    <string name="crop_image">Do you want to crop this image?</string>
-    <string name="crop_button">Crop image</string>
+    <string name="crop_image">Dorești să decupezi această imagine?</string>
+    <string name="crop_button">Decupează imaginea</string>
     <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
     <string name="select_image_failed">"Selectarea imaginii a eșuat. Vă rugăm reîncercați"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
+    <string name="activity_result_unexpected">Aplicația a returnat o valoare neașteptată. S-ar putea să fie nevoie să utilizați o aplicație diferită</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Conținutul câmpului</string>
 </resources>

@@ -69,8 +69,8 @@
     <string name="lost_mail_instructions">ଇମେଲ୍ ଭୁଲିଗଲେ କି?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
-    <string name="sync_prepare_syncing">ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
-    <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ପ୍ରସ୍ତୁତ କରୁଛି&#8230;</string>
+    <string name="sync_prepare_syncing">ସୀଙ୍କ୍ ପ୍ରସ୍ତୁତ ହେଉଛି&#8230;</string>
+    <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ ପ୍ରସ୍ତୁତ ହେଉଛି&#8230;</string>
     <string name="sync_uploading_message">ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
     <string name="sync_title">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
@@ -118,7 +118,7 @@
     <string name="force_full_sync_summary">ପରଵର୍ତ୍ତୀ ସିଙ୍କ୍ ରେ, ଗୋଟିଏ ଦିଗରେ ପରିଵର୍ତ୍ତନ କରିବାକୁ ବାଧ୍ୟ କରିବ</string>
     <string name="force_full_sync_confirmation">ବାଧ୍ୟତାମୂଳକ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍</string>
     <string name="full_sync_confirmation">ଯେତେଵେଳେ ଆପଣ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ପରଵର୍ତ୍ତୀ ସମୟରେ ସିଙ୍କ୍ କରିବେ ସେତେଵେଳେ ଅନୁରୋଧ କରାଯାଇଥିବା ପରିଵର୍ତ୍ତନ ଡାଟାବେସର ସମ୍ପୂର୍ଣ୍ଣ ଅପଲୋଡ୍ ଆଵଶ୍ୟକ କରିବ। ଯଦି ଆପଣଙ୍କର ସମୀକ୍ଷା କିମ୍ବା ଅନ୍ୟାନ୍ୟ ପରିଵର୍ତ୍ତନ ଅନ୍ୟ ଡିଵାଇସରେ ଅପେକ୍ଷା କରିଛି ଯାହା ଏପର୍ଯ୍ୟନ୍ତ ଏଠାରେ ସିଙ୍କ୍ ହୋଇନାହିଁ, ସେଗୁଡ଼ିକ ହଜିଯିବ। ଜାରି ରଖିବେ ତ?</string>
-    <string name="full_sync_confirmation_upgrade">AnkiDroidର ପୂର୍ଵ ଅଧିସ୍ଥାପିତ ସଂସ୍କରଣରେ ଗୋଟେ ବଗ୍ ରହିଥିବାରୁ, ଏକ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ବାଧ୍ୟ କରାଇବା ଲାଗି ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
+    <string name="full_sync_confirmation_upgrade">AnkiDroidର ପୂର୍ଵ ଅଧିସ୍ଥାପିତ ସଂସ୍କରଣରେ ଗୋଟେ ବଗ୍ ରହିଥିବାରୁ, ଏକ ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ ବାଧ୍ୟ କରାଇବା ଲାଗି ପରାମର୍ଶ ଦିଆଯାଉଛି।</string>
     <string name="sync_error_407_proxy_required">ପ୍ରକ୍ସି ପ୍ରାମାଣିକିକରଣ ଆବଶ୍ୟକ।</string>
     <string name="sync_error_409">ଗୋଟିଏ ସମୟରେ କେବଳ ଜଣେ ଗ୍ରାହକ AnkiWeb କୁ ଆକସେସ୍ କରିପାରିବେ। ଯଦି ପୂର୍ବ ସିଙ୍କ୍ ବିଫଳ ହେଲା, ଦୟାକରି କିଛି ମିନିଟ୍ ମଧ୍ୟରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_error_413_collection_size">ଆପଣଙ୍କ ସଂଗ୍ରହ କିମ୍ୱା ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ସିଙ୍କ୍ ପାଇଁ ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ।</string>
