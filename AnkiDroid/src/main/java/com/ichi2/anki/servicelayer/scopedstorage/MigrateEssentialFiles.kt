@@ -169,9 +169,7 @@ internal constructor(
     private fun throwIfEssentialFilesAreMutated(sourceDirectory: AnkiDroidDirectory, destinationDirectory: ScopedAnkiDroidDirectory) {
         // TODO: For Arthur to improve
         for ((source, destination) in iterateEssentialFiles(sourceDirectory).zip(iterateEssentialFiles(destinationDirectory.path))) {
-            if (!contentEquals(source, destination)) {
-                throw IllegalStateException("files not equal: $source, $destination")
-            }
+            throwIfContentUnequal(source, destination)
         }
     }
 
