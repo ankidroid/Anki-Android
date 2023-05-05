@@ -42,7 +42,7 @@ class ImportDialog : AsyncDialogFragment() {
             DIALOG_IMPORT_ADD_CONFIRM -> {
                 dialog.show {
                     title(R.string.import_title)
-                    message(text = resources.getQuantityString(R.plurals.import_files_message_add_confirm, dialogMessageList.size, displayFileName))
+                    message(text = res().getQuantityString(R.plurals.import_files_message_add_confirm, dialogMessageList.size, displayFileName))
                     positiveButton(R.string.import_message_add) {
                         (activity as ImportDialogListener).importAdd(dialogMessageList)
                         dismissAllDialogFragments()
@@ -53,7 +53,7 @@ class ImportDialog : AsyncDialogFragment() {
             DIALOG_IMPORT_REPLACE_CONFIRM -> {
                 dialog.show {
                     title(R.string.import_title)
-                    message(text = resources.getString(R.string.import_message_replace_confirm, displayFileName))
+                    message(text = res().getString(R.string.import_message_replace_confirm, displayFileName))
                     positiveButton(R.string.dialog_positive_replace) {
                         (activity as ImportDialogListener).importReplace(dialogMessageList)
                         dismissAllDialogFragments()
@@ -78,12 +78,12 @@ class ImportDialog : AsyncDialogFragment() {
 
     override val notificationMessage: String
         get() {
-            return resources.getString(R.string.import_interrupted)
+            return res().getString(R.string.import_interrupted)
         }
 
     override val notificationTitle: String
         get() {
-            return resources.getString(R.string.import_title)
+            return res().getString(R.string.import_title)
         }
 
     fun dismissAllDialogFragments() {
