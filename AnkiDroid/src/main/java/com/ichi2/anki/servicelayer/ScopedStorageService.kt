@@ -153,6 +153,8 @@ object ScopedStorageService {
      * Whether a user data scoped storage migration is taking place
      * This refers to the [MigrateUserData] operation of copying media which can take a long time.
      *
+     * DEPRECATED. Use [com.ichi2.anki.services.getMediaMigrationState] instead.
+     *
      * @throws IllegalStateException If either [PREF_MIGRATION_SOURCE] or [PREF_MIGRATION_DESTINATION] is set (but not both)
      * It is a logic bug if only one is set
      */
@@ -217,6 +219,10 @@ object ScopedStorageService {
     /**
      * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
      * This directory is stored under [CollectionHelper.PREF_COLLECTION_PATH] in SharedPreferences
+     *
+     * DEPRECATED. Use either [com.ichi2.anki.services.getMediaMigrationState], or
+     *   [com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp].
+     *
      * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
      */
     fun isLegacyStorage(context: Context): Boolean {
@@ -240,6 +246,10 @@ object ScopedStorageService {
 
     /**
      * @return `true` if [currentDirPath] is a Legacy Storage Directory.
+     *
+     * DEPRECATED. Use either [com.ichi2.anki.services.getMediaMigrationState], or
+     *   [com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp].
+     *
      */
     fun isLegacyStorage(currentDirPath: String, context: Context): Boolean {
         val internalScopedDirPath = CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(context)
@@ -270,29 +280,6 @@ object ScopedStorageService {
         // If the current AnkiDroid directory isn't a sub directory of the app-private external or internal storage
         // directories, then it must be in a legacy storage directory
         return true
-    }
-
-    fun migrationStatus(context: Context): Status {
-        if ((!isLegacyStorage(context) && !userMigrationIsInProgress(context))) {
-            return Status.COMPLETED
-        }
-
-        if (userMigrationIsInProgress(context)) {
-            return Status.IN_PROGRESS
-        }
-
-        if (!collectionWillBeMadeInaccessibleAfterUninstall(context)) {
-            return Status.NOT_NEEDED
-        }
-
-        return Status.NEEDS_MIGRATION
-    }
-
-    enum class Status {
-        NEEDS_MIGRATION,
-        IN_PROGRESS,
-        COMPLETED,
-        NOT_NEEDED
     }
 
     /**
@@ -332,6 +319,8 @@ object ScopedStorageService {
 
     /**
      * Whether the user's current collection will be inaccessible after uninstalling the app
+     *
+     * DEPRECATED. Use [com.ichi2.anki.services.getMediaMigrationState] instead.
      *
      * @return `false` if:
      * * ⚠️ The directory will be **removed** on uninstall

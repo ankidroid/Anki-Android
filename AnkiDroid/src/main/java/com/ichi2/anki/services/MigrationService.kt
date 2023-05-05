@@ -29,13 +29,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.*
+import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
-import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
-import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
+import com.ichi2.anki.ui.windows.managespace.getUserFriendlyErrorText
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.getOrSetLong
 import com.ichi2.utils.FileUtil
@@ -47,6 +47,10 @@ import timber.log.Timber
 import java.io.File
 import kotlin.math.max
 import kotlin.properties.ReadOnlyProperty
+
+// Shared preferences key for user-readable text representing migration error.
+// If it is set, it means that media migration is ongoing, but currently paused due to an error.
+const val PREF_MIGRATION_ERROR_TEXT = "migrationErrorText"
 
 /**
  * A foreground service responsible for migrating the collection
@@ -105,6 +109,8 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
     var flowOfProgress: MutableStateFlow<Progress> = MutableStateFlow(Progress.CalculatingTransferSize)
 
+    private val preferences get() = AnkiDroidApp.getSharedPrefs(this)
+
     private lateinit var migrateUserDataTask: MigrateUserData
 
     private var serviceHasBeenStarted = false
@@ -112,7 +118,9 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
     // To simplify things by allowing binding to the service at any time,
     // make sure the service has the correct progress emitted even if it is not going to be started.
     override fun onCreate() {
-        if (userMigrationHasSucceeded) flowOfProgress.tryEmit(Progress.Success)
+        if (getMediaMigrationState() is MediaMigrationState.NotOngoing.NotNeeded) {
+            flowOfProgress.tryEmit(Progress.Success)
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -129,8 +137,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
             flowOfProgress.emit(Progress.CalculatingTransferSize)
 
             try {
-                migrateUserDataTask = MigrateUserData
-                    .createInstance(AnkiDroidApp.getSharedPrefs(this@MigrationService))
+                migrateUserDataTask = MigrateUserData.createInstance(preferences)
 
                 val remainingTransferSize = getRemainingTransferSize(migrateUserDataTask)
                 val totalBytesToTransfer = getOrSetTotalTransferSize(valueToPersistIfNotCalculated = remainingTransferSize)
@@ -152,7 +159,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                 //   on *background* thread, and removed here in another *background* thread.
                 //   These are read from other threads, mostly via userMigrationIsInProgress,
                 //   which might be a race condition and lead to subtle bugs.
-                AnkiDroidApp.getSharedPrefs(this@MigrationService).edit {
+                preferences.edit {
                     remove(PREF_MIGRATION_DESTINATION)
                     remove(PREF_MIGRATION_SOURCE)
                     remove(TOTAL_BYTES_TO_TRANSFER_KEY)
@@ -161,6 +168,11 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                 flowOfProgress.emit(Progress.Success)
             } catch (e: Exception) {
                 CrashReportService.sendExceptionReport(e, "Storage migration failed")
+
+                preferences.edit {
+                    putString(PREF_MIGRATION_ERROR_TEXT, getUserFriendlyErrorText(e).toString())
+                }
+
                 flowOfProgress.emit(Progress.Failure(e))
             }
         }
@@ -282,7 +294,8 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
 
 /**
  * A delegate for a property that yields:
- *   * the [MigrationService] if the migration is in progress, and when the owner is started,
+ *   * the [MigrationService] if media migration is currently ongoing and not paused,
+ *     and when the owner is started,
  *   * or `null` otherwise.
  *
  * Note: binding to the service happens fast, but not immediately,
@@ -294,7 +307,7 @@ fun <O> O.migrationServiceWhileStartedOrNull(): ReadOnlyProperty<Any?, Migration
 
     lifecycleScope.launch {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            if (userMigrationIsInProgress(this@migrationServiceWhileStartedOrNull)) {
+            if (getMediaMigrationState() is MediaMigrationState.Ongoing.NotPaused) {
                 try {
                     withBoundTo<MigrationService> {
                         service = it
@@ -310,11 +323,57 @@ fun <O> O.migrationServiceWhileStartedOrNull(): ReadOnlyProperty<Any?, Migration
     return ReadOnlyProperty { _, _ -> service }
 }
 
+/**************************************************************************************************/
+
 /**
- * This assumes that the service is only created if the migration is, was, or is going to run,
- * that is when it can "succeed" at all.
+ * This represents the overarching state of media migration as determined by:
+ *   * the build/flavor,
+ *   * the API level,
+ *   * some settings persisted in shared preferences.
  *
- * See also the logic in [com.ichi2.anki.DeckPicker.shouldOfferToUpgrade]
+ * This is not determined by permissions or static variables.
  */
-private val Context.userMigrationHasSucceeded get() =
-    !userMigrationIsInProgress(this) && !isLegacyStorage(this)
+sealed interface MediaMigrationState {
+    sealed interface NotOngoing : MediaMigrationState {
+        sealed interface NotNeeded : NotOngoing {
+            object CollectionIsInAppPrivateFolder : NotNeeded
+            object CollectionIsInPublicFolderButWillRemainAccessible : NotNeeded
+        }
+        object Needed : NotOngoing
+    }
+
+    sealed interface Ongoing : MediaMigrationState {
+        object NotPaused : Ongoing
+        class PausedDueToError(val errorText: String) : Ongoing
+    }
+}
+
+// TODO Consider refactoring ScopedStorageService to remove its methods used here,
+//   inlining them, and use this method throughout the app for media migration state.
+fun Context.getMediaMigrationState(): MediaMigrationState {
+    val preferences = AnkiDroidApp.getSharedPrefs(this)
+
+    fun migrationIsOngoing() = ScopedStorageService.userMigrationIsInProgress(preferences)
+    fun collectionIsInAppPrivateDirectory() = !ScopedStorageService.isLegacyStorage(this)
+    fun collectionWillRemainAccessibleAfterReinstall() =
+        !ScopedStorageService.collectionWillBeMadeInaccessibleAfterUninstall(this)
+
+    return if (migrationIsOngoing()) {
+        val errorText = preferences.getString(PREF_MIGRATION_ERROR_TEXT, null)
+        when {
+            errorText.isNullOrBlank() ->
+                MediaMigrationState.Ongoing.NotPaused
+            else ->
+                MediaMigrationState.Ongoing.PausedDueToError(errorText)
+        }
+    } else {
+        when {
+            collectionIsInAppPrivateDirectory() ->
+                MediaMigrationState.NotOngoing.NotNeeded.CollectionIsInAppPrivateFolder
+            collectionWillRemainAccessibleAfterReinstall() ->
+                MediaMigrationState.NotOngoing.NotNeeded.CollectionIsInPublicFolderButWillRemainAccessible
+            else ->
+                MediaMigrationState.NotOngoing.Needed
+        }
+    }
+}
