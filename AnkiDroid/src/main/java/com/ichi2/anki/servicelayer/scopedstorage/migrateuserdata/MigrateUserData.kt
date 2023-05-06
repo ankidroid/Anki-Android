@@ -29,7 +29,6 @@ import com.ichi2.anki.servicelayer.scopedstorage.MoveFileOrDirectory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.SingleRetryDecorator
 import com.ichi2.anki.utils.TranslatableAggregateException
-import com.ichi2.anki.utils.TranslatableString
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
@@ -462,10 +461,12 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
                 val exception = loggedExceptions.singleOrNull()
                     ?: TranslatableAggregateException(
                         message = "Multiple consecutive errors without progress",
-                        translatableMessage = TranslatableString.by(
-                            R.string.error__etc__multiple_consecutive_errors_without_progress_most_recent,
-                            TranslatableString { context -> context.getUserFriendlyErrorText(loggedExceptions.last()) }
-                        ),
+                        translatableMessage = {
+                            getString(
+                                R.string.error__etc__multiple_consecutive_errors_without_progress_most_recent,
+                                getUserFriendlyErrorText(loggedExceptions.last())
+                            )
+                        },
                         causes = loggedExceptions
                     )
 

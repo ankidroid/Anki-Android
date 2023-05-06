@@ -21,7 +21,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.ui.windows.managespace.CanNotWriteToOrCreateFileException
 import com.ichi2.anki.utils.AggregateException
 import com.ichi2.anki.utils.TranslatableAggregateException
-import com.ichi2.anki.utils.TranslatableString
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.testutils.testExceptionWithStackTrace
 import org.hamcrest.MatcherAssert.assertThat
@@ -77,10 +76,12 @@ class TranslatableExceptionsTest {
         )
 
         val translatableAggregateExceptionWithACustomMessage = TranslatableAggregateException(
-            translatableMessage = TranslatableString.by(
-                R.string.error__etc__multiple_consecutive_errors_without_progress_most_recent,
-                TranslatableString { context -> context.getUserFriendlyErrorText(secondException) }
-            ),
+            translatableMessage = {
+                getString(
+                    R.string.error__etc__multiple_consecutive_errors_without_progress_most_recent,
+                    getUserFriendlyErrorText(secondException)
+                )
+            },
             causes = listOf(firstException, secondException)
         )
 

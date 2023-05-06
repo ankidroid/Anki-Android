@@ -80,7 +80,7 @@ open class AggregateException(message: String?, val causes: List<Exception>) : R
 }
 
 fun interface TranslatableException {
-    fun getMessage(context: Context): String
+    fun getTranslatedMessage(context: Context): String
 }
 
 class TranslatableAggregateException(
@@ -90,14 +90,14 @@ class TranslatableAggregateException(
 ) : AggregateException(message, causes), TranslatableException {
 
     @Suppress("IfThenToElvis")
-    override fun getMessage(context: Context): String {
-        return if (translatableMessage == null) {
+    override fun getTranslatedMessage(context: Context): String {
+        return if (translatableMessage != null) {
+            translatableMessage.toTranslatedString(context)
+        } else {
             context.getString(
                 R.string.error__etc__multiple_errors_most_recent,
                 context.getUserFriendlyErrorText(causes.last())
             )
-        } else {
-            translatableMessage.toString(context)
         }
     }
 }
@@ -110,7 +110,7 @@ class TranslatableAggregateException(
  */
 fun Context.getUserFriendlyErrorText(e: Exception): String =
     if (e is TranslatableException) {
-        e.getMessage(this)
+        e.getTranslatedMessage(this)
     } else {
         e.localizedMessage?.ifBlank { null }
             ?: e.message?.ifBlank { null }

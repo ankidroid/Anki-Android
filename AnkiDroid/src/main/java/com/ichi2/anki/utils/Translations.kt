@@ -20,35 +20,26 @@ import android.content.Context
 import androidx.annotation.StringRes
 
 /**
- * A string that can be localized by calling [toString] with a proper [Context].
- * If instantiated by calling [by] with arguments,
- * the arguments that are also [TranslatableString] are localized as well, e.g.
+ * A string that can be constructed now and localized later
+ * by calling [toTranslatedString] with a suitable [Context].
  *
- *     TranslatableString.by(
- *         R.string.hello_s,
- *         TranslatableString.by(R.string.world)
- *     ).toString(context)
+ *     TranslatableString.by(R.string.hello_world)
+ *         .toTranslatedString(context)
  *
- * will print something along in the language of the context:
+ *     TranslatableString { getString(R.string.hello_s, "world") }
+ *         .toTranslatedString(context)
  *
- *     Hello, world!
- *
- * When overriding [toString], care must be taken to ensure that
- * only the provided context is used to construct the resulting string.
  */
 fun interface TranslatableString {
-    fun toString(context: Context): String
+    fun Context.toTranslatedString(): String
 
     companion object {
-        fun by(@StringRes stringId: Int) =
-            TranslatableString { context -> context.getString(stringId) }
-
-        fun by(@StringRes stringId: Int, vararg arguments: Any?) =
-            TranslatableString { context ->
-                context.getString(
-                    stringId,
-                    *arguments.mapToArray { if (it is TranslatableString) it.toString(context) else it }
-                )
-            }
+        fun by(@StringRes stringId: Int) = TranslatableString { getString(stringId) }
     }
 }
+
+// This method exists as the way to call `TranslatableString.toTranslatedString()` without it
+// would be to say `with (translatableString) context.toTranslatableString()`.
+// TODO Once using context receivers, remove this method,
+//   instead writing the SAM as `context(Context) fun toTranslatedString()`.
+fun TranslatableString.toTranslatedString(context: Context) = context.toTranslatedString()

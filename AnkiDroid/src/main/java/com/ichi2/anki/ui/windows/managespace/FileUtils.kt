@@ -181,7 +181,7 @@ interface CollectionDirectoryProvider { val collectionDirectory: File }
 
 class CanNotWriteToOrCreateFileException(val file: File) : Exception(), TranslatableException {
     override val message get() = "Can not write to or create file: $file"
-    override fun getMessage(context: Context) =
+    override fun getTranslatedMessage(context: Context) =
         context.getString(R.string.error__etc__cannot_write_to_or_create_file, file)
 }
 
