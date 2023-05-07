@@ -139,13 +139,14 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         mutex.withLock {
             mDeckList.clear()
             mCurrentDeckList.clear()
-            mRev = 0
-            mLrn = mRev
-            mNew = mLrn
-            mNumbersComputed = true
             mHasSubdecks = nodes.any { it.children.any() }
             currentDeckId = withCol { decks.current().optLong("id") }
             processNodes(nodes)
+            val topLevelNodes = nodes.filter { it.value.depth == 0 && it.value.shouldDisplayCounts() }
+            mRev = topLevelNodes.sumOf { it.value.revCount }
+            mLrn = topLevelNodes.sumOf { it.value.lrnCount }
+            mNew = topLevelNodes.sumOf { it.value.newCount }
+            mNumbersComputed = true
             // Filtering performs notifyDataSetChanged after the async work is complete
             getFilter().filter(filter)
         }
@@ -302,14 +303,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             mDeckList.add(node)
             mCurrentDeckList.add(node)
 
-            // Add this node's counts to the totals if it's a parent deck
-            if (node.value.depth == 0) {
-                if (node.value.shouldDisplayCounts()) {
-                    mNew += node.value.newCount
-                    mLrn += node.value.lrnCount
-                    mRev += node.value.revCount
-                }
-            }
             // Process sub-decks
             if (shouldRecurse) {
                 processNodes(node.children)
