@@ -277,7 +277,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     private suspend fun processNodes(nodes: List<TreeNode<AbstractDeckTreeNode>>) {
         for (node in nodes) {
-            var shouldRecurse = true
             if (BackendFactory.defaultLegacySchema) {
                 // If the default deck is empty, hide it by not adding it to the deck list.
                 // We don't hide it if it's the only deck or if it has sub-decks.
@@ -286,25 +285,19 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
                         continue
                     }
                 }
-                // If any of this node's parents are collapsed, don't add it to the deck list
-                val parents = withCol { decks.parents(node.value.did) }
-                for (parent in parents) {
-                    if (parent.optBoolean("collapsed")) {
-                        return
-                    }
-                }
+            }
+            val isCollapsed = if (BackendFactory.defaultLegacySchema) {
+                withCol { decks.get(node.value.did).optBoolean("collapsed") }
             } else {
                 // backend takes care of excluding default, and includes collapsed info
-                if (node.value.collapsed) {
-                    shouldRecurse = false
-                }
+                node.value.collapsed
             }
 
             mDeckList.add(node)
             mCurrentDeckList.add(node)
 
             // Process sub-decks
-            if (shouldRecurse) {
+            if (!isCollapsed) {
                 processNodes(node.children)
             }
         }
