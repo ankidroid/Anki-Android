@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.DeckService.defaultDeckHasCards
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.Counts
@@ -129,6 +130,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
      * Consume a list of [AbstractDeckTreeNode]s to render a new deck list.
      * @param filter The string to filter the deck by
      */
+    @NeedsTest("Ensure hasSubdecks is false if there are only top level decks")
     suspend fun buildDeckList(nodes: List<TreeNode<AbstractDeckTreeNode>>, filter: CharSequence?) {
         Timber.d("buildDeckList")
         // TODO: This is a lazy hack to fix a bug. We hold the lock for far too long
@@ -140,7 +142,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             mLrn = mRev
             mNew = mLrn
             mNumbersComputed = true
-            mHasSubdecks = false
+            mHasSubdecks = nodes.any { it.children.any() }
             currentDeckId = withCol { decks.current().optLong("id") }
             processNodes(nodes)
             // Filtering performs notifyDataSetChanged after the async work is complete
@@ -285,7 +287,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
                 // If any of this node's parents are collapsed, don't add it to the deck list
                 val parents = withCol { decks.parents(node.value.did) }
                 for (parent in parents) {
-                    mHasSubdecks = true // If a deck has a parent it means it's a subdeck so set a flag
                     if (parent.optBoolean("collapsed")) {
                         return
                     }
@@ -293,7 +294,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             } else {
                 // backend takes care of excluding default, and includes collapsed info
                 if (node.value.collapsed) {
-                    mHasSubdecks = true
                     shouldRecurse = false
                 }
             }
