@@ -263,9 +263,9 @@ open class DeckPicker :
     private val mDeckExpanderClickListener = View.OnClickListener { view: View ->
         launchCatchingTask { toggleDeckExpand(view.tag as Long) }
     }
-    private val mDeckClickListener = View.OnClickListener { v: View -> launchCatchingTask { onDeckClick(v, DeckSelectionType.DEFAULT) } }
-    private val mCountsClickListener = View.OnClickListener { v: View -> launchCatchingTask { onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) } }
-    private suspend fun onDeckClick(v: View, selectionType: DeckSelectionType) {
+    private val mDeckClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.DEFAULT) }
+    private val mCountsClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) }
+    private fun onDeckClick(v: View, selectionType: DeckSelectionType) {
         val deckId = v.tag as Long
         Timber.i("DeckPicker:: Selected deck with id %d", deckId)
         var collectionIsOpen = false
@@ -1075,7 +1075,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                launchCatchingTask { handleDeckSelection(col.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS) }
+                handleDeckSelection(col.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
             }
             else -> {}
         }
@@ -1722,7 +1722,7 @@ open class DeckPicker :
         }
     }
 
-    private suspend fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
+    private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
         // Clear the undo history when selecting a new deck
         if (col.decks.selected() != did) {
             col.clearUndo()
@@ -1817,7 +1817,7 @@ open class DeckPicker :
      *
      * @param did The deck ID of the deck to select.
      */
-    private suspend fun scrollDecklistToDeck(did: DeckId) {
+    private fun scrollDecklistToDeck(did: DeckId) {
         val position = mDeckListAdapter.findDeckPosition(did)
         mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
     }

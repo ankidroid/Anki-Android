@@ -34,6 +34,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.libanki.sched.associateNodeWithParent
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
 import kotlinx.coroutines.runBlocking
@@ -80,6 +81,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     // Whether we have a background (so some items should be partially transparent).
     private var mPartiallyTransparentForBackground = false
+
+    private var deckIdToParentMap = mapOf<DeckId, DeckId?>()
 
     // ViewHolder class to save inflated views for recycling
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -147,12 +150,14 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             mLrn = topLevelNodes.sumOf { it.value.lrnCount }
             mNew = topLevelNodes.sumOf { it.value.newCount }
             mNumbersComputed = true
+            // Note: this will crash if we have a deck list with identical DeckIds
+            deckIdToParentMap = nodes.associateNodeWithParent().entries.associate { Pair(it.key.did, it.value?.did) }.toMap()
             // Filtering performs notifyDataSetChanged after the async work is complete
             getFilter().filter(filter)
         }
     }
 
-    suspend fun getNodeByDid(did: DeckId): TreeNode<AbstractDeckTreeNode> {
+    fun getNodeByDid(did: DeckId): TreeNode<AbstractDeckTreeNode> {
         val pos = findDeckPosition(did)
         return deckList[pos]
     }
@@ -309,20 +314,17 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
      *
      * An invalid deck ID will return position 0.
      */
-    @RustCleanup("optimize")
-    suspend fun findDeckPosition(did: DeckId): Int {
-        for (i in mCurrentDeckList.indices) {
-            if (mCurrentDeckList[i].value.did == did) {
-                return i
+    fun findDeckPosition(did: DeckId): Int {
+        mCurrentDeckList.forEachIndexed { index, treeNode ->
+            if (treeNode.value.did == did) {
+                return index
             }
         }
+
         // If the deck is not in our list, we search again using the immediate parent
-        val parents = withCol { decks.parents(did) }
-        return if (parents.isEmpty()) {
-            0
-        } else {
-            findDeckPosition(parents[parents.size - 1].optLong("id", 0))
-        }
+        // If the deck is not found, return 0
+        val parentDeckId = deckIdToParentMap[did] ?: return 0
+        return findDeckPosition(parentDeckId)
     }
 
     suspend fun eta(): Int? = if (mNumbersComputed) {
