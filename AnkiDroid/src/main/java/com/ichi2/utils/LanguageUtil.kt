@@ -30,8 +30,7 @@ import java.util.*
  * Utility call for proving language related functionality.
  */
 object LanguageUtil {
-    /** locale value of the currently selected locale of the app */
-    const val DEFAULT_LANGUAGE_TAG = ""
+    const val SYSTEM_LANGUAGE_TAG = ""
 
     /** A list of all languages supported by AnkiDroid
      * Please modify LanguageUtilsTest if changing
@@ -207,8 +206,8 @@ object LanguageUtil {
     fun getSystemLocale(): Locale = getLocaleCompat(Resources.getSystem())!!
 
     /** If locale is not provided, the current locale will be used. */
-    fun setDefaultBackendLanguages(languageTag: String = DEFAULT_LANGUAGE_TAG) {
-        val locale = if (languageTag == DEFAULT_LANGUAGE_TAG) {
+    fun setDefaultBackendLanguages(languageTag: String = SYSTEM_LANGUAGE_TAG) {
+        val locale = if (languageTag == SYSTEM_LANGUAGE_TAG) {
             Locale.getDefault()
         } else {
             Locale.forLanguageTag(languageTag)
