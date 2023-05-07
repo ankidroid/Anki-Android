@@ -46,6 +46,7 @@ import java.util.*
 
 @KotlinCleanup("lots to do")
 @RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
+@RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
     private val mDeckList: MutableList<TreeNode<AbstractDeckTreeNode>>
 
