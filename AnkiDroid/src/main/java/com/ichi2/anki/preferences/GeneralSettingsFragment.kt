@@ -87,12 +87,12 @@ class GeneralSettingsFragment : SettingsFragment() {
         val systemLocale = getSystemLocale()
         requirePreference<ListPreference>(R.string.pref_language_key).apply {
             entries = arrayOf(getStringByLocale(R.string.language_system, systemLocale), *sortedLanguages.keys.toTypedArray())
-            entryValues = arrayOf(LanguageUtil.DEFAULT_LANGUAGE_TAG, *sortedLanguages.values.toTypedArray())
+            entryValues = arrayOf(LanguageUtil.SYSTEM_LANGUAGE_TAG, *sortedLanguages.values.toTypedArray())
             setOnPreferenceChangeListener { selectedLanguage ->
                 LanguageUtil.setDefaultBackendLanguages(selectedLanguage as String)
                 runBlocking { CollectionManager.discardBackend() }
 
-                val localeCode = if (selectedLanguage != LanguageUtil.DEFAULT_LANGUAGE_TAG) {
+                val localeCode = if (selectedLanguage != LanguageUtil.SYSTEM_LANGUAGE_TAG) {
                     selectedLanguage
                 } else {
                     null
