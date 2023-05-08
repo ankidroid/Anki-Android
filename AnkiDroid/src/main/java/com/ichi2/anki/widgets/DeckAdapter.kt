@@ -366,7 +366,9 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
         override fun publishResults(constraint: CharSequence?, results: List<TreeNode<AbstractDeckTreeNode>>) {
             mCurrentDeckList.clear()
-            mCurrentDeckList.addAll(results)
+            var data: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList()
+            data.addAll(results)
+            mCurrentDeckList.addAll(data)
             notifyDataSetChanged()
         }
 
