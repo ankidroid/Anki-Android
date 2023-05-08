@@ -267,11 +267,11 @@ class DB(db: SupportSQLiteDatabase) {
             }
             return result
         } finally {
-            safeEndInTransaction(database)
+            database.safeEndInTransaction()
         }
     }
     fun safeEndInTransaction() {
-        safeEndInTransaction(database)
+        database.safeEndInTransaction()
     }
 
     companion object {
@@ -299,10 +299,10 @@ class DB(db: SupportSQLiteDatabase) {
             return DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
         }
 
-        fun safeEndInTransaction(database: SupportSQLiteDatabase) {
-            if (database.inTransaction()) {
+        fun SupportSQLiteDatabase.safeEndInTransaction() {
+            if (inTransaction()) {
                 try {
-                    database.endTransaction()
+                    endTransaction()
                 } catch (e: Exception) {
                     // endTransaction throws about invalid transaction even when you check first!
                     Timber.w(e)
