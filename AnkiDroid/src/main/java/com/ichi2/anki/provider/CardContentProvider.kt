@@ -31,6 +31,7 @@ import com.ichi2.compat.CompatHelper.Companion.isMarshmallow
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.DB.Companion.safeEndInTransaction
 import com.ichi2.libanki.Models.AllowEmpty
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.EmptyMediaException
@@ -759,7 +760,7 @@ class CardContentProvider : ContentProvider() {
             sqldb.setTransactionSuccessful()
             result
         } finally {
-            DB.safeEndInTransaction(sqldb)
+            sqldb.safeEndInTransaction()
         }
     }
 
