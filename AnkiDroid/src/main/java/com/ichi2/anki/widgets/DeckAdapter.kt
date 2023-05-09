@@ -112,12 +112,12 @@ class DeckAdapter(
     /**
      * The button showing a deck is collapsed and offering to expand it.
      */
-    private val mExpandImage: Drawable?
+    private val mExpandImage: Drawable
 
     /**
      * The button showing a deck is expanded, and offer to collapse it.
      */
-    private val mCollapseImage: Drawable?
+    private val mCollapseImage: Drawable
     private var currentDeckId: DeckId = 0
 
     // Totals accumulated as each deck is processed. Their value should be ignored until [mNumbersComputed] is true.
@@ -447,10 +447,10 @@ class DeckAdapter(
         mRowCurrentDrawable = ta.getResourceId(4, 0)
         mDeckNameDefaultColor = ta.getColor(5, ContextCompat.getColor(context, R.color.black))
         mDeckNameDynColor = ta.getColor(6, ContextCompat.getColor(context, R.color.material_blue_A700))
-        mExpandImage = ta.getDrawable(7)
-        mExpandImage!!.isAutoMirrored = true
-        mCollapseImage = ta.getDrawable(8)
-        mCollapseImage!!.isAutoMirrored = true
+        mExpandImage = ta.getDrawable(7)!!
+        mExpandImage.isAutoMirrored = true
+        mCollapseImage = ta.getDrawable(8)!!
+        mCollapseImage.isAutoMirrored = true
         ta.recycle()
     }
 }
