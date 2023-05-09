@@ -17,11 +17,14 @@
 package com.ichi2.preferences
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.util.AttributeSet
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
@@ -98,6 +101,8 @@ class ControlPreference : ListPreference {
         when (val index: Int = (newValue as String).toInt()) {
             ADD_GESTURE_INDEX -> {
                 val actionName = title
+                // TODO : Discuss if we want to move this to a fragment to allow horizontal orientation
+                (context as Activity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
                 MaterialDialog(context).show {
                     title(text = actionName.toString())
 
@@ -121,6 +126,8 @@ class ControlPreference : ListPreference {
                     }
 
                     noAutoDismiss()
+                }.onDismiss {
+                    (context as Activity).requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR
                 }
             }
             ADD_KEY_INDEX -> {
