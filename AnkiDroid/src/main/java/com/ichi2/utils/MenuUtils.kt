@@ -18,6 +18,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.Menu
 import android.view.MenuItem
+import androidx.annotation.ColorInt
 import androidx.appcompat.graphics.drawable.DrawableWrapperCompat
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.view.menu.MenuItemImpl
@@ -65,6 +66,7 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
  * Has no effect for items that have no icon.
  */
 fun Context.tintOverflowMenuIcons(menu: Menu, skipIf: ((MenuItem) -> Boolean)? = null) {
+    @ColorInt
     val iconColor = Themes.getColorFromAttr(this, R.attr.overflowAndPopupMenuIconColor)
 
     menu.forEachOverflowItemRecursive { item ->

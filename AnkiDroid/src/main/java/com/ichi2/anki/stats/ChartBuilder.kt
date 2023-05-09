@@ -91,10 +91,8 @@ class ChartBuilder(private val chartView: ChartView, private val collectionData:
         val plotSheet = PlotSheet(mFirstElement - 0.5, mLastElement + 0.5, 0.0, mMaxCards * Y_AXIS_STRETCH_FACTOR)
         plotSheet.setFrameThickness(frameThickness * 0.66f, frameThickness * 0.66f, frameThickness.toFloat(), frameThickness * 0.9f)
         plotSheet.setFontSize(textSize)
-        val backgroundColor = getColorFromAttr(chartView.context, R.attr.colorBackground)
-        plotSheet.setBackgroundColor(ColorWrap(backgroundColor))
-        val textColor = getColorFromAttr(chartView.context, R.attr.textColor)
-        plotSheet.textColor = ColorWrap(textColor)
+        plotSheet.setBackgroundColor(ColorWrap(getColorFromAttr(chartView.context, R.attr.colorBackground)))
+        plotSheet.textColor = ColorWrap(getColorFromAttr(chartView.context, R.attr.textColor))
         plotSheet.setIsBackwards(mBackwards)
         if (chartType == ChartType.CARDS_TYPES) {
             return createPieChart(plotSheet)

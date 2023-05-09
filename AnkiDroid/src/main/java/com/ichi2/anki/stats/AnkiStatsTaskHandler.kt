@@ -103,8 +103,7 @@ class AnkiStatsTaskHandler private constructor(
                             Timber.w(it)
                         }
                         progressBar.visibility = View.GONE
-                        val backgroundColor = getColorFromAttr(webView.context, R.attr.colorBackground)
-                        webView.setBackgroundColor(backgroundColor)
+                        webView.setBackgroundColor(getColorFromAttr(webView.context, R.attr.colorBackground))
                         webView.visibility = View.VISIBLE
                         webView.invalidate()
                     }

@@ -18,6 +18,7 @@ import android.view.*
 import android.view.animation.Animation
 import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
+import androidx.annotation.ColorInt
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.ActionBar
@@ -405,8 +406,14 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             )
             return
         }
-        val toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary)
-        val navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor)
+        @ColorInt
+        val colors = Themes.getColorFromAttr(this, intArrayOf(R.attr.colorPrimary, R.attr.customTabNavBarColor))
+
+        @ColorInt
+        val toolbarColor = colors[0]
+
+        @ColorInt
+        val navBarColor = colors[1]
         val colorSchemeParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(toolbarColor)
             .setNavigationBarColor(navBarColor)

@@ -103,14 +103,19 @@ object Themes {
         return attrs
     }
 
-    @JvmStatic // tests failed when removing, maybe try later
+    /**
+     * @see [getColorFromAttr], but for a single value.
+     */
     @ColorInt
-    fun getColorFromAttr(context: Context?, colorAttr: Int): Int {
+    fun getColorFromAttr(context: Context, colorAttr: Int): Int {
         val attrs = intArrayOf(colorAttr)
-        return getColorFromAttr(context!!, attrs)[0]
+        return getColorFromAttr(context, attrs)[0]
     }
 
-    @JvmStatic // tests failed when removing, maybe try later
+    /**
+     * @param attrs [ColorRes] of colors to get. This array should not be used after calling this function.
+     * @return An array with the [ColorInt] corresponding to the ColorRes in [attrs]; or of white if the value is not set.
+     */
     @ColorInt
     fun getColorFromAttr(context: Context, attrs: IntArray): IntArray {
         val ta = context.obtainStyledAttributes(attrs)
@@ -125,9 +130,7 @@ object Themes {
      * @return required color depending on the theme from the given attribute
      */
     @ColorInt
-    fun Fragment.getColorFromAttr(@AttrRes attribute: Int): Int {
-        return getColorFromAttr(requireContext(), attribute)
-    }
+    fun Fragment.getColorFromAttr(@AttrRes attribute: Int) = getColorFromAttr(requireContext(), attribute)
 
     /**
      * @return if current selected theme is `Follow system`

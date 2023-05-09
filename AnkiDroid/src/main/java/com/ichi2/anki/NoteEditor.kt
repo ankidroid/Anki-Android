@@ -37,6 +37,7 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.annotation.CheckResult
+import androidx.annotation.ColorInt
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
@@ -256,13 +257,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 modifyCurrentSelection(formatter, currentFocus)
             }
             // Sets the background and icon color of toolbar respectively.
-            setBackgroundColor(
-                Themes.getColorFromAttr(
-                    this@NoteEditor,
-                    R.attr.toolbarBackgroundColor
-                )
-            )
-            setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+            @ColorInt
+            val colors = Themes.getColorFromAttr(this@NoteEditor, intArrayOf(R.attr.toolbarBackgroundColor, R.attr.toolbarIconColor))
+
+            @ColorInt
+            val backgroundColor = colors[0]
+
+            @ColorInt
+            val iconColor = colors[1]
+            setBackgroundColor(backgroundColor)
+            setIconColor(iconColor)
         }
         val mainView = findViewById<View>(android.R.id.content)
         // Enable toolbar
