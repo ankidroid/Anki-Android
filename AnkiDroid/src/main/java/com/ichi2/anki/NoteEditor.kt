@@ -1034,6 +1034,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun closeCardEditorWithCheck() {
+        if (getCurrentFieldText(0).isEmpty()) {
+            closeNoteEditor()
+            return
+        }
         if (hasUnsavedChanges()) {
             showDiscardChangesDialog()
         } else {
