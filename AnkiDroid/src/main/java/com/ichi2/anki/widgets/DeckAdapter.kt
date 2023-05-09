@@ -50,10 +50,10 @@ import java.util.*
 @RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
-    private val mDeckList: MutableList<TreeNode<AbstractDeckTreeNode>>
+    private var mDeckList: List<TreeNode<AbstractDeckTreeNode>> = ArrayList()
 
     /** A subset of mDeckList (currently displayed)  */
-    private val mCurrentDeckList: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList()
+    private var mCurrentDeckList: List<TreeNode<AbstractDeckTreeNode>> = ArrayList()
     private val mZeroCountColor: Int
     private val mNewCountColor: Int
     private val mLearnCountColor: Int
@@ -141,13 +141,11 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         // TODO: This is a lazy hack to fix a bug. We hold the lock for far too long
         // and do I/O inside it. Better to calculate the new lists outside the lock, then swap
         mutex.withLock {
-            mDeckList.clear()
-            mCurrentDeckList.clear()
             mHasSubdecks = nodes.any { it.children.any() }
             currentDeckId = withCol { decks.current().optLong("id") }
             val newDecks = processNodes(nodes)
-            mDeckList.addAll(newDecks)
-            mCurrentDeckList.addAll(newDecks)
+            mDeckList = newDecks.toList()
+            mCurrentDeckList = newDecks.toList()
 
             val topLevelNodes = nodes.filter { it.value.depth == 0 && it.value.shouldDisplayCounts() }
             mRev = topLevelNodes.sumOf { it.value.revCount }
@@ -365,8 +363,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
 
         override fun publishResults(constraint: CharSequence?, results: List<TreeNode<AbstractDeckTreeNode>>) {
-            mCurrentDeckList.clear()
-            mCurrentDeckList.addAll(results)
+            mCurrentDeckList = results.toList()
             notifyDataSetChanged()
         }
 
@@ -405,7 +402,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     init {
-        mDeckList = ArrayList()
         // Get the colors from the theme attributes
         val attrs = intArrayOf(
             R.attr.zeroCountColor,
