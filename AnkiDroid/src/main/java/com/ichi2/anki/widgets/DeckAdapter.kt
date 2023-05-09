@@ -64,28 +64,72 @@ class DeckAdapter(
     private val deckLongClickListener: OnLongClickListener,
     private val countsClickListener: View.OnClickListener
 ) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
+    /**
+     * A list of decks. Contains at least all decks that should be displayed while search is empty.
+     * It may also contain collapsed decks.
+     */
     private var mDeckList: List<TreeNode<AbstractDeckTreeNode>> = ArrayList()
 
-    /** A subset of mDeckList (currently displayed)  */
+    /** The subset of mDeckList that should be displayed as a result of current search.
+     * It contains decks that match this search and their parents. */
     private var mCurrentDeckList: List<TreeNode<AbstractDeckTreeNode>> = ArrayList()
+
+    /**
+     *  color used to display the number of cards if it is 0 in the trailing column of deck picker.
+     */
     private val mZeroCountColor: Int
+
+    /**
+     * Color used for the number of new cards to review today.
+     */
     private val mNewCountColor: Int
+
+    /**
+     * Color used for the number of cards in learning to see today.
+     */
     private val mLearnCountColor: Int
+
+    /**
+     * Color used for the number of card in review mode to see today.
+     */
     private val mReviewCountColor: Int
+
+    /**
+     * Color for the background of the currently selected deck.
+     */
     private val mRowCurrentDrawable: Int
+
+    /**
+     * Color for the text of the standard decks (not dynamic).
+     */
     private val mDeckNameDefaultColor: Int
+
+    /**
+     * Color for the text of dynamic decks.
+     */
     private val mDeckNameDynColor: Int
+
+    /**
+     * The button showing a deck is collapsed and offering to expand it.
+     */
     private val mExpandImage: Drawable?
+
+    /**
+     * The button showing a deck is expanded, and offer to collapse it.
+     */
     private val mCollapseImage: Drawable?
     private var currentDeckId: DeckId = 0
 
-    // Totals accumulated as each deck is processed
+    // Totals accumulated as each deck is processed. Their value should be ignored until [mNumbersComputed] is true.
     private var mNew = 0
     private var mLrn = 0
     private var mRev = 0
     private var mNumbersComputed = false
 
     // Flags
+    /**
+     * Whether any deck of the collection has a subdeck.
+     */
     private var mHasSubdecks = false
 
     private var deckIdToParentMap = mapOf<DeckId, DeckId?>()
