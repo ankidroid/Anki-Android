@@ -23,6 +23,7 @@ import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -144,7 +145,10 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             mCurrentDeckList.clear()
             mHasSubdecks = nodes.any { it.children.any() }
             currentDeckId = withCol { decks.current().optLong("id") }
-            processNodes(nodes)
+            val newDecks = processNodes(nodes)
+            mDeckList.addAll(newDecks)
+            mCurrentDeckList.addAll(newDecks)
+
             val topLevelNodes = nodes.filter { it.value.depth == 0 && it.value.shouldDisplayCounts() }
             mRev = topLevelNodes.sumOf { it.value.revCount }
             mLrn = topLevelNodes.sumOf { it.value.lrnCount }
@@ -280,7 +284,14 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         indent.minimumWidth = width
     }
 
-    private suspend fun processNodes(nodes: List<TreeNode<AbstractDeckTreeNode>>) {
+    /**
+     * Returns a filtered and flattened view of [nodes]
+     * [nodes] contains all nodes of depth 0.
+     * Afterwards, all depths are returned
+     */
+    @CheckResult
+    private suspend fun processNodes(nodes: List<TreeNode<AbstractDeckTreeNode>>): List<TreeNode<AbstractDeckTreeNode>> {
+        val result = mutableListOf<TreeNode<AbstractDeckTreeNode>>()
         for (node in nodes) {
             if (BackendFactory.defaultLegacySchema) {
                 // If the default deck is empty, hide it by not adding it to the deck list.
@@ -298,14 +309,14 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
                 node.value.collapsed
             }
 
-            mDeckList.add(node)
-            mCurrentDeckList.add(node)
+            result.add(node)
 
             // Process sub-decks
             if (!isCollapsed) {
-                processNodes(node.children)
+                result.addAll(processNodes(node.children))
             }
         }
+        return result
     }
 
     /**
