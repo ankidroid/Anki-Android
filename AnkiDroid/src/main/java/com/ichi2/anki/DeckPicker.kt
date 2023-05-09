@@ -390,13 +390,15 @@ open class DeckPicker :
         }
 
         // create and set an adapter for the RecyclerView
-        mDeckListAdapter = DeckAdapter(layoutInflater, this).apply {
-            setDeckClickListener(mDeckClickListener)
-            setCountsClickListener(mCountsClickListener)
-            setDeckExpanderClickListener(mDeckExpanderClickListener)
-            setDeckLongClickListener(mDeckLongClickListener)
-            enablePartialTransparencyForBackground(hasDeckPickerBackground)
-        }
+        mDeckListAdapter = DeckAdapter(
+            layoutInflater,
+            this,
+            hasDeckPickerBackground,
+            mDeckClickListener,
+            mDeckExpanderClickListener,
+            mDeckLongClickListener,
+            mCountsClickListener
+        )
         recyclerView.adapter = mDeckListAdapter
 
         mPullToSyncWrapper = findViewById<SwipeRefreshLayout?>(R.id.pull_to_sync_wrapper).apply {

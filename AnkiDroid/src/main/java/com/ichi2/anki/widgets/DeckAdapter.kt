@@ -46,10 +46,24 @@ import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
 
+/**
+ * RecyclerView.Adapter for the list of decks in the DeckPicker.
+ *     @param mPartiallyTransparentForBackground  Whether we have a background (so some items should be partially transparent).
+
+ */
 @KotlinCleanup("lots to do")
 @RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
-class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
+class DeckAdapter(
+    private val layoutInflater: LayoutInflater,
+    context: Context,
+    private val partiallyTransparentForBackground: Boolean,
+    // Listeners
+    private val deckClickListener: View.OnClickListener,
+    private val deckExpanderClickListener: View.OnClickListener,
+    private val deckLongClickListener: OnLongClickListener,
+    private val countsClickListener: View.OnClickListener
+) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
     private var mDeckList: List<TreeNode<AbstractDeckTreeNode>> = ArrayList()
 
     /** A subset of mDeckList (currently displayed)  */
@@ -65,12 +79,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private val mCollapseImage: Drawable?
     private var currentDeckId: DeckId = 0
 
-    // Listeners
-    private var mDeckClickListener: View.OnClickListener? = null
-    private var mDeckExpanderClickListener: View.OnClickListener? = null
-    private var mDeckLongClickListener: OnLongClickListener? = null
-    private var mCountsClickListener: View.OnClickListener? = null
-
     // Totals accumulated as each deck is processed
     private var mNew = 0
     private var mLrn = 0
@@ -79,9 +87,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     // Flags
     private var mHasSubdecks = false
-
-    // Whether we have a background (so some items should be partially transparent).
-    private var mPartiallyTransparentForBackground = false
 
     private var deckIdToParentMap = mapOf<DeckId, DeckId?>()
 
@@ -106,27 +111,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             deckLearn = v.findViewById(R.id.deckpicker_lrn)
             deckRev = v.findViewById(R.id.deckpicker_rev)
         }
-    }
-
-    fun setDeckClickListener(listener: View.OnClickListener?) {
-        mDeckClickListener = listener
-    }
-
-    fun setCountsClickListener(listener: View.OnClickListener?) {
-        mCountsClickListener = listener
-    }
-
-    fun setDeckExpanderClickListener(listener: View.OnClickListener?) {
-        mDeckExpanderClickListener = listener
-    }
-
-    fun setDeckLongClickListener(listener: OnLongClickListener?) {
-        mDeckLongClickListener = listener
-    }
-
-    /** Sets whether the control should have partial transparency to allow a background to be seen  */
-    fun enablePartialTransparencyForBackground(isTransparent: Boolean) {
-        mPartiallyTransparentForBackground = isTransparent
     }
 
     private val mutex = Mutex()
@@ -189,7 +173,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
         if (treeNode.hasChildren()) {
             holder.deckExpander.tag = node.did
-            holder.deckExpander.setOnClickListener(mDeckExpanderClickListener)
+            holder.deckExpander.setOnClickListener(deckExpanderClickListener)
         } else {
             holder.deckExpander.isClickable = false
             holder.deckExpander.setOnClickListener(null)
@@ -198,7 +182,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         // Set background colour. The current deck has its own color
         if (isCurrentlySelectedDeck(node)) {
             holder.deckLayout.setBackgroundResource(mRowCurrentDrawable)
-            if (mPartiallyTransparentForBackground) {
+            if (partiallyTransparentForBackground) {
                 setBackgroundAlpha(holder.deckLayout, SELECTED_DECK_ALPHA_AGAINST_BACKGROUND)
             }
         } else {
@@ -236,9 +220,9 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         holder.countsLayout.tag = node.did
 
         // Set click listeners
-        holder.deckLayout.setOnClickListener(mDeckClickListener)
-        holder.deckLayout.setOnLongClickListener(mDeckLongClickListener)
-        holder.countsLayout.setOnClickListener(mCountsClickListener)
+        holder.deckLayout.setOnClickListener(deckClickListener)
+        holder.deckLayout.setOnLongClickListener(deckLongClickListener)
+        holder.countsLayout.setOnClickListener(countsClickListener)
     }
 
     private fun setBackgroundAlpha(view: View, alphaPercentage: Double) {
