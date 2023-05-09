@@ -333,11 +333,11 @@ class DeckAdapter(
             null
         }
     override fun getFilter(): Filter {
-        return DeckFilter()
+        return DeckFilter(mDeckList)
     }
 
     @VisibleForTesting
-    inner class DeckFilter(deckList: List<TreeNode<AbstractDeckTreeNode>> = mDeckList) : TypedFilter<TreeNode<AbstractDeckTreeNode>>(deckList) {
+    inner class DeckFilter(deckList: List<TreeNode<AbstractDeckTreeNode>>) : TypedFilter<TreeNode<AbstractDeckTreeNode>>(deckList) {
         override fun filterResults(constraint: CharSequence, items: List<TreeNode<AbstractDeckTreeNode>>): List<TreeNode<AbstractDeckTreeNode>> {
             val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
             return items.mapNotNull { t: TreeNode<AbstractDeckTreeNode> -> filterDeckInternal(filterPattern, t) }
