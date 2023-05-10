@@ -601,6 +601,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun hasUnsavedChanges(): Boolean {
+        // empty field
+        if (getCurrentFieldText(0).isEmpty()) {
+            return false
+        }
+
         if (!collectionHasLoaded()) {
             return false
         }
@@ -1034,9 +1039,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun closeCardEditorWithCheck() {
-        if (getCurrentFieldText(0).isEmpty()) {
-            closeNoteEditor()
-        } else if (hasUnsavedChanges()) {
+        if (hasUnsavedChanges()) {
             showDiscardChangesDialog()
         } else {
             closeNoteEditor()
