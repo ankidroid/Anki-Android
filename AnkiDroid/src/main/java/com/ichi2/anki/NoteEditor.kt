@@ -1046,7 +1046,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             Timber.i("NoteEditor:: OK button pressed to confirm discard changes")
             closeNoteEditor()
         }
-            .show()
     }
 
     private fun closeNoteEditor(intent: Intent = Intent()) {
