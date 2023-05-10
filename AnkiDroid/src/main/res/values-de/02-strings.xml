@@ -315,7 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Fehler beim Laden von Stapel »%s«</string>
     <string name="search_decks">Stapel durchsuchen</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Migrationsfortschritt anzeigen</string>
     <string name="ankidroid_init_failed_webview_title">Schwerer Fehler</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid basiert auf dem System WebView, der nicht verfügbar ist. Dies kann passieren, wenn das System Updates installiert. Bitte versuchen Sie es in ein paar Minuten erneut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -369,8 +369,8 @@
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Karte begraben.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d Karten zurückgestellt.</item>
+        <item quantity="one">%d Karte gesperrt.</item>
+        <item quantity="other">%d Karten gesperrt.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Feld %s anpinnen</string>

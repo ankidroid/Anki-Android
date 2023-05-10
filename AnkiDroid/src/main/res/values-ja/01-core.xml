@@ -104,7 +104,7 @@
     <string name="menu_dismiss_note">非表示 / 削除</string>
     <string name="menu_bury_card">カードを今日はパス</string>
     <string name="menu_bury_note">ノートを今日はパス</string>
-    <string name="menu_suspend_card">カードの表示を中止</string>
+    <string name="menu_suspend_card">カードを休止</string>
     <string name="menu_suspend_note">ノートを休止</string>
     <string name="menu_bury">今日はパス</string>
     <string name="menu_suspend">休止</string>
@@ -170,7 +170,7 @@
     <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
-    <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
+    <string name="empty_cloze_warning">ノートを編集して、穴埋め箇所を追加してください。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">同期が一時的に無効になっています</string>
     <string name="button_upgrade" comment="Text of the sync button">データ保存先を対象範囲別ストレージへ移行</string>

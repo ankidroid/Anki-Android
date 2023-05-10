@@ -96,10 +96,10 @@
     <string name="custom_study_rev_total_rev">デッキ内の、期日に達している復習カード: %d枚</string>
     <string name="custom_study_new_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_rev_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
-    <string name="custom_study_forgotten">直近 x 日間で間違えた（＝「やり直し」を選んだ）カードを再学習する</string>
+    <string name="custom_study_forgotten">直近 x 日間で「やり直し」を選んだカードを再学習</string>
     <string name="custom_study_ahead"> x 日先までの復習カードを予習</string>
     <string name="custom_study_random">デッキからランダムに x 枚のカードを選んで学習</string>
-    <string name="custom_study_preview">直近 x 日間で追加された新規カード（のうち通常のスケジュールで未学習のもの）を予習</string>
+    <string name="custom_study_preview">直近 x 日間で追加した習得未開始の新規カードを予習</string>
     <string name="custom_study_rebuild_deck_corrupt">カスタムデッキを再構築できませんでした</string>
     <string name="importing_collection">コレクションをインポートしています&#8230;</string>
     <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>

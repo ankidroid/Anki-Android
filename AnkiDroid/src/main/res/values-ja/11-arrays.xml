@@ -64,7 +64,7 @@
     <string name="cram_deck_conf_order_relative_overdueness">期日超過が相対的に大きい順</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">選択中のデッキ</string>
-    <string name="add_to_deck_decide_by_note_type">ノートタイプから選択</string>
+    <string name="add_to_deck_decide_by_note_type">選択中のノートタイプを最後に使用したデッキ</string>
     <!-- new_spread_labels -->
     <string name="new_spread_mix_new_and_review">復習カードと混ぜる</string>
     <string name="new_spread_new_after_review">復習カードの後</string>
