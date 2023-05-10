@@ -77,7 +77,7 @@
     <string name="reset_confirmation">TTSの言語設定をすべてリセットしました</string>
     <string name="card_zoom" maxLength="41">カードの拡大・縮小</string>
     <string name="image_zoom" maxLength="41">画像の拡大・縮小</string>
-    <string name="button_size" maxLength="41">解答表示・回答ボタンの縦サイズ</string>
+    <string name="button_size" maxLength="41">解答表示・回答ボタンのサイズ</string>
     <string name="card_browser_font_size" maxLength="41">カードブラウザのフォントサイズ</string>
     <string name="card_browser_hide_media" maxLength="41">カードブラウザでファイル名も表示</string>
     <string name="card_browser_hide_media_summary">カードブラウザのリスト画面の質問フィールド欄と解答フィールド欄に、メディア（画像・音声・動画）ファイル名も表示する</string>
@@ -163,7 +163,7 @@
     <string name="safe_display_summ">アニメーションを無効にし、より不具合が起こりくい方法でカードを表示します。電子ペーパー端末ではこの設定が必要となる場合があります</string>
     <string name="disable_extended_text_ui" maxLength="41">単一フィールド編集モードを無効にする</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め問題」のコンテキストメニューを許可</string>
+    <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め箇所」のコンテキストメニューを許可</string>
     <string name="vertical_centering" maxLength="41">上下中央揃え</string>
     <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
     <string name="pref_backup_max" maxLength="41">保管するバックアップの世代数</string>
@@ -179,10 +179,10 @@
     <string name="show_progress_summ">トップバーに、残りのカード枚数を表示します（青: 新規、赤: 習得中および再習得中、緑: 復習）</string>
     <string name="show_eta" maxLength="41">推定学習時間を表示</string>
     <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
-    <string name="use_current" maxLength="41">新規カードの追加先デッキ</string>
+    <string name="use_current" maxLength="41">新規カードの既定の追加先デッキ</string>
     <string name="new_spread" maxLength="41">新規カードの位置</string>
-    <string name="learn_cutoff" maxLength="41">習得学習の先取りの限度</string>
-    <string name="time_limit" maxLength="41">タイムボックス（目標時間通知）</string>
+    <string name="learn_cutoff" maxLength="41">習得学習の前倒し許容時間</string>
+    <string name="time_limit" maxLength="41">タイムボックス（時間の目標・区切り）</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
     <string name="day_offset_summary">%s時</string>
@@ -191,7 +191,7 @@
     <string name="pref_keep_screen_on" maxLength="41">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
     <string name="convert_fen_text" maxLength="41">チェス表記のサポート</string>
-    <string name="convert_fen_text_summ">FEN (Forsyth-Edwards Notation)を使いチェス盤を描画します。この表記は[fen][/fen] で囲む必要があります</string>
+    <string name="convert_fen_text_summ">FEN (Forsyth-Edwards Notation) を使いチェス盤を描画します。この表記は [fen] と [/fen] との両タグで囲む必要があります</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API を有効にする</string>
     <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
     <string name="custom_buttons" maxLength="41">アプリバーボタン</string>
@@ -212,8 +212,8 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">クリップボード画像をPNG形式で貼り付け</string>
     <string name="paste_as_png_summary">既定の設定ではAnkiDroidはディスク領域の節約のため、クリップボードにある画像をJPG画像として貼り付けます。 このオプションを有効にすると、JPG画像ではなくPNG画像として貼り付けます</string>
-    <string name="exit_via_double_tap_back" maxLength="41">学習/アプリ 終了には「戻る」操作２回</string>
-    <string name="exit_via_double_tap_back_summ">学習画面とデッキリスト画面でそれぞれ、誤って画面を終了しまう操作ミスを起こりにくくします</string>
+    <string name="exit_via_double_tap_back" maxLength="41">学習終了・アプリ終了には「戻る」操作２回</string>
+    <string name="exit_via_double_tap_back_summ">学習画面とデッキリスト画面でそれぞれ、誤って画面を閉じて終了しまう操作ミスを起こりにくくします</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">すべてのファイルをメディアインポートの対象として許可</string>
     <string name="media_import_allow_all_files_summ">Androidがメディアファイルを認識しない場合に試してみてください</string>
@@ -257,12 +257,12 @@
     <string name="deck_conf_reminders" maxLength="41">リマインダー</string>
     <string name="deck_conf_steps" maxLength="41">習得ステップ（分）</string>
     <string name="deck_conf_order" maxLength="41">新規カードの導入順序</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">一日あたりの新規カード出題枚数の上限</string>
+    <string name="deck_conf_new_cards_day" maxLength="41">一日の新規カード出題上限枚数</string>
     <string name="deck_conf_graduating_ivl" maxLength="41">最終ステップから復習開始までの間隔</string>
     <string name="deck_conf_days">XXX 日</string>
     <string name="deck_conf_easy_ivl" maxLength="41">簡単と回答してから復習までの間隔</string>
-    <string name="deck_conf_start_ease" maxLength="41">復習開始時の「易しさ」(復習間隔の伸び率)</string>
-    <string name="deck_conf_max_rev" maxLength="41">一日あたりの復習カード出題枚数の上限</string>
+    <string name="deck_conf_start_ease" maxLength="41">「易しさ」(間隔の伸び率) の初期値</string>
+    <string name="deck_conf_max_rev" maxLength="41">一日の復習カード出題上限枚数</string>
     <string name="deck_conf_new_bury" maxLength="41">兄弟関係の新規カードをパス</string>
     <string name="deck_conf_new_bury_summ">兄弟関係の (＝同じノートから作成された) 新規カードの学習を同じ日に行わず、翌日に延期します</string>
     <string name="deck_conf_rev_bury" maxLength="41">兄弟関係のカードの復習をパス</string>
@@ -273,7 +273,7 @@
     <string name="deck_conf_hard_factor" maxLength="41">回答「難しい」での間隔伸び率</string>
     <string name="deck_conf_ivl_fct" maxLength="41">復習間隔の調整</string>
     <string name="deck_conf_max_ivl" maxLength="41">復習間隔の上限</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">復習再開後の間隔（前回復習比）</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">復習再開後の間隔回復率</string>
     <string name="deck_conf_min_ivl" maxLength="41">復習再開後の間隔の下限</string>
     <string name="deck_conf_leech_thres" maxLength="41">無駄（定着困難）と判定する基準</string>
     <string name="deck_conf_fails">XXX 回 忘却 (＝復習カードに「やり直し」と回答) した時</string>

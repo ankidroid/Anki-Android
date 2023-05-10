@@ -128,7 +128,7 @@
     <string name="sync_account" maxLength="41">AnkiWeb 帐户</string>
     <string name="sync_account_summ_logged_out">未登录</string>
     <string name="automatic_sync_choice" maxLength="41">自动同步</string>
-    <string name="automatic_sync_choice_summ">如果距离上次同步了超过10分钟，在应用程序启动/退出自动同步。</string>
+    <string name="automatic_sync_choice_summ">如果距离上次同步了超过 10 分钟，在应用程序启动/退出自动同步。</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">始终</string>
     <string name="sync_media_only_unmetered">仅在不按流量计费的的连接时</string>
     <string name="sync_media_never">从不</string>
@@ -147,7 +147,7 @@
     <string name="notification_pref_title" maxLength="41">通知类型</string>
     <string name="never_notify">从不</string>
     <string name="notify_when_pending">有新消息</string>
-    <string name="notification_minimum_cards_due">超过%d张卡牌需要查看</string>
+    <string name="notification_minimum_cards_due">超过 %d 张卡片需要查看</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">振动</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">呼吸灯</string>
     <string name="timeout_answer_text" maxLength="41">自动显示答案</string>
@@ -163,11 +163,11 @@
     <string name="safe_display_summ">禁用所有动画并使用更安全的方法绘制卡牌。使用墨水屏（E-ink）的设备可能需要此功能。</string>
     <string name="disable_extended_text_ui" maxLength="41">禁用单字段编辑模式</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">旋转至横屏时允许上下文菜单中选择“创建填空”。</string>
+    <string name="disable_extended_text_ui_summ">旋转至横屏时允许上下文菜单中选择「创建填空题」。</string>
     <string name="vertical_centering" maxLength="41">居中对齐</string>
     <string name="vertical_centering_summ">垂直居中卡片内容</string>
     <string name="pref_backup_max" maxLength="41">最大备份数量</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">双击时间间隔 (毫秒)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">双击时间间隔（毫秒）</string>
     <string name="pref_double_tap_time_interval_summary">如果指定的时间没有过去，那么应用将忽略回答按钮的第二次点击。这可以防止意外的双击</string>
     <string name="show_estimates" maxLength="41">显示回答按钮的时间</string>
     <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
@@ -182,18 +182,18 @@
     <string name="use_current" maxLength="41">新牌组</string>
     <string name="new_spread" maxLength="41">新卡片位置</string>
     <string name="learn_cutoff" maxLength="41">提前学习的限制</string>
-    <string name="time_limit" maxLength="41">时间盒时间限制</string>
+    <string name="time_limit" maxLength="41">指定时间内的学习卡片数</string>
     <string name="new_timezone" maxLength="41">新时区处理</string>
-    <string name="day_offset_with_description" maxLength="41">次日开始时间 (0为午夜，23为 11PM)</string>
+    <string name="day_offset_with_description" maxLength="41">次日开始时间（0 为午夜，23 为晚上 11 点)</string>
     <string name="day_offset_summary">午夜过后 %s 小时</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
     <string name="pref_keep_screen_on" maxLength="41">保持屏幕常亮</string>
     <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>
     <string name="convert_fen_text" maxLength="41">国际象棋标注支持</string>
-    <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用[fen][/fen]标签括起来。</string>
-    <string name="enable_api_title" maxLength="41">启用AnkiDroid API</string>
-    <string name="enable_api_summary">让其他的应用程序连接到AnkiDroid读写数据</string>
+    <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用 [fen][/fen] 标签括起来。</string>
+    <string name="enable_api_title" maxLength="41">启用 AnkiDroid API</string>
+    <string name="enable_api_summary">让其他的应用程序连接到 AnkiDroid 读写数据</string>
     <string name="custom_buttons" maxLength="41">顶栏按钮</string>
     <string name="custom_buttons_summary">自定义顶栏按钮</string>
     <string name="custom_buttons_setting_always_show">总是显示</string>
@@ -276,7 +276,7 @@
     <string name="deck_conf_new_lps_ivl" maxLength="41">新的时间间隔</string>
     <string name="deck_conf_min_ivl" maxLength="41">最小时间间隔</string>
     <string name="deck_conf_leech_thres" maxLength="41">「记忆难点」阈值</string>
-    <string name="deck_conf_fails">XXX 失败</string>
+    <string name="deck_conf_fails">XXX 遗忘</string>
     <string name="deck_conf_leech_action" maxLength="41">对「记忆难点」的处理</string>
     <string name="deck_conf_max_time" maxLength="41">最大的回答时间</string>
     <string name="deck_conf_seconds">XXX 秒</string>
@@ -306,20 +306,20 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新安排学习进度</string>
     <string name="deck_conf_cram_reschedule_summ">按当前牌组的回答重排卡牌</string>
     <string name="deck_conf_cram_filter_2_check">启用第二筛选器</string>
-    <string name="deck_conf_cram_steps" maxLength="41">自定义学习间隔(以分钟计)</string>
+    <string name="deck_conf_cram_steps" maxLength="41">自定义学习间隔（以分钟计）</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">自定义学习间隔</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">为此牌组集中的牌组启用提醒通知</string>
     <string name="deck_conf_reminders_time" maxLength="41">提醒时间</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">帮助让 AnkiDroid 更好！</string>
+    <string name="analytics_dialog_title">让 AnkiDroid 更好！</string>
     <string name="analytics_title" maxLength="41">分享功能使用</string>
     <string name="analytics_summ">您可以通过帮助开发团队了解用户使用哪些功能来帮助 AnkiDroid</string>
     <string name="note_editor_replace_newlines" maxLength="41">用 HTML 替换换行</string>
     <string name="note_editor_replace_newlines_summ">在笔记编辑器中，编辑卡片时将 &lt;br&gt; 的任何实例转换为换行。</string>
     <string name="no_code_formatting" maxLength="41">简单输入的答案格式</string>
-    <string name="no_code_formatting_summ">修复在输入的答案结果中出现的“􏿾”</string>
-    <string name="type_in_answer_focus" maxLength="41">聚焦“输入答案”</string>
-    <string name="type_in_answer_focus_summ">自动聚焦在复习者的“输入答案”字段</string>
+    <string name="no_code_formatting_summ">修复在输入的答案结果中出现的「􏿾」</string>
+    <string name="type_in_answer_focus" maxLength="41">聚焦「输入答案」</string>
+    <string name="type_in_answer_focus_summ">自动聚焦在复习者的「输入答案」字段</string>
     <!-- About -->
     <string name="open_changelog">打开更新日志</string>
     <string name="pref_cat_about_title" maxLength="41">关于</string>
@@ -343,11 +343,11 @@
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">答： %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">移除“%s”</string>
-    <string name="bindings_already_bound">已绑定到 %s</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">移除「%s」</string>
+    <string name="bindings_already_bound">已绑定到「%s」</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">实验性功能</string>
-    <string name="experimental_pref_confirmation" maxLength="41">启用 \'%s\'</string>
+    <string name="experimental_pref_confirmation" maxLength="41">启用「%s」</string>
     <string name="use_rust_backend_title" maxLength="41">使用新后端</string>
     <string name="use_rust_backend_summary">启用较新的 Anki 功能，例如 v3 版调度程序\n不稳定。不要用在你在意的牌组上。应用关闭时不会还原。</string>
     <string name="use_rust_backend_warning">此操作可能彻底损坏您的安装。 要求应用卸载和删除 AnkiDroid 文件夹，并可能通过同步将损坏传播到 AnkiWeb。\n\n 我们欢迎测试，但请确保您有一个有效的非 AnkiWeb 备份。</string>
@@ -371,10 +371,10 @@
         <br><br>
         您可以通过牌组列表菜单恢复备份和导出您的牌组集合。
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自动备份时间间隔，单位为分钟</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自动备份时间间隔（以分钟计）</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">要保留的每日备份</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">要保留的每周备份</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">要保留的月度备份</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">要保留的每月备份</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
@@ -395,11 +395,11 @@
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">删除备份</string>
     <string name="progress__deleting_backups">正在删除备份...</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">删除牌组集</string>
-    <string name="pref__delete_collection__summary">删除牌组集、媒体和备份。不会删除应用设置</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">删除牌组集</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">删除集合</string>
+    <string name="pref__delete_collection__summary">删除集合、媒体和备份。不会删除应用设置</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">删除集合</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">您确定要删除您的牌组集合、媒体和备份吗？\n\n注意：此操作将关闭窗口。</string>
-    <string name="progress__deleting_collection">正在删除牌组集&#8230;</string>
+    <string name="progress__deleting_collection">正在删除集合&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">完全清空</string>
     <string name="pref__delete_everything__summary">删除牌组集合、媒体文件、备份和设置</string>
@@ -414,9 +414,9 @@
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">无牌组集</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">无集合</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">出错</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">获取中&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">计算中&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">牌组集不存在</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">集合不存在</string>
 </resources>

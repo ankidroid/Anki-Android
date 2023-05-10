@@ -57,14 +57,14 @@
     <string name="cram_deck_conf_order_random">随机</string>
     <string name="cram_deck_conf_order_increasing_intervals">间隔由小到大</string>
     <string name="cram_deck_conf_order_decreasing_intervals">间隔由大到小</string>
-    <string name="cram_deck_conf_order_most_lapsed">忘记最多的</string>
+    <string name="cram_deck_conf_order_most_lapsed">遗忘最多的</string>
     <string name="cram_deck_conf_order_order_added">添加顺序</string>
     <string name="cram_deck_conf_order_order_due">到期顺序</string>
     <string name="cram_deck_conf_order_latest_added_first">优先显示最晚添加的卡片</string>
     <string name="cram_deck_conf_order_relative_overdueness">相对到期</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">使用当前牌组</string>
-    <string name="add_to_deck_decide_by_note_type">由笔记类型决定</string>
+    <string name="add_to_deck_decide_by_note_type">由笔记模板决定</string>
     <!-- new_spread_labels -->
     <string name="new_spread_mix_new_and_review">混合新卡片和复习</string>
     <string name="new_spread_new_after_review">复习后再学习新卡片</string>
@@ -113,6 +113,6 @@
     <string name="gesture_show_all_hints">显示所有提示</string>
     <string name="record_voice">录制音频</string>
     <string name="replay_voice">重播音频</string>
-    <string name="automatic_answer_option_2">难(如果不可用很好)</string>
-    <string name="automatic_answer_option_4">易(如果不可用很好)</string>
+    <string name="automatic_answer_option_2">难（如果不可用很好）</string>
+    <string name="automatic_answer_option_4">易（如果不可用很好）</string>
 </resources>
