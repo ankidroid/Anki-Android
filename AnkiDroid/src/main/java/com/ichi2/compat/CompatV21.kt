@@ -39,6 +39,8 @@ import android.os.Vibrator
 import android.provider.MediaStore
 import android.util.SparseArray
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.TimePicker
 import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.utils.KotlinCleanup
@@ -101,6 +103,13 @@ open class CompatV21 : Compat {
 
     override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
         return bundle.getParcelable(key)
+    }
+
+    @SuppressLint("SoonBlockedPrivateApi")
+    override fun setTextCursorDrawable(editText: EditText, drawableRes: Int) {
+        val field = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+        field.isAccessible = true
+        field.set(editText, drawableRes)
     }
 
     override fun <T : Serializable?> getSerializableExtra(

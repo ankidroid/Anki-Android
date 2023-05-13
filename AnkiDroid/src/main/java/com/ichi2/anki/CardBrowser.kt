@@ -18,10 +18,8 @@
 
 package com.ichi2.anki
 
-import android.annotation.SuppressLint
 import android.content.*
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.TextUtils
@@ -33,7 +31,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.edit
 import anki.collection.OpChanges
@@ -75,6 +72,7 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.compat.Compat
+import com.ichi2.compat.CompatHelper.Companion.setTextCursorDrawableCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.SortOrder.NoOrdering
 import com.ichi2.libanki.SortOrder.UseCollectionOrdering
@@ -910,7 +908,6 @@ open class CardBrowser :
         selectNavigationItem(R.id.nav_browser)
     }
 
-    @SuppressLint("DiscouragedPrivateApi")
     @KotlinCleanup("Add a few variables to get rid of the !!")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
@@ -945,18 +942,11 @@ open class CardBrowser :
 
             try {
                 mSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)?.let {
-                    // Simplify the code once we have min SDK > 29
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        it.textCursorDrawable =
-                            AppCompatResources.getDrawable(applicationContext, R.drawable.cursor)
-                    } else {
-                        val field = TextView::class.java.getDeclaredField("mCursorDrawableRes")
-                        field.isAccessible = true
-                        field.set(it, R.drawable.cursor)
-                    }
+                    it.setTextCursorDrawableCompat(R.drawable.cursor)
                 }
             } catch (e: Exception) {
                 Timber.e("SearchBar custom view error : $e")
+                CrashReportService.sendExceptionReport(e, "CardBrowser")
             }
 
             mSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

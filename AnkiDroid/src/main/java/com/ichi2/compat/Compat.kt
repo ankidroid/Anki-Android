@@ -36,7 +36,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import android.util.SparseArray
 import android.view.View
+import android.widget.EditText
 import android.widget.TimePicker
+import androidx.annotation.DrawableRes
 import androidx.annotation.IntDef
 import java.io.*
 import java.util.*
@@ -90,6 +92,8 @@ interface Compat {
     fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo>
     fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T?
+
+    fun setTextCursorDrawable(editText: EditText, @DrawableRes drawableRes: Int)
 
     /**
      * Retrieve extended data from the intent.

@@ -28,6 +28,8 @@ import android.os.Parcelable
 import android.util.SparseArray
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
+import android.widget.EditText
+import androidx.annotation.DrawableRes
 import com.ichi2.compat.CompatHelper.Companion.compat
 import java.io.Serializable
 
@@ -190,6 +192,14 @@ class CompatHelper private constructor() {
          */
         inline fun <reified T> Parcel.readListCompat(outVal: MutableList<in T>) {
             compat.readList(this, outVal, T::class.java.classLoader, T::class.java)
+        }
+
+        /** The function takes in a [DrawableRes], which specifies the resource ID of
+         * the drawable to use as the text cursor.This drawable will be displayed as
+         * the blinking cursor when the user is editing the text in the EditText.
+         **/
+        fun EditText.setTextCursorDrawableCompat(@DrawableRes drawableRes: Int) {
+            compat.setTextCursorDrawable(this, drawableRes)
         }
     }
 }
