@@ -181,7 +181,7 @@
     <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの既定の追加先デッキ</string>
     <string name="new_spread" maxLength="41">新規カードの位置</string>
-    <string name="learn_cutoff" maxLength="41">習得学習の前倒し許容時間</string>
+    <string name="learn_cutoff" maxLength="41">習得学習の前倒し可能時間</string>
     <string name="time_limit" maxLength="41">タイムボックス（時間の目標・区切り）</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
@@ -273,7 +273,7 @@
     <string name="deck_conf_hard_factor" maxLength="41">回答「難しい」での間隔伸び率</string>
     <string name="deck_conf_ivl_fct" maxLength="41">復習間隔の調整</string>
     <string name="deck_conf_max_ivl" maxLength="41">復習間隔の上限</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">復習再開後の間隔回復率</string>
+    <string name="deck_conf_new_lps_ivl" maxLength="41">復習再開後の間隔（回復率）</string>
     <string name="deck_conf_min_ivl" maxLength="41">復習再開後の間隔の下限</string>
     <string name="deck_conf_leech_thres" maxLength="41">無駄（定着困難）と判定する基準</string>
     <string name="deck_conf_fails">XXX 回 忘却 (＝復習カードに「やり直し」と回答) した時</string>
