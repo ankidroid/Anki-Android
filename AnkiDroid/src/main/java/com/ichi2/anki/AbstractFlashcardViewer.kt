@@ -37,6 +37,7 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.*
 import android.webkit.WebView.HitTestResult
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
@@ -72,17 +73,18 @@ import com.ichi2.anki.servicelayer.AnkiMethod
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
-import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.Undo
-import com.ichi2.anki.services.MigrationService
-import com.ichi2.anki.services.ServiceConnection
+import com.ichi2.anki.services.migrationServiceWhileStartedOrNull
+import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListener
 import com.ichi2.async.updateCard
 import com.ichi2.compat.CompatHelper.Companion.compat
+import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
+import com.ichi2.compat.ResolveInfoFlagsCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -99,15 +101,11 @@ import com.ichi2.utils.*
 import com.ichi2.utils.AdaptionUtil.hasWebBrowser
 import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.AssetHelper.guessMimeType
-import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.ClipboardUtil.getText
-import com.ichi2.utils.Computation
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
-import com.ichi2.utils.iconAttr
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
@@ -122,7 +120,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import java.util.function.Consumer
 import java.util.function.Function
 import java.util.function.Supplier
-import kotlin.collections.HashSet
 import kotlin.math.abs
 
 @KotlinCleanup("lots to deal with")
@@ -133,6 +130,7 @@ abstract class AbstractFlashcardViewer :
     WhiteboardMultiTouchMethods,
     AutomaticallyAnswered,
     OnPageFinishedCallback,
+    BaseSnackbarBuilderProvider,
     ChangeManager.Subscriber {
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
@@ -290,7 +288,7 @@ abstract class AbstractFlashcardViewer :
         displayCardAnswer()
     }
 
-    private val migrationService = ServiceConnection<MigrationService>()
+    private val migrationService by migrationServiceWhileStartedOrNull()
 
     init {
         ChangeManager.subscribe(this)
@@ -556,18 +554,6 @@ abstract class AbstractFlashcardViewer :
         mGestureDetectorImpl = LinkDetectingGestureDetector()
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (ScopedStorageService.userMigrationIsInProgress(this)) {
-            migrationService.bind(this, MigrationService::class.java)
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        migrationService.unbind(this)
-    }
-
     protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
         return R.layout.reviewer
     }
@@ -759,6 +745,11 @@ abstract class AbstractFlashcardViewer :
         return text ?: ""
     }
 
+    val deckOptionsLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+        Timber.i("Returned from deck options -> Restarting activity")
+        performReload()
+    }
+
     @Suppress("deprecation") // super.onActivityResult
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -786,8 +777,6 @@ abstract class AbstractFlashcardViewer :
                 // nothing was changed by the note editor so just redraw the card
                 redrawCard()
             }
-        } else if (requestCode == DECK_OPTIONS && resultCode == RESULT_OK) {
-            performReload()
         }
     }
 
@@ -856,14 +845,14 @@ abstract class AbstractFlashcardViewer :
             fun legacyUndo() {
                 Undo().runWithHandler(
                     answerCardHandler(false)
-                        .alsoExecuteAfter { showSnackbarAboveAnswerButtons(message, Snackbar.LENGTH_SHORT) }
+                        .alsoExecuteAfter { showSnackbar(message, Snackbar.LENGTH_SHORT) }
                 )
             }
             if (BackendFactory.defaultLegacySchema) {
                 legacyUndo()
             } else {
                 return launchCatchingTask {
-                    if (!backendUndoAndShowPopup(findViewById(R.id.flip_card))) {
+                    if (!backendUndoAndShowPopup()) {
                         legacyUndo()
                     }
                 }
@@ -929,7 +918,7 @@ abstract class AbstractFlashcardViewer :
         @StringRes textResource: Int,
         duration: Int = Snackbar.LENGTH_SHORT
     ) {
-        showSnackbarAboveAnswerButtons(textResource, duration) {
+        showSnackbar(textResource, duration) {
             setAction(R.string.undo) { undo() }
         }
     }
@@ -938,7 +927,7 @@ abstract class AbstractFlashcardViewer :
         text: String,
         duration: Int = Snackbar.LENGTH_SHORT
     ) {
-        showSnackbarAboveAnswerButtons(text, duration) {
+        showSnackbar(text, duration) {
             setAction(R.string.undo) { undo() }
         }
     }
@@ -1597,7 +1586,7 @@ abstract class AbstractFlashcardViewer :
             }
 
             private fun handleStorageMigrationError(file: File): Boolean {
-                val migrationService = migrationService.instance ?: return false
+                val migrationService = migrationService ?: return false
                 if (handledError.contains(file.absolutePath)) {
                     return false
                 }
@@ -1675,22 +1664,6 @@ abstract class AbstractFlashcardViewer :
             answerField!!.isEnabled = false
         }
         invalidateOptionsMenu()
-    }
-
-    /**
-     * Select Text in the webview and automatically sends the selected text to the clipboard. From
-     * http://cosmez.blogspot.com/2010/04/webview-emulateshiftheld-on-android.html
-     */
-    @Suppress("deprecation") // Tracked separately in Github as #5024
-    private fun selectAndCopyText() {
-        mIsSelecting = try {
-            val shiftPressEvent = KeyEvent(0, 0, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_SHIFT_LEFT, 0, 0)
-            processCardAction { receiver: WebView? -> shiftPressEvent.dispatch(receiver) }
-            shiftPressEvent.isShiftPressed
-            true
-        } catch (e: Exception) {
-            throw AssertionError(e)
-        }
     }
 
     internal fun buryCard(): Boolean {
@@ -1845,31 +1818,13 @@ abstract class AbstractFlashcardViewer :
         closeReviewer(RESULT_ABORT_AND_SYNC, true)
     }
 
-    /** Displays a snackbar which does not obscure the answer buttons  */
-    private fun showSnackbarAboveAnswerButtons(
-        text: CharSequence,
-        duration: Int = Snackbar.LENGTH_LONG,
-        snackbarBuilder: SnackbarBuilder? = null
-    ) {
-        // BUG: Moving from full screen to non-full screen obscures the buttons
-        showSnackbar(text, duration) {
-            snackbarBuilder?.let { it() }
-
-            if (mAnswerButtonsPosition == "bottom") {
-                val easeButtons = findViewById<View>(R.id.answer_options_layout)
-                val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
-                anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
-            }
+    override val baseSnackbarBuilder: SnackbarBuilder = {
+        // Configure the snackbar to avoid the bottom answer buttons
+        if (mAnswerButtonsPosition == "bottom") {
+            val easeButtons = findViewById<View>(R.id.answer_options_layout)
+            val previewButtons = findViewById<View>(R.id.preview_buttons_layout)
+            anchorView = if (previewButtons.isVisible) previewButtons else easeButtons
         }
-    }
-
-    private fun showSnackbarAboveAnswerButtons(
-        @StringRes textResource: Int,
-        duration: Int = Snackbar.LENGTH_LONG,
-        snackbarBuilder: SnackbarBuilder? = null
-    ) {
-        val text = getString(textResource)
-        showSnackbarAboveAnswerButtons(text, duration, snackbarBuilder)
     }
 
     private fun onPageUp() {
@@ -2287,7 +2242,7 @@ abstract class AbstractFlashcardViewer :
                 if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
                     mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
                 }
-                url.path?.let { path -> migrationService.instance?.migrateFileImmediately(File(path)) }
+                url.path?.let { path -> migrationService?.migrateFileImmediately(File(path)) }
             }
             return null
         }
@@ -2314,7 +2269,6 @@ abstract class AbstractFlashcardViewer :
 
         // Filter any links using the custom "playsound" protocol defined in Sound.java.
         // We play sounds through these links when a user taps the sound icon.
-        @Suppress("deprecation") // resolveActivity
         fun filterUrl(url: String): Boolean {
             if (url.startsWith("playsound:")) {
                 launchCatchingTask {
@@ -2398,6 +2352,18 @@ abstract class AbstractFlashcardViewer :
                         executeCommand(ViewerCommand.TOGGLE_FLAG_BLUE)
                         true
                     }
+                    "pink" -> {
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_PINK)
+                        true
+                    }
+                    "turquoise" -> {
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_TURQUOISE)
+                        true
+                    }
+                    "purple" -> {
+                        executeCommand(ViewerCommand.TOGGLE_FLAG_PURPLE)
+                        true
+                    }
                     else -> {
                         Timber.d("No such Flag found.")
                         true
@@ -2470,7 +2436,7 @@ abstract class AbstractFlashcardViewer :
                     }
                 }
                 if (intent != null) {
-                    if (packageManager.resolveActivity(intent, 0) == null) {
+                    if (packageManager.resolveActivityCompat(intent, ResolveInfoFlagsCompat.EMPTY) == null) {
                         val packageName = intent.getPackage()
                         if (packageName == null) {
                             Timber.d("Not using resolved intent uri because not available: %s", intent)
@@ -2481,7 +2447,7 @@ abstract class AbstractFlashcardViewer :
                                 Intent.ACTION_VIEW,
                                 Uri.parse("market://details?id=$packageName")
                             )
-                            if (packageManager.resolveActivity(intent, 0) == null) {
+                            if (packageManager.resolveActivityCompat(intent, ResolveInfoFlagsCompat.EMPTY) == null) {
                                 intent = null
                             }
                         }
@@ -2561,13 +2527,13 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun displayCouldNotFindMediaSnackbar(filename: String?) {
-        showSnackbarAboveAnswerButtons(getString(R.string.card_viewer_could_not_find_image, filename)) {
+        showSnackbar(getString(R.string.card_viewer_could_not_find_image, filename)) {
             setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_missing_media))) }
         }
     }
 
     private fun displayMediaUpgradeRequiredSnackbar() {
-        showSnackbarAboveAnswerButtons(R.string.card_viewer_media_relative_protocol) {
+        showSnackbar(R.string.card_viewer_media_relative_protocol) {
             setAction(R.string.help) { openUrl(Uri.parse(getString(R.string.link_faq_invalid_protocol_relative))) }
         }
     }
@@ -2646,7 +2612,6 @@ abstract class AbstractFlashcardViewer :
          * Available options performed by other activities.
          */
         const val EDIT_CURRENT_CARD = 0
-        const val DECK_OPTIONS = 1
         const val EASE_1 = 1
         const val EASE_2 = 2
         const val EASE_3 = 3

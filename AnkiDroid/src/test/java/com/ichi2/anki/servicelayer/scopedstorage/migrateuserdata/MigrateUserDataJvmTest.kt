@@ -54,17 +54,16 @@ class MigrateUserDataJvmTest {
         val preferences = getScopedStorageMigrationPreferences(source = VALID_DIR, destination = VALID_DIR)
         val data = createInstance(preferences)
 
-        assertThat("a valid task instance should be created", data, notNullValue())
-
-        assertThat(data!!.source.directory.canonicalPath, equalTo(sourceDir))
+        assertThat(data.source.directory.canonicalPath, equalTo(sourceDir))
         assertThat(data.destination.directory.canonicalPath, equalTo(destDir))
     }
 
     @Test
     fun no_instance_if_not_migrating() {
         val preferences = getScopedStorageMigrationPreferences(source = NOT_SET, destination = NOT_SET)
-        val data = createInstance(preferences)
-        assertThat("a valid task instance should not be created as we are not migrating", data, nullValue())
+        val exception = assertFailsWith<IllegalStateException> { createInstance(preferences) }
+
+        assertThat(exception.message, equalTo("Migration is not in progress"))
     }
 
     @Test

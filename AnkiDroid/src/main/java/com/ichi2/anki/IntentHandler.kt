@@ -29,12 +29,15 @@ import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.annotations.NeedsTest
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
@@ -55,6 +58,7 @@ class IntentHandler : Activity() {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
+        Themes.setTheme(this)
         disableXiaomiForceDarkMode(this)
         setContentView(R.layout.progress_bar)
         val intent = intent
@@ -65,8 +69,7 @@ class IntentHandler : Activity() {
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
         val runIfStoragePermissions = Consumer { runnable: Runnable -> performActionIfStorageAccessible(runnable, reloadIntent, action) }
-        val launchType = getLaunchType(intent)
-        when (launchType) {
+        when (getLaunchType(intent)) {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
             LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
             LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })
@@ -100,8 +103,9 @@ class IntentHandler : Activity() {
      * has been granted (as long as AnkiDroid targeted API < 30, requested legacy storage, and has not been uninstalled since)
      *
      */
+    @NeedsTest("clicking a file in 'Files' to import")
     private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
-        if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this)) {
+        if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this) || Permissions.isExternalStorageManagerCompat()) {
             Timber.i("User has storage permissions. Running intent: %s", action)
             runnable.run()
         } else {

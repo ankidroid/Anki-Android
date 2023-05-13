@@ -61,6 +61,8 @@
     <string name="updated_version">Actualizado a la versión %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Guardar pizarra</string>
+    <string name="enable_stylus">Activar el modo del lápiz óptico</string>
+    <string name="disable_stylus">Desactivar el modo del lápiz óptico</string>
     <string name="enable_whiteboard">Activar pizarra</string>
     <string name="disable_whiteboard">Desactivar pizarra</string>
     <string name="show_whiteboard">Mostrar pizarra</string>
@@ -305,7 +307,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Ver</string>
     <string name="anki_js_error_code">(Código de error: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Información de depuración copiada al portapapeles</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copiado al portapapeles</string>
     <string name="about_ankidroid_error_copy_debug_info">Error al copiar información de depuración al portapapeles</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contenido de la tarjeta: Error al cargar ‘%s’</string>
@@ -313,6 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Error al cargar el mazo ‘%s’</string>
     <string name="search_decks">Buscar mazos</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid confía en la WebView del sistema, que no está disponible. Esto puede suceder si el sistema está instalando actualizaciones. Por favor, inténtalo de nuevo en unos minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -362,12 +365,13 @@
     <string name="check_network">Por favor revisa tu conexión de red</string>
     <string name="search_using_deck_name">Buscar usando nombre de mazo</string>
     <string name="home">Inicio</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Carta enterrada</string>
-    <string name="buried_note">Nota enterrada</string>
-    <string name="deleted_note">Nota eliminada</string>
-    <string name="suspended_card">Carta suspendida</string>
-    <string name="suspended_note">Nota suspendida</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Tarjeta enterrada</string>
+    <plurals name="note_suspended">
+        <item quantity="one">Tarjeta suspendida</item>
+        <item quantity="other">Tarjetas suspendidas</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Dejar fijo el campo %s</string>
     <!-- Scoped Storage Migration -->
@@ -376,9 +380,7 @@
     <string name="scoped_storage_postpone">Posponer</string>
     <string name="scoped_storage_migrate">Migrar</string>
     <string name="search_card_js_api_no_results">La búsqueda no ha devuelto resultados</string>
-    <string name="sync_impossible_during_migration">La sincronización estará deshabilitada hasta que finalice la migración.\n
-        %1$d archivos multimedia pendientes de migrar.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid necesita migrar su almacenamiento para cumplir con la política de seguridad de Android 10.\n\nEsto mejorará el rendimiento de sincronización multimedia.&lt;br&gt;&lt;br&gt;Durante la migración, no podrás sincronizar y algunos ajustes se desactivarán. Para mantener tus datos seguros, se producirá una sincronización multimedia antes de que la migración comience.&lt;br&gt;&lt;br&gt;Podrás usar o cerrar AnkiDroid sin problema durante este proceso.</string>
     <string name="start_migration_progress_message">Iniciando migración de almacenamiento. Podrás seguir usando AnkiDroid en breve.</string>
     <string name="migration_part_1_done_resume">Puedes seguir usando AnkiDroid.
 \nLa migración del almacenamiento continuará en segundo plano.</string>
@@ -414,7 +416,8 @@
     <string name="browser_options_dialog_heading">Opciones del navegador</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Esta funcionalidad no está disponible durante una migración de almacenamiento
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toca para iniciar la migración de almacenamiento</string>
+    <string name="media_sync_required_title">Sincronización multimedia requerida</string>
+    <string name="media_sync_unavailable_message">La sincronización multimedia está desactivada en la configuración. Por favor, antes de continuar, sincroniza y elabora una copia de seguridad de cualquier contenido que no haya sido sincronizado todavía</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

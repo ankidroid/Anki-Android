@@ -14,17 +14,30 @@
   ~  this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="12dp"
-    android:clickable="true">
+    >
 
-    <ProgressBar
-        android:id="@+id/ic_progressDonut"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:clickable="true"
-        android:indeterminate="false"
-        android:progressDrawable="@drawable/ic_migration_progress" />
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:indicatorSize="27dp"
+        app:trackCornerRadius="3dp"
+        app:trackThickness="3dp"
+        app:trackColor="@color/transparent"
+        app:indicatorColor="#fff"
+        />
+
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_small_up_arrow"
+        style="@android:style/Widget.ActionButton"
+        />
+
 </FrameLayout>

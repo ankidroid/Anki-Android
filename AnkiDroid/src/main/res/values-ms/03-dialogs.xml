@@ -44,223 +44,223 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">Ini mungkin mengambil waktu yang lama</string>
-    <string name="check_db_acknowledge">Database checked</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-    <string name="delete_deck_default_deck">Lalai dek tidak boleh dipadamkan</string>
-    <string name="delete_deck_title">Delete deck?</string>
+    <string name="check_db_title">Periksa pangkalan data?</string>
+    <string name="check_db_warning">Mungkin mengambil masa lama</string>
+    <string name="check_db_acknowledge">Pangkalan data telah diperiksa</string>
+    <string name="check_db_acknowledge_shrunk">Pangkalan data telah diperiksa dan dioptimumkan.\nKecilkan sebanyak %d MB.</string>
+    <string name="contextmenu_deckpicker_delete_deck">Padam dek</string>
+    <string name="delete_deck_default_deck">Dek lalai tidak boleh dipadam</string>
+    <string name="delete_deck_title">Padam dek?</string>
     <plurals name="delete_deck_message">
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
+        <item quantity="other">Padam semua kad dalam %1$s? Ia mengandungi %2$d kad.</item>
     </plurals>
-    <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
-    <string name="no_tts_available_message">Tidak ada teks-untuk-ucapan bahasa yang tersedia</string>
-    <string name="initializing_tts">Initializing TTS&#8230;</string>
-    <string name="tts_no_tts">Don’t speak</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
-    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Preview</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="delete_cram_deck_message">Hantar semua kad dalam %s kembali ke dek-dek asal?</string>
+    <string name="no_tts_available_message">Teks-ke-ucapan bahasa tiada</string>
+    <string name="initializing_tts">Memulakan TTS&#8230;</string>
+    <string name="tts_no_tts">Jangan bercakap</string>
+    <string name="unused_strings">\n\nFail tidak digunakan:\n</string>
+    <string name="preview_title" comment="Title of the window allowing to preview card(s)">Pratonton</string>
+    <string name="reposition_card_dialog_title">Alih posisi kad baru</string>
+    <string name="reposition_card_dialog_message">Posisi mula:</string>
+    <string name="reposition_card_not_new_error">Hanya kad baru boleh alih posisi</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="other">%d cards repositioned</item>
+        <item quantity="other">%d kad telah alih posisi</item>
     </plurals>
-    <string name="reset_card_dialog_title">Reset card progress</string>
-    <string name="reset_card_dialog_message">Kartu ini akan diletakkan pada akhir yang baru kad barisan</string>
+    <string name="reset_card_dialog_title">Tetap semula kemajuan kad</string>
+    <string name="reset_card_dialog_message">Kad ini akan diletakkan pada hujung aturan kad baru</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="other">%d cards reset</item>
+        <item quantity="other">%d kad ditetap semula</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="other">Jadualkan semula %d kad</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">Current interval: %d days</item>
+        <item quantity="other">Seling kini: %d hari</item>
     </plurals>
-    <string name="reschedule_card_dialog_message">Menjadwal ulang untuk memberi ulasan di hari x:</string>
+    <string name="reschedule_card_dialog_message">Jadualkan semula untuk semakan dalam x hari</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="other">%d cards rescheduled</item>
+        <item quantity="other">%d kad telah dijadual semula</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
-    <string name="answering_error_title">Database error</string>
-    <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
-    <string name="answering_error_report">Report error</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
-    <string name="repair_deck_dialog">Apakah anda benar-benar ingin untuk cuba membaiki pangkalan data?\n\nsebelum memulai usaha, salinan akan diwujudkan dalam subfolder \"%s\".</string>
-    <string name="intent_aedict_empty">Category “default” is empty</string>
-    <string name="intent_aedict_category">Untuk menambah kad untuk apa yang anda perlu lakukan membuang semua Nota kategori atau menambah satu yang bernama \"default\"</string>
-    <string name="custom_study_new_total_new">New cards in deck: %d</string>
-    <string name="custom_study_rev_total_rev">Reviews due in deck: %d</string>
-    <string name="custom_study_new_extend">Increase/decrease (“-3”) today’s new card limit by</string>
-    <string name="custom_study_rev_extend">Increase/decrease (“-3”) today’s review limit by</string>
-    <string name="custom_study_forgotten">Kajian kad lupa pada akhir hari x:</string>
-    <string name="custom_study_ahead">Mengkaji semula ke depan dengan hari x:</string>
+    <string name="reschedule_card_dialog_new_card_warning">Kad baru sedang dijadualkan semula. Penjadualan semula juga menukarkan kad baru kepada kad semakan. Guna pilihan \'alih posisi kad\' untuk ubah posisi kad baru dalam aturan baru</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">Penjadualan semula juga tetap semula cara penjadual mengolah kard pada masa hadapan (longgaran akan ditetapkan ke %d%%)</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Pilih dek dalam pengurus fail anda atau lawat halaman about:downloads untuk mengimportnya</string>
+    <string name="answering_error_title">Ralat pangkalan data</string>
+    <string name="answering_error_message">Menulis ke koleksi gagal. Pangkalan data mungkin rosak atau kehabisan ruang kosong pada cakera.\n\nJika ini berlaku kerap, cuba periksa pangkalan data, baiki koleksi atau pulih dari suatu sandaran. Sentuh \"tetapan\" untuk lakukannya.\n\Atau ia mungkin pepijat AnkiDroid; sila laporkannya agar kami boleh memeriksa ralat tersebut.</string>
+    <string name="answering_error_report">Lapor ralat</string>
+    <string name="storage_full_message">Kehabisan ruang storan kosong untuk membuka AnkiDroid. Kosongkan sedikit ruang untuk teruskan. </string>
+    <string name="repair_deck_dialog">Adakah anda pasti mahu membaiki pangkalan data?\n\nSebelum mencuba, satu salinan akan dibuat dalam subfolder “%s”.</string>
+    <string name="intent_aedict_empty">Kategori “lalai” kosong</string>
+    <string name="intent_aedict_category">Untuk tambah kad ke AnkiDroid buang semua kategori Papan Nota atau tambah satu bernama “default”</string>
+    <string name="custom_study_new_total_new">Kad baru dalam dek: %d</string>
+    <string name="custom_study_rev_total_rev">Semakan tunggakan dalam dek: %d</string>
+    <string name="custom_study_new_extend">Tambahkan/Kurangkan (“-3”) had kad baru hari ini sebanyak</string>
+    <string name="custom_study_rev_extend">Tambahkan/Kurangkan (“-3”) had semakan hari ini sebanyak</string>
+    <string name="custom_study_forgotten">Semak kad terlupa dalam x hari:</string>
+    <string name="custom_study_ahead">Semak awal sebanyak x hari:</string>
     <string name="custom_study_random">Pilih x kad secara rawak daripada dek:</string>
-    <string name="custom_study_preview">Preview baru kad berkata pada akhir hari x:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">Importing collection&#8230;</string>
-    <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
-    <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-    <string name="import_update_ignored">Beberapa kemas kini telah diabaikan karena jenis perhatian yang telah berubah</string>
+    <string name="custom_study_preview">Pratonton kad baru ditambah dalam x hari lepas:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Tidak dapat membina semula dek ulang kaji tersuai</string>
+    <string name="importing_collection">Mengimport koleksi&#8230;</string>
+    <string name="import_media_count">Mengimport fail media %1$d%%&#8230;</string>
+    <string name="import_progress">• Mengimport nota: %1$d%%\n• Mengimport kad: %2$d%%\n• Pasca pemprosesan: %3$d%%</string>
+    <string name="import_update_details">Telah kemas kini %1$d daripada %2$d nota sedia ada.</string>
+    <string name="import_update_ignored">Beberapa pembaruan telah diabaikan kerana jenis nota bertukar</string>
     <plurals name="import_complete_message">
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="other">Fail diimport: %1$d\nJumlah kad diimport: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid needs %s free storage space to continue. Please clear some space</string>
-    <string name="restore_backup_title">Restore backup?</string>
-    <string name="restore_backup">Koleksi anda akan digantikan dengan yang lebih tua salinan. Mana-mana yang tidak disimpan kemajuan akan hilang.</string>
-    <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="storage_full_title">Storan penuh</string>
+    <string name="storage_almost_full_title">Storan hampir penuh</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Tiada ruang</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid memerlukan %s ruang storan kosong untuk teruskan. Sila kosongkan sedikit ruang</string>
+    <string name="restore_backup_title">Pulih sandaran?</string>
+    <string name="restore_backup">Koleksi anda akan digantikan dengan salinan terdahulu. Mana-mana kemajuan yang belum disimpan akan dibuang.</string>
+    <string name="restore_backup_choose_another">Pilih lagi satu</string>
+    <string name="dialog_cancel">Batal</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Pasti</string>
+    <string name="dialog_no">Tidak</string>
     <string name="dialog_yes">Ya</string>
-    <string name="dialog_continue">Continue</string>
-    <string name="dialog_processing">Processing...</string>
-    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Create</string>
-    <string name="dialog_positive_delete">Delete</string>
+    <string name="dialog_continue">Teruskan</string>
+    <string name="dialog_processing">Memproses…</string>
+    <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Cipta</string>
+    <string name="dialog_positive_delete">Padam</string>
     <!-- Currently unsued, should be useful in the future -->
-    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
-    <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_remove">Remove</string>
-    <string name="dialog_positive_repair">Repair</string>
-    <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_positive_restore">Restore</string>
-    <string name="dialog_positive_set">Set</string>
-    <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
+    <string name="dialog_positive_disable" tools:ignore="UnusedResources">Lumpuhkan</string>
+    <string name="dialog_positive_overwrite">Tulis ganti</string>
+    <string name="dialog_positive_remove">Buang</string>
+    <string name="dialog_positive_repair">Baiki</string>
+    <string name="dialog_positive_replace">Ganti</string>
+    <string name="dialog_positive_restore">Pulih</string>
+    <string name="dialog_positive_set">Tetapkan</string>
+    <string name="dialog_collection_path_not_dir">Laluan yang dinyatakan bukan direktori yang sah</string>
     <!-- Media checking -->
-    <string name="check_media_title">Check media?</string>
-    <string name="check_media_warning">This may take a long time with large media collections</string>
-    <string name="check_media_message">Checking media&#8230;</string>
-    <string name="check_media_acknowledge">Media checked</string>
-    <string name="check_media_failed">Media check failed</string>
-    <string name="check_media_invalid">Files with invalid encoding: %d</string>
-    <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
-    <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
-    <string name="check_media_no_unused_missing">No unused or missing files found</string>
-    <string name="check_media_db_updated">Media database rebuilt</string>
-    <string name="check_media_delete_unused">Delete unused</string>
-    <string name="delete_media_message">Deleting media&#8230;</string>
-    <string name="delete_media_result_title">Deletion result</string>
+    <string name="check_media_title">Periksa media?</string>
+    <string name="check_media_warning">Mungkin mengambil masa lama dengan koleksi media besar</string>
+    <string name="check_media_message">Memeriksa media&#8230;</string>
+    <string name="check_media_acknowledge">Media telah diperiksa</string>
+    <string name="check_media_failed">Pemeriksaan media gagal</string>
+    <string name="check_media_invalid">Fail dengan pengekodan tidak sah: %d</string>
+    <string name="check_media_unused">Fail dalam folder media namun tidak digunakan oleh mana-mana kad: %d</string>
+    <string name="check_media_nohave">Fail digunakan pada kad namun bukan dalam folder media: %d</string>
+    <string name="check_media_no_unused_missing">Tiada fail tidak digunakan or hilang ditemui</string>
+    <string name="check_media_db_updated">Pangkalan data media telah dibina semula</string>
+    <string name="check_media_delete_unused">Padam yang tidak digunakan</string>
+    <string name="delete_media_message">Memadam media&#8230;</string>
+    <string name="delete_media_result_title">Keputusan pemadaman</string>
     <plurals name="delete_media_result_message">
-        <item quantity="other">%d files deleted</item>
+        <item quantity="other">%d fail telah dibuang</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">All cards</string>
-    <string name="tags_dialog_option_new_cards">New</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
+    <string name="tags_dialog_option_all_cards">Semua kad</string>
+    <string name="tags_dialog_option_new_cards">Baru</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Tunggakan</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">No empty cards</string>
-    <string name="empty_cards_count">Cards to delete: %d</string>
-    <string name="empty_cards_deleted">Cards deleted: %d</string>
+    <string name="emtpy_cards_finding">Mencari kad kosong&#8230;</string>
+    <string name="confirm_cancel">Anda mahu batalkan?</string>
+    <string name="empty_cards_none">Tiada kad kosong</string>
+    <string name="empty_cards_count">Kad untuk dipadam: %d</string>
+    <string name="empty_cards_deleted">Kad telah dipadam: %d</string>
     <!-- Multimedia - Edit Field Activity -->
-    <string name="multimedia_editor_audio_permission_refused">Could not obtain microphone permission.</string>
-    <string name="multimedia_editor_camera_permission_refused">Could not obtain camera permission. Functionality has been disabled.</string>
-    <string name="multimedia_editor_failed">Failed to open Multimedia Editor</string>
+    <string name="multimedia_editor_audio_permission_refused">Tidak dapat memperoleh kebenaran mikrofon.</string>
+    <string name="multimedia_editor_camera_permission_refused">Tidak dapat memperoleh kebenaran kamera. Fungsinya telah dilumpuhkan.</string>
+    <string name="multimedia_editor_failed">Gagal membuka Penyunting Multimedia</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">Audio recording permission denied</string>
-    <string name="mutimedia_editor_assertion_failed">Unknown error occurred displaying Advanced Editor</string>
+    <string name="multimedia_editor_audio_permission_denied">Kebenaran rakam audio ditolak</string>
+    <string name="mutimedia_editor_assertion_failed">Ralat tidak diketahui berlaku semasa memaparkan Penyunting Lanjutan</string>
     <!-- Database Integrity Check -->
-    <string name="integrity_check_startup_title">AnkiDroid Upgraded</string>
-    <string name="integrity_check_startup_content">AnkiDroid has been upgraded. This upgrade includes fixes for possible database problems, and we advise you to run check database now.</string>
-    <string name="integrity_check_continue_anyway">Continue Anyway</string>
-    <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
+    <string name="integrity_check_startup_title">AnkiDroid Dinaik Taraf</string>
+    <string name="integrity_check_startup_content">AnkiDroid telah dinaik taraf. Naik taraf ini mungkin termasuk pembaikan kesulitan pangkalan data, dan kami nasihatkan anda lakukan pemeriksaan pangkalan data sekarang.</string>
+    <string name="integrity_check_continue_anyway">Teruskan Juga</string>
+    <string name="integrity_check_insufficient_space">Periksa Pangkalan Data menggunakan storan sementara yang besar.\n\nSangat digalakkan anda sekurang-kurangnya mengandungi %s ruang kosong pada peranti anda dahulu.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nAnda kini mengandungi %s ruang kosong.</string>
+    <string name="integrity_check_fixed_no_home_deck">%d kad dengan laman utama dek salah telah dipulihkan. Sila lihat panduan untuk maklumat lanjut.</string>
+    <string name="video_creation_error">Tidak dapat memainkan video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
+    <string name="card_browser_deck_change_error">Tidak dapat tukar dek</string>
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
+    <string name="card_viewer_url_decode_error">Ralat menyahkod data dari kad</string>
+    <string name="undo_succeeded">\"%s\" telah dibuat asal</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
+    <string name="deck_options_corrupt">Gagal proses tetapan dek: %s</string>
     <!-- Database Errors-->
-    <string name="database_locked_title">Database Locked</string>
-    <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
-    <string name="incompatible_database_version_title">Incompatible Database Version</string>
-    <string name="incompatible_database_version_summary">The database is a more advanced version than this version of AnkiDroid can work with. Upgrade AnkiDroid or downgrade the database to open it\n\nSupported version: %1$d\nDatabase version: %2$d\n\nThe following restore options will overwrite your current collection, possibly with a compatible database version:</string>
+    <string name="database_locked_title">Pangkalan Data Dikunci</string>
+    <string name="database_locked_summary">Pangkalan data AnkiDroid sedang digunakan oleh aplikasi lain. Sila tutup aplikasi tersebut kemudian buka semula AnkiDroid.</string>
+    <string name="incompatible_database_version_title">Versi Pangkalan Data Tidak Serasi</string>
+    <string name="incompatible_database_version_summary">Pangkalan data memiliki versi lebih lanjut daripada versi AnkiDoird yang boleh digunakannya. Naik taraf AnkiDroid atau turun taraf pangkalan data untuk membukanya.\n\nVersi disokong: %1$d\nVersi pangkalan data: %2$d\n\nPilihan pemulihan berikut akan tulis ganti koleksi anda, mungkin dengan versi pangkalan data yang serasi:</string>
     <!-- Deck Picker Background-->
-    <string name="background_image_applied">Background image applied</string>
-    <string name="background_image_removed">Background image removed</string>
-    <string name="no_image_selected">No image selected</string>
-    <string name="error_selecting_image">Error selecting image. Please see manual. %s</string>
-    <string name="error_deleting_image">Error deleting image</string>
-    <string name="failed_to_apply_background_image">Failed to apply background image %s</string>
-    <string name="background_image_too_large">Deck Picker background too large</string>
-    <string name="image_max_size_allowed">Maximum image size %d MB allowed</string>
+    <string name="background_image_applied">Gambar latar belakang digunakan</string>
+    <string name="background_image_removed">Gambar latar belakang dibuang</string>
+    <string name="no_image_selected">Tiada gambar telah dipilih</string>
+    <string name="error_selecting_image">Ralat memilih gambar. Sila lihat panduan. %s</string>
+    <string name="error_deleting_image">Ralat memadam gambar</string>
+    <string name="failed_to_apply_background_image">Gagal menggunakan gambar latar belakang %s</string>
+    <string name="background_image_too_large">Latar belakang Pemilih Dek terlalu besar</string>
+    <string name="image_max_size_allowed">Saiz maksimum gambar yang dibenarkan %d MB</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">Missing required storage permission. Please grant storage permission then retry your action.</string>
+    <string name="intent_handler_failed_no_storage_permission">Kebenaran storan diperlukan tiada. Sila beri kebenaran storan kemudian cuba lagi tindakan anda.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">Could not load Card Browser Appearance</string>
+    <string name="card_template_editor_card_browser_appearance_failed">Tidak dapat memuatkan Penampilan Pencari Kad</string>
     <!-- Boot Service -->
-    <string name="boot_service_failed_to_schedule_notifications">Failed to schedule reminders</string>
-    <string name="boot_service_too_many_notifications">Too many reminders scheduled. Some will not appear</string>
+    <string name="boot_service_failed_to_schedule_notifications">Gagal menjadualkan peringatan</string>
+    <string name="boot_service_too_many_notifications">Terlalu banyak peringatan dijadualkan. Beberapa peringatan tidak akan muncul</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">Keyboard Language Selection</string>
-    <string name="locale_selection_dialog_summary">Some multilingual keyboards, such as GBoard support changing language when editing text\n\nPlease request the “setImeHintLocales” feature from your keyboard manufacturer if your keyboard does not change language.</string>
+    <string name="locale_selection_dialog_title">Pemilihan Bahasa Papan Kekunci</string>
+    <string name="locale_selection_dialog_summary">Sesetengah papan kekunci pelbagai bahasa, seperti Gboard menyokong pertukaran bahasa ketika menyunting teks\n\nSila minta ciri “setImeHintLocales” daripada pengusaha papan kekunci jika papan kekunci anda tidak tukar bahasa.</string>
     <!-- Help Dialog -->
-    <string name="help_title_using_ankidroid">Using AnkiDroid</string>
-    <string name="help_item_ankidroid_manual">AnkiDroid Manual</string>
-    <string name="help_item_anki_manual">Anki Manual</string>
-    <string name="help_item_ankidroid_faq">AnkiDroid FAQ</string>
-    <string name="help_title_get_help">Get Help</string>
-    <string name="help_item_mailing_list">Mailing List</string>
+    <string name="help_title_using_ankidroid">Menggunakan AnkiDroid</string>
+    <string name="help_item_ankidroid_manual">Panduan AnkiDroid</string>
+    <string name="help_item_anki_manual">Panduan Anki</string>
+    <string name="help_item_ankidroid_faq">Soalan Lazim AnkiDroid</string>
+    <string name="help_title_get_help">Dapatkan Bantuan</string>
+    <string name="help_item_mailing_list">Senarai Mel</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
-    <string name="help_title_support_ankidroid">Support AnkiDroid</string>
-    <string name="help_item_support_opencollective_donate">Donate</string>
-    <string name="help_item_support_develop_ankidroid">Develop</string>
-    <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
-    <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_report_bug">Laporkan Pepijat</string>
+    <string name="help_title_support_ankidroid">Sokong AnkiDroid</string>
+    <string name="help_item_support_opencollective_donate">Derma</string>
+    <string name="help_item_support_develop_ankidroid">Bangunkan</string>
+    <string name="help_item_support_rate_ankidroid">Nilaikan</string>
+    <string name="help_item_support_other_ankidroid">Lain-lain</string>
+    <string name="multimedia_editor_trans_translate">Terjemah</string>
+    <string name="help_title_community">Komuniti</string>
+    <string name="help_item_anki_forums">Forum Anki</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
-    <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
-    <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
-    <string name="help_title_send_exception">Send troubleshooting report</string>
-    <string name="help_dialog_exception_report_debounce">Report already submitted</string>
+    <string name="help_title_privacy">Privasi</string>
+    <string name="help_item_ankidroid_privacy_policy">Polisi Privasi AnkiDroid</string>
+    <string name="help_item_ankiweb_privacy_policy">Polisi Privasi AnkiWeb</string>
+    <string name="help_item_ankiweb_terms_and_conditions">Terma dan Syarat AnkiWeb</string>
+    <string name="help_title_send_exception">Hantar laporan penyelesaian masalah</string>
+    <string name="help_dialog_exception_report_debounce">Laporan telah dihantar</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="other">An automatic sync may be triggered in %d seconds</item>
+        <item quantity="other">Penyegerakan automatik mungkin dicetuskan dalam %d saat</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
-    <string name="deck_picker_new">Number of new cards to see today in this deck.</string>
-    <string name="deck_picker_rev">Number of cards due today in this deck.</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="metered_sync_warning">Sambungan anda bermeter. Pemindahan datam mungkin memerlukan wang</string>
+    <string name="deck_picker_new">Bilangan kad baru untuk lihat hari ini dalam dek ini.</string>
+    <string name="deck_picker_rev">Bilangan kad tunggakan hari ini dalam dek ini.</string>
+    <string name="deck_picker_lrn">Bilangan kad sedang dipelajari hari ini dalam dek ini.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="deck_picker_counts">Buka halaman ringkasan dek yang mengandungi bilangan kad untuk lihat hari ini.</string>
+    <string name="import_deck_package">Pakej Dek (.apkg)</string>
+    <string name="import_collection_package">Pakej koleksi (.colpkg)</string>
+    <string name="import_csv">Fail teks (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Anda tidak boleh mencipta subdek bagi semua dek</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="backup_your_collection">Sandarkan koleksi anda</string>
+    <string name="backup_collection_message">Anda masih belum sandarkan koleksi anda dalam jangka masa panjang. Anda sewajarnya lakukan ini sekarang bagi mengelak kehilangan data</string>
+    <string name="button_backup">Sandarkan</string>
+    <string name="button_disable_reminder">Lumpuhkan peringatan</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Kemudian</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Jangan tunjukkan lagi</string>
+    <string name="dismiss_backup_warning_title">Amaran kehilangan data</string>
+    <string name="dismiss_backup_warning_new_user">        Akibat perubahan privasi Android, data anda dan sandaran automatik akan dibuang dari telefon anda jika aplikasi dinyahpasang
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        Akibat perubahan privasi Android, data anda dan sandaran automatik tidak akan dapat dicapai jika aplikasi dinyahpasang
     </string>
 </resources>

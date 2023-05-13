@@ -18,7 +18,6 @@ package com.ichi2.anki.servicelayer
 
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.DB
 import com.ichi2.utils.Computation
 import timber.log.Timber
 
@@ -41,7 +40,7 @@ fun <TTaskResult : Any, TProgress, TResult> AnkiTask<TProgress, TResult>.dismiss
             // (querying the cards again is unnecessarily expensive)
             return Computation.ok(Pair(result.value, cards))
         } finally {
-            DB.safeEndInTransaction(col.db)
+            col.db.safeEndInTransaction()
         }
     } catch (e: RuntimeException) {
         Timber.e(e, "doInBackgroundSuspendCard - RuntimeException on suspending card")

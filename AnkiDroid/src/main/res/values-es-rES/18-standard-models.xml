@@ -26,10 +26,10 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Parte delantera</string>
+    <string name="front_field_name">Cara delantera</string>
     <string name="back_field_name">Reverso</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Texto</string>
-    <string name="extra_field_name_new">Reverso Extra</string>
+    <string name="extra_field_name_new">Cara trasera extra</string>
     <string name="field_to_ask_front_name">Añadir Reverso</string>
     <!--Card type-->
     <string name="card_n_name">Tarjeta %d</string>

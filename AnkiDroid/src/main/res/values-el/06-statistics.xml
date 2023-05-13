@@ -48,20 +48,20 @@
     <string name="statistics_mature">\'Ωριμες</string>
     <string name="statistics_young_and_learn">Young+Learn</string>
     <string name="statistics_unlearned">Unseen</string>
-    <string name="statistics_suspended">Suspended</string>
-    <string name="statistics_buried">Buried</string>
+    <string name="statistics_suspended">Σε αναστολή</string>
+    <string name="statistics_buried">Θαμμένα</string>
     <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">Επανεκμάθηση</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">Εκμάθηση</string>
     <string name="statistics_cram">Εντατικά</string>
     <string name="stats_cards" comment="Title to use in stats pages">Κάρτες</string>
     <string name="stats_cards_intervals">Cards with given interval</string>
-    <string name="stats_cumulative_cards">Cumulative cards</string>
-    <string name="stats_cumulative_answers">Cumulative answers</string>
-    <string name="stats_cumulative_time_minutes">Cumulative minutes</string>
-    <string name="stats_cumulative_time_hours">Cumulative hours</string>
-    <string name="stats_cumulative">Cumulative</string>
-    <string name="stats_cumulative_percentage">Cumulative percentage</string>
-    <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
+    <string name="stats_cumulative_cards">Αθροιστικές κάρτες</string>
+    <string name="stats_cumulative_answers">Αθροιστικές απαντήσεις</string>
+    <string name="stats_cumulative_time_minutes">Αθροιστικά λεπτά</string>
+    <string name="stats_cumulative_time_hours">Αθροιστικές ώρες</string>
+    <string name="stats_cumulative">Αθροιστικά</string>
+    <string name="stats_cumulative_percentage">Αθροιστικό ποσοστό</string>
+    <string formatted="false" name="stats_cumulative_correct_percentage">Αθροιστικά σωστά %</string>
     <string name="stats_answers">Απαντήσεις</string>
     <string name="stats_minutes">Λεπτά</string>
     <string name="stats_hours">Ώρες</string>
@@ -69,12 +69,12 @@
     <string name="stats_period_month">1 μήνας</string>
     <string name="stats_period_year">1 έτος</string>
     <string name="stats_period_lifetime">deck life</string>
-    <string name="stats_deck_collection">collection</string>
-    <string name="stats_time_of_day">Time of day</string>
-    <string name="stats_day_of_week">Day of week</string>
-    <string formatted="false" name="stats_percentage_correct">% correct</string>
-    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Reviews</string>
-    <string name="stats_answer_type">Answer type</string>
+    <string name="stats_deck_collection">συλλογή</string>
+    <string name="stats_time_of_day">Ώρα της ημέρας</string>
+    <string name="stats_day_of_week">Ημέρα της εβδομάδας</string>
+    <string formatted="false" name="stats_percentage_correct">% σωστά</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Επαναλήψεις</string>
+    <string name="stats_answer_type">Τύπος απάντησης</string>
     <string name="stats_today_again_count">Again count: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; correct)</string>
     <string name="stats_today_type_breakdown">Learn: &lt;b&gt;%1$d&lt;/b&gt;, review: &lt;b&gt;%2$d&lt;/b&gt;, relearn: &lt;b&gt;%3$d&lt;/b&gt;, filtered: &lt;b&gt;%4$d&lt;/b&gt;</string>
@@ -112,14 +112,14 @@
         <item>Εβδομάδες</item>
         <item>Μήνες</item>
     </string-array>
-    <string name="stats_today">Today</string>
-    <string name="stats_overview">Overview</string>
+    <string name="stats_today">Σήμερα</string>
+    <string name="stats_overview">Επισκόπηση</string>
     <string name="stats_forecast">Πρόγνωση</string>
     <string name="stats_review_count">Αριθμός επαναλήψεων</string>
     <string name="stats_review_time">Χρόνος επαναλήψεων</string>
-    <string name="stats_added" comment="Label of the number of added card">Added</string>
-    <string name="stats_review_intervals">Intervals</string>
-    <string name="stats_breakdown">Hourly breakdown</string>
+    <string name="stats_added" comment="Label of the number of added card">Προστέθηκαν</string>
+    <string name="stats_review_intervals">Διαστήματα</string>
+    <string name="stats_breakdown">Ωριαία κατανομή</string>
     <string name="stats_weekly_breakdown">Εβδομαδιαία ανάλυση</string>
     <string name="stats_answer_buttons">Κουμπιά απάντησης</string>
     <string-array name="stats_day_time_strings">

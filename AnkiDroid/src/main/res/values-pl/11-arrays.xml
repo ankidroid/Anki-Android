@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">Kiedy żaden font nie jest wybrany dla danych kart</string>
     <string name="override_font_always" comment="Option to always override font">Zawsze</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Według ustawień systemowych</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Jasny</string>
     <string name="day_theme_plain">Zwykły</string>
@@ -110,7 +110,7 @@
     <string name="gesture_abort_sync">Przerwij naukę i synchronizuj</string>
     <string name="gesture_toggle_whiteboard">Przełącz Tablicę</string>
     <string name="gesture_show_hint">Pokaż podpowiedź</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_all_hints">Pokaż wszystkie podpowiedzi</string>
     <string name="record_voice">Nagraj głos</string>
     <string name="replay_voice">Odtwórz głos</string>
     <string name="automatic_answer_option_2">Trudne (Dobre, jeśli niedostępne)</string>

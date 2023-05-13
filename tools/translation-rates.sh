@@ -20,10 +20,10 @@ grep -v " 0" > tmp-list.txt
 echo "By country:"
 cat tmp-list.txt |  sort
 
-echo "\nBy rate approved (implies 100% translated):"
+echo -e "\nBy rate approved (implies 100% translated):"
 cat tmp-list.txt | grep approved | sed -e "s/\(.*\) \([0-9]*\)%/\2% \1/g" | sort -nr
 
-echo "\nBy rate translated:"
+echo -e "\nBy rate translated:"
 cat tmp-list.txt | grep translated | sed -e "s/\(.*\) \([0-9]*\)%/\2% \1/g" | sort -nr
 
 rm -f tmp-translations-page.html tmp-list.txt

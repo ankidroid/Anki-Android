@@ -37,4 +37,9 @@ class PreferencesSearchView : SearchPreferenceActionView {
     override fun onActionViewCollapsed() {
         cancelSearch()
     }
+
+    override fun onActionViewExpanded() {
+        isIconified = false
+        super.onActionViewExpanded()
+    }
 }

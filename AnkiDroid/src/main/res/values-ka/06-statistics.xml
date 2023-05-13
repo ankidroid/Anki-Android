@@ -166,7 +166,7 @@
         <item>4</item>
     </string-array>
     <plurals name="stats_today_cards">
-        <item quantity="one">დღეს ნასწწვლია &lt;b&gt;%1$d ბარათი&lt;/b&gt; &lt;b&gt;%2$s&lt;/b&gt;-ში</item>
-        <item quantity="other">დღეს ნასწწვლია &lt;b&gt;%1$d ბარათი&lt;/b&gt; &lt;b&gt;%2$s&lt;/b&gt;-ში</item>
+        <item quantity="one">დღეს ნასწავლია &lt;b&gt;%1$d ბარათი&lt;/b&gt; &lt;b&gt;%2$s&lt;/b&gt;-ში</item>
+        <item quantity="other">დღეს ნასწავლია &lt;b&gt;%1$d ბარათი&lt;/b&gt; &lt;b&gt;%2$s&lt;/b&gt;-ში</item>
     </plurals>
 </resources>

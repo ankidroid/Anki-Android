@@ -1,11 +1,11 @@
-#/bin/bash
+#!/bin/bash
 # enable/disable scoped storage: ./set_scoped_storage.sh [limited/full]
 
 
 function help() {
-    echo "\nPossible arguments:"
-    echo "limited\t\tEquivalent to a fresh install. /AnkiDroid/ is inaccessible"
-    echo "full\t\tEquivalent to an upgrade from targetSdkVersion 29 to 30. /AnkiDroid/ is accessible\n"
+    echo -e "\nPossible arguments:"
+    echo -e "limited\t\tEquivalent to a fresh install. /AnkiDroid/ is inaccessible"
+    echo -e "full\t\tEquivalent to an upgrade from targetSdkVersion 29 to 30. /AnkiDroid/ is accessible\n"
 }
 
 # This should be run when a single AOSP emulator is open.

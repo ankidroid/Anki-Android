@@ -61,6 +61,8 @@
     <string name="updated_version">Оновлено до версії %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Зберегти написане</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Увімкнути дошку</string>
     <string name="disable_whiteboard">Вимкнути дошку</string>
     <string name="show_whiteboard">Показати дошку</string>
@@ -331,7 +333,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Перегляд</string>
     <string name="anki_js_error_code">(Код помилки: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Скопійовано дані відлагодження до буфера обміну</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Помилка копіювання даних відлагодження до буфера обміну</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
@@ -339,6 +341,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не вдалося завантажити колоду «%s»</string>
     <string name="search_decks">Шукати колоди</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Критична помилка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid використовує системний WebView, який недоступний. Це можливе, якщо система встановлює оновлення. Будь ласка, спробуйте знову за кілька хвилин.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -388,12 +391,15 @@
     <string name="check_network">Будь ласка, перевірте підключення до мережі</string>
     <string name="search_using_deck_name">Пошук за назвою колоди</string>
     <string name="home">Головна</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Картку відкладено</string>
-    <string name="buried_note">Відкладений запис</string>
-    <string name="deleted_note">Видалено запис</string>
-    <string name="suspended_card">Картку призупинено</string>
-    <string name="suspended_note">Запис призупинено</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="few">%d cards suspended.</item>
+        <item quantity="many">%d cards suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Зробити поле %s липким</string>
     <!-- Scoped Storage Migration -->
@@ -402,8 +408,6 @@
     <string name="scoped_storage_postpone">Відкласти</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Нічого не знайдено</string>
-    <string name="sync_impossible_during_migration">Синхронізація вимкнена до завершення перенесення\n
-        %1$d медіафайлів залишилося перенести.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Починається перенесення сховища. Незабаром ви зможете продовжити використовувати AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Ви можете продовжити використовувати AnkiDroid.
@@ -438,9 +442,9 @@
     <string name="toggle_browser_mode_help">Перемкнути показ карток або записів у браузері</string>
     <string name="truncate_content_help">Скоротіть висоту кожного рядка браузера, щоб показати лише перші 3 рядки вмісту</string>
     <string name="browser_options_dialog_heading">Параметри браузера</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Ця функція недоступна під час переміщення сховища</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Торкніться, щоб почати перенесення сховища</string>
+    <string name="media_sync_required_title">Необхідна синхронізація медіа</string>
+    <string name="media_sync_unavailable_message">Синхронізацію мультимедійних файлів вимкнено в налаштуваннях. Будь ласка, синхронізуйте та створіть резервну копію всіх медіафайлів, які не були синхронізовані, перш ніж продовжити</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

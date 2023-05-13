@@ -16,7 +16,6 @@
 package com.ichi2.preferences
 
 import android.content.SharedPreferences
-import com.ichi2.preferences.PreferenceExtensions.getOrSetString
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -37,7 +36,7 @@ class PreferenceExtensionsTest {
     @Mock
     private val mMockEditor: SharedPreferences.Editor? = null
     private fun getOrSetString(key: String, supplier: Supplier<String>): String {
-        return getOrSetString(mockPreferences, key, supplier)
+        return mockPreferences.getOrSetString(key, supplier)
     }
 
     @Before

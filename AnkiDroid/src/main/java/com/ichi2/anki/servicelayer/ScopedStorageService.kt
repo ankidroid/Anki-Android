@@ -25,8 +25,6 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.model.DiskFile
-import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
@@ -49,22 +47,12 @@ fun AnkiDroidDirectory.getCollectionAnki2Path(): CollectionFilePath =
     File(this.directory, CollectionHelper.COLLECTION_FILENAME).canonicalPath
 
 /**
- * Returns the relative file path from a given [AnkiDroidDirectory]
- * @return null if the file was not inside the directory, or referred to the root directory
- */
-fun AnkiDroidDirectory.getRelativeFilePath(file: DiskFile): RelativeFilePath? =
-    RelativeFilePath.fromPaths(
-        baseDir = this,
-        file = file
-    )
-
-/**
  * An [AnkiDroidDirectory] for an AnkiDroid collection which is under scoped storage
  * This storage directory is accessible without permissions after scoped storage changes,
  * and is much faster to access
  *
  * When uninstalling: A user will be asked if they want to delete this folder
- * A folder here may be modifiable via USB. In AnkiDroid's case, all collection folders should
+ * A folder here may be modifiable via USB. In the case of AnkiDroid, all collection folders should
  * be modifiable
  *
  * @see [isLegacyStorage]
@@ -154,7 +142,7 @@ object ScopedStorageService {
             try {
                 // MigrateEssentialFiles performs a COPY. Delete the data so we don't take up space.
                 bestProfileDirectory.deleteRecursively()
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
             throw e
         }
@@ -289,12 +277,12 @@ object ScopedStorageService {
             return Status.COMPLETED
         }
 
-        if (Permissions.allFileAccessPermissionGranted(context)) {
-            return Status.NOT_NEEDED
-        }
-
         if (userMigrationIsInProgress(context)) {
             return Status.IN_PROGRESS
+        }
+
+        if (!collectionWillBeMadeInaccessibleAfterUninstall(context)) {
+            return Status.NOT_NEEDED
         }
 
         return Status.NEEDS_MIGRATION
@@ -308,25 +296,74 @@ object ScopedStorageService {
     }
 
     /**
-     * @return whether the user's current collection is now inaccessible due to a 'reinstall'
+     * Whether the user's current collection is now inaccessible due to a 'reinstall'
+     *
+     * @return `false` if:
+     * * ⚠️ The directory will be **removed** on uninstall
+     *    * The user installed with Android 11+, and is more likely to expect this behavior
+     *    * Note: The directory data may not be removed if the user taps "Keep data" when uninstalling
+     * * The collection is currently accessible
+     * * the user is on Android 9 or below and Android will not revoke permissions
+     * * The user has the potential to grant [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE]
      * @see android.R.attr.preserveLegacyExternalStorage
      * @see android.R.attr.requestLegacyExternalStorage
      */
-    fun collectionInaccessibleAfterUninstall(context: Context): Boolean {
+    fun collectionWasMadeInaccessibleAfterUninstall(context: Context): Boolean {
         // If we're < Q then `requestLegacyExternalStorage` was not introduced
+        // We do not check for == Q here, instead relying on `isExternalStorageLegacy`
+        // requestLegacyExternalStorage is a strong assumption, but we need to handle the case that
+        // this assumption breaks down
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             return false
         }
 
+        // the user could obtain MANAGE_EXTERNAL_STORAGE
         if (Permissions.canManageExternalStorage(context)) {
             return false
         }
 
-        val collectionPath = File(CollectionHelper.getCollectionPath(context))
-        if (collectionPath.isInsideDirectoriesRemovedWithTheApp(context)) {
+        if (userIsPromptedToDeleteCollectionOnUninstall(context)) {
             return false
         }
 
         return !Environment.isExternalStorageLegacy()
+    }
+
+    /**
+     * Whether the user's current collection will be inaccessible after uninstalling the app
+     *
+     * @return `false` if:
+     * * ⚠️ The directory will be **removed** on uninstall
+     *    * The user installed with Android 11+, and is more likely to expect this behavior
+     *    * Note: The directory data may not be removed if the user taps "Keep data" when uninstalling
+     * * The collection is now inaccessible
+     * * the user is on Android Q or below and Android **should** not revoke permissions
+     * * The user has the potential to grant [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE]
+     * Returns `true` > Android 10 and the user has no way to access the collection on uninstall
+     * except for using another build of `com.ichi2.anki` or manually copying files
+     * @see android.R.attr.preserveLegacyExternalStorage
+     * @see android.R.attr.requestLegacyExternalStorage
+     */
+    fun collectionWillBeMadeInaccessibleAfterUninstall(context: Context): Boolean {
+        // If we're < Q then `requestLegacyExternalStorage` was not introduced
+        // If we're == Q then `preserveLegacyExternalStorage` is expected to be in place
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            return false
+        }
+
+        // the user could obtain MANAGE_EXTERNAL_STORAGE
+        if (Permissions.canManageExternalStorage(context)) {
+            return false
+        }
+
+        if (userIsPromptedToDeleteCollectionOnUninstall(context)) {
+            return false
+        }
+
+        return Environment.isExternalStorageLegacy()
+    }
+
+    fun userIsPromptedToDeleteCollectionOnUninstall(context: Context): Boolean {
+        return File(CollectionHelper.getCollectionPath(context)).isInsideDirectoriesRemovedWithTheApp(context)
     }
 }

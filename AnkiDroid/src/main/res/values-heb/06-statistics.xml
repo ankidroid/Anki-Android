@@ -53,9 +53,9 @@
     <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">ללמוד מחדש</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">ללמוד</string>
     <string name="statistics_cram">לפטם</string>
-    <string name="stats_cards" comment="Title to use in stats pages">קלפים</string>
-    <string name="stats_cards_intervals">קלפים בעלי מרווח נתון</string>
-    <string name="stats_cumulative_cards">קלפים מצטברים</string>
+    <string name="stats_cards" comment="Title to use in stats pages">כרטיסים</string>
+    <string name="stats_cards_intervals">כרטיסים בעלי מרווח נתון</string>
+    <string name="stats_cumulative_cards">כרטיסים מצטברים</string>
     <string name="stats_cumulative_answers">תשובות מצטברות</string>
     <string name="stats_cumulative_time_minutes">דקות מצטברות</string>
     <string name="stats_cumulative_time_hours">שעות מצטברות</string>
@@ -78,7 +78,7 @@
     <string name="stats_today_again_count">ספירת חזרה: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; נכון)</string>
     <string name="stats_today_type_breakdown">למד: &lt;b&gt;%1$d&lt;/b&gt;, סקור: &lt;b&gt;%2$d&lt;/b&gt;, למד מחדש: &lt;b&gt;%3$d&lt;/b&gt;, מסונן: &lt;b&amp;gt ;%4$d&lt;/b&gt;</string>
-    <string name="stats_today_mature_cards">מענה נכון על קלפים בוגרים: %1$d/%2$d (%3$.1f%%)</string>
+    <string name="stats_today_mature_cards">מענה נכון על כרטיסים בוגרים: %1$d/%2$d (%3$.1f%%)</string>
     <string name="stats_today_no_mature_cards">אף קלף בוגר נלמד היום.‏</string>
     <string name="stats_overview_forecast_total">סך הכל: &lt;b&gt;%1$d&lt;/b&gt; ביקורות</string>
     <string name="stats_overview_forecast_average">ממוצע: &lt;b&gt;%1$.1f&lt;/b&gt; ביקורות/יום</string>
@@ -89,9 +89,9 @@
     <string name="stats_overview_total_time_in_period">סך הכל: &lt;b&gt;%d&lt;/b&gt; דקות</string>
     <string name="stats_overview_time_per_day_studydays">ממוצע עבור ימים שנבדקו: &lt;b&gt;%1$.1f&lt;/b&gt; דקות/יום</string>
     <string name="stats_overview_time_per_day_all">אם למדת כל יום: &lt;b&gt;%1$.1f&lt;/b&gt; דקות/יום</string>
-    <string name="stats_overview_average_answer_time">זמן תשובה ממוצע: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; קלפים לדקה)</string>
+    <string name="stats_overview_average_answer_time">זמן תשובה ממוצע: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; כרטיסים לדקה)</string>
     <string name="stats_overview_new_cards_per_day">ממוצע: &lt;b&gt;%1$.1f&lt;/b&gt; כרטיסים/יום</string>
-    <string name="stats_overview_total_new_cards">סך הכל: &lt;b&gt;%1$d&lt;/b&gt; קלפים</string>
+    <string name="stats_overview_total_new_cards">סך הכל: &lt;b&gt;%1$d&lt;/b&gt; כרטיסים</string>
     <string name="stats_overview_average_interval">"מרווח ממוצע: "</string>
     <string name="stats_overview_longest_interval">"המרווח הארוך ביותר: "</string>
     <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; שנים</string>

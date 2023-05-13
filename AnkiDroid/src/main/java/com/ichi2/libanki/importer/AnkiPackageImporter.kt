@@ -24,6 +24,7 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ImportExportException
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
@@ -43,6 +44,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!
     private var mNameToNum: MutableMap<String, String>? = null
 
     @Throws(ImportExportException::class)
+    @NeedsTest("test this on our lowest SDK")
     override fun run() {
         publishProgress(0, 0, 0)
         val tempDir = File(File(mCol.path).parent, "tmpzip")

@@ -31,33 +31,39 @@
         android:minHeight="200dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ankidroid_logo"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <ImageView
         android:id="@+id/ankidroid_logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/intro_ankidroid_logo"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/barrier"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="25dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/title_divider"
         android:layout_width="100dp"
         android:layout_height="2dp"
         android:background="#dddddd"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintTop_toBottomOf="@id/study_less"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ankidroid_logo"
+        app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_constraintBottom_toTopOf="@id/remember_more"/>
 
     <LinearLayout
+        android:id="@+id/btn_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintTop_toBottomOf="@id/subtitle"
-        app:layout_constraintStart_toEndOf="@id/ankidroid_logo"
+        app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="20dp"
@@ -71,8 +77,7 @@
             android:minWidth="200dp"
             android:text="@string/intro_get_started"
             android:layout_marginBottom="10dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"/>
+            android:layout_marginEnd="20dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sync_profile"
@@ -93,16 +98,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="500dp"
-        android:paddingHorizontal="30dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:text="@string/intro_short_ankidroid_explanation"
-        android:textAlignment="center"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/ankidroid_logo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/remember_more"
-        app:layout_constraintBottom_toTopOf="@id/get_started"/>
+        app:layout_constraintBottom_toTopOf="@id/btn_container"/>
 
     <com.ichi2.ui.FixedTextView
         android:id="@+id/study_less"
@@ -114,7 +118,9 @@
         android:textSize="34sp"
         android:textStyle="bold"
         android:layout_marginTop="60dp"
-        app:layout_constraintStart_toEndOf="@id/ankidroid_logo"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/title_divider"/>
@@ -124,13 +130,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
         android:text="@string/intro_ankidroid_tagline_two"
         android:textAlignment="textStart"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/ankidroid_logo"
+        app:layout_constraintStart_toEndOf="@id/barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_divider"
         app:layout_constraintBottom_toTopOf="@id/subtitle"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        app:barrierDirection="start"
+        app:layout_constraintStart_toEndOf="@id/ankidroid_logo"
+        app:layout_constraintEnd_toStartOf="@id/subtitle"
+        android:layout_marginStart="50dp"
+        app:constraint_referenced_ids="study_less,title_divider,remember_more,subtitle,btn_container"
+        android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

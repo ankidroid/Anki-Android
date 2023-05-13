@@ -152,6 +152,7 @@ class Previewer : AbstractFlashcardViewer() {
         super.initLayout()
         topBarLayout!!.visibility = View.GONE
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
+        findViewById<View>(R.id.bottom_area_layout).visibility = View.VISIBLE
         previewLayout = PreviewLayout.createAndDisplay(this, mToggleAnswerHandler)
         previewLayout!!.setOnNextCard { changePreviewedCard(true) }
         previewLayout!!.setOnPreviousCard { changePreviewedCard(false) }

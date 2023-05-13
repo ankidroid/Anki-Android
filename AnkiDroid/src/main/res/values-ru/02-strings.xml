@@ -61,6 +61,8 @@
     <string name="updated_version">Обновлено до версии %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Сохранить написанное</string>
+    <string name="enable_stylus">Включить режим стилуса</string>
+    <string name="disable_stylus">Выключить режим стилуса</string>
     <string name="enable_whiteboard">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>
     <string name="show_whiteboard">Показать доску</string>
@@ -203,10 +205,10 @@
         <item quantity="other">Экспортировать %d выбранных карточек в apkg файл?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Экспортировать выбранную запись как apkg файл?</item>
-        <item quantity="few">Экспортировать %d выбранных записей как apkg файл?</item>
-        <item quantity="many">Экспортировать %d выбранных записей как apkg файл?</item>
-        <item quantity="other">Экспортировать %d выбранных записей как apkg файл?</item>
+        <item quantity="one">Экспортировать выбранную запись как apkg-файл?</item>
+        <item quantity="few">Экспортировать %d выбранных записей как apkg-файл?</item>
+        <item quantity="many">Экспортировать %d выбранных записей как apkg-файл?</item>
+        <item quantity="other">Экспортировать %d выбранных записей как apkg-файл?</item>
     </plurals>
     <string name="export_in_progress">Пакет Anki экспортируется&#8230;</string>
     <string name="export_success_title">Коллекция успешно экспортирована</string>
@@ -331,7 +333,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Вид</string>
     <string name="anki_js_error_code">(Код ошибки: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Отладочная информация скопирована в буфер обмена</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Скопировано в буфер обмена</string>
     <string name="about_ankidroid_error_copy_debug_info">Ошибка при копировании отладочной информации в буфер обмена</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
@@ -339,6 +341,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
     <string name="search_decks">Найти колоду</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Показать прогресс переноса файлов</string>
     <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Повторите попытку через несколько минут.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -388,12 +391,15 @@
     <string name="check_network">Проверьте подключение к Интернету</string>
     <string name="search_using_deck_name">Искать по названию колоды</string>
     <string name="home">Главная</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Карточка отложена</string>
-    <string name="buried_note">Запись отложена</string>
-    <string name="deleted_note">Запись удалена</string>
-    <string name="suspended_card">Карточка исключена</string>
-    <string name="suspended_note">Запись исключена</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Карточка отложена.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d карточка исключена.</item>
+        <item quantity="few">%d карточки исключено.</item>
+        <item quantity="many">%d карточек исключено.</item>
+        <item quantity="other">%d карточек исключено.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Закрепить поле %s</string>
     <!-- Scoped Storage Migration -->
@@ -402,12 +408,10 @@
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Ничего не найдено</string>
-    <string name="sync_impossible_during_migration">Синхронизация отключена до завершения переноса.\n
-        Осталось пернести %1$d медиафайлов.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">Начало перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
-    <string name="migration_part_1_done_resume">Вы можете продолжить учёбу с AnkiDroid.
-\nПеренос хранилища будет продолжаться в фоновом режиме.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid должен перенести свое файловое хранилище в соответствии с политикой безопасности Android 10.\n\nБлагодаря этому повысится производительность синхронизации медиафайлов.&lt;br&gt;&lt;br&gt;Во время процесса вы не сможете синхронизироваться и некоторые настройки будут недоступны. Чтобы ваши данные не потерялись, перед переносом хранилища произойдёт синхронизация медиафайлов.&lt;br&gt;&lt;br&gt;Во время переноса вы можете безопасно использовать или закрывать AnkiDroid.</string>
+    <string name="start_migration_progress_message">Начался перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
+    <string name="migration_part_1_done_resume">Вы можете продолжать использовать AnkiDroid.
+\nПеренос хранилища будет идти в фоновом режиме.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s не является допустимым пакетом дополнения JavaScript</string>
     <string name="could_not_create_dir">Не удалось создать каталог «%s»</string>
@@ -438,9 +442,10 @@
     <string name="toggle_browser_mode_help">Показывать карточки или записи в списке</string>
     <string name="truncate_content_help">Показывать в списке только первые 3 строки</string>
     <string name="browser_options_dialog_heading">Настройки браузера</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Эта функция недоступна во время переноса хранилища
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Нажмите, чтобы начать перенос хранилища</string>
+    <string name="media_sync_required_title">Требуется синхронизация медиафайлов</string>
+    <string name="media_sync_unavailable_message">Синхронизация медиафайлов отключена в настройках. Пожалуйста, перед продолжением синхронизируйте и сделайте резервную копию всех медиафайлов, которые не были синхронизированы</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

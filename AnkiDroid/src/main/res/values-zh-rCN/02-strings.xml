@@ -47,9 +47,9 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">打开侧栏</string>
     <string name="drawer_close">关闭侧栏</string>
-    <string name="CardEditorCardDeck">卡组：</string>
-    <string name="CardEditorNoteDeck">卡组：</string>
-    <string name="CardEditorModel">笔记类型：</string>
+    <string name="CardEditorCardDeck">牌组：</string>
+    <string name="CardEditorNoteDeck">牌组：</string>
+    <string name="CardEditorModel">笔记模板：</string>
     <string name="CardEditorTags">标签：%1$s</string>
     <string name="CardEditorCards">卡片：%1$s</string>
     <string name="tag_name">标签</string>
@@ -58,17 +58,19 @@
     <string name="check_all_tags">选中/取消所有标签</string>
     <string name="filter_tags">过滤标签</string>
     <string name="no_tags">你还没有添加任何标签。</string>
-    <string name="updated_version">更新到%s版本</string>
+    <string name="updated_version">更新到 %s 版本</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">保存白板</string>
+    <string name="enable_stylus">启用光笔模式</string>
+    <string name="disable_stylus">禁用光笔模式</string>
     <string name="enable_whiteboard">启用白板</string>
     <string name="disable_whiteboard">禁用白板</string>
     <string name="show_whiteboard">显示白板</string>
     <string name="hide_whiteboard">隐藏白板</string>
     <string name="clear_whiteboard">清空白板</string>
     <string name="replay_audio">重新播放</string>
-    <string name="leech_suspend_notification">卡片被标记为“水蛭”并暂停复习</string>
-    <string name="leech_notification">卡片被标记为“水蛭”</string>
+    <string name="leech_suspend_notification">卡片被标记为「记忆难点」并暂停复习</string>
+    <string name="leech_notification">卡片被标记为「记忆难点」</string>
     <string name="corrupt_font">字体文件 %s 已损坏</string>
     <string name="webview_crash_unknown">未知错误</string>
     <string name="webview_crash_unknwon_detailed">这是由 WebView 内部错误导致的</string>
@@ -86,22 +88,22 @@
     <string-array name="browser_column2_headings">
         <item>答案</item>
         <item>卡片</item>
-        <item>卡组</item>
+        <item>牌组</item>
         <item>笔记</item>
         <item>问题</item>
         <item>标签</item>
-        <item>失误</item>
+        <item>遗忘</item>
         <item>复习</item>
         <item>间隔</item>
         <item>简易度</item>
         <item>到期</item>
-        <item>已修改卡</item>
-        <item>已创建</item>
-        <item>已修改笔记</item>
+        <item>卡片修改时间</item>
+        <item>卡片创建时间</item>
+        <item>笔记修改时间</item>
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">应用</string>
-    <string name="filter_by_flags">标志</string>
+    <string name="filter_by_flags">旗标</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>
     <string name="custom_study_increase_review_limit">修改今天的复习卡片数量限制</string>
@@ -115,20 +117,20 @@
     <string name="discard_unsaved_changes">确定直接关闭吗？您将丢失所有已输入的内容。</string>
     <string name="note_editor_no_cards_created">没有已创建的卡片。请填写更多字段</string>
     <string name="note_editor_no_first_field">第一字段为空</string>
-    <string name="note_editor_no_cloze_delations">此笔记类型必须包含创建填空</string>
-    <string name="note_editor_no_cards_created_all_fields">当前笔记类型没有生成任何卡片。\n请选择另一个笔记类型，或点击 “卡片” 并添加一个字段替换</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">创建填空只能在完形填空笔记类型上使用</string>
+    <string name="note_editor_no_cloze_delations">此笔记模板必须包含填空题</string>
+    <string name="note_editor_no_cards_created_all_fields">当前笔记模板没有生成任何卡片。\n请选择另一个笔记模板，或点击「卡片」并添加一个字段替换</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">填空题只能在填空题笔记模板上使用</string>
     <string name="saving_facts">保存笔记</string>
-    <string name="saving_model">保存卡牌记录类型</string>
+    <string name="saving_model">保存笔记模板</string>
     <string name="save">保存</string>
     <string name="close">关闭</string>
     <string name="select">选择</string>
     <string name="reordering_cards">重新排列卡片中...</string>
-    <string name="field_remapping">%1$s （从“%2$s”）</string>
-    <string name="confirm_map_cards_to_nothing">在笔记类型中没有相应模板的卡片将被删除。如果该笔记没有生成其他的卡片，则该笔记将会丢失。你确定要继续吗？</string>
-    <string name="timebox_reached_title">已到达时间盒</string>
+    <string name="field_remapping">%1$s（来自「%2$s」）</string>
+    <string name="confirm_map_cards_to_nothing">任何无法映射的卡片都会被删除。如果该笔记没有生成其他卡片，该笔记将会丢失。你确定要继续吗？</string>
+    <string name="timebox_reached_title">已到达指定时间</string>
     <plurals name="timebox_reached">
-        <item quantity="other">在%2$s内学习了%1$d张卡片</item>
+        <item quantity="other">在 %2$s 内学习了 %1$d 张卡片</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
@@ -145,36 +147,36 @@
     <string name="rename" comment="Confirm that the renaming action should be processed.">重命名</string>
     <string name="default_conf_delete_error">不能删除默认牌组</string>
     <plurals name="factadder_cards_added">
-        <item quantity="other">已添加%d张卡片</item>
+        <item quantity="other">已添加 %d 张卡片</item>
     </plurals>
     <string name="check_db">检查数据库</string>
     <string name="check_media">检查媒体</string>
     <string name="empty_cards">空白卡片</string>
     <string name="check_db_message">正在检查数据库\n请等待...</string>
-    <string name="empty_card_warning">这张卡片是空的。请使用牌组列表界面右上角菜单中的“空白卡片”选项来查找空白卡片。</string>
+    <string name="empty_card_warning">这张卡片是空的。请使用牌组列表界面右上角菜单中的「空白卡片」选项来查找空白卡片。</string>
     <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
     <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
-    <string name="info_rate">给AnkiDroid评分</string>
-    <string name="import_title">正在导入……</string>
+    <string name="info_rate">给 AnkiDroid 评分</string>
+    <string name="import_title">正在导入…</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">添加</string>
     <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="other">您想要导入以下文件吗？\n%s\n 这可能需要很长的时间</item>
     </plurals>
-    <string name="import_log_no_apkg">这不是一个有效的 Anki 包文件</string>
+    <string name="import_log_no_apkg">这不是一个有效的 apkg 文件</string>
     <string name="import_title_error" comment="Title of error dialog">错误</string>
     <string name="import_log_failed_unzip">无法解压 apkg：%s</string>
     <string name="import_log_failed_copy_to">无法将 apkg 复制到 %s</string>
     <string name="import_log_failed_validate">apkg 验证失败</string>
-    <string name="import_log_insufficient_space_error">没有足够的空间来导入包。\n 需要 - %1$s \n 可用 - %2$s。\n\n 有问题？如果可能，请尝试在您的手机上腾出空间。 或者，同步使用的空间少于导入。 您可以尝试用具备更多可用空间的设备 (例如 Anki Desktop) 导入包，然后将其同步到此设备。</string>
+    <string name="import_log_insufficient_space_error">没有足够的空间来导入包。\n 需要 - %1$s \n 可用 - %2$s。\n\n 有问题？如果可能，请尝试在您的手机上腾出空间。 或者，同步使用的空间少于导入。 您可以尝试用具备更多可用空间的设备（例如 Anki Desktop）导入包，然后将其同步到此设备。</string>
     <string name="import_log_file_cache_cleared">导入文件错误，可能处理期间的缓存清理造成的。\n请再次尝试</string>
     <string name="import_succeeded_but_check_database">数据导入成功，但导入后的清理失败。稍后运行检查数据库。根原因：%s</string>
     <string name="import_error_corrupt_zip">apkg 文件已损坏。请删除并重新下载。\n\n根原因：%s</string>
     <string name="import_error_handle_exception">导入文件\n\n%s 失败</string>
-    <string name="import_error_not_apkg_extension">\"%s\" 并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
+    <string name="import_error_not_apkg_extension">「%s」并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
-    <string name="import_error_copy_to_cache">缓存文件失败 (可能超出存储空间)</string>
+    <string name="import_error_copy_to_cache">缓存文件失败（可能超出存储空间）</string>
     <string name="import_error_multiple_colpkg">选择了多个 colpkg 文件。</string>
     <string name="import_error_colpkg_apkg">同时选择了 apkg &amp; colpkg 文件。</string>
     <string name="import_stats_error">导入以下文件时发生了一些错误：\n%s</string>
@@ -182,21 +184,21 @@
     <string name="import_interrupted">导入中断</string>
     <string name="export_include_schedule">包括学习进度</string>
     <string name="export_include_media">包括媒体文件</string>
-    <string name="confirm_apkg_export">要将记忆库集合导出为 Anki 包吗？</string>
-    <string name="confirm_apkg_export_deck">将“%s”导出为akpg文件？</string>
+    <string name="confirm_apkg_export">要将集合导出为 apkg 文件吗？</string>
+    <string name="confirm_apkg_export_deck">将「%s」导出为 akpg 文件？</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="other">导出 %d 张选定卡片为 apkg 文件？</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">导出 %d 个选定笔记为 apkg 文件？</item>
     </plurals>
-    <string name="export_in_progress">正在导出 Anki 软件包文件&#8230;</string>
-    <string name="export_success_title">成功导出牌组集</string>
+    <string name="export_in_progress">正在导出 apkg 文件&#8230;</string>
+    <string name="export_success_title">成功导出集合</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
-    <string name="export_save_apkg_successful">已成功保存 Anki 包</string>
-    <string name="export_save_apkg_unsuccessful">保存 Anki 包失败</string>
+    <string name="export_save_apkg_successful">已成功保存 apkg 文件</string>
+    <string name="export_save_apkg_unsuccessful">保存 apkg 文件失败</string>
     <string name="export_success_message">您可以选择一个文件位置来保存它，或者与其他应用共享。</string>
-    <string name="export_share_title">选择如何发送 Anki 软件包</string>
+    <string name="export_share_title">选择如何发送 apkg 文件</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        嗨！
         <br/><br/>
@@ -216,29 +218,29 @@
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
     <string name="steps_error">间隔必须是大于 0 的数字</string>
     <string name="steps_min_error">至少需要一个间隔</string>
-    <string name="sched_end">(结束)</string>
-    <string name="sched_unbury_action">在菜单中点击“取消搁置”来查看这些卡片</string>
+    <string name="sched_end">（结束）</string>
+    <string name="sched_unbury_action">在菜单中点击「取消搁置」来查看这些卡片</string>
     <string name="sched_has_buried">一些相关的或被搁置的卡片被推迟到明天。</string>
-    <string name="tag_editor_add_feedback">点击“%2$s”以确认添加“%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">已选中%1$s</string>
+    <string name="tag_editor_add_feedback">点击「%2$s」以确认添加「%1$s」</string>
+    <string name="tag_editor_add_feedback_existing">已选中 %1$s</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
-        <item quantity="other">%s秒</item>
+        <item quantity="other">%s 秒</item>
     </plurals>
     <plurals name="time_span_minutes">
-        <item quantity="other">%s分钟</item>
+        <item quantity="other">%s 分钟</item>
     </plurals>
     <plurals name="time_span_hours">
-        <item quantity="other">%s小时</item>
+        <item quantity="other">%s 小时</item>
     </plurals>
     <plurals name="time_span_days">
-        <item quantity="other">%s天</item>
+        <item quantity="other">%s 天</item>
     </plurals>
     <plurals name="time_span_months">
-        <item quantity="other">%s个月</item>
+        <item quantity="other">%s 个月</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="other">%s年</item>
+        <item quantity="other">%s 年</item>
     </plurals>
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
@@ -253,7 +255,7 @@
     <string name="filtered_deck_name">筛选牌组</string>
     <string name="reminder_title">不要忘记今天去学习 ！</string>
     <plurals name="reminder_text">
-        <item quantity="other">%2$d 张卡牌在 %1$s 中待复习</item>
+        <item quantity="other">%2$d 张卡片在 %1$s 中待复习</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">共享 apkg 文件时出错</string>
@@ -271,7 +273,7 @@
     <string name="choose_an_image">选择图片</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">恢复初始设置</string>
-    <string name="cloze_sample_text">这是一个 {{%1$s::示例}} 完形填空。</string>
+    <string name="cloze_sample_text">这是一个 {{%1$s::示例}} 填空题。</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">示例</string>
     <string name="basic_answer_sample_text">一个示例</string>
     <string name="reviewer_tts_cloze_spoken_replacement">空白</string>
@@ -292,14 +294,15 @@
     <string name="reviewer_invalid_api_version_visit_documentation">查看</string>
     <string name="anki_js_error_code">（错误代码：%d）</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">已复制调试信息到剪贴板</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">已复制到剪贴板</string>
     <string name="about_ankidroid_error_copy_debug_info">复制调试信息到剪贴板时出错</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">加载“%s”失败</string>
+    <string name="card_viewer_could_not_find_image">卡片内容错误：加载「%s」失败</string>
     <string name="card_viewer_media_relative_protocol">卡片内容错误：需要更新媒体</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">加载牌组“%s”失败</string>
+    <string name="deck_picker_failed_deck_load">加载牌组「%s」失败</string>
     <string name="search_decks">搜索牌组</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">显示迁移进度</string>
     <string name="ankidroid_init_failed_webview_title">严重错误</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid 依赖的系统 WebView 不可用。如果系统正在安装更新，可能会发生这种情况。请几分钟后再试。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -312,10 +315,10 @@
     <string name="insert_heading">插入标题</string>
     <string name="format_font_size">更改字体大小</string>
     <string name="insert_mathjax">插入 MathJax 方程</string>
-    <string name="insert_cloze">插入完形填空</string>
+    <string name="insert_cloze">插入填空题</string>
     <string name="note_editor_toolbar_icon">按钮文本</string>
-    <string name="before_text">选择前的 HTML</string>
-    <string name="after_text">选择后的 HTML</string>
+    <string name="before_text">选择文本前的 HTML</string>
+    <string name="after_text">选择文本后的 HTML</string>
     <string name="add_toolbar_item">创建工具栏项</string>
     <string name="edit_toolbar_item">编辑工具栏项</string>
     <string name="toolbar_item_explain_edit_or_remove">输入要在选定文本之前和之后插入的 HTML\n\n 长按工具栏项目来编辑或删除它</string>
@@ -340,7 +343,7 @@
     <string name="download_deck">下载牌组</string>
     <string name="try_again">再试一次</string>
     <string name="cancel_download">取消下载</string>
-    <string name="cancel_download_question_title">取消下载吗？</string>
+    <string name="cancel_download_question_title">是否取消下载？</string>
     <string name="downloading_file">正在下载 %s</string>
     <string name="import_deck">导入牌组</string>
     <string name="something_wrong">出错了，请重试</string>
@@ -349,12 +352,12 @@
     <string name="check_network">请检查您的网络连接。</string>
     <string name="search_using_deck_name">使用牌组名称搜索</string>
     <string name="home">主页</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">搁置的卡片</string>
-    <string name="buried_note">隐藏的笔记</string>
-    <string name="deleted_note">删除的笔记</string>
-    <string name="suspended_card">搁置的卡牌</string>
-    <string name="suspended_note">搁置的笔记</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">已搁置卡片</string>
+    <plurals name="note_suspended">
+        <item quantity="other">%d 张卡片已暂停。</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">固定字段 %s</string>
     <!-- Scoped Storage Migration -->
@@ -363,20 +366,18 @@
     <string name="scoped_storage_postpone">推迟</string>
     <string name="scoped_storage_migrate">迁移</string>
     <string name="search_card_js_api_no_results">搜索未返回任何结果</string>
-    <string name="sync_impossible_during_migration">同步功能被禁用，直到迁移完成。\n
-        %1$d 个媒体文件留待迁移。</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid 需要迁移其存储空间以遵守 Android 10 安全政策。\n\n这将提高媒体同步性能。&lt;br&gt;&lt;br&gt;迁移过程中，您将无法同步，一些设置将被禁用。 迁移开始前为了保护您的数据安全，将会发生媒体同步。&lt;br&gt;&lt;br&gt;在此过程中使用或关闭 AnkiDroid 是安全的。</string>
-    <string name="start_migration_progress_message">开始存储迁移。不久后您就可以继续使用 AnkiDroid 啦。</string>
+    <string name="start_migration_progress_message">开始存储迁移。不久后您就可以继续使用 AnkiDroid。</string>
     <string name="migration_part_1_done_resume">您可以继续使用 AnkiDroid 了。
 \n存储迁移将在后台继续。</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s 不是一个有效的 javascript 附加组件包</string>
+    <string name="not_valid_js_addon">%s 不是一个有效的 JavaScript 附加组件包</string>
     <string name="could_not_create_dir">无法创建目录 %s</string>
     <string name="malicious_archive_entry_outside">恶意压缩文件。包含目标目录外的条目： %s</string>
     <string name="malicious_archive_exceeds_limit">恶意压缩文件。大小超过 %1$s 或包含超过 %2$d 个文件</string>
     <string name="file_extract_exceeds_storage_space">文件提取超出存储空间</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">展开标签 \'%s\'</string>
+    <string name="expand_tag">展开标签「%s」</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">访问牌组集合失败。请重试！</string>
     <!-- App Intro -->
@@ -397,11 +398,12 @@
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">笔记</string>
     <string name="toggle_cards_notes">切换卡片/笔记</string>
     <string name="toggle_browser_mode_help">在浏览器中切换显示卡片或笔记</string>
-    <string name="truncate_content_help">截断浏览器每行高度仅显示内容前三行</string>
+    <string name="truncate_content_help">截断浏览器每行高度并仅显示内容前三行</string>
     <string name="browser_options_dialog_heading">浏览器选项</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        此功能在存储迁移期间不可用
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">轻按开始存储迁移</string>
     <string name="media_sync_required_title">需要进行媒体同步</string>
     <string name="media_sync_unavailable_message">媒体同步在设置中被禁用。请同步并备份任何尚未同步的媒体，然后继续</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

@@ -18,11 +18,11 @@ package com.ichi2.anki.noteeditor
 
 import android.content.Context
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.View
 import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
+import com.ichi2.compat.CompatHelper.Companion.getSparseParcelableArrayCompat
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Models
 import com.ichi2.utils.KotlinCleanup
@@ -100,7 +100,6 @@ class FieldState private constructor(private val editor: NoteEditor) {
         return editor.fieldsFromSelectedNote
     }
 
-    @Suppress("deprecation") // get
     fun setInstanceState(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             return
@@ -113,7 +112,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
         if (customViewIds == null || viewHierarchyState == null) {
             return
         }
-        val views = viewHierarchyState["android:views"] as SparseArray<*>? ?: return
+        val views = viewHierarchyState.getSparseParcelableArrayCompat<View.BaseSavedState>("android:views") ?: return
         val important: MutableList<View.BaseSavedState> = ArrayList(customViewIds.size)
         for (i in customViewIds) {
             important.add(views[i!!] as View.BaseSavedState)

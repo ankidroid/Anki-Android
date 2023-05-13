@@ -150,6 +150,13 @@ TODO: Add a unit test
             android:title="@string/enable_whiteboard"
             app:useSimpleSummaryProvider="true"/>
         <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="@string/custom_button_toggle_stylus_key"
+            android:title="@string/enable_stylus"
+            app:useSimpleSummaryProvider="true"/>
+        <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"

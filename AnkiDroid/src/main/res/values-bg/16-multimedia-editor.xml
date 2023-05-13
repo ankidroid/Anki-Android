@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Добавяне на образ</string>
     <string name="multimedia_editor_popup_audio_clip">Добавяне на звуков откъс</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Добавяне на видео откъс</string>
     <string name="multimedia_editor_popup_audio">Звукозапис</string>
     <string name="multimedia_editor_popup_text">Разширен редактор</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
@@ -78,8 +78,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Галерия</string>
     <string name="multimedia_editor_image_field_editing_photo">Камера</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">Звук</string>
+    <string name="multimedia_editor_import_video">Видео</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Изтегляне</string>

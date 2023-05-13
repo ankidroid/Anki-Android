@@ -461,7 +461,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             // new
             var nlim = _deckNewLimitSingle(deck, false)
             var plim: Int? = null
-            if (!p.isNullOrEmpty()) {
+            if (p?.isNotEmpty() == true) {
                 val parentLims = lims[Decks.normalizeName(p)]
                 // 'temporary for diagnosis of bug #6383'
                 Assert.that(

@@ -47,23 +47,23 @@
     <!-- generic strings -->
     <string name="disabled">Изключен</string>
     <string name="enabled">Enabled</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s сек</string>
+    <string name="pref_summary_minutes">%s мин.</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Няма резултати</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Общи</string>
     <string name="pref_cat_studying" maxLength="41">Studying</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Преглед</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Синхрон</string>
     <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
     <string name="pref_cat_whiteboard" maxLength="41">Бяла дъска</string>
-    <string name="pref_cat_appearance" maxLength="41">Appearance</string>
+    <string name="pref_cat_appearance" maxLength="41">Външен вид</string>
     <string name="pref_cat_themes" maxLength="41">Теми</string>
     <string name="pref_cat_fonts" maxLength="41">Шрифтове</string>
     <string name="pref_cat_gestures" maxLength="41">Жестове</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls" maxLength="41">Контроли</string>
     <string name="pref_cat_advanced" maxLength="41">Разширени</string>
     <string name="pref_cat_workarounds" maxLength="41">Заобикаляне на проблеми</string>
     <string name="pref_cat_plugins" maxLength="41">Приставки</string>
@@ -129,14 +129,14 @@
     <string name="sync_account_summ_logged_out">Не сте влезнали в профила</string>
     <string name="automatic_sync_choice" maxLength="41">Автоматична синхронизация</string>
     <string name="automatic_sync_choice_summ">Автоматично синхронизиране пи стариране/изход от приложението, ако последното синхронизиране е от повече от 10        минути.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Винаги</string>
     <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_never">Никога</string>
     <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Дневна тема</string>
     <string name="night_theme" maxLength="41">Нощна тема</string>
     <string name="default_font" maxLength="41">Шрифт по подразбиране</string>
@@ -204,11 +204,11 @@
     <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">Third-party API apps</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging" maxLength="41">Дебъгване на HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="accessibility" maxLength="41">Достъпност</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
@@ -238,8 +238,8 @@
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">URL за синхрон</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
-    <string name="bluetooth">Bluetooth</string>
+    <string name="keyboard">Клавиатура</string>
+    <string name="bluetooth">Блутут</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
     <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
@@ -313,7 +313,7 @@
     <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
     <string name="deck_conf_reminders_time" maxLength="41">Remind at</string>
     <!-- analytics options -->
-    <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
+    <string name="analytics_dialog_title">Помогнете да направим AnkiDroid по-добро!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
     <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
@@ -323,11 +323,11 @@
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- About -->
-    <string name="open_changelog">Open Changelog</string>
+    <string name="open_changelog">Отваряне на дневника с промени</string>
     <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
+    <string name="contributors_title">Сътрудници</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">Лиценз</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
@@ -340,15 +340,15 @@
     <string name="card_side_selection_title">Изберете страна на картата</string>
     <string name="card_side_question">Въпрос</string>
     <string name="card_side_answer">Oтговор</string>
-    <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="card_side_both">Питане и отговор</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">П: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">О: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Премахване на \'%s\'</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41">Експериментално</string>
     <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
     <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
     <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
@@ -373,7 +373,7 @@
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Минути между автоматичните резервни копирания</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
@@ -382,11 +382,11 @@
          ####################################################################################### -->
     <string name="pref__manage_space__screen_title">Manage space</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Грешка</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d файл\n%2$s</item>
+        <item quantity="other">%1$d файла\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
@@ -398,15 +398,15 @@
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
     <string name="progress__deleting_backups">Deleting backups&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Изтриване на колекцията</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message">Are you sure you want to delete your collection, media, and backups?</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Изтриване на колекцията</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
+    <string name="progress__deleting_collection">Изтрива се колекцията&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Изтриване на всичко</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Изтриване на всичко</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
@@ -417,9 +417,9 @@
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Няма колекция</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Грешка</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Изчислява се...</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Колекцията не съществува.</string>
 </resources>

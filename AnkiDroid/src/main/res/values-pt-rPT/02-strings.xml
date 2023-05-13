@@ -61,6 +61,8 @@
     <string name="updated_version">Atualizada para a versão %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Activar quadro</string>
     <string name="disable_whiteboard">Desactivar quadro</string>
     <string name="show_whiteboard">Mostrar quadro</string>
@@ -305,7 +307,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
     <string name="anki_js_error_code">(Error Code: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
@@ -313,6 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -362,12 +365,13 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
     <!-- Scoped Storage Migration -->
@@ -376,8 +380,6 @@
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
@@ -401,8 +403,8 @@
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="deck_created">Deck created</string>
+    <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
@@ -417,4 +419,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

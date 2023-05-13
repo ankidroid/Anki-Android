@@ -80,7 +80,7 @@ class SharedDecksDownloadFragment : Fragment() {
     private var mDownloadCancelConfirmationDialog: MaterialDialog? = null
 
     companion object {
-        const val DOWNLOAD_PROGRESS_CHECK_DELAY = 100L
+        const val DOWNLOAD_PROGRESS_CHECK_DELAY = 1000L
 
         const val DOWNLOAD_STARTED_PROGRESS_PERCENTAGE = "0"
         const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
@@ -182,14 +182,17 @@ class SharedDecksDownloadFragment : Fragment() {
         override fun onReceive(context: Context, intent: Intent?) {
             Timber.i("Download might be complete now, verify and continue with import")
 
-            fun verifyDeckIsImportable() {
+            /**
+             * @return Whether the data in the received data is an importable deck
+             */
+            fun verifyDeckIsImportable(): Boolean {
                 if (mFileName == null) {
                     // Send ACRA report
                     CrashReportService.sendExceptionReport(
                         "File name is null",
                         "SharedDecksDownloadFragment::verifyDeckIsImportable"
                     )
-                    return
+                    return false
                 }
 
                 // Return if mDownloadId does not match with the ID of the completed download.
@@ -199,12 +202,7 @@ class SharedDecksDownloadFragment : Fragment() {
                             "Download completion related to some other download might have been received. " +
                             "Deck download might still be going on, when it completes then the method would be called again."
                     )
-                    // Send ACRA report
-                    CrashReportService.sendExceptionReport(
-                        "Download ID does not match with the ID of the completed download",
-                        "SharedDecksDownloadFragment::verifyDeckIsImportable"
-                    )
-                    return
+                    return false
                 }
 
                 stopDownloadProgressChecker()
@@ -213,7 +211,7 @@ class SharedDecksDownloadFragment : Fragment() {
                 if (!ImportUtils.isFileAValidDeck(mFileName!!)) {
                     Timber.i("File does not have 'apkg' or 'colpkg' extension, abort the deck opening task")
                     checkDownloadStatusAndUnregisterReceiver(isSuccessful = false, isInvalidDeckFile = true)
-                    return
+                    return false
                 }
 
                 val query = DownloadManager.Query()
@@ -225,7 +223,7 @@ class SharedDecksDownloadFragment : Fragment() {
                     if (!it.moveToFirst()) {
                         Timber.i("Empty cursor, cannot continue further with success check and deck import")
                         checkDownloadStatusAndUnregisterReceiver(isSuccessful = false)
-                        return
+                        return false
                     }
 
                     val columnIndex: Int = it.getColumnIndex(DownloadManager.COLUMN_STATUS)
@@ -235,16 +233,24 @@ class SharedDecksDownloadFragment : Fragment() {
                         Timber.i("Download could not be successful, update UI and unregister receiver")
                         Timber.d("Status code -> ${it.getInt(columnIndex)}")
                         checkDownloadStatusAndUnregisterReceiver(isSuccessful = false)
-                        return
+                        return false
                     }
                 }
+                return true
             }
 
-            try {
+            val verified = try {
                 verifyDeckIsImportable()
             } catch (exception: Exception) {
                 Timber.w(exception)
                 checkDownloadStatusAndUnregisterReceiver(isSuccessful = false)
+                return
+            }
+
+            if (!verified) {
+                // Could be a retryable fault (we received notification of another file)
+                // Otherwise, checkDownloadStatusAndUnregisterReceiver should have been called
+                // to update the UI
                 return
             }
 
@@ -287,9 +293,13 @@ class SharedDecksDownloadFragment : Fragment() {
     private val mDownloadProgressChecker: Runnable by lazy {
         object : Runnable {
             override fun run() {
+                if (!isVisible) {
+                    stopDownloadProgressChecker()
+                    return
+                }
                 checkDownloadProgress()
 
-                // Keep checking download progress at intervals of 0.1 second.
+                // Keep checking download progress at intervals of 1 second.
                 mHandler.postDelayed(this, DOWNLOAD_PROGRESS_CHECK_DELAY)
             }
         }
@@ -433,13 +443,13 @@ class SharedDecksDownloadFragment : Fragment() {
         mDownloadCancelConfirmationDialog = context?.let {
             MaterialDialog(it).show {
                 title(R.string.cancel_download_question_title)
-                positiveButton(R.string.dialog_cancel) {
+                positiveButton(R.string.dialog_yes) {
                     mDownloadManager.remove(mDownloadId)
                     unregisterReceiver()
                     isDownloadInProgress = false
                     activity?.onBackPressed()
                 }
-                negativeButton(R.string.dialog_continue) {
+                negativeButton(R.string.dialog_no) {
                     dismiss()
                 }
             }

@@ -45,13 +45,13 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">Cártaí le hathbhreithniú</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
         <item quantity="one">%d AnkiDroid card due</item>
         <item quantity="two">%d AnkiDroid cards due</item>
         <item quantity="few">%d AnkiDroid cards due</item>
         <item quantity="many">%d AnkiDroid cards due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="other">%d (g)cinn de chártaí le hathbhreithniú </item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid beag</string>
     <plurals name="widget_cards_due">

@@ -43,7 +43,7 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">ସର୍ଵଦା ରିପୋର୍ଟ କରନ୍ତୁ</string>
+    <string name="error_reporting_choice_always_report">ସର୍ଵଦା ରିପୋର୍ଟ କର</string>
     <string name="error_reporting_choice_never_report">କେବେ ବି ରିପୋର୍ଟ କରନ୍ତୁନି</string>
     <string name="error_reporting_choice_ask_user">ମୋତେ ପଚାରନ୍ତୁ</string>
     <!-- leech_action_labels -->
@@ -61,7 +61,7 @@
     <string name="cram_deck_conf_order_order_added">ଯୋଡ଼ାଯିବା କ୍ରମାନୁସାରେ</string>
     <string name="cram_deck_conf_order_order_due">ଧାର୍ଯ୍ୟ କ୍ରମାନୁସାରେ</string>
     <string name="cram_deck_conf_order_latest_added_first">ପ୍ରଥମେ ସର୍ବଶେଷରେ ଯୋଡ଼ା ଯାଇଥିବା</string>
-    <string name="cram_deck_conf_order_relative_overdueness">ଆପେକ୍ଷିକ ଅତ୍ୟଧିକତା</string>
+    <string name="cram_deck_conf_order_relative_overdueness">ଆପେକ୍ଷିକ ଅତିଦେୟତା</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">ଚଳିତ ତାସଖଣ୍ଡ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="add_to_deck_decide_by_note_type">ନୋଟ୍ ପ୍ରକାର ଅନୁଯାୟୀ ନିଷ୍ପତ୍ତି ନିଅନ୍ତୁ</string>
@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</string>
     <string name="override_font_always" comment="Option to always override font">ସର୍ଵଦା</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">ସିଷ୍ଟମ୍ କୁ ଅନୁସରଣ କରିବା</string>
+    <string name="theme_follow_system">ସିଷ୍ଟମ୍‌କୁ ଅନୁସରଣ କରିବା</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">ହାଲୁକା</string>
     <string name="day_theme_plain">ସାଧା</string>
@@ -97,18 +97,18 @@
     <string name="gesture_answer_better_recommended">ଉତ୍ତର ସୁପାରିଶିତ ଅପେକ୍ଷା ଭଲ</string>
     <string name="gesture_play">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
     <string name="gesture_abort_learning">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ</string>
-    <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
-    <string name="gesture_flag_orange">କମଳା ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
-    <string name="gesture_flag_green">ସବୁଜ ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
-    <string name="gesture_flag_blue">ନୀଳ ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
-    <string name="gesture_flag_pink">ଗୋଲାପୀ ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
-    <string name="gesture_flag_turquoise">ଫୀରୋଜା ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
-    <string name="gesture_flag_purple">ବାଇଗଣୀ ପତାକା ଟୋଗଲ୍ କରନ୍ତୁ</string>
+    <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_orange">କମଳା ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_green">ସବୁଜ ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_blue">ନୀଳ ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_pink">ଗୋଲାପୀ ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_turquoise">ଫୀରୋଜା ପତାକା ଟୋଗଲ୍ କରିବା</string>
+    <string name="gesture_flag_purple">ବାଇଗଣୀ ପତାକା ଟୋଗଲ୍ କରିବା</string>
     <string name="gesture_flag_remove">ପତାକା ହଟାନ୍ତୁ</string>
     <string name="gesture_page_up">ଉପର ପୃଷ୍ଠା</string>
     <string name="gesture_page_down">ତଳ ପୃଷ୍ଠା</string>
     <string name="gesture_abort_sync">ପଢ଼ିବା ବନ୍ଦ କରି ସିଙ୍କ୍ କରନ୍ତୁ</string>
-    <string name="gesture_toggle_whiteboard">ଧଳାପଟା ଟୋଗଲ୍ କରନ୍ତୁ</string>
+    <string name="gesture_toggle_whiteboard">ଧଳାପଟା ଟୋଗଲ୍ କରିବା</string>
     <string name="gesture_show_hint">ସଙ୍କେତ ଦେଖାଅ</string>
     <string name="gesture_show_all_hints">ସବୁ ସଙ୍କେତ ଦେଖାଅ</string>
     <string name="record_voice">ସ୍ୱର ରେକର୍ଡ କରନ୍ତୁ</string>

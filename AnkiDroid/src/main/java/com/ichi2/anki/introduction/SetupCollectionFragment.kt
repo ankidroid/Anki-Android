@@ -34,6 +34,7 @@
 package com.ichi2.anki.introduction
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.*
+import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
+import kotlinx.parcelize.Parcelize
 
 /**
  * Allows a user multiple choices for setting up the collection:
@@ -78,7 +81,8 @@ class SetupCollectionFragment : Fragment() {
         setFragmentResult(FRAGMENT_KEY, bundleOf(RESULT_KEY to option))
     }
 
-    enum class CollectionSetupOption {
+    @Parcelize
+    enum class CollectionSetupOption : Parcelable {
         /** Continues to the DeckPicker with a new collection */
         DeckPickerWithNewCollection,
 
@@ -91,10 +95,9 @@ class SetupCollectionFragment : Fragment() {
         const val RESULT_KEY = "result"
 
         /** Handles a result from a [SetupCollectionFragment] */
-        @Suppress("deprecation") // get
         fun FragmentActivity.handleCollectionSetupOption(handleResult: (CollectionSetupOption) -> Unit) {
             supportFragmentManager.setFragmentResultListener(FRAGMENT_KEY, this) { _, b ->
-                val item = b[RESULT_KEY] as CollectionSetupOption
+                val item = b.getParcelableCompat<CollectionSetupOption>(RESULT_KEY)!!
                 handleResult(item)
             }
         }

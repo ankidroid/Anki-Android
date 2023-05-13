@@ -391,11 +391,12 @@ open class SoundPlayerImpl : SoundPlayer {
     ) {
         Timber.d("Playing %s", soundPath)
         val soundUri = Uri.parse(soundPath)
+        val soundUriPath = soundUri.path.toString()
         mCurrentAudioUri = soundUri
 
         val context = AnkiDroidApp.instance.applicationContext
 
-        val isVideo = isVideo(soundPath)
+        val isVideo = isVideo(soundUriPath)
         if (isVideo && !hasVideoSurface && playVideoExternallyCallback?.invoke(soundPath, completionListener) == true) {
             return
         }

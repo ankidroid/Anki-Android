@@ -29,14 +29,14 @@
     <string name="front_field_name">Frente</string>
     <string name="back_field_name">Atrás</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Texto</string>
-    <string name="extra_field_name_new">Back Extra</string>
+    <string name="extra_field_name_new">Extra (verso)</string>
     <string name="field_to_ask_front_name">Adicionar o verso</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">Ficha: %d</string>
     <!--Note type-->
     <string name="basic_model_name">Básico</string>
     <string name="cloze_model_name">Cloze</string>
     <string name="basic_typing_model_name">Básico (digite a resposta)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
+    <string name="forward_reverse_model_name">Básico (e ficha invertida)</string>
     <string name="forward_optional_reverse_model_name">Básico (cartão invertido opcional)</string>
 </resources>

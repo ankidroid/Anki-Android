@@ -20,6 +20,7 @@ import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
+import android.os.Environment
 import androidx.annotation.CheckResult
 import androidx.core.content.edit
 import com.ichi2.anki.permissions.PermissionManager
@@ -27,6 +28,7 @@ import com.ichi2.anki.permissions.PermissionsRequestResults
 import com.ichi2.anki.permissions.finishActivityAndShowAppPermissionManagementScreen
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
+import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -143,7 +145,7 @@ sealed interface AnkiDroidFolder {
      * No permission dialog is required.
      * Google will not allow [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE], so this is default on the Play Store.
      */
-    object DeleteOnUninstall : AnkiDroidFolder
+    object AppPrivateFolder : AnkiDroidFolder
 }
 
 /**
@@ -152,12 +154,15 @@ sealed interface AnkiDroidFolder {
  * When impossible, we use the app-private directory.
  * See https://github.com/ankidroid/Anki-Android/issues/5304 for more context.
  */
-internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroidFolder {
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+internal fun selectAnkiDroidFolder(
+    canManageExternalStorage: Boolean,
+    currentFolderIsAccessibleAndLegacy: Boolean
+): AnkiDroidFolder {
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q || currentFolderIsAccessibleAndLegacy) {
         // match AnkiDroid behaviour before scoped storage - force the use of ~/AnkiDroid,
         // since it's fast & safe up to & including 'Q'
         // If a user upgrades their OS from Android 10 to 11 then storage speed is severely reduced
-        // and a user should use one of the below options to provide aster speeds
+        // and a user should use one of the below options to provide faster speeds
         return AnkiDroidFolder.PublicFolder(
             arrayOf(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -170,7 +175,7 @@ internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroid
     return if (canManageExternalStorage) {
         AnkiDroidFolder.PublicFolder(arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE))
     } else {
-        return AnkiDroidFolder.DeleteOnUninstall
+        return AnkiDroidFolder.AppPrivateFolder
     }
 }
 
@@ -189,13 +194,13 @@ internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroid
 @NeedsTest("Existing User: Changes Deck")
 class StartupStoragePermissionManager private constructor(
     private val deckPicker: DeckPicker,
-    uninstallPolicy: AnkiDroidFolder,
+    ankidroidFolder: AnkiDroidFolder,
     useCallbackIfActivityRecreated: Boolean
 ) {
     private var timesRequested: Int = 0
-    private val requiredPermissions = when (uninstallPolicy) {
-        is AnkiDroidFolder.DeleteOnUninstall -> noPermissionDialogRequired
-        is AnkiDroidFolder.PublicFolder -> uninstallPolicy.requiredPermissions
+    private val requiredPermissions = when (ankidroidFolder) {
+        is AnkiDroidFolder.AppPrivateFolder -> noPermissionDialogRequired
+        is AnkiDroidFolder.PublicFolder -> ankidroidFolder.requiredPermissions
     }
 
     /**
@@ -280,8 +285,12 @@ class StartupStoragePermissionManager private constructor(
         }
 
         fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
+            val canAccessLegacyStorage = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || Environment.isExternalStorageLegacy()
+            val currentFolderIsAccessibleAndLegacy = canAccessLegacyStorage && isLegacyStorage(context, setCollectionPath = false) == true
+
             return selectAnkiDroidFolder(
-                canManageExternalStorage = Permissions.canManageExternalStorage(context)
+                canManageExternalStorage = Permissions.canManageExternalStorage(context),
+                currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy
             )
         }
     }

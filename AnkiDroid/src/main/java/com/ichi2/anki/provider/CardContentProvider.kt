@@ -31,6 +31,7 @@ import com.ichi2.compat.CompatHelper.Companion.isMarshmallow
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.DB.Companion.safeEndInTransaction
 import com.ichi2.libanki.Models.AllowEmpty
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.EmptyMediaException
@@ -49,7 +50,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Supported URIs:
@@ -760,7 +760,7 @@ class CardContentProvider : ContentProvider() {
             sqldb.setTransactionSuccessful()
             result
         } finally {
-            DB.safeEndInTransaction(sqldb)
+            sqldb.safeEndInTransaction()
         }
     }
 
@@ -1110,7 +1110,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 db.database.setTransactionSuccessful()
             } finally {
-                DB.safeEndInTransaction(db)
+                db.safeEndInTransaction()
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "answerCard - RuntimeException on answering card")

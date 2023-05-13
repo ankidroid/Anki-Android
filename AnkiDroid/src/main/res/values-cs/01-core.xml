@@ -148,7 +148,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Abyste mohli pokračovat, prosím udělte AnkiDroid oprávnění k „úložišti“</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_all_files_access_permission">Abyste mohli pokračovat, prosím udělte AnkiDroidu oprávnění „přístup ke všem souborům“</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -259,9 +259,32 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nelze zapisovat do souboru %s nebo jej vytvořit</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Vaše data se přesouvají</string>
-    <string name="migration_successful_message">Přesun dat byl úspěšný</string>
-    <string name="migration_failed_message">Přesun dat se nezdařil</string>
-    <string name="migration_transferred_size">Přesunuto %1$.0f MB z %2$.0f MB</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">Data se přesouvají</string>
+    <string name="migration__calculating_transfer_size">Vypočítává se velikost přesunu&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Přesunuto %1$s z %2$s</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Přesun dat byl úspěšný</string>
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Vaše data byla úspěšně přesunuta.
+        AnkiDroid je opět plně funkční a můžete synchronizovat.
+        \n
+        \nVšimněte si, že vaše kolekce je nyní umístěna ve složce, která se odstraní, když odinstalujete aplikaci.
+        Ujistěte se prosím, že jsou vaše data v bezpečí, a to pravidelným zálohováním nebo exportováním záloh.
+    </string>
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Přesun dat se nezdařil</string>
+    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Přesun dat se nezdařil: %s</string>
+    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Přesun úložiště je pozastaven po selhání s chybou: %1$s
+        <br><br>
+        Prosím zkuste spustit přesun dat znovu.
+        Abyste vyřešili tento problém, může být třeba uvolnit nějaké misto na disku nebo znovu připojit chybějící média.
+        <br><br>
+        <a href="%2$s">Dozvědět se více a získat pomoc</a>
+    ]]></string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Nepřístupná kolekce</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Po odinstalování AnkiDroidu nelze otevřít vaši sbírku z důvodu změny zásad obchodu Play\n\nVaše data jsou v bezpečí a mohou být obnovena. Jsou umístěna v\n%s\n\nVyberte možnost níže, pokus je chcete obnovit:</string>
+    <string name="restore_data_from_ankiweb">Obnovit z AnkiWeb (doporučeno)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Obnovit přístup ke složce (doporučeno)</string>
+    <string name="install_non_play_store_ankidroid">Obnovit přístup ke složce (pro pokročilé)</string>
+    <string name="restore_data_from_backup">Obnovit ze zálohy .colpkg (pro pokročilé)</string>
+    <string name="create_new_collection">Vytvořit novou kolekci</string>
+    <string name="new_unsafe_collection">Nová kolekce bude odstraněna z vašeho telefonu, pokud odinstalujete AnkiDroid</string>
 </resources>

@@ -506,7 +506,7 @@ open class CardBrowser :
         mExportingDelegate = ActivityExportingDelegate(this) { col }
         super.onCreate(savedInstanceState)
         Timber.d("onCreate()")
-        if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this)) {
+        if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this) && !Permissions.isExternalStorageManagerCompat()) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
             showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
             displayDeckPickerForPermissionsDialog()
@@ -769,6 +769,13 @@ open class CardBrowser :
                 launchCatchingTask { deleteSelectedNote() }
                 return true
             }
+            KeyEvent.KEYCODE_F -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+F - Find notes")
+                    mSearchItem?.expandActionView()
+                    return true
+                }
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
@@ -1023,7 +1030,6 @@ open class CardBrowser :
         deckPicker.addCategory(Intent.CATEGORY_LAUNCHER)
         deckPicker.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.FADE)
-        finishActivityWithFade(this)
         finishActivityWithFade(this)
         this.setResult(RESULT_CANCELED)
     }

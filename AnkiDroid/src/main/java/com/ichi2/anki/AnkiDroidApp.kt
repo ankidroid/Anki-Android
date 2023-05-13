@@ -39,6 +39,7 @@ import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
+import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.*
@@ -57,6 +58,8 @@ open class AnkiDroidApp : Application() {
     /** An exception if the WebView subsystem fails to load  */
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
+
+    lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
 
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     /**
@@ -179,6 +182,8 @@ open class AnkiDroidApp : Application() {
 
         // Register for notifications
         mNotifications.observeForever { NotificationService.triggerNotificationFor(this) }
+
+        activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
     }
 
     fun scheduleNotification() {

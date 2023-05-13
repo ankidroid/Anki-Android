@@ -118,8 +118,8 @@
         <item quantity="one">کارت های وارد شده: %2$d</item>
         <item quantity="other">فایل های وارد شده: %1$d\nکل کارت های وارد شده: %2$d</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">حافظه</string>
+    <string name="storage_almost_full_title">اوکی</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">جای خالی وجود ندارد</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid %s فضای خالی لازم دارد تا ادامه دهد. لطفا کمی جا خالی کنید</string>
     <string name="restore_backup_title">بازیابی نسخه پشتیبان؟</string>
@@ -127,7 +127,7 @@
     <string name="restore_backup_choose_another">انتخاب دیگری</string>
     <string name="dialog_cancel">لغو</string>
     <string name="dialog_ok">تایید</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">تایید</string>
     <string name="dialog_no">خیر</string>
     <string name="dialog_yes">بله</string>
     <string name="dialog_continue">ادامه</string>
@@ -232,7 +232,7 @@
     <string name="help_item_support_develop_ankidroid">توسعه</string>
     <string name="help_item_support_rate_ankidroid">امتیازدهی</string>
     <string name="help_item_support_other_ankidroid">دیگر</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">ترجمه</string>
     <string name="help_title_community">انجمن</string>
     <string name="help_item_anki_forums">فوروم های Anki</string>
     <string name="help_item_discord">دیسکورد</string>

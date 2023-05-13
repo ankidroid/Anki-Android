@@ -38,6 +38,7 @@ import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.AnkiPackageExporter
 import com.ichi2.libanki.Collection
@@ -98,6 +99,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         }
     }
 
+    @NeedsTest("exporting deck with name containing apostrophe")
     override fun exportColAsApkgOrColpkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
         val exportPath = getExportFileName(path, "All Decks", includeSched)
 

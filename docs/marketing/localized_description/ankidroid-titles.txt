@@ -29,6 +29,7 @@ ko: AnkiDroid 플래시 카드
 ku: Naverokê Bixwaze
 lt: „AnkiDroid“ atminties kortelės
 mr: अंकीड्रोएड फ़्लँशकार्डस्
+ms: Kad Imbasan AnkiDroid
 nl: AnkiDroid flitskaarten
 pl: AnkiDroid – Fiszki
 ru: AnkiDroid: карточки для запоминания

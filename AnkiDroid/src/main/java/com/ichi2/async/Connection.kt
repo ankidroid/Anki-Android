@@ -24,6 +24,7 @@ import android.os.PowerManager
 import android.os.PowerManager.WakeLock
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.MediaSyncException
@@ -455,7 +456,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         } finally {
             Timber.i("Sync Finished - Closing Collection")
             // don't bump mod time unless we explicitly save
-            col?.close(false)
+            CollectionManager.closeCollectionBlocking(false)
             CollectionHelper.instance.unlockCollection()
         }
     }

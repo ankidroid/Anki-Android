@@ -66,6 +66,7 @@
     <string name="custom_button_suspend_key">customButtonSuspend</string>
     <string name="custom_button_delete_key">customButtonDelete</string>
     <string name="custom_button_enable_whiteboard_key">customButtonEnableWhiteboard</string>
+    <string name="custom_button_toggle_stylus_key">customButtonToggleStylus</string>
     <string name="custom_button_save_whiteboard_key">customButtonSaveWhiteboard</string>
     <string name="custom_button_whiteboard_pen_color_key">customButtonWhiteboardPenColor</string>
     <string name="custom_button_show_hide_whiteboard_key">customButtonShowHideWhiteboard</string>
