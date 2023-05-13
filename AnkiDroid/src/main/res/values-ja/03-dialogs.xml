@@ -60,9 +60,9 @@
     <string name="tts_no_tts">発声なし</string>
     <string name="unused_strings">\n\n(1) のファイルのリスト:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>
-    <string name="reposition_card_dialog_title">新規カードの表示順序を変更</string>
+    <string name="reposition_card_dialog_title">新規カードの導入順序を変更</string>
     <string name="reposition_card_dialog_message">開始位置</string>
-    <string name="reposition_card_not_new_error">新規カード以外は表示順序を変更できません。</string>
+    <string name="reposition_card_not_new_error">新規カード以外は順序を変更できません。</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="other">%d枚のカードの表示順序が変更されました</item>
     </plurals>

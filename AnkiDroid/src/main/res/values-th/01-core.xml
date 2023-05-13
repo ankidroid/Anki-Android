@@ -97,8 +97,8 @@
     <string name="move_all_to_deck">ย้ายทั้งหมดไปที่สำรับ</string>
     <string name="unbury">ยกเลิกการซ่อน</string>
     <string name="rename_deck">เปลี่ยนชื่อสำรับ</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="create_shortcut">สร้างทางลัด</string>
+    <string name="browse_cards">ค้นหาการ์ด</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">เพิ่ม</string>
     <string name="menu_add_note">เพิ่มโน้ต</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">เชื่อมบัญชีผู้ใช้</string>

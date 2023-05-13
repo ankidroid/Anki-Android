@@ -51,14 +51,14 @@
     <string name="CardEditorNoteDeck">Deck:</string>
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
-    <string name="CardEditorCards">Cards: %1$s</string>
-    <string name="tag_name">Tag name</string>
+    <string name="CardEditorCards">การ์ด: %1$s</string>
+    <string name="tag_name">ชื่อเเท็ก</string>
     <string name="add_new_filter_tags">Add/filter tags</string>
-    <string name="add_tag">Add tag</string>
+    <string name="add_tag">เพิ่มเเท็ก</string>
     <string name="check_all_tags">Check/uncheck all tags</string>
     <string name="filter_tags">Filter tags</string>
     <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="updated_version">อัปเดตเป็นเวอร์ชั่น %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
     <string name="enable_stylus">Enable stylus mode</string>
@@ -68,13 +68,13 @@
     <string name="show_whiteboard">Show whiteboard</string>
     <string name="hide_whiteboard">Hide whiteboard</string>
     <string name="clear_whiteboard">Clear whiteboard</string>
-    <string name="replay_audio">Replay audio</string>
+    <string name="replay_audio">เล่นเสียงอีกครั้ง</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
     <string name="corrupt_font">Corrupt font file %s</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom">หน่วยความจำเต็ม</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
@@ -82,16 +82,16 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
-        <item>Question</item>
+        <item>คำถาม</item>
         <item>Sort field</item>
     </string-array>
     <string-array name="browser_column2_headings">
-        <item>Answer</item>
-        <item>Card</item>
+        <item>คำตอบ</item>
+        <item>การ์ด</item>
         <item>Deck</item>
-        <item>Note</item>
+        <item>โน้ต</item>
         <item>Question</item>
-        <item>Tags</item>
+        <item>แท็ก</item>
         <item>Lapses</item>
         <item>Reviews</item>
         <item>Interval</item>
