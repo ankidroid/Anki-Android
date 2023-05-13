@@ -36,6 +36,7 @@ import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgres
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
+import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.getOrSetLong
 import com.ichi2.utils.FileUtil
@@ -262,18 +263,37 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
             builder.setContentText(getString(R.string.migration_successful_message))
         }
 
+        // A note on behavior of BigTextStyle.
+        // When the notification is collapsed, big text style is completely ignored,
+        // and the notification builder's title and text is shown, single-line each:
+        //
+        //   Content title, bold
+        //   Content text, ellipsized if long...
+        //
+        // When expanded, these are replaced by big content style's big content title
+        // and big text. If big content title is not present, notification's content title is used:
+        //
+        //   Big content title or notification's content title, bold
+        //   Big text, spanning several lines
+        //   if it is sufficiently long
         is MigrationService.Progress.Failure -> {
-            val url = getString(R.string.migration_failed_help_url)
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            val pendingIntent = CompatHelper.compat.getImmutableActivityIntent(this, 0, intent, 0)
+            val errorText = getUserFriendlyErrorText(progress.e)
+
             val copyDebugInfoIntent = IntentHandler
                 .copyStringToClipboardIntent(this, progress.e.stackTraceToString())
             val copyDebugInfoPendingIntent = CompatHelper.compat
                 .getImmutableActivityIntent(this, 1, copyDebugInfoIntent, 0)
 
+            val helpUrl = getString(R.string.migration_failed_help_url)
+            val viewHelpUrlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl))
+            val viewHelpUrlPendingIntent = CompatHelper.compat
+                .getImmutableActivityIntent(this, 0, viewHelpUrlIntent, 0)
+
+            builder.setContentTitle(getString(R.string.migration__failed__title))
+            builder.setContentText(errorText)
+            builder.setStyle(NotificationCompat.BigTextStyle().bigText(errorText))
             builder.addAction(R.drawable.ic_star_notify, getString(R.string.feedback_copy_debug), copyDebugInfoPendingIntent)
-            builder.setContentText(getString(R.string.migration__failed, progress.e))
-            builder.addAction(0, getString(R.string.help), pendingIntent)
+            builder.addAction(0, getString(R.string.help), viewHelpUrlPendingIntent)
         }
     }
 
