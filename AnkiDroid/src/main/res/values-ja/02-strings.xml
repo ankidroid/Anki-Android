@@ -138,7 +138,7 @@
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid カード</string>
     <string name="note_editor_copy_note">ノートをコピー</string>
-    <string name="card_editor_reposition_card">新規カードの表示順序を変更</string>
+    <string name="card_editor_reposition_card">導入順序を変更</string>
     <string name="card_editor_reset_card">学習履歴をリセット</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">スケジュールを変更</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
@@ -284,7 +284,7 @@
     <string name="white_board_image_save_failed">ホワイトボード画像の保存に失敗しました。 %s</string>
     <string name="white_board_image_saved">ホワイトボードの画像を \"%s\" に保存しました</string>
     <string name="title_whiteboard_pen_color">ホワイトボードペンの色を選択</string>
-    <string name="title_whiteboard_editor">ホワイトボードエディター</string>
+    <string name="title_whiteboard_editor">ホワイトボードエディタ</string>
     <string name="user_is_a_robot">自動テストが検出されました。人間による操作の場合は、AnkiDroidサポートにお問い合わせください。</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">このカードはサポートされない機能を使用しています。開発者 %1$sに連絡するか、Wikiで確認してください。 %2$s</string>
@@ -405,5 +405,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">タップしてストレージ移行を開始</string>
     <string name="media_sync_required_title">メディアの同期が必要です</string>
     <string name="media_sync_unavailable_message">メディアの同期が設定で無効になっています。続行する前に、まだ同期していないメディアを同期することによってバックアップをとってください</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
+    <string name="remember_sync_metered_checkbox_msg">今後確認しない (この警告は「同期」の設定で再度有効にできます)</string>
 </resources>

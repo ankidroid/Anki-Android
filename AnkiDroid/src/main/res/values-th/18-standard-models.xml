@@ -26,9 +26,9 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
+    <string name="front_field_name">ด้านหน้า</string>
+    <string name="back_field_name">ด้านหลัง</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">ข้อความ</string>
     <string name="extra_field_name_new">Back Extra</string>
     <string name="field_to_ask_front_name">Add Reverse</string>
     <!--Card type-->

@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଡାଟାବେସ୍ ଦୁର୍ନୀତିଗ୍ରସ୍ତ ଥିଲା। ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
     <string name="sync_overwrite_error">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଦ୍ୱାରା ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହ ଓଭର୍ ରାଇଟ୍ ହୋଇପାରିବ ନାହିଁ</string>
     <string name="sync_connection_error">ସଂଯୋଗ ସମୟ ସମାପ୍ତ ହୋଇଛି। ହୁଏତ ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ସମସ୍ୟାର ସମ୍ମୁଖୀନ ହେଉଛି, କିମ୍ବା ଆପଣଙ୍କର ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ବହୁତ ବଡ଼ ଫାଇଲ୍ ଅଛି।</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍‌ଟିକୁ ଆପଣଙ୍କ ଷ୍ଟୋରେଜ୍‌ରେ ସଞ୍ଚୟ କରିହେଲାନି। ହୁଏତ ଷ୍ଟୋରେଜ୍ କେଵଳ ପଠନଯୋଗ୍ୟ ଅଟେ କିମ୍ବା ସେଠାରେ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ।</string>
     <string name="sync_error_invalid_sync_server">ଵିକଶିତ ସେଟିଂରେ କଷ୍ଟମ୍ ସିଙ୍କ୍ ସର୍ଵର୍ ଅମାନ୍ୟ ଅଟେ (%s)। ଦୟାକରି ଏକ ଵୈଧ ସର୍ଵର୍ ପ୍ରଵେଶ କରନ୍ତୁ, ନହେଲେ ସେଟିଂଟିକୁ ଅକ୍ଷମ କରଦିଅନ୍ତୁ।</string>
     <string name="sync_deletions_message">ବିଲୋପଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରୁଛି&#8230;</string>
     <string name="sync_small_objects_message">ଛୋଟ ବସ୍ତୁଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରାହଉଛି&#8230;</string>
