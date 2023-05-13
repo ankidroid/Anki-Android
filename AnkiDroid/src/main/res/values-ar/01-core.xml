@@ -197,7 +197,6 @@
     <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>
     <string name="empty_cloze_warning">عدّل هذه الملحوظة وأضف بعض عبارات ملء الفراغات. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">مزامنة</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">تم إيقاف المزامنة مؤقتًا</string>
     <string name="button_upgrade" comment="Text of the sync button">انقل لمساحة التخزين السحابية</string>
     <string name="cancel_sync_confirm">هل تود إلغاء المزامنة؟</string>
     <string name="continue_sync">واصِل المزامنة</string>
@@ -275,6 +274,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s نسخة</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">يتعذر تعديل أو إنشاء ملف %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">ترحيل البيانات</string>
     <string name="migration__calculating_transfer_size">حسابة حجم التحويل&#8230;</string>
@@ -287,7 +288,6 @@
         الرجاء التأكد من أن بياناتك آمنة عن طريق مزامنة أو تصدير النسخ الاحتياطية بانتظام.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">فشلت عملية النقل</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">فشلت عملية النقل: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        تم إيقاف هجرة التخزين مؤقتاً بعد الفشل مع الخطأ: %1$s.
         <br><br>
         الرجاء محاولة إعادة تشغيل الهجرة.
@@ -295,6 +295,11 @@
         <br><br>
         <a href="%2$s">تعلم المزيد والحصول على المساعدة</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">فشل في الوصول إلى المجموعة</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">نحن غير قادرين على الوصول إلى مجموعتك بعد إلغاء تثبيت AnkiDroid بسبب تغيير في سياسة متجر \n Play\n البيانات الخاصة بك آمنة ويمكن استعادتها في\n%s\n\nحدد الخيار أدناه للاستعادة:</string>
     <string name="restore_data_from_ankiweb">استعادة من AnkiWeb (مستحسن)</string>

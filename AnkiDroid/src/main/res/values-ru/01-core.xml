@@ -187,7 +187,6 @@
     <string name="sd_card_not_mounted">Карта памяти не установлена</string>
     <string name="empty_cloze_warning">Правьте эту заметку и добавьте пропуски. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронизировать</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Синхронизация временно отключена</string>
     <string name="button_upgrade" comment="Text of the sync button">Перенос хранилища</string>
     <string name="cancel_sync_confirm">Отменить синхронизацию?</string>
     <string name="continue_sync">Продолжить синхронизацию</string>
@@ -259,6 +258,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">Копия %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Не удалось отредактировать или создать файл %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Перенос файлов</string>
     <string name="migration__calculating_transfer_size">Вычисление размеров файлов для переноса...</string>
@@ -271,7 +272,6 @@
         Пожалуйста, позаботьтесь о сохранности ваших данных и регулярно синхронизируйте или экспортируйте резервные копии.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Не удалось перенести файлы</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Не удалось перенести файлы: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Передача файлов приостановлена после сбоя с ошибкой: %1$s.
         <br><br>
         Пожалуйста, попробуйте перезапустить процесс передачи файлов.
@@ -279,6 +279,11 @@
         <br><br>
         <a href="%2$s">Узнать подробности и получить помощь</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недоступная коллекция</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Мы не можем получить доступ к вашей коллекции, так как AnkiDroid был удалён из-за изменения политики Play Store\n\nВаши данные в безопасности и могут быть восстановлены. Они расположены в\n%s\n\nВыберите опцию для восстановления:</string>
     <string name="restore_data_from_ankiweb">Восстановить из AnkiWeb (рекомендуемый)</string>

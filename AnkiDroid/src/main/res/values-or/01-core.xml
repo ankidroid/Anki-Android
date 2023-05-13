@@ -177,7 +177,6 @@
     <string name="sd_card_not_mounted">ଡିଵାଇସ୍ ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି କରାଯାଇ ନାହିଁ</string>
     <string name="empty_cloze_warning">ଏହି ନୋଟ୍ କୁ ସମ୍ପାଦନ କରି କିଛିଟା କ୍ଲୋଜ୍-ଵିଲୋପ ଯୋଗ କରନ୍ତୁ। (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ସୀଙ୍କ୍</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">ସୀଙ୍କ୍ ଅସ୍ଥାୟୀ ଭାଵେ ଅକ୍ଷମ ହୋଇଅଛି</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">ଆପଣ ସୀଙ୍କ୍‌ଟିକୁ ବାତିଲ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="continue_sync">ସୀଙ୍କ୍ ଜାରି ରଖନ୍ତୁ</string>
@@ -243,6 +242,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s ନକଲ</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">%s ଫାଇଲ୍‌ରେ ଲେଖିହେଉନି କିମ୍ୱା ସୃଷ୍ଟି କରିହେଉନି</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">ଡାଟା ସ୍ଥାନାନ୍ତରଣ ଚାଲିଛି</string>
     <string name="migration__calculating_transfer_size">ଅନ୍ତରଣ ଆକାର ଗଣନା ଚାଲିଛି&#8230;</string>
@@ -255,7 +256,6 @@
         ଦୟାକରି ନିୟମିତ ସୀଙ୍କ୍ କିମ୍ବା ବ୍ୟାକଅପ୍ ରପ୍ତାନି କରି ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କର ଡାଟା ସୁରକ୍ଷିତ ଅଟେ।
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">ସ୍ଥାନାନ୍ତରଣ ଵିଫଳ ହେଲା</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">ସ୍ଥାନାନ୍ତରଣ ଵିଫଳ ହେଲା: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        ଏଇ ତ୍ରୁଟି ସହିତ ଵିଫଳ ହେବା ପରେ ଷ୍ଟୋରେଜ୍ ସ୍ଥାନାନ୍ତରଣ ସ୍ଥଗିତ ହୋଇଛି: %1$s.
         <br><br>
         ଦୟାକରି ସ୍ଥାନାନ୍ତରଣକ ପୁନଃ-ଚଲାଇବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ।
@@ -263,6 +263,11 @@
         <br><br>
         <a href="%2$s">ଅଧିକ ଜାଣନ୍ତୁ ଏଵଂ ସାହାଯ୍ୟ ପାଆନ୍ତୁ</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">ଅଗମ୍ୟ ସଂଗ୍ରହ</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store ନୀତିରେ ପରିଵର୍ତ୍ତନ ହେତୁ AnkiDroid ଅନଇନଷ୍ଟଲ୍ ହେବା ପରେ ଆମେ ଆପଣଙ୍କ ସଂଗ୍ରହ ପାଖରେ ପହଞ୍ଚିବାରେ ଅସମର୍ଥ\n\nଆପଣଙ୍କ ଡାଟା ସୁରକ୍ଷିତ ଅଛି ଏଵଂ ପୁନରୁଦ୍ଧାର କରାଯାଇପାରିବ। ଯାହା ଏଠି ଗଚ୍ଛିତ ଅଛି\n%s\n\nପୁନରୁଦ୍ଧାର କରିବାକୁ ହେଲେ ତଳେ ଏକ ଵିକଳ୍ପ ବାଛନ୍ତୁ:</string>
     <string name="restore_data_from_ankiweb">AnkiWebରୁ ପୁନରୁଦ୍ଧାର କରିବା (ସୁପାରିଶିତ)</string>

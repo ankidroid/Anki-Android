@@ -187,7 +187,6 @@
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
     <string name="empty_cloze_warning">Upravte tuto poznámku a přidejte nějaké doplňovačky. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizovat</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronizace dočasně zakázána</string>
     <string name="button_upgrade" comment="Text of the sync button">Přesunout do vyhrazeného úložiště</string>
     <string name="cancel_sync_confirm">Přejete si přerušit synchronizaci?</string>
     <string name="continue_sync">Pokračovat v synchronizaci</string>
@@ -259,6 +258,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nelze zapisovat do souboru %s nebo jej vytvořit</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Data se přesouvají</string>
     <string name="migration__calculating_transfer_size">Vypočítává se velikost přesunu&#8230;</string>
@@ -271,7 +272,6 @@
         Ujistěte se prosím, že jsou vaše data v bezpečí, a to pravidelným zálohováním nebo exportováním záloh.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Přesun dat se nezdařil</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Přesun dat se nezdařil: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Přesun úložiště je pozastaven po selhání s chybou: %1$s
         <br><br>
         Prosím zkuste spustit přesun dat znovu.
@@ -279,6 +279,11 @@
         <br><br>
         <a href="%2$s">Dozvědět se více a získat pomoc</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Nepřístupná kolekce</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Po odinstalování AnkiDroidu nelze otevřít vaši sbírku z důvodu změny zásad obchodu Play\n\nVaše data jsou v bezpečí a mohou být obnovena. Jsou umístěna v\n%s\n\nVyberte možnost níže, pokus je chcete obnovit:</string>
     <string name="restore_data_from_ankiweb">Obnovit z AnkiWeb (doporučeno)</string>

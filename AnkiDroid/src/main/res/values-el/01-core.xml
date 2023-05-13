@@ -177,7 +177,6 @@
     <string name="sd_card_not_mounted">O χώρος αποθήκευσης συσκευής δεν έχει προσαρτηθεί</string>
     <string name="empty_cloze_warning">Επεξεργαστείτε αυτή τη σημείωση και προσθέστε μερικές κενές φράσεις. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Συγχρονισμός</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Συγχρονισμός προσωρινά απενεργοποιημένος</string>
     <string name="button_upgrade" comment="Text of the sync button">Μετεγκατάσταση σε εμβέλεια αποθήκευσης</string>
     <string name="cancel_sync_confirm">Θέλετε να ακυρώσετε τον συγχρονισμό;</string>
     <string name="continue_sync">Συνέχεια συγχρονισμού</string>
@@ -243,6 +242,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s αντίγραφο</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Αδυναμία γραφής σε ή δημιουργίας αρχείου %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Μετεγκατάσταση δεδομένων</string>
     <string name="migration__calculating_transfer_size">Υπολογισμός μεγέθους μεταφοράς&#8230;</string>
@@ -255,7 +256,6 @@
         Παρακαλώ βεβαιωθείτε ότι τα δεδομένα σας είναι ασφαλή συγχρονίζοντας τακτικώς ή εξάγοντας αντίγραφα ασφαλείας.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Αποτυχία μετεγκατάστασης</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Αποτυχία μετεγκατάστασης: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Η μετεγκατάσταση αποθήκευσης είναι σε παύση μετά την αποτυχία με το σφάλμα: %1$s.
         <br><br>
         Παρακαλούμε δοκιμάστε να εκτελέσετε ξανά τη μετάβαση.
@@ -263,6 +263,11 @@
         <br><br>
         <a href="%2$s">Μάθετε περισσότερα και λάβετε βοήθεια</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Μη προσβάσιμη συλλογή</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Δεν είναι δυνατή η πρόσβαση στη συλλογή σας μετά την απεγκατάσταση του AnkiDroid λόγω αλλαγής στην Πολιτική Play Store\n\nΤα δεδομένα σας είναι ασφαλή και μπορούν να αποκατασταθούν. Βρίσκονται στο\n%s\n\nΕπιλέξτε μια παρακάτω επιλογή για επαναφορά:</string>
     <string name="restore_data_from_ankiweb">Επαναφορά από AnkiWeb (συνιστάται)</string>
