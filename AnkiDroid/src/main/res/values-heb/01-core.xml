@@ -188,7 +188,6 @@
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
     <string name="empty_cloze_warning">ערוך את הרשומה והוסף השלם את החסר. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">סנכרון</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">סנכרון מושבת זמנית</string>
     <string name="button_upgrade" comment="Text of the sync button">העבר לאחסון הקפי</string>
     <string name="cancel_sync_confirm">לבטל את הסנכרון?</string>
     <string name="continue_sync">המשך סנכרון</string>
@@ -260,6 +259,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">עותק של %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">לא ניתן לכתוב או ליצור קובץ %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">מעביר נתונים </string>
     <string name="migration__calculating_transfer_size">מחשב את גודל ההעברה...</string>
@@ -272,7 +273,6 @@
         אנא ודא שהנתונים שלך בטוחים על ידי סנכרון או ייצוא גיבויים באופן קבוע.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">העברה נכשלה</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">העברה נכשלה: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        העברת האחסון מושהית לאחר כשל עם השגיאה: %1$s.
         <br><br>
         אנא נסה להפעיל מחדש את ההעברה.
@@ -280,6 +280,11 @@
         <br><br>
         <a href="%2$s">למידע נוסף וקבלת עזרה</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">אין גישה לאוסף</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">לא נוכל לגשת לאוסף שלך לאחר הסרת ההתקנה של AnkiDroid עקב שינוי במדיניות של חנות Play\n\nהנתונים שלך בטוחים וניתן לשחזר אותם. הוא ממוקם ב-\n%s\n\nבחר אפשרות למטה לשחזור:</string>
     <string name="restore_data_from_ankiweb">שחזור מ-AnkiWeb (מומלץ)</string>

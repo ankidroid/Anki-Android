@@ -177,7 +177,6 @@
     <string name="sd_card_not_mounted">Almacenamiento del dispositivo no montado</string>
     <string name="empty_cloze_warning">Editar esta nota y añadir algunos huecos (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizar</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sincronización desactivada temporalmente</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrar al almacenamiento de alcance.</string>
     <string name="cancel_sync_confirm">¿Desea cancelar la sincronización?</string>
     <string name="continue_sync">Continuar la sincronización</string>
@@ -243,6 +242,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copiar</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Migrando datos</string>
     <string name="migration__calculating_transfer_size">Calculando el tamaño de transferencia&#8230;</string>
@@ -255,7 +256,6 @@
         Por favor, mantenga sus datos seguros sincronizando o exportando copias de seguridad de forma regular.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migración fallida</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Migración fallida: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        La migración de almacenamiento se ha pausado después de fallar con el error: %1$s.
         <br><br>
         Por favor, intente ejecutar la migración nuevamente.
@@ -263,6 +263,11 @@
         <br><br>
         <a href="%2$s">Obtenga más información y ayuda</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Colección inaccesible</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">No podemos acceder a tu colección después de desinstalar AnkiDroid debido a un cambio en la política de Play Store\n\nTus datos están seguros y pueden ser restaurados. Están ubicados en\n%s\n\nSelecciona una opción debajo para restaurar:</string>
     <string name="restore_data_from_ankiweb">Restaurar desde AnkiWeb (recomendado)</string>

@@ -182,7 +182,6 @@
     <string name="sd_card_not_mounted">Cardul SD nu a fost găsit</string>
     <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizare</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sincronizare dezactivată temporar</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">Doriți să anulați sincronizarea?</string>
     <string name="continue_sync">Continuați sincronizarea</string>
@@ -251,6 +250,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">Copie %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nu se poate crea or scrie în fișierul %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Datele sunt migrate</string>
     <string name="migration__calculating_transfer_size">Se calculează dimensiunea transferului&#8230;</string>
@@ -263,7 +264,6 @@
         Te rugăm să te asiguri că datele tale sunt în siguranță prin sincronizarea regulată sau exportul de copii de rezervă.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migrare eșuată</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Migrare eșuată: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Migrarea stocării este întreruptă după ce a eșuat cu eroarea: %1$s.
         <br><br>
         Te rugăm să încerci să inițiezi din nou migrarea.
@@ -271,6 +271,11 @@
         <br><br>
         <a href="%2$s">Aflați mai multe și obțineți ajutor</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Colecție inaccesibilă</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Nu putem accesa colecția ta după ce AnkiDroid este dezinstalat din cauza unei schimbări în Politica Magazinului Play.\n\nDatele tale sunt sigure și pot fi restaurate. Se află la\n%s\n\nSelectați una din opțiunile de mai jos pentru a le restaura:</string>
     <string name="restore_data_from_ankiweb">Restaurează din AnkiWeb (recomandat)</string>

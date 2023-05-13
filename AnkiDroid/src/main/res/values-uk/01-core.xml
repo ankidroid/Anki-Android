@@ -187,7 +187,6 @@
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
     <string name="empty_cloze_warning">Будь ласка, відредагуйте цей запис та додайте пропуски. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронізувати</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Синхронізація тимчасово вимкнена</string>
     <string name="button_upgrade" comment="Text of the sync button">Перенесення до зашифрованого сховища (scoped storage)</string>
     <string name="cancel_sync_confirm">Ви хочете скасувати синхронізацію?</string>
     <string name="continue_sync">Продовжити синхронізацію</string>
@@ -259,6 +258,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">Копія %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Неможливо записати чи створити файл %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Міграція даних</string>
     <string name="migration__calculating_transfer_size">Розрахунок розміру передавання&#8230;</string>
@@ -271,7 +272,6 @@
         Будь ласка, переконайтеся, що ваші дані в безпеці, регулярно синхронізуючись або експортуючи резервні копії.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Не вдалось перенести дані</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Перенесення не вдалось: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Перенесення сховища призупинено після помилки: %1$s.
         <br><br>
         Будь ласка, спробуйте повторно запустити перенесення.
@@ -279,6 +279,11 @@
         <br><br>
         <a href="%2$s">Дізнайтеся більше та отримайте допомогу</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недоступна колекція</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Ми не можемо отримати доступ до вашої колекції після видалення AnkiDroid через зміну політики Play Store\n\nВаші дані в безпечному і можуть бути відновлені. Місцезнаходження даних \n%s\n\nВиберіть опцію нижче для відновлення:</string>
     <string name="restore_data_from_ankiweb">Відновити з AnkiWeb (рекомендовано)</string>

@@ -172,7 +172,6 @@
     <string name="sd_card_not_mounted">未挂载储存设备</string>
     <string name="empty_cloze_warning">编辑此笔记并添加一些填空。（%1$s）</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">暂时禁用了同步</string>
     <string name="button_upgrade" comment="Text of the sync button">迁移到作用域存储</string>
     <string name="cancel_sync_confirm">你想要取消同步吗？</string>
     <string name="continue_sync">继续同步</string>
@@ -235,6 +234,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s 的副本</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">无法写入或创建文件 %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">迁移数据</string>
     <string name="migration__calculating_transfer_size">正在计算传输大小&#8230;</string>
@@ -247,7 +248,6 @@
         请通过定期同步或导出备份，确保您的数据安全。
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">迁移失败</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">迁移失败：%s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        存储迁移因失败而暂停，遭遇错误：%1$s。
         <br><br>
         请尝试重新运行迁移。
@@ -255,6 +255,11 @@
         <br><br>
         <a href="%2$s">了解更多并获取帮助</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">无法访问牌组</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">卸载 AnkiDroid 后由于 Play Store 政策更改，我们无法访问您的牌组\n\n您的数据是安全的且可以被恢复。数据位于\n%s\n\n选择下方的一个选项进行还原：</string>
     <string name="restore_data_from_ankiweb">从 AnkiWeb 还原（推荐）</string>

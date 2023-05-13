@@ -182,7 +182,6 @@
     <string name="sd_card_not_mounted">Ierīces krātuve nav uzstādīta</string>
     <string name="empty_cloze_warning">Izmaini šo rakstu un pievieno kādu \"vārdu atņemi\". (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Saskaņošana</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Saskaņošana pagaidu izslēgta</string>
     <string name="button_upgrade" comment="Text of the sync button">Pārvietot uz ierobežoto krātuvi</string>
     <string name="cancel_sync_confirm">Vai pārtraukt saskaņošanu?</string>
     <string name="continue_sync">Turpināt</string>
@@ -251,6 +250,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kópija</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nespēj uzrakstīt vai izveidot dotni %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Pārnes datus</string>
     <string name="migration__calculating_transfer_size">Apsver pārnešanas izmērus&#8230;</string>
@@ -263,7 +264,6 @@
         Pārliecinies, ka tavi dati ir drošībā, saskaņojot vai izrakstot rezerves kópiju.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Pārnešana neizdevās</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">Pārnešana neizdevās: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Krātuves pārnešana apstādināta dēļ ķļūdas: %1$s.
         <br><br>
         Lūdzu, mēģiniet vēlkārt.
@@ -271,6 +271,11 @@
         <br><br>
         <a href="%2$s">Lasi par to vairāk šeit</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Nepieejams krājums</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Mēs nespējam piekļūt jūsu krājumam pēc  AnkiDroid atstādīšanas dēļ Play Store noteikumiem\n\nTavi dati ir drošībā un var tikt atgūti. Tie atrodas\n%s\n\nIzvēlies atgūšanas veidu:</string>
     <string name="restore_data_from_ankiweb">Atgūt no AnkiWeb (ieteikts)</string>

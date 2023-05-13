@@ -172,7 +172,6 @@
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
     <string name="empty_cloze_warning">ノートを編集して、穴埋め箇所を追加してください。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">同期が一時的に無効になっています</string>
     <string name="button_upgrade" comment="Text of the sync button">データ保存先を対象範囲別ストレージへ移行</string>
     <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
     <string name="continue_sync">同期を続行</string>
@@ -235,6 +234,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s コピー</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">データ移動</string>
     <string name="migration__calculating_transfer_size">移動するデータのサイズを計算中&#8230;</string>
@@ -247,7 +248,6 @@
         誤ってデータを失うことのないよう、コレクションの同期またはエクスポートを定期的に行うことを強くおすすめします。
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">移行に失敗しました</string>
-    <string name="migration__failed" comment="A short message shown in a notification when storage migration fails">移行に失敗しました: %s</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        ストレージ移行は次のエラーにより中断されています: %1$s
         <br><br>
         移行を再試行してください。
@@ -255,6 +255,11 @@
         <br><br>
         <a href="%2$s">詳細とサポート</a>
     ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid"> Playストアのプライバシーポリシーの変更により、AnkiDroidはアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>
     <string name="restore_data_from_ankiweb">AnkiWebから復元 (推奨)</string>
