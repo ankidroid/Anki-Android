@@ -1046,7 +1046,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             Timber.i("NoteEditor:: OK button pressed to confirm discard changes")
             closeNoteEditor()
         }
-            .show()
     }
 
     private fun closeNoteEditor(intent: Intent = Intent()) {
@@ -1434,7 +1433,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     @NeedsTest("13719: moving from a note type with more fields to one with fewer fields")
     private fun saveToggleStickyMap() {
-        for ((key) in mToggleStickyText) {
+        for ((key) in mToggleStickyText.toMap()) {
             // handle fields for different note type with different size
             if (key < mEditFields!!.size) {
                 mToggleStickyText[key] = mEditFields!![key]?.fieldText

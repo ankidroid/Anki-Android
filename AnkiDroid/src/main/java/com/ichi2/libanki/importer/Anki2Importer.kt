@@ -128,8 +128,8 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             throw err
         } finally {
             // endTransaction throws about invalid transaction even when you check first!
-            DB.safeEndInTransaction(dst.db)
-            DB.safeEndInTransaction(dst.media.db!!)
+            dst.db.safeEndInTransaction()
+            dst.media.db!!.safeEndInTransaction()
         }
         Timber.i("Performing vacuum/analyze")
         try {
@@ -318,7 +318,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                 dst.db.database.setTransactionSuccessful()
             }
         } finally {
-            DB.safeEndInTransaction(dst.db)
+            dst.db.safeEndInTransaction()
         }
         dst.updateFieldCache(dirty)
         dst.tags.registerNotes(dirty)
@@ -646,7 +646,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                 dst.db.database.setTransactionSuccessful()
             }
         } finally {
-            DB.safeEndInTransaction(dst.db)
+            dst.db.safeEndInTransaction()
         }
     }
 

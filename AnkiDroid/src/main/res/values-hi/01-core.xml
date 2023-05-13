@@ -138,7 +138,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">जारी रखने के लिए कृपया AnkiDroid को \'स्टोरेज\' की अनुमति दें</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_all_files_access_permission">जारी रखने के लिए कृपया AnkiDroid को \'सभी फाइलों तक पहुंच\' अनुमति की अनुमति दें</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -177,7 +177,7 @@
     <string name="sd_card_not_mounted">डिवाइस संग्रह माउंट नहीं</string>
     <string name="empty_cloze_warning">इस नोट को संपादित करें और कुछ cloze विलोपन जोड़ें। (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">सिंक</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
+    <string name="button_sync_disabled" comment="Text of the sync button when disabled">सिंक अस्थाई रूप से अक्षम</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
     <string name="cancel_sync_confirm">क्या आप सिंक्रनाइज़ेशन रद्द करना चाहते हैं?</string>
     <string name="continue_sync">सिंक जारी रखें</string>

@@ -315,6 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossibile caricare il mazzo «%s»</string>
     <string name="search_decks">Cerca mazzi</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Errore Fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid si basa sulla WebView di Sistema che non è disponibile. Questo può verificarsi se il sistema sta installando aggiornamenti. Sei pregato di riprovare tra qualche minuto.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -417,4 +418,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tocca per avviare la migrazione</string>
     <string name="media_sync_required_title">Sincronizzazione del media richiesta</string>
     <string name="media_sync_unavailable_message">La sincronizzazione media è disabilitata nelle impostazioni. Si prega di sincronizzare ed eseguire il backup di qualsiasi supporto che non è stato sincronizzato prima di continuare</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

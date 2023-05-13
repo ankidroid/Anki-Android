@@ -315,6 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Bigo sa pagload ng deck na \'%s\'</string>
     <string name="search_decks">Maghanap ng mga deck</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Malubhang Kamalian</string>
     <string name="ankidroid_init_failed_webview">Umaasa ang AnkiDroid sa Pansistemang WebView kung saan ito ay hindi magamit. Nangyayari ito kung nag-iinstall ng update ang sistema. Mangyaring subukan muli makaraan ang ilang minuto.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -417,4 +418,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">I-tap nang masimulang ang paglipat ng storage</string>
     <string name="media_sync_required_title">Kinakailangan ang Media Sync</string>
     <string name="media_sync_unavailable_message">Naka-disable ang media sync sa mga setting. Mangyaring i-sync at i-backup ang anumang midya na hindi ba nasi-sync bago magpatuloy.</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

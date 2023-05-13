@@ -264,7 +264,7 @@
         <a href="%2$s">Mehr erfahren und Hilfe erhalten</a>
     ]]></string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Unzugängliche Sammlung</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Wir können, aufgrund einer Änderung der Play Store-Richtlinie, nachdem AnkiDroid deinstalliert wurde, auf Ihre Sammlung nicht zugreifen.\n\nIhre Daten sind sicher und können wiederhergestellt werden. Es befindet sich unter\n%s\n\nWählen Sie eine Option unten, um sie wiederherzustellen:</string>
     <string name="restore_data_from_ankiweb">von AnkiWeb wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid_recommended">Ordnerzugriff wiederherstellen (empfohlen)</string>
     <string name="install_non_play_store_ankidroid">Ordnerzugriff wiederherstellen (erfahren)</string>

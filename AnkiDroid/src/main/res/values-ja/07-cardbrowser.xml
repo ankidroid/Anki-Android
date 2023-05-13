@@ -51,24 +51,24 @@
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="other">%d枚のノート</item>
     </plurals>
-    <string name="card_browser_all_decks">全てのデッキ</string>
+    <string name="card_browser_all_decks">すべてのデッキ</string>
     <string name="card_browser_delete_card">ノートを削除</string>
-    <string name="card_browser_suspend_card">カードを保留</string>
+    <string name="card_browser_suspend_card">カードを休止</string>
     <string name="card_browser_change_deck">デッキを変更</string>
-    <string name="card_browser_unsuspend_card">カードの保留を解除</string>
+    <string name="card_browser_unsuspend_card">カードの休止を解除</string>
     <string name="card_browser_mark_card">ノートにマーク</string>
     <string name="card_browser_unmark_card">ノートのマークを解除</string>
     <string name="delete_card_title">ノートの削除</string>
-    <string name="changed_deck_message">%sにカードを移動しました</string>
+    <string name="changed_deck_message">%s にカードを移動しました</string>
     <string name="card_browser_show_marked">マーク付きカードを抽出</string>
-    <string name="card_browser_show_suspended">保留カードを抽出</string>
+    <string name="card_browser_show_suspended">休止中カードを抽出</string>
     <string name="card_browser_search_by_tag">タグやカードの状態による抽出</string>
-    <string name="card_browser_search_by_flag">フラグで絞り込み</string>
+    <string name="card_browser_search_by_flag">フラグで抽出</string>
     <string name="card_browser_list_my_searches">マイ検索条件</string>
-    <string name="card_browser_list_my_searches_save">検索条件を保存</string>
-    <string name="card_browser_list_my_searches_title">保存済みの検索条件を選択する</string>
-    <string name="card_browser_list_my_searches_new_name">現在の検索条件に名前をつける</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">検索条件に名前をつけてください</string>
+    <string name="card_browser_list_my_searches_save">現在の検索条件を保存</string>
+    <string name="card_browser_list_my_searches_title">保存済み検索条件を選択</string>
+    <string name="card_browser_list_my_searches_new_name">現在の検索条件に付ける名前</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">名前なしで検索条件を保存することはできません</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">同じ名前が既に存在します</string>
     <string name="card_browser_list_my_searches_remove_content">「%1$s」を削除しますか？</string>
     <string name="card_browser_change_display_order">表示順を変更</string>
@@ -88,8 +88,8 @@
         <item>回答回数順</item>
         <item>忘却回数順</item>
     </string-array>
-    <string name="card_browser_select_all">全て選択</string>
-    <string name="card_browser_select_none">選択を全て解除</string>
+    <string name="card_browser_select_all">すべて選択</string>
+    <string name="card_browser_select_none">選択をすべて解除</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(新規)</string>
     <string name="card_browser_due_filtered_card">(フィルター)</string>
     <string name="card_browser_interval_learning_card">(習得中)</string>
@@ -107,7 +107,7 @@
         <item quantity="other">%d枚のカードを削除しました</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">作成日</string>
+    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">追加日</string>
     <string name="card_info_first_review">最初の学習日</string>
     <string name="card_info_latest_review">直近の学習日</string>
     <string name="card_info_interval">間隔</string>

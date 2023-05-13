@@ -74,7 +74,7 @@
         <item quantity="other">残り約%1$d日と%2$d時間</item>
     </plurals>
     <string name="no_cards_placeholder_title">まだカードがありません</string>
-    <string name="no_cards_placeholder_description">＋アイコンから\nカードを追加してください</string>
+    <string name="no_cards_placeholder_description">画面右下の「＋」ボタンから\nカードを追加してください</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
@@ -94,20 +94,20 @@
     <string name="undo_action_change_deck_multi">デッキを変更</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">描線を一つ取り消す</string>
     <string name="move_all_to_deck">移動先デッキを選択</string>
-    <string name="unbury">延期を解除</string>
-    <string name="rename_deck">このデッキの名前を変更</string>
+    <string name="unbury">パスを取り消す</string>
+    <string name="rename_deck">デッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
     <string name="browse_cards">カードをブラウザで表示</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">追加</string>
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
     <string name="menu_dismiss_note">非表示 / 削除</string>
-    <string name="menu_bury_card">カードを延期</string>
-    <string name="menu_bury_note">ノートを延期</string>
-    <string name="menu_suspend_card">カードを保留</string>
-    <string name="menu_suspend_note">ノートを保留</string>
-    <string name="menu_bury">延期</string>
-    <string name="menu_suspend">保留</string>
+    <string name="menu_bury_card">カードを今日はパス</string>
+    <string name="menu_bury_note">ノートを今日はパス</string>
+    <string name="menu_suspend_card">カードを休止</string>
+    <string name="menu_suspend_note">ノートを休止</string>
+    <string name="menu_bury">今日はパス</string>
+    <string name="menu_suspend">休止</string>
     <string name="menu_delete_note">ノートを削除</string>
     <string name="menu_flag">フラグ</string>
     <string name="menu_flag_card">カードにフラグを付ける</string>
@@ -120,7 +120,7 @@
     <string name="menu_flag_card_six">ターコイズフラグ</string>
     <string name="menu_flag_card_seven">紫フラグ</string>
     <string name="menu_edit_tags">タグを編集</string>
-    <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらも全て削除されます。\n%s</string>
+    <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらもすべて削除されます。\n%s</string>
     <string name="menu_search">%1$s で検索</string>
     <string name="menu_mark_note">ノートにマークを付ける</string>
     <string name="menu_unmark_note">ノートのマークをはずす</string>
@@ -147,7 +147,7 @@
     <string name="time_quantity_hours">%d時間</string>
     <string name="time_quantity_days">%d日</string>
     <string name="time_quantity_days_hours">%1$d日と%2$d時間</string>
-    <string name="time_quantity_months">%.1fヵ月</string>
+    <string name="time_quantity_months">%.1fか月</string>
     <string name="time_quantity_years">%.1f年</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">フィルターデッキを再構築しています...</string>
@@ -164,13 +164,13 @@
     <string name="studyoptions_empty">このデッキにはカードが入っていません。「＋」ボタンをタップしてカードを追加してください。</string>
     <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
     <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
-    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題を全て達成しました！</string>
+    <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題をすべて達成しました！</string>
     <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。</string>
     <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。（上限を上げると短期的に学習の負担が増えますのでご注意ください。）</string>
     <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
-    <string name="empty_cloze_warning">ノートを編集して「穴埋め問題」を追加してください。(%1$s)</string>
+    <string name="empty_cloze_warning">ノートを編集して、穴埋め箇所を追加してください。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
     <string name="button_sync_disabled" comment="Text of the sync button when disabled">同期が一時的に無効になっています</string>
     <string name="button_upgrade" comment="Text of the sync button">データ保存先を対象範囲別ストレージへ移行</string>
@@ -180,14 +180,14 @@
     <string name="sync_cancel_message">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
     <string name="export">エクスポート</string>
     <string name="export_collection">エクスポート（コレクション）</string>
-    <string name="export_deck">このデッキをエクスポート</string>
+    <string name="export_deck">デッキをエクスポート</string>
     <string name="nothing">なし</string>
     <!-- Card template editor -->
     <string name="title_activity_template_editor">カードタイプ</string>
     <string name="card_template_editor_front">表面のテンプレート</string>
     <string name="card_template_editor_back">裏面のテンプレート</string>
     <string name="card_template_editor_styling">書式</string>
-    <string name="card_template_editor_menu_card_browser_appearance">カードブラウザー用の表示設定</string>
+    <string name="card_template_editor_menu_card_browser_appearance">カードブラウザ用の表示設定</string>
     <string name="card_template_editor_deck_override">デッキ選択を上書き</string>
     <string name="card_template_editor_insert_field">フィールドを挿入</string>
     <string name="card_template_editor_select_field">挿入するフィールドを選択してください</string>
@@ -199,11 +199,11 @@
         <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
     </plurals>
     <string name="invalid_template">カードを作成できませんでした</string>
-    <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１つ以上のノートが削除されます。先に新しいカードタイプを追加してください。</string>
+    <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１枚または複数枚のノートが削除されます。先に新しいカードタイプを追加し保存してください。</string>
     <string name="card_template_editor_save_error">カードテンプレートの変更を保存できません: %s</string>
     <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>
     <!-- Card Browser Appearance -->
-    <string name="card_template_browser_appearance_title">ブラウザー用の表示設定</string>
+    <string name="card_template_browser_appearance_title">ブラウザ表示設定</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">カード情報</string>
@@ -222,7 +222,7 @@
     <string name="wrong_tag_closed">「{{/%1$s}}」と記入されていますが、記入されている開始タグの対となる終了タグは「{{/%2$s}}」です</string>
     <string name="filter_error">フィルター %s にエラーがあります</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">コレクションを統合できません。\nどちらのコレクションを維持しますか？</string>
+    <string name="sync_conflict_message_new">コレクションを統合できません。\nどちらのコレクションを保持しますか？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">AnkiDroid内のコレクションのデータを、AnkiWeb上のコレクションのデータで上書きしますか？</string>
@@ -230,7 +230,7 @@
     <string name="sync_conflict_title_new">保持するコレクションを選択</string>
     <string name="sync_conflict_replace_title">コレクションを上書き</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="other">%1$d cards (0 due)</item>
+        <item quantity="other">%1$d枚 (現在の課題なし)</item>
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s コピー</string>
     <!-- Generic errors -->
@@ -239,7 +239,7 @@
     <string name="migration__migrating_data">データ移動</string>
     <string name="migration__calculating_transfer_size">移動するデータのサイズを計算中&#8230;</string>
     <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">%2$s 中 %1$s 移動済み</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">移行に成功しました</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">ストレージ移行が完了しました</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        データの移動が完了しました。
         同期などAnkiDroidの全機能が使用できます。
         \n
@@ -262,5 +262,5 @@
     <string name="install_non_play_store_ankidroid">フォルダへのアクセスを回復 (高度)</string>
     <string name="restore_data_from_backup">.colpkg バックアップから復元 (高度)</string>
     <string name="create_new_collection">新しいコレクションを作成</string>
-    <string name="new_unsafe_collection">AnkiDroidをアンインストールすると、新しいコレクションは端末から削除されます。</string>
+    <string name="new_unsafe_collection">新たに作成するコレクションは、AnkiDroidをアンインストールするとこの端末から削除されます。</string>
 </resources>

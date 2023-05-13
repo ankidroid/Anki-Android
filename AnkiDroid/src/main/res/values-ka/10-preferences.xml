@@ -221,7 +221,7 @@
     <!-- Statistics settings -->
     <string name="stats_default_deck_title" maxLength="41">ნაგულისხმევი დასტა სტატისტიკის გახსნისას</string>
     <string name="stats_default_deck_current">უახლესად მონიშნული დასტის სტატისტიკის ჩვენება</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
+    <string name="stats_default_deck_all">ყველა დასტის სტატისტიკის ჩვენება</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">გაღრმავებული სტატისტიკა</string>
     <string name="enable_advanced_statistics_title" maxLength="41">გაღრმავებული სტატისტიკის ჩართვა</string>
@@ -294,11 +294,11 @@
     <string name="deck_conf_reset_message">დაყენდეს მიმდინარე პარამეტრების ჯგუფი ნაგულისხმევ მონაცემებზე?</string>
     <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">კონფიგურაციის დამატება</string>
     <string name="deck_conf_add_summ">Create a copy of the current options group</string>
-    <string name="deck_conf_remove_message">Remove current options group?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Set for all subdecks</string>
+    <string name="deck_conf_remove_message">ამოიშალოს მიმდინარე პარამეტრების ჯგუფი?</string>
+    <string name="deck_conf_set_subdecks" maxLength="41">ყველა ქვედასტაზე დაყენება</string>
     <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s subdeck will use this group</item>
-        <item quantity="other">%s subdecks will use this group</item>
+        <item quantity="one">ამ ჯგუფს გამოიყენებს %s ქვედასტა</item>
+        <item quantity="other">ამ ჯგუფს გამოიყენებს %s ქვედასტა</item>
     </plurals>
     <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
     <string name="pref_browser_editor_font" maxLength="41">შრიფტი ბარათების საძიებოსა და რედაქტორისთვის</string>

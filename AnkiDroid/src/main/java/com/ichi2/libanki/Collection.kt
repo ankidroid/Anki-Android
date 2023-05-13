@@ -419,15 +419,13 @@ open class Collection(
      * Disconnect from DB.
      */
     @Synchronized
-    @KotlinCleanup("remove/rename val db")
     fun close(save: Boolean = true, downgrade: Boolean = false, forFullSync: Boolean = false) {
         if (!dbClosed) {
             try {
-                val db = db.database
                 if (save) {
-                    this.db.executeInTransaction { this.save() }
+                    db.executeInTransaction { this.save() }
                 } else {
-                    DB.safeEndInTransaction(db)
+                    db.safeEndInTransaction()
                 }
             } catch (e: RuntimeException) {
                 Timber.w(e)

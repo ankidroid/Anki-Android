@@ -212,7 +212,7 @@
         <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
         <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
     </plurals>
-    <string name="invalid_template">A card could not be generated</string>
+    <string name="invalid_template">Cartonașul nu a putut fi generat</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
@@ -220,21 +220,21 @@
     <string name="card_template_browser_appearance_title">Browser appearance</string>
     <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Informații despre cartonaș</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Citește și scrie în baza de date a AnkiDroid</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Cartonaș Anki</string>
     <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s are o problemă:<br/>%2$s</string>
     <string name="more_information">Mai multe informații</string>
     <string name="no_field">Găsit \'{{%1$s}}\', dar nu există nici un câmp numit \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
+    <string name="closed_tag_not_open">Am găsit \'{{/%1$s}}\', dar lipsește \'{{#%1$s}}\' sau \'{{^%1$s}}\'.</string>
     <string name="missing_closing_bracket">Lipsește \'}}\' în \'%s\'.</string>
     <string name="open_tag_not_closed">Lipsește \'{{%s}}\'.</string>
     <string name="wrong_tag_closed">S-a găsit \'{{/%1$s}}\', dar era așteptat \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="filter_error">Eroare în filtrul %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Colecțiile nu pot fi combinate.\nCe colecție doriți să păstrați?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>

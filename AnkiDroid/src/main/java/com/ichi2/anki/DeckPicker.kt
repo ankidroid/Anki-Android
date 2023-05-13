@@ -267,9 +267,9 @@ open class DeckPicker :
     private val mDeckExpanderClickListener = View.OnClickListener { view: View ->
         launchCatchingTask { toggleDeckExpand(view.tag as Long) }
     }
-    private val mDeckClickListener = View.OnClickListener { v: View -> launchCatchingTask { onDeckClick(v, DeckSelectionType.DEFAULT) } }
-    private val mCountsClickListener = View.OnClickListener { v: View -> launchCatchingTask { onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) } }
-    private suspend fun onDeckClick(v: View, selectionType: DeckSelectionType) {
+    private val mDeckClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.DEFAULT) }
+    private val mCountsClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) }
+    private fun onDeckClick(v: View, selectionType: DeckSelectionType) {
         val deckId = v.tag as Long
         Timber.i("DeckPicker:: Selected deck with id %d", deckId)
         var collectionIsOpen = false
@@ -323,10 +323,6 @@ open class DeckPicker :
         super.onCreate(savedInstanceState)
 
         startupStoragePermissionManager = StartupStoragePermissionManager.register(this, useCallbackIfActivityRecreated = false)
-
-        asyncMessageContent = resources.getString(R.string.import_interrupted)
-        asyncMessageTitle = resources.getString(R.string.import_title)
-
         // handle the first load: display the app introduction
         if (!hasShownAppIntro()) {
             val appIntro = Intent(this, IntroductionActivity::class.java)
@@ -1035,7 +1031,8 @@ open class DeckPicker :
         // (currently 10 minutes), and is not under a metered connection (if not allowed by preference)
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
         val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
-        val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
+        val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
+        val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
         val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
         val isMigratingStorage = userMigrationIsInProgress(this)
         if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection && !isMigratingStorage) {
@@ -1091,7 +1088,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                launchCatchingTask { handleDeckSelection(col.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS) }
+                handleDeckSelection(col.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
             }
             else -> {}
         }
@@ -1590,6 +1587,9 @@ open class DeckPicker :
                 message(R.string.metered_sync_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
+                checkBoxPrompt(R.string.remember_sync_metered_checkbox_msg) { isCheckboxChecked ->
+                    preferences.edit { putBoolean(getString(R.string.metered_sync_key), isCheckboxChecked) }
+                }
             }
         } else {
             doSync()
@@ -1735,7 +1735,7 @@ open class DeckPicker :
         }
     }
 
-    private suspend fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
+    private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
         // Clear the undo history when selecting a new deck
         if (col.decks.selected() != did) {
             col.clearUndo()
@@ -1830,7 +1830,7 @@ open class DeckPicker :
      *
      * @param did The deck ID of the deck to select.
      */
-    private suspend fun scrollDecklistToDeck(did: DeckId) {
+    private fun scrollDecklistToDeck(did: DeckId) {
         val position = mDeckListAdapter.findDeckPosition(did)
         mRecyclerViewLayoutManager.scrollToPositionWithOffset(position, recyclerView.height / 2)
     }
@@ -2386,12 +2386,6 @@ open class DeckPicker :
 
         private const val ONE_DAY_IN_SECONDS: Int = 60 * 60 * 24
 
-        /** Import Error variable so to access the resource directory without
-         * causing a crash
-         */
-        lateinit var asyncMessageContent: String
-        lateinit var asyncMessageTitle: String
-
         /**
          * Result codes from other activities
          */
@@ -2421,8 +2415,8 @@ open class DeckPicker :
         const val PICK_CSV_FILE = 14
 
         // For automatic syncing
-        // 10 minutes in milliseconds.
-        const val AUTOMATIC_SYNC_MIN_INTERVAL: Long = 600000
+        // 10 minutes in milliseconds..
+        private const val AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES: Long = 10
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
 
         /**

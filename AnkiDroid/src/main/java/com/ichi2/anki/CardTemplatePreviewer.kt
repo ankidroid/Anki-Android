@@ -354,7 +354,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             val template = col.findTemplates(n)[index]
             return col.getNewLinkedCard(PreviewerCard(col, n), n, template, 1, 0L, false)
         } catch (e: Exception) {
-            Timber.e(e, "getDummyCard() unable to create card")
+            // Calling code handles null return, so we can log this for developer's interest but move on
+            Timber.d(e, "getDummyCard() unable to create card")
         }
         return null
     }
