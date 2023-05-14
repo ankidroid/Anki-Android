@@ -23,10 +23,12 @@ import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.*
-import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
+import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.requireLong
@@ -93,6 +95,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
     private fun handleActionOnLongClick(selectedOption: DeckPickerContextMenuOption) {
+        val activity = requireActivity() as DeckPicker
         when (selectedOption) {
             DeckPickerContextMenuOption.DELETE_DECK -> {
                 Timber.i("Delete deck selected")
@@ -100,67 +103,66 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 /* we can only disable the shortcut for now as it is restricted by Google https://issuetracker.google.com/issues/68949561?pli=1#comment4
                  * if fixed or given free hand to delete the shortcut with the help of API update this method and use the new one
                  */
-                (activity as DeckPicker).disableDeckAndChildrenShortcuts(deckId)
+                activity.disableDeckAndChildrenShortcuts(deckId)
 
-                (activity as DeckPicker).confirmDeckDeletion(deckId)
+                activity.confirmDeckDeletion(deckId)
             }
             DeckPickerContextMenuOption.DECK_OPTIONS -> {
                 Timber.i("Open deck options selected")
-                (activity as DeckPicker).showContextMenuDeckOptions(deckId)
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.showContextMenuDeckOptions(deckId)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY -> {
                 Timber.i("Custom study option selected")
-                val ankiActivity = requireActivity() as AnkiActivity
-                val d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog::class.java)
+                val d = FragmentFactoryUtils.instantiate(activity, CustomStudyDialog::class.java)
                 d.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, deckId)
-                ankiActivity.showDialogFragment(d)
+                activity.showDialogFragment(d)
             }
             DeckPickerContextMenuOption.CREATE_SHORTCUT -> {
                 Timber.i("Create icon for a deck")
-                (activity as DeckPicker).createIcon(requireContext(), deckId)
+                activity.createIcon(requireContext(), deckId)
             }
             DeckPickerContextMenuOption.RENAME_DECK -> {
                 Timber.i("Rename deck selected")
-                (activity as DeckPicker).renameDeckDialog(deckId)
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.renameDeckDialog(deckId)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.EXPORT_DECK -> {
                 Timber.i("Export deck selected")
-                (activity as DeckPicker).exportDeck(deckId)
+                activity.exportDeck(deckId)
             }
             DeckPickerContextMenuOption.UNBURY -> {
                 Timber.i("Unbury deck selected")
                 collection.sched.unburyCardsForDeck(deckId)
-                (activity as StudyOptionsListener).onRequireDeckListUpdate()
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.onRequireDeckListUpdate()
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD -> {
                 Timber.i("Rebuild deck selected")
-                launchCatchingTask { (activity as DeckPicker).rebuildFiltered(deckId) }
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                launchCatchingTask { activity.rebuildFiltered(deckId) }
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY -> {
                 Timber.i("Empty deck selected")
-                (activity as DeckPicker).emptyFiltered(deckId)
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.emptyFiltered(deckId)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CREATE_SUBDECK -> {
                 Timber.i("Create Subdeck selected")
-                (activity as DeckPicker).createSubDeckDialog(deckId)
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.createSubDeckDialog(deckId)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
                 collection.decks.select(deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
-                (activity as DeckPicker).startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.ADD_CARD -> {
                 Timber.i("Add selected")
                 collection.decks.select(deckId)
-                (activity as DeckPicker).addNote()
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.addNote()
+                activity.dismissAllDialogFragments()
             }
         }
     }
