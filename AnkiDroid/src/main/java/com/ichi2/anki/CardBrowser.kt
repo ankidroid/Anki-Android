@@ -72,7 +72,6 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper.Companion.setTextCursorDrawableCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.SortOrder.NoOrdering
 import com.ichi2.libanki.SortOrder.UseCollectionOrdering
@@ -946,15 +945,6 @@ open class CardBrowser :
                 }
             })
             mSearchView = mSearchItem!!.actionView as CardBrowserSearchView
-
-            try {
-                mSearchView!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)?.let {
-                    it.setTextCursorDrawableCompat(R.drawable.cursor)
-                }
-            } catch (e: Exception) {
-                Timber.e("SearchBar custom view error : $e")
-                CrashReportService.sendExceptionReport(e, "CardBrowser")
-            }
 
             mSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {

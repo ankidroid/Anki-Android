@@ -186,4 +186,11 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="android:navigationBarColor">@color/white</item>
         <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
+
+    <!-- Search view theme. Only used to set the color of the text view cursor.
+     This also overrides `colorControlActivated` to undo another override in the light theme. -->
+    <style name="SearchViewTheme">
+        <item name="colorAccent">@color/white</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
+    </style>
 </resources>

@@ -24,8 +24,6 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Size
-import android.widget.EditText
-import androidx.annotation.DrawableRes
 import com.ichi2.libanki.utils.TimeManager
 import java.io.File
 
@@ -43,10 +41,6 @@ open class CompatV29 : CompatV26(), Compat {
             // E/MediaMetadataRetrieverJNI: getEmbeddedPicture: Call to getEmbeddedPicture failed
             false
         }
-    }
-
-    override fun setTextCursorDrawable(editText: EditText, @DrawableRes drawableRes: Int) {
-        editText.setTextCursorDrawable(drawableRes)
     }
 
     override fun saveImage(context: Context, bitmap: Bitmap, baseFileName: String, extension: String, format: Bitmap.CompressFormat, quality: Int): Uri {

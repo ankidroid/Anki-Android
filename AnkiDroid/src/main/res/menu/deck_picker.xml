@@ -6,7 +6,7 @@
             android:id="@+id/deck_picker_action_filter"
             android:icon="@drawable/ic_search_white"
             android:title="@string/search_decks"
-            ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
+            ankidroid:actionViewClass="com.ichi2.ui.CardBrowserSearchView"
             ankidroid:showAsAction="always|collapseActionView"/>
         <item
             android:id="@+id/action_migration_progress"

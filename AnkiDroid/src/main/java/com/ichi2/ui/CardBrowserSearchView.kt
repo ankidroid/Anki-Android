@@ -18,12 +18,15 @@ package com.ichi2.ui
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.ContextThemeWrapper
 import androidx.appcompat.widget.SearchView
+import com.ichi2.anki.R
 
-class CardBrowserSearchView : SearchView {
-    constructor(context: Context) : super(context) {}
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+class CardBrowserSearchView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyle: Int = androidx.appcompat.R.attr.searchViewStyle
+) : SearchView(ContextThemeWrapper(context, R.style.SearchViewTheme), attrs, defStyle) {
 
     /** Whether an action to set text should be ignored  */
     private var mIgnoreValueChange = false
