@@ -167,13 +167,6 @@ open class CollectionHelper {
     }
 
     /**
-     * @return Whether or not [Collection] and its child database are open.
-     */
-    fun colIsOpen(): Boolean {
-        return CollectionManager.isOpenUnsafe()
-    }
-
-    /**
      * This currently stores either:
      * An error message stating the reason that a storage check must be performed
      * OR
@@ -586,3 +579,8 @@ open class CollectionHelper {
         }
     }
 }
+
+/**
+ * @return Whether or not [Collection] and its child database are open.
+ */
+fun colIsOpen() = CollectionManager.isOpenUnsafe()

@@ -152,10 +152,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     override val col: Collection
         get() = CollectionHelper.instance.getCol(this)!!
 
-    fun colIsOpen(): Boolean {
-        return CollectionHelper.instance.colIsOpen()
-    }
-
     /**
      * Whether animations should not be displayed
      * This is used to improve the UX for e-ink devices
@@ -616,7 +612,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         )
 
     fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
-        if (CollectionHelper.instance.colIsOpen()) {
+        if (colIsOpen()) {
             launchCatchingTask {
                 Timber.d("saveCollectionInBackground: start")
                 withCol {

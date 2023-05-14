@@ -152,7 +152,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         mControllersForCleanup.clear()
 
         try {
-            if (CollectionHelper.instance.colIsOpen()) {
+            if (colIsOpen()) {
                 CollectionHelper.instance.getCol(targetContext)!!.debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections

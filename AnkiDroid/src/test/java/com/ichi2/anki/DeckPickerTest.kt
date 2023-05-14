@@ -391,7 +391,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should now be open",
-                CollectionHelper.instance.colIsOpen()
+                colIsOpen()
             )
             assertThat(
                 CollectionType.SCHEMA_V_16.isCollection(
@@ -424,7 +424,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should not be open",
-                !CollectionHelper.instance.colIsOpen()
+                !colIsOpen()
             )
             assertThat(
                 "An error dialog should be displayed",
@@ -448,7 +448,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should not be open",
-                !CollectionHelper.instance.colIsOpen()
+                !colIsOpen()
             )
             assertThat(
                 "An error dialog should be displayed",
@@ -529,7 +529,7 @@ class DeckPickerTest : RobolectricTest() {
         // ensure collection not loaded yet
         assertThat(
             "collection should not be loaded",
-            CollectionHelper.instance.colIsOpen(),
+            colIsOpen(),
             equalTo(false)
         )
     }

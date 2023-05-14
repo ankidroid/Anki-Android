@@ -27,6 +27,7 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.colIsOpen
 import com.ichi2.anki.exception.MediaSyncException
 import com.ichi2.anki.exception.UnknownHttpResponseException
 import com.ichi2.async.Connection.ConflictResolution.*
@@ -253,7 +254,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         // Use safe version that catches exceptions so that full sync is still possible
         val col = CollectionHelper.instance.getColSafe(AnkiDroidApp.instance)
         var colCorruptFullSync = false
-        if (!CollectionHelper.instance.colIsOpen() || !ok) {
+        if (!colIsOpen() || !ok) {
             colCorruptFullSync = if (FULL_DOWNLOAD == conflictResolution) {
                 true
             } else {

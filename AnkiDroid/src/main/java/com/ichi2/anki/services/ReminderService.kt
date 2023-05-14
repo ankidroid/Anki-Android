@@ -26,6 +26,7 @@ import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
+import com.ichi2.anki.colIsOpen
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
@@ -69,7 +70,7 @@ class ReminderService : BroadcastReceiver() {
             Timber.w(t, "onReceive - unexpectedly unable to get collection. Returning.")
             return
         }
-        if (null == col || !colHelper.colIsOpen()) {
+        if (null == col || !colIsOpen()) {
             Timber.w("onReceive - null or closed collection, unable to process reminders")
             return
         }

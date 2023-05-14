@@ -16,8 +16,8 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.colIsOpen
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
@@ -51,9 +51,9 @@ class CollectionTest : RobolectricTest() {
     @Test
     fun beforeUploadClosesCollection() {
         val col = col
-        assertThat("db should be open", CollectionHelper.instance.colIsOpen(), equalTo(true))
+        assertThat("db should be open", colIsOpen(), equalTo(true))
         col.beforeUpload()
-        assertThat("db should be closed", CollectionHelper.instance.colIsOpen(), equalTo(false))
+        assertThat("db should be closed", colIsOpen(), equalTo(false))
     }
 
     /*******************
