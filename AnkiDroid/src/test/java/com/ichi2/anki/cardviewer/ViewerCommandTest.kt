@@ -39,8 +39,8 @@ class ViewerCommandTest {
                 "binding_TOGGLE_FLAG_ORANGE, binding_TOGGLE_FLAG_GREEN, binding_TOGGLE_FLAG_BLUE, " +
                 "binding_TOGGLE_FLAG_PINK, binding_TOGGLE_FLAG_TURQUOISE, binding_TOGGLE_FLAG_PURPLE, " +
                 "binding_UNSET_FLAG, binding_PAGE_UP, binding_PAGE_DOWN, binding_TAG, binding_CARD_INFO, binding_ABORT_AND_SYNC, " +
-                "binding_RECORD_VOICE, binding_REPLAY_VOICE, binding_TOGGLE_WHITEBOARD, binding_SHOW_HINT, " +
-                "binding_SHOW_ALL_HINTS, binding_ADD_NOTE, binding_CLEAR_WHITEBOARD, binding_CHANGE_WHITEBOARD_PEN_COLOR",
+                "binding_RECORD_VOICE, binding_REPLAY_VOICE, binding_TOGGLE_WHITEBOARD, binding_CLEAR_WHITEBOARD, " +
+                "binding_CHANGE_WHITEBOARD_PEN_COLOR, binding_SHOW_HINT, binding_SHOW_ALL_HINTS, binding_ADD_NOTE",
             names
         )
     }
