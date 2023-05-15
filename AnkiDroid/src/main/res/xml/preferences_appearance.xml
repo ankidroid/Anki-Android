@@ -22,8 +22,7 @@
 
 <!-- Fonts & Style Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
-    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
         android:title="@string/pref_cat_appearance"
         android:key="@string/pref_appearance_screen_key">
@@ -34,7 +33,7 @@
             android:entryValues="@array/app_theme_values"
             android:key="@string/app_theme_key"
             android:title="@string/app_theme"
-            app1:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/day_theme_labels"
@@ -42,7 +41,7 @@
             android:key="@string/day_theme_key"
             android:shouldDisableView="true"
             android:title="@string/day_theme"
-            app1:useSimpleSummaryProvider="true"
+            app:useSimpleSummaryProvider="true"
             search:ignore="true"/>
         <ListPreference
             android:defaultValue="3"
@@ -51,7 +50,7 @@
             android:key="@string/night_theme_key"
             android:shouldDisableView="true"
             android:title="@string/night_theme"
-            app1:useSimpleSummaryProvider="true"
+            app:useSimpleSummaryProvider="true"
             search:ignore="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
@@ -75,7 +74,7 @@
             android:entries="@array/full_screen_mode_labels"
             android:entryValues="@array/full_screen_mode_values"
             android:title="@string/fullscreen_review"
-            app1:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true"/>
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/center_vertically_preference"
@@ -91,7 +90,7 @@
             android:entryValues="@array/answer_buttons_position"
             android:key="@string/answer_buttons_position_preference"
             android:title="@string/answer_buttons_position"
-            app1:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true"/>
         <SwitchPreference
             android:key="@string/show_topbar_preference"
             android:defaultValue="true"
@@ -113,19 +112,19 @@
             android:key="@string/pref_default_font_key"
             android:shouldDisableView="true"
             android:title="@string/default_font"
-            app1:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="0"
             android:key="@string/pref_font_applicability_key"
             android:entries="@array/override_font_labels"
             android:entryValues="@array/override_font_values"
             android:title="@string/override_font"
-            app1:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true"/>
         <ListPreference
             android:defaultValue="@string/empty_string"
             android:key="@string/pref_browser_and_editor_font_key"
             android:title="@string/pref_browser_editor_font"
-            app1:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/card_browser">
         <SwitchPreference
