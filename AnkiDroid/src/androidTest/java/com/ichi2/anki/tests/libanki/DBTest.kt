@@ -60,10 +60,10 @@ class DBTest : InstrumentedTest() {
         // Scribble in it
         val b = ByteArray(1024)
         Random().nextBytes(b)
-        val illFatedDBFileStream = FileOutputStream(illFatedDBFile)
-        illFatedDBFileStream.write(b, 0, 1024)
-        illFatedDBFileStream.flush()
-        illFatedDBFileStream.close()
+        FileOutputStream(illFatedDBFile).use { illFatedDBFileStream ->
+            illFatedDBFileStream.write(b, 0, 1024)
+            illFatedDBFileStream.flush()
+        }
 
         // Try to do something
         try {

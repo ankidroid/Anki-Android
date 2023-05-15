@@ -30,6 +30,7 @@ import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.Time.Companion.utcOffset
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.getFreeDiskSpace
+import okio.use
 import timber.log.Timber
 import java.io.BufferedOutputStream
 import java.io.File
@@ -153,11 +154,11 @@ open class BackupManager {
         val colPath = colFile.absolutePath
         // Save collection file as zip archive
         return try {
-            val zos = ZipOutputStream(BufferedOutputStream(FileOutputStream(backupFile)))
-            val ze = ZipEntry(CollectionHelper.COLLECTION_FILENAME)
-            zos.putNextEntry(ze)
-            CompatHelper.compat.copyFile(colPath, zos)
-            zos.close()
+            ZipOutputStream(BufferedOutputStream(FileOutputStream(backupFile))).use { zos ->
+                val ze = ZipEntry(CollectionHelper.COLLECTION_FILENAME)
+                zos.putNextEntry(ze)
+                CompatHelper.compat.copyFile(colPath, zos)
+            }
             // Delete old backup files if needed
             val prefs = AnkiDroidApp.instance.baseContext.sharedPrefs()
             val backupLimits = BackupLimits.newBuilder()

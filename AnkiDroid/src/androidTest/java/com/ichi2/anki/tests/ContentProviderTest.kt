@@ -330,34 +330,29 @@ class ContentProviderTest : InstrumentedTest() {
     fun testQueryDirectSqlQuery() {
         // search for correct mid
         val cr = contentResolver
-        var cursor = cr.query(
+        cr.query(
             FlashCardsContract.Note.CONTENT_URI_V2,
             null,
             "mid=$mModelId",
             null,
             null
-        )
-        assertNotNull(cursor)
-        try {
+        ).use { cursor ->
+            assertNotNull(cursor)
             assertEquals(
                 "Check number of results",
                 mCreatedNotes.size,
                 cursor.count
             )
-        } finally {
-            cursor.close()
         }
         // search for bogus mid
-        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=0", null, null)
-        assertNotNull(cursor)
-        try {
+        cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=0", null, null).use { cursor ->
+            assertNotNull(cursor)
             assertEquals("Check number of results", 0, cursor.count)
-        } finally {
-            cursor.close()
         }
         // check usage of selection args
-        cursor = cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=?", arrayOf("0"), null)
-        assertNotNull(cursor)
+        cr.query(FlashCardsContract.Note.CONTENT_URI_V2, null, "mid=?", arrayOf("0"), null).use { cursor ->
+            assertNotNull(cursor)
+        }
     }
 
     /**
@@ -384,9 +379,11 @@ class ContentProviderTest : InstrumentedTest() {
                     val noteId =
                         it.getString(it.getColumnIndex(FlashCardsContract.Note._ID))
                     val noteUri = Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, noteId)
-                    val singleNoteCursor = cr.query(noteUri, projection, null, null, null)
-                    assertNotNull("Check that there is a valid cursor for detail data", singleNoteCursor)
-                    try {
+                    cr.query(noteUri, projection, null, null, null).use { singleNoteCursor ->
+                        assertNotNull(
+                            "Check that there is a valid cursor for detail data",
+                            singleNoteCursor
+                        )
                         assertEquals(
                             "Check that there is exactly one result",
                             1,
@@ -409,8 +406,6 @@ class ContentProviderTest : InstrumentedTest() {
                                 singleNoteCursor.getColumnName(j)
                             )
                         }
-                    } finally {
-                        singleNoteCursor!!.close()
                     }
                 }
             }
@@ -426,15 +421,14 @@ class ContentProviderTest : InstrumentedTest() {
         // Query all available notes
         for (i in FlashCardsContract.Note.DEFAULT_PROJECTION.indices) {
             val projection = removeFromProjection(FlashCardsContract.Note.DEFAULT_PROJECTION, i)
-            val allNotesCursor = cr.query(
+            cr.query(
                 FlashCardsContract.Note.CONTENT_URI,
                 projection,
                 "tag:$TEST_TAG",
                 null,
                 null
-            )
-            assertNotNull("Check that there is a valid cursor", allNotesCursor)
-            try {
+            ).use { allNotesCursor ->
+                assertNotNull("Check that there is a valid cursor", allNotesCursor)
                 assertEquals(
                     "Check number of results",
                     mCreatedNotes.size,
@@ -453,8 +447,6 @@ class ContentProviderTest : InstrumentedTest() {
                         allNotesCursor.getColumnName(j)
                     )
                 }
-            } finally {
-                allNotesCursor!!.close()
             }
         }
     }
@@ -696,12 +688,11 @@ class ContentProviderTest : InstrumentedTest() {
                     ),
                     "cards"
                 )
-                val cardsCursor = cr.query(cardsUri, null, null, null, null)
-                assertNotNull(
-                    "Check that there is a valid cursor after query for cards",
-                    cardsCursor
-                )
-                try {
+                cr.query(cardsUri, null, null, null, null).use { cardsCursor ->
+                    assertNotNull(
+                        "Check that there is a valid cursor after query for cards",
+                        cardsCursor
+                    )
                     assertThat(
                         "Check that there is at least one result for cards",
                         cardsCursor!!.count,
@@ -733,8 +724,6 @@ class ContentProviderTest : InstrumentedTest() {
                             movedCardCur.getLong(movedCardCur.getColumnIndex(FlashCardsContract.Card.DECK_ID))
                         assertEquals("Make sure that card is in new deck", targetDid, did)
                     }
-                } finally {
-                    cardsCursor!!.close()
                 }
             }
         }

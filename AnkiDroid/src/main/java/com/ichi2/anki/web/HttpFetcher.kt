@@ -86,35 +86,34 @@ object HttpFetcher {
 
     fun fetchThroughHttp(address: String?, encoding: String? = "utf-8"): String {
         Timber.d("fetching %s", address)
-        var response: Response? = null
         return try {
             val requestBuilder = Request.Builder()
             requestBuilder.url(address!!).get()
             val httpGet: Request = requestBuilder.build()
             val client: OkHttpClient = getOkHttpBuilder(true).build()
-            response = client.newCall(httpGet).execute()
-            if (response.code != 200) {
-                Timber.d("Response code was %s, returning failure", response.code)
-                return "FAILED"
-            }
-            val reader = BufferedReader(
-                InputStreamReader(
-                    response.body!!.byteStream(),
-                    Charset.forName(encoding)
+            client.newCall(httpGet).execute().use { response ->
+                if (response.code != 200) {
+                    Timber.d("Response code was %s, returning failure", response.code)
+                    return "FAILED"
+                }
+                val reader = BufferedReader(
+                    InputStreamReader(
+                        response.body!!.byteStream(),
+                        Charset.forName(encoding)
+                    )
                 )
-            )
-            val stringBuilder = StringBuilder()
-            var line: String?
-            @KotlinCleanup("it's strange")
-            while (reader.readLine().also { line = it } != null) {
-                stringBuilder.append(line)
+
+                val stringBuilder = StringBuilder()
+                var line: String?
+                @KotlinCleanup("it's strange")
+                while (reader.readLine().also { line = it } != null) {
+                    stringBuilder.append(line)
+                }
+                stringBuilder.toString()
             }
-            stringBuilder.toString()
         } catch (e: Exception) {
             Timber.d(e, "Failed with an exception")
             "FAILED with exception: " + e.message
-        } finally {
-            response?.body?.close()
         }
     }
 
@@ -142,9 +141,9 @@ object HttpFetcher {
             val client: OkHttpClient = getOkHttpBuilder(true).build()
             response = client.newCall(request).execute()
             val file = File.createTempFile(prefix!!, extension, context.cacheDir)
-            val inputStream = response.body!!.byteStream()
-            CompatHelper.compat.copyFile(inputStream, file.canonicalPath)
-            inputStream.close()
+            response.body!!.byteStream().use { inputStream ->
+                CompatHelper.compat.copyFile(inputStream, file.canonicalPath)
+            }
             file.absolutePath
         } catch (e: Exception) {
             Timber.w(e)

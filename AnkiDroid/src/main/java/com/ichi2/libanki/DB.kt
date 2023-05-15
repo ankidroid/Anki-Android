@@ -104,16 +104,12 @@ class DB(db: SupportSQLiteDatabase) {
      * @return The integer result of the query.
      */
     fun queryScalar(@Language("SQL") query: String, vararg selectionArgs: Any): Int {
-        var cursor: Cursor? = null
         val scalar: Int
-        try {
-            cursor = database.query(query, selectionArgs)
+        database.query(query, selectionArgs).use { cursor ->
             if (!cursor.moveToNext()) {
                 return 0
             }
             scalar = cursor.getInt(0)
-        } finally {
-            cursor?.close()
         }
         return scalar
     }

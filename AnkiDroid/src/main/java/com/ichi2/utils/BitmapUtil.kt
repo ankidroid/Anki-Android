@@ -43,12 +43,8 @@ object BitmapUtil {
             // Decode image size
             val o = BitmapFactory.Options()
             o.inJustDecodeBounds = true
-            var fis: FileInputStream? = null
-            try {
-                fis = FileInputStream(theFile)
+            FileInputStream(theFile).use { fis ->
                 BitmapFactory.decodeStream(fis, null, o)
-            } finally {
-                fis?.close()
             }
             var scale = 1
             if (o.outHeight > imageMaxSize || o.outWidth > imageMaxSize) {
@@ -63,11 +59,8 @@ object BitmapUtil {
             // Decode with inSampleSize
             val o2 = BitmapFactory.Options()
             o2.inSampleSize = scale
-            try {
-                fis = FileInputStream(theFile)
+            FileInputStream(theFile).use { fis ->
                 bmp = BitmapFactory.decodeStream(fis, null, o2)
-            } finally {
-                fis!!.close() // don't need a null check, as we reuse the variable.
             }
         } catch (e: Exception) {
             // #5513 - We don't know the reason for the crash, let's find out.

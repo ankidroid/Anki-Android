@@ -19,7 +19,6 @@ import android.app.Activity
 import android.content.ClipData
 import android.content.Intent
 import android.net.Uri
-import android.os.ParcelFileDescriptor
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -233,18 +232,19 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         }
         val uri = intent.data
         Timber.d("Exporting from file to ContentProvider URI: %s/%s", mExportFileName, uri.toString())
-        val fileOutputStream: FileOutputStream
-        val pfd: ParcelFileDescriptor?
         try {
-            pfd = activity.contentResolver.openFileDescriptor(uri!!, "w")
-            if (pfd != null) {
-                fileOutputStream = FileOutputStream(pfd.fileDescriptor)
-                CompatHelper.compat.copyFile(mExportFileName, fileOutputStream)
-                fileOutputStream.close()
-                pfd.close()
-            } else {
-                Timber.w("exportToProvider() failed - ContentProvider returned null file descriptor for %s", uri)
-                return false
+            activity.contentResolver.openFileDescriptor(uri!!, "w").use { pfd ->
+                if (pfd != null) {
+                    FileOutputStream(pfd.fileDescriptor).use { fileOutputStream ->
+                        CompatHelper.compat.copyFile(mExportFileName, fileOutputStream)
+                    }
+                } else {
+                    Timber.w(
+                        "exportToProvider() failed - ContentProvider returned null file descriptor for %s",
+                        uri
+                    )
+                    return false
+                }
             }
             if (deleteAfterExport && !File(mExportFileName).delete()) {
                 Timber.w("Failed to delete temporary export file %s", mExportFileName)

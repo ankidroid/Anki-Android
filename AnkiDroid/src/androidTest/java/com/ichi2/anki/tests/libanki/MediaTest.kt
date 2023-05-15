@@ -61,18 +61,18 @@ class MediaTest : InstrumentedTest() {
         BackupManager.removeDir(dir)
         assertTrue(dir.mkdirs())
         val path = File(dir, "foo.jpg")
-        var os = FileOutputStream(path, false)
-        os.write("hello".toByteArray())
-        os.close()
+        FileOutputStream(path, false).use { os ->
+            os.write("hello".toByteArray())
+        }
         // new file, should preserve name
         val r = mTestCol!!.media.addFile(path)
         assertEquals("foo.jpg", r)
         // adding the same file again should not create a duplicate
         assertEquals("foo.jpg", mTestCol!!.media.addFile(path))
         // but if it has a different md5, it should
-        os = FileOutputStream(path, false)
-        os.write("world".toByteArray())
-        os.close()
+        FileOutputStream(path, false).use { os ->
+            os.write("world".toByteArray())
+        }
         assertNotEquals("foo.jpg", mTestCol!!.media.addFile(path))
     }
 
@@ -114,9 +114,9 @@ class MediaTest : InstrumentedTest() {
         f.setField(1, "<img src='fake2.png'>")
         mTestCol!!.addNote(f)
         // and add another file which isn't used
-        val os = FileOutputStream(File(mTestCol!!.media.dir, "foo.jpg"), false)
-        os.write("test".toByteArray())
-        os.close()
+        FileOutputStream(File(mTestCol!!.media.dir, "foo.jpg"), false).use { os ->
+            os.write("test".toByteArray())
+        }
         // check media
         val ret = mTestCol!!.media.check()
         var expected = listOf("fake2.png")
