@@ -36,6 +36,7 @@ import com.ichi2.utils.IntentUtil.tryOpenIntent
 import com.ichi2.utils.VersionUtils.appName
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
+import com.ichi2.utils.toRGBHex
 import timber.log.Timber
 
 private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
@@ -93,10 +94,10 @@ class Info : AnkiActivity() {
         // Apply Theme colors
         val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
         val backgroundColor = typedArray.getColor(0, -1)
-        val textColor = String.format("#%06X", 0xFFFFFF and typedArray.getColor(1, -1)) // Color to hex string
+        val textColor = typedArray.getColor(1, -1).toRGBHex()
 
         val anchorTextThemeColor = ThemeUtils.getThemeAttrColor(this, R.attr.colorAccent)
-        val anchorTextColor = String.format("#%06X", 0xFFFFFF and anchorTextThemeColor)
+        val anchorTextColor = anchorTextThemeColor.toRGBHex()
 
         mWebView!!.setBackgroundColor(backgroundColor)
         setRenderWorkaround(this)
@@ -106,7 +107,7 @@ class Info : AnkiActivity() {
                     text = res.getString(R.string.dialog_continue)
                     setOnClickListener { close() }
                 }
-                val background = String.format("#%06X", 0xFFFFFF and backgroundColor)
+                val background = backgroundColor.toRGBHex()
                 mWebView!!.loadUrl("file:///android_asset/changelog.html")
                 mWebView!!.settings.javaScriptEnabled = true
                 mWebView!!.webViewClient = object : WebViewClient() {
