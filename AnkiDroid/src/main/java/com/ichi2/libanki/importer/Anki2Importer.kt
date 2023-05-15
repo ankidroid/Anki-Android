@@ -48,6 +48,11 @@ import java.util.regex.Matcher
 @KotlinCleanup("remove !!")
 @KotlinCleanup("lateinit")
 @KotlinCleanup("make col non-null")
+/**
+ *
+ * @param file The path to the collection.anki2 database. Should be unicode.
+ * path should be tested with File.exists() and File.canWrite() before this is called.
+ */
 open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file) {
     private val mDeckPrefix: String?
     private val mAllowUpdate: Boolean
