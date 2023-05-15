@@ -52,6 +52,7 @@
             android:key="@string/night_theme_key"
             android:shouldDisableView="true"
             android:title="@string/night_theme"
+            android:icon="@drawable/ic_dark_mode_24"
             app:useSimpleSummaryProvider="true"
             search:ignore="true"/>
     </PreferenceCategory>
