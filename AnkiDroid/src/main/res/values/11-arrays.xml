@@ -97,7 +97,6 @@
     <string name="gesture_page_down">Page Down</string>
     <string name="gesture_abort_sync">Abort Learning and Sync</string>
     <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_change_whiteboard_pen_color">Change Whiteboard pen color</string>
     <string name="gesture_show_hint">Show Hint</string>
     <string name="gesture_show_all_hints">Show All Hints</string>
     <string name="record_voice">Record Voice</string>
