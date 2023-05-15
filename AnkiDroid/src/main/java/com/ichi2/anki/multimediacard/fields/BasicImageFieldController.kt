@@ -743,25 +743,25 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     private fun getImageNameFromContentResolver(context: Context, uri: Uri, selection: String?): String? {
         Timber.d("getImageNameFromContentResolver() %s", uri)
         val filePathColumns = arrayOf(MediaStore.MediaColumns.DISPLAY_NAME)
-        val cursor = ContentResolverCompat.query(context.contentResolver, uri, filePathColumns, selection, null, null, null)
+        ContentResolverCompat.query(context.contentResolver, uri, filePathColumns, selection, null, null, null).use { cursor ->
 
-        if (cursor == null) {
-            Timber.w("getImageNameFromContentResolver() cursor was null")
-            showSomethingWentWrong()
-            return null
+            if (cursor == null) {
+                Timber.w("getImageNameFromContentResolver() cursor was null")
+                showSomethingWentWrong()
+                return null
+            }
+
+            if (!cursor.moveToFirst()) {
+                // TODO: #5909, it would be best to instrument this to see if we can fix the failure
+                Timber.w("getImageNameFromContentResolver() cursor had no data")
+                showSomethingWentWrong()
+                return null
+            }
+
+            val imageName = cursor.getString(cursor.getColumnIndex(filePathColumns[0]))
+            Timber.d("getImageNameFromContentResolver() decoded image name %s", imageName)
+            return imageName
         }
-
-        if (!cursor.moveToFirst()) {
-            // TODO: #5909, it would be best to instrument this to see if we can fix the failure
-            Timber.w("getImageNameFromContentResolver() cursor had no data")
-            showSomethingWentWrong()
-            return null
-        }
-
-        val imageName = cursor.getString(cursor.getColumnIndex(filePathColumns[0]))
-        cursor.close()
-        Timber.d("getImageNameFromContentResolver() decoded image name %s", imageName)
-        return imageName
     }
 
     val isShowingPreview: Boolean

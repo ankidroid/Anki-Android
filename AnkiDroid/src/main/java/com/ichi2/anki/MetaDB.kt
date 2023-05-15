@@ -483,9 +483,8 @@ object MetaDB {
      */
     fun getWidgetSmallStatus(context: Context): IntArray {
         openDBIfClosed(context)
-        var cursor: Cursor? = null
         try {
-            cursor = mMetaDb!!.query(
+            mMetaDb!!.query(
                 "smallWidgetStatus",
                 arrayOf("due", "eta"),
                 null,
@@ -493,36 +492,28 @@ object MetaDB {
                 null,
                 null,
                 null
-            )
-            if (cursor.moveToNext()) {
-                return intArrayOf(cursor.getInt(0), cursor.getInt(1))
+            ).use { cursor ->
+                if (cursor.moveToNext()) {
+                    return intArrayOf(cursor.getInt(0), cursor.getInt(1))
+                }
             }
         } catch (e: SQLiteException) {
             Timber.e(e, "Error while querying widgetStatus")
-        } finally {
-            if (cursor != null && !cursor.isClosed) {
-                cursor.close()
-            }
         }
         return intArrayOf(0, 0)
     }
 
     fun getNotificationStatus(context: Context): Int {
         openDBIfClosed(context)
-        var cursor: Cursor? = null
         val due = 0
         try {
-            cursor =
-                mMetaDb!!.query("smallWidgetStatus", arrayOf("due"), null, null, null, null, null)
-            if (cursor.moveToFirst()) {
-                return cursor.getInt(0)
+            mMetaDb!!.query("smallWidgetStatus", arrayOf("due"), null, null, null, null, null).use { cursor ->
+                if (cursor.moveToFirst()) {
+                    return cursor.getInt(0)
+                }
             }
         } catch (e: SQLiteException) {
             Timber.e(e, "Error while querying widgetStatus")
-        } finally {
-            if (cursor != null && !cursor.isClosed) {
-                cursor.close()
-            }
         }
         return due
     }
@@ -572,15 +563,10 @@ object MetaDB {
         }
 
         // API LEVEL
-        fun getTableColumnCount(metaDb: SQLiteDatabase, tableName: String): Int {
-            var c: Cursor? = null
-            return try {
-                c = metaDb.rawQuery("PRAGMA table_info($tableName)", null)
+        fun getTableColumnCount(metaDb: SQLiteDatabase, tableName: String) =
+            metaDb.rawQuery("PRAGMA table_info($tableName)", null).use { c ->
                 c.count
-            } finally {
-                c?.close()
             }
-        }
 
         fun getInteger(cur: Cursor, columnIndex: Int): Int? {
             return if (cur.isNull(columnIndex)) null else cur.getInt(columnIndex)

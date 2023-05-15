@@ -636,9 +636,6 @@ open class Scheduler(val col: Collection) {
                     revTime = cur.getDouble(3)
                     relrnRate = cur.getDouble(4)
                     relrnTime = cur.getDouble(5)
-                    if (!cur.isClosed()) {
-                        cur.close()
-                    }
                 }
 
             // If the collection has no revlog data to work with, assume a 20 second average rep for that type

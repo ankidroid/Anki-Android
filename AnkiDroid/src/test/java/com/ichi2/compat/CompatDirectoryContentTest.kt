@@ -52,23 +52,23 @@ class CompatDirectoryContentTest : Test21And26() {
             .withTempFile("zero")
             .withTempFile("one")
             .withTempFile("two")
-        val iterator = compat.contentOfDirectory(directory)
-        val found = Array(3) { false }
-        for (i in 1..3) {
-            assertThat("Iterator should have a $i-th element", iterator.hasNext(), equalTo(true))
-            val file = iterator.next()
-            val fileNumber = when (file.name) {
-                "zero" -> 0
-                "one" -> 1
-                "two" -> 2
-                else -> -1
+        compat.contentOfDirectory(directory).use { iterator ->
+            val found = Array(3) { false }
+            for (i in 1..3) {
+                assertThat("Iterator should have a $i-th element", iterator.hasNext(), equalTo(true))
+                val file = iterator.next()
+                val fileNumber = when (file.name) {
+                    "zero" -> 0
+                    "one" -> 1
+                    "two" -> 2
+                    else -> -1
+                }
+                assertThat("File ${file.name} should not be in ${directory.path}", fileNumber, not(equalTo(-1)))
+                assertThat("File ${file.name} should not be listed twice", found[fileNumber], equalTo(false))
+                found[fileNumber] = true
             }
-            assertThat("File ${file.name} should not be in ${directory.path}", fileNumber, not(equalTo(-1)))
-            assertThat("File ${file.name} should not be listed twice", found[fileNumber], equalTo(false))
-            found[fileNumber] = true
+            assertThat("Iterator should not have next anymore", iterator.hasNext(), equalTo(false))
         }
-        assertThat("Iterator should not have next anymore", iterator.hasNext(), equalTo(false))
-        iterator.close()
     }
 
     @Test
