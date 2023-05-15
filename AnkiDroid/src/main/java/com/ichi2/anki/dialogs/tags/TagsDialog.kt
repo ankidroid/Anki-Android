@@ -269,6 +269,7 @@ class TagsDialog : AnalyticsDialogFragment {
             // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
             inputET.setText("$prefixTag ")
         }
+        inputET.setSelection(inputET.text.length)
         addTagDialog.show()
     }
 
