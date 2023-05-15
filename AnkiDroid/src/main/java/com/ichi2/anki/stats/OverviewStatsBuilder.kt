@@ -25,6 +25,7 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.themes.Themes.getColorFromAttr
+import com.ichi2.utils.toRGBHex
 import java.util.*
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
@@ -72,8 +73,7 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
     }
 
     fun createInfoHtmlString(): String {
-        val textColorInt = getColorFromAttr(webView.context, R.attr.textColor)
-        val textColor = String.format("#%06X", 0xFFFFFF and textColorInt) // Color to hex string
+        val textColor = getColorFromAttr(webView.context, R.attr.textColor).toRGBHex()
         val css = """
                <style>
                h1, h3 { margin-bottom: 0; margin-top: 1em; text-transform: capitalize; }
