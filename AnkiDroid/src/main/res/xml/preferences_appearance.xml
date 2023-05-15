@@ -42,6 +42,7 @@
             android:key="@string/day_theme_key"
             android:shouldDisableView="true"
             android:title="@string/day_theme"
+            android:icon="@drawable/ic_light_mode_24"
             app:useSimpleSummaryProvider="true"
             search:ignore="true"/>
         <ListPreference
