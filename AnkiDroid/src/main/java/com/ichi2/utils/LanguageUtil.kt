@@ -212,17 +212,17 @@ object LanguageUtil {
         } else {
             Locale.forLanguageTag(languageTag)
         }
-        BackendFactory.defaultLanguages = listOf(localeToBackendCode(locale))
+        BackendFactory.defaultLanguages = listOf(languageTagToBackendCode(locale.language))
     }
 
-    private fun localeToBackendCode(locale: Locale): String {
-        return when (locale.language) {
-            Locale("heb").language -> "he"
-            Locale("ind").language -> "id"
-            Locale("tgl").language -> "tl"
-            Locale("hi").language -> "hi-IN"
-            Locale("yue").language -> "zh-HK"
-            else -> locale.toLanguageTag()
+    private fun languageTagToBackendCode(languageTag: String): String {
+        return when (languageTag) {
+            "heb" -> "he"
+            "ind" -> "id"
+            "tgl" -> "tl"
+            "hi" -> "hi-IN"
+            "yue" -> "zh-HK"
+            else -> languageTag
         }
     }
 
