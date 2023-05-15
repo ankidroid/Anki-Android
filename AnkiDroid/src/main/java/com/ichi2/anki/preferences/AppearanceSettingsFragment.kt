@@ -69,9 +69,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
             true
         }
 
-        val appThemePref = requirePreference<ListPreference>(getString(R.string.app_theme_key))
-        val dayThemePref = requirePreference<ListPreference>(getString(R.string.day_theme_key))
-        val nightThemePref = requirePreference<ListPreference>(getString(R.string.night_theme_key))
+        val appThemePref = requirePreference<ListPreference>(R.string.app_theme_key)
+        val dayThemePref = requirePreference<ListPreference>(R.string.day_theme_key)
+        val nightThemePref = requirePreference<ListPreference>(R.string.night_theme_key)
         val themeIsFollowSystem = appThemePref.value == Themes.FOLLOW_SYSTEM_MODE
 
         // Remove follow system options in android versions which do not have system dark mode
