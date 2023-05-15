@@ -31,8 +31,6 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
-import java.lang.Exception
-import kotlin.Throws
 
 object Storage {
     var isInMemory = false
@@ -74,7 +72,10 @@ object Storage {
     }
 
     /**
-     *  Open a new or existing collection. Path must be unicode
+     *  Open a new or existing collection.
+     *
+     * @param Path The path to the collection.anki2 database. Should be unicode.
+     * path should be tested with File.exists() and File.canWrite() before this is called.
      * */
     fun collection(
         context: Context,

@@ -71,7 +71,8 @@ open class CollectionHelper {
     /**
      * Opens the collection without checking to see if the directory exists.
      *
-     * path should be tested with File.exists() and File.canWrite() before this is called
+     * @param Path The path to the collection.anki2 database. Should be unicode.
+     * path should be tested with File.exists() and File.canWrite() before this is called.
      */
     private fun openCollection(context: Context, path: String): Collection {
         Timber.i("Begin openCollection: %s", path)

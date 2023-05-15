@@ -85,6 +85,9 @@ open class Collection(
      * @return The context that created this Collection.
      */
     val context: Context,
+    /**
+     *  @param Path The path to the collection.anki2 database. Must be unicode and openable with [File].
+     */
     val path: String,
     var server: Boolean,
     private var debugLog: Boolean, // Not in libAnki.
