@@ -67,6 +67,7 @@ class Syncer(
         BASIC_CHECK_FAILED("basicCheckFailed"),
         OVERWRITE_ERROR("overwriteError"),
         REMOTE_DB_ERROR("remoteDbError"),
+        SOCKET_ERROR("socketError"),
         SD_ACCESS_ERROR("sdAccessError"),
         FINISH_ERROR("finishError"),
         IO_EXCEPTION("IOException"),
