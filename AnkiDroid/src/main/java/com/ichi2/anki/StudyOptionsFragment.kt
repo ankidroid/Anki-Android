@@ -76,7 +76,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
      */
     private var mStudyOptionsView: View? = null
     private lateinit var deckInfoLayout: View
-    private var mButtonStart: Button? = null
+    private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
     private var mTextDeckDescription: TextView? = null
     private var mTextTodayNew: TextView? = null
@@ -221,7 +221,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         mTextDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
         // make links clickable
         mTextDeckDescription!!.movementMethod = LinkMovementMethod.getInstance()
-        mButtonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
+        buttonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
         textCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message)
         // Code common to both fragmented and non-fragmented view
         mTextTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new)
@@ -230,7 +230,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         mTextNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
         mTextTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
         textETA = studyOptionsView.findViewById(R.id.studyoptions_eta)
-        mButtonStart!!.setOnClickListener(mButtonClickListener)
+        buttonStart.setOnClickListener(mButtonClickListener)
     }
 
     /**
@@ -627,15 +627,15 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 deckInfoLayout.visibility = View.VISIBLE
                 textCongratsMessage.visibility = View.VISIBLE
                 textCongratsMessage.setText(R.string.studyoptions_empty)
-                mButtonStart!!.visibility = View.GONE
+                buttonStart.visibility = View.GONE
             } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
                 mCurrentContentView = CONTENT_CONGRATS
                 if (!isDynamic) {
                     deckInfoLayout.visibility = View.GONE
-                    mButtonStart!!.visibility = View.VISIBLE
-                    mButtonStart!!.setText(R.string.custom_study)
+                    buttonStart.visibility = View.VISIBLE
+                    buttonStart.setText(R.string.custom_study)
                 } else {
-                    mButtonStart!!.visibility = View.GONE
+                    buttonStart.visibility = View.GONE
                 }
                 textCongratsMessage.visibility = View.VISIBLE
                 textCongratsMessage.text = col!!.sched.finishedMsg(requireActivity())
@@ -643,8 +643,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
                 deckInfoLayout.visibility = View.VISIBLE
                 textCongratsMessage.visibility = View.GONE
-                mButtonStart!!.visibility = View.VISIBLE
-                mButtonStart!!.setText(R.string.studyoptions_start)
+                buttonStart.visibility = View.VISIBLE
+                buttonStart.setText(R.string.studyoptions_start)
             }
 
             // Set deck description
