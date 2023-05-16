@@ -595,10 +595,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 return
             }
 
+            val col = col
+                ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
+
             // Reinitialize controls in case changed to filtered deck
             initAllContentViews(mStudyOptionsView!!)
             // Set the deck name
-            val deck = col!!.decks.current()
+            val deck = col.decks.current()
             // Main deck name
             val fullName = deck.getString("name")
             val name = Decks.path(fullName)
@@ -638,7 +641,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     buttonStart.visibility = View.GONE
                 }
                 textCongratsMessage.visibility = View.VISIBLE
-                textCongratsMessage.text = col!!.sched.finishedMsg(requireActivity())
+                textCongratsMessage.text = col.sched.finishedMsg(requireActivity())
             } else {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
                 deckInfoLayout.visibility = View.VISIBLE
@@ -651,7 +654,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             val desc: String = if (isDynamic) {
                 resources.getString(R.string.dyn_deck_desc)
             } else {
-                col!!.decks.getActualDescription()
+                col.decks.getActualDescription()
             }
             if (desc.isNotEmpty()) {
                 textDeckDescription.text = formatDescription(desc)
@@ -677,12 +680,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     mFullNewCountThread!!.interrupt()
                 }
                 mFullNewCountThread = Thread {
-                    val collection = col
                     // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
                     val query = "SELECT count(*) FROM cards WHERE did IN " +
-                        Utils.ids2str(collection!!.decks.active()) +
+                        Utils.ids2str(col.decks.active()) +
                         " AND queue = " + Consts.QUEUE_TYPE_NEW
-                    val fullNewCount = collection.db.queryScalar(query)
+                    val fullNewCount = col.db.queryScalar(query)
                     if (fullNewCount > 0) {
                         val setNewTotalText = Runnable { textNewTotal.text = fullNewCount.toString() }
                         if (!Thread.currentThread().isInterrupted) {
