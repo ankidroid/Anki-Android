@@ -78,7 +78,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var deckInfoLayout: View
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
-    private var mTextDeckDescription: TextView? = null
+    private lateinit var textDeckDescription: TextView
     private var mTextTodayNew: TextView? = null
     private var mTextTodayLrn: TextView? = null
     private var mTextTodayRev: TextView? = null
@@ -218,9 +218,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         deckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
         textDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
-        mTextDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
+        textDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
         // make links clickable
-        mTextDeckDescription!!.movementMethod = LinkMovementMethod.getInstance()
+        textDeckDescription.movementMethod = LinkMovementMethod.getInstance()
         buttonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
         textCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message)
         // Code common to both fragmented and non-fragmented view
@@ -654,10 +654,10 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 col!!.decks.getActualDescription()
             }
             if (desc.isNotEmpty()) {
-                mTextDeckDescription!!.text = formatDescription(desc)
-                mTextDeckDescription!!.visibility = View.VISIBLE
+                textDeckDescription.text = formatDescription(desc)
+                textDeckDescription.visibility = View.VISIBLE
             } else {
-                mTextDeckDescription!!.visibility = View.GONE
+                textDeckDescription.visibility = View.GONE
             }
 
             // Set new/learn/review card counts
