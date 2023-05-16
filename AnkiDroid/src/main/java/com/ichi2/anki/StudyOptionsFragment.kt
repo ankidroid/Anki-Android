@@ -77,7 +77,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private var mStudyOptionsView: View? = null
     private var mDeckInfoLayout: View? = null
     private var mButtonStart: Button? = null
-    private var mTextDeckName: TextView? = null
+    private lateinit var textDeckName: TextView
     private var mTextDeckDescription: TextView? = null
     private var mTextTodayNew: TextView? = null
     private var mTextTodayLrn: TextView? = null
@@ -217,7 +217,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility = View.VISIBLE
         }
         mDeckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
-        mTextDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
+        textDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
         mTextDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
         // make links clickable
         mTextDeckDescription!!.movementMethod = LinkMovementMethod.getInstance()
@@ -615,7 +615,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             if (name.size > 2) {
                 nameBuilder.append("\n").append(name[name.size - 1])
             }
-            mTextDeckName!!.text = nameBuilder.toString()
+            textDeckName.text = nameBuilder.toString()
             if (tryOpenCramDeckOptions()) {
                 return
             }
