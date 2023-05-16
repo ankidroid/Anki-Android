@@ -85,7 +85,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private var mTextNewTotal: TextView? = null
     private var mTextTotal: TextView? = null
     private lateinit var textETA: TextView
-    private var mTextCongratsMessage: TextView? = null
+    private lateinit var textCongratsMessage: TextView
     private var mToolbar: Toolbar? = null
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
@@ -222,7 +222,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         // make links clickable
         mTextDeckDescription!!.movementMethod = LinkMovementMethod.getInstance()
         mButtonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
-        mTextCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message)
+        textCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message)
         // Code common to both fragmented and non-fragmented view
         mTextTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new)
         mTextTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn)
@@ -625,8 +625,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             if (result.numberOfCardsInDeck == 0 && !isDynamic) {
                 mCurrentContentView = CONTENT_EMPTY
                 deckInfoLayout.visibility = View.VISIBLE
-                mTextCongratsMessage!!.visibility = View.VISIBLE
-                mTextCongratsMessage!!.setText(R.string.studyoptions_empty)
+                textCongratsMessage.visibility = View.VISIBLE
+                textCongratsMessage.setText(R.string.studyoptions_empty)
                 mButtonStart!!.visibility = View.GONE
             } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
                 mCurrentContentView = CONTENT_CONGRATS
@@ -637,12 +637,12 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 } else {
                     mButtonStart!!.visibility = View.GONE
                 }
-                mTextCongratsMessage!!.visibility = View.VISIBLE
-                mTextCongratsMessage!!.text = col!!.sched.finishedMsg(requireActivity())
+                textCongratsMessage.visibility = View.VISIBLE
+                textCongratsMessage.text = col!!.sched.finishedMsg(requireActivity())
             } else {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
                 deckInfoLayout.visibility = View.VISIBLE
-                mTextCongratsMessage!!.visibility = View.GONE
+                textCongratsMessage.visibility = View.GONE
                 mButtonStart!!.visibility = View.VISIBLE
                 mButtonStart!!.setText(R.string.studyoptions_start)
             }
@@ -697,9 +697,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             mTextTotal!!.text = result.numberOfCardsInDeck.toString()
             // Set estimated time remaining
             if (result.eta != -1) {
-                textETA!!.text = result.eta.toString()
+                textETA.text = result.eta.toString()
             } else {
-                textETA!!.text = "-"
+                textETA.text = "-"
             }
             // Rebuild the options menu
             configureToolbar()
