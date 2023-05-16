@@ -75,7 +75,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
      * UI elements for "Study Options" view
      */
     private var mStudyOptionsView: View? = null
-    private var mDeckInfoLayout: View? = null
+    private lateinit var deckInfoLayout: View
     private var mButtonStart: Button? = null
     private lateinit var textDeckName: TextView
     private var mTextDeckDescription: TextView? = null
@@ -216,7 +216,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (mFragmented) {
             studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility = View.VISIBLE
         }
-        mDeckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
+        deckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
         textDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
         mTextDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
         // make links clickable
@@ -624,14 +624,14 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             val isDynamic = deck.isDyn
             if (result.numberOfCardsInDeck == 0 && !isDynamic) {
                 mCurrentContentView = CONTENT_EMPTY
-                mDeckInfoLayout!!.visibility = View.VISIBLE
+                deckInfoLayout.visibility = View.VISIBLE
                 mTextCongratsMessage!!.visibility = View.VISIBLE
                 mTextCongratsMessage!!.setText(R.string.studyoptions_empty)
                 mButtonStart!!.visibility = View.GONE
             } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
                 mCurrentContentView = CONTENT_CONGRATS
                 if (!isDynamic) {
-                    mDeckInfoLayout!!.visibility = View.GONE
+                    deckInfoLayout.visibility = View.GONE
                     mButtonStart!!.visibility = View.VISIBLE
                     mButtonStart!!.setText(R.string.custom_study)
                 } else {
@@ -641,7 +641,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 mTextCongratsMessage!!.text = col!!.sched.finishedMsg(requireActivity())
             } else {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
-                mDeckInfoLayout!!.visibility = View.VISIBLE
+                deckInfoLayout.visibility = View.VISIBLE
                 mTextCongratsMessage!!.visibility = View.GONE
                 mButtonStart!!.visibility = View.VISIBLE
                 mButtonStart!!.setText(R.string.studyoptions_start)
