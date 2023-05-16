@@ -121,6 +121,13 @@
         <item name="iconColor">@color/white</item>
     </style>
 
+    <style name="NoBackgroundButton" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:letterSpacing">0</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:focusable">true</item>
+    </style>
+
     <!-- For all other action bar popups like overflow menu (except spinner dropdown in Lollipop). -->
     <style name="ActionBar.Popup" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <item name="android:drawSelectorOnTop">false</item>
