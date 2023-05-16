@@ -84,7 +84,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private var mTextTodayRev: TextView? = null
     private var mTextNewTotal: TextView? = null
     private var mTextTotal: TextView? = null
-    private var mTextETA: TextView? = null
+    private lateinit var textETA: TextView
     private var mTextCongratsMessage: TextView? = null
     private var mToolbar: Toolbar? = null
 
@@ -229,7 +229,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         mTextTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev)
         mTextNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
         mTextTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
-        mTextETA = studyOptionsView.findViewById(R.id.studyoptions_eta)
+        textETA = studyOptionsView.findViewById(R.id.studyoptions_eta)
         mButtonStart!!.setOnClickListener(mButtonClickListener)
     }
 
@@ -697,9 +697,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             mTextTotal!!.text = result.numberOfCardsInDeck.toString()
             // Set estimated time remaining
             if (result.eta != -1) {
-                mTextETA!!.text = result.eta.toString()
+                textETA!!.text = result.eta.toString()
             } else {
-                mTextETA!!.text = "-"
+                textETA!!.text = "-"
             }
             // Rebuild the options menu
             configureToolbar()
