@@ -40,6 +40,7 @@ import java.io.FileInputStream
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
+import java.net.SocketException
 import java.util.Locale
 
 class FullSyncer(col: Collection?, hkey: String?, con: Connection, hostNum: HostNum?) :
@@ -95,8 +96,11 @@ class FullSyncer(col: Collection?, hkey: String?, con: Connection, hostNum: Host
         } catch (e: FileNotFoundException) {
             Timber.e(e, "Failed to create temp file when downloading collection.")
             throw RuntimeException(e)
-        } catch (e: IOException) {
+        } catch (e: SocketException) {
             Timber.e(e, "Full sync failed to download collection.")
+            return ConnectionResultType.SOCKET_ERROR
+        } catch (e: IOException) {
+            Timber.e(e, "Full sync failed to save or download collection.")
             return ConnectionResultType.SD_ACCESS_ERROR
         } finally {
             body.close()

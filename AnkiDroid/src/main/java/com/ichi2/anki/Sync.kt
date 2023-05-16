@@ -633,6 +633,15 @@ fun DeckPicker.createSyncListener(isFetchingMedia: Boolean) = object : Connectio
                             )
                         )
                     }
+                    Syncer.ConnectionResultType.SOCKET_ERROR -> {
+                        dialogMessage = res.getString(R.string.sync_connection_error)
+                        showSyncErrorMessage(
+                            joinSyncMessages(
+                                dialogMessage,
+                                syncMessage
+                            )
+                        )
+                    }
                     Syncer.ConnectionResultType.CONNECTION_ERROR -> {
                         dialogMessage = res.getString(R.string.sync_connection_error)
                         if (result[0] is Exception) {
