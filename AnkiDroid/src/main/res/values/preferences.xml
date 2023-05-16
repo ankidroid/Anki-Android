@@ -113,6 +113,7 @@
     <string name="card_browser_external_context_menu_key">card_browser_enable_external_context_menu</string>
     <string name="anki_card_external_context_menu_key">anki_card_enable_external_context_menu</string>
     <string name="pref_reset_languages_key">resetLanguages</string>
+    <string name="simulate_error_during_essential_file_migration">crashDuringEssentialMigration</string>
     <string name="enable_v3_sched_key">v3sched</string>
     <!-- Advanced statistics -->
     <string name="pref_advanced_statistics_screen_key">advancedStatisticsScreen</string>

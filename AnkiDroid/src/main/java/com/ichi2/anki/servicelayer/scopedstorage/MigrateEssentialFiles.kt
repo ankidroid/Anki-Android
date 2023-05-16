@@ -21,9 +21,11 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CrashReportService
+import com.ichi2.anki.R
 import com.ichi2.anki.exception.RetryableException
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.*
@@ -91,6 +93,10 @@ internal constructor(
      * @throws IllegalStateException If a lock cannot be acquired on the collection
      */
     fun execute() {
+        if (getSharedPrefs(context).getBoolean(context.getString(R.string.simulate_error_during_essential_file_migration), false)) {
+            // Simulate an unexpected crash during migration
+            throw Exception("Simulation of an error during essential file migration, as set in developer preferences.")
+        }
         if (ScopedStorageService.userMigrationIsInProgress(context)) {
             throw IllegalStateException("Migration is already in progress")
         }
