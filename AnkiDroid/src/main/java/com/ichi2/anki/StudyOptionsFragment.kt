@@ -691,8 +691,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                             textNewTotal.post(setNewTotalText)
                         }
                     }
+                }.apply {
+                    start()
                 }
-                mFullNewCountThread!!.start()
             }
 
             // Set total number of cards
