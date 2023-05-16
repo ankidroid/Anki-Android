@@ -79,11 +79,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var buttonStart: Button
     private lateinit var textDeckName: TextView
     private lateinit var textDeckDescription: TextView
-    private var mTextTodayNew: TextView? = null
-    private var mTextTodayLrn: TextView? = null
-    private var mTextTodayRev: TextView? = null
-    private var mTextNewTotal: TextView? = null
-    private var mTextTotal: TextView? = null
+    private lateinit var textTodayNew: TextView
+    private lateinit var textTodayLrn: TextView
+    private lateinit var textTodayRev: TextView
+    private lateinit var textNewTotal: TextView
+    private lateinit var textTotal: TextView
     private lateinit var textETA: TextView
     private lateinit var textCongratsMessage: TextView
     private var mToolbar: Toolbar? = null
@@ -92,7 +92,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private var mLoadWithDeckOptions = false
     private var mFragmented = false
     private var mFullNewCountThread: Thread? = null
-    private var mListener: StudyOptionsListener? = null
+    private lateinit var listener: StudyOptionsListener
 
     /**
      * Callbacks for UI events
@@ -114,7 +114,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mListener = try {
+        listener = try {
             context as StudyOptionsListener
         } catch (e: ClassCastException) {
             throw ClassCastException("$context must implement StudyOptionsListener")
@@ -224,11 +224,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         buttonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
         textCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message)
         // Code common to both fragmented and non-fragmented view
-        mTextTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new)
-        mTextTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn)
-        mTextTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev)
-        mTextNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
-        mTextTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
+        textTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new)
+        textTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn)
+        textTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev)
+        textNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
+        textTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
         textETA = studyOptionsView.findViewById(R.id.studyoptions_eta)
         buttonStart.setOnClickListener(mButtonClickListener)
     }
@@ -661,17 +661,17 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
 
             // Set new/learn/review card counts
-            mTextTodayNew!!.text = result.newCardsToday.toString()
-            mTextTodayLrn!!.text = result.lrnCardsToday.toString()
-            mTextTodayRev!!.text = result.revCardsToday.toString()
+            textTodayNew.text = result.newCardsToday.toString()
+            textTodayLrn.text = result.lrnCardsToday.toString()
+            textTodayRev.text = result.revCardsToday.toString()
 
             // Set the total number of new cards in deck
             if (result.numberOfNewCardsInDeck < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
                 // if it hasn't been truncated by libanki then just set it usually
-                mTextNewTotal!!.text = result.numberOfNewCardsInDeck.toString()
+                textNewTotal.text = result.numberOfNewCardsInDeck.toString()
             } else {
                 // if truncated then make a thread to allow full count to load
-                mTextNewTotal!!.text = ">1000"
+                textNewTotal.text = ">1000"
                 if (mFullNewCountThread != null) {
                     // a thread was previously made -- interrupt it
                     mFullNewCountThread!!.interrupt()
@@ -684,9 +684,9 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                         " AND queue = " + Consts.QUEUE_TYPE_NEW
                     val fullNewCount = collection.db.queryScalar(query)
                     if (fullNewCount > 0) {
-                        val setNewTotalText = Runnable { mTextNewTotal!!.text = fullNewCount.toString() }
+                        val setNewTotalText = Runnable { textNewTotal.text = fullNewCount.toString() }
                         if (!Thread.currentThread().isInterrupted) {
-                            mTextNewTotal!!.post(setNewTotalText)
+                            textNewTotal.post(setNewTotalText)
                         }
                     }
                 }
@@ -694,7 +694,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
 
             // Set total number of cards
-            mTextTotal!!.text = result.numberOfCardsInDeck.toString()
+            textTotal.text = result.numberOfCardsInDeck.toString()
             // Set estimated time remaining
             if (result.eta != -1) {
                 textETA.text = result.eta.toString()
@@ -707,7 +707,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
         // If in fragmented mode, refresh the deck list
         if (mFragmented && refreshDecklist) {
-            mListener!!.onRequireDeckListUpdate()
+            listener.onRequireDeckListUpdate()
         }
     }
 
