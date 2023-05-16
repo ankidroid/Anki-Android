@@ -51,4 +51,13 @@
         android:title="@string/reset_onboarding"
         android:summary="@string/reset_onboarding_desc"
         android:key="@string/pref_reset_onboarding_key"/>
+    <PreferenceCategory
+        android:title="Migration crashes">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:title="Simulate errors during migration."
+            android:summary="Simulate error during media file move"
+            android:key="@string/crash_during_media_migration"
+            />
+    </PreferenceCategory>
 </PreferenceScreen>

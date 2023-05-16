@@ -213,7 +213,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     }
 
     private fun MigrateUserDataTester.execTask(): Boolean {
-        this.migrateFiles(mock())
+        this.migrateFiles(crash = false, mock())
 
         // TODO BEFORE-RELEASE This method always returns true, as before this change
         //   it returned the result of `migrateFiles`, which was also always true.
@@ -229,8 +229,8 @@ private class MigrateUserDataTester
 private constructor(source: Directory, destination: Directory, val filesToMigrateCount: Int) :
     MigrateUserData(source, destination) {
 
-    override fun initializeContext(progress: MigrationProgressListener): UserDataMigrationContext {
-        return super.initializeContext(progress).apply {
+    override fun initializeContext(crash: Boolean, progress: MigrationProgressListener): UserDataMigrationContext {
+        return super.initializeContext(crash, progress).apply {
             attemptRename = false
         }
     }

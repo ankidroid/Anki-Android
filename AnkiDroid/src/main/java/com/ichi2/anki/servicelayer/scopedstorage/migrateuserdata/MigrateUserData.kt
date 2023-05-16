@@ -165,8 +165,10 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * Context for an [Operation], allowing a change of execution behavior and
      * allowing progress and exception reporting logic when executing
      * a large mutable queue of tasks
+     *
+     * @param crash Whether to crash on move file (for debugging purpose)
      */
-    abstract class MigrationContext {
+    abstract class MigrationContext(val crash: Boolean = false) {
         abstract fun reportError(throwingOperation: Operation, ex: Exception)
 
         /**
@@ -410,7 +412,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @param executor The executor that will do the migration.
      * @param progressReportParam A function, called for each file that is migrated, with the number of bytes of the file.
      */
-    open class UserDataMigrationContext(private val executor: Executor, val source: Directory, val progressReportParam: MigrationProgressListener) : MigrationContext() {
+    open class UserDataMigrationContext(private val executor: Executor, val source: Directory, simulateErrorDuringFileMove: Boolean, val progressReportParam: MigrationProgressListener) : MigrationContext(simulateErrorDuringFileMove) {
         val successfullyCompleted: Boolean get() = loggedExceptions.isEmpty() && !executor.terminated
 
         /**
@@ -520,8 +522,8 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @throws AggregateException If multiple exceptions were thrown when executing
      * @throws RuntimeException Various other failings if only a single exception was thrown
      */
-    fun migrateFiles(progressListener: MigrationProgressListener) {
-        val context = initializeContext(progressListener)
+    fun migrateFiles(crash: Boolean, progressListener: MigrationProgressListener) {
+        val context = initializeContext(crash, progressListener)
 
         // define the function here, so we can execute it on retry
         fun moveRemainingFiles() {
@@ -555,8 +557,8 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @return A User data migration context, executing the migration of [source] on [executor].
      * Calling [collectionTask::doProgress] on each migrated file, with the number of bytes migrated.
      */
-    internal open fun initializeContext(progress: (MigrationProgressListener)) =
-        UserDataMigrationContext(executor, source, progress)
+    internal open fun initializeContext(crash: Boolean, progress: (MigrationProgressListener)) =
+        UserDataMigrationContext(executor, source, crash, progress)
 
     /**
      * Returns migration operations for the top level items in /AnkiDroid/

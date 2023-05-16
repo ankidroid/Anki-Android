@@ -142,7 +142,7 @@ class MoveConflictedFile private constructor(
     class ContextHandlingFileConflictException(
         private val wrappedContext: MigrationContext,
         private val operation: Operation
-    ) : MigrationContext() {
+    ) : MigrationContext(wrappedContext.crash) {
 
         /** Whether at least one [FileConflictException] was handled and ignored */
         var handledFileConflictSinceLastReset = false

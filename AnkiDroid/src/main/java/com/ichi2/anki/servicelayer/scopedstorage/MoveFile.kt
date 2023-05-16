@@ -39,6 +39,10 @@ import java.io.File
  */
 internal data class MoveFile(val sourceFile: DiskFile, val destinationFile: File) : Operation() {
     override fun execute(context: MigrationContext): List<Operation> {
+        if (context.crash) {
+            // Simulate an unexpected crash during migration
+            throw Exception("Crash of migration set in developer preferences.")
+        }
         if (!sourceFile.file.exists()) {
             sourceDoesNotExists(context)
         } else if (destinationFile.exists()) {

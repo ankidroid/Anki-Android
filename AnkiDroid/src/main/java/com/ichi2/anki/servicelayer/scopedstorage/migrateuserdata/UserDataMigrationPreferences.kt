@@ -28,8 +28,9 @@ import java.io.File
  *
  * @param source The path of the source directory. Check [migrationInProgress] before use.
  * @param destination The path of the destination directory. Check [migrationInProgress] before use.
+ * @param crash whether to force a crash (for debugging purpose)
  */
-class UserDataMigrationPreferences private constructor(val source: String, val destination: String) {
+class UserDataMigrationPreferences private constructor(val source: String, val destination: String, val crash: Boolean) {
     /**  Whether a scoped storage migration is in progress */
     val migrationInProgress = source.isNotEmpty()
     val sourceFile get() = File(source)
@@ -57,10 +58,11 @@ class UserDataMigrationPreferences private constructor(val source: String, val d
 
             return createInstance(
                 source = getValue(PREF_MIGRATION_SOURCE),
-                destination = getValue(PREF_MIGRATION_DESTINATION)
+                destination = getValue(PREF_MIGRATION_DESTINATION),
+                crash = preferences.getBoolean("crashDuringMediaMigration", false)
             )
         }
 
-        fun createInstance(source: String, destination: String) = UserDataMigrationPreferences(source, destination).also { it.check() }
+        fun createInstance(source: String, destination: String, crash: Boolean) = UserDataMigrationPreferences(source, destination, crash).also { it.check() }
     }
 }

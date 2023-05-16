@@ -143,7 +143,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                 val totalBytesToTransfer = getOrSetTotalTransferSize(valueToPersistIfNotCalculated = remainingTransferSize)
                 var transferredBytes = max(totalBytesToTransfer - remainingTransferSize, 0)
 
-                migrateUserDataTask.migrateFiles(progressListener = { deltaTransferredBytes ->
+                migrateUserDataTask.migrateFiles(preferences.getBoolean("crashDuringMediaMigration", false), progressListener = { deltaTransferredBytes ->
                     transferredBytes += deltaTransferredBytes
                     flowOfProgress.tryEmit(
                         Progress.Transferring(
