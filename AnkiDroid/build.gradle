@@ -300,7 +300,7 @@ dependencies {
     // Changing the version from 1.8.0 to 1.7.0 because the item in navigation drawer is getting bold unnecessarily
     implementation 'com.google.android.material:material:1.7.0'
     // noinspection GradleDependency jackson-databind 2.13 requires SDK 24+: https://github.com/FasterXML/jackson-databind#compatibility
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
 
