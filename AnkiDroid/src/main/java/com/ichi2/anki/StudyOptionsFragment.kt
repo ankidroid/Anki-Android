@@ -147,10 +147,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Timber.i("onCreateView()")
-        if (container == null) {
-            // Currently in a layout without a container, so no reason to create our view.
-            return null
-        }
         val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
         mStudyOptionsView = studyOptionsView
         mFragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
