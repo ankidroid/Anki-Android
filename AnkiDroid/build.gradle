@@ -339,7 +339,7 @@ dependencies {
     // noinspection GradleDependency - commons-compress 1.12 - later versions use `File.toPath`; API26 can remove?
     implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
-    implementation 'commons-io:commons-io:2.11.0' // FileUtils.contentEquals
+    implementation 'commons-io:commons-io:2.12.0' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'com.arcao:slf4j-timber:3.1'
