@@ -69,7 +69,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         val activity: Activity = requireActivity()
         val tagsDialogView = LayoutInflater.from(activity)
             .inflate(R.layout.locale_selection_dialog, activity.findViewById(R.id.root_layout), false)
-        val adapter = LocaleListAdapter(Locale.getAvailableLocales())
+        val adapter = LocaleListAdapter(Locale.getAvailableLocales() + IPALanguage)
         setupRecyclerView(activity, tagsDialogView, adapter)
         inflateMenu(tagsDialogView, adapter)
 
@@ -173,6 +173,15 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
+        /**
+         * Language identifier for International Phonetic Alphabet. This isn't available from [Locale.getAvailableLocales], but
+         * GBoard seems to understand this as a language code.
+         *
+         * See issue #13883
+         * See https://en.wikipedia.org/wiki/International_Phonetic_Alphabet#IETF_language_tags
+         */
+        private val IPALanguage = Locale.Builder().setLanguageTag("und-fonipa").build()
+
         /**
          * @param handler Marker interface to enforce the convention the caller implementing LocaleSelectionDialogHandler
          */
