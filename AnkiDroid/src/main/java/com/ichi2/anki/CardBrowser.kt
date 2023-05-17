@@ -945,7 +945,6 @@ open class CardBrowser :
                 }
             })
             mSearchView = mSearchItem!!.actionView as CardBrowserSearchView
-
             mSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (mSearchView!!.shouldIgnoreValueChange()) {
