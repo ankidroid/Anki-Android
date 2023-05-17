@@ -68,7 +68,7 @@ internal fun throwIfContentUnequal(file1: File, file2: File) {
     val file1Exists = file1.exists()
     val file2Exists = file2.exists()
     if (file1Exists != file2Exists) {
-        throw IllegalStateException("Only one file existed. file1: $file1Exists; file2: $file2Exists")
+        throw IllegalStateException("Only one file existed. file1: $file1Exists; file2: $file2Exists. $file1 $file2")
     }
     if (!file1Exists) {
         // two not existing files are equal
@@ -81,7 +81,7 @@ internal fun throwIfContentUnequal(file1: File, file2: File) {
     val file2Length = file2.length()
     if (file1Length != file2Length) {
         // lengths differ, cannot be equal
-        throw IllegalStateException("File lengths differed. file1: $file1Length; file2: $file2Length")
+        throw IllegalStateException("File lengths differed. file1: $file1Length; file2: $file2Length. $file1 $file2")
     }
     if (file1.canonicalFile == file2.canonicalFile) {
         // same file
@@ -90,7 +90,7 @@ internal fun throwIfContentUnequal(file1: File, file2: File) {
     Files.newInputStream(file1.toPath()).use { input1 ->
         Files.newInputStream(file2.toPath()).use { input2 ->
             if (!IOUtils.contentEquals(input1, input2)) {
-                throw IllegalStateException("files had same lengths ($file1Length), but different content")
+                throw IllegalStateException("files had same lengths ($file1Length), but different content. $file1 $file2")
             }
         }
     }
