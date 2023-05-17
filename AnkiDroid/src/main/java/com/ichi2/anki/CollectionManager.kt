@@ -330,6 +330,10 @@ object CollectionManager {
         }
     }
 
+    fun isOpenAtThisInstantUnsafe(): Boolean {
+        return collection?.dbClosed == false
+    }
+
     /**
      Use [col] as collection in tests.
      This collection persists only up to the next (direct or indirect) call to `ensureClosed`
