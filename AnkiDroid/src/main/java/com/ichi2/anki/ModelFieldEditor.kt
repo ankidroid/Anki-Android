@@ -85,6 +85,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             subtitle = intent.getStringExtra("title")
         }
         startLoadingCollection()
+        // It provides methods to handle events before and after the text is modified
         textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -176,6 +177,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             MaterialDialog(this).show {
                 customView(view = _fieldNameInput, horizontalPadding = true)
                 title(R.string.model_field_editor_add)
+                // TODO :- This functionality must be extracted
                 _fieldNameInput.doOnTextChanged { text, _, _, _ ->
                     val fieldName = text.toString().trim()
                     if (fieldName.isEmpty()) {
@@ -218,7 +220,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     this.dismiss()
                 }
             }
-                .noAutoDismiss()
                 .displayKeyboard(_fieldNameInput)
         }
     }
@@ -317,6 +318,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             MaterialDialog(this).show {
                 customView(view = _fieldNameInput, horizontalPadding = true)
                 title(R.string.model_field_editor_rename)
+                // TODO :- This functionality must be extracted
                 _fieldNameInput.doOnTextChanged { text, _, _, _ ->
                     val fieldName = text.toString().trim()
                     if (mFieldsLabels.any { fieldName == it }) {
@@ -358,7 +360,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                 }
                 displayKeyboard(_fieldNameInput)
             }
-                .noAutoDismiss()
         }
     }
 
