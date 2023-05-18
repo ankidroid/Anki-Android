@@ -79,13 +79,13 @@
     <string name="image_zoom" maxLength="41">ଛବି ଜୁମ୍</string>
     <string name="button_size" maxLength="41">ଉତ୍ତର ବଟନ ଆକାର</string>
     <string name="card_browser_font_size" maxLength="41">ପତ୍ର ବ୍ରାଉଜର୍ ଫଣ୍ଟ ସ୍କେଲିଂ</string>
-    <string name="card_browser_hide_media" maxLength="41">ପତ୍ର ବ୍ରାଉଜରରେ ଫାଇଲନାମ ଗୁଡ଼ିକୁ ଦର୍ଶାନ୍ତୁ</string>
-    <string name="card_browser_hide_media_summary">ପତ୍ର ବ୍ରାଉଜରର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍ ନାମ ଦର୍ଶାନ୍ତୁ</string>
+    <string name="card_browser_hide_media" maxLength="41">ପତ୍ର ବ୍ରାଉଜର୍‌ରେ ଫାଇଲ୍‌ନାମ ସବୁ ଦର୍ଶାଇବା</string>
+    <string name="card_browser_hide_media_summary">ପତ୍ର ବ୍ରାଉଜର୍‌ର ପ୍ରଶ୍ନ/ଉତ୍ତର କ୍ଷେତ୍ରରେ ମିଡ଼ିଆ ଫାଇଲ୍‌ନାମ ସବୁ ଦର୍ଶାଇବା</string>
     <string name="col_path" maxLength="41">AnkiDroid directory</string>
-    <string name="fullscreen_review" maxLength="41">ପୂର୍ଣ୍ଣସ୍କ୍ରିନ୍ ମୋଡ୍</string>
+    <string name="fullscreen_review" maxLength="41">ପୂର୍ଣ୍ଣସ୍କ୍ରୀନ୍ ମୋଡ୍</string>
     <string name="full_screen_off">ବନ୍ଦ</string>
-    <string name="full_screen_system">ସିଷ୍ଟମ୍ ବାରଗୁଡିକ ଲୁଚାନ୍ତୁ</string>
-    <string name="full_screen_complete">ସିଷ୍ଟମ୍ ବାର୍ ଏବଂ ଉତ୍ତର ବଟନ୍ ଲୁଚାନ୍ତୁ</string>
+    <string name="full_screen_system">ସିଷ୍ଟମ୍ ଦଣ୍ଡିକାଗୁଡ଼ିକ ଲୁଚାଇବା</string>
+    <string name="full_screen_complete">ସିଷ୍ଟମ୍ ଦଣ୍ଡିକା ଏଵଂ ଉତ୍ତର ବଟନ୍ ଲୁଚାଇବା</string>
     <string name="answer_buttons_position" maxLength="41">ଉତ୍ତର ବଟନ୍ ଅଵସ୍ଥାନ</string>
     <string-array name="answer_buttons_position_labels">
         <item>ଶୀର୍ଷ</item>
@@ -95,10 +95,10 @@
     <string name="gestures" maxLength="41">ଅଙ୍ଗଭଙ୍ଗୀ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="gestures_summ">ପତ୍ରଗୁଡ଼ିକର ଉତ୍ତର ଏବଂ ସମ୍ପାଦନ କରିବା ଭଳି କାର୍ଯ୍ୟରେ ଅଙ୍ଗଭଙ୍ଗୀ ନ୍ୟସ୍ତ କରନ୍ତୁ</string>
     <string name="gestures_corner_touch" maxLength="41">୯-ଅଙ୍କ ସ୍ପର୍ଶ</string>
-    <string name="gestures_corner_touch_summary">ସ୍କ୍ରିନ୍ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">ପୂର୍ଣ୍ଣ ସ୍କ୍ରିନ୍ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">ସ୍କ୍ରିନର ଯେକୌଣସି ସ୍ଥାନରୁ ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରିବା ମାତ୍ରେ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍ ଖୋଲନ୍ତୁ</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_corner_touch_summary">ସ୍କ୍ରୀନ୍ କୋଣରେ ସ୍ପର୍ଶ ଅଙ୍ଗଭଙ୍ଗୀକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">ପୂର୍ଣ୍ଣ ସ୍କ୍ରୀନ୍ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">ସ୍କ୍ରୀନ୍‌ର ଯେକୌଣସି ସ୍ଥାନରୁ ଡାହାଣକୁ ସ୍ୱାଇପ୍ କରିବା ମାତ୍ରେ ନେଵିଗେଶନ୍ ଡ୍ରୟର୍ ଖୋଲନ୍ତୁ</string>
+    <string name="gestures_none" maxLength="41">କିଛି ନାହିଁ</string>
     <string name="gestures_swipe_up" maxLength="41">ଉପରକୁ ସ୍ଵାଇପ୍ କଲେ</string>
     <string name="gestures_swipe_down" maxLength="41">ତଳକୁ ସ୍ଵାଇପ୍ କଲେ</string>
     <string name="gestures_swipe_left" maxLength="41">ବାମକୁ ସ୍ଵାଇପ୍ କଲେ</string>
@@ -115,11 +115,11 @@
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ତଳ ବାମକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ତଳ ଡାହାଣକୁ ସ୍ପର୍ଶ କଲେ</string>
     <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">ସ୍କ୍ରୋଲ୍ ପାଇଁ kanji/katakana, emoji/kao-moji ବଟନ୍ ଗୁଡ଼ିକୁ ମଧ୍ୟ ବ୍ୟବହାର କରନ୍ତୁ</string>
+    <string name="more_scrolling_buttons_summ">ସ୍କ୍ରୋଲିଂରେ kanji/katakana, emoji/kao-moji ବଟନ୍‌ଗୁଡ଼ିକ ମଧ୍ୟ ଵ୍ୟଵହାର କରିବା</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ ମେନୁ</string>
     <string name="card_browser_enable_external_context_menu_summary">ସବୁ ଜାଗାରେ ‘%s’ ପ୍ରସଙ୍ଗ ମେନୁକୁ ସକ୍ଷମ କରିଥାଏ</string>
-    <string name="double_scrolling_gap" maxLength="41">ଦୁଇଥର ସ୍କ୍ରୋଲିଂ</string>
-    <string name="double_scrolling_gap_summ">eReader ସହିତ ସ୍କ୍ରୋଲ୍ ଫାଙ୍କକୁ ଦୁଇଗୁଣ କରନ୍ତୁ</string>
+    <string name="double_scrolling_gap" maxLength="41">ଦ୍ୱିଗୁଣ ସ୍କ୍ରୋଲିଂ</string>
+    <string name="double_scrolling_gap_summ">eReaderରେ ସ୍କ୍ରୋଲ୍ ଫାଙ୍କକୁ ଦୁଇଗୁଣ କରନ୍ତୁ</string>
     <string name="swipe_sensitivity" maxLength="41">ସ୍ୱାଇପ୍ ସମ୍ବେଦନଶୀଳତା</string>
     <string name="tts" maxLength="41">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
@@ -128,7 +128,7 @@
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="automatic_sync_choice" maxLength="41">ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
-    <string name="automatic_sync_choice_summ">ଯଦି ଶେଷ ସିଙ୍କ୍ ୧୦ ମିନିଟ୍ ରୁ ଅଧିକ ପୂର୍ବରୁ କରାଯାଇଥିଲା ତେବେ ଆପ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ସିଙ୍କ୍ କରନ୍ତୁ।</string>
+    <string name="automatic_sync_choice_summ">ଯଦି ଗତ ସୀଙ୍କ୍ ୧୦ ମିନିଟ୍‌ରୁ ଅଧିକ ଆଗରୁ ହୋଇଥିଲା ତେବେ ଆପ୍ ଆରମ୍ଭ/ପ୍ରସ୍ଥାନ କରିବା ସମୟରେ ସ୍ୱଚାଳିତ ଭାଵେ ସୀଙ୍କ୍ କରିବା।</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">ସର୍ଵଦା</string>
     <string name="sync_media_only_unmetered">କେଵଳ ମିଟର୍ ନଥିବା ସଂଯୋଜନାଗୁଡ଼ିକରେ</string>
     <string name="sync_media_never">କଦାପି ନୁହେଁ</string>
@@ -146,13 +146,13 @@
     <string name="notification_pref" maxLength="41">ଵିଜ୍ଞପ୍ତି</string>
     <string name="notification_pref_title" maxLength="41">କେବେ ସୂଚିତ କରାଯିବ</string>
     <string name="never_notify">କଦାପି ସୂଚିତ କରନାହିଁ</string>
-    <string name="notify_when_pending">ବିଚାରାଧୀନ ବାର୍ତ୍ତା ଉପଲବ୍ଧ ଥିଲେ</string>
+    <string name="notify_when_pending">ବିଚାରାଧୀନ ଵାର୍ତ୍ତା ଉପଲବ୍ଧ ଥିଲେ</string>
     <string name="notification_minimum_cards_due">%d ରୁ ଅଧିକ ପତ୍ର ବାକି ଥାଏ</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">କମ୍ପନ</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED ସୂଚକ</string>
-    <string name="timeout_answer_text" maxLength="41">ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ</string>
-    <string name="timeout_answer" maxLength="41">ସମୟ-ସମାପ୍ତ ଉତ୍ତର</string>
-    <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଉତ୍ତର ଦେଖାନ୍ତୁ। ବିଳମ୍ବ, ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଖୋଲାଯାଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ କରେ</string>
+    <string name="timeout_answer_text" maxLength="41">ସ୍ୱଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ</string>
+    <string name="timeout_answer" maxLength="41">ସମୟ-ସମାପ୍ତି ଉତ୍ତର</string>
+    <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱଚାଳିତ ଭାଵେ ଉତ୍ତର ଦେଖାଅ। ଵିଳମ୍ବରେ ସ୍ୱଚାଳିତ ଭାଵେ ଚାଳନ ହୋଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ</string>
     <string name="timeout_answer_seconds" maxLength="41">ଉତ୍ତର ଦେଖାଇବା ସମୟ</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">ପରଵର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବା ସମୟ</string>
@@ -169,16 +169,16 @@
     <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ (ମିଲିସେକେଣ୍ଡ)</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
-    <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାନ୍ତୁ</string>
-    <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍ ଗୁଡ଼ିକରେ ପରଵର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦର୍ଶାଇବା</string>
-    <string name="show_large_answer_buttons" maxLength="41">ବଡ଼ ଉତ୍ତର ବଟନ୍ ଦେଖାନ୍ତୁ</string>
-    <string name="show_large_answer_buttons_summ">୨ଟି ଧାଡ଼ିରେ ଉତ୍ତର ବଟନ୍ ଦେଖାନ୍ତୁ</string>
-    <string name="show_top_bar" maxLength="41">ଶୀର୍ଷ ବାର୍ ଦେଖାନ୍ତୁ</string>
-    <string name="show_top_bar_summ">ଶୀର୍ଷ ବାର୍ ରେ ପତ୍ର ଗଣନା, ପତାକା ଏବଂ ଚିହ୍ନ ଦେଖାନ୍ତୁ</string>
-    <string name="show_progress" maxLength="41">ଅବଶିଷ୍ଟ ଦେଖାନ୍ତୁ</string>
-    <string name="show_progress_summ">ବଳକା ପତ୍ରସଂଖ୍ୟା ଦେଖାନ୍ତୁ</string>
-    <string name="show_eta" maxLength="41">ETA ଦେଖାନ୍ତୁ</string>
-    <string name="show_eta_summ">ବଳକା ସମୟ ଦେଖାନ୍ତୁ</string>
+    <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାଇବା</string>
+    <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍‌ଗୁଡ଼ିକରେ ପରଵର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦର୍ଶାଇବା</string>
+    <string name="show_large_answer_buttons" maxLength="41">ବଡ଼ ଉତ୍ତର ବଟନ୍ ଦେଖାଇବା</string>
+    <string name="show_large_answer_buttons_summ">୨ଟି ଧାଡ଼ିରେ ଉତ୍ତର ବଟନ୍ ଦେଖାଇବା</string>
+    <string name="show_top_bar" maxLength="41">ଶୀର୍ଷ ଦଣ୍ଡିକା ଦେଖାଇବା</string>
+    <string name="show_top_bar_summ">ଶୀର୍ଷ ଦଣ୍ଡିକାରେ ପତ୍ର ଗଣନା, ପତାକା ଏଵଂ ଚିହ୍ନ ଦେଖାଇବା</string>
+    <string name="show_progress" maxLength="41">ବାକିତକ ଦେଖାଇବା</string>
+    <string name="show_progress_summ">ଅଵଶିଷ୍ଟ ପତ୍ର ଗଣନା ଦେଖାଇବା</string>
+    <string name="show_eta" maxLength="41">ETA ଦେଖାଇବା</string>
+    <string name="show_eta_summ">ବଳକା ସମୟ ଦେଖାଇବା</string>
     <string name="use_current" maxLength="41">ନୂଆ ପତ୍ର ପାଇଁ ତାସଖଣ୍ଡ</string>
     <string name="new_spread" maxLength="41">ନୂଆ ପତ୍ରର ଅଵସ୍ଥିତି</string>
     <string name="learn_cutoff" maxLength="41">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
@@ -188,18 +188,20 @@
     <string name="day_offset_summary">ମଧ୍ୟରାତ୍ରିରୁ %s ଘଣ୍ଟା ପରେ</string>
     <string name="xlabel_dayoffset_seekbar" maxLength="41">ମଧ୍ୟରାତ୍ରି</string>
     <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
-    <string name="pref_keep_screen_on" maxLength="41">ସ୍କ୍ରିନ୍ ସଚଳ ରଖନ୍ତୁ</string>
-    <string name="pref_keep_screen_on_summ">ସ୍କ୍ରିନ୍ ସମୟ-ସମାପ୍ତ ଅକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="convert_fen_text" maxLength="41">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ </string>
+    <string name="pref_keep_screen_on" maxLength="41">ସ୍କ୍ରୀନ୍ ସଚଳ ରଖିବା</string>
+    <string name="pref_keep_screen_on_summ">ସ୍କ୍ରୀନ୍ ସମୟ-ସମାପ୍ତି ଅକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="convert_fen_text" maxLength="41">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ</string>
     <string name="convert_fen_text_summ">Forsyth–Edwards ଅଙ୍କନରୁ ଚେସବୋର୍ଡ ଅଙ୍କନ କର। ଅଙ୍କନ ନିଶ୍ଚିତ ଭାବରେ [fen][/fen] ଟ୍ୟାଗରେ ଆବଦ୍ଧ ହେବା ଆବଶ୍ୟକ।</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="enable_api_summary">ଅନ୍ୟ ଆପସ୍ କୁ AnkiDroid ସହିତ ସଂଯୋଗ କରି ଆପଣଙ୍କ ହସ୍ତକ୍ଷେପ ବିନା ତଥ୍ୟ ପଢ଼ିବା/ଲେଖିବାକୁ ଦିଅନ୍ତୁ</string>
-    <string name="custom_buttons" maxLength="41">ଆପ୍ ବାର୍ ବଟନ୍</string>
-    <string name="custom_buttons_summary">ଆପ୍ ବାର୍ ରେ କେଉଁ କ୍ରିୟା ଦେଖାଯାଏ କଷ୍ଟୋମାଇଜ୍ କରନ୍ତୁ</string>
+    <string name="custom_buttons" maxLength="41">ଆପ୍ ଦଣ୍ଡିକା ବଟନ୍</string>
+    <string name="custom_buttons_summary">ଆପ୍ ଦଣ୍ଡିକାରେ କେଉଁସବୁ କୃତ୍ୟ ଦେଖାଯିବ ଅନୁକୂଳ କରିବା</string>
     <string name="custom_buttons_setting_always_show">ସର୍ଵଦା ଦେଖାଅ</string>
     <string name="custom_buttons_setting_if_room">ଜାଗା ଥିଲେ ଦେଖାଅ</string>
     <string name="custom_buttons_setting_menu_only">କେଵଳ ମେନୁ</string>
     <string name="reset_custom_buttons" maxLength="41">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="reset_settings_to_default">Reset settings to default</string>
+    <string name="reset">Reset</string>
     <string name="thirdparty_apps_title" maxLength="41">ତୃତୀୟ-ପକ୍ଷ API ଆପ୍ ସମୂହ</string>
     <string name="thirdparty_apps_summary">ଆପ୍ଲିକେସନଗୁଡ଼ିକର ଏକ ତାଲିକା ଦେଖନ୍ତୁ ଯାହା AnkiDroid API ଯେପରିକି ଅଭିଧାନ, ଉପଯୋଗୀତା ର ବ୍ୟବହାର କରନ୍ତି।</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript ତ୍ରୁଟି ନିବାରଣ</string>
@@ -211,14 +213,14 @@
     <string name="paste_as_png" maxLength="41">କ୍ଲିପବୋର୍ଡ ପ୍ରତିଛବିଗୁଡ଼ିକୁ PNG ଭାବରେ ଲେପନ</string>
     <string name="paste_as_png_summary">ଡିଫଲ୍ଟ ଭାବରେ Anki ଡିସ୍କ ସ୍ପେସ୍ ସଞ୍ଚୟ କରିବାକୁ JPG ଫାଇଲ୍ ଭାବରେ କ୍ଲିପବୋର୍ଡରେ ପ୍ରତିଛବିଗୁଡ଼ିକୁ ପେଷ୍ଟ କରେ। ଏହା ପରିବର୍ତ୍ତେ PNG ପ୍ରତିଛବି ଭାବରେ ପେଷ୍ଟ କରିବାକୁ ଆପଣ ଏହି ବିକଳ୍ପକୁ ବ୍ୟବହାର କରିପାରିବେ।</string>
     <string name="exit_via_double_tap_back" maxLength="41">ଫେରିବା/ପ୍ରସ୍ଥାନ କରିବାକୁ ଦୁଇଥର ବ୍ୟାକ୍ ଦବାଅ</string>
-    <string name="exit_via_double_tap_back_summ">ହଠାତ୍ ସମୀକ୍ଷକ କିମ୍ୱା ଆପ୍ଲିକେସନ୍ ଛାଡ଼ିବା ଏଡ଼ାଇବାକୁ</string>
+    <string name="exit_via_double_tap_back_summ">ହଠାତ୍ ସମୀକ୍ଷକ କିମ୍ୱା ଆପ୍ ଛାଡ଼ିବା ଏଡ଼ାଇବାକୁ</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">ମିଡ଼ିଆ ଆମଦାନୀରେ ସବୁ ଫାଇଲକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="media_import_allow_all_files_summ">ଯଦି ଆଣ୍ଡ୍ରଏଡ୍ ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ଚିହ୍ନି ପାରେ ନାହିଁ</string>
     <!-- Statistics settings -->
     <string name="stats_default_deck_title" maxLength="41">ପରିସଂଖ୍ୟାନ ଖୋଲିବା ବେଳେ ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ</string>
-    <string name="stats_default_deck_current">ସବୁଠାରୁ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ ପାଇଁ ପରିସଂଖ୍ୟାନ ଦେଖାଇବା</string>
-    <string name="stats_default_deck_all">ସବୁ ତାସଖଣ୍ଡ ପାଇଁ ପରିସଂଖ୍ୟାନ ଦେଖାଇବା</string>
+    <string name="stats_default_deck_current">ସବୁଠାରୁ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡର ପରିସଂଖ୍ୟାନ ଦେଖାଇବା</string>
+    <string name="stats_default_deck_all">ସବୁ ତାସଖଣ୍ଡର ପରିସଂଖ୍ୟାନ ଦେଖାଇବା</string>
     <!-- Advanced statistics settings -->
     <string name="advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ</string>
     <string name="enable_advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ ସକ୍ଷମ କରନ୍ତୁ</string>
@@ -229,10 +231,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସୀଙ୍କ୍ ସର୍ଵର୍</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ଵ୍ୟଵହାର ହୋଇନାହିଁ</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        AnkiWeb ସହ ସୀଙ୍କ୍ରୋନାଇଜ୍ କରିବାର ଵିକଳ୍ପ ଭାଵରେ,
+        ଆପଣ ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍ ପାଇଁ ଆପଣଙ୍କ ନିଜ ସର୍ଵର୍ ଵ୍ୟଵହାର କରିପାରିବେ।
+        ଯଦି ସେଟ୍ ହୋଇନାହିଁ, ତେବେ ଏହା ବଦଳରେ ଡିଫଲ୍ଟ AnkiWeb ସର୍ଵର୍ ଵ୍ୟଵହାର ହେବ।
+        <a href="%s">ଅଧିକ ଜାଣନ୍ତୁ</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">ସୀଙ୍କ୍ url</string>
     <!-- Key Bindings -->
@@ -266,8 +268,8 @@
     <string name="deck_conf_new_bury_summ">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
     <string name="deck_conf_rev_bury" maxLength="41">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
     <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">ସାଧାରଣ ସେଟିଂସ୍ ବ୍ୟବହାର କରନ୍ତୁ</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀର ସେଟିଂସ୍ ବ୍ୟବହାର କରିବା ପରିବର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱୟଂଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ\' ସେଟିଂସ୍ ବ୍ୟବହାର କରନ୍ତୁ।</string>
+    <string name="deck_conf_use_general_timeout_settings" maxLength="41">ସାଧାରଣ ସେଟିଂ ଵ୍ୟଵହାର କରିବା</string>
+    <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀର ସେଟିଂ ଵ୍ୟଵହାର କରିବା ପରିଵର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ\' ସେଟିଂ ଵ୍ୟଵହାର କରିବା।</string>
     <string name="deck_conf_easy_bonus" maxLength="41">ସହଜ ଅଧିଲାଭ</string>
     <string name="deck_conf_hard_factor" maxLength="41">କଠିନ ଅନ୍ତରାଳ</string>
     <string name="deck_conf_ivl_fct" maxLength="41">ଅନ୍ତରାଳ ସଂଶୋଧକ</string>
@@ -279,8 +281,8 @@
     <string name="deck_conf_leech_action" maxLength="41">ଜୋକ (leech) କାର୍ଯ୍ୟ</string>
     <string name="deck_conf_max_time" maxLength="41">ସର୍ବାଧିକ ଉତ୍ତର ସମୟ</string>
     <string name="deck_conf_seconds">XXX ସେକେଣ୍ଡ</string>
-    <string name="deck_conf_timer" maxLength="41">ଉତ୍ତର ଟାଇମର୍ ଦେଖାନ୍ତୁ</string>
-    <string name="deck_conf_autoplay" maxLength="41">ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଅଡ଼ିଓ ଚଲାନ୍ତୁ</string>
+    <string name="deck_conf_timer" maxLength="41">ଉତ୍ତର ସମୟ-ନିୟାମକ ଦେଖାଇବା</string>
+    <string name="deck_conf_autoplay" maxLength="41">ସ୍ୱଚାଳିତ ଭାଵେ ଅଡ଼ିଓ ଚଲାଅ</string>
     <string name="deck_conf_replayq" maxLength="41">ପ୍ରଶ୍ନର ପୁନରାବୃତ୍ତି କରନ୍ତୁ</string>
     <string name="deck_conf_replayq_summ">ଉତ୍ତର ଦେଖାଯିବା ବେଳେ, ଉଭୟ ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ଅଡ଼ିଓ ପୁନଃଚାଳନ କରନ୍ତୁ</string>
     <string name="deck_conf_manage" maxLength="41">ଗୋଷ୍ଠୀ ପରିଚାଳନା</string>
@@ -319,7 +321,7 @@
     <string name="no_code_formatting" maxLength="41">ସରଳ ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫର୍ମାଟିଂ</string>
     <string name="no_code_formatting_summ">ଟାଇପ୍ ହୋଇଥିବା ଉତ୍ତର ଫଳାଫଳଗୁଡ଼ିକରେ ଦେଖାଯାଉଥିବା ‘􏿾’ ଠିକ୍ କରେ</string>
     <string name="type_in_answer_focus" maxLength="41">‘ଉତ୍ତର ଟାଇପ୍ କର’ ଉପରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
-    <string name="type_in_answer_focus_summ">ସମୀକ୍ଷକଙ୍କ ମଧ୍ୟରେ ‘ଉତ୍ତର ଟାଇପ୍ କର’ କ୍ଷେତ୍ରକୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
+    <string name="type_in_answer_focus_summ">ସମୀକ୍ଷକରେ ‘ଉତ୍ତର ଟାଇପ୍ କର’ କ୍ଷେତ୍ରକୁ ସ୍ୱଚାଳିତ ଭାଵେ କେନ୍ଦ୍ରୀଭୂତ କରିବା</string>
     <!-- About -->
     <string name="open_changelog">ପରିବର୍ତ୍ତନ ଲଗ୍ ଖୋଲନ୍ତୁ</string>
     <string name="pref_cat_about_title" maxLength="41">ଵିଷୟରେ</string>
@@ -350,13 +352,13 @@
     <string name="experimental_pref_confirmation" maxLength="41">‘%s’ ସକ୍ଷମ କରିବା</string>
     <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ଵ୍ୟଵହାର କରିବା</string>
     <string name="use_rust_backend_summary">ନୂଆ Anki ଵୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ ସକ୍ଷମ କରେ, ଯେପରିକି v3 scheduler\nଅସ୍ଥିର ଅଟେ। ଆପଣଙ୍କ କୌଣସି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ସଂଗ୍ରହ ଉପରେ ଵ୍ୟଵହାର କରନ୍ତୁନି। ଆପ୍ ବନ୍ଦ କଲେ ପ୍ରତ୍ୟାଵର୍ତ୍ତନ ହୁଏନାହିଁ</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
+    <string name="use_rust_backend_warning">ଏମିତି ବି ସମ୍ଭାଵନା ଅଛି ଯେ ଏହା ଆପଣଙ୍କ ଅଧିସ୍ଥାପନକୁ ସମ୍ପୂର୍ଣ୍ଣ ଭାଵରେ ଦୁର୍ନୀତିଗ୍ରସ୍ତ କରି ଛାଡ଼ିଦେବ, ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ଓ AnkiDroid ଫୋଲ୍ଡରକୁ ଵିଲୋପ କରିବା ଆଵଶ୍ୟକତା ପଡ଼ିପାରେ, ଆଉ AnkiWebରେ ସୀଙ୍କ୍ ମାଧ୍ୟମରେ ଦୁର୍ନୀତି ପ୍ରଚାର କରିବାର ସୁଯୋଗ ରହିଛି।\n\nଆମେ ପରୀକ୍ଷଣକୁ ସ୍ୱାଗତ କରୁ, କିନ୍ତୁ ଦୟାକରି ସୁନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ପାଖରେ ଏକ ଵୈଧ ଅଣ-AnkiWeb ବ୍ୟାକଅପ୍ ଅଛି।</string>
     <string name="enable_v3_sched_title" maxLength="41">v3 ଅନୁସୂଚକ ଵ୍ୟଵହାର କରିବା</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ଵିକଳ୍ପ</string>
     <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ଵିକଳ୍ପ ସକ୍ଷମ କରିବା</string>
     <string name="disable_dev_options">ଡେଵେଲପର୍ ଵିକଳ୍ପ ଅକ୍ଷମ କରିବା</string>
-    <string name="dev_options_warning">        ଡେଵେଲପର୍ ବିକଳ୍ପ ସକ୍ଷମ କରିବା ପୂର୍ବରୁ ଦୟାକରି ନିଶ୍ଚିତ ହୁଅନ୍ତୁ। ଏଇ ବିକଳ୍ପଗୁଡ଼ିକ ବିପଜ୍ଜନକ ଏବଂ ଆପ୍ ଭାଙ୍ଗିପାରନ୍ତି କିମ୍ବା ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ଭ୍ରଷ୍ଟ କରିପାରନ୍ତି।\n\nଧ୍ୟାନ ଦିଅନ୍ତୁ ଯେ ଏହି ବିକଳ୍ପଗୁଡ଼ିକ ଅଧିକାଂଶ ଉପଭୋକ୍ତାଙ୍କ ପାଇଁ ଉପଯୁକ୍ତ ନୁହେଁ ଏବଂ ସେଥିପାଇଁ ଅନୁବାଦ କରାନଯାଇ ଇଂରାଜୀରେ ହି ଥାଏ।
+    <string name="dev_options_warning">        ଡେଵେଲପର୍ ଵିକଳ୍ପ ସକ୍ଷମ କରିବା ଆଗରୁ ଦୟାକରି ନିଶ୍ଚିତ ହୁଅନ୍ତୁ। ଏଇ ଵିକଳ୍ପ ବିପଜ୍ଜନକ ଏଵଂ ଆପ୍ ଭାଙ୍ଗିପାରନ୍ତି କିମ୍ବା ଆପଣଙ୍କ ସଂଗ୍ରହକୁ ଭ୍ରଷ୍ଟ କରିପାରନ୍ତି।\n\nଧ୍ୟାନ ଦିଅନ୍ତୁ ଯେ ଏହି ଵିକଳ୍ପଗୁଡ଼ିକ ଅଧିକାଂଶ ଉପଭୋକ୍ତାଙ୍କ ପାଇଁ ଉପଯୁକ୍ତ ନୁହେଁ ଏଣୁ ଅନୁଵାଦ କରାନଯାଇ ଇଂରାଜୀରେ ହି ଥାଏ।
     </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
@@ -398,20 +400,20 @@
     <string name="progress__deleting_backups">ବ୍ୟାକଅପଗୁଡ଼ିକ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">ସଂଗ୍ରହ ଵିଲୋପ କରିଦେବା</string>
-    <string name="pref__delete_collection__summary">ସଂଗ୍ରହ, ମିଡ଼ିଆ, ଏଵଂ ବ୍ୟାକଅପ୍ ଵିଲୋପ କରିବା। ଆପ୍ ସେଟିଂସ୍ ଵିଲୋପ ହୁଏନାହିଁ</string>
+    <string name="pref__delete_collection__summary">ସଂଗ୍ରହ, ମିଡ଼ିଆ, ଏଵଂ ବ୍ୟାକଅପ୍ ଵିଲୋପ କରିବା। ଆପ୍ ସେଟିଂ ଵିଲୋପ ହୁଏନାହିଁ</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">ସଂଗ୍ରହ ଵିଲୋପ କରିଦେବେ</string>
-    <string name="dialog__delete_collection__message">ଆପଣ ଆପଣଙ୍କ ସଂଗ୍ରହ, ମିଡ଼ିଆ, ଏଵଂ ବ୍ୟାକଅପ୍ ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ?</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ଆପଣ ଆପଣଙ୍କ ସଂଗ୍ରହ, ମିଡ଼ିଆ, ଏଵଂ ବ୍ୟାକଅପ୍ ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ?\n\nଟିପ୍ପଣୀ: ଏହି କୃତ୍ୟଟି ୱିଣ୍ଡୋ ବନ୍ଦ କରିଦେବ।</string>
     <string name="progress__deleting_collection">ସଂଗ୍ରହ ଵିଲୋପ ହେଉଛି&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">ସବୁକିଛି ଵିଲୋପ କରିଦେବା</string>
-    <string name="pref__delete_everything__summary">ସଂଗ୍ରହ, ମିଡ଼ିଆ, ବ୍ୟାକଅପ୍, ଏଵଂ ସେଟିଂସ୍ ଵିଲୋପ କରିବା</string>
+    <string name="pref__delete_everything__summary">ସଂଗ୍ରହ, ମିଡ଼ିଆ, ବ୍ୟାକଅପ୍, ଏଵଂ ସେଟିଂ ଵିଲୋପ କରିବା</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">ସବୁକିଛି ଵିଲୋପ କରିଦେବେ</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ଆପଣ ସବୁ ଡାଟା ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ? ଏଥିରେ ଆପଣଙ୍କ ସଂଗ୍ରହ, ମିଡ଼ିଆ, ବ୍ୟାକଅପ୍ ଏଵଂ ଅଗ୍ରାଧିକାର ଅନ୍ତର୍ଭୁକ୍ତ।\n\nଟିପ୍ପଣୀ: ଏହି କୃତ୍ୟଟି ୱିଣ୍ଡୋ ବନ୍ଦ କରିଦେବ।</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">ଆପ୍ ଡାଟା ଵିଲୋପ କରିଦେବା</string>
-    <string name="pref__delete_app_data__summary">ସେଟିଂସ୍ ଏଵଂ ଅନ୍ୟାନ୍ୟ ଆପ୍ ଡାଟା ଵିଲୋପ କରିବା</string>
+    <string name="pref__delete_app_data__summary">ସେଟିଂ ଏଵଂ ଅନ୍ୟାନ୍ୟ ଆପ୍ ଡାଟା ଵିଲୋପ କରିବା</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">ଆପ୍ ଡାଟା ଵିଲୋପ କରିଦେବେ</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ଆପଣ ଆପ୍ ଡାଟା ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ? ଏଥିରେ ସେଟିଂସ୍ ଏଵଂ ଅନ୍ୟାନ୍ୟ ଆପ୍ ଡାଟା ଅନ୍ତର୍ଭୁକ୍ତ।\n\nଟିପ୍ପଣୀ: ଏହି କୃତ୍ୟଟି ୱିଣ୍ଡୋ ବନ୍ଦ କରିଦେବ।</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">ଆପଣ ଆପ୍ ଡାଟା ଵିଲୋପ କରିବାକୁ ନିଶ୍ଚିତ ଅଛନ୍ତି ତ? ଏଥିରେ ସେଟିଂ ଏଵଂ ଅନ୍ୟାନ୍ୟ ଆପ୍ ଡାଟା ଅନ୍ତର୍ଭୁକ୍ତ।\n\nଟିପ୍ପଣୀ: ଏହି କୃତ୍ୟଟି ୱିଣ୍ଡୋ ବନ୍ଦ କରିଦେବ।</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->

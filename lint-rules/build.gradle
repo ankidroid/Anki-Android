@@ -5,8 +5,15 @@ repositories {
     mavenCentral()
 }
 
-kotlin {
-    jvmToolchain(11)
+tasks.withType(JavaCompile).configureEach {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11 // starting with AGP 7.4.0 we need to target JVM 11 bytecode
+    }
 }
 
 dependencies {

@@ -107,7 +107,7 @@
     <string name="undo">Cofnij</string>
     <string name="undo_action_review">ostatnia powtórka</string>
     <string name="undo_action_change_deck_multi">zmień talie</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Cofnij pociągnięcie pędzlem</string>
     <string name="move_all_to_deck">Przenieś wszystkie do talii</string>
     <string name="unbury">Odkop</string>
     <string name="rename_deck">Zmień nazwę talii</string>
@@ -148,6 +148,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Proszę przyznać AnkiDroid uprawnienie \"Pamięć\" by kontynuować</string>
+    <string name="startup_all_files_access_permission">Proszę przyznać AnkiDroid uprawnienie \"Dostęp do wszystkich plików\", aby kontynuować</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -186,7 +187,6 @@
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
     <string name="empty_cloze_warning">Edytuj notatkę i dodaj luki w tekście. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizuj</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Synchronizacja tymczasowo wyłączona</string>
     <string name="button_upgrade" comment="Text of the sync button">Migruj dane do przestrzeni dyskowej</string>
     <string name="cancel_sync_confirm">Chcesz przerwać synchronizację?</string>
     <string name="continue_sync">Kontynuuj synchronizację</string>
@@ -258,9 +258,38 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">Kopia %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nie można zapisać do lub utworzyć pliku %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">Migracja danych</string>
+    <string name="migration__calculating_transfer_size">Obliczanie rozmiaru transferu&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Przeniesiono %1$s z %2$s</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Przenoszenie powiodło się</string>
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Twoje dane zostały pomyślnie przeniesione.
+        AnkiDroid znów funkcjonuje w pełni i możesz uruchomić synchronizację.
+        \n
+        \nZauważ, że Twoja kolekcja znajduje się teraz w folderze, który jest usuwany podczas odinstalowywania aplikacji.
+        Upewnij się, że Twoje dane są bezpieczne poprzez regularną synchronizację lub eksport kopii zapasowej.
+    </string>
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migracja nie powiodła się</string>
+    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Migracja pamięci masowej jest wstrzymana po występieniu błędu: %1$s.
+        <br><br>
+        Spróbuj ponownie uruchomić migrację.
+        Aby rozwiązać problem, być może trzeba zwolnić trochę miejsca na dysku, lub ponownie podłączyć brakujące media.
+        <br><br>
+        <a href="%2$s">Dowiedz się więcej i uzyskaj pomoc</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Niedostępna kolekcja</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Nie możemy uzyskać dostępu do Twojej kolekcji po odinstalowaniu AnkiDroid ze względu na zmianę w polityce sklepu Play\n\nTwoje dane są bezpieczne i mogą zostać przywrócone. Znajduje się w\n%s\n\nWybierz jedną z opcji poniżej, aby je przywrócić:</string>
+    <string name="restore_data_from_ankiweb">Przywróć z AnkiWeb (zalecane)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Przywróć dostęp do folderu (zalecane)</string>
+    <string name="install_non_play_store_ankidroid">Przywróć dostęp do folderu (zaawansowane)</string>
+    <string name="restore_data_from_backup">Przywróć kopię zapasową z pliku .colpkg (zaawansowane)</string>
+    <string name="create_new_collection">Utwórz nową kolekcję</string>
+    <string name="new_unsafe_collection">Nowa kolekcja zostanie usunięta z telefonu, jeśli odinstalujesz AnkiDroid</string>
 </resources>

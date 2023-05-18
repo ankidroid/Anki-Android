@@ -19,6 +19,8 @@ package com.ichi2.anki.servicelayer.scopedstorage
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Executor
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
+import com.ichi2.testutils.Flaky
+import com.ichi2.testutils.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasSize
@@ -90,6 +92,7 @@ class ExecutorTest {
      * The preempted element should be added before the second 'initial' element.
      */
     @Test
+    @Flaky(os = OS.WINDOWS, "Index 2 out of bounds for length 2")
     fun `A preempted element is executed before a regular element`() {
         val opOne = BlockedOperation()
         val opTwo = mock<Operation>(name = "opTwo")

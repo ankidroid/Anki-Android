@@ -201,6 +201,8 @@
     <string name="custom_buttons_setting_if_room">Паказваць, калі ёсць месца</string>
     <string name="custom_buttons_setting_menu_only">Толькі меню</string>
     <string name="reset_custom_buttons" maxLength="41">Скінуць да стандартных</string>
+    <string name="reset_settings_to_default">Скінуць налады да прадвызначаных</string>
+    <string name="reset">Скінуць</string>
     <string name="thirdparty_apps_title" maxLength="41">Праграмныя API іншых распрацоўшчыкаў</string>
     <string name="thirdparty_apps_summary">Паглядзець спіс праграм, якія выкарыстоўваць API AnkiDroid (слоўнікі, службовыя праграмы і г.д.).</string>
     <string name="html_javascript_debugging" maxLength="41">Адладка HTML / JavaScript</string>
@@ -230,10 +232,10 @@
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Уласны сервер сінхранізацыі</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не выкарыстоўваецца</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_help2"><![CDATA[        Замест сінхранізацыі з серверам AnkiWeb,
+        вы можаце выкарыстоўваць уласны сервер для сінхранізацыі.
+        Калі не зададзена, то прадвызначана выкарыстоўваецца сервер AnkiWeb.
+        <a href="%s">Даведацца больш</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Спасылка для сінхранізацыі</string>
     <!-- Key Bindings -->
@@ -407,7 +409,7 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Выдаліць калекцыю</string>
     <string name="pref__delete_collection__summary">Выдаліць калекцыю, мультымедыйныя файлы і рэзервовыя копіі. Налады праграмы не будуць выдалены</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Выдаліць калекцыю</string>
-    <string name="dialog__delete_collection__message">Вы сапраўды хочаце выдаліць сваю калекцыю, медыя і рэзервовыя копіі?</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Вы сапраўды хочаце выдаліць сваю калекцыю, медыя і рэзервовыя копіі?\n\nНататка: гэта дзеянне прывядзе да закрыцця акна.</string>
     <string name="progress__deleting_collection">Выдаленне калекцыі...</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Выдаліць усё</string>

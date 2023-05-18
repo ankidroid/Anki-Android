@@ -77,11 +77,11 @@
     <string name="sync_log_uploading_message">სრული სინქრონიზაცია ლოკალურიდან</string>
     <string name="sync_log_clocks_unsynchronized">თქვენი მოწყობილობის საათი არასწორია %1$d წამით%2$s. დარწმუნდით, რომ დაყენებულია სწორი თარიღი, დრო და სასაათო სარტყელი და ხელახლა სცადეთ სინქრონიზაცია.</string>
     <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
-    <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>
+    <string name="sync_log_clocks_unsynchronized_date">, შესაძლოა თარიღი იყოს არასწორი</string>
     <string name="sync_no_changes_message">ცვლილებები ვერ მოიძებნა</string>
     <string name="sync_database_acknowledge">კოლექციის სინქრონიზაცია წარმატებით განხორციელდა</string>
     <string name="sync_log_error_specific">სინქრონიზაციის შეცდომა, ტიპი: %1$s, შეტყობინება: %2$s</string>
-    <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
+    <string name="sync_corrupt_database">თქვენი მონაცემთა ბაზა დაზიანებულია. გთხოვთ, სინქრონიზების ხელახლა ცდამდე პრობლემა აღმოფხვრათ.\n\nმონაცემთა ბაზის გამოსასწორებლად საჭირო ინფორმაციისთვის იხილეთ %s.</string>
     <string name="sync_too_busy">სერვერი დაკავებულია. სცადეთ მოგვიანებით.</string>
     <string name="sync_remote_db_error">ჩამოტვირთული მონაცემთა ბაზა დაზიანებული იყო. გთხოვთ ხელახლა სცადოთ.</string>
     <string name="sync_overwrite_error">მიმდინარე კოლექცია ვერ ჩანაცვლდა ჩამოტვირთული ფაილით</string>
@@ -100,11 +100,11 @@
     <string name="sync_check_upload_file">ფაილის შემოწმება ატვირთვამდე&#8230;</string>
     <string name="sync_check_download_file">ჩამოტვირთული ფაილის შემოწმება&#8230;</string>
     <string name="sync_media_find">იძებნება შეცვლილი მედიაფაილები&#8230;</string>
-    <string name="sync_media_no_changes">No changes to media files</string>
+    <string name="sync_media_no_changes">მედიაფაილები არ შეცვლილა</string>
     <string name="sync_media_success">მედიაფაილები სინქრონიზებულია</string>
     <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
     <string name="sync_media_changes_count">ასატვირთია %d შეცვლილი მედიაფაილი</string>
-    <string name="sync_media_downloaded_count">%d media files downloaded</string>
+    <string name="sync_media_downloaded_count">ჩამოტვირთულია %d მედიაფაილი</string>
     <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
     <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>

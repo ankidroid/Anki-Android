@@ -23,27 +23,37 @@ import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.DeckService.defaultDeckHasCards
-import com.ichi2.libanki.Collection
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.TreeNode
+import com.ichi2.libanki.sched.associateNodeWithParent
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import net.ankiweb.rsdroid.BackendFactory
+import net.ankiweb.rsdroid.RustCleanup
+import timber.log.Timber
 import java.util.*
 
 @KotlinCleanup("lots to do")
+@RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
+@RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
-    private val mDeckList: MutableList<TreeNode<AbstractDeckTreeNode>>
+    private var mDeckList: List<TreeNode<AbstractDeckTreeNode>> = ArrayList()
 
     /** A subset of mDeckList (currently displayed)  */
-    private val mCurrentDeckList: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList()
+    private var mCurrentDeckList: List<TreeNode<AbstractDeckTreeNode>> = ArrayList()
     private val mZeroCountColor: Int
     private val mNewCountColor: Int
     private val mLearnCountColor: Int
@@ -60,7 +70,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private var mDeckExpanderClickListener: View.OnClickListener? = null
     private var mDeckLongClickListener: OnLongClickListener? = null
     private var mCountsClickListener: View.OnClickListener? = null
-    private lateinit var mCol: Collection
 
     // Totals accumulated as each deck is processed
     private var mNew = 0
@@ -73,6 +82,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
 
     // Whether we have a background (so some items should be partially transparent).
     private var mPartiallyTransparentForBackground = false
+
+    private var deckIdToParentMap = mapOf<DeckId, DeckId?>()
 
     // ViewHolder class to save inflated views for recycling
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -118,23 +129,34 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         mPartiallyTransparentForBackground = isTransparent
     }
 
+    private val mutex = Mutex()
+
     /**
      * Consume a list of [AbstractDeckTreeNode]s to render a new deck list.
      * @param filter The string to filter the deck by
      */
-    fun buildDeckList(nodes: List<TreeNode<AbstractDeckTreeNode>>, col: Collection, filter: CharSequence?) {
-        mCol = col
-        mDeckList.clear()
-        mCurrentDeckList.clear()
-        mRev = 0
-        mLrn = mRev
-        mNew = mLrn
-        mNumbersComputed = true
-        mHasSubdecks = false
-        currentDeckId = mCol.decks.current().optLong("id")
-        processNodes(nodes)
-        // Filtering performs notifyDataSetChanged after the async work is complete
-        getFilter().filter(filter)
+    @NeedsTest("Ensure hasSubdecks is false if there are only top level decks")
+    suspend fun buildDeckList(nodes: List<TreeNode<AbstractDeckTreeNode>>, filter: CharSequence?) {
+        Timber.d("buildDeckList")
+        // TODO: This is a lazy hack to fix a bug. We hold the lock for far too long
+        // and do I/O inside it. Better to calculate the new lists outside the lock, then swap
+        mutex.withLock {
+            mHasSubdecks = nodes.any { it.children.any() }
+            currentDeckId = withCol { decks.current().optLong("id") }
+            val newDecks = processNodes(nodes)
+            mDeckList = newDecks.toList()
+            mCurrentDeckList = newDecks.toList()
+
+            val topLevelNodes = nodes.filter { it.value.depth == 0 && it.value.shouldDisplayCounts() }
+            mRev = topLevelNodes.sumOf { it.value.revCount }
+            mLrn = topLevelNodes.sumOf { it.value.lrnCount }
+            mNew = topLevelNodes.sumOf { it.value.newCount }
+            mNumbersComputed = true
+            // Note: this will crash if we have a deck list with identical DeckIds
+            deckIdToParentMap = nodes.associateNodeWithParent().entries.associate { Pair(it.key.did, it.value?.did) }.toMap()
+            // Filtering performs notifyDataSetChanged after the async work is complete
+            getFilter().filter(filter)
+        }
     }
 
     fun getNodeByDid(did: DeckId): TreeNode<AbstractDeckTreeNode> {
@@ -159,7 +181,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             deckLayout.setPadding(smallPadding, 0, rightPadding, 0)
             holder.deckExpander.visibility = View.VISIBLE
             // Create the correct expander for this deck
-            setDeckExpander(holder.deckExpander, holder.indentView, treeNode)
+            runBlocking { setDeckExpander(holder.deckExpander, holder.indentView, treeNode) }
         } else {
             holder.deckExpander.visibility = View.GONE
             val normalPadding = deckLayout.resources.getDimension(R.dimen.deck_picker_left_padding).toInt()
@@ -191,7 +213,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         val filtered = if (!BackendFactory.defaultLegacySchema) {
             node.filtered
         } else {
-            mCol.decks.isDyn(node.did)
+            runBlocking { withCol { decks.isDyn(node.did) } }
         }
         if (filtered) {
             holder.deckName.setTextColor(mDeckNameDynColor)
@@ -233,10 +255,11 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         return mCurrentDeckList.size
     }
 
-    private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
+    @RustCleanup("non suspend")
+    private suspend fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
         val nodeValue = node.value
         val collapsed = if (BackendFactory.defaultLegacySchema) {
-            mCol.decks.get(nodeValue.did).optBoolean("collapsed", false)
+            withCol { decks.get(nodeValue.did).optBoolean("collapsed", false) }
         } else {
             node.value.collapsed
         }
@@ -259,48 +282,39 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         indent.minimumWidth = width
     }
 
-    private fun processNodes(nodes: List<TreeNode<AbstractDeckTreeNode>>) {
+    /**
+     * Returns a filtered and flattened view of [nodes]
+     * [nodes] contains all nodes of depth 0.
+     * Afterwards, all depths are returned
+     */
+    @CheckResult
+    private suspend fun processNodes(nodes: List<TreeNode<AbstractDeckTreeNode>>): List<TreeNode<AbstractDeckTreeNode>> {
+        val result = mutableListOf<TreeNode<AbstractDeckTreeNode>>()
         for (node in nodes) {
-            var shouldRecurse = true
             if (BackendFactory.defaultLegacySchema) {
                 // If the default deck is empty, hide it by not adding it to the deck list.
                 // We don't hide it if it's the only deck or if it has sub-decks.
                 if (node.value.did == 1L && nodes.size > 1 && !node.hasChildren()) {
-                    if (!defaultDeckHasCards(mCol)) {
+                    if (withCol { !defaultDeckHasCards(col) }) {
                         continue
                     }
                 }
-                // If any of this node's parents are collapsed, don't add it to the deck list
-                for (parent in mCol.decks.parents(node.value.did)) {
-                    mHasSubdecks = true // If a deck has a parent it means it's a subdeck so set a flag
-                    if (parent.optBoolean("collapsed")) {
-                        return
-                    }
-                }
+            }
+            val isCollapsed = if (BackendFactory.defaultLegacySchema) {
+                withCol { decks.get(node.value.did).optBoolean("collapsed") }
             } else {
                 // backend takes care of excluding default, and includes collapsed info
-                if (node.value.collapsed) {
-                    mHasSubdecks = true
-                    shouldRecurse = false
-                }
+                node.value.collapsed
             }
 
-            mDeckList.add(node)
-            mCurrentDeckList.add(node)
+            result.add(node)
 
-            // Add this node's counts to the totals if it's a parent deck
-            if (node.value.depth == 0) {
-                if (node.value.shouldDisplayCounts()) {
-                    mNew += node.value.newCount
-                    mLrn += node.value.lrnCount
-                    mRev += node.value.revCount
-                }
-            }
             // Process sub-decks
-            if (shouldRecurse) {
-                processNodes(node.children)
+            if (!isCollapsed) {
+                result.addAll(processNodes(node.children))
             }
         }
+        return result
     }
 
     /**
@@ -310,26 +324,24 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
      * An invalid deck ID will return position 0.
      */
     fun findDeckPosition(did: DeckId): Int {
-        for (i in mCurrentDeckList.indices) {
-            if (mCurrentDeckList[i].value.did == did) {
-                return i
+        mCurrentDeckList.forEachIndexed { index, treeNode ->
+            if (treeNode.value.did == did) {
+                return index
             }
         }
+
         // If the deck is not in our list, we search again using the immediate parent
-        val parents = mCol.decks.parents(did)
-        return if (parents.isEmpty()) {
-            0
-        } else {
-            findDeckPosition(parents[parents.size - 1].optLong("id", 0))
-        }
+        // If the deck is not found, return 0
+        val parentDeckId = deckIdToParentMap[did] ?: return 0
+        return findDeckPosition(parentDeckId)
     }
 
-    val eta: Int?
-        get() = if (mNumbersComputed) {
-            mCol.sched.eta(Counts(mNew, mLrn, mRev))
-        } else {
-            null
-        }
+    suspend fun eta(): Int? = if (mNumbersComputed) {
+        withCol { sched.eta(Counts(mNew, mLrn, mRev)) }
+    } else {
+        null
+    }
+
     val due: Int?
         get() = if (mNumbersComputed) {
             mNew + mLrn + mRev
@@ -351,8 +363,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
 
         override fun publishResults(constraint: CharSequence?, results: List<TreeNode<AbstractDeckTreeNode>>) {
-            mCurrentDeckList.clear()
-            mCurrentDeckList.addAll(results)
+            mCurrentDeckList = results.toList()
             notifyDataSetChanged()
         }
 
@@ -391,7 +402,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     init {
-        mDeckList = ArrayList()
         // Get the colors from the theme attributes
         val attrs = intArrayOf(
             R.attr.zeroCountColor,

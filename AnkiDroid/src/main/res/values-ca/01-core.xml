@@ -138,6 +138,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Dóna-li a AnkiDroid el permís \'Storage\' per a continuar si us plau</string>
+    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -176,7 +177,6 @@
     <string name="sd_card_not_mounted">La tarjeta SD no funciona correctament</string>
     <string name="empty_cloze_warning">Editeu aquesta nota i afegiu-hi algunes eliminacions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronització</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">La sincronització està desactivada temporalment.</string>
     <string name="button_upgrade" comment="Text of the sync button">Migra a l\'emmagatzematge scoped</string>
     <string name="cancel_sync_confirm">Voleu cancel·lar la sincronització?</string>
     <string name="continue_sync">Continua la sincronització</string>
@@ -242,9 +242,38 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s còpies</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_data">Migrating data</string>
+    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migration successful</string>
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
+        AnkiDroid is fully functional again, and you can sync.
+        \n
+        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
+        Please make sure that your data is safe by regularly syncing or exporting backups.
+    </string>
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
+    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        Please try re-running the migration.
+        To resolve the problem, you may need to free up some disk space, or-reconnect the missing media.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
+    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
+    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
+    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
+    <string name="create_new_collection">Create a new collection</string>
+    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
 </resources>

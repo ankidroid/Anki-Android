@@ -32,6 +32,17 @@ import timber.log.Timber
 typealias SnackbarBuilder = Snackbar.() -> Unit
 
 /**
+ * An activity/fragment can implement this interface to specify a
+ * base configuration for snackbars shown in the activity/fragment.
+ */
+interface BaseSnackbarBuilderProvider {
+    /**
+     * The SnackbarBuilder that will be run to provide a base configuration for snackbars shown.
+     */
+    val baseSnackbarBuilder: SnackbarBuilder
+}
+
+/**
  * Show a snackbar.
  *
  * You can create snackbars by calling `showSnackbar` on either an activity or a view.
@@ -95,10 +106,14 @@ fun Activity.showSnackbar(
     duration: Int = Snackbar.LENGTH_LONG,
     snackbarBuilder: SnackbarBuilder? = null
 ) {
-    val view: View? = findViewById(R.id.root_layout)
+    val view: View? = findViewById(R.id.root_layout) as? CoordinatorLayout
 
     if (view != null) {
-        view.showSnackbar(text, duration, snackbarBuilder)
+        val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
+        view.showSnackbar(text, duration) {
+            baseSnackbarBuilder?.invoke(this)
+            snackbarBuilder?.invoke(this)
+        }
     } else {
         val errorMessage = "While trying to show a snackbar, " +
             "could not find a view with id root_layout in $this"
@@ -179,7 +194,7 @@ fun View.showSnackbar(
     snackbarBuilder: SnackbarBuilder? = null
 ) {
     val snackbar = Snackbar.make(this, text, duration)
-    snackbar.setMaxLines(2)
+    snackbar.setMaxLines(4)
     snackbar.behavior = SwipeDismissBehaviorFix()
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -222,7 +237,11 @@ fun Fragment.showSnackbar(
     duration: Int = Snackbar.LENGTH_LONG,
     snackbarBuilder: SnackbarBuilder? = null
 ) {
-    requireActivity().showSnackbar(text, duration, snackbarBuilder)
+    val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
+    requireActivity().showSnackbar(text, duration) {
+        baseSnackbarBuilder?.invoke(this)
+        snackbarBuilder?.invoke(this)
+    }
 }
 
 /**
@@ -261,6 +280,8 @@ fun Fragment.showSnackbar(
 }
 
 /* ********************************************************************************************** */
+
+fun Activity.canProperlyShowSnackbars() = findViewById<View>(R.id.root_layout) is CoordinatorLayout
 
 fun Snackbar.setMaxLines(maxLines: Int) {
     view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)?.maxLines = maxLines

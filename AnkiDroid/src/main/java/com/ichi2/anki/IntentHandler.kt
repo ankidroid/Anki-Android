@@ -19,28 +19,33 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Message
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.FileProvider
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
+import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.annotations.NeedsTest
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
+import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
 import timber.log.Timber
 import java.io.File
 import java.util.function.Consumer
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Class which handles how the application responds to different intents, forcing it to always be single task,
@@ -53,6 +58,7 @@ class IntentHandler : Activity() {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
         Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
+        Themes.setTheme(this)
         disableXiaomiForceDarkMode(this)
         setContentView(R.layout.progress_bar)
         val intent = intent
@@ -63,8 +69,7 @@ class IntentHandler : Activity() {
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
         val runIfStoragePermissions = Consumer { runnable: Runnable -> performActionIfStorageAccessible(runnable, reloadIntent, action) }
-        val launchType = getLaunchType(intent)
-        when (launchType) {
+        when (getLaunchType(intent)) {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
             LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
             LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })
@@ -87,21 +92,20 @@ class IntentHandler : Activity() {
             return
         }
 
-        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug, true)
+        showThemedToast(this, R.string.about_ankidroid_successfully_copied_debug_info, true)
     }
 
     /**
      * Execute the runnable if one of the two following conditions are satisfied:
      *
-     *  * AnkiDroid is using an app-specific directory to store user data
+     *  * AnkiDroid is using an app-private directory to store user data
      *  * AnkiDroid is using a legacy directory to store user data but has access to it since storage permission
-     * has been granted (as long as AnkiDroid targets API < 30 & requests legacy storage)
+     * has been granted (as long as AnkiDroid targeted API < 30, requested legacy storage, and has not been uninstalled since)
      *
      */
+    @NeedsTest("clicking a file in 'Files' to import")
     private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
-        if (!ScopedStorageService.isLegacyStorage(this) ||
-            applicationInfo.targetSdkVersion < Build.VERSION_CODES.R && hasStorageAccessPermission(this)
-        ) {
+        if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this) || Permissions.isExternalStorageManagerCompat()) {
             Timber.i("User has storage permissions. Running intent: %s", action)
             runnable.run()
         } else {
@@ -209,11 +213,8 @@ class IntentHandler : Activity() {
          * Send a Message to AnkiDroidApp so that the DialogMessageHandler forces a sync
          */
         fun sendDoSyncMsg() {
-            // Create a new message for DialogHandler
-            val handlerMessage = Message.obtain()
-            handlerMessage.what = DialogHandler.MSG_DO_SYNC
             // Store the message in AnkiDroidApp message holder, which is loaded later in AnkiActivity.onResume
-            storeMessage(handlerMessage)
+            storeMessage(DoSync().toMessage())
         }
 
         fun copyStringToClipboardIntent(context: Context, textToCopy: String) =
@@ -223,5 +224,41 @@ class IntentHandler : Activity() {
                 // 25000 * 2 (bytes per char) = 50,000 bytes <<< 500KB
                 it.putExtra(CLIPBOARD_INTENT_EXTRA_DATA, textToCopy.trimToLength(25000))
             }
+
+        class DoSync : DialogHandlerMessage(
+            which = WhichDialogHandler.MSG_DO_SYNC,
+            analyticName = "DoSyncDialog"
+        ) {
+            override fun handleAsyncMessage(deckPicker: DeckPicker) {
+                val preferences = AnkiDroidApp.getSharedPrefs(deckPicker)
+                val res = deckPicker.resources
+                val hkey = preferences.getString("hkey", "")
+                val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
+                val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
+                if (!limited && hkey!!.isNotEmpty() && NetworkUtils.isOnline) {
+                    deckPicker.sync()
+                } else {
+                    val err = res.getString(R.string.sync_error)
+                    if (limited) {
+                        val remainingTimeInSeconds = max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
+                        // getQuantityString needs an int
+                        val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
+                        val message = res.getQuantityString(R.plurals.sync_automatic_sync_needs_more_time, remaining, remaining)
+                        deckPicker.showSimpleNotification(err, message, Channel.SYNC)
+                    } else {
+                        deckPicker.showSimpleNotification(err, res.getString(R.string.youre_offline), Channel.SYNC)
+                    }
+                }
+                deckPicker.finishWithoutAnimation()
+            }
+
+            override fun toMessage(): Message = emptyMessage(this.what)
+
+            companion object {
+                const val INTENT_SYNC_MIN_INTERVAL = (
+                    2 * 60000 // 2min minimum sync interval
+                    ).toLong()
+            }
+        }
     }
 }

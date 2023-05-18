@@ -35,7 +35,7 @@
     <string name="card_n_name">Kort %d</string>
     <!--Note type-->
     <string name="basic_model_name">Grunnleggende</string>
-    <string name="cloze_model_name">Cloze</string>
+    <string name="cloze_model_name">Hulltekst</string>
     <string name="basic_typing_model_name">Grunnleggende (skriv inn svaret)</string>
     <string name="forward_reverse_model_name">Grunnleggende (og motsatt kortet)</string>
     <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>

@@ -56,8 +56,8 @@
         <item quantity="other">%d cards due</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">%d минута остава</item>
+        <item quantity="other">%s минути остават</item>
     </plurals>
     <string name="widget_add_note_button">Добавяне на нова бележка в AnkiDroid</string>
 </resources>

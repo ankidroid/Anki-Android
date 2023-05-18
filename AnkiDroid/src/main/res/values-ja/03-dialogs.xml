@@ -47,74 +47,74 @@
     <string name="check_db_title">データベースをチェックしますか？</string>
     <string name="check_db_warning">これには長い時間がかかることがあります。</string>
     <string name="check_db_acknowledge">データベースのチェックが完了しました</string>
-    <string name="check_db_acknowledge_shrunk">データベースがチェックされ最適化されました。\n %d MBへ縮小。</string>
-    <string name="contextmenu_deckpicker_delete_deck">このデッキを削除</string>
-    <string name="delete_deck_default_deck">デフォルト デッキは削除できません</string>
+    <string name="check_db_acknowledge_shrunk">データベースをチェックし最適化しました。\nデータを%dMB削減しました。</string>
+    <string name="contextmenu_deckpicker_delete_deck">デッキを削除</string>
+    <string name="delete_deck_default_deck">デフォルトデッキは削除できません</string>
     <string name="delete_deck_title">デッキを削除しますか？</string>
     <plurals name="delete_deck_message">
-        <item quantity="other">%1$s内の全てのカードを削除しますか？　%2$d枚のカードが含まれています</item>
+        <item quantity="other">%1$s内のすべてのカードを削除しますか？　%2$d枚のカードが含まれています</item>
     </plurals>
-    <string name="delete_cram_deck_message">%s の全てのカードを元のデッキに戻してもよろしいですか？</string>
+    <string name="delete_cram_deck_message">%s のすべてのカードを元のデッキに戻してもよろしいですか？</string>
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
     <string name="initializing_tts">テキスト読み上げ（TTS）機能を初期化しています...</string>
-    <string name="tts_no_tts">音声なし</string>
-    <string name="unused_strings">\n\n使用されていないファイル:\n</string>
+    <string name="tts_no_tts">発声なし</string>
+    <string name="unused_strings">\n\n(1) のファイルのリスト:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>
-    <string name="reposition_card_dialog_title">新規カードの表示順序を変更</string>
+    <string name="reposition_card_dialog_title">新規カードの導入順序を変更</string>
     <string name="reposition_card_dialog_message">開始位置</string>
-    <string name="reposition_card_not_new_error">新規カード以外は表示順序を変更できません。</string>
+    <string name="reposition_card_not_new_error">新規カード以外は順序を変更できません。</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="other">%d枚のカードの表示順序が変更されました</item>
     </plurals>
-    <string name="reset_card_dialog_title">カードの学習履歴をリセット</string>
-    <string name="reset_card_dialog_message">新規カードの最後に配置します</string>
+    <string name="reset_card_dialog_title">カードの学習進度をリセット</string>
+    <string name="reset_card_dialog_message">このカードを新規カードの最後に配置します</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="other">%d枚のカードの学習履歴をリセットしました</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="other">%d枚のカードを再スケジュール</item>
+        <item quantity="other">%d枚のカードのスケジュールを変更</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">現在の間隔: %d 日</item>
+        <item quantity="other">現在の間隔: %d日</item>
     </plurals>
     <string name="reschedule_card_dialog_message">x日後に復習する</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
         <item quantity="other">%d枚のカードのスケジュールを変更しました</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">新しいカードのスケジュールが変更されています。 スケジュールを変更すると、新しいカードがレビューカードに変わります。 「カードの再配置」オプションを使用して、新しいキュー内の新しいカードの位置を変更します</string>
-    <string name="reschedule_card_dialog_warning_ease_reset">スケジューラが将来カードをどのように扱うかもリセットします（易しさは %d%%）</string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">ファイルマネージャーでデッキを選択するか、ダウンロードページに移動してインポートします</string>
+    <string name="reschedule_card_dialog_new_card_warning">新規カードのスケジュールを変更しようとしています。 スケジュールを変更すると、新規カードは習得ステップを飛ばして復習カードに移行します。新規カードのまま表示の順序を変更したい場合は、カードブラウザーの 「新規カードの表示順序を変更」機能を使用してください</string>
+    <string name="reschedule_card_dialog_warning_ease_reset">スケジュール変更を行うと、そのカードの復習履歴に基づいて間隔を調整する指標がリセットされます（易しさが初期値の%d%%に戻ります）</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">ファイルマネージャーでデッキを選択するか、「about:downloads」ページに移動してデッキをインポートしてください</string>
     <string name="answering_error_title">データベース エラー</string>
-    <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。これは、データの破損か、ディスクの容量の不足が原因と考えられます。\n\n繰り返しエラーが発生する場合には、データをチェックするか、バックアップからコレクションを修復してください。\n\nまた、AnkiDroidのバグかもしれませんので\'オプション\'をクリックして、エラーを報告してください。</string>
-    <string name="answering_error_report">エラーを報告する</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
-    <string name="repair_deck_dialog">本当にデータの修復を行いますか？　\n\n処理を開始する前に、サブフォルダー（%s）にコピーが作成されます。</string>
-    <string name="intent_aedict_empty">カテゴリー \'default\' が空です。</string>
-    <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか追、\'default\' という名前のカテゴリを追加してください。</string>
-    <string name="custom_study_new_total_new">デッキの中の新規カードの枚数: %d</string>
-    <string name="custom_study_rev_total_rev">予定日時に達した復習カード数: %d</string>
+    <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。データベースの破損しているか、ストレージの空き容量が不足している可能性があります。\n\n繰り返しエラーが発生する場合には、「データベースをチェック」、コレクションの修復、「バックアップから復元」を試してみてください。\nまた、AnkiDroidのバグである可能性が考えられる場合は、開発者にご報告ください。</string>
+    <string name="answering_error_report">エラーを報告</string>
+    <string name="storage_full_message">AnkiDroidアプリを開くための十分な空き容量がストレージにありません。続行するには空き容量を確保してください。 </string>
+    <string name="repair_deck_dialog">データベースの修復を試みて本当によろしいですか？　\n\n試行の開始前に、サブフォルダー \"%s\" にコピーを作成します。</string>
+    <string name="intent_aedict_empty">カテゴリー \"default\" が空です</string>
+    <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか、\"default\" という名前のカテゴリを追加してください</string>
+    <string name="custom_study_new_total_new">デッキ内の新規カード: %d枚</string>
+    <string name="custom_study_rev_total_rev">デッキ内の、期日に達している復習カード: %d枚</string>
     <string name="custom_study_new_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
     <string name="custom_study_rev_extend">上限枚数をいくつ増やしますか？（減らす場合は負の数）</string>
-    <string name="custom_study_forgotten">過去 x 日以内に忘却したカードを復習する</string>
-    <string name="custom_study_ahead">先取りする日数</string>
-    <string name="custom_study_random">デッキからランダムに x 枚のカードを抽出する</string>
-    <string name="custom_study_preview">過去 x 日間に追加された新規カードをプレビュー</string>
+    <string name="custom_study_forgotten">直近 x 日間で「やり直し」を選んだカードを再学習</string>
+    <string name="custom_study_ahead"> x 日先までの復習カードを予習</string>
+    <string name="custom_study_random">デッキからランダムに x 枚のカードを選んで学習</string>
+    <string name="custom_study_preview">直近 x 日間で追加した習得未開始の新規カードを予習</string>
     <string name="custom_study_rebuild_deck_corrupt">カスタムデッキを再構築できませんでした</string>
     <string name="importing_collection">コレクションをインポートしています&#8230;</string>
     <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
     <string name="import_progress">• ノートのインポート: %1$d%%\n• カードのインポート: %2$d%%\n• 後処理: %3$d%%</string>
-    <string name="import_update_details">既存のノート%2$d件のうち%1$d件を更新しました。</string>
-    <string name="import_update_ignored">ノートタイプが変更されたため、いくつかのアップデートが無視されました</string>
+    <string name="import_update_details">既存のノート%2$d枚のうち%1$d枚を更新しました。</string>
+    <string name="import_update_ignored">ノートタイプが変更されたため、いくつかの更新は無視されました</string>
     <plurals name="import_complete_message">
         <item quantity="other">インポートされたファイル: %1$d\nインポートされたカードの合計: %2$d</item>
     </plurals>
     <string name="storage_full_title">ストレージの空き容量がありません</string>
     <string name="storage_almost_full_title">ストレージの空き容量が少なくなっています</string>
-    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">空き容量が不足</string>
+    <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">空き容量不足</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroidを続行するには%sの空き容量が必要です。容量を空けてください</string>
     <string name="restore_backup_title">バックアップから復元しますか？</string>
-    <string name="restore_backup">現在のコレクション（全デッキ）が、以前バックアップしたものに置き換えられます。また、バックアップ後に変更した内容は全て失われます。</string>
+    <string name="restore_backup">現在のコレクションが、以前バックアップとして作成したコレクションに置き換えられます。バックアップ後に変更した内容は全て失われます。</string>
     <string name="restore_backup_choose_another">他を選択</string>
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_ok">OK</string>
@@ -127,10 +127,10 @@
     <string name="dialog_positive_delete">削除</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">無効化</string>
-    <string name="dialog_positive_overwrite">上書き</string>
+    <string name="dialog_positive_overwrite">上書きする</string>
     <string name="dialog_positive_remove">削除</string>
     <string name="dialog_positive_repair">修復</string>
-    <string name="dialog_positive_replace">置換</string>
+    <string name="dialog_positive_replace">上書き</string>
     <string name="dialog_positive_restore">戻す</string>
     <string name="dialog_positive_set">適用</string>
     <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
@@ -141,39 +141,39 @@
     <string name="check_media_acknowledge">メディアのチェックの完了</string>
     <string name="check_media_failed">メディアのチェック時にエラーが発生しました</string>
     <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
-    <string name="check_media_unused">(1) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d 個</string>
-    <string name="check_media_nohave">(2) カードに表示するよう指定されているが、メディア用フォルダ内に存在しないファイル: %d 個</string>
-    <string name="check_media_no_unused_missing">使われていないファイル、不足しているファイルはありませんでした。</string>
-    <string name="check_media_db_updated">メディアのデータベースが再構築されました。</string>
+    <string name="check_media_unused">(1) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d個</string>
+    <string name="check_media_nohave">(2) カードに表示するよう記載されているが、メディア用フォルダ内に存在しないファイル: %d個</string>
+    <string name="check_media_no_unused_missing">使用されていないファイル、不足しているファイルはありません</string>
+    <string name="check_media_db_updated">メディアのデータベースを再構築しました</string>
     <string name="check_media_delete_unused">(1) のファイルを削除</string>
     <string name="delete_media_message">メディアを削除中&#8230;</string>
     <string name="delete_media_result_title">結果を削除</string>
     <plurals name="delete_media_result_message">
-        <item quantity="other">%d 個のファイルが削除されました</item>
+        <item quantity="other">%d個のファイルを削除しました</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">全て</string>
+    <string name="tags_dialog_option_all_cards">すべて</string>
     <string name="tags_dialog_option_new_cards">新規</string>
-    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">予定日時後</string>
+    <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">期日到来済</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">白紙カード（表側に何も表示されないカード）がないか確認しています&#8230;</string>
-    <string name="confirm_cancel">キャンセルしますか?</string>
+    <string name="confirm_cancel">キャンセルしますか？</string>
     <string name="empty_cards_none">白紙カードはありません</string>
     <string name="empty_cards_count">白紙カードが%d枚見つかりました。削除しますか？</string>
     <string name="empty_cards_deleted">%d枚のカードを削除しました</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">マイクの権限を取得できませんでした。</string>
     <string name="multimedia_editor_camera_permission_refused">カメラの権限を取得できませんでした。機能が無効になっています。</string>
-    <string name="multimedia_editor_failed">マルチメディアエディターを開けませんでした</string>
+    <string name="multimedia_editor_failed">マルチメディアエディタを開けませんでした</string>
     <!-- Multimedia - Audio View -->
-    <string name="multimedia_editor_audio_permission_denied">音声録音の権限が拒否されました</string>
-    <string name="mutimedia_editor_assertion_failed">エディターの表示中に不明なエラーが発生しました</string>
+    <string name="multimedia_editor_audio_permission_denied">音声録音の権限が付与されませんでした</string>
+    <string name="mutimedia_editor_assertion_failed">エディタの表示中に不明なエラーが発生しました</string>
     <!-- Database Integrity Check -->
     <string name="integrity_check_startup_title">AnkiDroidをアップグレードしました</string>
-    <string name="integrity_check_startup_content">AnkiDroidがアップグレードされました。このアップグレードには、データベースの問題の修正が含まれており、今すぐ「データベースをチェック」を実行することをお勧めします。</string>
+    <string name="integrity_check_startup_content">AnkiDroidをアップグレードしました。このアップグレードには、データベースに関する不具合の修正が含まれています。今すぐ「データベースをチェック」を実行することをおすすめします。</string>
     <string name="integrity_check_continue_anyway">続ける</string>
-    <string name="integrity_check_insufficient_space">データベースのチェックには大量の一時ストレージを使用します。\n\n続行する前に、お使いのデバイスに少なくとも %s の空き領域が必要です。</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\n現在 %s は可能です。</string>
+    <string name="integrity_check_insufficient_space">データベースのチェックには一時ファイル用のデータ領域が必要です。\n\n続行する前に、お使いのデバイスに少なくとも %s の空き領域を確保してください。</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\n現在の空き容量は %s です。</string>
     <string name="integrity_check_fixed_no_home_deck">%d 枚のカードが復元されました。詳細はマニュアルをご覧ください。</string>
     <string name="video_creation_error">動画を再生できませんでした</string>
     <!-- Card Browser -->
@@ -186,8 +186,8 @@
     <!-- Database Errors-->
     <string name="database_locked_title">データベースがロックされています</string>
     <string name="database_locked_summary">AnkiDroidデータベースを別のアプリが使用中です。該当するアプリを終了してAnkiDroidを再起動してください。</string>
-    <string name="incompatible_database_version_title">互換性のないデータベースのバージョン</string>
-    <string name="incompatible_database_version_summary">このデータベースは、AnkiDroidの今のバージョンよりも新しいバージョン用のものです。 AnkiDroidをバージョンアップするか、データベースをダウングレードして開きます\n\nサポートされているバージョン: %1$d\nデータベースバージョン: %2$d\n\n以下の復元オプションは、現在のコレクションをおそらく互換性のあるデータベースのバージョンで上書きします。 </string>
+    <string name="incompatible_database_version_title">互換性のないバージョンのデータベース</string>
+    <string name="incompatible_database_version_summary">このデータベースは、このAnkiDroidでは使用できません。 これを使用するには、AnkiDroidをアップグレードするか、データベースをダウングレードしてください。\n\nこのAnkiDroidで開ける最大バージョン: %1$d\nこのデータベースのバージョン: %2$d\n\n次の復元オプションは、現在のコレクションを、このAnkiDroidで使用できる可能性が高いデータベースで上書きします。 </string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">背景画像を適用しました</string>
     <string name="background_image_removed">背景画像を解除しました</string>
@@ -195,19 +195,19 @@
     <string name="error_selecting_image">画像の選択中にエラーが発生しました。マニュアルを参照してください。 %s</string>
     <string name="error_deleting_image">画像削除エラー</string>
     <string name="failed_to_apply_background_image">背景画像 %s の適用に失敗しました</string>
-    <string name="background_image_too_large">デッキピッカーの背景が大きすぎます</string>
-    <string name="image_max_size_allowed">最大画像サイズは %d MB</string>
+    <string name="background_image_too_large">デッキリストの背景画像が大きすぎます</string>
+    <string name="image_max_size_allowed">最大画像サイズは%dMBです</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
-    <string name="intent_handler_failed_no_storage_permission">必要なストレージ操作権限がありません。ストレージ操作権限を得てから、アクションを再試行してください。</string>
+    <string name="intent_handler_failed_no_storage_permission">必要なストレージ権限がありません。ストレージ権限を付与してから、アクションを再試行してください。</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">カードブラウザを読み込めませんでした</string>
+    <string name="card_template_editor_card_browser_appearance_failed">カードブラウザ用の表示設定を読み込めませんでした</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">リマインダーのスケジュールに失敗しました</string>
     <string name="boot_service_too_many_notifications">スケジュールされたリマインダーが多すぎます。一部のリマインダーは表示されません</string>
     <!-- Locale Selection Dialog -->
-    <string name="locale_selection_dialog_title">キーボードの選択</string>
-    <string name="locale_selection_dialog_summary">Gboardなどの多言語入力対応キーボードでは、文字入力の際にキーボードの言語を変更することができます\n\n使用しているキーボードで言語の変更ができない場合は、キーボードの製作者に「setImeHintLocales」機能をリクエストしてください</string>
+    <string name="locale_selection_dialog_title">キーボード言語の選択</string>
+    <string name="locale_selection_dialog_summary">Gboardなどの多言語入力対応キーボードでは、文字編集のために各フィールドを選択した際にキーボードの言語を自動的に切り替えることができます\n\n使用しているキーボードで言語の変更ができない場合は、キーボードアプリの開発者に「setImeHintLocales」機能をリクエストしてください</string>
     <!-- Help Dialog -->
     <string name="help_title_using_ankidroid">使い方</string>
     <string name="help_item_ankidroid_manual">AnkiDroidマニュアル</string>
@@ -217,7 +217,7 @@
     <string name="help_item_mailing_list">メーリングリスト</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">バグを報告</string>
-    <string name="help_title_support_ankidroid">支援・応援</string>
+    <string name="help_title_support_ankidroid">AnkiDroidを支援</string>
     <string name="help_item_support_opencollective_donate">寄付</string>
     <string name="help_item_support_develop_ankidroid">開発</string>
     <string name="help_item_support_rate_ankidroid">評価</string>
@@ -238,7 +238,7 @@
     <plurals name="sync_automatic_sync_needs_more_time">
         <item quantity="other">%d 秒後に自動同期がスタートします。</item>
     </plurals>
-    <string name="metered_sync_warning">従量課金制のネット接続です。データ通信量に応じて通信費が増える可能性があります。</string>
+    <string name="metered_sync_warning">従量課金制のネット接続です。データ通信量に応じて通信費が増える可能性があります</string>
     <string name="deck_picker_new">このデッキ内の、今日出題する予定の新規カードの数。</string>
     <string name="deck_picker_rev">このデッキ内の、今日出題する予定のカードの数。</string>
     <string name="deck_picker_lrn">このデッキ内の、習得中カードの数。</string>
@@ -252,15 +252,14 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="backup_your_collection">コレクションのバックアップ</string>
+    <string name="backup_collection_message">しばらくコレクションをバックアップしていません。データの損失を防ぐためにすぐにバックアップを行うことを強くおすすめします。</string>
     <string name="button_backup">バックアップ</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="button_disable_reminder">リマインダーを無効にする</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">後で</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">今後表示しない</string>
+    <string name="dismiss_backup_warning_title">データ損失の警告</string>
+    <string name="dismiss_backup_warning_new_user">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、あなたのコレクションや自動バックアップのデータもこの端末から削除されます。
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
+    <string name="dismiss_backup_warning_upgrade">        Androidのプライバシーポリシーの変更に伴い、今後AnkiDroidをアンインストールすると、現在のコレクションや自動バックアップのデータにアクセスできなくなります。</string>
 </resources>

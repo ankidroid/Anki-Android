@@ -26,10 +26,10 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Manage note types</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Manage fields</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Administrert notattyper</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Administrer felter</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">Du kan ikke slette din siste notattype</string>
     <string name="toast_last_field">Notattyper må ha minst ett felt</string>
     <string name="toast_empty_name">Du må angi et navn</string>
     <string name="toast_duplicate_field">Feltnavn allerede brukt</string>
@@ -49,7 +49,7 @@
     <string name="model_browser_template">Rediger kort</string>
     <string name="model_browser_add">Legg til notattype</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">Gi nytt navn til notattype</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
@@ -60,28 +60,28 @@
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Flytt felt</string>
     <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
-    <string name="model_field_editor_changing">Updating fields</string>
-    <string name="model_field_editor_sort_field">Sort by this field</string>
+    <string name="model_field_editor_toggle_sticky">Husk siste inndata når du legger til</string>
+    <string name="model_field_editor_changing">Oppdaterer felt</string>
+    <string name="model_field_editor_sort_field">Sorter etter dette feltet</string>
     <string name="model_clone_suffix">kopier</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
-    <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
+    <string name="model_delete_warning">Er du sikker på at du vil slette denne notattypen?</string>
+    <string name="field_delete_warning">Er du sikker på at du vil slette dette feltet?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Legg til: %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Kopier: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_question_format">Spørsmålsformat</string>
+    <string name="card_template_browser_appearance_answer_format">Svarformat</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Tilbakestill til standardverdier?</string>
+    <string name="card_template_browser_appearance_saving_note">Endringene trer i kraft når kortmalen blir lagret</string>
     <!-- Deck Override -->
     <string name="card_template_editor_deck_override_on">Deck override (on)</string>
     <string name="card_template_editor_deck_override_off">Deck override (off)</string>
     <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
     <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
     <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="deck_picker_dialog_filter_decks">Filtrer kortstokker</string>
 </resources>

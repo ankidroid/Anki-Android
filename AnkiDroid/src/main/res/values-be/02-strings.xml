@@ -61,6 +61,8 @@
     <string name="updated_version">Абноўлена да версіі %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Захаваць дошку</string>
+    <string name="enable_stylus">Уключыць рэжым стылуса</string>
+    <string name="disable_stylus">Адключыць рэжым стылуса</string>
     <string name="enable_whiteboard">Уключыць дошку</string>
     <string name="disable_whiteboard">Адключыць дошку</string>
     <string name="show_whiteboard">Паказаць дошку</string>
@@ -331,7 +333,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Выгляд</string>
     <string name="anki_js_error_code">(Код памылкі: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Адладачная інфармацыя скапіяваная ў буфер абмену</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Скапіяваць у буфер абмену</string>
     <string name="about_ankidroid_error_copy_debug_info">Памылка капіявання адладачнай інфармацыі ў буфер абмену</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Памылка змесціва карткі: немагчыма загрузіць ‘%s’</string>
@@ -339,6 +341,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Памылка загрузкі калоды ‘%s’</string>
     <string name="search_decks">Пошук калод</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Паказаць ход выканання пераносу</string>
     <string name="ankidroid_init_failed_webview_title">Крытычная памылка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid выкарыстоўвае сістэмныя WebView, якія зараз недаступныя. Гэта можа здарыцца таму, што ў дадзены момант адбываюцца ўсталяванне абнаўленняў. Паспрабуйце, калі ласка, пачакаць і паўтарыць спробу праз некалькі хвілін.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -388,35 +391,24 @@
     <string name="check_network">Калі ласка, праверце падключэнне да інтэрнэту</string>
     <string name="search_using_deck_name">Пошук па назве калоды</string>
     <string name="home">Галоўная</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Адкладзеная картка</string>
-    <string name="buried_note">Адкладзеныя карткі</string>
-    <string name="deleted_note">Выдалены запіс</string>
-    <string name="suspended_card">Прыпыненыя карткі</string>
-    <string name="suspended_note">Прыпыненыя запісы</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Адкладзеная картка.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d картка прыпынена.</item>
+        <item quantity="few">%d карткі прыпынены.</item>
+        <item quantity="many">%d картак прыпынены.</item>
+        <item quantity="other">%d карткі прыпынены.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Зрабіць поле %s ліпучым</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Перанос сховішча</string>
-    <string name="scoped_storage_initial_message">AnkiDroid павінен перанесці даныя, каб адпавядаць новым правілам прыватнасці Android
-\n\nКалі выдаліць AnkiDroid перад пераносам, то ўсе вашы даныя будуць згубленыя
-\n\nКалі ласка, выканайце перанос як толькі ў вас будзе такая магчымасць</string>
-    <string name="scoped_storage_terms_message">Перанос будзе адбывацца ў фоне. Падчас пераносу вы не зможаце зрабіць сінхранізацыю\n\nПрыблізны час: %s</string>
-    <string name="scoped_storage_term_1">Я зрабіў рэзервовую копію сваіх даных</string>
-    <string name="scoped_storage_term_1_ankiweb">Я нядаўна рабіў сінхранізацыю з AnkiWeb</string>
-    <string name="scoped_storage_term_2">Я не буду выдаляць праграму падчас пераносу даных</string>
-    <string name="scoped_storage_select_all_terms">Калі ласка, прыміце ўсе пункты для працягу</string>
     <string name="scoped_storage_learn_more">Падрабязней</string>
     <string name="scoped_storage_postpone">Адкласці</string>
     <string name="scoped_storage_migrate">Перанесці </string>
     <string name="search_card_js_api_no_results">Пошук не даў ніякіх вынікаў</string>
-    <string name="sync_impossible_during_migration">Сінхранізацыя адключана да завяршэння пераносу.\n
-        Засталося перанесці медыяфайлаў: %1$d</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">Калі вы паўторна ўсталюеце AnkiDroid, ён не зможа адкрыць вашу калекцыю.</string>
-    <string name="migration_update_request_dialog_download_warning">Калі вы выдаліце AnkiDroid, вам давядзецца яшчэ раз спампаваць вашу поўную калекцыю.</string>
-    <string name="migration_update_request">Палітыка Android доступу да сховішча патрабуе ад нас змяніць месца захоўвання вашай калекцыі. Калі адбудзецца перанос вашых даных, AnkiDroid будзе працаваць хутчэй, а вашы даныя будуць больш абароненымі.
-    Вы не зможаце сінхранізаваць даныя падчас пераносу сховішча.
-    </string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid павінен перанесці сваё сховішча ў адпаведнасці з палітыкай бяспекі Android 10.\n\nГэта дапаможа павысіць прадукцыйнасць медыяфайлаў.&lt;br&gt;&lt;br&gt;Падчас пераносу вы не зможаце сінхранізавацца і некаторыя налады будуць адключаны. Каб не згубіць вашы даныя, перад пераносам сховішча адбудзецца сінхранізацыя медыяфайлаў.&lt;br&gt;&lt;br&gt;Падчас працэсу пераносу вы зможаце бяспечна выкарыстоўваць або закрываць AnkiDroid.</string>
     <string name="start_migration_progress_message">Пачынаецца перанос сховішча. Неўзабаве вы зможаце працягнуць выкарыстоўваць AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Вы можаце працягнуць выкарыстанне AnkiDroid.
 \nПеранос сховішча будзе працягнуты ў фонавым рэжыме.</string>
@@ -450,6 +442,10 @@
     <string name="toggle_browser_mode_help">Пераключыць адлюстраванне картак або нататак у браўзеры</string>
     <string name="truncate_content_help">Скараціць вышыню кожнага радка браўзера для адлюстравання толькі першых 3 радкоў змесціва</string>
     <string name="browser_options_dialog_heading">Налады браўзера</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Гэта функцыя недаступна падчас пераносу сховішча
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Націсніце, каб пачаць перанос сховішча</string>
+    <string name="media_sync_required_title">Неабходна сінхранізацыя медыяфайлаў</string>
+    <string name="media_sync_unavailable_message">Сінхранізацыя медыяфайлаў адключана ў наладах праграмы. Перад працягам сінхранізуйце і зрабіце рэзервовую копію ўсіх медыяфайлаў, якія не былі сінхранізаваны</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

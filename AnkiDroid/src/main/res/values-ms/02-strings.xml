@@ -46,42 +46,44 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
     <string name="drawer_open">Buka laci</string>
-    <string name="drawer_close">Close drawer</string>
+    <string name="drawer_close">Tutup laci</string>
     <string name="CardEditorCardDeck">Dek kad:</string>
     <string name="CardEditorNoteDeck">Dek:</string>
     <string name="CardEditorModel">Jenis:</string>
-    <string name="CardEditorTags">Tags: %1$s</string>
+    <string name="CardEditorTags">Tag: %1$s</string>
     <string name="CardEditorCards">Kad: %1$s</string>
-    <string name="tag_name">Tag nama</string>
-    <string name="add_new_filter_tags">Tambah/penapis tag</string>
+    <string name="tag_name">Nama tag</string>
+    <string name="add_new_filter_tags">Tambah/tapis tag</string>
     <string name="add_tag">Tambah tag</string>
-    <string name="check_all_tags">Semak/Buang tanda semua tag</string>
-    <string name="filter_tags">Filter tags</string>
-    <string name="no_tags">Ou tidak berkata apa-apa lagi tag</string>
-    <string name="updated_version">Dikemaskini untuk versi %s</string>
+    <string name="check_all_tags">Tanda/Buang tanda semua tag</string>
+    <string name="filter_tags">Tapis tag</string>
+    <string name="no_tags">Anda belum tambah apa-apa tag lagi</string>
+    <string name="updated_version">Dikemas kini ke versi %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Simpan papan putih</string>
+    <string name="enable_stylus">Dayakan mod stilus</string>
+    <string name="disable_stylus">Lumpuhkan mod stilus</string>
     <string name="enable_whiteboard">Dayakan papan putih</string>
-    <string name="disable_whiteboard">Menyahdayakan papan putih</string>
-    <string name="show_whiteboard">Menunjukkan papan putih</string>
+    <string name="disable_whiteboard">Lumpuhkan papan putih</string>
+    <string name="show_whiteboard">Tunjuk papan putih</string>
     <string name="hide_whiteboard">Sembunyi papan putih</string>
-    <string name="clear_whiteboard">Padam papan putih</string>
+    <string name="clear_whiteboard">Kosongkan papan putih</string>
     <string name="replay_audio">Main semula audio</string>
-    <string name="leech_suspend_notification">Kad ditandai seperti lintah dan digantung</string>
-    <string name="leech_notification">Card marked as leech</string>
-    <string name="corrupt_font">Fail font rosak %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
-    <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
+    <string name="leech_suspend_notification">Kad ditanda lintah dan dibekukan</string>
+    <string name="leech_notification">Kad ditanda lintah</string>
+    <string name="corrupt_font">Fail fon rosak %s</string>
+    <string name="webview_crash_unknown">Ralat tidak diketahui</string>
+    <string name="webview_crash_unknwon_detailed">Ini disebabkan oleh ralat dalaman dalam WebView</string>
+    <string name="webview_crash_oom">Kehabisan Memori</string>
+    <string name="webview_crash_oom_details">WebView ditamatkan oleh sistem. Ini selalu berlaku apabila aplikasi kehabisan memori, disebabkan oleh fon atau media besar.</string>
+    <string name="webview_crash_nonfatal">Pemapar WebView ranap. Punca: %s</string>
+    <string name="webview_crash_fatal">Ralat Maut: Pemapar WebView ranap. Punca: %s</string>
+    <string name="webview_crash_loop_dialog_title">Kegagalan Pemaparan Sistem WebView</string>
+    <string name="webview_crash_loop_dialog_content">WebView Sistem gagal memapar kad \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Soalan</item>
-        <item>Sort field</item>
+        <item>Susun medan</item>
     </string-array>
     <string-array name="browser_column2_headings">
         <item>Jawapan</item>
@@ -89,141 +91,141 @@
         <item>Dek</item>
         <item>Nota</item>
         <item>Soalan</item>
-        <item>Tags</item>
-        <item>Lapses</item>
-        <item>Ulasan</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Tag</item>
+        <item>Cuaian</item>
+        <item>Semakan</item>
+        <item>Seling</item>
+        <item>Longgaran</item>
+        <item>Tunggak</item>
+        <item>Kad diubah</item>
+        <item>Dicipta</item>
+        <item>Nota diubah</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Terap</string>
+    <string name="filter_by_flags">Tanda</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Kajian lupa kad</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Belajar pilihan rawak kad</string>
+    <string name="custom_study_increase_new_limit">Ubah had kad baru hari ini</string>
+    <string name="custom_study_increase_review_limit">Ubah had kad semakan hari ini</string>
+    <string name="custom_study_review_forgotten">Semak kad terlupa</string>
+    <string name="custom_study_review_ahead">Semak awal</string>
+    <string name="custom_study_random_selection">Ulang kaji kad pilihan rawak</string>
     <string name="custom_study_preview_new">Pratonton kad baru</string>
-    <string name="custom_study_limit_tags">Batas tertentu tag</string>
+    <string name="custom_study_limit_tags">Had kepada tag tertentu</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Edit nota</string>
-    <string name="discard_unsaved_changes">Dekat dan hilang semasa input?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
-    <string name="saving_facts">Menyimpan Nota</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="cardeditor_title_edit_card">Sunting nota</string>
+    <string name="discard_unsaved_changes">Tutup dan buang input ini?</string>
+    <string name="note_editor_no_cards_created">Tiada kad dicipta. Sila isikan lebih banyak medan</string>
+    <string name="note_editor_no_first_field">Medan pertama kosong</string>
+    <string name="note_editor_no_cloze_delations">Jenis nota memerlukan penghapusan kloz</string>
+    <string name="note_editor_no_cards_created_all_fields">Jenis nota ini tidak mencipta apa-apa kad.\nSila pilih jenis nota lain atau tekan \'Kad\' dan tambah medan penggantian.</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Penghapusan kloz hanya akan berhasil dalam jenis nota Cloze.</string>
+    <string name="saving_facts">Menyimpan nota</string>
+    <string name="saving_model">Menyimpan jenis nota</string>
     <string name="save">Simpan</string>
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
-    <string name="reordering_cards">Penyusunan semula Kad&#8230;</string>
-    <string name="field_remapping">%1$s (daripada \"%2$s\")</string>
-    <string name="confirm_map_cards_to_nothing">Apa kad dipetakan untuk tiada apa-apa akan dihapuskan. Jika nota tidak mempunyai baki kad, ia akan hilang. Adakah anda pasti anda mahu untuk terus?</string>
-    <string name="timebox_reached_title">Timebox reached</string>
+    <string name="reordering_cards">Menyusun semula kad&#8230;</string>
+    <string name="field_remapping">%1$s (daripada “%2$s”)</string>
+    <string name="confirm_map_cards_to_nothing">Mana-mana kad yang dipetakan ke \"tiada\" akan dipadam. Jika suatu nota tiada baki kad, ia akan dipadam. Adakah anda mahu teruskan?</string>
+    <string name="timebox_reached_title">Kotak masa tercapai</string>
     <plurals name="timebox_reached">
-        <item quantity="other">%1$d cards studied in %2$s</item>
+        <item quantity="other">%1$d kad dipelajari dalam %2$s</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="other">%1$d minit</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Kad AnkiDroid</string>
-    <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_reposition_card">Reposition</string>
-    <string name="card_editor_reset_card">Reset progress</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
-    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Preview</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">Operasi ini tidak mungkin disebabkan oleh memori yang tidak mencukupi pada anda peranti</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Rename</string>
-    <string name="default_conf_delete_error">Pilihan lalai kumpulan tidak boleh dikeluarkan</string>
+    <string name="note_editor_copy_note">Salin nota</string>
+    <string name="card_editor_reposition_card">Alih posisi</string>
+    <string name="card_editor_reset_card">Tetap semula kemajuan</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Jadual semula</string>
+    <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pratonton</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d daripada %2$d</string>
+    <string name="error_insufficient_memory">Operasi tidak mungkin akibat kekurangan memori peranti anda</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Nama semula</string>
+    <string name="default_conf_delete_error">Kumpulan tetapan lalai tidak boleh dibuang</string>
     <plurals name="factadder_cards_added">
-        <item quantity="other">%d cards added</item>
+        <item quantity="other">%d kad ditambah</item>
     </plurals>
-    <string name="check_db">Check database</string>
-    <string name="check_media">Check media</string>
-    <string name="empty_cards">Empty cards</string>
-    <string name="check_db_message">Checking database&#8230;</string>
-    <string name="empty_card_warning">Ini kad adalah kosong. Gunakan \"Kosong kad\" pilihan dari menu di dek skrin senarai.</string>
-    <string name="unknown_type_field_warning">Type answer: unknown field %s</string>
-    <string name="delete_deck">Deleting deck&#8230;</string>
-    <string name="info_rate">Rate AnkiDroid</string>
-    <string name="import_title">Importing</string>
-    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Add</string>
-    <string name="import_message_replace_confirm">Ini akan memadam ada koleksi dan menggantikannya dengan data file %s</string>
+    <string name="check_db">Periksa pangkalan data</string>
+    <string name="check_media">Periksa media</string>
+    <string name="empty_cards">Kosongkan kad</string>
+    <string name="check_db_message">Memeriksa pangkalan data&#8230;</string>
+    <string name="empty_card_warning">Kad kosong. Gunakan pilihan “Kosongkan kad” dalam menu pada skrin senarai dek.</string>
+    <string name="unknown_type_field_warning">Taip jawapan: medan %s tidak diketahui</string>
+    <string name="delete_deck">Memadam dek&#8230;</string>
+    <string name="info_rate">Nilaikan AnkiDroid</string>
+    <string name="import_title">Mengimport</string>
+    <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
+    <string name="import_message_replace_confirm">Ini akan membuang koleksi sedia ada anda dan menggantikannya dengan data fail %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Adakah anda mahu import fail ini:\n%s\nMungkin ambil masa lama</item>
     </plurals>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
-    <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
-    <string name="import_error_content_provider">Yang dipilih file tidak bisa menjadi diimport secara automatik dengan apa yang anda perlu lakukan. Sila lihat manual untuk bagaimana untuk manual import terbesar fail: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Replacing collection&#8230;</string>
-    <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_include_schedule">Include scheduling</string>
-    <string name="export_include_media">Include media</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
-    <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
+    <string name="import_log_no_apkg">Bukan fail pakej Anki yang sah</string>
+    <string name="import_title_error" comment="Title of error dialog">Ralat</string>
+    <string name="import_log_failed_unzip">Gagal membuka zip apkg: %s</string>
+    <string name="import_log_failed_copy_to">Gagal menyalin apkg ke %s</string>
+    <string name="import_log_failed_validate">Pengesahan apkg gagal</string>
+    <string name="import_log_insufficient_space_error">Tiada ruang untuk mengimport pakej.\nPerlukan - %1$s \nTersedia - %2$s.\n\nAlami kesulitan? Cuba kosongkan ruang telefon anda jika mampu. Sebagai alternatif, penyegerakan memerlukan kurang ruangan berbanding import. Anda boleh cuba mengimport pakej menggunakan peranti ruangan lebih besar (seperti Anki Desktop) dan kemudian menyegerakkannya ke peranti ini.</string>
+    <string name="import_log_file_cache_cleared">Ralat mengimport fail, mungkin penghapusan cache ketika memproses.\nSila cuba lagi</string>
+    <string name="import_succeeded_but_check_database">Import data berjaya namun pembersihan selepas import gagal. Lakukan pemeriksaan pangkalan data nanti. Punca: %s</string>
+    <string name="import_error_corrupt_zip">Fail apkg rosak. Sila buang dan muat turun semula.\n\nPunca: %s</string>
+    <string name="import_error_handle_exception">Gagal mengimport fail\n\n%s</string>
+    <string name="import_error_not_apkg_extension">Nama fail “%s” tiada sambungan .apkg atau .colpkg</string>
+    <string name="import_error_load_imported_database">Penggantian pangkalan data Anki (.anki2) belum disokong lagi. Sila lihat panduan bagi langkah penggantian.</string>
+    <string name="import_error_content_provider">AnkiDroid tidak boleh mengimport fail pilihan secara automatik. Sila lihat manual pengguna bagi cara import fail anki secara manual: \n%s</string>
+    <string name="import_error_copy_to_cache">Gagal memcachekan fail (kemungkinan kehabisan ruang storan)</string>
+    <string name="import_error_multiple_colpkg">Pelbagai fail colpkg telah dipilih.</string>
+    <string name="import_error_colpkg_apkg">Kedua-dua fail apkg &amp; colpkg telah dipilih serentak.</string>
+    <string name="import_stats_error">Beberapa ralat berlaku ketika mengimport fail berikut:\n%s</string>
+    <string name="import_replacing">Mengganti koleksi&#8230;</string>
+    <string name="import_interrupted">Import tergendala: AnkiDroid telah ditutup</string>
+    <string name="export_include_schedule">Termasuk penjadualan</string>
+    <string name="export_include_media">Termasuk media</string>
+    <string name="confirm_apkg_export">Eksport koleksi sebagai pakej Anki?</string>
+    <string name="confirm_apkg_export_deck">Eksport “%s” sebagai fail apkg?</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Eksport %d kad terpilih sebagai fail apkg?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Eksport %d nota terpilih sebagai fail apkg?</item>
     </plurals>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
-    <string name="export_save_apkg_successful">Successfully saved Anki package</string>
-    <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
-    <string name="export_share_title">Send Anki package using</string>
-    <string name="export_email_subject">AnkiDroid exported flashcards: %s</string>
+    <string name="export_in_progress">Mengeksport fail pakej Anki&#8230;</string>
+    <string name="export_success_title">Koleksi berjaya dieksport</string>
+    <string name="export_send_no_handlers">Tiada aplikasi tersedia mengendalikan apkg. Menyimpan...</string>
+    <string name="export_save_apkg_successful">Berjaya simpan pakej Anki</string>
+    <string name="export_save_apkg_unsuccessful">Gagal simpan pakej Anki</string>
+    <string name="export_success_message">Anda boleh pilih lokasi fail untuk simpan, atau kongsi dengan aplikasi lain.</string>
+    <string name="export_share_title">Hantar pakej Anki menggunakan</string>
+    <string name="export_email_subject">Kad imbasan dieksport AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Ini merupakan dek kad imbasan Anki dihantar dari AnkiDroid[1].
+        Cuba buka dek ini menggunakan salah satu pengedaran Anki tersedia[2] dan nikmati pembelajaran senang dan cekap!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
-    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
-    <string name="menu__deck_options">Deck options</string>
-    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
-    <string name="select_tts">Set TTS language</string>
-    <string name="custom_study">Custom study</string>
-    <string name="more_options">More</string>
-    <string name="dyn_deck_desc">Ini adalah dek khas untuk belajar di luar jadual biasa. Kad secara automatik akan kembali ke asal mereka dek setelah anda memberi ulasan mereka. Memotong dek ini dari dek senarai akan kembali semua selebihnya kad ke asal mereka dek.</string>
-    <string name="steps_error">Langkah-langkah harus jumlah yang lebih besar daripada 0</string>
-    <string name="steps_min_error">At least one step is required</string>
-    <string name="sched_end">(end)</string>
-    <string name="sched_unbury_action">Untuk melihat mereka sekarang sentuh \"Unbury\" item di menu</string>
-    <string name="sched_has_buried">Beberapa berkaitan atau dikubur kad telah ditangguhkan sampai besok</string>
-    <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
-    <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
+    <string name="export_select_save_app">Pilih lokasi simpan fail</string>
+    <string name="export_select_share_app">Pilih aplikasi untuk kongsi</string>
+    <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tetapan</string>
+    <string name="menu__deck_options">Tetapan dek</string>
+    <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tetapan ulang kaji</string>
+    <string name="select_tts">Tetapkan bahasa TTS</string>
+    <string name="custom_study">Ulang kaji tersuai</string>
+    <string name="more_options">Lagi</string>
+    <string name="dyn_deck_desc">Ini merupakan dek khas untuk mengulang kaji diluar jadual biasa. Kad akan dikembalikan ke dek asal setelah disemak. Memadam dek ini daripada senarai dek akan mengembalikan baki kad ke dek asal.</string>
+    <string name="steps_error">Setiap langkah hendaklah lebih besar daripada 0</string>
+    <string name="steps_min_error">Sekurang-kurangnya satu langkah diperlukan</string>
+    <string name="sched_end">(tamat)</string>
+    <string name="sched_unbury_action">Untuk lihatnya sekarang sentuh pilihan “Tampil” dalam menu</string>
+    <string name="sched_has_buried">Beberapa kad berkaitan atau kad tersorok telah ditunda sehingga esok</string>
+    <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk sahkan tambah “%1$s”</string>
+    <string name="tag_editor_add_feedback_existing">Tag “%1$s” sedia ada dipilih</string>
     <!-- Time spans -->
     <plurals name="time_span_seconds">
-        <item quantity="other">%s seconds</item>
+        <item quantity="other">%s saat</item>
     </plurals>
     <plurals name="time_span_minutes">
         <item quantity="other">%s minit</item>
@@ -243,173 +245,165 @@
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s saat</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
     <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Dek itu sudah wujud</string>
-    <string name="decks_rename_filtered_nosubdecks">Ditapis dek tidak mempunyai subdecks</string>
-    <string name="filtered_deck_name">Dek yang ditapis</string>
-    <string name="reminder_title">Screened decks don\'t have subdecks!</string>
+    <string name="decks_rename_filtered_nosubdecks">Dek ditapis tidak boleh ada subdek</string>
+    <string name="filtered_deck_name">Dek Ditapis</string>
+    <string name="reminder_title">Janngan lupa ulang kaji hari ini!</string>
     <plurals name="reminder_text">
-        <item quantity="other">%2$d cards to review in %1$s</item>
+        <item quantity="other">%2$d kad untuk disemak dalam %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
-    <string name="apk_share_error">Ralat perkongsian apkg file</string>
+    <string name="apk_share_error">Ralat kongsikan fail apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
-    <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
-    <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
-    <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
-    <string name="web_page_error">Error loading page: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
+    <string name="export_v2_dummy_note">Fail ini perlu versi Anki baru</string>
+    <string name="activity_start_failed">Sistem tidak mempunyai aplikasi dipasang yang boleh melakukan tindakan ini.</string>
+    <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Anda mungkin mahu memampatkan dan ubah saiz gambar dalam direktori media]]></string>
+    <string name="no_browser_notification">Tiada pelayar ditemui，sila lawat laman web melalui PC atau telefon: </string>
+    <string name="web_page_error">Ralat memuatkan halaman: %s</string>
+    <string name="no_outgoing_link_in_cardbrowser">Pautan halaman luar dalam kad tidak disokong</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
+    <string name="check_integrity_recovered_deck_name">Kad dipulih</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Select image</string>
+    <string name="background_image_title">Latar belakang</string>
+    <string name="choose_an_image">Pilih gambar</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="restore_default">Pulih Lalai</string>
+    <string name="cloze_sample_text">Ini merupakan {{%1$s::sampel}} penghapusan kloz.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">conteh</string>
+    <string name="basic_answer_sample_text">sebagai contoh</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Sila hidupkan skrin penuh untuk menggunakan Lihat Laci Navigasi melalui JavaScript.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Sila hidupkan skrin penuh untuk menggunakan Lihat Menu Pilihan melalui JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
-    <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
+    <string name="white_board_image_save_failed">Gagal menyimpan gambar papan putih. %s</string>
+    <string name="white_board_image_saved">Gambar papan putih simpan di %s</string>
+    <string name="title_whiteboard_pen_color">Warna pen papan putih</string>
+    <string name="title_whiteboard_editor">Penyunting papan putih</string>
+    <string name="user_is_a_robot">Ujian automatik dikesan. Jika anda manusia, hubungi sokongan AnkiDroid</string>
     <!-- JS api -->
-    <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
-    <string name="invalid_json_data">Card provided invalid data. %s</string>
-    <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
-    <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="api_version_developer_contact">Kad menggunakan ciri-ciri AnkiDroid yang tidak disokong. Hubungi pembangun %1$s, atau layari wiki. %2$s</string>
+    <string name="invalid_json_data">Kad sediakan data tidak sah. %s</string>
+    <string name="valid_js_api_version">Versi AnkiDroid JS API tidak sah. Hubungi pembangun %s, atau layari wiki</string>
+    <string name="update_js_api_version">Tersedia pembaruan AnkiDroid JS API. Hubungi pembangun %s, atau layari wiki</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Lihat</string>
+    <string name="anki_js_error_code">(Kod Ralat: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
-    <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Disalin ke papan keratan</string>
+    <string name="about_ankidroid_error_copy_debug_info">Ralat menyalin maklumat nyahpepijat ke papan keratan</string>
     <!-- Card Viewer -->
-    <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
-    <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
+    <string name="card_viewer_could_not_find_image">Ralat Kandungan Kad: Gagal memuatkan ‘%s’</string>
+    <string name="card_viewer_media_relative_protocol">Ralat Kandungan Kad: Kemas kini media diperlukan</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
-    <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
+    <string name="deck_picker_failed_deck_load">Gagal memuatkan dek ‘%s’</string>
+    <string name="search_decks">Cari dek</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Tunjuk kemajuan penghijrahan</string>
+    <string name="ankidroid_init_failed_webview_title">Ralat Maut</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroid bergantung kepada WebView Sistem yang tidak tersedia. Ini boleh berlaku jika sistem sedang kemas kini. Sila cuba lagi dalam beberapa minit.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
-    <string name="insert_horizontal_line">Insert Horizontal Line</string>
-    <string name="insert_heading">Insert Heading</string>
-    <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
-    <string name="after_text">HTML After Selection</string>
-    <string name="add_toolbar_item">Create Toolbar Item</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
-    <string name="remove_toolbar_item">Remove Toolbar Item?</string>
-    <string name="note_editor_paste_too_large">The image is too large to paste, please insert the image manually</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android backup in progress. Please try again</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">You may need to use iManager to allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">Your home screen does not allow AnkiDroid to add shortcuts</string>
-    <string name="create_shortcut_error">Error adding shortcut: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Capitalize sentences</string>
-    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Scroll toolbar</string>
+    <string name="menu_font_size">Saiz tulisan</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Lihat Bar Alat</string>
+    <string name="format_insert_bold">Format sebagai Tebal</string>
+    <string name="format_insert_italic">Format sebagai Italik</string>
+    <string name="format_insert_underline">Format sebagai Garis Bawah</string>
+    <string name="insert_horizontal_line">Masukkan Garis Mendatar</string>
+    <string name="insert_heading">Masukkan Tajuk</string>
+    <string name="format_font_size">Tukar Saiz Tulisan</string>
+    <string name="insert_mathjax">Masukkan Persamaan MathJax</string>
+    <string name="insert_cloze">Masukkan Penghapusan Kloz</string>
+    <string name="note_editor_toolbar_icon">Teks butang</string>
+    <string name="before_text">HTML Sebelum Pilihan</string>
+    <string name="after_text">HTML Selepas Pilihan</string>
+    <string name="add_toolbar_item">Cipta Item Bar Alat</string>
+    <string name="edit_toolbar_item">Sunting Item Bar Alat</string>
+    <string name="toolbar_item_explain_edit_or_remove">Masukkan HTML sebelum dan selepas pilihan teks\n\nTekan lama item bar alat untuk sunting atau buangnya</string>
+    <string name="remove_toolbar_item">Buang Item Bar Alat?</string>
+    <string name="note_editor_paste_too_large">Gambar terlalu besar untuk ditampal, sila masukkan gambar secara manual</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Sandaran Android sedang dijalankan. Sila cuba lagi</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">Anda mungkin perlu menggunakan iManager untuk membenarkan AnkiDroid tambah pintasan</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">Skrin laman utama anda melarang AnkiDroid menambah pintasan</string>
+    <string name="create_shortcut_error">Ralat menambah pintasan: %s</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">Guna huruf besar awal kata dalam ayat</string>
+    <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">Tatal bar alat</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="email_id_empty">Alamat e-mel diperlukan</string>
+    <string name="password_empty">Kata laluan diperlukan</string>
+    <string name="back_pressed_once">Tekan kembali lagi untuk keluar</string>
+    <string name="back_pressed_once_reviewer">Tekan kembali lagi untuk pulang</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
-    <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="download_deck">Muat turun dek</string>
+    <string name="try_again">Cuba Lagi</string>
+    <string name="cancel_download">Batal muat turun</string>
+    <string name="cancel_download_question_title">Batal muat turun?</string>
+    <string name="downloading_file">Memuat turun %s</string>
+    <string name="import_deck">Import Dek</string>
+    <string name="something_wrong">kesulitan berlaku, sila cuba lagi</string>
+    <string name="download_failed">Memuat turun gagal</string>
+    <string name="deck_download_progress_message">Anda boleh guna aplikasi lain sementara memuat turun</string>
+    <string name="check_network">Sila semak sambungan rangkaian anda</string>
+    <string name="search_using_deck_name">Cari menggunakan nama dek</string>
+    <string name="home">Laman Utama</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Kad disorok.</string>
+    <plurals name="note_suspended">
+        <item quantity="other">%d kad dibekukan.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Lekatkan medan %s</string>
     <!-- Scoped Storage Migration -->
-    <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
-    <string name="scoped_storage_postpone">Postpone</string>
-    <string name="scoped_storage_migrate">Migrate</string>
-    <string name="search_card_js_api_no_results">Search returned no results</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="scoped_storage_title">Penghijrahan storan</string>
+    <string name="scoped_storage_learn_more">Ketahui Lebih Lanjut</string>
+    <string name="scoped_storage_postpone">Tunda</string>
+    <string name="scoped_storage_migrate">Hijrah</string>
+    <string name="search_card_js_api_no_results">Pencarian tiada hasil</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Storan AnkiDroid berhijrah agar patuhi polisi sekuriti Android 10.\n\nIni akan melancarkan penyegerakan media.&lt;br&gt;&lt;br&gt;Semasa penghijrahan anda tidak boleh menyegerak dan sesetengah tetapan akan dilumpuhkan. Media akan disegeraki sebelum berhijrah agar data anda selamat.&lt;br&gt;&lt;br&gt;Selamat untuk menggunakan atau menutup AnkiDroid semasa proses ini.</string>
+    <string name="start_migration_progress_message">Memulakan penghijrahan storan. Anda boleh terus menggunakan AnkiDroid dalam masa terdekat.</string>
+    <string name="migration_part_1_done_resume">Anda boleh terus menggunakan AnkiDroid.
+\nPenghijrahan storan akan diteruskan sementara itu.</string>
     <!--  JS Addons  -->
-    <string name="not_valid_js_addon">%s is not a valid javascript addon package</string>
-    <string name="could_not_create_dir">Could not create directory %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="not_valid_js_addon">%s bukan pakej javascript tambahan yang sah</string>
+    <string name="could_not_create_dir">Tidak dapat mencipta direktori %s</string>
+    <string name="malicious_archive_entry_outside">Arkib berbahaya. Mengandungi entri di luar direktori sasaran: %s</string>
+    <string name="malicious_archive_exceeds_limit">Arkib berbahaya. Saiz melangkaui %1$s atau mengandungi lebih daripada %2$d fail</string>
+    <string name="file_extract_exceeds_storage_space">Ekstrak file melangkaui ruang storan</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Expand tag \'%s\'</string>
+    <string name="expand_tag">Perluaskan tag \'%s\'</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
+    <string name="field_editor_model_not_available">Gagal mencapai koleksi. Sila cuba lagi!</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="intro_ankidroid_tagline_one">Kurangkan ulang kaji</string>
+    <string name="intro_ankidroid_tagline_two">Ingat lebih</string>
+    <string name="intro_short_ankidroid_explanation">Penjadual kad Anki jimat masa dengan memperkasakan memori paling lemah dan memelihara memori paling kuat</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Mari Mulakan</string>
+    <string name="intro_sync_from_ankiweb">Segerakkan dari AnkiWeb</string>
+    <string name="already_logged_in">Telah log masuk</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="validation_deck_already_exists">Dek wujud</string>
+    <string name="deck_created">Dek dicipta</string>
+    <string name="deck_renamed">Dek dinamakan semula</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Dek diapadam. Sila buang pintasan</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kad</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Nota</string>
+    <string name="toggle_cards_notes">Togel Kad/Nota</string>
+    <string name="toggle_browser_mode_help">Togel Tunjukkan kad atau nota dalam pencari</string>
+    <string name="truncate_content_help">Pendekkan ketinggian setiap barisan Pencari dengan menunjukkan hanya 3 baris pertama dari kandungan</string>
+    <string name="browser_options_dialog_heading">Pilihan Pencari</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Fungsi ini tiada ketika penghijrahan storan
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tekan untuk mulakan penghijrahan storan</string>
+    <string name="media_sync_required_title">Penyegerakan Media Diperlukan</string>
+    <string name="media_sync_unavailable_message">Penyegerakan media dilumpuhkan mengikut tetapan. Sila segerakkan dan sandarkan apa-apa media yang belum disegeraki dahulu</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

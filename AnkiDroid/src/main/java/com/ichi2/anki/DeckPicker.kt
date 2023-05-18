@@ -27,13 +27,11 @@ package com.ichi2.anki
 
 import android.Manifest
 import android.content.*
-import android.content.pm.PackageManager
 import android.database.SQLException
 import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.*
-import android.provider.Settings
 import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
@@ -41,21 +39,25 @@ import android.widget.*
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
-import androidx.core.app.ActivityCompat
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.core.os.bundleOf
+import androidx.core.text.parseAsHtml
 import androidx.fragment.app.commit
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
-import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
@@ -69,6 +71,7 @@ import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.*
+import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
 import com.ichi2.anki.dialogs.MediaCheckDialog.MediaCheckDialogListener
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
@@ -80,16 +83,20 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.notetype.ManageNotetypes
-import com.ichi2.anki.pages.CsvImporter
+import com.ichi2.anki.permissions.PermissionManager
+import com.ichi2.anki.permissions.PermissionsRequestRawResults
+import com.ichi2.anki.permissions.PermissionsRequestResults
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
-import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.toMB
+import com.ichi2.anki.services.MediaMigrationState
 import com.ichi2.anki.services.MigrationService
-import com.ichi2.anki.services.ServiceConnection
+import com.ichi2.anki.services.PREF_MIGRATION_ERROR_TEXT
+import com.ichi2.anki.services.getMediaMigrationState
+import com.ichi2.anki.services.withBoundTo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.web.HostNumFactory
@@ -102,7 +109,6 @@ import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
-import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
@@ -115,17 +121,19 @@ import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.*
+import makeLinksClickable
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
-import org.intellij.lang.annotations.Language
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
+import java.lang.ref.WeakReference
 import kotlin.math.roundToLong
 import kotlin.system.measureTimeMillis
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
+const val TIMES_STORAGE_MIGRATION_POSTPONED_KEY = "timesStorageMigrationPostponed"
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -164,7 +172,9 @@ open class DeckPicker :
     MediaCheckDialogListener,
     OnRequestPermissionsResultCallback,
     CustomStudyListener,
-    ChangeManager.Subscriber {
+    ChangeManager.Subscriber,
+    SyncCompletionListener,
+    ImportColpkgListener {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
@@ -224,23 +234,28 @@ open class DeckPicker :
      */
     private var mFocusedDeck: Long = 0
 
+    var importColpkgListener: ImportColpkgListener? = null
+
     private var mToolbarSearchView: SearchView? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
+
+    private lateinit var startupStoragePermissionManager: StartupStoragePermissionManager
+
+    // used for check media
+    private val checkMediaStoragePermissionCheck = PermissionManager.register(
+        this,
+        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+        useCallbackIfActivityRecreated = true,
+        callback = callbackHandlingStoragePermissionsCheckForCheckMedia(WeakReference(this))
+    )
+
+    private var migrateStorageAfterMediaSyncCompleted = false
 
     // stored for testing purposes
     @VisibleForTesting
     var createMenuJob: Job? = null
     private var loadDeckCounts: Job? = null
-
-    private val migrationService: ServiceConnection<MigrationService> = object : ServiceConnection<MigrationService>() {
-        override fun onServiceConnected(service: MigrationService) {
-            service.migrationCompletedListener = { onStorageMigrationCompleted() }
-        }
-        override fun onServiceDisconnected(service: MigrationService) {
-            service.migrationCompletedListener = null
-        }
-    }
 
     init {
         ChangeManager.subscribe(this)
@@ -250,7 +265,7 @@ open class DeckPicker :
     // LISTENERS
     // ----------------------------------------------------------------------------
     private val mDeckExpanderClickListener = View.OnClickListener { view: View ->
-        toggleDeckExpand(view.tag as Long)
+        launchCatchingTask { toggleDeckExpand(view.tag as Long) }
     }
     private val mDeckClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.DEFAULT) }
     private val mCountsClickListener = View.OnClickListener { v: View -> onDeckClick(v, DeckSelectionType.SHOW_STUDY_OPTIONS) }
@@ -290,105 +305,6 @@ open class DeckPicker :
         true
     }
 
-    private val mImportAddListener = ImportAddListener(this)
-
-    private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, ImporterData?>(deckPicker) {
-        override fun actualOnPostExecute(context: DeckPicker, result: ImporterData?) {
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
-            // If result.errFlag and result are both set, we are signalling
-            // some files were imported successfully & some errors occurred.
-            // If result.impList is null & result.errList is set
-            // we are signalling all the files which were selected threw error
-            if (result!!.impList == null && result.errList != null) {
-                Timber.w("Import: Add Failed: %s", result.errList)
-                context.showSimpleMessageDialog(result.errList)
-            } else {
-                Timber.i("Import: Add succeeded")
-
-                var fileCount = 0
-                var totalCardCount = 0
-
-                var errorMsg = ""
-
-                for (data in result.impList!!) {
-                    // Check if mLog is not null or empty
-                    // If mLog is not null or empty that indicates an error has occurred.
-                    if (data.log.isEmpty()) {
-                        fileCount += 1
-                        totalCardCount += data.cardCount
-                    } else { errorMsg += data.fileName + "\n" + data.log[0] + "\n" }
-                }
-
-                var dialogMsg = context.resources.getQuantityString(R.plurals.import_complete_message, fileCount, fileCount, totalCardCount)
-                if (result.errList != null) {
-                    errorMsg += result.errList
-                }
-                if (errorMsg.isNotEmpty()) {
-                    dialogMsg += "\n\n" + context.resources.getString(R.string.import_stats_error, errorMsg)
-                }
-
-                context.showSimpleMessageDialog(dialogMsg)
-                context.updateDeckList()
-            }
-        }
-
-        override fun actualOnPreExecute(context: DeckPicker) {
-            if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog = StyledProgressDialog.show(
-                    context,
-                    context.resources.getString(R.string.import_title),
-                    null,
-                    false
-                )
-            }
-        }
-
-        override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-            @Suppress("Deprecation")
-            context.mProgressDialog!!.setMessage(value)
-        }
-    }
-
-    private fun importReplaceListener(): ImportReplaceListener {
-        return ImportReplaceListener(this)
-    }
-
-    private class ImportReplaceListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Computation<*>?>(deckPicker) {
-        override fun actualOnPostExecute(context: DeckPicker, result: Computation<*>?) {
-            Timber.i("Import: Replace Task Completed")
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
-            }
-            val res = context.resources
-            if (result!!.succeeded()) {
-                context.updateDeckList()
-            } else {
-                context.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), reload = true)
-            }
-        }
-
-        override fun actualOnPreExecute(context: DeckPicker) {
-            if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog = StyledProgressDialog.show(
-                    context,
-                    context.resources.getString(R.string.import_title),
-                    context.resources.getString(R.string.import_replacing),
-                    false
-                )
-            }
-        }
-
-        /**
-         * @param value A message
-         */
-        override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-            @Suppress("Deprecation")
-            context.mProgressDialog!!.setMessage(value)
-        }
-    }
-
     // ----------------------------------------------------------------------------
     // ANDROID ACTIVITY METHODS
     // ----------------------------------------------------------------------------
@@ -406,6 +322,7 @@ open class DeckPicker :
         // Then set theme and content view
         super.onCreate(savedInstanceState)
 
+        startupStoragePermissionManager = StartupStoragePermissionManager.register(this, useCallbackIfActivityRecreated = false)
         // handle the first load: display the app introduction
         if (!hasShownAppIntro()) {
             val appIntro = Intent(this, IntroductionActivity::class.java)
@@ -525,39 +442,36 @@ open class DeckPicker :
      *
      * See: #5304
      * @return true: Interrupt startup. `false`: continue as normal
+     *
+     * TODO BEFORE-RELEASE This always returns false.
+     *   Investigate why and either fix the method or make it return Unit.
      */
     open fun startingStorageMigrationInterruptsStartup(): Boolean {
-        val migrationStatus = ScopedStorageService.migrationStatus(this)
-        Timber.i("migration status: %s", migrationStatus)
-        when (migrationStatus) {
-            ScopedStorageService.Status.NEEDS_MIGRATION -> {
-                // TODO: we should propose a migration, but not yet (alpha users should opt in)
-                // If the migration was proposed too soon, don't show it again and startup normally.
-                // TODO: This logic needs thought
-                // showDialogThatOffersToMigrateStorage(onPostpone = {
-                //     // Unblocks the UI if opened from changing the deck path
-                //     updateDeckList()
-                //     invalidateOptionsMenu()
-                //     handleStartup(skipStorageMigration = true)
-                // })
-                return false // TODO: Allow startup normally
+        val mediaMigrationState = getMediaMigrationState()
+        Timber.i("migration status: %s", mediaMigrationState)
+        when (mediaMigrationState) {
+            is MediaMigrationState.NotOngoing.Needed -> {
+                // TODO BEFORE-RELEASE we should propose a migration, but not yet (alpha users should opt in)
+                //   If the migration was proposed too soon, don't show it again and startup normally.
+                // TODO BEFORE-RELEASE This logic needs thought
+                //   showDialogThatOffersToMigrateStorage(onPostpone = {
+                //       // Unblocks the UI if opened from changing the deck path
+                //       updateDeckList()
+                //       invalidateOptionsMenu()
+                //       handleStartup(skipStorageMigration = true)
+                //   })
+                return false // TODO BEFORE-RELEASE Allow startup normally
             }
-            ScopedStorageService.Status.IN_PROGRESS -> {
+            is MediaMigrationState.Ongoing.PausedDueToError -> {
+                showDialogThatOffersToResumeMigrationAfterError(mediaMigrationState.errorText)
+                return false
+            }
+            is MediaMigrationState.Ongoing.NotPaused -> {
                 startMigrateUserDataService()
                 return false
             }
-            // If legacy storage is being used, ensure storage permission is obtained in order to access Legacy Directories
-            ScopedStorageService.Status.REQUIRES_PERMISSION -> {
-                requestStoragePermission()
-                return true
-            }
-            ScopedStorageService.Status.PERMISSION_FAILED -> {
-                // TODO: Handle "user reinstalled & kept data" scenario.
-                //  (Or edge case of permission removal)
-                return false
-            }
             // App is already using Scoped Storage Directory for user data, no need to migrate & can proceed with startup
-            ScopedStorageService.Status.COMPLETED -> return false
+            is MediaMigrationState.NotOngoing.NotNeeded -> return false
         }
     }
 
@@ -565,24 +479,27 @@ open class DeckPicker :
      * The first call in showing dialogs for startup - error or success.
      * Attempts startup if storage permission has been acquired, else, it requests the permission
      */
-    private fun handleStartup() {
+    fun handleStartup() {
+        val storagePermissionsResult = startupStoragePermissionManager.checkPermissions()
+        if (storagePermissionsResult.requiresPermissionDialog) {
+            Timber.i("postponing startup code - dialog shown")
+            startupStoragePermissionManager.displayStoragePermissionDialog()
+            return
+        }
+
         if (startingStorageMigrationInterruptsStartup()) return
 
         Timber.d("handleStartup: Continuing. unaffected by storage migration")
-        if (hasStorageAccessPermission(this)) {
-            val failure = InitialActivity.getStartupFailureType(this)
-            mStartupError = if (failure == null) {
-                // Show any necessary dialogs (e.g. changelog, special messages, etc)
-                val sharedPrefs = getSharedPrefs(this)
-                showStartupScreensAndDialogs(sharedPrefs, 0)
-                false
-            } else {
-                // Show error dialogs
-                handleStartupFailure(failure)
-                true
-            }
+        val failure = InitialActivity.getStartupFailureType(this)
+        mStartupError = if (failure == null) {
+            // Show any necessary dialogs (e.g. changelog, special messages, etc)
+            val sharedPrefs = getSharedPrefs(this)
+            showStartupScreensAndDialogs(sharedPrefs, 0)
+            false
         } else {
-            requestStoragePermission()
+            // Show error dialogs
+            handleStartupFailure(failure)
+            true
         }
     }
 
@@ -595,17 +512,21 @@ open class DeckPicker :
             }
             DIRECTORY_NOT_ACCESSIBLE -> {
                 Timber.i("AnkiDroid directory inaccessible")
-                val i = AdvancedSettingsFragment.getSubscreenIntent(this)
-                startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE)
-                showThemedToast(this, R.string.directory_inaccessible, false)
+                if (ScopedStorageService.collectionWasMadeInaccessibleAfterUninstall(this)) {
+                    showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL)
+                } else {
+                    val i = AdvancedSettingsFragment.getSubscreenIntent(this)
+                    startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE)
+                    showThemedToast(this, R.string.directory_inaccessible, false)
+                }
             }
             FUTURE_ANKIDROID_VERSION -> {
                 Timber.i("Displaying database versioning")
-                showDatabaseErrorDialog(DatabaseErrorDialog.INCOMPATIBLE_DB_VERSION)
+                showDatabaseErrorDialog(DatabaseErrorDialogType.INCOMPATIBLE_DB_VERSION)
             }
             DATABASE_LOCKED -> {
                 Timber.i("Displaying database locked error")
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+                showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
             }
             WEBVIEW_FAILED -> AlertDialog.Builder(this).show {
                 title(R.string.ankidroid_init_failed_webview_title)
@@ -628,11 +549,11 @@ open class DeckPicker :
 
     private fun displayDatabaseFailure() {
         Timber.i("Displaying database failure")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
     }
     private fun displayNoStorageError() {
         Timber.i("Displaying no storage error")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DISK_FULL)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DISK_FULL)
     }
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
@@ -658,24 +579,12 @@ open class DeckPicker :
         }
     }
 
-    /**
-     * precondition: [hasStorageAccessPermission] should return false
-     */
-    private fun requestStoragePermission() {
-        // DEFECT #5847: This fails if the activity is killed.
-        // Even if the dialog is showing, we want to show it again.
-        val storagePermissions = arrayOf(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-        ActivityCompat.requestPermissions(this, storagePermissions, REQUEST_STORAGE_PERMISSION)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
         mFloatingActionMenu.closeFloatingActionMenu()
         menuInflater.inflate(R.menu.deck_picker, menu)
         setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
+        mToolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
         // ...then launch a task to possibly update the visible icons.
@@ -689,28 +598,82 @@ open class DeckPicker :
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun updateMigrationState(menu: Menu, migrationInProgress: Boolean) {
-        val menuProgressIcon: MenuItem = menu.findItem(R.id.action_migration_progress)
-        menuProgressIcon.isVisible = migrationInProgress
-        val progressBar: ProgressBar =
-            menuProgressIcon.actionView!!.findViewById(R.id.ic_progressDonut)
-        if (migrationInProgress) {
-            migrationService.instance?.let { service ->
-                service.totalToTransfer?.let { totalToTransfer ->
-                    val total = totalToTransfer.toDouble().toInt()
-                    progressBar.max = total
-                    lifecycleScope.launch {
-                        while (service.currentProgress < total) {
-                            progressBar.progress = service.currentProgress.toInt()
-                            delay(50)
-                        }
-                        progressBar.progress = total
-                    }
+    private var migrationProgressPublishingJob: Job? = null
+    private var cachedMigrationProgressMenuItemActionView: View? = null
+
+    /**
+     * Set up the menu item that shows circular progress of storage migration.
+     * Can be called multiple times without harm.
+     *
+     * Note that, somewhat unconventionally, AnkiDroid will often call [invalidateOptionsMenu],
+     * which results in [onCreateOptionsMenu] being called and the menu recreated from scratch,
+     * with the state of individual menu items reset.
+     *
+     * This also means that the view showing progress can be swapped for another view at any time.
+     * This is not a problem with [ProgressBar], but [CircularProgressIndicator],
+     * which comes with sensible drawables out of the box--including rounded corners--
+     * seems to be failing to draw right away when its `progress` is set, resulting in a flicker.
+     *
+     * To overcome these issues, we:
+     *   * set visibility of the menu item on every call, and
+     *   * cache and reuse the view that shows progress.
+     *
+     * TODO Investigate whether we can stop recreating the menu,
+     *   relying instead on modifying it directly and/or using [onPrepareOptionsMenu].
+     *   Note an issue with the latter: https://github.com/ankidroid/Anki-Android/issues/7755
+     */
+    private fun setupMigrationProgressMenuItem(menu: Menu, mediaMigrationState: MediaMigrationState) {
+        val migrationProgressMenuItem = menu.findItem(R.id.action_migration_progress)
+            .apply { isVisible = mediaMigrationState is MediaMigrationState.Ongoing.NotPaused }
+
+        suspend fun CircularProgressIndicator.publishProgress(progress: MigrationService.Progress) {
+            when (progress) {
+                is MigrationService.Progress.CalculatingTransferSize -> {
+                    this.isIndeterminate = true
+                }
+
+                is MigrationService.Progress.Transferring -> {
+                    this.isIndeterminate = false
+                    this.progress = (progress.ratio * Int.MAX_VALUE).toInt()
+                }
+
+                // TODO BEFORE-RELEASE Perhaps handle the cases of success & failure differently?
+                is MigrationService.Progress.Done -> {
+                    updateMenuState()
+                    updateMenuFromState(menu)
                 }
             }
-            progressBar.setOnClickListener {
-                warnNoSyncDuringMigration()
+        }
+
+        if (mediaMigrationState is MediaMigrationState.Ongoing.NotPaused) {
+            if (cachedMigrationProgressMenuItemActionView == null) {
+                val actionView = migrationProgressMenuItem.actionView!!
+                    .also { cachedMigrationProgressMenuItemActionView = it }
+
+                val progressIndicator = actionView
+                    .findViewById<CircularProgressIndicator>(R.id.progress_indicator)
+                    .apply { max = Int.MAX_VALUE }
+
+                actionView.findViewById<ImageButton>(R.id.button).also { button ->
+                    button.setOnClickListener { warnNoSyncDuringMigration() }
+                    TooltipCompat.setTooltipText(button, getText(R.string.show_migration_progress))
+                }
+
+                migrationProgressPublishingJob = lifecycleScope.launch {
+                    withBoundTo<MigrationService> { service ->
+                        service.flowOfProgress
+                            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                            .collect { progress -> progressIndicator.publishProgress(progress) }
+                    }
+                }
+            } else {
+                migrationProgressMenuItem.actionView = cachedMigrationProgressMenuItemActionView
             }
+        } else {
+            cachedMigrationProgressMenuItemActionView = null
+
+            migrationProgressPublishingJob?.cancel()
+            migrationProgressPublishingJob = null
         }
     }
 
@@ -756,9 +719,9 @@ open class DeckPicker :
         optionsMenuState?.run {
             menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
             updateUndoIconFromState(menu.findItem(R.id.action_undo), undoIcon)
-            updateSyncIconFromState(menu.findItem(R.id.action_sync), syncIcon)
-            menu.findItem(R.id.action_scoped_storage_migrate).isVisible = offerToMigrate
-            updateMigrationState(menu, migrationInProgress)
+            updateSyncIconFromState(menu.findItem(R.id.action_sync), this)
+            menu.findItem(R.id.action_scoped_storage_migrate).isVisible = shouldShowStartMigrationButton
+            setupMigrationProgressMenuItem(menu, mediaMigrationState)
         }
     }
 
@@ -773,34 +736,35 @@ open class DeckPicker :
         }
     }
 
-    private fun updateSyncIconFromState(menuItem: MenuItem, syncIcon: SyncIconState) {
-        menuItem.setTitle(
-            when (syncIcon) {
-                SyncIconState.Normal -> R.string.button_sync
-                SyncIconState.PendingChanges -> R.string.button_sync
-                SyncIconState.FullSync -> R.string.sync_menu_title_full_sync
-                SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
-                SyncIconState.Disabled -> R.string.button_sync_disabled
-            }
-        )
-        when (syncIcon) {
-            SyncIconState.Normal -> {
-                BadgeDrawableBuilder.removeBadge(menuItem)
-            }
-            SyncIconState.PendingChanges -> {
-                BadgeDrawableBuilder(this)
-                    .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_warning))
-                    .replaceBadge(menuItem)
-            }
-            SyncIconState.FullSync, SyncIconState.NotLoggedIn -> {
-                BadgeDrawableBuilder(this)
-                    .withText('!')
-                    .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_error))
-                    .replaceBadge(menuItem)
-            }
-            SyncIconState.Disabled -> {
-                BadgeDrawableBuilder.removeBadge(menuItem)
-                menuItem.isVisible = false
+    private fun updateSyncIconFromState(menuItem: MenuItem, state: OptionsMenuState) {
+        if (state.mediaMigrationState is MediaMigrationState.Ongoing) {
+            menuItem.isVisible = false
+        } else {
+            menuItem.isVisible = true
+
+            menuItem.setTitle(
+                when (state.syncIcon) {
+                    SyncIconState.Normal, SyncIconState.PendingChanges -> R.string.button_sync
+                    SyncIconState.FullSync -> R.string.sync_menu_title_full_sync
+                    SyncIconState.NotLoggedIn -> R.string.sync_menu_title_no_account
+                }
+            )
+
+            when (state.syncIcon) {
+                SyncIconState.Normal -> {
+                    BadgeDrawableBuilder.removeBadge(menuItem)
+                }
+                SyncIconState.PendingChanges -> {
+                    BadgeDrawableBuilder(this)
+                        .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_warning))
+                        .replaceBadge(menuItem)
+                }
+                SyncIconState.FullSync, SyncIconState.NotLoggedIn -> {
+                    BadgeDrawableBuilder(this)
+                        .withText('!')
+                        .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_error))
+                        .replaceBadge(menuItem)
+                }
             }
         }
     }
@@ -811,31 +775,28 @@ open class DeckPicker :
             val searchIcon = decks.count() >= 10
             val undoIcon = undoName(resources).ifEmpty { null }
             val syncIcon = fetchSyncStatus(col)
-            val offerToUpgrade = shouldOfferToUpgrade(context)
-            val migrationInProgress = userMigrationIsInProgress(context)
-            OptionsMenuState(searchIcon, undoIcon, syncIcon, offerToUpgrade, migrationInProgress)
+            val mediaMigrationState = getMediaMigrationState()
+            val shouldShowStartMigrationButton = shouldOfferToMigrate() ||
+                mediaMigrationState is MediaMigrationState.Ongoing.PausedDueToError
+            OptionsMenuState(searchIcon, undoIcon, syncIcon, shouldShowStartMigrationButton, mediaMigrationState)
         }
     }
 
-    private fun shouldOfferToUpgrade(context: Context): Boolean {
+    // TODO BEFORE-RELEASE This doesn't offer to migrate data if not logged in.
+    //   This should be changed so that we offer to migrate regardless.
+    private fun shouldOfferToMigrate(): Boolean {
+        // ALLOW_UNSAFE_MIGRATION skips ensuring that the user is backed up to AnkiWeb
         if (!BuildConfig.ALLOW_UNSAFE_MIGRATION && !isLoggedIn()) {
             return false
         }
-        return isLegacyStorage(context) && !userMigrationIsInProgress(context)
+        return getMediaMigrationState() is MediaMigrationState.NotOngoing.Needed
     }
 
     private fun fetchSyncStatus(col: Collection): SyncIconState {
         val auth = syncAuth()
         return when (SyncStatus.getSyncStatus(col, this, auth)) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES -> {
-                SyncIconState.Normal
-            }
-            SyncStatus.ONGOING_MIGRATION -> {
-                SyncIconState.Disabled
-            }
-            SyncStatus.HAS_CHANGES -> {
-                SyncIconState.PendingChanges
-            }
+            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES -> SyncIconState.Normal
+            SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
             SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
             SyncStatus.FULL_SYNC -> SyncIconState.FullSync
         }
@@ -864,7 +825,12 @@ open class DeckPicker :
             }
             R.id.action_scoped_storage_migrate -> {
                 Timber.i("DeckPicker:: migrate button pressed")
-                showDialogThatOffersToMigrateStorage()
+                val migrationState = getMediaMigrationState()
+                if (migrationState is MediaMigrationState.Ongoing.PausedDueToError) {
+                    showDialogThatOffersToResumeMigrationAfterError(migrationState.errorText)
+                } else {
+                    showDialogThatOffersToMigrateStorage(shownAutomatically = false)
+                }
                 return true
             }
             R.id.action_import -> {
@@ -887,7 +853,7 @@ open class DeckPicker :
             }
             R.id.action_check_database -> {
                 Timber.i("DeckPicker:: Check database button pressed")
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK)
+                showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK)
                 return true
             }
             R.id.action_check_media -> {
@@ -913,7 +879,7 @@ open class DeckPicker :
             }
             R.id.action_restore_backup -> {
                 Timber.i("DeckPicker:: Restore from backup button pressed")
-                showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_CONFIRM_RESTORE_BACKUP)
+                showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_RESTORE_BACKUP)
                 return true
             }
             R.id.action_export -> {
@@ -923,14 +889,6 @@ open class DeckPicker :
             }
             else -> return super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun showImportDialog() {
-        if (userMigrationIsInProgress(this)) {
-            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
-            return
-        }
-        showDialogFragment(ImportFileSelectionFragment.createInstance(this))
     }
 
     fun exportCollection(includeMedia: Boolean) {
@@ -975,41 +933,21 @@ open class DeckPicker :
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finishWithoutAnimation()
         } else if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
-            val importResult = ImportUtils.handleFileImport(this, data!!)
-            if (!importResult.isSuccess) {
-                ImportUtils.showImportUnsuccessfulDialog(this, importResult.humanReadableMessage, false)
-            }
+            onSelectedPackageToImport(data!!)
         } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
-            val path = ImportUtils.getFileCachedCopy(this, data!!) ?: return
-            startActivity(CsvImporter.getIntent(this, path))
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_STORAGE_PERMISSION && permissions.isNotEmpty()) {
-            if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                invalidateOptionsMenu()
-                handleStartup()
-            } else {
-                // User denied access to file storage  so show error toast and display "App Info"
-                showThemedToast(this, R.string.startup_no_storage_permission, false)
-                finishWithoutAnimation()
-                // Open the Android settings page for our app so that the user can grant the missing permission
-                val intent = Intent()
-                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                val uri = Uri.fromParts("package", packageName, null)
-                intent.data = uri
-                startActivityWithoutAnimation(intent)
-            }
+            onSelectedCsvForImport(data!!)
         }
     }
 
     override fun onResume() {
         Timber.d("onResume()")
+        // stop onResume() processing the message.
+        // we need to process the message after `loadDeckCounts` is added in refreshState
+        // As `loadDeckCounts` is cancelled in `migrate()`
+        val message = dialogHandler.popMessage()
         super.onResume()
         refreshState()
-        // Migration
+        message?.let { dialogHandler.sendStoredMessage(it) }
     }
 
     fun refreshState() {
@@ -1039,22 +977,21 @@ open class DeckPicker :
     public override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putBoolean("mIsFABOpen", mFloatingActionMenu.isFABOpen)
+        savedInstanceState.putBoolean("migrateStorageAfterMediaSyncCompleted", migrateStorageAfterMediaSyncCompleted)
+        importColpkgListener?.let {
+            if (it is DatabaseRestorationListener) {
+                savedInstanceState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
+            }
+        }
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         mFloatingActionMenu.isFABOpen = savedInstanceState.getBoolean("mIsFABOpen")
-    }
-
-    fun onStorageMigrationCompleted() {
-        migrationService.unbind(this)
-        invalidateOptionsMenu() // reapply the sync icon
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (userMigrationIsInProgress(this)) {
-            migrationService.bind(this, MigrationService::class.java)
+        migrateStorageAfterMediaSyncCompleted = savedInstanceState.getBoolean("migrateStorageAfterMediaSyncCompleted")
+        savedInstanceState.getString("dbRestorationPath")?.let { path ->
+            CollectionHelper.ankiDroidDirectoryOverride = path
+            importColpkgListener = DatabaseRestorationListener(this, path)
         }
     }
 
@@ -1069,7 +1006,6 @@ open class DeckPicker :
     override fun onStop() {
         Timber.d("onStop()")
         super.onStop()
-        migrationService.unbind(this)
         if (colIsOpen()) {
             WidgetStatus.update(this)
             // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
@@ -1095,7 +1031,8 @@ open class DeckPicker :
         // (currently 10 minutes), and is not under a metered connection (if not allowed by preference)
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
         val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
-        val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > AUTOMATIC_SYNC_MIN_INTERVAL
+        val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
+        val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
         val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
         val isMigratingStorage = userMigrationIsInProgress(this)
         if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection && !isMigratingStorage) {
@@ -1172,7 +1109,12 @@ open class DeckPicker :
             // new code triggers backup in updateDeckList()
         }
 
-        launchCatchingTask { BackupPromptDialog.showIfAvailable(this@DeckPicker) }
+        launchCatchingTask {
+            val shownBackupDialog = BackupPromptDialog.showIfAvailable(this@DeckPicker)
+            if (!shownBackupDialog && shouldOfferToMigrate() && timeToShowStorageMigrationDialog()) {
+                showDialogThatOffersToMigrateStorage(shownAutomatically = true)
+            }
+        }
 
         // Force a full sync if flag was set in upgrade path, asking the user to confirm if necessary
         if (mRecommendFullSync) {
@@ -1185,32 +1127,26 @@ open class DeckPicker :
                 // If libanki determines it's necessary to confirm the full sync then show a confirmation dialog
                 // We have to show the dialog via the DialogHandler since this method is called via an async task
                 val res = resources
-                val handlerMessage = Message.obtain()
-                handlerMessage.what = DialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG
-                val handlerMessageData = Bundle()
-                handlerMessageData.putString(
-                    "message",
-                    """
+                val message = """
      ${res.getString(R.string.full_sync_confirmation_upgrade)}
      
      ${res.getString(R.string.full_sync_confirmation)}
-                    """.trimIndent()
-                )
-                handlerMessage.data = handlerMessageData
-                dialogHandler.sendMessage(handlerMessage)
+                """.trimIndent()
+
+                dialogHandler.sendMessage(ForceFullSyncDialog(message).toMessage())
             }
         }
         automaticSync()
     }
 
     private fun showCollectionErrorDialog() {
-        dialogHandler.sendEmptyMessage(DialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG)
+        dialogHandler.sendMessage(CollectionLoadingErrorDialog().toMessage())
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     @RustCleanup("make mDueTree a concrete DeckDueTreeNode")
     @Suppress("UNCHECKED_CAST")
-    fun toggleDeckExpand(did: DeckId) {
+    suspend fun toggleDeckExpand(did: DeckId) {
         if (!col.decks.children(did).isEmpty()) {
             // update DB
             col.decks.collapse(did)
@@ -1218,7 +1154,7 @@ open class DeckPicker :
             findInDeckTree(dueTree!! as List<TreeNode<DeckDueTreeNode>>, did)?.run {
                 collapsed = !collapsed
             }
-            renderPage()
+            renderPage(col.isEmpty)
             dismissAllDialogFragments()
         }
     }
@@ -1451,12 +1387,12 @@ open class DeckPicker :
     }
 
     // Show dialogs to deal with database loading issues etc
-    open fun showDatabaseErrorDialog(id: Int) {
-        if (id == DatabaseErrorDialog.DIALOG_CONFIRM_DATABASE_CHECK && userMigrationIsInProgress(this)) {
+    open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
+        if (errorDialogType == DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK && userMigrationIsInProgress(this)) {
             showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
         }
-        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(id)
+        val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType)
         showAsyncDialogFragment(newFragment)
     }
 
@@ -1488,15 +1424,6 @@ open class DeckPicker :
     override fun showSyncErrorDialog(dialogType: Int, message: String?) {
         val newFragment: AsyncDialogFragment = newInstance(dialogType, message)
         showAsyncDialogFragment(newFragment, Channel.SYNC)
-    }
-
-    fun showImportDialog(id: Int, messageList: ArrayList<String>) {
-        Timber.d("showImportDialog() delegating to ImportDialog")
-        if (messageList.isEmpty()) {
-            messageList.add("")
-        }
-        val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, messageList)
-        showAsyncDialogFragment(newFragment)
     }
 
     fun onSdCardNotMounted() {
@@ -1572,19 +1499,7 @@ open class DeckPicker :
      * If has the storage permission, job is scheduled, otherwise storage permission is asked first.
      */
     override fun mediaCheck() {
-        // TODO show to the user this message when failing
-        @Suppress("UNUSED_VARIABLE")
-        val failedCheck = getString(R.string.check_media_failed)
-        if (hasStorageAccessPermission(this)) {
-            launchCatchingTask {
-                val result = checkMedia()
-                if (result != null) {
-                    showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, result)
-                }
-            }
-        } else {
-            requestStoragePermission()
-        }
+        checkMediaStoragePermissionCheck.launchDialogOrExecuteCallbackNow()
     }
 
     override fun deleteUnused(unused: List<String>) {
@@ -1601,18 +1516,19 @@ open class DeckPicker :
     }
 
     fun exit() {
+        Timber.i("exit()")
         CollectionHelper.instance.closeCollection(false, "DeckPicker:exit()")
         finishWithoutAnimation()
     }
 
     open fun handleDbError() {
         Timber.i("Displaying Database Error")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
     }
 
     open fun handleDbLocked() {
         Timber.i("Displaying Database Locked")
-        showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_DB_LOCKED)
+        showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_DB_LOCKED)
     }
 
     fun restoreFromBackup(path: String) {
@@ -1653,22 +1569,15 @@ open class DeckPicker :
             return
         }
 
-        fun shouldFetchMedia(): Boolean {
-            val always = getString(R.string.sync_media_always_value)
-            val onlyIfUnmetered = getString(R.string.sync_media_only_unmetered_value)
-            val shouldFetchMedia = preferences.getString(getString(R.string.sync_fetch_media_key), always)
-            return shouldFetchMedia == always ||
-                (shouldFetchMedia == onlyIfUnmetered && !isActiveNetworkMetered())
-        }
-
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
         fun doSync() {
             if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(conflict, shouldFetchMedia())
+                handleNewSync(conflict, shouldFetchMedia(preferences))
             } else {
-                val data = arrayOf(hkey, shouldFetchMedia(), conflict, HostNumFactory.getInstance(baseContext))
-                Connection.sync(createSyncListener(), Connection.Payload(data))
+                val fetchMedia = shouldFetchMedia(preferences)
+                val data = arrayOf(hkey, fetchMedia, conflict, HostNumFactory.getInstance(baseContext))
+                Connection.sync(createSyncListener(isFetchingMedia = fetchMedia), Connection.Payload(data))
             }
         }
         // Warn the user in case the connection is metered
@@ -1678,6 +1587,9 @@ open class DeckPicker :
                 message(R.string.metered_sync_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
+                checkBoxPrompt(R.string.remember_sync_metered_checkbox_msg) { isCheckboxChecked ->
+                    preferences.edit { putBoolean(getString(R.string.metered_sync_key), isCheckboxChecked) }
+                }
             }
         } else {
             doSync()
@@ -1695,7 +1607,7 @@ open class DeckPicker :
     override fun importAdd(importPath: List<String>) {
         Timber.d("importAdd() for file %s", importPath)
         if (BackendFactory.defaultLegacySchema) {
-            TaskManager.launchCollectionTask(ImportAdd(importPath), mImportAddListener)
+            TaskManager.launchCollectionTask(ImportAdd(importPath), importAddListener())
         } else {
             importApkgs(importPath)
         }
@@ -1767,7 +1679,7 @@ open class DeckPicker :
         startActivityWithAnimation(intent, START)
     }
 
-    private fun openStudyOptions(withDeckOptions: Boolean) {
+    private fun openStudyOptions(@Suppress("SameParameterValue") withDeckOptions: Boolean) {
         if (fragmented) {
             // The fragment will show the study options screen instead of launching a new activity.
             loadStudyOptionsFragment(withDeckOptions)
@@ -1828,7 +1740,7 @@ open class DeckPicker :
         if (col.decks.selected() != did) {
             col.clearUndo()
         }
-        if (col.get_config_int("schedVer") == 1) {
+        if (col.get_config_int("schedVer", 1) == 1) {
             promptUserToUpdateScheduler()
             return
         }
@@ -1945,9 +1857,11 @@ open class DeckPicker :
         if (quick) {
             launchCatchingTask {
                 withProgress {
-                    val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>> =
-                        withCol { sched.quickDeckDueTree() }
-                    onDecksLoaded(decks)
+                    val deckData = withCol {
+                        val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>> = sched.quickDeckDueTree()
+                        Pair(decks, isEmpty)
+                    }
+                    onDecksLoaded(deckData.first, deckData.second)
                 }
             }
         } else {
@@ -1956,14 +1870,16 @@ open class DeckPicker :
                 Timber.d("Refreshing deck list")
                 withProgress {
                     Timber.d("doInBackgroundLoadDeckCounts")
-                    val deckData = withCol { sched.deckDueTree(null) }
-                    onDecksLoaded(deckData)
+                    val deckData = withCol {
+                        Pair(sched.deckDueTree(null), this.isEmpty)
+                    }
+                    onDecksLoaded(deckData.first, deckData.second)
                 }
             }
         }
     }
 
-    private fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?) {
+    private fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?, collectionIsEmpty: Boolean) {
         Timber.i("Updating deck list UI")
         hideProgressBar()
         // Make sure the fragment is visible
@@ -1977,7 +1893,7 @@ open class DeckPicker :
         }
         @Suppress("UNCHECKED_CAST")
         dueTree = result as List<TreeNode<AbstractDeckTreeNode>>?
-        renderPage()
+        launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
         launchCatchingTask {
             val reviewSummaryStatsSting = AnkiStatsTaskHandler.getReviewSummaryStatisticsString(this@DeckPicker)
@@ -1990,7 +1906,7 @@ open class DeckPicker :
         Timber.d("Startup - Deck List UI Completed")
     }
 
-    private fun renderPage() {
+    private suspend fun renderPage(collectionIsEmpty: Boolean) {
         if (dueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
@@ -1999,7 +1915,7 @@ open class DeckPicker :
         }
 
         // Check if default deck is the only available and there are no cards
-        val isEmpty = dueTree!!.size == 1 && dueTree!![0].value.did == 1L && col.isEmpty
+        val isEmpty = dueTree!!.size == 1 && dueTree!![0].value.did == 1L && collectionIsEmpty
         if (animationDisabled()) {
             mDeckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             mNoDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
@@ -2039,32 +1955,32 @@ open class DeckPicker :
             // We're done here
             return
         }
-        mDeckListAdapter.buildDeckList(dueTree!!, col, currentFilter)
+        mDeckListAdapter.buildDeckList(dueTree!!, currentFilter)
 
         // Set the "x due in y minutes" subtitle
         try {
-            val eta = mDeckListAdapter.eta
+            val eta = mDeckListAdapter.eta()
             val due = mDeckListAdapter.due
             val res = resources
-            if (col.cardCount() != -1) {
-                val time: String = if (eta != -1 && eta != null) {
-                    Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
+
+            val time: String = if (eta != -1 && eta != null) {
+                Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
+            } else {
+                "-"
+            }
+            if (due != null && supportActionBar != null) {
+                val cardCount = withCol { cardCount() }
+                val subTitle: String = if (due == 0) {
+                    res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
                 } else {
-                    "-"
+                    res.getQuantityString(R.plurals.deckpicker_title, due, due, time)
                 }
-                if (due != null && supportActionBar != null) {
-                    val subTitle: String = if (due == 0) {
-                        res.getQuantityString(R.plurals.deckpicker_title_zero_due, col.cardCount(), col.cardCount())
-                    } else {
-                        res.getQuantityString(R.plurals.deckpicker_title, due, due, time)
-                    }
-                    supportActionBar!!.subtitle = subTitle
-                }
+                supportActionBar!!.subtitle = subTitle
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "RuntimeException setting time remaining")
         }
-        val current = col.decks.current().optLong("id")
+        val current = withCol { decks.current().optLong("id") }
         if (mFocusedDeck != current) {
             scrollDecklistToDeck(current)
             mFocusedDeck = current
@@ -2467,6 +2383,9 @@ open class DeckPicker :
     }
 
     companion object {
+
+        private const val ONE_DAY_IN_SECONDS: Int = 60 * 60 * 24
+
         /**
          * Result codes from other activities
          */
@@ -2496,9 +2415,29 @@ open class DeckPicker :
         const val PICK_CSV_FILE = 14
 
         // For automatic syncing
-        // 10 minutes in milliseconds.
-        const val AUTOMATIC_SYNC_MIN_INTERVAL: Long = 600000
+        // 10 minutes in milliseconds..
+        private const val AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES: Long = 10
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
+
+        /**
+         * Handles a [PermissionsRequestResults] for storage permissions to launch 'checkMedia'
+         * Static to avoid a context leak
+         */
+        fun callbackHandlingStoragePermissionsCheckForCheckMedia(deckPickerRef: WeakReference<DeckPicker>): (permissionResultRaw: PermissionsRequestRawResults) -> Unit {
+            fun handleStoragePermissionsCheckForCheckMedia(permissionResultRaw: PermissionsRequestRawResults) {
+                val deckPicker = deckPickerRef.get() ?: return
+                val permissionResult = PermissionsRequestResults.from(deckPicker, permissionResultRaw)
+                if (permissionResult.allGranted) {
+                    deckPicker.launchCatchingTask {
+                        val mediaCheckResult = deckPicker.checkMedia() ?: return@launchCatchingTask
+                        deckPicker.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
+                    }
+                } else {
+                    showThemedToast(deckPicker, R.string.check_media_failed, true)
+                }
+            }
+            return ::handleStoragePermissionsCheckForCheckMedia
+        }
 
         // Animation utility methods used by renderPage() method
         fun fadeIn(view: View?, duration: Int, translation: Float = 0f, startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE }): ViewPropertyAnimator {
@@ -2536,10 +2475,18 @@ open class DeckPicker :
      * Migrate the user data in a service
      */
     fun migrate() {
+        migrateStorageAfterMediaSyncCompleted = false
+
         if (userMigrationIsInProgress(this) || !isLegacyStorage(this)) {
             // This should not ever occurs.
             return
         }
+
+        if (mActivityPaused) {
+            sendNotificationForAsyncOperation(MigrateStorageOnSyncSuccess(this.resources), Channel.SYNC)
+            return
+        }
+
         launchCatchingTask {
             val elapsedMillisDuringEssentialFilesMigration = measureTimeMillis {
                 withProgress(getString(R.string.start_migration_progress_message)) {
@@ -2567,29 +2514,14 @@ open class DeckPicker :
     private fun startMigrateUserDataService() {
         // TODO: Handle lack of disk space - most common error
         Timber.i("Starting Migrate User Data Service")
-        migrationService.startForeground(this, MigrationService::class.java)
+        ContextCompat.startForegroundService(this, Intent(this, MigrationService::class.java))
     }
 
     /**
      * Show a dialog that explains no sync can occur during migration.
      */
     private fun warnNoSyncDuringMigration() {
-        // TODO: handle value updates
-        // Note: migrationService shouldn't be null in normal operation
-        val text = migrationService.instance?.let { service ->
-            return@let service.totalToTransfer?.let { totalToTransfer ->
-                "\n\n" + getString(R.string.migration_transferred_size, service.currentProgress.toMB().toFloat(), totalToTransfer.toMB().toFloat())
-            }
-        }
-        // TODO: maybe handle onStorageMigrationCompleted()
-        // TODO: sync_impossible_during_migration needs changing
-        MaterialDialog(this).show {
-            message(text = resources.getString(R.string.sync_impossible_during_migration, 5) + text)
-            positiveButton(res = R.string.dialog_ok)
-            negativeButton(res = R.string.scoped_storage_learn_more) {
-                openUrl(R.string.link_scoped_storage_faq)
-            }
-        }
+        MigrationProgressDialogFragment().show(supportFragmentManager, "MigrationProgressDialogFragment")
     }
 
     /**
@@ -2601,43 +2533,158 @@ open class DeckPicker :
             .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
 
     /**
-     * Show a dialog offering to migrate, postpone or learn more.
+     * The number of times the storage migration was postponed. -1 for 'disabled'
      */
-    private fun showDialogThatOffersToMigrateStorage() {
+    private var timesStorageMigrationPostponed: Int
+        get() = getSharedPrefs(baseContext).getInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, 0)
+        set(value) = getSharedPrefs(baseContext)
+            .edit { putInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, value) }
+
+    /** Whether the user has disabled the dialog from [showDialogThatOffersToMigrateStorage] */
+    private val disabledScopedStorageReminder: Boolean
+        get() = timesStorageMigrationPostponed == -1
+
+    /**
+     * Show a dialog offering to migrate, postpone or learn more.
+     * @return shownAutomatically `true` if the dialog was shown automatically, `false` if the user
+     * pressed a button to open the dialog
+     */
+    private fun showDialogThatOffersToMigrateStorage(shownAutomatically: Boolean) {
         Timber.i("Displaying dialog to migrate storage")
         if (userMigrationIsInProgress(baseContext)) {
             // This should not occur. We should have not called the function in this case.
             return
         }
 
-        val ifYouUninstallMessageId = when {
-            isLoggedIn() -> R.string.migration_warning_risk_of_data_loss_if_no_update
-            else -> R.string.migration_update_request_dialog_download_warning
+        val message = getString(R.string.migration_update_request_requires_media_sync)
+
+        fun onPostponeOnce() {
+            if (shownAutomatically) {
+                timesStorageMigrationPostponed += 1
+            }
+            setMigrationWasLastPostponedAtToNow()
         }
 
-        @Language("HTML")
-        val message = """${getString(R.string.migration_update_request)}
-            <br>
-            <br>${getString(ifYouUninstallMessageId)}"""
+        fun onPostponePermanently() {
+            BackupPromptDialog.showPermanentlyDismissDialog(
+                this,
+                onCancel = { onPostponeOnce() },
+                onDisableReminder = {
+                    getSharedPrefs(this).edit {
+                        putInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, -1)
+                        remove(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS)
+                    }
+                }
+            )
+        }
 
-        AlertDialog.Builder(this)
+        var userCheckedDoNotShowAgain = false
+        var dialog = AlertDialog.Builder(this)
             .setTitle(R.string.scoped_storage_title)
             .setMessage(message)
             .setPositiveButton(
                 getString(R.string.scoped_storage_migrate)
             ) { _, _ ->
-                migrate()
+                performMediaSyncBeforeStorageMigration()
             }
             .setNegativeButton(
                 getString(R.string.scoped_storage_postpone)
             ) { _, _ ->
-                setMigrationWasLastPostponedAtToNow()
-            }.addScopedStorageLearnMoreLinkAndShow(message)
+                if (userCheckedDoNotShowAgain) {
+                    onPostponePermanently()
+                } else {
+                    onPostponeOnce()
+                }
+            }
+        // allow the user to dismiss the automatic dialog after it's been seen twice
+        if (shownAutomatically && timesStorageMigrationPostponed > 1) {
+            dialog.checkBoxPrompt(R.string.button_do_not_show_again) { checked ->
+                Timber.d("Don't show again checked: %b", checked)
+                userCheckedDoNotShowAgain = checked
+            }
+        }
+        dialog.addScopedStorageLearnMoreLinkAndShow(message)
+    }
+
+    private fun showDialogThatOffersToResumeMigrationAfterError(errorText: String) {
+        val helpUrl = getString(R.string.link_migration_failed_dialog_learn_more_en)
+        val message = getString(R.string.migration__resume_after_failed_dialog__message, errorText, helpUrl)
+            .parseAsHtml()
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.scoped_storage_title)
+            .setMessage(message)
+            .setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            .setPositiveButton(R.string.migration__resume_after_failed_dialog__button_positive) { _, _ ->
+                getSharedPrefs(this@DeckPicker).edit { remove(PREF_MIGRATION_ERROR_TEXT) }
+                startMigrateUserDataService()
+                invalidateOptionsMenu()
+            }
+            .create()
+            .makeLinksClickable()
+            .show()
+    }
+
+    // TODO BEFORE-RELEASE Fix the logic. As I understand, this works the following way,
+    //   which could make a little more sense:
+    //     if (media sync is not disabled,
+    //         and (either we sync media unconditionally or are on a suitable network),
+    //         and (either we are logged in, or unsafe migration is disallowed (the default))):
+    //       set flag migrate-after-media-synced, and
+    //       call sync, which may fail to actually sync or even fail to start syncing
+    //       (in these cases, migration might start unexpectedly after a successful sync);
+    //     else:
+    //       tell the user that migration is disabled in the settings (might not be true)
+    //       and tell them to sync & backup before continuing (which isn't possible),
+    //       and instead of offering them to force sync,
+    //       offer them to migrate regardless of the above.
+    private fun performMediaSyncBeforeStorageMigration() {
+        // if we allow an unsafe migration, the 'sync required' dialog shows an unsafe migration confirmation dialog
+        val showUnsafeSyncDialog = (BuildConfig.ALLOW_UNSAFE_MIGRATION && !isLoggedIn())
+
+        if (shouldFetchMedia(getSharedPrefs(this)) && !showUnsafeSyncDialog) {
+            Timber.i("Syncing before storage migration")
+            migrateStorageAfterMediaSyncCompleted = true
+            sync()
+        } else {
+            Timber.i("media sync disabled: displaying dialog")
+            AlertDialog.Builder(this).show {
+                setTitle(R.string.media_sync_required_title)
+                iconAttr(R.attr.dialogErrorIcon)
+                setMessage(R.string.media_sync_unavailable_message)
+                setPositiveButton(getString(R.string.scoped_storage_migrate)) { _, _ ->
+                    Timber.i("Performing unsafe storage migration")
+                    migrate()
+                }
+                setNegativeButton(getString(R.string.scoped_storage_postpone)) { _, _ ->
+                    setMigrationWasLastPostponedAtToNow()
+                }
+            }
+        }
     }
 
     // Scoped Storage migration
     private fun setMigrationWasLastPostponedAtToNow() {
         migrationWasLastPostponedAt = TimeManager.time.intTime()
+    }
+
+    private fun timeToShowStorageMigrationDialog(): Boolean {
+        return !disabledScopedStorageReminder &&
+            // A reminder was shown more than 4 days ago
+            migrationWasLastPostponedAt + ONE_DAY_IN_SECONDS * 4 <= TimeManager.time.intTime()
+    }
+
+    override fun onImportColpkg(colpkgPath: String?) {
+        invalidateOptionsMenu()
+        updateDeckList()
+        importColpkgListener?.onImportColpkg(colpkgPath)
+    }
+
+    override fun onMediaSyncCompleted(data: SyncCompletion) {
+        Timber.i("Media sync completed. Success: %b", data.isSuccess)
+        if (migrateStorageAfterMediaSyncCompleted) {
+            migrate()
+        }
     }
 }
 
@@ -2652,24 +2699,52 @@ data class OptionsMenuState(
     /** If undo is available, a string describing the action. */
     val undoIcon: String?,
     val syncIcon: SyncIconState,
-    val offerToMigrate: Boolean,
-    val migrationInProgress: Boolean
+    val shouldShowStartMigrationButton: Boolean,
+    val mediaMigrationState: MediaMigrationState
 )
 
 enum class SyncIconState {
     Normal,
     PendingChanges,
     FullSync,
-    NotLoggedIn,
-
-    /**
-     * The icon should appear as disabled. Currently only occurs during scoped storage migration.
-     */
-    Disabled
+    NotLoggedIn
 }
 
-/**
- * @param impList: List of packages to import
- * @param errList: a string describing the errors. Null if no error.
- */
-data class ImporterData(val impList: List<AnkiPackageImporter>?, val errList: String?)
+class CollectionLoadingErrorDialog : DialogHandlerMessage(
+    WhichDialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG,
+    "CollectionLoadErrorDialog"
+) {
+    override fun handleAsyncMessage(deckPicker: DeckPicker) {
+        // Collection could not be opened
+        deckPicker.showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_LOAD_FAILED)
+    }
+
+    override fun toMessage() = emptyMessage(this.what)
+}
+
+class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
+    which = WhichDialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG,
+    analyticName = "ForceFullSyncDialog"
+) {
+    override fun handleAsyncMessage(deckPicker: DeckPicker) {
+        // Confirmation dialog for forcing full sync
+        val dialog = ConfirmationDialog()
+        val confirm = Runnable {
+            // Bypass the check once the user confirms
+            CollectionHelper.instance.getCol(AnkiDroidApp.instance)!!.modSchemaNoCheck()
+        }
+        dialog.setConfirm(confirm)
+        dialog.setArgs(message)
+        deckPicker.showDialogFragment(dialog)
+    }
+
+    override fun toMessage(): Message = Message.obtain().apply {
+        what = this@ForceFullSyncDialog.what
+        data = bundleOf("message" to message)
+    }
+
+    companion object {
+        fun fromMessage(message: Message): DialogHandlerMessage =
+            ForceFullSyncDialog(message.data.getString("message"))
+    }
+}

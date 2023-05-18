@@ -15,8 +15,10 @@
  ****************************************************************************************/
 package com.ichi2.anki.dialogs
 
-import android.os.Message
+import android.content.res.Resources
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import timber.log.Timber
 
 abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
     /* provide methods for text to show in notification bar when the DialogFragment
@@ -25,5 +27,14 @@ abstract class AsyncDialogFragment : AnalyticsDialogFragment() {
        the onPostExecute() method of an AsyncTask */
     abstract val notificationMessage: String?
     abstract val notificationTitle: String
-    open val dialogHandlerMessage: Message? get() = null
+    open val dialogHandlerMessage: DialogHandlerMessage? get() = null
+
+    protected fun res(): Resources {
+        return try {
+            AnkiDroidApp.appResources
+        } catch (e: Exception) {
+            Timber.w(e, "AnkiDroidApp.getAppResources failure. Returning Fragment resources as fallback.")
+            resources
+        }
+    }
 }

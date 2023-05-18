@@ -29,14 +29,14 @@
     <string name="front_field_name">Μπροστά</string>
     <string name="back_field_name">Πίσω</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Κείμενο</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="extra_field_name_new">Πίσω Επιπλέον</string>
+    <string name="field_to_ask_front_name">Προσθήκη Αντιστροφής</string>
     <!--Card type-->
     <string name="card_n_name">Κάρτα %d</string>
     <!--Note type-->
     <string name="basic_model_name">Βασική</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="cloze_model_name">Συμπλήρωση κενών</string>
+    <string name="basic_typing_model_name">Βασική (πληκτρολογήστε την απάντηση)</string>
+    <string name="forward_reverse_model_name">Βασική (και αντίστροφη κάρτα)</string>
+    <string name="forward_optional_reverse_model_name">Βασική (προαιρετική αντίστροφη κάρτα)</string>
 </resources>

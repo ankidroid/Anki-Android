@@ -200,6 +200,8 @@
     <string name="custom_buttons_setting_if_room">Если есть место</string>
     <string name="custom_buttons_setting_menu_only">Только меню</string>
     <string name="reset_custom_buttons" maxLength="41">Сбросить</string>
+    <string name="reset_settings_to_default">Сброс настроек</string>
+    <string name="reset">Сброс</string>
     <string name="thirdparty_apps_title" maxLength="41">Сторонние приложения</string>
     <string name="thirdparty_apps_summary">Покажет список приложений, которые используют API AnkiDroid, например, словари</string>
     <string name="html_javascript_debugging" maxLength="41">Отладка HTML и JavaScript</string>
@@ -403,7 +405,7 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Удалить коллекцию</string>
     <string name="pref__delete_collection__summary">Удалить коллекцию, медиа и резервные копии. Настройки приложения не удаляются</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Удалить коллекцию</string>
-    <string name="dialog__delete_collection__message">Удалить вашу коллекцию, медиафайлы и резервные копии?</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Удалить вашу коллекцию, медиафайлы и резервные копии?\n\nПримечание: это действие закроет окно.</string>
     <string name="progress__deleting_collection">Коллекция удаляется&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Удалить всё</string>

@@ -61,6 +61,8 @@
     <string name="updated_version">მიმდინარეობს ვერსიის განახლება %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">დაფის შენახვა</string>
+    <string name="enable_stylus">სტილუსის რეჟიმის ჩართვა</string>
+    <string name="disable_stylus">სტილუსის რეჟიმის გამორთვა</string>
     <string name="enable_whiteboard">დაფის ჩართვა</string>
     <string name="disable_whiteboard">დაფის გამორთვა</string>
     <string name="show_whiteboard">დაფის ჩვენება</string>
@@ -116,7 +118,7 @@
     <string name="note_editor_no_cards_created">ბარათები არ შეიქმნა. გთხოვთ მეტი ველი შეავსოთ</string>
     <string name="note_editor_no_first_field">პირველი ველი ცარიელია</string>
     <string name="note_editor_no_cloze_delations">შენიშვნის ეს ტიპი უნდა შეიცავდეს გამოტოვებულ ადგილებს</string>
-    <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
+    <string name="note_editor_no_cards_created_all_fields">მიმდინარე შენიშვნის ტიპმა არ წარმოშვა ბარათები.\nგთხოვთ აირჩიოთ სხვა შენიშვნის ტიპი ან შეეხოთ „ბარათების“ ღილაკს და დაამატოთ ველის შემცვლელი</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">გამოტოვებული ადგილები მხოლოდ გამოტოვებული ადგილებიანი ტიპის შენიშვნებში იმუშავებს</string>
     <string name="saving_facts">შენიშვნის შენახვა</string>
     <string name="saving_model">შენიშვნის ტიპი ინახება</string>
@@ -151,7 +153,7 @@
         <item quantity="other">%d ბარათი დაემატა</item>
     </plurals>
     <string name="check_db">მონაცემთა ბაზის შემოწმება</string>
-    <string name="check_media">მედია ფაილების შემოწმება</string>
+    <string name="check_media">მედიაფაილების შემოწმება</string>
     <string name="empty_cards">ცარიელი ბარათები</string>
     <string name="check_db_message">მოწმდება მონაცემთა ბაზა&#8230;</string>
     <string name="empty_card_warning">ბარათი ცარიელია. გამოიყენეთ \"ცარიელი ბარათების\" ღილაკი დასტების სიის ეკრანზე არსებული მენიუდან</string>
@@ -185,7 +187,7 @@
     <string name="import_replacing">კოლექციის ჩანაცვლება...</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_include_schedule">სწავლის განრიგის თან გათვალისწინება</string>
-    <string name="export_include_media">მედია ფაილების მოცვა</string>
+    <string name="export_include_media">მედიაფაილების მოცვა</string>
     <string name="confirm_apkg_export">გსურთ კოლექციის Anki-პაკეტად ექსპორტირება?</string>
     <string name="confirm_apkg_export_deck">დაექსპორტდეს \"%s\" როგორც apkg ფაილი?</string>
     <plurals name="confirm_apkg_export_selected_cards">
@@ -198,7 +200,7 @@
     </plurals>
     <string name="export_in_progress">მიმდინარეობს Аnki-პაკეტის ფაილის ექსპორტი&#8230;</string>
     <string name="export_success_title">კოლექციის ექსპორტი წარმატებით დასრულდა</string>
-    <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
+    <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება…</string>
     <string name="export_save_apkg_successful">Anki-პაკეტი წარმატებით შეინახა</string>
     <string name="export_save_apkg_unsuccessful">Anki-პაკეტი ვერ შეინახა</string>
     <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
@@ -281,7 +283,7 @@
     <string name="check_integrity_recovered_deck_name">აღდგენილი ბარათები</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">ფონი</string>
-    <string name="choose_an_image">სურათის მონიშვნა</string>
+    <string name="choose_an_image">სურათის არჩევა</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">ნაგულისხმევის აღდგენა</string>
     <string name="cloze_sample_text">ეს {{%1$s::sample}} გამოტოვებული ადგილია.</string>
@@ -305,7 +307,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">ხედი</string>
     <string name="anki_js_error_code">(შეცდომის კოდი: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">გამართვის ინფორმაცია გაცვლის ბუფერზე დაკოპირდა</string>
+    <string name="about_ankidroid_successfully_copied_debug_info"> დაკოპირდა გაცვლის ბუფერზე</string>
     <string name="about_ankidroid_error_copy_debug_info">შეცდომა გამართვის ინფორმაციის გაცვლის ბუფერზე დაკოპირებისას</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">ბარათის შიგთავსის შეცდომა: „%s“ ვერ ჩაიტვირთა</string>
@@ -313,6 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">შეცდომა დასტის „%s“ ჩატვირთვისას</string>
     <string name="search_decks">დასტების მოძიება</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">ფატალური შეცდომა</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -362,34 +365,22 @@
     <string name="check_network">გთხოვთ შეამოწმოთ ქსელთან კავშირი</string>
     <string name="search_using_deck_name">დასტის სახელით ძებნა</string>
     <string name="home">მთავარი</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">დამალული ბარათი</string>
-    <string name="buried_note">დამალული შენიშვნა</string>
-    <string name="deleted_note">შენიშვნა წაიშალა</string>
-    <string name="suspended_card">გამოტოვებული ბარათი</string>
-    <string name="suspended_note">გამოტოვებული შენიშვნა</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">ბარათი დამალულია.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">გამოტოვებულია %d ბარათი.</item>
+        <item quantity="other">გამოტოვებულია %d ბარათი.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s ველის ჩამაგრება</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">საცავის მიგრაცია</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">შენახული მაქვს მონაცემების სარეზერვო ასლი</string>
-    <string name="scoped_storage_term_1_ankiweb">სულ ცოტა ხნის წინ მოვახდინე AnkiWeb-თან სინქრონიზაცია</string>
-    <string name="scoped_storage_term_2">არ მოვახდენ აპლიკაციის დეინსტალაციას მონაცემების გადაადგილებისას</string>
-    <string name="scoped_storage_select_all_terms">გასაგრძელებლად გთხოვთ მიიღოთ ყველა ელემენტი</string>
     <string name="scoped_storage_learn_more">გაიგეთ მეტი</string>
     <string name="scoped_storage_postpone">გადადება</string>
     <string name="scoped_storage_migrate">მონაცემების მიგრაცია</string>
     <string name="search_card_js_api_no_results">ვერ მოიძებნა</string>
-    <string name="sync_impossible_during_migration">სინქრონიზაცია გამორთული იქნება, სანამ მიგრაცია არ დასრულდება.\n
-        დარჩენილია %1$d მედიაფაილი</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">იწყება მეხსიერების მიგრაცია. AnkiDroid-ის გამოყენების შესაძლებლობა ცოტა ხანში აღდგება</string>
     <string name="migration_part_1_done_resume">ისევ შეგიძლიათ AnkiDroid გამოიყენოთ.
 \nმეხსიერების მიგრაცია ფონში გაგრძელდება</string>
@@ -420,9 +411,13 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ბარათები</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">შენიშვნები</string>
     <string name="toggle_cards_notes">ბარათების/შენიშვნების ნახვა/დამალვა</string>
-    <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების ბრაუზერში ჩვენების გადართვა</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">ბრაუზერის პარამეტრები</string>
+    <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების საძიებოში ჩვენების გადართვა</string>
+    <string name="truncate_content_help">ბრაუზერის თითო მწკრივის სიმაღლის ისე დამოკლება, რომ მხოლოდ შიგთავსის პირველი 3 სტრიქონი აჩვენოს</string>
+    <string name="browser_options_dialog_heading">ბარათების საძიებოს პარამეტრები</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">შეეხეთ საცავის მიგრაციისათვის</string>
+    <string name="media_sync_required_title">საჭიროა მედიაფაილების სინქრონიზაცია</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

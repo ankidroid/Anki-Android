@@ -148,6 +148,25 @@ class CompatHelper private constructor() {
         }
 
         /**
+         * Retrieve all activities that can be performed for the given intent.
+         *
+         * @param intent The desired intent as per resolveActivity().
+         * @param flags Additional option flags to modify the data returned. The
+         *            most important is [MATCH_DEFAULT_ONLY], to limit the
+         *            resolution to only those activities that support the
+         *            [CATEGORY_DEFAULT]. Or, set
+         *            [MATCH_ALL] to prevent any filtering of the results.
+         * @return Returns a List of ResolveInfo objects containing one entry for
+         *         each matching activity, ordered from best to worst. In other
+         *         words, the first item is what would be returned by
+         *         {@link #resolveActivity}. If there are no matching activities, an
+         *         empty list is returned.
+         */
+        fun PackageManager.queryIntentActivitiesCompat(intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
+            return compat.queryIntentActivities(this, intent, flags)
+        }
+
+        /**
          * Returns the value associated with the given key or `null` if:
          *  * No mapping of the desired type exists for the given key.
          *  * A `null` value is explicitly associated with the key.
@@ -171,6 +190,49 @@ class CompatHelper private constructor() {
          */
         inline fun <reified T> Parcel.readListCompat(outVal: MutableList<in T>) {
             compat.readList(this, outVal, T::class.java.classLoader, T::class.java)
+        }
+
+        /**
+         * Returns the value associated with the given key, or null if:
+         *
+         * * No mapping of the desired type exists for the given key.
+         * * A null value is explicitly associated with the key.
+         * * The object is not of type T.
+         *
+         * @param key a String, or null
+         * @return a [SparseArray] of T values, or null
+         */
+        inline fun <reified T : Parcelable> Bundle.getSparseParcelableArrayCompat(key: String): SparseArray<T>? {
+            return compat.getSparseParcelableArray(this, key, T::class.java)
+        }
+
+        /**
+         * Determine the best action to perform for a given Intent. This is how
+         * resolveActivity finds an activity if a class has not been
+         * explicitly specified.
+         *
+         * Note: if using an implicit Intent (without an explicit
+         * ComponentName specified), be sure to consider whether to set the
+         * MATCH_DEFAULT_ONLY only flag. You need to do so to resolve the
+         * activity in the same way that
+         * android.content.Context#startActivity(Intent) and
+         * android.content.Intent#resolveActivity(PackageManager)
+         * Intent.resolveActivity(PackageManager) do.
+         *
+         * @param intent An intent containing all of the desired specification
+         *            (action, data, type, category, and/or component).
+         * @param flags Additional option flags to modify the data returned. The
+         *            most important is MATCH_DEFAULT_ONLY, to limit the
+         *            resolution to only those activities that support the
+         *            android.content.Intent#CATEGORY_DEFAULT.
+         * @return Returns a ResolveInfo object containing the final activity intent
+         *         that was determined to be the best action. Returns null if no
+         *         matching activity was found. If multiple matching activities are
+         *         found and there is no default set, returns a ResolveInfo object
+         *         containing something else, such as the activity resolver.
+         */
+        fun PackageManager.resolveActivityCompat(intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo? {
+            return compat.resolveActivity(this, intent, flags)
         }
     }
 }

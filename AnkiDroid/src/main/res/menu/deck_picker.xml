@@ -8,10 +8,10 @@
             android:title="@string/search_decks"
             ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
             ankidroid:showAsAction="always|collapseActionView"/>
-        <!--        TODO: add a title for this action-->
         <item
             android:id="@+id/action_migration_progress"
             android:visible="false"
+            android:title="@string/show_migration_progress"
             ankidroid:actionLayout="@layout/migration_progress_menu_layout"
             ankidroid:showAsAction="always" />
         <!--

@@ -29,58 +29,57 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">ノートタイプを管理</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">フィールドを管理</string>
     <!--Toasts-->
-    <string name="toast_last_model">残り一つのノートタイプは削除できません</string>
+    <string name="toast_last_model">残り1つのノートタイプは削除できません</string>
     <string name="toast_last_field">ノートタイプにはフィールドが少なくとも1つ必要です</string>
     <string name="toast_empty_name">名前を入力してください</string>
-    <string name="toast_duplicate_field">そのフィールド名は既に使用されています</string>
+    <string name="toast_duplicate_field">そのフィールド名はすでに使用されています</string>
     <string name="toast_out_of_range">無効な値です</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
-        <item quantity="other">%d個のノートタイプが使用可能</item>
+        <item quantity="other">%d種類のノートタイプ</item>
     </plurals>
     <plurals name="model_browser_of_type">
-        <item quantity="other">%d個のノート</item>
+        <item quantity="other">%d枚のノート</item>
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">削除</string>
     <string name="model_browser_rename" comment="Rename a note type">名前を変更</string>
-    <string name="model_browser_template">カードのテンプレートを編集</string>
+    <string name="model_browser_template">カードを編集</string>
     <string name="model_browser_add">ノートタイプを追加</string>
     <!--Rename-->
     <string name="rename_model">ノートタイプの名前を変更</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">使用言語を %sに設定</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">%s をキーボード言語に設定しました</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">フィールドを編集</string>
     <string name="model_field_editor_add">フィールドを追加</string>
     <string name="model_field_editor_delete">削除</string>
     <string name="model_field_editor_rename">名前を変更</string>
     <string name="model_field_editor_language_hint">キーボード言語を設定</string>
-    <string name="model_field_editor_reposition_menu">並べ替える</string>
+    <string name="model_field_editor_reposition_menu">配置順序を変更</string>
     <string name="model_field_editor_reposition">上から何番目にこのフィールドを配置しますか？（ %1$d ～ %2$d ）</string>
-    <string name="model_field_editor_toggle_sticky">追加時に最後の入力を記憶する</string>
+    <string name="model_field_editor_toggle_sticky">ノート連続追加時に直前の入力内容を保持する</string>
     <string name="model_field_editor_changing">フィールドを更新</string>
     <string name="model_field_editor_sort_field">ブラウザでのソートフィールド（見出し）にする</string>
     <string name="model_clone_suffix">コピー</string>
     <!--Warnings-->
-    <string name="model_delete_warning">このノートタイプを削除しますか？</string>
-    <string name="field_delete_warning">このフィールドを削除してもよろしいですか？</string>
+    <string name="model_delete_warning">このノートタイプを削除します。本当によろしいですか？</string>
+    <string name="field_delete_warning">このフィールドを削除します。本当によろしいですか？</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">追加: %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">複製: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">カードブラウザーがカードを表示するために使用するテンプレートを入力します。これを使用すると、より簡潔な答えを表示できます。\n\n\nのフロントテンプレート「 {{Country}} の資本金は:」\nカードブラウザで\n「資本金: {{Country}}」に圧縮できます。</string>
-    <string name="card_template_browser_appearance_question_format">質問の表示形式</string>
-    <string name="card_template_browser_appearance_answer_format">解答の表示形式</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">デフォルト値を復元しますか？</string>
+    <string name="card_template_browser_appearance_summary">カードブラウザでカードをリスト表示する際に使用するテンプレートを設定できます。これを利用すると、内容をより簡潔に表示することができます。\n\n例えば、\n「 {{Country}} の首都はどこですか？」\nという内容の表面テンプレートについて、\n「 {{Country}} の首都」\nという、リストの質問欄用のテンプレートを設定することによって、「フランス の首都」「ドイツ の首都」のように、カード表面の内容をコンパクトに示すことができます。</string>
+    <string name="card_template_browser_appearance_question_format">質問欄テンプレート</string>
+    <string name="card_template_browser_appearance_answer_format">解答欄テンプレート</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">既定値を復元しますか？</string>
     <string name="card_template_browser_appearance_saving_note">変更内容は、カードテンプレートが保存された後に適用されます</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">デッキの上書き (オン)</string>
-    <string name="card_template_editor_deck_override_off">デッキの上書き (オフ)</string>
-    <string name="model_manager_deck_override_added_message"> ‘%1$s’をデフォルトデッキとして‘%2$s’に設定します
-「%1$s」のデフォルトデッキを「%2$s」に設定</string>
-    <string name="model_manager_deck_override_removed_message">%sのデフォルトデッキを削除しました</string>
-    <string name="deck_override_explanation">選択したデッキに新しいカード「%s」を設定する</string>
+    <string name="card_template_editor_deck_override_on">デッキ選択を上書き (指定済み)</string>
+    <string name="card_template_editor_deck_override_off">デッキ選択を上書き (未指定)</string>
+    <string name="model_manager_deck_override_added_message">「%2$s」を「%1$s」のデフォルトデッキに指定しました</string>
+    <string name="model_manager_deck_override_removed_message">「%s」のデフォルトデッキの指定を解除しました</string>
+    <string name="deck_override_explanation">「%s」のカードの追加先デッキを選択（追加画面でのデッキ選択を無視）</string>
     <string name="deck_picker_dialog_filter_decks">デッキ名検索</string>
 </resources>

@@ -194,7 +194,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
             Timber.d("doInBackgroundImportReplace")
             val res = AnkiDroidApp.instance.baseContext.resources
             val context = col.context
-            val colPath = CollectionHelper.getCollectionPath(context)
+            val colPath = col.path
             // extract the deck from the zip file
             val dir = File(File(colPath).parentFile, "tmpzip")
             if (dir.exists()) {

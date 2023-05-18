@@ -95,14 +95,14 @@
     <string name="sync_writing_db">Записване на промените в базата данни&#8230;</string>
     <string name="sync_download_chunk">Изтегляне на промените&#8230;</string>
     <string name="sync_upload_chunk">Качване на промените&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
+    <string name="sync_up_down_size">Качване: %1$d KB, теглене: %2$d KB</string>
     <string name="sync_generic_error">Възникна грешка. Опитайте отново по-късно.</string>
     <string name="sync_check_upload_file">Проверка на файла преди качване&#8230;</string>
     <string name="sync_check_download_file">Проверка на изтеглен файл...</string>
     <string name="sync_media_find">Търсене на променени медийни файлове&#8230;</string>
     <string name="sync_media_no_changes">Без промени в медийните файлове</string>
     <string name="sync_media_success">Медите са синхронизирани</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
+    <string name="sync_media_partial_updated">Синхронизирането на медийните файлове е частично завършено:\n%1$d медийни файла изтеглени.\n%2$d медийни файла са качени.</string>
     <string name="sync_media_changes_count">%d промени в медийните файлове за качване</string>
     <string name="sync_media_downloaded_count">%d промени в медийните файлове за изтегляне</string>
     <string name="sync_sanity_failed">След синхронизирането възникна проблем във Вашите колекции. За да го разреши, AnkiDroid ще извърши пълно синхронизиране. Изберете коя страна искате да запазите.</string>
@@ -111,12 +111,12 @@
     <string name="sync_media_error">Грешка при синхронизиране мултимедийни данни</string>
     <string name="sync_media_error_check">Грешка при синхронизиране на медиите. Препоръчва се проверка на медиите.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
+    <string name="sync_basic_check_failed">Пуснете ‘%s’ преди синхронизирането</string>
     <string name="sync_sanity_local">Локално</string>
     <string name="sync_sanity_remote">Отдалечено</string>
     <string name="force_full_sync_title">Пълна синхронизация</string>
     <string name="force_full_sync_summary">При следващото синхронизиране, презаписът е в една посока</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Принудително пълно синхронизиране</string>
     <string name="full_sync_confirmation">При следващото синхронизиране ще се извърши пълно синхронизиране на колекцията Ви от това устройство на сървъра. Ако имате коментари или други промени на друго устройство, които все още не са синхронизирани тук, ще бъдат загубени. Ще продължите ли?</string>
     <string name="full_sync_confirmation_upgrade">Поради грешка във вече инсталирана версия на AnkiDroid е препоръчително да се направи пълно синхронизиране.</string>
     <string name="sync_error_407_proxy_required">Proxy authentication required.</string>

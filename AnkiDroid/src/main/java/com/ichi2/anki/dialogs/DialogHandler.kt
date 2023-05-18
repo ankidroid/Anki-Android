@@ -21,13 +21,10 @@ import android.os.Message
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.libanki.MediaCheckResult
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
-import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.ImportUtils
 import timber.log.Timber
 import java.lang.ref.WeakReference
-import kotlin.math.max
-import kotlin.math.min
 
 /**
  * We're not allowed to commit fragment transactions from Loader.onLoadCompleted(),
@@ -36,115 +33,42 @@ import kotlin.math.min
  */
 class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
     // Use weak reference to main activity to prevent leaking the activity when it's closed
-    val mActivity: WeakReference<AnkiActivity> = WeakReference(activity)
-    override fun handleMessage(msg: Message) {
-        val msgData = msg.data
-        val messageName = MESSAGE_NAME_LIST[msg.what]
-        UsageAnalytics.sendAnalyticsScreenView(messageName)
-        Timber.i("Handling Message: %s", messageName)
-
+    private val mActivity: WeakReference<AnkiActivity> = WeakReference(activity)
+    override fun handleMessage(message: Message) {
+        val msg = DialogHandlerMessage.fromMessage(message)
+        UsageAnalytics.sendAnalyticsScreenView(msg.analyticName)
+        Timber.i("Handling Message: %s", msg.analyticName)
         val deckPicker = mActivity.get() as DeckPicker
-        if (msg.what == MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG) {
-            // Collection could not be opened
-            deckPicker.showDatabaseErrorDialog(DatabaseErrorDialog.DIALOG_LOAD_FAILED)
-        } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG) {
-            // Handle import of collection package APKG
-            deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_REPLACE_CONFIRM, msgData.getStringArrayList("importPath")!!)
-        } else if (msg.what == MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG) {
-            // Handle import of deck package APKG
-            deckPicker.showImportDialog(ImportDialog.DIALOG_IMPORT_ADD_CONFIRM, msgData.getStringArrayList("importPath")!!)
-        } else if (msg.what == MSG_SHOW_SYNC_ERROR_DIALOG) {
-            val id = msgData.getInt("dialogType")
-            val message = msgData.getString("dialogMessage")
-            deckPicker.showSyncErrorDialog(id, message)
-        } else if (msg.what == MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG) {
-            // Media check results
-            val id = msgData.getInt("dialogType")
-            if (id != MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
-                val checkList =
-                    MediaCheckResult(
-                        msgData.getStringArrayList("nohave")!!,
-                        msgData.getStringArrayList("unused")!!,
-                        msgData.getStringArrayList("invalid")!!
-                    )
-                deckPicker.showMediaCheckDialog(id, checkList)
-            }
-        } else if (msg.what == MSG_SHOW_DATABASE_ERROR_DIALOG) {
-            // Database error dialog
-            deckPicker.showDatabaseErrorDialog(msgData.getInt("dialogType"))
-        } else if (msg.what == MSG_SHOW_FORCE_FULL_SYNC_DIALOG) {
-            // Confirmation dialog for forcing full sync
-            val dialog = ConfirmationDialog()
-            val confirm = Runnable {
-                // Bypass the check once the user confirms
-                CollectionHelper.instance.getCol(AnkiDroidApp.instance)!!.modSchemaNoCheck()
-            }
-            dialog.setConfirm(confirm)
-            dialog.setArgs(msgData.getString("message"))
-            mActivity.get()!!.showDialogFragment(dialog)
-        } else if (msg.what == MSG_DO_SYNC) {
-            val preferences = AnkiDroidApp.getSharedPrefs(mActivity.get())
-            val res = mActivity.get()!!.resources
-            val hkey = preferences.getString("hkey", "")
-            val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
-            val limited = millisecondsSinceLastSync < INTENT_SYNC_MIN_INTERVAL
-            if (!limited && hkey!!.isNotEmpty() && NetworkUtils.isOnline) {
-                deckPicker.sync()
-            } else {
-                val err = res.getString(R.string.sync_error)
-                if (limited) {
-                    val remainingTimeInSeconds = max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
-                    // getQuantityString needs an int
-                    val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
-                    val message = res.getQuantityString(R.plurals.sync_automatic_sync_needs_more_time, remaining, remaining)
-                    mActivity.get()!!.showSimpleNotification(err, message, Channel.SYNC)
-                } else {
-                    mActivity.get()!!.showSimpleNotification(err, res.getString(R.string.youre_offline), Channel.SYNC)
-                }
-            }
-            mActivity.get()!!.finishWithoutAnimation()
-        }
+        msg.handleAsyncMessage(deckPicker)
     }
 
     /**
-     * Read and handle Message which was stored via storeMessage()
+     * Returns the current message (if any) and stops further processing of it
      */
-    fun readMessage() {
+    fun popMessage(): Message? {
+        val toReturn = sStoredMessage
+        sStoredMessage = null
+        return toReturn
+    }
+
+    /**
+     * Read and handle Message which was stored via [storeMessage]
+     */
+    fun executeMessage() {
         Timber.d("Reading persistent message")
         if (sStoredMessage != null) {
-            Timber.i("Dispatching persistent message: %d", sStoredMessage!!.what)
-            sendMessage(sStoredMessage!!)
+            sendStoredMessage(sStoredMessage!!)
         }
         sStoredMessage = null
     }
 
-    companion object {
-        const val INTENT_SYNC_MIN_INTERVAL = (
-            2 * 60000 // 2min minimum sync interval
-            ).toLong()
+    fun sendStoredMessage(message: Message) {
+        Timber.i("Dispatching persistent message: %d", message.what)
+        sendMessage(message)
+    }
 
-        /**
-         * Handler messages
-         */
-        const val MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG = 0
-        const val MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG = 1
-        const val MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG = 2
-        const val MSG_SHOW_SYNC_ERROR_DIALOG = 3
-        const val MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG = 5
-        const val MSG_SHOW_DATABASE_ERROR_DIALOG = 6
-        const val MSG_SHOW_FORCE_FULL_SYNC_DIALOG = 7
-        const val MSG_DO_SYNC = 8
-        val MESSAGE_NAME_LIST = arrayOf(
-            "CollectionLoadErrorDialog",
-            "ImportReplaceDialog",
-            "ImportAddDialog",
-            "SyncErrorDialog",
-            "ExportCompleteDialog",
-            "MediaCheckCompleteDialog",
-            "DatabaseErrorDialog",
-            "ForceFullSyncDialog",
-            "DoSyncDialog"
-        )
+    companion object {
+
         private var sStoredMessage: Message? = null
 
         /**
@@ -159,6 +83,58 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
         @VisibleForTesting(otherwise = VisibleForTesting.NONE)
         fun discardMessage() {
             sStoredMessage = null
+        }
+    }
+}
+
+/**
+ * A message which can be passed to [DialogHandler] for the [DeckPicker] to handle asynchronously
+ * once the app is restored.
+ *
+ * Restoration + handling is performed in [AnkiActivity.onResume].
+ * It is assumed that the [DeckPicker] will be the inheritor of AnkiActivity at this time.
+ * As this is provided as the intent from [AnkiActivity.showSimpleNotification]
+ */
+abstract class DialogHandlerMessage protected constructor(val which: WhichDialogHandler, val analyticName: String) {
+    val what = which.what
+    abstract fun handleAsyncMessage(deckPicker: DeckPicker)
+
+    protected fun emptyMessage(what: Int): Message = Message.obtain().apply { this.what = what }
+
+    // TODO: See if toMessage + fromMessage can be made parcelable
+    abstract fun toMessage(): Message
+
+    companion object {
+        fun fromMessage(message: Message): DialogHandlerMessage {
+            return when (WhichDialogHandler.fromInt(message.what)) {
+                WhichDialogHandler.MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG -> CollectionLoadingErrorDialog()
+                WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG -> ImportUtils.CollectionImportReplace.fromMessage(message)
+                WhichDialogHandler.MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG -> ImportUtils.CollectionImportAdd.fromMessage(message)
+                WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG -> SyncErrorDialog.SyncErrorDialogMessageHandler.fromMessage(message)
+                WhichDialogHandler.MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG -> MediaCheckDialog.MediaCheckCompleteDialog.fromMessage(message)
+                WhichDialogHandler.MSG_SHOW_DATABASE_ERROR_DIALOG -> DatabaseErrorDialog.ShowDatabaseErrorDialog.fromMessage(message)
+                WhichDialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG -> ForceFullSyncDialog.fromMessage(message)
+                WhichDialogHandler.MSG_DO_SYNC -> IntentHandler.Companion.DoSync()
+                WhichDialogHandler.MSG_MIGRATE_ON_SYNC_SUCCESS -> MigrateStorageOnSyncSuccess.MigrateOnSyncSuccessHandler()
+            }
+        }
+    }
+
+    /** A list of unique values to be used in [DialogHandler]
+     * @param what Ensures that a [Message] is provided with a unique value */
+    enum class WhichDialogHandler(val what: Int) {
+        MSG_SHOW_COLLECTION_LOADING_ERROR_DIALOG(0),
+        MSG_SHOW_COLLECTION_IMPORT_REPLACE_DIALOG(1),
+        MSG_SHOW_COLLECTION_IMPORT_ADD_DIALOG(2),
+        MSG_SHOW_SYNC_ERROR_DIALOG(3),
+        MSG_SHOW_MEDIA_CHECK_COMPLETE_DIALOG(5),
+        MSG_SHOW_DATABASE_ERROR_DIALOG(6),
+        MSG_SHOW_FORCE_FULL_SYNC_DIALOG(7),
+        MSG_DO_SYNC(8),
+        MSG_MIGRATE_ON_SYNC_SUCCESS(9)
+        ;
+        companion object {
+            fun fromInt(value: Int) = WhichDialogHandler.values().first { it.what == value }
         }
     }
 }

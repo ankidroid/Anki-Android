@@ -296,7 +296,7 @@ fun saveModel(
             Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot mark transaction successful.")
         }
     } finally {
-        DB.safeEndInTransaction(col.db)
+        col.db.safeEndInTransaction()
     }
 }
 

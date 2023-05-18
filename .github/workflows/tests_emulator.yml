@@ -46,8 +46,9 @@ jobs:
       fail-fast: false
       matrix:
         # Refactor to make these dynamic with a low/high bracket only on schedule, not push
-        # For now this is just the fastest combo (api/arch/target/snapshot-warm-time) based on testing
-        api-level: [29]
+        # For now this is the latest supported API. Previously API 29 was fastest.
+        # #13695: This was reverted to API 30, 31 was unstable. This should be fixed
+        api-level: [30]
         arch: [x86_64]
         target: [google_apis]
         first-boot-delay: [600]

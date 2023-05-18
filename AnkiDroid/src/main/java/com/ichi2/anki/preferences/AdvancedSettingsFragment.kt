@@ -48,6 +48,10 @@ class AdvancedSettingsFragment : SettingsFragment() {
     override fun initSubscreen() {
         removeUnnecessaryAdvancedPrefs()
 
+        /*
+         * First section
+         */
+
         // Check that input is valid before committing change in the collection path
         requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
             disableIfStorageMigrationInProgress()
@@ -58,6 +62,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
                     true
                 } catch (e: StorageAccessException) {
+                    // TODO: Request MANAGE_EXTERNAL_STORAGE
                     Timber.e(e, "Could not initialize directory: %s", newPath)
                     AlertDialog.Builder(requireContext()).show {
                         setTitle(R.string.dialog_collection_path_not_dir)
@@ -69,12 +74,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     false
                 }
             }
-        }
-
-        // Third party apps
-        requirePreference<Preference>(R.string.thirdparty_apps_key).setOnPreferenceClickListener {
-            (requireActivity() as AnkiActivity).openUrl(R.string.link_third_party_api_apps)
-            true
         }
 
         // Configure "Reset languages" preference
@@ -92,6 +91,11 @@ class AdvancedSettingsFragment : SettingsFragment() {
             }
             true
         }
+
+        /*
+         * Statistics section
+         */
+
         // Default deck for statistics
         requirePreference<Preference>(R.string.stats_default_deck_key).apply {
             // It doesn't have an effect on the new Statistics page,
@@ -116,6 +120,17 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 }
             }
         }
+
+        /*
+         * Plugins section
+         */
+
+        // Third party apps
+        requirePreference<Preference>(R.string.thirdparty_apps_key).setOnPreferenceClickListener {
+            (requireActivity() as AnkiActivity).openUrl(R.string.link_third_party_api_apps)
+            true
+        }
+
         // Enable API
         requirePreference<SwitchPreference>(R.string.enable_api_key).setOnPreferenceChangeListener { newValue ->
             val providerName = ComponentName(requireContext(), CardContentProvider::class.java.name)
@@ -129,20 +144,12 @@ class AdvancedSettingsFragment : SettingsFragment() {
             requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
         }
 
-        // v3 scheduler
+        /*
+         * Experimental
+         */
+
         @RustCleanup("move this to Reviewing > Scheduling once the new backend is the default")
-        val v3schedPref = requirePreference<SwitchPreference>(R.string.enable_v3_sched_key).apply {
-            launchCatchingTask { withCol { isChecked = v3Enabled } }
-            // if new backend was enabled on local.properties, remove the pref dependency
-            if (!BuildConfig.LEGACY_SCHEMA) {
-                dependency = null
-                isEnabled = true
-            }
-            setOnPreferenceChangeListener { newValue: Any ->
-                Timber.d("v3 scheduler set to $newValue")
-                launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
-            }
-        }
+        val v3schedPref = requirePreference<SwitchPreference>(R.string.enable_v3_sched_key)
 
         // Use V16 backend
         requirePreference<SwitchPreference>(R.string.pref_rust_backend_key).apply {
@@ -168,6 +175,20 @@ class AdvancedSettingsFragment : SettingsFragment() {
                     v3schedPref.isChecked = false
                     (requireActivity() as Preferences).restartWithNewDeckPicker()
                 }
+            }
+        }
+
+        // v3 scheduler
+        v3schedPref.apply {
+            launchCatchingTask { withCol { isChecked = v3Enabled } }
+            // if new backend was enabled on local.properties, remove the pref dependency
+            if (!BuildConfig.LEGACY_SCHEMA) {
+                dependency = null
+                isEnabled = true
+            }
+            setOnPreferenceChangeListener { newValue: Any ->
+                Timber.d("v3 scheduler set to $newValue")
+                launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
             }
         }
     }

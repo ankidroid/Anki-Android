@@ -19,6 +19,7 @@ package com.ichi2.anki.servicelayer
 import android.content.Context
 import android.os.Build
 import android.webkit.WebView
+import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.VersionUtils.pkgVersionName
@@ -44,6 +45,8 @@ object DebugInfoService {
                AnkiDroid Version = $pkgVersionName
                
                Android Version = ${Build.VERSION.RELEASE}
+               
+               ProductFlavor = ${BuildConfig.FLAVOR}
                
                Manufacturer = ${Build.MANUFACTURER}
                

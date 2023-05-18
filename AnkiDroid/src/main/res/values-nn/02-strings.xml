@@ -60,7 +60,9 @@
     <string name="no_tags">Du har ikke lagt til noen etiketter ennå.</string>
     <string name="updated_version">Oppdatert til versjon %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Lagre tavle</string>
+    <string name="enable_stylus">Aktiver pennemodus</string>
+    <string name="disable_stylus">Slå av pennemodus</string>
     <string name="enable_whiteboard">Aktiver tavle</string>
     <string name="disable_whiteboard">Deaktiver tavle</string>
     <string name="show_whiteboard">Vis tavle</string>
@@ -70,12 +72,12 @@
     <string name="leech_suspend_notification">Kort merket som igle og suspendert</string>
     <string name="leech_notification">Kort merket som igle</string>
     <string name="corrupt_font">Ugyldig font-fil %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
-    <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
-    <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
-    <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
+    <string name="webview_crash_unknown">Ukjent feil</string>
+    <string name="webview_crash_unknwon_detailed">Dette skyldes en intern feil i WebView.</string>
+    <string name="webview_crash_oom">For lite minne</string>
+    <string name="webview_crash_oom_details">WebView ble avsluttet av systemet. Dette skjer vanligvis når programmet går tom for minne, som regel på grunn av store skrifttyper eller media.</string>
+    <string name="webview_crash_nonfatal">WebView renderer krasjet. Årsak: %s</string>
+    <string name="webview_crash_fatal">Kritisk feil: WebView-avspiller krasjet. Årsak: %s</string>
     <string name="webview_crash_loop_dialog_title">System WebView Rendering Failure</string>
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
@@ -94,30 +96,30 @@
         <item>Repetisjoner</item>
         <item>Intervall</item>
         <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Forfaller</item>
+        <item>Kort endret</item>
+        <item>Opprettet</item>
+        <item>Notat endret</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
+    <string name="apply_filter">Bruk</string>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Review forgotten cards</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
+    <string name="custom_study_increase_new_limit">Endre dagens nye kortgrense</string>
+    <string name="custom_study_increase_review_limit">Endre dagens nye kortgrense</string>
+    <string name="custom_study_review_forgotten">Gjennomgå glemte kort</string>
+    <string name="custom_study_review_ahead">Gjennomgå på forhånd</string>
+    <string name="custom_study_random_selection">Øv på et tilfeldig utvalg av kort</string>
+    <string name="custom_study_preview_new">Forhåndsvis nye kort</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Rediger notat</string>
-    <string name="discard_unsaved_changes">Close and lose current input?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
-    <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
+    <string name="discard_unsaved_changes">Lukk og mist gjeldende inndata?</string>
+    <string name="note_editor_no_cards_created">Ingen kort opprettet. Fyll ut flere felt</string>
+    <string name="note_editor_no_first_field">Det første feltet er tomt</string>
+    <string name="note_editor_no_cloze_delations">Denne notattypen kan ikke inneholde hulltekstfyll.</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">Fylling av hulltekst fungerer ikke i en hulltekstnotat.</string>
     <string name="saving_facts">Lagrer notat</string>
     <string name="saving_model">Saving note type</string>
     <string name="save">Lagre</string>
@@ -137,10 +139,10 @@
         <item quantity="other">%1$d minutter</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kort</string>
-    <string name="note_editor_copy_note">Copy note</string>
-    <string name="card_editor_reposition_card">Reposition</string>
+    <string name="note_editor_copy_note">Kopier notat</string>
+    <string name="card_editor_reposition_card">Flytt</string>
     <string name="card_editor_reset_card">Tilbakestill fremdrift</string>
-    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
+    <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Endre plan</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Forhåndsvisning</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="error_insufficient_memory">Operasjonen ikke mulig på grunn av for lite minne på enheten</string>
@@ -151,7 +153,7 @@
         <item quantity="other">%d kort lagt til</item>
     </plurals>
     <string name="check_db">Kontroller database</string>
-    <string name="check_media">Check media</string>
+    <string name="check_media">Sjekk media</string>
     <string name="empty_cards">Tomme kort</string>
     <string name="check_db_message">Undersøker database.\nVennligst vent...</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
@@ -166,15 +168,15 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">Dette er ikke en gyldig Anki pakke fil</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
+    <string name="import_title_error" comment="Title of error dialog">Feil</string>
+    <string name="import_log_failed_unzip">Kan ikke pakke ut apkg: %s</string>
+    <string name="import_log_failed_copy_to">Kunne ikke kopiere apkg til %s</string>
+    <string name="import_log_failed_validate">Akg feilet validering</string>
+    <string name="import_log_insufficient_space_error">Det er ikke nok plass til å importere pakken. Det trengs \n - %1$s \nTilgjengelig - %2$s.\n\n Problemer? Prøv å frigjøre plass på telefonen din hvis mulig. Alternativt kan synkronisering bruke mindre plass enn importering. Du kan prøve å importere pakken med en enhet med mer plass (for eksempel Anki Desktop) og deretter synkronisere den til denne enheten.</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">Feil med å importere fil\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Den valgte filen kunne ikke importeres automatisk av AnkiDroid. Vennligst referer til brukermanualen for å finne ut hvordan man importerer anki-filer manuelt: \n%s</string>
@@ -182,7 +184,7 @@
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Replacing collection&#8230;</string>
+    <string name="import_replacing">Erstatter samling&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Include scheduling</string>
     <string name="export_include_media">Inkluder media</string>
@@ -280,32 +282,32 @@
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
-    <string name="background_image_title">Background</string>
-    <string name="choose_an_image">Select image</string>
+    <string name="background_image_title">Bakgrunn</string>
+    <string name="choose_an_image">Velg bilde</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Restore Default</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="cloze_sample_text">Dette er en {{%1$s::eksempel}} hulltekstfylling.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">eksompel</string>
+    <string name="basic_answer_sample_text">et eksempel</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Tom</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
-    <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="white_board_image_save_failed">Kunne ikke lagre tavle. %s</string>
+    <string name="white_board_image_saved">Tavle lagret som %s</string>
+    <string name="title_whiteboard_pen_color">Farge på penn</string>
+    <string name="title_whiteboard_editor">Tavleeditor</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Vis</string>
+    <string name="anki_js_error_code">(Feilkode: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Kopiert til utklippstavle</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
@@ -313,19 +315,20 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
-    <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="ankidroid_init_failed_webview_title">Uopprettelig feil</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
-    <string name="menu_font_size">Font size</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
-    <string name="format_insert_bold">Format as Bold</string>
-    <string name="format_insert_italic">Format as Italic</string>
+    <string name="menu_font_size">Skriftstørrelse</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Vis verktøylinje</string>
+    <string name="format_insert_bold">Formater som fet</string>
+    <string name="format_insert_italic">Formater som kursiv</string>
     <string name="format_insert_underline">Format as Underline</string>
     <string name="insert_horizontal_line">Insert Horizontal Line</string>
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
+    <string name="insert_cloze">Sett inn hulltekstfyll</string>
     <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
@@ -351,45 +354,33 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">Hent kortleiken</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
+    <string name="try_again">Prøv igjen</string>
+    <string name="cancel_download">Avbryt nedlasting</string>
+    <string name="cancel_download_question_title">Avbryt nedlasting?</string>
+    <string name="downloading_file">Laster ned %s</string>
     <string name="import_deck">Før inn kortleiken</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
+    <string name="something_wrong">Noe gikk galt. Vennligst prøv igjen</string>
+    <string name="download_failed">Nedlasting feilet</string>
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <string name="search_using_deck_name">Søk ved hjelp av kortstokknavn</string>
+    <string name="home">Hjem</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Kort skjult.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
-    <string name="scoped_storage_learn_more">Learn More</string>
+    <string name="scoped_storage_learn_more">Finn ut mer</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
 \nStorage migration will continue in the background.</string>
@@ -404,12 +395,12 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Failed to access collection. Please try again!</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
+    <string name="intro_ankidroid_tagline_one">Les mindre</string>
+    <string name="intro_ankidroid_tagline_two">Husk mer</string>
     <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Kom i gang</string>
+    <string name="intro_sync_from_ankiweb">Synkroniser fra AnkiWeb</string>
+    <string name="already_logged_in">Allerede pålogget</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Kortleiken finst</string>
     <string name="deck_created">Laga ein kortleik</string>
@@ -417,12 +408,16 @@
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Kortleiken er sletta. Tak bort snarvegen</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kort</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notater</string>
     <string name="toggle_cards_notes">Toggle Cards/Notes</string>
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
     <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
     <string name="browser_options_dialog_heading">Browser Options</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

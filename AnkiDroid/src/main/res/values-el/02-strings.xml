@@ -53,20 +53,22 @@
     <string name="CardEditorTags">Ετικέτες:%1$s</string>
     <string name="CardEditorCards">Κάρτες %1$s</string>
     <string name="tag_name">Όνομα ετικέτας</string>
-    <string name="add_new_filter_tags">Add/filter tags</string>
+    <string name="add_new_filter_tags">Προσθήκη/φιλτράρισμα ετικετών</string>
     <string name="add_tag">Προσθήκη ετικέτας</string>
     <string name="check_all_tags">Check/uncheck all tags</string>
-    <string name="filter_tags">Filter tags</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="filter_tags">Φιλτράρισμα ετικετών</string>
+    <string name="no_tags">Δεν έχετε προσθέσει καμία ετικέτα ακόμα</string>
+    <string name="updated_version">Αναβαθμίστηκε στην εκδοχή %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Enable whiteboard</string>
     <string name="disable_whiteboard">Disable whiteboard</string>
     <string name="show_whiteboard">Εμφάνιση πίνακα</string>
     <string name="hide_whiteboard">Απόκρυψη πίνακα</string>
     <string name="clear_whiteboard">Καθαρίσμός πίνακα</string>
-    <string name="replay_audio">Replay audio</string>
+    <string name="replay_audio">Επανάληψη ήχου</string>
     <string name="leech_suspend_notification">Η κάρτα χαρακτηρίστηκε βδέλλα και αναστάλθηκε</string>
     <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>
     <string name="corrupt_font">Κατεστραμμένο αρχείο γραμματοσειράς %s</string>
@@ -93,22 +95,22 @@
         <item>Lapses</item>
         <item>Reviews</item>
         <item>Interval</item>
-        <item>Ease</item>
+        <item>Ευκολία</item>
         <item>Due</item>
         <item>Card Modified</item>
-        <item>Created</item>
+        <item>Δημιουργήθηκε</item>
         <item>Note Modified</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
+    <string name="apply_filter">Εφαρμογή</string>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
     <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
     <string name="custom_study_review_forgotten">Review forgotten cards</string>
     <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
-    <string name="custom_study_preview_new">Preview new cards</string>
+    <string name="custom_study_random_selection">Μελέτη μιας τυχαίας επιλογής καρτών</string>
+    <string name="custom_study_preview_new">Προεπισκόπηση νέων καρτών</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Σύνταξη Σημείωσης</string>
@@ -119,7 +121,7 @@
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Αποθήκευση σημείωσης</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Αποθήκευση τύπου σημείωσης</string>
     <string name="save">Αποθήκευση</string>
     <string name="close">Κλείσιμο</string>
     <string name="select">Επιλέξτε</string>
@@ -151,7 +153,7 @@
         <item quantity="other">%d cards added</item>
     </plurals>
     <string name="check_db">Έλεγχος βάσης δεδομένων</string>
-    <string name="check_media">Check media</string>
+    <string name="check_media">Έλεγχος πολυμέσων </string>
     <string name="empty_cards">Κενές κάρτες</string>
     <string name="check_db_message">Έλεγχος βάσης δεδομένων.\nΠαρακαλούμε περιμένετε...</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
@@ -162,8 +164,8 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Προσθήκη</string>
     <string name="import_message_replace_confirm">Αυτό θα διαγράψει την υπάρχουσα συλλογή σας και θα την αντικαταστήσει με τα δεδομένα του αρχείου %s. Είστε σίγουροι?</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="one">Προσθήκη \"%s\" στη συλλογή; Μπορεί να διαρκέσει πολύ χρόνο</item>
+        <item quantity="other">Θες να εισάγεις το ακόλουθο αρχείο :\n%s\n ; Αυτό μπορεί να διαρκέσει πολύ χρόνο.</item>
     </plurals>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
@@ -305,7 +307,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">View</string>
     <string name="anki_js_error_code">(Error Code: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Copied debug information to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
@@ -313,6 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -362,34 +365,22 @@
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Buried card</string>
-    <string name="buried_note">Buried note</string>
-    <string name="deleted_note">Deleted note</string>
-    <string name="suspended_card">Suspended card</string>
-    <string name="suspended_note">Suspended note</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
-    <string name="scoped_storage_initial_message">AnkiDroid must move its data to meet new Android privacy rules
-\n\nIf you uninstall AnkiDroid before the migration, your data will be lost
-\n\nPlease perform the migration as soon as possible</string>
-    <string name="scoped_storage_terms_message">Migration will occur in the background. You will be unable to sync while migrating\n\nEstimated duration: %s</string>
-    <string name="scoped_storage_term_1">I have backed up my data</string>
-    <string name="scoped_storage_term_1_ankiweb">I have synced with AnkiWeb recently</string>
-    <string name="scoped_storage_term_2">I will not uninstall the app while data is being moved</string>
-    <string name="scoped_storage_select_all_terms">Please accept all items to continue</string>
     <string name="scoped_storage_learn_more">Learn More</string>
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">If you reinstall AnkiDroid, it will not be able to open your collection.</string>
-    <string name="migration_update_request_dialog_download_warning">If you uninstall AnkiDroid, you will need to download your full collection again.</string>
-    <string name="migration_update_request">Android storage access policy requires us to change where we store your collection. When your data is migrated AnkiDroid will be faster and your data will be more secure.
-    You will not be able to sync during the storage migration.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
 \nStorage migration will continue in the background.</string>
@@ -412,8 +403,8 @@
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
     <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Created deck</string>
-    <string name="deck_renamed">Renamed deck</string>
+    <string name="deck_created">Deck created</string>
+    <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
@@ -425,4 +416,8 @@
     <string name="browser_options_dialog_heading">Browser Options</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

@@ -36,7 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
 
-fun DeckPicker.importApkgs(apkgPaths: List<String>) {
+fun AnkiActivity.importApkgs(apkgPaths: List<String>) {
     launchCatchingTask {
         for (apkgPath in apkgPaths) {
             val report = withProgress(

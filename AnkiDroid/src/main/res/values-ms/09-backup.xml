@@ -44,25 +44,25 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
-    <string name="backup_restore">Memulihkan dari sandaran</string>
+    <string name="backup_deck_no_storage_left">Sandaran tidak disimpan. kehabisan ruang pada storan anda. Kurangkan kedalaman sandaran atau buang beberapa fail lain.</string>
+    <string name="storage_warning">Tinggal kurang dari %d MB ruang pada storan anda.\nKosongkan sedikit ruang untuk mengelakkan kehilangan data.</string>
+    <string name="backup_restore">Pulih dari sandaran</string>
     <string name="backup_new_collection">Koleksi baru</string>
-    <string name="backup_del_collection">Menghapuskan koleksi dan mencipta yang baru</string>
-    <string name="backup_del_collection_question">Bersihkan koleksi dan membuat yang baru? Ini akan drop semua pembelajaran anda kemajuan dan padamkan semua kad.</string>
-    <string name="backup_full_sync_from_server">Penyegerakan penuh daripada pelayan</string>
-    <string name="backup_full_sync_from_server_question">Ganti koleksi anda dengan salah satu dari AnkiWeb? Ini akan drop semua pembelajaran anda kemajuan dan berkata maklumat sejak anda terakhir sync.</string>
+    <string name="backup_del_collection">Buang koleksi dan cipta yang baharu</string>
+    <string name="backup_del_collection_question">Buang koleksi dan cipta yang baharu? Ini akan lepaskan semua kemajuan pembelajaran anda dan memadam semua kad.</string>
+    <string name="backup_full_sync_from_server">Penyegerakan penuh dari pelayan</string>
+    <string name="backup_full_sync_from_server_question">Ganti tulis koleksi anda dengan yang dari AnkiWeb? Ini akan buang semua kemajuan pembelajaran dan maklumat yang ditambah sejak penyegerakan terakhir.</string>
     <string name="error_handling_title">Pengendalian ralat</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Pilihan</string>
-    <string name="backup_retry_opening">Coba membuka</string>
-    <string name="backup_error_menu_repair">Pembaikan pangkalan data</string>
+    <string name="backup_retry_opening">Cuba buka semula</string>
+    <string name="backup_error_menu_repair">Baiki pangkalan data</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">Membaiki pangkalan data&#8230;</string>
-    <string name="backup_invalid_file_error">Sandaran yang dipilih adalah tidak sah</string>
+    <string name="backup_invalid_file_error">Sandaran pilihan tidak sah</string>
     <string name="backup_restore_select_title">Pilih sandaran untuk memulihkan</string>
-    <string name="backup_restore_no_backups">Tidak backup yang ada di perangkat ini. Jika anda memiliki backup pada komputer anda, salinan mereka secara manual ke anda apa yang anda perlu lakukan folder.</string>
+    <string name="backup_restore_no_backups">Tiada sandaran tersedia pada peranti ini. Jika anda mempunyai sandara pada komputer desktop, salin secara manual ke dalam folder AnkiDroid.</string>
     <string name="open_collection_failed_title">Koleksi tidak dibuka</string>
-    <string name="corrupt_db_message">Koleksi anda telah menjadi rosak.\n\nTouch \"pilihan\" untuk memulihkan dari sandaran, atau jika itu tidak berhasil, lihat mengikuti instruksi manual untuk membaiki pangkalan data:\n%1$s</string>
-    <string name="access_collection_failed_message">Ralat yang berlaku semasa mengakses koleksi anda. Ia mungkin telah disebabkan oleh berbahaya bug, atau mungkin ada masalah dengan itu. \n\nTry berlari daftar pangkalan data, atau memulihkan dari sandaran dengan menekan butang \"pilihan\". Jika kau terus melihat pesan ini, sila file laporan bug:\n%1$s</string>
-    <string name="deck_repair_error">Koleksi yang tidak bisa diperbaiki</string>
+    <string name="corrupt_db_message">Koleksi anda rosak.\n\nSentuh “pilihan” untuk pulihkan dari sandaran, atau jika tidak berjaya, lihat lengkah seterusnya untuk membaiki pangkalan data secara manual:\n%1$s</string>
+    <string name="access_collection_failed_message">Ralat berlaku semasa mencapai koleksi anda. Ia mungkin disebabkan oleh pepijat tidak berisiko, atau mungkin terdapat kesulitan. \n\nCuba lakukan pemeriksaan pangkalan data, atau pulihkan dari sandaran dengan menekan butang “pilihan”. Jika anda masih melihat pesanan ini, sila failkan laporan pepijat:\n%1$s</string>
+    <string name="deck_repair_error">Koleksi tidak dapat dibaiki</string>
 </resources>

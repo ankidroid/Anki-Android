@@ -261,15 +261,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Você não pode criar um sub-baralho para todos os baralhos</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
+    <string name="backup_your_collection">Cópia da sua coleção</string>
+    <string name="backup_collection_message">Você não fez cópia da sua coleção há um tempo. Deveria fazê-lo agora para evitar perda de dados.</string>
+    <string name="button_backup">Criar cópia</string>
     <string name="button_disable_reminder">Desabilitar lembrete</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Mais tarde</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Não mostrar novamente</string>
     <string name="dismiss_backup_warning_title">Aviso de perda de dados</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="dismiss_backup_warning_new_user">        Devido às alterações de privacidade do Android, seus dados e cópias automáticas serão excluídos do seu telefone se o aplicativo for desinstalado.
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        Devido às alterações de privacidade do Android, seus dados e cópias automáticas serão inacessíveis se o aplicativo for desinstalado.
     </string>
 </resources>

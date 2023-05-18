@@ -46,6 +46,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
@@ -53,7 +54,6 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
@@ -73,6 +73,7 @@ import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
@@ -101,7 +102,8 @@ open class Reviewer :
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
-    private var mColorPalette: LinearLayout? = null
+    private lateinit var mColorPalette: LinearLayout
+    private var toggleStylus = false
 
     // TODO: Consider extracting to ViewModel
     // Card counts
@@ -111,7 +113,7 @@ open class Reviewer :
     private lateinit var mTextBarNew: TextView
     private lateinit var mTextBarLearn: TextView
     private lateinit var mTextBarReview: TextView
-    protected lateinit var answerTimer: AnswerTimer
+    private lateinit var answerTimer: AnswerTimer
     private var mPrefHideDueCount = false
 
     // Whiteboard
@@ -127,7 +129,7 @@ open class Reviewer :
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var audioView: AudioView? = null
         protected set
-    protected var tempAudioPath: String? = null
+    private var tempAudioPath: String? = null
 
     // ETA
     private var mEta = 0
@@ -149,10 +151,9 @@ open class Reviewer :
             // BUG: If the method crashes, this will crash
             invalidateOptionsMenu()
             val cardCount: Int = result!!.value.result.size
-            showThemedToast(
-                this,
+            showSnackbar(
                 resources.getQuantityString(toastResourceId, cardCount, cardCount),
-                true
+                Snackbar.LENGTH_SHORT
             )
         }
     }
@@ -350,6 +351,8 @@ open class Reviewer :
             val whiteboardVisibility = MetaDB.getWhiteboardVisibility(this, parentDid)
             setWhiteboardEnabledState(true)
             setWhiteboardVisibility(whiteboardVisibility)
+            toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
+            whiteboard!!.toggleStylus = toggleStylus
         }
         col.sched.deferReset() // Reset schedule in case card was previously loaded
         col.startTimebox()
@@ -433,10 +436,10 @@ open class Reviewer :
             }
             R.id.action_change_whiteboard_pen_color -> {
                 Timber.i("Reviewer:: Pen Color button pressed")
-                if (mColorPalette!!.visibility == View.GONE) {
-                    mColorPalette!!.visibility = View.VISIBLE
+                if (mColorPalette.visibility == View.GONE) {
+                    mColorPalette.visibility = View.VISIBLE
                 } else {
-                    mColorPalette!!.visibility = View.GONE
+                    mColorPalette.visibility = View.GONE
                 }
                 updateWhiteboardEditorPosition()
             }
@@ -445,10 +448,10 @@ open class Reviewer :
                 if (whiteboard != null) {
                     try {
                         val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(TimeManager.time).path
-                        showThemedToast(this@Reviewer, getString(R.string.white_board_image_saved, savedWhiteboardFileName), true)
+                        showSnackbar(getString(R.string.white_board_image_saved, savedWhiteboardFileName), Snackbar.LENGTH_SHORT)
                     } catch (e: Exception) {
                         Timber.w(e)
-                        showThemedToast(this@Reviewer, getString(R.string.white_board_image_save_failed, e.localizedMessage), true)
+                        showSnackbar(getString(R.string.white_board_image_save_failed, e.localizedMessage), Snackbar.LENGTH_SHORT)
                     }
                 }
             }
@@ -463,6 +466,13 @@ open class Reviewer :
                 setWhiteboardVisibility(!mShowWhiteboard)
                 refreshActionBar()
             }
+            R.id.action_toggle_stylus -> { // toggle stylus mode
+                Timber.i("Reviewer:: Stylus set to %b", !toggleStylus)
+                toggleStylus = !toggleStylus
+                whiteboard!!.toggleStylus = toggleStylus
+                MetaDB.storeWhiteboardStylusState(this, parentDid, toggleStylus)
+                refreshActionBar()
+            }
             R.id.action_toggle_whiteboard -> {
                 toggleWhiteboard()
             }
@@ -472,7 +482,7 @@ open class Reviewer :
                 } else {
                     com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current().id)
                 }
-                startActivityForResultWithAnimation(i, DECK_OPTIONS, ActivityTransitionAnimation.Direction.FADE)
+                deckOptionsLauncher.launch(i)
             }
             R.id.action_select_tts -> {
                 Timber.i("Reviewer:: Select TTS button pressed")
@@ -533,7 +543,7 @@ open class Reviewer :
         setWhiteboardEnabledState(prefWhiteboard)
         setWhiteboardVisibility(prefWhiteboard)
         if (!prefWhiteboard) {
-            mColorPalette!!.visibility = View.GONE
+            mColorPalette.visibility = View.GONE
         }
         refreshActionBar()
     }
@@ -693,7 +703,7 @@ open class Reviewer :
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected fun openCardInfo(fromGesture: Gesture? = null) {
         if (currentCard == null) {
-            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), true)
+            showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
         val intent = if (BackendFactory.defaultLegacySchema) {
@@ -768,7 +778,7 @@ open class Reviewer :
                 //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
             } else {
                 // In this case, there is no object word for the verb, "Undo",
-                // so in some languages such as Japanese, which have pre/postpositional particle with the object,
+                // so in some languages such as Japanese, which have pre/post-positional particle with the object,
                 // we need to use the string for just "Undo" instead of the string for "Undo %s".
                 undoIcon.title = resources.getString(R.string.undo)
             }
@@ -777,6 +787,7 @@ open class Reviewer :
             mOnboarding.onUndoButtonEnabled()
         }
         val toggleWhiteboardIcon = menu.findItem(R.id.action_toggle_whiteboard)
+        val toggleStylusIcon = menu.findItem(R.id.action_toggle_stylus)
         val hideWhiteboardIcon = menu.findItem(R.id.action_hide_whiteboard)
         val changePenColorIcon = menu.findItem(R.id.action_change_whiteboard_pen_color)
         // White board button
@@ -785,6 +796,9 @@ open class Reviewer :
             toggleWhiteboardIcon.setTitle(R.string.disable_whiteboard)
             // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
             toggleWhiteboardIcon.isVisible = true
+            if (!mActionButtons.status.toggleStylusIsDisabled()) {
+                toggleStylusIcon.isVisible = true
+            }
             if (!mActionButtons.status.hideWhiteboardIsDisabled()) {
                 hideWhiteboardIcon.isVisible = true
             }
@@ -798,6 +812,7 @@ open class Reviewer :
                 changePenColorIcon.isVisible = true
             }
             val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
+            val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
             val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, null)!!.mutate()
             if (mShowWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
@@ -805,14 +820,25 @@ open class Reviewer :
                 hideWhiteboardIcon.setTitle(R.string.hide_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
+                if (toggleStylus) {
+                    toggleStylusIcon.setTitle(R.string.disable_stylus)
+                    stylusIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
+                } else {
+                    toggleStylusIcon.setTitle(R.string.enable_stylus)
+                    stylusIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+                }
+                toggleStylusIcon.icon = stylusIcon
             } else {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
                 hideWhiteboardIcon.setTitle(R.string.show_whiteboard)
                 whiteboardColorPaletteIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+                stylusIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+                toggleStylusIcon.isEnabled = false
+                toggleStylusIcon.icon = stylusIcon
                 changePenColorIcon.isEnabled = false
                 changePenColorIcon.icon = whiteboardColorPaletteIcon
-                mColorPalette!!.visibility = View.GONE
+                mColorPalette.visibility = View.GONE
             }
         } else {
             toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
@@ -1053,21 +1079,21 @@ open class Reviewer :
         val layoutParams: RelativeLayout.LayoutParams
         when (mAnswerButtonsPosition) {
             "none", "top" -> {
-                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams = mColorPalette.layoutParams as RelativeLayout.LayoutParams
                 layoutParams.removeRule(RelativeLayout.ABOVE)
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-                mColorPalette!!.layoutParams = layoutParams
+                mColorPalette.layoutParams = layoutParams
             }
             "bottom" -> {
-                layoutParams = mColorPalette!!.layoutParams as RelativeLayout.LayoutParams
+                layoutParams = mColorPalette.layoutParams as RelativeLayout.LayoutParams
                 layoutParams.removeRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
                 layoutParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
-                mColorPalette!!.layoutParams = layoutParams
+                mColorPalette.layoutParams = layoutParams
             }
         }
     }
 
-    protected fun updateScreenCounts() {
+    private fun updateScreenCounts() {
         if (currentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
@@ -1119,7 +1145,7 @@ open class Reviewer :
     }
 
     @VisibleForTesting
-    public override fun displayCardAnswer() {
+    override fun displayCardAnswer() {
         delayedHide(100)
         super.displayCardAnswer()
     }
@@ -1604,17 +1630,17 @@ open class Reviewer :
 
     inner class ReviewerJavaScriptFunction(activity: AbstractFlashcardViewer) : AnkiDroidJsAPI(activity) {
         @JavascriptInterface
-        override fun ankiGetNewCardCount(): String? {
+        override fun ankiGetNewCardCount(): String {
             return mNewCount.toString()
         }
 
         @JavascriptInterface
-        override fun ankiGetLrnCardCount(): String? {
+        override fun ankiGetLrnCardCount(): String {
             return mLrnCount.toString()
         }
 
         @JavascriptInterface
-        override fun ankiGetRevCardCount(): String? {
+        override fun ankiGetRevCardCount(): String {
             return mRevCount.toString()
         }
 

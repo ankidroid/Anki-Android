@@ -129,6 +129,7 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
      * different method for copying tables
      *
      * @param path String path to destination database
+     * path should be tested with File.exists() and File.canWrite() before this is called.
      * @throws JSONException
      * @throws IOException
      */
@@ -143,7 +144,7 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
         // flexible
         dst.close()
         Timber.d("Attach DB")
-        col.db.database.execSQL("ATTACH '$path' AS DST_DB")
+        col.db.database.execSQL("ATTACH ? AS DST_DB", arrayOf(path))
         // copy cards, noting used nids (as unique set)
         Timber.d("Copy cards")
         col.db.database

@@ -59,8 +59,8 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
     }
 
     override val notificationTitle: String
-        get() = resources.getString(R.string.export_success_title)
+        get() = res().getString(R.string.export_success_title)
 
     override val notificationMessage: String
-        get() = resources.getString(R.string.export_success_message)
+        get() = res().getString(R.string.export_success_message)
 }

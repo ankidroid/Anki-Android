@@ -94,7 +94,7 @@
     <string name="answering_error_title">Veritabanı hatası</string>
     <string name="answering_error_message">Koleksiyona yazılamadı. Veritabanı bozuk olabilir veya diskte yeterli boş alan olmayabilir.\n\nBu daha sık oluyorsa, veritabanını kontrol etmeyi, koleksiyonu onarmayı veya bir yedekten geri yüklemeyi deneyin. Bunun için \"seçenekler\"e dokunun.\n\Veya bu bir AnkiDroid hatası da olabilir; Bunu kontrol edebilmemiz için lütfen hatayı bildirin.</string>
     <string name="answering_error_report">Hatayı bildir</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">AnkiDroid\'i açmaya yetecek boş depolama alanı yok. Devam etmek için biraz alan boşaltın. </string>
     <string name="repair_deck_dialog">Veritabanını onarmayı gerçekten denemek istiyor musunuz?\n\nGirişime başlamadan önce, \"%s\" altklasöründe bir kopya oluşturulacak.</string>
     <string name="intent_aedict_empty">\"Varsayılan\" kategorisi boş</string>
     <string name="intent_aedict_category">AnkiDroid\'e kart eklemek için bütün Not Defteri kategorilerini kaldırın veya \"default\" isminde bir tane ekleyin</string>
@@ -237,8 +237,8 @@
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Gizlilik</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Gizlilik Politikası</string>
-    <string name="help_item_ankiweb_privacy_policy">AnkiDroid Gizlilik Politikası</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Gizlilik Poliçesi</string>
+    <string name="help_item_ankiweb_privacy_policy">AnkiWeb Gizlilik Poliçesi</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Şartları ve Koşulları</string>
     <string name="help_title_send_exception">Sorun giderme raporu gönder</string>
     <string name="help_dialog_exception_report_debounce">Rapor zaten gönderildi</string>
@@ -261,15 +261,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Bütün desteler için bir altdeste oluşturamazsınız</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="backup_your_collection">Koleksiyonunuzu yedekleyin</string>
+    <string name="backup_collection_message">Koleksiyonunuzu bir süredir yedeklemediniz. Veri kaybını önlemek için bunu şimdi yapmalısınız</string>
+    <string name="button_backup">Yedekle</string>
+    <string name="button_disable_reminder">Hatırlatmayı kapat</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Daha sonra</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Tekrar gösterme</string>
+    <string name="dismiss_backup_warning_title">Veri kaybı uyarısı</string>
+    <string name="dismiss_backup_warning_new_user">        Android gizlilik değişikliklerinden dolayı, uygulama kaldırılırsa veriniz ve otomatik yedekleriniz telefonunuzdan silinecek
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        Android gizlilik değişikliklerinden dolayı, uygulama kaldırılırsa veriniz ve otomatik yedekleriniz erişilemez hâle gelecek
     </string>
 </resources>

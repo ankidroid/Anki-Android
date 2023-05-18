@@ -87,8 +87,11 @@ interface Compat {
     fun getMediaRecorder(context: Context): MediaRecorder
     fun <T> readSparseArray(parcel: Parcel, loader: ClassLoader, clazz: Class<T>): SparseArray<T>?
     fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>?
+    fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
+    fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo>
     fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T?
+    fun <T : Parcelable> getSparseParcelableArray(bundle: Bundle, key: String, clazz: Class<T>): SparseArray<T>?
 
     /**
      * Retrieve extended data from the intent.

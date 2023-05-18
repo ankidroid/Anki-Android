@@ -22,10 +22,14 @@ import anki.sync.SyncStatusResponse
 import anki.sync.syncLoginRequest
 import com.ichi2.libanki.CollectionV16
 
-fun CollectionV16.syncLogin(username: String, password: String): SyncAuth {
+fun CollectionV16.syncLogin(username: String, password: String, endpoint: String?): SyncAuth {
     val req = syncLoginRequest {
         this.username = username
         this.password = password
+        // default endpoint used here, if it is null
+        if (endpoint != null) {
+            this.endpoint = endpoint
+        }
     }
     return backend.syncLogin(req)
 }

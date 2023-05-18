@@ -33,7 +33,6 @@ import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleColle
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.themes.Themes
-import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.*
 import timber.log.Timber
 
@@ -77,7 +76,8 @@ class IntroductionActivity : AppIntro() {
             }
         }
 
-        this.setColorDoneText(getColorFromAttr(this, android.R.attr.textColorPrimary))
+        this.showSeparator(false)
+        isButtonsEnabled = false
     }
 
     private fun openLoginDialog() {
@@ -116,7 +116,7 @@ class IntroductionActivity : AppIntro() {
         if (startupFailure == StartupFailure.WEBVIEW_FAILED) {
             AlertDialog.Builder(this).show {
                 title(R.string.ankidroid_init_failed_webview_title)
-                message(R.string.ankidroid_init_failed_webview, AnkiDroidApp.webViewErrorMessage)
+                message(text = getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.webViewErrorMessage))
                 positiveButton(R.string.close) { finish() }
                 cancelable(false)
             }

@@ -19,6 +19,7 @@ package com.ichi2.anki.testutil
 import android.os.Build
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
+import com.ichi2.anki.utils.ensureAllFilesAccess
 import org.junit.rules.TestRule
 
 object GrantStoragePermission {
@@ -48,5 +49,6 @@ val notificationPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TI
 /** Grants permissions, given some may be invalid */
 fun grantPermissions(vararg permissions: String?): TestRule {
     val validPermissions = permissions.filterNotNull().toTypedArray()
+    ensureAllFilesAccess()
     return GrantPermissionRule.grant(*validPermissions)
 }

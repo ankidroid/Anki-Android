@@ -33,6 +33,14 @@ open class CompatV33 : CompatV31(), Compat {
         return bundle.getParcelableArrayList(key, clazz)
     }
 
+    override fun resolveActivity(
+        packageManager: PackageManager,
+        intent: Intent,
+        flags: ResolveInfoFlagsCompat
+    ): ResolveInfo? {
+        return packageManager.resolveActivity(intent, PackageManager.ResolveInfoFlags.of(flags.value))
+    }
+
     override fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T? {
         return intent.getSerializableExtra(name, className)
     }
@@ -68,6 +76,10 @@ open class CompatV33 : CompatV31(), Compat {
         return packageManager.resolveService(intent, PackageManager.ResolveInfoFlags.of(flags.value))
     }
 
+    override fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
+        return packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flags.value))
+    }
+
     override fun <T> readList(
         parcel: Parcel,
         outVal: MutableList<in T>,
@@ -79,5 +91,13 @@ open class CompatV33 : CompatV31(), Compat {
 
     override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
         return bundle.getParcelable(key, clazz)
+    }
+
+    override fun <T : Parcelable> getSparseParcelableArray(
+        bundle: Bundle,
+        key: String,
+        clazz: Class<T>
+    ): SparseArray<T>? {
+        return bundle.getSparseParcelableArray(key, clazz)
     }
 }

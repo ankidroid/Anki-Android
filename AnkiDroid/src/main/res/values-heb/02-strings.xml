@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת מגירה</string>
     <string name="drawer_close">סגירת מגירה</string>
-    <string name="CardEditorCardDeck">חפיסת קלפים:‏</string>
+    <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
     <string name="CardEditorTags">תגיות: %1$s</string>
@@ -61,6 +61,8 @@
     <string name="updated_version">עודקן לגירסה %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">שמור לוח</string>
+    <string name="enable_stylus">הפעל מצב סטיילוס</string>
+    <string name="disable_stylus">כבה מצב סטיילוס</string>
     <string name="enable_whiteboard">לאפשר ציור</string>
     <string name="disable_whiteboard">בטל הציור</string>
     <string name="show_whiteboard">הצג לוח ציור</string>
@@ -123,7 +125,7 @@
     <string name="save">שמירה</string>
     <string name="close">סגירה</string>
     <string name="select">בחירה</string>
-    <string name="reordering_cards">מסדר מחדש את הקלפים&#8230;</string>
+    <string name="reordering_cards">מסדר מחדש את הכרטיסים&#8230;</string>
     <string name="field_remapping">%1$s (מתוך \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">קלף שממופה לכלום ימחק. אם לרשימה אין קלפים נותרים, היא תימחק. להמשיך?</string>
     <string name="timebox_reached_title">קופסת הזמן הגיעה</string>
@@ -291,10 +293,10 @@
     <string name="filtered_deck_name">חפיסה מסוננת</string>
     <string name="reminder_title">לא לשכוח ללמוד היום!</string>
     <plurals name="reminder_text">
-        <item quantity="one">קלף אחד לשינון בעוד %1$s</item>
-        <item quantity="two">%2$d קלפים לשינון בעוד %1$s</item>
-        <item quantity="many">%2$d קלפים לשינון בעוד %1$s</item>
-        <item quantity="other">%2$d קלפים לשינון בעוד %1$s</item>
+        <item quantity="one">כרטיס אחד לשינון בעוד %1$s</item>
+        <item quantity="two">%2$d כרטיסים לשינון בעוד %1$s</item>
+        <item quantity="many">%2$d כרטיסים לשינון בעוד %1$s</item>
+        <item quantity="other">%2$d כרטיסים לשינון בעוד %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>
@@ -306,7 +308,7 @@
     <string name="web_page_error">טעינת העמוד נכשלה: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">אין תמיכה בקישור לעמוד חיצוני בקלף.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">קלפים משוחזרים</string>
+    <string name="check_integrity_recovered_deck_name">כרטיסים משוחזרים</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">רקע</string>
     <string name="choose_an_image">נא לבחור תמונה</string>
@@ -333,7 +335,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">תצוגה</string>
     <string name="anki_js_error_code">(קוד שגיאה: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">השגיאה הועתקה</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">הועתק מהלוח</string>
     <string name="about_ankidroid_error_copy_debug_info">תקלה בהעתקת הודעת השגיאה</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
@@ -341,6 +343,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">טעינת החפיסה %s נכשלה</string>
     <string name="search_decks">חיפוש בחפיסות</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">שגיאה מכרעת</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid משתמש בדפדפן המערכת שאינו זמין. זה קורה לפעמים אם המערכת מתקינה עדכונים. נא נסה שנית בעוד כמה דקות. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -390,34 +393,24 @@
     <string name="check_network">נא בדוק את החיבור לרשת</string>
     <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
     <string name="home">בית</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">קלף נקבר</string>
-    <string name="buried_note">רשומה נקברה</string>
-    <string name="deleted_note">רשומה נמחקה</string>
-    <string name="suspended_card">קלף הוקפא</string>
-    <string name="suspended_note">רשומה הוקפאה</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">הקלף נקבר</string>
+    <plurals name="note_suspended">
+        <item quantity="one">כרטיס %d הושעה.</item>
+        <item quantity="two">%d כרטיסים הושעו.</item>
+        <item quantity="many">%d כרטיסים הושעו.</item>
+        <item quantity="other">%d כרטיסים הושעו.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">הפוך שדה %s לדביק</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">העברת אחסון</string>
-    <string name="scoped_storage_initial_message">AnkiDroid חייבת להעביר את הנתונים שלה כדי לעמוד בכללי הפרטיות החדשים של אנדרואיד
-\n\nאם תסיר את ההתקנה של AnkiDroid לפני ההעברה, הנתונים שלך יאבדו
-\n\nאנא בצע את ההעברה בהקדם האפשרי</string>
-    <string name="scoped_storage_terms_message">העברת הנתונים תתרחש ברקע. לא תוכל לסנכרן בזמן ההעברה\n\nמשך זמן משוער: %s</string>
-    <string name="scoped_storage_term_1">גיביתי את המידע</string>
-    <string name="scoped_storage_term_1_ankiweb">הסתנכרנתי עם AnkiWeb לאחרונה</string>
-    <string name="scoped_storage_term_2">אני לא אסיר את ההתקנה של האפליקציה בזמן העברת הנתונים</string>
-    <string name="scoped_storage_select_all_terms">נא לאשר הכול על מנת למשיך</string>
     <string name="scoped_storage_learn_more">מידע נוסף</string>
     <string name="scoped_storage_postpone">לדחות</string>
     <string name="scoped_storage_migrate">הסבה</string>
     <string name="search_card_js_api_no_results">אין תוצאות לשאילתת החיפוש</string>
-    <string name="sync_impossible_during_migration">הסנכרון מושבת עד לסיום ההעברה.\n
-         נותרו %1$d קובצי מדיה להעברה.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">אם תתקין מחדש את AnkiDroid, הוא לא יוכל לפתוח את האוסף שלך.</string>
-    <string name="migration_update_request_dialog_download_warning">אם תסיר את ההתקנה של AnkiDroid, תצטרך להוריד שוב את האוסף המלא שלך.</string>
-    <string name="migration_update_request">מדיניות הגישה לאחסון ב-Android מחייבת אותנו לשנות את המקום שבו אנו מאחסנים את האוסף שלך. כאשר הנתונים שלך יועברו AnkiDroid יהיה מהיר יותר והנתונים שלך יהיו מאובטחים יותר.
-    לא תוכל לסנכרן במהלך העברת האחסון.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid צריך להעביר את האחסון שלו כדי לעמוד במדיניות האבטחה של Android 10.\n\nזה ישפר את ביצועי סנכרון המדיה.&lt;br&gt;&lt;br&gt;במהלך ההעברה לא תוכל לסנכרן וחלק מההגדרות יושבתו. סנכרון מדיה יתרחש לפני תחילת ההעברה כדי לשמור על בטיחות הנתונים שלך.&lt;br&gt;&lt;br&gt;זה בטוח להשתמש או לסגור את AnkiDroid במהלך תהליך זה.</string>
     <string name="start_migration_progress_message">התחלת העברת אחסון. תוכל להמשיך להשתמש ב-AnkiDroid בקרוב.</string>
     <string name="migration_part_1_done_resume">ביכולתך להמשיך להשתמש ב-AnkiDroid.
 \nהעברת אחסון תמשיך ברקע.</string>
@@ -434,7 +427,7 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">למד פחות</string>
     <string name="intro_ankidroid_tagline_two">זכור יותי</string>
-    <string name="intro_short_ankidroid_explanation">מתזמן הקלפים של אנקי חוסך זמן על ידי חיזוק הזיכרונות החלשים ביותר שלך ושימור החזקים ביותר שלך</string>
+    <string name="intro_short_ankidroid_explanation">מתזמן הכרטיסים של אנקי חוסך זמן על ידי חיזוק הזיכרונות החלשים ביותר שלך ושימור החזקים ביותר שלך</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">התחל</string>
     <string name="intro_sync_from_ankiweb">סנכרון מ-AnkiWeb</string>
     <string name="already_logged_in">כבר מחובר</string>
@@ -451,6 +444,9 @@
     <string name="toggle_browser_mode_help">החלף הצגת כרטיסים או פתקים בדפדפן</string>
     <string name="truncate_content_help">חתוך את הגובה של כל שורה בדפדפן כדי להציג רק 3 שורות תוכן ראשונות</string>
     <string name="browser_options_dialog_heading">אפשרויות דפדפן</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
-    </string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">פונקציונליות זו אינה זמינה במהלך העברת אחסון</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">הקש כדי להתחיל העברת אחסון</string>
+    <string name="media_sync_required_title">דרוש סנכרון מדיה</string>
+    <string name="media_sync_unavailable_message">סנכרון מדיה מושבת בהגדרות. אנא סנכרן וגבה כל מדיה שלא סונכרנה לפני שתמשיך</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

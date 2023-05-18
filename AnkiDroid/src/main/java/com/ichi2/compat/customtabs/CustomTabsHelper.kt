@@ -19,6 +19,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsService
+import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
+import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.CompatHelper.Companion.resolveServiceCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
 import timber.log.Timber
@@ -52,20 +54,19 @@ object CustomTabsHelper {
      * @param context [Context] to use for accessing [PackageManager].
      * @return The package name recommended to use for connecting to custom tabs related components.
      */
-    @Suppress("deprecation") // resolveActivity queryIntentActivities
     fun getPackageNameToUse(context: Context): String? {
         if (sPackageNameToUse != null) return sPackageNameToUse
         val pm = context.packageManager
         // Get default VIEW intent handler.
         val activityIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.example.com"))
-        val defaultViewHandlerInfo = pm.resolveActivity(activityIntent, 0)
+        val defaultViewHandlerInfo = pm.resolveActivityCompat(activityIntent, ResolveInfoFlagsCompat.EMPTY)
         var defaultViewHandlerPackageName: String? = null
         if (defaultViewHandlerInfo != null) {
             defaultViewHandlerPackageName = defaultViewHandlerInfo.activityInfo.packageName
         }
 
         // Get all apps that can handle VIEW intents.
-        val resolvedActivityList = pm.queryIntentActivities(activityIntent, 0)
+        val resolvedActivityList = pm.queryIntentActivitiesCompat(activityIntent, ResolveInfoFlagsCompat.EMPTY)
         val packagesSupportingCustomTabs: MutableList<String?> = ArrayList(resolvedActivityList.size)
         for (info in resolvedActivityList) {
             val serviceIntent = Intent()
@@ -104,13 +105,12 @@ object CustomTabsHelper {
      * @param intent The intent to check with.
      * @return Whether there is a specialized handler for the given intent.
      */
-    @Suppress("deprecation") // queryIntentActivities
     private fun hasSpecializedHandlerIntents(context: Context, intent: Intent): Boolean {
         try {
             val pm = context.packageManager
-            val handlers = pm.queryIntentActivities(
+            val handlers = pm.queryIntentActivitiesCompat(
                 intent,
-                PackageManager.GET_RESOLVED_FILTER
+                ResolveInfoFlagsCompat.of(PackageManager.GET_RESOLVED_FILTER.toLong())
             )
             if (handlers.isEmpty()) {
                 return false

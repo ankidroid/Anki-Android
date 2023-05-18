@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Dodaj obraz</string>
     <string name="multimedia_editor_popup_audio_clip">Dodaj klip dźwiękowy</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Dodaj klip wideo</string>
     <string name="multimedia_editor_popup_audio">Nagraj dźwięk</string>
     <string name="multimedia_editor_popup_text">Zaawansowany edytor</string>
     <string name="multimedia_editor_popup_cloze">Luka do wypełnienia</string>
@@ -52,7 +52,7 @@
     <string name="multimedia_editor_pron_looking_up">Sprawdzanie wymowy</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">Wymowa nie udała się</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">Obsługiwane jest tylko jedno słowo na raz</string>
     <string name="multimedia_editor_word_search_try_lower_case">Spróbuj użyć tylko małych liter</string>
     <string name="multimedia_editor_poweredbeolingus">Dostarczone przez Beolingus</string>
     <!-- Field editing general -->
@@ -112,5 +112,5 @@
     <string name="save_dialog_content">Aktualny rozmiar obrazu: %sMB. Domyślny limit rozmiaru obrazu to 1 MB. Czy chcesz przyciąć obraz?</string>
     <string name="select_image_failed">"Wybieranie obrazu nie powiodło się, spróbuj ponownie"</string>
     <string name="activity_result_unexpected">Aplikacja zwróciła nieoczekiwaną wartość. Może być konieczne użycie innej aplikacji</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Zawartość pola</string>
 </resources>

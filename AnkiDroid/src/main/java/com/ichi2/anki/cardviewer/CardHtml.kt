@@ -21,6 +21,9 @@ import com.ichi2.anki.R
 import com.ichi2.anki.TtsParser
 import com.ichi2.anki.cardviewer.CardAppearance.Companion.hasUserDefinedNightMode
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Sound.SingleSoundSide
+import com.ichi2.libanki.Sound.SingleSoundSide.ANSWER
+import com.ichi2.libanki.Sound.SingleSoundSide.QUESTION
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
 import com.ichi2.themes.Themes.currentTheme
@@ -213,14 +216,10 @@ class CardHtml(
             return newAnswerContent
         }
 
-        fun legacyGetTtsTags(card: Card, cardSide: Sound.SoundSide, context: Context): List<TTSTag>? {
-            val cardSideContent: String = when {
-                Sound.SoundSide.QUESTION == cardSide -> card.q(true)
-                Sound.SoundSide.ANSWER == cardSide -> card.pureAnswer
-                else -> {
-                    Timber.w("Unrecognised cardSide")
-                    return null
-                }
+        fun legacyGetTtsTags(card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {
+            val cardSideContent: String = when (cardSide) {
+                QUESTION -> card.q(true)
+                ANSWER -> card.pureAnswer
             }
             return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
         }

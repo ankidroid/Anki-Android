@@ -26,12 +26,12 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Manage note types</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">จัดการรูปแบบโน๊ต</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Manage fields</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">คุณไม่สามารถลบรูปแบบโน๊ตอันสุดท้ายได้</string>
     <string name="toast_last_field">Note types must have at least one field</string>
-    <string name="toast_empty_name">You must enter a name</string>
+    <string name="toast_empty_name">คุณต้องใส่ชื่อ</string>
     <string name="toast_duplicate_field">Field name already used</string>
     <string name="toast_out_of_range">You must enter a valid value</string>
     <!--Plurals-->
@@ -43,11 +43,11 @@
     </plurals>
     <!--Browser-->
     <string name="model_browser_delete">Delete note type</string>
-    <string name="model_browser_rename" comment="Rename a note type">Rename</string>
-    <string name="model_browser_template">Edit cards</string>
-    <string name="model_browser_add">Add note type</string>
+    <string name="model_browser_rename" comment="Rename a note type">เปลี่ยนชื่อ</string>
+    <string name="model_browser_template">เเก้ไขการ์ด</string>
+    <string name="model_browser_add">เพิ่มรูปแบบโน๊ต</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">เปลี่ยนชื่อรูปแบบโน๊ต</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
@@ -61,14 +61,14 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Updating fields</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
-    <string name="model_clone_suffix">copy</string>
+    <string name="model_clone_suffix">คัดลอก</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">คุณแน่ใจหรือไม่ว่าต้องการลบรูปแบบโน๊ตนี้?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Add: %1$s </string>
+    <string name="model_browser_add_add">เพิ่ม: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Clone: %1$s </string>
+    <string name="model_browser_add_clone">คัดลอก: %1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">Question Format</string>

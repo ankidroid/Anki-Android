@@ -16,12 +16,14 @@
 
 package com.ichi2.anki.servicelayer.scopedstorage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.exception.RetryableException
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.*
@@ -39,7 +41,6 @@ import com.ichi2.libanki.Storage
 import com.ichi2.libanki.Utils
 import kotlinx.coroutines.runBlocking
 import net.ankiweb.rsdroid.BackendFactory
-import org.apache.commons.io.FileUtils
 import timber.log.Timber
 import java.io.Closeable
 import java.io.File
@@ -61,7 +62,7 @@ import java.io.File
  * * Collection is not corrupt and can be opened
  * * Collection basic check passes [UserActionRequiredException.CheckDatabaseException]
  * * Collection can be closed and locked
- * * User has space to mve files [UserActionRequiredException.OutOfSpaceException] (the size of essential files + [SAFETY_MARGIN_BYTES]
+ * * User has space to move files [UserActionRequiredException.OutOfSpaceException] (the size of essential files + [SAFETY_MARGIN_BYTES]
  * * A migration is not currently taking place
  */
 open class MigrateEssentialFiles
@@ -164,12 +165,21 @@ internal constructor(
         }
     }
 
+    @SuppressLint("NewApi") // contentEquals is API 26, we're guaranteed to be above this if performing a migration
     @NeedsTest("untested, needs documentation")
     private fun throwIfEssentialFilesAreMutated(sourceDirectory: AnkiDroidDirectory, destinationDirectory: ScopedAnkiDroidDirectory) {
         // TODO: For Arthur to improve
         for ((source, destination) in iterateEssentialFiles(sourceDirectory).zip(iterateEssentialFiles(destinationDirectory.path))) {
-            if (!FileUtils.contentEquals(source, destination)) {
-                throw IllegalStateException("files not equal: $source, $destination")
+            try {
+                throwIfContentUnequal(source, destination)
+            } catch (e: Exception) {
+                // 13807: .nomedia was reported as mutated, but we could not determine the cause
+                if (source.name == ".nomedia") {
+                    CrashReportService.sendExceptionReport(e, ".nomedia was mutated")
+                    continue
+                }
+                // any other file should be reported as an error and fail the migration
+                throw e
             }
         }
     }

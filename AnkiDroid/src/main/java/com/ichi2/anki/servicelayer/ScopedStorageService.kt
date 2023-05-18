@@ -25,12 +25,11 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.model.Directory
-import com.ichi2.anki.model.DiskFile
-import com.ichi2.anki.model.RelativeFilePath
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.UserDataMigrationPreferences
+import com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp
 import com.ichi2.utils.FileUtil.getParentsAndSelfRecursive
 import com.ichi2.utils.FileUtil.isDescendantOf
 import com.ichi2.utils.Permissions
@@ -48,22 +47,12 @@ fun AnkiDroidDirectory.getCollectionAnki2Path(): CollectionFilePath =
     File(this.directory, CollectionHelper.COLLECTION_FILENAME).canonicalPath
 
 /**
- * Returns the relative file path from a given [AnkiDroidDirectory]
- * @return null if the file was not inside the directory, or referred to the root directory
- */
-fun AnkiDroidDirectory.getRelativeFilePath(file: DiskFile): RelativeFilePath? =
-    RelativeFilePath.fromPaths(
-        baseDir = this,
-        file = file
-    )
-
-/**
  * An [AnkiDroidDirectory] for an AnkiDroid collection which is under scoped storage
  * This storage directory is accessible without permissions after scoped storage changes,
  * and is much faster to access
  *
  * When uninstalling: A user will be asked if they want to delete this folder
- * A folder here may be modifiable via USB. In AnkiDroid's case, all collection folders should
+ * A folder here may be modifiable via USB. In the case of AnkiDroid, all collection folders should
  * be modifiable
  *
  * @see [isLegacyStorage]
@@ -153,7 +142,7 @@ object ScopedStorageService {
             try {
                 // MigrateEssentialFiles performs a COPY. Delete the data so we don't take up space.
                 bestProfileDirectory.deleteRecursively()
-            } catch (e: Exception) {
+            } catch (_: Exception) {
             }
             throw e
         }
@@ -163,6 +152,8 @@ object ScopedStorageService {
     /**
      * Whether a user data scoped storage migration is taking place
      * This refers to the [MigrateUserData] operation of copying media which can take a long time.
+     *
+     * DEPRECATED. Use [com.ichi2.anki.services.getMediaMigrationState] instead.
      *
      * @throws IllegalStateException If either [PREF_MIGRATION_SOURCE] or [PREF_MIGRATION_DESTINATION] is set (but not both)
      * It is a logic bug if only one is set
@@ -228,6 +219,10 @@ object ScopedStorageService {
     /**
      * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
      * This directory is stored under [CollectionHelper.PREF_COLLECTION_PATH] in SharedPreferences
+     *
+     * DEPRECATED. Use either [com.ichi2.anki.services.getMediaMigrationState], or
+     *   [com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp].
+     *
      * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
      */
     fun isLegacyStorage(context: Context): Boolean {
@@ -235,7 +230,26 @@ object ScopedStorageService {
     }
 
     /**
+     * Checks if current directory being used by AnkiDroid to store user data is a Legacy Storage Directory.
+     * This directory is stored under [CollectionHelper.PREF_COLLECTION_PATH] in SharedPreferences
+     * @return `true` if AnkiDroid is storing user data in a Legacy Storage Directory.
+     *
+     * @param setCollectionPath if `false`, null is returned. This stops an infinite loop
+     * if `isLegacyStorage` is called when obtaining the collection path
+     */
+    fun isLegacyStorage(context: Context, setCollectionPath: Boolean): Boolean? {
+        if (!setCollectionPath && !AnkiDroidApp.getSharedPrefs(context).contains(CollectionHelper.PREF_COLLECTION_PATH)) {
+            return null
+        }
+        return isLegacyStorage(CollectionHelper.getCurrentAnkiDroidDirectory(context), context)
+    }
+
+    /**
      * @return `true` if [currentDirPath] is a Legacy Storage Directory.
+     *
+     * DEPRECATED. Use either [com.ichi2.anki.services.getMediaMigrationState], or
+     *   [com.ichi2.anki.ui.windows.managespace.isInsideDirectoriesRemovedWithTheApp].
+     *
      */
     fun isLegacyStorage(currentDirPath: String, context: Context): Boolean {
         val internalScopedDirPath = CollectionHelper.getAppSpecificInternalAnkiDroidDirectory(context)
@@ -250,7 +264,7 @@ object ScopedStorageService {
         )
 
         // Loop to check if the current AnkiDroid directory or any of its parents are the same as the root directories
-        // for app-specific external or internal storage - the only directories which will be accessible without
+        // for app-private external or internal storage - the only directories which will be accessible without
         // permissions under scoped storage
         val scopedDirectories = externalScopedDirs + internalScopedDir
         var currentDirParent: File? = currentDir
@@ -263,36 +277,82 @@ object ScopedStorageService {
             currentDirParent = currentDirParent.parentFile?.canonicalFile
         }
 
-        // If the current AnkiDroid directory isn't a sub directory of the app-specific external or internal storage
+        // If the current AnkiDroid directory isn't a sub directory of the app-private external or internal storage
         // directories, then it must be in a legacy storage directory
         return true
     }
 
-    fun migrationStatus(context: Context): Status {
-        if (!isLegacyStorage(context) && !userMigrationIsInProgress(context)) {
-            return Status.COMPLETED
+    /**
+     * Whether the user's current collection is now inaccessible due to a 'reinstall'
+     *
+     * @return `false` if:
+     * * ⚠️ The directory will be **removed** on uninstall
+     *    * The user installed with Android 11+, and is more likely to expect this behavior
+     *    * Note: The directory data may not be removed if the user taps "Keep data" when uninstalling
+     * * The collection is currently accessible
+     * * the user is on Android 9 or below and Android will not revoke permissions
+     * * The user has the potential to grant [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE]
+     * @see android.R.attr.preserveLegacyExternalStorage
+     * @see android.R.attr.requestLegacyExternalStorage
+     */
+    fun collectionWasMadeInaccessibleAfterUninstall(context: Context): Boolean {
+        // If we're < Q then `requestLegacyExternalStorage` was not introduced
+        // We do not check for == Q here, instead relying on `isExternalStorageLegacy`
+        // requestLegacyExternalStorage is a strong assumption, but we need to handle the case that
+        // this assumption breaks down
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return false
         }
 
-        if (!Permissions.hasStorageAccessPermission(context)) {
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !Environment.isExternalStorageLegacy()) {
-                Status.PERMISSION_FAILED
-            } else {
-                Status.REQUIRES_PERMISSION
-            }
+        // the user could obtain MANAGE_EXTERNAL_STORAGE
+        if (Permissions.canManageExternalStorage(context)) {
+            return false
         }
 
-        if (userMigrationIsInProgress(context)) {
-            return Status.IN_PROGRESS
+        if (userIsPromptedToDeleteCollectionOnUninstall(context)) {
+            return false
         }
 
-        return Status.NEEDS_MIGRATION
+        return !Environment.isExternalStorageLegacy()
     }
 
-    enum class Status {
-        NEEDS_MIGRATION,
-        REQUIRES_PERMISSION,
-        PERMISSION_FAILED,
-        IN_PROGRESS,
-        COMPLETED
+    /**
+     * Whether the user's current collection will be inaccessible after uninstalling the app
+     *
+     * DEPRECATED. Use [com.ichi2.anki.services.getMediaMigrationState] instead.
+     *
+     * @return `false` if:
+     * * ⚠️ The directory will be **removed** on uninstall
+     *    * The user installed with Android 11+, and is more likely to expect this behavior
+     *    * Note: The directory data may not be removed if the user taps "Keep data" when uninstalling
+     * * The collection is now inaccessible
+     * * the user is on Android Q or below and Android **should** not revoke permissions
+     * * The user has the potential to grant [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE]
+     * Returns `true` > Android 10 and the user has no way to access the collection on uninstall
+     * except for using another build of `com.ichi2.anki` or manually copying files
+     * @see android.R.attr.preserveLegacyExternalStorage
+     * @see android.R.attr.requestLegacyExternalStorage
+     */
+    fun collectionWillBeMadeInaccessibleAfterUninstall(context: Context): Boolean {
+        // If we're < Q then `requestLegacyExternalStorage` was not introduced
+        // If we're == Q then `preserveLegacyExternalStorage` is expected to be in place
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            return false
+        }
+
+        // the user could obtain MANAGE_EXTERNAL_STORAGE
+        if (Permissions.canManageExternalStorage(context)) {
+            return false
+        }
+
+        if (userIsPromptedToDeleteCollectionOnUninstall(context)) {
+            return false
+        }
+
+        return Environment.isExternalStorageLegacy()
+    }
+
+    fun userIsPromptedToDeleteCollectionOnUninstall(context: Context): Boolean {
+        return File(CollectionHelper.getCollectionPath(context)).isInsideDirectoriesRemovedWithTheApp(context)
     }
 }

@@ -19,6 +19,7 @@
  ****************************************************************************************/
 package com.ichi2.anki.multimediacard.fields
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
@@ -63,6 +64,7 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
+import com.ichi2.utils.Permissions.arePermissionsDefinedInAnkiDroidManifest
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -184,7 +186,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             layout.addView(btnDraw, ViewGroup.LayoutParams.MATCH_PARENT)
         }
-        if (com.ichi2.utils.CheckCameraPermission.manifestContainsPermission(context)) {
+        if (context.arePermissionsDefinedInAnkiDroidManifest(Manifest.permission.CAMERA)) {
             layout.addView(btnCamera, ViewGroup.LayoutParams.MATCH_PARENT)
         }
         layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -352,7 +354,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
     }
 
-    @Suppress("deprecation") // get
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // All image modification methods come through here - this ensures that the state is consistent
 
@@ -391,7 +392,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             ACTIVITY_TAKE_PICTURE -> handleTakePictureResult()
             ACTIVITY_DRAWING -> {
                 // receive image from drawing activity
-                val savedImagePath = data!!.extras!![DrawingActivity.EXTRA_RESULT_WHITEBOARD] as Uri?
+                val savedImagePath = data!!.extras!!.getParcelableCompat<Uri>(DrawingActivity.EXTRA_RESULT_WHITEBOARD)
                 handleDrawingResult(savedImagePath)
             }
             else -> {
@@ -822,10 +823,9 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         }
 
         companion object {
-            @Suppress("deprecation") // getParcelable
             fun fromBundle(savedInstanceState: Bundle): ImageViewModel {
                 val imagePath = savedInstanceState.getString("mImagePath")
-                val imageUri = savedInstanceState.getParcelable<Uri>("mImageUri")
+                val imageUri = savedInstanceState.getParcelableCompat<Uri>("mImageUri")
                 return ImageViewModel(imagePath, imageUri)
             }
         }

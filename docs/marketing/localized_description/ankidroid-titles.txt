@@ -23,11 +23,13 @@ hi: AnkiDroid फ़्लैशकार्ड
 hu: AnkiDroid Szókártyák
 hy-AM: AnkiDroid քարտեր
 id: Kartu flash AnkiDroid
+ka: AnkiDroid: სამეცადინო ბარათები
 kk: AnkiDroid жаттау карталары
 ko: AnkiDroid 플래시 카드
 ku: Naverokê Bixwaze
 lt: „AnkiDroid“ atminties kortelės
 mr: अंकीड्रोएड फ़्लँशकार्डस्
+ms: Kad Imbasan AnkiDroid
 nl: AnkiDroid flitskaarten
 pl: AnkiDroid – Fiszki
 ru: AnkiDroid: карточки для запоминания

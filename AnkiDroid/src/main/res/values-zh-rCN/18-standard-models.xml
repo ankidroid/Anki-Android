@@ -35,7 +35,7 @@
     <string name="card_n_name">卡片 %d</string>
     <!--Note type-->
     <string name="basic_model_name">基本</string>
-    <string name="cloze_model_name">完形填空</string>
+    <string name="cloze_model_name">填空题</string>
     <string name="basic_typing_model_name">基本型（输入答案）</string>
     <string name="forward_reverse_model_name">基本型（含翻转的卡片）</string>
     <string name="forward_optional_reverse_model_name">基本型（随意添加翻转的卡片）</string>

@@ -388,7 +388,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         val currentCardId: CardId = currentCard.id
         intent.putExtra("currentCard", currentCardId)
         intent.putExtra("search_query", query)
-        activity.startActivityForResultWithAnimation(intent, NavigationDrawerActivity.REQUEST_BROWSE_CARDS, ActivityTransitionAnimation.Direction.START)
+        activity.startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
     }
 
     @JavascriptInterface

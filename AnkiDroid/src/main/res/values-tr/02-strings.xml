@@ -57,10 +57,12 @@
     <string name="add_tag">Etiket ekle</string>
     <string name="check_all_tags">Tüm etiketleri işaretle/kaldır</string>
     <string name="filter_tags">Etiket filtrele</string>
-    <string name="no_tags">Henüz herhangi bir etiket eklemediniz.</string>
+    <string name="no_tags">Henüz herhangi bir etiket eklemediniz</string>
     <string name="updated_version">%s versiyonuna güncellendi</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Yazı tahtasını kaydet</string>
+    <string name="enable_stylus">Kalem modunu aç</string>
+    <string name="disable_stylus">Kalem kodunu kapat</string>
     <string name="enable_whiteboard">Yazı tahtasını etkinleştir</string>
     <string name="disable_whiteboard">Yazı tahtasını devredışı bırak</string>
     <string name="show_whiteboard">Yazı tahtasını göster</string>
@@ -71,13 +73,13 @@
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
     <string name="corrupt_font">Bozuk yazı tipi dosyası %s</string>
     <string name="webview_crash_unknown">Bilinmeyen hata</string>
-    <string name="webview_crash_unknwon_detailed">Bu, Web Görünümü\'ndeki dahili bir hatadan kaynaklandı.</string>
+    <string name="webview_crash_unknwon_detailed">Bu, Web Görünümü\'ndeki dahili bir hatadan kaynaklandı</string>
     <string name="webview_crash_oom">Yetersiz Bellek</string>
     <string name="webview_crash_oom_details">Web Görünümü sistem tarafından sonlandırıldı. Bu, genellikle büyük yazı tipleri veya ortamlar nedeniyle uygulamanın belleği bittiğinde meydana gelir.</string>
-    <string name="webview_crash_nonfatal">Web Görünümü oluşturucusu çöktü. Nedeni: %s</string>
-    <string name="webview_crash_fatal">Kritik Hata: Web Görünümü oluşturucusu çöktü. Nedeni: %s</string>
-    <string name="webview_crash_loop_dialog_title">Sistem Web Görünümü Oluşturma Hatası</string>
-    <string name="webview_crash_loop_dialog_content">Sistem Web Görünümü kartını işleyemedi \'%1$s\'.\n %2$s</string>
+    <string name="webview_crash_nonfatal">WebView oluşturucusu çöktü. Neden: %s</string>
+    <string name="webview_crash_fatal">Kritik Hata: WebView oluşturucusu çöktü. Neden: %s</string>
+    <string name="webview_crash_loop_dialog_title">Sistem WebView Oluşturma Hatası</string>
+    <string name="webview_crash_loop_dialog_content">Sistem WebView bu kartı işleyemedi: \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Soru</item>
@@ -96,22 +98,22 @@
         <item>Kolaylık</item>
         <item>Vade</item>
         <item>Kart Değiştirildi</item>
-        <item>Oluşturulma</item>
-        <item>Değiştirilmiş notlar</item>
+        <item>Oluşturulma Tarihi</item>
+        <item>Değiştirilmiş Notlar</item>
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">Uygula</string>
     <string name="filter_by_flags">Bayraklar</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Bugünün yeni kart sınırını düzenle</string>
-    <string name="custom_study_increase_review_limit">Bugünün tekrar edilecek kart sınırını düzenle</string>
+    <string name="custom_study_increase_review_limit">Bugünün çalışma kartı sınırını düzenle</string>
     <string name="custom_study_review_forgotten">Unutulan kartları gözden geçir</string>
     <string name="custom_study_review_ahead">Önceden çalış</string>
     <string name="custom_study_random_selection">Rastgele seçilmiş kartları çalış</string>
     <string name="custom_study_preview_new">Yeni kartlara önden bak</string>
     <string name="custom_study_limit_tags">Belirli etiketlere sınırla</string>
     <!-- Card editor -->
-    <string name="cardeditor_title_edit_card">Notu Düzenle</string>
+    <string name="cardeditor_title_edit_card">Notu düzenle</string>
     <string name="discard_unsaved_changes">Kapatıp şu anki girdi kaybedilsin mi?</string>
     <string name="note_editor_no_cards_created">Hiçbir kart yaratılmadı. Lütfen daha fazla alan doldurun</string>
     <string name="note_editor_no_first_field">İlk alan boş</string>
@@ -119,13 +121,13 @@
     <string name="note_editor_no_cards_created_all_fields">Seçili not türü hiç kart çıkarmadı.\nLütfen başka bir not türü seçin, veya \"Kartlar\"a basıp alan değişikliği ekleyin.</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Boşluk doldurma sadece Boşluklu not türünde çalışır</string>
     <string name="saving_facts">Not kaydediliyor</string>
-    <string name="saving_model">Not tipini kaydet</string>
+    <string name="saving_model">Not tipi kaydediliyor</string>
     <string name="save">Kaydet</string>
     <string name="close">Kapat</string>
     <string name="select">Seç</string>
     <string name="reordering_cards">Kartların sırası değiştiriliyor...</string>
-    <string name="field_remapping">%1$s (\'%2$s\')\'dan/den</string>
-    <string name="confirm_map_cards_to_nothing">Hiçbiriyle eşlemeyen herhangi bir kart silinecek. Geriye kalan kartları olmayan not varsa, kaybolur. Devam etmek istediğinizden emin misiniz?</string>
+    <string name="field_remapping">%1$s (\'%2$s\' içinden)</string>
+    <string name="confirm_map_cards_to_nothing">Hiçbir şeyle eşlemeyen tüm kartlar silinecektir. Eğer bir notun kalan kartları yoksa, kaybolacaktır. Devam etmek istediğinizden emin misiniz?</string>
     <string name="timebox_reached_title">Zaman sınırına ulaşıldı</string>
     <plurals name="timebox_reached">
         <item quantity="one">%2$s dakikada %1$d kart çalışıldı</item>
@@ -136,13 +138,13 @@
         <item quantity="one">%1$d dakika</item>
         <item quantity="other">%1$d dakika</item>
     </plurals>
-    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid Kartı</string>
+    <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid kartı</string>
     <string name="note_editor_copy_note">Notu kopyala</string>
     <string name="card_editor_reposition_card">Yerini değiştir</string>
     <string name="card_editor_reset_card">İlerlemeyi sıfırla</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Yeniden planla</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Önizle</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d \'den %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d içinden %1$d tanesi</string>
     <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Yeniden adlandır</string>
     <string name="default_conf_delete_error">Varsayılan seçenekler grubu kaldırılamaz</string>
@@ -153,14 +155,14 @@
     <string name="check_db">Veritabanını denetle</string>
     <string name="check_media">Medyayı kontrol et</string>
     <string name="empty_cards">Boş kartlar</string>
-    <string name="check_db_message">Veritabanı denetleniyor.\nLütfen bekleyin...</string>
+    <string name="check_db_message">Veritabanı denetleniyor&#8230;</string>
     <string name="empty_card_warning">Bu kart boş. Deste listesi ekranındaki menüden \"Boş kartlar\" seçeneğini kullanın.</string>
     <string name="unknown_type_field_warning">Cevabı yaz: bilinmeyen alan %s</string>
-    <string name="delete_deck">Deste siliniyor...\nLütfen bekleyin.</string>
-    <string name="info_rate">AnkiDroid\'e Oy Ver</string>
+    <string name="delete_deck">Deste siliniyor&#8230;</string>
+    <string name="info_rate">AnkiDroid\'e oy ver</string>
     <string name="import_title">İçeri Aktarılıyor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ekle</string>
-    <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silerek %s dosyasının verileriyle değiştirir. Emin misiniz?</string>
+    <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silecek ve şu dosyanın verileriyle değiştirecek: %s</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="one">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir</item>
         <item quantity="other">Aşağıdaki dosyaları içeri aktarmak istiyor musunuz:\n%s\nBu uzun sürebilir</item>
@@ -168,9 +170,9 @@
     <string name="import_log_no_apkg">Bu geçerli bir Anki paketi dosyası değil</string>
     <string name="import_title_error" comment="Title of error dialog">Hata</string>
     <string name="import_log_failed_unzip">Apkg zipten çıkarılamadı: %s</string>
-    <string name="import_log_failed_copy_to">apkg\'yi %s\'e kopyalama başarısız</string>
-    <string name="import_log_failed_validate">apkg onaylama başarısız</string>
-    <string name="import_log_insufficient_space_error">Paketi içe aktarmak için yeterli alan yok.\nGerekli - %1$s \nMevcut - %2$s.\n\nSorun mu yaşıyorsunuz? Mümkünse telefonunuzda yer açmaya çalışın. Alternatif olarak, senkronizasyon, içe aktarmadan daha az alan kullanır. Paketi daha fazla alana sahip bir cihazla (örneğin Anki Desktop) içe aktarmayı deneyebilir ve ardından bu cihazla senkronize edebilirsiniz.</string>
+    <string name="import_log_failed_copy_to">Apkg\'yi %s içine kopyalama başarısız</string>
+    <string name="import_log_failed_validate">apkg doğrulama başarısız</string>
+    <string name="import_log_insufficient_space_error">Paketi içe aktarmak için yeterli alan yok.\nGereken - %1$s \nMevcut - %2$s.\n\nSorun mu yaşıyorsunuz? Mümkünse telefonunuzda yer açmaya çalışın. Alternatif olarak; senkronizasyon, içe aktarmadan daha az yer kullanır. Paketi daha fazla alana sahip bir cihazla (örneğin Anki Desktop) içe aktarmayı deneyebilir ve ardından bu cihazla senkronize etmeyi deneyebilirsiniz.</string>
     <string name="import_log_file_cache_cleared">Dosya aktarımında hata, muhtemelen işlem esnasında önbellek temizliği.\nLütfen yeniden deneyin.</string>
     <string name="import_succeeded_but_check_database">Veri aktarımı başarılı ama aktarım sonrası temizlik başarısız oldu. Daha sonra veritabanı kontrolünü çalıştırın. Temel sebep: %s</string>
     <string name="import_error_corrupt_zip">Apkg dosyası bozuk. Lütfen silip yeniden indirin.\n\nTemel sebep: %s</string>
@@ -181,20 +183,20 @@
     <string name="import_error_copy_to_cache">Dosya belleğe alınamadı (depolama alanı bitmiş olabilir)</string>
     <string name="import_error_multiple_colpkg">Birden fazla colpkg dosyası seçilmiş.</string>
     <string name="import_error_colpkg_apkg">Aynı zamanda hem apkg hem colpkg dosyaları seçilmiş.</string>
-    <string name="import_stats_error">Aşağıdaki dosyaları içeri aktarırken hatalar meydana geldi:\n%s</string>
+    <string name="import_stats_error">Aşağıdaki dosyalar içeri aktarılırken bazı hatalar meydana geldi:\n%s</string>
     <string name="import_replacing">Koleksiyon değiştiriliyor&#8230;</string>
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
-    <string name="export_include_schedule">Zamanlama dâhil</string>
-    <string name="export_include_media">Medya dâhil</string>
+    <string name="export_include_schedule">Zamanlamayı dahil et</string>
+    <string name="export_include_media">Medyayı dahil et</string>
     <string name="confirm_apkg_export">Koleksiyon Anki paketi hâlinde dışarı aktarılsın mı?</string>
     <string name="confirm_apkg_export_deck">\"%s\" apkg dosyası olarak kaydedilsin mi?</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">Seçili kart apkg dosyası olarak dışarı aktarılsın mı?</item>
-        <item quantity="other">Seçili %d kart apkg dosyası olarak dışarı aktarılsın mı?</item>
+        <item quantity="other">Seçili %d kartları apkg dosyası olarak dışarı aktarılsın mı?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="one">Seçili not apkg dosyası olarak dışarı aktarılsın mı?</item>
-        <item quantity="other">Seçili %d not apkg dosyası olarak dışarı aktarılsın mı?</item>
+        <item quantity="other">Seçili %d notlar apkg dosyası olarak dışarı aktarılsın mı?</item>
     </plurals>
     <string name="export_in_progress">Anki paketi dosyası dışarı aktarılıyor&#8230;</string>
     <string name="export_success_title">Koleksiyon başarıyla dışarı aktarıldı</string>
@@ -203,7 +205,7 @@
     <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
     <string name="export_success_message">Kaydetmek için bir dosya konumu seçebilir, veya başka bir uygulamayla paylaşabilirsiniz.</string>
     <string name="export_share_title">Anki paketini göndermek için kullan</string>
-    <string name="export_email_subject">AnkiDroid\'den aktarılan bilgi kartları: %s</string>
+    <string name="export_email_subject">AnkiDroid\'den dışa aktarılan bilgi kartları: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!
         <br/><br/>
         Bu, AnkiDroid\'den[1] gönderilmiş bir Anki bilgi kartı destesi.
@@ -217,7 +219,7 @@
     <string name="menu__deck_options">Deste seçenekleri</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Çalışma seçenekleri</string>
     <string name="select_tts">Metin okuma dilini ayarla</string>
-    <string name="custom_study">Kişisel Çalışma</string>
+    <string name="custom_study">Kişisel çalışma</string>
     <string name="more_options">Daha fazlası</string>
     <string name="dyn_deck_desc">Bu normal programın dışında çalışmak için özel bir deste. Kartlar çalışıldıktan sonra otomatik olarak kendi destelerine geri dönecekler. Bu desteyi deste listesinden silmek kalan bütün kartları kendi destelerine geri döndürecek.</string>
     <string name="steps_error">Adım 0\'dan büyük bir sayı olmalıdır</string>
@@ -260,10 +262,10 @@
          languages which apparently use the other symbol to mean less
          than. -->
     <string name="less_than_time">&lt; %s</string>
-    <string name="decks_rename_exists">Bu deste zaten var.</string>
-    <string name="decks_rename_filtered_nosubdecks">Filtreli destenin alt destesi olmaz</string>
+    <string name="decks_rename_exists">Bu deste zaten mevcut</string>
+    <string name="decks_rename_filtered_nosubdecks">Filtreli destenin altdestesi olamaz</string>
     <string name="filtered_deck_name">Filtreli Deste</string>
-    <string name="reminder_title">Bugün çalışmaya unutmayın!</string>
+    <string name="reminder_title">Bugün çalışmayı unutmayın!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s içinde çalışmak için %2$d kart</item>
         <item quantity="other">%1$s içinde çalışmak için %2$d kart</item>
@@ -274,9 +276,9 @@
     <string name="export_v2_dummy_note">Bu dosya için Anki\'nin daha yeni bir sürümü gerekli.</string>
     <string name="activity_start_failed">Sistemde bu eylemi gerçekleştirebilecek bir uygulama yüklü değil.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Fotoğraf dosyaları büyük olabilir. Resimleri medya dizininde sıkıştırmak ve boyutlarını değiştirmek isteyebilirsiniz.]]></string>
-    <string name="no_browser_notification">Tarayıcı bulunmadı, lütfen web sayfasına pcden veya mobilden girin: </string>
+    <string name="no_browser_notification">Tarayıcı bulunmadı, lütfen web sayfasına bilgisayardan veya telefondan girin: </string>
     <string name="web_page_error">Sayfa yüklenirken hata: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Kartta harici sayfa linki desteklenmiyor.</string>
+    <string name="no_outgoing_link_in_cardbrowser">Karttaki harici sayfa linki desteklenmiyor.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <string name="check_integrity_recovered_deck_name">Düzeltilmiş Kartlar</string>
     <!-- Deckpicker Background -->
@@ -284,19 +286,19 @@
     <string name="choose_an_image">Bir resim seç</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Varsayılana Dön</string>
-    <string name="cloze_sample_text">Bu bir {{%1$s::sample}} gizleme işlemidir.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">Bir örnek:</string>
+    <string name="cloze_sample_text">Bu {{%1$s::örnek}} bir boşluk doldurmadır.</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">örnik</string>
+    <string name="basic_answer_sample_text">bir örnek</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Boş</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Navigasyon Çekmecesini Gösteri JavaScript\'le kullanmak için lütfen tam ekranı açın.</string>
-    <string name="ankidroid_turn_on_fullscreen_options_menu">Seçenek Menüsünü Gösteri JavaScript\'le kullanmak için lütfen tam ekranı açın.</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">Navigasyon Çekmecesini Göster\'i JavaScript\'le kullanmak için lütfen tam ekranı açın.</string>
+    <string name="ankidroid_turn_on_fullscreen_options_menu">Seçenek Menüsünü Göster\'i JavaScript\'le kullanmak için lütfen tam ekranı açın.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Yazı tahtası resmi kaydedilemedi. %s</string>
-    <string name="white_board_image_saved">Yazı tahtası resmi %s adresine kaydedildi</string>
-    <string name="title_whiteboard_pen_color">Beyaz tahta kalem rengi</string>
+    <string name="white_board_image_saved">Yazı tahtası resmi bu adrese kaydedildi: %s</string>
+    <string name="title_whiteboard_pen_color">Yazı tahtası kalem rengi</string>
     <string name="title_whiteboard_editor">Yazı tahtası düzenleyici</string>
-    <string name="user_is_a_robot">Otomatik test saptandı. Eğer insansanız, AnkiDroid desteğiyle iletişime geçin.</string>
+    <string name="user_is_a_robot">Otomatik test saptandı. Eğer insansanız, AnkiDroid desteğiyle iletişime geçin</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">Bu kart desteklenmeyen AnkiDroid özellikleri kullanıyor. Geliştiriciyle iletişime geçin (%1$s), veya vikiye bakın. %2$s</string>
     <string name="invalid_json_data">Kart geçersiz veri sağladı. %s</string>
@@ -305,7 +307,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Görüntüle</string>
     <string name="anki_js_error_code">(Hata kodu: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">Debug bilgisi not panosuna kopyalandı</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Panoya kopyalandı</string>
     <string name="about_ankidroid_error_copy_debug_info">Debug bilgisi not panosuna kopyalanırken hata</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kart İçeriği Hatası: \"%s\" yüklenemedi</string>
@@ -313,15 +315,16 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">\'%s\' destesinin yüklenmesi başarısız</string>
     <string name="search_decks">Deste ara</string>
-    <string name="ankidroid_init_failed_webview_title">Kritik hata</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="ankidroid_init_failed_webview_title">Kritik Hata</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid şu an ulaşılamayan System WebView\'a dayanır. Bu sistem güncelleme yüklerken olabilir. Lütfen birkaç dakika sonra tekrar deneyin.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">Yazı tipi boyutu</string>
-    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Araç Çubuğunu Göster</string>
+    <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Araç çubuğunu göster</string>
     <string name="format_insert_bold">Kalın olarak biçimlendir</string>
-    <string name="format_insert_italic">İtalic olarak biçimlendir</string>
+    <string name="format_insert_italic">İtalik olarak biçimlendir</string>
     <string name="format_insert_underline">Altı çizili olarak biçimlendir</string>
-    <string name="insert_horizontal_line">Yatay Çizgi Ekle</string>
+    <string name="insert_horizontal_line">Yatay Çizgi ekle</string>
     <string name="insert_heading">Başlık ekle</string>
     <string name="format_font_size">Yazı Tipi Boyutunu Değiştir</string>
     <string name="insert_mathjax">MathJax denklemi ekle</string>
@@ -329,12 +332,12 @@
     <string name="note_editor_toolbar_icon">Düğme yazısı</string>
     <string name="before_text">Seçimden önce HTML</string>
     <string name="after_text">Seçimden sonra HTML</string>
-    <string name="add_toolbar_item">Araç çubuğu öğesi yarat</string>
-    <string name="edit_toolbar_item">Araç çubuğu öğesini düzenle</string>
+    <string name="add_toolbar_item">Araç Çubuğu Öğesi yarat</string>
+    <string name="edit_toolbar_item">Araç Çubuğu Öğesini düzenle</string>
     <string name="toolbar_item_explain_edit_or_remove">Seçili yazıdan önce ve sonra eklenecek HTML girin\n\nBir araç çubuğu öğesini değiştirmek ya da kaldırmak için basılı tutun</string>
-    <string name="remove_toolbar_item">Araç çubuğu öğesini sil?</string>
-    <string name="note_editor_paste_too_large">Görsel yapıştırmak için çok büyük, lütfen görseli elle ekleyin</string>
-    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">Android yedeklemesi gerçekleştiriliyor. Lütfen tekrar deneyin</string>
+    <string name="remove_toolbar_item">Araç Çubuğu Öğesini sil?</string>
+    <string name="note_editor_paste_too_large">Görsel yapıştırılamayacak kadar büyük, lütfen görseli manuel olarak ekleyiniz</string>
+    <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android yedeklemesi gerçekleştiriliyor. Lütfen tekrar deneyin</string>
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid\'in kısayol eklemesine izin vermek için iManager kullanmanız gerekebilir</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">Ana ekranın, kısayol ekleyebilmesi için AnkiDroid\'e izin vermiyor</string>
     <string name="create_shortcut_error">Kısayolu eklerken hata: %s</string>
@@ -362,34 +365,22 @@
     <string name="check_network">Lütfen ağ bağlantını kontrol et</string>
     <string name="search_using_deck_name">Deste ismini kullanarak ara</string>
     <string name="home">Ana sayfa</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Gömülmüş kart</string>
-    <string name="buried_note">Gömülmüş not</string>
-    <string name="deleted_note">Silinmiş not</string>
-    <string name="suspended_card">Askıya alınmış kart</string>
-    <string name="suspended_note">Askıya alınmış not</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Kart gizlendi.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d kart askıya alındı.</item>
+        <item quantity="other">%d kart askıya alındı.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">%s alanını yapışkan yap</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Depolama geçişi</string>
-    <string name="scoped_storage_initial_message">AnkiDroid, Android\'in yeni gizlilik kurallarını karşılamak için verilerini taşımalı
-\n\nAnkiDroid\'i taşıma işleminden önce kaldırırsanız verileriniz kaybolur
-\n\nLütfen taşıma işlemini mümkün olan en kısa sürede gerçekleştirin</string>
-    <string name="scoped_storage_terms_message">Taşıma arka planda gerçekleşecek. Taşıma sırasında senkronizasyon yapamayacaksınız\n\nTahmini süre: %s</string>
-    <string name="scoped_storage_term_1">Verilerimi yedekledim</string>
-    <string name="scoped_storage_term_1_ankiweb">Az önce AkiWeb ile senkronizasyon yaptım</string>
-    <string name="scoped_storage_term_2">Veriler taşınırken uygulamayı kaldırmayacağım</string>
-    <string name="scoped_storage_select_all_terms">Devam etmek için lütfen tüm öğeleri kabul edin</string>
     <string name="scoped_storage_learn_more">Daha fazlasını öğren</string>
     <string name="scoped_storage_postpone">Ertele</string>
     <string name="scoped_storage_migrate">Taşı</string>
     <string name="search_card_js_api_no_results">Arama sonuç vermedi</string>
-    <string name="sync_impossible_during_migration">Geçiş yapılana kadar senkronizasyon devre dışı.\n
-        Geçirilecek %1$d medya dosyası kaldı.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">AnkiDroid\'i baştan yüklerseniz, koleksiyonunuzu açamayacaktır.</string>
-    <string name="migration_update_request_dialog_download_warning">AnkiDroid\'i kaldırırsanız, bütün koleksiyonunuzu yeniden indirmeniz gerekecektir.</string>
-    <string name="migration_update_request">Android depolama erişim politikası sebebiyle koleksiyonunuzu sakladığımız yeri değiştirmemiz gerekiyor. Verileriniz geçirildiğinde AnkiDroid daha hızlı, verileriniz ise daha güvende olacak.
-    Depolama geçişi esnasında senkronizasyon yapamayacaksınız.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid\'in Android 10 güvenlik poliçesine uyum sağlamak için depolamasını taşıması gerekiyor.\n\nBu, medya senkronizasyon performansını yükseltecek.&lt;br&gt;&lt;br&gt;Taşıma sırasında senkronizasyon yapılamaz ve bazı ayarlar değiştirilemez. Verilerinizi güvende tutmak için taşıma başlamadan önce bir medya senkronizasyonu gerçekleşecek.&lt;br&gt;&lt;br&gt;Bu işlem sırasında AnkiDroid\'i kullanmak veya kapatmak güvenlidir.</string>
     <string name="start_migration_progress_message">Depolama geçişi başlatılıyor. Kısa bir süre sonra AnkiDroid\'i kullanmaya devam edebilirsiniz.</string>
     <string name="migration_part_1_done_resume">AnkiDroid\'i kullanmaya devam edebilirsiniz.
 \nDepolama geçişi arkaplanda devam edecek.</string>
@@ -423,6 +414,10 @@
     <string name="toggle_browser_mode_help">Kartları veya notları tarayıcıda göstermeyi aç/kapat</string>
     <string name="truncate_content_help">Tarayıcının her sırasının yüksekliğini içeriğin sadece ilk 3 satırını gösterecek şekilde kırp</string>
     <string name="browser_options_dialog_heading">Tarayıcı Seçenekleri</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Bu işlev depolama taşıması sırasında kullanılamıyor
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Depolama taşımayı başlatmak için dokunun</string>
+    <string name="media_sync_required_title">Medya Senkronizasyonu Gerekiyor</string>
+    <string name="media_sync_unavailable_message">Medya senkronizasyonu ayarlardan kapalı. Lütfen devam etmeden önce senkronize edilmemiş medyayı senkronize edin ve yedekleyin.</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

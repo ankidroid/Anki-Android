@@ -51,6 +51,7 @@ import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.sched.SchedV3
 import com.ichi2.libanki.template.ParsedNode
 import com.ichi2.libanki.template.TemplateError
+import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.upgrade.upgradeJSONIfNecessary
@@ -84,6 +85,9 @@ open class Collection(
      * @return The context that created this Collection.
      */
     val context: Context,
+    /**
+     *  @param Path The path to the collection.anki2 database. Must be unicode and openable with [File].
+     */
     val path: String,
     var server: Boolean,
     private var debugLog: Boolean, // Not in libAnki.
@@ -418,25 +422,13 @@ open class Collection(
      * Disconnect from DB.
      */
     @Synchronized
-    fun close() {
-        close(true)
-    }
-
-    @Synchronized
-    fun close(save: Boolean) {
-        close(save, false)
-    }
-
-    @Synchronized
-    @KotlinCleanup("remove/rename val db")
-    fun close(save: Boolean, downgrade: Boolean, forFullSync: Boolean = false) {
+    fun close(save: Boolean = true, downgrade: Boolean = false, forFullSync: Boolean = false) {
         if (!dbClosed) {
             try {
-                val db = db.database
                 if (save) {
-                    this.db.executeInTransaction { this.save() }
+                    db.executeInTransaction { this.save() }
                 } else {
-                    DB.safeEndInTransaction(db)
+                    db.safeEndInTransaction()
                 }
             } catch (e: RuntimeException) {
                 Timber.w(e)
@@ -2572,4 +2564,15 @@ open class Collection(
 
         private const val SQLITE_WINDOW_SIZE_KB = 2048
     }
+}
+
+/**
+ * @throws JSONException object can't be cast
+ */
+@NotInLibAnki
+fun Collection.get_config_int(key: String, defaultValue: Int): Int {
+    if (has_config_not_null(key)) {
+        return get_config_int(key)
+    }
+    return defaultValue
 }

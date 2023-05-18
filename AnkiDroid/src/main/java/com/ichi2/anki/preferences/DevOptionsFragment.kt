@@ -52,12 +52,12 @@ class DevOptionsFragment : SettingsFragment() {
             }
         }
         // Make it possible to test crash reporting
-        requirePreference<Preference>(getString(R.string.pref_trigger_crash_key)).setOnPreferenceClickListener {
+        requirePreference<Preference>(R.string.pref_trigger_crash_key).setOnPreferenceClickListener {
             Timber.w("Crash triggered on purpose from advanced preferences in debug mode")
             throw RuntimeException("This is a test crash")
         }
         // Make it possible to test analytics
-        requirePreference<Preference>(getString(R.string.pref_analytics_debug_key)).setOnPreferenceClickListener {
+        requirePreference<Preference>(R.string.pref_analytics_debug_key).setOnPreferenceClickListener {
             if (UsageAnalytics.isEnabled) {
                 showSnackbar("Analytics set to dev mode")
             } else {
@@ -67,14 +67,14 @@ class DevOptionsFragment : SettingsFragment() {
             true
         }
         // Lock database
-        requirePreference<Preference>(getString(R.string.pref_lock_database_key)).setOnPreferenceClickListener {
+        requirePreference<Preference>(R.string.pref_lock_database_key).setOnPreferenceClickListener {
             val c = CollectionHelper.instance.getCol(requireContext())!!
             Timber.w("Toggling database lock")
             c.db.database.beginTransaction()
             true
         }
         // Reset onboarding
-        requirePreference<Preference>(getString(R.string.pref_reset_onboarding_key)).setOnPreferenceClickListener {
+        requirePreference<Preference>(R.string.pref_reset_onboarding_key).setOnPreferenceClickListener {
             OnboardingUtils.reset(requireContext())
             true
         }

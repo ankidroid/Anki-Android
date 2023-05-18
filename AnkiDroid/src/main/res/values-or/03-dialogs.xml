@@ -94,7 +94,7 @@
     <string name="answering_error_title">ଡାଟାବେସ୍ ତ୍ରୁଟି</string>
     <string name="answering_error_message">ସଂଗ୍ରହରେ ଲିଖନ ବିଫଳ ହେଲା। ଡାଟାବେସ୍ ଭ୍ରଷ୍ଟ ହୋଇପାରେ କିମ୍ବା ଡିସ୍କରେ ପର୍ଯ୍ୟାପ୍ତ ଖାଲି ସ୍ଥାନ ନ ଥାଇପାରେ।\n\nଯଦି ଏହା ଅଧିକ ଘଟେ, ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ, ସଂଗ୍ରହକୁ ମରାମତି କରନ୍ତୁ କିମ୍ବା ବ୍ୟାକଅପ୍ ରୁ ପୁନଃସ୍ଥାପନ କରନ୍ତୁ। ଏଥିପାଇଁ “ବିକଳ୍ପ” କୁ ବାଛନ୍ତୁ।\nକିମ୍ବା ଏହା ଏକ AnkiDroid ବଗ୍ ମଧ୍ୟ ହୋଇପାରେ। ଦୟାକରି ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ ଯାହା ଦ୍ୱାରା ଆମେ ଏହାକୁ ଯାଞ୍ଚ କରିପାରିବୁ।</string>
     <string name="answering_error_report">ତ୍ରୁଟି ରିପୋର୍ଟ କରନ୍ତୁ</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">AnkiDroid ଖୋଲିବା ପାଇଁ ପର୍ଯ୍ୟାପ୍ତ ମୁକ୍ତ ଷ୍ଟୋରେଜ୍ ସ୍ଥାନ ନାହିଁ। ଜାରି ରଖିବାକୁ ହେଲେ କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ। </string>
     <string name="repair_deck_dialog">ଆପଣ ପ୍ରକୃତରେ ଡାଟାବେସ୍ ମରାମତି କରିବାକୁ ଚେଷ୍ଟା କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?\n\nପ୍ରୟାସ ଆରମ୍ଭ କରିବା ପୂର୍ବରୁ, “%s” ଉପଫୋଲ୍ଡର୍ ରେ ଏକ କପି ସୃଷ୍ଟି ହେବ।</string>
     <string name="intent_aedict_empty">ବର୍ଗ “ଡିଫଲ୍ଟ” ଖାଲି ଅଛି</string>
     <string name="intent_aedict_category">AnkiDroid ରେ ପତ୍ର ଯୋଡ଼ିବା ପାଇଁ ସମସ୍ତ Notepad ବର୍ଗଗୁଡ଼ିକୁ ଅପସାରଣ କରନ୍ତୁ କିମ୍ବା “ଡିଫଲ୍ଟ” ନାମକ ଏକ ବର୍ଗ ଯୋଡ଼ନ୍ତୁ</string>
@@ -111,15 +111,15 @@
     <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କରୁଛି %1$d%%&#8230;</string>
     <string name="import_progress">• ନୋଟ୍ ଆମଦାନି: %1$d%%\n• ପତ୍ର ଆମଦାନି: %2$d%%\n• ପରଵର୍ତ୍ତୀ ପ୍ରକ୍ରିୟାକରଣ: %3$d%%</string>
     <string name="import_update_details">%2$dଟି ଵିଦ୍ୟମାନ ନୋଟ୍ ମଧ୍ୟରୁ %1$dଟି ଅଦ୍ୟତନ କରାଗଲା।</string>
-    <string name="import_update_ignored">କିଛି ଅଦ୍ୟତନକୁ ଅଣଦେଖା କରାଯାଇଥିଲା କାରଣ ନୋଟ୍ ପ୍ରକାର ବଦଳିଛି</string>
+    <string name="import_update_ignored">ନୋଟ୍ ପ୍ରକାର ବଦଳିଥିବାରୁ କିଛିଟା ଅଦ୍ୟତନ ଅଣଦେଖା ହୋଇଛି</string>
     <plurals name="import_complete_message">
         <item quantity="one">%2$dଟି ପତ୍ର ଆମଦାନୀ ହୋଇଛି</item>
         <item quantity="other">%1$dଟି ଫାଇଲ୍ ଆମଦାନୀ ହୋଇଛି\nସର୍ବମୋଟ %2$dଟି ପତ୍ର ଆମଦାନୀ କରାଗଲା</item>
     </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି ହେଲାଣି</string>
+    <string name="storage_almost_full_title">ଷ୍ଟୋରେଜ୍ ପ୍ରାୟ ଭର୍ତ୍ତି ହେବାକୁ ବସିଲାଣି</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ଜାଗା ନାହିଁ</string>
-    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">ଜାରି ରଖିବାକୁ AnkiDroid %s ମାଗଣା ଷ୍ଟୋରେଜ୍ ସ୍ପେସ୍ ଆବଶ୍ୟକ କରେ। ଦୟାକରି କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ</string>
+    <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">ଜାରି ରଖିବାପାଇଁ AnkiDroid %s ଖାଲି ଷ୍ଟୋରେଜ୍ ସ୍ଥାନ ଲୋଡ଼େ। ଦୟାକରି କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ</string>
     <string name="restore_backup_title">ବ୍ୟାକଅପ୍ ପୁନରୁଦ୍ଧାର କରିବେ?</string>
     <string name="restore_backup">ଆପଣଙ୍କ ସଂଗ୍ରହ ଏକ ପୁରାତନ କପି ସହ ବଦଳାଯିବ। ଯେକୌଣସି ଅସଞ୍ଚିତ ପ୍ରଗତି ହଜିଯିବ।</string>
     <string name="restore_backup_choose_another">ଅନ୍ୟ ଗୋଟେ ବାଛନ୍ତୁ</string>
@@ -146,7 +146,7 @@
     <string name="check_media_warning">ବଡ଼ ମିଡ଼ିଆ ସଂଗ୍ରହ ସହିତ ଏହା ଏକ ଦୀର୍ଘ ସମୟ ନେଇପାରେ</string>
     <string name="check_media_message">ମିଡ଼ିଆ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
     <string name="check_media_acknowledge">ମିଡ଼ିଆ ଯାଞ୍ଚ କରାଗଲା</string>
-    <string name="check_media_failed">ମିଡ଼ିଆ ଯାଞ୍ଚ ବିଫଳ ହେଲା</string>
+    <string name="check_media_failed">ମିଡ଼ିଆ ଯାଞ୍ଚ ଵିଫଳ ହେଲା</string>
     <string name="check_media_invalid">ଅବୈଧ ଏନକୋଡିଂ ସହିତ ଫାଇଲଗୁଡିକ: %d</string>
     <string name="check_media_unused">ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ଗଚ୍ଛିତ କିନ୍ତୁ କୌଣସି ପତ୍ର ଦ୍ୱାରା ବ୍ୟବହାର ହେଉନଥିବା ଫାଇଲଗୁଡ଼ିକ: %d</string>
     <string name="check_media_nohave">ପତ୍ରରେ ବ୍ୟବହୃତ କିନ୍ତୁ ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ନଥିବା ଫାଇଲଗୁଡ଼ିକ: %d</string>
@@ -183,19 +183,19 @@
     <string name="integrity_check_insufficient_space">ଡାଟାବେସ୍ ଯାଞ୍ଚ ବହୁ ପରିମାଣର ଅସ୍ଥାୟୀ ଷ୍ଟୋରେଜ୍ ବ୍ୟବହାର କରେ।\n\nଏହା ଜାରି ରଖିବା ପୂର୍ବରୁ ଆପଣଙ୍କ ଡିଵାଇସରେ ଅତି କମରେ %s ଖାଲି ସ୍ଥାନ ଥିବା ଦୃଢ଼ ଭାବରେ ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nଆପଣଙ୍କ ପାଖରେ ବର୍ତ୍ତମାନ %s ଖାଲି ଅଛି।</string>
     <string name="integrity_check_fixed_no_home_deck">ଭୁଲ ଘରୋଇ ତାସଖଣ୍ଡ ସହିତ %dଟି ପତ୍ର ଉଦ୍ଧାର କରାଯାଇଛି। ଅଧିକ ସୂଚନା ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
-    <string name="video_creation_error">ଵିଡ଼ିଓ ଚାଳନ କରାଯାଇପାରିଲା ନାହିଁ</string>
+    <string name="video_creation_error">ଵିଡ଼ିଓ ଚାଳନ କରିହେଲା ନାହିଁ</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">ତାସଖଣ୍ଡ ପରିଵର୍ତ୍ତନ କରିହେଲା ନାହିଁ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ପତ୍ରରୁ ତଥ୍ୟ ଡିକୋଡିଂ କରିବାରେ ତ୍ରୁଟି</string>
-    <string name="undo_succeeded">\"%s\" ପୂର୍ବବତ୍ କରାଗଲା</string>
+    <string name="undo_succeeded">\"%s\" ପୂର୍ଵଵତ୍ କରାଗଲା</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">ତାସଖଣ୍ଡ ବିକଳ୍ପଗୁଡ଼ିକ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ବିଫଳ : %s</string>
+    <string name="deck_options_corrupt">ତାସଖଣ୍ଡ ଵିକଳ୍ପ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ଵିଫଳ: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">ଡାଟାବେସ୍ ଲକ୍ ହୋଇଛି</string>
-    <string name="database_locked_summary">AnkiDroid ଡାଟାବେସ୍ ଅନ୍ୟ ଏକ ଆପ ଦ୍ୱାରା ବ୍ୟବହୃତ ହେଉଛି। ଦୟାକରି ଅନ୍ୟ ଆପକୁ ବନ୍ଦ କରନ୍ତୁ ତାପରେ AnkiDroidକୁ ଖୋଲନ୍ତୁ।</string>
+    <string name="database_locked_summary">AnkiDroid ଡାଟାବେସ୍ ଅନ୍ୟ ଏକ ଆପ୍ ଦ୍ୱାରା ଵ୍ୟଵହାର ହେଉଛି। ଦୟାକରି ଅନ୍ୟ ଆପ୍‌ଟିକୁ ବନ୍ଦ କରି AnkiDroid ଖୋଲନ୍ତୁ।</string>
     <string name="incompatible_database_version_title">ଅସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ </string>
-    <string name="incompatible_database_version_summary">AnkiDroid ର ଏହି ସଂସ୍କରଣ ଡାଟାବେସ୍ ସହିତ କାମ କରିପାରିବନାହିଁ। ଏହାକୁ ଖୋଲିବା ପାଇଁ AnkiDroid କୁ ଅଦ୍ୟତନ କରନ୍ତୁ କିମ୍ବା ଡାଟାବେସ୍ କୁ ଡାଉନଗ୍ରେଡ୍ କରନ୍ତୁ\n\nସମର୍ଥିତ ସଂସ୍କରଣ: %1$d\nଡାଟାବେସ୍ ସଂସ୍କରଣ: %2$d\n\nନିମ୍ନଲିଖିତ ପୁନରୁଦ୍ଧାର ବିକଳ୍ପଗୁଡ଼ିକ ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହକୁ ନବଲିଖନ କରିବ, ସମ୍ଭବତଃ ଏକ ସୁସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ ସହିତ:</string>
+    <string name="incompatible_database_version_summary">AnkiDroidର ଏହି ସଂସ୍କରଣ ଡାଟାବେସ୍ ସହିତ କାମ କରିପାରିବନାହିଁ। ଏହାକୁ ଖୋଲିବା ପାଇଁ AnkiDroidକୁ ଅଦ୍ୟତନ କରନ୍ତୁ କିମ୍ବା ଡାଟାବେସ୍‌କୁ ଡାଉନଗ୍ରେଡ୍ କରନ୍ତୁ\n\nସମର୍ଥିତ ସଂସ୍କରଣ: %1$d\nଡାଟାବେସ୍ ସଂସ୍କରଣ: %2$d\n\nନିମ୍ନଲିଖିତ ପୁନରୁଦ୍ଧାର ଵିକଳ୍ପ ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ସଂଗ୍ରହକୁ ନବଲିଖନ କରିବ, ସମ୍ଭବତଃ ଏକ ସୁସଙ୍ଗତ ଡାଟାବେସ୍ ସଂସ୍କରଣ ସହିତ:</string>
     <!-- Deck Picker Background-->
     <string name="background_image_applied">ପୃଷ୍ଠପଟ ପ୍ରତିଛବି ପ୍ରୟୋଗ ହୋଇଛି</string>
     <string name="background_image_removed">ପୃଷ୍ଠପଟ ପ୍ରତିଛବି ଅପସାରିତ ହୋଇଛି</string>
@@ -203,7 +203,7 @@
     <string name="error_selecting_image">ପ୍ରତିଛବି ବାଛିବାରେ ତ୍ରୁଟି। ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ। %s</string>
     <string name="error_deleting_image">ଛବି ବିଲୋପ କରିବାରେ ତ୍ରୁଟି</string>
     <string name="failed_to_apply_background_image">ପୃଷ୍ଠପଟ ପ୍ରତିଛବି ପ୍ରୟୋଗ କରିବାରେ ବିଫଳ %s</string>
-    <string name="background_image_too_large">AnkiDroid ର ମୂଳ ସ୍କ୍ରିନ୍ ପୃଷ୍ଠପଟ ଛବି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ</string>
+    <string name="background_image_too_large">AnkiDroidର ମୂଳ ସ୍କ୍ରୀନ୍ ପୃଷ୍ଠପଟ ଛଵି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ</string>
     <string name="image_max_size_allowed">ସର୍ବାଧିକ ପ୍ରତିଛବି ଆକାର %d MB ଅନୁମୋଦିତ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -225,7 +225,7 @@
     <string name="help_item_mailing_list">ମେଲିଂ ତାଲିକା</string>
     <string name="help_item_reddit">Reddit</string>
     <string name="help_item_report_bug">ଏକ ବଗ୍ ରିପୋର୍ଟ କରନ୍ତୁ</string>
-    <string name="help_title_support_ankidroid">AnkiDroid କୁ ସମର୍ଥନ କରନ୍ତୁ</string>
+    <string name="help_title_support_ankidroid">AnkiDroidକୁ ସମର୍ଥନ କରନ୍ତୁ</string>
     <string name="help_item_support_opencollective_donate">ଦାନ କରନ୍ତୁ</string>
     <string name="help_item_support_develop_ankidroid">ବିକାଶ କରନ୍ତୁ</string>
     <string name="help_item_support_rate_ankidroid">ମୂଲ୍ୟାୟନ</string>
@@ -244,8 +244,8 @@
     <string name="help_dialog_exception_report_debounce">ରିପୋର୍ଟ ଆଗରୁ ଦାଖଲ ହୋଇଛି</string>
     <!--Sync-->
     <plurals name="sync_automatic_sync_needs_more_time">
-        <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
-        <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱୟଂଚାଳିତ ସିଙ୍କ୍ ଚାଳିତ ହୋଇପାରେ</item>
+        <item quantity="one">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ ଚାଳନ ହୋଇପାରେ</item>
+        <item quantity="other">%d ସେକେଣ୍ଡରେ ଏକ ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ ଚାଳନ ହୋଇପାରେ</item>
     </plurals>
     <string name="metered_sync_warning">ଆପଣଙ୍କ ସଂଯୋଜନା ମିଟର୍ ହେଉଛି। ଡାଟା ଅନ୍ତରଣରେ ଟଙ୍କା ଖର୍ଚ୍ଚ ହୋଇପାରେ</string>
     <string name="deck_picker_new">ଏହି ତାସଖଣ୍ଡରେ ଆଜି ଦେଖିବାକୁ ଥିବା ନୂତନ ପତ୍ରର ସଂଖ୍ୟା।</string>
@@ -261,15 +261,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">ଆପଣ ସବୁ ତାସଖଣ୍ଡ ପାଇଁ ଗୋଟେ ଉପତାସଖଣ୍ଡ ସୃଷ୍ଟି କରିପାରିବେ ନାହିଁ</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="backup_your_collection">ଆପଣଙ୍କ ସଂଗ୍ରହର ବ୍ୟାକଅପ୍ ନେବା</string>
+    <string name="backup_collection_message">ଆପଣ କିଛି ଦିନ ହେବ ଆପଣଙ୍କ ସଂଗ୍ରହର ବ୍ୟାକଅପ୍ ନେଇନାହାଁନ୍ତି। ଡାଟା ହାନିକୁ ରୋକିବା ପାଇଁ ଆପଣ ଵର୍ତ୍ତମାନ ଏହା କରିନେବା ଉଚିତ୍</string>
+    <string name="button_backup">ବ୍ୟାକଅପ୍</string>
+    <string name="button_disable_reminder">ସ୍ମାରକ ଅକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">ପରେ</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">ପୁନଃ ଦେଖାଅନି</string>
+    <string name="dismiss_backup_warning_title">ଡାଟା କ୍ଷତି ଚେତାଵନୀ</string>
+    <string name="dismiss_backup_warning_new_user">        ଆଣ୍ଡ୍ରଏଡ୍ ଗୋପନୀୟତା ପରିଵର୍ତ୍ତନ ହେତୁ, ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ଆପଣଙ୍କ ଫୋନ୍‌ରୁ ଆପଣଙ୍କ ଡାଟା ଏଵଂ ସ୍ୱଚାଳିତ ବ୍ୟାକଅପ୍ ଵିଲୋପ ହୋଇଯିବ
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        ଆଣ୍ଡ୍ରଏଡ୍ ଗୋପନୀୟତା ପରିଵର୍ତ୍ତନ ହେତୁ, ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ଆପଣଙ୍କ ଡାଟା ଏଵଂ ସ୍ୱଚାଳିତ ବ୍ୟାକଅପ୍ ଅଗମ୍ୟ ପାଲଟିବ
     </string>
 </resources>

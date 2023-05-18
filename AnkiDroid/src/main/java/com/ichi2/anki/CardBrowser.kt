@@ -101,7 +101,8 @@ import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
 
-@Suppress("LeakingThis") // The class is only 'open' due to testing
+@Suppress("LeakingThis")
+// The class is only 'open' due to testing
 @KotlinCleanup("scan through this class and add attributes - in process")
 open class CardBrowser :
     NavigationDrawerActivity(),
@@ -397,10 +398,9 @@ open class CardBrowser :
 
         override fun onSaveSearch(searchName: String?, searchTerms: String?) {
             if (searchName.isNullOrEmpty()) {
-                showThemedToast(
-                    this@CardBrowser,
-                    getString(R.string.card_browser_list_my_searches_new_search_error_empty_name),
-                    true
+                showSnackbar(
+                    R.string.card_browser_list_my_searches_new_search_error_empty_name,
+                    Snackbar.LENGTH_SHORT
                 )
                 return
             }
@@ -412,10 +412,9 @@ open class CardBrowser :
                 mSearchView!!.setQuery("", false)
                 mMySearchesItem!!.isVisible = true
             } else {
-                showThemedToast(
-                    this@CardBrowser,
-                    getString(R.string.card_browser_list_my_searches_new_search_error_dup),
-                    true
+                showSnackbar(
+                    R.string.card_browser_list_my_searches_new_search_error_dup,
+                    Snackbar.LENGTH_SHORT
                 )
             }
         }
@@ -479,7 +478,7 @@ open class CardBrowser :
     }
 
     private fun displayCouldNotChangeDeck() {
-        showThemedToast(this, getString(R.string.card_browser_deck_change_error), true)
+        showSnackbar(R.string.card_browser_deck_change_error, Snackbar.LENGTH_SHORT)
     }
 
     @get:VisibleForTesting
@@ -507,7 +506,7 @@ open class CardBrowser :
         mExportingDelegate = ActivityExportingDelegate(this) { col }
         super.onCreate(savedInstanceState)
         Timber.d("onCreate()")
-        if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this)) {
+        if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this) && !Permissions.isExternalStorageManagerCompat()) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
             showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
             displayDeckPickerForPermissionsDialog()
@@ -770,6 +769,13 @@ open class CardBrowser :
                 launchCatchingTask { deleteSelectedNote() }
                 return true
             }
+            KeyEvent.KEYCODE_F -> {
+                if (event.isCtrlPressed) {
+                    Timber.i("Ctrl+F - Find notes")
+                    mSearchItem?.expandActionView()
+                    return true
+                }
+            }
         }
         return super.onKeyDown(keyCode, event)
     }
@@ -853,7 +859,10 @@ open class CardBrowser :
             openNoteEditorForCard(selectedCardIds[0])
         } catch (e: Exception) {
             Timber.w(e, "Error Opening Note Editor")
-            showThemedToast(this, getString(R.string.multimedia_editor_something_wrong), false)
+            showSnackbar(
+                R.string.multimedia_editor_something_wrong,
+                Snackbar.LENGTH_LONG
+            )
         }
     }
 
@@ -1012,7 +1021,6 @@ open class CardBrowser :
         deckPicker.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivityWithAnimation(deckPicker, ActivityTransitionAnimation.Direction.FADE)
         finishActivityWithFade(this)
-        finishActivityWithFade(this)
         this.setResult(RESULT_CANCELED)
     }
 
@@ -1154,18 +1162,20 @@ open class CardBrowser :
                 showDialogFragment(newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
                 return true
             }
+
+            @NeedsTest("filter-marked query needs testing")
             R.id.action_show_marked -> {
                 mSearchTerms = "tag:marked"
                 mSearchView!!.setQuery("", false)
-                mSearchView!!.queryHint = resources.getString(R.string.card_browser_show_marked)
-                searchCards()
+                searchWithFilterQuery(mSearchTerms)
                 return true
             }
+
+            @NeedsTest("filter-suspended query needs testing")
             R.id.action_show_suspended -> {
                 mSearchTerms = "is:suspended"
                 mSearchView!!.setQuery("", false)
-                mSearchView!!.queryHint = resources.getString(R.string.card_browser_show_suspended)
-                searchCards()
+                searchWithFilterQuery(mSearchTerms)
                 return true
             }
             R.id.action_search_by_tag -> {
@@ -1742,7 +1752,7 @@ open class CardBrowser :
     /** Returns the decks which are valid targets for "Change Deck"  */
     @get:VisibleForTesting
     val validDecksForChangeDeck: List<Deck>
-        get() = deckSpinnerSelection!!.dropDownDecks
+        get() = deckSpinnerSelection!!.computeDropDownDecks()
             .filterNot { d -> Decks.isDynamic(d) }
 
     @RustCleanup("this isn't how Desktop Anki does it")

@@ -121,7 +121,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             SIMPLE_NOTIFICATION_ID
         )
         // Show any pending dialogs which were stored persistently
-        dialogHandler.readMessage()
+        dialogHandler.executeMessage()
     }
 
     override fun onDestroy() {
@@ -452,7 +452,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * @param newFragment  the DialogFragment you want to show
      */
     open fun showDialogFragment(newFragment: DialogFragment) {
-        showDialogFragment(this, newFragment)
+        runOnUiThread {
+            showDialogFragment(this, newFragment)
+        }
     }
 
     /**
@@ -482,7 +484,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         } catch (e: IllegalStateException) {
             Timber.w(e)
             // Store a persistent message to SharedPreferences instructing AnkiDroid to show dialog
-            DialogHandler.storeMessage(newFragment.dialogHandlerMessage)
+            DialogHandler.storeMessage(newFragment.dialogHandlerMessage?.toMessage())
             // Show a basic notification to the user in the notification bar in the meantime
             val title = newFragment.notificationTitle
             val message = newFragment.notificationMessage

@@ -144,12 +144,10 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
      * from here returns, the MultimediaEditFieldActivity passes control here back. And the results from the started before
      * activity are received.
      */
-    @Suppress("deprecation") // get
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_PRONUNCIATION && resultCode == Activity.RESULT_OK) {
             try {
-                val pronouncePath = data!!.extras!![LoadPronunciationActivity.EXTRA_PRONUNCIATION_FILE_PATH]
-                    .toString()
+                val pronouncePath = data!!.extras!!.getString(LoadPronunciationActivity.EXTRA_PRONUNCIATION_FILE_PATH)!!
                 val f = File(pronouncePath)
                 if (!f.exists()) {
                     showToast(gtxt(R.string.multimedia_editor_pron_pronunciation_failed))

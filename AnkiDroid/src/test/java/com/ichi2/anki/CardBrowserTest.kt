@@ -107,6 +107,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.WINDOWS, "Index 0 out of bounds for length 0")
     fun browserIsInMultiSelectModeWhenSelectingOne() {
         val browser = browserWithMultipleNotes
         selectOneOfManyCards(browser)
@@ -242,6 +243,17 @@ class CardBrowserTest : RobolectricTest() {
         }
     }
 
+    @Test // see #13391
+    fun newlyCreatedDeckIsShownAsOptionInBrowser() = runTest {
+        val deckOneId = addDeck("one")
+        val browser = browserWithNoNewCards
+        assertEquals(1, browser.validDecksForChangeDeck.size)
+        assertEquals(deckOneId, browser.validDecksForChangeDeck.first().id)
+        val deckTwoId = addDeck("two")
+        assertEquals(2, browser.validDecksForChangeDeck.size)
+        assertArrayEquals(longArrayOf(deckOneId, deckTwoId), browser.validDecksForChangeDeck.map { it.id }.toLongArray())
+    }
+
     @Test
     fun flagsAreShownInBigDecksTest() = runTest {
         val numberOfNotes = 75
@@ -348,6 +360,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.WINDOWS, "IllegalStateException: Card '1596783600440' not found")
     fun previewWorksAfterSort() {
         // #7286
         val cid1 = addNoteUsingBasicModel("Hello", "World").cards()[0].id

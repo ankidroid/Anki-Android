@@ -23,6 +23,7 @@ import android.os.storage.StorageVolume
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.TranslatableException
 import kotlinx.coroutines.*
 import java.io.File
 import java.util.*
@@ -134,10 +135,10 @@ private suspend fun Context.getUserDataAndCacheSizeUsingGetPackageSizeInfo(): Lo
 fun File.isInsideDirectoriesRemovedWithTheApp(context: Context): Boolean {
     infix fun File.isInsideOf(parent: File) = this.canonicalFile.startsWith(parent.canonicalFile)
 
-    return context.getExternalFilesDirs(null).any { this isInsideOf it } ||
-        context.externalCacheDirs.any { this isInsideOf it } ||
-        context.externalMediaDirs.any { this isInsideOf it } ||
-        context.obbDirs.any { this isInsideOf it } ||
+    return context.getExternalFilesDirs(null).filterNotNull().any { this isInsideOf it } ||
+        context.externalCacheDirs.filterNotNull().any { this isInsideOf it } ||
+        context.externalMediaDirs.filterNotNull().any { this isInsideOf it } ||
+        context.obbDirs.filterNotNull().any { this isInsideOf it } ||
         context.externalDirs.any { this isInsideOf it }
 }
 
@@ -149,6 +150,7 @@ fun File.isInsideDirectoriesRemovedWithTheApp(context: Context): Boolean {
  */
 private val Context.externalDirs: Set<File> get() =
     (getExternalFilesDirs(null) + externalCacheDirs)
+        .filterNotNull()
         .mapNotNullTo(mutableSetOf()) { externalFilesOrCacheDir ->
             externalFilesOrCacheDir.parentFile?.let { parentDir ->
                 if (parentDir.name == packageName) parentDir else null
@@ -177,8 +179,10 @@ fun File.canWriteToOrCreate(): Boolean =
 
 interface CollectionDirectoryProvider { val collectionDirectory: File }
 
-class CanNotWriteToOrCreateFileException(val file: File) : Exception() {
+class CanNotWriteToOrCreateFileException(val file: File) : Exception(), TranslatableException {
     override val message get() = "Can not write to or create file: $file"
+    override fun getTranslatedMessage(context: Context) =
+        context.getString(R.string.error__etc__cannot_write_to_or_create_file, file)
 }
 
 suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirectory() {
@@ -189,15 +193,3 @@ suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirect
 
 suspend fun CollectionDirectoryProvider.collectionDirectoryExists() =
     withContext(Dispatchers.IO) { collectionDirectory.exists() }
-
-/********************************************* Etc ************************************************/
-
-fun Context.getUserFriendlyErrorText(e: Exception): CharSequence =
-    if (e is CanNotWriteToOrCreateFileException) {
-        getString(R.string.error__etc__cannot_write_to_or_create_file, e.file)
-    } else {
-        e.localizedMessage
-            ?: e.message
-            ?: e::class.simpleName
-            ?: getString(R.string.error__etc__unknown_error)
-    }

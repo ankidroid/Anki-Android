@@ -61,6 +61,8 @@
     <string name="updated_version">Actualitzeu a la versió %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Desar pissarra</string>
+    <string name="enable_stylus">Enable stylus mode</string>
+    <string name="disable_stylus">Disable stylus mode</string>
     <string name="enable_whiteboard">Activar pissarra</string>
     <string name="disable_whiteboard">Desactiva la pissarra</string>
     <string name="show_whiteboard">Mostra la pissarra</string>
@@ -305,7 +307,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Veure</string>
     <string name="anki_js_error_code">(Codi d\'error: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug">S\'ha copiat al porta-retalls la informació de depuració</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copiant al porta-retalls informació de depuració</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contingut de la carta: Error al carregar \'%s\'</string>
@@ -313,6 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Error al carregar paquet \'%s\'</string>
     <string name="search_decks">Cerca de paquets</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid confia en el sistema WebView que no està disponible. Això pot passar si el sistema instal·la actualitzacions. Torneu-ho a provar d\'aquí a uns quants minuts.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -362,34 +365,22 @@
     <string name="check_network">Comproveu la vostra connexió de xarxa si us plau</string>
     <string name="search_using_deck_name">Cercar usant el nom del paquet</string>
     <string name="home">Inici</string>
-    <!-- Reviewer actions -->
-    <string name="buried_card">Targeta enterrada</string>
-    <string name="buried_note">Nota enterrada</string>
-    <string name="deleted_note">Nota suprimida</string>
-    <string name="suspended_card">Targeta suspesa</string>
-    <string name="suspended_note">Nota suspesa</string>
+    <!-- Reviewer actions 
+    Each of these strings ends with a period, following the notation of Anki Desktop -->
+    <string name="card_buried">Card buried.</string>
+    <plurals name="note_suspended">
+        <item quantity="one">%d card suspended.</item>
+        <item quantity="other">%d cards suspended.</item>
+    </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Feu que el camp %s sigui enganxós</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Migració de la carpeta</string>
-    <string name="scoped_storage_initial_message">Cal moure les dades per complir amb les noves normes de privadesa d\'Android
-\n\nSi desinstal·leu l\'AnkiDroid abans de la migració, les vostres dades es perdran
-\n\nSi us plau, realitzeu la migració tan aviat com sigui possible</string>
-    <string name="scoped_storage_terms_message">La migració s\'executarà en segon pla. No podreu sincronitzar durant la migració\n\nLa durada estimada és: %s</string>
-    <string name="scoped_storage_term_1">He fet una còpia de seguretat de les meves dades</string>
-    <string name="scoped_storage_term_1_ankiweb">He sincronitzat amb l\'AnkiWeb recentment</string>
-    <string name="scoped_storage_term_2">No desinstal·laré l\'aplicació mentre les dades es canvien de lloc</string>
-    <string name="scoped_storage_select_all_terms">Si us plau, accepteu tots els elements per a continuar.</string>
     <string name="scoped_storage_learn_more">Vull saber-ne més</string>
     <string name="scoped_storage_postpone">Ajorna-ho</string>
     <string name="scoped_storage_migrate">Migra</string>
     <string name="search_card_js_api_no_results">La cerca ha tornat cap resultat</string>
-    <string name="sync_impossible_during_migration">La sincronització està desactivada mentre dura la migració.\n
-         Queden per migrar %1$d fitxers multimèdia.</string>
-    <string name="migration_warning_risk_of_data_loss_if_no_update">Si torneu a instal·lar AnkiDroid, no podrà obrir la vostra col·lecció.</string>
-    <string name="migration_update_request_dialog_download_warning">Si desinstal·leu l\'AnkiDroid, haureu de tornar a descarregar tota la col·lecció.</string>
-    <string name="migration_update_request">La política de privadesa d\'Android obliga a canviar de lloc la carpeta de la vostra col·lecció. Quan les dades es migrin, l\'AnkiDroid serà més ràpid i les vostres dades seran més segures.
-     No podreu sincronitzar mentre duri la migració.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">S\'està iniciant la migració. Podreu reprendre l\'ús d\'AnkiDroid en breu.</string>
     <string name="migration_part_1_done_resume">Podeu tornar a utilitzar l\'AnkiDroid.
 \nLa migració continuarà en segon pla.</string>
@@ -425,4 +416,8 @@
     <string name="browser_options_dialog_heading">Opcions del navegador</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
+    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

@@ -19,8 +19,10 @@ package com.ichi2.anki.dialogs
 import android.net.Uri
 import android.os.Bundle
 import android.os.Message
+import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.joinSyncMessages
 import com.ichi2.async.Connection.ConflictResolution
@@ -228,15 +230,11 @@ class SyncErrorDialog : AsyncDialogFragment() {
             }
         }
 
-    override val dialogHandlerMessage: Message
+    override val dialogHandlerMessage: SyncErrorDialogMessageHandler
         get() {
-            val msg = Message.obtain()
-            msg.what = DialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG
-            val b = Bundle()
-            b.putInt("dialogType", requireArguments().getInt("dialogType"))
-            b.putString("dialogMessage", requireArguments().getString("dialogMessage"))
-            msg.data = b
-            return msg
+            val dialogType = requireArguments().getInt("dialogType")
+            val dialogMessage = requireArguments().getString("dialogMessage")
+            return SyncErrorDialogMessageHandler(dialogType, dialogMessage)
         }
 
     fun dismissAllDialogFragments() {
@@ -269,6 +267,31 @@ class SyncErrorDialog : AsyncDialogFragment() {
             args.putString("dialogMessage", dialogMessage)
             f.arguments = args
             return f
+        }
+    }
+
+    class SyncErrorDialogMessageHandler(
+        private val dialogType: Int,
+        private val dialogMessage: String?
+    ) : DialogHandlerMessage(WhichDialogHandler.MSG_SHOW_SYNC_ERROR_DIALOG, "SyncErrorDialog") {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            deckPicker.showSyncErrorDialog(dialogType, dialogMessage)
+        }
+
+        override fun toMessage(): Message = Message.obtain().apply {
+            what = this@SyncErrorDialogMessageHandler.what
+            data = bundleOf(
+                "dialogType" to dialogType,
+                "dialogMessage" to dialogMessage
+            )
+        }
+
+        companion object {
+            fun fromMessage(message: Message): SyncErrorDialogMessageHandler {
+                val dialogType = message.data.getInt("dialogType")
+                val dialogMessage = message.data.getString("dialogMessage")
+                return SyncErrorDialogMessageHandler(dialogType, dialogMessage)
+            }
         }
     }
 }
