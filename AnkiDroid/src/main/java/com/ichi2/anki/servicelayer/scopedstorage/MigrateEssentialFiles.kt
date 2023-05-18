@@ -23,6 +23,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
+import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.exception.RetryableException
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.servicelayer.*
@@ -169,7 +170,17 @@ internal constructor(
     private fun throwIfEssentialFilesAreMutated(sourceDirectory: AnkiDroidDirectory, destinationDirectory: ScopedAnkiDroidDirectory) {
         // TODO: For Arthur to improve
         for ((source, destination) in iterateEssentialFiles(sourceDirectory).zip(iterateEssentialFiles(destinationDirectory.path))) {
-            throwIfContentUnequal(source, destination)
+            try {
+                throwIfContentUnequal(source, destination)
+            } catch (e: Exception) {
+                // 13807: .nomedia was reported as mutated, but we could not determine the cause
+                if (source.name == ".nomedia") {
+                    CrashReportService.sendExceptionReport(e, ".nomedia was mutated")
+                    continue
+                }
+                // any other file should be reported as an error and fail the migration
+                throw e
+            }
         }
     }
 
