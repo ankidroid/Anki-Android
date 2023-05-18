@@ -405,7 +405,11 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
                     val downloadedCount = mediaClient.getDownloadCount()
                     val uploadedCount = mediaClient.getUploadCount()
                     mediaError = if (downloadedCount == 0 && uploadedCount == 0) {
-                        "${AnkiDroidApp.appResources.getString(R.string.sync_media_error)}\n\n${e.localizedMessage}"
+                        "${AnkiDroidApp.appResources.getString(R.string.sync_media_error)}\n${
+                        AnkiDroidApp.appResources.getString(
+                            R.string.check_network
+                        )
+                        }\n\n${e.localizedMessage}"
                     } else {
                         "${AnkiDroidApp.appResources.getString(R.string.sync_media_partial_updated,downloadedCount,uploadedCount)}\n\n${e.localizedMessage}"
                     }
