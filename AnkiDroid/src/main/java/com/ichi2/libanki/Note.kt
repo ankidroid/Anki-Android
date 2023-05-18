@@ -18,6 +18,7 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
@@ -291,7 +292,7 @@ class Note : Cloneable {
      *
      * @return whether it has no content, dupe first field, or nothing remarkable.
      */
-    fun dupeOrEmpty(): DupeOrEmpty {
+    suspend fun dupeOrEmpty(): DupeOrEmpty {
         if (fields[0].trim { it <= ' ' }.isEmpty()) {
             return DupeOrEmpty.EMPTY
         }
@@ -302,18 +303,20 @@ class Note : Cloneable {
         val csum = csumAndStrippedFieldField.second
         // find any matching csums and compare
         val strippedFirstField = csumAndStrippedFieldField.first
-        val fields = col.db.queryStringList(
-            "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
-            csum,
-            this.id,
-            mid
-        )
-        for (flds in fields) {
-            if (Utils.stripHTMLMedia(
-                    Utils.splitFields(flds)[0]
-                ) == strippedFirstField
-            ) {
-                return DupeOrEmpty.DUPE
+        withCol {
+            val fields = col.db.queryStringList(
+                "SELECT flds FROM notes WHERE csum = ? AND id != ? AND mid = ?",
+                csum,
+                this@Note.id,
+                mid
+            )
+            for (flds in fields) {
+                if (Utils.stripHTMLMedia(
+                        Utils.splitFields(flds)[0]
+                    ) == strippedFirstField
+                ) {
+                    return@withCol DupeOrEmpty.DUPE
+                }
             }
         }
         return DupeOrEmpty.CORRECT
