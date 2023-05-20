@@ -664,7 +664,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     /** similar to _getCard but only fill the queues without taking the card.
      * Returns lists that may contain the next cards.
      */
-    protected open fun _fillNextCard(): Array<CardQueue<out Card.Cache?>> {
+    protected open fun _fillNextCard(): Array<CardQueue<out Card.Cache>> {
         // learning card due?
         if (_preloadLrnCard(false)) {
             return arrayOf(mLrnQueue)
