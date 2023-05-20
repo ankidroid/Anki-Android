@@ -244,7 +244,7 @@ class Sched(col: Collection) : SchedV2(col) {
     }
 
     @KotlinCleanup("simplify fun with when")
-    override fun _fillNextCard(): Array<CardQueue<out Card.Cache?>> {
+    override fun _fillNextCard(): Array<CardQueue<out Card.Cache>> {
         // learning card due?
         if (_preloadLrnCard(false)) {
             return arrayOf(mLrnQueue)
