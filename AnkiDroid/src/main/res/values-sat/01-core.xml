@@ -97,7 +97,7 @@
     <string name="undo">ᱢᱟᱲᱟᱝᱟᱜ</string>
     <string name="undo_action_review">ᱢᱟᱲᱟᱝᱟᱜ ᱧᱮᱧᱮᱞᱠᱚᱜ</string>
     <string name="undo_action_change_deck_multi">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ᱜᱟᱨ ᱛᱮᱭᱟᱨ ᱛᱟᱭᱚᱢ ᱢᱮ</string>
     <string name="move_all_to_deck">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱛᱮ ᱩᱪᱟ.ᱰ ᱡᱮ</string>
     <string name="unbury">ᱛᱚᱯᱟ ᱚᱰᱚᱠ ᱢᱮ</string>
     <string name="rename_deck">ᱰᱮᱠ ᱟ ᱧᱩᱛᱩᱢ ᱵᱚᱫᱚᱞ‌ ᱢᱮ</string>
@@ -255,7 +255,7 @@
         \nNote that your collection is now located in a folder that is removed when uninstalling the app.
         Please make sure that your data is safe by regularly syncing or exporting backups.
     </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">ᱩᱪᱟᱹᱲ ᱰᱤᱜᱟᱹᱣ ᱮᱱᱟ</string>
     <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
         <br><br>
         Please try re-running the migration.

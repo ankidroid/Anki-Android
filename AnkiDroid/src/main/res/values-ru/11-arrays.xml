@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">Если в карточке не указан шрифт</string>
     <string name="override_font_always" comment="Option to always override font">Всегда</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Как в системных настройках</string>
+    <string name="theme_follow_system">Как в системе</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Светлая</string>
     <string name="day_theme_plain">Простая</string>

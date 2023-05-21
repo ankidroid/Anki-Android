@@ -63,6 +63,6 @@
     <string name="backup_restore_no_backups">ამ მოწყობილობაზე ვერ მოიძებნა სარეზერვო ასლი. თქვენს კომპიუტერზე თუ გაქვთ შენახული სარეზერვო ასლები, ჩააკოპირეთ ისინი AnkiDroid-ის საქაღალდეში.</string>
     <string name="open_collection_failed_title">კოლექცია არ გაიხსნა</string>
     <string name="corrupt_db_message">თქვენი კოლექცია დაზიანებულია.\n\nსარეზერვო ასლიდან აღსადგენად შეეხეთ „ პარამეტრების“ ღილაკს; თუ არ იმუშავა, გთხოვთ, იხილოთ ინსტრუქცია მონაცემთა ბასის შესაკეთებლად:\n%1$s</string>
-    <string name="access_collection_failed_message">An error occurred while accessing your collection. It may have been caused by a harmless bug, or there may be a problem with it. \n\nTry running check database, or restoring from backup by pressing the “options” button. If you continue to see this message, please file a bug report:\n%1$s</string>
+    <string name="access_collection_failed_message">თქვენს კოლექციაზე წვდომისას დაფიქსირდა შეცდომა. შესაძლოა ეს უბრალოდ უვნებელი შეცდომის შედეგი იყოს ან კოლექციას რამე პრობლემა ქონდეს. \n\nშეცდომის გამოსწორების მიზნით გთხოვთ შეეხოთ „მონაცემთა ბაზის შემოწმებას“ ან დააჭიროთ „პარამეტრების“ ღილაკს, რათა აღადგინოთ მონაცემები სარეზერვო ასლიდან. ამ შეტყობინების მუდმივად ნახვის შემთხვევაში გთხოვთ გამოგვიგზავნოთ ხარვეზის შეტყობინება:\n%1$s  </string>
     <string name="deck_repair_error">კოლექცია ვერ შეკეთდა</string>
 </resources>

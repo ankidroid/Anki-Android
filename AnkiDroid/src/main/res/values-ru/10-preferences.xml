@@ -142,7 +142,7 @@
     <string name="default_font" maxLength="41">Шрифт по умолчанию</string>
     <string name="override_font" maxLength="41">Когда применять шрифт по умолчанию</string>
     <string name="language" maxLength="41">Язык</string>
-    <string name="language_system">Системный</string>
+    <string name="language_system">Как в системе</string>
     <string name="notification_pref" maxLength="41">Уведомления</string>
     <string name="notification_pref_title" maxLength="41">Какие показывать</string>
     <string name="never_notify">Никакие</string>

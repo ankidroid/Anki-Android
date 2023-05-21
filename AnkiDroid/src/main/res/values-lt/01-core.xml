@@ -86,7 +86,7 @@
         <item quantity="other">%1$d days %2$d left</item>
     </plurals>
     <string name="no_cards_placeholder_title">Kolekcija tuščia</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_description">Pridėkite korteles\nnaudodami + mygtuką.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
         <item quantity="one">Šiandien išmokote %1$d kortelę per %2$s</item>
@@ -126,7 +126,7 @@
     <string name="menu_delete_note">Ištrinti užrašą</string>
     <string name="menu_flag">Pažymėti</string>
     <string name="menu_flag_card">Pažymėti su vėliava</string>
-    <string name="menu_flag_card_zero">No flag</string>
+    <string name="menu_flag_card_zero">Nėra vėliavos</string>
     <string name="menu_flag_card_one">Raudona vėliava</string>
     <string name="menu_flag_card_two">Oranžinė vėliava</string>
     <string name="menu_flag_card_three">Žalia vėliava</string>
@@ -147,8 +147,8 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_no_storage_permission">Norėdami tęsti, suteikite AnkiDroid saugyklos teises.</string>
+    <string name="startup_all_files_access_permission">Norėdami tęsti, suteikite AnkiDroid visų failų prieigos teises.</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -165,16 +165,16 @@
     <string name="time_quantity_months">%.1f mėn</string>
     <string name="time_quantity_years">%.1f m</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Perdaromas filtruotas rinkinys...</string>
     <string name="rebuild_cram_label">Atkurti</string>
     <string name="empty_cram_label">Išvalyti</string>
-    <string name="create_subdeck">Create subdeck</string>
-    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
+    <string name="create_subdeck">Kurkite vidinį rinkinį</string>
+    <string name="empty_filtered_deck">Išvalomas filtruotas rinkinys...</string>
     <string name="custom_study_deck_name">Individualus mokymosi seansas</string>
     <string name="custom_study_deck_exists">Prašome pirmiausiai pervadinti esamą individualaus mokymosi rinkinį</string>
     <string name="empty_deck">Šis rinkinys yra tuščias</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Rinkinio paieška</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Rinkinio paieška </string>
     <string name="invalid_deck_name">Blogas rinkinio vardas</string>
     <string name="studyoptions_empty">Šis rinkinys yra tuščias. Norėdami pridėti naują turinį, spauskite +.</string>
     <string name="studyoptions_limit_reached">Pasiekta dienos mokymosi norma</string>
@@ -187,7 +187,7 @@
     <string name="sd_card_not_mounted">Atminties įrenginys neprijungtas</string>
     <string name="empty_cloze_warning">Redaguoti šį užrašą ir įkelti keletą paslėptų žodžių. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinchronizuoti</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migruoti į apibrėžtają saugyklą</string>
     <string name="cancel_sync_confirm">Ar norite sinchronizavimą atšaukti?</string>
     <string name="continue_sync">Tęsti sinchronizavimą</string>
     <string name="sync_cancelled">Sinchronizavimas atšauktas</string>
@@ -201,16 +201,16 @@
     <string name="card_template_editor_front">Priekinė pusė</string>
     <string name="card_template_editor_back">Galinė pusė</string>
     <string name="card_template_editor_styling">Išvaizdos keitimas</string>
-    <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
-    <string name="card_template_editor_deck_override">Deck override</string>
+    <string name="card_template_editor_menu_card_browser_appearance">Naršyklės išvaizda</string>
+    <string name="card_template_editor_deck_override">Rinkinio perrašymas </string>
     <string name="card_template_editor_insert_field">Įterpti laukelį</string>
     <string name="card_template_editor_select_field">Pasirinkti laukelį</string>
     <string name="card_template_editor_cant_delete">Reikalingas bent vienas kortelės tipas</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="one">This will create %1$d card. Proceed?</item>
+        <item quantity="one">Tai sukurs %1$d kortelę. Ar norite tęsti?</item>
         <item quantity="few">This will create %1$d cards. Proceed?</item>
         <item quantity="many">This will create %1$d cards. Proceed?</item>
-        <item quantity="other">This will create %1$d cards. Proceed?</item>
+        <item quantity="other">Tai sukurs %1$d korteles. Ar norite tęsti?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusią %1$d kortelę?</item>
@@ -219,8 +219,8 @@
         <item quantity="other">Ar tikrai ištrinti “%2$s” kortelių tipą ir su juo susijusias %1$d kortelių?</item>
     </plurals>
     <string name="invalid_template">Kortelės sukurti nepavyko</string>
-    <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
-    <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
+    <string name="card_template_editor_would_delete_note">Ištrynus šį kortelių tipą, kartu bus ištrintas vienas ar keli užrašai. Prašome pirmiausiai sukurti naują kortelių tipą.</string>
+    <string name="card_template_editor_save_error">Negalima užsaugoti kortelių šablono pakeitimo: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Naršyklės išvaizda</string>

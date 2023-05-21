@@ -258,8 +258,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s копія</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Немагчыма запісаць або стварыць файл %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Некалькі памылак, самая нядаўняя: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Некалькі паслядоўных памылак без выканання, самая нядаўняя: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Перанос даных</string>
     <string name="migration__calculating_transfer_size">Падлік памеру для пераносу&#8230;</string>
@@ -279,11 +279,11 @@
         <br><br>
         <a href="%2$s">Даведацца больш і атрымаць дапамогу</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Міграцыя сховішча прыпынена пасля збою з памылкай: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Даведацца больш і атрымаць дапамогу</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Працягнуць перанос</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недаступная калекцыя</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Мы не можам атрымаць доступ да вашай калекцыі пасля выдалення AnkiDroid па прычыне змены палітыкі Play Store\n\nВашы даныя знаходзяцца ў бяспецы і могуць быць адноўлены. Яны размяшчаюцца ў\n%s\n\nВыберыце параметр ніжэй, каб аднавіць:</string>
     <string name="restore_data_from_ankiweb">Аднавіць з AnkiWeb (рэкамендавана)</string>

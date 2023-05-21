@@ -101,7 +101,7 @@
     <string name="move_all_to_deck">ସବୁ ଏହି ତାସଖଣ୍ଡକୁ ନେଇ ଯାଆନ୍ତୁ</string>
     <string name="unbury">ସ୍ଥଗିତରୁ ଫେରାଇ ଆଣ</string>
     <string name="rename_deck">ତାସଖଣ୍ଡ ନାମ ବଦଳାନ୍ତୁ</string>
-    <string name="create_shortcut">ସର୍ଟକଟ୍‌ ସୃଷ୍ଟି କରନ୍ତୁ</string>
+    <string name="create_shortcut">ସର୍ଟ୍‌କଟ୍ ସୃଷ୍ଟି କରିବା</string>
     <string name="browse_cards">ପତ୍ରଗୁଡ଼ିକ ଖେଳାଇବା</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="menu_add_note">ନୋଟ୍ ଯୋଡ଼ନ୍ତୁ</string>

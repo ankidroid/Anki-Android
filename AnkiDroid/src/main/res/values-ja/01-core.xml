@@ -234,8 +234,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s コピー</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"複数のエラーが発生しました。直近のエラー: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">進行を妨げる複数の連続エラーが発生しました。直近のエラー: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">データ移動</string>
     <string name="migration__calculating_transfer_size">移動するデータのサイズを計算中&#8230;</string>
@@ -255,11 +255,11 @@
         <br><br>
         <a href="%2$s">詳細とサポート</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        ストレージ移行は次のエラーにより一時停止中です: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">詳細とサポート</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">移行を再開</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">アクセスできないコレクション</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid"> Playストアのプライバシーポリシーの変更により、AnkiDroidはアンインストール前のコレクションにはアクセスできなくなりました。\n\nコレクションは\n%s\nに保存されており、復元可能です。 \n\n復元するための選択肢は次の通りです:</string>
     <string name="restore_data_from_ankiweb">AnkiWebから復元 (推奨)</string>
