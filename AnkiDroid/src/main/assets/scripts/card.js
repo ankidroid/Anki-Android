@@ -239,9 +239,9 @@ var onPageFinished = function () {
                    no reflowing because the content only shows after MathJax has rendered. */
 
                 if (card.classList.contains("mathjax-needs-to-render")) {
-                    return MathJax.startup.promise
+                    return (MathJax.startup.promise = MathJax.startup.promise
                         .then(() => MathJax.typesetPromise([card]))
-                        .then(() => card.classList.remove("mathjax-needs-to-render"));
+                        .then(() => card.classList.remove("mathjax-needs-to-render")));
                 }
             }
         })
