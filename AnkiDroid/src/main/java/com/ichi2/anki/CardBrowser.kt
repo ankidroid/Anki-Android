@@ -2126,9 +2126,9 @@ open class CardBrowser :
             // Draw the content in the columns
             val card = mCards[position]
             (v.tag as Array<*>)
-                .forEachIndexed { i, col ->
-                    setFont(col as TextView) // set font for column
-                    col.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
+                .forEachIndexed { i, column ->
+                    setFont(column as TextView) // set font for column
+                    column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
                 }
             // set card's background color
             val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color)

@@ -34,9 +34,9 @@ import kotlin.random.Random
 object CollectionDBCorruption {
     // It writes 100 bytes at position 100 to 199
     private fun corrupt(path: String) {
-        RandomAccessFile(File(path), "rw").use { col ->
-            col.seek(100)
-            col.write(Random.nextBytes(100))
+        RandomAccessFile(File(path), "rw").use { collectionFile ->
+            collectionFile.seek(100)
+            collectionFile.write(Random.nextBytes(100))
         }
 
         assert(File(path).length() != 0L)
