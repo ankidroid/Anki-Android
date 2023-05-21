@@ -57,7 +57,7 @@ object LaTeX {
      * Convert HTML with embedded latex tags to image links.
      * NOTE: _imgLink produces an alphanumeric filename so there is no need to escape the replacement string.
      */
-    fun mungeQA(html: String, col: Collection, svg: Boolean): String {
+    fun mungeQA(col: Collection, html: String, svg: Boolean): String {
         return mungeQA(html, col.media, svg)
     }
 

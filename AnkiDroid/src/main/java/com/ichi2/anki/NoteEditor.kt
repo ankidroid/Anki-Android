@@ -354,7 +354,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // Note type Selector
         mNoteTypeSpinner = findViewById(R.id.note_type_spinner)
-        mAllModelIds = setupNoteTypeSpinner(this, mNoteTypeSpinner!!, col)
+        mAllModelIds = setupNoteTypeSpinner(col, this, mNoteTypeSpinner!!)
 
         // Deck Selector
         val deckTextView = findViewById<TextView>(R.id.CardEditorDeckText)

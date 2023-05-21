@@ -141,7 +141,7 @@ class AdvancedStatistics {
         )
         val axisTitles =
             intArrayOf(type.ordinal, R.string.stats_cards, R.string.stats_cumulative_cards)
-        val simuationResult = calculateDueAsPlottableSimulationResult(type, col, dids)
+        val simuationResult = calculateDueAsPlottableSimulationResult(col, type, dids)
         val dues = simuationResult.nReviews
         val seriesList = Array(REVIEW_TYPE_COUNT_PLUS_1) { DoubleArray(dues.size) }
         for (t in dues.indices) {
@@ -237,8 +237,8 @@ class AdvancedStatistics {
      * - The forecasted number of cards in each state (new, young, mature)
      */
     private fun calculateDueAsPlottableSimulationResult(
-        type: AxisType,
         col: Collection,
+        type: AxisType,
         dids: String
     ): PlottableSimulationResult {
         var end = 0

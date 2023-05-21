@@ -199,8 +199,8 @@ class AutomaticAnswer(
         }
 
         @CheckResult
-        fun createInstance(target: AutomaticallyAnswered, preferences: SharedPreferences, col: Collection): AutomaticAnswer {
-            val settings = AutomaticAnswerSettings.createInstance(preferences, col)
+        fun createInstance(col: Collection, target: AutomaticallyAnswered, preferences: SharedPreferences): AutomaticAnswer {
+            val settings = AutomaticAnswerSettings.createInstance(col, preferences)
             return AutomaticAnswer(target, settings)
         }
     }
@@ -243,8 +243,8 @@ class AutomaticAnswerSettings(
          * or if "useGeneralTimeoutSettings" is set
          */
         fun queryDeckSpecificOptions(
-            action: AutomaticAnswerAction,
             col: Collection,
+            action: AutomaticAnswerAction,
             selectedDid: DeckId
         ): AutomaticAnswerSettings? {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
@@ -273,11 +273,11 @@ class AutomaticAnswerSettings(
             return AutomaticAnswerSettings(action, prefUseTimer, prefWaitQuestionSecond, prefWaitAnswerSecond)
         }
 
-        fun createInstance(preferences: SharedPreferences, col: Collection): AutomaticAnswerSettings {
+        fun createInstance(col: Collection, preferences: SharedPreferences): AutomaticAnswerSettings {
             // deck specific options take precedence over general (preference-based) options.
             // the action can only be set via preferences (but is stored in the collection).
             val action = getAction(col)
-            return queryDeckSpecificOptions(action, col, col.decks.selected()) ?: queryFromPreferences(preferences, action)
+            return queryDeckSpecificOptions(col, action, col.decks.selected()) ?: queryFromPreferences(preferences, action)
         }
 
         private fun getAction(col: Collection): AutomaticAnswerAction {

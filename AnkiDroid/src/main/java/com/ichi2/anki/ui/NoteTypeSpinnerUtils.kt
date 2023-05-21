@@ -23,7 +23,7 @@ import com.ichi2.anki.R
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.NamedJSONComparator
 
-fun setupNoteTypeSpinner(context: Context, noteTypeSpinner: Spinner, col: Collection): List<Long> {
+fun setupNoteTypeSpinner(col: Collection, context: Context, noteTypeSpinner: Spinner): List<Long> {
     val sortedModels = col.models.all().sortedWith(NamedJSONComparator.INSTANCE)
     val modelNames = sortedModels.map { it.getString("name") }
 

@@ -77,7 +77,7 @@ class CardInfo : AnkiActivity() {
         }
 
         // Candidate to move to background thread - can get hundreds of rows for bad cards.
-        val model = CardInfoModel.create(c, col)
+        val model = CardInfoModel.create(col, c)
         setText(R.id.card_info_added, formatDate(model.cardId))
         setIfNotNull<Long?>(model.firstReviewDate, R.id.card_info_first_review, R.id.card_info_first_review_label) { date: Long? -> formatDate(date) }
         setIfNotNull<Long?>(model.latestReviewDate, R.id.card_info_latest_review, R.id.card_info_latest_review_label) { date: Long? -> formatDate(date) }
@@ -295,7 +295,7 @@ class CardInfo : AnkiActivity() {
 
         companion object {
             @CheckResult
-            fun create(c: Card, collection: Collection): CardInfoModel {
+            fun create(collection: Collection, c: Card): CardInfoModel {
                 val addedDate = c.id
                 var firstReview: Long? = collection.db.queryLongScalar("select min(id) from revlog where cid = ?", c.id)
                 if (firstReview == 0L) {

@@ -227,8 +227,8 @@ class TemplateManager {
 
             if (!_browser) {
                 val svg = _note_type.optBoolean("latexsvg", false)
-                qoutText = LaTeX.mungeQA(qout.text, _col, svg)
-                aoutText = LaTeX.mungeQA(aout.text, _col, svg)
+                qoutText = LaTeX.mungeQA(_col, qout.text, svg)
+                aoutText = LaTeX.mungeQA(_col, aout.text, svg)
             }
 
             val output = TemplateRenderOutput(

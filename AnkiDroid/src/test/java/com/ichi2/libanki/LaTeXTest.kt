@@ -97,7 +97,7 @@ class LaTeXTest : RobolectricTest() {
 
         // Test without access to media
         assertThat(
-            LaTeX.mungeQA("[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", col, false),
+            LaTeX.mungeQA(col, "[$]\\sqrt[3]{2} + \\text{\"var\"}[/$]", false),
             equalTo("$\\sqrt[3]{2} + \\text{\"var\"}$")
         )
     }

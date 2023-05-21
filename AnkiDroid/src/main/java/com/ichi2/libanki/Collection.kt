@@ -1149,7 +1149,7 @@ open class Collection(
             if (!browser) {
                 // browser don't show image. So compiling LaTeX actually remove information.
                 val svg = model.optBoolean("latexsvg", false)
-                html = LaTeX.mungeQA(html, this, svg)
+                html = LaTeX.mungeQA(this, html, svg)
             }
             d[type] = html
             // empty cloze?

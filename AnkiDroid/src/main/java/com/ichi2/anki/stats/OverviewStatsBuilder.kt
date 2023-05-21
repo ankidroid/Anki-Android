@@ -17,7 +17,41 @@ package com.ichi2.anki.stats
 
 import android.R
 import android.webkit.WebView
-import com.ichi2.anki.R.string.*
+import com.ichi2.anki.R.string.stats_added
+import com.ichi2.anki.R.string.stats_answer_buttons
+import com.ichi2.anki.R.string.stats_forecast
+import com.ichi2.anki.R.string.stats_overview_answer_buttons_learn
+import com.ichi2.anki.R.string.stats_overview_answer_buttons_mature
+import com.ichi2.anki.R.string.stats_overview_answer_buttons_young
+import com.ichi2.anki.R.string.stats_overview_average_answer_time
+import com.ichi2.anki.R.string.stats_overview_average_interval
+import com.ichi2.anki.R.string.stats_overview_card_types_average_ease
+import com.ichi2.anki.R.string.stats_overview_card_types_highest_ease
+import com.ichi2.anki.R.string.stats_overview_card_types_lowest_ease
+import com.ichi2.anki.R.string.stats_overview_card_types_total_cards
+import com.ichi2.anki.R.string.stats_overview_card_types_total_notes
+import com.ichi2.anki.R.string.stats_overview_days_studied
+import com.ichi2.anki.R.string.stats_overview_forecast_average
+import com.ichi2.anki.R.string.stats_overview_forecast_due_tomorrow
+import com.ichi2.anki.R.string.stats_overview_forecast_total
+import com.ichi2.anki.R.string.stats_overview_longest_interval
+import com.ichi2.anki.R.string.stats_overview_new_cards_per_day
+import com.ichi2.anki.R.string.stats_overview_reviews_per_day_all
+import com.ichi2.anki.R.string.stats_overview_reviews_per_day_studydays
+import com.ichi2.anki.R.string.stats_overview_time_per_day_all
+import com.ichi2.anki.R.string.stats_overview_time_per_day_studydays
+import com.ichi2.anki.R.string.stats_overview_total_new_cards
+import com.ichi2.anki.R.string.stats_overview_total_time_in_period
+import com.ichi2.anki.R.string.stats_review_count
+import com.ichi2.anki.R.string.stats_review_intervals
+import com.ichi2.anki.R.string.stats_review_time
+import com.ichi2.anki.R.string.stats_today
+import com.ichi2.anki.R.string.stats_today_again_count
+import com.ichi2.anki.R.string.stats_today_correct_count
+import com.ichi2.anki.R.string.stats_today_mature_cards
+import com.ichi2.anki.R.string.stats_today_no_mature_cards
+import com.ichi2.anki.R.string.stats_today_type_breakdown
+import com.ichi2.anki.R.string.title_activity_template_editor
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
@@ -26,7 +60,7 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.toRGBHex
-import java.util.*
+import java.util.Locale
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
@@ -291,7 +325,7 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
     }
 
     private fun _limit(): String {
-        return Stats.deckLimit(deckId, col)
+        return Stats.deckLimit(col, deckId)
     }
 
     companion object {

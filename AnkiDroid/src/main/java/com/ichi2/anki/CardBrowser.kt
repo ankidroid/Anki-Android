@@ -91,12 +91,8 @@ import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.IllegalStateException
-import java.lang.StringBuilder
 import java.util.*
 import java.util.function.Consumer
-import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max
@@ -790,7 +786,7 @@ open class CardBrowser :
             Timber.i("Not marking cards - nothing selected")
             return
         }
-        val result = withProgress { withCol { toggleNotesMarkForCardsIds(selectedCardIds, this) } }
+        val result = withProgress { withCol { toggleNotesMarkForCardsIds(this, selectedCardIds) } }
         updateCardsInList(getAllCards(getNotes(result.toList())))
         invalidateOptionsMenu() // maybe the availability of undo changed
         // reload if updated cards contain review card
@@ -798,8 +794,8 @@ open class CardBrowser :
     }
 
     private fun toggleNotesMarkForCardsIds(
-        cardIds: List<Long>,
-        col: Collection
+        col: Collection,
+        cardIds: List<Long>
     ): Array<Card> {
         val cards = cardIds.map { col.getCard(it) }.toTypedArray()
         col.db.executeInTransaction {
@@ -1388,7 +1384,7 @@ open class CardBrowser :
                 )
             )
         } else {
-            val selectedNoteIds = selectedNoteIds(selectedCardIds, col)
+            val selectedNoteIds = selectedNoteIds(col, selectedCardIds)
             mExportingDelegate.showExportDialog(
                 ExportDialogParams(
                     message = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_notes, selectedNoteIds.size, selectedNoteIds.size),
@@ -2327,7 +2323,7 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(id: Long, col: Collection, position: Int, inCardMode: Boolean) : super(col, id) {
+        constructor(col: Collection, id: Long, position: Int, inCardMode: Boolean) : super(col, id) {
             this.position = position
             this.inCardMode = inCardMode
         }
@@ -2795,5 +2791,5 @@ suspend fun searchForCards(
 }
 
 private fun Sequence<CardId>.toCardCache(col: Collection, isInCardMode: Boolean): Sequence<CardBrowser.CardCache> {
-    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
+    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(col, cid, idx, isInCardMode) }
 }

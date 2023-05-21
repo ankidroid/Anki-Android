@@ -225,19 +225,19 @@ class CardContentProvider : ContentProvider() {
                 col.db.query(sql, noteId)
             }
             NOTES_ID_CARDS -> {
-                val currentNote = getNoteFromUri(uri, col)
+                val currentNote = getNoteFromUri(col, uri)
                 val columns = projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 for (currentCard: Card in currentNote.cards()) {
-                    addCardToCursor(currentCard, rv, col, columns)
+                    addCardToCursor(col, currentCard, rv, columns)
                 }
                 rv
             }
             NOTES_ID_CARDS_ORD -> {
-                val currentCard = getCardFromUri(uri, col)
+                val currentCard = getCardFromUri(col, uri)
                 val columns = projection ?: FlashCardsContract.Card.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                addCardToCursor(currentCard, rv, col, columns)
+                addCardToCursor(col, currentCard, rv, columns)
                 rv
             }
             MODELS -> {
@@ -250,7 +250,7 @@ class CardContentProvider : ContentProvider() {
                 rv
             }
             MODELS_ID -> {
-                val modelId = getModelIdFromUri(uri, col)
+                val modelId = getModelIdFromUri(col, uri)
                 val columns = projection ?: FlashCardsContract.Model.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 addModelToCursor(modelId, col.models, rv, columns)
@@ -259,7 +259,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_TEMPLATES -> {
                 /* Direct access model templates */
                 val models = col.models
-                val currentModel = models.get(getModelIdFromUri(uri, col))
+                val currentModel = models.get(getModelIdFromUri(col, uri))
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
@@ -279,11 +279,11 @@ class CardContentProvider : ContentProvider() {
                 /* Direct access model template with specific ID */
                 val models = col.models
                 val ord = uri.lastPathSegment!!.toInt()
-                val currentModel = models.get(getModelIdFromUri(uri, col))
+                val currentModel = models.get(getModelIdFromUri(col, uri))
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
-                    val template = getTemplateFromUri(uri, col)
+                    val template = getTemplateFromUri(col, uri)
                     addTemplateToCursor(template, currentModel, ord + 1, models, rv, columns)
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Model is malformed", e)
@@ -332,7 +332,7 @@ class CardContentProvider : ContentProvider() {
                         buttonTexts.put(col.sched.nextIvlStr(context!!, currentCard, i + 1))
                         i++
                     }
-                    addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns)
+                    addReviewInfoToCursor(col, currentCard, buttonTexts, buttonCount, rv, columns)
                     k++
                 }
                 if (deckIdOfTemporarilySelectedDeck != -1L) { // if the selected deck was changed
@@ -353,11 +353,11 @@ class CardContentProvider : ContentProvider() {
                 }
                 forEach(allDecks) {
                     addDeckToCursor(
+                        col,
                         it.did,
                         it.fullDeckName,
                         getDeckCountsFromDueTreeNode(it),
                         rv,
-                        col,
                         columns
                     )
                 }
@@ -370,7 +370,7 @@ class CardContentProvider : ContentProvider() {
                 val allDecks = col.sched.deckDueTree()
                 val desiredDeckId = uri.pathSegments[1].toLong()
                 findInDeckTree(allDecks, desiredDeckId)?.let {
-                    addDeckToCursor(it.did, it.fullDeckName, getDeckCountsFromDueTreeNode(it), rv, col, columns)
+                    addDeckToCursor(col, it.did, it.fullDeckName, getDeckCountsFromDueTreeNode(it), rv, columns)
                 }
                 rv
             }
@@ -380,7 +380,7 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 val counts = JSONArray(listOf(col.sched.counts()))
-                addDeckToCursor(id, name, counts, rv, col, columns)
+                addDeckToCursor(col, id, name, counts, rv, columns)
                 rv
             }
             else -> throw IllegalArgumentException("uri $uri is not supported")
@@ -409,7 +409,7 @@ class CardContentProvider : ContentProvider() {
             NOTES_ID -> {
                 /* Direct access note details
                  */
-                val currentNote = getNoteFromUri(uri, col)
+                val currentNote = getNoteFromUri(col, uri)
                 // the key of the ContentValues contains the column name
                 // the value of the ContentValues contains the row value.
                 val valueSet = values!!.valueSet()
@@ -450,7 +450,7 @@ class CardContentProvider : ContentProvider() {
             }
             NOTES_ID_CARDS -> throw UnsupportedOperationException("Not yet implemented")
             NOTES_ID_CARDS_ORD -> {
-                val currentCard = getCardFromUri(uri, col)
+                val currentCard = getCardFromUri(col, uri)
                 var isDeckUpdate = false
                 var did = Decks.NOT_FOUND_DECK_ID
                 // the key of the ContentValues contains the column name
@@ -491,7 +491,7 @@ class CardContentProvider : ContentProvider() {
                 val newLatexPost = values.getAsString(FlashCardsContract.Model.LATEX_POST)
                 val newLatexPre = values.getAsString(FlashCardsContract.Model.LATEX_PRE)
                 // Get the original note JSON
-                val model = col.models.get(getModelIdFromUri(uri, col))
+                val model = col.models.get(getModelIdFromUri(col, uri))
                 try {
                     // Update model name and/or css
                     if (newModelName != null) {
@@ -547,7 +547,7 @@ class CardContentProvider : ContentProvider() {
                 // Update the model
                 try {
                     val templateOrd = uri.lastPathSegment!!.toInt()
-                    val existingModel = col.models.get(getModelIdFromUri(uri, col))
+                    val existingModel = col.models.get(getModelIdFromUri(col, uri))
                     val templates = existingModel!!.getJSONArray("tmpls")
                     val template = templates.getJSONObject(templateOrd)
                     if (name != null) {
@@ -598,7 +598,7 @@ class CardContentProvider : ContentProvider() {
                     }
                 }
                 if (cardOrd != -1 && noteID != -1L) {
-                    val cardToAnswer: Card = getCard(noteID, cardOrd, col)
+                    val cardToAnswer: Card = getCard(col, noteID, cardOrd)
                     @Suppress("SENSELESS_COMPARISON")
                     @KotlinCleanup("based on getCard() method, cardToAnswer does seem to be not null")
                     if (cardToAnswer != null) {
@@ -654,7 +654,7 @@ class CardContentProvider : ContentProvider() {
                 1
             }
             MODELS_ID_EMPTY_CARDS -> {
-                val model = col.models.get(getModelIdFromUri(uri, col)) ?: return -1
+                val model = col.models.get(getModelIdFromUri(col, uri)) ?: return -1
                 val cids: List<Long> = col.genCards(col.models.nids(model), model)!!
                 col.remCards(cids)
                 cids.size
@@ -881,7 +881,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_TEMPLATES -> {
                 run {
                     val models: ModelManager = col.models
-                    val mid: NoteTypeId = getModelIdFromUri(uri, col)
+                    val mid: NoteTypeId = getModelIdFromUri(col, uri)
                     val existingModel: Model = models.get(mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
                     val name: String = values!!.getAsString(FlashCardsContract.CardTemplate.NAME)
@@ -910,7 +910,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_FIELDS -> {
                 run {
                     val models: ModelManager = col.models
-                    val mid: NoteTypeId = getModelIdFromUri(uri, col)
+                    val mid: NoteTypeId = getModelIdFromUri(col, uri)
                     val existingModel: Model = models.get(mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
                     val name: String = values!!.getAsString(FlashCardsContract.Model.FIELD_NAME)
@@ -966,12 +966,12 @@ class CardContentProvider : ContentProvider() {
             MEDIA ->
                 // insert a media file
                 // contentvalue should have data and preferredFileName values
-                insertMediaFile(values, col)
+                insertMediaFile(col, values)
             else -> throw IllegalArgumentException("uri $uri is not supported")
         }
     }
 
-    private fun insertMediaFile(values: ContentValues?, col: Collection): Uri? {
+    private fun insertMediaFile(col: Collection, values: ContentValues?): Uri? {
         // Insert media file using libanki.Media.addFile and return Uri for the inserted file.
         val fileUri = Uri.parse(values!!.getAsString(FlashCardsContract.AnkiMedia.FILE_URI))
         val preferredName = values.getAsString(FlashCardsContract.AnkiMedia.PREFERRED_NAME)
@@ -1058,7 +1058,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addCardToCursor(currentCard: Card, rv: MatrixCursor, @Suppress("UNUSED_PARAMETER") col: Collection, columns: Array<String>) {
+    private fun addCardToCursor(@Suppress("UNUSED_PARAMETER") col: Collection, currentCard: Card, rv: MatrixCursor, columns: Array<String>) {
         val cardName: String = try {
             currentCard.template().getString("name")
         } catch (je: JSONException) {
@@ -1083,7 +1083,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addReviewInfoToCursor(currentCard: Card, nextReviewTimesJson: JSONArray, buttonCount: Int, rv: MatrixCursor, col: Collection, columns: Array<String>) {
+    private fun addReviewInfoToCursor(col: Collection, currentCard: Card, nextReviewTimesJson: JSONArray, buttonCount: Int, rv: MatrixCursor, columns: Array<String>) {
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
@@ -1163,7 +1163,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addDeckToCursor(id: Long, name: String, deckCounts: JSONArray, rv: MatrixCursor, col: Collection, columns: Array<String>) {
+    private fun addDeckToCursor(col: Collection, id: Long, name: String, deckCounts: JSONArray, rv: MatrixCursor, columns: Array<String>) {
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
@@ -1197,13 +1197,13 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun getCardFromUri(uri: Uri, col: Collection): Card {
+    private fun getCardFromUri(col: Collection, uri: Uri): Card {
         val noteId = uri.pathSegments[1].toLong()
         val ord = uri.pathSegments[3].toInt()
-        return getCard(noteId, ord, col)
+        return getCard(col, noteId, ord)
     }
 
-    private fun getCard(noteId: NoteId, ord: Int, col: Collection): Card {
+    private fun getCard(col: Collection, noteId: NoteId, ord: Int): Card {
         val currentNote = col.getNote(noteId)
         var currentCard: Card? = null
         for (card in currentNote.cards()) {
@@ -1217,12 +1217,12 @@ class CardContentProvider : ContentProvider() {
         return currentCard
     }
 
-    private fun getNoteFromUri(uri: Uri, col: Collection): Note {
+    private fun getNoteFromUri(col: Collection, uri: Uri): Note {
         val noteId = uri.pathSegments[1].toLong()
         return col.getNote(noteId)
     }
 
-    private fun getModelIdFromUri(uri: Uri, col: Collection): Long {
+    private fun getModelIdFromUri(col: Collection, uri: Uri): Long {
         val modelIdSegment = uri.pathSegments[1]
         val id: Long = if (modelIdSegment == FlashCardsContract.Model.CURRENT_MODEL_ID) {
             col.models.current()!!.optLong("id", -1)
@@ -1237,8 +1237,8 @@ class CardContentProvider : ContentProvider() {
     }
 
     @Throws(JSONException::class)
-    private fun getTemplateFromUri(uri: Uri, col: Collection): JSONObject {
-        val model: JSONObject? = col.models.get(getModelIdFromUri(uri, col))
+    private fun getTemplateFromUri(col: Collection, uri: Uri): JSONObject {
+        val model: JSONObject? = col.models.get(getModelIdFromUri(col, uri))
         val ord = uri.lastPathSegment!!.toInt()
         return model!!.getJSONArray("tmpls").getJSONObject(ord)
     }

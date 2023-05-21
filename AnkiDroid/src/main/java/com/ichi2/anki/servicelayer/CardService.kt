@@ -26,7 +26,7 @@ object CardService {
      * can do better with performance here
      * TODO: blocks the UI, should be fixed
      */
-    fun selectedNoteIds(selectedCardIds: List<Long>, col: Collection) =
+    fun selectedNoteIds(col: Collection, selectedCardIds: List<Long>) =
         CardUtils.getNotes(
             selectedCardIds.map { col.getCard(it) }
         ).map { it.id }

@@ -1244,7 +1244,7 @@ from cards where did in ${_limit()}"""
      * Tools ***********************************************************************************************
      */
     private fun _limit(): String {
-        return deckLimit(mDeckId, col)
+        return deckLimit(col, mDeckId)
     }
 
     private fun _getDeckFilter(): String {
@@ -1282,7 +1282,7 @@ from cards where did in ${_limit()}"""
          * @param col collection
          * @return
          */
-        fun deckLimit(deckId: Long, col: Collection): String {
+        fun deckLimit(col: Collection, deckId: Long): String {
             return if (deckId == ALL_DECKS_ID) {
                 // All decks
                 val decks = col.decks.all()

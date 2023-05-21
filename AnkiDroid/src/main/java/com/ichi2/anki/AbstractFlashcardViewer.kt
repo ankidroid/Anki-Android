@@ -1286,7 +1286,7 @@ abstract class AbstractFlashcardViewer :
         try {
             mShowNextReviewTime = col.get_config_boolean("estTimes")
             val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
-            automaticAnswer = AutomaticAnswer.createInstance(this, preferences, col)
+            automaticAnswer = AutomaticAnswer.createInstance(col, this, preferences)
         } catch (ex: Exception) {
             Timber.w(ex)
             onCollectionLoadError()

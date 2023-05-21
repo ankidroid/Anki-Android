@@ -60,7 +60,7 @@ class CardInfoModelTest : RobolectricTest() {
         )
         col.save()
 
-        mModel = CardInfo.CardInfoModel.create(c, col)
+        mModel = CardInfo.CardInfoModel.create(col, c)
     }
 
     @Test
