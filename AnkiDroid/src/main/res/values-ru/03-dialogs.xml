@@ -82,10 +82,10 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Перепланировать %d карту</item>
-        <item quantity="few">Перепланировать %d карты</item>
-        <item quantity="many">Перепланировать %d карт</item>
-        <item quantity="other">Перепланировать %d карт</item>
+        <item quantity="one">Перепланировать %d карточку</item>
+        <item quantity="few">Перепланировать %d карточки</item>
+        <item quantity="many">Перепланировать %d карточек</item>
+        <item quantity="other">Перепланировать %d карточек</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">Текущий интервал: %d день</item>

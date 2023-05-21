@@ -242,8 +242,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopyala</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">%s dosyası oluşturulamıyor ya da yazılamıyor</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Birden fazla hata oluştu, en son: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">İlerleme olmadan birden fazla ardışık hata oluştu, en son: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Veri taşınıyor</string>
     <string name="migration__calculating_transfer_size">Aktarma boyutu hesaplanıyor&#8230;</string>
@@ -256,18 +256,18 @@
         Lütfen düzenli olarak senkronize ederek ve yedeklemelerinizi dışarı aktararak verinizi güvende tuttuğunuzdan emin olunuz.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Aktarma başarısız</string>
-    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Depolama aktarımı bu hata dolayısıyla durduruldu: %1$s.
+    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Depolama taşıması bu hata dolayısıyla durduruldu: %1$s.
         <br><br>
-        Lütfen aktarımı tekrar deneyiniz.
+        Lütfen taşımayı tekrar deneyin.
         Hatayı düzeltmek için, disk alanı boşaltmak veya eksik medyaları yeniden bağlamanız gerekebilir.
         <br><br>
-        <a href="%2$s">Daha fazlası ve yardım için</a>
+        <a href="%2$s">Daha fazlasını öğrenmek ve yardım almak için</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Depolama taşıması bu hata dolayısıyla durduruldu: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Daha fazlasını öğrenmek ve yardım almak için</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Taşımaya devam edin</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Koleksiyona erişilemiyor</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Play Store İlkesindeki bir değişiklikten dolayı AnkiDroid kaldırıldıktan sonra koleksiyonunuza erişemiyoruz\n\nVerileriniz güvende ve geri getirilebilir.\n%s\nadresinden erişim sağlayabilirsiniz.\n\nGeri getirmek için aşağıdakilerden birini seçiniz:</string>
     <string name="restore_data_from_ankiweb">AnkiWeb\'den geri getir (önerilir)</string>

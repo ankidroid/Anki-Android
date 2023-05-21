@@ -325,8 +325,8 @@
     <!-- About -->
     <string name="open_changelog">ପରିବର୍ତ୍ତନ ଲଗ୍ ଖୋଲନ୍ତୁ</string>
     <string name="pref_cat_about_title" maxLength="41">ଵିଷୟରେ</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
+    <string name="contributors_title">ଯୋଗଦାତା</string>
+    <string name="about_contributors_description"><![CDATA[ଏମାନେ ହେଉଛନ୍ତି ଆମର ଅଦ୍ଭୁତ <a href=\"%1$s\">ଯୋଗଦାତା</a>। ପ୍ରୋଗ୍ରାମିଂ, ଅନୁଵାଦ, ଦାନ ଓ <a href=\"%2$s\">ଆହୁରି ଅନେକ କିଛି</a> ଦ୍ୱାରା ଆପଣ ମଧ୍ୟ AnkiDroidକୁ ସାହାଯ୍ୟ କରିପାରିବେ!]]></string>
     <string name="license">ଲାଇସେନ୍ସ</string>
     <string name="license_description"><![CDATA[AnkiDroidକୁ <a href=\"%1$s\">GPL-3.0</a> ଏବଂ <a href=\"%2$s\">AGPL-3.0</a> ଲାଇସେନ୍ସ ଅଧୀନରେ ପ୍ରକାଶିତ କରାଯାଏ, ତାହା ସହ ସୋର୍ସ କୋଡ୍ କୁ <a href=\"%3$s\">GitHubରେ</a> ଉପଲବ୍ଧ କରାଇ ଦିଆଯାଇଥାଏ]]></string>
     <string name="donate_description"><![CDATA[ଆପଣ <a href=\"%1$s\">ଦାନ</a> କରି AnkiDroidର ବିକାଶକୁ ସମର୍ଥନ କରିପାରିବେ। ଯେକୌଣସି ରାଶି ଅତ୍ୟନ୍ତ ପ୍ରଶଂସନୀୟ ଅଟେ।]]></string>

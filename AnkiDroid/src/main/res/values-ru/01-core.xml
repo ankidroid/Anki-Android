@@ -257,11 +257,11 @@
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">Копия %s</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Не удалось отредактировать или создать файл %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Не удалось записать или создать файл %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Несколько ошибок, последняя: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Несколько последовательных ошибок, последняя: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_data">Перенос файлов</string>
+    <string name="migration__migrating_data">Данные переносятся</string>
     <string name="migration__calculating_transfer_size">Вычисление размеров файлов для переноса...</string>
     <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Перенесено %1$s из %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Данные успешно перенесены</string>
@@ -279,13 +279,13 @@
         <br><br>
         <a href="%2$s">Узнать подробности и получить помощь</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Перенос хранилища приостановлен после сбоя с ошибкой: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Подробности и помощь</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недоступная коллекция</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Мы не можем получить доступ к вашей коллекции, так как AnkiDroid был удалён из-за изменения политики Play Store\n\nВаши данные в безопасности и могут быть восстановлены. Они расположены в\n%s\n\nВыберите опцию для восстановления:</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Возобновить перенос файлов</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Коллекция недоступна</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Не удаётся получить доступ к вашей коллекции, так как AnkiDroid был удалён из-за изменения политики Play Store\n\nВаши данные в безопасности и могут быть восстановлены. Они расположены в\n%s\n\nВыберите способ восстановления:</string>
     <string name="restore_data_from_ankiweb">Восстановить из AnkiWeb (рекомендуемый)</string>
     <string name="install_non_play_store_ankidroid_recommended">Восстановить доступ к папке (рекомендуемый)</string>
     <string name="install_non_play_store_ankidroid">Восстановить доступ к папке (продвинутый)</string>

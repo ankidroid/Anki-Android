@@ -51,7 +51,7 @@
     <string name="vague_error" comment="Network error dialog title">Hata</string>
     <string name="retry">Yeniden Dene</string>
     <string name="menu_get_shared_decks">Paylaşılan desteler edin</string>
-    <string name="connection_error_message">Bir ağ hatası meydana geldi.</string>
+    <string name="connection_error_message">Bir ağ hatası oluştu.</string>
     <string name="not_logged_in_title">AnkiWeb\'e giriş yap</string>
     <string name="login_create_account_message">Bulut senkronizasyon hizmetini kullanmak için üçüncü parti bir hesaba giriş yapmanız gerekiyor. Hesabı bir sonraki adımda açabilirsiniz.</string>
     <!-- MyAccount.kt -->
@@ -96,7 +96,7 @@
     <string name="sync_download_chunk">Değişiklikler indiriliyor...</string>
     <string name="sync_upload_chunk">Değişiklikler yükleniyor...</string>
     <string name="sync_up_down_size">Aktarılan: %1$d KB, indirilen: %2$d KB</string>
-    <string name="sync_generic_error">Bir hatâ meydana geldi. Lütfen sonra yeniden deneyin.</string>
+    <string name="sync_generic_error">Bir hata oluştu. Lütfen sonra tekrar deneyin.</string>
     <string name="sync_check_upload_file">Yüklemeden önce dosya kontrol ediliyor...</string>
     <string name="sync_check_download_file">İndirilen dosya kontrol ediliyor...</string>
     <string name="sync_media_find">Değiştirilmiş medya bulunuyor...</string>

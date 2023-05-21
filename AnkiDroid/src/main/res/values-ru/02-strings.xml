@@ -309,7 +309,7 @@
     <string name="check_integrity_recovered_deck_name">Восстановленные карточки</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>
-    <string name="choose_an_image">Выберите изображение</string>
+    <string name="choose_an_image">Выбрать изображение</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Сбросить настройки</string>
     <string name="cloze_sample_text">Это {{%1$s::пример}} задания с пропусками</string>
@@ -333,7 +333,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Вид</string>
     <string name="anki_js_error_code">(Код ошибки: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Скопировано в буфер обмена</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Скопировано в буфер</string>
     <string name="about_ankidroid_error_copy_debug_info">Ошибка при копировании отладочной информации в буфер обмена</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
@@ -441,11 +441,11 @@
     <string name="toggle_cards_notes">Переключить карточки/заметки</string>
     <string name="toggle_browser_mode_help">Показывать карточки или записи в списке</string>
     <string name="truncate_content_help">Показывать в списке только первые 3 строки</string>
-    <string name="browser_options_dialog_heading">Настройки браузера</string>
+    <string name="browser_options_dialog_heading">Параметры списка карточек</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Эта функция недоступна во время переноса хранилища
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Нажмите, чтобы начать перенос хранилища</string>
     <string name="media_sync_required_title">Требуется синхронизация медиафайлов</string>
     <string name="media_sync_unavailable_message">Синхронизация медиафайлов отключена в настройках. Пожалуйста, перед продолжением синхронизируйте и сделайте резервную копию всех медиафайлов, которые не были синхронизированы</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
+    <string name="remember_sync_metered_checkbox_msg">Больше не спрашивать (предупреждение можно вернуть в настройках)</string>
 </resources>

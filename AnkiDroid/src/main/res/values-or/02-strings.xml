@@ -191,8 +191,8 @@
     <string name="confirm_apkg_export">ସଂଗ୍ରହକୁ Anki package ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</string>
     <string name="confirm_apkg_export_deck">“%s” କୁ apkg ଫାଇଲ ଭାବରେ ରପ୍ତାନି କରିବେ କି?</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="one">ମନୋନୀତ ପତ୍ରକୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
+        <item quantity="other">ମନୋନୀତ ପତ୍ରଗୁଡ଼ିକୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="one">ମନୋନୀତ ନୋଟ୍‌କୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
@@ -338,9 +338,9 @@
     <string name="remove_toolbar_item">ଉପକରଣ-ଦଣ୍ଡିକାର ଆଇଟମ୍ ହଟାଇବେ?</string>
     <string name="note_editor_paste_too_large">ପେଷ୍ଟ କରିବାକୁ ପ୍ରତିଛବି ଅତ୍ୟଧିକ ବଡ଼ ଅଟେ, ଦୟାକରି ହସ୍ତକୃତ ଭାବେ ପ୍ରତିଛବିଟିକୁ ସନ୍ନିବେଶ କରନ୍ତୁ</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        ଆଣ୍ଡ୍ରଏଡ୍ ବ୍ୟାକଅପ୍ ଚାଲିଛି। ଦୟାକରି ପୁଣିଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ବ୍ୟବହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
-    <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ଗୃହସ୍କ୍ରୀନ୍ AnkiDroidକୁ ସର୍ଟକଟ୍ ଯୋଡ଼ିବାର ଅନୁମତି ଦିଏ ନାହିଁ</string>
-    <string name="create_shortcut_error">ସର୍ଟକଟ୍ ଯୋଡ଼ିବାରେ ତ୍ରୁଟି: %s</string>
+    <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroid କୁ ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବା ଅନୁମତି ଦେବା ପାଇଁ ଆପଣଙ୍କୁ iManager ଵ୍ୟଵହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
+    <string name="create_shortcut_failed" comment="home screen == launcher">ଆପଣଙ୍କ ଗୃହସ୍କ୍ରୀନ୍ AnkiDroidକୁ ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବାର ଅନୁମତି ଦିଏ ନାହିଁ</string>
+    <string name="create_shortcut_error">ସର୍ଟ୍‌କଟ୍ ଯୋଡ଼ିବାରେ ତ୍ରୁଟି: %s</string>
     <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">ବାକ୍ୟଗୁଡ଼ିକରେ ବଡ଼ ଅକ୍ଷର କରିବା</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ସ୍କ୍ରୋଲ୍ ହେଉଥିବା ଉପକରଣ-ଦଣ୍ଡିକା</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
@@ -406,7 +406,7 @@
     <string name="deck_created">ତାସଖଣ୍ଡ ସୃଷ୍ଟି କରାଗଲା</string>
     <string name="deck_renamed">ତାସଖଣ୍ଡ ନାମ ବଦଳାଗଲା</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">ତାସଖଣ୍ଡ ଵିଲୋପ ହୋଇଛି। ଦୟାକରି ସର୍ଟ୍‌କଟ୍‌ଟି ଅପସାରଣ କରନ୍ତୁ</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">ପତ୍ର</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ନୋଟ୍</string>
