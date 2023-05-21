@@ -978,13 +978,13 @@ class ContentProviderTest : InstrumentedTest() {
             col.reset()
             nextCard = sched.card
             waitToFinish()
-            if (nextCard != null && nextCard.note().id == noteID && nextCard.ord == cardOrd) break
+            if (nextCard != null && nextCard.nid == noteID && nextCard.ord == cardOrd) break
             waitToFinish()
         }
         assertNotNull("Check that there actually is a next scheduled card", nextCard)
         assertEquals(
             "Check that received card and actual card have same note id",
-            nextCard!!.note().id,
+            nextCard!!.nid,
             noteID
         )
         assertEquals(
@@ -1032,7 +1032,7 @@ class ContentProviderTest : InstrumentedTest() {
             for (i in 0..9) { // minimizing fails, when sched.reset() randomly chooses between multiple cards
                 col.reset()
                 nextCard = sched.card
-                if (nextCard != null && nextCard.note().id == noteID && nextCard.ord == cardOrd) break
+                if (nextCard != null && nextCard.nid == noteID && nextCard.ord == cardOrd) break
                 try {
                     Thread.sleep(500)
                 } catch (e: Exception) {
@@ -1042,7 +1042,7 @@ class ContentProviderTest : InstrumentedTest() {
             assertNotNull("Check that there actually is a next scheduled card", nextCard)
             assertEquals(
                 "Check that received card and actual card have same note id",
-                nextCard!!.note().id,
+                nextCard!!.nid,
                 noteID
             )
             assertEquals(
@@ -1092,7 +1092,7 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals("card is initial new", Consts.CARD_TYPE_NEW, card.queue)
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val noteId = card.note().id
+        val noteId = card.nid
         val cardOrd = card.ord
         val earlyGraduatingEase =
             if (schedVersion == 1) AbstractFlashcardViewer.EASE_3 else AbstractFlashcardViewer.EASE_4
@@ -1112,7 +1112,7 @@ class ContentProviderTest : InstrumentedTest() {
         col.reset()
         val newCard = col.sched.card
         if (newCard != null) {
-            if (newCard.note().id == card.note().id && newCard.ord == card.ord) {
+            if (newCard.nid == card.nid && newCard.ord == card.ord) {
                 fail("Next scheduled card has not changed")
             }
         }
@@ -1146,7 +1146,7 @@ class ContentProviderTest : InstrumentedTest() {
         // -----------------------
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val noteId = card.note().id
+        val noteId = card.nid
         val cardOrd = card.ord
         val bury = 1
         val values = ContentValues().apply {
@@ -1196,7 +1196,7 @@ class ContentProviderTest : InstrumentedTest() {
         // --------------------------
         val cr = contentResolver
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
-        val noteId = card.note().id
+        val noteId = card.nid
         val cardOrd = card.ord
 
         @KotlinCleanup("rename, while valid suspend is a kotlin soft keyword")

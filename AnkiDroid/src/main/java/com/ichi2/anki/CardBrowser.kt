@@ -2380,7 +2380,7 @@ open class CardBrowser :
                 Column.DUE -> card.dueString
                 Column.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod)
-                Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
+                Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
                 Column.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
                 Column.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
                 Column.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote()).toString()

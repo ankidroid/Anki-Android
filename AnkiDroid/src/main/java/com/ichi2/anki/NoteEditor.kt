@@ -1119,8 +1119,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         )
         // Also pass the note id and ord if not adding new note
         if (!addNote && mCurrentEditedCard != null) {
-            intent.putExtra("noteId", mCurrentEditedCard!!.note().id)
-            Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard!!.note().id)
+            intent.putExtra("noteId", mCurrentEditedCard!!.nid)
+            Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard!!.nid)
             intent.putExtra("ordId", mCurrentEditedCard!!.ord)
             Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard!!.ord)
         }
