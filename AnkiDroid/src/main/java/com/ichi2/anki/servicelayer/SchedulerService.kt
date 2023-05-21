@@ -87,7 +87,7 @@ class SchedulerService {
                 // collect undo information
                 col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_bury_note, card))
                 // then bury
-                col.sched.buryNote(card.note().id)
+                col.sched.buryNote(card.nid)
             }
         }
     }
