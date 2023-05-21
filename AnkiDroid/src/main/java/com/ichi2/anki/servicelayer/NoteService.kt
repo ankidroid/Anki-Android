@@ -26,9 +26,15 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
-import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField
+import com.ichi2.anki.multimediacard.fields.EFieldType
+import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
+import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
@@ -72,7 +78,7 @@ object NoteService {
         return null
     }
 
-    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
+    fun updateMultimediaNoteFromFields(col: Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
             val field: IField = if (value.startsWith("<img")) {
@@ -116,7 +122,7 @@ object NoteService {
      *
      * @param field
      */
-    fun importMediaToDirectory(col: com.ichi2.libanki.Collection, field: IField?) {
+    fun importMediaToDirectory(col: Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
             EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> tmpMediaPath = field.audioPath
@@ -156,7 +162,7 @@ object NoteService {
      */
     @VisibleForTesting
     @CheckResult
-    fun getFieldsAsBundleForPreview(editFields: Collection<NoteField?>?, replaceNewlines: Boolean): Bundle {
+    fun getFieldsAsBundleForPreview(editFields: kotlin.collections.Collection<NoteField?>?, replaceNewlines: Boolean): Bundle {
         val fields = Bundle()
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.

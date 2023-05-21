@@ -43,6 +43,7 @@ import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.BackendUtils.from_json_bytes
 import com.ichi2.libanki.backend.BackendUtils.to_json_bytes
 import com.ichi2.libanki.utils.TimeManager.time
@@ -270,7 +271,7 @@ class ManageNotetypes : AnkiActivity() {
      *
      * @param action the action to run before the notetypes refresh, if not provided simply refresh
      */
-    private suspend fun runAndRefreshAfter(action: com.ichi2.libanki.Collection.() -> Unit = {}) {
+    private suspend fun runAndRefreshAfter(action: Collection.() -> Unit = {}) {
         val updatedNotetypes = withProgress {
             withCol {
                 action()

@@ -32,6 +32,7 @@ import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.async.TaskManager.Companion.waitToFinish
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
@@ -184,7 +185,7 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     @Throws(Exception::class)
-    private fun removeAllModelsByName(col: com.ichi2.libanki.Collection, name: String) {
+    private fun removeAllModelsByName(col: Collection, name: String) {
         var testModel = col.models.byName(name)
         while (testModel != null) {
             col.models.rem(testModel)
@@ -1072,7 +1073,7 @@ class ContentProviderTest : InstrumentedTest() {
         )
     }
 
-    private fun getFirstCardFromScheduler(col: com.ichi2.libanki.Collection): Card? {
+    private fun getFirstCardFromScheduler(col: Collection): Card? {
         val deckId = mTestDeckIds[0]
         col.decks.select(deckId)
         col.reset()
@@ -1275,7 +1276,7 @@ class ContentProviderTest : InstrumentedTest() {
         assertNotNull(allModels)
     }
 
-    private fun reopenCol(): com.ichi2.libanki.Collection {
+    private fun reopenCol(): Collection {
         CollectionHelper.instance.closeCollection(false, "ContentProviderTest: reopenCol")
         return col
     }
@@ -1286,7 +1287,7 @@ class ContentProviderTest : InstrumentedTest() {
     companion object {
         @Parameterized.Parameters
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<Array<Any>> {
+        fun initParameters(): kotlin.collections.Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2
             return listOf(arrayOf(1), arrayOf(2))
         }
@@ -1315,7 +1316,7 @@ class ContentProviderTest : InstrumentedTest() {
 
         @Suppress("SameParameterValue")
         private fun setupNewNote(
-            col: com.ichi2.libanki.Collection,
+            col: Collection,
             mid: Long,
             did: Long,
             fields: Array<String>,

@@ -23,6 +23,7 @@ import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview
 import com.ichi2.anki.stats.StatsMetaInfo
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.Time.Companion.gregorianCalendar
@@ -30,7 +31,7 @@ import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
 
-class Stats(private val col: com.ichi2.libanki.Collection, did: Long) {
+class Stats(private val col: Collection, did: Long) {
     enum class AxisType(val days: Int, val descriptionId: Int) {
         TYPE_MONTH(30, R.string.stats_period_month), TYPE_YEAR(
             365,
@@ -1266,7 +1267,7 @@ from cards where did in ${_limit()}"""
     companion object {
         const val SECONDS_PER_DAY = 86400L
         const val ALL_DECKS_ID = 0L
-        fun getDayOffset(col: com.ichi2.libanki.Collection): Int {
+        fun getDayOffset(col: Collection): Int {
             return when (col.schedVer()) {
                 2 -> col.get_config("rollover", Preferences.DEFAULT_ROLLOVER_VALUE)!!
                 // 1, or otherwise:
@@ -1281,7 +1282,7 @@ from cards where did in ${_limit()}"""
          * @param col collection
          * @return
          */
-        fun deckLimit(deckId: Long, col: com.ichi2.libanki.Collection): String {
+        fun deckLimit(deckId: Long, col: Collection): String {
             return if (deckId == ALL_DECKS_ID) {
                 // All decks
                 val decks = col.decks.all()
@@ -1292,7 +1293,7 @@ from cards where did in ${_limit()}"""
                 Utils.ids2str(ids)
             } else {
                 // The given deck id and its children
-                val values: Collection<Long> = col.decks.children(deckId).values
+                val values: kotlin.collections.Collection<Long> = col.decks.children(deckId).values
                 val ids = ArrayList<Long>(values.size)
                 ids.add(deckId)
                 ids.addAll(values)

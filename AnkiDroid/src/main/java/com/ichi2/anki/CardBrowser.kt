@@ -73,6 +73,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.SortOrder.NoOrdering
 import com.ichi2.libanki.SortOrder.UseCollectionOrdering
 import com.ichi2.libanki.stats.Stats
@@ -572,7 +573,7 @@ open class CardBrowser :
     }
 
     // Finish initializing the activity after the collection has been correctly loaded
-    override fun onCollectionLoaded(col: com.ichi2.libanki.Collection) {
+    override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
@@ -798,7 +799,7 @@ open class CardBrowser :
 
     private fun toggleNotesMarkForCardsIds(
         cardIds: List<Long>,
-        col: com.ichi2.libanki.Collection
+        col: Collection
     ): Array<Card> {
         val cards = cardIds.map { col.getCard(it) }.toTypedArray()
         col.db.executeInTransaction {
@@ -1879,7 +1880,7 @@ open class CardBrowser :
      * Removes cards from view. Doesn't delete them in model (database).
      * @param reorderCards Whether to rearrange the positions of checked items (DEFECT: Currently deselects all)
      */
-    private fun removeNotesView(cardsIds: Collection<Long>, reorderCards: Boolean) {
+    private fun removeNotesView(cardsIds: kotlin.collections.Collection<Long>, reorderCards: Boolean) {
         val idToPos = getPositionMap(mCards)
         val idToRemove = cardsIds.filter { cId -> idToPos.containsKey(cId) }
         mReloadRequired = mReloadRequired || cardsIds.contains(reviewerCardId)
@@ -2326,7 +2327,7 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int, inCardMode: Boolean) : super(col, id) {
+        constructor(id: Long, col: Collection, position: Int, inCardMode: Boolean) : super(col, id) {
             this.position = position
             this.inCardMode = inCardMode
         }
@@ -2793,6 +2794,6 @@ suspend fun searchForCards(
     }
 }
 
-private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: Boolean): Sequence<CardBrowser.CardCache> {
+private fun Sequence<CardId>.toCardCache(col: Collection, isInCardMode: Boolean): Sequence<CardBrowser.CardCache> {
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
 }

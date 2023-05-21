@@ -19,6 +19,7 @@ package com.ichi2.testutils
 import android.annotation.SuppressLint
 import com.ichi2.anki.BackupManager
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
 import java.io.File
 
@@ -34,7 +35,7 @@ object Backup {
      * @throws IllegalStateException If backup creation failed, or timed out after 1 second
      */
     @SuppressLint("DirectSystemCurrentTimeMillisUsage")
-    fun create(col: com.ichi2.libanki.Collection) {
+    fun create(col: Collection) {
         BackupManagerTestUtilities.setupSpaceForBackup(col.context)
         val path = col.path
         val time = TimeManager.time

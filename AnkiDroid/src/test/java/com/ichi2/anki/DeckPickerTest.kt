@@ -11,6 +11,7 @@ import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.testutils.*
@@ -45,7 +46,7 @@ class DeckPickerTest : RobolectricTest() {
     companion object {
         @ParameterizedRobolectricTestRunner.Parameters
         @JvmStatic // required for initParameters
-        fun initParameters(): Collection<String> {
+        fun initParameters(): kotlin.collections.Collection<String> {
             return listOf("normal", "xlarge")
         }
     }
@@ -549,7 +550,7 @@ class DeckPickerTest : RobolectricTest() {
             "ThisIsSchema250"
         );
 
-        fun isCollection(col: com.ichi2.libanki.Collection): Boolean {
+        fun isCollection(col: Collection): Boolean {
             return col.decks.allNames().contains(deckName)
         }
     }
