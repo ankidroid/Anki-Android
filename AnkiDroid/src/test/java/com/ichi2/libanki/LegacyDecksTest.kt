@@ -97,7 +97,7 @@ class LegacyDecksTest : RobolectricTest() {
     // following copied from storage:: _setColVars
     private val decks: Decks
         get() {
-            val col = col
+
             if (col.decks is Decks) {
                 return col.decks as Decks
             }

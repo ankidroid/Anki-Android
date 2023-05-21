@@ -324,7 +324,7 @@ open class SchedV2Test : RobolectricTest() {
     @get:Throws(Exception::class)
     val colV2: Collection
         get() {
-            val col = col
+
             col.changeSchedulerVer(2)
             ifV3 {
                 assumeThat(defaultLegacySchema, equalTo(false))

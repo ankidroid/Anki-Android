@@ -96,7 +96,6 @@ class ContentProviderTest : InstrumentedTest() {
         assumeThat(defaultLegacySchema, `is`(true))
         Timber.i("setUp()")
         mCreatedNotes = ArrayList()
-        val col = col
 
         // We have parameterized the "schedVersion" variable, if we are on an emulator
         // (so it is safe) we will try to run with multiple scheduler versions
@@ -155,7 +154,7 @@ class ContentProviderTest : InstrumentedTest() {
         if (!mTearDown) {
             return
         }
-        val col = col
+
         // Delete all notes
         val remnantNotes = col.findNotes("tag:$TEST_TAG")
         if (remnantNotes.isNotEmpty()) {
@@ -888,7 +887,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     fun testQueryAllDecks() {
-        val col = col
         val decks = col.decks
         val decksCursor = contentResolver
             .query(
@@ -926,7 +924,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     fun testQueryCertainDeck() {
-        val col = col
         val deckId = mTestDeckIds[0]
         val deckUri = Uri.withAppendedPath(
             FlashCardsContract.Deck.CONTENT_ALL_URI,
@@ -960,7 +957,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     fun testQueryNextCard() {
-        val col = col
         val sched = col.sched
         val reviewInfoCursor = contentResolver.query(
             FlashCardsContract.ReviewInfo.CONTENT_URI,
@@ -1006,7 +1002,7 @@ class ContentProviderTest : InstrumentedTest() {
         val deckToTest = mTestDeckIds[0]
         val deckSelector = "deckID=?"
         val deckArguments = arrayOf(deckToTest.toString())
-        val col = col
+
         val sched = col.sched
         val selectedDeckBeforeTest = col.decks.selected()
         col.decks.select(1) // select Default deck
@@ -1088,7 +1084,6 @@ class ContentProviderTest : InstrumentedTest() {
      */
     @Test
     fun testAnswerCard() {
-        val col = col
         val card = getFirstCardFromScheduler(col)
         val cardId = card!!.id
 
@@ -1133,7 +1128,7 @@ class ContentProviderTest : InstrumentedTest() {
     fun testBuryCard() {
         // get the first card due
         // ----------------------
-        val col = col
+
         val card = getFirstCardFromScheduler(col)
 
         // verify that the card is not already user-buried
@@ -1183,7 +1178,7 @@ class ContentProviderTest : InstrumentedTest() {
     fun testSuspendCard() {
         // get the first card due
         // ----------------------
-        val col = col
+
         val card = getFirstCardFromScheduler(col)
 
         // verify that the card is not already suspended
@@ -1231,7 +1226,7 @@ class ContentProviderTest : InstrumentedTest() {
     fun testUpdateTags() {
         // get the first card due
         // ----------------------
-        val col = col
+
         val card = getFirstCardFromScheduler(col)
         val note = card!!.note()
         val noteId = note.id
@@ -1271,7 +1266,7 @@ class ContentProviderTest : InstrumentedTest() {
             "This causes mild data corruption - should not be run on a collection you care about",
             isEmulator()
         )
-        val col = col
+
         col.models.all()[0].put("did", JSONObject.NULL)
         col.save()
         val cr = contentResolver

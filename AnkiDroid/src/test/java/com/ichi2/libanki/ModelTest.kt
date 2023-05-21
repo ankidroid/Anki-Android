@@ -59,7 +59,7 @@ class ModelTest : RobolectricTest() {
     @Test
     fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
-        val col = col
+
         val m = col.models.current()
         m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}")
         col.models.save(m)
@@ -83,7 +83,7 @@ class ModelTest : RobolectricTest() {
     @Test
     fun test_field_named_frontSide() {
         // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
-        val col = col
+
         val m = col.models.current()
 
         // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
@@ -112,7 +112,6 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_modelDelete() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
@@ -124,7 +123,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_modelCopy() {
-        val col = col
         val m = col.models.current()
         val m2 = col.models.copy(m!!)
         assertEquals("Basic copy", m2.getString("name"))
@@ -143,7 +141,6 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_fields() {
-        val col = col
         var note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
@@ -251,7 +248,6 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_templates() {
-        val col = col
         val m = col.models.current()
         val mm = col.models
         var t = Models.newTemplate("Reverse")
@@ -300,7 +296,6 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_cloze_ordinals() {
-        val col = col
         col.models.setCurrent(col.models.byName("Cloze")!!)
         val m = col.models.current()
         val mm = col.models
@@ -328,7 +323,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_cloze_empty() {
-        val col = col
         val mm = col.models
         val clozeModel = mm.byName("Cloze")
         mm.setCurrent(clozeModel!!)
@@ -340,7 +334,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_text() {
-        val col = col
         val m = col.models.current()
         m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}")
         col.models.save(m)
@@ -358,7 +351,7 @@ class ModelTest : RobolectricTest() {
                 note.id = 0
             }
         }
-        val col = col
+
         col.models.setCurrent(col.models.byName("Cloze")!!)
         var note = col.newNote()
         assertEquals("Cloze", note.model().getString("name"))
@@ -495,7 +488,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_cloze_mathjax() {
-        val col = col
         col.models.setCurrent(col.models.byName("Cloze")!!)
         var note = col.newNote()
         note.setItem(
@@ -530,7 +522,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_type_and_cloze() {
-        val col = col
         val m = col.models.byName("Cloze")
         col.models.setCurrent(m!!)
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{cloze:Text}}{{type:cloze:Text}}")
@@ -548,7 +539,6 @@ class ModelTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     @Suppress("SpellCheckingInspection") // chaine
     fun test_chained_mods() {
-        val col = col
         col.models.setCurrent(col.models.byName("Cloze")!!)
         val m = col.models.current()
         val mm = col.models
@@ -580,7 +570,6 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_modelChange() {
-        val col = col
         val cloze = col.models.byName("Cloze")
         // enable second template and add a note
         val basic = col.models.current()
@@ -685,7 +674,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_req() {
-        val col = col
         val mm = col.models
         val basic = mm.byName("Basic")
         assertTrue(basic!!.has("req"))
@@ -750,7 +738,7 @@ class ModelTest : RobolectricTest() {
         if (!BackendFactory.defaultLegacySchema) {
             return
         }
-        val col = col
+
         val mm = col.models
         val basic = mm.byName("Basic")
         val template = basic!!.getJSONArray("tmpls").getJSONObject(0)
@@ -778,7 +766,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun nonEmptyFieldTest() {
-        val col = col
         val mm = col.models
         val basic = mm.byName("Basic")
         val s: MutableSet<String> = HashSet<String>()
@@ -795,7 +782,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun avail_standard_order_test() {
-        val col = col
         val mm = col.models
         val basic = mm.byName("Basic")!!
         val reverse = mm.byName("Basic (and reversed card)")!!
@@ -872,7 +858,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun avail_ords_test() {
-        val col = col
         val mm = col.models
         val basic = mm.byName("Basic")!!
         val reverse = mm.byName("Basic (and reversed card)")!!
@@ -944,7 +929,6 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun getDid_test() {
-        val col = col
         val mm = col.models
         val basic = mm.byName("Basic")
         basic!!.put("did", 999L)

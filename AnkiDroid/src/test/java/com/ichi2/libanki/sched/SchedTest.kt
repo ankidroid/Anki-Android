@@ -171,7 +171,6 @@ class SchedTest : RobolectricTest() {
      */
     @Throws(ConfirmModSchemaException::class)
     private fun getColV1(): Collection {
-        val col = col
         col.changeSchedulerVer(1)
         return col
     }

@@ -113,7 +113,7 @@ class FinderTest : RobolectricTest() {
     @Test
     fun test_findCards() {
         TimeManager.reset()
-        val col = col
+
         var note = col.newNote()
         note.setItem("Front", "dog")
         note.setItem("Back", "cat")
@@ -380,7 +380,6 @@ class FinderTest : RobolectricTest() {
 
     @Test
     fun test_findCardsHierarchyTag() {
-        val col = col
         var note = col.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar")
@@ -423,7 +422,7 @@ class FinderTest : RobolectricTest() {
     @Test
     fun test_deckNameContainingWildcardCanBeSearched() {
         val deck = "*Yr1::Med2::CAS4::F4: Renal::BRS (zanki)::HY"
-        val col = col
+
         val currentDid = addDeck(deck)
         col.decks.select(currentDid)
         val note = col.newNote()
@@ -444,7 +443,6 @@ class FinderTest : RobolectricTest() {
 
     @Test
     fun test_findReplace() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar")
@@ -479,7 +477,6 @@ class FinderTest : RobolectricTest() {
 
     @Test
     fun test_findDupes() {
-        val col = col
         val note = col.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar")

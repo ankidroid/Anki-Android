@@ -38,7 +38,7 @@ class UndoTest : RobolectricTest() {
     @get:Throws(Exception::class)
     private val colV2: Collection
         get() {
-            val col = col
+
             col.changeSchedulerVer(2)
             return col
         }

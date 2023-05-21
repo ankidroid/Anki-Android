@@ -67,7 +67,6 @@ class DecksTest : RobolectricTest() {
      */
     @Test
     fun test_basic() {
-        val col = col
         val decks = col.decks
         // we start with a standard col
         assertEquals(1, decks.allSortedNames().size.toLong())
@@ -113,7 +112,6 @@ class DecksTest : RobolectricTest() {
 
     @Test
     fun test_remove() {
-        val col = col
         // create a new col, and add a note/card to it
         val deck1 = addDeck("deck1")
         val note = col.newNote()
@@ -133,7 +131,6 @@ class DecksTest : RobolectricTest() {
     @SuppressLint("CheckResult")
     @Throws(DeckRenameException::class)
     fun test_rename() {
-        val col = col
         var id = addDeck("hello::world")
         // should be able to rename into a completely different branch, creating
         // parents as necessary
@@ -231,7 +228,7 @@ class DecksTest : RobolectricTest() {
     @Test
     fun curDeckIsLong() {
         // Regression for #8092
-        val col = col
+
         val decks = col.decks
         val id = addDeck("test")
         decks.select(id)
@@ -244,7 +241,6 @@ class DecksTest : RobolectricTest() {
 
     @Test
     fun isDynStd() {
-        val col = col
         val decks = col.decks
         val filteredId = addDynamicDeck("filtered")
         val filtered = decks.get(filteredId)

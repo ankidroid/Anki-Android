@@ -19,7 +19,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Filter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
@@ -86,7 +85,6 @@ class DeckSpinnerSelection(
     }
 
     fun initializeNoteEditorDeckSpinner(currentEditedCard: Card?, addNote: Boolean) {
-        val col = collection
         dropDownDecks = computeDropDownDecks()
         val deckNames = ArrayList<String>(dropDownDecks.size)
         mAllDeckIds = ArrayList(dropDownDecks.size)
@@ -102,7 +100,7 @@ class DeckSpinnerSelection(
                 if (!addNote && currentEditedCard != null && currentEditedCard.did == thisDid) {
                     // If the current card is in a dynamic deck, it can stay there. Hence current deck is added
                     // to the spinner, even if it is dynamic.
-                    context.applicationContext.getString(R.string.current_and_default_deck, currentName, col.decks.name(currentEditedCard.oDid))
+                    context.applicationContext.getString(R.string.current_and_default_deck, currentName, collection.decks.name(currentEditedCard.oDid))
                 } else {
                     continue
                 }

@@ -11,8 +11,6 @@ import org.junit.runner.RunWith
 class DeckOptionsActivityTest : RobolectricTest() {
     @Test
     fun changeHardFactor() {
-        val col = col
-
         // Verify that for newly created deck hardFactor is default.
         var hardFactor = col.get_config("hardFactor", 1.2)!!
         Assert.assertEquals(1.2, hardFactor, 0.01)

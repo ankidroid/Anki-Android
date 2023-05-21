@@ -61,7 +61,6 @@ class AbstractSchedTest : RobolectricTest() {
         // #6587
         addNoteUsingBasicModel("Hello", "World")
 
-        val col = col
         val sched = col.sched
         col.reset()
 
@@ -86,7 +85,6 @@ class AbstractSchedTest : RobolectricTest() {
 
     @Test
     fun ensureUndoCorrectCounts() {
-        val col = col
         val sched = col.sched
         val dconf = col.decks.getConf(1)
         assertThat(dconf, notNullValue())
@@ -113,7 +111,6 @@ class AbstractSchedTest : RobolectricTest() {
 
     @Test
     fun testCardQueue() {
-        val col = col
         val sched = col.sched as SchedV2
         val queue = SimpleCardQueue(sched)
         assertThat(queue.size(), `is`(0))
@@ -142,7 +139,7 @@ class AbstractSchedTest : RobolectricTest() {
     @Test
     fun siblingCorrectlyBuried() {
         // #6903
-        val col = col
+
         val sched = col.sched
         val dconf = col.decks.getConf(1)
         assertThat(dconf, notNullValue())
@@ -232,7 +229,6 @@ class AbstractSchedTest : RobolectricTest() {
         }
 
         fun test() {
-            val col = col
             val models = col.models
 
             val dconf = mDecks.getConf(1)
@@ -346,7 +342,6 @@ mw.col.sched.extendLimits(1, 0)
     }
 
     private fun undoAndRedo(preload: Boolean) {
-        val col = col
         val conf = col.decks.confForDid(1)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 3.0, 5.0, 10.0)))
         col.decks.save(conf)
@@ -451,7 +446,6 @@ mw.col.sched.extendLimits(1, 0)
 
     @Test
     fun regression_7066() {
-        val col = col
         val dconf = col.decks.getConf(1)
         dconf!!.getJSONObject("new").put("bury", true)
         val sched = col.sched
@@ -470,7 +464,6 @@ mw.col.sched.extendLimits(1, 0)
     @KotlinCleanup("remove arrayOfNulls to remove the !!")
     @KotlinCleanup("make `gotten` non-null")
     fun regression_7984() {
-        val col = col
         val sched = col.sched as SchedV2
         val time = time
         val cards = arrayOfNulls<Card>(2)

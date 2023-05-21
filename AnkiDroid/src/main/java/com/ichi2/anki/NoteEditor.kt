@@ -1148,7 +1148,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             @NeedsTest("test to guard against changes in the REQUEST_MULTIMEDIA_EDIT clause preventing text fields to be updated")
             REQUEST_MULTIMEDIA_EDIT -> {
                 if (resultCode != RESULT_CANCELED) {
-                    val col = col
                     val extras = data!!.extras ?: return
                     val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
                     val field = extras[MultimediaEditFieldActivity.EXTRA_RESULT_FIELD] as IField? ?: return
