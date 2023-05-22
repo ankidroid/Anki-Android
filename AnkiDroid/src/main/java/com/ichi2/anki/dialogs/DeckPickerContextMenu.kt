@@ -37,7 +37,7 @@ import com.ichi2.utils.FragmentFactoryUtils
 import timber.log.Timber
 import java.util.function.Supplier
 
-class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialogFragment() {
+class DeckPickerContextMenu(private val col: Collection) : AnalyticsDialogFragment() {
 
     fun withArguments(did: DeckId): DeckPickerContextMenu {
         val args = this.arguments ?: Bundle()
@@ -51,7 +51,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val title = collection.decks.name(deckId)
+        val title = col.decks.name(deckId)
         return MaterialDialog(requireActivity())
             .title(text = title)
             .cancelable(true)
@@ -68,7 +68,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
     private val contextMenuOptions: List<DeckPickerContextMenuOption>
         get() {
             val did = deckId
-            val dyn = collection.decks.isDyn(did)
+            val dyn = col.decks.isDyn(did)
             val contextMenuOptions = ArrayList<DeckPickerContextMenuOption>(11) // init with our fixed list size for performance
             contextMenuOptions.add(DeckPickerContextMenuOption.ADD_CARD)
             contextMenuOptions.add(DeckPickerContextMenuOption.BROWSE_CARDS)
@@ -85,7 +85,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.EXPORT_DECK)
-            if (collection.sched.haveBuried(did)) {
+            if (col.sched.haveBuried(did)) {
                 contextMenuOptions.add(DeckPickerContextMenuOption.UNBURY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
@@ -133,7 +133,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
             }
             DeckPickerContextMenuOption.UNBURY -> {
                 Timber.i("Unbury deck selected")
-                collection.sched.unburyCardsForDeck(deckId)
+                col.sched.unburyCardsForDeck(deckId)
                 activity.onRequireDeckListUpdate()
                 activity.dismissAllDialogFragments()
             }
@@ -153,14 +153,14 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
-                collection.decks.select(deckId)
+                col.decks.select(deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
                 activity.startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
                 activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.ADD_CARD -> {
                 Timber.i("Add selected")
-                collection.decks.select(deckId)
+                col.decks.select(deckId)
                 activity.addNote()
                 activity.dismissAllDialogFragments()
             }

@@ -57,7 +57,7 @@ import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 
-class CustomStudyDialog(private val collection: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
+class CustomStudyDialog(private val col: Collection, private val customStudyListener: CustomStudyListener?) : AnalyticsDialogFragment(), TagsDialogListener {
 
     interface CustomStudyListener : CreateCustomStudySessionListener.Callback {
         fun onExtendStudyLimits()
@@ -87,7 +87,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val dialogId = requireArguments().getInt("id")
         return if (dialogId < 100) {
             // Select the specified deck
-            collection.decks.select(requireArguments().getLong("did"))
+            col.decks.select(requireArguments().getLong("did"))
             buildContextMenu(dialogId)
         } else {
             buildInputDialog(ContextMenuOption.fromInt(dialogId))
@@ -121,7 +121,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     }
                     MORE_OPTIONS -> {
                         // User asked to see all custom study options
-                        val d = CustomStudyDialog(collection, customStudyListener)
+                        val d = CustomStudyDialog(col, customStudyListener)
                             .withArguments(
                                 STANDARD,
                                 requireArguments().getLong("did"),
@@ -140,13 +140,13 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         val dialogFragment = TagsDialog().withArguments(
                             TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
                             ArrayList(),
-                            ArrayList(collection.tags.byDeck(currentDeck, true))
+                            ArrayList(col.tags.byDeck(currentDeck, true))
                         )
                         customStudyListener?.showDialogFragment(dialogFragment)
                     }
                     else -> {
                         // User asked for a standard custom study option
-                        val d = CustomStudyDialog(collection, customStudyListener)
+                        val d = CustomStudyDialog(col, customStudyListener)
                             .withArguments(
                                 ContextMenuOption.fromString(resources, charSequence.toString()),
                                 requireArguments().getLong("did"),
@@ -212,18 +212,18 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 when (contextMenuOption) {
                     STUDY_NEW -> {
                         AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendNew", n) }
-                        val deck = collection.decks.get(did)
+                        val deck = col.decks.get(did)
                         deck.put("extendNew", n)
-                        collection.decks.save(deck)
-                        collection.sched.extendLimits(n, 0)
+                        col.decks.save(deck)
+                        col.sched.extendLimits(n, 0)
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_REV -> {
                         AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendRev", n) }
-                        val deck = collection.decks.get(did)
+                        val deck = col.decks.get(did)
                         deck.put("extendRev", n)
-                        collection.decks.save(deck)
-                        collection.sched.extendLimits(0, n)
+                        col.decks.save(deck)
+                        col.sched.extendLimits(0, n)
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_FORGOT -> {
@@ -363,17 +363,17 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     add(STUDY_PREVIEW)
                     add(STUDY_TAGS)
                 }
-                if (collection.sched.totalNewForCurrentDeck() == 0) {
+                if (col.sched.totalNewForCurrentDeck() == 0) {
                     // If no new cards we wont show CUSTOM_STUDY_NEW
                     dialogOptions.remove(STUDY_NEW)
                 }
                 return dialogOptions.toList()
             }
             LIMITS -> // Special custom study options to show when the daily study limit has been reached
-                return if (!collection.sched.newDue() && !collection.sched.revDue()) {
+                return if (!col.sched.newDue() && !col.sched.revDue()) {
                     listOf(STUDY_NEW, STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
                 } else {
-                    if (collection.sched.newDue()) {
+                    if (col.sched.newDue()) {
                         listOf(STUDY_NEW, DECK_OPTIONS, MORE_OPTIONS)
                     } else {
                         listOf(STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
@@ -395,8 +395,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         get() {
             val res = resources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
-                STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched.totalNewForCurrentDeck())
-                STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched.totalRevForCurrentDeck())
+                STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, col.sched.totalNewForCurrentDeck())
+                STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, col.sched.totalRevForCurrentDeck())
                 else -> ""
             }
         }
@@ -437,7 +437,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val dyn: Deck
         val did = requireArguments().getLong("did")
 
-        val decks = collection.decks
+        val decks = col.decks
         val deckToStudyName = decks.get(did).getString("name")
         val customStudyDeck = resources.getString(R.string.custom_study_deck_name)
         val cur = decks.byName(customStudyDeck)
@@ -450,7 +450,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck)
                 // safe to empty
-                collection.sched.emptyDyn(cur.getLong("id"))
+                col.sched.emptyDyn(cur.getLong("id"))
                 // reuse; don't delete as it may have children
                 dyn = cur
                 decks.select(cur.getLong("id"))
@@ -488,7 +488,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
-        collection.decks.save(dyn)
+        col.decks.save(dyn)
         requireActivity().launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()

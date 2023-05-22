@@ -119,12 +119,12 @@ class AnkiStatsTaskHandler private constructor(
 
         @Synchronized
         fun getInstance(
-            collection: Collection,
+            col: Collection,
             mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
             defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
         ): AnkiStatsTaskHandler {
-            if (instance == null || instance!!.collectionData !== collection) {
-                instance = AnkiStatsTaskHandler(collection, mainDispatcher, defaultDispatcher)
+            if (instance == null || instance!!.collectionData !== col) {
+                instance = AnkiStatsTaskHandler(col, mainDispatcher, defaultDispatcher)
             }
             return instance!!
         }

@@ -23,8 +23,8 @@ import org.mockito.kotlin.spy
 import org.mockito.kotlin.whenever
 
 object CollectionUtils {
-    fun lockDatabase(collection: Collection) {
-        val db = collection.db
+    fun lockDatabase(col: Collection) {
+        val db = col.db
         val spy = spy(db)
 
         doThrow(SQLiteDatabaseLockedException::class).whenever(spy).execute(any())
@@ -34,6 +34,6 @@ object CollectionUtils {
         whenever(spy.database).thenReturn(spiedDb)
         doThrow(SQLiteDatabaseLockedException::class).whenever(spiedDb).beginTransaction()
 
-        collection.dbInternal = spy
+        col.dbInternal = spy
     }
 }

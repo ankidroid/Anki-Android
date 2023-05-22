@@ -85,11 +85,11 @@ class TemporaryModel(val model: Model) {
         addTemplateChange(ChangeType.DELETE, ord)
     }
 
-    fun saveToDatabase(collection: Collection) {
+    fun saveToDatabase(col: Collection) {
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempModelFiles()
-        return saveModel(collection, model, adjustedTemplateChanges)
+        return saveModel(col, model, adjustedTemplateChanges)
     }
 
     /**

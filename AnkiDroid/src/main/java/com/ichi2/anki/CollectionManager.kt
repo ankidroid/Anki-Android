@@ -49,7 +49,7 @@ object CollectionManager {
      * calls [withQueue], and then executes [ensureClosedInner] and [ensureOpenInner] inside it.
      * A closed collection can be detected via [withOpenColOrNull] or by checking [Collection.dbClosed].
      */
-    private var collection: Collection? = null
+    private var col: Collection? = null
 
     private var queue: CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
 
@@ -94,7 +94,7 @@ object CollectionManager {
     suspend fun <T> withCol(block: Collection.() -> T): T {
         return withQueue {
             ensureOpenInner()
-            block(collection!!)
+            block(col!!)
         }
     }
 
@@ -107,8 +107,8 @@ object CollectionManager {
      */
     suspend fun<T> withOpenColOrNull(block: Collection.() -> T): T? {
         return withQueue {
-            if (collection != null && !collection!!.dbClosed) {
-                block(collection!!)
+            if (col != null && !col!!.dbClosed) {
+                block(col!!)
             } else {
                 null
             }
@@ -188,15 +188,15 @@ object CollectionManager {
 
     /** See [ensureClosed]. This must only be run inside the queue. */
     private fun ensureClosedInner(save: Boolean = true) {
-        if (collection == null) {
+        if (col == null) {
             return
         }
         try {
-            collection!!.close(save = save)
+            col!!.close(save = save)
         } catch (exc: Exception) {
             Timber.e("swallowing error on close: $exc")
         }
-        collection = null
+        col = null
     }
 
     /**
@@ -217,9 +217,9 @@ object CollectionManager {
         if (emulateOpenFailure) {
             throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
         }
-        if (collection == null || collection!!.dbClosed) {
+        if (col == null || col!!.dbClosed) {
             val path = createCollectionPath()
-            collection =
+            col =
                 collection(AnkiDroidApp.instance, path, server = false, log = true, backend)
         }
     }
@@ -274,7 +274,7 @@ object CollectionManager {
         return logUIHangs {
             blockForQueue {
                 ensureOpenInner()
-                collection!!
+                col!!
             }
         }
     }
@@ -324,7 +324,7 @@ object CollectionManager {
                 if (emulateOpenFailure) {
                     false
                 } else {
-                    collection?.dbClosed == false
+                    col?.dbClosed == false
                 }
             }
         }
@@ -339,7 +339,7 @@ object CollectionManager {
             if (col == null) {
                 ensureClosedInner()
             }
-            collection = col
+            this.col = col
         }
     }
 
@@ -356,7 +356,7 @@ object CollectionManager {
                 BackendFactory.defaultLegacySchema = false
                 ensureOpenInner()
                 try {
-                    (collection!! as CollectionV16).block()
+                    (this@CollectionManager.col!! as CollectionV16).block()
                 } finally {
                     BackendFactory.defaultLegacySchema = true
                     discardBackendInner()

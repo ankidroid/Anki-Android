@@ -28,8 +28,12 @@ import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
 import com.ichi2.anki.servicelayer.DeckService.shouldShowDefaultDeck
 import com.ichi2.anki.widgets.DeckDropDownAdapter
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Deck
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.Decks
 import com.ichi2.utils.FragmentManagerSupplier
 import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.asFragmentManagerSupplier
@@ -52,7 +56,7 @@ import timber.log.Timber
  */
 class DeckSpinnerSelection(
     private val context: AnkiActivity,
-    private val collection: Collection,
+    private val col: Collection,
     private val spinner: Spinner,
     private val showAllDecks: Boolean,
     private val alwaysShowDefault: Boolean,
@@ -100,7 +104,7 @@ class DeckSpinnerSelection(
                 if (!addNote && currentEditedCard != null && currentEditedCard.did == thisDid) {
                     // If the current card is in a dynamic deck, it can stay there. Hence current deck is added
                     // to the spinner, even if it is dynamic.
-                    context.applicationContext.getString(R.string.current_and_default_deck, currentName, collection.decks.name(currentEditedCard.oDid))
+                    context.applicationContext.getString(R.string.current_and_default_deck, currentName, col.decks.name(currentEditedCard.oDid))
                 } else {
                     continue
                 }
@@ -131,7 +135,7 @@ class DeckSpinnerSelection(
      * @return All decks, except maybe default if it should be hidden.
      */
     fun computeDropDownDecks(): List<Deck> {
-        val sortedDecks = collection.decks.allSorted().toMutableList()
+        val sortedDecks = col.decks.allSorted().toMutableList()
         if (shouldHideDefaultDeck()) {
             sortedDecks.removeIf { x: Deck -> x.getLong("id") == Consts.DEFAULT_DECK_ID }
         }
@@ -141,7 +145,7 @@ class DeckSpinnerSelection(
     fun setSpinnerListener() {
         spinner.setOnTouchListener { _: View?, motionEvent: MotionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_UP) {
-                displayDeckSelectionDialog(collection)
+                displayDeckSelectionDialog(col)
             }
             true
         }
@@ -203,7 +207,7 @@ class DeckSpinnerSelection(
                 val position = if (showAllDecks) dropDownDeckIdx + 1 else dropDownDeckIdx
                 spinner.setSelection(position)
                 if (setAsCurrentDeck) {
-                    collection.decks.select(deckId)
+                    col.decks.select(deckId)
                 }
                 return true
             }
@@ -248,7 +252,7 @@ class DeckSpinnerSelection(
      * @return Whether default deck should appear in the list of deck
      */
     private fun shouldHideDefaultDeck(): Boolean {
-        return !alwaysShowDefault && !shouldShowDefaultDeck(collection)
+        return !alwaysShowDefault && !shouldShowDefaultDeck(col)
     }
 
     companion object {

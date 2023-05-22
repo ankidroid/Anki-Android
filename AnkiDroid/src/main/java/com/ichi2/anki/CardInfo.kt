@@ -295,31 +295,31 @@ class CardInfo : AnkiActivity() {
 
         companion object {
             @CheckResult
-            fun create(collection: Collection, c: Card): CardInfoModel {
+            fun create(col: Collection, c: Card): CardInfoModel {
                 val addedDate = c.id
-                var firstReview: Long? = collection.db.queryLongScalar("select min(id) from revlog where cid = ?", c.id)
+                var firstReview: Long? = col.db.queryLongScalar("select min(id) from revlog where cid = ?", c.id)
                 if (firstReview == 0L) {
                     firstReview = null
                 }
-                var latestReview: Long? = collection.db.queryLongScalar("select max(id) from revlog where cid = ?", c.id)
+                var latestReview: Long? = col.db.queryLongScalar("select max(id) from revlog where cid = ?", c.id)
                 if (latestReview == 0L) {
                     latestReview = null
                 }
-                var averageTime: Long? = collection.db.queryLongScalar("select avg(time) from revlog where cid = ?", c.id)
+                var averageTime: Long? = col.db.queryLongScalar("select avg(time) from revlog where cid = ?", c.id)
                 if (averageTime == 0L) {
                     averageTime = null
                 }
-                var totalTime: Long? = collection.db.queryLongScalar("select sum(time) from revlog where cid = ?", c.id)
+                var totalTime: Long? = col.db.queryLongScalar("select sum(time) from revlog where cid = ?", c.id)
                 if (totalTime == 0L) {
                     totalTime = null
                 }
                 var easeInPercent: Double? = c.factor / 1000.0
                 val lapses = c.lapses
                 val reviews = c.reps
-                val model = collection.models.get(c.note().mid)
+                val model = col.models.get(c.note().mid)
                 val cardType = getCardType(c, model)
                 val noteType = model!!.getString("name")
-                val deckName = collection.decks.get(c.did).getString("name")
+                val deckName = col.decks.get(c.did).getString("name")
                 val noteId = c.nid
                 var interval: Int? = c.ivl
                 if (interval!! <= 0) {
@@ -329,8 +329,8 @@ class CardInfo : AnkiActivity() {
                     easeInPercent = null
                 }
                 val due = c.dueString
-                val entries: MutableList<RevLogEntry> = ArrayList(collection.db.queryScalar("select count() from revlog where cid = ?", c.id))
-                collection.db.query(
+                val entries: MutableList<RevLogEntry> = ArrayList(col.db.queryScalar("select count() from revlog where cid = ?", c.id))
+                col.db.query(
                     "select " +
                         "id as dateTime, " +
                         "ease as rating, " +
