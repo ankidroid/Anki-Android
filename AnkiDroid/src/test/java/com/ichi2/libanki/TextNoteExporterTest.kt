@@ -24,7 +24,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.util.*
-import kotlin.Throws
 
 @RunWith(ParameterizedRobolectricTestRunner::class)
 class TextNoteExporterTest(
@@ -32,29 +31,27 @@ class TextNoteExporterTest(
     private val includeTags: Boolean,
     private val includeHTML: Boolean
 ) : RobolectricTest() {
-    private lateinit var collection: Collection
     private lateinit var exporter: TextNoteExporter
     private lateinit var noteList: List<Note>
 
     @Before
     override fun setUp() {
         super.setUp()
-        collection = col
-        exporter = TextNoteExporter(collection, includeId, includeTags, includeHTML)
-        val n1 = collection.newNote()
+        exporter = TextNoteExporter(col, includeId, includeTags, includeHTML)
+        val n1 = col.newNote()
         n1.setItem("Front", "foo")
         n1.setItem("Back", "bar<br>")
         n1.addTags(HashSet(listOf("tag", "tag2")))
-        collection.addNote(n1)
-        val n2 = collection.newNote()
+        col.addNote(n1)
+        val n2 = col.newNote()
         n2.setItem("Front", "baz")
         n2.setItem("Back", "qux")
         try {
-            n2.model().put("did", collection.decks.id("new col"))
+            n2.model().put("did", col.decks.id("new col"))
         } catch (filteredAncestor: DeckRenameException) {
             Timber.e(filteredAncestor)
         }
-        collection.addNote(n2)
+        col.addNote(n2)
         noteList = listOf(n1, n2)
     }
 
