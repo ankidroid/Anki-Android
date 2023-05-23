@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.InputType
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.callbacks.onShow
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.R
@@ -57,7 +58,9 @@ open class IntegerDialog : AnalyticsDialogFragment() {
                 maxLength = requireArguments().getInt("digits")
             ) { _: MaterialDialog?, text: CharSequence -> mConsumer!!.accept(text.toString().toInt()) }
             contentNullable(requireArguments().getString("content"))
-            displayKeyboard(getInputField())
+            onShow {
+                displayKeyboard(getInputField())
+            }
         }
 
         return show
