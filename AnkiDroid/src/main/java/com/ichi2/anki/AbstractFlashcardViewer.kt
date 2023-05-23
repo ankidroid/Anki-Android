@@ -474,7 +474,7 @@ abstract class AbstractFlashcardViewer :
                     positiveButton(R.string.dialog_continue) {
                         col.startTimebox()
                     }
-                    negativeButton(R.string.close) {
+                    negativeButton(text = TR.studyingFinish()) {
                         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
                     }
                     cancelable(true)
