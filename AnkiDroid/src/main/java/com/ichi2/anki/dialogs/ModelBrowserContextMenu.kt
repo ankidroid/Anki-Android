@@ -5,12 +5,12 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.ModelBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.utils.title
 import timber.log.Timber
 
 class ModelBrowserContextMenu : AnalyticsDialogFragment() {
@@ -19,13 +19,13 @@ class ModelBrowserContextMenu : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val items = ModelBrowserContextMenuAction.values().sortedBy { it.order }
-        return MaterialDialog(requireActivity()).show {
+        return AlertDialog.Builder(requireActivity()).apply {
             title(text = requireArguments().getString(KEY_LABEL)!!)
-            listItems(items = items.map { resources.getString(it.actionTextResId) }) { _: MaterialDialog, index: Int, _: CharSequence ->
+            setItems(items.map { resources.getString(it.actionTextResId) }.toTypedArray()) { _, index ->
                 (requireActivity() as? ModelBrowser)?.run { handleAction(items[index]) }
                     ?: Timber.e("ContextMenu used from outside of its target activity!")
             }
-        }
+        }.create()
     }
 
     companion object {
