@@ -376,7 +376,7 @@ open class DeckPicker :
 
         var hasDeckPickerBackground = false
         try {
-            hasDeckPickerBackground = applyDeckPickerBackground(view)
+            hasDeckPickerBackground = applyDeckPickerBackground()
         } catch (e: OutOfMemoryError) { // 6608 - OOM should be catchable here.
             Timber.w(e, "Failed to apply background - OOM")
             showThemedToast(this, getString(R.string.background_image_too_large), false)
@@ -558,23 +558,24 @@ open class DeckPicker :
 
     // throws doesn't seem to be checked by the compiler - consider it to be documentation
     @Throws(OutOfMemoryError::class)
-    private fun applyDeckPickerBackground(view: View): Boolean {
+    private fun applyDeckPickerBackground(): Boolean {
+        val backgroundView = findViewById<ImageView>(R.id.background)
         // Allow the user to clear data and get back to a good state if they provide an invalid background.
         if (!getSharedPrefs(this).getBoolean("deckPickerBackground", false)) {
             Timber.d("No DeckPicker background preference")
-            view.setBackgroundResource(0)
+            backgroundView.setBackgroundResource(0)
             return false
         }
         val currentAnkiDroidDirectory = CollectionHelper.getCurrentAnkiDroidDirectory(this)
         val imgFile = File(currentAnkiDroidDirectory, "DeckPickerBackground.png")
         return if (!imgFile.exists()) {
             Timber.d("No DeckPicker background image")
-            view.setBackgroundResource(0)
+            backgroundView.setBackgroundResource(0)
             false
         } else {
             Timber.i("Applying background")
             val drawable = Drawable.createFromPath(imgFile.absolutePath)
-            view.background = drawable
+            backgroundView.setImageDrawable(drawable)
             true
         }
     }
