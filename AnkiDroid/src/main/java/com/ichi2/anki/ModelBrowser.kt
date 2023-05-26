@@ -293,8 +293,8 @@ class ModelBrowser : AnkiActivity() {
         //   that you are cloning. I suggest reworking the strings so this is less confusing.
         MaterialDialog(this).show {
             title(R.string.model_browser_add)
-            positiveButton(R.string.dialog_ok)
-            listItemsSingleChoice(items = infos.map { it.label }) { _, index, _ ->
+            listItemsSingleChoice(items = infos.map { it.label }, waitForPositiveButton = false) { dialog, index, _ ->
+                dialog.dismiss()
                 MaterialDialog(this@ModelBrowser).show {
                     title(R.string.model_browser_add)
                     positiveButton(R.string.dialog_ok)
