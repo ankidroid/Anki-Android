@@ -18,6 +18,7 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -40,6 +41,7 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
+import com.ichi2.anki.ui.dialogs.DefaultActivityLifecycleCallbacks
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.*
@@ -54,11 +56,11 @@ import java.util.regex.Pattern
  */
 @KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
-open class AnkiDroidApp : Application() {
+open class AnkiDroidApp : Application(), DefaultActivityLifecycleCallbacks {
     /** An exception if the WebView subsystem fails to load  */
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
-
+    var isDeckPickerAvailable = false
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
 
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
@@ -184,6 +186,7 @@ open class AnkiDroidApp : Application() {
         mNotifications.observeForever { NotificationService.triggerNotificationFor(this) }
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
+        registerActivityLifecycleCallbacks(this)
     }
 
     fun scheduleNotification() {
@@ -399,6 +402,18 @@ open class AnkiDroidApp : Application() {
                 return
             }
             super.log(priority, tag, message, t)
+        }
+    }
+
+    override fun onActivityResumed(activity: Activity) {
+        if (activity::class.java == DeckPicker::class.java) {
+            isDeckPickerAvailable = true
+        }
+    }
+
+    override fun onActivityStopped(activity: Activity) {
+        if (activity::class.java == DeckPicker::class.java) {
+            isDeckPickerAvailable = false
         }
     }
 }

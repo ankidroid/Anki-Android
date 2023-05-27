@@ -948,6 +948,12 @@ open class DeckPicker :
         super.onResume()
         refreshState()
         message?.let { dialogHandler.sendStoredMessage(it) }
+        val prefs = getSharedPrefs(this)
+        if (prefs.getBoolean(PREF_IS_MIGRATION_SERVICE_PENDING, false)) {
+            Timber.i("MigrationService is pending, attempt to start it")
+            prefs.edit { putBoolean(PREF_IS_MIGRATION_SERVICE_PENDING, false) }
+            startMigrateUserDataService()
+        }
     }
 
     fun refreshState() {
@@ -2418,6 +2424,7 @@ open class DeckPicker :
         // 10 minutes in milliseconds..
         private const val AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES: Long = 10
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
+        private const val PREF_IS_MIGRATION_SERVICE_PENDING = "pref_is_migration_service_pending"
 
         /**
          * Handles a [PermissionsRequestResults] for storage permissions to launch 'checkMedia'
@@ -2514,7 +2521,15 @@ open class DeckPicker :
     private fun startMigrateUserDataService() {
         // TODO: Handle lack of disk space - most common error
         Timber.i("Starting Migrate User Data Service")
-        ContextCompat.startForegroundService(this, Intent(this, MigrationService::class.java))
+        val prefs = getSharedPrefs(this@DeckPicker)
+        if (AnkiDroidApp.instance.isDeckPickerAvailable) {
+            Timber.w("Starting migration service, DeckPicker is available")
+            prefs.edit { putBoolean(PREF_IS_MIGRATION_SERVICE_PENDING, false) }
+            ContextCompat.startForegroundService(this, Intent(this, MigrationService::class.java))
+        } else {
+            Timber.w("DeckPicker was not available, the start of the MigrationService was postponed")
+            prefs.edit { putBoolean(PREF_IS_MIGRATION_SERVICE_PENDING, true) }
+        }
     }
 
     /**
