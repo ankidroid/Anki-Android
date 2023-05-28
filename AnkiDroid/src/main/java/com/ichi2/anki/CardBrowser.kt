@@ -444,35 +444,28 @@ open class CardBrowser :
      * Change Deck
      * @param did Id of the deck
      */
-    // TODO: This function can be simplified a lot
+
     @VisibleForTesting
     fun moveSelectedCardsToDeck(did: DeckId) {
         val selectedDeck = col.decks.get(did)
-        // TODO: Currently try-catch is at every level which isn't required, simplify that
-        try {
-            // #5932 - can't be dynamic
-            // TODO: Simplify, this is internally checked also in changeDeckMulti, executeChangeCollectionTask() -> changeDeckMulti()
-            if (Decks.isDynamic(selectedDeck)) {
-                Timber.w("Attempted to change cards to dynamic deck. Cancelling operation.")
-                displayCouldNotChangeDeck()
-                return
-            }
-        } catch (e: Exception) {
+        if (Decks.isDynamic(selectedDeck)) {
+            Timber.w("Attempted to change cards to dynamic deck. Cancelling operation.")
             displayCouldNotChangeDeck()
-            Timber.e(e)
             return
         }
+
         mNewDid = selectedDeck.getLong("id")
         Timber.i("Changing selected cards to deck: %d", mNewDid)
-        selectedCardIds.run { // to prevent computing selectedCardIds multiple times
-            if (isEmpty()) {
-                endMultiSelectMode()
-                cardsAdapter.notifyDataSetChanged()
-            } else {
+
+        selectedCardIds.run {
+            if (isNotEmpty()) {
                 if (contains(reviewerCardId)) {
                     mReloadRequired = true
                 }
                 executeChangeCollectionTask(this, mNewDid)
+            } else {
+                endMultiSelectMode()
+                cardsAdapter.notifyDataSetChanged()
             }
         }
     }
