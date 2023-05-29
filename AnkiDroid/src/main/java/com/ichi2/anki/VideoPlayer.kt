@@ -23,7 +23,8 @@ import android.os.Bundle
 import android.view.SurfaceHolder
 import android.view.WindowManager.LayoutParams
 import android.widget.VideoView
-import com.ichi2.anki.UIUtils.showThemedToast
+import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.VideoPlayer
 import com.ichi2.themes.Themes
 import timber.log.Timber
@@ -44,7 +45,7 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
             if (path == null) {
                 // #5911 - May happen if launched externally. Not possible inside AnkiDroid
                 Timber.w("video path was null")
-                showThemedToast(this, getString(R.string.video_creation_error), true)
+                showSnackbar(getString(R.string.video_creation_error), Snackbar.LENGTH_SHORT)
                 finish()
                 return
             }
