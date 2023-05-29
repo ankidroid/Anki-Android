@@ -3,13 +3,14 @@
 
     <item
         android:id="@+id/action_add_note_from_card_browser"
-        android:icon="@drawable/ic_add_white"
+        android:icon="@drawable/ic_baseline_add_24"
         android:title="@string/menu_add"
+        android:iconTint="@color/white"
         ankidroid:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_search_white"
+        android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/deck_conf_cram_search"
         ankidroid:actionViewClass="com.ichi2.ui.CardBrowserSearchView"
         ankidroid:showAsAction="always|collapseActionView"/>
