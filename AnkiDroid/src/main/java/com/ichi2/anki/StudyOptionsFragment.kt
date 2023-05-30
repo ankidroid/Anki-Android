@@ -75,24 +75,24 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
      * UI elements for "Study Options" view
      */
     private var mStudyOptionsView: View? = null
-    private var mDeckInfoLayout: View? = null
-    private var mButtonStart: Button? = null
-    private var mTextDeckName: TextView? = null
-    private var mTextDeckDescription: TextView? = null
-    private var mTextTodayNew: TextView? = null
-    private var mTextTodayLrn: TextView? = null
-    private var mTextTodayRev: TextView? = null
-    private var mTextNewTotal: TextView? = null
-    private var mTextTotal: TextView? = null
-    private var mTextETA: TextView? = null
-    private var mTextCongratsMessage: TextView? = null
+    private lateinit var deckInfoLayout: View
+    private lateinit var buttonStart: Button
+    private lateinit var textDeckName: TextView
+    private lateinit var textDeckDescription: TextView
+    private lateinit var textTodayNew: TextView
+    private lateinit var textTodayLrn: TextView
+    private lateinit var textTodayRev: TextView
+    private lateinit var textNewTotal: TextView
+    private lateinit var textTotal: TextView
+    private lateinit var textETA: TextView
+    private lateinit var textCongratsMessage: TextView
     private var mToolbar: Toolbar? = null
 
     // Flag to indicate if the fragment should load the deck options immediately after it loads
     private var mLoadWithDeckOptions = false
     private var mFragmented = false
     private var mFullNewCountThread: Thread? = null
-    private var mListener: StudyOptionsListener? = null
+    private lateinit var listener: StudyOptionsListener
 
     /**
      * Callbacks for UI events
@@ -114,7 +114,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mListener = try {
+        listener = try {
             context as StudyOptionsListener
         } catch (e: ClassCastException) {
             throw ClassCastException("$context must implement StudyOptionsListener")
@@ -147,10 +147,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Timber.i("onCreateView()")
-        if (container == null) {
-            // Currently in a layout without a container, so no reason to create our view.
-            return null
-        }
         val studyOptionsView = inflater.inflate(R.layout.studyoptions_fragment, container, false)
         mStudyOptionsView = studyOptionsView
         mFragmented = requireActivity().javaClass != StudyOptionsActivity::class.java
@@ -216,21 +212,21 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (mFragmented) {
             studyOptionsView.findViewById<View>(R.id.studyoptions_gradient).visibility = View.VISIBLE
         }
-        mDeckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
-        mTextDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
-        mTextDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
+        deckInfoLayout = studyOptionsView.findViewById(R.id.studyoptions_deckcounts)
+        textDeckName = studyOptionsView.findViewById(R.id.studyoptions_deck_name)
+        textDeckDescription = studyOptionsView.findViewById(R.id.studyoptions_deck_description)
         // make links clickable
-        mTextDeckDescription!!.movementMethod = LinkMovementMethod.getInstance()
-        mButtonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
-        mTextCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message)
+        textDeckDescription.movementMethod = LinkMovementMethod.getInstance()
+        buttonStart = studyOptionsView.findViewById(R.id.studyoptions_start)
+        textCongratsMessage = studyOptionsView.findViewById(R.id.studyoptions_congrats_message)
         // Code common to both fragmented and non-fragmented view
-        mTextTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new)
-        mTextTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn)
-        mTextTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev)
-        mTextNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
-        mTextTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
-        mTextETA = studyOptionsView.findViewById(R.id.studyoptions_eta)
-        mButtonStart!!.setOnClickListener(mButtonClickListener)
+        textTodayNew = studyOptionsView.findViewById(R.id.studyoptions_new)
+        textTodayLrn = studyOptionsView.findViewById(R.id.studyoptions_lrn)
+        textTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev)
+        textNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
+        textTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
+        textETA = studyOptionsView.findViewById(R.id.studyoptions_eta)
+        buttonStart.setOnClickListener(mButtonClickListener)
     }
 
     /**
@@ -595,10 +591,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 return
             }
 
+            val col = col
+                ?: throw NullPointerException("StudyOptionsFragment:: Collection is null while rebuilding Ui")
+
             // Reinitialize controls in case changed to filtered deck
             initAllContentViews(mStudyOptionsView!!)
             // Set the deck name
-            val deck = col!!.decks.current()
+            val deck = col.decks.current()
             // Main deck name
             val fullName = deck.getString("name")
             val name = Decks.path(fullName)
@@ -615,7 +614,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             if (name.size > 2) {
                 nameBuilder.append("\n").append(name[name.size - 1])
             }
-            mTextDeckName!!.text = nameBuilder.toString()
+            textDeckName.text = nameBuilder.toString()
             if (tryOpenCramDeckOptions()) {
                 return
             }
@@ -624,82 +623,82 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             val isDynamic = deck.isDyn
             if (result.numberOfCardsInDeck == 0 && !isDynamic) {
                 mCurrentContentView = CONTENT_EMPTY
-                mDeckInfoLayout!!.visibility = View.VISIBLE
-                mTextCongratsMessage!!.visibility = View.VISIBLE
-                mTextCongratsMessage!!.setText(R.string.studyoptions_empty)
-                mButtonStart!!.visibility = View.GONE
+                deckInfoLayout.visibility = View.VISIBLE
+                textCongratsMessage.visibility = View.VISIBLE
+                textCongratsMessage.setText(R.string.studyoptions_empty)
+                buttonStart.visibility = View.GONE
             } else if (result.newCardsToday + result.lrnCardsToday + result.revCardsToday == 0) {
                 mCurrentContentView = CONTENT_CONGRATS
                 if (!isDynamic) {
-                    mDeckInfoLayout!!.visibility = View.GONE
-                    mButtonStart!!.visibility = View.VISIBLE
-                    mButtonStart!!.setText(R.string.custom_study)
+                    deckInfoLayout.visibility = View.GONE
+                    buttonStart.visibility = View.VISIBLE
+                    buttonStart.setText(R.string.custom_study)
                 } else {
-                    mButtonStart!!.visibility = View.GONE
+                    buttonStart.visibility = View.GONE
                 }
-                mTextCongratsMessage!!.visibility = View.VISIBLE
-                mTextCongratsMessage!!.text = col!!.sched.finishedMsg(requireActivity())
+                textCongratsMessage.visibility = View.VISIBLE
+                textCongratsMessage.text = col.sched.finishedMsg(requireActivity())
             } else {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
-                mDeckInfoLayout!!.visibility = View.VISIBLE
-                mTextCongratsMessage!!.visibility = View.GONE
-                mButtonStart!!.visibility = View.VISIBLE
-                mButtonStart!!.setText(R.string.studyoptions_start)
+                deckInfoLayout.visibility = View.VISIBLE
+                textCongratsMessage.visibility = View.GONE
+                buttonStart.visibility = View.VISIBLE
+                buttonStart.setText(R.string.studyoptions_start)
             }
 
             // Set deck description
             val desc: String = if (isDynamic) {
                 resources.getString(R.string.dyn_deck_desc)
             } else {
-                col!!.decks.getActualDescription()
+                col.decks.getActualDescription()
             }
             if (desc.isNotEmpty()) {
-                mTextDeckDescription!!.text = formatDescription(desc)
-                mTextDeckDescription!!.visibility = View.VISIBLE
+                textDeckDescription.text = formatDescription(desc)
+                textDeckDescription.visibility = View.VISIBLE
             } else {
-                mTextDeckDescription!!.visibility = View.GONE
+                textDeckDescription.visibility = View.GONE
             }
 
             // Set new/learn/review card counts
-            mTextTodayNew!!.text = result.newCardsToday.toString()
-            mTextTodayLrn!!.text = result.lrnCardsToday.toString()
-            mTextTodayRev!!.text = result.revCardsToday.toString()
+            textTodayNew.text = result.newCardsToday.toString()
+            textTodayLrn.text = result.lrnCardsToday.toString()
+            textTodayRev.text = result.revCardsToday.toString()
 
             // Set the total number of new cards in deck
             if (result.numberOfNewCardsInDeck < NEW_CARD_COUNT_TRUNCATE_THRESHOLD) {
                 // if it hasn't been truncated by libanki then just set it usually
-                mTextNewTotal!!.text = result.numberOfNewCardsInDeck.toString()
+                textNewTotal.text = result.numberOfNewCardsInDeck.toString()
             } else {
                 // if truncated then make a thread to allow full count to load
-                mTextNewTotal!!.text = ">1000"
+                textNewTotal.text = ">1000"
                 if (mFullNewCountThread != null) {
                     // a thread was previously made -- interrupt it
                     mFullNewCountThread!!.interrupt()
                 }
                 mFullNewCountThread = Thread {
-                    val collection = col
                     // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
                     val query = "SELECT count(*) FROM cards WHERE did IN " +
-                        Utils.ids2str(collection!!.decks.active()) +
+                        Utils.ids2str(col.decks.active()) +
                         " AND queue = " + Consts.QUEUE_TYPE_NEW
-                    val fullNewCount = collection.db.queryScalar(query)
+                    val fullNewCount = col.db.queryScalar(query)
                     if (fullNewCount > 0) {
-                        val setNewTotalText = Runnable { mTextNewTotal!!.text = fullNewCount.toString() }
+                        val setNewTotalText = Runnable { textNewTotal.text = fullNewCount.toString() }
                         if (!Thread.currentThread().isInterrupted) {
-                            mTextNewTotal!!.post(setNewTotalText)
+                            textNewTotal.post(setNewTotalText)
                         }
                     }
+                }.apply {
+                    start()
                 }
-                mFullNewCountThread!!.start()
             }
 
             // Set total number of cards
-            mTextTotal!!.text = result.numberOfCardsInDeck.toString()
+            textTotal.text = result.numberOfCardsInDeck.toString()
             // Set estimated time remaining
             if (result.eta != -1) {
-                mTextETA!!.text = result.eta.toString()
+                textETA.text = result.eta.toString()
             } else {
-                mTextETA!!.text = "-"
+                textETA.text = "-"
             }
             // Rebuild the options menu
             configureToolbar()
@@ -707,7 +706,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
         // If in fragmented mode, refresh the deck list
         if (mFragmented && refreshDecklist) {
-            mListener!!.onRequireDeckListUpdate()
+            listener.onRequireDeckListUpdate()
         }
     }
 
