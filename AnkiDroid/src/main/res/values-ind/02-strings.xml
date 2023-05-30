@@ -128,6 +128,7 @@
     <string name="reordering_cards">Mengurutkan ulang kartu&#8230;</string>
     <string name="field_remapping">%1$s (dari “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Semua kartu yang yang dibuat kosong akan dihapus. Jika catatan tidak memiliki sisa kartu, kartu tersebut akan hilang. Apa kamu yakin?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Batas waktu telah tercapai</string>
     <plurals name="timebox_reached">
         <item quantity="other">%1$d kartu dipelajari dalam %2$s</item>

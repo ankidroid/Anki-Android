@@ -128,6 +128,7 @@
     <string name="reordering_cards">Stokker om kortene&#8230;</string>
     <string name="field_remapping">%1$s (fra “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Alle kort som ikke er tilordnet noe vil slettes. Hvis et notat ikke har kort igjen, vil det gå tapt. Er du sikker du vil fortsette?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d kort studert i %2$s</item>

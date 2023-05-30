@@ -115,21 +115,21 @@
     <string name="menu_suspend">Suspender</string>
     <string name="menu_delete_note">Slett notat</string>
     <string name="menu_flag">Flagg</string>
-    <string name="menu_flag_card">Flagg kortet</string>
-    <string name="menu_flag_card_zero">Ingen flagg</string>
-    <string name="menu_flag_card_one">Rødt flagg</string>
+    <string name="menu_flag_card">Flagg kort</string>
+    <string name="menu_flag_card_zero">Inkje flagg</string>
+    <string name="menu_flag_card_one">Raudt flagg</string>
     <string name="menu_flag_card_two">Oransje flagg</string>
     <string name="menu_flag_card_three">Grønt flagg</string>
     <string name="menu_flag_card_four">Blått flagg</string>
     <string name="menu_flag_card_five">Rosa flagg</string>
-    <string name="menu_flag_card_six">Turkis flagg</string>
+    <string name="menu_flag_card_six">Turkist flagg</string>
     <string name="menu_flag_card_seven">Lilla flagg</string>
     <string name="menu_edit_tags">Rediger tagger</string>
     <string name="delete_note_message">Slette dette notatet med alle kortene?\n%s</string>
     <string name="menu_search">Oppslag i %1$s</string>
     <string name="menu_mark_note">Marker notat</string>
-    <string name="menu_unmark_note">Fjern notatmarkering</string>
-    <string name="menu_toggle_mic_tool_bar">Sjekk uttalen</string>
+    <string name="menu_unmark_note">Fjern markering på notat</string>
+    <string name="menu_toggle_mic_tool_bar">Sjekk uttale</string>
     <string name="new_deck">Lag ein kortleik</string>
     <string name="new_dynamic_deck">Lag en filtrert kortstokk</string>
     <string name="directory_inaccessible">AnkiDroid-mappa er utilgjengeleg</string>
@@ -178,7 +178,7 @@
     <string name="empty_cloze_warning">Rediger dette notatet og legg til hulltekst. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synkroniser</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">Vil du avbryte synkroniseringen?</string>
+    <string name="cancel_sync_confirm">Vil du avbryte synkroniseringa?</string>
     <string name="continue_sync">Fortsett synkronisering</string>
     <string name="sync_cancelled">Synkronisering Avbrutt</string>
     <string name="sync_cancel_message">Avbryter...\nDet kan ta en stund.</string>

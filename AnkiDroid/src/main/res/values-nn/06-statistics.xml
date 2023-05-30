@@ -63,17 +63,17 @@
     <string name="stats_cumulative_percentage">Samlet prosent</string>
     <string formatted="false" name="stats_cumulative_correct_percentage">Cumulative correct %</string>
     <string name="stats_answers">Svar</string>
-    <string name="stats_minutes">Minutter</string>
-    <string name="stats_hours">Timer</string>
+    <string name="stats_minutes">Minutt</string>
+    <string name="stats_hours">Timar</string>
     <string name="stats_percentage">Prosent</string>
-    <string name="stats_period_month">1 måned</string>
+    <string name="stats_period_month">1 månad</string>
     <string name="stats_period_year">1 år</string>
     <string name="stats_period_lifetime">kortstokkens livstid</string>
     <string name="stats_deck_collection">samling</string>
-    <string name="stats_time_of_day">Tidspunkt på døgnet</string>
-    <string name="stats_day_of_week">Ukedag</string>
-    <string formatted="false" name="stats_percentage_correct">% riktig</string>
-    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Repetisjoner</string>
+    <string name="stats_time_of_day">Tid på døgnet</string>
+    <string name="stats_day_of_week">Vekedag</string>
+    <string formatted="false" name="stats_percentage_correct">% rett</string>
+    <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">Repetisjonar</string>
     <string name="stats_answer_type">Svartype</string>
     <string name="stats_today_again_count">Antall igjen: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(&lt;b&gt;%.1f%%&lt;/b&gt; riktig)</string>
@@ -92,7 +92,7 @@
     <string name="stats_overview_average_answer_time">Gjennomsnittlig svartid: &lt;b&gt;%1$.1fs&lt;/b&gt; (&lt;b&gt;%2$.2f&lt;/b&gt; kort per minutt)</string>
     <string name="stats_overview_new_cards_per_day">Gjennomsnitt: &lt;b&gt;%1$.1f&lt;/b&gt; kort per dag</string>
     <string name="stats_overview_total_new_cards">Tilsammen: &lt;b&gt;%1$d&lt;/b&gt; kort</string>
-    <string name="stats_overview_average_interval">"Gjennomsnittlig intervall: "</string>
+    <string name="stats_overview_average_interval">"Gjennomsnittleg intervall: "</string>
     <string name="stats_overview_longest_interval">"Lengste intervall: "</string>
     <string name="stats_overview_years">&lt;b&gt;%1$.1f&lt;/b&gt; år</string>
     <string name="stats_overview_months">&lt;b&gt;%1$.1f&lt;/b&gt; måneder</string>

@@ -56,21 +56,21 @@
     <string name="model_field_editor_title">Rediger felt</string>
     <string name="model_field_editor_add">Legg til felt</string>
     <string name="model_field_editor_delete">Slett felt</string>
-    <string name="model_field_editor_rename">Endre navn på felt</string>
+    <string name="model_field_editor_rename">Gjev felt nytt namn</string>
     <string name="model_field_editor_language_hint">Set keyboard language hint</string>
     <string name="model_field_editor_reposition_menu">Flytt felt</string>
     <string name="model_field_editor_reposition">Reposition field (enter a value %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Husk siste inndata når du legger til</string>
     <string name="model_field_editor_changing">Oppdaterer felt</string>
     <string name="model_field_editor_sort_field">Sorter etter dette feltet</string>
-    <string name="model_clone_suffix">kopier</string>
+    <string name="model_clone_suffix">kopi</string>
     <!--Warnings-->
     <string name="model_delete_warning">Er du sikker på at du vil slette denne notattypen?</string>
-    <string name="field_delete_warning">Er du sikker på at du vil slette dette feltet?</string>
+    <string name="field_delete_warning">Er du sikker på at du vil sletta dette feltet?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Legg til: %1$s </string>
+    <string name="model_browser_add_add">Legg til: %1$s</string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">Kopier: %1$s </string>
+    <string name="model_browser_add_clone">Kopier: %1$s</string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
     <string name="card_template_browser_appearance_question_format">Spørsmålsformat</string>

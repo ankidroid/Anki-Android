@@ -128,6 +128,7 @@
     <string name="reordering_cards">カードを並べ替えています...</string>
     <string name="field_remapping">%1$s (\'%2$s\'から)</string>
     <string name="confirm_map_cards_to_nothing">割り当て先のないカードは削除されます。カードがすべて削除されたノートは、そのノート自体が削除されます。続行してもよろしいですか？</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">タイムボックス時間経過</string>
     <plurals name="timebox_reached">
         <item quantity="other">%2$sで%1$d枚のカードを学習しました</item>

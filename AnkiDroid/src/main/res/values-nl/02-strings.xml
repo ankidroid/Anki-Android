@@ -128,6 +128,7 @@
     <string name="reordering_cards">Kaarten herschikken...</string>
     <string name="field_remapping">%1$s (van “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">De kaarten toegewezen aan niets zullen worden verwijderd. Als een memo resterende kaarten heeft, zullen zij verloren gaan. Weet u zeker dat u wilt doorgaan?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Timebox bereikt</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d kaart geoefend in %2$s</item>

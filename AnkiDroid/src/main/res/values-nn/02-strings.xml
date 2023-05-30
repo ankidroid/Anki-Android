@@ -68,13 +68,13 @@
     <string name="show_whiteboard">Vis tavle</string>
     <string name="hide_whiteboard">Skjul tavle</string>
     <string name="clear_whiteboard">Rens tavle</string>
-    <string name="replay_audio">Spill lydklipp på nytt</string>
+    <string name="replay_audio">Spel lyd på nytt</string>
     <string name="leech_suspend_notification">Kort merket som igle og suspendert</string>
     <string name="leech_notification">Kort merket som igle</string>
     <string name="corrupt_font">Ugyldig font-fil %s</string>
-    <string name="webview_crash_unknown">Ukjent feil</string>
+    <string name="webview_crash_unknown">Ukjend feil</string>
     <string name="webview_crash_unknwon_detailed">Dette skyldes en intern feil i WebView.</string>
-    <string name="webview_crash_oom">For lite minne</string>
+    <string name="webview_crash_oom">Tomt for minne</string>
     <string name="webview_crash_oom_details">WebView ble avsluttet av systemet. Dette skjer vanligvis når programmet går tom for minne, som regel på grunn av store skrifttyper eller media.</string>
     <string name="webview_crash_nonfatal">WebView renderer krasjet. Årsak: %s</string>
     <string name="webview_crash_fatal">Kritisk feil: WebView-avspiller krasjet. Årsak: %s</string>
@@ -93,23 +93,23 @@
         <item>Spørsmål</item>
         <item>Etiketter</item>
         <item>Feilsvar</item>
-        <item>Repetisjoner</item>
+        <item>Repetisjonar</item>
         <item>Intervall</item>
-        <item>Ease</item>
+        <item>Lette</item>
         <item>Forfaller</item>
-        <item>Kort endret</item>
-        <item>Opprettet</item>
+        <item>Kort endra</item>
+        <item>Laga</item>
         <item>Notat endret</item>
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">Bruk</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags">Flagg</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Endre dagens nye kortgrense</string>
+    <string name="custom_study_increase_new_limit">Endre grensa for nye kort i dag</string>
     <string name="custom_study_increase_review_limit">Endre dagens nye kortgrense</string>
-    <string name="custom_study_review_forgotten">Gjennomgå glemte kort</string>
+    <string name="custom_study_review_forgotten">Gå gjennom gløymde kort</string>
     <string name="custom_study_review_ahead">Gjennomgå på forhånd</string>
-    <string name="custom_study_random_selection">Øv på et tilfeldig utvalg av kort</string>
+    <string name="custom_study_random_selection">Øv på eit tilfeldig utval av kort</string>
     <string name="custom_study_preview_new">Forhåndsvis nye kort</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <!-- Card editor -->
@@ -128,6 +128,7 @@
     <string name="reordering_cards">Stokker om kortene&#8230;</string>
     <string name="field_remapping">%1$s (fra “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Alle kort som ikke er tilordnet noe vil slettes. Hvis et notat ikke har kort igjen, vil det gå tapt. Er du sikker du vil fortsette?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d kort studert i %2$s</item>
@@ -141,18 +142,18 @@
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">AnkiDroid-kort</string>
     <string name="note_editor_copy_note">Kopier notat</string>
     <string name="card_editor_reposition_card">Flytt</string>
-    <string name="card_editor_reset_card">Tilbakestill fremdrift</string>
+    <string name="card_editor_reset_card">Tilbakestill framgang</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Endre plan</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Forhåndsvisning</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="error_insufficient_memory">Operasjonen ikke mulig på grunn av for lite minne på enheten</string>
-    <string name="rename" comment="Confirm that the renaming action should be processed.">Omdøpe</string>
+    <string name="rename" comment="Confirm that the renaming action should be processed.">Byt namn</string>
     <string name="default_conf_delete_error">The default options group can’t be removed</string>
     <plurals name="factadder_cards_added">
         <item quantity="one">%d kort lagt til</item>
         <item quantity="other">%d kort lagt til</item>
     </plurals>
-    <string name="check_db">Kontroller database</string>
+    <string name="check_db">Sjekk databasen</string>
     <string name="check_media">Sjekk media</string>
     <string name="empty_cards">Tomme kort</string>
     <string name="check_db_message">Undersøker database.\nVennligst vent...</string>
@@ -176,7 +177,7 @@
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_handle_exception">Feil med å importere fil\n\n%s</string>
+    <string name="import_error_handle_exception">Klarte ikkje å importere fil\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Den valgte filen kunne ikke importeres automatisk av AnkiDroid. Vennligst referer til brukermanualen for å finne ut hvordan man importerer anki-filer manuelt: \n%s</string>
@@ -184,7 +185,7 @@
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Erstatter samling&#8230;</string>
+    <string name="import_replacing">Erstattar samlinga&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Include scheduling</string>
     <string name="export_include_media">Inkluder media</string>

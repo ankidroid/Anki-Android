@@ -259,8 +259,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">עותק של %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">לא ניתן לכתוב או ליצור קובץ %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"שגיאות מרובות, האחרונה: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">שגיאות רצופות מרובות ללא התקדמות, האחרונה: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">מעביר נתונים </string>
     <string name="migration__calculating_transfer_size">מחשב את גודל ההעברה...</string>
@@ -280,11 +280,10 @@
         <br><br>
         <a href="%2$s">למידע נוסף וקבלת עזרה</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
-        <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[העברת האחסון מושהית לאחר כשל עם השגיאה: %1$s.
+         <br><br>
+         <a href="%2$s">למידע נוסף וקבלת עזרה</a>]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">המשך המרה</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">אין גישה לאוסף</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">לא נוכל לגשת לאוסף שלך לאחר הסרת ההתקנה של AnkiDroid עקב שינוי במדיניות של חנות Play\n\nהנתונים שלך בטוחים וניתן לשחזר אותם. הוא ממוקם ב-\n%s\n\nבחר אפשרות למטה לשחזור:</string>
     <string name="restore_data_from_ankiweb">שחזור מ-AnkiWeb (מומלץ)</string>

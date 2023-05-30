@@ -42,7 +42,7 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">चित्र जोड़ें</string>
     <string name="multimedia_editor_popup_audio_clip">ऑडियो क्लिप जोड़ें</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">वीडियो क्लिप जोड़ें</string>
     <string name="multimedia_editor_popup_audio">ध्वनि रिकॉर्ड करें</string>
     <string name="multimedia_editor_popup_text">उन्नत संपादक</string>
     <string name="multimedia_editor_popup_cloze">क्लोज़ विलोपन</string>
@@ -52,7 +52,7 @@
     <string name="multimedia_editor_pron_looking_up">उच्चारण खोजा जा रहा है</string>
     <!-- in controller when fails -->
     <string name="multimedia_editor_pron_pronunciation_failed">उच्चारण विफल</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
+    <string name="multimedia_editor_only_one_word">एक समय में केवल एक शब्द समर्थित है</string>
     <string name="multimedia_editor_word_search_try_lower_case">केवल छोटे अक्षरों को उपयोग करने का प्रयास करें</string>
     <string name="multimedia_editor_poweredbeolingus">Beolingus द्वारा संचालित</string>
     <!-- Field editing general -->
@@ -78,8 +78,8 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">गैलरी</string>
     <string name="multimedia_editor_image_field_editing_photo">कैमरा</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">ऑडियो</string>
+    <string name="multimedia_editor_import_video">वीडियो</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">डाउनलोड हो रहा है...</string>
@@ -112,5 +112,5 @@
     <string name="save_dialog_content">वर्तमान छवि का आकार %sMB है। डिफ़ॉल्ट छवि आकार सीमा 1 MB है। क्या आप इसे क्रॉप करना चाहते हैं?</string>
     <string name="select_image_failed">"छवि का चयन विफल रहा, कृपया पुनः प्रयास करें"</string>
     <string name="activity_result_unexpected">ऐप ने एक अनपेक्षित मान लौटाया . आपको एक अलग ऐप का उपयोग करने की आवश्यकता हो सकती है।</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">फ़ील्ड सामग्री</string>
 </resources>

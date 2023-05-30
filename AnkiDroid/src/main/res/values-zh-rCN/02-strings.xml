@@ -128,6 +128,7 @@
     <string name="reordering_cards">重新排列卡片中...</string>
     <string name="field_remapping">%1$s（来自「%2$s」）</string>
     <string name="confirm_map_cards_to_nothing">任何无法映射的卡片都会被删除。如果该笔记没有生成其他卡片，该笔记将会丢失。你确定要继续吗？</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">已到达指定时间</string>
     <plurals name="timebox_reached">
         <item quantity="other">在 %2$s 内学习了 %1$d 张卡片</item>

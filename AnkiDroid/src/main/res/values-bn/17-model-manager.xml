@@ -26,12 +26,12 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Manage note types</string>
-    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Manage fields</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">নোট-টাইপস ব্যবস্থাপনা</string>
+    <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">ফিল্ডস ব্যবস্থাপনা</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
-    <string name="toast_last_field">Note types must have at least one field</string>
-    <string name="toast_empty_name">You must enter a name</string>
+    <string name="toast_last_model">আপনি সর্বশেষ নোট-টাইপটিকে ডিলিট করতে পারেন না</string>
+    <string name="toast_last_field">নোট-যেকোনো টাইপের অন্তত একটি ফিল্ড থাকা জরুরি</string>
+    <string name="toast_empty_name">আপনাকে একটি নাম লিখতে হবে</string>
     <string name="toast_duplicate_field">Field name already used</string>
     <string name="toast_out_of_range">You must enter a valid value</string>
     <!--Plurals-->

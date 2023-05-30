@@ -128,6 +128,7 @@
     <string name="reordering_cards">Keičiamas kortelių eiliškumas&#8230;</string>
     <string name="field_remapping">%1$s (nuo “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Bet kokios tuščios kortelės bus ištrintos. Jei užrašas neturės susijusių kortelių, jis bus ištrintas. Ar tikrai norite tęsti?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">Per %2$s išmokote %1$d kortelę</item>

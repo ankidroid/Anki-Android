@@ -128,6 +128,7 @@
     <string name="reordering_cards">Reordenando cards...</string>
     <string name="field_remapping">%1$s (de \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Quaisquer cards não-mapeados serão removidos. Se não houverem cards para uma nota, ela será perdida. Tem certeza de que deseja continuar?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Caixa do tempo alcançada</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d card estudado em %2$s</item>

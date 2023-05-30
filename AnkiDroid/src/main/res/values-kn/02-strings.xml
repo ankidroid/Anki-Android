@@ -128,6 +128,7 @@
     <string name="reordering_cards">ಕಾರ್ಡ್‌ಗಳನ್ನು ಮರುಕ್ರಮಗೊಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ನಿಂದ)</string>
     <string name="confirm_map_cards_to_nothing">ಯಾವುದಕ್ಕೂ ಮ್ಯಾಪ್ ಮಾಡದ ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ. ಟಿಪ್ಪಣಿಯಲ್ಲಿ ಉಳಿದ ಕಾರ್ಡ್‌ಗಳಿಲ್ಲದಿದ್ದರೆ, ಅದು ಕಳೆದುಹೋಗುತ್ತದೆ. ನೀವು ಮುಂದುವರಿಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">ಟೈಮ್‌ಬಾಕ್ಸ್ ತಲುಪಿದೆ</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d ಕಾರ್ಡ್ ಅನ್ನು%2$s ನಲ್ಲಿ ಅಧ್ಯಯನ ಮಾಡಲಾಗಿದೆ</item>

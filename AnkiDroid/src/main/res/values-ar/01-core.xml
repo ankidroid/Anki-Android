@@ -274,8 +274,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s نسخة</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">يتعذر تعديل أو إنشاء ملف %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"أخطاء متعددة، آخر خطأ: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">أخطاء متعددة متتابعة دون تقدم، آخر خطأ: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">ترحيل البيانات</string>
     <string name="migration__calculating_transfer_size">حسابة حجم التحويل&#8230;</string>
@@ -295,11 +295,11 @@
         <br><br>
         <a href="%2$s">تعلم المزيد والحصول على المساعدة</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        توقف نقل التخزين بعد أن فشل بسبب هذا الخطأ: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">تعلم المزيد واحصل على المساعدة</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">استئناف النقل</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">فشل في الوصول إلى المجموعة</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">نحن غير قادرين على الوصول إلى مجموعتك بعد إلغاء تثبيت AnkiDroid بسبب تغيير في سياسة متجر \n Play\n البيانات الخاصة بك آمنة ويمكن استعادتها في\n%s\n\nحدد الخيار أدناه للاستعادة:</string>
     <string name="restore_data_from_ankiweb">استعادة من AnkiWeb (مستحسن)</string>

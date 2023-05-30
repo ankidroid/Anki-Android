@@ -128,6 +128,7 @@
     <string name="reordering_cards">কার্ডগুলো পুনঃবিন্যাস করছি&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” থেকে)</string>
     <string name="confirm_map_cards_to_nothing">ম্যাপিং বিহীন কার্ডগুলি মুছে ফেলা হবে। কোনও নোটে যদি আর কার্ড বাকি না থাকে তবে সেটাও মুছে যাবে। আপনি কি চালিয়ে যেতে চান?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">সময়সীমা অতিক্রান্ত হয়েছে</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d টি কার্ড অধ্যয়িত হয়েছে %2$s মিনিটে</item>
