@@ -760,6 +760,7 @@ fun DeckPicker.createSyncListener(isFetchingMedia: Boolean) = object : Connectio
             // Mark sync as completed - then refresh the sync icon
             SyncStatus.markSyncCompleted()
             invalidateOptionsMenu()
+            updateMenuState()
             updateDeckList()
             WidgetStatus.update(this@createSyncListener)
             if (fragmented) {
