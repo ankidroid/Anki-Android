@@ -128,6 +128,7 @@
     <string name="reordering_cards">ପତ୍ର ପୁନଃବ୍ୟବସ୍ଥିତ ହଉଛି&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ରୁ)</string>
     <string name="confirm_map_cards_to_nothing">କୌଣସି ଜିନିଷକୁ ମ୍ୟାପ୍ ନହୋଇ ଥିବା ପତ୍ରସବୁ ବିଲୋପ ହେବ। ଯଦି କୌଣସି ନୋଟ୍ ର ଅବଶିଷ୍ଟ ପତ୍ର ନଥାଏ, ତେବେ ଏହା ନଷ୍ଟ ହୋଇଯିବ। ଆପଣ ଜାରି ରଖିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">ସମୟବାକ୍ସ ପହଞ୍ଚିଛି</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$dଟିଏ ପତ୍ର %2$s ରେ ଅଧ୍ୟୟନ କଲେ</item>

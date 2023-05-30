@@ -350,7 +350,7 @@
     <string name="experimental_pref_confirmation" maxLength="41">「%s」を有効にする</string>
     <string name="use_rust_backend_title" maxLength="41">新しいバックエンドを使用する</string>
     <string name="use_rust_backend_summary">V3スケジューラーなど、Ankiの新しい機能を有効にします。\n注意：試験運用中です。バックアップを確保していないコレクションでは使用しないでください。アプリを終了しても元に戻りません</string>
-    <string name="use_rust_backend_warning">この機能はまだ十分な検証を終えていないため、これを有効にすることによって、あなたのAnkiDroidのデータに深刻な破損を与えてしまう可能性も否定できません。 AnkiDroidアプリのアンインストールとAnkiDroidフォルダの削除が必要となる可能性や、AnkiWebとの同期によってAnkiWebや他の端末のデータにも破損を波及させてしまう可能性もあります。\n\nこの機能を試していただくことは歓迎いたしますが、万一に備え、AnkiWeb以外にもコレクションのバックアップを確保しておくことを強くおすすめします。</string>
+    <string name="use_rust_backend_warning">この機能はまだ十分な検証を終えていないため、これを有効にすることによって、あなたのAnkiDroidのデータに深刻な損害を与えてしまう可能性も否定できません。 AnkiDroidアプリのアンインストールとAnkiDroidフォルダの削除が必要となる可能性や、AnkiWebとの同期によってAnkiWebや他の端末のデータにも損害を波及させてしまう可能性もあります。\n\nこの機能を試していただくことは歓迎いたしますが、万一に備え、AnkiWeb以外にもコレクションのバックアップを確保しておくことを強くおすすめします。</string>
     <string name="enable_v3_sched_title" maxLength="41">V3スケジューラーを使用する</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>

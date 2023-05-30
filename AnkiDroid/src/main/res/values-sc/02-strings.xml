@@ -130,6 +130,7 @@
     <string name="reordering_cards">Torrende a ordinare sas cartas&#8230;</string>
     <string name="field_remapping">%1$s (dae “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Sas cartas chene connessiones s\'ant a iscantzellare. Si una nota non tenet prus cartas s\'at a pèrdere. Ses seguru de chèrrere sighire?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Lìmite de tempus barigadu</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d carta istudiada in %2$s</item>

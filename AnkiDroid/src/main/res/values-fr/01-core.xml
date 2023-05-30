@@ -242,8 +242,8 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copie</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Impossible d\'éditer ou de créer le fichier %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Erreurs multiples, les plus récentes : %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Plusieurs erreurs consécutives sans progrès, la plupart des plus récentes : %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_data">Migration des données</string>
     <string name="migration__calculating_transfer_size">Calcul de la taille du transfert</string>
@@ -263,11 +263,11 @@
         <br><br>
         <a href="%2$s">En savoir plus et obtenir de l\'aide</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        La migration du stockage est suspendue après échec avec l\'erreur : %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">En savoir plus et obtenir de l\'aide</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Reprendre la migration</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Collection inaccessible</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Nous ne pouvons pas accéder à votre collection après la désinstallation d\'AnkiDroid, en raison d\'une modification de la politique du Play Store\n\nVos données sont conservées et peuvent être restaurées. Elles se trouvent à\n%s\n\nSélectionnez une option ci-dessous pour les restaurer :</string>
     <string name="restore_data_from_ankiweb">Restaurez depuis Ankiweb (recommandé)</string>

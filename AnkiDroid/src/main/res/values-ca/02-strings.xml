@@ -128,6 +128,7 @@
     <string name="reordering_cards">Reordenant cartes&#8230;</string>
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">S\'esborrarà qualsevol carta assignada a res. Si una anotació té cap carta restant, serà perduda. Esteu segur que voleu continuar?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Límit de temps assolit</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d carta estudiada en %2$s</item>

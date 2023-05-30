@@ -73,7 +73,7 @@
     <string name="override_font_if_missing">जब स्पैनिश पर कोई फ़ॉंट निर्दिष्ट नहीं है</string>
     <string name="override_font_always" comment="Option to always override font">हमेशा</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">सिस्टम का पालन करें</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">उजाला</string>
     <string name="day_theme_plain">सादा</string>
@@ -107,12 +107,12 @@
     <string name="gesture_flag_remove">ध्वज हटाएं</string>
     <string name="gesture_page_up">पन्ना ऊपर</string>
     <string name="gesture_page_down">पन्ना निचे</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
+    <string name="gesture_abort_sync">सीखना और सिंक रद्द करें</string>
     <string name="gesture_toggle_whiteboard">श्वेतपट्ट टॉगल करें</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="gesture_show_hint">संकेत दिखाएं</string>
+    <string name="gesture_show_all_hints">सभी संकेत दिखाएं</string>
+    <string name="record_voice">आवाज रिकॉर्ड करें</string>
+    <string name="replay_voice">आवाज फिर से चलाएं</string>
+    <string name="automatic_answer_option_2">कठिन (अनुपलब्ध होने पर अच्छा)</string>
+    <string name="automatic_answer_option_4">आसान (अनुपलब्ध होने पर अच्छा)</string>
 </resources>

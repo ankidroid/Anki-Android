@@ -128,6 +128,7 @@
     <string name="reordering_cards">Перамешванне картак&#8230;</string>
     <string name="field_remapping">%1$s (з “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Не супастаўленыя карткі будуць выдаленыя. Калі запіс не мае ніводнай карткі, то ён будзе згублены. Працягнуць?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Дасягнутыя абмежаванні па часе</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d картка вывучана за %2$s</item>

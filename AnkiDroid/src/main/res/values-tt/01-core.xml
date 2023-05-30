@@ -68,10 +68,10 @@
         <item quantity="other">%d минут калды</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d сәгатъ %2$d калды</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d көн %2$d калды</item>
     </plurals>
     <string name="no_cards_placeholder_title">Коллекция буш</string>
     <string name="no_cards_placeholder_description">Кәртләрне\n+ төймәсена басып беркетә башлагыз.</string>
@@ -92,7 +92,7 @@
     <string name="undo">Кире алу</string>
     <string name="undo_action_review">соңгы кабатлау</string>
     <string name="undo_action_change_deck_multi">колодаларны алыштыру</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Штрихны кире алу</string>
     <string name="move_all_to_deck">Бөтенесен колодага кую</string>
     <string name="unbury">Кайтару</string>
     <string name="rename_deck">Исемен үзгәртү</string>
@@ -116,7 +116,7 @@
     <string name="menu_flag_card_two">Кызыл-сары байрак</string>
     <string name="menu_flag_card_three">Яшел байрак</string>
     <string name="menu_flag_card_four">Зәңгәр байрак</string>
-    <string name="menu_flag_card_five">Pink flag</string>
+    <string name="menu_flag_card_five">Алсу байрак</string>
     <string name="menu_flag_card_six">Turquoise flag</string>
     <string name="menu_flag_card_seven">Purple flag</string>
     <string name="menu_edit_tags">Тегларны үзгәртү</string>
@@ -133,7 +133,7 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Зинһар, AnkiDroid өчен \"Storage\" рөхсәтен бирегез</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_all_files_access_permission">Зинһар, AnkiDroid өчен бөтен файлларга рөхсәтен бирегез</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -150,7 +150,7 @@
     <string name="time_quantity_months">%.1f ай</string>
     <string name="time_quantity_years">%.1f ел</string>
     <!-- or "%.1f a" -->
-    <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
+    <string name="rebuild_filtered_deck">Фильтрлы колода үзгәртелә...</string>
     <string name="rebuild_cram_label">Яңадан тезү</string>
     <string name="empty_cram_label">Бушату</string>
     <string name="create_subdeck">Колода эчендә колода ясау</string>
@@ -158,8 +158,8 @@
     <string name="custom_study_deck_name">Шәхси өйрәнү сессиясе</string>
     <string name="custom_study_deck_exists">Башта булган артык өйрәнү колода исемен үзгәртегез</string>
     <string name="empty_deck">Бу колода буш</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_deck" comment="Deck search for selecting it">Колода эзләү</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Колода эзләү</string>
     <string name="invalid_deck_name">Шундый колода исеме була алмый</string>
     <string name="studyoptions_empty">Бу колода буш. Берәрнәрсә өстәү өчен + төймәсенә басыгыз.</string>
     <string name="studyoptions_limit_reached">Бүгенге өйрәнү үтәлде</string>

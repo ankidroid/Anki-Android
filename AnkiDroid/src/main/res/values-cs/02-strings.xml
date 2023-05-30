@@ -128,6 +128,7 @@
     <string name="reordering_cards">Mění se pořadí karet&#8230;</string>
     <string name="field_remapping">%1$s (z \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Karty mapované na prázdný cíl budou odstraněny. Nezbývají-li už v poznámce žádné karty, bude poznámka ztracena. Opravdu chcete pokračovat?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Časové omezení dosaženo</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d karta studována za %2$s</item>

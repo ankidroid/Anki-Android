@@ -128,6 +128,7 @@
     <string name="reordering_cards">מסדר מחדש את הכרטיסים&#8230;</string>
     <string name="field_remapping">%1$s (מתוך \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">קלף שממופה לכלום ימחק. אם לרשימה אין קלפים נותרים, היא תימחק. להמשיך?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">קופסת הזמן הגיעה</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d כרטסיה נלמדו ב%2$s</item>
@@ -343,7 +344,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">טעינת החפיסה %s נכשלה</string>
     <string name="search_decks">חיפוש בחפיסות</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">הצג התקדמות ההמרה</string>
     <string name="ankidroid_init_failed_webview_title">שגיאה מכרעת</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid משתמש בדפדפן המערכת שאינו זמין. זה קורה לפעמים אם המערכת מתקינה עדכונים. נא נסה שנית בעוד כמה דקות. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -448,5 +449,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">הקש כדי להתחיל העברת אחסון</string>
     <string name="media_sync_required_title">דרוש סנכרון מדיה</string>
     <string name="media_sync_unavailable_message">סנכרון מדיה מושבת בהגדרות. אנא סנכרן וגבה כל מדיה שלא סונכרנה לפני שתמשיך</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
+    <string name="remember_sync_metered_checkbox_msg">אל תשאל שוב (ניתן להפעיל מחדש אזהרה זו דרך הגדרות הסנכרון)</string>
 </resources>
