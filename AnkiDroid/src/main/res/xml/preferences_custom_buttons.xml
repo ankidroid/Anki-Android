@@ -23,166 +23,171 @@ MenuItem.SHOW_AS_ACTION_ALWAYS  = 2
 MENU_DISABLED = 3
 
 Ensure to add the custom icons to Preferences.java's reset functionality
-TODO: Add a unit test
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:title="@string/custom_buttons"
-    android:key="@string/pref_app_bar_buttons_screen_key">
+    android:key="@string/pref_app_bar_buttons_screen_key"
+    android:title="@string/custom_buttons">
     <Preference
         android:key="@string/reset_custom_buttons_key"
         android:title="@string/reset_custom_buttons" />
-    <PreferenceCategory android:title="@string/deck_conf_general" >
+    <PreferenceCategory
+        android:key="@string/deck_conf_general"
+        android:title="@string/deck_conf_general">
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_undo_key"
             android:title="@string/undo"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_schedule_card_key"
             android:title="@string/card_editor_reschedule_card"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_flag_key"
             android:title="@string/menu_flag"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_edit_card_key"
             android:title="@string/cardeditor_title_edit_card"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_tags_key"
             android:title="@string/menu_edit_tags"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="3"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_add_card_key"
             android:title="@string/menu_add_note"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_replay_key"
             android:title="@string/replay_audio"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="3"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_card_info_key"
             android:title="@string/card_info_title"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_select_tts_key"
             android:title="@string/select_tts"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_deck_options_key"
             android:title="@string/menu__deck_options"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_mark_card_key"
             android:title="@string/menu_mark_note"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_toggle_mic_toolbar_key"
             android:title="@string/menu_toggle_mic_tool_bar"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/menu_dismiss_note" >
+    <PreferenceCategory
+        android:key="@string/menu_dismiss_note"
+        android:title="@string/menu_dismiss_note">
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_bury_key"
             android:title="@string/menu_bury"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_suspend_key"
             android:title="@string/menu_suspend"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_delete_key"
             android:title="@string/menu_delete_note"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_cat_whiteboard" >
+    <PreferenceCategory
+        android:key="@string/pref_cat_whiteboard"
+        android:title="@string/pref_cat_whiteboard">
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_enable_whiteboard_key"
             android:title="@string/enable_whiteboard"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_toggle_stylus_key"
             android:title="@string/enable_stylus"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_save_whiteboard_key"
             android:title="@string/save_whiteboard"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_whiteboard_pen_color_key"
             android:title="@string/title_whiteboard_pen_color"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="2"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_show_hide_whiteboard_key"
             android:title="@string/hide_whiteboard"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"
             android:key="@string/custom_button_clear_whiteboard_key"
             android:title="@string/clear_whiteboard"
-            app:useSimpleSummaryProvider="true"/>
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 </PreferenceScreen>
