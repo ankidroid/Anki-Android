@@ -305,12 +305,11 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         // we map from "int" -> field, but the order isn't guaranteed, and there may be skips.
         // so convert this to a list of strings, with null in place of the invalid fields
         val elementCount = noteFields.keySet().stream().map { s: String -> s.toInt() }.max { obj: Int, anotherInteger: Int? -> obj.compareTo(anotherInteger!!) }.orElse(-1) + 1
-        val ret = arrayOfNulls<String>(elementCount)
-        Arrays.fill(ret, "") // init array, nulls cause a crash
+        val ret = Array(elementCount) { "" }
         for (fieldOrd in noteFields.keySet()) {
-            ret[fieldOrd.toInt()] = noteFields.getString(fieldOrd)
+            ret[fieldOrd.toInt()] = noteFields.getString(fieldOrd)!!
         }
-        return ArrayList(listOf(*ret))
+        return ret.toMutableList()
     }
 
     /**
