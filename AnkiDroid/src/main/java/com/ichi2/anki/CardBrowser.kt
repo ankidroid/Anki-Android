@@ -2376,7 +2376,7 @@ open class CardBrowser :
                 Column.FLAGS -> Integer.valueOf(card.userFlag()).toString()
                 Column.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
                 Column.MARKED -> if (isMarked(card.note())) "marked" else null
-                Column.SFLD -> card.note().sFld
+                Column.SFLD -> card.note(col).sFld()
                 Column.DECK -> col.decks.name(card.did)
                 Column.TAGS -> card.note().stringTags()
                 Column.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"

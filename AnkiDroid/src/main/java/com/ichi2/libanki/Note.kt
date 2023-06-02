@@ -25,7 +25,7 @@ import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.json.JSONObject
 import timber.log.Timber
-import java.util.*
+import java.util.AbstractSet
 import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")
@@ -339,8 +339,7 @@ class Note : Cloneable {
         }
     }
 
-    val sFld: String
-        get() = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
+    fun sFld() = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
     fun setField(index: Int, value: String) {
         fields[index] = value
