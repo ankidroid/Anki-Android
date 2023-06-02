@@ -157,7 +157,7 @@ class CardHtml(
          * TODO: This is no longer entirely true as more post-processing occurs
          */
         private fun displayString(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
-            if (side == Side.FRONT && card.isEmpty) {
+            if (side == Side.FRONT && card.isEmpty()) {
                 return context.resources.getString(R.string.empty_card_warning)
             }
 
