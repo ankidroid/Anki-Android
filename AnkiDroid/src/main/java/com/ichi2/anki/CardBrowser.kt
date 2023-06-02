@@ -2348,6 +2348,7 @@ open class CardBrowser :
          */
         val color: Int
             get() {
+                val card = card()
                 return when (card.userFlag()) {
                     1 -> R.attr.flagRed
                     2 -> R.attr.flagOrange
@@ -2369,6 +2370,7 @@ open class CardBrowser :
             }
 
         fun getColumnHeaderText(key: Column?): String? {
+            val card = card()
             return when (key) {
                 Column.FLAGS -> Integer.valueOf(card.userFlag()).toString()
                 Column.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
@@ -2399,15 +2401,15 @@ open class CardBrowser :
         }
 
         private fun getEaseForCards(): String {
-            return if (card.type == Consts.CARD_TYPE_NEW) {
+            return if (card().type == Consts.CARD_TYPE_NEW) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
             } else {
-                "${card.factor / 10}%"
+                "${card().factor / 10}%"
             }
         }
 
         private fun getAvgEaseForNotes(): String {
-            val avgEase = card.avgEaseOfNote(col)
+            val avgEase = card().avgEaseOfNote(col)
 
             return if (avgEase == null) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
@@ -2417,15 +2419,15 @@ open class CardBrowser :
         }
 
         private fun queryIntervalForCards(): String {
-            return when (card.type) {
+            return when (card().type) {
                 Consts.CARD_TYPE_NEW -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
                 Consts.CARD_TYPE_LRN -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
-                else -> Utils.roundedTimeSpanUnformatted(AnkiDroidApp.instance, card.ivl * Stats.SECONDS_PER_DAY)
+                else -> Utils.roundedTimeSpanUnformatted(AnkiDroidApp.instance, card().ivl * Stats.SECONDS_PER_DAY)
             }
         }
 
         private fun queryAvgIntervalForNotes(): String {
-            val avgInterval = card.avgIntervalOfNote(col)
+            val avgInterval = card().avgIntervalOfNote(col)
 
             return if (avgInterval == null) {
                 "" // upstream does not display interval for notes with new or learning cards
@@ -2440,7 +2442,7 @@ open class CardBrowser :
             if (reload) {
                 reload()
             }
-            card.note(col)
+            card().note(col)
             // First column can not be the answer. If it were to change, this code should also be changed.
             if (COLUMN1_KEYS[column1Index] == Column.QUESTION || arrayOf(Column.QUESTION, Column.ANSWER).contains(COLUMN2_KEYS[column2Index])) {
                 updateSearchItemQA()
@@ -2457,6 +2459,7 @@ open class CardBrowser :
             if (mQa != null) {
                 return
             }
+            val card = card()
             // render question and answer
             val qa = card.render_output(col, reload = true, browser = true)
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result

@@ -521,14 +521,13 @@ open class Card : Cloneable {
          * The card with id given at creation. Note that it has content of the time at which the card was loaded, which
          * may have changed in database. So it is not equivalent to getCol().getCard(getId()). If you need fresh data, reload
          * first. */
-        @get:Synchronized
-        val card: Card
-            get() {
-                if (mCard == null) {
-                    mCard = col.getCard(this.id)
-                }
-                return mCard!!
+        @Synchronized
+        fun card(): Card {
+            if (mCard == null) {
+                mCard = col.getCard(this.id)
             }
+            return mCard!!
+        }
 
         /** Next access to card will reload the card from the database.  */
         @Synchronized
@@ -554,7 +553,7 @@ open class Card : Cloneable {
         }
 
         fun loadQA(col: Collection, reload: Boolean, browser: Boolean) {
-            card.render_output(col, reload, browser)
+            card().render_output(col, reload, browser)
         }
     }
 

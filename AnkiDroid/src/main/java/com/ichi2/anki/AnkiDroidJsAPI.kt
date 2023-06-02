@@ -474,11 +474,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         val searchResult: MutableList<String> = ArrayList()
         for (s in cards) {
             val jsonObject = JSONObject()
-            val fieldsData = s.card.note(col).fields
-            val fieldsName = s.card.model(col).fieldsNames
+            val fieldsData = s.card().note(col).fields
+            val fieldsName = s.card().model(col).fieldsNames
 
-            val noteId = s.card.nid
-            val cardId = s.card.id
+            val noteId = s.card().nid
+            val cardId = s.card().id
             jsonObject.put("cardId", cardId)
             jsonObject.put("noteId", noteId)
 
