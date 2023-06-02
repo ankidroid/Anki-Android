@@ -2131,7 +2131,7 @@ open class CardBrowser :
                     column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
                 }
             // set card's background color
-            val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color)
+            val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color())
             v.setBackgroundColor(backgroundColor)
             // setup checkbox to change color in multi-select mode
             val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
@@ -2346,28 +2346,27 @@ open class CardBrowser :
          * Get the background color of items in the card list based on the Card
          * @return index into TypedArray specifying the background color
          */
-        val color: Int
-            get() {
-                val card = card()
-                return when (card.userFlag()) {
-                    1 -> R.attr.flagRed
-                    2 -> R.attr.flagOrange
-                    3 -> R.attr.flagGreen
-                    4 -> R.attr.flagBlue
-                    5 -> R.attr.flagPink
-                    6 -> R.attr.flagTurquoise
-                    7 -> R.attr.flagPurple
-                    else -> {
-                        if (isMarked(card.note(col))) {
-                            R.attr.markedColor
-                        } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
-                            R.attr.suspendedColor
-                        } else {
-                            android.R.attr.colorBackground
-                        }
+        fun color(): Int {
+            val card = card()
+            return when (card.userFlag()) {
+                1 -> R.attr.flagRed
+                2 -> R.attr.flagOrange
+                3 -> R.attr.flagGreen
+                4 -> R.attr.flagBlue
+                5 -> R.attr.flagPink
+                6 -> R.attr.flagTurquoise
+                7 -> R.attr.flagPurple
+                else -> {
+                    if (isMarked(card.note(col))) {
+                        R.attr.markedColor
+                    } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
+                        R.attr.suspendedColor
+                    } else {
+                        android.R.attr.colorBackground
                     }
                 }
             }
+        }
 
         fun getColumnHeaderText(key: Column?): String? {
             val card = card()
