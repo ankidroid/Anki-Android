@@ -238,7 +238,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                mTemplateCount = col.findTemplates(toPreview.note()).size
+                mTemplateCount = col.findTemplates(toPreview.note(col)).size
                 if (mTemplateCount >= 2) {
                     previewLayout!!.showNavigationButtons()
                 }
@@ -286,7 +286,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             currentCard!!.oDid = currentCard!!.did
         }
         currentCard!!.did = newDid
-        val currentNote = currentCard!!.note()
+        val currentNote = currentCard!!.note(col)
         val tagsList = mNoteEditorBundle!!.getStringArrayList("tags")
         NoteUtils.setTags(currentNote, tagsList)
         return currentCard
@@ -373,44 +373,46 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             mNote = null
         }
 
-        /* if we have an unsaved note saved, use it instead of a collection lookup */ override fun note(
+        /* if we have an unsaved note saved, use it instead of a collection lookup */
+        override fun note(
+            col: Collection,
             reload: Boolean
         ): Note {
-            return mNote ?: super.note(reload)
+            return mNote ?: super.note(col, reload)
         }
 
         /** if we have an unsaved note saved, use it instead of a collection lookup  */
-        override fun note(): Note {
-            return mNote ?: super.note()
+        override fun note(col: Collection): Note {
+            return mNote ?: super.note(col)
         }
 
         /** if we have an unsaved note, never return empty  */
-        override fun isEmpty() = if (mNote != null) {
+        override fun isEmpty(col: Collection) = if (mNote != null) {
             false
         } else {
-            super.isEmpty()
+            super.isEmpty(col)
         }
 
         /** Override the method that fetches the model so we can render unsaved models  */
-        override fun model(): Model {
-            return mEditedModel ?: super.model()
+        override fun model(col: Collection): Model {
+            return mEditedModel ?: super.model(col)
         }
 
-        override fun render_output(reload: Boolean, browser: Boolean): TemplateRenderOutput {
+        override fun render_output(col: Collection, reload: Boolean, browser: Boolean): TemplateRenderOutput {
             if (render_output == null || reload) {
                 render_output = if (BackendFactory.defaultLegacySchema) {
                     col.render_output_legacy(this, reload, browser)
                 } else {
-                    val index = if (model().isCloze) {
+                    val index = if (model(col).isCloze) {
                         0
                     } else {
                         ord
                     }
                     val context = TemplateManager.TemplateRenderContext.from_card_layout(
-                        note(),
+                        note(col),
                         this,
-                        model(),
-                        model().getJSONArray("tmpls")[index] as JSONObject,
+                        model(col),
+                        model(col).getJSONArray("tmpls")[index] as JSONObject,
                         fill_empty = false
                     )
                     context.render()

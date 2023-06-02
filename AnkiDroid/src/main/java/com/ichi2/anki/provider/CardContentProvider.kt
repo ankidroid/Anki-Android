@@ -467,7 +467,7 @@ class CardContentProvider : ContentProvider() {
                     Timber.d("CardContentProvider: Moving card to other deck...")
                     col.decks.flush()
                     currentCard.did = did
-                    currentCard.flush()
+                    currentCard.flush(col = col)
                     col.save()
                     updated++
                 } else {
@@ -752,7 +752,7 @@ class CardContentProvider : ContentProvider() {
                 col.addNote(newNote, allowEmpty)
                 for (card: Card in newNote.cards()) {
                     card.did = deckId
-                    card.flush()
+                    card.flush(col = col)
                 }
                 result++
             }
@@ -1058,14 +1058,14 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addCardToCursor(@Suppress("UNUSED_PARAMETER") col: Collection, currentCard: Card, rv: MatrixCursor, columns: Array<String>) {
+    private fun addCardToCursor(col: Collection, currentCard: Card, rv: MatrixCursor, columns: Array<String>) {
         val cardName: String = try {
-            currentCard.template().getString("name")
+            currentCard.template(col).getString("name")
         } catch (je: JSONException) {
             throw IllegalArgumentException("Card is using an invalid template", je)
         }
-        val question = currentCard.q()
-        val answer = currentCard.a()
+        val question = currentCard.q(col = col)
+        val answer = currentCard.a(col)
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
@@ -1075,9 +1075,9 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.DECK_ID -> rb.add(currentCard.did)
                 FlashCardsContract.Card.QUESTION -> rb.add(question)
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
-                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple())
-                FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.render_output(false).answer_text)
-                FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer())
+                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple(col))
+                FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.render_output(col, false).answer_text)
+                FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer(col))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }
@@ -1091,7 +1091,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.ReviewInfo.CARD_ORD -> rb.add(currentCard.ord)
                 FlashCardsContract.ReviewInfo.BUTTON_COUNT -> rb.add(buttonCount)
                 FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES -> rb.add(nextReviewTimesJson.toString())
-                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.note().mid, currentCard.q() + currentCard.a())))
+                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.note(col).mid, currentCard.q(col = col) + currentCard.a(col))))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }

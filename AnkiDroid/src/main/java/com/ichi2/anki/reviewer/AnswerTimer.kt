@@ -23,6 +23,7 @@ import android.widget.Chronometer
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.R
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.themes.Themes.getColorFromAttr
 
 /**
@@ -56,9 +57,9 @@ class AnswerTimer(private val cardTimer: Chronometer) {
      *
      * This may also change the limit, based on [Card.timeLimit]
      */
-    fun setupForCard(newCard: Card) {
+    fun setupForCard(col: Collection, newCard: Card) {
         currentCard = newCard
-        showTimer = newCard.showTimer()
+        showTimer = newCard.showTimer(col)
         if (showTimer && cardTimer.visibility == View.INVISIBLE) {
             cardTimer.visibility = View.VISIBLE
         } else if (!showTimer && cardTimer.visibility != View.INVISIBLE) {
@@ -69,11 +70,11 @@ class AnswerTimer(private val cardTimer: Chronometer) {
         if (!showTimer) {
             cardTimer.stop()
         } else {
-            resetTimerUI(newCard)
+            resetTimerUI(col, newCard)
         }
     }
 
-    private fun resetTimerUI(newCard: Card) {
+    private fun resetTimerUI(col: Collection, newCard: Card) {
         // Set normal timer color
         cardTimer.setTextColor(getColorFromAttr(context, android.R.attr.textColor))
 
@@ -81,7 +82,7 @@ class AnswerTimer(private val cardTimer: Chronometer) {
         cardTimer.start()
 
         // Stop and highlight the timer if it reaches the time limit.
-        limit = newCard.timeLimit()
+        limit = newCard.timeLimit(col)
         cardTimer.setOnChronometerTickListener { chronometer: Chronometer ->
             val elapsed: Long = elapsedRealTime - chronometer.base
             if (elapsed >= limit) {
@@ -102,7 +103,7 @@ class AnswerTimer(private val cardTimer: Chronometer) {
         currentCard.stopTimer()
     }
 
-    fun resume() {
+    fun resume(col: Collection) {
         if (!this::currentCard.isInitialized) {
             return
         }
@@ -114,10 +115,10 @@ class AnswerTimer(private val cardTimer: Chronometer) {
             return
         }
         // Then update and resume the UI timer. Set the base time as if the timer had started
-        // timeTaken() seconds ago.
-        cardTimer.base = elapsedRealTime - currentCard.timeTaken()
+        // timeTaken(col) seconds ago.
+        cardTimer.base = elapsedRealTime - currentCard.timeTaken(col)
         // Don't start the timer if we have already reached the time limit or it will tick over
-        if (elapsedRealTime - cardTimer.base < currentCard.timeLimit()) {
+        if (elapsedRealTime - cardTimer.base < currentCard.timeLimit(col)) {
             cardTimer.start()
         }
     }

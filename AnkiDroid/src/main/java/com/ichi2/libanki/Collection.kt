@@ -933,7 +933,7 @@ open class Collection(
         }
         card.due = _dueForDid(card.did, due).toLong()
         if (flush) {
-            card.flush()
+            card.flush(col)
         }
         return card
     }
@@ -1380,15 +1380,20 @@ open class Collection(
         _loadScheduler()
     }
 
-    open fun render_output(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput? {
+    open fun render_output(
+        collection: Collection,
+        c: Card,
+        reload: Boolean,
+        browser: Boolean
+    ): TemplateRenderOutput? {
         return render_output_legacy(c, reload, browser)
     }
 
     @RustCleanup("Hack for Card Template Previewer, needs review")
     fun render_output_legacy(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput {
-        val f = c.note(reload)
-        val m = c.model()
-        val t = c.template()
+        val f = c.note(col, reload)
+        val m = c.model(col)
+        val t = c.template(col)
         val did: DeckId = if (c.isInDynamicDeck) {
             c.oDid
         } else {
@@ -1425,7 +1430,7 @@ open class Collection(
             answer_text = qa["a"]!!,
             question_av_tags = listOf(),
             answer_av_tags = listOf(),
-            css = c.model().getString("css")
+            css = c.model(col).getString("css")
         )
     }
 
@@ -1439,7 +1444,7 @@ open class Collection(
     }
 
     fun markReview(card: Card) {
-        val wasLeech = card.note().hasTag("leech")
+        val wasLeech = card.note(col).hasTag("leech")
         val clonedCard = card.clone()
         markUndo(UndoReview(wasLeech, clonedCard))
     }

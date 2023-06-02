@@ -20,14 +20,18 @@ import androidx.annotation.StringRes
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.UndoAction
 import com.ichi2.libanki.UndoAction.Companion.revertCardToProvidedState
 import com.ichi2.libanki.UndoAction.UndoNameId
+import com.ichi2.libanki.Utils
 import com.ichi2.utils.Computation
 import timber.log.Timber
-import java.util.*
+import java.util.Optional
 import java.util.concurrent.CancellationException
-import kotlin.collections.ArrayList
 import com.ichi2.libanki.Collection as AnkiCollection
 
 typealias NextCardAnd<T> = Computation<NextCard<T>>
@@ -56,15 +60,15 @@ class SchedulerService {
 
     class GetCard : ActionAndNextCard() {
         override fun execute(): ComputeResult {
-            return getCard(this)
+            return getCard(col, this)
         }
 
         companion object {
-            fun getCard(getCard: ActionAndNextCard): ComputeResult {
+            fun getCard(col: Collection, getCard: ActionAndNextCard): ComputeResult {
                 val sched = getCard.col.sched
                 Timber.i("Obtaining card")
                 val newCard = sched.card
-                newCard?.render_output(true)
+                newCard?.render_output(col, true)
                 return Computation.ok(NextCard.withNoResult(newCard))
             }
         }
@@ -85,7 +89,7 @@ class SchedulerService {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
                 // collect undo information
-                col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_bury_note, card))
+                col.markUndo(UndoAction.revertNoteToProvidedState(col, R.string.menu_bury_note, card))
                 // then bury
                 col.sched.buryNote(card.nid)
             }
@@ -95,7 +99,7 @@ class SchedulerService {
     class DeleteNote(val card: Card) : ActionAndNextCard() {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
-                val note: Note = card.note()
+                val note: Note = card.note(col)
                 // collect undo information
                 val allCs = note.cards()
                 col.markUndo(UndoDeleteNote(note, allCs, card))
@@ -125,12 +129,12 @@ class SchedulerService {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
                 // collect undo information
-                val cards = card.note().cards()
+                val cards = card.note(col).cards()
                 val cids = LongArray(cards.size)
                 for (i in cards.indices) {
                     cids[i] = cards[i].id
                 }
-                col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_suspend_note, card))
+                col.markUndo(UndoAction.revertNoteToProvidedState(col, R.string.menu_suspend_note, card))
                 // suspend note
                 col.sched.suspendCards(cids)
             }
@@ -181,7 +185,7 @@ class SchedulerService {
             note.flush(note.mod, false)
             ids.add(note.id)
             for (c in allCs) {
-                c.flush(false)
+                c.flush(col, false)
                 ids.add(c.id)
             }
             col.db.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids))
@@ -197,7 +201,7 @@ class SchedulerService {
         override fun undo(col: AnkiCollection): Card? {
             Timber.i("Undoing action of type %s on %d cards", javaClass, cardsCopied.size)
             for (card in cardsCopied) {
-                card.flush(false)
+                card.flush(col, false)
             }
             // /* card schedule change undone, reset and get
             // new card */

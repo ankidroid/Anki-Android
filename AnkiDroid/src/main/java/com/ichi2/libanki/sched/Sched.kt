@@ -91,10 +91,10 @@ class Sched(col: Collection) : SchedV2(col) {
         } else {
             throw RuntimeException("Invalid queue")
         }
-        _updateStats(card, "time", card.timeTaken().toLong())
+        _updateStats(card, "time", card.timeTaken(col).toLong())
         card.mod = time.intTime()
         card.usn = col.usn()
-        card.flushSched()
+        card.flushSched(col)
     }
 
     override fun counts(card: Card): Counts {
@@ -948,7 +948,7 @@ class Sched(col: Collection) : SchedV2(col) {
         // if over threshold or every half threshold reps after that
         if (card.lapses >= lf && (card.lapses - lf) % Math.max(lf / 2, 1) == 0) {
             // add a leech tag
-            val n = card.note()
+            val n = card.note(col)
             n.addTag("leech")
             n.flush()
             // handle

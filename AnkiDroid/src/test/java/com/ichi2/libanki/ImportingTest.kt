@@ -128,8 +128,8 @@ class ImportingTest : RobolectricTest() {
       assertEquals(1, dst.noteCount());
       // the front template should contain the text added in the 2nd package
       tlong cid = dst.findCards("")[0]  // only 1 note in collection
-      tNote note = dst.getCard(tcid).note();
-      assertThat(tnote.cards().get(0).template().getString("qfmt"), containsString("Changed Front Template"));
+      tNote note = dst.getCard(tcid).note(col);
+      assertThat(tnote.cards().get(0).template(col).getString("qfmt"), containsString("Changed Front Template"));
       }
 
       @Test

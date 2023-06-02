@@ -22,6 +22,7 @@ import androidx.annotation.CheckResult
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Sound
 import com.ichi2.libanki.Utils
 import timber.log.Timber
@@ -36,8 +37,8 @@ class HtmlGenerator(
 ) {
 
     @CheckResult
-    fun generateHtml(card: Card, reload: Boolean, side: Side): CardHtml {
-        return CardHtml.createInstance(card, reload, side, this)
+    fun generateHtml(col: Collection, card: Card, reload: Boolean, side: Side): CardHtml {
+        return CardHtml.createInstance(col, card, reload, side, this)
     }
 
     fun filterTypeAnswer(content: String, side: Side): String {

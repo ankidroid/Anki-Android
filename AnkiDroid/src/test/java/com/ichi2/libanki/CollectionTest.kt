@@ -37,7 +37,7 @@ class CollectionTest : RobolectricTest() {
         val did = addDeck("Testing")
         for (c in n.cards()) {
             c.did = did
-            c.flush()
+            c.flush(col)
         }
         assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
 
@@ -118,7 +118,7 @@ class CollectionTest : RobolectricTest() {
         assertEquals(4, col.cardCount())
         // check q/a generation
         val c0 = note.cards()[0]
-        assertThat(c0.q(), Matchers.containsString("three"))
+        assertThat(c0.q(col), Matchers.containsString("three"))
         // it should not be a duplicate
         assertEquals(note.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT)
         // now let's make a duplicate
@@ -188,16 +188,16 @@ class CollectionTest : RobolectricTest() {
         n.setItem("Front", "foo[abc]")
         col.addNote(n)
         val c = n.cards()[0]
-        assertTrue(c.q().endsWith("abc"))
+        assertTrue(c.q(col).endsWith("abc"))
         // and should avoid sound
         n.setItem("Front", "foo[sound:abc.mp3]")
         n.flush()
-        val question = c.q(true)
+        val question = c.q(col, true)
         assertThat("Question «$question» does not contains «anki:play».", question, Matchers.containsString("anki:play"))
         // it shouldn't throw an error while people are editing
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:}}")
         mm.save(m)
-        c.q(true)
+        c.q(col, true)
     }
 
     @Test

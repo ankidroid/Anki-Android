@@ -188,7 +188,9 @@ open class Reviewer :
     }
 
     override fun onResume() {
-        answerTimer.resume()
+        launchWithCol { 
+            answerTimer.resume(col)
+        }
         super.onResume()
     }
 
@@ -241,7 +243,7 @@ open class Reviewer :
             return
         }
         launchCatchingTask {
-            toggleMark(card.note())
+            toggleMark(card.note(col))
             refreshActionBar()
             onMarkChanged()
         }
@@ -261,7 +263,7 @@ open class Reviewer :
         launchCatchingTask {
             card.setUserFlag(flag)
             if (BackendFactory.defaultLegacySchema) {
-                card.flush()
+                card.flush(col)
                 /* Following code would allow to update value of {{cardFlag}}.
                Anki does not update this value when a flag is changed, so
                currently this code would do something that anki itself
@@ -729,7 +731,7 @@ open class Reviewer :
         mActionButtons.setCustomButtonsStatus(menu)
         var alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
-        if (currentCard != null && isMarked(currentCard!!.note())) {
+        if (currentCard != null && isMarked(currentCard!!.note(col))) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)
@@ -1139,7 +1141,7 @@ open class Reviewer :
 
     override fun displayCardQuestion() {
         // show timer, if activated in the deck's preferences
-        answerTimer.setupForCard(currentCard!!)
+        answerTimer.setupForCard(col, currentCard!!)
         delayedHide(100)
         super.displayCardQuestion()
     }

@@ -19,6 +19,7 @@ import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 
@@ -91,8 +92,8 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
         /**
          * hasUserDefinedNightMode finds out if the user has included class .night_mode in card's stylesheet
          */
-        fun hasUserDefinedNightMode(card: Card): Boolean {
-            return card.css().contains(nightModeClassRegex)
+        fun hasUserDefinedNightMode(col: Collection, card: Card): Boolean {
+            return card.css(col).contains(nightModeClassRegex)
         }
     }
 }

@@ -241,8 +241,8 @@ object NoteService {
     }
 }
 
-fun Card.totalLapsesOfNote() = NoteService.totalLapses(note())
+fun Card.totalLapsesOfNote(col: Collection) = NoteService.totalLapses(note(col))
 
-fun Card.totalReviewsForNote() = NoteService.totalReviews(note())
+fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(note(col))
 
-fun Card.avgIntervalOfNote() = NoteService.avgInterval(note())
+fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(note(col))

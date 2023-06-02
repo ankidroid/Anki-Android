@@ -120,7 +120,7 @@ class SchedTest : RobolectricTest() {
         val n = addNoteUsingBasicModel("Hello", "World")
         val c = n.firstCard()
         c.queue = QUEUE_TYPE_SIBLING_BURIED
-        c.flush()
+        c.flush(col)
         return c
     }
 
@@ -358,9 +358,9 @@ class SchedTest : RobolectricTest() {
         c.type = CARD_TYPE_REV
         c.queue = QUEUE_TYPE_LRN
         c.oDue = 321
-        c.flush()
+        c.flush(col)
         (col.sched as Sched).removeLrn()
-        c.load()
+        c.load(col)
         assertEquals(QUEUE_TYPE_REV, c.queue)
         assertEquals(321, c.due)
     }
@@ -381,17 +381,17 @@ class SchedTest : RobolectricTest() {
         col.reset()
         // should get '1' first
         var c = card!!
-        assertTrue(c.q().endsWith("1"))
+        assertTrue(c.q(col).endsWith("1"))
         // pass it so it's due in 10 minutes
         col.sched.answerCard(c, BUTTON_TWO)
         // get the other card
         c = card!!
-        assertTrue(c.q().endsWith("2"))
+        assertTrue(c.q(col).endsWith("2"))
         // fail it so it's due in 1 minute
         col.sched.answerCard(c, BUTTON_ONE)
         // we shouldn't get the same card again
         c = card!!
-        assertFalse(c.q().endsWith("2"))
+        assertFalse(c.q(col).endsWith("2"))
     }
 
     @Test
@@ -422,7 +422,7 @@ class SchedTest : RobolectricTest() {
         assertNull(card)
         // for testing, move it back a day
         c.due = c.due - 1
-        c.flush()
+        c.flush(col)
         col.reset()
         assertEquals(Counts(0, 1, 0), col.sched.counts())
         c = card!!
@@ -437,7 +437,7 @@ class SchedTest : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_TWO)
         // simulate the passing of another two days
         c.due = c.due - 2
-        c.flush()
+        c.flush(col)
         col.reset()
         // the last pass should graduate it into a review card
         assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_TWO))
@@ -447,7 +447,7 @@ class SchedTest : RobolectricTest() {
         // if the lapse step is tomorrow, failing it should handle the counts
         // correctly
         c.due = 0
-        c.flush()
+        c.flush(col)
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
         conf = col.sched._cardConf(c)
@@ -478,7 +478,7 @@ class SchedTest : RobolectricTest() {
             lapses = 1
             ivl = 100
             startTimer()
-            flush()
+            flush(col)
         }
         // save it for later use as well
         val cardcopy = c.clone()
@@ -509,7 +509,7 @@ class SchedTest : RobolectricTest() {
         // try again with an ease of 2 instead
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c = cardcopy.clone()
-        c.flush()
+        c.flush(col)
         col.sched.answerCard(c, BUTTON_TWO)
         assertEquals(QUEUE_TYPE_REV, c.queue)
         // the new interval should be (100 + 8/4) * 1.2 = 122
@@ -523,7 +523,7 @@ class SchedTest : RobolectricTest() {
         // ease 3
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c = cardcopy.clone()
-        c.flush()
+        c.flush(col)
         col.sched.answerCard(c, BUTTON_THREE)
         // the new interval should be (100 + 8/2) * 2.5 = 260
         assertTrue(checkRevIvl(c, 260))
@@ -533,7 +533,7 @@ class SchedTest : RobolectricTest() {
         // ease 4
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c = cardcopy.clone()
-        c.flush()
+        c.flush(col)
         col.sched.answerCard(c, BUTTON_FOUR)
         // the new interval should be (100 + 8) * 2.5 * 1.3 = 351
         assertTrue(checkRevIvl(c, 351))
@@ -557,7 +557,7 @@ class SchedTest : RobolectricTest() {
         c.setReps(1)
         c.ivl = 1
         c.startTimer()
-        c.flush()
+        c.flush(col)
         col.reset()
         // Upstream, there is no space in 2d
         assertEquals("2 d", without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_TWO)))
@@ -584,7 +584,7 @@ class SchedTest : RobolectricTest() {
           c.setFactor(STARTING_FACTOR);
           c.setLeft(2002);
           c.setIvl(0);
-          c.flush();
+          c.flush(col);
           // checkpoint
           col.save();
           col.getSched().reset();
@@ -742,7 +742,7 @@ class SchedTest : RobolectricTest() {
             ivl = 100
             type = CARD_TYPE_REV
             queue = QUEUE_TYPE_REV
-            flush()
+            flush(col)
         }
 
         col.reset()
@@ -753,20 +753,20 @@ class SchedTest : RobolectricTest() {
         assertEquals(CARD_TYPE_REV, c.type)
         col.sched.suspendCards(longArrayOf(c.id))
         col.sched.unsuspendCards(longArrayOf(c.id))
-        c.load()
+        c.load(col)
         assertEquals(QUEUE_TYPE_REV, c.queue)
         assertEquals(CARD_TYPE_REV, c.type)
         assertEquals(1, c.due)
         // should cope with cards in cram decks
         c.due = 1
-        c.flush()
+        c.flush(col)
         addDynamicDeck("tmp")
         col.sched.rebuildDyn()
-        c.load()
+        c.load(col)
         assertNotEquals(1, c.due)
         assertNotEquals(1, c.did)
         col.sched.suspendCards(longArrayOf(c.id))
-        c.load()
+        c.load(col)
         assertEquals(1, c.due)
         assertEquals(1, c.did)
     }
@@ -787,7 +787,7 @@ class SchedTest : RobolectricTest() {
             mod = 1
             factor = STARTING_FACTOR
             startTimer()
-            flush()
+            flush(col)
         }
         col.reset()
         assertEquals(Counts(0, 0, 0), col.sched.counts())
@@ -856,7 +856,7 @@ class SchedTest : RobolectricTest() {
         // delete the deck, returning the card mid-study
         col.decks.rem(col.decks.selected())
         assertEquals(1, col.sched.deckDueTree().size.toLong())
-        c.load()
+        c.load(col)
         assertEquals(1, c.ivl)
         assertEquals((col.sched.today + 1).toLong(), c.due)
         // make it due
@@ -864,7 +864,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(Counts(0, 0, 0), col.sched.counts())
         c.due = -5
         c.ivl = 100
-        c.flush()
+        c.flush(col)
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
         // cram again
@@ -872,7 +872,7 @@ class SchedTest : RobolectricTest() {
         col.sched.rebuildDyn(did)
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
-        c.load()
+        c.load(col)
         assertEquals(4, col.sched.answerButtons(c).toLong())
         // add a sibling so we can test minSpace, etc
         val c2 = c.clone()
@@ -880,7 +880,7 @@ class SchedTest : RobolectricTest() {
             id = 0
             ord = 1
             due = 325
-            flush()
+            flush(col)
         }
 
         // should be able to answer it
@@ -909,7 +909,7 @@ class SchedTest : RobolectricTest() {
         assertNotEquals(c.due, oldDue)
         // if we terminate cramming prematurely it should be set back to new
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(QUEUE_TYPE_NEW, c.queue)
         assertEquals(CARD_TYPE_NEW, c.type)
         assertEquals(oldDue, c.due)
@@ -946,7 +946,7 @@ class SchedTest : RobolectricTest() {
             type = CARD_TYPE_REV
             due = (col.sched.today + 25).toLong()
             factor = STARTING_FACTOR
-            flush()
+            flush(col)
         }
         val cardcopy = c.clone()
         col.sched.rebuildDyn(did)
@@ -960,61 +960,61 @@ class SchedTest : RobolectricTest() {
         assertEquals((col.sched.today + 25).toLong(), c.due)
         // check failure too
         c = cardcopy
-        c.flush()
+        c.flush(col)
         col.sched.rebuildDyn(did)
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals((col.sched.today + 25).toLong(), c.due)
         // fail+grad early
         c = cardcopy
-        c.flush()
+        c.flush(col)
         col.sched.rebuildDyn(did)
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched.answerCard(c, BUTTON_THREE)
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals((col.sched.today + 25).toLong(), c.due)
         // due cards - pass
         c = cardcopy
         c.due = -25
-        c.flush()
+        c.flush(col)
         col.sched.rebuildDyn(did)
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_THREE)
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals(-25, c.due)
         // fail
         c = cardcopy
         c.due = -25
-        c.flush()
+        c.flush(col)
         col.sched.rebuildDyn(did)
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals(-25, c.due)
         // fail with normal grad
         c = cardcopy
         c.due = -25
-        c.flush()
+        c.flush(col)
         col.sched.rebuildDyn(did)
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched.answerCard(c, BUTTON_THREE)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals(-25, c.due)
         // lapsed card pulled into cram
@@ -1149,7 +1149,7 @@ class SchedTest : RobolectricTest() {
             type = CARD_TYPE_REV
             queue = QUEUE_TYPE_REV
             due = col.sched.today.toLong()
-            flush()
+            flush(col)
         }
 
         col.reset()
@@ -1172,7 +1172,7 @@ class SchedTest : RobolectricTest() {
                 type = CARD_TYPE_REV
                 queue = QUEUE_TYPE_REV
                 due = 0
-                flush()
+                flush(col)
             }
         }
         // fail the first one
@@ -1236,7 +1236,7 @@ class SchedTest : RobolectricTest() {
         val c = note.cards()[0]
         c.queue = QUEUE_TYPE_REV
         c.due = 0
-        c.flush()
+        c.flush(col)
         // add one more with a new deck
         note = col.newNote()
         note.setItem("Front", "two")
@@ -1265,7 +1265,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(0, value.newCount.toLong())
         // code should not fail if a card has an invalid deck
         c.did = 12345
-        c.flush()
+        c.flush(col)
         col.sched.deckDueTree()
     }
 
@@ -1294,7 +1294,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(Counts(3, 0, 0), col.sched.counts())
         for (i in arrayOf("one", "three", "two")) {
             val c = card!!
-            assertEquals(c.note().getItem("Front"), i)
+            assertEquals(c.note(col).getItem("Front"), i)
             col.sched.answerCard(c, BUTTON_TWO)
         }
     }
@@ -1355,7 +1355,7 @@ class SchedTest : RobolectricTest() {
             type = CARD_TYPE_REV
             ivl = 100
             due = 0
-            flush()
+            flush(col)
         }
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
@@ -1373,13 +1373,13 @@ class SchedTest : RobolectricTest() {
         col.addNote(note)
         val c = note.cards()[0]
         col.sched.reschedCards(listOf(c.id), 0, 0)
-        c.load()
+        c.load(col)
         assertEquals(col.sched.today.toLong(), c.due)
         assertEquals(1, c.ivl)
         assertEquals(CARD_TYPE_REV, c.type)
         assertEquals(QUEUE_TYPE_REV, c.queue)
         col.sched.reschedCards(listOf(c.id), 1, 1)
-        c.load()
+        c.load(col)
         assertEquals((col.sched.today + 1).toLong(), c.due)
         assertEquals(+1, c.ivl)
     }
@@ -1401,7 +1401,7 @@ class SchedTest : RobolectricTest() {
             lapses = 1
             ivl = 100
             startTimer()
-            flush()
+            flush(col)
         }
         col.reset()
         col.sched.answerCard(c, BUTTON_ONE)
@@ -1426,7 +1426,7 @@ class SchedTest : RobolectricTest() {
             setReps(3)
             lapses = 1
             startTimer()
-            flush()
+            flush(col)
         }
 
         val conf = col.sched._cardConf(c)

@@ -132,9 +132,9 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         assertThat(javaScriptFunction.ankiGetCardFlag(), equalTo(1))
 
         // Card Mark
-        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(false))
-        reviewer.currentCard!!.note().addTag("marked")
-        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(true))
+        assertThat(javaScriptFunction.ankiGetCardMark(col), equalTo(false))
+        reviewer.currentCard!!.note(col).addTag("marked")
+        assertThat(javaScriptFunction.ankiGetCardMark(col), equalTo(true))
     }
 
     @Test
@@ -185,7 +185,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Card mark test
         // ---------------
         // Before marking card
-        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(false))
+        assertThat(javaScriptFunction.ankiGetCardMark(col), equalTo(false))
 
         // call javascript function defined in card.js to mark card
         var markCardJs = "javascript:(function () {\n"

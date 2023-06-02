@@ -131,11 +131,12 @@ class CollectionV16(
     }
 
     override fun render_output(
+        collection: Collection,
         c: Card,
         reload: Boolean,
         browser: Boolean
     ): TemplateManager.TemplateRenderContext.TemplateRenderOutput {
-        return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
+        return TemplateManager.TemplateRenderContext.from_existing_card(col, c, browser).render()
     }
 
     override fun findCards(

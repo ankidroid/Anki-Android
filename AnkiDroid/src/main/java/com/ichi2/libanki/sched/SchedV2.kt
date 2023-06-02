@@ -241,10 +241,10 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
         _answerCard(card, ease)
 
-        _updateStats(card, "time", card.timeTaken().toLong())
+        _updateStats(card, "time", card.timeTaken(col).toLong())
         card.mod = time.intTime()
         card.usn = col.usn()
-        card.flushSched()
+        card.flushSched(col)
     }
 
     fun _answerCard(card: Card, @BUTTON_TYPE ease: Int) {
@@ -1392,7 +1392,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     ) {
         val lastIvl = -_delayForGrade(conf, lastLeft)
         val ivl = if (leaving) card.ivl else -_delayForGrade(conf, card.left)
-        log(card.id, col.usn(), ease, ivl, lastIvl, card.factor, card.timeTaken(), type)
+        log(card.id, col.usn(), ease, ivl, lastIvl, card.factor, card.timeTaken(col), type)
     }
 
     protected fun log(
@@ -1680,7 +1680,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             if (delay != 0) -delay else card.ivl,
             card.lastIvl,
             card.factor,
-            card.timeTaken(),
+            card.timeTaken(col),
             type
         )
     }
@@ -1945,7 +1945,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         // if over threshold or every half threshold reps after that
         if (card.lapses >= lf && (card.lapses - lf) % Math.max(lf / 2, 1) == 0) {
             // add a leech tag
-            val n = card.note()
+            val n = card.note(col)
             n.addTag("leech")
             n.flush()
             // handle
@@ -2670,13 +2670,13 @@ end)  """
 
     override fun undoReview(card: Card, wasLeech: Boolean) {
         // remove leech tag if it didn't have it before
-        if (!wasLeech && card.note().hasTag("leech")) {
-            card.note().delTag("leech")
-            card.note().flush()
+        if (!wasLeech && card.note(col).hasTag("leech")) {
+            card.note(col).delTag("leech")
+            card.note(col).flush()
         }
         Timber.i("Undo Review of card %d, leech: %b", card.id, wasLeech)
         // write old data
-        card.flush(false)
+        card.flush(col, false)
         val conf = _cardConf(card)
         val previewing = conf.isDyn && !conf.getBoolean("resched")
         if (!previewing) {

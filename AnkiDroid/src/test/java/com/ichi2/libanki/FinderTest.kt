@@ -184,17 +184,17 @@ class FinderTest : RobolectricTest() {
         c.queue = QUEUE_TYPE_REV
         c.type = CARD_TYPE_REV
         assertEquals(0, col.findCards("is:review").size)
-        c.flush()
+        c.flush(col)
         AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:review"))
         assertEquals(0, col.findCards("is:due").size)
         c.due = 0
         c.queue = QUEUE_TYPE_REV
-        c.flush()
+        c.flush(col)
         AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:due"))
         assertEquals(4, col.findCards("-is:due").size)
         c.queue = QUEUE_TYPE_SUSPENDED
         // ensure this card gets a later mod time
-        c.flush()
+        c.flush(col)
         col.db.execute("update cards set mod = mod + 1 where id = ?", c.id)
         AnkiAssert.assertEqualsArrayList(arrayOf(c.id), col.findCards("is:suspended"))
         // nids

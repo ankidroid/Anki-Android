@@ -32,7 +32,7 @@ abstract class CardQueue<T : Card.Cache>(
     fun loadFirstCard() {
         if (!queue.isEmpty()) {
             // No need to reload. If the card was changed, reset would have been called and emptied the queue
-            queue[0].loadQA(false, false)
+            queue[0].loadQA(col, false, false)
         }
     }
 

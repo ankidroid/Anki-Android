@@ -462,7 +462,7 @@ class CardBrowserTest : RobolectricTest() {
             due = 5
             queue = Consts.QUEUE_TYPE_REV
             type = Consts.CARD_TYPE_REV
-            flush()
+            flush(col)
         }
 
         val b = browserWithNoNewCards
@@ -552,7 +552,7 @@ class CardBrowserTest : RobolectricTest() {
         col.decks.select(deck)
         val c2 = addNoteUsingBasicModel("New", "world").firstCard()
         c2.did = deck
-        c2.flush()
+        c2.flush(col)
 
         val cardBrowser = browserWithNoNewCards
         cardBrowser.searchCards("world or hello")
@@ -609,7 +609,7 @@ class CardBrowserTest : RobolectricTest() {
         col.decks.select(deck)
         val c2 = addNoteUsingBasicModel("Front", "Back").firstCard()
         c2.did = deck
-        c2.flush()
+        c2.flush(col)
 
         val cardBrowser = browserWithNoNewCards
         cardBrowser.searchCards("Hello")
@@ -643,7 +643,7 @@ class CardBrowserTest : RobolectricTest() {
     private fun flagCardForNote(n: Note, flag: Int) {
         val c = n.firstCard()
         c.setUserFlag(flag)
-        c.flush()
+        c.flush(col)
     }
 
     private fun selectDefaultDeck() {

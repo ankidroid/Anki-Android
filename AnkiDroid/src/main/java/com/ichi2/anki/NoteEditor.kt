@@ -322,7 +322,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     finishWithoutAnimation()
                     return
                 }
-                mEditorNote = mCurrentEditedCard!!.note()
+                mEditorNote = mCurrentEditedCard!!.note(col)
                 addNote = false
             }
             CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_NOTEEDITOR ->
@@ -334,7 +334,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     finishWithoutAnimation()
                     return
                 }
-                mEditorNote = mCurrentEditedCard!!.note()
+                mEditorNote = mCurrentEditedCard!!.note(col)
                 addNote = false
             }
             CALLER_NOTEEDITOR_INTENT_ADD -> {
@@ -608,7 +608,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // changed note type?
         if (!addNote && mCurrentEditedCard != null) {
             val newModel: JSONObject? = currentlySelectedModel
-            val oldModel: JSONObject = mCurrentEditedCard!!.model()
+            val oldModel: JSONObject = mCurrentEditedCard!!.model(col)
             if (newModel != oldModel) {
                 return true
             }
@@ -727,7 +727,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         } else {
             // Check whether note type has been changed
             val newModel = currentlySelectedModel
-            val oldModel = if (mCurrentEditedCard == null) null else mCurrentEditedCard!!.model()
+            val oldModel = if (mCurrentEditedCard == null) null else mCurrentEditedCard!!.model(col)
             if (newModel != oldModel) {
                 mReloadRequired = true
                 if (mModelChangeCardMap!!.size < mEditorNote!!.numberOfCards() || mModelChangeCardMap!!.containsValue(
@@ -761,9 +761,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 col.setDeck(longArrayOf(mCurrentEditedCard!!.id), deckId)
                 // refresh the card object to reflect the database changes from above
-                mCurrentEditedCard!!.load()
+                mCurrentEditedCard!!.load(col)
                 // also reload the note object
-                mEditorNote = mCurrentEditedCard!!.note()
+                mEditorNote = mCurrentEditedCard!!.note(col)
                 // then set the card ID to the new deck
                 mCurrentEditedCard!!.did = deckId
                 modified = true
@@ -1882,7 +1882,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         for (i in 0 until tmpls.length()) {
             var name = tmpls.getJSONObject(i).optString("name")
             // If more than one card, and we have an existing card, underline existing card
-            if (!addNote && tmpls.length() > 1 && model === mEditorNote!!.model() && mCurrentEditedCard != null && mCurrentEditedCard!!.template()
+            if (!addNote && tmpls.length() > 1 && model === mEditorNote!!.model() && mCurrentEditedCard != null && mCurrentEditedCard!!.template(col)
                 .optString("name") == name
             ) {
                 name = "<u>$name</u>"
@@ -1980,7 +1980,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private inner class EditNoteTypeListener : OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
             // Get the current model
-            val noteModelId = mCurrentEditedCard!!.model().getLong("id")
+            val noteModelId = mCurrentEditedCard!!.model(col).getLong("id")
             // Get new model
             val newModel = col.models.get(mAllModelIds!![pos])
             if (newModel == null) {
@@ -2024,7 +2024,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 updateFieldsFromStickyText()
             } else {
                 populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false)
-                updateCards(mCurrentEditedCard!!.model())
+                updateCards(mCurrentEditedCard!!.model(col))
                 findViewById<View>(R.id.CardEditorTagButton).isEnabled = true
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
                 mDeckSpinnerSelection!!.setEnabledActionBarSpinner(true)

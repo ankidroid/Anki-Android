@@ -27,7 +27,6 @@ import com.ichi2.libanki.Note
 import com.ichi2.libanki.UndoAction
 import com.ichi2.libanki.Utils
 import timber.log.Timber
-import java.util.ArrayList
 
 /** @param hasUnsuspended  whether there were any unsuspended card (in which card the action was "Suspend",
  * otherwise the action was "Unsuspend")
@@ -78,7 +77,7 @@ class UndoDeleteNoteMulti(private val notesArr: Array<Note>, private val allCard
             ids.add(n.id)
         }
         for (c in allCards) {
-            c.flush(false)
+            c.flush(col, false)
             ids.add(c.id)
         }
         col.db.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids))
@@ -94,11 +93,11 @@ class UndoChangeDeckMulti(private val cards: Array<Card>, private val originalDi
         // move cards to original deck
         for (i in cards.indices) {
             val card = cards[i]
-            card.load()
+            card.load(col)
             card.did = originalDids[i]
-            val note = card.note()
+            val note = card.note(col)
             note.flush()
-            card.flush()
+            card.flush(col)
         }
         return null // don't fetch new card
     }

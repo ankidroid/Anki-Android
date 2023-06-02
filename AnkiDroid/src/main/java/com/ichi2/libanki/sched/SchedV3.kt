@@ -17,7 +17,11 @@
 package com.ichi2.libanki.sched
 
 import android.app.Activity
-import anki.scheduler.*
+import anki.scheduler.CardAnswer
+import anki.scheduler.QueuedCards
+import anki.scheduler.SchedulingState
+import anki.scheduler.SchedulingStates
+import anki.scheduler.cardAnswer
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CollectionV16
@@ -73,7 +77,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
             activityForLeechNotification?.get()?.let { leech(card, it) }
         }
         // tests assume the card was mutated
-        card.load()
+        card.load(col)
     }
 
     fun buildAnswer(card: Card, states: SchedulingStates, ease: Int): CardAnswer {
@@ -83,7 +87,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
             newState = stateFromEase(states, ease)
             rating = ratingFromEase(ease)
             answeredAtMillis = time.intTimeMS()
-            millisecondsTaken = card.timeTaken()
+            millisecondsTaken = card.timeTaken(col)
         }
     }
 

@@ -316,8 +316,8 @@ class CardInfo : AnkiActivity() {
                 var easeInPercent: Double? = c.factor / 1000.0
                 val lapses = c.lapses
                 val reviews = c.reps
-                val model = col.models.get(c.note().mid)
-                val cardType = getCardType(c, model)
+                val model = col.models.get(c.note(col).mid)
+                val cardType = getCardType(col, c, model)
                 val noteType = model!!.getString("name")
                 val deckName = col.decks.get(c.did).getString("name")
                 val noteId = c.nid
@@ -328,7 +328,7 @@ class CardInfo : AnkiActivity() {
                 if (c.type < Consts.CARD_TYPE_REV) {
                     easeInPercent = null
                 }
-                val due = c.dueString()
+                val due = c.dueString(col)
                 val entries: MutableList<RevLogEntry> = ArrayList(col.db.queryScalar("select count() from revlog where cid = ?", c.id))
                 col.db.query(
                     "select " +
@@ -356,9 +356,9 @@ class CardInfo : AnkiActivity() {
                 return CardInfoModel(addedDate, firstReview, latestReview, due, interval, easeInPercent, reviews, lapses, averageTime, totalTime, cardType, noteType, deckName, noteId, entries)
             }
 
-            protected fun getCardType(c: Card, model: Model?): String? {
+            protected fun getCardType(col: Collection, c: Card, model: Model?): String? {
                 return try {
-                    val ord = if (c.model().isCloze) {
+                    val ord = if (c.model(col).isCloze) {
                         0
                     } else {
                         c.ord

@@ -375,7 +375,7 @@ class ReviewerTest : RobolectricTest() {
         reviewCard.queue = Consts.QUEUE_TYPE_REV
         reviewCard.type = Consts.CARD_TYPE_REV
         reviewCard.due = 0
-        reviewCard.flush()
+        reviewCard.flush(col)
     }
 
     private class ReviewerForMenuItems : Reviewer() {

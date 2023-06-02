@@ -30,35 +30,35 @@ class ClozeTest : RobolectricTest() {
         f.setItem("Text", "nothing")
         assertThat(d.addNote(f), greaterThan(0))
         val card = f.cards()[0]
-        assertTrue(card.isEmpty())
+        assertTrue(card.isEmpty(col))
         // try with one cloze
         f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "hello {{c1::world}}")
         assertEquals(1, d.addNote(f))
-        assertThat(f.firstCard().q(), containsString("hello <span class=cloze>[...]</span>"))
-        assertThat(f.firstCard().a(), containsString("hello <span class=cloze>world</span>"))
+        assertThat(f.firstCard().q(col), containsString("hello <span class=cloze>[...]</span>"))
+        assertThat(f.firstCard().a(col), containsString("hello <span class=cloze>world</span>"))
         // and with a comment
         f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "hello {{c1::world::typical}}")
         assertEquals(1, d.addNote(f))
-        assertThat(f.firstCard().q(), containsString("<span class=cloze>[typical]</span>"))
-        assertThat(f.firstCard().a(), containsString("<span class=cloze>world</span>"))
+        assertThat(f.firstCard().q(col), containsString("<span class=cloze>[typical]</span>"))
+        assertThat(f.firstCard().a(col), containsString("<span class=cloze>world</span>"))
         // and with two clozes
         f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "hello {{c1::world}} {{c2::bar}}")
         assertEquals(2, d.addNote(f))
         val c1 = f.firstCard()
         val c2 = f.cards()[1]
-        assertThat(c1.q(), containsString("<span class=cloze>[...]</span> bar"))
-        assertThat(c1.a(), containsString("<span class=cloze>world</span> bar"))
-        assertThat(c2.q(), containsString("world <span class=cloze>[...]</span>"))
-        assertThat(c2.a(), containsString("world <span class=cloze>bar</span>"))
+        assertThat(c1.q(col), containsString("<span class=cloze>[...]</span> bar"))
+        assertThat(c1.a(col), containsString("<span class=cloze>world</span> bar"))
+        assertThat(c2.q(col), containsString("world <span class=cloze>[...]</span>"))
+        assertThat(c2.a(col), containsString("world <span class=cloze>bar</span>"))
         // if there are multiple answers for a single cloze, they are given in a
         // list
         f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "a {{c1::b}} {{c1::c}}")
         assertEquals(1, d.addNote(f))
-        assertThat(f.firstCard().a(), containsString("<span class=cloze>b</span> <span class=cloze>c</span>"))
+        assertThat(f.firstCard().a(col), containsString("<span class=cloze>b</span> <span class=cloze>c</span>"))
         // if we add another cloze, a card should be generated
         val cnt = d.cardCount()
         f.setItem("Text", "{{c2::hello}} {{c1::foo}}")
@@ -79,8 +79,8 @@ class ClozeTest : RobolectricTest() {
         f.flush()
         if (!BackendFactory.defaultLegacySchema) { f.id = 0 }
         assertEquals(1, d.addNote(f))
-        assertThat(f.firstCard().q(), containsString("Cloze with <span class=cloze>[...]</span>"))
-        assertThat(f.firstCard().a(), containsString("Cloze with <span class=cloze>multi-line\nstring</span>"))
+        assertThat(f.firstCard().q(col), containsString("Cloze with <span class=cloze>[...]</span>"))
+        assertThat(f.firstCard().a(col), containsString("Cloze with <span class=cloze>multi-line\nstring</span>"))
         // try a multiline cloze in p tag
         f.setItem(
             "Text",
@@ -92,8 +92,8 @@ class ClozeTest : RobolectricTest() {
         f.flush()
         if (!BackendFactory.defaultLegacySchema) { f.id = 0 }
         assertEquals(1, d.addNote(f))
-        assertThat(f.firstCard().q(), containsString("<p>Cloze in html tag with <span class=cloze>[...]</span>"))
-        assertThat(f.firstCard().a(), containsString("<p>Cloze in html tag with <span class=cloze>multi-line\nstring</span>"))
+        assertThat(f.firstCard().q(col), containsString("<p>Cloze in html tag with <span class=cloze>[...]</span>"))
+        assertThat(f.firstCard().a(col), containsString("<p>Cloze in html tag with <span class=cloze>multi-line\nstring</span>"))
 
         // make sure multiline cloze things aren't too greedy
         f.setItem(
@@ -108,7 +108,7 @@ class ClozeTest : RobolectricTest() {
         if (!BackendFactory.defaultLegacySchema) { f.id = 0 }
         assertEquals(1, d.addNote(f))
         assertThat(
-            f.firstCard().q(),
+            f.firstCard().q(col),
             containsString(
                 """
     <p>Cloze in html tag with <span class=cloze>[...]</span> and then {{c2:another
@@ -117,7 +117,7 @@ class ClozeTest : RobolectricTest() {
             )
         )
         assertThat(
-            f.firstCard().a(),
+            f.firstCard().a(col),
             containsString(
                 """
     <p>Cloze in html tag with <span class=cloze>multi-line
