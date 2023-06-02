@@ -37,7 +37,7 @@ abstract class CardQueue<T : Card.Cache>(
 
     @Throws(NoSuchElementException::class)
     fun removeFirstCard(): Card {
-        return queue.remove()!!.card
+        return queue.remove()!!.card()
     }
 
     fun remove(cid: CardId) =

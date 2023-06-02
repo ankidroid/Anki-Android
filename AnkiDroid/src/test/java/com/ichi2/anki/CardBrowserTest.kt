@@ -270,13 +270,13 @@ class CardBrowserTest : RobolectricTest() {
         val flag = 1
         cardBrowser.updateSelectedCardsFlag(flag)
         // check if card flag turned to flag = 1
-        assertThat("Card should be flagged", getCheckedCard(cardBrowser).card.userFlag(), equalTo(flag))
+        assertThat("Card should be flagged", getCheckedCard(cardBrowser).card().userFlag(), equalTo(flag))
 
         // unflag the selected card with flag = 0
         val unflagFlag = 0
         cardBrowser.updateSelectedCardsFlag(unflagFlag)
         // check if card flag actually changed from flag = 1
-        assertThat("Card flag should be removed", getCheckedCard(cardBrowser).card.userFlag(), not(flag))
+        assertThat("Card flag should be removed", getCheckedCard(cardBrowser).card().userFlag(), not(flag))
 
         // deselect and select all cards
         cardBrowser.onSelectNone()
@@ -308,7 +308,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private fun getCardFlagAfterFlagChangeDone(cardBrowser: CardBrowser, cardId: CardId): Int {
-        return cardBrowser.getPropertiesForCardId(cardId).card.userFlag()
+        return cardBrowser.getPropertiesForCardId(cardId).card().userFlag()
     }
 
     @Test
