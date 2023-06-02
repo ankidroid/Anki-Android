@@ -328,7 +328,7 @@ class CardInfo : AnkiActivity() {
                 if (c.type < Consts.CARD_TYPE_REV) {
                     easeInPercent = null
                 }
-                val due = c.dueString
+                val due = c.dueString()
                 val entries: MutableList<RevLogEntry> = ArrayList(col.db.queryScalar("select count() from revlog where cid = ?", c.id))
                 col.db.query(
                     "select " +

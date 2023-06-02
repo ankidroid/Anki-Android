@@ -430,14 +430,13 @@ open class Card : Cloneable {
     }
 
     // not in Anki.
-    val dueString: String
-        get() {
-            var t = nextDue()
-            if (queue < 0) {
-                t = "($t)"
-            }
-            return t
+    fun dueString(): String {
+        var t = nextDue()
+        if (queue < 0) {
+            t = "($t)"
         }
+        return t
+    }
 
     // as in Anki aqt/browser.py
     @VisibleForTesting
