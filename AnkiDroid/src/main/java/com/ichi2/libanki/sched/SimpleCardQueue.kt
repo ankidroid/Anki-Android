@@ -20,6 +20,6 @@ import com.ichi2.libanki.Card
 
 class SimpleCardQueue(sched: AbstractSched) : CardQueue<Card.Cache>(sched) {
     fun add(id: Long) {
-        add(Card.Cache(col, id))
+        add(Card.Cache(id))
     }
 }

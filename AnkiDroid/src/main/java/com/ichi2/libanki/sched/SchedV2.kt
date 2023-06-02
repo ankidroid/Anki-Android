@@ -2656,7 +2656,7 @@ end)  """
                 break
             }
         }
-        i.add(LrnCard(col, due, id))
+        i.add(LrnCard(due, id))
     }
 
     fun leechActionSuspend(card: Card): Boolean {

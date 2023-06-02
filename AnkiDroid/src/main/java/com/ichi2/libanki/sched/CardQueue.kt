@@ -38,7 +38,7 @@ abstract class CardQueue<T : Card.Cache>(
 
     @Throws(NoSuchElementException::class)
     fun removeFirstCard(): Card {
-        return queue.remove()!!.card()
+        return queue.remove()!!.card(col)
     }
 
     // CardCache and LrnCache with the same id will be considered as equal so it's a valid implementation.

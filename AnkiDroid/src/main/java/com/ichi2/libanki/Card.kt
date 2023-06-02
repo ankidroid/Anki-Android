@@ -494,25 +494,21 @@ open class Card : Cloneable {
      * Card card2 = cache.getCard();
      */
     open class Cache : Cloneable {
-        val col: Collection
         val id: Long
         private var mCard: Card? = null
 
-        constructor(col: Collection, id: Long) {
-            this.col = col
+        constructor(id: Long) {
             this.id = id
         }
 
         /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded.  */
         protected constructor(cache: Cache) {
-            col = cache.col
             this.id = cache.id
             mCard = cache.mCard
         }
 
         /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded.  */
-        constructor(col: Collection, card: Card) {
-            this.col = col
+        constructor(card: Card) {
             this.id = card.id
             mCard = card
         }
@@ -522,7 +518,7 @@ open class Card : Cloneable {
          * may have changed in database. So it is not equivalent to getCol().getCard(getId()). If you need fresh data, reload
          * first. */
         @Synchronized
-        fun card(): Card {
+        fun card(col: Collection): Card {
             if (mCard == null) {
                 mCard = col.getCard(this.id)
             }
@@ -541,7 +537,7 @@ open class Card : Cloneable {
 
         /** The cloned version represents the same card but data are not loaded.  */
         public override fun clone(): Cache {
-            return Cache(col, this.id)
+            return Cache(this.id)
         }
 
         override fun equals(other: Any?): Boolean {
@@ -553,7 +549,7 @@ open class Card : Cloneable {
         }
 
         fun loadQA(col: Collection, reload: Boolean, browser: Boolean) {
-            card().render_output(col, reload, browser)
+            card(col).render_output(col, reload, browser)
         }
     }
 

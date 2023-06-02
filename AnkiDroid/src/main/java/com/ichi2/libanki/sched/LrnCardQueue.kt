@@ -27,7 +27,7 @@ class LrnCardQueue(sched: AbstractSched) : CardQueue<LrnCard>(sched) {
         private set
 
     fun add(due: Long, cid: CardId) {
-        add(LrnCard(col, due, cid))
+        add(LrnCard(due, cid))
     }
 
     fun sort() {

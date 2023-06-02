@@ -1668,7 +1668,7 @@ open class CardBrowser :
             val cards = withProgress { searchForCards(query, order, inCardsMode) }
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
-                cards[i].load(false, mColumn1Index, mColumn2Index)
+                cards[i].load(col, false, mColumn1Index, mColumn2Index)
             }
             redrawAfterSearch(cards)
         }
@@ -1858,7 +1858,7 @@ open class CardBrowser :
         cards
             .mapNotNull { c -> idToPos[c.id] }
             .filterNot { pos -> pos >= cardCount }
-            .forEach { pos -> mCards[pos].load(true, mColumn1Index, mColumn2Index) }
+            .forEach { pos -> mCards[pos].load(col, true, mColumn1Index, mColumn2Index) }
         updateList()
     }
 
@@ -2036,7 +2036,7 @@ open class CardBrowser :
                 if (currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount) {
                     mLastRenderStart = currentTime
                     renderBrowserQAJob?.cancel()
-                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards) }
+                    launchCatchingTask { renderBrowserQAParams(col, firstVisibleItem, visibleItemCount, cards) }
                 }
             }
         }
@@ -2050,15 +2050,16 @@ open class CardBrowser :
             if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 val startIdx = listView.firstVisiblePosition
                 val numVisible = listView.lastVisiblePosition - startIdx
-                launchCatchingTask { renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, mCards) }
+                launchCatchingTask { renderBrowserQAParams(col, startIdx - 5, 2 * numVisible + 5, mCards) }
             }
         }
     }
 
     // TODO: Improve progress bar handling in places where this function is used
-    protected suspend fun renderBrowserQAParams(firstVisibleItem: Int, visibleItemCount: Int, cards: CardCollection<CardCache>) {
+    protected suspend fun renderBrowserQAParams(col: Collection, firstVisibleItem: Int, visibleItemCount: Int, cards: CardCollection<CardCache>) {
         Timber.d("Starting Q&A background rendering")
         val result = renderBrowserQA(
+            col,
             cards,
             firstVisibleItem,
             visibleItemCount,
@@ -2128,10 +2129,10 @@ open class CardBrowser :
             (v.tag as Array<*>)
                 .forEachIndexed { i, column ->
                     setFont(column as TextView) // set font for column
-                    column.text = card.getColumnHeaderText(fromKeys[i]) // set text for column
+                    column.text = card.getColumnHeaderText(col, fromKeys[i]) // set text for column
                 }
             // set card's background color
-            val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color())
+            val backgroundColor: Int = getColorFromAttr(this@CardBrowser, card.color(col))
             v.setBackgroundColor(backgroundColor)
             // setup checkbox to change color in multi-select mode
             val checkBox = v.findViewById<CheckBox>(R.id.card_checkbox)
@@ -2323,7 +2324,7 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(col: Collection, id: Long, position: Int, inCardMode: Boolean) : super(col, id) {
+        constructor(id: Long, position: Int, inCardMode: Boolean) : super(id) {
             this.position = position
             this.inCardMode = inCardMode
         }
@@ -2346,8 +2347,8 @@ open class CardBrowser :
          * Get the background color of items in the card list based on the Card
          * @return index into TypedArray specifying the background color
          */
-        fun color(): Int {
-            val card = card()
+        fun color(col: Collection): Int {
+            val card = card(col)
             return when (card.userFlag()) {
                 1 -> R.attr.flagRed
                 2 -> R.attr.flagOrange
@@ -2368,8 +2369,8 @@ open class CardBrowser :
             }
         }
 
-        fun getColumnHeaderText(key: Column?): String? {
-            val card = card()
+        fun getColumnHeaderText(col: Collection, key: Column?): String? {
+            val card = card(col)
             return when (key) {
                 Column.FLAGS -> Integer.valueOf(card.userFlag()).toString()
                 Column.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
@@ -2379,36 +2380,36 @@ open class CardBrowser :
                 Column.TAGS -> card.note(col).stringTags()
                 Column.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards()}"
                 Column.DUE -> card.dueString(col)
-                Column.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
+                Column.EASE -> if (inCardMode) getEaseForCards(col) else getAvgEaseForNotes(col)
                 Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note(col).mod)
                 Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
                 Column.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note(col).mod)
-                Column.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
+                Column.INTERVAL -> if (inCardMode) queryIntervalForCards(col) else queryAvgIntervalForNotes(col)
                 Column.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote(col)).toString()
                 Column.NOTE_TYPE -> card.model(col).optString("name")
                 Column.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote(col).toString()
                 Column.QUESTION -> {
-                    updateSearchItemQA()
+                    updateSearchItemQA(col)
                     mQa!!.first
                 }
                 Column.ANSWER -> {
-                    updateSearchItemQA()
+                    updateSearchItemQA(col)
                     mQa!!.second
                 }
                 else -> null
             }
         }
 
-        private fun getEaseForCards(): String {
-            return if (card().type == Consts.CARD_TYPE_NEW) {
+        private fun getEaseForCards(col: Collection): String {
+            return if (card(col).type == Consts.CARD_TYPE_NEW) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
             } else {
-                "${card().factor / 10}%"
+                "${card(col).factor / 10}%"
             }
         }
 
-        private fun getAvgEaseForNotes(): String {
-            val avgEase = card().avgEaseOfNote(col)
+        private fun getAvgEaseForNotes(col: Collection): String {
+            val avgEase = card(col).avgEaseOfNote(col)
 
             return if (avgEase == null) {
                 AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
@@ -2417,16 +2418,16 @@ open class CardBrowser :
             }
         }
 
-        private fun queryIntervalForCards(): String {
-            return when (card().type) {
+        private fun queryIntervalForCards(col: Collection): String {
+            return when (card(col).type) {
                 Consts.CARD_TYPE_NEW -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_new_card)
                 Consts.CARD_TYPE_LRN -> AnkiDroidApp.instance.getString(R.string.card_browser_interval_learning_card)
-                else -> Utils.roundedTimeSpanUnformatted(AnkiDroidApp.instance, card().ivl * Stats.SECONDS_PER_DAY)
+                else -> Utils.roundedTimeSpanUnformatted(AnkiDroidApp.instance, card(col).ivl * Stats.SECONDS_PER_DAY)
             }
         }
 
-        private fun queryAvgIntervalForNotes(): String {
-            val avgInterval = card().avgIntervalOfNote(col)
+        private fun queryAvgIntervalForNotes(col: Collection): String {
+            val avgInterval = card(col).avgIntervalOfNote(col)
 
             return if (avgInterval == null) {
                 "" // upstream does not display interval for notes with new or learning cards
@@ -2437,14 +2438,14 @@ open class CardBrowser :
 
         /** pre compute the note and question/answer.  It can safely
          * be called twice without doing extra work.  */
-        fun load(reload: Boolean, column1Index: Int, column2Index: Int) {
+        fun load(col: Collection, reload: Boolean, column1Index: Int, column2Index: Int) {
             if (reload) {
                 reload()
             }
-            card().note(col)
+            card(col).note(col)
             // First column can not be the answer. If it were to change, this code should also be changed.
             if (COLUMN1_KEYS[column1Index] == Column.QUESTION || arrayOf(Column.QUESTION, Column.ANSWER).contains(COLUMN2_KEYS[column2Index])) {
-                updateSearchItemQA()
+                updateSearchItemQA(col)
             }
             isLoaded = true
         }
@@ -2454,11 +2455,11 @@ open class CardBrowser :
          * uses non-browser format. If answer starts by question, remove
          * question.
          */
-        private fun updateSearchItemQA() {
+        private fun updateSearchItemQA(col: Collection) {
             if (mQa != null) {
                 return
             }
-            val card = card()
+            val card = card(col)
             // render question and answer
             val qa = card.render_output(col, reload = true, browser = true)
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
@@ -2600,7 +2601,7 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     suspend fun rerenderAllCards() {
-        renderBrowserQAParams(0, mCards.size() - 1, mCards)
+        renderBrowserQAParams(col, 0, mCards.size() - 1, mCards)
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
@@ -2788,11 +2789,11 @@ suspend fun searchForCards(
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (inCardsMode) findCards(query, order) else findOneCardByNote(query)).asSequence()
-            .toCardCache(col, inCardsMode)
+            .toCardCache(inCardsMode)
             .toMutableList()
     }
 }
 
-private fun Sequence<CardId>.toCardCache(col: Collection, isInCardMode: Boolean): Sequence<CardBrowser.CardCache> {
-    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(col, cid, idx, isInCardMode) }
+private fun Sequence<CardId>.toCardCache(isInCardMode: Boolean): Sequence<CardBrowser.CardCache> {
+    return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, idx, isInCardMode) }
 }

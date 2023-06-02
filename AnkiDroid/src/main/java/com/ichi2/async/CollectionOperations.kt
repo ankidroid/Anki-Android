@@ -183,6 +183,7 @@ fun changeDeckConfiguration(
 }
 
 suspend fun renderBrowserQA(
+    col: Collection,
     cards: CardBrowser.CardCollection<CardBrowser.CardCache>,
     startPos: Int,
     n: Int,
@@ -216,7 +217,7 @@ suspend fun renderBrowserQA(
         // Extract card item
         try {
             // Ensure that card still exists.
-            card.card()
+            card.card(col)
         } catch (e: WrongId) {
             // #5891 - card can be inconsistent between the deck browser screen and the collection.
             // Realistically, we can skip any exception as it's a rendering task which should not kill the
@@ -227,7 +228,7 @@ suspend fun renderBrowserQA(
             continue
         }
         // Update item
-        card.load(false, column1Index, column2Index)
+        card.load(col, false, column1Index, column2Index)
         val progress = i.toFloat() / n * 100
         withContext(Dispatchers.Main) { onProgressUpdate(progress.toInt()) }
     }
@@ -243,7 +244,7 @@ suspend fun checkCardSelection(col: Collection, checkedCards: Set<CardBrowser.Ca
     var hasUnmarked = false
     for (c in checkedCards) {
         ensureActive() // check if job is not cancelled
-        val card = c.card()
+        val card = c.card(col)
         hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
         hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note(col))
         if (hasUnsuspended && hasUnmarked) break

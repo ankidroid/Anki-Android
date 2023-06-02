@@ -17,11 +17,9 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.Collection
 
-class LrnCard(col: Collection, val due: Long, cid: Long) :
+class LrnCard(val due: Long, cid: Long) :
     Card.Cache(
-        col,
         cid
     ),
     Comparable<LrnCard> {
