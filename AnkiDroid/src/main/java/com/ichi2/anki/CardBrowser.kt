@@ -2383,7 +2383,7 @@ open class CardBrowser :
                 Column.DECK -> col.decks.name(card.did)
                 Column.TAGS -> card.note().stringTags()
                 Column.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"
-                Column.DUE -> card.dueString
+                Column.DUE -> card.dueString()
                 Column.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod)
                 Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
