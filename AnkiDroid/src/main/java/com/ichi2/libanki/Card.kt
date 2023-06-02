@@ -325,17 +325,16 @@ open class Card : Cloneable {
     /*
      * Returns the answer with anything before the <hr id=answer> tag removed
      */
-    val pureAnswer: String
-        get() {
-            val s = render_output(false).answer_text
-            for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
-                val pos = s.indexOf(target)
-                if (pos == -1) continue
-                return s.substring(pos + target.length).trim { it <= ' ' }
-            }
-            // neither found
-            return s
+    fun pureAnswer(): String {
+        val s = render_output(false).answer_text
+        for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
+            val pos = s.indexOf(target)
+            if (pos == -1) continue
+            return s.substring(pos + target.length).trim { it <= ' ' }
         }
+        // neither found
+        return s
+    }
 
     /**
      * Save the currently elapsed reviewing time so it can be restored on resume.
