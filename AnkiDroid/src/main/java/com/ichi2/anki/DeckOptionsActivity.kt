@@ -317,7 +317,7 @@ class DeckOptionsActivity :
                                             for (childDid in children.values) {
                                                 val child = col.decks.get(childDid)
                                                 if (child.isDyn) continue
-                                                changeDeckConfiguration(deck, mOptions, col)
+                                                changeDeckConfiguration(child, mOptions, col)
                                             }
                                         }
                                     } finally {
