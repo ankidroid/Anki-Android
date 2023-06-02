@@ -243,7 +243,7 @@ open class Reviewer :
             return
         }
         launchCatchingTask {
-            toggleMark(card.note(col))
+            toggleMark(col, card.note(col))
             refreshActionBar()
             onMarkChanged()
         }
@@ -731,7 +731,7 @@ open class Reviewer :
         mActionButtons.setCustomButtonsStatus(menu)
         var alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
-        if (currentCard != null && isMarked(currentCard!!.note(col))) {
+        if (currentCard != null && isMarked(col, currentCard!!.note(col))) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
         } else {
             markCardIcon.setTitle(R.string.menu_mark_note).setIcon(R.drawable.ic_star_border_white)

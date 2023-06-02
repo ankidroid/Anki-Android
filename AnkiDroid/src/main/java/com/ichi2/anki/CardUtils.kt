@@ -25,24 +25,24 @@ object CardUtils {
     /**
      * @return All cards of all notes
      */
-    fun getAllCards(notes: Set<Note>): List<Card> {
+    fun getAllCards(col: Collection, notes: Set<Note>): List<Card> {
         val allCards: MutableList<Card> = ArrayList(notes.size)
         for (note in notes) {
-            allCards.addAll(note.cards())
+            allCards.addAll(note.cards(col))
         }
         return allCards
     }
 
-    fun markAll(notes: List<Note>, mark: Boolean) {
+    fun markAll(col: Collection, notes: List<Note>, mark: Boolean) {
         for (note in notes) {
             if (mark) {
-                if (!isMarked(note)) {
+                if (!isMarked(col, note)) {
                     note.addTag("marked")
-                    note.flush()
+                    note.flush(col)
                 }
             } else {
                 note.delTag("marked")
-                note.flush()
+                note.flush(col)
             }
         }
     }

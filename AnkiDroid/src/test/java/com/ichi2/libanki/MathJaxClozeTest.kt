@@ -43,9 +43,9 @@ class MathJaxClozeTest : RobolectricTest() {
         val note = c.newNote(c.models.byName("Cloze")!!)
         note.setItem("Text", "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}")
         c.addNote(note)
-        assertEquals(5, note.numberOfCards())
+        assertEquals(5, note.numberOfCards(col))
 
-        val cards = note.cards()
+        val cards = note.cards(col)
 
         assertThat(cards[0].q(col), containsString(clozeClass()))
         assertThat(cards[1].q(col), containsString(clozeClass()))
@@ -66,7 +66,7 @@ class MathJaxClozeTest : RobolectricTest() {
             note.setItem("Text", "\\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}")
             c.addNote(note)
 
-            val cards = note.cards()
+            val cards = note.cards(col)
             val c2 = cards[0]
             val q = c2.q(col)
             val a = c2.a(col)
@@ -78,7 +78,7 @@ class MathJaxClozeTest : RobolectricTest() {
             val note = c.newNote(c.models.byName("Cloze")!!)
             note.setItem("Text", "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]")
             c.addNote(note)
-            val cards = note.cards()
+            val cards = note.cards(col)
             val c2 = cards[0]
             val q = c2.q(col)
             assertThat(q, containsString("\\(a\\) <span ${clozeClass()}${clozeData("b")}>[...]</span> \\[ [...] \\]"))
@@ -97,7 +97,7 @@ class MathJaxClozeTest : RobolectricTest() {
 
         c.addNote(note)
 
-        val cards = note.cards()
+        val cards = note.cards(col)
         val c2 = cards[0]
         val q = c2.q(col)
         val a = c2.a(col)

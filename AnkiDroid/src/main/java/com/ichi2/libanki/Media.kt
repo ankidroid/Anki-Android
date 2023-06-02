@@ -415,7 +415,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
                 note.setField(c, nfc)
             }
         }
-        note.flush()
+        note.flush(col)
     }
 
     class MediaCheckRequiredException : Exception("Media check required")

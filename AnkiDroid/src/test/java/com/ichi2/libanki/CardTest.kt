@@ -42,7 +42,7 @@ class CardTest : RobolectricTest() {
         note.setItem("One", "1")
         note.setItem("Two", "2")
         col.addNote(note)
-        val card = note.cards()[0]
+        val card = note.cards(col)[0]
 
         assertThat(card.pureAnswer(col), equalTo("2"))
     }
@@ -56,7 +56,7 @@ class CardTest : RobolectricTest() {
         note.setItem("Front", "1")
         note.setItem("Back", "2")
         col.addNote(note)
-        val cid = note.cards()[0].id
+        val cid = note.cards(col)[0].id
         col.reset()
         col.sched.answerCard(col.sched.card!!, Consts.BUTTON_TWO)
         col.remCards(listOf(cid))
@@ -74,7 +74,7 @@ class CardTest : RobolectricTest() {
         note.setItem("Front", "1")
         note.setItem("Back", "2")
         col.addNote(note)
-        val c = note.cards()[0]
+        val c = note.cards(col)[0]
         col.models.current()!!.getLong("id")
         assertEquals(0, c.template(col).getInt("ord"))
     }
@@ -85,7 +85,7 @@ class CardTest : RobolectricTest() {
         note.setItem("Front", "1")
         note.setItem("Back", "")
         col.addNote(note)
-        assertEquals(1, note.numberOfCards())
+        assertEquals(1, note.numberOfCards(col))
         val m = col.models.current()
         val mm = col.models
         // adding a new template should automatically create cards
@@ -94,19 +94,19 @@ class CardTest : RobolectricTest() {
         t.put("afmt", "")
         mm.addTemplateModChanged(m!!, t)
         mm.save(m, true)
-        assertEquals(2, note.numberOfCards())
+        assertEquals(2, note.numberOfCards(col))
         // if the template is changed to remove cards, they'll be removed
         t = m.getJSONArray("tmpls").getJSONObject(1)
         t.put("qfmt", "{{Back}}")
         mm.save(m, true)
         val rep = col.emptyCids(null)
         col.remCards(rep)
-        assertEquals(1, note.numberOfCards())
+        assertEquals(1, note.numberOfCards(col))
         // if we add to the note, a card should be automatically generated
-        note.load()
+        note.load(col)
         note.setItem("Back", "1")
-        note.flush()
-        assertEquals(2, note.numberOfCards())
+        note.flush(col)
+        assertEquals(2, note.numberOfCards(col))
     }
 
     @Test
@@ -117,27 +117,27 @@ class CardTest : RobolectricTest() {
         note.setItem("Text", "{{c1::one}}")
         col.addNote(note)
         assertEquals(1, col.cardCount())
-        assertEquals(1, note.cards()[0].did)
+        assertEquals(1, note.cards(col)[0].did)
         // set the model to a new default col
         val newId = addDeck("new")
         cloze.put("did", newId)
         col.models.save(cloze, false)
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}")
-        note.flush()
-        assertEquals(1, note.cards()[1].did)
+        note.flush(col)
+        assertEquals(1, note.cards(col)[1].did)
         // and same with multiple cards
         note.setItem("Text", "{{c3::three}}")
-        note.flush()
-        assertEquals(1, note.cards()[2].did)
+        note.flush(col)
+        assertEquals(1, note.cards(col)[2].did)
         // if one of the cards is in a different col, it should revert to the
         // model default
-        val c = note.cards()[1]
+        val c = note.cards(col)[1]
         c.did = newId
         c.flush(col)
         note.setItem("Text", "{{c4::four}}")
-        note.flush()
-        assertEquals(newId, note.cards()[3].did)
+        note.flush(col)
+        assertEquals(newId, note.cards(col)[3].did)
     }
 
     @Test
@@ -233,7 +233,7 @@ class CardTest : RobolectricTest() {
     }
 
     private fun assertNoteOrdinalAre(note: Note, ords: Array<Int>) {
-        val cards = note.cards()
+        val cards = note.cards(col)
         assumeThat(cards.size, equalTo(ords.size))
         for (card in cards) {
             val ord = card.ord
@@ -248,7 +248,7 @@ class CardTest : RobolectricTest() {
     fun nextDueTest() {
         // Test runs as the 7th of august 2020, 9h00
         val n = addNoteUsingBasicModel("Front", "Back")
-        val c = n.firstCard()
+        val c = n.firstCard(col)
         val decks = col.decks
         val cal = Calendar.getInstance()
         cal[2021, 2, 19, 7, 42] = 42

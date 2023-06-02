@@ -118,7 +118,7 @@ class AbstractSchedTest : RobolectricTest() {
         val cids = LongArray(nbCard)
         for (i in 0 until nbCard) {
             val note = addNoteUsingBasicModel("foo", "bar")
-            val card = note.firstCard()
+            val card = note.firstCard(col)
             val cid = card.id
             cids[i] = cid
             queue.add(cid)
@@ -167,7 +167,7 @@ class AbstractSchedTest : RobolectricTest() {
             // because decrementing does not consider burying sibling
             assertEquals(0, counts.lrn.toLong())
             assertEquals(0, counts.rev.toLong())
-            assertEquals(notes[i]!!.firstCard().id, card.id)
+            assertEquals(notes[i]!!.firstCard(col).id, card.id)
             assertEquals(Consts.QUEUE_TYPE_NEW, card.queue)
             sched.answerCard(card, sched.answerButtons(card))
         }
@@ -468,7 +468,7 @@ mw.col.sched.extendLimits(1, 0)
         val time = time
         val cards = arrayOfNulls<Card>(2)
         for (i in 0..1) {
-            cards[i] = addNoteUsingBasicModel(i.toString(), "").cards()[0]
+            cards[i] = addNoteUsingBasicModel(i.toString(), "").cards(col)[0]
             cards[i]!!.queue = Consts.QUEUE_TYPE_LRN
             cards[i]!!.type = Consts.CARD_TYPE_LRN
             cards[i]!!.due = time.intTime() - 20 * 60 + i

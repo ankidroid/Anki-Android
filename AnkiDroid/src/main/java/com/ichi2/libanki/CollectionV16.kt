@@ -236,7 +236,7 @@ class CollectionV16(
         backend.setDeck(cardIds = cids.asIterable(), deckId = did)
     }
 
-    /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. */
+    /** Save (flush) the note to the DB. Unlike note.flush(col), this is undoable. */
     fun updateNote(note: Note) {
         backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
     }
@@ -256,6 +256,6 @@ class CollectionV16(
     @RustCleanup("Remove this in favour of addNote() above; call addNote() inside undoableOp()")
     override fun addNote(note: Note, allowEmpty: Models.AllowEmpty): Int {
         addNote(note, note.model().did)
-        return note.numberOfCards()
+        return note.numberOfCards(col)
     }
 }

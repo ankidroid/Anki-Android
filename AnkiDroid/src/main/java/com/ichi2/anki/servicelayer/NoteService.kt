@@ -187,8 +187,8 @@ object NoteService {
         }
     }
 
-    suspend fun toggleMark(note: Note) {
-        if (isMarked(note)) {
+    suspend fun toggleMark(col: Collection, note: Note) {
+        if (isMarked(col, note)) {
             note.delTag("marked")
         } else {
             note.addTag("marked")
@@ -196,15 +196,15 @@ object NoteService {
 
         withCol {
             if (BackendFactory.defaultLegacySchema) {
-                note.flush()
+                note.flush(col)
             } else {
                 newBackend.updateNote(note)
             }
         }
     }
 
-    fun isMarked(note: Note): Boolean {
-        return note.hasTag("marked")
+    fun isMarked(col: Collection, note: Note): Boolean {
+        return note.hasTag(col, tag = "marked")
     }
 
     //  TODO: should make a direct SQL query to do this
@@ -212,23 +212,23 @@ object NoteService {
      * returns the average ease of all the non-new cards in the note,
      * or if all the cards in the note are new, returns null
      */
-    fun avgEase(note: Note): Int? {
-        val nonNewCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW }
+    fun avgEase(col: Collection, note: Note): Int? {
+        val nonNewCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW }
 
         return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
     }
 
     //  TODO: should make a direct SQL query to do this
-    fun totalLapses(note: Note) = note.cards().sumOf { it.lapses }
+    fun totalLapses(col: Collection, note: Note) = note.cards(col).sumOf { it.lapses }
 
-    fun totalReviews(note: Note) = note.cards().sumOf { it.reps }
+    fun totalReviews(col: Collection, note: Note) = note.cards(col).sumOf { it.reps }
 
     /**
      * Returns the average interval of all the non-new and non-learning cards in the note,
      * or if all the cards in the note are new or learning, returns null
      */
-    fun avgInterval(note: Note): Int? {
-        val nonNewOrLearningCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
+    fun avgInterval(col: Collection, note: Note): Int? {
+        val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
 
         return nonNewOrLearningCards.average { it.ivl }?.toInt()
     }
@@ -241,8 +241,8 @@ object NoteService {
     }
 }
 
-fun Card.totalLapsesOfNote(col: Collection) = NoteService.totalLapses(note(col))
+fun Card.totalLapsesOfNote(col: Collection) = NoteService.totalLapses(col, note(col))
 
-fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(note(col))
+fun Card.totalReviewsForNote(col: Collection) = NoteService.totalReviews(col, note(col))
 
-fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(note(col))
+fun Card.avgIntervalOfNote(col: Collection) = NoteService.avgInterval(col, note(col))

@@ -288,7 +288,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         currentCard!!.did = newDid
         val currentNote = currentCard!!.note(col)
         val tagsList = mNoteEditorBundle!!.getStringArrayList("tags")
-        NoteUtils.setTags(currentNote, tagsList)
+        NoteUtils.setTags(col, currentNote, tagsList)
         return currentCard
     }
 
@@ -409,6 +409,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                         ord
                     }
                     val context = TemplateManager.TemplateRenderContext.from_card_layout(
+                        col,
                         note(col),
                         this,
                         model(col),

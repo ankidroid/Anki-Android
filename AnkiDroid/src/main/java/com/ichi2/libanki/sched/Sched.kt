@@ -950,7 +950,7 @@ class Sched(col: Collection) : SchedV2(col) {
             // add a leech tag
             val n = card.note(col)
             n.addTag("leech")
-            n.flush()
+            n.flush(col)
             // handle
             if (conf.getInt("leechAction") == Consts.LEECH_SUSPEND) {
                 // if it has an old due, remove it from cram/relearning

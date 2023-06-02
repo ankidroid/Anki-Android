@@ -285,7 +285,7 @@ class CardTemplateEditorTest : RobolectricTest() {
 
         // Edit note to have Add Reverse set to 'y' so we get a second card
         selectiveGeneratedNote.setField(2, "y")
-        selectiveGeneratedNote.flush()
+        selectiveGeneratedNote.flush(col)
 
         // - assert two cards
         assertEquals("should be two cards now", 2, getModelCardCount(collectionBasicModelOriginal))
@@ -608,7 +608,7 @@ class CardTemplateEditorTest : RobolectricTest() {
     private fun getModelCardCount(model: Model): Int {
         var cardCount = 0
         for (noteId in col.models.nids(model)) {
-            cardCount += col.getNote(noteId).numberOfCards()
+            cardCount += col.getNote(noteId).numberOfCards(col)
         }
         return cardCount
     }

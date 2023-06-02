@@ -29,7 +29,7 @@ class CardInfoModelTest : RobolectricTest() {
     @Before
     fun setupModel() {
         // using a card from my collection
-        val c = addNoteUsingBasicModel("Hello", "World").firstCard()
+        val c = addNoteUsingBasicModel("Hello", "World").firstCard(col)
 
         // filtering the card did this.
         c.due = -99826

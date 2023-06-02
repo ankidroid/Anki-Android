@@ -616,7 +616,7 @@ open class Collection(
         if (cms.isEmpty()) {
             return 0
         }
-        note.flush()
+        note.flush(col)
         // deck conf governs which of these are used
         val due = nextID("pos")
         // add cards
@@ -1407,7 +1407,7 @@ open class Collection(
                 model = m,
                 did = did,
                 ord = c.ord,
-                tags = f.stringTags(),
+                tags = f.stringTags(col),
                 flist = f.fields,
                 flags = c.internalGetFlags(),
                 browser = browser,
@@ -1420,7 +1420,7 @@ open class Collection(
                 model = m,
                 did = did,
                 ord = c.ord,
-                tags = f.stringTags(),
+                tags = f.stringTags(col),
                 flist = f.fields,
                 flags = c.internalGetFlags()
             )
@@ -1444,7 +1444,7 @@ open class Collection(
     }
 
     fun markReview(card: Card) {
-        val wasLeech = card.note(col).hasTag("leech")
+        val wasLeech = card.note(col).hasTag(col, tag = "leech")
         val clonedCard = card.clone()
         markUndo(UndoReview(wasLeech, clonedCard))
     }

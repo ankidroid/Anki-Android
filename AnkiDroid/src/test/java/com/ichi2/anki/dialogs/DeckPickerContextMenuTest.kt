@@ -172,7 +172,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             val deckId = addDeck("Deck 1")
             col.models.byName("Basic")!!.put("did", deckId)
-            val card = addNoteUsingBasicModel("front", "back").firstCard()
+            val card = addNoteUsingBasicModel("front", "back").firstCard(col)
             col.sched.buryCards(longArrayOf(card.id))
             updateDeckList()
             assertEquals(1, visibleDeckCount)
@@ -215,7 +215,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     fun testDynRebuildAndEmpty() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
             val cardIds = (0..3)
-                .map { addNoteUsingBasicModel("$it", "").firstCard().id }
+                .map { addNoteUsingBasicModel("$it", "").firstCard(col).id }
             assertTrue(allCardsInSameDeck(cardIds, 1))
             val deckId = addDynamicDeck("Deck 1")
             col.sched.rebuildDyn(deckId)

@@ -30,7 +30,6 @@ import java.util.regex.Pattern
 
 @KotlinCleanup("lots to do")
 class Note : Cloneable {
-    val col: Collection
 
     /**
      * Should only be mutated by addNote()
@@ -59,13 +58,11 @@ class Note : Cloneable {
     private var mNewlyAdded = false
 
     constructor(col: Collection, id: Long) {
-        this.col = col
         this.id = id
-        load()
+        load(col)
     }
 
     constructor(col: Collection, model: Model) {
-        this.col = col
         this.id = if (BackendFactory.defaultLegacySchema) {
             time.timestampID(col.db, "notes")
         } else {
@@ -82,7 +79,7 @@ class Note : Cloneable {
         mScm = col.scm
     }
 
-    fun load() {
+    fun load(col: Collection) {
         Timber.d("load()")
         col.db
             .query(
@@ -106,7 +103,7 @@ class Note : Cloneable {
             }
     }
 
-    fun reloadModel() {
+    fun reloadModel(col: Collection) {
         mModel = col.models.get(mid)!!
     }
 
@@ -114,9 +111,9 @@ class Note : Cloneable {
      * If fields or tags have changed, write changes to disk.
      */
     @BlocksSchemaUpgrade("new path must update to native note adding/updating routine")
-    fun flush(mod: Long? = null, changeUsn: Boolean = true) {
+    fun flush(col: Collection, mod: Long? = null, changeUsn: Boolean = true) {
         assert(mScm == col.scm)
-        preFlush()
+        preFlush(col)
         if (changeUsn) {
             usn = col.usn()
         }
@@ -125,7 +122,7 @@ class Note : Cloneable {
             col.models.sortIdx(mModel)
         )
         val sfld = csumAndStrippedFieldField.first
-        val tags = stringTags()
+        val tags = stringTags(col)
         val fields = joinedFields()
         if (mod == null && col.db.queryScalar(
                 "select 1 from notes where id = ? and tags = ? and flds = ?",
@@ -147,24 +144,24 @@ class Note : Cloneable {
         } else {
             // TODO: tags are not registered; calling code must switch to using backend add/update notes
         }
-        postFlush()
+        postFlush(col)
     }
 
     private fun joinedFields(): String {
         return Utils.joinFields(fields)
     }
 
-    fun numberOfCards(): Int {
+    fun numberOfCards(col: Collection): Int {
         return col.db.queryLongScalar("SELECT count() FROM cards WHERE nid = ?", this.id).toInt()
     }
 
-    fun cids(): List<Long> {
+    fun cids(col: Collection): List<Long> {
         return col.db.queryLongList("SELECT id FROM cards WHERE nid = ? ORDER BY ord", this.id)
     }
 
-    fun cards(): ArrayList<Card> {
-        val cards = ArrayList<Card>(cids().size)
-        for (cid in cids()) {
+    fun cards(col: Collection): ArrayList<Card> {
+        val cards = ArrayList<Card>(cids(col).size)
+        for (cid in cids(col)) {
             // each getCard access database. This is inefficient.
             // Seems impossible to solve without creating a constructor of a list of card.
             // Not a big trouble since most note have a small number of cards.
@@ -174,7 +171,7 @@ class Note : Cloneable {
     }
 
     /** The first card, assuming it exists. */
-    fun firstCard(): Card {
+    fun firstCard(col: Collection): Card {
         return col.getCard(
             col.db.queryLongScalar(
                 "SELECT id FROM cards WHERE nid = ? ORDER BY ord LIMIT 1",
@@ -242,15 +239,15 @@ class Note : Cloneable {
      * Tags
      * ***********************************************************
      */
-    fun hasTag(tag: String?): Boolean {
+    fun hasTag(col: Collection, tag: String?): Boolean {
         return col.tags.inList(tag!!, tags)
     }
 
-    fun stringTags(): String {
+    fun stringTags(col: Collection): String {
         return col.tags.join(col.tags.canonify(tags))
     }
 
-    fun setTagsFromStr(str: String?) {
+    fun setTagsFromStr(col: Collection, str: String?) {
         tags = ArrayList(col.tags.split(str!!))
     }
 
@@ -291,7 +288,7 @@ class Note : Cloneable {
      *
      * @return whether it has no content, dupe first field, or nothing remarkable.
      */
-    fun dupeOrEmpty(): DupeOrEmpty {
+    fun dupeOrEmpty(col: Collection): DupeOrEmpty {
         if (fields[0].trim { it <= ' ' }.isEmpty()) {
             return DupeOrEmpty.EMPTY
         }
@@ -326,20 +323,20 @@ class Note : Cloneable {
     /*
      * have we been added yet?
      */
-    private fun preFlush() {
+    private fun preFlush(col: Collection) {
         mNewlyAdded = col.db.queryScalar("SELECT 1 FROM cards WHERE nid = ?", this.id) == 0
     }
 
     /*
      * generate missing cards
      */
-    private fun postFlush() {
+    private fun postFlush(col: Collection) {
         if (!mNewlyAdded) {
             col.genCards(this.id, mModel)
         }
     }
 
-    fun sFld() = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
+    fun sFld(col: Collection) = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
     fun setField(index: Int, value: String) {
         fields[index] = value

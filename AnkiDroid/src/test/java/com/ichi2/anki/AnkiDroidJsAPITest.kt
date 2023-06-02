@@ -352,7 +352,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiResetProgressTest() {
         val n = addNoteUsingBasicModel("Front", "Back")
-        val c = n.firstCard()
+        val c = n.firstCard(col)
 
         // Make card review with 28L due and 280% ease
         c.type = Consts.CARD_TYPE_REV

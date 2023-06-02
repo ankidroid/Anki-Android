@@ -429,7 +429,7 @@ class NoteEditorTest : RobolectricTest() {
         when (from) {
             REVIEWER -> {
                 i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
-                editorCard = n.firstCard()
+                editorCard = n.firstCard(col)
             }
             DECK_LIST -> i.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
         }

@@ -118,7 +118,7 @@ class DecksTest : RobolectricTest() {
         note.setItem("Front", "1")
         note.model().put("did", deck1)
         col.addNote(note)
-        val c = note.cards()[0]
+        val c = note.cards(col)[0]
         assertEquals(deck1, c.did)
         assertEquals(1, col.cardCount().toLong())
         col.decks.rem(deck1)

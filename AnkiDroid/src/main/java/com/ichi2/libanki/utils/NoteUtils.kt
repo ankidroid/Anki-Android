@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.libanki.utils
 
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
 
 object NoteUtils {
@@ -23,13 +24,13 @@ object NoteUtils {
      * assumption on the content of tagsList, except that its strings
      * are valid tags (i.e. no spaces in it).
      */
-    fun setTags(currentNote: Note, tagsList: List<String>?) {
+    fun setTags(col: Collection, currentNote: Note, tagsList: List<String>?) {
         val currentTags = currentNote.tags.toTypedArray()
         for (tag in currentTags) {
             currentNote.delTag(tag)
         }
         if (tagsList != null) {
-            val tagsSet = currentNote.col.tags.canonify(tagsList)
+            val tagsSet = col.tags.canonify(tagsList)
             currentNote.addTags(tagsSet)
         }
     }

@@ -62,7 +62,7 @@ abstract class UndoAction
             undoNameId: Int,
             card: Card
         ): UndoAction {
-            return revertToProvidedState(undoNameId, card, card.note(col).cards())
+            return revertToProvidedState(undoNameId, card, card.note(col).cards(col))
         }
 
         /**

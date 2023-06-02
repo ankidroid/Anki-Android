@@ -90,7 +90,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun noErrorShouldOccurIfSoundFileNotPresent() {
         val firstNote = addNoteUsingBasicModel("[[sound:not_on_file_system.mp3]]", "World")
-        moveToReviewQueue(firstNote.firstCard())
+        moveToReviewQueue(firstNote.firstCard(col))
 
         val reviewer = startReviewer()
         reviewer.generateQuestionSoundList()
@@ -103,7 +103,7 @@ class ReviewerTest : RobolectricTest() {
     fun jsTime4ShouldBeBlankIfButtonUnavailable() {
         // #6623 - easy should be blank when displaying a card with 3 buttons (after displaying a review)
         val firstNote = addNoteUsingBasicModel("Hello", "World")
-        moveToReviewQueue(firstNote.firstCard())
+        moveToReviewQueue(firstNote.firstCard(col))
 
         addNoteUsingBasicModel("Hello", "World2")
 
@@ -191,9 +191,9 @@ class ReviewerTest : RobolectricTest() {
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
 
         val cards = arrayOf(
-            addRevNoteUsingBasicModelDueToday("1", "bar").firstCard(),
-            addNoteUsingBasicModel("2", "bar").firstCard(),
-            addNoteUsingBasicModel("3", "bar").firstCard()
+            addRevNoteUsingBasicModelDueToday("1", "bar").firstCard(col),
+            addNoteUsingBasicModel("2", "bar").firstCard(col),
+            addNoteUsingBasicModel("3", "bar").firstCard(col)
         )
         waitForAsyncTasksToComplete()
 

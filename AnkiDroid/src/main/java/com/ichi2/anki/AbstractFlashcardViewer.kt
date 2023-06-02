@@ -910,7 +910,7 @@ abstract class AbstractFlashcardViewer :
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
         dismiss(DeleteNote(currentCard!!)) {
-            showSnackbarWithUndoButtonText(TR.browsingCardsDeleted(currentCard!!.note(col).numberOfCards()))
+            showSnackbarWithUndoButtonText(TR.browsingCardsDeleted(currentCard!!.note(col).numberOfCards(col)))
         }
     }
 
@@ -1680,14 +1680,14 @@ abstract class AbstractFlashcardViewer :
 
     internal fun suspendNote(): Boolean {
         return dismiss(SuspendNote(currentCard!!)) {
-            val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, currentCard!!.note(col).numberOfCards(), currentCard!!.note(col).numberOfCards())
+            val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, currentCard!!.note(col).numberOfCards(col), currentCard!!.note(col).numberOfCards(col))
             showSnackbarWithUndoButtonText(noteSuspended)
         }
     }
 
     internal fun buryNote(): Boolean {
         return dismiss(BuryNote(currentCard!!)) {
-            showSnackbarWithUndoButtonText(TR.studyingCardsBuried(currentCard!!.note(col).numberOfCards()))
+            showSnackbarWithUndoButtonText(TR.studyingCardsBuried(currentCard!!.note(col).numberOfCards(col)))
         }
     }
 
@@ -2115,7 +2115,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(currentCard!!.note(col))
+        return isMarked(col, currentCard!!.note(col))
     }
 
     protected fun <TResult : Computation<NextCard<*>>?> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {
@@ -2580,8 +2580,8 @@ abstract class AbstractFlashcardViewer :
         if (currentCard!!.note(col).tags != selectedTags) {
             val tagString = selectedTags.joinToString(" ")
             val note = currentCard!!.note(col)
-            note.setTagsFromStr(tagString)
-            note.flush()
+            note.setTagsFromStr(col, tagString)
+            note.flush(col)
             // Reload current card to reflect tag changes
             displayCardQuestion(true)
         }

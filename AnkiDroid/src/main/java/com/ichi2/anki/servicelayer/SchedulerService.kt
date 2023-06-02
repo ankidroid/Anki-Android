@@ -101,7 +101,7 @@ class SchedulerService {
             return computeThenGetNextCardInTransaction {
                 val note: Note = card.note(col)
                 // collect undo information
-                val allCs = note.cards()
+                val allCs = note.cards(col)
                 col.markUndo(UndoDeleteNote(note, allCs, card))
                 // delete note
                 col.remNotes(longArrayOf(note.id))
@@ -129,7 +129,7 @@ class SchedulerService {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
                 // collect undo information
-                val cards = card.note(col).cards()
+                val cards = card.note(col).cards(col)
                 val cids = LongArray(cards.size)
                 for (i in cards.indices) {
                     cids[i] = cards[i].id
@@ -182,7 +182,7 @@ class SchedulerService {
         override fun undo(col: AnkiCollection): Card {
             Timber.i("Undo: Delete note")
             val ids = ArrayList<Long>(allCs.size + 1)
-            note.flush(note.mod, false)
+            note.flush(col, note.mod, false)
             ids.add(note.id)
             for (c in allCs) {
                 c.flush(col, false)

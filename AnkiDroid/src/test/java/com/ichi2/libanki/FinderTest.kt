@@ -87,7 +87,7 @@ class FinderTest : RobolectricTest() {
 
     private fun burySiblings(sched: SchedV2, toManuallyBury: Card): Card {
         sched.answerCard(toManuallyBury, Consts.BUTTON_ONE)
-        val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
+        val siblingBuried = Note(col, toManuallyBury.nid).cards(col)[1]
         assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
         return siblingBuried
     }
@@ -120,7 +120,7 @@ class FinderTest : RobolectricTest() {
         note.addTag("monkey animal_1 * %")
         col.addNote(note)
         val n1id = note.id
-        val firstCardId = note.cards()[0].id
+        val firstCardId = note.cards(col)[0].id
         note = col.newNote()
         note.setItem("Front", "goats are fun")
         note.setItem("Back", "sheep")
@@ -131,7 +131,7 @@ class FinderTest : RobolectricTest() {
         note.setItem("Front", "cat")
         note.setItem("Back", "sheep")
         col.addNote(note)
-        val catCard = note.cards()[0]
+        val catCard = note.cards(col)[0]
         var m = col.models.current()
         m = col.models.copy(m!!)
         val mm = col.models
@@ -145,7 +145,7 @@ class FinderTest : RobolectricTest() {
         note.setItem("Back", "foo bar")
         col.addNote(note)
         col.save()
-        val latestCardIds = note.cids()
+        val latestCardIds = note.cids(col)
         // tag searches
         assertEquals(5, col.findCards("tag:*").size)
         assertEquals(1, col.findCards("tag:\\*").size)
@@ -180,7 +180,7 @@ class FinderTest : RobolectricTest() {
         assertEquals(0, col.findCards("\"are goats\"").size)
         assertEquals(1, col.findCards("\"goats are\"").size)
         // card states
-        var c = note.cards()[0]
+        var c = note.cards(col)[0]
         c.queue = QUEUE_TYPE_REV
         c.type = CARD_TYPE_REV
         assertEquals(0, col.findCards("is:review").size)
@@ -290,7 +290,7 @@ class FinderTest : RobolectricTest() {
         val noteBack = note.getItem("Back")
         note.setItem("Front", noteBack)
         note.setItem("Back", noteFront)
-        note.flush()
+        note.flush(col)
         assertEquals(0, col.findCards("helloworld").size)
         //  Those lines are commented above
         // assertEquals(, col.findCards("helloworld", full=true).size())2
@@ -430,7 +430,7 @@ class FinderTest : RobolectricTest() {
         note.setItem("Back", "bar")
         note.model().put("did", currentDid)
         col.addNote(note)
-        val did = note.firstCard().did
+        val did = note.firstCard(col).did
         assertEquals(currentDid, did)
         val cb = super.startActivityNormallyOpenCollectionWithIntent(
             CardBrowser::class.java,
@@ -456,22 +456,22 @@ class FinderTest : RobolectricTest() {
         assertEquals(0, col.findReplace(nids, "abc", "123"))
         // global replace
         assertEquals(2, col.findReplace(nids, "foo", "qux"))
-        note.load()
+        note.load(col)
         assertEquals("qux", note.getItem("Front"))
-        note2.load()
+        note2.load(col)
         assertEquals("qux", note2.getItem("Back"))
         // single field replace
         assertEquals(1, col.findReplace(nids, "qux", "foo", "Front"))
-        note.load()
+        note.load(col)
         assertEquals("foo", note.getItem("Front"))
-        note2.load()
+        note2.load(col)
         assertEquals("qux", note2.getItem("Back"))
         // regex replace
         assertEquals(0, col.findReplace(nids, "B.r", "reg"))
-        note.load()
+        note.load(col)
         assertNotEquals("reg", note.getItem("Back"))
         assertEquals(1, col.findReplace(nids, "B.r", "reg", true))
-        note.load()
+        note.load(col)
         assertEquals(note.getItem("Back"), "reg")
     }
 

@@ -209,7 +209,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiGetCardMark(col: Collection): Boolean {
-        return currentCard.note(col).hasTag("marked")
+        return currentCard.note(col).hasTag(col, tag = "marked")
     }
 
     @JavascriptInterface

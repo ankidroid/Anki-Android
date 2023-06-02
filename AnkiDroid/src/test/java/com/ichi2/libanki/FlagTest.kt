@@ -32,7 +32,7 @@ class FlagTest : RobolectricTest() {
         n.setItem("Front", "one")
         n.setItem("Back", "two")
         col.addNote(n)
-        val c = n.cards()[0]
+        val c = n.cards(col)[0]
 
         // make sure higher bits are preserved
         val origBits = 0b101 shl 3

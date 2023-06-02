@@ -335,7 +335,7 @@ class Decks(private val col: Collection) : DeckManager() {
             }
             // delete cards too?
             if (cardsToo) {
-                // don't use cids(), as we want cards in cram decks too
+                // don't use cids(col), as we want cards in cram decks too
                 val cids = col.db.queryLongList(
                     "SELECT id FROM cards WHERE did = ? OR odid = ?",
                     did,

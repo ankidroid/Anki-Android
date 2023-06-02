@@ -34,7 +34,7 @@ class PreviewerTest : RobolectricTest() {
         // #7801
         addNoteUsingBasicModel("Hello", "World")
 
-        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
+        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard(col)
         setDeck("Deck", cardToPreview)
 
         val previewer = getPreviewerPreviewing(cardToPreview)
@@ -51,7 +51,7 @@ class PreviewerTest : RobolectricTest() {
         // #7801
         addNoteUsingBasicModel("Hello", "World")
 
-        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
+        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard(col)
         setDeck("Deck", cardToPreview)
 
         val previewer = getPreviewerPreviewing(cardToPreview)
@@ -67,7 +67,7 @@ class PreviewerTest : RobolectricTest() {
 
     @Test
     fun previewerShouldNotAccessScheduler() {
-        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard()
+        val cardToPreview = addNoteUsingBasicModel("Hello", "World").firstCard(col)
         val previewer = getPreviewerPreviewing(cardToPreview)
 
         assertThat("Previewer is not a reviewer", previewer.canAccessScheduler(), equalTo(false))
@@ -128,7 +128,7 @@ class PreviewerTest : RobolectricTest() {
         val c = arrayOfNulls<Card>(front.size)
         val arrayList = LongArray(front.size)
         for (i in front.indices) {
-            val cardToPreview = addNoteUsingBasicModel(front[i], back[i]).firstCard()
+            val cardToPreview = addNoteUsingBasicModel(front[i], back[i]).firstCard(col)
             setDeck("Deck", cardToPreview)
             val h = cardToPreview.id
             arrayList[i] = h

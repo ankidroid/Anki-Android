@@ -52,7 +52,7 @@ fun updateCard(
     if (BackendFactory.defaultLegacySchema) {
         col.db.executeInTransaction {
             // TODO: undo integration
-            editNote.flush()
+            editNote.flush(col)
             // flush card too, in case, did has been changed
             editCard.flush(col)
         }
@@ -89,7 +89,7 @@ fun updateMultipleNotes(
     Timber.d("CollectionOperations: updateMultipleNotes")
     return col.db.executeInTransaction {
         for (note in notesToUpdate) {
-            note.flush()
+            note.flush(col)
         }
         notesToUpdate
     }
@@ -246,7 +246,7 @@ suspend fun checkCardSelection(col: Collection, checkedCards: Set<CardBrowser.Ca
         ensureActive() // check if job is not cancelled
         val card = c.card(col)
         hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
-        hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note(col))
+        hasUnmarked = hasUnmarked || !NoteService.isMarked(col, card.note(col))
         if (hasUnsuspended && hasUnmarked) break
     }
     Pair(hasUnsuspended, hasUnmarked)
@@ -315,7 +315,7 @@ fun deleteMultipleNotes(
         // list of all ids to pass to remNotes method.
         // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
         val notes = CardUtils.getNotes(col, listOf(*cards))
-        val allCards = CardUtils.getAllCards(notes)
+        val allCards = CardUtils.getAllCards(col, notes)
         // delete note
         val uniqueNoteIds = LongArray(notes.size)
         val notesArr = notes.toTypedArray()
@@ -414,7 +414,7 @@ fun changeDeckMulti(
             // then set the card ID to the new deck
             card.did = newDid
             val note = card.note(col)
-            note.flush()
+            note.flush(col)
             // flush card too, in case, did has been changed
             card.flush(col)
         }

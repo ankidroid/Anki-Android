@@ -400,7 +400,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
 
     protected fun addRevNoteUsingBasicModelDueToday(@Suppress("SameParameterValue") front: String, @Suppress("SameParameterValue") back: String): Note {
         val note = addNoteUsingBasicModel(front, back)
-        val card = note.firstCard()
+        val card = note.firstCard(col)
         card.queue = Consts.QUEUE_TYPE_REV
         card.type = Consts.CARD_TYPE_REV
         card.due = col.sched.today.toLong()
