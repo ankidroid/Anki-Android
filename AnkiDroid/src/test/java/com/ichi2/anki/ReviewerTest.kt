@@ -230,7 +230,7 @@ class ReviewerTest : RobolectricTest() {
 
         val decks = col.decks
         val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
         val didA = addDeck("A")
@@ -246,7 +246,7 @@ class ReviewerTest : RobolectricTest() {
         val decks = col.decks
 
         val didAb = addDeck("A::B")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
 
@@ -327,11 +327,11 @@ class ReviewerTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     private fun addNoteWithThreeCards() {
         val models = col.models
-        var m: Model? = models.copy(models.current()!!)
+        var m: Model? = models.copy(col, models.current(col)!!)
         m!!.put("name", "Three")
-        models.add(m)
-        m = models.byName("Three")
-        models.flush()
+        models.add(col, m)
+        m = models.byName(col, "Three")
+        models.flush(col)
         cloneTemplate(models, m, "1")
         cloneTemplate(models, m, "2")
 
@@ -354,7 +354,7 @@ class ReviewerTest : RobolectricTest() {
         newTemplate.put("name", cardName)
         newTemplate.put("qfmt", newTemplate.getString("qfmt") + extra)
 
-        models.addTemplate(m, newTemplate)
+        models.addTemplate(col, m, newTemplate)
     }
 
     private fun displayAnswer(reviewer: Reviewer) {

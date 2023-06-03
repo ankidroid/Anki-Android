@@ -275,13 +275,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         )
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
         advanceRobolectricLooperWithSleep()
-        assertNull("Can delete used template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
+        assertNull("Can delete used template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
         assertFalse("Ordinal pending add?", TemporaryModel.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
         assertEquals("Change incorrectly added to list?", 0, testEditor.tempModel?.templateChanges?.size)
 
         // Assert can delete 'Card 2'
-        assertNotNull("Cannot delete unused template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
+        assertNotNull("Cannot delete unused template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
 
         // Edit note to have Add Reverse set to 'y' so we get a second card
         selectiveGeneratedNote.setField(2, "y")
@@ -291,9 +291,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         assertEquals("should be two cards now", 2, getModelCardCount(collectionBasicModelOriginal))
 
         // - assert can delete either Card template but not both
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
+        assertNull("Can delete both templates?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
 
         // A couple more notes to make sure things are okay
         val secondNote = col.newNote(collectionBasicModelOriginal)
@@ -303,9 +303,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         col.addNote(secondNote)
 
         // - assert can delete either Card template but not both
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
+        assertNull("Can delete both templates?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
     }
 
     /**
@@ -345,9 +345,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         )
         clickMaterialDialogButton(WhichButton.NEGATIVE, true)
         advanceRobolectricLooperWithSleep()
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
+        assertNull("Can delete both templates?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
         assertEquals("Change in database despite no change?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
         assertEquals("Model should have 2 templates still", 2, testEditor.tempModel?.templateCount)
 
@@ -412,13 +412,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
 
         // - assert can delete any 1 or 2 Card templates but not all
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(2)))
-        assertNotNull("Cannot delete two templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
-        assertNotNull("Cannot delete two templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 2)))
-        assertNotNull("Cannot delete two templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1, 2)))
-        assertNull("Can delete all templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1, 2)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(2)))
+        assertNotNull("Cannot delete two templates?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
+        assertNotNull("Cannot delete two templates?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 2)))
+        assertNotNull("Cannot delete two templates?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(1, 2)))
+        assertNull("Can delete all templates?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1, 2)))
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
         assertEquals("Change added but not adjusted correctly?", 1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 0))
         assertEquals("Change incorrectly pending add?", -1, TemporaryModel.getAdjustedAddOrdinalAtChangeIndex(testEditor.tempModel!!, 1))
@@ -473,9 +473,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         clickMaterialDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
+        assertNull("Can delete both templates?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
         assertEquals("Change in database despite no save?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
         assertEquals("Model should have 1 template", 1, testEditor.tempModel?.templateCount)
 
@@ -499,9 +499,9 @@ class CardTemplateEditorTest : RobolectricTest() {
         clickMaterialDialogButton(WhichButton.POSITIVE, true)
         advanceRobolectricLooperWithSleep()
         assertTrue("Model should have changed", testEditor.modelHasChanged())
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
-        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
-        assertNull("Can delete both templates?", col.models.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
+        assertNotNull("Cannot delete template?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(1)))
+        assertNull("Can delete both templates?", col.models.getCardIdsForModel(col, collectionBasicModelOriginal.getLong("id"), intArrayOf(0, 1)))
         assertEquals("Change in database despite no save?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
         assertEquals("Model should have 1 template", 1, testEditor.tempModel?.templateCount)
 
@@ -593,7 +593,7 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         val ordinal = testEditor.viewPager.currentItem
         val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(testEditor.tempModel!!, ordinal)) {
-            col.models.tmplUseCount(testEditor.tempModel!!.model, ordinal)
+            col.models.tmplUseCount(col, testEditor.tempModel!!.model, ordinal)
         } else {
             0
         }
@@ -607,7 +607,7 @@ class CardTemplateEditorTest : RobolectricTest() {
 
     private fun getModelCardCount(model: Model): Int {
         var cardCount = 0
-        for (noteId in col.models.nids(model)) {
+        for (noteId in col.models.nids(col, model)) {
             cardCount += col.getNote(noteId).numberOfCards(col)
         }
         return cardCount

@@ -175,7 +175,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 val imp = AnkiPackageImporter(col, path)
                 imp.setProgressCallback(TaskManager.ProgressCallback(collectionTask, res))
                 try {
-                    imp.run()
+                    imp.run(col)
                     impList.add(imp)
                 } catch (e: ImportExportException) {
                     Timber.w(e)
@@ -228,7 +228,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 var tmpCol: Collection? = null
                 try {
                     tmpCol = Storage.collection(context, colFile)
-                    if (!tmpCol.validCollection()) {
+                    if (!tmpCol.validCollection(col)) {
                         tmpCol.close()
                         return Computation.ERR
                     }

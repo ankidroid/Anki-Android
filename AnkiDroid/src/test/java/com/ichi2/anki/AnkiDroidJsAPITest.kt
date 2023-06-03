@@ -36,7 +36,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         decks.select(didA)
@@ -61,7 +61,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         decks.select(didA)
@@ -84,7 +84,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         decks.select(didA)
@@ -142,7 +142,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         decks.select(didA)
@@ -171,7 +171,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         decks.select(didA)
@@ -238,7 +238,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         addNoteUsingBasicModel("baz", "bak")
@@ -317,7 +317,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+        val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         addNoteUsingBasicModel("baz", "bak")

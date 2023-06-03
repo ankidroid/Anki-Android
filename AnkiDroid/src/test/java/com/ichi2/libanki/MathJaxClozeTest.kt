@@ -40,7 +40,7 @@ class MathJaxClozeTest : RobolectricTest() {
     fun verifyMathJaxClozeCards() {
         val c = col
 
-        val note = c.newNote(c.models.byName("Cloze")!!)
+        val note = c.newNote(c.models.byName(col, "Cloze")!!)
         note.setItem("Text", "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}")
         c.addNote(note)
         assertEquals(5, note.numberOfCards(col))
@@ -62,7 +62,7 @@ class MathJaxClozeTest : RobolectricTest() {
         }
         val c = col
         run {
-            val note = c.newNote(c.models.byName("Cloze")!!)
+            val note = c.newNote(c.models.byName(col, "Cloze")!!)
             note.setItem("Text", "\\(1 \\div 2 =\\){{c1::\\(\\frac{1}{2}\\)}}")
             c.addNote(note)
 
@@ -75,7 +75,7 @@ class MathJaxClozeTest : RobolectricTest() {
             assertThat(a, containsString("<span ${clozeClass()}>\\(\\frac{1}{2}\\)</span>"))
         }
         run {
-            val note = c.newNote(c.models.byName("Cloze")!!)
+            val note = c.newNote(c.models.byName(col, "Cloze")!!)
             note.setItem("Text", "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]")
             c.addNote(note)
             val cards = note.cards(col)
@@ -92,7 +92,7 @@ class MathJaxClozeTest : RobolectricTest() {
             return
         }
         val c = col
-        val note = c.newNote(c.models.byName("Cloze")!!)
+        val note = c.newNote(c.models.byName(col, "Cloze")!!)
         note.setItem("Text", "the \\((\\){{c1::\\(x\\)}}\\()\\) is {{c2::\\(y\\)}} but not {{c1::\\(z\\)}} or {{c2::\\(\\lambda\\)}}")
 
         c.addNote(note)

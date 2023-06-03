@@ -30,7 +30,7 @@ class StorageRustTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
     fun testModelCount() {
-        val modelNames = col.models.all().map { x -> x.getString("name") }
+        val modelNames = col.models.all(col).map { x -> x.getString("name") }
         MatcherAssert.assertThat(
             modelNames,
             Matchers.containsInAnyOrder(

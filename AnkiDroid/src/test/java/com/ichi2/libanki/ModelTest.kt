@@ -60,9 +60,9 @@ class ModelTest : RobolectricTest() {
     fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
 
-        val m = col.models.current()
+        val m = col.models.current(col)
         m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}")
-        col.models.save(m)
+        col.models.save(col, m)
         val note = col.newNote()
         note.setItem("Front", "helloworld")
         col.addNote(note)
@@ -84,13 +84,13 @@ class ModelTest : RobolectricTest() {
     fun test_field_named_frontSide() {
         // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
 
-        val m = col.models.current()
+        val m = col.models.current(col)
 
         // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
-        col.models.addFieldModChanged(m!!, col.models.newField("FrontSide"))
-        col.models.addFieldModChanged(m, col.models.newField("FrontSide2"))
+        col.models.addFieldModChanged(col, m!!, col.models.newField(col, "FrontSide"))
+        col.models.addFieldModChanged(col, m, col.models.newField(col, "FrontSide2"))
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}{{FrontSide2}}")
-        col.models.save(m)
+        col.models.save(col, m)
 
         val note = col.newNote()
         note.setItem("Front", "helloworld")
@@ -117,14 +117,14 @@ class ModelTest : RobolectricTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         assertEquals(1, col.cardCount())
-        col.models.rem(col.models.current()!!)
+        col.models.rem(col, col.models.current(col)!!)
         assertEquals(0, col.cardCount())
     }
 
     @Test
     fun test_modelCopy() {
-        val m = col.models.current()
-        val m2 = col.models.copy(m!!)
+        val m = col.models.current(col)
+        val m2 = col.models.copy(col, m!!)
         assertEquals("Basic copy", m2.getString("name"))
         assertNotEquals(m2.getLong("id"), m.getLong("id"))
         assertEquals(2, m2.getJSONArray("flds").length())
@@ -145,21 +145,22 @@ class ModelTest : RobolectricTest() {
         note.setItem("Front", "1")
         note.setItem("Back", "2")
         col.addNote(note)
-        val m = col.models.current()
+        val m = col.models.current(col)
         // make sure renaming a field updates the templates
-        col.models.renameField(m!!, m.getJSONArray("flds").getJSONObject(0), "NewFront")
+        col.models.renameField(col, m!!, m.getJSONArray("flds").getJSONObject(0), "NewFront")
         assertThat(
             m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"),
             containsString("{{NewFront}}")
         )
         val h = col.models.scmhash(m)
         // add a field
-        var field: JSONObject? = col.models.newField("foo")
-        col.models.addField(m, field!!)
+        var field: JSONObject? = col.models.newField(col, "foo")
+        col.models.addField(col, m, field!!)
         assertArrayEquals(
             arrayOf("1", "2", ""),
             col.getNote(
                 col.models.nids(
+                    col,
                     m
                 )[0]
             ).fields
@@ -167,78 +168,85 @@ class ModelTest : RobolectricTest() {
         assertNotEquals(h, col.models.scmhash(m))
         // rename it
         field = m.getJSONArray("flds").getJSONObject(2)
-        col.models.renameField(m, field, "bar")
-        assertEquals("", col.getNote(col.models.nids(m)[0]).getItem("bar"))
+        col.models.renameField(col, m, field, "bar")
+        assertEquals("", col.getNote(col.models.nids(col, m)[0]).getItem("bar"))
         // delete back
-        col.models.remField(m, m.getJSONArray("flds").getJSONObject(1))
+        col.models.remField(col, m, m.getJSONArray("flds").getJSONObject(1))
         assertArrayEquals(
             arrayOf("1", ""),
             col.getNote(
                 col.models.nids(
+                    col,
                     m
                 )[0]
             ).fields
         )
         // move 0 -> 1
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.models.moveField(col, m, m.getJSONArray("flds").getJSONObject(0), 1)
         assertArrayEquals(
             arrayOf("", "1"),
             col.getNote(
                 col.models.nids(
+                    col,
                     m
                 )[0]
             ).fields
         )
         // move 1 -> 0
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(1), 0)
+        col.models.moveField(col, m, m.getJSONArray("flds").getJSONObject(1), 0)
         assertArrayEquals(
             arrayOf("1", ""),
             col.getNote(
                 col.models.nids(
+                    col,
                     m
                 )[0]
             ).fields
         )
         // add another and put in middle
-        field = col.models.newField("baz")
-        col.models.addField(m, field)
-        note = col.getNote(col.models.nids(m)[0])
+        field = col.models.newField(col, "baz")
+        col.models.addField(col, m, field)
+        note = col.getNote(col.models.nids(col, m)[0])
         note.setItem("baz", "2")
         note.flush(col)
         assertArrayEquals(
             arrayOf("1", "", "2"),
             col.getNote(
                 col.models.nids(
+                    col,
                     m
                 )[0]
             ).fields
         )
         // move 2 -> 1
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(2), 1)
+        col.models.moveField(col, m, m.getJSONArray("flds").getJSONObject(2), 1)
         assertArrayEquals(
             arrayOf("1", "2", ""),
             col.getNote(
                 col.models.nids(
+                    col,
                     m
                 )[0]
             ).fields
         )
         // move 0 -> 2
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(0), 2)
+        col.models.moveField(col, m, m.getJSONArray("flds").getJSONObject(0), 2)
         assertArrayEquals(
             arrayOf("2", "", "1"),
             col.getNote(
                 col.models.nids(
+                    col,
                     m
                 )[0]
             ).fields
         )
         // move 0 -> 1
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.models.moveField(col, m, m.getJSONArray("flds").getJSONObject(0), 1)
         assertArrayEquals(
             arrayOf("", "2", "1"),
             col.getNote(
                 col.models.nids(
+                    col,
                     m
                 )[0]
             ).fields
@@ -248,13 +256,13 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_templates() {
-        val m = col.models.current()
+        val m = col.models.current(col)
         val mm = col.models
         var t = Models.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m!!, t)
-        mm.save(m)
+        mm.addTemplateModChanged(col, m!!, t)
+        mm.save(col, m)
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
@@ -268,13 +276,13 @@ class ModelTest : RobolectricTest() {
         assertEquals(0, c.ord)
         assertEquals(1, c2.ord)
         // switch templates
-        col.models.moveTemplate(m, c.template(col), 1)
+        col.models.moveTemplate(col, m, c.template(col), 1)
         c.load(col)
         c2.load(col)
         assertEquals(1, c.ord)
         assertEquals(0, c2.ord)
         // removing a template should delete its cards
-        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        col.models.remTemplate(col, m, m.getJSONArray("tmpls").getJSONObject(0))
         assertEquals(1, col.cardCount())
         // and should have updated the other cards' ordinals
         c = note.cards(col)[0]
@@ -283,8 +291,8 @@ class ModelTest : RobolectricTest() {
         // it shouldn't be possible to orphan notes by removing templates
         t = Models.newTemplate("template name")
         t.put("qfmt", "{{Front}}1")
-        mm.addTemplateModChanged(m, t)
-        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        mm.addTemplateModChanged(col, m, t)
+        col.models.remTemplate(col, m, m.getJSONArray("tmpls").getJSONObject(0))
         assertEquals(
             0,
             col.db.queryLongScalar(
@@ -296,17 +304,17 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_cloze_ordinals() {
-        col.models.setCurrent(col.models.byName("Cloze")!!)
-        val m = col.models.current()
+        col.models.setCurrent(col, col.models.byName(col, "Cloze")!!)
+        val m = col.models.current(col)
         val mm = col.models
 
         // We replace the default Cloze template
         val t = Models.newTemplate("ChainedCloze")
         t.put("qfmt", "{{text:cloze:Text}}")
         t.put("afmt", "{{text:cloze:Text}}")
-        mm.addTemplateModChanged(m!!, t)
-        mm.save(m)
-        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        mm.addTemplateModChanged(col, m!!, t)
+        mm.save(col, m)
+        col.models.remTemplate(col, m, m.getJSONArray("tmpls").getJSONObject(0))
 
         val note = col.newNote()
         note.setItem("Text", "{{c1::firstQ::firstA}}{{c2::secondQ::secondA}}")
@@ -324,8 +332,8 @@ class ModelTest : RobolectricTest() {
     @Test
     fun test_cloze_empty() {
         val mm = col.models
-        val clozeModel = mm.byName("Cloze")
-        mm.setCurrent(clozeModel!!)
+        val clozeModel = mm.byName(col, "Cloze")
+        mm.setCurrent(col, clozeModel!!)
         assertListEquals(
             listOf(0, 1),
             Models.availOrds(clozeModel, arrayOf("{{c1::Empty}} and {{c2::}}", ""))
@@ -334,9 +342,9 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_text() {
-        val m = col.models.current()
+        val m = col.models.current(col)
         m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}")
-        col.models.save(m)
+        col.models.save(col, m)
         val note = col.newNote()
         note.setItem("Front", "hello<b>world")
         col.addNote(note)
@@ -352,7 +360,7 @@ class ModelTest : RobolectricTest() {
             }
         }
 
-        col.models.setCurrent(col.models.byName("Cloze")!!)
+        col.models.setCurrent(col, col.models.byName(col, "Cloze")!!)
         var note = col.newNote()
         assertEquals("Cloze", note.model().getString("name"))
         // a cloze model with no clozes is not empty
@@ -488,7 +496,7 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_cloze_mathjax() {
-        col.models.setCurrent(col.models.byName("Cloze")!!)
+        col.models.setCurrent(col, col.models.byName(col, "Cloze")!!)
         var note = col.newNote()
         note.setItem(
             "Text",
@@ -522,10 +530,10 @@ class ModelTest : RobolectricTest() {
 
     @Test
     fun test_type_and_cloze() {
-        val m = col.models.byName("Cloze")
-        col.models.setCurrent(m!!)
+        val m = col.models.byName(col, "Cloze")
+        col.models.setCurrent(col, m!!)
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{cloze:Text}}{{type:cloze:Text}}")
-        col.models.save(m)
+        col.models.save(col, m)
         val note = col.newNote()
         note.setItem("Text", "hello {{c1::world}}")
         col.addNote(note)
@@ -539,17 +547,17 @@ class ModelTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     @Suppress("SpellCheckingInspection") // chaine
     fun test_chained_mods() {
-        col.models.setCurrent(col.models.byName("Cloze")!!)
-        val m = col.models.current()
+        col.models.setCurrent(col, col.models.byName(col, "Cloze")!!)
+        val m = col.models.current(col)
         val mm = col.models
 
         // We replace the default Cloze template
         val t = Models.newTemplate("ChainedCloze")
         t.put("qfmt", "{{cloze:text:Text}}")
         t.put("afmt", "{{cloze:text:Text}}")
-        mm.addTemplateModChanged(m!!, t)
-        mm.save(m)
-        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        mm.addTemplateModChanged(col, m!!, t)
+        mm.save(col, m)
+        col.models.remTemplate(col, m, m.getJSONArray("tmpls").getJSONObject(0))
         val note = col.newNote()
         val q1 = "<span style=\"color:red\">phrase</span>"
         val a1 = "<b>sentence</b>"
@@ -570,15 +578,15 @@ class ModelTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_modelChange() {
-        val cloze = col.models.byName("Cloze")
+        val cloze = col.models.byName(col, "Cloze")
         // enable second template and add a note
-        val basic = col.models.current()
+        val basic = col.models.current(col)
         val mm = col.models
         val t = Models.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(basic!!, t)
-        mm.save(basic)
+        mm.addTemplateModChanged(col, basic!!, t)
+        mm.save(col, basic)
         var note = col.newNote()
         note.setItem("Front", "note")
         note.setItem("Back", "b123")
@@ -588,7 +596,7 @@ class ModelTest : RobolectricTest() {
         val noOp = mapOf<Int, Int?>(0 to 0, 1 to 1)
         map[0] = 1
         map[1] = 0
-        col.models.change(basic, note.id, basic, map, noOp)
+        col.models.change(col, basic, note.id, basic, map, noOp)
         note.load(col)
         assertEquals("b123", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
@@ -599,7 +607,7 @@ class ModelTest : RobolectricTest() {
         assertThat(c1.q(col), containsString("note"))
         assertEquals(0, c0.ord)
         assertEquals(1, c1.ord)
-        col.models.change(basic, note.id, basic, noOp, map)
+        col.models.change(col, basic, note.id, basic, noOp, map)
         note.load(col)
         c0.load(col)
         c1.load(col)
@@ -617,7 +625,7 @@ class ModelTest : RobolectricTest() {
         //     // The low precision timer on Windows reveals a race condition
         //     time.sleep(0.05);
         // }
-        col.models.change(basic, note.id, basic, noOp, map)
+        col.models.change(col, basic, note.id, basic, noOp, map)
         note.load(col)
         c0.load(col)
         // the card was deleted
@@ -626,7 +634,7 @@ class ModelTest : RobolectricTest() {
         // an unmapped field becomes blank
         assertEquals("b123", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
-        col.models.change(basic, note.id, basic, map, noOp)
+        col.models.change(col, basic, note.id, basic, map, noOp)
         note.load(col)
         assertEquals("", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
@@ -637,25 +645,25 @@ class ModelTest : RobolectricTest() {
         col.addNote(note)
         // counts = col.getModels().all_use_counts();
         // Using older version of the test
-        assertEquals(2, col.models.useCount(basic))
-        assertEquals(0, col.models.useCount(cloze!!))
+        assertEquals(2, col.models.useCount(col, basic))
+        assertEquals(0, col.models.useCount(col, cloze!!))
         // Identity map
         map = HashMap()
         map[0] = 0
         map[1] = 1
-        col.models.change(basic, note.id, cloze, map, map)
+        col.models.change(col, basic, note.id, cloze, map, map)
         note.load(col)
         assertEquals("f2", note.getItem("Text"))
         assertEquals(2, note.numberOfCards(col))
         // back the other way, with deletion of second ord
-        col.models.remTemplate(basic, basic.getJSONArray("tmpls").getJSONObject(1))
+        col.models.remTemplate(col, basic, basic.getJSONArray("tmpls").getJSONObject(1))
         assertEquals(
             2,
             col.db.queryScalar("select count() from cards where nid = ?", note.id)
         )
         map = HashMap()
         map[0] = 0
-        col.models.change(cloze, note.id, basic, map, map)
+        col.models.change(col, cloze, note.id, basic, map, map)
         assertEquals(
             1,
             col.db.queryScalar("select count() from cards where nid = ?", note.id)
@@ -675,7 +683,7 @@ class ModelTest : RobolectricTest() {
     @Test
     fun test_req() {
         val mm = col.models
-        val basic = mm.byName("Basic")
+        val basic = mm.byName(col, "Basic")
         assertTrue(basic!!.has("req"))
         reqSize(basic)
         var r = basic.getJSONArray("req").getJSONArray(0)
@@ -686,7 +694,7 @@ class ModelTest : RobolectricTest() {
         assertEquals(1, r.getJSONArray(2).length())
         assertEquals(0, r.getJSONArray(2).getInt(0))
 
-        var opt = mm.byName("Basic (optional reversed card)")
+        var opt = mm.byName(col, "Basic (optional reversed card)")
         reqSize(opt)
 
         r = opt!!.getJSONArray("req").getJSONArray(0)
@@ -700,7 +708,7 @@ class ModelTest : RobolectricTest() {
 
         // testing any
         opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{Back}}{{Add Reverse}}")
-        mm.save(opt, true)
+        mm.save(col, opt, true)
         assertEquals(
             JSONArray("[1, \"any\", [1, 2]]"),
             opt.getJSONArray("req").getJSONArray(1)
@@ -710,14 +718,14 @@ class ModelTest : RobolectricTest() {
             // can't add front without field in v16
             opt.getJSONArray("tmpls").getJSONObject(1)
                 .put("qfmt", "{{^Add Reverse}}{{/Add Reverse}}")
-            mm.save(opt, true)
+            mm.save(col, opt, true)
             assertEquals(
                 JSONArray("[1, \"none\", []]"),
                 opt.getJSONArray("req").getJSONArray(1)
             )
         }
 
-        opt = mm.byName("Basic (type in the answer)")
+        opt = mm.byName(col, "Basic (type in the answer)")
         reqSize(opt)
         r = opt!!.getJSONArray("req").getJSONArray(0)
         assertTrue(
@@ -740,12 +748,12 @@ class ModelTest : RobolectricTest() {
         }
 
         val mm = col.models
-        val basic = mm.byName("Basic")
+        val basic = mm.byName(col, "Basic")
         val template = basic!!.getJSONArray("tmpls").getJSONObject(0)
         template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}")
         assertFailsWith<Exception> {
             // in V16, the "save" throws, in V11, the "add" throws
-            mm.save(basic, true)
+            mm.save(col, basic, true)
             addNoteUsingBasicModel("foo", "bar")
         }
     }
@@ -767,7 +775,7 @@ class ModelTest : RobolectricTest() {
     @Test
     fun nonEmptyFieldTest() {
         val mm = col.models
-        val basic = mm.byName("Basic")
+        val basic = mm.byName(col, "Basic")
         val s: MutableSet<String> = HashSet<String>()
         assertEquals(s, basic!!.nonEmptyFields(arrayOf("", "")))
         s.add("Front")
@@ -783,8 +791,8 @@ class ModelTest : RobolectricTest() {
     @Test
     fun avail_standard_order_test() {
         val mm = col.models
-        val basic = mm.byName("Basic")!!
-        val reverse = mm.byName("Basic (and reversed card)")!!
+        val basic = mm.byName(col, "Basic")!!
+        val reverse = mm.byName(col, "Basic (and reversed card)")!!
 
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "")))
         assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "Back")))
@@ -859,8 +867,8 @@ class ModelTest : RobolectricTest() {
     @Test
     fun avail_ords_test() {
         val mm = col.models
-        val basic = mm.byName("Basic")!!
-        val reverse = mm.byName("Basic (and reversed card)")!!
+        val basic = mm.byName(col, "Basic")!!
+        val reverse = mm.byName(col, "Basic (and reversed card)")!!
 
         assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "")))
         assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "Back")))
@@ -930,7 +938,7 @@ class ModelTest : RobolectricTest() {
     @Test
     fun getDid_test() {
         val mm = col.models
-        val basic = mm.byName("Basic")
+        val basic = mm.byName(col, "Basic")
         basic!!.put("did", 999L)
 
         val expected = 999L

@@ -23,7 +23,7 @@ class ClozeTest : RobolectricTest() {
             return
         }
         val d = col
-        var f = d.newNote(d.models.byName("Cloze")!!)
+        var f = d.newNote(d.models.byName(col, "Cloze")!!)
         val name = f.model().getString("name")
         assertEquals("Cloze", name)
         // a cloze model with no clozes is not empty
@@ -32,19 +32,19 @@ class ClozeTest : RobolectricTest() {
         val card = f.cards(col)[0]
         assertTrue(card.isEmpty(col))
         // try with one cloze
-        f = d.newNote(d.models.byName("Cloze")!!)
+        f = d.newNote(d.models.byName(col, "Cloze")!!)
         f.setItem("Text", "hello {{c1::world}}")
         assertEquals(1, d.addNote(f))
         assertThat(f.firstCard(col).q(col), containsString("hello <span class=cloze>[...]</span>"))
         assertThat(f.firstCard(col).a(col), containsString("hello <span class=cloze>world</span>"))
         // and with a comment
-        f = d.newNote(d.models.byName("Cloze")!!)
+        f = d.newNote(d.models.byName(col, "Cloze")!!)
         f.setItem("Text", "hello {{c1::world::typical}}")
         assertEquals(1, d.addNote(f))
         assertThat(f.firstCard(col).q(col), containsString("<span class=cloze>[typical]</span>"))
         assertThat(f.firstCard(col).a(col), containsString("<span class=cloze>world</span>"))
         // and with two clozes
-        f = d.newNote(d.models.byName("Cloze")!!)
+        f = d.newNote(d.models.byName(col, "Cloze")!!)
         f.setItem("Text", "hello {{c1::world}} {{c2::bar}}")
         assertEquals(2, d.addNote(f))
         val c1 = f.firstCard(col)
@@ -55,7 +55,7 @@ class ClozeTest : RobolectricTest() {
         assertThat(c2.a(col), containsString("world <span class=cloze>bar</span>"))
         // if there are multiple answers for a single cloze, they are given in a
         // list
-        f = d.newNote(d.models.byName("Cloze")!!)
+        f = d.newNote(d.models.byName(col, "Cloze")!!)
         f.setItem("Text", "a {{c1::b}} {{c1::c}}")
         assertEquals(1, d.addNote(f))
         assertThat(f.firstCard(col).a(col), containsString("<span class=cloze>b</span> <span class=cloze>c</span>"))

@@ -173,7 +173,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (tempModel == null) {
-            tempModel = TemporaryModel(Model(col.models.get(mModelId).toString()))
+            tempModel = TemporaryModel(Model(col.models.get(col, mModelId).toString()))
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
         mFieldNames = tempModel!!.model.fieldsNames
@@ -197,7 +197,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     fun modelHasChanged(): Boolean {
-        val oldModel: JSONObject? = col.models.get(mModelId)
+        val oldModel: JSONObject? = col.models.get(col, mModelId)
         return tempModel != null && tempModel!!.model.toString() != oldModel.toString()
     }
 
@@ -502,7 +502,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 // isOrdinalPendingAdd method will check if there are any new card types added or not,
                                 // if TempModel has new card type then numAffectedCards will be 0 by default.
                                 val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel!!, ordinal)) {
-                                    col.models.tmplUseCount(tempModel.model, ordinal)
+                                    col.models.tmplUseCount(col, tempModel.model, ordinal)
                                 } else {
                                     0
                                 }
@@ -528,7 +528,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 // Show confirmation dialog
                                 val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel, ordinal)) {
                                     Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
-                                    col.models.tmplUseCount(tempModel.model, ordinal)
+                                    col.models.tmplUseCount(col, tempModel.model, ordinal)
                                 } else {
                                     0
                                 }
@@ -683,7 +683,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             if (!TemporaryModel.isOrdinalPendingAdd(tempModel!!, position)) {
                 val currentDeletes = tempModel.getDeleteDbOrds(position)
                 // TODO - this is a SQL query on GUI thread - should see a DeckTask conversion ideally
-                if (col.models.getCardIdsForModel(tempModel.modelId, currentDeletes) == null) {
+                if (col.models.getCardIdsForModel(col, tempModel.modelId, currentDeletes) == null) {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
                     // not already have cards generated making it safe will see this error message:

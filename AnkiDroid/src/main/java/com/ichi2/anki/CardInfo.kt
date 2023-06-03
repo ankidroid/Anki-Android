@@ -316,7 +316,7 @@ class CardInfo : AnkiActivity() {
                 var easeInPercent: Double? = c.factor / 1000.0
                 val lapses = c.lapses
                 val reviews = c.reps
-                val model = col.models.get(c.note(col).mid)
+                val model = col.models.get(col, c.note(col).mid)
                 val cardType = getCardType(col, c, model)
                 val noteType = model!!.getString("name")
                 val deckName = col.decks.get(c.did).getString("name")

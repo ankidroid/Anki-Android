@@ -43,7 +43,7 @@ class ModelTest : InstrumentedTest() {
             Build.VERSION.SDK_INT != Build.VERSION_CODES.Q
         )
         val models = mTestCol.models
-        val model = models.all()[0]
+        val model = models.all(col)[0]
         val testString = "test"
         val size = testString.length * 1024 * 1024
         val buf = StringBuilder((size * 1.01).toInt())
@@ -53,10 +53,10 @@ class ModelTest : InstrumentedTest() {
         }
         model.put(testString, buf.toString())
         // Buf should be more than 4MB, so at least two chunks from database.
-        models.flush()
+        models.flush(col)
         // Reload models
         mTestCol.load()
-        val newModel = models.all()[0]
+        val newModel = models.all(col)[0]
         assertEquals(newModel, model)
     }
 }

@@ -24,7 +24,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.utils.NamedJSONComparator
 
 fun setupNoteTypeSpinner(col: Collection, context: Context, noteTypeSpinner: Spinner): List<Long> {
-    val sortedModels = col.models.all().sortedWith(NamedJSONComparator.INSTANCE)
+    val sortedModels = col.models.all(col).sortedWith(NamedJSONComparator.INSTANCE)
     val modelNames = sortedModels.map { it.getString("name") }
 
     noteTypeSpinner.adapter = ArrayAdapter(

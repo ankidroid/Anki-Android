@@ -23,7 +23,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
 
-abstract class ModelManager(protected val col: Collection) {
+abstract class ModelManager() {
 
     /*
      * Saving/loading registry
@@ -34,20 +34,20 @@ abstract class ModelManager(protected val col: Collection) {
     abstract fun load(json: String)
 
     /** Mark M modified if provided, and schedule registry flush. */
-    fun save() = save(null)
-    fun save(m: Model?) = save(m, false)
+    fun save(col: Collection) = save(col, null)
+    fun save(col: Collection, m: Model?) = save(col, m, false)
 
     /**
      * Save a model
      * @param m model to save
      * @param templates flag which (when true) re-generates the cards for each note which uses the model
      */
-    abstract fun save(m: Model?, templates: Boolean)
+    abstract fun save(col: Collection, m: Model?, templates: Boolean)
 
     /** Flush the registry if any models were changed. */
-    abstract fun flush()
+    abstract fun flush(col: Collection)
 
-    abstract fun ensureNotEmpty(): Boolean
+    abstract fun ensureNotEmpty(col: Collection): Boolean
 
     /*
       Retrieving and creating models
@@ -58,7 +58,7 @@ abstract class ModelManager(protected val col: Collection) {
      * Get current model.
      * @return The model, or null if not found in the deck and in the configuration.
      */
-    fun current() = current(true)
+    fun current(col: Collection) = current(col, true)
 
     /**
      * Get current model.
@@ -66,36 +66,36 @@ abstract class ModelManager(protected val col: Collection) {
      * found, it uses the configuration`s field curModel.
      * @return The model, or null if not found in the deck and in the configuration.
      */
-    abstract fun current(forDeck: Boolean = true): Model?
-    abstract fun setCurrent(m: Model)
+    abstract fun current(col: Collection, forDeck: Boolean = true): Model?
+    abstract fun setCurrent(col: Collection, m: Model)
 
     /** get model with ID, or null.  */
-    abstract fun get(id: Long): Model?
+    abstract fun get(col: Collection, id: Long): Model?
 
     /** get all models  */
-    abstract fun all(): List<Model>
+    abstract fun all(col: Collection): List<Model>
 
     /** get the names of all models */
-    abstract fun allNames(): List<String>
+    abstract fun allNames(col: Collection): List<String>
 
     /** get model with NAME.  */
-    abstract fun byName(name: String): Model?
+    abstract fun byName(col: Collection, name: String): Model?
 
     /** Create a new model, save it in the registry, and return it.  */
     // Called `new` in Anki's code. New is a reserved word in java,
     // not in python. Thus the method has to be renamed.
-    abstract fun newModel(name: String): Model
+    abstract fun newModel(col: Collection, name: String): Model
 
     /** Delete model, and all its cards/notes.
      * @throws ConfirmModSchemaException
      */
     @Throws(ConfirmModSchemaException::class)
-    abstract fun rem(m: Model)
+    abstract fun rem(col: Collection, m: Model)
 
-    abstract fun add(m: Model)
+    abstract fun add(col: Collection, m: Model)
 
     /** Add or update an existing model. Used for syncing and merging.  */
-    open fun update(m: Model) = update(m, true)
+    open fun update(col: Collection, m: Model) = update(col, m, true)
 
     /**
      * Add or update an existing model. Used for syncing and merging.
@@ -104,17 +104,17 @@ abstract class ModelManager(protected val col: Collection) {
      * syncing (which is now handled on the Rust end)
      * importing apkg files (which will be handled by Rust in the future)
      */
-    abstract fun update(m: Model, preserve_usn_and_mtime: Boolean = true)
+    abstract fun update(col: Collection, m: Model, preserve_usn_and_mtime: Boolean = true)
 
-    abstract fun have(id: Long): Boolean
-    abstract fun ids(): Set<Long>
+    abstract fun have(col: Collection, id: Long): Boolean
+    abstract fun ids(col: Collection): Set<Long>
 
     /*
       Tools ***********************************************************************************************
      */
 
     /** Note ids for M  */
-    abstract fun nids(m: Model): List<Long>
+    abstract fun nids(col: Collection, m: Model): List<Long>
 
     /**
      * Number of notes using m
@@ -122,7 +122,7 @@ abstract class ModelManager(protected val col: Collection) {
      * @return The number of notes with that model.
      */
     @RustCleanup("use all_use_counts()")
-    abstract fun useCount(m: Model): Int
+    abstract fun useCount(col: Collection, m: Model): Int
 
     /**
      * Number of notes using m
@@ -130,44 +130,44 @@ abstract class ModelManager(protected val col: Collection) {
      * @param ord The index of the card template
      * @return The number of notes with that model.
      */
-    abstract fun tmplUseCount(m: Model, ord: Int): Int
+    abstract fun tmplUseCount(col: Collection, m: Model, ord: Int): Int
 
     /*
       Copying ***********************************************************************************************
      */
 
     /** Copy, save and return.  */
-    abstract fun copy(m: Model): Model
+    abstract fun copy(col: Collection, m: Model): Model
 
     /*
      * Fields ***********************************************************************************************
      */
 
-    abstract fun newField(name: String): JSONObject
+    abstract fun newField(col: Collection, name: String): JSONObject
 
     abstract fun sortIdx(m: Model): Int
 
     @Throws(ConfirmModSchemaException::class)
-    abstract fun setSortIdx(m: Model, idx: Int)
+    abstract fun setSortIdx(col: Collection, m: Model, idx: Int)
 
     @Throws(ConfirmModSchemaException::class)
-    abstract fun addField(m: Model, field: JSONObject)
+    abstract fun addField(col: Collection, m: Model, field: JSONObject)
 
     @Throws(ConfirmModSchemaException::class)
-    abstract fun remField(m: Model, field: JSONObject)
+    abstract fun remField(col: Collection, m: Model, field: JSONObject)
 
     @Throws(ConfirmModSchemaException::class)
-    abstract fun moveField(m: Model, field: JSONObject, idx: Int)
+    abstract fun moveField(col: Collection, m: Model, field: JSONObject, idx: Int)
 
     @Throws(ConfirmModSchemaException::class)
-    abstract fun renameField(m: Model, field: JSONObject, newName: String)
+    abstract fun renameField(col: Collection, m: Model, field: JSONObject, newName: String)
 
     /*
      * Templates ***********************************************************************************************
      */
 
     @Throws(ConfirmModSchemaException::class)
-    abstract fun addTemplate(m: Model, template: JSONObject)
+    abstract fun addTemplate(col: Collection, m: Model, template: JSONObject)
 
     /**
      * Removing a template
@@ -175,9 +175,9 @@ abstract class ModelManager(protected val col: Collection) {
      * @throws ConfirmModSchemaException
      */
     @Throws(ConfirmModSchemaException::class)
-    abstract fun remTemplate(m: Model, template: JSONObject)
+    abstract fun remTemplate(col: Collection, m: Model, template: JSONObject)
 
-    abstract fun moveTemplate(m: Model, template: JSONObject, idx: Int)
+    abstract fun moveTemplate(col: Collection, m: Model, template: JSONObject, idx: Int)
     /*
       Model changing ***********************************************************************************************
      */
@@ -192,7 +192,7 @@ abstract class ModelManager(protected val col: Collection) {
      * @throws ConfirmModSchemaException
      */
     @Throws(ConfirmModSchemaException::class)
-    abstract fun change(m: Model, nid: NoteId, newModel: Model, fmap: Map<Int, Int?>, cmap: Map<Int, Int?>)
+    abstract fun change(col: Collection, m: Model, nid: NoteId, newModel: Model, fmap: Map<Int, Int?>, cmap: Map<Int, Int?>)
 
     /*
       Schema hash ***********************************************************************************************
@@ -204,7 +204,7 @@ abstract class ModelManager(protected val col: Collection) {
      * Sync handling ***********************************************************************************************
      */
 
-    abstract fun beforeUpload()
+    abstract fun beforeUpload(col: Collection)
 
     /*
      * Other stuff NOT IN LIBANKI
@@ -213,15 +213,15 @@ abstract class ModelManager(protected val col: Collection) {
 
     abstract fun setChanged()
 
-    abstract fun getModels(): Map<Long, Model>
+    abstract fun getModels(col: Collection): Map<Long, Model>
 
     /** @return Number of models */
-    abstract fun count(): Int
+    abstract fun count(col: Collection): Int
 
     /** Validate model entries.  */
     @RustCleanup("remove from Java and replace with unit test")
-    fun validateModel(): Boolean {
-        for (model in all()) {
+    fun validateModel(col: Collection): Boolean {
+        for (model in all(col)) {
             if (!validateBrackets(model)) {
                 return false
             }
@@ -267,7 +267,7 @@ abstract class ModelManager(protected val col: Collection) {
      * @param ords array of ints, each one is the ordinal a the card template in the given model
      * @return null if deleting ords would orphan notes, long[] of related card ids to delete if it is safe
      */
-    open fun getCardIdsForModel(modelId: NoteTypeId, ords: IntArray): List<Long>? {
+    open fun getCardIdsForModel(col: Collection, modelId: NoteTypeId, ords: IntArray): List<Long>? {
         val cardIdsToDeleteSql = "select c2.id from cards c2, notes n2 where c2.nid=n2.id and n2.mid = ? and c2.ord  in " + Utils.ids2str(ords)
         val cids: List<Long> = col.db.queryLongList(cardIdsToDeleteSql, modelId)
         // Timber.d("cardIdsToDeleteSql was ' %s' and got %s", cardIdsToDeleteSql, Utils.ids2str(cids));
@@ -296,10 +296,10 @@ abstract class ModelManager(protected val col: Collection) {
      * [ConfirmModSchemaException]
      */
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
-    fun addFieldInNewModel(m: Model, field: JSONObject) {
+    fun addFieldInNewModel(col: Collection, m: Model, field: JSONObject) {
         Assert.that(Models.isModelNew(m), "Model was assumed to be new, but is not")
         try {
-            _addField(m, field)
+            _addField(col, m, field)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
             CrashReportService.sendExceptionReport(e, "addFieldInNewModel: Unexpected mod schema")
@@ -307,13 +307,13 @@ abstract class ModelManager(protected val col: Collection) {
         }
     }
 
-    fun addTemplateInNewModel(m: Model, template: JSONObject) {
+    fun addTemplateInNewModel(col: Collection, m: Model, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
         Assert.that(Models.isModelNew(m), "Model was assumed to be new, but is not")
 
         try {
-            _addTemplate(m, template)
+            _addTemplate(col, m, template)
         } catch (e: ConfirmModSchemaException) {
             Timber.w(e, "Unexpected mod schema")
             CrashReportService.sendExceptionReport(e, "addTemplateInNewModel: Unexpected mod schema")
@@ -322,23 +322,23 @@ abstract class ModelManager(protected val col: Collection) {
     }
 
     /** Add template without schema mod */
-    protected abstract fun _addTemplate(m: Model, template: JSONObject)
+    protected abstract fun _addTemplate(col: Collection, m: Model, template: JSONObject)
 
     /** Add field without schema mod */
-    protected abstract fun _addField(m: Model, field: JSONObject)
+    protected abstract fun _addField(col: Collection, m: Model, field: JSONObject)
 
-    fun addFieldModChanged(m: Model, field: JSONObject) {
+    fun addFieldModChanged(col: Collection, m: Model, field: JSONObject) {
         // similar to Anki's addField; but thanks to assumption that
         // mod is already changed, it never has to throw
         // ConfirmModSchemaException.
         Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
-        _addField(m, field)
+        _addField(col, m, field)
     }
 
-    fun addTemplateModChanged(m: Model, template: JSONObject) {
+    fun addTemplateModChanged(col: Collection, m: Model, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
         Assert.that(col.schemaChanged(), "Mod was assumed to be already changed, but is not")
-        _addTemplate(m, template)
+        _addTemplate(col, m, template)
     }
 }

@@ -45,7 +45,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!
 
     @Throws(ImportExportException::class)
     @NeedsTest("test this on our lowest SDK")
-    override fun run() {
+    override fun run(col: Collection) {
         publishProgress(0, 0, 0)
         val tempDir = File(File(mCol.path).parent, "tmpzip")
         val tmpCol: Collection? // self.col into Anki.
@@ -102,7 +102,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!
             }
             tmpCol = Storage.collection(context, colpath)
             try {
-                if (!tmpCol.validCollection()) {
+                if (!tmpCol.validCollection(col)) {
                     log.add(res.getString(R.string.import_log_failed_validate))
                     return
                 }
@@ -141,7 +141,7 @@ class AnkiPackageImporter(col: Collection?, file: String?) : Anki2Importer(col!!
                 Timber.e("Malformed media dict. Media import will be incomplete.")
             }
             // run anki2 importer
-            super.run()
+            super.run(col)
             // import static media
             for ((file, c) in mNameToNum!!) {
                 if (!file.startsWith("_") && !file.startsWith("latex-")) {

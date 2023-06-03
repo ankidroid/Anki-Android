@@ -201,10 +201,10 @@ class ImportingTest : RobolectricTest() {
       public void test_csv2(){
       Collection col = getCol();
       Models mm = col.getModels();
-      Model m = mm.current();
-      Note note = mm.newField("Three");
+      Model m = mm.current(col);
+      Note note = mm.newField(col, "Three");
       mm.addField(m, note);
-      mm.save(m);
+      mm.save(col, m);
       Note n = col.newNote();
       n.setItem("Front", "1");
       n.setItem("Back", "2");
@@ -226,10 +226,10 @@ class ImportingTest : RobolectricTest() {
       public void test_tsv_tag_modified(){
       Collection col = getCol();
       Models mm = col.getModels();
-      Model m = mm.current();
-      Note note = mm.newField("Top");
+      Model m = mm.current(col);
+      Note note = mm.newField(col, "Top");
       mm.addField(m, note);
-      mm.save(m);
+      mm.save(col, m);
       Note n = col.newNote();
       n.setItem("Front", "1");
       n.setItem("Back", "2");
@@ -263,10 +263,10 @@ class ImportingTest : RobolectricTest() {
       public void test_tsv_tag_multiple_tags(){
       Collection col = getCol();
       Models mm = col.getModels();
-      Model m = mm.current();
-      Note note = mm.newField("Top");
+      Model m = mm.current(col);
+      Note note = mm.newField(col, "Top");
       mm.addField(m, note);
-      mm.save(m);
+      mm.save(col, m);
       Note n = col.newNote();
       n.setItem("Front", "1");
       n.setItem("Back", "2");
@@ -298,10 +298,10 @@ class ImportingTest : RobolectricTest() {
       public void test_csv_tag_only_if_modified(){
       Collection col = getCol();
       Models mm = col.getModels();
-      Model m = mm.current();
-      Note note = mm.newField("Left");
+      Model m = mm.current(col);
+      Note note = mm.newField(col, "Left");
       mm.addField(m, note);
-      mm.save(m);
+      mm.save(col, m);
       Note n = col.newNote();
       n.setItem("Front", "1");
       n.setItem("Back", "2");

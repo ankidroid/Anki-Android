@@ -99,7 +99,7 @@ class MediaTest : InstrumentedTest() {
     @Test
     @Suppress("SpellCheckingInspection")
     fun testStrings() {
-        val mid = mTestCol!!.models.getModels().entries.iterator().next().key
+        val mid = mTestCol!!.models.getModels(col).entries.iterator().next().key
 
         var expected: List<String?> = emptyList<String>()
         var actual = mTestCol!!.media.filesInStr(mid, "aoeu").toMutableList()

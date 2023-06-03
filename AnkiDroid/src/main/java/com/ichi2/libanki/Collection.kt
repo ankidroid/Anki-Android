@@ -236,7 +236,7 @@ open class Collection(
     }
 
     protected open fun initModels(): ModelManager {
-        val models = Models(this)
+        val models = Models()
         models.load(loadColumn("models"))
         return models
     }
@@ -404,7 +404,7 @@ open class Collection(
     @Suppress("UNUSED_PARAMETER") // name is required by tests and likely should be used
     fun save(name: String? = null, mod: Long = 0) {
         // let the managers conditionally flush
-        models.flush()
+        models.flush(col)
         decks.flush()
         tags.flush()
         // and flush deck + bump mod if db has been changed
@@ -515,7 +515,7 @@ open class Collection(
         // we can save space by removing the log of deletions
         db.execute("delete from graves")
         mUsn += 1
-        models.beforeUpload()
+        models.beforeUpload(col)
         tags.beforeUpload()
         decks.beforeUpload()
         modSchemaNoCheck()
@@ -590,7 +590,7 @@ open class Collection(
      * @return The new note
      */
     fun newNote(forDeck: Boolean = true): Note {
-        return newNote(models.current(forDeck)!!)
+        return newNote(models.current(col, forDeck)!!)
     }
 
     /**
@@ -714,7 +714,7 @@ open class Collection(
     }
 
     fun genCards(nids: kotlin.collections.Collection<Long>, mid: NoteTypeId): ArrayList<Long>? {
-        return genCards(nids, models.get(mid)!!)
+        return genCards(nids, models.get(col, mid)!!)
     }
 
     fun genCards(
@@ -1002,8 +1002,8 @@ open class Collection(
 
     fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int>?, T : CancelListener? {
         val rem: MutableList<Long> = ArrayList()
-        for (m in models.all()) {
-            rem.addAll(genCards(models.nids(m), m, task)!!)
+        for (m in models.all(col)) {
+            rem.addAll(genCards(models.nids(col, m), m, task)!!)
         }
         return rem
     }
@@ -1051,7 +1051,7 @@ open class Collection(
         val r = ArrayList<Array<Any>>(data.size)
         for (o in data) {
             val fields = Utils.splitFields(o.flds)
-            val model = models.get(o.modelId)
+            val model = models.get(col, o.modelId)
                 ?: // note point to invalid model
                 continue
             val csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, models.sortIdx(model))
@@ -1463,14 +1463,14 @@ open class Collection(
         }
         val badNotes = db.queryScalar(
             "select 1 from notes where id not in (select distinct nid from cards) " +
-                "or mid not in " + Utils.ids2str(models.ids()) + " limit 1"
+                "or mid not in " + Utils.ids2str(models.ids(col)) + " limit 1"
         ) > 0
         // notes without cards or models
         if (badNotes) {
             return false
         }
         // invalid ords
-        for (m in models.all()) {
+        for (m in models.all(col)) {
             // ignore clozes
             if (m.getInt("type") != Consts.MODEL_STD) {
                 continue
@@ -1497,7 +1497,7 @@ open class Collection(
         val result = CheckDatabaseResult(file.length())
         val currentTask = intArrayOf(1)
         // a few fixes are in all-models loops, the rest are one-offs
-        val totalTasks = models.all().size * 4 + 27
+        val totalTasks = models.all(col).size * 4 + 27
         val notifyProgress = Runnable { fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks) }
         val executeIntegrityTask = Consumer { function: FunctionalInterfaces.FunctionThrowable<Runnable, List<String?>?> ->
             // DEFECT: notifyProgress will lag if an exception is thrown.
@@ -1546,7 +1546,7 @@ open class Collection(
             }
         )
         // for each model
-        for (m in models.all()) {
+        for (m in models.all(col)) {
             executeIntegrityTask.accept(
                 FunctionalInterfaces.FunctionThrowable { callback: Runnable ->
                     deleteCardsWithInvalidModelOrdinals(
@@ -1789,7 +1789,7 @@ open class Collection(
         Timber.d("ensureModelsAreNotEmpty()")
         val problems = ArrayList<String?>(1)
         notifyProgress.run()
-        if (models.ensureNotEmpty()) {
+        if (models.ensureNotEmpty(col)) {
             problems.add("Added missing note type.")
         }
         return problems
@@ -1885,9 +1885,9 @@ open class Collection(
     private fun updateFieldCache(notifyProgress: Runnable): List<String?> {
         Timber.d("updateFieldCache")
         // field cache
-        for (m in models.all()) {
+        for (m in models.all(col)) {
             notifyProgress.run()
-            updateFieldCache(models.nids(m))
+            updateFieldCache(models.nids(col, m))
         }
         return emptyList<String>()
     }
@@ -2100,7 +2100,7 @@ open class Collection(
         notifyProgress.run()
         val ids = db.queryLongList(
             "SELECT id FROM notes WHERE mid NOT IN " + Utils.ids2str(
-                models.ids()
+                models.ids(col)
             )
         )
         notifyProgress.run()
@@ -2247,9 +2247,9 @@ open class Collection(
         }
 
     /** Check if this collection is valid.  */
-    fun validCollection(): Boolean {
+    fun validCollection(col: Collection): Boolean {
         // TODO: more validation code
-        return models.validateModel()
+        return models.validateModel(col)
     }
 
     // Anki sometimes set sortBackward to 0/1 instead of

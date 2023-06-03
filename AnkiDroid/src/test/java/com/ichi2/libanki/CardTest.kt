@@ -38,7 +38,7 @@ class CardTest : RobolectricTest() {
     fun `pureAnswer() handled quoted html element`() {
         // <hr id="answer"> is also used
         val modelName = addNonClozeModel("Test", arrayOf("One", "Two"), "{{One}}", "{{One}}<hr id=\"answer\">{{Two}}")
-        val note = col.newNote(col.models.byName(modelName)!!)
+        val note = col.newNote(col.models.byName(col, modelName)!!)
         note.setItem("One", "1")
         note.setItem("Two", "2")
         col.addNote(note)
@@ -68,14 +68,14 @@ class CardTest : RobolectricTest() {
     }
 
     @Test
-    @SuppressLint("CheckResult") // col.models.current()!!.getLong("id")
+    @SuppressLint("CheckResult") // col.models.current(col)!!.getLong("id")
     fun test_misc_cards() {
         val note = col.newNote()
         note.setItem("Front", "1")
         note.setItem("Back", "2")
         col.addNote(note)
         val c = note.cards(col)[0]
-        col.models.current()!!.getLong("id")
+        col.models.current(col)!!.getLong("id")
         assertEquals(0, c.template(col).getInt("ord"))
     }
 
@@ -86,19 +86,19 @@ class CardTest : RobolectricTest() {
         note.setItem("Back", "")
         col.addNote(note)
         assertEquals(1, note.numberOfCards(col))
-        val m = col.models.current()
+        val m = col.models.current(col)
         val mm = col.models
         // adding a new template should automatically create cards
         var t = Models.newTemplate("rev")
         t.put("qfmt", "{{Front}}1")
         t.put("afmt", "")
-        mm.addTemplateModChanged(m!!, t)
-        mm.save(m, true)
+        mm.addTemplateModChanged(col, m!!, t)
+        mm.save(col, m, true)
         assertEquals(2, note.numberOfCards(col))
         // if the template is changed to remove cards, they'll be removed
         t = m.getJSONArray("tmpls").getJSONObject(1)
         t.put("qfmt", "{{Back}}")
-        mm.save(m, true)
+        mm.save(col, m, true)
         val rep = col.emptyCids(null)
         col.remCards(rep)
         assertEquals(1, note.numberOfCards(col))
@@ -111,8 +111,8 @@ class CardTest : RobolectricTest() {
 
     @Test
     fun test_gendeck() {
-        val cloze = col.models.byName("Cloze")
-        col.models.setCurrent(cloze!!)
+        val cloze = col.models.byName(col, "Cloze")
+        col.models.setCurrent(col, cloze!!)
         val note = col.newNote()
         note.setItem("Text", "{{c1::one}}")
         col.addNote(note)
@@ -121,7 +121,7 @@ class CardTest : RobolectricTest() {
         // set the model to a new default col
         val newId = addDeck("new")
         cloze.put("did", newId)
-        col.models.save(cloze, false)
+        col.models.save(col, cloze, false)
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}")
         note.flush(col)
@@ -144,22 +144,22 @@ class CardTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_or() {
         val models = col.models
-        val model = models.byName("Basic")
+        val model = models.byName(col, "Basic")
         assertNotNull(model)
-        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "A")
-        models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "B")
-        val fld2 = models.newField("C")
+        models.renameField(col, model, model.getJSONArray("flds").getJSONObject(0), "A")
+        models.renameField(col, model, model.getJSONArray("flds").getJSONObject(1), "B")
+        val fld2 = models.newField(col, "C")
         fld2.put("ord", JSONObject.NULL)
-        models.addField(model, fld2)
+        models.addField(col, model, fld2)
         val tmpls = model.getJSONArray("tmpls")
         tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}")
         // ensure first card is always generated,
         // because at last one card is generated
         val tmpl = Models.newTemplate("AND_OR")
         tmpl.put("qfmt", "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}")
-        models.addTemplate(model, tmpl)
-        models.save(model)
-        models.setCurrent(model)
+        models.addTemplate(col, model, tmpl)
+        models.save(col, model)
+        models.setCurrent(col, model)
         var note = col.newNote()
         note.setItem("A", "foo")
         col.addNote(note)
@@ -193,23 +193,23 @@ class CardTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_not() {
         val models = col.models
-        val model = models.byName("Basic")
+        val model = models.byName(col, "Basic")
         assertNotNull(model)
         val tmpls = model.getJSONArray("tmpls")
-        models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "First")
-        models.renameField(model, model.getJSONArray("flds").getJSONObject(1), "Front")
-        val fld2 = models.newField("AddIfEmpty")
+        models.renameField(col, model, model.getJSONArray("flds").getJSONObject(0), "First")
+        models.renameField(col, model, model.getJSONArray("flds").getJSONObject(1), "Front")
+        val fld2 = models.newField(col, "AddIfEmpty")
         fld2.put("name", "AddIfEmpty")
-        models.addField(model, fld2)
+        models.addField(col, model, fld2)
 
         // ensure first card is always generated,
         // because at last one card is generated
         tmpls.getJSONObject(0).put("qfmt", "{{AddIfEmpty}}{{Front}}{{First}}")
         val tmpl = Models.newTemplate("NOT")
         tmpl.put("qfmt", "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    ")
-        models.addTemplate(model, tmpl)
-        models.save(model)
-        models.setCurrent(model)
+        models.addTemplate(col, model, tmpl)
+        models.save(col, model)
+        models.setCurrent(col, model)
         var note = col.newNote()
         note.setItem("First", "foo")
         note.setItem("AddIfEmpty", "foo")

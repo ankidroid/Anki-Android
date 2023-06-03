@@ -127,7 +127,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
      */
     @Suppress("SameParameterValue")
     private fun findModelIdByName(modelName: String): Long {
-        return col.models.getModels().filter { idModels: Map.Entry<Long?, Model> -> idModels.value.getString("name") == modelName }.keys.first()
+        return col.models.getModels(col).filter { idModels: Map.Entry<Long?, Model> -> idModels.value.getString("name") == modelName }.keys.first()
     }
 
     companion object {

@@ -61,7 +61,7 @@ class NoteServiceTest : RobolectricTest() {
     // tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
     fun updateJsonNoteTest() {
-        val testModel = testCol!!.models.byName("Basic")
+        val testModel = testCol!!.models.byName(col, "Basic")
         val multiMediaNote: IMultimediaEditableNote? = NoteService.createEmptyNote(testModel!!)
         multiMediaNote!!.getField(0)!!.text = "foo"
         multiMediaNote.getField(1)!!.text = "bar"

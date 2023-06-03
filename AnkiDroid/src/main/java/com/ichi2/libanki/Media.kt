@@ -215,7 +215,7 @@ create table meta (dirMod int, lastUsn int); insert into meta values (0, 0);"""
      */
     fun filesInStr(mid: Long?, string: String, includeRemote: Boolean = false): List<String> {
         val l: MutableList<String> = ArrayList()
-        val model = col.models.get(mid!!)
+        val model = col.models.get(col, mid!!)
         var strings: MutableList<String?> = ArrayList()
         if (model!!.isCloze && string.contains("{{c")) {
             // if the field has clozes in it, we'll need to expand the

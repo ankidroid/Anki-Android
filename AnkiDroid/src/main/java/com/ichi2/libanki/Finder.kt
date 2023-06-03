@@ -542,7 +542,7 @@ class Finder(private val col: Collection) {
 
     private fun _findModel(`val`: String): String {
         val ids = LinkedList<Long>()
-        for (m in col.models.all()) {
+        for (m in col.models.all(col)) {
             var modelName = m.getString("name")
             modelName = Normalizer.normalize(modelName, Normalizer.Form.NFC)
             if (modelName.equals(`val`, ignoreCase = true)) {
@@ -620,7 +620,7 @@ class Finder(private val col: Collection) {
         }
         // search for template names
         val lims: MutableList<String> = ArrayList()
-        for (m in col.models.all()) {
+        for (m in col.models.all(col)) {
             val tmpls = m.getJSONArray("tmpls")
             for (t in tmpls.jsonObjectIterable()) {
                 val templateName = t.getString("name")
@@ -666,8 +666,8 @@ class Finder(private val col: Collection) {
         val pattern = Pattern.compile("\\Q$javaVal\\E", Pattern.CASE_INSENSITIVE or Pattern.DOTALL)
 
         // find models that have that field
-        val mods: MutableMap<Long, Array<Any>> = HashMapInit(col.models.count())
-        for (m in col.models.all()) {
+        val mods: MutableMap<Long, Array<Any>> = HashMapInit(col.models.count(col))
+        for (m in col.models.all(col)) {
             val flds = m.getJSONArray("flds")
             for (f in flds.jsonObjectIterable()) {
                 var fieldName = f.getString("name")
@@ -795,7 +795,7 @@ class Finder(private val col: Collection) {
             var dst = dst
             val mmap: MutableMap<Long, Int> = HashMap()
             if (field != null) {
-                for (m in col.models.all()) {
+                for (m in col.models.all(col)) {
                     val flds = m.getJSONArray("flds")
                     for (f in flds.jsonObjectIterable()) {
                         if (f.getString("name").equals(field, ignoreCase = true)) {
@@ -819,7 +819,7 @@ class Finder(private val col: Collection) {
             val d = ArrayList<Array<Any>>(nids.size)
             val snids = Utils.ids2str(nids)
             val midToNid: MutableMap<Long, MutableCollection<Long>> =
-                HashMapInit(col.models.count())
+                HashMapInit(col.models.count(col))
             col.db.query(
                 "select id, mid, flds from notes where id in $snids"
             ).use { cur ->
@@ -887,7 +887,7 @@ class Finder(private val col: Collection) {
             fieldName: String?
         ): Int? {
             if (!fields.containsKey(mid)) {
-                val model: JSONObject? = col.models.get(mid)
+                val model: JSONObject? = col.models.get(col, mid)
                 val flds = model!!.getJSONArray("flds")
                 for (c in 0 until flds.length()) {
                     val f = flds.getJSONObject(c)

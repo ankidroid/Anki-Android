@@ -192,9 +192,9 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
         }
         // models - start with zero
         Timber.d("Copy models")
-        for (m in col.models.all()) {
+        for (m in col.models.all(col)) {
             if (mids.contains(m.getLong("id"))) {
-                dst.models.update(m)
+                dst.models.update(col, m)
             }
         }
         // decks
@@ -258,7 +258,7 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
                     val fname = f.name
                     if (fname.startsWith("_")) {
                         // Loop through every model that will be exported, and check if it contains a reference to f
-                        for (model in col.models.all()) {
+                        for (model in col.models.all(col)) {
                             if (_modelHasMedia(model, fname)) {
                                 media.put(fname, true)
                                 break

@@ -236,7 +236,7 @@ class AbstractSchedTest : RobolectricTest() {
             dconf!!.getJSONObject("new").put("perDay", 0)
             mDecks.save(dconf)
 
-            val model = models.byName("Basic")
+            val model = models.byName(col, "Basic")
             for (did in longArrayOf(mCId, mDId)) {
                 // The note is added in model's did. So change model's did.
                 model!!.put("did", did)

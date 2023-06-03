@@ -46,7 +46,7 @@ class CollectionV16(
     }
 
     override fun initModels(): ModelManager {
-        return ModelsV16(this)
+        return ModelsV16()
     }
 
     override fun initConf(conf: String): ConfigManager {
@@ -124,9 +124,9 @@ class CollectionV16(
         // but it's useful to match 100% for regression tests
 
         // we reverse so "Basic" is last and conf."curModel" is correct
-        val all = models.all().reversed()
+        val all = models.all(col).reversed()
         for (m in all) {
-            models.save(m) // equivalent to m.put("usn", -1)
+            models.save(col, m) // equivalent to m.put("usn", -1)
         }
     }
 

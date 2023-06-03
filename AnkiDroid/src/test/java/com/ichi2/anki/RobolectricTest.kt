@@ -379,7 +379,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
     @Throws(JSONException::class)
     protected fun getCurrentDatabaseModelCopy(modelName: String): Model {
         val collectionModels = col.models
-        return Model(collectionModels.byName(modelName).toString().trim { it <= ' ' })
+        return Model(collectionModels.byName(col, modelName).toString().trim { it <= ' ' })
     }
 
     protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
@@ -416,7 +416,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
     }
 
     protected fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
-        val model = col.models.byName((name)!!)
+        val model = col.models.byName(col, (name)!!)
             ?: throw IllegalArgumentException("Could not find model '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
@@ -429,23 +429,23 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
     }
 
     protected fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
-        val model = col.models.newModel(name)
+        val model = col.models.newModel(col, name)
         for (field in fields) {
-            col.models.addFieldInNewModel(model, col.models.newField(field))
+            col.models.addFieldInNewModel(col, model, col.models.newField(col, field))
         }
         val t = Models.newTemplate("Card 1")
         t.put("qfmt", qfmt)
         t.put("afmt", afmt)
-        col.models.addTemplateInNewModel(model, t)
-        col.models.add(model)
-        col.models.flush()
+        col.models.addTemplateInNewModel(col, model, t)
+        col.models.add(col, model)
+        col.models.flush(col)
         return name
     }
 
     private fun addField(model: Model, name: String) {
         val models = col.models
         try {
-            models.addField(model, models.newField(name))
+            models.addField(col, model, models.newField(col, name))
         } catch (e: ConfirmModSchemaException) {
             throw RuntimeException(e)
         }

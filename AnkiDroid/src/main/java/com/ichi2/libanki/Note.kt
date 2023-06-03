@@ -97,14 +97,14 @@ class Note : Cloneable {
                 fields = Utils.splitFields(cursor.getString(5))
                 mFlags = cursor.getInt(6)
                 mData = cursor.getString(7)
-                mModel = col.models.get(mid)!!
+                mModel = col.models.get(col, mid)!!
                 mFMap = Models.fieldMap(mModel)
                 mScm = col.scm
             }
     }
 
     fun reloadModel(col: Collection) {
-        mModel = col.models.get(mid)!!
+        mModel = col.models.get(col, mid)!!
     }
 
     /*

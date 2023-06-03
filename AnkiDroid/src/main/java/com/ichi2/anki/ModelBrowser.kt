@@ -283,7 +283,7 @@ class ModelBrowser : AnkiActivity() {
             }
 
             newModel.put("name", newName)
-            mCol.models.update(newModel)
+            mCol.models.update(col, newModel)
             fullRefresh()
         }
 
@@ -357,7 +357,7 @@ class ModelBrowser : AnkiActivity() {
                     }
                     if (name.isNotEmpty()) {
                         model.put("name", name)
-                        mCol.models.update(model)
+                        mCol.models.update(col, model)
                         mModels!![mModelListPosition].put("name", name)
                         mModelDisplayList!![mModelListPosition] = DisplayPair(
                             mModels!![mModelListPosition].getString("name"),
@@ -414,7 +414,7 @@ class ModelBrowser : AnkiActivity() {
             withProgress {
                 withCol {
                     Timber.d("doInBackGroundDeleteModel")
-                    col.models.rem(col.models.get(mCurrentID)!!)
+                    col.models.rem(col, col.models.get(col, mCurrentID)!!)
                     col.save()
                 }
             }

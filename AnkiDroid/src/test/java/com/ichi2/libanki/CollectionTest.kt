@@ -101,13 +101,13 @@ class CollectionTest : RobolectricTest() {
         var n = col.addNote(note)
         assertEquals(1, n)
         // test multiple cards - add another template
-        val m = col.models.current()
+        val m = col.models.current(col)
         val mm = col.models
         val t = Models.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m!!, t)
-        mm.save(m, true) // todo: remove true which is not upstream
+        mm.addTemplateModChanged(col, m!!, t)
+        mm.save(col, m, true) // todo: remove true which is not upstream
         assertEquals(2, col.cardCount())
         // creating new notes should use both cards
         note = col.newNote()
@@ -169,21 +169,21 @@ class CollectionTest : RobolectricTest() {
     @Test
     fun test_timestamps() {
         val stdModelSize = StdModels.STD_MODELS.size
-        assertEquals(col.models.all().size, stdModelSize)
+        assertEquals(col.models.all(col).size, stdModelSize)
         for (i in 0..99) {
             StdModels.BASIC_MODEL.add(col)
         }
-        assertEquals(col.models.all().size, (100 + stdModelSize))
+        assertEquals(col.models.all(col).size, (100 + stdModelSize))
     }
 
     @Test
     @Ignore("Pending port of media search from Rust code")
     fun test_furigana() {
         val mm = col.models
-        val m = mm.current()
+        val m = mm.current(col)
         // filter should work
         m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}")
-        mm.save(m)
+        mm.save(col, m)
         val n = col.newNote()
         n.setItem("Front", "foo[abc]")
         col.addNote(n)
@@ -196,7 +196,7 @@ class CollectionTest : RobolectricTest() {
         assertThat("Question «$question» does not contains «anki:play».", question, Matchers.containsString("anki:play"))
         // it shouldn't throw an error while people are editing
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:}}")
-        mm.save(m)
+        mm.save(col, m)
         c.q(col, true)
     }
 

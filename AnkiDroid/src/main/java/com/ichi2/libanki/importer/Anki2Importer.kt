@@ -75,12 +75,12 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     private var mMustResetLearning = false
 
     @Throws(ImportExportException::class)
-    override fun run() {
+    override fun run(col: Collection) {
         publishProgress(0, 0, 0)
         try {
             _prepareFiles()
             try {
-                _import()
+                _import(col)
             } finally {
                 src.close(false)
             }
@@ -103,7 +103,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         }
     }
 
-    private fun _import() {
+    private fun _import(col: Collection) {
         mDecks = HashUtil.HashMapInit(src.decks.count())
         try {
             // Use transactions for performance and rollbacks in case of error
@@ -115,9 +115,9 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             }
             Timber.i("Preparing Import")
             _prepareTS()
-            _prepareModels()
+            _prepareModels(col)
             Timber.i("Importing notes")
-            _importNotes()
+            _importNotes(col)
             Timber.i("Importing Cards")
             _importCards()
             Timber.i("Importing Media")
@@ -171,7 +171,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
      * Notes
      * ***********************************************************
      */
-    private fun _importNotes() {
+    private fun _importNotes(col: Collection) {
         val noteCount = dst.noteCount()
         // build guid -> (id,mod,mid) hash & map of existing note ids
         mNotes = HashUtil.HashMapInit(noteCount)
@@ -225,7 +225,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     val csum = cur.getLong(7)
                     val flag = cur.getInt(8)
                     val data = cur.getString(9)
-                    val shouldAddAndNewMid = _uniquifyNote(guid, mid)
+                    val shouldAddAndNewMid = _uniquifyNote(col, guid, mid)
                     val shouldAdd = shouldAddAndNewMid.first
                     mid = shouldAddAndNewMid.second
                     if (shouldAdd) {
@@ -259,7 +259,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                                     update.add(arrayOf(nid, guid, mid, mod, usn, tags, flds, sfld, csum, flag, data))
                                     dirty.add(nid)
                                 } else {
-                                    val modelName = mCol.models.get(oldMid)!!.getString("name")
+                                    val modelName = mCol.models.get(col, oldMid)!!.getString("name")
                                     val commaSeparatedFields = flds.replace('\u001f', ',')
                                     dupesIgnored.add("$modelName: $commaSeparatedFields")
                                     mIgnoredGuids!!.add(guid)
@@ -342,8 +342,8 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
 
     // determine if note is a duplicate, and adjust mid and/or guid as required
     // returns true if note should be added and its mid
-    private fun _uniquifyNote(origGuid: String, srcMid: Long): Pair<Boolean, Long> {
-        val dstMid = _mid(srcMid)
+    private fun _uniquifyNote(col: Collection, origGuid: String, srcMid: Long): Pair<Boolean, Long> {
+        val dstMid = _mid(col, srcMid)
         // duplicate Schemas?
         if (srcMid == dstMid) {
             return Pair(!mNotes!!.containsKey(origGuid), srcMid)
@@ -365,33 +365,33 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
       new model if necessary.
      */
     /** Prepare index of schema hashes.  */
-    private fun _prepareModels() {
-        mModelMap = HashUtil.HashMapInit(src.models.count())
+    private fun _prepareModels(col: Collection) {
+        mModelMap = HashUtil.HashMapInit(src.models.count(col))
     }
 
     /** Return local id for remote MID.  */
-    private fun _mid(srcMid: Long): Long {
+    private fun _mid(col: Collection, srcMid: Long): Long {
         // already processed this mid?
         if (mModelMap!!.containsKey(srcMid)) {
             return mModelMap!![srcMid]!!
         }
         var mid = srcMid
-        val srcModel = src.models.get(srcMid)
+        val srcModel = src.models.get(col, srcMid)
         val srcScm = src.models.scmhash(srcModel!!)
         while (true) {
             // missing from target col?
-            if (!dst.models.have(mid)) {
+            if (!dst.models.have(col, mid)) {
                 // copy it over
                 val model = srcModel.deepClone().apply {
                     put("id", mid)
                     put("mod", TimeManager.time.intTime())
                     put("usn", mCol.usn())
                 }
-                dst.models.update(model)
+                dst.models.update(col, model)
                 break
             }
             // there's an existing model; do the schemas match?
-            val dstModel = dst.models.get(mid)
+            val dstModel = dst.models.get(col, mid)
             val dstScm = dst.models.scmhash(dstModel!!)
             if (srcScm == dstScm) {
                 // they do; we can reuse this mid
@@ -400,7 +400,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     put("mod", TimeManager.time.intTime())
                     put("usn", mCol.usn())
                 }
-                dst.models.update(model)
+                dst.models.update(col, model)
                 break
             }
             // as they don't match, try next id

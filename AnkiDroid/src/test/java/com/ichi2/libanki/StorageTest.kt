@@ -142,10 +142,10 @@ open class StorageTest : RobolectricTest() {
             return ret.toString(0)
         }
 
-        /** Extract models from models.all() and reformat as the JSON style used in the `col.models` column  */
+        /** Extract models from models.all(col) and reformat as the JSON style used in the `col.models` column  */
         private fun loadModelsV16(col: Collection): String {
             val ret = JSONObject()
-            for (m in col.models.all()) {
+            for (m in col.models.all(col)) {
                 ret.put(m.getString("id"), m)
             }
             return ret.toString(0)

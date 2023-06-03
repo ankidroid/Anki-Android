@@ -714,7 +714,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // adding current note to collection
             val noOfAddedCards = withProgress(resources.getString(R.string.saving_facts)) {
                 CollectionManager.withCol {
-                    models.current()!!.put("tags", tags)
+                    models.current(col)!!.put("tags", tags)
                     models.setChanged()
                     db.executeInTransaction {
                         addNote(mEditorNote!!, Models.AllowEmpty.ONLY_CLOZE)
@@ -820,7 +820,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     @Throws(ConfirmModSchemaException::class)
     private fun changeNoteType(oldModel: Model?, newModel: Model?) {
         val noteId = mEditorNote!!.id
-        col.models.change(oldModel!!, noteId, newModel!!, mModelChangeFieldMap!!, mModelChangeCardMap!!)
+        col.models.change(col, oldModel!!, noteId, newModel!!, mModelChangeFieldMap!!, mModelChangeCardMap!!)
         // refresh the note object to reflect the database changes
         mEditorNote!!.load(col)
         // close note editor
@@ -1628,7 +1628,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return
         }
         if (note == null || addNote || mCurrentEditedCard == null) {
-            val model = col.models.current()
+            val model = col.models.current(col)
             if (col.get_config("addToCur", true)!!) {
                 deckId = col.get_config_long(CURRENT_DECK)
                 if (col.decks.isDyn(deckId)) {
@@ -1656,7 +1656,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /** Handles setting the current note (non-null afterwards) and rebuilding the UI based on this note  */
     private fun setNote(note: Note?, changeType: FieldChangeType) {
         mEditorNote = if (note == null || addNote) {
-            val model = col.models.current()
+            val model = col.models.current(col)
             Note(col, model!!)
         } else {
             note
@@ -1917,7 +1917,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private val currentlySelectedModel: Model?
-        get() = col.models.get(mAllModelIds!![mNoteTypeSpinner!!.selectedItemPosition])
+        get() = col.models.get(col, mAllModelIds!![mNoteTypeSpinner!!.selectedItemPosition])
 
     /**
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
@@ -1948,16 +1948,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
-            val oldModelId = col.models.current()!!.getLong("id")
+            val oldModelId = col.models.current(col)!!.getLong("id")
             val newId = mAllModelIds!![pos]
             Timber.i("Changing note type to '%d", newId)
             if (oldModelId != newId) {
-                val model = col.models.get(newId)
+                val model = col.models.get(col, newId)
                 if (model == null) {
                     Timber.w("New model %s not found, not changing note type", newId)
                     return
                 }
-                col.models.setCurrent(model)
+                col.models.setCurrent(col, model)
                 val currentDeck = col.decks.current()
                 currentDeck.put("mid", newId)
                 col.decks.save(currentDeck)
@@ -1982,7 +1982,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Get the current model
             val noteModelId = mCurrentEditedCard!!.model(col).getLong("id")
             // Get new model
-            val newModel = col.models.get(mAllModelIds!![pos])
+            val newModel = col.models.get(col, mAllModelIds!![pos])
             if (newModel == null) {
                 Timber.w("newModel %s not found", mAllModelIds!![pos])
                 return

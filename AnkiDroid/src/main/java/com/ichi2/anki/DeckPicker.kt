@@ -1227,15 +1227,15 @@ open class DeckPicker :
                 Timber.i("Fixing font-family definition in templates")
                 try {
                     val models = col.models
-                    for (m in models.all()) {
+                    for (m in models.all(col)) {
                         val css = m.getString("css")
                         @Suppress("SpellCheckingInspection")
                         if (css.contains("font-familiy")) {
                             m.put("css", css.replace("font-familiy", "font-family"))
-                            models.save(m)
+                            models.save(col, m)
                         }
                     }
-                    models.flush()
+                    models.flush(col)
                 } catch (e: JSONException) {
                     Timber.e(e, "Failed to upgrade css definitions.")
                 }

@@ -132,14 +132,14 @@ class FinderTest : RobolectricTest() {
         note.setItem("Back", "sheep")
         col.addNote(note)
         val catCard = note.cards(col)[0]
-        var m = col.models.current()
-        m = col.models.copy(m!!)
+        var m = col.models.current(col)
+        m = col.models.copy(col, m!!)
         val mm = col.models
         val t = Models.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m, t)
-        mm.save(m)
+        mm.addTemplateModChanged(col, m, t)
+        mm.save(col, m)
         note = col.newNote()
         note.setItem("Front", "test")
         note.setItem("Back", "foo bar")

@@ -179,7 +179,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
         val typedField = 1 // BACK
 
-        LanguageHintService.setLanguageHintForField(col.models, withLanguage, typedField, Locale("ja"))
+        LanguageHintService.setLanguageHintForField(col, col.models, withLanguage, typedField, Locale("ja"))
 
         addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni")
         addNoteUsingModelName(normal.getString("name"), "one", "two")

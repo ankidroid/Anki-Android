@@ -109,7 +109,7 @@ var NoteType.type: Int
         put("type", value)
     }
 
-class ModelsV16(col: CollectionV16) : ModelManager(col) {
+class ModelsV16 : ModelManager() {
     /*
     # Saving/loading registry
     #############################################################
@@ -123,7 +123,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
 
     /** Save changes made to provided note type. */
     @RustCleanup("templates is not needed, m should be non-null")
-    override fun save(m: NoteType?, @Suppress("UNUSED_PARAMETER") templates: Boolean) {
+    override fun save(col: Collection, m: NoteType?, @Suppress("UNUSED_PARAMETER") templates: Boolean) {
         if (m == null) {
             Timber.w("a null model is no longer supported - data is automatically flushed")
             return
@@ -133,7 +133,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
         // v2 review history. So we manually update the usn/mtime here
         m.put("mod", TimeManager.time.intTime())
         m.put("usn", col.usn())
-        update(m, preserve_usn_and_mtime = true)
+        update(col, m, preserve_usn_and_mtime = true)
     }
 
     @RustCleanup("not required - java only")
@@ -141,12 +141,12 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     }
 
     /** legacy */
-    override fun flush() {
+    override fun flush(col: Collection) {
         // intentionally left blank
     }
 
     @RustCleanup("not necessary in V16")
-    override fun ensureNotEmpty(): Boolean {
+    override fun ensureNotEmpty(col: Collection): Boolean {
         Timber.w("ensureNotEmpty is not necessary in V16")
         return false
     }
@@ -181,13 +181,13 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     #############################################################
      */
 
-    fun all_names_and_ids(): Sequence<NoteTypeNameID> {
+    fun all_names_and_ids(col: Collection): Sequence<NoteTypeNameID> {
         return col.backend.getNotetypeNames().map {
             NoteTypeNameID(it.name, it.id)
         }.asSequence()
     }
 
-    fun all_use_counts(): Sequence<NoteTypeNameIDUseCount> {
+    fun all_use_counts(col: Collection): Sequence<NoteTypeNameIDUseCount> {
         return col.backend.getNotetypeNamesAndCounts().map {
             NoteTypeNameIDUseCount(it.id, it.name, it.useCount.toUInt())
         }.asSequence()
@@ -195,16 +195,18 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
 
     /* legacy */
 
-    override fun allNames(): List<String> {
-        return all_names_and_ids().map { it.name }.toMutableList()
+    override fun allNames(col: Collection): List<String> {
+        return all_names_and_ids(col).map {
+            it.name
+        }.toMutableList()
     }
 
-    override fun ids(): Set<int> {
-        return all_names_and_ids().map { it.id }.toSet()
+    override fun ids(col: Collection): Set<int> {
+        return all_names_and_ids(col).map { it.id }.toSet()
     }
 
     // only used by importing code
-    override fun have(id: int): bool = all_names_and_ids().any { it.id == id }
+    override fun have(col: Collection, id: int): bool = all_names_and_ids(col).any { it.id == id }
 
     /*
     # Current note type
@@ -213,18 +215,18 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
 
     /** Get current model.*/
     @RustCleanup("Check the -1 fallback - copied from the Java")
-    override fun current(forDeck: bool): NoteType {
-        var m = get(col.decks.current().getLongOrNull("mid"))
+    override fun current(col: Collection, forDeck: bool): NoteType {
+        var m = get(col, col.decks.current().getLongOrNull("mid"))
         if (!forDeck || m == null) {
-            m = get(col.get_config("curModel", -1L)!!)
+            m = get(col, col.get_config("curModel", -1L)!!)
         }
         if (m != null) {
             return m
         }
-        return get(all_names_and_ids().first().id)!!
+        return get(col, all_names_and_ids(col).first().id)!!
     }
 
-    override fun setCurrent(m: NoteType) {
+    override fun setCurrent(col: Collection, m: NoteType) {
         col.set_config("curModel", m.id)
     }
 
@@ -233,7 +235,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     #############################################################
      */
 
-    fun id_for_name(name: str): Long? {
+    fun id_for_name(col: Collection, name: str): Long? {
         return try {
             col.backend.getNotetypeIdByName(name)
         } catch (e: BackendNotFoundException) {
@@ -242,12 +244,12 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     }
 
     /** "Get model with ID, or None." */
-    override fun get(id: int): NoteType? {
-        return get(id as int?)
+    override fun get(col: Collection, id: int): NoteType? {
+        return get(col, id as int?)
     }
 
     /** Externally, we do not want to pass in a null id */
-    private fun get(id: int?): NoteType? {
+    private fun get(col: Collection, id: int?): NoteType? {
         if (id == null) {
             return null
         }
@@ -268,30 +270,30 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     }
 
     /** Get all models */
-    override fun all(): List<NoteType> {
-        return all_names_and_ids().map { get(it.id)!! }.toMutableList()
+    override fun all(col: Collection): List<NoteType> {
+        return all_names_and_ids(col).map { get(col, it.id)!! }.toMutableList()
     }
 
     /** Get model with NAME. */
-    override fun byName(name: str): NoteType? {
-        val id = id_for_name(name)
-        return id?.let { get(it) }
+    override fun byName(col: Collection, name: str): NoteType? {
+        val id = id_for_name(col, name)
+        return id?.let { get(col, it) }
     }
 
     @RustCleanup("When we're kotlin only, rename to 'new', name existed due to Java compat")
-    override fun newModel(name: str): NoteType = new(name)
+    override fun newModel(col: Collection, name: str): NoteType = new(col, name)
 
     /** Create a new non-cloze model, and return it. */
-    fun new(name: str): NoteType {
+    fun new(col: Collection, name: str): NoteType {
         // caller should call save() after modifying
-        val nt = newBasicNotetype()
+        val nt = newBasicNotetype(col)
         nt.flds = JSONArray()
         nt.tmpls = JSONArray()
         nt.name = name
         return nt
     }
 
-    private fun newBasicNotetype(): NoteType {
+    private fun newBasicNotetype(col: Collection): NoteType {
         return NoteType(
             BackendUtils.from_json_bytes(
                 col.backend.getStockNotetypeLegacy(StockNotetype.Kind.BASIC)
@@ -300,29 +302,29 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     }
 
     /** Delete model, and all its cards/notes. */
-    override fun rem(m: NoteType) {
-        remove(m.id)
+    override fun rem(col: Collection, m: NoteType) {
+        remove(col, m.id)
     }
 
-    fun remove_all_notetypes() {
-        for (nt in all_names_and_ids()) {
+    fun remove_all_notetypes(col: Collection) {
+        for (nt in all_names_and_ids(col)) {
             _remove_from_cache(nt.id)
             col.backend.removeNotetype(nt.id)
         }
     }
 
     /** Modifies schema. */
-    fun remove(id: int) {
+    fun remove(col: Collection, id: int) {
         _remove_from_cache(id)
         col.backend.removeNotetype(id)
     }
 
-    override fun add(m: NoteType) {
-        save(m)
+    override fun add(col: Collection, m: NoteType) {
+        save(col, m)
     }
 
-    fun ensureNameUnique(m: NoteType) {
-        val existingId = id_for_name(m.name)
+    fun ensureNameUnique(col: Collection, m: NoteType) {
+        val existingId = id_for_name(col, m.name)
         existingId?.let {
             if (it != m.id) {
                 // Python uses a float time, but it doesn't really matter, the goal is just a random id.
@@ -332,22 +334,22 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     }
 
     /** Add or update an existing model. Use .save() instead. */
-    override fun update(m: NoteType, preserve_usn_and_mtime: Boolean) {
+    override fun update(col: Collection, m: NoteType, preserve_usn_and_mtime: Boolean) {
         _remove_from_cache(m.id)
-        ensureNameUnique(m)
+        ensureNameUnique(col, m)
         m.id = col.backend.addOrUpdateNotetype(
             json = to_json_bytes(m),
             preserveUsnAndMtime = preserve_usn_and_mtime,
             skipChecks = preserve_usn_and_mtime
         )
-        setCurrent(m)
-        _mutate_after_write(m)
+        setCurrent(col, m)
+        _mutate_after_write(col, m)
     }
 
-    private fun _mutate_after_write(nt: NoteType) {
+    private fun _mutate_after_write(col: Collection, nt: NoteType) {
         // existing code expects the note type to be mutated to reflect
         // the changes made when adding, such as ordinal assignment :-(
-        val updated = get(nt.id)!!
+        val updated = get(col, nt.id)!!
         nt.update(updated)
     }
 
@@ -357,20 +359,20 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
      */
 
     @RustCleanup("use nids(int)")
-    override fun nids(m: Model): List<int> = nids(m.getLong("id"))
+    override fun nids(col: Collection, m: Model): List<int> = nids(col, m.getLong("id"))
 
     /** Note ids for M. */
-    fun nids(ntid: int): List<int> {
+    fun nids(col: Collection, ntid: int): List<int> {
         return col.db.queryLongList("select id from notes where mid = ?", ntid)
     }
 
     /** Number of note using M. */
-    override fun useCount(m: NoteType): Int {
+    override fun useCount(col: Collection, m: NoteType): Int {
         return col.db.queryLongScalar("select count() from notes where mid = ?", m.id).toInt()
     }
 
     @RustCleanup("not in libAnki any more - may not be needed")
-    override fun tmplUseCount(m: NoteType, ord: Int): Int {
+    override fun tmplUseCount(col: Collection, m: NoteType, ord: Int): Int {
         return col.db.queryScalar(
             "select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?",
             m.id,
@@ -384,11 +386,11 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
      */
 
     /** Copy, save and return. */
-    override fun copy(m: NoteType): NoteType {
+    override fun copy(col: Collection, m: NoteType): NoteType {
         val m2 = m.deepcopy()
         m2.name = col.context.getString(R.string.copy_note_type_name, m2.name)
         m2.id = 0
-        add(m2)
+        add(col, m2)
         return m2
     }
 
@@ -418,8 +420,8 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
      */
 
     @RustCleanup("Check JSONObject.NULL")
-    fun new_field(name: str): Field {
-        val nt = newBasicNotetype()
+    fun new_field(col: Collection, name: str): Field {
+        val nt = newBasicNotetype(col)
         val field = nt.flds.getJSONObject(0)
         field.put("name", name)
         field.put("ord", JSONObject.NULL)
@@ -454,7 +456,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
 
     /** name exists for compat with java */
     @RustCleanup("remove - use set_sort_index")
-    override fun setSortIdx(m: NoteType, idx: Int) = set_sort_index(m, idx)
+    override fun setSortIdx(col: Collection, m: NoteType, idx: Int) = set_sort_index(m, idx)
 
     /** Modifies schema. */
     fun set_sort_index(nt: NoteType, idx: Int) {
@@ -466,10 +468,10 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
      legacy
      */
 
-    override fun newField(name: str) = new_field(name)
+    override fun newField(col: Collection, name: str) = new_field(col, name)
 
     @RustCleanup("remove")
-    override fun beforeUpload() {
+    override fun beforeUpload(col: Collection) {
         // intentionally blank - not needed
     }
 
@@ -479,28 +481,28 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     }
 
     @RustCleanup("Only exists for interface compatibility")
-    override fun getModels(): Map<Long, NoteType> = all().map { Pair(it.id, it) }.toMap()
+    override fun getModels(col: Collection): Map<Long, NoteType> = all(col).map { Pair(it.id, it) }.toMap()
 
-    override fun addField(m: NoteType, field: Field) {
+    override fun addField(col: Collection, m: NoteType, field: Field) {
         add_field(m, field)
         if (m.id != 0L) {
-            save(m)
+            save(col, m)
         }
     }
 
-    override fun remField(m: NoteType, field: Field) {
+    override fun remField(col: Collection, m: NoteType, field: Field) {
         remove_field(m, field)
-        save(m)
+        save(col, m)
     }
 
-    override fun moveField(m: NoteType, field: Field, idx: Int) {
+    override fun moveField(col: Collection, m: NoteType, field: Field, idx: Int) {
         reposition_field(m, field, idx)
-        save(m)
+        save(col, m)
     }
 
-    override fun renameField(m: NoteType, field: Field, newName: str) {
+    override fun renameField(col: Collection, m: NoteType, field: Field, newName: str) {
         rename_field(m, field, newName)
-        save(m)
+        save(col, m)
     }
 
     /*
@@ -509,8 +511,8 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
      */
 
     @RustCleanup("Check JSONObject.NULL")
-    fun new_template(name: str): Template {
-        val nt = newBasicNotetype()
+    fun new_template(col: Collection, name: str): Template {
+        val nt = newBasicNotetype(col)
         val template = nt.tmpls.getJSONObject(0)
         template["name"] = name
         template["qfmt"] = ""
@@ -542,23 +544,23 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     }
 
     /** legacy */
-    fun newTemplate(name: str): Template = new_template(name)
+    fun newTemplate(col: Collection, name: str): Template = new_template(col, name)
 
-    override fun addTemplate(m: NoteType, template: Template) {
+    override fun addTemplate(col: Collection, m: NoteType, template: Template) {
         add_template(m, template)
         if (m.id != 0L) {
-            save(m)
+            save(col, m)
         }
     }
 
-    override fun remTemplate(m: NoteType, template: Template) {
+    override fun remTemplate(col: Collection, m: NoteType, template: Template) {
         remove_template(m, template)
-        save(m)
+        save(col, m)
     }
 
-    override fun moveTemplate(m: NoteType, template: Template, idx: Int) {
+    override fun moveTemplate(col: Collection, m: NoteType, template: Template, idx: Int) {
         reposition_template(m, template, idx)
-        save(m)
+        save(col, m)
     }
 
     /*
@@ -583,6 +585,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
      * multiple notes at once.
      * */
     override fun change(
+        col: Collection,
         m: NoteType,
         nid: NoteId,
         newModel: NoteType,
@@ -656,16 +659,16 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
      * ***********************************************************************************************
      */
 
-    override fun count(): Int {
-        return all_names_and_ids().count()
+    override fun count(col: Collection): Int {
+        return all_names_and_ids(col).count()
     }
 
-    override fun _addTemplate(m: Model, template: JSONObject) {
-        addTemplate(m, template)
+    override fun _addTemplate(col: Collection, m: Model, template: JSONObject) {
+        addTemplate(col, m, template)
     }
 
-    override fun _addField(m: Model, field: JSONObject) {
-        addField(m, field)
+    override fun _addField(col: Collection, m: Model, field: JSONObject) {
+        addField(col, m, field)
     }
 }
 

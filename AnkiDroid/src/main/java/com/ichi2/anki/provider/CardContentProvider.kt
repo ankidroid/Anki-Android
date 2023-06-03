@@ -244,8 +244,8 @@ class CardContentProvider : ContentProvider() {
                 val models = col.models
                 val columns = projection ?: FlashCardsContract.Model.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                for (modelId: NoteTypeId in models.getModels().keys) {
-                    addModelToCursor(modelId, models, rv, columns)
+                for (modelId: NoteTypeId in models.getModels(col).keys) {
+                    addModelToCursor(col, modelId, models, rv, columns)
                 }
                 rv
             }
@@ -253,13 +253,13 @@ class CardContentProvider : ContentProvider() {
                 val modelId = getModelIdFromUri(col, uri)
                 val columns = projection ?: FlashCardsContract.Model.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                addModelToCursor(modelId, col.models, rv, columns)
+                addModelToCursor(col, modelId, col.models, rv, columns)
                 rv
             }
             MODELS_ID_TEMPLATES -> {
                 /* Direct access model templates */
                 val models = col.models
-                val currentModel = models.get(getModelIdFromUri(col, uri))
+                val currentModel = models.get(col, getModelIdFromUri(col, uri))
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
@@ -267,7 +267,7 @@ class CardContentProvider : ContentProvider() {
                     var idx = 0
                     while (idx < templates.length()) {
                         val template = templates.getJSONObject(idx)
-                        addTemplateToCursor(template, currentModel, idx + 1, models, rv, columns)
+                        addTemplateToCursor(col, template, currentModel, idx + 1, models, rv, columns)
                         idx++
                     }
                 } catch (e: JSONException) {
@@ -279,12 +279,12 @@ class CardContentProvider : ContentProvider() {
                 /* Direct access model template with specific ID */
                 val models = col.models
                 val ord = uri.lastPathSegment!!.toInt()
-                val currentModel = models.get(getModelIdFromUri(col, uri))
+                val currentModel = models.get(col, getModelIdFromUri(col, uri))
                 val columns = projection ?: FlashCardsContract.CardTemplate.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 try {
                     val template = getTemplateFromUri(col, uri)
-                    addTemplateToCursor(template, currentModel, ord + 1, models, rv, columns)
+                    addTemplateToCursor(col, template, currentModel, ord + 1, models, rv, columns)
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Model is malformed", e)
                 }
@@ -491,7 +491,7 @@ class CardContentProvider : ContentProvider() {
                 val newLatexPost = values.getAsString(FlashCardsContract.Model.LATEX_POST)
                 val newLatexPre = values.getAsString(FlashCardsContract.Model.LATEX_PRE)
                 // Get the original note JSON
-                val model = col.models.get(getModelIdFromUri(col, uri))
+                val model = col.models.get(col, getModelIdFromUri(col, uri))
                 try {
                     // Update model name and/or css
                     if (newModelName != null) {
@@ -525,7 +525,7 @@ class CardContentProvider : ContentProvider() {
                         model!!.put("latexPre", newLatexPre)
                         updated++
                     }
-                    col.models.save(model)
+                    col.models.save(col, model)
                     col.save()
                 } catch (e: JSONException) {
                     Timber.e(e, "JSONException updating model")
@@ -547,7 +547,7 @@ class CardContentProvider : ContentProvider() {
                 // Update the model
                 try {
                     val templateOrd = uri.lastPathSegment!!.toInt()
-                    val existingModel = col.models.get(getModelIdFromUri(col, uri))
+                    val existingModel = col.models.get(col, getModelIdFromUri(col, uri))
                     val templates = existingModel!!.getJSONArray("tmpls")
                     val template = templates.getJSONObject(templateOrd)
                     if (name != null) {
@@ -573,7 +573,7 @@ class CardContentProvider : ContentProvider() {
                     // Save the model
                     templates.put(templateOrd, template)
                     existingModel.put("tmpls", templates)
-                    col.models.save(existingModel, true)
+                    col.models.save(col, existingModel, true)
                     col.save()
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Model is malformed", e)
@@ -654,8 +654,8 @@ class CardContentProvider : ContentProvider() {
                 1
             }
             MODELS_ID_EMPTY_CARDS -> {
-                val model = col.models.get(getModelIdFromUri(col, uri)) ?: return -1
-                val cids: List<Long> = col.genCards(col.models.nids(model), model)!!
+                val model = col.models.get(col, getModelIdFromUri(col, uri)) ?: return -1
+                val cids: List<Long> = col.genCards(col.models.nids(col, model), model)!!
                 col.remCards(cids)
                 cids.size
             }
@@ -729,7 +729,7 @@ class CardContentProvider : ContentProvider() {
                 val fldsArray = Utils.splitFields(flds)
                 if (model == null || thisModelId != modelId) {
                     // new modelId so need to recalculate model, modelId and invalidate duplicateChecker (which is based on previous model)
-                    model = col.models.get(thisModelId)
+                    model = col.models.get(col, thisModelId)
                     modelId = thisModelId
                 }
 
@@ -782,7 +782,7 @@ class CardContentProvider : ContentProvider() {
                 val tags = values.getAsString(FlashCardsContract.Note.TAGS)
                 val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
-                val newNote = Note(col, col.models.get(modelId)!!)
+                val newNote = Note(col, col.models.get(col, modelId)!!)
                 // Set fields
                 val fldsArray = Utils.splitFields(flds)
                 // Check that correct number of flds specified
@@ -825,12 +825,12 @@ class CardContentProvider : ContentProvider() {
                 }
                 // Create a new model
                 val mm = col.models
-                val newModel = mm.newModel(modelName)
+                val newModel = mm.newModel(col, modelName)
                 return try {
                     // Add the fields
                     val allFields = Utils.splitFields(fieldNames)
                     for (f: String? in allFields) {
-                        mm.addFieldInNewModel(newModel, mm.newField(f!!))
+                        mm.addFieldInNewModel(col, newModel, mm.newField(col, f!!))
                     }
                     // Add some empty card templates
                     var idx = 0
@@ -843,7 +843,7 @@ class CardContentProvider : ContentProvider() {
                             answerField = allFields[1]
                         }
                         t.put("afmt", "{{FrontSide}}\\n\\n<hr id=answer>\\n\\n{{$answerField}}")
-                        mm.addTemplateInNewModel(newModel, t)
+                        mm.addTemplateInNewModel(col, newModel, t)
                         idx++
                     }
                     // Add the CSS if specified
@@ -867,7 +867,7 @@ class CardContentProvider : ContentProvider() {
                         newModel.put("latexPre", latexPre)
                     }
                     // Add the model to collection (from this point on edits will require a full-sync)
-                    mm.add(newModel)
+                    mm.add(col, newModel)
                     col.save()
                     // Get the mid and return a URI
                     val mid = newModel.getLong("id").toString()
@@ -882,7 +882,7 @@ class CardContentProvider : ContentProvider() {
                 run {
                     val models: ModelManager = col.models
                     val mid: NoteTypeId = getModelIdFromUri(col, uri)
-                    val existingModel: Model = models.get(mid)
+                    val existingModel: Model = models.get(col, mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
                     val name: String = values!!.getAsString(FlashCardsContract.CardTemplate.NAME)
                     val qfmt: String = values.getAsString(FlashCardsContract.CardTemplate.QUESTION_FORMAT)
@@ -895,8 +895,8 @@ class CardContentProvider : ContentProvider() {
                         t.put("afmt", afmt)
                         t.put("bqfmt", bqfmt)
                         t.put("bafmt", bafmt)
-                        models.addTemplate(existingModel, t)
-                        models.save(existingModel)
+                        models.addTemplate(col, existingModel, t)
+                        models.save(col, existingModel)
                         col.save()
                         return ContentUris.withAppendedId(uri, t.getInt("ord").toLong())
                     } catch (e: ConfirmModSchemaException) {
@@ -911,13 +911,13 @@ class CardContentProvider : ContentProvider() {
                 run {
                     val models: ModelManager = col.models
                     val mid: NoteTypeId = getModelIdFromUri(col, uri)
-                    val existingModel: Model = models.get(mid)
+                    val existingModel: Model = models.get(col, mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
                     val name: String = values!!.getAsString(FlashCardsContract.Model.FIELD_NAME)
                         ?: throw IllegalArgumentException("field name missing for model: $mid")
-                    val field: JSONObject = models.newField(name)
+                    val field: JSONObject = models.newField(col, name)
                     try {
-                        models.addField(existingModel, field)
+                        models.addField(col, existingModel, field)
                         col.save()
                         val flds: JSONArray = existingModel.getJSONArray("flds")
                         return ContentUris.withAppendedId(uri, (flds.length() - 1).toLong())
@@ -1021,8 +1021,8 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addModelToCursor(modelId: NoteTypeId, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
-        val jsonObject = models.get(modelId)
+    private fun addModelToCursor(col: Collection, modelId: NoteTypeId, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
+        val jsonObject = models.get(col, modelId)
         val rb = rv.newRow()
         try {
             for (column in columns) {
@@ -1048,7 +1048,7 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.Model.TYPE -> rb.add(jsonObject!!.getLong("type"))
                     FlashCardsContract.Model.LATEX_POST -> rb.add(jsonObject!!.getString("latexPost"))
                     FlashCardsContract.Model.LATEX_PRE -> rb.add(jsonObject!!.getString("latexPre"))
-                    FlashCardsContract.Model.NOTE_COUNT -> rb.add(models.useCount(jsonObject!!))
+                    FlashCardsContract.Model.NOTE_COUNT -> rb.add(models.useCount(col, jsonObject!!))
                     else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
                 }
             }
@@ -1138,7 +1138,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addTemplateToCursor(tmpl: JSONObject, model: Model?, id: Int, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
+    private fun addTemplateToCursor(col: Collection, tmpl: JSONObject, model: Model?, id: Int, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
         try {
             val rb = rv.newRow()
             for (column in columns) {
@@ -1151,7 +1151,7 @@ class CardContentProvider : ContentProvider() {
                     FlashCardsContract.CardTemplate.ANSWER_FORMAT -> rb.add(tmpl.getString("afmt"))
                     FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT -> rb.add(tmpl.getString("bqfmt"))
                     FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT -> rb.add(tmpl.getString("bafmt"))
-                    FlashCardsContract.CardTemplate.CARD_COUNT -> rb.add(models.tmplUseCount(model!!, tmpl.getInt("ord")))
+                    FlashCardsContract.CardTemplate.CARD_COUNT -> rb.add(models.tmplUseCount(col, model!!, tmpl.getInt("ord")))
                     else -> throw UnsupportedOperationException(
                         "Support for column \"$column\" is not implemented"
                     )
@@ -1225,7 +1225,7 @@ class CardContentProvider : ContentProvider() {
     private fun getModelIdFromUri(col: Collection, uri: Uri): Long {
         val modelIdSegment = uri.pathSegments[1]
         val id: Long = if (modelIdSegment == FlashCardsContract.Model.CURRENT_MODEL_ID) {
-            col.models.current()!!.optLong("id", -1)
+            col.models.current(col)!!.optLong("id", -1)
         } else {
             try {
                 uri.pathSegments[1].toLong()
@@ -1238,7 +1238,7 @@ class CardContentProvider : ContentProvider() {
 
     @Throws(JSONException::class)
     private fun getTemplateFromUri(col: Collection, uri: Uri): JSONObject {
-        val model: JSONObject? = col.models.get(getModelIdFromUri(col, uri))
+        val model: JSONObject? = col.models.get(col, getModelIdFromUri(col, uri))
         val ord = uri.lastPathSegment!!.toInt()
         return model!!.getJSONArray("tmpls").getJSONObject(ord)
     }

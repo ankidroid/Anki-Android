@@ -383,7 +383,7 @@ class Syncer(
                 return result
             }
             var found = false
-            for (m in col.models.all()) {
+            for (m in col.models.all(col)) {
                 if (col.server) {
                     // the web upgrade was mistakenly setting usn
                     if (m.getInt("usn") < 0) {
@@ -399,7 +399,7 @@ class Syncer(
                 }
             }
             if (found) {
-                col.models.save()
+                col.models.save(col)
             }
             // check for missing parent decks
             col.sched.quickDeckDueTree<AbstractDeckTreeNode>()
@@ -418,7 +418,7 @@ class Syncer(
             check.put(col.db.queryScalar("SELECT count() FROM notes"))
             check.put(col.db.queryScalar("SELECT count() FROM revlog"))
             check.put(col.db.queryScalar("SELECT count() FROM graves"))
-            check.put(col.models.all().size)
+            check.put(col.models.all(col).size)
             check.put(col.decks.all().size)
             check.put(col.decks.allConf().size)
             result.put("client", check)
@@ -635,19 +635,19 @@ class Syncer(
         get() {
             val result = JSONArray()
             if (col.server) {
-                for (m in col.models.all()) {
+                for (m in col.models.all(col)) {
                     if (m.getInt("usn") >= mMinUsn) {
                         result.put(m)
                     }
                 }
             } else {
-                for (m in col.models.all()) {
+                for (m in col.models.all(col)) {
                     if (m.getInt("usn") == -1) {
                         m.put("usn", mMaxUsn)
                         result.put(m)
                     }
                 }
-                col.models.save()
+                col.models.save(col)
             }
             return result
         }
@@ -656,7 +656,7 @@ class Syncer(
     private fun mergeModels(rchg: JSONArray) {
         for (model in rchg.jsonObjectIterable()) {
             val r = Model(model)
-            val l = col.models.get(r.getLong("id"))
+            val l = col.models.get(col, r.getLong("id"))
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
                 // This is a hack to detect when the note type has been altered
@@ -670,7 +670,7 @@ class Syncer(
                         throw UnexpectedSchemaChange()
                     }
                 }
-                col.models.update(r)
+                col.models.update(col, r)
             }
         }
     }

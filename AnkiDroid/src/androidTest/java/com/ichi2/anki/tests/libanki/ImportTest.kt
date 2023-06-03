@@ -89,7 +89,7 @@ class ImportTest : InstrumentedTest() {
         // it should be imported correctly into an empty deck
         val empty = emptyCol
         var imp: Importer = Anki2Importer(empty, testCol.path)
-        imp.run()
+        imp.run(col)
         var expected = listOf("foo.mp3")
         var actual = File(empty.media.dir()).list()!!.toMutableList()
         actual.retainAll(expected)
@@ -97,7 +97,7 @@ class ImportTest : InstrumentedTest() {
         // and importing again will not duplicate, as the file content matches
         empty.remCards(empty.db.queryLongList("select id from cards"))
         imp = Anki2Importer(empty, testCol.path)
-        imp.run()
+        imp.run(col)
         expected = listOf("foo.mp3")
         actual = mutableListOf(*File(empty.media.dir()).list()!!)
         actual.retainAll(expected)
@@ -110,7 +110,7 @@ class ImportTest : InstrumentedTest() {
         os.write("bar".toByteArray())
         os.close()
         imp = Anki2Importer(empty, testCol.path)
-        imp.run()
+        imp.run(col)
         expected = listOf("foo.mp3", "foo_$mid.mp3")
         actual = mutableListOf(*File(empty.media.dir()).list()!!)
         actual.retainAll(expected)
@@ -123,7 +123,7 @@ class ImportTest : InstrumentedTest() {
         os.write("bar".toByteArray())
         os.close()
         imp = Anki2Importer(empty, testCol.path)
-        imp.run()
+        imp.run(col)
         expected = listOf("foo.mp3", "foo_$mid.mp3")
         actual = mutableListOf(*File(empty.media.dir()).list()!!)
         actual.retainAll(expected)
@@ -146,7 +146,7 @@ class ImportTest : InstrumentedTest() {
         )
         actual.retainAll(expected)
         assertEquals(actual.size.toLong(), 0)
-        imp.run()
+        imp.run(col)
         expected = listOf("foo.wav")
         actual = mutableListOf(*File(testCol.media.dir()).list()!!)
         actual.retainAll(expected)
@@ -154,7 +154,7 @@ class ImportTest : InstrumentedTest() {
         // import again should be idempotent in terms of media
         testCol.remCards(testCol.db.queryLongList("select id from cards"))
         imp = AnkiPackageImporter(testCol, apkg)
-        imp.run()
+        imp.run(col)
         expected = listOf("foo.wav")
         actual = mutableListOf(*File(testCol.media.dir()).list()!!)
         actual.retainAll(expected)
@@ -165,7 +165,7 @@ class ImportTest : InstrumentedTest() {
         os.write("xyz".toByteArray())
         os.close()
         imp = AnkiPackageImporter(testCol, apkg)
-        imp.run()
+        imp.run(col)
         assertEquals(2, File(testCol.media.dir()).list()!!.size.toLong())
     }
 
@@ -178,12 +178,12 @@ class ImportTest : InstrumentedTest() {
         var tmp = Shared.getTestFilePath(testContext, "diffmodeltemplates-1.apkg")
         var imp = AnkiPackageImporter(testCol, tmp)
         imp.setDupeOnSchemaChange(true)
-        imp.run()
+        imp.run(col)
         // then the version with updated template
         tmp = Shared.getTestFilePath(testContext, "diffmodeltemplates-2.apkg")
         imp = AnkiPackageImporter(testCol, tmp)
         imp.setDupeOnSchemaChange(true)
-        imp.run()
+        imp.run(col)
         // collection should contain the note we imported
         assertEquals(1, testCol.noteCount().toLong())
         // the front template should contain the text added in the 2nd package
@@ -200,13 +200,13 @@ class ImportTest : InstrumentedTest() {
         // create a new empty deck
         var tmp = Shared.getTestFilePath(testContext, "update1.apkg")
         var imp = AnkiPackageImporter(testCol, tmp)
-        imp.run()
+        imp.run(col)
         assertEquals(0, imp.dupes)
         assertEquals(1, imp.added)
         assertEquals(0, imp.updated)
         // importing again should be idempotent
         imp = AnkiPackageImporter(testCol, tmp)
-        imp.run()
+        imp.run(col)
         assertEquals(1, imp.dupes)
         assertEquals(0, imp.added)
         assertEquals(0, imp.updated)
@@ -215,7 +215,7 @@ class ImportTest : InstrumentedTest() {
         assertTrue(testCol.db.queryString("select flds from notes").startsWith("hello"))
         tmp = Shared.getTestFilePath(testContext, "update2.apkg")
         imp = AnkiPackageImporter(testCol, tmp)
-        imp.run()
+        imp.run(col)
         assertEquals(1, imp.dupes)
         assertEquals(0, imp.added)
         assertEquals(1, imp.updated)
@@ -231,10 +231,10 @@ class ImportTest : InstrumentedTest() {
         // create a new empty deck
         var tmp = Shared.getTestFilePath(testContext, "update1.apkg")
         var imp = AnkiPackageImporter(testCol, tmp)
-        imp.run()
+        imp.run(col)
         tmp = Shared.getTestFilePath(testContext, "update3.apkg")
         imp = AnkiPackageImporter(testCol, tmp)
-        imp.run()
+        imp.run(col)
         // there is a dupe, but it was ignored
         assertEquals(1, imp.dupes)
         assertEquals(0, imp.added)

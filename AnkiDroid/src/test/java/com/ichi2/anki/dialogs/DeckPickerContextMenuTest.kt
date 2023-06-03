@@ -63,7 +63,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             val didA = addDeck("Deck 1")
             updateDeckList()
             col.decks.select(didA)
-            val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
+            val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
             basic!!.put("did", didA)
             addNoteUsingBasicModel("Front", "Back")
             assertEquals(1, visibleDeckCount)
@@ -171,7 +171,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
 
             val deckId = addDeck("Deck 1")
-            col.models.byName("Basic")!!.put("did", deckId)
+            col.models.byName(col, "Basic")!!.put("did", deckId)
             val card = addNoteUsingBasicModel("front", "back").firstCard(col)
             col.sched.buryCards(longArrayOf(card.id))
             updateDeckList()

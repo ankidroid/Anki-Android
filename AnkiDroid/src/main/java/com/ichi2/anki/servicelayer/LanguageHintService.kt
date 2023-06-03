@@ -20,11 +20,12 @@ import android.os.Build
 import android.os.LocaleList
 import android.widget.EditText
 import androidx.annotation.CheckResult
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.ModelManager
 import org.json.JSONObject
 import timber.log.Timber
-import java.util.*
+import java.util.Locale
 
 /**
  * The language that a keyboard should open with when an [EditText] is selected
@@ -44,10 +45,10 @@ object LanguageHintService {
         return Locale.forLanguageTag(field.getString("ad-hint-locale"))
     }
 
-    fun setLanguageHintForField(models: ModelManager, model: Model, fieldPos: Int, selectedLocale: Locale) {
+    fun setLanguageHintForField(col: Collection, models: ModelManager, model: Model, fieldPos: Int, selectedLocale: Locale) {
         val field = model.getField(fieldPos)
         field.put("ad-hint-locale", selectedLocale.toLanguageTag())
-        models.save(model)
+        models.save(col, model)
 
         Timber.i("Set field locale to %s", selectedLocale)
     }

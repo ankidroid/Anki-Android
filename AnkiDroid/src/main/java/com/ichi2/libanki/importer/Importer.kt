@@ -45,7 +45,7 @@ abstract class Importer(col: Collection, protected var file: String) {
     protected var progress: TaskManager.ProgressCallback<String>? = null
 
     @Throws(ImportExportException::class)
-    abstract fun run()
+    abstract fun run(col: Collection)
 
     /**
      * Timestamps

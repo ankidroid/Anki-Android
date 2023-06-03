@@ -26,9 +26,6 @@ import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.*
 import com.ichi2.utils.HashUtil.HashMapInit
-import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.jsonObjectIterable
-import com.ichi2.utils.stringIterable
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -37,7 +34,7 @@ import java.util.regex.Pattern
 
 @KotlinCleanup("IDE Lint")
 @KotlinCleanup("Lots to do")
-class Models(col: Collection) : ModelManager(col) {
+class Models() : ModelManager() {
     /**
      * Saving/loading registry
      * ***********************************************************************************************
@@ -71,7 +68,7 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     /** {@inheritDoc}  */
-    override fun save(m: Model?, templates: Boolean) {
+    override fun save(col: Collection, m: Model?, templates: Boolean) {
         if (m != null && m.has("id")) {
             m.put("mod", time.intTime())
             m.put("usn", col.usn())
@@ -81,10 +78,10 @@ class Models(col: Collection) : ModelManager(col) {
                 // Included only for backwards compatibility (to AnkiDroid <2.14 etc)
                 // https://forums.ankiweb.net/t/is-req-still-used-or-present/9977
                 // https://github.com/ankidroid/Anki-Android/issues/8945
-                _updateRequired(m)
+                _updateRequired(col, m)
             }
             if (templates) {
-                _syncTemplates(m)
+                _syncTemplates(col, m)
             }
         }
         mChanged = true
@@ -94,9 +91,9 @@ class Models(col: Collection) : ModelManager(col) {
 
     /** {@inheritDoc}  */
     @KotlinCleanup("fix 'val'")
-    override fun flush() {
+    override fun flush(col: Collection) {
         if (mChanged) {
-            ensureNotEmpty()
+            ensureNotEmpty(col)
             val array = JSONObject()
             for ((key, value) in mModels!!) {
                 array.put(java.lang.Long.toString(key), value)
@@ -109,7 +106,7 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     /** {@inheritDoc}  */
-    override fun ensureNotEmpty(): Boolean {
+    override fun ensureNotEmpty(col: Collection): Boolean {
         return if (mModels!!.isEmpty()) {
             // TODO: Maybe we want to restore all models if we don't have any
             StdModels.BASIC_MODEL.add(col)
@@ -125,13 +122,13 @@ class Models(col: Collection) : ModelManager(col) {
      */
     /** {@inheritDoc}  */
     @KotlinCleanup("remove var and simplify fun with direct return")
-    override fun current(forDeck: Boolean): Model? {
+    override fun current(col: Collection, forDeck: Boolean): Model? {
         var m: Model? = null
         if (forDeck) {
-            m = get(col.decks.current().optLong("mid", -1))
+            m = get(col, col.decks.current().optLong("mid", -1))
         }
         if (m == null) {
-            m = get(col.get_config("curModel", -1L)!!)
+            m = get(col, col.get_config("curModel", -1L)!!)
         }
         if (m == null) {
             if (!mModels!!.isEmpty()) {
@@ -141,13 +138,13 @@ class Models(col: Collection) : ModelManager(col) {
         return m
     }
 
-    override fun setCurrent(m: Model) {
+    override fun setCurrent(col: Collection, m: Model) {
         col.set_config("curModel", m.getLong("id"))
     }
 
     /** {@inheritDoc}  */
     @KotlinCleanup("replace with mModels!![id] if this matches 'libanki'")
-    override operator fun get(id: Long): Model? {
+    override operator fun get(col: Collection, id: Long): Model? {
         return if (mModels!!.containsKey(id)) {
             mModels!![id]
         } else {
@@ -156,13 +153,13 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     /** {@inheritDoc}  */
-    override fun all(): ArrayList<Model> {
+    override fun all(col: Collection): ArrayList<Model> {
         return ArrayList(mModels!!.values)
     }
 
     /** {@inheritDoc}  */
     @KotlinCleanup("replace with map")
-    override fun allNames(): ArrayList<String> {
+    override fun allNames(col: Collection): ArrayList<String> {
         val nameList = ArrayList<String>()
         for (m in mModels!!.values) {
             nameList.add(m.getString("name"))
@@ -172,7 +169,7 @@ class Models(col: Collection) : ModelManager(col) {
 
     /** {@inheritDoc}  */
     @KotlinCleanup("replace with .find { }")
-    override fun byName(name: String): Model? {
+    override fun byName(col: Collection, name: String): Model? {
         for (m in mModels!!.values) {
             if (m.getString("name") == name) {
                 return m
@@ -182,7 +179,7 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     /** {@inheritDoc}  */
-    override fun newModel(name: String): Model {
+    override fun newModel(col: Collection, name: String): Model {
         // caller should call save() after modifying
         return Model(DEFAULT_MODEL).apply {
             put("name", name)
@@ -195,10 +192,10 @@ class Models(col: Collection) : ModelManager(col) {
 
     /** {@inheritDoc}  */
     @Throws(ConfirmModSchemaException::class)
-    override operator fun rem(m: Model) {
+    override fun rem(col: Collection, m: Model) {
         col.modSchema()
         val id = m.getLong("id")
-        val current = current()!!.getLong("id") == id
+        val current = current(col)!!.getLong("id") == id
         // delete notes/cards
         col.remCards(
             col.db.queryLongList(
@@ -208,27 +205,27 @@ class Models(col: Collection) : ModelManager(col) {
         )
         // then the model
         mModels!!.remove(id)
-        save()
+        save(col)
         // GUI should ensure last model is not deleted
         if (current) {
-            setCurrent(mModels!!.values.iterator().next())
+            setCurrent(col, mModels!!.values.iterator().next())
         }
     }
 
-    override fun add(m: Model) {
+    override fun add(col: Collection, m: Model) {
         _setID(m)
-        update(m)
-        setCurrent(m)
-        save(m)
+        update(col, m)
+        setCurrent(col, m)
+        save(col, m)
     }
 
-    override fun update(m: Model, preserve_usn_and_mtime: Boolean) {
+    override fun update(col: Collection, m: Model, preserve_usn_and_mtime: Boolean) {
         if (!preserve_usn_and_mtime) {
             Timber.w("preserve_usn_and_mtime is not supported in legacy java class")
         }
         mModels!![m.getLong("id")] = m
         // mark registry changed, but don't bump mod time
-        save()
+        save(col)
     }
 
     private fun _setID(m: Model) {
@@ -239,28 +236,28 @@ class Models(col: Collection) : ModelManager(col) {
         m.put("id", id)
     }
 
-    override fun have(id: Long): Boolean {
+    override fun have(col: Collection, id: Long): Boolean {
         return mModels!!.containsKey(id)
     }
 
-    override fun ids(): Set<Long> {
+    override fun ids(col: Collection): Set<Long> {
         return mModels!!.keys
     }
     /*
       Tools ***********************************************************************************************
      */
     /** {@inheritDoc}  */
-    override fun nids(m: Model): List<Long> {
+    override fun nids(col: Collection, m: Model): List<Long> {
         return col.db.queryLongList("SELECT id FROM notes WHERE mid = ?", m.getLong("id"))
     }
 
     /** {@inheritDoc}  */
-    override fun useCount(m: Model): Int {
+    override fun useCount(col: Collection, m: Model): Int {
         return col.db.queryScalar("select count() from notes where mid = ?", m.getLong("id"))
     }
 
     /** {@inheritDoc}  */
-    override fun tmplUseCount(m: Model, ord: Int): Int {
+    override fun tmplUseCount(col: Collection, m: Model, ord: Int): Int {
         return col.db.queryScalar(
             "select count() from cards, notes where cards.nid = notes.id and notes.mid = ? and cards.ord = ?",
             m.getLong("id"),
@@ -271,17 +268,17 @@ class Models(col: Collection) : ModelManager(col) {
       Copying ***********************************************************************************************
      */
     /** {@inheritDoc}  */
-    override fun copy(m: Model): Model {
+    override fun copy(col: Collection, m: Model): Model {
         val m2 = m.deepClone()
         m2.put("name", m2.getString("name") + " copy")
-        add(m2)
+        add(col, m2)
         return m2
     }
 
     /*
      * Fields ***********************************************************************************************
      */
-    override fun newField(name: String): JSONObject {
+    override fun newField(col: Collection, name: String): JSONObject {
         return JSONObject(defaultField).apply {
             put("name", name)
         }
@@ -292,32 +289,32 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     @Throws(ConfirmModSchemaException::class)
-    override fun setSortIdx(m: Model, idx: Int) {
+    override fun setSortIdx(col: Collection, m: Model, idx: Int) {
         col.modSchema()
         m.put("sortf", idx)
-        col.updateFieldCache(nids(m))
-        save(m)
+        col.updateFieldCache(nids(col, m))
+        save(col, m)
     }
 
-    override fun _addField(m: Model, field: JSONObject) {
+    override fun _addField(col: Collection, m: Model, field: JSONObject) {
         // do the actual work of addField. Do not check whether model
         // is not new.
         val flds = m.getJSONArray("flds")
         flds.put(field)
         m.put("flds", flds)
         _updateFieldOrds(m)
-        save(m)
-        _transformFields(m, TransformFieldAdd())
+        save(col, m)
+        _transformFields(col, m, TransformFieldAdd())
     }
 
     @Throws(ConfirmModSchemaException::class)
-    override fun addField(m: Model, field: JSONObject) {
+    override fun addField(col: Collection, m: Model, field: JSONObject) {
         // only mod schema if model isn't new
         // this is Anki's addField.
         if (!isModelNew(m)) {
             col.modSchema()
         }
-        _addField(m, field)
+        _addField(col, m, field)
     }
 
     internal class TransformFieldAdd : TransformFieldVisitor {
@@ -331,7 +328,7 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     @Throws(ConfirmModSchemaException::class)
-    override fun remField(m: Model, field: JSONObject) {
+    override fun remField(col: Collection, m: Model, field: JSONObject) {
         col.modSchema()
         val flds = m.getJSONArray("flds")
         val flds2 = JSONArray()
@@ -349,12 +346,12 @@ class Models(col: Collection) : ModelManager(col) {
             m.put("sortf", sortf - 1)
         }
         _updateFieldOrds(m)
-        _transformFields(m, TransformFieldDelete(idx))
+        _transformFields(col, m, TransformFieldDelete(idx))
         if (idx == sortIdx(m)) {
             // need to rebuild
-            col.updateFieldCache(nids(m))
+            col.updateFieldCache(nids(col, m))
         }
-        renameFieldInternal(m, field, null)
+        renameFieldInternal(col, m, field, null)
     }
 
     internal class TransformFieldDelete(private val idx: Int) : TransformFieldVisitor {
@@ -367,7 +364,7 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     @Throws(ConfirmModSchemaException::class)
-    override fun moveField(m: Model, field: JSONObject, idx: Int) {
+    override fun moveField(col: Collection, m: Model, field: JSONObject, idx: Int) {
         col.modSchema()
         var flds = m.getJSONArray("flds")
         val l = ArrayList<JSONObject?>(flds.length())
@@ -396,8 +393,8 @@ class Models(col: Collection) : ModelManager(col) {
             }
         }
         _updateFieldOrds(m)
-        save(m)
-        _transformFields(m, TransformFieldMove(idx, oldidx))
+        save(col, m)
+        _transformFields(col, m, TransformFieldMove(idx, oldidx))
     }
 
     internal class TransformFieldMove(private val idx: Int, private val oldidx: Int) :
@@ -414,7 +411,7 @@ class Models(col: Collection) : ModelManager(col) {
 
     @KotlinCleanup("remove this, make newName non-null and use empty string instead of null")
     @KotlinCleanup("turn 'pat' into pat.toRegex()")
-    private fun renameFieldInternal(m: Model, field: JSONObject, newName: String?) {
+    private fun renameFieldInternal(col: Collection, m: Model, field: JSONObject, newName: String?) {
         @Suppress("NAME_SHADOWING")
         var newName: String? = newName
         col.modSchema()
@@ -437,12 +434,12 @@ class Models(col: Collection) : ModelManager(col) {
             }
         }
         field.put("name", newName)
-        save(m)
+        save(col, m)
     }
 
     @Throws(ConfirmModSchemaException::class)
-    override fun renameField(m: Model, field: JSONObject, newName: String) =
-        renameFieldInternal(m, field, newName)
+    override fun renameField(col: Collection, m: Model, field: JSONObject, newName: String) =
+        renameFieldInternal(col, m, field, newName)
 
     fun _updateFieldOrds(m: JSONObject) {
         val flds = m.getJSONArray("flds")
@@ -456,7 +453,7 @@ class Models(col: Collection) : ModelManager(col) {
         fun transform(fields: Array<String>): Array<String>
     }
 
-    fun _transformFields(m: Model, fn: TransformFieldVisitor) {
+    fun _transformFields(col: Collection, m: Model, fn: TransformFieldVisitor) {
         // model hasn't been added yet?
         if (isModelNew(m)) {
             return
@@ -479,28 +476,28 @@ class Models(col: Collection) : ModelManager(col) {
     }
 
     /** Note: should col.genCards() afterwards.  */
-    override fun _addTemplate(m: Model, template: JSONObject) {
+    override fun _addTemplate(col: Collection, m: Model, template: JSONObject) {
         // do the actual work of addTemplate. Do not consider whether
         // model is new or not.
         val tmpls = m.getJSONArray("tmpls")
         tmpls.put(template)
         m.put("tmpls", tmpls)
         _updateTemplOrds(m)
-        save(m)
+        save(col, m)
     }
 
     @Throws(ConfirmModSchemaException::class)
-    override fun addTemplate(m: Model, template: JSONObject) {
+    override fun addTemplate(col: Collection, m: Model, template: JSONObject) {
         // That is Anki's addTemplate method
         if (!isModelNew(m)) {
             col.modSchema()
         }
-        _addTemplate(m, template)
+        _addTemplate(col, m, template)
     }
 
     /** {@inheritDoc}  */
     @Throws(ConfirmModSchemaException::class)
-    override fun remTemplate(m: Model, template: JSONObject) {
+    override fun remTemplate(col: Collection, m: Model, template: JSONObject) {
         if (m.getJSONArray("tmpls").length() <= 1) {
             return
         }
@@ -515,7 +512,7 @@ class Models(col: Collection) : ModelManager(col) {
         }
         require(ord != -1) { "Invalid template proposed for delete" }
         // the code in "isRemTemplateSafe" was in place here in libanki. It is extracted to a method for reuse
-        val cids = getCardIdsForModel(m.getLong("id"), intArrayOf(ord))
+        val cids = getCardIdsForModel(col, m.getLong("id"), intArrayOf(ord))
         if (cids == null) {
             Timber.d("remTemplate getCardIdsForModel determined it was unsafe to delete the template")
             return
@@ -544,11 +541,11 @@ class Models(col: Collection) : ModelManager(col) {
         }
         m.put("tmpls", tmpls2)
         _updateTemplOrds(m)
-        save(m)
+        save(col, m)
         Timber.d("remTemplate done working")
     }
 
-    override fun moveTemplate(m: Model, template: JSONObject, idx: Int) {
+    override fun moveTemplate(col: Collection, m: Model, template: JSONObject, idx: Int) {
         var tmpls = m.getJSONArray("tmpls")
         var oldidx = -1
         val l = ArrayList<JSONObject?>()
@@ -580,7 +577,7 @@ class Models(col: Collection) : ModelManager(col) {
             }
         }
         // apply
-        save(m)
+        save(col, m)
         col.db.execute(
             "update cards set ord = (case " + sb +
                 " end),usn=?,mod=? where nid in (select id from notes where mid = ?)",
@@ -590,9 +587,9 @@ class Models(col: Collection) : ModelManager(col) {
         )
     }
 
-    private fun _syncTemplates(m: Model) {
+    private fun _syncTemplates(col: Collection, m: Model) {
         @Suppress("UNUSED_VARIABLE") // unused upstream as well
-        val rem = col.genCards(nids(m), m)!!
+        val rem = col.genCards(nids(col, m), m)!!
     }
 
     /*
@@ -602,6 +599,7 @@ class Models(col: Collection) : ModelManager(col) {
     @Throws(ConfirmModSchemaException::class)
     @KotlinCleanup("rename null param from genCards")
     override fun change(
+        col: Collection,
         m: Model,
         nid: NoteId,
         newModel: Model,
@@ -609,12 +607,12 @@ class Models(col: Collection) : ModelManager(col) {
         cmap: Map<Int, Int?>
     ) {
         col.modSchema()
-        _changeNote(nid, newModel, fmap)
-        _changeCards(nid, m, newModel, cmap)
+        _changeNote(col, nid, newModel, fmap)
+        _changeCards(col, nid, m, newModel, cmap)
         col.genCards(nid, newModel, null)
     }
 
-    private fun _changeNote(nid: Long, newModel: Model, map: Map<Int, Int?>) {
+    private fun _changeNote(col: Collection, nid: Long, newModel: Model, map: Map<Int, Int?>) {
         val nfields = newModel.getJSONArray("flds").length()
         val mid = newModel.getLong("id")
         val sflds = col.db.queryString("select flds from notes where id = ?", nid)
@@ -644,7 +642,7 @@ class Models(col: Collection) : ModelManager(col) {
         col.updateFieldCache(longArrayOf(nid))
     }
 
-    private fun _changeCards(nid: Long, oldModel: Model, newModel: Model, map: Map<Int, Int?>) {
+    private fun _changeCards(col: Collection, nid: Long, oldModel: Model, newModel: Model, map: Map<Int, Int?>) {
         val d: MutableList<Array<Any>> = ArrayList()
         val deleted: MutableList<Long> = ArrayList()
         val omType = oldModel.getInt("type")
@@ -704,7 +702,7 @@ class Models(col: Collection) : ModelManager(col) {
      * Required field/text cache
      * ***********************************************************************************************
      */
-    private fun _updateRequired(m: Model) {
+    private fun _updateRequired(col: Collection, m: Model) {
         if (m.isCloze) {
             // nothing to do
             return
@@ -713,7 +711,7 @@ class Models(col: Collection) : ModelManager(col) {
         val flds = m.fieldsNames
         val templates = m.getJSONArray("tmpls")
         for (t in templates.jsonObjectIterable()) {
-            val ret = _reqForTemplate(m, flds, t)
+            val ret = _reqForTemplate(col, m, flds, t)
             val r = JSONArray()
             r.put(t.getInt("ord"))
             r.put(ret[0])
@@ -723,7 +721,7 @@ class Models(col: Collection) : ModelManager(col) {
         m.put("req", req)
     }
 
-    private fun _reqForTemplate(m: Model, flds: List<String>, t: JSONObject): Array<Any> {
+    private fun _reqForTemplate(col: Collection, m: Model, flds: List<String>, t: JSONObject): Array<Any> {
         val nbFields = flds.size
         val a = Array(nbFields) { "ankiflag" }
         val b = Array(nbFields) { "" }
@@ -788,10 +786,10 @@ class Models(col: Collection) : ModelManager(col) {
     /*
      * Sync handling ***********************************************************************************************
      */
-    override fun beforeUpload() {
-        val changed = Utils.markAsUploaded(all())
+    override fun beforeUpload(col: Collection) {
+        val changed = Utils.markAsUploaded(all(col))
         if (changed) {
-            save()
+            save(col)
         }
     }
 
@@ -819,12 +817,12 @@ class Models(col: Collection) : ModelManager(col) {
             return result
         }
 
-    override fun getModels(): HashMap<Long, Model> {
+    override fun getModels(col: Collection): HashMap<Long, Model> {
         return mModels!!
     }
 
     /** {@inheritDoc}  */
-    override fun count(): Int {
+    override fun count(col: Collection): Int {
         return mModels!!.size
     }
 
