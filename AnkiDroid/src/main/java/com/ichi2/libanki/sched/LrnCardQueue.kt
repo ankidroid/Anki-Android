@@ -17,8 +17,9 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.Collection
 
-class LrnCardQueue(sched: AbstractSched) : CardQueue<LrnCard>(sched) {
+class LrnCardQueue : CardQueue<LrnCard>() {
     /**
      * Whether the queue already contains its current expected value.
      * If it's not the case, then we won't add cards reviewed immediately and wait for a filling to occur.
@@ -26,7 +27,7 @@ class LrnCardQueue(sched: AbstractSched) : CardQueue<LrnCard>(sched) {
     var isFilled = false
         private set
 
-    fun add(due: Long, cid: CardId) {
+    fun add(col: Collection, due: Long, cid: CardId) {
         add(LrnCard(col, due, cid))
     }
 

@@ -17,9 +17,10 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 
-class SimpleCardQueue(sched: AbstractSched) : CardQueue<Card.Cache>(sched) {
-    fun add(id: Long) {
+class SimpleCardQueue : CardQueue<Card.Cache>() {
+    fun add(col: Collection, id: Long) {
         add(Card.Cache(col, id))
     }
 }
