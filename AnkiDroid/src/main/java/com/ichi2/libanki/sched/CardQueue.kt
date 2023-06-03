@@ -41,7 +41,8 @@ abstract class CardQueue<T : Card.Cache>(
     }
 
     fun remove(cid: CardId) =
-        queue.removeIf { card -> card.id == cid }
+        // CardCache and LrnCache with the same id will be considered as equal so it's a valid implementation.
+        queue.removeIf { it?.id == cid }
 
     fun add(elt: T) {
         queue.add(elt)
