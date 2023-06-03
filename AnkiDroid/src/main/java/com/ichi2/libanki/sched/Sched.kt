@@ -332,7 +332,7 @@ class Sched(col: Collection) : SchedV2(col) {
             mReportLimit
         ).use { cur ->
             while (cur.moveToNext()) {
-                mLrnQueue.add(cur.getLong(0), cur.getLong(1))
+                mLrnQueue.add(col, cur.getLong(0), cur.getLong(1))
             }
             // as it arrives sorted by did first, we need to sort it
             mLrnQueue.sort()
@@ -680,7 +680,7 @@ class Sched(col: Collection) : SchedV2(col) {
                      * queue is not empty if it should not be empty (important for the conditional belows), but the
                      * front of the queue contains distinct card.
                      */
-                    mRevQueue.add(cid)
+                    mRevQueue.add(col, cid)
                 }
                 if (!mRevQueue.isEmpty) {
                     // ordering

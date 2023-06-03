@@ -77,10 +77,10 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     private var mNewCardModulus = 0
 
     // Queues
-    protected val mNewQueue = SimpleCardQueue(this)
-    protected val mLrnQueue = LrnCardQueue(this)
-    protected val mLrnDayQueue = SimpleCardQueue(this)
-    protected val mRevQueue = SimpleCardQueue(this)
+    protected val mNewQueue = SimpleCardQueue()
+    protected val mLrnQueue = LrnCardQueue()
+    protected val mLrnDayQueue = SimpleCardQueue()
+    protected val mRevQueue = SimpleCardQueue()
     private var mNewDids = LinkedList<Long>()
     protected var mLrnDids = LinkedList<Long>()
 
@@ -819,7 +819,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
                     lim
                 )
                 ) {
-                    mNewQueue.add(cid)
+                    mNewQueue.add(col, cid)
                 }
                 if (!mNewQueue.isEmpty) {
                     // Note: libanki reverses mNewQueue and returns the last element in _getNewCard().
@@ -1042,7 +1042,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             ).use { cur ->
                 mLrnQueue.setFilled()
                 while (cur.moveToNext()) {
-                    mLrnQueue.add(cur.getLong(0), cur.getLong(1))
+                    mLrnQueue.add(col, cur.getLong(0), cur.getLong(1))
                 }
                 // as it arrives sorted by did first, we need to sort it
                 mLrnQueue.sort()
@@ -1109,7 +1109,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
                 mQueueLimit
             )
             ) {
-                mLrnDayQueue.add(cid)
+                mLrnDayQueue.add(col, cid)
             }
             if (!mLrnDayQueue.isEmpty) {
                 // order
@@ -1578,7 +1578,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
                 lim
             ).use { cur ->
                 while (cur.moveToNext()) {
-                    mRevQueue.add(cur.getLong(0))
+                    mRevQueue.add(col, cur.getLong(0))
                 }
             }
             if (!mRevQueue.isEmpty) {

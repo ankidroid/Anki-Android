@@ -114,8 +114,7 @@ class AbstractSchedTest : RobolectricTest() {
     @Test
     fun testCardQueue() {
         val col = col
-        val sched = col.sched as SchedV2
-        val queue = SimpleCardQueue(sched)
+        val queue = SimpleCardQueue()
         assertThat(queue.size(), `is`(0))
         val nbCard = 6
         val cids = LongArray(nbCard)
@@ -124,7 +123,7 @@ class AbstractSchedTest : RobolectricTest() {
             val card = note.firstCard()
             val cid = card.id
             cids[i] = cid
-            queue.add(cid)
+            queue.add(col, cid)
         }
         assertThat(queue.size(), `is`(nbCard))
         assertEquals(cids[0], queue.removeFirstCard().id)

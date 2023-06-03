@@ -17,11 +17,10 @@
 package com.ichi2.libanki.sched
 
 import com.ichi2.libanki.Card
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.libanki.Collection
 
-@KotlinCleanup("Make sched non-null ")
-class SimpleCardQueue(sched: AbstractSched?) : CardQueue<Card.Cache?>(sched) {
-    fun add(id: Long) {
-        add(col?.let { Card.Cache(it, id) })
+class SimpleCardQueue : CardQueue<Card.Cache?>() {
+    fun add(col: Collection, id: Long) {
+        add(Card.Cache(col, id))
     }
 }
