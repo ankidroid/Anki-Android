@@ -53,6 +53,7 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.*
 import com.ichi2.anki.cardviewer.CardHtml.Companion.legacyGetTtsTags
@@ -92,7 +93,6 @@ import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling
 import com.ichi2.libanki.Sound.SingleSoundSide
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.SoundPlayer
-import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
@@ -235,10 +235,6 @@ abstract class AbstractFlashcardViewer :
     private var mViewerUrl: String? = null
     private var mAssetLoader: WebViewAssetLoader? = null
     private val mFadeDuration = 300
-
-    @KotlinCleanup("made internal for tests")
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal var sched: AbstractSched? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal lateinit var mSoundPlayer: Sound
@@ -484,7 +480,7 @@ abstract class AbstractFlashcardViewer :
         }
 
         override fun onPostExecute(result: Result) {
-            if (sched == null) {
+            if (!colIsOpen()) {
                 // TODO: proper testing for restored activity
                 finishWithoutAnimation()
                 return
@@ -573,7 +569,6 @@ abstract class AbstractFlashcardViewer :
     // Finish initializing the activity after the collection has been correctly loaded
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
-        sched = col.sched
         val mediaDir = col.media.dir()
         mBaseUrl = Utils.getBaseUrl(mediaDir).also { baseUrl ->
             mSoundPlayer = Sound(baseUrl).also { sound ->
@@ -638,10 +633,15 @@ abstract class AbstractFlashcardViewer :
 
     override fun onDestroy() {
         super.onDestroy()
-        // Tells the scheduler there is no more current cards. 0 is
-        // not a valid id.
-        if (sched != null && sched is SchedV2) {
-            (sched!! as SchedV2).discardCurrentCard()
+        launchCatchingTask {
+            withOpenColOrNull {
+                val sched = col.sched
+                // Tells the scheduler there is no more current cards. 0 is
+                // not a valid id.
+                if (sched is SchedV2) {
+                    (sched).discardCurrentCard()
+                }
+            }
         }
         Timber.d("onDestroy()")
         mTTS.releaseTts(this)
