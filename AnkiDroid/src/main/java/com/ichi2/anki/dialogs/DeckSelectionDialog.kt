@@ -151,10 +151,9 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         }
     }
 
-    private fun showSubDeckDialog(parentDeckPath: String) {
+    private fun showSubDeckDialog(parentId: Long) {
         try {
             // create subdeck
-            val parentId = decks.id(parentDeckPath)
             val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a sub deck was created
@@ -190,9 +189,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private fun requireCollectionGetter(): CollectionGetter {
         return requireContext() as CollectionGetter
     }
-
-    protected val decks: DeckManager
-        get() = requireCollectionGetter().col.decks
 
     /**
      * Create the deck if it does not exists.
@@ -263,7 +259,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
                     if (deckID == DeckSpinnerSelection.ALL_DECKS_ID) {
                         context?.let { showThemedToast(it, R.string.cannot_create_subdeck_for_all_decks, true) }
                     } else {
-                        showSubDeckDialog(deckName)
+                        showSubDeckDialog(deckID)
                     }
                     true
                 }
