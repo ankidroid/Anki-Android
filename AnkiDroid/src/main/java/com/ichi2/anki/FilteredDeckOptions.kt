@@ -258,7 +258,7 @@ class FilteredDeckOptions :
         if (prefChanged) {
             // Rebuild the filtered deck if a setting has changed
             try {
-                col.sched.rebuildDyn(deck.getLong("id"))
+                col.sched.rebuildDyn(col, deck.getLong("id"))
             } catch (e: JSONException) {
                 Timber.e(e)
             }

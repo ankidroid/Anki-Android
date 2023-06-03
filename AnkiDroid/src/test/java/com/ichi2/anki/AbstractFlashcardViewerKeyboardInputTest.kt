@@ -17,11 +17,11 @@ package com.ichi2.anki
 
 import android.view.KeyEvent
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.libanki.Collection
 import org.hamcrest.MatcherAssert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import timber.log.Timber
-import java.lang.Exception
 
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
@@ -77,7 +77,7 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
             // intentionally blank
         }
 
-        override fun displayCardAnswer() {
+        override fun displayCardAnswer(col: Collection) {
             mDisplayAnswer = true
         }
 

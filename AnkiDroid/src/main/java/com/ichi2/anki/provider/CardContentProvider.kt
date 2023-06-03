@@ -321,15 +321,15 @@ class CardContentProvider : ContentProvider() {
                 }
 
                 // retrieve the number of cards provided by the selection parameter "limit"
-                col.sched.deferReset()
+                col.sched.deferReset(col)
                 var k = 0
                 while (k < limit) {
-                    val currentCard = col.sched.card() ?: break
-                    val buttonCount = col.sched.answerButtons(currentCard)
+                    val currentCard = col.sched.card(col) ?: break
+                    val buttonCount = col.sched.answerButtons(col, currentCard)
                     val buttonTexts = JSONArray()
                     var i = 0
                     while (i < buttonCount) {
-                        buttonTexts.put(col.sched.nextIvlStr(context!!, currentCard, i + 1))
+                        buttonTexts.put(col.sched.nextIvlStr(col, context!!, currentCard, i + 1))
                         i++
                     }
                     addReviewInfoToCursor(col, currentCard, buttonTexts, buttonCount, rv, columns)
@@ -343,7 +343,7 @@ class CardContentProvider : ContentProvider() {
             }
             DECKS -> {
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
-                val allDecks = col.sched.deckDueTree()
+                val allDecks = col.sched.deckDueTree(col)
                 val rv = MatrixCursor(columns, 1)
                 fun forEach(nodeList: List<TreeNode<DeckDueTreeNode>>, fn: (DeckDueTreeNode) -> Unit) {
                     for (node in nodeList) {
@@ -367,7 +367,7 @@ class CardContentProvider : ContentProvider() {
                 /* Direct access deck */
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                val allDecks = col.sched.deckDueTree()
+                val allDecks = col.sched.deckDueTree(col)
                 val desiredDeckId = uri.pathSegments[1].toLong()
                 findInDeckTree(allDecks, desiredDeckId)?.let {
                     addDeckToCursor(col, it.did, it.fullDeckName, getDeckCountsFromDueTreeNode(it), rv, columns)
@@ -379,7 +379,7 @@ class CardContentProvider : ContentProvider() {
                 val name = col.decks.name(id)
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                val counts = JSONArray(listOf(col.sched.counts()))
+                val counts = JSONArray(listOf(col.sched.counts(col)))
                 addDeckToCursor(col, id, name, counts, rv, columns)
                 rv
             }
@@ -1106,7 +1106,7 @@ class CardContentProvider : ContentProvider() {
                     if (timeTaken != -1L) {
                         cardToAnswer.timerStarted = TimeManager.time.intTimeMS() - timeTaken
                     }
-                    sched.answerCard(cardToAnswer, ease)
+                    sched.answerCard(col, cardToAnswer, ease)
                 }
                 db.database.setTransactionSuccessful()
             } finally {
@@ -1125,10 +1125,10 @@ class CardContentProvider : ContentProvider() {
                 if (card != null) {
                     if (bury) {
                         // bury
-                        sched.buryCards(longArrayOf(card.id))
+                        sched.buryCards(col, longArrayOf(card.id))
                     } else {
                         // suspend
-                        sched.suspendCards(longArrayOf(card.id))
+                        sched.suspendCards(col, longArrayOf(card.id))
                     }
                 }
             }

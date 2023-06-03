@@ -115,7 +115,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val note = viewer.currentCard!!.note(col)
         note.setField(1, "David")
 
-        viewer.saveEditedCard()
+        viewer.saveEditedCard(col)
 
         waitForAsyncTasksToComplete()
 
@@ -131,7 +131,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         assertThat(viewer.correctTypedAnswer, equalTo("World"))
 
-        viewer.displayCardAnswer()
+        viewer.displayCardAnswer(col)
 
         assertThat(viewer.cardContent, containsString("World"))
 
@@ -142,7 +142,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val note = viewer.currentCard!!.note(col)
         note.setField(1, "David")
 
-        viewer.saveEditedCard()
+        viewer.saveEditedCard(col)
 
         waitForAsyncTasksToComplete()
 

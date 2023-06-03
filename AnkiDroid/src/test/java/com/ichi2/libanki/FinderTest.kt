@@ -52,7 +52,7 @@ class FinderTest : RobolectricTest() {
         val sched = upgradeToSchedV2() // needs to be first
         enableBurySiblings()
         super.addNoteUsingModelName("Basic (and reversed card)", "Front", "Back")
-        val toAnswer: Card = sched.card()!!
+        val toAnswer: Card = sched.card(col)!!
 
         // act
         val siblingBuried = burySiblings(sched, toAnswer)
@@ -86,14 +86,14 @@ class FinderTest : RobolectricTest() {
     }
 
     private fun burySiblings(sched: SchedV2, toManuallyBury: Card): Card {
-        sched.answerCard(toManuallyBury, Consts.BUTTON_ONE)
+        sched.answerCard(col, toManuallyBury, Consts.BUTTON_ONE)
         val siblingBuried = Note(col, toManuallyBury.nid).cards(col)[1]
         assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
         return siblingBuried
     }
 
     private fun buryManually(sched: SchedV2, id: Long): Card {
-        sched.buryCards(longArrayOf(id), true)
+        sched.buryCards(col, longArrayOf(id), true)
         val manuallyBuriedCard = Card(col, id)
         assertThat(
             manuallyBuriedCard.queue,
@@ -284,7 +284,7 @@ class FinderTest : RobolectricTest() {
         col.addNote(note)
         // as it's the sort field, it matches
         assertEquals(2, col.findCards("helloworld").size)
-        // assertEquals(, col.findCards("helloworld", full=true).size())2 This is commented upstream
+        // assertEquals(col, col.findCards("helloworld", full=true).size())2 This is commented upstream
         // if we put it on the back, it won't
         val noteFront = note.getItem("Front")
         val noteBack = note.getItem("Back")
@@ -293,8 +293,8 @@ class FinderTest : RobolectricTest() {
         note.flush(col)
         assertEquals(0, col.findCards("helloworld").size)
         //  Those lines are commented above
-        // assertEquals(, col.findCards("helloworld", full=true).size())2
-        // assertEquals(, col.findCards("back:helloworld", full=true).size()G)2
+        // assertEquals(col, col.findCards("helloworld", full=true).size())2
+        // assertEquals(col, col.findCards("back:helloworld", full=true).size()G)2
         // searching for an invalid special tag should not error
         // TODO: ensure the search fail
         //  assertThrows(Exception.class, () -> col.findCards("is:invalid").size());
@@ -335,11 +335,11 @@ class FinderTest : RobolectricTest() {
             assertEquals(0, col.findCards("rated:1:1").size)
             assertEquals(0, col.findCards("rated:1:2").size)
             c = card!!
-            col.sched.answerCard(c, Consts.BUTTON_TWO)
+            col.sched.answerCard(col, c, Consts.BUTTON_TWO)
             assertEquals(0, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)
             c = card!!
-            col.sched.answerCard(c, Consts.BUTTON_ONE)
+            col.sched.answerCard(col, c, Consts.BUTTON_ONE)
             assertEquals(1, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)
             assertEquals(2, col.findCards("rated:1").size)

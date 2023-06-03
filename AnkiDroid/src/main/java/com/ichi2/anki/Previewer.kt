@@ -121,7 +121,7 @@ class Previewer : AbstractFlashcardViewer() {
         currentCard = col.getCard(mCardList[mIndex])
         displayCardQuestion()
         if (mShowingAnswer) {
-            displayCardAnswer()
+            displayCardAnswer(col)
         }
         showBackIcon()
     }
@@ -198,8 +198,8 @@ class Previewer : AbstractFlashcardViewer() {
 
     // Called via mFlipCardListener in parent class when answer button pressed
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    override fun displayCardAnswer() {
-        super.displayCardAnswer()
+    override fun displayCardAnswer(col: Collection) {
+        super.displayCardAnswer(col)
         mShowingAnswer = true
         updateButtonsState()
     }
@@ -208,7 +208,7 @@ class Previewer : AbstractFlashcardViewer() {
         /* do nothing */
     }
 
-    override fun displayAnswerBottomBar() {
+    override fun displayAnswerBottomBar(col: Collection) {
         /* do nothing */
     }
 
@@ -247,7 +247,7 @@ class Previewer : AbstractFlashcardViewer() {
         if (mShowingAnswer) {
             displayCardQuestion()
         } else {
-            displayCardAnswer()
+            displayCardAnswer(col)
         }
     }
 

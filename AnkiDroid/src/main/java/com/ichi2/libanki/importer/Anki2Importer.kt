@@ -119,12 +119,12 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
             Timber.i("Importing notes")
             _importNotes(col)
             Timber.i("Importing Cards")
-            _importCards()
+            _importCards(col)
             Timber.i("Importing Media")
             _importStaticMedia()
             publishProgress(100, 100, 25)
             Timber.i("Performing post-import")
-            _postImport()
+            _postImport(col)
             publishProgress(100, 100, 50)
             dst.db.database.setTransactionSuccessful()
             dst.media.db!!.database.setTransactionSuccessful()
@@ -469,7 +469,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
      * Cards
      * ***********************************************************
      */
-    private fun _importCards() {
+    private fun _importCards(col: Collection) {
         if (mMustResetLearning) {
             try {
                 src.changeSchedulerVer(2)
@@ -513,11 +513,11 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         val cards: MutableList<Array<Any>> = ArrayList(nbCardsToImport)
         var totalCardCount = 0
         val thresExecCards = 1000
-        val revlog: MutableList<Array<Any>> = ArrayList(src.sched.logCount())
+        val revlog: MutableList<Array<Any>> = ArrayList(src.sched.logCount(col))
         var totalRevlogCount = 0
         val thresExecRevlog = 1000
         val usn = dst.usn()
-        val aheadBy = (src.sched.today() - dst.sched.today()).toLong()
+        val aheadBy = (src.sched.today(col) - dst.sched.today(col)).toLong()
         dst.db.database.beginTransaction()
         try {
             src.db.query(
@@ -800,9 +800,9 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
      * Post-import cleanup
      * ***********************************************************
      */
-    private fun _postImport() {
+    private fun _postImport(col: Collection) {
         for (did in mDecks!!.values) {
-            mCol.sched.maybeRandomizeDeck(did)
+            mCol.sched.maybeRandomizeDeck(col, did)
         }
         // make sure new position is correct
         dst.set_config("nextPos", dst.db.queryLongScalar("select max(due)+1 from cards where type = $CARD_TYPE_NEW"))

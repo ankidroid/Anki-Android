@@ -215,7 +215,7 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
                         val deck = col.decks.get(did)
                         deck.put("extendNew", n)
                         col.decks.save(deck)
-                        col.sched.extendLimits(n, 0)
+                        col.sched.extendLimits(col, n, 0)
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_REV -> {
@@ -223,7 +223,7 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
                         val deck = col.decks.get(did)
                         deck.put("extendRev", n)
                         col.decks.save(deck)
-                        col.sched.extendLimits(0, n)
+                        col.sched.extendLimits(col, 0, n)
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_FORGOT -> {
@@ -363,17 +363,17 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
                     add(STUDY_PREVIEW)
                     add(STUDY_TAGS)
                 }
-                if (col.sched.totalNewForCurrentDeck() == 0) {
+                if (col.sched.totalNewForCurrentDeck(col) == 0) {
                     // If no new cards we wont show CUSTOM_STUDY_NEW
                     dialogOptions.remove(STUDY_NEW)
                 }
                 return dialogOptions.toList()
             }
             LIMITS -> // Special custom study options to show when the daily study limit has been reached
-                return if (!col.sched.newDue() && !col.sched.revDue()) {
+                return if (!col.sched.newDue(col) && !col.sched.revDue(col)) {
                     listOf(STUDY_NEW, STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
                 } else {
-                    if (col.sched.newDue()) {
+                    if (col.sched.newDue(col)) {
                         listOf(STUDY_NEW, DECK_OPTIONS, MORE_OPTIONS)
                     } else {
                         listOf(STUDY_REV, DECK_OPTIONS, MORE_OPTIONS)
@@ -395,8 +395,8 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
         get() {
             val res = resources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
-                STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, col.sched.totalNewForCurrentDeck())
-                STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, col.sched.totalRevForCurrentDeck())
+                STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, col.sched.totalNewForCurrentDeck(col))
+                STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, col.sched.totalRevForCurrentDeck(col))
                 else -> ""
             }
         }
@@ -450,7 +450,7 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck)
                 // safe to empty
-                col.sched.emptyDyn(cur.getLong("id"))
+                col.sched.emptyDyn(col, cur.getLong("id"))
                 // reuse; don't delete as it may have children
                 dyn = cur
                 decks.select(cur.getLong("id"))

@@ -285,7 +285,7 @@ abstract class AbstractFlashcardViewer :
         }
         lastClickTime = elapsedRealTime
         automaticAnswer.onShowAnswer()
-        displayCardAnswer()
+        displayCardAnswer(col)
     }
 
     private val migrationService by migrationServiceWhileStartedOrNull()
@@ -404,16 +404,16 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    suspend fun saveEditedCard() {
+    suspend fun saveEditedCard(col: Collection) {
         val updatedCard: Card = withProgress {
             withCol {
                 updateCard(this, editorCard!!, true, canAccessScheduler())
             }
         }
-        onCardUpdated(updatedCard)
+        onCardUpdated(col, updatedCard)
     }
 
-    private fun onCardUpdated(result: Card) {
+    private fun onCardUpdated(col: Collection, result: Card) {
         if (currentCard !== result) {
             /*
              * Before updating currentCard, we check whether it is changing or not. If the current card changes,
@@ -424,8 +424,8 @@ abstract class AbstractFlashcardViewer :
         currentCard = result
         launchCatchingTask {
             withCol {
-                sched.counts() // Ensure counts are recomputed if necessary, to know queue to look for
-                sched.preloadNextCard()
+                sched.counts(col) // Ensure counts are recomputed if necessary, to know queue to look for
+                sched.preloadNextCard(col)
             }
         }
         if (currentCard == null) {
@@ -438,7 +438,7 @@ abstract class AbstractFlashcardViewer :
             mSoundPlayer.resetSounds() // load sounds from scratch, to expose any edit changes
             mAnswerSoundsAdded = false // causes answer sounds to be reloaded
             generateQuestionSoundList() // questions must be intentionally regenerated
-            displayCardAnswer()
+            displayCardAnswer(col)
         } else {
             displayCardQuestion()
         }
@@ -533,7 +533,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     open val answerButtonCount: Int
-        get() = col.sched.answerButtons(currentCard!!)
+        get() = col.sched.answerButtons(col, currentCard!!)
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -719,7 +719,7 @@ abstract class AbstractFlashcardViewer :
         }
         if (!displayAnswer) {
             if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                displayCardAnswer()
+                displayCardAnswer(col)
                 return true
             }
         }
@@ -771,7 +771,7 @@ abstract class AbstractFlashcardViewer :
             if (resultCode == RESULT_OK) {
                 // content of note was changed so update the note and current card
                 Timber.i("AbstractFlashcardViewer:: Saving card...")
-                launchCatchingTask { saveEditedCard() }
+                launchCatchingTask { saveEditedCard(col) }
                 onEditedNoteChanged()
             } else if (resultCode == RESULT_CANCELED && !reloadRequired) {
                 // nothing was changed by the note editor so just redraw the card
@@ -953,7 +953,7 @@ abstract class AbstractFlashcardViewer :
                 return@launchCatchingTask
             }
             mIsSelecting = false
-            val buttonNumber = col.sched.answerButtons(currentCard!!)
+            val buttonNumber = col.sched.answerButtons(col, currentCard!!)
             // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
             if (buttonNumber < ease) {
                 return@launchCatchingTask
@@ -965,9 +965,9 @@ abstract class AbstractFlashcardViewer :
             val oldCard = currentCard!!
             val newCard = withCol {
                 Timber.i("Answering card %d", oldCard.id)
-                col.sched.answerCard(oldCard, ease)
+                col.sched.answerCard(col, oldCard, ease)
                 Timber.i("Obtaining next card")
-                sched.card()?.apply { render_output(col, reload = true) }
+                sched.card(col)?.apply { render_output(col, reload = true) }
             }
             // TODO: this handling code is unnecessarily complex, and would be easier to follow
             //  if written imperatively
@@ -1099,7 +1099,7 @@ abstract class AbstractFlashcardViewer :
     /** If a card is displaying the question, flip it, otherwise answer it  */
     private fun flipOrAnswerCard(cardOrdinal: Int) {
         if (!displayAnswer) {
-            displayCardAnswer()
+            displayCardAnswer(col)
             return
         }
         performClickWithVisualFeedback(cardOrdinal)
@@ -1141,7 +1141,7 @@ abstract class AbstractFlashcardViewer :
         return mShowNextReviewTime
     }
 
-    protected open fun displayAnswerBottomBar() {
+    protected open fun displayAnswerBottomBar(col: Collection) {
         flipCardLayout!!.isClickable = false
         easeButtonsLayout!!.visibility = View.VISIBLE
         if (mLargeAnswerButtons) {
@@ -1242,7 +1242,7 @@ abstract class AbstractFlashcardViewer :
         answerField!!.visibility = if (typeAnswer!!.validForEditText()) View.VISIBLE else View.GONE
         answerField!!.setOnEditorActionListener { _, actionId: Int, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                displayCardAnswer()
+                displayCardAnswer(col)
                 return@setOnEditorActionListener true
             }
             false
@@ -1251,7 +1251,7 @@ abstract class AbstractFlashcardViewer :
             if (event.action == KeyEvent.ACTION_UP &&
                 (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER)
             ) {
-                displayCardAnswer()
+                displayCardAnswer(col)
                 return@setOnKeyListener true
             }
             false
@@ -1393,10 +1393,10 @@ abstract class AbstractFlashcardViewer :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    open fun displayCardAnswer() {
+    open fun displayCardAnswer(col: Collection) {
         // #7294 Required in case the animation end action does not fire:
         actualHideEaseButtons()
-        Timber.d("displayCardAnswer()")
+        Timber.d("displayCardAnswer(col)")
         mMissingImageHandler.onCardSideChange()
         mBackButtonPressedToReturn = false
 
@@ -1425,7 +1425,7 @@ abstract class AbstractFlashcardViewer :
         mIsSelecting = false
         val answerContent = mHtmlGenerator!!.generateHtml(col, currentCard!!, false, Side.BACK)
         updateCard(answerContent)
-        displayAnswerBottomBar()
+        displayAnswerBottomBar(col)
         automaticAnswer.onDisplayAnswer()
         // If Card-based TTS is enabled, we "automatic display" after the TTS has finished as we don't know the duration
         if (!mTTS.enabled) {
@@ -1700,7 +1700,7 @@ abstract class AbstractFlashcardViewer :
                     if (displayAnswer) {
                         return false
                     }
-                    displayCardAnswer()
+                    displayCardAnswer(col)
                     true
                 }
                 ViewerCommand.FLIP_OR_ANSWER_EASE1 -> {
@@ -2395,7 +2395,7 @@ abstract class AbstractFlashcardViewer :
                 WebViewSignalParserUtils.SHOW_ANSWER -> {
                     // display answer when showAnswer() called from card.js
                     if (!Companion.displayAnswer) {
-                        displayCardAnswer()
+                        displayCardAnswer(col)
                     }
                     return true
                 }

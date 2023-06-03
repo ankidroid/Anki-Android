@@ -52,11 +52,11 @@ class Sched(col: Collection) : SchedV2(col) {
 
     // Queues
     private var mRevDids = LinkedList<Long>()
-    override fun answerCard(card: Card, @BUTTON_TYPE ease: Int) {
+    override fun answerCard(col: Collection, card: Card, @BUTTON_TYPE ease: Int) {
         col.log()
         col.markReview(card)
         discardCurrentCard()
-        _burySiblings(card)
+        _burySiblings(col, card)
         card.incrReps()
         // former is for logging new cards, latter also covers filt. decks
         card.wasNew = card.type == Consts.CARD_TYPE_NEW
@@ -69,37 +69,37 @@ class Sched(col: Collection) : SchedV2(col) {
                 card.type = Consts.CARD_TYPE_LRN
             }
             // init reps to graduation
-            card.left = _startingLeft(card)
+            card.left = _startingLeft(col, card)
             // dynamic?
             if (card.isInDynamicDeck && card.type == Consts.CARD_TYPE_REV) {
-                if (_resched(card)) {
+                if (_resched(col, card)) {
                     // reviews get their ivl boosted on first sight
-                    card.ivl = _dynIvlBoost(card)
+                    card.ivl = _dynIvlBoost(col, card)
                     card.oDue = (mToday!! + card.ivl).toLong()
                 }
             }
-            _updateStats(card, "new")
+            _updateStats(col, card, "new")
         }
         if (card.queue == Consts.QUEUE_TYPE_LRN || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
-            _answerLrnCard(card, ease)
+            _answerLrnCard(col, card, ease)
             if (!wasNewQ) {
-                _updateStats(card, "lrn")
+                _updateStats(col, card, "lrn")
             }
         } else if (card.queue == Consts.QUEUE_TYPE_REV) {
-            _answerRevCard(card, ease)
-            _updateStats(card, "rev")
+            _answerRevCard(col, card, ease)
+            _updateStats(col, card, "rev")
         } else {
             throw RuntimeException("Invalid queue")
         }
-        _updateStats(card, "time", card.timeTaken(col).toLong())
+        _updateStats(col, card, "time", card.timeTaken(col).toLong())
         card.mod = time.intTime()
         card.usn = col.usn()
         card.flushSched(col)
     }
 
-    override fun counts(card: Card): Counts {
-        val counts = counts()
-        val idx = countIdx(card)
+    override fun counts(col: Collection, card: Card): Counts {
+        val counts = counts(col)
+        val idx = countIdx(col, card)
         if (idx === LRN) {
             counts.addLrn(card.left / 1000)
         } else {
@@ -108,7 +108,7 @@ class Sched(col: Collection) : SchedV2(col) {
         return counts
     }
 
-    override fun countIdx(card: Card): Queue {
+    override fun countIdx(col: Collection, card: Card): Queue {
         return when (card.queue) {
             Consts.QUEUE_TYPE_DAY_LEARN_RELEARN, Consts.QUEUE_TYPE_LRN -> LRN
             Consts.QUEUE_TYPE_NEW -> NEW
@@ -117,13 +117,13 @@ class Sched(col: Collection) : SchedV2(col) {
         }
     }
 
-    override fun answerButtons(card: Card): Int {
+    override fun answerButtons(col: Collection, card: Card): Int {
         return if (card.oDue != 0L) {
             // normal review in dyn deck?
             if (card.isInDynamicDeck && card.queue == Consts.QUEUE_TYPE_REV) {
                 return 4
             }
-            val conf = _lrnConf(card)
+            val conf = _lrnConf(col, card)
             if (card.type == Consts.CARD_TYPE_NEW || card.type == Consts.CARD_TYPE_LRN || conf.getJSONArray(
                     "delays"
                 ).length() > 1
@@ -139,7 +139,7 @@ class Sched(col: Collection) : SchedV2(col) {
         }
     }
 
-    private fun unburyCardsForDeck(allDecks: List<Long>) {
+    private fun unburyCardsForDeck(col: Collection, allDecks: List<Long>) {
         // Refactored to allow unburying an arbitrary deck
         val sids = Utils.ids2str(allDecks)
         col.log(col.db.queryLongList("select id from cards where " + queueIsBuriedSnippet() + " and did in " + sids))
@@ -155,8 +155,8 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * Returns [deckname, did, rev, lrn, new]
      */
-    override fun deckDueList(collectionTask: CancelListener?): List<DeckDueTreeNode>? {
-        _checkDay()
+    override fun deckDueList(col: Collection, collectionTask: CancelListener?): List<DeckDueTreeNode>? {
+        _checkDay(col)
         col.decks.checkIntegrity()
         val allDecksSorted = col.decks.allSorted()
 
@@ -170,8 +170,8 @@ class Sched(col: Collection) : SchedV2(col) {
             val deckName = deck.getString("name")
             val p = Decks.parent(deckName)
             // new
-            var nlim = _deckNewLimitSingle(deck, false)
-            var rlim = _deckRevLimitSingle(deck, false)
+            var nlim = _deckNewLimitSingle(col, deck, false)
+            var rlim = _deckRevLimitSingle(col, deck, false)
             if (!p.isNullOrEmpty()) {
                 val parentLims = lims[Decks.normalizeName(p)]
                 // 'temporary for diagnosis of bug #6383'
@@ -185,11 +185,11 @@ class Sched(col: Collection) : SchedV2(col) {
                 // review
                 rlim = Math.min(rlim, parentLims[1])
             }
-            val _new = _newForDeck(deck.getLong("id"), nlim)
+            val _new = _newForDeck(col, deck.getLong("id"), nlim)
             // learning
-            val lrn = _lrnForDeck(deck.getLong("id"))
+            val lrn = _lrnForDeck(col, deck.getLong("id"))
             // reviews
-            val rev = _revForDeck(deck.getLong("id"), rlim)
+            val rev = _revForDeck(col, deck.getLong("id"), rlim)
             // save to list
             deckNodes.add(
                 DeckDueTreeNode(
@@ -214,61 +214,61 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * Return the next due card, or null.
      */
-    override fun _getCard(): Card? {
+    override fun _getCard(col: Collection): Card? {
         // learning card due?
-        var c = _getLrnCard(false)
+        var c = _getLrnCard(col, false)
         if (c != null) {
             return c
         }
         // new first, or time for one?
-        if (_timeForNewCard()) {
-            c = _getNewCard()
+        if (_timeForNewCard(col)) {
+            c = _getNewCard(col)
             if (c != null) {
                 return c
             }
         }
         // Card due for review?
-        c = _getRevCard()
+        c = _getRevCard(col)
         if (c != null) {
             return c
         }
         // day learning card due?
-        c = _getLrnDayCard()
+        c = _getLrnDayCard(col)
         if (c != null) {
             return c
         }
         // New cards left?
-        c = _getNewCard()
-        return c ?: _getLrnCard(true)
+        c = _getNewCard(col)
+        return c ?: _getLrnCard(col, true)
         // collapse or finish
     }
 
     @KotlinCleanup("simplify fun with when")
-    override fun _fillNextCard(): Array<CardQueue<out Card.Cache>> {
+    override fun _fillNextCard(col: Collection): Array<CardQueue<out Card.Cache>> {
         // learning card due?
-        if (_preloadLrnCard(false)) {
+        if (_preloadLrnCard(col, false)) {
             return arrayOf(mLrnQueue)
         }
         // new first, or time for one?
-        if (_timeForNewCard()) {
-            if (_fillNew()) {
+        if (_timeForNewCard(col)) {
+            if (_fillNew(col)) {
                 return arrayOf(mLrnQueue, mNewQueue)
             }
         }
         // Card due for review?
-        if (_fillRev()) {
+        if (_fillRev(col)) {
             return arrayOf(mLrnQueue, mRevQueue)
         }
         // day learning card due?
-        if (_fillLrnDay()) {
+        if (_fillLrnDay(col)) {
             return arrayOf(mLrnQueue, mLrnDayQueue)
         }
         // New cards left?
-        if (_fillNew()) {
+        if (_fillNew(col)) {
             return arrayOf(mLrnQueue, mNewQueue)
         }
         // collapse or finish
-        return if (_preloadLrnCard(true)) {
+        return if (_preloadLrnCard(col, true)) {
             arrayOf(mLrnQueue)
         } else {
             arrayOf()
@@ -278,23 +278,23 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * Learning queues *********************************************************** ************************************
      */
-    override fun _resetLrnCount() {
-        _resetLrnCount(null)
+    override fun _resetLrnCount(col: Collection) {
+        _resetLrnCount(col, null)
     }
 
-    override fun _resetLrnCount(cancelListener: CancelListener?) {
+    override fun _resetLrnCount(col: Collection, cancelListener: CancelListener?) {
         // sub-day
         mLrnCount = col.db.queryScalar(
-            "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit() +
+            "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit(col) +
                 " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? and id != ? LIMIT ?)",
-            dayCutoff(),
+            dayCutoff(col),
             currentCardId(),
             mReportLimit
         )
         if (isCancelled(cancelListener)) return
         // day
         mLrnCount += col.db.queryScalar(
-            "SELECT count() FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? " +
+            "SELECT count() FROM cards WHERE did IN " + _deckLimit(col) + " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ? " +
                 "AND id != ? LIMIT ?",
             mToday!!,
             currentCardId(),
@@ -302,14 +302,14 @@ class Sched(col: Collection) : SchedV2(col) {
         )
     }
 
-    override fun _resetLrnQueue() {
+    override fun _resetLrnQueue(col: Collection) {
         mLrnQueue.clear()
         mLrnDayQueue.clear()
         mLrnDids = col.decks.active()
     }
 
     // sub-day learning
-    override fun _fillLrn(): Boolean {
+    override fun _fillLrn(col: Collection): Boolean {
         if (mHaveCounts && mLrnCount == 0) {
             return false
         }
@@ -326,8 +326,8 @@ class Sched(col: Collection) : SchedV2(col) {
          * required when the card is reviewed.
          */mLrnQueue.setFilled()
         col.db.query(
-            "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
-            dayCutoff(),
+            "SELECT due, id FROM cards WHERE did IN " + _deckLimit(col) + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
+            dayCutoff(col),
             currentCardId(),
             mReportLimit
         ).use { cur ->
@@ -340,8 +340,8 @@ class Sched(col: Collection) : SchedV2(col) {
         }
     }
 
-    override fun _getLrnCard(collapse: Boolean): Card? {
-        if (_fillLrn()) {
+    override fun _getLrnCard(col: Collection, collapse: Boolean): Card? {
+        if (_fillLrn(col)) {
             var cutoff = time.intTime()
             if (collapse) {
                 cutoff += col.get_config_int("collapseTime").toLong()
@@ -357,8 +357,8 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * @param ease 1=no, 2=yes, 3=remove
      */
-    override fun _answerLrnCard(card: Card, @BUTTON_TYPE ease: Int) {
-        val conf = _lrnConf(card)
+    override fun _answerLrnCard(col: Collection, card: Card, @BUTTON_TYPE ease: Int) {
+        val conf = _lrnConf(col, card)
 
         @REVLOG_TYPE val type: Int
         type = if (card.isInDynamicDeck && !card.wasNew) {
@@ -373,22 +373,22 @@ class Sched(col: Collection) : SchedV2(col) {
         val lastLeft = card.left
         // immediate graduate?
         if (ease == Consts.BUTTON_THREE) {
-            _rescheduleAsRev(card, conf, true)
+            _rescheduleAsRev(col, card, conf, true)
             leaving = true
             // graduation time?
         } else if (ease == Consts.BUTTON_TWO && card.left % 1000 - 1 <= 0) {
-            _rescheduleAsRev(card, conf, false)
+            _rescheduleAsRev(col, card, conf, false)
             leaving = true
         } else {
             // one step towards graduation
             if (ease == Consts.BUTTON_TWO) {
                 // decrement real left count and recalculate left today
                 val left = card.left % 1000 - 1
-                card.left = _leftToday(conf.getJSONArray("delays"), left) * 1000 + left
+                card.left = _leftToday(col, conf.getJSONArray("delays"), left) * 1000 + left
                 // failed
             } else {
-                card.left = _startingLeft(card)
-                val resched = _resched(card)
+                card.left = _startingLeft(col, card)
+                val resched = _resched(col, card)
                 if (conf.has("mult") && resched) {
                     // review that's lapsed
                     card.ivl = Math.max(
@@ -411,39 +411,39 @@ class Sched(col: Collection) : SchedV2(col) {
             card.due = time.intTime() + delay
 
             // due today?
-            if (card.due < dayCutoff()) {
+            if (card.due < dayCutoff(col)) {
                 mLrnCount += card.left / 1000
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
                 // it twice in a row
                 card.queue = Consts.QUEUE_TYPE_LRN
-                if (!mLrnQueue.isEmpty && revCount() == 0 && newCount() == 0) {
+                if (!mLrnQueue.isEmpty && revCount(col) == 0 && newCount(col) == 0) {
                     val smallestDue = mLrnQueue.firstDue
                     card.due = Math.max(card.due, smallestDue + 1)
                 }
                 _sortIntoLrn(card.due, card.id)
             } else {
                 // the card is due in one or more days, so we need to use the day learn queue
-                val ahead = (card.due - dayCutoff()) / SECONDS_PER_DAY + 1
+                val ahead = (card.due - dayCutoff(col)) / SECONDS_PER_DAY + 1
                 card.due = mToday!! + ahead
                 card.queue = Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
             }
         }
-        _logLrn(card, ease, conf, leaving, type, lastLeft)
+        _logLrn(col, card, ease, conf, leaving, type, lastLeft)
     }
 
-    override fun _lrnConf(card: Card): JSONObject {
+    override fun _lrnConf(col: Collection, card: Card): JSONObject {
         return if (card.type == Consts.CARD_TYPE_REV) {
-            _lapseConf(card)
+            _lapseConf(col, card)
         } else {
-            _newConf(card)
+            _newConf(col, card)
         }
     }
 
-    override fun _rescheduleAsRev(card: Card, conf: JSONObject, early: Boolean) {
+    override fun _rescheduleAsRev(col: Collection, card: Card, conf: JSONObject, early: Boolean) {
         val lapse = card.type == Consts.CARD_TYPE_REV
         if (lapse) {
-            if (_resched(card)) {
+            if (_resched(col, card)) {
                 card.due = Math.max((mToday!! + 1).toLong(), card.oDue)
             } else {
                 card.due = card.oDue
@@ -455,7 +455,7 @@ class Sched(col: Collection) : SchedV2(col) {
         card.queue = Consts.QUEUE_TYPE_REV
         card.type = Consts.CARD_TYPE_REV
         // if we were dynamic, graduating means moving back to the old deck
-        val resched = _resched(card)
+        val resched = _resched(col, card)
         if (card.isInDynamicDeck) {
             card.did = card.oDid
             card.oDue = 0
@@ -469,24 +469,24 @@ class Sched(col: Collection) : SchedV2(col) {
         }
     }
 
-    override fun _startingLeft(card: Card): Int {
+    override fun _startingLeft(col: Collection, card: Card): Int {
         val conf: JSONObject
         conf = if (card.type == Consts.CARD_TYPE_REV) {
-            _lapseConf(card)
+            _lapseConf(col, card)
         } else {
-            _lrnConf(card)
+            _lrnConf(col, card)
         }
         val tot = conf.getJSONArray("delays").length()
-        val tod = _leftToday(conf.getJSONArray("delays"), tot)
+        val tod = _leftToday(col, conf.getJSONArray("delays"), tot)
         return tot + tod * 1000
     }
 
-    private fun _graduatingIvl(card: Card, conf: JSONObject, early: Boolean, adj: Boolean): Int {
+    private fun _graduatingIvl(col: Collection, card: Card, conf: JSONObject, early: Boolean, adj: Boolean): Int {
         if (card.type == Consts.CARD_TYPE_REV) {
             // lapsed card being relearnt
             if (card.isInDynamicDeck) {
                 if (conf.getBoolean("resched")) {
-                    return _dynIvlBoost(card)
+                    return _dynIvlBoost(col, card)
                 }
             }
             return card.ivl
@@ -514,12 +514,12 @@ class Sched(col: Collection) : SchedV2(col) {
     }
 
     @VisibleForTesting
-    fun removeLrn() {
-        removeLrn(null)
+    fun removeLrn(col: Collection) {
+        removeLrn(col, null)
     }
 
     /** Remove cards from the learning queues.  */
-    private fun removeLrn(ids: LongArray?) {
+    private fun removeLrn(col: Collection, ids: LongArray?) {
         val extra: String
         extra = if (ids != null && ids.size > 0) {
             " AND id IN " + Utils.ids2str(ids)
@@ -535,10 +535,10 @@ class Sched(col: Collection) : SchedV2(col) {
             col.usn()
         )
         // new cards in learning
-        forgetCards(col.db.queryLongList("SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " + extra))
+        forgetCards(col, col.db.queryLongList("SELECT id FROM cards WHERE queue IN (" + Consts.QUEUE_TYPE_LRN + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") " + extra))
     }
 
-    private fun _lrnForDeck(did: Long): Int {
+    private fun _lrnForDeck(col: Collection, did: Long): Int {
         return try {
             val cnt = col.db.queryScalar(
                 "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did = ?" +
@@ -567,10 +567,11 @@ class Sched(col: Collection) : SchedV2(col) {
      *
      * @param considerCurrentCard Whether current card should be counted if it is in this deck
      */
-    protected fun _deckRevLimit(did: Long, considerCurrentCard: Boolean): Int {
+    protected fun _deckRevLimit(col: Collection, did: Long, considerCurrentCard: Boolean): Int {
         return _deckNewLimit(
+            col,
             did,
-            { d: Deck? -> _deckRevLimitSingle(d, considerCurrentCard) },
+            { d: Deck? -> _deckRevLimitSingle(col, d, considerCurrentCard) },
             considerCurrentCard
         )
     }
@@ -585,7 +586,7 @@ class Sched(col: Collection) : SchedV2(col) {
      * @param considerCurrentCard Whether current card should be counted if it is in this deck
      */
     @KotlinCleanup("remove nullable on deck")
-    override fun _deckRevLimitSingle(d: Deck?, considerCurrentCard: Boolean): Int {
+    override fun _deckRevLimitSingle(col: Collection, d: Deck?, considerCurrentCard: Boolean): Int {
         if (d!!.isDyn) {
             return mReportLimit
         }
@@ -603,7 +604,7 @@ class Sched(col: Collection) : SchedV2(col) {
         return lim
     }
 
-    private fun _revForDeck(did: Long, lim: Int): Int {
+    private fun _revForDeck(col: Collection, did: Long, lim: Int): Int {
         @Suppress("NAME_SHADOWING")
         var lim = lim
         lim = Math.min(lim, mReportLimit)
@@ -616,20 +617,21 @@ class Sched(col: Collection) : SchedV2(col) {
     }
 
     @KotlinCleanup("see if these functions can be combined into one")
-    override fun _resetRevCount() {
-        _resetRevCount(null)
+    override fun _resetRevCount(col: Collection) {
+        _resetRevCount(col, null)
     }
 
-    override fun _resetRevCount(cancelListener: CancelListener?) {
+    override fun _resetRevCount(col: Collection, cancelListener: CancelListener?) {
         mRevCount = _walkingCount(
-            { d: Deck? -> _deckRevLimitSingle(d, true) },
-            { did: Long, lim: Int -> _cntFnRev(did, lim) },
+            col,
+            { d: Deck? -> _deckRevLimitSingle(col, d, true) },
+            { did: Long, lim: Int -> _cntFnRev(col, did, lim) },
             cancelListener
         )
     }
 
     // Dynamically invoked in _walkingCount, passed as a parameter in _resetRevCount
-    protected fun _cntFnRev(did: Long, lim: Int): Int {
+    protected fun _cntFnRev(col: Collection, did: Long, lim: Int): Int {
         // protected because _walkingCount need to be able to access it.
         return col.db.queryScalar(
             "SELECT count() FROM (SELECT id FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_REV + " and due <= ? " +
@@ -641,12 +643,12 @@ class Sched(col: Collection) : SchedV2(col) {
         )
     }
 
-    override fun _resetRevQueue() {
+    override fun _resetRevQueue(col: Collection) {
         mRevQueue.clear()
         mRevDids = col.decks.active()
     }
 
-    override fun _fillRev(allowSibling: Boolean): Boolean {
+    override fun _fillRev(col: Collection, allowSibling: Boolean): Boolean {
         if (!mRevQueue.isEmpty) {
             return true
         }
@@ -655,7 +657,7 @@ class Sched(col: Collection) : SchedV2(col) {
         }
         while (!mRevDids.isEmpty()) {
             val did = mRevDids.first
-            val lim = Math.min(mQueueLimit, _deckRevLimit(did, false))
+            val lim = Math.min(mQueueLimit, _deckRevLimit(col, did, false))
             if (lim != 0) {
                 mRevQueue.clear()
                 // fill the queue with the current did
@@ -686,9 +688,9 @@ class Sched(col: Collection) : SchedV2(col) {
                     // ordering
                     if (col.decks.get(did).isDyn) {
                         // dynamic decks need due order preserved
-                        // Note: libanki reverses mRevQueue and returns the last element in _getRevCard().
+                        // Note: libanki reverses mRevQueue and returns the last element in _getRevCard(col).
                         // AnkiDroid differs by leaving the queue intact and returning the *first* element
-                        // in _getRevCard().
+                        // in _getRevCard(col).
                     } else {
                         @KotlinCleanup(".apply")
                         val r = Random()
@@ -709,8 +711,8 @@ class Sched(col: Collection) : SchedV2(col) {
             // if we didn't get a card but the count is non-zero,
             // we need to check again for any cards that were
             // removed from the queue but not buried
-            _resetRev()
-            return _fillRev(true)
+            _resetRev(col)
+            return _fillRev(col, true)
         }
         return false
     }
@@ -719,20 +721,20 @@ class Sched(col: Collection) : SchedV2(col) {
      * Answering a review card **************************************************
      * *********************************************
      */
-    override fun _answerRevCard(card: Card, @BUTTON_TYPE ease: Int) {
+    override fun _answerRevCard(col: Collection, card: Card, @BUTTON_TYPE ease: Int) {
         var delay = 0
         if (ease == Consts.BUTTON_ONE) {
-            delay = _rescheduleLapse(card)
+            delay = _rescheduleLapse(col, card)
         } else {
-            _rescheduleRev(card, ease)
+            _rescheduleRev(col, card, ease)
         }
-        _logRev(card, ease, delay, Consts.REVLOG_REV)
+        _logRev(col, card, ease, delay, Consts.REVLOG_REV)
     }
 
-    override fun _rescheduleLapse(card: Card): Int {
-        val conf = _lapseConf(card)
+    override fun _rescheduleLapse(col: Collection, card: Card): Int {
+        val conf = _lapseConf(col, card)
         card.lastIvl = card.ivl
-        if (_resched(card)) {
+        if (_resched(col, card)) {
             card.lapses = card.lapses + 1
             card.ivl = _nextLapseIvl(card, conf)
             card.factor = Math.max(1300, card.factor - 200)
@@ -744,7 +746,7 @@ class Sched(col: Collection) : SchedV2(col) {
         }
         // if suspended as a leech, nothing to do
         var delay = 0
-        if (_checkLeech(card, conf) && card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
+        if (_checkLeech(col, card, conf) && card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
             return delay
         }
         // if no relearning steps, nothing to do
@@ -757,15 +759,15 @@ class Sched(col: Collection) : SchedV2(col) {
         }
         delay = _delayForGrade(conf, 0)
         card.due = delay + time.intTime()
-        card.left = _startingLeft(card)
+        card.left = _startingLeft(col, card)
         // queue 1
-        if (card.due < dayCutoff()) {
+        if (card.due < dayCutoff(col)) {
             mLrnCount += card.left / 1000
             card.queue = Consts.QUEUE_TYPE_LRN
             _sortIntoLrn(card.due, card.id)
         } else {
             // day learn queue
-            val ahead = (card.due - dayCutoff()) / SECONDS_PER_DAY + 1
+            val ahead = (card.due - dayCutoff(col)) / SECONDS_PER_DAY + 1
             card.due = mToday!! + ahead
             card.queue = Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
         }
@@ -776,11 +778,11 @@ class Sched(col: Collection) : SchedV2(col) {
         return Math.max(conf.getInt("minInt"), (card.ivl * conf.getDouble("mult")).toInt())
     }
 
-    private fun _rescheduleRev(card: Card, @BUTTON_TYPE ease: Int) {
+    private fun _rescheduleRev(col: Collection, card: Card, @BUTTON_TYPE ease: Int) {
         // update interval
         card.lastIvl = card.ivl
-        if (_resched(card)) {
-            _updateRevIvl(card, ease)
+        if (_resched(col, card)) {
+            _updateRevIvl(col, card, ease)
             // then the rest
             card.factor = Math.max(1300, card.factor + FACTOR_ADDITION_VALUES[ease - 2])
             card.due = (mToday!! + card.ivl).toLong()
@@ -800,10 +802,10 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * Ideal next interval for CARD, given EASE.
      */
-    private fun _nextRevIvl(card: Card, @BUTTON_TYPE ease: Int): Int {
+    private fun _nextRevIvl(col: Collection, card: Card, @BUTTON_TYPE ease: Int): Int {
         val delay = _daysLate(card)
         var interval = 0
-        val conf = _revConf(card)
+        val conf = _revConf(col, card)
         val fct = card.factor / 1000.0
         val ivl2 =
             _constrainedIvl(((card.ivl + delay / 4) * 1.2).toInt(), conf, card.ivl.toDouble())
@@ -831,10 +833,10 @@ class Sched(col: Collection) : SchedV2(col) {
     }
 
     @KotlinCleanup("remove catch")
-    override fun _updateRevIvl(card: Card, @BUTTON_TYPE ease: Int) {
+    override fun _updateRevIvl(col: Collection, card: Card, @BUTTON_TYPE ease: Int) {
         try {
-            val idealIvl = _nextRevIvl(card, ease)
-            val conf = _revConf(card)
+            val idealIvl = _nextRevIvl(col, card, ease)
+            val conf = _revConf(col, card)
             card.ivl = Math.min(
                 Math.max(_adjRevIvl(idealIvl), card.ivl + 1),
                 conf.getInt("maxIvl")
@@ -857,15 +859,15 @@ class Sched(col: Collection) : SchedV2(col) {
      * Dynamic deck handling ******************************************************************
      * *****************************
      */
-    override fun rebuildDyn(did: Long) {
+    override fun rebuildDyn(col: Collection, did: Long) {
         val deck = col.decks.get(did)
         if (deck.isStd) {
             Timber.e("error: deck is not a filtered deck")
             return
         }
         // move any existing cards back first, then fill
-        emptyDyn(did)
-        val ids = _fillDyn(deck)
+        emptyDyn(col, did)
+        val ids = _fillDyn(col, deck)
         if (ids.isEmpty()) {
             return
         }
@@ -873,7 +875,7 @@ class Sched(col: Collection) : SchedV2(col) {
         col.decks.select(did)
     }
 
-    private fun _fillDyn(deck: Deck): List<Long> {
+    private fun _fillDyn(col: Collection, deck: Deck): List<Long> {
         val terms = deck.getJSONArray("terms").getJSONArray(0)
         var search = terms.getString(0)
         val limit = terms.getInt(1)
@@ -890,11 +892,11 @@ class Sched(col: Collection) : SchedV2(col) {
         }
         // move the cards over
         col.log(deck.getLong("id"), ids)
-        _moveToDyn(deck.getLong("id"), ids)
+        _moveToDyn(col, deck.getLong("id"), ids)
         return ids
     }
 
-    override fun emptyDyn(lim: String) {
+    override fun emptyDyn(col: Collection, lim: String) {
         col.log(col.db.queryLongList("select id from cards where $lim"))
         // move out of cram queue
         col.db.execute(
@@ -905,7 +907,7 @@ class Sched(col: Collection) : SchedV2(col) {
         )
     }
 
-    private fun _moveToDyn(did: Long, ids: List<Long>) {
+    private fun _moveToDyn(col: Collection, did: Long, ids: List<Long>) {
         val data = ArrayList<Array<Any?>>(ids.size)
         // long t = getTime().intTime(); // unused variable present (and unused) upstream
         val u = col.usn()
@@ -925,7 +927,7 @@ class Sched(col: Collection) : SchedV2(col) {
         )
     }
 
-    private fun _dynIvlBoost(card: Card): Int {
+    private fun _dynIvlBoost(col: Collection, card: Card): Int {
         if (!card.isInDynamicDeck || card.type != Consts.CARD_TYPE_REV || card.factor == 0) {
             Timber.e("error: deck is not a filtered deck")
             return 0
@@ -933,14 +935,14 @@ class Sched(col: Collection) : SchedV2(col) {
         val elapsed = card.ivl - (card.oDue - mToday!!)
         val factor = (card.factor / 1000.0 + 1.2) / 2.0
         val ivl = Math.max(1, Math.max(card.ivl, (elapsed * factor).toInt()))
-        val conf = _revConf(card)
+        val conf = _revConf(col, card)
         return Math.min(conf.getInt("maxIvl"), ivl)
     }
     /*
       Leeches ****************************************************************** *****************************
      */
     /** Leech handler. True if card was a leech.  */
-    override fun _checkLeech(card: Card, conf: JSONObject): Boolean {
+    override fun _checkLeech(col: Collection, card: Card, conf: JSONObject): Boolean {
         val lf = conf.getInt("leechFails")
         if (lf == 0) {
             return false
@@ -977,8 +979,8 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * Tools ******************************************************************** ***************************
      */
-    override fun _newConf(card: Card): JSONObject {
-        val conf = _cardConf(card)
+    override fun _newConf(col: Collection, card: Card): JSONObject {
+        val conf = _cardConf(col, card)
         if (!card.isInDynamicDeck) {
             return conf.getJSONObject("new")
         }
@@ -1004,8 +1006,8 @@ class Sched(col: Collection) : SchedV2(col) {
         return dict
     }
 
-    override fun _lapseConf(card: Card): JSONObject {
-        val conf = _cardConf(card)
+    override fun _lapseConf(col: Collection, card: Card): JSONObject {
+        val conf = _cardConf(col, card)
         if (!card.isInDynamicDeck) {
             return conf.getJSONObject("lapse")
         }
@@ -1030,8 +1032,8 @@ class Sched(col: Collection) : SchedV2(col) {
     }
 
     @KotlinCleanup("conf.getInt(dyn) == DECK_STD or conf.getBoolean(resched)")
-    private fun _resched(card: Card): Boolean {
-        val conf = _cardConf(card)
+    private fun _resched(col: Collection, card: Card): Boolean {
+        val conf = _cardConf(col, card)
         return if (conf.getInt("dyn") == DECK_STD) {
             true
         } else {
@@ -1043,14 +1045,14 @@ class Sched(col: Collection) : SchedV2(col) {
      * Daily cutoff ************************************************************* **********************************
      * This function uses GregorianCalendar so as to be sensitive to leap years, daylight savings, etc.
      */
-    override fun _updateCutoff() {
+    override fun _updateCutoff(col: Collection) {
         val oldToday = mToday
         // days since col created
         mToday = ((time.intTime() - col.crt) / SECONDS_PER_DAY).toInt()
         // end of day cutoff
         _dayCutoff = col.crt + (mToday!! + 1) * SECONDS_PER_DAY
         if (mToday != oldToday) {
-            col.log(mToday, dayCutoff())
+            col.log(mToday, dayCutoff(col))
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
@@ -1061,7 +1063,7 @@ class Sched(col: Collection) : SchedV2(col) {
         @Suppress("USELESS_CAST") // not useless
         val unburied: Int = col.get_config("lastUnburied", 0 as Int)!!
         if (unburied < mToday!!) {
-            ignoreDatabaseModification { unburyCards() }
+            ignoreDatabaseModification { unburyCards(col) }
         }
     }
 
@@ -1070,12 +1072,12 @@ class Sched(col: Collection) : SchedV2(col) {
      * *****************************************
      */
     @KotlinCleanup("convert to expression")
-    override fun haveBuried(): Boolean {
-        return haveBuried(col.decks.active())
+    override fun haveBuried(col: Collection): Boolean {
+        return haveBuried(col, col.decks.active())
     }
 
     @KotlinCleanup("convert to expression")
-    private fun haveBuried(allDecks: List<Long>): Boolean {
+    private fun haveBuried(col: Collection, allDecks: List<Long>): Boolean {
         // Refactored to allow querying an arbitrary deck
         val sdids = Utils.ids2str(allDecks)
         val cnt = col.db.queryScalar(
@@ -1090,12 +1092,12 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * Return the next interval for CARD, in seconds.
      */
-    override fun nextIvl(card: Card, @BUTTON_TYPE ease: Int): Long {
+    override fun nextIvl(col: Collection, card: Card, @BUTTON_TYPE ease: Int): Long {
         return if (card.queue == Consts.QUEUE_TYPE_NEW || card.queue == Consts.QUEUE_TYPE_LRN || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN) {
-            _nextLrnIvl(card, ease)
+            _nextLrnIvl(col, card, ease)
         } else if (ease == Consts.BUTTON_ONE) {
             // lapsed
-            val conf = _lapseConf(card)
+            val conf = _lapseConf(col, card)
             if (conf.getJSONArray("delays").length() > 0) {
                 (conf.getJSONArray("delays").getDouble(0) * 60.0).toLong()
             } else {
@@ -1106,25 +1108,26 @@ class Sched(col: Collection) : SchedV2(col) {
             }
         } else {
             // review
-            _nextRevIvl(card, ease) * SECONDS_PER_DAY
+            _nextRevIvl(col, card, ease) * SECONDS_PER_DAY
         }
     }
 
-    override fun _nextLrnIvl(card: Card, @BUTTON_TYPE ease: Int): Long {
+    override fun _nextLrnIvl(col: Collection, card: Card, @BUTTON_TYPE ease: Int): Long {
         // this isn't easily extracted from the learn code
         if (card.queue == Consts.QUEUE_TYPE_NEW) {
-            card.left = _startingLeft(card)
+            card.left = _startingLeft(col, card)
         }
-        val conf = _lrnConf(card)
+        val conf = _lrnConf(col, card)
         return if (ease == Consts.BUTTON_ONE) {
             // fail
             _delayForGrade(conf, conf.getJSONArray("delays").length()).toLong()
         } else if (ease == Consts.BUTTON_THREE) {
             // early removal
-            if (!_resched(card)) {
+            if (!_resched(col, card)) {
                 0
             } else {
                 _graduatingIvl(
+                    col,
                     card,
                     conf,
                     true,
@@ -1135,10 +1138,11 @@ class Sched(col: Collection) : SchedV2(col) {
             val left = card.left % 1000 - 1
             if (left <= 0) {
                 // graduate
-                if (!_resched(card)) {
+                if (!_resched(col, card)) {
                     0
                 } else {
                     _graduatingIvl(
+                        col,
                         card,
                         conf,
                         false,
@@ -1156,10 +1160,10 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * Suspend cards.
      */
-    override fun suspendCards(ids: LongArray) {
+    override fun suspendCards(col: Collection, ids: LongArray) {
         col.log(*ids.toTypedArray())
-        remFromDyn(ids)
-        removeLrn(ids)
+        remFromDyn(col, ids)
+        removeLrn(col, ids)
         col.db.execute(
             "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN " +
                 Utils.ids2str(ids),
@@ -1179,11 +1183,11 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * Unsuspend cards
      */
-    override fun buryCards(cids: LongArray, manual: Boolean) {
+    override fun buryCards(col: Collection, cids: LongArray, manual: Boolean) {
         // The boolean is useless here. However, it ensures that we are override the method with same parameter in SchedV2.
         col.log(*cids.toTypedArray())
-        remFromDyn(cids)
-        removeLrn(cids)
+        remFromDyn(col, cids)
+        removeLrn(col, cids)
         col.db.execute(
             "update cards set " + queueIsBuriedSnippet() + ",mod=?,usn=? where id in " + Utils.ids2str(
                 cids
@@ -1198,16 +1202,16 @@ class Sched(col: Collection) : SchedV2(col) {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-    override fun haveBuried(did: Long): Boolean {
+    override fun haveBuried(col: Collection, did: Long): Boolean {
         val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
         all.add(did)
-        return haveBuried(all)
+        return haveBuried(col, all)
     }
 
-    override fun unburyCardsForDeck(did: Long) {
+    override fun unburyCardsForDeck(col: Collection, did: Long) {
         val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
         all.add(did)
-        unburyCardsForDeck(all)
+        unburyCardsForDeck(col, all)
     }
 
     /* Need to override. Otherwise it get SchedV2.mName variable*/

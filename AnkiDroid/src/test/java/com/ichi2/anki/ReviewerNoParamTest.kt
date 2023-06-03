@@ -124,7 +124,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
         val hideCount = reviewer.delayedHideCount
 
-        reviewer.displayCardAnswer()
+        reviewer.displayCardAnswer(col)
 
         assertThat("Hide should be called after flipping a card", reviewer.delayedHideCount, greaterThan(hideCount))
     }
@@ -134,7 +134,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         addNoteUsingBasicModel("Hello", "World")
         val reviewer = startReviewerFullScreen()
 
-        reviewer.displayCardAnswer()
+        reviewer.displayCardAnswer(col)
         advanceRobolectricLooperWithSleep()
 
         val hideCount = reviewer.delayedHideCount
@@ -150,7 +150,7 @@ class ReviewerNoParamTest : RobolectricTest() {
         addNoteUsingBasicModel("Hello", "World")
         val reviewer = startReviewerFullScreen()
 
-        reviewer.displayCardAnswer()
+        reviewer.displayCardAnswer(col)
         advanceRobolectricLooperWithSleep()
         reviewer.answerCard(Consts.BUTTON_ONE)
         advanceRobolectricLooperWithSleep()

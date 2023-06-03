@@ -319,7 +319,7 @@ class Decks(private val col: Collection) : DeckManager() {
         if (deck.isDyn) {
             // deleting a cramming deck returns cards to their previous deck
             // rather than deleting the cards
-            col.sched.emptyDyn(did)
+            col.sched.emptyDyn(col, did)
             if (childrenToo) {
                 for (id in children(did).values) {
                     rem(id, cardsToo, false)
@@ -705,7 +705,7 @@ class Decks(private val col: Collection) : DeckManager() {
         // if it was previously randomized, resort
         KotlinCleanup("replace 0 by constant to mean random/standard")
         if (oldOrder == 0) {
-            col.sched.resortConf(_new)
+            col.sched.resortConf(col, _new)
         }
     }
 

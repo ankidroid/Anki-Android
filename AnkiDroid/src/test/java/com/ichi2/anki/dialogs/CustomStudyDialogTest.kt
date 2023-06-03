@@ -114,7 +114,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         val mockCollection = Mockito.mock(Collection::class.java, Mockito.RETURNS_DEEP_STUBS)
         val mockSched = Mockito.mock(AbstractSched::class.java)
         whenever(mockCollection.sched).thenReturn(mockSched)
-        whenever(mockSched.newCount()).thenReturn(0)
+        whenever(mockSched.newCount(col)).thenReturn(0)
         val factory = CustomStudyDialogFactory({ mockCollection }, mMockListener)
         val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)

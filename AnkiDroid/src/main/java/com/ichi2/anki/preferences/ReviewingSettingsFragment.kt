@@ -98,14 +98,14 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // New timezone handling
         requirePreference<SwitchPreference>(R.string.new_timezone_handling_preference).apply {
             launchCatchingTask {
-                isChecked = withCol { sched._new_timezone_enabled() }
+                isChecked = withCol { sched._new_timezone_enabled(col) }
                 isEnabled = withCol { schedVer() > 1 }
             }
             setOnPreferenceChangeListener { newValue ->
                 if (newValue == true) {
-                    launchWithCol { sched.set_creation_offset() }
+                    launchWithCol { sched.set_creation_offset(col) }
                 } else {
-                    launchWithCol { sched.clear_creation_offset() }
+                    launchWithCol { sched.clear_creation_offset(col) }
                 }
             }
         }

@@ -272,7 +272,7 @@ open class Reviewer :
 
             card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
             if (sDisplayAnswer) {
-                displayCardAnswer();
+                displayCardAnswer(col);
             } else {
                 displayCardQuestion();
                 } */
@@ -315,7 +315,7 @@ open class Reviewer :
         // Select the deck
         col.decks.select(did)
         // Reset the schedule so that we get the counts for the currently selected deck
-        col.sched.deferReset()
+        col.sched.deferReset(col)
     }
 
     override fun setTitle() {
@@ -356,7 +356,7 @@ open class Reviewer :
             toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
             whiteboard!!.toggleStylus = toggleStylus
         }
-        col.sched.deferReset() // Reset schedule in case card was previously loaded
+        col.sched.deferReset(col) // Reset schedule in case card was previously loaded
         col.startTimebox()
         GetCard().runWithHandler(answerCardHandler(false))
         disableDrawerSwipeOnConflicts()
@@ -988,12 +988,12 @@ open class Reviewer :
     }
 
     override fun performReload() {
-        col.sched.deferReset()
+        col.sched.deferReset(col)
         GetCard().runWithHandler(answerCardHandler(false))
     }
 
-    override fun displayAnswerBottomBar() {
-        super.displayAnswerBottomBar()
+    override fun displayAnswerBottomBar(col: Collection) {
+        super.displayAnswerBottomBar(col)
         mOnboarding.onAnswerShown()
         val buttonCount: Int = try {
             this.buttonCount
@@ -1037,21 +1037,21 @@ open class Reviewer :
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, currentCard!!, button)
+            fun nextIvlStr(col: Collection, button: Int) = sched!!.nextIvlStr(col, this, currentCard!!, button)
 
-            easeButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
-            easeButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
+            easeButton1!!.nextTime = nextIvlStr(col, Consts.BUTTON_ONE)
+            easeButton2!!.nextTime = nextIvlStr(col, Consts.BUTTON_TWO)
             if (buttonCount > 2) {
-                easeButton3!!.nextTime = nextIvlStr(Consts.BUTTON_THREE)
+                easeButton3!!.nextTime = nextIvlStr(col, Consts.BUTTON_THREE)
             }
             if (buttonCount > 3) {
-                easeButton4!!.nextTime = nextIvlStr(Consts.BUTTON_FOUR)
+                easeButton4!!.nextTime = nextIvlStr(col, Consts.BUTTON_FOUR)
             }
         }
     }
 
     val buttonCount: Int
-        get() = sched!!.answerButtons(currentCard!!)
+        get() = sched!!.answerButtons(col, currentCard!!)
 
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
@@ -1099,10 +1099,10 @@ open class Reviewer :
         if (currentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = sched!!.counts(currentCard!!)
+        val counts = sched!!.counts(col, currentCard!!)
         if (actionBar != null) {
             if (mPrefShowETA) {
-                mEta = sched!!.eta(counts, false)
+                mEta = sched!!.eta(col, counts, false)
                 actionBar.subtitle = Utils.remainingTime(this, (mEta * 60).toLong())
             }
         }
@@ -1115,7 +1115,7 @@ open class Reviewer :
         // if this code is run as a card is being answered, currentCard may be non-null but
         // the queues may be empty - we can't call countIdx() in such a case
         if (counts.count() != 0) {
-            when (sched!!.countIdx(currentCard!!)) {
+            when (sched!!.countIdx(col, currentCard!!)) {
                 Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
                 Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
                 Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
@@ -1147,9 +1147,9 @@ open class Reviewer :
     }
 
     @VisibleForTesting
-    override fun displayCardAnswer() {
+    override fun displayCardAnswer(col: Collection) {
         delayedHide(100)
-        super.displayCardAnswer()
+        super.displayCardAnswer(col)
     }
 
     override fun initLayout() {

@@ -59,8 +59,8 @@ class UndoSuspendCardMulti(
         for (i in toUnsuspendIds.indices) {
             toUnsuspendIdsArray[i] = toUnsuspendIds[i]
         }
-        col.sched.suspendCards(toSuspendIdsArray)
-        col.sched.unsuspendCards(toUnsuspendIdsArray)
+        col.sched.suspendCards(col, toSuspendIdsArray)
+        col.sched.unsuspendCards(col, toUnsuspendIdsArray)
         return null // don't fetch new card
     }
 }

@@ -188,7 +188,7 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
             dst.reopen()
             // then need to reset card state
             Timber.d("Resetting cards")
-            dst.sched.resetCards(cids)
+            dst.sched.resetCards(col, cids)
         }
         // models - start with zero
         Timber.d("Copy models")

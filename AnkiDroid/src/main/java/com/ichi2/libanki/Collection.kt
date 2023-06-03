@@ -266,12 +266,12 @@ open class Collection(
             sched = Sched(this)
         } else if (ver == 2) {
             sched = if (v3Enabled) {
-                SchedV3(this.newBackend)
+                SchedV3()
             } else {
                 SchedV2(this)
             }
             if (!server) {
-                set_config("localOffset", sched._current_timezone_offset())
+                set_config("localOffset", sched._current_timezone_offset(col))
             }
         }
     }
@@ -289,9 +289,9 @@ open class Collection(
         val v2Sched = SchedV2(this)
         clearUndo()
         if (ver == 1) {
-            v2Sched.moveToV1()
+            v2Sched.moveToV1(col)
         } else {
-            v2Sched.moveToV2()
+            v2Sched.moveToV2(col)
         }
         set_config("schedVer", ver)
         _loadScheduler()
@@ -559,7 +559,7 @@ open class Collection(
      * Rebuild the queue and reload data after DB modified.
      */
     fun reset() {
-        sched.deferReset()
+        sched.deferReset(col)
     }
 
     /**
@@ -1374,7 +1374,7 @@ open class Collection(
     }
 
     open fun onCreate() {
-        sched.useNewTimezoneCode()
+        sched.useNewTimezoneCode(col)
         set_config("schedVer", 2)
         // we need to reload the scheduler: this was previously loaded as V1
         _loadScheduler()
@@ -1438,7 +1438,7 @@ open class Collection(
     class UndoReview(private val wasLeech: Boolean, private val clonedCard: Card) :
         UndoAction(R.string.undo_action_review) {
         override fun undo(col: Collection): Card {
-            col.sched.undoReview(clonedCard, wasLeech)
+            col.sched.undoReview(col, clonedCard, wasLeech)
             return clonedCard
         }
     }
@@ -1850,7 +1850,7 @@ open class Collection(
                 "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
                     ids
                 ),
-                sched.today(),
+                sched.today(col),
                 TimeManager.time.intTime(),
                 usn()
             )

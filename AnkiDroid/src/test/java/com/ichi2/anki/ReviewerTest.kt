@@ -359,7 +359,7 @@ class ReviewerTest : RobolectricTest() {
 
     private fun displayAnswer(reviewer: Reviewer) {
         waitForAsyncTasksToComplete()
-        reviewer.displayCardAnswer()
+        reviewer.displayCardAnswer(col)
         waitForAsyncTasksToComplete()
     }
 

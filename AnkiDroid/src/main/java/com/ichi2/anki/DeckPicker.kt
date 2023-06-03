@@ -919,7 +919,7 @@ open class DeckPicker :
         } else if (requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS) {
             if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
                 // Show a message when reviewing has finished
-                if (col.sched.count() == 0) {
+                if (col.sched.count(col) == 0) {
                     showSnackbar(R.string.studyoptions_congrats_finished)
                 } else {
                     showSnackbar(R.string.studyoptions_no_cards_due)
@@ -1760,10 +1760,10 @@ open class DeckPicker :
         }
         // There are numbers
         // Figure out what action to take
-        if (col.sched.hasCardsTodayAfterStudyAheadLimit()) {
+        if (col.sched.hasCardsTodayAfterStudyAheadLimit(col)) {
             // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
             openStudyOptions(false)
-        } else if (col.sched.newDue() || col.sched.revDue()) {
+        } else if (col.sched.newDue(col) || col.sched.revDue(col)) {
             // If there are no cards to review because of the daily study limit then give "Study more" option
             showSnackbar(R.string.studyoptions_limit_reached) {
                 addCallback(mSnackbarShowHideCallback)
@@ -1858,7 +1858,7 @@ open class DeckPicker :
             launchCatchingTask {
                 withProgress {
                     val deckData = withCol {
-                        val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>> = sched.quickDeckDueTree()
+                        val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>> = sched.quickDeckDueTree(col)
                         Pair(decks, isEmpty)
                     }
                     onDecksLoaded(deckData.first, deckData.second)
@@ -1871,7 +1871,7 @@ open class DeckPicker :
                 withProgress {
                     Timber.d("doInBackgroundLoadDeckCounts")
                     val deckData = withCol {
-                        Pair(sched.deckDueTree(null), this.isEmpty)
+                        Pair(sched.deckDueTree(col, null), this.isEmpty)
                     }
                     onDecksLoaded(deckData.first, deckData.second)
                 }
@@ -2151,7 +2151,7 @@ open class DeckPicker :
             withCol {
                 Timber.d("rebuildFiltered: doInBackground - RebuildCram")
                 decks.select(did)
-                sched.rebuildDyn(decks.selected())
+                sched.rebuildDyn(col, decks.selected())
                 updateValuesFromDeck(this, true)
             }
             updateDeckList()
@@ -2165,7 +2165,7 @@ open class DeckPicker :
             withProgress {
                 withCol {
                     Timber.d("doInBackgroundEmptyCram")
-                    sched.emptyDyn(decks.selected())
+                    sched.emptyDyn(col, decks.selected())
                     updateValuesFromDeck(this, true)
                 }
             }

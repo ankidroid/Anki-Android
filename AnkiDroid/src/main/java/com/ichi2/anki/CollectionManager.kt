@@ -372,7 +372,7 @@ object CollectionManager {
      */
     suspend fun updateScheduler() {
         withNewSchema {
-            sched.upgradeToV2()
+            sched.upgradeToV2(col)
         }
     }
 

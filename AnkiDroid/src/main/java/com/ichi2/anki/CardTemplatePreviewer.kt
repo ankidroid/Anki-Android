@@ -156,11 +156,11 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         previewLayout!!.setShowingAnswer(false)
     }
 
-    override fun displayCardAnswer() {
+    override fun displayCardAnswer(col: Collection) {
         if (mAllFieldsNull && mCardType != null && mCardType == getString(R.string.basic_typing_model_name)) {
             answerField!!.setText(getString(R.string.basic_answer_sample_text_user))
         }
-        super.displayCardAnswer()
+        super.displayCardAnswer(col)
         mShowingAnswer = true
         previewLayout!!.setShowingAnswer(true)
     }
@@ -169,7 +169,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         /* do nothing */
     }
 
-    override fun displayAnswerBottomBar() {
+    override fun displayAnswerBottomBar(col: Collection) {
         /* do nothing */
     }
 
@@ -177,7 +177,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         if (mShowingAnswer) {
             displayCardQuestion()
         } else {
-            displayCardAnswer()
+            displayCardAnswer(col)
         }
     }
 
@@ -265,7 +265,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
         displayCardQuestion()
         if (mShowingAnswer) {
-            displayCardAnswer()
+            displayCardAnswer(col)
         }
         showBackIcon()
     }

@@ -337,7 +337,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     suspend fun eta(): Int? = if (mNumbersComputed) {
-        withCol { sched.eta(Counts(mNew, mLrn, mRev)) }
+        withCol { sched.eta(col, Counts(mNew, mLrn, mRev)) }
     } else {
         null
     }

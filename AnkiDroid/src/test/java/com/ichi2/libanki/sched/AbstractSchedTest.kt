@@ -64,17 +64,17 @@ class AbstractSchedTest : RobolectricTest() {
         val sched = col.sched
         col.reset()
 
-        val cardBeforeUndo = sched.card()
-        val countsBeforeUndo = sched.counts()
+        val cardBeforeUndo = sched.card(col)
+        val countsBeforeUndo = sched.counts(col)
         // Not shown in the UI, but there is a state where the card has been removed from the queue, but not answered
         // where the counts are decremented.
         assertThat(countsBeforeUndo, `is`(Counts(0, 0, 0)))
 
-        sched.answerCard(cardBeforeUndo!!, Consts.BUTTON_THREE)
+        sched.answerCard(col, cardBeforeUndo!!, Consts.BUTTON_THREE)
 
         waitForTask(Undo().toDelegate(), 5000)
 
-        val countsAfterUndo = sched.counts()
+        val countsAfterUndo = sched.counts(col)
 
         assertThat(
             "Counts after an undo should be the same as before an undo",
@@ -97,16 +97,16 @@ class AbstractSchedTest : RobolectricTest() {
         }
         col.reset()
         assertThat(col.cardCount(), `is`(20))
-        assertThat(sched.newCount(), `is`(10))
-        val card = sched.card()
-        assertThat(sched.newCount(), `is`(9))
-        assertThat(sched.counts(card!!).new, `is`(10))
-        sched.answerCard(card, sched.goodNewButton)
-        sched.card()
+        assertThat(sched.newCount(col), `is`(10))
+        val card = sched.card(col)
+        assertThat(sched.newCount(col), `is`(9))
+        assertThat(sched.counts(col, card!!).new, `is`(10))
+        sched.answerCard(col, card, sched.goodNewButton)
+        sched.card(col)
         nonTaskUndo(col)
         card.load(col)
-        assertThat(sched.newCount(), `is`(9))
-        assertThat(sched.counts(card).new, `is`(10))
+        assertThat(sched.newCount(col), `is`(9))
+        assertThat(sched.counts(col, card).new, `is`(10))
     }
 
     @Test
@@ -124,15 +124,15 @@ class AbstractSchedTest : RobolectricTest() {
             queue.add(cid)
         }
         assertThat(queue.size(), `is`(nbCard))
-        assertEquals(cids[0], queue.removeFirstCard().id)
+        assertEquals(cids[0], queue.removeFirstCard(col).id)
         assertThat(queue.size(), `is`(nbCard - 1))
         queue.remove(cids[1])
         assertThat(queue.size(), `is`(nbCard - 2))
         queue.remove(cids[3])
         assertThat(queue.size(), `is`(nbCard - 3))
-        assertEquals(cids[2], queue.removeFirstCard().id)
+        assertEquals(cids[2], queue.removeFirstCard(col).id)
         assertThat(queue.size(), `is`(nbCard - 4))
-        assertEquals(cids[4], queue.removeFirstCard().id)
+        assertEquals(cids[4], queue.removeFirstCard(col).id)
         assertThat(queue.size(), `is`(nbCard - 5))
     }
 
@@ -154,8 +154,8 @@ class AbstractSchedTest : RobolectricTest() {
 
         col.reset()
         for (i in 0 until nbNote) {
-            val card = sched.card()
-            val counts = sched.counts(card!!)
+            val card = sched.card(col)
+            val counts = sched.counts(col, card!!)
             assertThat(
                 counts.new,
                 `is`(greaterThan(nbNote - i))
@@ -169,10 +169,10 @@ class AbstractSchedTest : RobolectricTest() {
             assertEquals(0, counts.rev.toLong())
             assertEquals(notes[i]!!.firstCard(col).id, card.id)
             assertEquals(Consts.QUEUE_TYPE_NEW, card.queue)
-            sched.answerCard(card, sched.answerButtons(card))
+            sched.answerCard(col, card, sched.answerButtons(col, card))
         }
 
-        val card = sched.card()
+        val card = sched.card(col)
         assertNull(card)
     }
 
@@ -187,7 +187,7 @@ class AbstractSchedTest : RobolectricTest() {
         addDeckWithExactName(child)
 
         col.decks.checkIntegrity()
-        AnkiAssert.assertDoesNotThrow { col.sched.deckDueTree() }
+        AnkiAssert.assertDoesNotThrow { col.sched.deckDueTree(col) }
     }
 
     private inner class IncreaseToday {
@@ -200,8 +200,8 @@ class AbstractSchedTest : RobolectricTest() {
 
         private fun assertNewCountIs(explanation: String, did: Long, expected: Int) {
             mDecks.select(did)
-            mSched.resetCounts()
-            assertThat(explanation, mSched.newCount(), `is`(expected))
+            mSched.resetCounts(col)
+            assertThat(explanation, mSched.newCount(col), `is`(expected))
         }
 
         private fun increaseAndAssertNewCountsIs(
@@ -225,7 +225,7 @@ class AbstractSchedTest : RobolectricTest() {
 
         private fun extendNew(did: Long) {
             mDecks.select(did)
-            mSched.extendLimits(1, 0)
+            mSched.extendLimits(col, 1, 0)
         }
 
         fun test() {
@@ -289,8 +289,8 @@ class AbstractSchedTest : RobolectricTest() {
             mDecks.select(mCId)
             col.reset()
             for (i in 0..2) {
-                val card = mSched.card()
-                mSched.answerCard(card!!, mSched.answerButtons(card))
+                val card = mSched.card(col)
+                mSched.answerCard(col, card!!, mSched.answerButtons(col, card))
             }
             assertNewCountsIs(
                 "All cards from C are reviewed. Still 4 cards to review in D, but only two available because of A's limit.",
@@ -329,7 +329,7 @@ class AbstractSchedTest : RobolectricTest() {
 ```python
 from aqt import mw
 c = mw.col.decks.byName("A::B::C")
-mw.col.sched.extendLimits(1, 0)
+mw.col.sched.extendLimits(col, 1, 0)
 ```
              */
         }
@@ -353,37 +353,37 @@ mw.col.sched.extendLimits(1, 0)
         col.reset()
         advanceRobolectricLooper()
 
-        var card = sched.card()
+        var card = sched.card(col)
         assertNotNull(card)
-        assertEquals(Counts(1, 0, 0), sched.counts(card))
+        assertEquals(Counts(1, 0, 0), sched.counts(col, card))
         if (preload) {
-            sched.preloadNextCard()
+            sched.preloadNextCard(col)
         }
 
-        sched.answerCard(card, sched.goodNewButton)
+        sched.answerCard(col, card, sched.goodNewButton)
         advanceRobolectricLooper()
 
-        card = sched.card()
+        card = sched.card(col)
         assertNotNull(card)
         assertEquals(
             Counts(0, if (schedVersion == 1) 3 else 1, 0),
-            sched.counts(card)
+            sched.counts(col, card)
         )
         if (preload) {
-            sched.preloadNextCard()
+            sched.preloadNextCard(col)
         }
 
-        sched.answerCard(card, sched.goodNewButton)
+        sched.answerCard(col, card, sched.goodNewButton)
         advanceRobolectricLooper()
 
-        card = sched.card()
+        card = sched.card(col)
         assertNotNull(card)
         assertEquals(
             Counts(0, if (schedVersion == 1) 2 else 1, 0),
-            sched.counts(card)
+            sched.counts(col, card)
         )
         if (preload) {
-            sched.preloadNextCard()
+            sched.preloadNextCard(col)
             advanceRobolectricLooper()
         }
 
@@ -394,24 +394,24 @@ mw.col.sched.extendLimits(1, 0)
         assertNotNull(card)
         assertEquals(
             Counts(0, if (schedVersion == 1) 3 else 1, 0),
-            sched.counts(card)
+            sched.counts(col, card)
         )
-        sched.count()
+        sched.count(col)
         if (preload) {
-            sched.preloadNextCard()
+            sched.preloadNextCard(col)
             advanceRobolectricLooper()
         }
 
-        sched.answerCard(card, sched.goodNewButton)
+        sched.answerCard(col, card, sched.goodNewButton)
         advanceRobolectricLooper()
-        card = sched.card()
+        card = sched.card(col)
         assertNotNull(card)
         if (preload) {
-            sched.preloadNextCard()
+            sched.preloadNextCard(col)
         }
         assertEquals(
             Counts(0, if (schedVersion == 1) 2 else 1, 0),
-            sched.counts(card)
+            sched.counts(col, card)
         )
         assertNotNull(card)
     }
@@ -452,12 +452,12 @@ mw.col.sched.extendLimits(1, 0)
         addNoteUsingBasicAndReversedModel("foo", "bar")
         addNoteUsingBasicModel("plop", "foo")
         col.reset()
-        val card = sched.card()
-        sched.preloadNextCard()
-        sched.answerCard(card!!, Consts.BUTTON_THREE)
+        val card = sched.card(col)
+        sched.preloadNextCard(col)
+        sched.answerCard(col, card!!, Consts.BUTTON_THREE)
         @Suppress("UNUSED_VARIABLE")
-        var unusedCard = sched.card()
-        AnkiAssert.assertDoesNotThrow { sched.preloadNextCard() }
+        var unusedCard = sched.card(col)
+        AnkiAssert.assertDoesNotThrow { sched.preloadNextCard(col) }
     }
 
     @Test
@@ -476,7 +476,7 @@ mw.col.sched.extendLimits(1, 0)
         }
         col.reset()
         // Regression test success non deterministically without the sleep
-        var gotten: Card? = sched.card()
+        var gotten: Card? = sched.card(col)
         advanceRobolectricLooperWithSleep()
         assertThat(
             gotten,
@@ -484,17 +484,17 @@ mw.col.sched.extendLimits(1, 0)
                 cards[0]
             )
         )
-        sched.answerCard(gotten!!, Consts.BUTTON_ONE)
+        sched.answerCard(col, gotten!!, Consts.BUTTON_ONE)
 
-        gotten = sched.card()
+        gotten = sched.card(col)
         assertThat(
             gotten,
             `is`(
                 cards[1]
             )
         )
-        sched.answerCard(gotten!!, Consts.BUTTON_ONE)
-        gotten = sched.card()
+        sched.answerCard(col, gotten!!, Consts.BUTTON_ONE)
+        gotten = sched.card(col)
         assertThat(
             gotten,
             `is`(

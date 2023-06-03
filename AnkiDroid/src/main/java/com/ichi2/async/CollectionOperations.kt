@@ -68,7 +68,7 @@ fun updateCard(
                 q(col, true) // reload qa-cache
             }
         } else {
-            col.sched.card()!! // check: are there deleted too?
+            col.sched.card(col)!! // check: are there deleted too?
         }
     } else {
         editCard
@@ -127,18 +127,18 @@ fun updateValuesFromDeck(
         val sched = col.sched
         if (reset) {
             // reset actually required because of counts, which is used in getCollectionTaskListener
-            sched.resetCounts()
+            sched.resetCounts(col)
         }
-        val counts = sched.counts()
-        val totalNewCount = sched.totalNewForCurrentDeck()
-        val totalCount = sched.cardCount()
+        val counts = sched.counts(col)
+        val totalNewCount = sched.totalNewForCurrentDeck(col)
+        val totalCount = sched.cardCount(col)
         StudyOptionsFragment.DeckStudyData(
             counts.new,
             counts.lrn,
             counts.rev,
             totalNewCount,
             totalCount,
-            sched.eta(counts)
+            sched.eta(col, counts)
         )
     } catch (e: RuntimeException) {
         Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
@@ -174,8 +174,8 @@ fun changeDeckConfiguration(
     val newOrder = col.decks.getConf(newConfId)!!.getJSONObject("new").getInt("order")
     if (oldOrder != newOrder) {
         when (newOrder) {
-            0 -> col.sched.randomizeCards(deck.getLong("id"))
-            1 -> col.sched.orderCards(deck.getLong("id"))
+            0 -> col.sched.randomizeCards(col, deck.getLong("id"))
+            1 -> col.sched.orderCards(col, deck.getLong("id"))
         }
     }
     col.decks.setConf(deck, newConfId)
@@ -324,7 +324,7 @@ fun deleteMultipleNotes(
         }
         col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
         col.remNotes(uniqueNoteIds)
-        sched.deferReset()
+        sched.deferReset(col)
         // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
         allCards.toTypedArray()
     }
@@ -352,9 +352,9 @@ fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
         // if at least one card is unsuspended -> suspend all
         // otherwise unsuspend all
         if (hasUnsuspended) {
-            sched.suspendCards(cids)
+            sched.suspendCards(col, cids)
         } else {
-            sched.unsuspendCards(cids)
+            sched.unsuspendCards(col, cids)
         }
 
         // mark undo for all at once
@@ -364,7 +364,7 @@ fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
         for (c in cards) {
             c.load(col)
         }
-        sched.deferReset()
+        sched.deferReset(col)
         // pass cards back so more actions can be performed by the caller
         // (querying the cards again is unnecessarily expensive)
         cards
@@ -404,7 +404,7 @@ fun changeDeckMulti(
         for (i in cards.indices) {
             changedCardIds[i] = cards[i].id
         }
-        col.sched.remFromDyn(changedCardIds)
+        col.sched.remFromDyn(col, changedCardIds)
         val originalDids = LongArray(cards.size)
         for (i in cards.indices) {
             val card = cards[i]

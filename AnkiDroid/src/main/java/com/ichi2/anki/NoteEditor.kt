@@ -751,13 +751,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             // Regular changes in note content
             var modified = false
-            // changed did? this has to be done first as remFromDyn() involves a direct write to the database
+            // changed did? this has to be done first as remFromDyn(col, ) involves a direct write to the database
             if (mCurrentEditedCard != null && mCurrentEditedCard!!.did != deckId) {
                 mReloadRequired = true
                 if (BackendFactory.defaultLegacySchema) {
                     // remove card from filtered deck first (new schema takes care of it
                     // for us)
-                    col.sched.remFromDyn(longArrayOf(mCurrentEditedCard!!.id))
+                    col.sched.remFromDyn(col, longArrayOf(mCurrentEditedCard!!.id))
                 }
                 col.setDeck(longArrayOf(mCurrentEditedCard!!.id), deckId)
                 // refresh the card object to reflect the database changes from above

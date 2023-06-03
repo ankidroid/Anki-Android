@@ -160,7 +160,7 @@ class DeckPickerTest : RobolectricTest() {
             addNoteUsingBasicModel("Which card is this ?", i.toString())
         }
         // This set a card as current card
-        sched.card()
+        sched.card(col)
         ensureCollectionLoadIsSynchronous()
         val deckPicker = super.startActivityNormallyOpenCollectionWithIntent(
             DeckPicker::class.java,

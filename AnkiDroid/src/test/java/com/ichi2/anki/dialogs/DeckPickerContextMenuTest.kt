@@ -173,15 +173,15 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             val deckId = addDeck("Deck 1")
             col.models.byName(col, "Basic")!!.put("did", deckId)
             val card = addNoteUsingBasicModel("front", "back").firstCard(col)
-            col.sched.buryCards(longArrayOf(card.id))
+            col.sched.buryCards(col, longArrayOf(card.id))
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            assertTrue(col.sched.haveBuried(deckId), "Deck should have buried cards")
+            assertTrue(col.sched.haveBuried(col, deckId), "Deck should have buried cards")
 
             openContextMenuAndSelectItem(recyclerView, 7)
 
-            assertFalse(col.sched.haveBuried(deckId))
+            assertFalse(col.sched.haveBuried(col, deckId))
         }
     }
 
@@ -218,7 +218,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
                 .map { addNoteUsingBasicModel("$it", "").firstCard(col).id }
             assertTrue(allCardsInSameDeck(cardIds, 1))
             val deckId = addDynamicDeck("Deck 1")
-            col.sched.rebuildDyn(deckId)
+            col.sched.rebuildDyn(col, deckId)
             assertTrue(allCardsInSameDeck(cardIds, deckId))
             updateDeckList()
             assertEquals(1, visibleDeckCount)

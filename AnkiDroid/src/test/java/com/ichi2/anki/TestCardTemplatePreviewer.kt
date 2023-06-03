@@ -16,6 +16,7 @@
 package com.ichi2.anki
 
 import android.view.View
+import com.ichi2.libanki.Collection
 
 class TestCardTemplatePreviewer : CardTemplatePreviewer() {
     var showingAnswer = false
@@ -25,8 +26,8 @@ class TestCardTemplatePreviewer : CardTemplatePreviewer() {
         lastClickTime = (AnkiDroidApp.getSharedPrefs(baseContext).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL) * -2).toLong()
     }
 
-    override fun displayCardAnswer() {
-        super.displayCardAnswer()
+    override fun displayCardAnswer(col: Collection) {
+        super.displayCardAnswer(col)
         showingAnswer = true
     }
 

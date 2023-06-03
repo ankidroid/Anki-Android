@@ -202,7 +202,7 @@ class DeckOptionsActivity :
                                 if (oldOrder != newOrder) {
                                     mOptions.getJSONObject("new").put("order", newOrder)
                                     confChangeHandler("doInBackground - reorder") {
-                                        sched.resortConf(mOptions)
+                                        sched.resortConf(col, mOptions)
                                     }
                                 }
                                 mOptions.getJSONObject("new").put("order", value.toInt())
@@ -448,7 +448,7 @@ class DeckOptionsActivity :
                         col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
                     if (order != defaultOrder) {
                         conf.getJSONObject("new").put("order", defaultOrder)
-                        col.sched.resortConf(conf)
+                        col.sched.resortConf(col, conf)
                     }
                     col.save()
                 }

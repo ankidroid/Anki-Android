@@ -402,13 +402,13 @@ class Syncer(
                 col.models.save(col)
             }
             // check for missing parent decks
-            col.sched.quickDeckDueTree<AbstractDeckTreeNode>()
+            col.sched.quickDeckDueTree<AbstractDeckTreeNode>(col)
             // return summary of deck
             val check = JSONArray()
             val counts = JSONArray()
 
-            col.sched.resetCounts()
-            val counts_ = col.sched.counts()
+            col.sched.resetCounts(col)
+            val counts_ = col.sched.counts(col)
             @KotlinCleanup("apply{}")
             counts.put(counts_.new)
             counts.put(counts_.lrn)

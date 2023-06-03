@@ -67,7 +67,7 @@ class SchedulerService {
             fun getCard(col: Collection, getCard: ActionAndNextCard): ComputeResult {
                 val sched = getCard.col.sched
                 Timber.i("Obtaining card")
-                val newCard = sched.card()
+                val newCard = sched.card(col)
                 newCard?.render_output(col, true)
                 return Computation.ok(NextCard.withNoResult(newCard))
             }
@@ -80,7 +80,7 @@ class SchedulerService {
                 // collect undo information
                 col.markUndo(revertCardToProvidedState(R.string.menu_bury_card, card))
                 // then bury
-                col.sched.buryCards(longArrayOf(card.id))
+                col.sched.buryCards(col, longArrayOf(card.id))
             }
         }
     }
@@ -91,7 +91,7 @@ class SchedulerService {
                 // collect undo information
                 col.markUndo(UndoAction.revertNoteToProvidedState(col, R.string.menu_bury_note, card))
                 // then bury
-                col.sched.buryNote(card.nid)
+                col.sched.buryNote(col, card.nid)
             }
         }
     }
@@ -117,9 +117,9 @@ class SchedulerService {
                 col.markUndo(revertCardToProvidedState(R.string.menu_suspend_card, suspendedCard))
                 // suspend card
                 if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
-                    col.sched.unsuspendCards(longArrayOf(card.id))
+                    col.sched.unsuspendCards(col, longArrayOf(card.id))
                 } else {
-                    col.sched.suspendCards(longArrayOf(card.id))
+                    col.sched.suspendCards(col, longArrayOf(card.id))
                 }
             }
         }
@@ -136,7 +136,7 @@ class SchedulerService {
                 }
                 col.markUndo(UndoAction.revertNoteToProvidedState(col, R.string.menu_suspend_note, card))
                 // suspend note
-                col.sched.suspendCards(cids)
+                col.sched.suspendCards(col, cids)
             }
         }
     }
@@ -145,7 +145,7 @@ class SchedulerService {
         override fun execute(): RepositionResetResult {
             val inputCards = dismissNotes(cardIds) { cards ->
                 return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reposition_card) {
-                    col.sched.sortCards(cardIds, startPosition, 1, false, true)
+                    col.sched.sortCards(col, cardIds, startPosition, 1, false, true)
                 }
             }
             return inputCards.map { x -> NextCard(x.first.orElse(null), x.second) }
@@ -156,7 +156,7 @@ class SchedulerService {
         override fun execute(): RepositionResetResult {
             val inputCards = dismissNotes(cardIds) { cards ->
                 return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reschedule_card) {
-                    col.sched.reschedCards(cardIds, interval, interval)
+                    col.sched.reschedCards(col, cardIds, interval, interval)
                 }
             }
             return inputCards.map { x -> NextCard(x.first.orElse(null), x.second) }
@@ -167,7 +167,7 @@ class SchedulerService {
         override fun execute(): RepositionResetResult {
             val inputCards = dismissNotes(cardIds) { cards ->
                 return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reset_card) {
-                    col.sched.forgetCards(cardIds)
+                    col.sched.forgetCards(col, cardIds)
                 }
             }
             return inputCards.map { x -> NextCard(x.first.orElse(null), x.second) }
@@ -207,7 +207,7 @@ class SchedulerService {
             // new card */
             Timber.d("Single card non-review change undo succeeded")
             col.reset()
-            return col.sched.card()
+            return col.sched.card(col)
         }
     }
 
@@ -215,10 +215,10 @@ class SchedulerService {
         fun <T> ActionAndNextCardV<T>.computeThenGetNextCardInTransaction(task: (AnkiCollection) -> T): Computation<NextCard<T>> {
             return try {
                 val maybeNextCard = col.db.executeInTransaction {
-                    col.sched.deferReset()
+                    col.sched.deferReset(col)
                     val result = task(col)
                     // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
-                    val maybeNextCard = col.sched.card()
+                    val maybeNextCard = col.sched.card(col)
 
                     return@executeInTransaction NextCard(maybeNextCard, result)
                 }
@@ -249,7 +249,7 @@ class SchedulerService {
             actualActualTask()
             // In all cases schedule a new card so Reviewer doesn't sit on the old one
             col.reset()
-            return Computation.ok(Optional.ofNullable(sched.card()))
+            return Computation.ok(Optional.ofNullable(sched.card(col)))
         }
     }
 }

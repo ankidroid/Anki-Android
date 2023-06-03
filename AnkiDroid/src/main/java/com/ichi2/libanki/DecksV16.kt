@@ -582,7 +582,7 @@ class DecksV16(private val col: CollectionV16) :
         this.update_config(new)
         // if it was previously randomized, re-sort
         if (oldOrder == 0) {
-            this.col.sched.resortConf(DeckConfig(new.config, DeckConfig.Source.DECK_CONFIG))
+            this.col.sched.resortConf(col, DeckConfig(new.config, DeckConfig.Source.DECK_CONFIG))
         }
     }
 

@@ -75,7 +75,7 @@ function taFocus() {
     window.location.href = "signal:typefocus";
 }
 
-/*  Call displayCardAnswer() and answerCard() from anki deck template using javascript
+/*  Call displayCardAnswer(col) and answerCard() from anki deck template using javascript
  *  See also AbstractFlashcardViewer.
  */
 function showAnswer() {

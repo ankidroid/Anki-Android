@@ -62,7 +62,7 @@ class ReminderServiceTest : RobolectricTest() {
     @Test
     fun testDatabaseFailureWhileSyncingDoesNotCrash() {
         // If getCol() fails, it triggers different exception handling in the service.
-        // The cause was getSched().deckDueTree()
+        // The cause was getSched().deckDueTree(col, )
         val baseCol = col
         val mockCol = spy(baseCol)
 

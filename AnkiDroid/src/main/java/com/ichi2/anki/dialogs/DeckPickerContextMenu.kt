@@ -85,7 +85,7 @@ class DeckPickerContextMenu(private val col: Collection) : AnalyticsDialogFragme
                 contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.EXPORT_DECK)
-            if (col.sched.haveBuried(did)) {
+            if (col.sched.haveBuried(col, did)) {
                 contextMenuOptions.add(DeckPickerContextMenuOption.UNBURY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
@@ -133,7 +133,7 @@ class DeckPickerContextMenu(private val col: Collection) : AnalyticsDialogFragme
             }
             DeckPickerContextMenuOption.UNBURY -> {
                 Timber.i("Unbury deck selected")
-                col.sched.unburyCardsForDeck(deckId)
+                col.sched.unburyCardsForDeck(col, deckId)
                 activity.onRequireDeckListUpdate()
                 activity.dismissAllDialogFragments()
             }

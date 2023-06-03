@@ -41,7 +41,7 @@ class PreviewerTest : RobolectricTest() {
 
         assertThat("Initially should be previewing selected card", previewer.currentCardId, equalTo(cardToPreview.id))
 
-        previewer.saveEditedCard()
+        previewer.saveEditedCard(col)
 
         assertThat("Should be previewing selected card after edit", previewer.currentCardId, equalTo(cardToPreview.id))
     }
@@ -60,7 +60,7 @@ class PreviewerTest : RobolectricTest() {
 
         cardToPreview.note(col).setField(0, "Hi")
 
-        previewer.saveEditedCard()
+        previewer.saveEditedCard(col)
 
         assertThat("Card content should be updated after editing", previewer.cardContent, containsString("Hi"))
     }

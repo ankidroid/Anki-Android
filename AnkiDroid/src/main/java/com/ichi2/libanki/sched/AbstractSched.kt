@@ -34,7 +34,7 @@ import java.lang.ref.WeakReference
  * reset`). Some promise only apply in normal use.
  *
  */
-abstract class AbstractSched(col: Collection) : BaseSched(col) {
+abstract class AbstractSched : BaseSched() {
     /**
      * Pop the next card from the queue. null if finished.
      *
@@ -48,31 +48,31 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
      *
      * @return the next card from the queue. null if finished.
      */
-    abstract fun card(): Card?
+    abstract fun card(col: Collection): Card?
 
     /**
      * The collection saves some numbers such as counts, queues of cards to review, queues of decks potentially having some cards.
      * Reset all of this and compute from scratch. This occurs because anything else than the sequence of getCard/answerCard did occur.
      */
     // Should ideally be protected. It's public only because CollectionTask should call it when the scheduler planned this task
-    abstract fun reset()
+    abstract fun reset(col: Collection)
 
     /** Ensure that the question on the potential next card can be accessed quickly. */
-    abstract fun preloadNextCard()
+    abstract fun preloadNextCard(col: Collection)
 
     /** Recompute the counts of the currently selected deck.  */
-    abstract fun resetCounts()
+    abstract fun resetCounts(col: Collection)
 
     /** Ensure that reset will be called before returning any card or count.  */
-    fun deferReset() {
-        deferReset(null)
+    fun deferReset(col: Collection) {
+        deferReset(col, null)
     }
 
     /**
      * Same as deferReset(). When `reset` is done, it then simulates that `getCard` returned undoneCard. I.e. it will
      * assume this card is currently in the reviewer and so should not be added in queue and should not be
      * counted. This is called by `undo` with the card send back to the reviewer. */
-    abstract fun deferReset(undoneCard: Card?)
+    abstract fun deferReset(col: Collection, undoneCard: Card?)
 
     /**
      * Does all actions required to answer the card. That is:
@@ -86,13 +86,13 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
      * @param card The card answered
      * @param ease The button pressed by the user
      */
-    abstract fun answerCard(card: Card, @BUTTON_TYPE ease: Int)
+    abstract fun answerCard(col: Collection, card: Card, @BUTTON_TYPE ease: Int)
 
     /**
      * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.
      */
-    fun count(): Int {
-        return counts().count()
+    fun count(col: Collection): Int {
+        return counts(col).count()
     }
 
     /**
@@ -107,48 +107,48 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
      */
     // TODO: consider counting the card currently in the reviewer, this would simplify the code greatly
     // We almost never want to consider the card in the reviewer differently, and a lot of code is added to correct this.
-    abstract fun counts(cancelListener: CancelListener?): Counts
-    fun counts(): Counts {
-        return counts(null)
+    abstract fun counts(col: Collection, cancelListener: CancelListener?): Counts
+    fun counts(col: Collection): Counts {
+        return counts(col, null)
     }
 
     /**
      * @param card A card that should be added to the count result.
      * @return same array as counts(), apart that Card is added
      */
-    abstract fun counts(card: Card): Counts
+    abstract fun counts(col: Collection, card: Card): Counts
 
     /** @return Number of new card in selected decks. Recompute it if we reseted.
      */
-    fun newCount(): Int {
+    fun newCount(col: Collection): Int {
         // We need to actually recompute the three elements, because we potentially need to deal with undid card
         // in any deck where it may be
-        return counts().new
+        return counts(col).new
     }
 
     /** @return Number of lrn card in selected decks. Recompute it if we reseted.
      */
-    fun lrnCount(): Int {
-        return counts().lrn
+    fun lrnCount(col: Collection): Int {
+        return counts(col).lrn
     }
 
     /** @return Number of rev card in selected decks. Recompute it if we reseted.
      */
-    fun revCount(): Int {
-        return counts().rev
+    fun revCount(col: Collection): Int {
+        return counts(col).rev
     }
 
     /**
      * @param card A Card which is in a mode allowing review. I.e. neither suspended nor buried.
      * @return Which of the three numbers shown in reviewer/overview should the card be counted. 0:new, 1:rev, 2: any kind of learning.
      */
-    abstract fun countIdx(card: Card): Counts.Queue
+    abstract fun countIdx(col: Collection, card: Card): Counts.Queue
 
     /**
      * @param card A card in a queue allowing review.
      * @return Number of buttons to show in the reviewer for `card`.
      */
-    abstract fun answerButtons(card: Card): Int
+    abstract fun answerButtons(col: Collection, card: Card): Int
 
     /**
      * specific-deck case not supported by the backend; UI only uses this
@@ -156,7 +156,7 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
      * @param did An id of a deck
      * @return Whether there is any buried cards in the deck
      */
-    abstract fun haveBuried(did: DeckId): Boolean
+    abstract fun haveBuried(col: Collection, did: DeckId): Boolean
 
     /**
      * @return Name of the scheduler. std or std2 currently.
@@ -179,7 +179,7 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
      * @param card The data of the card before the review was made
      * @param wasLeech Whether the card was a leech before the review was made (if false, remove the leech tag)
      */
-    abstract fun undoReview(card: Card, wasLeech: Boolean)
+    abstract fun undoReview(col: Collection, card: Card, wasLeech: Boolean)
 
     /** @return The button to press to enter "good" on a new card.
      */

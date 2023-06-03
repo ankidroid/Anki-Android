@@ -154,7 +154,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         mToolbar = studyOptionsView.findViewById(R.id.studyOptionsToolbar)
         if (mToolbar != null) {
             mToolbar!!.inflateMenu(R.menu.study_options_fragment)
-            configureToolbar()
+            configureToolbar(col)
         }
         refreshInterface(true)
         return studyOptionsView
@@ -292,7 +292,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
-                col!!.sched.unburyCardsForDeck()
+                col!!.sched.unburyCardsForDeck(col!!)
                 refreshInterfaceAndDecklist(true)
                 item.isVisible = false
                 return true
@@ -327,7 +327,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val result = requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
             withCol {
                 Timber.d("doInBackground - RebuildCram")
-                sched.rebuildDyn(decks.selected())
+                sched.rebuildDyn(col, decks.selected())
                 updateValuesFromDeck(this, true)
             }
         }
@@ -339,27 +339,27 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val result = requireActivity().withProgress(resources.getString(R.string.empty_filtered_deck)) {
             withCol {
                 Timber.d("doInBackgroundEmptyCram")
-                sched.emptyDyn(decks.selected())
+                sched.emptyDyn(col, decks.selected())
                 updateValuesFromDeck(this, true)
             }
         }
         rebuildUi(result, true)
     }
 
-    fun configureToolbar() {
-        configureToolbarInternal(true)
+    fun configureToolbar(col: Collection?) {
+        configureToolbarInternal(col, true)
     }
 
     // This will allow a maximum of one recur in order to workaround database closes
     // caused by sync on startup where this might be running then have the collection close
     @NeedsTest("test whether the navigationIcon and navigationOnClickListener are set properly")
-    private fun configureToolbarInternal(recur: Boolean) {
+    private fun configureToolbarInternal(col: Collection?, recur: Boolean) {
         Timber.i("configureToolbarInternal()")
         try {
             mToolbar!!.setOnMenuItemClickListener(this)
             val menu = mToolbar!!.menu
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-            if (col != null && col!!.decks.isDyn(col!!.decks.selected())) {
+            if (col != null && col.decks.isDyn(col.decks.selected())) {
                 menu.findItem(R.id.action_rebuild).isVisible = true
                 menu.findItem(R.id.action_empty).isVisible = true
                 menu.findItem(R.id.action_custom_study).isVisible = false
@@ -385,19 +385,19 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 menu.findItem(R.id.action_export).isVisible = false
             }
             // Switch on or off unbury depending on if there are cards to unbury
-            menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
+            menu.findItem(R.id.action_unbury).isVisible = col != null && col.sched.haveBuried(col)
             // Set the proper click target for the undo button's ActionProvider
             val undoActionProvider: RtlCompliantActionProvider? = MenuItemCompat.getActionProvider(
                 menu.findItem(R.id.action_undo)
             ) as? RtlCompliantActionProvider
             undoActionProvider?.clickHandler = { _, menuItem -> onMenuItemClick(menuItem) }
             // Switch on or off undo depending on whether undo is available
-            if (col == null || !col!!.undoAvailable()) {
+            if (col == null || !col.undoAvailable()) {
                 menu.findItem(R.id.action_undo).isVisible = false
             } else {
                 menu.findItem(R.id.action_undo).isVisible = true
                 val res = AnkiDroidApp.appResources
-                menu.findItem(R.id.action_undo).title = res.getString(R.string.studyoptions_congrats_undo, col!!.undoName(res))
+                menu.findItem(R.id.action_undo).title = res.getString(R.string.studyoptions_congrats_undo, col.undoName(res))
             }
             // Set the back button listener
             if (!mFragmented) {
@@ -416,7 +416,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                         Timber.i(ex, "Thread interrupted while waiting to retry. Likely unimportant.")
                         Thread.currentThread().interrupt()
                     }
-                    configureToolbarInternal(false)
+                    configureToolbarInternal(col, false)
                 } else {
                     Timber.w(e, "Database closed while working. No re-tries left.")
                 }
@@ -428,7 +428,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult")
         Timber.d("Handling onActivityResult for StudyOptionsFragment (openReview, resultCode = %d)", result.resultCode)
         if (mToolbar != null) {
-            configureToolbar() // FIXME we were crashing here because mToolbar is null #8913
+            configureToolbar(col) // FIXME we were crashing here because mToolbar is null #8913
         } else {
             CrashReportService.sendExceptionReport("mToolbar null after return from tablet review session? Issue 8913", "StudyOptionsFragment")
         }
@@ -438,7 +438,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-            if (col!!.sched.count() > 0 && mStudyOptionsView != null) {
+            if (col!!.sched.count(col!!) > 0 && mStudyOptionsView != null) {
                 mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
                     .showSnackbar(R.string.studyoptions_no_cards_due)
             }
@@ -447,7 +447,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private var onDeckOptionsActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Timber.i("StudyOptionsFragment::mOnDeckOptionsActivityResult")
         Timber.d("Handling onActivityResult for StudyOptionsFragment (deckOptions/filteredDeckOptions, resultCode = %d)", result.resultCode)
-        configureToolbar()
+        configureToolbar(col)
         if (result.resultCode == DeckPicker.RESULT_DB_ERROR || result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             closeStudyOptions(result.resultCode)
             return@registerForActivityResult
@@ -637,7 +637,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     buttonStart.visibility = View.GONE
                 }
                 textCongratsMessage.visibility = View.VISIBLE
-                textCongratsMessage.text = col.sched.finishedMsg(requireActivity())
+                textCongratsMessage.text = col.sched.finishedMsg(col, requireActivity())
             } else {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
                 deckInfoLayout.visibility = View.VISIBLE
@@ -676,7 +676,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     mFullNewCountThread!!.interrupt()
                 }
                 mFullNewCountThread = Thread {
-                    // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck()
+                    // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck(col)
                     val query = "SELECT count(*) FROM cards WHERE did IN " +
                         Utils.ids2str(col.decks.active()) +
                         " AND queue = " + Consts.QUEUE_TYPE_NEW
@@ -701,7 +701,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 textETA.text = "-"
             }
             // Rebuild the options menu
-            configureToolbar()
+            configureToolbar(col)
         }
 
         // If in fragmented mode, refresh the deck list

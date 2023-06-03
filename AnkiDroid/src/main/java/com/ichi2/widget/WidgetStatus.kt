@@ -98,13 +98,13 @@ object WidgetStatus {
             val col = CollectionHelper.instance.getCol(context)!!
 
             // Only count the top-level decks in the total
-            val nodes = col.sched.deckDueTree().map { it.value }
+            val nodes = col.sched.deckDueTree(col).map { it.value }
             for (node in nodes) {
                 total.addNew(node.newCount)
                 total.addLrn(node.lrnCount)
                 total.addRev(node.revCount)
             }
-            val eta = col.sched.eta(total, false)
+            val eta = col.sched.eta(col, total, false)
             sSmallWidgetStatus = Pair(total.count(), eta)
         }
 

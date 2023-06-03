@@ -51,7 +51,7 @@ class Undo : ActionAndNextCard() {
                 Timber.d("Single card review undo succeeded")
                 card.startTimer()
                 col.reset()
-                sched.deferReset(card)
+                sched.deferReset(col, card)
             }
             return card
         }
