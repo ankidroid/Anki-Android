@@ -32,12 +32,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getParcelableArrayListCompat
 import com.ichi2.libanki.*
@@ -52,7 +54,6 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * "Deck Search": A dialog allowing the user to select a deck from a list of decks.
@@ -157,7 +158,12 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a sub deck was created
-                selectDeckWithDeckName(decks.name(id!!))
+                launchCatchingTask {
+                    withCol {
+                        val decks = col.decks
+                        selectDeckWithDeckName(decks, decks.name(id!!))
+                    }
+                }
             }
             createDeckDialog.showDialog()
         } catch (ex: DeckRenameException) {
@@ -170,8 +176,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         // todo
         // setOnNewDeckCreated parameter to be made non null
         createDeckDialog.setOnNewDeckCreated { id: Long? ->
-            // a deck was created
-            selectDeckWithDeckName(decks.name(id!!))
+            launchCatchingTask {
+                withCol {
+                    val decks = col.decks
+                    // a deck was created
+                    selectDeckWithDeckName(decks, decks.name(id!!))
+                }
+            }
         }
         createDeckDialog.showDialog()
     }
@@ -187,7 +198,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
      * Create the deck if it does not exists.
      * If name is valid, send the deck with this name to listener and close the dialog.
      */
-    private fun selectDeckWithDeckName(deckName: String) {
+    private fun selectDeckWithDeckName(decks: DeckManager, deckName: String) {
         try {
             val id = decks.id(deckName)
             val dec = SelectableDeck(id, deckName)
