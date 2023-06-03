@@ -67,7 +67,7 @@ class ExportingTest : RobolectricTest() {
        os.unlink(newname);
        e.exportInto(newname);
        // exporting should not have changed conf for original deck
-       conf = col.getDecks().confForDid(did);
+       conf = col.getDecks().confForDid(col, did);
        assertNotEquals(conf.getLong("id") != 1);
        // connect to new deck
        Collection col2 = aopen(newname);
@@ -75,7 +75,7 @@ class ExportingTest : RobolectricTest() {
        // as scheduling was reset, should also revert decks to default conf
        long did = col2.getDecks().id("test", create=false);
        assertTrue(did);
-       conf2 = col2.getDecks().confForDid(did);
+       conf2 = col2.getDecks().confForDid(col, did);
        assertTrue(conf2.getJSONObject("new").put("perDay",= 20));
        Deck dobj = col2.getDecks().get(did);
        // conf should be 1

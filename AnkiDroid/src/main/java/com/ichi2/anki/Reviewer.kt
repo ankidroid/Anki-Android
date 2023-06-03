@@ -188,7 +188,7 @@ open class Reviewer :
     }
 
     override fun onResume() {
-        launchWithCol { 
+        launchWithCol {
             answerTimer.resume(col)
         }
         super.onResume()
@@ -303,24 +303,24 @@ open class Reviewer :
         Timber.d("selectDeckFromExtra() with deckId = %d", did)
 
         // deckId does not exist, load default
-        if (col.decks.get(did, _default = false) == null) {
+        if (col.decks.get(col, did, _default = false) == null) {
             Timber.w("selectDeckFromExtra() deckId '%d' doesn't exist", did)
             return
         }
 
         // Clear the undo history when selecting a new deck
-        if (col.decks.selected() != did) {
+        if (col.decks.selected(col) != did) {
             col.clearUndo()
         }
         // Select the deck
-        col.decks.select(did)
+        col.decks.select(col, did)
         // Reset the schedule so that we get the counts for the currently selected deck
         col.sched.deferReset(col)
     }
 
     override fun setTitle() {
         val title: String = if (colIsOpen()) {
-            Decks.basename(col.decks.current().getString("name"))
+            Decks.basename(col.decks.current(col).getString("name"))
         } else {
             Timber.e("Could not set title in reviewer because collection closed")
             ""
@@ -482,7 +482,7 @@ open class Reviewer :
                 val i = if (BackendFactory.defaultLegacySchema) {
                     Intent(this, DeckOptionsActivity::class.java)
                 } else {
-                    com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current().id)
+                    com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current(col).id)
                 }
                 deckOptionsLauncher.launch(i)
             }
@@ -845,7 +845,7 @@ open class Reviewer :
         } else {
             toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
         }
-        if (colIsOpen() && col.decks.isDyn(parentDid)) {
+        if (colIsOpen() && col.decks.isDyn(col, parentDid)) {
             menu.findItem(R.id.action_open_deck_options).isVisible = false
         }
         if (mTTS.enabled && !mActionButtons.status.selectTtsIsDisabled()) {

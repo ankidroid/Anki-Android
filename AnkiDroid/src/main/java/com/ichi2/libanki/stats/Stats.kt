@@ -77,7 +77,7 @@ class Stats(private val col: Collection, did: Long) {
             title = if (mWholeCollection) {
                 AnkiDroidApp.instance.resources.getString(R.string.card_browser_all_decks)
             } else {
-                col.decks.get(mDeckId).getString("name")
+                col.decks.get(col, mDeckId).getString("name")
             }
             return arrayOf(
                 /*0*/
@@ -224,7 +224,7 @@ class Stats(private val col: Collection, did: Long) {
         if (by == DeckAgeType.REVIEW) {
             t = col.db.queryLongScalar("select id from revlog $lim order by id limit 1").toDouble()
         } else if (by == DeckAgeType.ADD) {
-            lim = "where did in " + Utils.ids2str(col.decks.active())
+            lim = "where did in " + Utils.ids2str(col.decks.active(col))
             t = col.db.queryLongScalar("select id from cards $lim order by id limit 1").toDouble()
         }
         val period: Long
@@ -240,7 +240,7 @@ class Stats(private val col: Collection, did: Long) {
         return if (mWholeCollection) {
             ""
         } else {
-            "cid in (select id from cards where did in " + Utils.ids2str(col.decks.active()) + ")"
+            "cid in (select id from cards where did in " + Utils.ids2str(col.decks.active(col)) + ")"
         }
     }
 
@@ -1285,7 +1285,7 @@ from cards where did in ${_limit()}"""
         fun deckLimit(col: Collection, deckId: Long): String {
             return if (deckId == ALL_DECKS_ID) {
                 // All decks
-                val decks = col.decks.all()
+                val decks = col.decks.all(col)
                 val ids = ArrayList<Long>(decks.size)
                 for (d in decks) {
                     ids.add(d.getLong("id"))
@@ -1293,7 +1293,7 @@ from cards where did in ${_limit()}"""
                 Utils.ids2str(ids)
             } else {
                 // The given deck id and its children
-                val values: kotlin.collections.Collection<Long> = col.decks.children(deckId).values
+                val values: kotlin.collections.Collection<Long> = col.decks.children(col, deckId).values
                 val ids = ArrayList<Long>(values.size)
                 ids.add(deckId)
                 ids.addAll(values)

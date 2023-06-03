@@ -28,7 +28,7 @@ object DeckService {
 
     @Suppress("SameParameterValue")
     private fun hasChildren(col: Collection, did: DeckId) =
-        col.decks.children(did).size > 0
+        col.decks.children(col, did).size > 0
 
     fun defaultDeckHasCards(col: Collection) =
         col.db.queryScalar("select 1 from cards where did = 1") != 0
@@ -43,7 +43,7 @@ object DeckService {
      * @return the number of cards in the supplied deck and child decks
      */
     fun countCardsInDeckTree(col: Collection, did: DeckId): Int {
-        val children: TreeMap<String, Long> = col.decks.children(did)
+        val children: TreeMap<String, Long> = col.decks.children(col, did)
         val dids = LongArray(children.size + 1)
         dids[0] = did
         var i = 1
@@ -60,5 +60,5 @@ object DeckService {
      * @return true if the collection contains a deck with the given name
      */
     fun deckExists(col: Collection, name: String) =
-        col.decks.byName(name) != null
+        col.decks.byName(col, name) != null
 }

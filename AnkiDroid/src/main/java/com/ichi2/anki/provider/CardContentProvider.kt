@@ -293,7 +293,7 @@ class CardContentProvider : ContentProvider() {
             SCHEDULE -> {
                 val columns = projection ?: FlashCardsContract.ReviewInfo.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
-                val selectedDeckBeforeQuery = col.decks.selected()
+                val selectedDeckBeforeQuery = col.decks.selected(col)
                 var deckIdOfTemporarilySelectedDeck: Long = -1
                 var limit = 1 // the number of scheduled cards to return
                 var selectionArgIndex = 0
@@ -337,7 +337,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 if (deckIdOfTemporarilySelectedDeck != -1L) { // if the selected deck was changed
                     // change the selected deck back to the one it was before the query
-                    col.decks.select(selectedDeckBeforeQuery)
+                    col.decks.select(col, selectedDeckBeforeQuery)
                 }
                 rv
             }
@@ -375,8 +375,8 @@ class CardContentProvider : ContentProvider() {
                 rv
             }
             DECK_SELECTED -> {
-                val id = col.decks.selected()
-                val name = col.decks.name(id)
+                val id = col.decks.selected(col)
+                val name = col.decks.name(col, id)
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
                 val rv = MatrixCursor(columns, 1)
                 val counts = JSONArray(listOf(col.sched.counts(col)))
@@ -461,11 +461,11 @@ class CardContentProvider : ContentProvider() {
                     isDeckUpdate = key == FlashCardsContract.Card.DECK_ID
                     did = values.getAsLong(key)
                 }
-                require(!col.decks.isDyn(did)) { "Cards cannot be moved to a filtered deck" }
+                require(!col.decks.isDyn(col, did)) { "Cards cannot be moved to a filtered deck" }
                 /* now update the card
                  */if (isDeckUpdate && did >= 0) {
                     Timber.d("CardContentProvider: Moving card to other deck...")
-                    col.decks.flush()
+                    col.decks.flush(col)
                     currentCard.did = did
                     currentCard.flush(col = col)
                     col.save()
@@ -503,7 +503,7 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     if (newDid != null) {
-                        if (col.decks.isDyn(newDid.toLong())) {
+                        if (col.decks.isDyn(col, newDid.toLong())) {
                             throw IllegalArgumentException("Cannot set a filtered deck as default deck for a model")
                         }
                         model!!.put("did", newDid)
@@ -704,7 +704,7 @@ class CardContentProvider : ContentProvider() {
         }
         val col = CollectionHelper.instance.getCol(context!!)
             ?: throw IllegalStateException(COL_NULL_ERROR_MSG)
-        if (col.decks.isDyn(deckId)) {
+        if (col.decks.isDyn(col, deckId)) {
             throw IllegalArgumentException("A filtered deck cannot be specified as the deck in bulkInsertNotes")
         }
         col.log(String.format(Locale.US, "bulkInsertNotes: %d items.\n%s", valuesArr.size, getLogMessage("bulkInsert", null)))
@@ -712,7 +712,7 @@ class CardContentProvider : ContentProvider() {
         // for caching model information (so we don't have to query for each note)
         var modelId = Models.NOT_FOUND_NOTE_TYPE
         var model: Model? = null
-        col.decks.flush() // is it okay to move this outside the for-loop? Is it needed at all?
+        col.decks.flush(col) // is it okay to move this outside the for-loop? Is it needed at all?
         val sqldb = col.db.database
         return try {
             var result = 0
@@ -820,7 +820,7 @@ class CardContentProvider : ContentProvider() {
                 if (modelName == null || fieldNames == null || numCards == null) {
                     throw IllegalArgumentException("Model name, field_names, and num_cards can't be empty")
                 }
-                if (did != null && col.decks.isDyn(did)) {
+                if (did != null && col.decks.isDyn(col, did)) {
                     throw IllegalArgumentException("Cannot set a filtered deck as default deck for a model")
                 }
                 // Create a new model
@@ -932,7 +932,7 @@ class CardContentProvider : ContentProvider() {
             DECKS -> {
                 // Insert new deck with specified name
                 val deckName = values!!.getAsString(FlashCardsContract.Deck.DECK_NAME)
-                var did = col.decks.id_for_name(deckName)
+                var did = col.decks.id_for_name(col, deckName)
                 if (did != null) {
                     throw IllegalArgumentException("Deck name already exists: $deckName")
                 }
@@ -940,11 +940,11 @@ class CardContentProvider : ContentProvider() {
                     throw IllegalArgumentException("Invalid deck name '$deckName'")
                 }
                 try {
-                    did = col.decks.id(deckName)
+                    did = col.decks.id(col, deckName)
                 } catch (filteredSubdeck: DeckRenameException) {
                     throw IllegalArgumentException(filteredSubdeck.message)
                 }
-                val deck: Deck = col.decks.get(did)
+                val deck: Deck = col.decks.get(col, did)
                 @KotlinCleanup("remove the null check if deck is found to be not null in DeckManager.get(Long)")
                 @Suppress("SENSELESS_COMPARISON")
                 if (deck != null) {
@@ -958,7 +958,7 @@ class CardContentProvider : ContentProvider() {
                         return null
                     }
                 }
-                col.decks.flush()
+                col.decks.flush(col)
                 Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, did.toString())
             }
             DECK_SELECTED -> throw IllegalArgumentException("Selected deck can only be queried and updated")
@@ -1171,12 +1171,12 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Deck.DECK_ID -> rb.add(id)
                 FlashCardsContract.Deck.DECK_COUNTS -> rb.add(deckCounts)
                 FlashCardsContract.Deck.OPTIONS -> {
-                    val config = col.decks.confForDid(id).toString()
+                    val config = col.decks.confForDid(col, id).toString()
                     rb.add(config)
                 }
-                FlashCardsContract.Deck.DECK_DYN -> rb.add(col.decks.isDyn(id))
+                FlashCardsContract.Deck.DECK_DYN -> rb.add(col.decks.isDyn(col, id))
                 FlashCardsContract.Deck.DECK_DESC -> {
-                    val desc = col.decks.getActualDescription()
+                    val desc = col.decks.getActualDescription(col)
                     rb.add(desc)
                 }
             }
@@ -1184,8 +1184,8 @@ class CardContentProvider : ContentProvider() {
     }
 
     private fun selectDeckWithCheck(col: Collection, did: DeckId): Boolean {
-        return if (col.decks.get(did, false) != null) {
-            col.decks.select(did)
+        return if (col.decks.get(col, did, false) != null) {
+            col.decks.select(col, did)
             true
         } else {
             Timber.e(

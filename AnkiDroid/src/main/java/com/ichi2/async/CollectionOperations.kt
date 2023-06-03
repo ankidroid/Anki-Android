@@ -62,7 +62,7 @@ fun updateCard(
         // no need to flush card in new path
     }
     return if (isFromReviewer) {
-        if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
+        if (col.decks.active(col).contains(editCard.did) || !canAccessScheduler) {
             editCard.apply {
                 load(col)
                 q(col, true) // reload qa-cache
@@ -170,15 +170,15 @@ fun changeDeckConfiguration(
 ) {
     val newConfId = conf.getLong("id")
     // If new config has a different sorting order, reorder the cards
-    val oldOrder = col.decks.getConf(deck.getLong("conf"))!!.getJSONObject("new").getInt("order")
-    val newOrder = col.decks.getConf(newConfId)!!.getJSONObject("new").getInt("order")
+    val oldOrder = col.decks.getConf(col, deck.getLong("conf"))!!.getJSONObject("new").getInt("order")
+    val newOrder = col.decks.getConf(col, newConfId)!!.getJSONObject("new").getInt("order")
     if (oldOrder != newOrder) {
         when (newOrder) {
             0 -> col.sched.randomizeCards(col, deck.getLong("id"))
             1 -> col.sched.orderCards(col, deck.getLong("id"))
         }
     }
-    col.decks.setConf(deck, newConfId)
+    col.decks.setConf(col, deck, newConfId)
     col.save()
 }
 
@@ -382,7 +382,7 @@ fun changeDeckMulti(
     val cards = cardIds.map { col.getCard(it) }.toTypedArray()
     Timber.i("Changing %d cards to deck: '%d'", cards.size, newDid)
     return col.db.executeInTransaction {
-        val deckData = col.decks.get(newDid)
+        val deckData = col.decks.get(col, newDid)
         if (Decks.isDynamic(deckData)) {
             // #5932 - can't change to a dynamic deck. Use "Rebuild"
             Timber.w("Attempted to move to dynamic deck. Cancelling task.")

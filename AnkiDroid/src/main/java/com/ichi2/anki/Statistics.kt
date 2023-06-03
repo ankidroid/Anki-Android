@@ -110,7 +110,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         invalidateOptionsMenu()
         //        StatisticFragment.updateAllFragments();
         when (val defaultDeck = AnkiDroidApp.getSharedPrefs(this).getString("stats_default_deck", "current")) {
-            "current" -> mStatsDeckId = col.decks.selected()
+            "current" -> mStatsDeckId = col.decks.selected(col)
             "all" -> mStatsDeckId = Stats.ALL_DECKS_ID
             else -> Timber.w("Unknown defaultDeck: %s", defaultDeck)
         }
@@ -361,7 +361,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             deckId = (requireActivity() as Statistics).mStatsDeckId
             if (deckId != Stats.ALL_DECKS_ID) {
                 val col = CollectionHelper.instance.getCol(requireActivity())!!
-                val baseName = Decks.basename(col.decks.current().getString("name"))
+                val baseName = Decks.basename(col.decks.current(col).getString("name"))
                 if (sIsSubtitle) {
                     (requireActivity() as AppCompatActivity).supportActionBar!!.subtitle = baseName
                 } else {
@@ -437,7 +437,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
             val col = CollectionHelper.instance.getCol(requireActivity())!!
             deckId = (requireActivity() as Statistics).mStatsDeckId
             if (deckId != Stats.ALL_DECKS_ID) {
-                val basename = Decks.basename(col.decks.current().getString("name"))
+                val basename = Decks.basename(col.decks.current(col).getString("name"))
                 if (sIsSubtitle) {
                     (requireActivity() as AppCompatActivity).supportActionBar!!.subtitle = basename
                 } else {

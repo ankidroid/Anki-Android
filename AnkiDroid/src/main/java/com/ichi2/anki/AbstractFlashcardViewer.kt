@@ -803,7 +803,7 @@ abstract class AbstractFlashcardViewer :
     // ----------------------------------------------------------------------------
     // Get the did of the parent deck (ignoring any subdecks)
     protected val parentDid: DeckId
-        get() = col.decks.selected()
+        get() = col.decks.selected(col)
 
     private fun redrawCard() {
         // #3654 We can call this from ActivityResult, which could mean that the card content hasn't yet been set
@@ -1330,7 +1330,7 @@ abstract class AbstractFlashcardViewer :
         if (currentCard == null) return
         val actionBar = supportActionBar
         if (actionBar != null) {
-            val title = Decks.basename(col.decks.get(currentCard!!.did).getString("name"))
+            val title = Decks.basename(col.decks.get(col, currentCard!!.did).getString("name"))
             actionBar.title = title
         }
         if (!prefShowTopbar) {

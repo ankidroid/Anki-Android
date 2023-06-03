@@ -104,14 +104,14 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
     }
 
     private fun _import(col: Collection) {
-        mDecks = HashUtil.HashMapInit(src.decks.count())
+        mDecks = HashUtil.HashMapInit(src.decks.count(col))
         try {
             // Use transactions for performance and rollbacks in case of error
             dst.db.database.beginTransaction()
             dst.media.db!!.database.beginTransaction()
             if (!mDeckPrefix.isNullOrEmpty()) {
-                val id = dst.decks.id_safe(mDeckPrefix)
-                dst.decks.select(id)
+                val id = dst.decks.id_safe(col, mDeckPrefix)
+                dst.decks.select(col, id)
             }
             Timber.i("Preparing Import")
             _prepareTS()
@@ -417,13 +417,13 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
      */
     /** Given did in src col, return local id.  */
     @KotlinCleanup("use scope function")
-    private fun _did(did: DeckId): Long {
+    private fun _did(col: Collection, did: DeckId): Long {
         // already converted?
         if (mDecks!!.containsKey(did)) {
             return mDecks!![did]!!
         }
         // get the name in src
-        val g = src.decks.get(did)
+        val g = src.decks.get(col, did)
         var name = g.getString("name")
         // if there's a prefix, replace the top level deck
         if (!mDeckPrefix.isNullOrEmpty()) {
@@ -442,24 +442,24 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                 head += "::"
             }
             head += parent
-            val idInSrc = src.decks.id_safe(head!!)
-            _did(idInSrc)
+            val idInSrc = src.decks.id_safe(col, head!!)
+            _did(col, idInSrc)
         }
         // create in local
-        val newid = dst.decks.id_safe(name)
+        val newid = dst.decks.id_safe(col, name)
         // pull conf over
         if (g.has("conf") && g.getLong("conf") != 1L) {
-            val conf = src.decks.getConf(g.getLong("conf"))
-            dst.decks.save(conf!!)
-            dst.decks.updateConf(conf)
-            val g2 = dst.decks.get(newid)
+            val conf = src.decks.getConf(col, g.getLong("conf"))
+            dst.decks.save(col, conf!!)
+            dst.decks.updateConf(col, conf)
+            val g2 = dst.decks.get(col, newid)
             g2.put("conf", g.getLong("conf"))
-            dst.decks.save(g2)
+            dst.decks.save(col, g2)
         }
         // save desc
-        val deck = dst.decks.get(newid)
+        val deck = dst.decks.get(col, newid)
         deck.put("desc", g.getString("desc"))
-        dst.decks.save(deck)
+        dst.decks.save(col, deck)
         // add to deck map and return
         mDecks!![did] = newid
         return newid
@@ -569,7 +569,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
                     existing.add(cid)
                     // update cid, nid, etc
                     val nid = mNotes!![guid]!!.nid
-                    did = _did(did)
+                    did = _did(col, did)
                     val mod = TimeManager.time.intTime()
                     // review cards have a due date relative to collection
                     if (queue == QUEUE_TYPE_REV || queue == QUEUE_TYPE_DAY_LEARN_RELEARN || type == CARD_TYPE_REV) {

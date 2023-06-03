@@ -772,7 +772,7 @@ open class DeckPicker :
     @VisibleForTesting
     suspend fun updateMenuState() {
         optionsMenuState = withOpenColOrNull {
-            val searchIcon = decks.count() >= 10
+            val searchIcon = decks.count(col) >= 10
             val undoIcon = undoName(resources).ifEmpty { null }
             val syncIcon = fetchSyncStatus(col)
             val mediaMigrationState = getMediaMigrationState()
@@ -1088,7 +1088,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                handleDeckSelection(col.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
+                handleDeckSelection(col.decks.selected(col), DeckSelectionType.SKIP_STUDY_OPTIONS)
             }
             else -> {}
         }
@@ -1147,9 +1147,9 @@ open class DeckPicker :
     @RustCleanup("make mDueTree a concrete DeckDueTreeNode")
     @Suppress("UNCHECKED_CAST")
     suspend fun toggleDeckExpand(did: DeckId) {
-        if (!col.decks.children(did).isEmpty()) {
+        if (!col.decks.children(col, did).isEmpty()) {
             // update DB
-            col.decks.collapse(did)
+            col.decks.collapse(col, did)
             // update stored state
             findInDeckTree(dueTree!! as List<TreeNode<DeckDueTreeNode>>, did)?.run {
                 collapsed = !collapsed
@@ -1737,7 +1737,7 @@ open class DeckPicker :
 
     private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
         // Clear the undo history when selecting a new deck
-        if (col.decks.selected() != did) {
+        if (col.decks.selected(col) != did) {
             col.clearUndo()
         }
         if (col.get_config_int("schedVer", 1) == 1) {
@@ -1745,7 +1745,7 @@ open class DeckPicker :
             return
         }
         // Select the deck
-        col.decks.select(did)
+        col.decks.select(col, did)
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
         // Reset the schedule so that we get the counts for the currently selected deck
@@ -1770,7 +1770,7 @@ open class DeckPicker :
                 setAction(R.string.study_more) {
                     val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.ContextMenuConfiguration.LIMITS,
-                        col.decks.selected(),
+                        col.decks.selected(col),
                         true
                     )
                     showDialogFragment(d)
@@ -1788,7 +1788,7 @@ open class DeckPicker :
                 // highlighted correctly.
                 updateDeckList()
             }
-        } else if (col.decks.isDyn(did)) {
+        } else if (col.decks.isDyn(col, did)) {
             // Go to the study options screen if filtered deck with no cards to study
             openStudyOptions(false)
         } else if (!deckDueTreeNode.hasChildren() && col.isEmptyDeck(did)) {
@@ -1810,7 +1810,7 @@ open class DeckPicker :
                 setAction(R.string.custom_study) {
                     val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
-                        col.decks.selected(),
+                        col.decks.selected(col),
                         true
                     )
                     showDialogFragment(d)
@@ -1980,7 +1980,7 @@ open class DeckPicker :
         } catch (e: RuntimeException) {
             Timber.e(e, "RuntimeException setting time remaining")
         }
-        val current = withCol { decks.current().optLong("id") }
+        val current = withCol { decks.current(col).optLong("id") }
         if (mFocusedDeck != current) {
             scrollDecklistToDeck(current)
             mFocusedDeck = current
@@ -1990,7 +1990,7 @@ open class DeckPicker :
     // Callback to show study options for currently selected deck
     fun showContextMenuDeckOptions(did: DeckId) {
         // open deck options
-        if (col.decks.isDyn(did)) {
+        if (col.decks.isDyn(col, did)) {
             // open cram options if filtered deck
             val i = Intent(this@DeckPicker, FilteredDeckOptions::class.java)
             i.putExtra("did", did)
@@ -2011,7 +2011,7 @@ open class DeckPicker :
     fun exportDeck(did: DeckId) {
         mExportingDelegate.showExportDialog(
             ExportDialogParams(
-                message = resources.getString(R.string.confirm_apkg_export_deck, col.decks.get(did).getString("name")),
+                message = resources.getString(R.string.confirm_apkg_export_deck, col.decks.get(col, did).getString("name")),
                 exportType = ExportType.ExportDeck(did)
             )
         )
@@ -2026,8 +2026,8 @@ open class DeckPicker :
                     .putExtra("deckId", did)
             )
             .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
-            .setShortLabel(Decks.basename(col.decks.name(did)))
-            .setLongLabel(col.decks.name(did))
+            .setShortLabel(Decks.basename(col.decks.name(col, did)))
+            .setLongLabel(col.decks.name(col, did))
             .build()
         try {
             val success = ShortcutManagerCompat.requestPinShortcut(this, shortcut, null)
@@ -2047,14 +2047,14 @@ open class DeckPicker :
 
     /** Disables the shortcut of the deck and the children belonging to it.*/
     fun disableDeckAndChildrenShortcuts(did: DeckId) {
-        val childDids = col.decks.childDids(did, col.decks.childMap()).map { it.toString() }
+        val childDids = col.decks.childDids(did, col.decks.childMap(col)).map { it.toString() }
         val deckTreeDids = listOf(did.toString(), *childDids.toTypedArray())
         val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
         ShortcutManagerCompat.disableShortcuts(this, deckTreeDids, errorMessage)
     }
 
     fun renameDeckDialog(did: DeckId) {
-        val currentName = col.decks.name(did)
+        val currentName = col.decks.name(col, did)
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
         createDeckDialog.deckName = currentName
         createDeckDialog.setOnNewDeckCreated {
@@ -2075,7 +2075,7 @@ open class DeckPicker :
             return launchCatchingTask {
                 val changes = withProgress {
                     undoableOp {
-                        newDecks.removeDecks(listOf(did))
+                        newDecks.removeDecks(col, listOf(did))
                     }
                 }
                 showSnackbar(TR.browsingCardsDeleted(changes.count))
@@ -2093,7 +2093,7 @@ open class DeckPicker :
         }
         // Get the number of cards contained in this deck and its subdecks
         val cnt = DeckService.countCardsInDeckTree(col, did)
-        val isDyn = col.decks.isDyn(did)
+        val isDyn = col.decks.isDyn(col, did)
         // Delete empty decks without warning. Filtered decks save filters in the deck data, so require confirmation.
         if (cnt == 0 && !isDyn) {
             deleteDeck(did)
@@ -2102,7 +2102,7 @@ open class DeckPicker :
         }
         // Otherwise we show a warning and require confirmation
         val msg: String
-        val deckName = "'" + col.decks.name(did) + "'"
+        val deckName = "'" + col.decks.name(col, did) + "'"
         msg = if (isDyn) {
             res.getString(R.string.delete_cram_deck_message, deckName)
         } else {
@@ -2120,11 +2120,11 @@ open class DeckPicker :
     fun deleteDeck(did: DeckId) {
         launchCatchingTask {
             // Flag to indicate if the deck being deleted is the current deck.
-            val isRemovingCurrent = (did == col.decks.current().optLong("id"))
+            val isRemovingCurrent = (did == col.decks.current(col).optLong("id"))
             withProgress(resources.getString(R.string.delete_deck)) {
                 withCol {
                     Timber.d("doInBackgroundDeleteDeck")
-                    col.decks.rem(did, true)
+                    col.decks.rem(col, did, true)
                     // TODO: if we had "undo delete note" like desktop client then we won't need this.
                     col.clearUndo()
                 }
@@ -2150,8 +2150,9 @@ open class DeckPicker :
         withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
             withCol {
                 Timber.d("rebuildFiltered: doInBackground - RebuildCram")
-                decks.select(did)
-                sched.rebuildDyn(col, decks.selected())
+
+                decks.select(col, did)
+                sched.rebuildDyn(col, decks.selected(col))
                 updateValuesFromDeck(this, true)
             }
             updateDeckList()
@@ -2160,12 +2161,12 @@ open class DeckPicker :
     }
 
     fun emptyFiltered(did: DeckId) {
-        col.decks.select(did)
+        col.decks.select(col, did)
         launchCatchingTask {
             withProgress {
                 withCol {
                     Timber.d("doInBackgroundEmptyCram")
-                    sched.emptyDyn(col, decks.selected())
+                    sched.emptyDyn(col, decks.selected(col))
                     updateValuesFromDeck(this, true)
                 }
             }

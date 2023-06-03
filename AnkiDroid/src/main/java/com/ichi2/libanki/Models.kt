@@ -125,7 +125,7 @@ class Models() : ModelManager() {
     override fun current(col: Collection, forDeck: Boolean): Model? {
         var m: Model? = null
         if (forDeck) {
-            m = get(col, col.decks.current().optLong("mid", -1))
+            m = get(col, col.decks.current(col).optLong("mid", -1))
         }
         if (m == null) {
             m = get(col, col.get_config("curModel", -1L)!!)

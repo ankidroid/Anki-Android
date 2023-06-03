@@ -62,7 +62,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         ensureExecutionOfScenario(DeckDialogType.FILTERED_DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 // a deck was created
-                assertThat(id, equalTo(col.decks.id(deckName)))
+                assertThat(id, equalTo(col.decks.id(col, deckName)))
                 assertionCalled()
             }
             createDeckDialog.createFilteredDeck(deckName)
@@ -72,12 +72,12 @@ class CreateDeckDialogTest : RobolectricTest() {
     @Test
     @Throws(DeckRenameException::class)
     fun testCreateSubDeckFunction() {
-        val deckParentId = col.decks.id("Deck Name")
+        val deckParentId = col.decks.id(col, "Deck Name")
         val deckName = "filteredDeck"
         ensureExecutionOfScenario(DeckDialogType.SUB_DECK, deckParentId) { createDeckDialog, assertionCalled ->
             createDeckDialog.setOnNewDeckCreated { id: Long ->
-                val deckNameWithParentName = col.decks.getSubdeckName(deckParentId, deckName)
-                assertThat(id, equalTo(col.decks.id(deckNameWithParentName!!)))
+                val deckNameWithParentName = col.decks.getSubdeckName(col, deckParentId, deckName)
+                assertThat(id, equalTo(col.decks.id(col, deckNameWithParentName!!)))
                 assertionCalled()
             }
             createDeckDialog.createSubDeck(deckParentId, deckName)
@@ -90,7 +90,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         ensureExecutionOfScenario(DeckDialogType.DECK) { createDeckDialog, assertionCalled ->
             createDeckDialog.setOnNewDeckCreated { id: Long ->
                 // a deck was created
-                assertThat(id, equalTo(col.decks.byName(deckName)!!.getLong("id")))
+                assertThat(id, equalTo(col.decks.byName(col, deckName)!!.getLong("id")))
                 assertionCalled()
             }
             createDeckDialog.createDeck(deckName)
@@ -105,7 +105,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             createDeckDialog.deckName = deckName
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a deck name was renamed
-                assertThat(deckNewName, equalTo(col.decks.name(id!!)))
+                assertThat(deckNewName, equalTo(col.decks.name(col, id!!)))
                 assertionCalled()
             }
             createDeckDialog.renameDeck(deckNewName)
@@ -132,7 +132,7 @@ class CreateDeckDialogTest : RobolectricTest() {
             }
         }
 
-        suspend fun decksCount() = withCol { decks.count() }
+        suspend fun decksCount() = withCol { decks.count(col) }
         val deckCounter = AtomicInteger(1)
 
         for (i in 0 until 10) {
@@ -185,7 +185,7 @@ class CreateDeckDialogTest : RobolectricTest() {
         assertEquals(deckPicker.optionsMenuState!!.searchIcon, false)
         // a single top-level deck with lots of subdecks should turn the icon on
         withCol {
-            decks.id(deckTreeName(0, 10, "Deck"))
+            decks.id(col, deckTreeName(0, 10, "Deck"))
         }
         deckPicker.updateMenuState()
         assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
@@ -211,7 +211,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     fun `Duplicate subdecks can't be created`() {
         // Subdecks have a 'context' of the parent deck: selecting 'A' and entering 'B' creates 'A::B'
         createDeck("parent::child")
-        val parentDeckId = col.decks.byName("parent")!!.getLong("id")
+        val parentDeckId = col.decks.byName(col, "parent")!!.getLong("id")
         testDialog(DeckDialogType.SUB_DECK, parentDeckId) {
             input = "parent"
             assertThat("'parent::parent' should be valid", positiveButton.isEnabled, equalTo(true))
@@ -223,7 +223,7 @@ class CreateDeckDialogTest : RobolectricTest() {
     }
 
     private fun createDeck(deckName: String) {
-        col.decks.id(deckName)
+        col.decks.id(col, deckName)
     }
 
     /**

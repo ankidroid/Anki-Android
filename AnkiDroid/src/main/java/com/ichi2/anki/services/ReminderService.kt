@@ -73,7 +73,7 @@ class ReminderService : BroadcastReceiver() {
             Timber.w("onReceive - null or closed collection, unable to process reminders")
             return
         }
-        if (col.decks.getConf(dConfId) == null) {
+        if (col.decks.getConf(col, dConfId) == null) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
             val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
                 context,
@@ -136,7 +136,7 @@ class ReminderService : BroadcastReceiver() {
     private fun getDeckOptionDue(col: Collection, dConfId: Long, recur: Boolean): List<DeckDueTreeNode>? {
         // Avoid crashes if the deck option group is deleted while we
         // are working
-        if (col.dbClosed || col.decks.getConf(dConfId) == null) {
+        if (col.dbClosed || col.decks.getConf(col, dConfId) == null) {
             Timber.d("Deck option %s became unavailable while ReminderService was working. Ignoring", dConfId)
             return null
         }
@@ -145,7 +145,7 @@ class ReminderService : BroadcastReceiver() {
             val decks: MutableList<DeckDueTreeNode> = ArrayList(dues.size)
             // This loop over top level deck only. No notification will ever occur for subdecks.
             for (node in dues) {
-                val deck: JSONObject? = col.decks.get(node.did, false)
+                val deck: JSONObject? = col.decks.get(col, node.did, false)
                 // Dynamic deck has no "conf", so are not added here.
                 if (deck != null && deck.optLong("conf") == dConfId) {
                     decks.add(node)

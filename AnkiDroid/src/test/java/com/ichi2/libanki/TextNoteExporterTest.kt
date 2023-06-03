@@ -47,7 +47,7 @@ class TextNoteExporterTest(
         n2.setItem("Front", "baz")
         n2.setItem("Back", "qux")
         try {
-            n2.model().put("did", col.decks.id("new col"))
+            n2.model().put("did", col.decks.id(col, "new col"))
         } catch (filteredAncestor: DeckRenameException) {
             Timber.e(filteredAncestor)
         }

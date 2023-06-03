@@ -235,7 +235,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun showCustomStudyContextMenu() {
         val ankiActivity = requireActivity() as AnkiActivity
         val contextMenu = instantiate(ankiActivity, CustomStudyDialog::class.java)
-        contextMenu.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, col!!.decks.selected())
+        contextMenu.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, col!!.decks.selected(col!!))
         ankiActivity.showDialogFragment(contextMenu)
     }
 
@@ -270,14 +270,15 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 return true
             }
             R.id.action_deck_or_study_options -> {
+                val col = col!!
                 Timber.i("StudyOptionsFragment:: Deck or study options button pressed")
-                if (col!!.decks.isDyn(col!!.decks.selected())) {
+                if (col.decks.isDyn(col, col.decks.selected(col))) {
                     openFilteredDeckOptions()
                 } else {
                     val i = if (BackendFactory.defaultLegacySchema) {
                         Intent(activity, DeckOptionsActivity::class.java)
                     } else {
-                        com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
+                        com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col.decks.current(col).id)
                     }
                     Timber.i("Opening deck options for activity result")
                     onDeckOptionsActivityResult.launch(i)
@@ -308,15 +309,18 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 return true
             }
             R.id.action_rename -> {
-                (activity as DeckPicker).renameDeckDialog(col!!.decks.selected())
+                val col = col!!
+                (activity as DeckPicker).renameDeckDialog(col.decks.selected(col))
                 return true
             }
             R.id.action_delete -> {
-                (activity as DeckPicker).confirmDeckDeletion(col!!.decks.selected())
+                val col = col!!
+                (activity as DeckPicker).confirmDeckDeletion(col.decks.selected(col))
                 return true
             }
             R.id.action_export -> {
-                (activity as DeckPicker).exportDeck(col!!.decks.selected())
+                val col = col!!
+                (activity as DeckPicker).exportDeck(col.decks.selected(col))
                 return true
             }
             else -> return false
@@ -327,7 +331,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val result = requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
             withCol {
                 Timber.d("doInBackground - RebuildCram")
-                sched.rebuildDyn(col, decks.selected())
+                sched.rebuildDyn(col, decks.selected(col))
                 updateValuesFromDeck(this, true)
             }
         }
@@ -339,7 +343,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val result = requireActivity().withProgress(resources.getString(R.string.empty_filtered_deck)) {
             withCol {
                 Timber.d("doInBackgroundEmptyCram")
-                sched.emptyDyn(col, decks.selected())
+                sched.emptyDyn(col, decks.selected(col))
                 updateValuesFromDeck(this, true)
             }
         }
@@ -359,7 +363,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             mToolbar!!.setOnMenuItemClickListener(this)
             val menu = mToolbar!!.menu
             // Switch on or off rebuild/empty/custom study depending on whether or not filtered deck
-            if (col != null && col.decks.isDyn(col.decks.selected())) {
+            if (col != null && col.decks.isDyn(col, col.decks.selected(col))) {
                 menu.findItem(R.id.action_rebuild).isVisible = true
                 menu.findItem(R.id.action_empty).isVisible = true
                 menu.findItem(R.id.action_custom_study).isVisible = false
@@ -454,7 +458,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         if (mLoadWithDeckOptions) {
             mLoadWithDeckOptions = false
-            val deck = col!!.decks.current()
+            val deck = col!!.decks.current(col!!)
             if (deck.isDyn && deck.has("empty")) {
                 deck.remove("empty")
             }
@@ -597,7 +601,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             // Reinitialize controls in case changed to filtered deck
             initAllContentViews(mStudyOptionsView!!)
             // Set the deck name
-            val deck = col.decks.current()
+            val deck = col.decks.current(col)
             // Main deck name
             val fullName = deck.getString("name")
             val name = Decks.path(fullName)
@@ -650,7 +654,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             val desc: String = if (isDynamic) {
                 resources.getString(R.string.dyn_deck_desc)
             } else {
-                col.decks.getActualDescription()
+                col.decks.getActualDescription(col)
             }
             if (desc.isNotEmpty()) {
                 textDeckDescription.text = formatDescription(desc)
@@ -678,7 +682,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 mFullNewCountThread = Thread {
                     // TODO: refactor code to not rewrite this query, add to Sched.totalNewForCurrentDeck(col)
                     val query = "SELECT count(*) FROM cards WHERE did IN " +
-                        Utils.ids2str(col.decks.active()) +
+                        Utils.ids2str(col.decks.active(col)) +
                         " AND queue = " + Consts.QUEUE_TYPE_NEW
                     val fullNewCount = col.db.queryScalar(query)
                     if (fullNewCount > 0) {

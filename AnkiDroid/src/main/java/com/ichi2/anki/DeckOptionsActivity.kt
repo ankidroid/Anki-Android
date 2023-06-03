@@ -48,8 +48,6 @@ import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.themes.Themes
 import com.ichi2.ui.AppCompatPreferenceActivity
 import com.ichi2.utils.*
-import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.NamedJSONComparator
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
@@ -74,7 +72,7 @@ class DeckOptionsActivity :
         override fun cacheValues() {
             Timber.i("DeckOptions - CacheValues")
             try {
-                mOptions = col.decks.confForDid(deck.getLong("id"))
+                mOptions = col.decks.confForDid(col, deck.getLong("id"))
 
                 mValues.apply {
                     set("name", deck.getString("name"))
@@ -122,7 +120,7 @@ class DeckOptionsActivity :
                     set("lapLeechThres", lapOptions.getString("leechFails"))
                     set("lapLeechAct", lapOptions.getString("leechAction"))
                     // options group management
-                    set("currentConf", col.decks.getConf(deck.getLong("conf"))!!.getString("name"))
+                    set("currentConf", col.decks.getConf(col, deck.getLong("conf"))!!.getString("name"))
                 }
                 // reminders
                 if (mOptions.has("reminder")) {
@@ -243,7 +241,7 @@ class DeckOptionsActivity :
                             "replayQuestion" -> mOptions.put("replayq", value)
                             "desc" -> {
                                 deck.put("desc", value)
-                                col.decks.save(deck)
+                                col.decks.save(col, deck)
                             }
                             "newSteps" -> mOptions.getJSONObject("new").put("delays", StepsPreference.convertToJSON((value as String)))
                             "lapSteps" -> mOptions.getJSONObject("lapse").put("delays", StepsPreference.convertToJSON((value as String)))
@@ -251,7 +249,7 @@ class DeckOptionsActivity :
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
                                 confChangeHandler("change Deck configuration") {
-                                    mOptions = decks.getConf(newConfId)!!
+                                    mOptions = decks.getConf(col, newConfId)!!
                                     changeDeckConfiguration(deck, mOptions, this)
                                 }
                             }
@@ -264,7 +262,7 @@ class DeckOptionsActivity :
                             "confReset" -> if (value as Boolean) {
                                 // reset configuration
                                 confChangeHandler("doInBackgroundConfReset") {
-                                    decks.restoreToDefault(mOptions)
+                                    decks.restoreToDefault(col, mOptions)
                                     save()
                                 }
                             }
@@ -272,9 +270,9 @@ class DeckOptionsActivity :
                                 val newName = value as String
                                 if (newName.isNotEmpty()) {
                                     // New config clones current config
-                                    val id = col.decks.confId(newName, mOptions.toString())
+                                    val id = col.decks.confId(col, newName, mOptions.toString())
                                     deck.put("conf", id)
-                                    col.decks.save(deck)
+                                    col.decks.save(col, deck)
                                 }
                             }
                             "confRemove" -> if (mOptions.getLong("id") == 1L) {
@@ -313,9 +311,9 @@ class DeckOptionsActivity :
                                     try {
                                         withCol {
                                             Timber.d("confSetSubdecks")
-                                            val children = col.decks.children(deck.getLong("id"))
+                                            val children = col.decks.children(col, deck.getLong("id"))
                                             for (childDid in children.values) {
-                                                val child = col.decks.get(childDid)
+                                                val child = col.decks.get(col, childDid)
                                                 if (child.isDyn) continue
                                                 changeDeckConfiguration(child, mOptions, col)
                                             }
@@ -408,7 +406,7 @@ class DeckOptionsActivity :
 
                 // save conf
                 try {
-                    col.decks.save(mOptions)
+                    col.decks.save(col, mOptions)
                 } catch (e: RuntimeException) {
                     Timber.e(e, "DeckOptions - RuntimeException on saving conf")
                     CrashReportService.sendExceptionReport(e, "DeckOptionsSaveConf")
@@ -434,7 +432,7 @@ class DeckOptionsActivity :
             @Throws(ConfirmModSchemaException::class)
             private fun remConf() {
                 // Remove options group, asking user to confirm full sync if necessary
-                col.decks.remConf(mOptions.getLong("id"))
+                col.decks.remConf(col, mOptions.getLong("id"))
                 // Run the CPU intensive re-sort operation in a background thread
                 val conf = mOptions
                 confChangeHandler("Remove configuration") {
@@ -445,7 +443,7 @@ class DeckOptionsActivity :
                     // Cards must be reordered according to the default conf.
                     val order = conf.getJSONObject("new").getInt("order")
                     val defaultOrder =
-                        col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
+                        col.decks.getConf(col, 1)!!.getJSONObject("new").getInt("order")
                     if (order != defaultOrder) {
                         conf.getJSONObject("new").put("order", defaultOrder)
                         col.sched.resortConf(col, conf)
@@ -473,9 +471,9 @@ class DeckOptionsActivity :
         }
         val extras = intent.extras
         deck = if (extras != null && extras.containsKey("did")) {
-            col.decks.get(extras.getLong("did"))
+            col.decks.get(col, extras.getLong("did"))
         } else {
-            col.decks.current()
+            col.decks.current(col)
         }
         registerExternalStorageListener()
 
@@ -574,7 +572,7 @@ class DeckOptionsActivity :
     // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
     private fun buildLists() {
         val deckConfPref = findPreference("deckConf") as ListPreference
-        val confs = col.decks.allConf()
+        val confs = col.decks.allConf(col)
         Collections.sort(confs, NamedJSONComparator.INSTANCE)
         val confValues = arrayOfNulls<String>(confs.size)
         val confLabels = arrayOfNulls<String>(confs.size)
@@ -627,7 +625,7 @@ class DeckOptionsActivity :
             var count = 0
             val conf = deck.getLong("conf")
             @KotlinCleanup("Join both if blocks")
-            for (deck in col.decks.all()) {
+            for (deck in col.decks.all(col)) {
                 if (deck.isDyn) {
                     continue
                 }
@@ -644,7 +642,7 @@ class DeckOptionsActivity :
     private val optionsGroupName: String
         get() {
             val confId = pref.getLong("deckConf", 0)
-            return col.decks.getConf(confId)!!.getString("name")
+            return col.decks.getConf(col, confId)!!.getString("name")
         }
 
     /**
@@ -655,9 +653,9 @@ class DeckOptionsActivity :
         get() {
             var count = 0
             val did = deck.getLong("id")
-            val children = col.decks.children(did)
+            val children = col.decks.children(col, did)
             for (childDid in children.values) {
-                val child = col.decks.get(childDid)
+                val child = col.decks.get(col, childDid)
                 if (child.isDyn) {
                     continue
                 }

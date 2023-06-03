@@ -453,7 +453,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
 
     protected fun addDeck(deckName: String?): Long {
         return try {
-            col.decks.id(deckName!!)
+            col.decks.id(col, deckName!!)
         } catch (filteredAncestor: DeckRenameException) {
             throw RuntimeException(filteredAncestor)
         }
@@ -461,7 +461,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
 
     protected fun addDynamicDeck(name: String?): Long {
         return try {
-            col.decks.newDyn(name!!)
+            col.decks.newDyn(col, name!!)
         } catch (filteredAncestor: DeckRenameException) {
             throw RuntimeException(filteredAncestor)
         }

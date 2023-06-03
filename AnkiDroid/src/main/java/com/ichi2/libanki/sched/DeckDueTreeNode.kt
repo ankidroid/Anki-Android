@@ -74,9 +74,9 @@ class DeckDueTreeNode(
             }
         }
         // limit the counts to the deck's limits
-        val conf = col.decks.confForDid(did)
+        val conf = col.decks.confForDid(col, did)
         if (conf.isStd) {
-            val deck = col.decks.get(did)
+            val deck = col.decks.get(col, did)
             limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1))
             if (addRev) {
                 limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1))

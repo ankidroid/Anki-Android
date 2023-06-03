@@ -80,9 +80,9 @@ class FinderTest : RobolectricTest() {
     }
 
     private fun enableBurySiblings() {
-        val config = col.decks.allConf()[0]
+        val config = col.decks.allConf(col)[0]
         config.getJSONObject("new").put("bury", true)
-        col.decks.save(config)
+        col.decks.save(col, config)
     }
 
     private fun burySiblings(sched: SchedV2, toManuallyBury: Card): Card {
@@ -424,7 +424,7 @@ class FinderTest : RobolectricTest() {
         val deck = "*Yr1::Med2::CAS4::F4: Renal::BRS (zanki)::HY"
 
         val currentDid = addDeck(deck)
-        col.decks.select(currentDid)
+        col.decks.select(col, currentDid)
         val note = col.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar")

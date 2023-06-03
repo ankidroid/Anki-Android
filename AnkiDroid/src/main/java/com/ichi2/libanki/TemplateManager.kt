@@ -170,7 +170,7 @@ class TemplateManager {
                 // add (most) special fields
                 fields["Tags"] = _note.stringTags(col).trim()
                 fields["Type"] = _note_type.name
-                fields["Deck"] = _col.decks.name(_card.oDid or _card.did)
+                fields["Deck"] = _col.decks.name(col, _card.oDid or _card.did)
                 fields["Subdeck"] = Decks.basename(fields["Deck"]!!)
                 if (_template != null) {
                     fields["Card"] = _template!!["name"] as String

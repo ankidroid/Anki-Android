@@ -104,7 +104,7 @@ class DeckSpinnerSelection(
                 if (!addNote && currentEditedCard != null && currentEditedCard.did == thisDid) {
                     // If the current card is in a dynamic deck, it can stay there. Hence current deck is added
                     // to the spinner, even if it is dynamic.
-                    context.applicationContext.getString(R.string.current_and_default_deck, currentName, col.decks.name(currentEditedCard.oDid))
+                    context.applicationContext.getString(R.string.current_and_default_deck, currentName, col.decks.name(col, currentEditedCard.oDid))
                 } else {
                     continue
                 }
@@ -135,7 +135,7 @@ class DeckSpinnerSelection(
      * @return All decks, except maybe default if it should be hidden.
      */
     fun computeDropDownDecks(): List<Deck> {
-        val sortedDecks = col.decks.allSorted().toMutableList()
+        val sortedDecks = col.decks.allSorted(col).toMutableList()
         if (shouldHideDefaultDeck()) {
             sortedDecks.removeIf { x: Deck -> x.getLong("id") == Consts.DEFAULT_DECK_ID }
         }
@@ -207,7 +207,7 @@ class DeckSpinnerSelection(
                 val position = if (showAllDecks) dropDownDeckIdx + 1 else dropDownDeckIdx
                 spinner.setSelection(position)
                 if (setAsCurrentDeck) {
-                    col.decks.select(deckId)
+                    col.decks.select(col, deckId)
                 }
                 return true
             }

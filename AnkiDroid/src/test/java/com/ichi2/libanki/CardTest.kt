@@ -328,7 +328,7 @@ class CardTest : RobolectricTest() {
         assertEquals("", c.dueString(col))
 
         // Dynamic deck
-        val dyn = decks.newDyn("dyn")
+        val dyn = decks.newDyn(col, "dyn")
         c.oDid = c.did
         c.did = dyn
         assertEquals("(filtered)", c.nextDue(col))

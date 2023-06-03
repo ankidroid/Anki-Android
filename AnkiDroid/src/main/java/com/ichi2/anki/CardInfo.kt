@@ -319,7 +319,7 @@ class CardInfo : AnkiActivity() {
                 val model = col.models.get(col, c.note(col).mid)
                 val cardType = getCardType(col, c, model)
                 val noteType = model!!.getString("name")
-                val deckName = col.decks.get(c.did).getString("name")
+                val deckName = col.decks.get(col, c.did).getString("name")
                 val noteId = c.nid
                 var interval: Int? = c.ivl
                 if (interval!! <= 0) {

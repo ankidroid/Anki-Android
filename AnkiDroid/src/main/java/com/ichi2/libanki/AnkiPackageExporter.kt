@@ -58,7 +58,7 @@ open class Exporter(protected val col: Collection, protected val did: DeckId?) {
         cids = if (did == null) {
             col.db.queryLongList("select id from cards").toTypedArray()
         } else {
-            col.decks.cids(did, true).toTypedArray()
+            col.decks.cids(col, did, true).toTypedArray()
         }
         count = cids.size
         return cids
@@ -201,11 +201,11 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
         Timber.d("Copy decks")
         var dids: MutableCollection<Long?>? = null
         if (did != null) {
-            dids = HashSet(col.decks.children(did).values)
+            dids = HashSet(col.decks.children(col, did).values)
             dids.add(did)
         }
         val dconfs = JSONObject()
-        for (d in col.decks.all()) {
+        for (d in col.decks.all(col)) {
             if ("1" == d.getString("id")) {
                 continue
             }
@@ -222,13 +222,13 @@ open class AnkiExporter(col: Collection, did: DeckId?, val includeSched: Boolean
                 // scheduling not included, so reset deck settings to default
                 destinationDeck.put("conf", 1)
             }
-            dst.decks.update(destinationDeck)
+            dst.decks.update(col, destinationDeck)
         }
         // copy used deck confs
         Timber.d("Copy deck options")
-        for (dc in col.decks.allConf()) {
+        for (dc in col.decks.allConf(col)) {
             if (dconfs.has(dc.getString("id"))) {
-                dst.decks.updateConf(dc)
+                dst.decks.updateConf(col, dc)
             }
         }
         // find used media

@@ -91,12 +91,12 @@ open class SchedV2Test : RobolectricTest() {
         // 30 minutes learn ahead. required as we have 20m delay
         col.set_config("collapseTime", 1800)
         val homeDeckId = addDeck("Poorretention")
-        val homeDeckConf = col.decks.confForDid(homeDeckId)
+        val homeDeckConf = col.decks.confForDid(col, homeDeckId)
         val lapse = homeDeckConf.getJSONObject("lapse")
         lapse.put("minInt", 2)
         lapse.put("mult", 0.7)
         lapse.put("delays", JSONArray("[20]"))
-        col.decks.save(homeDeckConf)
+        col.decks.save(col, homeDeckConf)
         ensureLapseMatchesSppliedAnkiDesktopConfig(lapse)
         col.flush()
         val dynId = addDynamicDeck("Dyn")
@@ -274,7 +274,7 @@ open class SchedV2Test : RobolectricTest() {
         val col = colV2
         // a delay of 0 crashed the app (step of 0.01).
         addNoteUsingBasicModel("Hello", "World")
-        col.decks.allConf()[0].getJSONObject("new")
+        col.decks.allConf(col)[0].getJSONObject("new")
             .put("delays", JSONArray(listOf(0.01, 10)))
         val c = col.sched.card(col)
         MatcherAssert.assertThat(c, Matchers.notNullValue())
@@ -367,7 +367,7 @@ open class SchedV2Test : RobolectricTest() {
         // disabled for now, as the learn fudging makes this randomly fail
         // // the default order should ensure siblings are not seen together, and
         // // should show all cards
-        // Model m = col.getModels().current(); Models mm = col.getModels()
+        // Model m = col.getModels().current(col); Models mm = col.getModels()
         // JSONObject t = mm.newTemplate("Reverse")
         // t['qfmt'] = "{{Back}}"
         // t['afmt'] = "{{Front}}"
@@ -403,8 +403,8 @@ open class SchedV2Test : RobolectricTest() {
             col.addNote(note)
         }
         // give the child deck a different configuration
-        val c2 = col.decks.confId("new conf")
-        col.decks.setConf(col.decks.get(deck2), c2)
+        val c2 = col.decks.confId(col, "new conf")
+        col.decks.setConf(col, col.decks.get(col, deck2), c2)
         col.reset()
         // both confs have defaulted to a limit of 20
         Assert.assertEquals(20, col.sched.newCount(col).toLong())
@@ -412,15 +412,15 @@ open class SchedV2Test : RobolectricTest() {
         val c = card!!
         Assert.assertEquals(1, c.did)
         // limit the parent to 10 cards, meaning we get 10 in total
-        val conf1 = col.decks.confForDid(1)
+        val conf1 = col.decks.confForDid(col, 1)
         conf1.getJSONObject("new").put("perDay", 10)
-        col.decks.save(conf1)
+        col.decks.save(col, conf1)
         col.reset()
         Assert.assertEquals(10, col.sched.newCount(col).toLong())
         // if we limit child to 4, we should get 9
-        val conf2 = col.decks.confForDid(deck2)
+        val conf2 = col.decks.confForDid(col, deck2)
         conf2.getJSONObject("new").put("perDay", 4)
-        col.decks.save(conf2)
+        col.decks.save(col, conf2)
         col.reset()
         Assert.assertEquals(9, col.sched.newCount(col).toLong())
     }
@@ -436,11 +436,11 @@ open class SchedV2Test : RobolectricTest() {
         val c = card!!
         val conf = col.sched._cardConf(col, c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0)))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         col.sched.answerCard(col, c, BUTTON_TWO)
         // should handle gracefully
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0)))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         col.sched.answerCard(col, c, BUTTON_TWO)
     }
 
@@ -468,7 +468,7 @@ open class SchedV2Test : RobolectricTest() {
         assertNotNull(c)
         val conf = col.sched._cardConf(col, c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(0.5, 3.0, 10.0)))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         // fail it
         col.sched.answerCard(col, c, BUTTON_ONE)
         // it should have three reps left to graduation
@@ -575,9 +575,9 @@ open class SchedV2Test : RobolectricTest() {
             type = CARD_TYPE_REV
         }
         c.flush(col)
-        val conf = col.decks.confForDid(1)
+        val conf = col.decks.confForDid(col, 1)
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
 
         // fail the card
         col.reset()
@@ -628,7 +628,7 @@ open class SchedV2Test : RobolectricTest() {
         var c = card!!
         var conf = col.sched._cardConf(col, c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 10.0, 1440.0, 2880.0)))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         // pass it
         col.sched.answerCard(col, c, BUTTON_THREE)
         // two reps to graduate, 1 more today
@@ -674,7 +674,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(Counts(0, 0, 1), col.sched.counts(col))
         conf = col.sched._cardConf(col, c)
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf(1440.0)))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         c = card!!
         col.sched.answerCard(col, c, BUTTON_ONE)
         Assert.assertEquals(QUEUE_TYPE_DAY_LEARN_RELEARN, c.queue)
@@ -741,9 +741,9 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(2650, c.factor)
         // leech handling
         // //////////////////////////////////////////////////////////////////////////////////////////////////
-        val conf = col.decks.getConf(1)
+        val conf = col.decks.getConf(col, 1)
         conf!!.getJSONObject("lapse").put("leechAction", LEECH_SUSPEND)
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         c = cardcopy.clone()
         c.lapses = 7
         c.flush(col)
@@ -769,16 +769,16 @@ open class SchedV2Test : RobolectricTest() {
     fun test_review_limits() {
         TimeManager.reset()
         val col = colV2
-        val parent = col.decks.get(addDeck("parent"))
-        val child = col.decks.get(addDeck("parent::child"))
-        val pconf = col.decks.getConf(col.decks.confId("parentConf"))
-        val cconf = col.decks.getConf(col.decks.confId("childConf"))
+        val parent = col.decks.get(col, addDeck("parent"))
+        val child = col.decks.get(col, addDeck("parent::child"))
+        val pconf = col.decks.getConf(col, col.decks.confId(col, "parentConf"))
+        val cconf = col.decks.getConf(col, col.decks.confId(col, "childConf"))
         pconf!!.getJSONObject("rev").put("perDay", 5)
-        col.decks.updateConf(pconf)
-        col.decks.setConf(parent, pconf.getLong("id"))
+        col.decks.updateConf(col, pconf)
+        col.decks.setConf(col, parent, pconf.getLong("id"))
         cconf!!.getJSONObject("rev").put("perDay", 10)
-        col.decks.updateConf(cconf)
-        col.decks.setConf(child, cconf.getLong("id"))
+        col.decks.updateConf(col, cconf)
+        col.decks.setConf(col, child, cconf.getLong("id"))
         val m = col.models.current(col)
         m!!.put("did", child.getLong("id"))
         col.models.save(col, m, false)
@@ -809,7 +809,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(10, tree.children[0].value.revCount.toLong())
 
         // .counts() should match
-        col.decks.select(child.getLong("id"))
+        col.decks.select(col, child.getLong("id"))
         col.reset()
         Assert.assertEquals(Counts(0, 0, 10), col.sched.counts(col))
 
@@ -868,9 +868,9 @@ open class SchedV2Test : RobolectricTest() {
         )
 
         // if hard factor is <= 1, then hard may not increase
-        val conf = col.decks.confForDid(1)
+        val conf = col.decks.confForDid(col, 1)
         conf.getJSONObject("rev").put("hardFactor", 1)
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         Assert.assertEquals(
             "1 d",
             AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(col, targetContext, c, BUTTON_TWO))
@@ -966,10 +966,10 @@ open class SchedV2Test : RobolectricTest() {
         note.setItem("Back", "two")
         col.addNote(note)
         col.reset()
-        val conf = col.decks.confForDid(1)
+        val conf = col.decks.confForDid(col, 1)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(0.5, 3.0, 10.0)))
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf(1.0, 5.0, 9.0)))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         val c = card!!
         // new cards
         // //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1014,7 +1014,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(60, col.sched.nextIvl(col, c, BUTTON_ONE))
         // or 1 day if relearn is false
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         Assert.assertEquals(Stats.SECONDS_PER_DAY, col.sched.nextIvl(col, c, BUTTON_ONE))
         // (* 100 1.2 SECONDS_PER_DAY)10368000.0
         Assert.assertEquals(10368000, col.sched.nextIvl(col, c, BUTTON_TWO))
@@ -1215,7 +1215,7 @@ open class SchedV2Test : RobolectricTest() {
         val c = card!!
         val conf = col.sched._cardConf(col, c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 10.0, 61.0)))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         col.sched.answerCard(col, c, BUTTON_ONE)
         Assert.assertEquals(CARD_TYPE_LRN, c.queue)
         Assert.assertEquals(QUEUE_TYPE_LRN, c.type)
@@ -1270,9 +1270,9 @@ open class SchedV2Test : RobolectricTest() {
         col.addNote(note2)
         // cram deck
         val did = addDynamicDeck("Cram")
-        val cram = col.decks.get(did)
+        val cram = col.decks.get(col, did)
         cram.put("resched", false)
-        col.decks.save(cram)
+        col.decks.save(col, cram)
         col.sched.rebuildDyn(col, did)
         col.reset()
         // grab the first card
@@ -1555,7 +1555,7 @@ open class SchedV2Test : RobolectricTest() {
         note.model().put("did", addDeck("foo::baz"))
         col.addNote(note)
         col.reset()
-        Assert.assertEquals(5, col.decks.allSortedNames().size.toLong())
+        Assert.assertEquals(5, col.decks.allSortedNames(col).size.toLong())
         val tree = col.sched.deckDueTree(col)[0]
         Assert.assertEquals("Default", tree.value.lastDeckNameComponent)
         // sum of child and parent
@@ -1747,7 +1747,7 @@ open class SchedV2Test : RobolectricTest() {
         c.flush(col)
         val conf = col.sched._cardConf(col, c)
         conf.getJSONObject("lapse").put("mult", 0.5)
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         c = card!!
         advanceRobolectricLooper()
         col.sched.answerCard(col, c, BUTTON_ONE)
@@ -1807,7 +1807,7 @@ open class SchedV2Test : RobolectricTest() {
         c.flush(col)
         val conf = col.sched._cardConf(col, c)
         conf.getJSONObject("lapse").put("mult", 0.5)
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         col.reset()
         c = card!!
         col.sched.answerCard(col, c, BUTTON_ONE)
@@ -1885,7 +1885,7 @@ open class SchedV2Test : RobolectricTest() {
         val sched = col.sched
         addNoteUsingBasicModel("foo", "bar")
         val did = addDynamicDeck("test")
-        val deck = decks.get(did)
+        val deck = decks.get(col, did)
         deck.put("resched", false)
         sched.rebuildDyn(col, did)
         col.reset()

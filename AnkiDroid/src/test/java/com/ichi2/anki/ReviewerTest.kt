@@ -63,6 +63,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun verifyStartupNoCollection() {
+        // TODO: FAILED
         enableNullCollection()
         ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.col } } }
     }
@@ -158,7 +159,7 @@ class ReviewerTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     fun testMultipleCards() = runTest {
         addNoteWithThreeCards()
-        val nw = col.decks.confForDid(1).getJSONObject("new")
+        val nw = col.decks.confForDid(col, 1).getJSONObject("new")
         val time = collectionTime
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
 
@@ -186,7 +187,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun testLrnQueueAfterUndo() = runTest {
-        val nw = col.decks.confForDid(1).getJSONObject("new")
+        val nw = col.decks.confForDid(col, 1).getJSONObject("new")
         val time = TimeManager.time as MockTime
         nw.put("delays", JSONArray(intArrayOf(1, 10, 60, 120)))
 
@@ -234,7 +235,7 @@ class ReviewerTest : RobolectricTest() {
         basic!!.put("did", didAb)
         addNoteUsingBasicModel("foo", "bar")
         val didA = addDeck("A")
-        decks.select(didA)
+        decks.select(col, didA)
         val reviewer = startReviewer()
         waitForAsyncTasksToComplete()
         assertThat(reviewer.supportActionBar!!.title, equalTo("B"))
@@ -251,13 +252,13 @@ class ReviewerTest : RobolectricTest() {
         addNoteUsingBasicModel("foo", "bar")
 
         val didA = addDeck("A")
-        decks.select(didA)
+        decks.select(col, didA)
 
         val reviewer = startReviewer()
         val javaScriptFunction = reviewer.javaScriptFunction()
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.ankiGetDeckName(), equalTo("B"))
+        assertThat(javaScriptFunction.ankiGetDeckName(col), equalTo("B"))
     }
 
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {

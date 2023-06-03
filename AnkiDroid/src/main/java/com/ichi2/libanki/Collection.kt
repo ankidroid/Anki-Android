@@ -216,8 +216,8 @@ open class Collection(
     }
 
     @KotlinCleanup("remove :DeckManager, remove ? on return value")
-    protected open fun initDecks(deckConf: String?): DeckManager? {
-        val deckManager: DeckManager = Decks(this)
+    protected open fun initDecks(col: Collection, deckConf: String?): DeckManager? {
+        val deckManager: DeckManager = Decks()
         // models.load(loadColumn("models")); This code has been
         // moved to `CollectionHelper::loadLazyCollection` for
         // efficiency Models are loaded lazily on demand. The
@@ -318,7 +318,7 @@ open class Collection(
                 deckConf = cursor.getString(7)
                 tags.load(cursor.getString(8))
             }
-        decks = initDecks(deckConf)!!
+        decks = initDecks(col, deckConf)!!
     }
 
     @KotlinCleanup("make sChunk lazy and remove this")
@@ -405,7 +405,7 @@ open class Collection(
     fun save(name: String? = null, mod: Long = 0) {
         // let the managers conditionally flush
         models.flush(col)
-        decks.flush()
+        decks.flush(col)
         tags.flush()
         // and flush deck + bump mod if db has been changed
         if (db.mod) {
@@ -517,7 +517,7 @@ open class Collection(
         mUsn += 1
         models.beforeUpload(col)
         tags.beforeUpload()
-        decks.beforeUpload()
+        decks.beforeUpload(col)
         modSchemaNoCheck()
         ls = scm
         Timber.i("Compacting database before full upload")
@@ -850,11 +850,11 @@ open class Collection(
                             Timber.w(e)
                             // do nothing
                         }
-                        if (decks.isDyn(did!!)) {
+                        if (decks.isDyn(col, did!!)) {
                             did = 1L
                         }
                         // if the deck doesn't exist, use default instead
-                        did = decks.get(did).getLong("id")
+                        did = decks.get(col, did).getLong("id")
                         // give it a new id instead
                         data.add(arrayOf(ts, nid, did, tord, now, usn, due))
                         ts += 1
@@ -914,7 +914,7 @@ open class Collection(
         // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
         if (did == 0L) {
             did = template.optLong("did", 0)
-            if (did > 0 && decks.get(did, false) != null) {
+            if (did > 0 && decks.get(col, did, false) != null) {
                 // did is valid
             } else if (parameterDid != 0L) {
                 did = parameterDid
@@ -924,7 +924,7 @@ open class Collection(
         }
         card.did = did
         // if invalid did, use default instead
-        val deck = decks.get(card.did)
+        val deck = decks.get(col, card.did)
         if (deck.isDyn) {
             // must not be a filtered deck
             card.did = Consts.DEFAULT_DECK_ID
@@ -939,7 +939,7 @@ open class Collection(
     }
 
     private fun _dueForDid(did: DeckId, due: Int): Int {
-        val conf = decks.confForDid(did)
+        val conf = decks.confForDid(col, did)
         // in order due?
         return if (conf.getJSONObject("new")
             .getInt("order") == Consts.NEW_CARDS_DUE
@@ -1104,7 +1104,7 @@ open class Collection(
         val cardNum = ord + 1
         fields["Tags"] = tags.trim { it <= ' ' }
         fields["Type"] = model.getString("name")
-        fields["Deck"] = decks.name(did)
+        fields["Deck"] = decks.name(col, did)
         val baseName = Decks.basename(fields["Deck"]!!)
         fields["Subdeck"] = baseName
         fields["CardFlag"] = _flagNameFromCardFlags(flags)
@@ -1703,7 +1703,7 @@ open class Collection(
         notifyProgress.run()
 
         // obtain a list of all valid dconf IDs
-        val allConf = decks.allConf()
+        val allConf = decks.allConf(col)
         val configIds = HashUtil.HashSetInit<Long>(allConf.size)
         for (conf in allConf) {
             configIds.add(conf.getLong("id"))
@@ -1711,7 +1711,7 @@ open class Collection(
         notifyProgress.run()
         @KotlinCleanup("use count { }")
         var changed = 0
-        for (d in decks.all()) {
+        for (d in decks.all(col)) {
             // dynamic decks do not have dconf
             if (Decks.isDynamic(d)) {
                 continue
@@ -1725,7 +1725,7 @@ open class Collection(
         val ret: MutableList<String?> = ArrayList(1)
         if (changed > 0) {
             ret.add("Fixed $changed decks with invalid config")
-            decks.save()
+            decks.save(col)
         }
         return ret
     }
@@ -1746,7 +1746,7 @@ open class Collection(
         notifyProgress.run()
 
         // get the deck Ids to query
-        val dynDeckIds = decks.allDynamicDeckIds()
+        val dynDeckIds = decks.allDynamicDeckIds(col)
         // make it mutable
         val dynIdsAndZero: MutableList<Long> = ArrayList(listOf(*dynDeckIds))
         dynIdsAndZero.add(0L)
@@ -1764,8 +1764,8 @@ open class Collection(
         // we use a ! prefix to keep it at the top of the deck list
         val recoveredDeckName =
             "! " + context.getString(R.string.check_integrity_recovered_deck_name)
-        val nextDeckId = decks.id_safe(recoveredDeckName)
-        decks.flush()
+        val nextDeckId = decks.id_safe(col, recoveredDeckName)
+        decks.flush(col)
         db.execute(
             "update cards " +
                 "set did = ?, " +
@@ -1907,7 +1907,7 @@ open class Collection(
         notifyProgress.run()
         @KotlinCleanup(".count { }")
         var fixCount = 0
-        for (id in decks.allDynamicDeckIds()) {
+        for (id in decks.allDynamicDeckIds(col)) {
             try {
                 if (hasDeckOptions(id)) {
                     removeDeckOptions(id)
@@ -1918,7 +1918,7 @@ open class Collection(
             }
         }
         if (fixCount > 0) {
-            decks.save()
+            decks.save(col)
             problems.add(String.format(Locale.US, "%d dynamic deck(s) had deck options.", fixCount))
         }
         return problems
@@ -1926,7 +1926,7 @@ open class Collection(
 
     @Throws(NoSuchDeckException::class)
     private fun getDeckOrFail(deckId: DeckId): Deck {
-        return decks.get(deckId, false) ?: throw NoSuchDeckException(deckId)
+        return decks.get(col, deckId, false) ?: throw NoSuchDeckException(deckId)
     }
 
     @Throws(NoSuchDeckException::class)
@@ -1942,9 +1942,9 @@ open class Collection(
     private fun removeDynamicPropertyFromNonDynamicDecks(notifyProgress: Runnable): ArrayList<String?> {
         Timber.d("removeDynamicPropertyFromNonDynamicDecks()")
         val problems = ArrayList<String?>(1)
-        val dids = ArrayList<Long>(decks.count())
-        for (id in decks.allIds()) {
-            if (!decks.isDyn(id)) {
+        val dids = ArrayList<Long>(decks.count(col))
+        for (id in decks.allIds(col)) {
+            if (!decks.isDyn(col, id)) {
                 dids.add(id)
             }
         }

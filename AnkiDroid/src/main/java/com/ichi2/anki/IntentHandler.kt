@@ -119,7 +119,8 @@ class IntentHandler : Activity() {
         val deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0)
         Timber.i("Handling intent to review deck '%d'", deckId)
         val reviewIntent = Intent(this, Reviewer::class.java)
-        CollectionHelper.instance.getCol(this)!!.decks.select(deckId)
+        val col = CollectionHelper.instance.getCol(this)!!
+        col.decks.select(col, deckId)
         startActivity(reviewIntent)
         AnkiActivity.finishActivityWithFade(this)
     }

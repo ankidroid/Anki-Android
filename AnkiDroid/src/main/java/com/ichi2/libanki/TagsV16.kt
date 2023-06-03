@@ -78,7 +78,7 @@ class TagsV16(val col: CollectionV16) : TagManager() {
             return list(set(split(" ".join(res))))
         }
         val dids = mutableListOf(did)
-        for ((_, id) in col.decks.children(did)) {
+        for ((_, id) in col.decks.children(col, did)) {
             dids.add(id)
         }
         query = basequery + " AND c.did IN " + ids2str(dids)

@@ -51,7 +51,7 @@ class DeckPickerContextMenu(private val col: Collection) : AnalyticsDialogFragme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val title = col.decks.name(deckId)
+        val title = col.decks.name(col, deckId)
         return MaterialDialog(requireActivity())
             .title(text = title)
             .cancelable(true)
@@ -68,7 +68,7 @@ class DeckPickerContextMenu(private val col: Collection) : AnalyticsDialogFragme
     private val contextMenuOptions: List<DeckPickerContextMenuOption>
         get() {
             val did = deckId
-            val dyn = col.decks.isDyn(did)
+            val dyn = col.decks.isDyn(col, did)
             val contextMenuOptions = ArrayList<DeckPickerContextMenuOption>(11) // init with our fixed list size for performance
             contextMenuOptions.add(DeckPickerContextMenuOption.ADD_CARD)
             contextMenuOptions.add(DeckPickerContextMenuOption.BROWSE_CARDS)
@@ -153,14 +153,14 @@ class DeckPickerContextMenu(private val col: Collection) : AnalyticsDialogFragme
                 activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
-                col.decks.select(deckId)
+                col.decks.select(col, deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
                 activity.startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
                 activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.ADD_CARD -> {
                 Timber.i("Add selected")
-                col.decks.select(deckId)
+                col.decks.select(col, deckId)
                 activity.addNote()
                 activity.dismissAllDialogFragments()
             }

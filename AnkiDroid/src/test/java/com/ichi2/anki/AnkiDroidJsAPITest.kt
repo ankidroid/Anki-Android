@@ -39,7 +39,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
+        decks.select(col, didA)
 
         val reviewer: Reviewer = startReviewer()
         val javaScriptFunction = reviewer.javaScriptFunction()
@@ -64,7 +64,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
+        decks.select(col, didA)
 
         val reviewer: Reviewer = startReviewer()
         val javaScriptFunction = reviewer.javaScriptFunction()
@@ -87,7 +87,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
+        decks.select(col, didA)
 
         val reviewer: Reviewer = startReviewer()
         val javaScriptFunction = reviewer.javaScriptFunction()
@@ -145,7 +145,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
+        decks.select(col, didA)
 
         val reviewer: Reviewer = startReviewer()
         val javaScriptFunction = reviewer.javaScriptFunction()
@@ -174,7 +174,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
+        decks.select(col, didA)
 
         val reviewer: Reviewer = startReviewer()
         val javaScriptFunction = reviewer.javaScriptFunction()
@@ -245,7 +245,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         addNoteUsingBasicModel("Anki", "Droid")
         addNoteUsingBasicModel("Test Card", "Bury and Suspend Card")
         addNoteUsingBasicModel("Test Note", "Bury and Suspend Note")
-        decks.select(didA)
+        decks.select(col, didA)
 
         val reviewer: Reviewer = startReviewer()
 
@@ -321,7 +321,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         basic!!.put("did", didA)
         addNoteUsingBasicModel("foo", "bar")
         addNoteUsingBasicModel("baz", "bak")
-        decks.select(didA)
+        decks.select(col, didA)
 
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()

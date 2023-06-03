@@ -160,12 +160,12 @@ open class SchedV2(col: Collection) : AbstractSched() {
             setCurrentCard(col, undoneCard)
         } else {
             discardCurrentCard()
-            col.decks.update_active()
+            col.decks.update_active(col)
         }
     }
 
     override fun reset(col: Collection) {
-        col.decks.update_active()
+        col.decks.update_active(col)
         _updateCutoff(col)
         resetCounts(col, false)
         resetQueues(col, false)
@@ -195,17 +195,17 @@ open class SchedV2(col: Collection) : AbstractSched() {
         mHaveCounts = false
         _resetLrnCount(col, cancelListener)
         if (isCancelled(cancelListener)) {
-            Timber.v("Cancel computing counts of deck %s", col.decks.current().getString("name"))
+            Timber.v("Cancel computing counts of deck %s", col.decks.current(col).getString("name"))
             return
         }
         _resetRevCount(col, cancelListener)
         if (isCancelled(cancelListener)) {
-            Timber.v("Cancel computing counts of deck %s", col.decks.current().getString("name"))
+            Timber.v("Cancel computing counts of deck %s", col.decks.current(col).getString("name"))
             return
         }
         _resetNewCount(col, cancelListener)
         if (isCancelled(cancelListener)) {
-            Timber.v("Cancel computing counts of deck %s", col.decks.current().getString("name"))
+            Timber.v("Cancel computing counts of deck %s", col.decks.current(col).getString("name"))
             return
         }
         mHaveCounts = true
@@ -352,13 +352,13 @@ open class SchedV2(col: Collection) : AbstractSched() {
     fun _updateStats(col: Collection, card: Card, type: String, cnt: Long) {
         val key = type + "Today"
         val did = card.did
-        val list = col.decks.parents(did).toMutableList()
-        list.add(col.decks.get(did))
+        val list = col.decks.parents(col, did).toMutableList()
+        list.add(col.decks.get(col, did))
         for (g in list) {
             val a = g.getJSONArray(key)
             // add
             a.put(1, a.getLong(1) + cnt)
-            col.decks.save(g)
+            col.decks.save(col, g)
         }
     }
 
@@ -367,11 +367,11 @@ open class SchedV2(col: Collection) : AbstractSched() {
             super.extendLimits(col, newc, rev)
             return
         }
-        val cur = col.decks.current()
-        val decks = col.decks.parents(cur.getLong("id")).toMutableList()
+        val cur = col.decks.current(col)
+        val decks = col.decks.parents(col, cur.getLong("id")).toMutableList()
         decks.add(cur)
-        for (did in col.decks.children(cur.getLong("id")).values) {
-            decks.add(col.decks.get(did))
+        for (did in col.decks.children(col, cur.getLong("id")).values) {
+            decks.add(col.decks.get(col, did))
         }
         for (g in decks) {
             // add
@@ -379,7 +379,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
             today.put(1, today.getInt(1) - newc)
             today = g.getJSONArray("revToday")
             today.put(1, today.getInt(1) - rev)
-            col.decks.save(g)
+            col.decks.save(col, g)
         }
     }
 
@@ -396,17 +396,17 @@ open class SchedV2(col: Collection) : AbstractSched() {
         cancelListener: CancelListener? = null
     ): Int {
         var tot = 0
-        val pcounts = HashUtil.HashMapInit<Long, Int>(col.decks.count())
+        val pcounts = HashUtil.HashMapInit<Long, Int>(col.decks.count(col))
         // for each of the active decks
-        for (did in col.decks.active()) {
+        for (did in col.decks.active(col)) {
             if (isCancelled(cancelListener)) return -1
             // get the individual deck's limit
-            var lim = limFn.operation(col.decks.get(did))
+            var lim = limFn.operation(col.decks.get(col, did))
             if (lim == 0) {
                 continue
             }
             // check the parents
-            val parents = col.decks.parents(did)
+            val parents = col.decks.parents(col, did)
             for (p in parents) {
                 // add if missing
                 val id = p.getLong("id")
@@ -448,11 +448,11 @@ open class SchedV2(col: Collection) : AbstractSched() {
      * Return sorted list of all decks. */
     protected open fun deckDueList(col: Collection, collectionTask: CancelListener?): List<DeckDueTreeNode>? {
         _checkDay(col)
-        col.decks.checkIntegrity()
-        val allDecksSorted = col.decks.allSorted()
+        col.decks.checkIntegrity(col)
+        val allDecksSorted = col.decks.allSorted(col)
         val lims = HashUtil.HashMapInit<String?, Array<Int>>(allDecksSorted.size)
         val deckNodes = ArrayList<DeckDueTreeNode>(allDecksSorted.size)
-        val childMap = col.decks.childMap()
+        val childMap = col.decks.childMap(col)
         for (deck in allDecksSorted) {
             if (isCancelled(collectionTask)) {
                 return null
@@ -514,7 +514,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
         // Similar to deckDueList
         @KotlinCleanup("simplify with map {}")
         val allDecksSorted = ArrayList<DeckTreeNode>()
-        for (deck in col.decks.allSorted()) {
+        for (deck in col.decks.allSorted(col)) {
             val g = DeckTreeNode(deck.getString("name"), deck.getLong("id"))
             allDecksSorted.add(g)
         }
@@ -575,7 +575,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
              * current one itself.  I.e., they are subdecks that stem
              * from this descendant.  This is our version of python's
              * itertools.groupby. */if (!checkDone && child.depth != depth) {
-                val deck = col.decks.get(child.did)
+                val deck = col.decks.get(col, child.did)
                 Timber.d(
                     "Deck %s (%d)'s parent is missing. Ignoring for quick display.",
                     deck.getString("name"),
@@ -588,7 +588,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
                 if (head == descendantOfChild.getDeckNameComponent(depth)) {
                     // Same head - add to tail of current head.
                     if (!checkDone && descendantOfChild.depth == depth) {
-                        val deck = col.decks.get(descendantOfChild.did)
+                        val deck = col.decks.get(col, descendantOfChild.did)
                         Timber.d(
                             "Deck %s (%d)'s is a duplicate name. Ignoring for quick display.",
                             deck.getString("name"),
@@ -750,7 +750,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
     }
 
     private fun _resetNewQueue(col: Collection) {
-        mNewDids = LinkedList(col.decks.active())
+        mNewDids = LinkedList(col.decks.active(col))
         mNewQueue.clear()
         _updateNewCardRatio(col)
     }
@@ -912,8 +912,8 @@ open class SchedV2(col: Collection) : AbstractSched() {
         if (fn == null) {
             fn = LimitMethod { g: Deck -> _deckNewLimitSingle(col, g, considerCurrentCard) }
         }
-        val decks = col.decks.parents(did).toMutableList()
-        decks.add(col.decks.get(did))
+        val decks = col.decks.parents(col, did).toMutableList()
+        decks.add(col.decks.get(col, did))
         var lim = -1
         // for the deck and each of its parents
         var rem: Int
@@ -957,7 +957,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
             return mDynReportLimit
         }
         val did = g.getLong("id")
-        val c = col.decks.confForDid(did)
+        val c = col.decks.confForDid(col, did)
         var lim = Math.max(
             0,
             c.getJSONObject("new").getInt("perDay") - g.getJSONArray("newToday").getInt(1)
@@ -1026,7 +1026,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
     protected open fun _resetLrnQueue(col: Collection) {
         mLrnQueue.clear()
         mLrnDayQueue.clear()
-        mLrnDids = col.decks.active()
+        mLrnDids = col.decks.active(col)
     }
 
     // sub-day learning
@@ -1478,7 +1478,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      */
     private fun _currentRevLimit(col: Collection, considerCurrentCard: Boolean): Int {
-        val d = col.decks.get(col.decks.selected(), false)
+        val d = col.decks.get(col, col.decks.selected(col), false)
         return _deckRevLimitSingle(col, d, considerCurrentCard)
     }
 
@@ -1521,7 +1521,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
             return mDynReportLimit
         }
         val did = d.getLong("id")
-        val c = col.decks.confForDid(did)
+        val c = col.decks.confForDid(col, did)
         var lim = Math.max(
             0,
             c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1)
@@ -1830,7 +1830,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
             super.rebuildDyn(col, did)
             return
         }
-        val deck = col.decks.get(did)
+        val deck = col.decks.get(col, did)
         if (deck.isStd) {
             Timber.e("error: deck is not a filtered deck")
             return
@@ -1842,7 +1842,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
             return
         }
         // and change to our new deck
-        col.decks.select(did)
+        col.decks.select(col, did)
     }
 
     /**
@@ -1914,7 +1914,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
     }
 
     protected fun _moveToDyn(col: Collection, did: Long, ids: List<Long?>, start: Int) {
-        val deck = col.decks.get(did)
+        val deck = col.decks.get(col, did)
         val data = ArrayList<Array<Any?>>(ids.size)
         val u = col.usn()
         var due = start
@@ -2006,7 +2006,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
             return conf.getJSONObject("new")
         }
         // dynamic deck; override some attributes, use original deck for others
-        val oconf = col.decks.confForDid(card.oDid)
+        val oconf = col.decks.confForDid(col, card.oDid)
         return JSONObject().apply {
             // original deck
             put("ints", oconf.getJSONObject("new").getJSONArray("ints"))
@@ -2027,7 +2027,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
             return conf.getJSONObject("lapse")
         }
         // dynamic deck; override some attributes, use original deck for others
-        val oconf = col.decks.confForDid(card.oDid)
+        val oconf = col.decks.confForDid(col, card.oDid)
         return JSONObject().apply {
             // original deck
             put("minInt", oconf.getJSONObject("lapse").getInt("minInt"))
@@ -2045,7 +2045,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
         return if (!card.isInDynamicDeck) {
             conf.getJSONObject("rev")
         } else {
-            col.decks.confForDid(card.oDid).getJSONObject("rev")
+            col.decks.confForDid(col, card.oDid).getJSONObject("rev")
         }
     }
 
@@ -2073,7 +2073,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
-        for (deck in col.decks.all()) {
+        for (deck in col.decks.all(col)) {
             update(deck)
         }
         // unbury if the day has rolled over
@@ -2122,7 +2122,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
     }
 
     fun haveBuriedSiblings(col: Collection): Boolean {
-        return haveBuriedSiblings(col, col.decks.active())
+        return haveBuriedSiblings(col, col.decks.active(col))
     }
 
     private fun haveBuriedSiblings(col: Collection, allDecks: List<Long>): Boolean {
@@ -2135,7 +2135,7 @@ open class SchedV2(col: Collection) : AbstractSched() {
     }
 
     fun haveManuallyBuried(col: Collection): Boolean {
-        return haveManuallyBuried(col, col.decks.active())
+        return haveManuallyBuried(col, col.decks.active(col))
     }
 
     private fun haveManuallyBuried(col: Collection, allDecks: List<Long>): Boolean {
@@ -2316,7 +2316,7 @@ end)  """
             super.unburyCardsForDeck(col, did, type)
             return
         }
-        val dids = col.decks.childDids(did, col.decks.childMap()).toMutableList()
+        val dids = col.decks.childDids(did, col.decks.childMap(col)).toMutableList()
         dids.add(did)
         unburyCardsForDeck(col, type, dids)
     }
@@ -2632,13 +2632,13 @@ end)  """
      */
     // Overridden: In sched v1, a single type of burying exist
     override fun haveBuried(col: Collection, did: Long): Boolean {
-        val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
+        val all: MutableList<Long> = ArrayList(col.decks.children(col, did).values)
         all.add(did)
         return haveBuriedSiblings(col, all) || haveManuallyBuried(col, all)
     }
 
     open fun unburyCardsForDeck(col: Collection, did: Long) {
-        val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
+        val all: MutableList<Long> = ArrayList(col.decks.children(col, did).values)
         all.add(did)
         unburyCardsForDeck(col, UnburyType.ALL, all)
     }
@@ -2752,7 +2752,7 @@ end)  """
     fun setCurrentCard(col: Collection, card: Card) {
         mCurrentCard = card
         val did = card.did
-        val parents = col.decks.parents(did)
+        val parents = col.decks.parents(col, did)
         val currentCardParentsDid: MutableList<Long> = ArrayList(parents.size + 1)
         for (parent in parents) {
             currentCardParentsDid.add(parent.getLong("id"))

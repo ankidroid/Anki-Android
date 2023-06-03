@@ -40,16 +40,16 @@ class DecksTest : RobolectricTest() {
         for (deckName in TEST_DECKS) {
             addDeck(deckName)
         }
-        val brokenDeck = decks.byName("cmxieunwoogyxsctnjmv::INSBGDS")
+        val brokenDeck = decks.byName(col, "cmxieunwoogyxsctnjmv::INSBGDS")
         Asserts.notNull(brokenDeck, "We should get deck with given name")
         // Changing the case. That could exists in an old collection or during sync.
         brokenDeck!!.put("name", "CMXIEUNWOOGYXSCTNJMV::INSBGDS")
-        decks.save(brokenDeck)
+        decks.save(col, brokenDeck)
 
-        decks.childMap()
-        for (deck in decks.all()) {
+        decks.childMap(col)
+        for (deck in decks.all(col)) {
             val did = deck.getLong("id")
-            for (parent in decks.parents(did)) {
+            for (parent in decks.parents(col, did)) {
                 Asserts.notNull(parent, "Parent should not be null")
             }
         }
@@ -69,32 +69,32 @@ class DecksTest : RobolectricTest() {
     fun test_basic() {
         val decks = col.decks
         // we start with a standard col
-        assertEquals(1, decks.allSortedNames().size.toLong())
+        assertEquals(1, decks.allSortedNames(col).size.toLong())
         // it should have an id of 1
-        assertNotNull(decks.name(1))
+        assertNotNull(decks.name(col, 1))
         // create a new col
         val parentId = addDeck("new deck")
         assertNotEquals(parentId, 0)
-        assertEquals(2, decks.allSortedNames().size.toLong())
+        assertEquals(2, decks.allSortedNames(col).size.toLong())
         // should get the same id
         assertEquals(parentId, addDeck("new deck"))
         // we start with the default col selected
-        assertEquals(1, decks.selected())
-        assertEqualsArrayList(arrayOf(1L), decks.active())
+        assertEquals(1, decks.selected(col))
+        assertEqualsArrayList(arrayOf(1L), decks.active(col))
         // we can select a different col
-        decks.select(parentId)
-        assertEquals(parentId, decks.selected())
-        assertEqualsArrayList(arrayOf(parentId), decks.active())
+        decks.select(col, parentId)
+        assertEquals(parentId, decks.selected(col))
+        assertEqualsArrayList(arrayOf(parentId), decks.active(col))
         // let's create a child
         val childId = addDeck("new deck::child")
         col.reset()
         // it should have been added to the active list
-        assertEquals(parentId, decks.selected())
-        assertEqualsArrayList(arrayOf(parentId, childId), decks.active())
+        assertEquals(parentId, decks.selected(col))
+        assertEqualsArrayList(arrayOf(parentId, childId), decks.active(col))
         // we can select the child individually too
-        decks.select(childId)
-        assertEquals(childId, decks.selected())
-        assertEqualsArrayList(arrayOf(childId), decks.active())
+        decks.select(col, childId)
+        assertEquals(childId, decks.selected(col))
+        assertEqualsArrayList(arrayOf(childId), decks.active(col))
         // parents with a different case should be handled correctly
         addDeck("ONE")
         val m = col.models.current(col)
@@ -104,10 +104,10 @@ class DecksTest : RobolectricTest() {
         n.setItem("Front", "abc")
         col.addNote(n)
 
-        assertEquals(decks.id_for_name("new deck")!!.toLong(), parentId)
-        assertEquals(decks.id_for_name("  New Deck  ")!!.toLong(), parentId)
-        assertNull(decks.id_for_name("Not existing deck"))
-        assertNull(decks.id_for_name("new deck::not either"))
+        assertEquals(decks.id_for_name(col, "new deck")!!.toLong(), parentId)
+        assertEquals(decks.id_for_name(col, "  New Deck  ")!!.toLong(), parentId)
+        assertNull(decks.id_for_name(col, "Not existing deck"))
+        assertNull(decks.id_for_name(col, "new deck::not either"))
     }
 
     @Test
@@ -121,10 +121,10 @@ class DecksTest : RobolectricTest() {
         val c = note.cards(col)[0]
         assertEquals(deck1, c.did)
         assertEquals(1, col.cardCount().toLong())
-        col.decks.rem(deck1)
+        col.decks.rem(col, deck1)
         assertEquals(0, col.cardCount().toLong())
         // if we try to get it, we get the default
-        assertEquals("[no deck]", col.decks.name(c.did))
+        assertEquals("[no deck]", col.decks.name(col, c.did))
     }
 
     @Test
@@ -135,40 +135,42 @@ class DecksTest : RobolectricTest() {
         // should be able to rename into a completely different branch, creating
         // parents as necessary
         val decks = col.decks
-        decks.rename(decks.get(id), "foo::bar")
-        var names: List<String?> = decks.allSortedNames()
+        decks.rename(col, decks.get(col, id), "foo::bar")
+        var names: List<String?> = decks.allSortedNames(col)
         assertTrue(names.contains("foo"))
         assertTrue(names.contains("foo::bar"))
         assertFalse(names.contains("hello::world"))
         // create another col
         /* TODO: do we want to follow upstream here ?
          // automatically adjusted if a duplicate name
-         decks.rename(decks.get(id), "FOO");
-         names =  decks.allSortedNames();
+         decks.rename(col, decks.get(col, id), "FOO");
+         names =  decks.allSortedNames(col, );
          assertThat(names, containsString("FOO+"));
 
           */
         // when renaming, the children should be renamed too
         addDeck("one::two::three")
         id = addDeck("one")
-        col.decks.rename(col.decks.get(id), "yo")
-        names = col.decks.allSortedNames()
+        col.decks.rename(col, col.decks.get(col, id), "yo")
+        names = col.decks.allSortedNames(col)
         for (n in arrayOf("yo", "yo::two", "yo::two::three")) {
             assertTrue(names.contains(n))
         }
         // over filtered
         val filteredId = addDynamicDeck("filtered")
-        col.decks.get(filteredId)
+        col.decks.get(col, filteredId)
         val childId = addDeck("child")
-        val child = col.decks.get(childId)
+        val child = col.decks.get(col, childId)
         assertThrows(DeckRenameException::class.java) {
             col.decks.rename(
+                col,
                 child,
                 "filtered::child"
             )
         }
         assertThrows(DeckRenameException::class.java) {
             col.decks.rename(
+                col,
                 child,
                 "FILTERED::child"
             )
@@ -186,41 +188,41 @@ class DecksTest : RobolectricTest() {
 
      // Renaming also renames children
      col.getDecks().renameForDragAndDrop(chinese_did, languages_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames(col, ));
 
      // Dragging a col onto itself is a no-op
      col.getDecks().renameForDragAndDrop(languages_did, languages_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames(col, ));
 
      // Dragging a col onto its parent is a no-op
      col.getDecks().renameForDragAndDrop(hsk_did, chinese_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames(col, ));
 
      // Dragging a col onto a descendant is a no-op
      col.getDecks().renameForDragAndDrop(languages_did, hsk_did);
      // TODO: real problem to correct, even if we don't have drag and drop
-     // assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+     // assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames(col, ));
 
      // Can drag a grandchild onto its grandparent.  It becomes a child
      col.getDecks().renameForDragAndDrop(hsk_did, languages_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::HSK"}, col.getDecks().allSortedNames());
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::HSK"}, col.getDecks().allSortedNames(col, ));
 
      // Can drag a col onto its sibling
      col.getDecks().renameForDragAndDrop(hsk_did, chinese_did);
-     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames());
+     assertEqualsArrayList(new String [] {"Default", "Languages", "Languages::Chinese", "Languages::Chinese::HSK"}, col.getDecks().allSortedNames(col, ));
 
      // Can drag a col back to the top level
      col.getDecks().renameForDragAndDrop(chinese_did, null);
-     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, col.getDecks().allSortedNames());
+     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, col.getDecks().allSortedNames(col, ));
 
      // Dragging a top level col to the top level is a no-op
      col.getDecks().renameForDragAndDrop(chinese_did, null);
-     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, col.getDecks().allSortedNames());
+     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Languages"}, col.getDecks().allSortedNames(col, ));
 
      // decks are renamed if necessary«
      long new_hsk_did = addDeck("hsk");
      col.getDecks().renameForDragAndDrop(new_hsk_did, chinese_did);
-     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Chinese::hsk+", "Languages"}, col.getDecks().allSortedNames());
+     assertEqualsArrayList(new String [] {"Default", "Chinese", "Chinese::HSK", "Chinese::hsk+", "Languages"}, col.getDecks().allSortedNames(col, ));
      col.getDecks().rem(new_hsk_did);
 
      }
@@ -231,7 +233,7 @@ class DecksTest : RobolectricTest() {
 
         val decks = col.decks
         val id = addDeck("test")
-        decks.select(id)
+        decks.select(col, id)
         assertDoesNotThrow("curDeck should be saved as a long. A deck id.") {
             col.get_config_long(
                 CURRENT_DECK
@@ -243,16 +245,16 @@ class DecksTest : RobolectricTest() {
     fun isDynStd() {
         val decks = col.decks
         val filteredId = addDynamicDeck("filtered")
-        val filtered = decks.get(filteredId)
+        val filtered = decks.get(col, filteredId)
         val deckId = addDeck("deck")
-        val deck = decks.get(deckId)
+        val deck = decks.get(col, deckId)
         assertThat(deck.isStd, equalTo(true))
         assertThat(deck.isDyn, equalTo(false))
         assertThat(filtered.isStd, equalTo(false))
         assertThat(filtered.isDyn, equalTo(true))
 
-        val filteredConfig = decks.confForDid(filteredId)
-        val deckConfig = decks.confForDid(deckId)
+        val filteredConfig = decks.confForDid(col, filteredId)
+        val deckConfig = decks.confForDid(col, deckId)
         assertThat(deckConfig.isStd, equalTo((true)))
         assertThat(deckConfig.isDyn, equalTo((false)))
         assertThat(filteredConfig.isStd, equalTo((false)))
@@ -264,11 +266,11 @@ class DecksTest : RobolectricTest() {
         // https://github.com/ankitects/anki/commit/94d369db18c2a6ac3b0614498d8abcc7db538633
         val decks = col.decks
 
-        val d = decks.all()[0]
+        val d = decks.all(col)[0]
         d.put("conf", 12L)
-        decks.save()
+        decks.save(col)
 
-        val config = decks.confForDid(d.getLong("id"))
+        val config = decks.confForDid(col, d.getLong("id"))
         assertThat(
             "If a config is not found, return the default",
             config.getLong("id"),

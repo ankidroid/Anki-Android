@@ -149,14 +149,14 @@ abstract class BaseSched() {
      * Unbury all buried cards in selected decks
      */
     fun unburyCardsForDeck(col: Collection, type: UnburyType = UnburyType.ALL) {
-        unburyCardsForDeck(col, col.decks.selected(), type)
+        unburyCardsForDeck(col, col.decks.selected(col), type)
     }
 
     /**
      * Unbury all buried cards in all decks. Only used for tests.
      */
     open fun unburyCards(col: Collection) {
-        for (did in col.decks.allIds()) {
+        for (did in col.decks.allIds(col)) {
             unburyCardsForDeck(col, did)
         }
     }
@@ -253,7 +253,7 @@ abstract class BaseSched() {
      */
     open fun extendLimits(col: Collection, newc: Int, rev: Int) {
         col.newBackend.backend.extendLimits(
-            deckId = col.decks.selected(),
+            deckId = col.decks.selected(col),
             newDelta = newc,
             reviewDelta = rev
         )
@@ -267,7 +267,7 @@ abstract class BaseSched() {
     }
 
     fun rebuildDyn(col: Collection) {
-        rebuildDyn(col, col.decks.selected())
+        rebuildDyn(col, col.decks.selected(col))
     }
 
     /** Remove all cards from a dynamic deck
@@ -371,7 +371,7 @@ abstract class BaseSched() {
             sb.append("\n\n")
             sb.append("").append(context.getString(R.string.sched_has_buried)).append(now)
         }
-        if (col.decks.current().isStd) {
+        if (col.decks.current(col).isStd) {
             sb.append("\n\n")
             sb.append(context.getString(R.string.studyoptions_congrats_custom))
         }
@@ -431,7 +431,7 @@ abstract class BaseSched() {
      */
     @RustCleanup("remove after removing old apkg importer")
     fun maybeRandomizeDeck(col: Collection, did: DeckId) {
-        val conf = col.decks.confForDid(did)
+        val conf = col.decks.confForDid(col, did)
         // in order due?
         if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
             randomizeCards(col, did)
@@ -443,7 +443,7 @@ abstract class BaseSched() {
      * @param conf A deck configuration
      */
     fun resortConf(col: Collection, conf: DeckConfig) {
-        val dids = col.decks.didsForConf(conf)
+        val dids = col.decks.didsForConf(col, conf)
         for (did in dids) {
             if (conf.getJSONObject("new").getLong("order") == 0L) {
                 randomizeCards(col, did)
@@ -458,7 +458,7 @@ abstract class BaseSched() {
     }
 
     fun _deckLimit(col: Collection): String {
-        return Utils.ids2str(col.decks.active())
+        return Utils.ids2str(col.decks.active(col))
     }
 
     /**
@@ -692,7 +692,7 @@ abstract class BaseSched() {
      * @return The conf of the deck of the card.
      */
     fun _cardConf(col: Collection, card: Card): DeckConfig {
-        return col.decks.confForDid(card.did)
+        return col.decks.confForDid(col, card.did)
     }
 
     /*

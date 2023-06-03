@@ -52,7 +52,6 @@ import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * "Deck Search": A dialog allowing the user to select a deck from a list of decks.
@@ -153,11 +152,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     private fun showSubDeckDialog(parentDeckPath: String) {
         try {
             // create subdeck
-            val parentId = decks.id(parentDeckPath)
+            val parentId = decks.id(col, parentDeckPath)
             val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a sub deck was created
-                selectDeckWithDeckName(decks.name(id!!))
+                selectDeckWithDeckName(col, decks.name(col, id!!))
             }
             createDeckDialog.showDialog()
         } catch (ex: DeckRenameException) {
@@ -171,7 +170,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         // setOnNewDeckCreated parameter to be made non null
         createDeckDialog.setOnNewDeckCreated { id: Long? ->
             // a deck was created
-            selectDeckWithDeckName(decks.name(id!!))
+            selectDeckWithDeckName(col, decks.name(col, id!!))
         }
         createDeckDialog.showDialog()
     }
@@ -180,16 +179,19 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         return requireContext() as CollectionGetter
     }
 
+    protected val col: Collection
+        get() = requireCollectionGetter().col
+
     protected val decks: DeckManager
-        get() = requireCollectionGetter().col.decks
+        get() = col.decks
 
     /**
      * Create the deck if it does not exists.
      * If name is valid, send the deck with this name to listener and close the dialog.
      */
-    private fun selectDeckWithDeckName(deckName: String) {
+    private fun selectDeckWithDeckName(col: Collection, deckName: String) {
         try {
-            val id = decks.id(deckName)
+            val id = decks.id(col, deckName)
             val dec = SelectableDeck(id, deckName)
             selectDeckAndClose(dec)
         } catch (ex: DeckRenameException) {
@@ -360,8 +362,8 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @param filter A method deciding which deck to add
              * @return the list of all SelectableDecks from the collection satisfying filter
              */
-            fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
-                val all = c.decks.all()
+            fun fromCollection(col: Collection, filter: FunctionalInterfaces.Filter<Deck> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
+                val all = col.decks.all(col)
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)
                 for (d in all) {
                     if (!filter.shouldInclude(d)) {

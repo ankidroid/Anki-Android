@@ -120,7 +120,7 @@ class ContentProviderTest : InstrumentedTest() {
         // Use the names of the fields as test values for the notes which will be added
         mDummyFields = fields.toTypedArray()
         // create test decks and add one note for every deck
-        mNumDecksBeforeTest = col.decks.count()
+        mNumDecksBeforeTest = col.decks.count(col)
         for (fullName in TEST_DECKS) {
             val path = Decks.path(fullName)
             var partialName: String? = ""
@@ -132,10 +132,10 @@ class ContentProviderTest : InstrumentedTest() {
                 /* If parent already exists, don't add the deck, so
                  * that we are sure it won't get deleted at
                  * set-down, */
-                if (col.decks.byName(partialName!!) != null) {
+                if (col.decks.byName(col, partialName!!) != null) {
                     continue
                 }
-                val did = col.decks.id(partialName)
+                val did = col.decks.id(col, partialName)
                 mTestDeckIds.add(did)
                 mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields.requireNoNulls(), TEST_TAG))
                 partialName += "::"
@@ -170,13 +170,13 @@ class ContentProviderTest : InstrumentedTest() {
         }
         // delete test decks
         for (did in mTestDeckIds) {
-            col.decks.rem(did, cardsToo = true, childrenToo = true)
+            col.decks.rem(col, did, cardsToo = true, childrenToo = true)
         }
-        col.decks.flush()
+        col.decks.flush(col)
         assertEquals(
             "Check that all created decks have been deleted",
             mNumDecksBeforeTest,
-            col.decks.count()
+            col.decks.count(col)
         )
         // Delete test model
         col.modSchemaNoCheck()
@@ -901,7 +901,7 @@ class ContentProviderTest : InstrumentedTest() {
         decksCursor.use {
             assertEquals(
                 "Check number of results",
-                decks.count(),
+                decks.count(col),
                 it.count
             )
             while (it.moveToNext()) {
@@ -909,7 +909,7 @@ class ContentProviderTest : InstrumentedTest() {
                     it.getLong(it.getColumnIndex(FlashCardsContract.Deck.DECK_ID))
                 val deckName =
                     it.getString(it.getColumnIndex(FlashCardsContract.Deck.DECK_NAME))
-                val deck = decks.get(deckID)
+                val deck = decks.get(col, deckID)
                 assertNotNull("Check that the deck we received actually exists", deck)
                 assertEquals(
                     "Check that the received deck has the correct name",
@@ -938,7 +938,7 @@ class ContentProviderTest : InstrumentedTest() {
                     decksCursor.getLong(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_ID))
                 val returnedDeckName =
                     decksCursor.getString(decksCursor.getColumnIndex(FlashCardsContract.Deck.DECK_NAME))
-                val realDeck = col.decks.get(deckId)
+                val realDeck = col.decks.get(col, deckId)
                 assertEquals(
                     "Check that received deck ID equals real deck ID",
                     deckId,
@@ -1005,8 +1005,8 @@ class ContentProviderTest : InstrumentedTest() {
         val deckArguments = arrayOf(deckToTest.toString())
 
         val sched = col.sched
-        val selectedDeckBeforeTest = col.decks.selected()
-        col.decks.select(1) // select Default deck
+        val selectedDeckBeforeTest = col.decks.selected(col)
+        col.decks.select(col, 1) // select Default deck
         val reviewInfoCursor = contentResolver.query(
             FlashCardsContract.ReviewInfo.CONTENT_URI,
             null,
@@ -1025,9 +1025,9 @@ class ContentProviderTest : InstrumentedTest() {
             assertEquals(
                 "Check that the selected deck has not changed",
                 1,
-                col.decks.selected()
+                col.decks.selected(col)
             )
-            col.decks.select(deckToTest)
+            col.decks.select(col, deckToTest)
             var nextCard: Card? = null
             for (i in 0..9) { // minimizing fails, when sched.reset() randomly chooses between multiple cards
                 col.reset()
@@ -1051,7 +1051,7 @@ class ContentProviderTest : InstrumentedTest() {
                 cardOrd
             )
         }
-        col.decks.select(selectedDeckBeforeTest)
+        col.decks.select(col, selectedDeckBeforeTest)
     }
 
     /**
@@ -1069,13 +1069,13 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals(
             "Check that the selected deck has been correctly set",
             deckId,
-            col.decks.selected()
+            col.decks.selected(col)
         )
     }
 
     private fun getFirstCardFromScheduler(col: Collection): Card? {
         val deckId = mTestDeckIds[0]
-        col.decks.select(deckId)
+        col.decks.select(col, deckId)
         col.reset()
         return col.sched.card(col)
     }

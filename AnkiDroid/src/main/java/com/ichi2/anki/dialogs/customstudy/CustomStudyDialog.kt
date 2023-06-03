@@ -87,7 +87,7 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
         val dialogId = requireArguments().getInt("id")
         return if (dialogId < 100) {
             // Select the specified deck
-            col.decks.select(requireArguments().getLong("did"))
+            col.decks.select(col, requireArguments().getLong("did"))
             buildContextMenu(dialogId)
         } else {
             buildInputDialog(ContextMenuOption.fromInt(dialogId))
@@ -212,17 +212,17 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
                 when (contextMenuOption) {
                     STUDY_NEW -> {
                         AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendNew", n) }
-                        val deck = col.decks.get(did)
+                        val deck = col.decks.get(col, did)
                         deck.put("extendNew", n)
-                        col.decks.save(deck)
+                        col.decks.save(col, deck)
                         col.sched.extendLimits(col, n, 0)
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_REV -> {
                         AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendRev", n) }
-                        val deck = col.decks.get(did)
+                        val deck = col.decks.get(col, did)
                         deck.put("extendRev", n)
-                        col.decks.save(deck)
+                        col.decks.save(col, deck)
                         col.sched.extendLimits(col, 0, n)
                         onLimitsExtended(jumpToReviewer)
                     }
@@ -438,9 +438,9 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
         val did = requireArguments().getLong("did")
 
         val decks = col.decks
-        val deckToStudyName = decks.get(did).getString("name")
+        val deckToStudyName = decks.get(col, did).getString("name")
         val customStudyDeck = resources.getString(R.string.custom_study_deck_name)
-        val cur = decks.byName(customStudyDeck)
+        val cur = decks.byName(col, customStudyDeck)
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck)
             if (cur.isStd) {
@@ -453,12 +453,12 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
                 col.sched.emptyDyn(col, cur.getLong("id"))
                 // reuse; don't delete as it may have children
                 dyn = cur
-                decks.select(cur.getLong("id"))
+                decks.select(col, cur.getLong("id"))
             }
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
             dyn = try {
-                decks.get(decks.newDyn(customStudyDeck))
+                decks.get(col, decks.newDyn(col, customStudyDeck))
             } catch (ex: DeckRenameException) {
                 showThemedToast(requireActivity(), ex.getLocalizedMessage(this.resources), true)
                 return
@@ -488,7 +488,7 @@ class CustomStudyDialog(private val col: Collection, private val customStudyList
         // Rebuild the filtered deck
         Timber.i("Rebuilding Custom Study Deck")
         // PERF: Should be in background
-        col.decks.save(dyn)
+        col.decks.save(col, dyn)
         requireActivity().launchCatchingTask { rebuildCram(CreateCustomStudySessionListener(customStudyListener!!)) }
         // Hide the dialogs
         customStudyListener?.dismissAllDialogFragments()

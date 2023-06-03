@@ -282,7 +282,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             return null
         }
         val newDid = mNoteEditorBundle!!.getLong("did")
-        if (col.decks.isDyn(newDid)) {
+        if (col.decks.isDyn(col, newDid)) {
             currentCard!!.oDid = currentCard!!.did
         }
         currentCard!!.did = newDid

@@ -21,13 +21,13 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 object FilteredDeckUtil {
     fun createFilteredDeck(col: Collection, name: String?, search: String): Long {
         val filteredDid: Long = try {
-            col.decks.newDyn(name!!)
+            col.decks.newDyn(col, name!!)
         } catch (filteredAncestor: DeckRenameException) {
             throw RuntimeException(filteredAncestor)
         }
-        val conf = col.decks.confForDid(filteredDid)
+        val conf = col.decks.confForDid(col, filteredDid)
         conf.getJSONArray("terms").getJSONArray(0).put(0, search)
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         return filteredDid
     }
 }

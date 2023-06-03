@@ -62,7 +62,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             val models = col.models
             val didA = addDeck("Deck 1")
             updateDeckList()
-            col.decks.select(didA)
+            col.decks.select(col, didA)
             val basic = models.byName(col, AnkiDroidApp.appResources.getString(R.string.basic_model_name))
             basic!!.put("did", didA)
             addNoteUsingBasicModel("Front", "Back")
@@ -84,7 +84,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             val browser = shadowOf(this).nextStartedActivity!!
             assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
 
-            assertEquals(deckId, col.decks.selected())
+            assertEquals(deckId, col.decks.selected(col))
         }
     }
 
@@ -143,7 +143,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             openContextMenuAndSelectItem(recyclerView, 8)
 
-            assertThat(col.decks.allIds(), not(containsInAnyOrder(deckId)))
+            assertThat(col.decks.allIds(col), not(containsInAnyOrder(deckId)))
         }
     }
 

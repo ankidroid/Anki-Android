@@ -30,14 +30,20 @@ import anki.generic.Empty
 import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.*
+import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.dialogs.ExportDialogParams
+import com.ichi2.anki.exportApkg
+import com.ichi2.anki.exportColpkg
+import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.withProgress
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.AnkiPackageExporter
@@ -120,7 +126,8 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     override fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean) {
-        val deckName = collectionSupplier.get().decks.name(did)
+        val col = collectionSupplier.get()
+        val deckName = col.decks.name(col, did)
         val exportPath = getExportFileName(path, deckName, includeSched)
 
         if (BackendFactory.defaultLegacySchema) {

@@ -370,7 +370,7 @@ class Syncer(
                 result.put("client", "graves had usn = -1")
                 return result
             }
-            for (g in col.decks.all()) {
+            for (g in col.decks.all(col)) {
                 if (g.getInt("usn") == -1) {
                     Timber.e("Sync - SanityCheck: unsynced deck: %s", g.getString("name"))
                     result.put("client", "deck had usn = -1")
@@ -419,8 +419,8 @@ class Syncer(
             check.put(col.db.queryScalar("SELECT count() FROM revlog"))
             check.put(col.db.queryScalar("SELECT count() FROM graves"))
             check.put(col.models.all(col).size)
-            check.put(col.decks.all().size)
-            check.put(col.decks.allConf().size)
+            check.put(col.decks.all(col).size)
+            check.put(col.decks.allConf(col).size)
             result.put("client", check)
             result
         } catch (e: JSONException) {
@@ -623,7 +623,7 @@ class Syncer(
         // and decks
         val decks = graves.getJSONArray("decks")
         for (did in decks.longIterable()) {
-            col.decks.rem(did, false, false)
+            col.decks.rem(col, did, false, false)
         }
         col.server = wasServer
     }
@@ -683,13 +683,13 @@ class Syncer(
             val result = JSONArray()
             if (col.server) {
                 val decks = JSONArray()
-                for (g in col.decks.all()) {
+                for (g in col.decks.all(col)) {
                     if (g.getInt("usn") >= mMinUsn) {
                         decks.put(g)
                     }
                 }
                 val dconfs = JSONArray()
-                for (g in col.decks.allConf()) {
+                for (g in col.decks.allConf(col)) {
                     if (g.getInt("usn") >= mMinUsn) {
                         dconfs.put(g)
                     }
@@ -698,20 +698,20 @@ class Syncer(
                 result.put(dconfs)
             } else {
                 val decks = JSONArray()
-                for (g in col.decks.all()) {
+                for (g in col.decks.all(col)) {
                     if (g.getInt("usn") == -1) {
                         g.put("usn", mMaxUsn)
                         decks.put(g)
                     }
                 }
                 val dconfs = JSONArray()
-                for (g in col.decks.allConf()) {
+                for (g in col.decks.allConf(col)) {
                     if (g.getInt("usn") == -1) {
                         g.put("usn", mMaxUsn)
                         dconfs.put(g)
                     }
                 }
-                col.decks.save()
+                col.decks.save(col)
                 result.put(decks)
                 result.put(dconfs)
             }
@@ -722,19 +722,19 @@ class Syncer(
         val decks = rchg.getJSONArray(0)
         for (deck in decks.jsonObjectIterable()) {
             val r = Deck(deck)
-            val l = col.decks.get(r.getLong("id"), false)
+            val l = col.decks.get(col, r.getLong("id"), false)
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
-                col.decks.update(r)
+                col.decks.update(col, r)
             }
         }
         val confs = rchg.getJSONArray(1)
         for (deckConfig in confs.jsonObjectIterable()) {
             val r = DeckConfig(deckConfig, DeckConfig.Source.DECK_CONFIG)
-            val l = col.decks.getConf(r.getLong("id"))
+            val l = col.decks.getConf(col, r.getLong("id"))
             // if missing locally or server is newer, update
             if (l == null || r.getLong("mod") > l.getLong("mod")) {
-                col.decks.updateConf(r)
+                col.decks.updateConf(col, r)
             }
         }
     }

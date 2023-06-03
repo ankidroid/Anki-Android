@@ -142,7 +142,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         // and do I/O inside it. Better to calculate the new lists outside the lock, then swap
         mutex.withLock {
             mHasSubdecks = nodes.any { it.children.any() }
-            currentDeckId = withCol { decks.current().optLong("id") }
+            currentDeckId = withCol { decks.current(col).optLong("id") }
             val newDecks = processNodes(nodes)
             mDeckList = newDecks.toList()
             mCurrentDeckList = newDecks.toList()
@@ -213,7 +213,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         val filtered = if (!BackendFactory.defaultLegacySchema) {
             node.filtered
         } else {
-            runBlocking { withCol { decks.isDyn(node.did) } }
+            runBlocking { withCol { decks.isDyn(col, node.did) } }
         }
         if (filtered) {
             holder.deckName.setTextColor(mDeckNameDynColor)
@@ -259,7 +259,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private suspend fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
         val nodeValue = node.value
         val collapsed = if (BackendFactory.defaultLegacySchema) {
-            withCol { decks.get(nodeValue.did).optBoolean("collapsed", false) }
+            withCol { decks.get(col, nodeValue.did).optBoolean("collapsed", false) }
         } else {
             node.value.collapsed
         }
@@ -301,7 +301,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
                 }
             }
             val isCollapsed = if (BackendFactory.defaultLegacySchema) {
-                withCol { decks.get(node.value.did).optBoolean("collapsed") }
+                withCol { decks.get(col, node.value.did).optBoolean("collapsed") }
             } else {
                 // backend takes care of excluding default, and includes collapsed info
                 node.value.collapsed

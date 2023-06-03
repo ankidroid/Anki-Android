@@ -444,7 +444,7 @@ open class CardBrowser :
     // TODO: This function can be simplified a lot
     @VisibleForTesting
     fun moveSelectedCardsToDeck(did: DeckId) {
-        val selectedDeck = col.decks.get(did)
+        val selectedDeck = col.decks.get(col, did)
         // TODO: Currently try-catch is at every level which isn't required, simplify that
         try {
             // #5932 - can't be dynamic
@@ -686,7 +686,7 @@ open class CardBrowser :
             true
         }
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        val deckId = col.decks.selected()
+        val deckId = col.decks.selected(col)
         deckSpinnerSelection = DeckSpinnerSelection(
             this,
             col,
@@ -703,10 +703,10 @@ open class CardBrowser :
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
         if (lastDeckId != null && lastDeckId == ALL_DECKS_ID) {
             selectAllDecks()
-        } else if (lastDeckId != null && col.decks.get(lastDeckId!!, false) != null) {
+        } else if (lastDeckId != null && col.decks.get(col, lastDeckId!!, false) != null) {
             deckSpinnerSelection!!.selectDeckById(lastDeckId!!, false)
         } else {
-            deckSpinnerSelection!!.selectDeckById(col.decks.selected(), false)
+            deckSpinnerSelection!!.selectDeckById(col.decks.selected(col), false)
         }
     }
 
@@ -715,7 +715,7 @@ open class CardBrowser :
         mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
         } else {
-            val deckName = col.decks.name(deckId)
+            val deckName = col.decks.name(col, deckId)
             "deck:\"$deckName\" "
         }
         saveLastDeckId(deckId)
@@ -1966,7 +1966,7 @@ open class CardBrowser :
             when (lastDeckId) {
                 null -> getString(R.string.card_browser_unknown_deck_name)
                 ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
-                else -> col.decks.name(lastDeckId!!)
+                else -> col.decks.name(col, lastDeckId!!)
             }
         } catch (e: Exception) {
             Timber.w(e, "Unable to get selected deck name")
@@ -2376,7 +2376,7 @@ open class CardBrowser :
                 Column.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
                 Column.MARKED -> if (isMarked(col, card.note(col))) "marked" else null
                 Column.SFLD -> card.note(col).sFld(col)
-                Column.DECK -> col.decks.name(card.did)
+                Column.DECK -> col.decks.name(col, card.did)
                 Column.TAGS -> card.note(col).stringTags(col)
                 Column.CARD -> if (inCardMode) card.template(col).optString("name") else "${card.note(col).numberOfCards(col)}"
                 Column.DUE -> card.dueString(col)
@@ -2649,7 +2649,7 @@ open class CardBrowser :
                 cardsAdapter.notifyDataSetChanged()
                 invalidateOptionsMenu() // maybe the availability of undo changed
                 // snackbar to offer undo
-                val deckName = col.decks.name(mNewDid)
+                val deckName = col.decks.name(col, mNewDid)
                 val message = getString(R.string.changed_deck_message, deckName)
                 showUndoSnackbar(message)
             } else {

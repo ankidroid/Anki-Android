@@ -86,10 +86,10 @@ class AbstractSchedTest : RobolectricTest() {
     @Test
     fun ensureUndoCorrectCounts() {
         val sched = col.sched
-        val dconf = col.decks.getConf(1)
+        val dconf = col.decks.getConf(col, 1)
         assertThat(dconf, notNullValue())
         dconf!!.getJSONObject("new").put("perDay", 10)
-        col.decks.save(dconf)
+        col.decks.save(col, dconf)
         for (i in 0..19) {
             val note = col.newNote()
             note.setField(0, "a")
@@ -141,10 +141,10 @@ class AbstractSchedTest : RobolectricTest() {
         // #6903
 
         val sched = col.sched
-        val dconf = col.decks.getConf(1)
+        val dconf = col.decks.getConf(col, 1)
         assertThat(dconf, notNullValue())
         dconf!!.getJSONObject("new").put("bury", true)
-        col.decks.save(dconf)
+        col.decks.save(col, dconf)
         val nbNote = 2
         val notes = arrayOfNulls<Note>(nbNote)
         for (i in 0 until nbNote) {
@@ -186,7 +186,7 @@ class AbstractSchedTest : RobolectricTest() {
         addDeckWithExactName(parent)
         addDeckWithExactName(child)
 
-        col.decks.checkIntegrity()
+        col.decks.checkIntegrity(col)
         AnkiAssert.assertDoesNotThrow { col.sched.deckDueTree(col) }
     }
 
@@ -199,7 +199,7 @@ class AbstractSchedTest : RobolectricTest() {
         private val mSched: AbstractSched = col.sched
 
         private fun assertNewCountIs(explanation: String, did: Long, expected: Int) {
-            mDecks.select(did)
+            mDecks.select(col, did)
             mSched.resetCounts(col)
             assertThat(explanation, mSched.newCount(col), `is`(expected))
         }
@@ -224,17 +224,17 @@ class AbstractSchedTest : RobolectricTest() {
         }
 
         private fun extendNew(did: Long) {
-            mDecks.select(did)
+            mDecks.select(col, did)
             mSched.extendLimits(col, 1, 0)
         }
 
         fun test() {
             val models = col.models
 
-            val dconf = mDecks.getConf(1)
+            val dconf = mDecks.getConf(col, 1)
             assertThat(dconf, notNullValue())
             dconf!!.getJSONObject("new").put("perDay", 0)
-            mDecks.save(dconf)
+            mDecks.save(col, dconf)
 
             val model = models.byName(col, "Basic")
             for (did in longArrayOf(mCId, mDId)) {
@@ -286,7 +286,7 @@ class AbstractSchedTest : RobolectricTest() {
                 3,
                 4
             )
-            mDecks.select(mCId)
+            mDecks.select(col, mCId)
             col.reset()
             for (i in 0..2) {
                 val card = mSched.card(col)
@@ -328,7 +328,7 @@ class AbstractSchedTest : RobolectricTest() {
              or to do
 ```python
 from aqt import mw
-c = mw.col.decks.byName("A::B::C")
+c = mw.col.decks.byName(col, "A::B::C")
 mw.col.sched.extendLimits(col, 1, 0)
 ```
              */
@@ -342,9 +342,9 @@ mw.col.sched.extendLimits(col, 1, 0)
     }
 
     private fun undoAndRedo(preload: Boolean) {
-        val conf = col.decks.confForDid(1)
+        val conf = col.decks.confForDid(col, 1)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 3.0, 5.0, 10.0)))
-        col.decks.save(conf)
+        col.decks.save(col, conf)
         col.set_config("collapseTime", 20 * 60)
         val sched = col.sched
 
@@ -430,12 +430,12 @@ mw.col.sched.extendLimits(col, 1, 0)
         val decks = col.decks
 
         val did = addDeck(name)
-        val d = decks.get(did)
+        val d = decks.get(col, did)
         d.put("name", name)
-        decks.update(d)
+        decks.update(col, d)
 
         @KotlinCleanup("Replace stream() with kotlin collection operators")
-        val hasMatch = decks.all().stream().anyMatch { x: Deck -> name == x.getString("name") }
+        val hasMatch = decks.all(col).stream().anyMatch { x: Deck -> name == x.getString("name") }
         @KotlinCleanup("remove .format")
         assertThat(
             "Deck $name should exist",
@@ -446,7 +446,7 @@ mw.col.sched.extendLimits(col, 1, 0)
 
     @Test
     fun regression_7066() {
-        val dconf = col.decks.getConf(1)
+        val dconf = col.decks.getConf(col, 1)
         dconf!!.getJSONObject("new").put("bury", true)
         val sched = col.sched
         addNoteUsingBasicAndReversedModel("foo", "bar")

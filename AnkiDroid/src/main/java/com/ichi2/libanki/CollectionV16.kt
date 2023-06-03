@@ -41,8 +41,8 @@ class CollectionV16(
         return TagsV16(this)
     }
 
-    override fun initDecks(deckConf: String?): DeckManager {
-        return DecksV16(this)
+    override fun initDecks(col: Collection, deckConf: String?): DeckManager {
+        return DecksV16()
     }
 
     override fun initModels(): ModelManager {
@@ -86,7 +86,7 @@ class CollectionV16(
 
     override fun load() {
         config = initConfV16()
-        decks = initDecks(null)
+        decks = initDecks(col, null)
     }
 
     override fun flush(mod: Long) {

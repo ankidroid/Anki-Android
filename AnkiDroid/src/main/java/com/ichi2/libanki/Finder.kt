@@ -556,7 +556,7 @@ class Finder(private val col: Collection) {
         if (did == null) {
             return null
         }
-        val children: kotlin.collections.Collection<Long> = col.decks.children(did).values
+        val children: kotlin.collections.Collection<Long> = col.decks.children(col, did).values
         val res: MutableList<Long> = ArrayList(children.size + 1)
         res.add(did)
         res.addAll(children)
@@ -576,18 +576,18 @@ class Finder(private val col: Collection) {
         var ids: MutableList<Long>?
         // current deck?
         if ("current".equals(`val`, ignoreCase = true)) {
-            ids = dids(col.decks.selected())
+            ids = dids(col.decks.selected(col))
         } else if (!`val`.contains("*")) {
             // single deck
-            ids = dids(col.decks.id_for_name(`val`))
+            ids = dids(col.decks.id_for_name(col, `val`))
         } else {
             // wildcard
-            ids = dids(col.decks.id_for_name(`val`))
+            ids = dids(col.decks.id_for_name(col, `val`))
             if (ids == null) {
                 ids = ArrayList()
                 `val` = `val`.replace("*", ".*")
                 `val` = `val`.replace("+", "\\+")
-                for (d in col.decks.all()) {
+                for (d in col.decks.all(col)) {
                     var deckName = d.getString("name")
                     deckName = Normalizer.normalize(deckName, Normalizer.Form.NFC)
                     if (deckName.matches("(?i)$`val`".toRegex())) {

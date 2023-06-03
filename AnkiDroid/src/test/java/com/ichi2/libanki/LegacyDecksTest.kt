@@ -37,48 +37,48 @@ class LegacyDecksTest : RobolectricTest() {
     @Throws(DeckRenameException::class)
     fun testEnsureParents() {
         val decks = decks
-        decks.id("test")
-        val subsubdeckName = decks._ensureParents("  tESt :: sub :: subdeck")
+        decks.id(col, "test")
+        val subsubdeckName = decks._ensureParents(col, "  tESt :: sub :: subdeck")
         assertEquals("test::sub:: subdeck", subsubdeckName) // Only parents are renamed, not the last deck.
-        assertNotNull(decks.byName("test::sub"))
-        assertNull(decks.byName("test::sub:: subdeck"))
-        assertNull(decks.byName("  test :: sub :: subdeck"))
-        assertNull(decks.byName("  test :: sub "))
+        assertNotNull(decks.byName(col, "test::sub"))
+        assertNull(decks.byName(col, "test::sub:: subdeck"))
+        assertNull(decks.byName(col, "  test :: sub :: subdeck"))
+        assertNull(decks.byName(col, "  test :: sub "))
 
-        decks.newDyn("filtered")
-        assertFailsWith<DeckRenameException> { decks._ensureParents("filtered:: sub :: subdeck") }
+        decks.newDyn(col, "filtered")
+        assertFailsWith<DeckRenameException> { decks._ensureParents(col, "filtered:: sub :: subdeck") }
     }
 
     @Test
     @Throws(DeckRenameException::class)
     fun testEnsureParentsNotFiltered() {
         val decks = decks
-        decks.id("test")
-        val subsubdeckName = decks._ensureParentsNotFiltered("  tESt :: sub :: subdeck")
+        decks.id(col, "test")
+        val subsubdeckName = decks._ensureParentsNotFiltered(col, "  tESt :: sub :: subdeck")
         assertEquals("test::sub:: subdeck", subsubdeckName) // Only parents are renamed, not the last deck.
-        assertNotNull(decks.byName("test::sub"))
-        assertNull(decks.byName("test::sub:: subdeck"))
-        assertNull(decks.byName("  test :: sub :: subdeck"))
-        assertNull(decks.byName("  test :: sub "))
+        assertNotNull(decks.byName(col, "test::sub"))
+        assertNull(decks.byName(col, "test::sub:: subdeck"))
+        assertNull(decks.byName(col, "  test :: sub :: subdeck"))
+        assertNull(decks.byName(col, "  test :: sub "))
 
-        decks.newDyn("filtered")
-        val filteredSubdeckName = decks._ensureParentsNotFiltered("filtered:: sub :: subdeck")
+        decks.newDyn(col, "filtered")
+        val filteredSubdeckName = decks._ensureParentsNotFiltered(col, "filtered:: sub :: subdeck")
         assertEquals("filtered'::sub:: subdeck", filteredSubdeckName) // Only parents are renamed, not the last deck.
-        assertNotNull(decks.byName("filtered'::sub"))
-        assertNotNull(decks.byName("filtered'"))
-        assertNull(decks.byName("filtered::sub:: subdeck"))
-        assertNull(decks.byName("filtered::sub"))
+        assertNotNull(decks.byName(col, "filtered'::sub"))
+        assertNotNull(decks.byName(col, "filtered'"))
+        assertNull(decks.byName(col, "filtered::sub:: subdeck"))
+        assertNull(decks.byName(col, "filtered::sub"))
     }
 
     @Test
     fun duplicateName() {
         val decks = decks
         decks.load("{\"2\": {\"name\": \"A\", \"id\":2}, \"3\": {\"name\": \"A\", \"id\":3}, \"4\": {\"name\": \"A::B\", \"id\":4}}", "{}")
-        decks.checkIntegrity()
-        val deckA: JSONObject? = decks.byName("A")
+        decks.checkIntegrity(col)
+        val deckA: JSONObject? = decks.byName(col, "A")
         assertNotNull(deckA, "A deck with name \"A\" should still exists")
         assertThat("A deck with name \"A\" should have name \"A\"", deckA.getString("name"), Matchers.equalTo("A"))
-        val deckAPlus: JSONObject? = decks.byName("A+")
+        val deckAPlus: JSONObject? = decks.byName(col, "A+")
         assertNotNull(deckAPlus, "A deck with name \"A+\" should still exists")
     }
 
@@ -86,11 +86,11 @@ class LegacyDecksTest : RobolectricTest() {
     @Throws(DeckRenameException::class)
     fun descendantOfFiltered() {
         val decks = decks
-        decks.newDyn("filtered")
-        assertFailsWith<DeckRenameException> { decks.id("filtered::subdeck::subsubdeck") }
+        decks.newDyn(col, "filtered")
+        assertFailsWith<DeckRenameException> { decks.id(col, "filtered::subdeck::subsubdeck") }
 
-        val subdeckId = decks.id_safe("filtered::subdeck::subsubdeck")
-        val subdeck = decks.get(subdeckId)
+        val subdeckId = decks.id_safe(col, "filtered::subdeck::subsubdeck")
+        val subdeck = decks.get(col, subdeckId)
         assertEquals("filtered'::subdeck::subsubdeck", subdeck.getString("name"))
     }
 
@@ -101,7 +101,7 @@ class LegacyDecksTest : RobolectricTest() {
             if (col.decks is Decks) {
                 return col.decks as Decks
             }
-            val decks = Decks(col)
+            val decks = Decks()
 
             // following copied from storage:: _setColVars
 

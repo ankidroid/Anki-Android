@@ -249,11 +249,11 @@ class AutomaticAnswerSettings(
         ): AutomaticAnswerSettings? {
             // Dynamic don't have review options; attempt to get deck-specific auto-advance options
             // but be prepared to go with all default if it's a dynamic deck
-            if (col.decks.isDyn(selectedDid)) {
+            if (col.decks.isDyn(col, selectedDid)) {
                 return null
             }
 
-            val revOptions = col.decks.confForDid(selectedDid).getJSONObject("rev")
+            val revOptions = col.decks.confForDid(col, selectedDid).getJSONObject("rev")
 
             if (revOptions.optBoolean("useGeneralTimeoutSettings", true)) {
                 // we want to use the general settings, no need for per-deck settings
@@ -277,7 +277,7 @@ class AutomaticAnswerSettings(
             // deck specific options take precedence over general (preference-based) options.
             // the action can only be set via preferences (but is stored in the collection).
             val action = getAction(col)
-            return queryDeckSpecificOptions(col, action, col.decks.selected()) ?: queryFromPreferences(preferences, action)
+            return queryDeckSpecificOptions(col, action, col.decks.selected(col)) ?: queryFromPreferences(preferences, action)
         }
 
         private fun getAction(col: Collection): AutomaticAnswerAction {

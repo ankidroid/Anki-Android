@@ -47,7 +47,7 @@ import java.util.regex.Pattern
 @KotlinCleanup("remove unused functions")
 @KotlinCleanup("where ever possible replace ArrayList() with mutableListOf()")
 @KotlinCleanup("nullability")
-class Decks(private val col: Collection) : DeckManager() {
+class Decks() : DeckManager() {
     @get:RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     @KotlinCleanup("lateinit")
     @get:VisibleForTesting
@@ -172,21 +172,21 @@ class Decks(private val col: Collection) : DeckManager() {
     }
 
     /** {@inheritDoc}  */
-    override fun save() {
-        save(null as JSONObject?)
+    override fun save(col: Collection) {
+        save(col, null as JSONObject?)
     }
 
     /** {@inheritDoc}  */
-    override fun save(g: Deck) {
-        save(g as JSONObject)
+    override fun save(col: Collection, g: Deck) {
+        save(col, g as JSONObject)
     }
 
     /** {@inheritDoc}  */
-    override fun save(g: DeckConfig) {
-        save(g as JSONObject)
+    override fun save(col: Collection, g: DeckConfig) {
+        save(col, g as JSONObject)
     }
 
-    private fun save(g: JSONObject?) {
+    private fun save(col: Collection, g: JSONObject?) {
         if (g != null) {
             g.put("mod", time.intTime())
             g.put("usn", col.usn())
@@ -194,7 +194,7 @@ class Decks(private val col: Collection) : DeckManager() {
         mChanged = true
     }
 
-    override fun flush() {
+    override fun flush(col: Collection) {
         val values = ContentValues()
         if (mChanged) {
             val decksarray = JSONObject()
@@ -218,16 +218,16 @@ class Decks(private val col: Collection) : DeckManager() {
      */
     @Suppress("NAME_SHADOWING")
     @KotlinCleanup("Simplify function body")
-    override fun id_for_name(name: String): Long? {
+    override fun id_for_name(col: Collection, name: String): Long? {
         var name = name
         name = usable_name(name)
-        val deck = byName(name)
+        val deck = byName(col, name)
         return deck?.getLong("id")
     }
 
     @Throws(DeckRenameException::class)
-    override fun id(name: String): Long {
-        return id(name, DEFAULT_DECK)
+    override fun id(col: Collection, name: String): Long {
+        return id(col, name, DEFAULT_DECK)
     }
 
     @Suppress("NAME_SHADOWING")
@@ -246,18 +246,18 @@ class Decks(private val col: Collection) : DeckManager() {
     @Throws(DeckRenameException::class)
     @Suppress("NAME_SHADOWING")
     @KotlinCleanup("Simplify function body")
-    fun id(name: String, type: String): Long {
+    fun id(col: Collection, name: String, type: String): Long {
         var name = name
         name = usable_name(name)
-        val id = id_for_name(name)
+        val id = id_for_name(col, name)
         if (id != null) {
             return id
         }
         if (name.contains("::")) {
             // not top level; ensure all parents exist
-            name = _ensureParents(name)
+            name = _ensureParents(col, name)
         }
-        return id_create_name_valid(name, type)
+        return id_create_name_valid(col, name, type)
     }
 
     /**
@@ -265,7 +265,7 @@ class Decks(private val col: Collection) : DeckManager() {
      * @param type The json encoding of the deck, except for name and id
      * @return the deck's id
      */
-    private fun id_create_name_valid(name: String, type: String): Long {
+    private fun id_create_name_valid(col: Collection, name: String, type: String): Long {
         var id: Long
         val g = Deck(type)
         g.put("name", name)
@@ -274,8 +274,8 @@ class Decks(private val col: Collection) : DeckManager() {
         } while (decks!!.containsKey(id))
         g.put("id", id)
         decks!![id] = g
-        save(g)
-        maybeAddToActive()
+        save(col, g)
+        maybeAddToActive(col)
         mNameMap!!.add(g)
         // runHook("newDeck"); // TODO
         return id
@@ -284,29 +284,29 @@ class Decks(private val col: Collection) : DeckManager() {
     /** {@inheritDoc}  */
     @Suppress("NAME_SHADOWING")
     @KotlinCleanup("Simplify function body")
-    override fun id_safe(name: String, type: String): Long {
+    override fun id_safe(col: Collection, name: String, type: String): Long {
         var name = name
         name = usable_name(name)
-        val id = id_for_name(name)
+        val id = id_for_name(col, name)
         if (id != null) {
             return id
         }
         if (name.contains("::")) {
             // not top level; ensure all parents exist
-            name = _ensureParentsNotFiltered(name)
+            name = _ensureParentsNotFiltered(col, name)
         }
-        return id_create_name_valid(name, type)
+        return id_create_name_valid(col, name, type)
     }
 
     /** {@inheritDoc}  */
-    override fun rem(did: Long, cardsToo: Boolean, childrenToo: Boolean) {
-        val deck = get(did, false)
+    override fun rem(col: Collection, did: DeckId, cardsToo: Boolean, childrenToo: Boolean) {
+        val deck = get(col, did, false)
         if (did == 1L) {
             // we won't allow the default deck to be deleted, but if it's a
             // child of an existing deck then it needs to be renamed
             if (deck != null && deck.getString("name").contains("::")) {
                 deck.put("name", "Default")
-                save(deck)
+                save(col, deck)
             }
             return
         }
@@ -321,16 +321,16 @@ class Decks(private val col: Collection) : DeckManager() {
             // rather than deleting the cards
             col.sched.emptyDyn(col, did)
             if (childrenToo) {
-                for (id in children(did).values) {
-                    rem(id, cardsToo, false)
+                for (id in children(col, did).values) {
+                    rem(col, id, cardsToo, false)
                 }
             }
         } else {
             // delete children first
             if (childrenToo) {
                 // we don't want to delete children when syncing
-                for (id in children(did).values) {
-                    rem(id, cardsToo, false)
+                for (id in children(col, did).values) {
+                    rem(col, id, cardsToo, false)
                 }
             }
             // delete cards too?
@@ -348,15 +348,15 @@ class Decks(private val col: Collection) : DeckManager() {
         decks!!.remove(did)
         mNameMap!!.remove(deck.getString("name"), deck)
         // ensure we have an active deck
-        if (active().contains(did)) {
-            select(decks!!.keys.iterator().next())
+        if (active(col).contains(did)) {
+            select(col, decks!!.keys.iterator().next())
         }
-        save()
+        save(col)
     }
 
     /** {@inheritDoc}  */
     @KotlinCleanup("Simplify if-for code block with forEach on decks.values")
-    override fun allNames(dyn: Boolean): List<String> {
+    override fun allNames(col: Collection, dyn: Boolean): List<String> {
         val list: MutableList<String> = ArrayList(
             decks!!.size
         )
@@ -375,34 +375,34 @@ class Decks(private val col: Collection) : DeckManager() {
     }
 
     /** {@inheritDoc}  */
-    override fun all(): List<Deck> {
+    override fun all(col: Collection): List<Deck> {
         return ArrayList(decks!!.values)
     }
 
-    override fun allIds(): Set<Long> {
+    override fun allIds(col: Collection): Set<Long> {
         return decks!!.keys
     }
 
-    override fun collapse(did: Long) {
-        val deck = get(did)
+    override fun collapse(col: Collection, did: Long) {
+        val deck = get(col, did)
         deck.put("collapsed", !deck.getBoolean("collapsed"))
-        save(deck)
+        save(col, deck)
     }
 
-    fun collapseBrowser(did: Long) {
-        val deck = get(did)
+    fun collapseBrowser(col: Collection, did: Long) {
+        val deck = get(col, did)
         val collapsed = deck.optBoolean("browserCollapsed", false)
         deck.put("browserCollapsed", !collapsed)
-        save(deck)
+        save(col, deck)
     }
 
     /** {@inheritDoc}  */
-    override fun count(): Int {
+    override fun count(col: Collection): Int {
         return decks!!.size
     }
 
     @CheckResult
-    override operator fun get(did: Long, _default: Boolean): Deck? {
+    override operator fun get(col: Collection, did: Long, _default: Boolean): Deck? {
         return if (decks!!.containsKey(did)) {
             decks!![did]
         } else if (_default) {
@@ -414,14 +414,14 @@ class Decks(private val col: Collection) : DeckManager() {
 
     /** {@inheritDoc}  */
     @CheckResult
-    override fun byName(name: String): Deck? {
+    override fun byName(col: Collection, name: String): Deck? {
         return mNameMap!![name]
     }
 
     /** {@inheritDoc}  */
-    override fun update(g: Deck) {
+    override fun update(col: Collection, g: Deck) {
         val id = g.getLong("id")
-        val oldDeck: JSONObject? = get(id, false)
+        val oldDeck: JSONObject? = get(col, id, false)
         if (oldDeck != null) {
             // In case where another update got the name
             // `oldName`, it would be a mistake to remove it from nameMap
@@ -429,19 +429,19 @@ class Decks(private val col: Collection) : DeckManager() {
         }
         mNameMap!!.add(g)
         decks!![g.getLong("id")] = g
-        maybeAddToActive()
+        maybeAddToActive(col)
         // mark registry changed, but don't bump mod time
-        save()
+        save(col)
     }
 
     /** {@inheritDoc}  */
     @Suppress("NAME_SHADOWING")
     @Throws(DeckRenameException::class)
-    override fun rename(g: Deck, newName: String) {
+    override fun rename(col: Collection, g: Deck, newName: String) {
         var newName = newName
         newName = strip(newName)
         // make sure target node doesn't already exist
-        val deckWithThisName = byName(newName)
+        val deckWithThisName = byName(col, newName)
         if (deckWithThisName != null) {
             if (deckWithThisName.getLong("id") != g.getLong("id")) {
                 throw DeckRenameException(DeckRenameException.ALREADY_EXISTS)
@@ -453,11 +453,11 @@ class Decks(private val col: Collection) : DeckManager() {
              * the code in order do this change. */
         }
         // ensure we have parents and none is a filtered deck
-        newName = _ensureParents(newName)
+        newName = _ensureParents(col, newName)
 
         // rename children
         val oldName = g.getString("name")
-        for (grp in all()) {
+        for (grp in all(col)) {
             val grpOldName = grp.getString("name")
             if (grpOldName.startsWith("$oldName::")) {
                 val grpNewName =
@@ -466,7 +466,7 @@ class Decks(private val col: Collection) : DeckManager() {
                 mNameMap!!.remove(grpOldName, grp)
                 grp.put("name", grpNewName)
                 mNameMap!!.add(grp)
-                save(grp)
+                save(col, grp)
             }
         }
         mNameMap!!.remove(oldName, g)
@@ -475,18 +475,18 @@ class Decks(private val col: Collection) : DeckManager() {
         // ensure we have parents again, as we may have renamed parent->child
         // No ancestor can be filtered after renaming
         @Suppress("UNUSED_VALUE") // TODO: Maybe a bug
-        newName = _ensureParentsNotFiltered(newName)
+        newName = _ensureParentsNotFiltered(col, newName)
         mNameMap!!.add(g)
-        save(g)
+        save(col, g)
         // renaming may have altered active did order
-        maybeAddToActive()
+        maybeAddToActive(col)
     }
 
     /* Buggy implementation. Keep as first draft if we want to use it again
     public void renameForDragAndDrop(Long draggedDeckDid, Long ontoDeckDid) throws DeckRenameException {
-        Deck draggedDeck = get(draggedDeckDid);
+        Deck draggedDeck = get(col, draggedDeckDid);
         String draggedDeckName = draggedDeck.getString("name");
-        String ontoDeckName = get(ontoDeckDid).getString("name");
+        String ontoDeckName = get(col, ontoDeckDid).getString("name");
 
         String draggedBasename = basename(draggedDeckName);
         if (ontoDeckDid == null) {
@@ -549,7 +549,7 @@ class Decks(private val col: Collection) : DeckManager() {
     @VisibleForTesting
     @Throws(DeckRenameException::class)
     @Suppress("NAME_SHADOWING")
-    internal fun _ensureParents(name: String): String {
+    internal fun _ensureParents(col: Collection, name: String): String {
         var name = name
         var s = ""
         val path = path(name)
@@ -569,10 +569,10 @@ class Decks(private val col: Collection) : DeckManager() {
                 "::$p"
             }
             // fetch or create
-            val did = id(s)
+            val did = id(col, s)
             // get original case
-            s = name(did)
-            val deck = get(did)
+            s = name(col, did)
+            val deck = get(col, did)
             if (deck.isDyn) {
                 throw DeckRenameException.filteredAncestor(name, s)
             }
@@ -585,7 +585,7 @@ class Decks(private val col: Collection) : DeckManager() {
     /** {@inheritDoc}  */
     @VisibleForTesting
     @Suppress("NAME_SHADOWING")
-    internal fun _ensureParentsNotFiltered(name: String): String {
+    internal fun _ensureParentsNotFiltered(col: Collection, name: String): String {
         var name = name
         var s = ""
         val path = path(name)
@@ -599,16 +599,16 @@ class Decks(private val col: Collection) : DeckManager() {
             } else {
                 "::$p"
             }
-            var did = id_safe(s)
-            var deck = get(did)
-            s = name(did)
+            var did = id_safe(col, s)
+            var deck = get(col, did)
+            s = name(col, did)
             while (deck.isDyn) {
                 s = "$s'"
                 // fetch or create
-                did = id_safe(s)
+                did = id_safe(col, s)
                 // get original case
-                s = name(did)
-                deck = get(did)
+                s = name(col, did)
+                deck = get(col, did)
             }
         }
         name = s + "::" + path[path.size - 1]
@@ -619,16 +619,16 @@ class Decks(private val col: Collection) : DeckManager() {
       ***********************************************************
      */
     /** {@inheritDoc}  */
-    override fun allConf(): List<DeckConfig> {
+    override fun allConf(col: Collection): List<DeckConfig> {
         return ArrayList(mDconf!!.values)
     }
 
-    override fun confForDid(did: Long): DeckConfig {
-        val deck = get(did, false)!!
+    override fun confForDid(col: Collection, did: Long): DeckConfig {
+        val deck = get(col, did, false)!!
         if (deck.has("conf")) {
             // fall back on default
             @KotlinCleanup("Clarify comment. It doesn't make sense when using :?")
-            val conf = getConf(deck.getLong("conf")) ?: getConf(1L)!!
+            val conf = getConf(col, deck.getLong("conf")) ?: getConf(col, 1L)!!
             return conf.apply {
                 put("dyn", DECK_STD)
             }
@@ -637,17 +637,17 @@ class Decks(private val col: Collection) : DeckManager() {
         return DeckConfig(deck, DeckConfig.Source.DECK_EMBEDDED)
     }
 
-    override fun getConf(confId: Long): DeckConfig? {
+    override fun getConf(col: Collection, confId: Long): DeckConfig? {
         return mDconf!![confId]
     }
 
-    override fun updateConf(g: DeckConfig) {
+    override fun updateConf(col: Collection, g: DeckConfig) {
         mDconf!![g.getLong("id")] = g
-        save()
+        save(col)
     }
 
     /** {@inheritDoc}  */
-    override fun confId(name: String, cloneFrom: String): Long {
+    override fun confId(col: Collection, name: String, cloneFrom: String): Long {
         var id: Long
         val c = DeckConfig(cloneFrom, DeckConfig.Source.DECK_CONFIG)
         do {
@@ -656,36 +656,36 @@ class Decks(private val col: Collection) : DeckManager() {
         c.put("id", id)
         c.put("name", name)
         mDconf!![id] = c
-        save(c)
+        save(col, c)
         return id
     }
 
     /** {@inheritDoc}  */
     @Throws(ConfirmModSchemaException::class)
-    override fun remConf(id: Long) {
+    override fun remConf(col: Collection, id: Long) {
         assert(id != 1L)
         col.modSchema()
         mDconf!!.remove(id)
         @KotlinCleanup("filter and map")
-        for (g in all()) {
+        for (g in all(col)) {
             // ignore cram decks
             if (!g.has("conf")) {
                 continue
             }
             if (g.getString("conf") == java.lang.Long.toString(id)) {
                 g.put("conf", 1)
-                save(g)
+                save(col, g)
             }
         }
     }
 
-    override fun setConf(grp: Deck, id: Long) {
+    override fun setConf(col: Collection, grp: Deck, id: Long) {
         grp.put("conf", id)
-        save(grp)
+        save(col, grp)
     }
 
     @KotlinCleanup("filter + map")
-    override fun didsForConf(conf: DeckConfig): List<Long> {
+    override fun didsForConf(col: Collection, conf: DeckConfig): List<Long> {
         val dids: MutableList<Long> = ArrayList()
         for (deck in decks!!.values) {
             if (deck.has("conf") && deck.getLong("conf") == conf.getLong("id")) {
@@ -696,12 +696,12 @@ class Decks(private val col: Collection) : DeckManager() {
     }
 
     @RustCleanup("use backend method")
-    override fun restoreToDefault(conf: DeckConfig) {
+    override fun restoreToDefault(col: Collection, conf: DeckConfig) {
         val oldOrder = conf.getJSONObject("new").getInt("order")
         val _new = DeckConfig(DEFAULT_CONF, DeckConfig.Source.DECK_CONFIG)
         _new.put("id", conf.getLong("id"))
         _new.put("name", conf.getString("name"))
-        updateConf(_new)
+        updateConf(col, _new)
         // if it was previously randomized, resort
         KotlinCleanup("replace 0 by constant to mean random/standard")
         if (oldOrder == 0) {
@@ -713,49 +713,49 @@ class Decks(private val col: Collection) : DeckManager() {
      * Deck utils
      * ***********************************************************
      */
-    override fun name(did: Long, _default: Boolean): String {
-        val deck = get(did, _default)
+    override fun name(col: Collection, did: Long, _default: Boolean): String {
+        val deck = get(col, did, _default)
         return deck?.getString("name") ?: "[no deck]"
     }
 
-    fun nameOrNone(did: Long): String? {
-        val deck = get(did, false)
+    fun nameOrNone(col: Collection, did: Long): String? {
+        val deck = get(col, did, false)
         return deck?.getString("name")
     }
 
-    private fun maybeAddToActive() {
+    private fun maybeAddToActive(col: Collection) {
         // reselect current deck, or default if current has disappeared
-        val c = current()
-        select(c.getLong("id"))
+        val c = current(col)
+        select(col, c.getLong("id"))
     }
 
-    override fun cids(did: Long, children: Boolean): MutableList<Long> {
+    override fun cids(col: Collection, did: Long, children: Boolean): MutableList<Long> {
         if (!children) {
             return col.db.queryLongList("select id from cards where did=?", did)
         }
         @KotlinCleanup("simplify with listOf(did) + values")
-        val values: kotlin.collections.Collection<Long> = children(did).values
+        val values: kotlin.collections.Collection<Long> = children(col, did).values
         val dids: MutableList<Long> = ArrayList(values.size + 1)
         dids.add(did)
         dids.addAll(values)
         return col.db.queryLongList("select id from cards where did in " + Utils.ids2str(dids))
     }
 
-    private fun _recoverOrphans() {
+    private fun _recoverOrphans(col: Collection) {
         val mod = col.db.mod
         SyncStatus.ignoreDatabaseModification {
             @KotlinCleanup("maybe change concat to interpolation")
             col.db.execute(
                 "update cards set did = 1 where did not in " + Utils.ids2str(
-                    allIds()
+                    allIds(col)
                 )
             )
         }
         col.db.mod = mod
     }
 
-    private fun _checkDeckTree() {
-        val sortedDecks = allSorted()
+    private fun _checkDeckTree(col: Collection) {
+        val sortedDecks = allSorted(col)
         val names: MutableMap<String?, Deck?> = HashMapInit(sortedDecks.size)
         for (deck in sortedDecks) {
             var deckName = deck.getString("name")
@@ -770,7 +770,7 @@ class Decks(private val col: Collection) : DeckManager() {
                 deckName = strippedName
                 deck.put("name", deckName)
                 mNameMap!!.add(deck)
-                save(deck)
+                save(col, deck)
             }
 
             // ensure no sections are blank
@@ -780,7 +780,7 @@ class Decks(private val col: Collection) : DeckManager() {
                 deckName = "blank"
                 deck.put("name", "blank")
                 mNameMap!!.add(deck)
-                save(deck)
+                save(col, deck)
             }
             if (deckName.contains("::::")) {
                 Timber.i("fix deck with missing sections %s", deck.getString("name"))
@@ -791,7 +791,7 @@ class Decks(private val col: Collection) : DeckManager() {
                 } while (deckName.contains("::::"))
                 deck.put("name", deckName)
                 mNameMap!!.add(deck)
-                save(deck)
+                save(col, deck)
             }
 
             // two decks with the same name?
@@ -804,31 +804,31 @@ class Decks(private val col: Collection) : DeckManager() {
                 } while (names.containsKey(normalizeName(deckName)))
                 mNameMap!!.add(deck)
                 mNameMap!!.add(homonym) // Ensuring both names are correctly in mNameMap
-                save(deck)
+                save(col, deck)
             }
 
             // immediate parent must exist
             val immediateParent = parent(deckName)
             if (immediateParent != null && !names.containsKey(normalizeName(immediateParent))) {
                 Timber.i("fix deck with missing parent %s", deckName)
-                val parent = byName(immediateParent)
-                _ensureParentsNotFiltered(deckName)
+                val parent = byName(col, immediateParent)
+                _ensureParentsNotFiltered(col, deckName)
                 names[normalizeName(immediateParent)] = parent
             }
             names[normalizeName(deckName)] = deck
         }
     }
 
-    override fun checkIntegrity() {
-        _recoverOrphans()
-        _checkDeckTree()
+    override fun checkIntegrity(col: Collection) {
+        _recoverOrphans(col)
+        _checkDeckTree(col)
     }
     /*
       Deck selection
       ***********************************************************
      */
     /** {@inheritDoc}  */
-    override fun active(): LinkedList<Long> {
+    override fun active(col: Collection): LinkedList<Long> {
         val activeDecks = col.get_config_array(ACTIVE_DECKS)
         val result = LinkedList<Long>()
         result.addAll(activeDecks.longIterable())
@@ -836,26 +836,26 @@ class Decks(private val col: Collection) : DeckManager() {
     }
 
     /** {@inheritDoc}  */
-    override fun selected(): Long {
+    override fun selected(col: Collection): Long {
         return col.get_config_long(CURRENT_DECK)
     }
 
-    @Suppress("SENSELESS_COMPARISON") // get(selected)
-    override fun current(): Deck {
-        if (get(selected()) == null || !decks!!.containsKey(selected())) {
-            select(Consts.DEFAULT_DECK_ID) // Select default deck if the selected deck is null
+    @Suppress("SENSELESS_COMPARISON") // get(col, selected)
+    override fun current(col: Collection): Deck {
+        if (get(col, selected(col)) == null || !decks!!.containsKey(selected(col))) {
+            select(col, Consts.DEFAULT_DECK_ID) // Select default deck if the selected deck is null
         }
-        return get(selected())
+        return get(col, selected(col))
     }
 
     /** {@inheritDoc}  */
-    override fun select(did: Long) {
+    override fun select(col: Collection, did: Long) {
         val name = decks!![did]!!.getString("name")
 
         // current deck
         col.set_config(CURRENT_DECK, did)
         // and active decks (current + all children)
-        val actv = children(did) // Note: TreeMap is already sorted
+        val actv = children(col, did) // Note: TreeMap is already sorted
         actv[name] = did
         val activeDecks = JSONArray()
         for (n in actv.values) {
@@ -865,11 +865,11 @@ class Decks(private val col: Collection) : DeckManager() {
     }
 
     /** {@inheritDoc}  */
-    override fun children(did: Long): TreeMap<String, Long> {
-        val name = get(did).getString("name")
+    override fun children(col: Collection, did: Long): TreeMap<String, Long> {
+        val name = get(col, did).getString("name")
         val actv = TreeMap<String, Long>()
         @KotlinCleanup("filter and map")
-        for (g in all()) {
+        for (g in all(col)) {
             if (g.getString("name").startsWith("$name::")) {
                 actv[g.getString("name")] = g.getLong("id")
             }
@@ -894,11 +894,11 @@ class Decks(private val col: Collection) : DeckManager() {
         return arr.requireNoNulls()
     }
 
-    override fun childMap(): Node {
+    override fun childMap(col: Collection): Node {
         val childMap = Node()
 
         // Go through all decks, sorted by name
-        val decks = all()
+        val decks = all(col)
         Collections.sort(decks, DeckComparator.INSTANCE)
         for (deck in decks) {
             val node = Node()
@@ -906,7 +906,7 @@ class Decks(private val col: Collection) : DeckManager() {
             val parts = listOf(*path(deck.getString("name")))
             if (parts.size > 1) {
                 val immediateParent = parts.subList(0, parts.size - 1).joinToString("::")
-                val pid = byName(immediateParent)!!.getLong("id")
+                val pid = byName(col, immediateParent)!!.getLong("id")
                 childMap[pid]!![deck.getLong("id")] = node
             }
         }
@@ -932,9 +932,9 @@ class Decks(private val col: Collection) : DeckManager() {
     }
 
     /** {@inheritDoc}  */
-    override fun parents(did: Long): List<Deck> {
+    override fun parents(col: Collection, did: Long): List<Deck> {
         // get parent and grandparent names
-        val parents = parentsNames(get(did).getString("name"))
+        val parents = parentsNames(get(col, did).getString("name"))
         // convert to objects
         val oParents: MutableList<Deck> = ArrayList(parents.size)
         for (i in parents.indices) {
@@ -949,14 +949,14 @@ class Decks(private val col: Collection) : DeckManager() {
      * Sync handling
      * ***********************************************************
      */
-    override fun beforeUpload() {
-        val changed_decks = Utils.markAsUploaded(all())
-        val changed_conf = Utils.markAsUploaded(allConf())
+    override fun beforeUpload(col: Collection) {
+        val changed_decks = Utils.markAsUploaded(all(col))
+        val changed_conf = Utils.markAsUploaded(allConf(col))
         if (changed_decks || changed_conf) {
             // shouldSave should always be called on both lists, for
             // its side effect. Thus the disjunction should not be
             // directly applied to the methods.
-            save()
+            save(col)
         }
     }
 
@@ -966,18 +966,18 @@ class Decks(private val col: Collection) : DeckManager() {
     /** {@inheritDoc}  */
     @Throws(DeckRenameException::class)
     @KotlinCleanup("maybe use 'apply'")
-    override fun newDyn(name: String): Long {
-        val did = id(name, defaultDynamicDeck)
-        select(did)
+    override fun newDyn(col: Collection, name: String): Long {
+        val did = id(col, name, defaultDynamicDeck)
+        select(col, did)
         return did
     }
 
     @KotlinCleanup("convert to expression body")
-    override fun isDyn(did: Long): Boolean {
-        return get(did).isDyn
+    override fun isDyn(col: Collection, did: Long): Boolean {
+        return get(col, did).isDyn
     }
 
-    override fun update_active() {
+    override fun update_active(col: Collection) {
         // intentionally blank
     }
 
@@ -1141,7 +1141,7 @@ class Decks(private val col: Collection) : DeckManager() {
         }
 
         fun isDynamic(col: Collection, deckId: Long): Boolean {
-            return isDynamic(col.decks.get(deckId))
+            return isDynamic(col.decks.get(col, deckId))
         }
 
         fun isDynamic(deck: Deck): Boolean {

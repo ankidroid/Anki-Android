@@ -290,7 +290,7 @@ open class Card : Cloneable {
      * Time limit for answering in milliseconds.
      */
     fun timeLimit(col: Collection): Int {
-        val conf = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
+        val conf = col.decks.confForDid(col, if (!isInDynamicDeck) did else oDid)
         return conf.getInt("maxTaken") * 1000
     }
 
@@ -365,7 +365,7 @@ open class Card : Cloneable {
     }
 
     fun showTimer(col: Collection): Boolean {
-        val options = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
+        val options = col.decks.confForDid(col, if (!isInDynamicDeck) did else oDid)
         return DeckConfig.parseTimerOpt(options, true)
     }
 

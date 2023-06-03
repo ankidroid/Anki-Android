@@ -41,7 +41,7 @@ suspend fun rebuildCram(listener: CreateCustomStudySessionListener) {
     listener.onPreExecute()
     CollectionManager.withCol {
         Timber.d("doInBackground - rebuildCram()")
-        sched.rebuildDyn(col, decks.selected())
+        sched.rebuildDyn(col, decks.selected(col))
         updateValuesFromDeck(this, true)
     }
     listener.onPostExecute()

@@ -47,7 +47,7 @@ class SoundPlayer {
 
         companion object {
             fun create(col: Collection, card: Card): CardSoundConfig {
-                val deckConfig = col.decks.confForDid(CardUtils.getDeckIdForCard(card))
+                val deckConfig = col.decks.confForDid(col, CardUtils.getDeckIdForCard(card))
 
                 val autoPlay = deckConfig.optBoolean("autoplay", false)
 

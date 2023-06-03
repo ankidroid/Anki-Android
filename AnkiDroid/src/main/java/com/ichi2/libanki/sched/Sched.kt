@@ -157,8 +157,8 @@ class Sched(col: Collection) : SchedV2(col) {
      */
     override fun deckDueList(col: Collection, collectionTask: CancelListener?): List<DeckDueTreeNode>? {
         _checkDay(col)
-        col.decks.checkIntegrity()
-        val allDecksSorted = col.decks.allSorted()
+        col.decks.checkIntegrity(col)
+        val allDecksSorted = col.decks.allSorted(col)
 
         @KotlinCleanup("input should be non-null")
         val lims = HashUtil.HashMapInit<String?, Array<Int>>(allDecksSorted.size)
@@ -305,7 +305,7 @@ class Sched(col: Collection) : SchedV2(col) {
     override fun _resetLrnQueue(col: Collection) {
         mLrnQueue.clear()
         mLrnDayQueue.clear()
-        mLrnDids = col.decks.active()
+        mLrnDids = col.decks.active(col)
     }
 
     // sub-day learning
@@ -525,7 +525,7 @@ class Sched(col: Collection) : SchedV2(col) {
             " AND id IN " + Utils.ids2str(ids)
         } else {
             // benchmarks indicate it's about 10x faster to search all decks with the index than scan the table
-            " AND did IN " + Utils.ids2str(col.decks.allIds())
+            " AND did IN " + Utils.ids2str(col.decks.allIds(col))
         }
         // review cards in relearning
         col.db.execute(
@@ -591,7 +591,7 @@ class Sched(col: Collection) : SchedV2(col) {
             return mReportLimit
         }
         val did = d.getLong("id")
-        val c = col.decks.confForDid(did)
+        val c = col.decks.confForDid(col, did)
         var lim = Math.max(
             0,
             c.getJSONObject("rev").getInt("perDay") - d.getJSONArray("revToday").getInt(1)
@@ -645,7 +645,7 @@ class Sched(col: Collection) : SchedV2(col) {
 
     override fun _resetRevQueue(col: Collection) {
         mRevQueue.clear()
-        mRevDids = col.decks.active()
+        mRevDids = col.decks.active(col)
     }
 
     override fun _fillRev(col: Collection, allowSibling: Boolean): Boolean {
@@ -686,7 +686,7 @@ class Sched(col: Collection) : SchedV2(col) {
                 }
                 if (!mRevQueue.isEmpty) {
                     // ordering
-                    if (col.decks.get(did).isDyn) {
+                    if (col.decks.get(col, did).isDyn) {
                         // dynamic decks need due order preserved
                         // Note: libanki reverses mRevQueue and returns the last element in _getRevCard(col).
                         // AnkiDroid differs by leaving the queue intact and returning the *first* element
@@ -860,7 +860,7 @@ class Sched(col: Collection) : SchedV2(col) {
      * *****************************
      */
     override fun rebuildDyn(col: Collection, did: Long) {
-        val deck = col.decks.get(did)
+        val deck = col.decks.get(col, did)
         if (deck.isStd) {
             Timber.e("error: deck is not a filtered deck")
             return
@@ -872,7 +872,7 @@ class Sched(col: Collection) : SchedV2(col) {
             return
         }
         // and change to our new deck
-        col.decks.select(did)
+        col.decks.select(col, did)
     }
 
     private fun _fillDyn(col: Collection, deck: Deck): List<Long> {
@@ -985,7 +985,7 @@ class Sched(col: Collection) : SchedV2(col) {
             return conf.getJSONObject("new")
         }
         // dynamic deck; override some attributes, use original deck for others
-        val oconf = col.decks.confForDid(card.oDid)
+        val oconf = col.decks.confForDid(col, card.oDid)
 
         @KotlinCleanup("use ?:")
         var delays = conf.optJSONArray("delays")
@@ -1012,7 +1012,7 @@ class Sched(col: Collection) : SchedV2(col) {
             return conf.getJSONObject("lapse")
         }
         // dynamic deck; override some attributes, use original deck for others
-        val oconf = col.decks.confForDid(card.oDid)
+        val oconf = col.decks.confForDid(col, card.oDid)
         var delays = conf.optJSONArray("delays")
         @KotlinCleanup("use :?")
         if (delays == null) {
@@ -1056,7 +1056,7 @@ class Sched(col: Collection) : SchedV2(col) {
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
-        for (deck in col.decks.all()) {
+        for (deck in col.decks.all(col)) {
             update(deck)
         }
         // unbury if the day has rolled over
@@ -1073,7 +1073,7 @@ class Sched(col: Collection) : SchedV2(col) {
      */
     @KotlinCleanup("convert to expression")
     override fun haveBuried(col: Collection): Boolean {
-        return haveBuried(col, col.decks.active())
+        return haveBuried(col, col.decks.active(col))
     }
 
     @KotlinCleanup("convert to expression")
@@ -1203,13 +1203,13 @@ class Sched(col: Collection) : SchedV2(col) {
      * ***********************************************************
      */
     override fun haveBuried(col: Collection, did: Long): Boolean {
-        val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
+        val all: MutableList<Long> = ArrayList(col.decks.children(col, did).values)
         all.add(did)
         return haveBuried(col, all)
     }
 
     override fun unburyCardsForDeck(col: Collection, did: Long) {
-        val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
+        val all: MutableList<Long> = ArrayList(col.decks.children(col, did).values)
         all.add(did)
         unburyCardsForDeck(col, all)
     }

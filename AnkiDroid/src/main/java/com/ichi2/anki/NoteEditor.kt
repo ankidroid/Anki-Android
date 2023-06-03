@@ -1631,7 +1631,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val model = col.models.current(col)
             if (col.get_config("addToCur", true)!!) {
                 deckId = col.get_config_long(CURRENT_DECK)
-                if (col.decks.isDyn(deckId)) {
+                if (col.decks.isDyn(col, deckId)) {
                     /*
                      * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
                      * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
@@ -1958,9 +1958,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     return
                 }
                 col.models.setCurrent(col, model)
-                val currentDeck = col.decks.current()
+                val currentDeck = col.decks.current(col)
                 currentDeck.put("mid", newId)
-                col.decks.save(currentDeck)
+                col.decks.save(col, currentDeck)
                 // Update deck
                 if (!col.get_config("addToCur", true)!!) {
                     deckId = model.optLong("did", Consts.DEFAULT_DECK_ID)

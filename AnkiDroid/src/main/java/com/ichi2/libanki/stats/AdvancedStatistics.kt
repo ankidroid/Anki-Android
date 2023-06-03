@@ -262,6 +262,7 @@ class AdvancedStatistics {
         val todayStats = TodayStats(col, mSettings!!.getDayStartCutoff(col.crt))
         val t0 = time.intTimeMS()
         val simulationResult = reviewSimulator.simNreviews(
+            col,
             mSettings!!.getToday(col.crt.toInt().toLong()),
             col.decks,
             dids,
@@ -396,9 +397,9 @@ class AdvancedStatistics {
     }
 
     private inner class DeckFactory {
-        fun createDeck(did: Long, decks: DeckManager): Deck {
+        fun createDeck(col: Collection, did: Long, decks: DeckManager): Deck {
             Timber.d("Trying to get deck settings for deck with id=%s", did)
-            val conf = decks.confForDid(did)
+            val conf = decks.confForDid(col, did)
             var newPerDay = mSettings!!.maxNewPerDay
             var revPerDay = mSettings!!.maxReviewsPerDay
             var initialFactor: Int = Settings.initialFactor
@@ -656,7 +657,7 @@ class AdvancedStatistics {
         }
 
         init {
-            mNLearnedPerDeckId = HashMapInit(col.decks.count())
+            mNLearnedPerDeckId = HashMapInit(col.decks.count(col))
             val db = col.db.database
             val query = "select cards.did, " +
                 "sum(case when revlog.type = " + CARD_TYPE_NEW + " then 1 else 0 end)" + /* learning */
@@ -712,6 +713,7 @@ class AdvancedStatistics {
         private val mTMax: Int
         private val mNewCardSimulator = NewCardSimulator()
         fun simNreviews(
+            col: Collection,
             today: Int,
             decks: DeckManager,
             didsStr: String,
@@ -731,7 +733,7 @@ class AdvancedStatistics {
                     simulationResultAggregated.add(
                         simNreviews(
                             today,
-                            mDecks.createDeck(did, decks)
+                            mDecks.createDeck(col, did, decks)
                         ),
                         nIterationsInv
                     )
