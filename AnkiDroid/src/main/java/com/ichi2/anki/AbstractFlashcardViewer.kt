@@ -967,7 +967,7 @@ abstract class AbstractFlashcardViewer :
                 Timber.i("Answering card %d", oldCard.id)
                 col.sched.answerCard(oldCard, ease)
                 Timber.i("Obtaining next card")
-                sched.card?.apply { render_output(col, reload = true) }
+                sched.card()?.apply { render_output(col, reload = true) }
             }
             // TODO: this handling code is unnecessarily complex, and would be easier to follow
             //  if written imperatively

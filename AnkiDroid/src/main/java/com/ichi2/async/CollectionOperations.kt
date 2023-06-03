@@ -68,7 +68,7 @@ fun updateCard(
                 q(col, true) // reload qa-cache
             }
         } else {
-            col.sched.card!! // check: are there deleted too?
+            col.sched.card()!! // check: are there deleted too?
         }
     } else {
         editCard

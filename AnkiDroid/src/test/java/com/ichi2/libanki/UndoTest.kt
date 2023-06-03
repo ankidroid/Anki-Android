@@ -76,7 +76,7 @@ class UndoTest : RobolectricTest() {
             addNote(note)
             reset()
             assertEquals("add", undoName(targetContext.resources))
-            val c = sched.card
+            val c = sched.card()
             sched.answerCard(c!!, Consts.BUTTON_TWO)
             assertEquals("Review", undoName(targetContext.resources))
         }
@@ -98,7 +98,7 @@ class UndoTest : RobolectricTest() {
             */
             // answer
             assertEquals(Counts(1, 0, 0), sched.counts())
-            var c = sched.card
+            var c = sched.card()
             assertEquals(QUEUE_TYPE_NEW, c!!.queue)
             sched.answerCard(c, Consts.BUTTON_THREE)
             assertEquals(1001, c.left)
@@ -119,9 +119,9 @@ class UndoTest : RobolectricTest() {
             addNote(note)
             reset()
             assertEquals(Counts(2, 0, 0), sched.counts())
-            c = sched.card
+            c = sched.card()
             sched.answerCard(c!!, Consts.BUTTON_THREE)
-            c = sched.card
+            c = sched.card()
             sched.answerCard(c!!, Consts.BUTTON_THREE)
             assertEquals(Counts(0, 2, 0), sched.counts())
             undo()
@@ -131,7 +131,7 @@ class UndoTest : RobolectricTest() {
             reset()
             assertEquals(Counts(2, 0, 0), sched.counts())
             // performing a normal op will clear the review queue
-            c = sched.card
+            c = sched.card()
             sched.answerCard(c!!, Consts.BUTTON_THREE)
             assertThat(undoType(), instanceOf(UndoReview::class.java))
             save("foo")

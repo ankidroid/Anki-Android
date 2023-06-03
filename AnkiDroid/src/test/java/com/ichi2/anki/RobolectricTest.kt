@@ -574,7 +574,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
 
     protected val card: Card?
         get() {
-            val card = col.sched.card
+            val card = col.sched.card()
             advanceRobolectricLooperWithSleep()
             return card
         }

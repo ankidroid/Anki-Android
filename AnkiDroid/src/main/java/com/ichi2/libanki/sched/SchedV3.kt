@@ -53,10 +53,9 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
 
     // could be made more efficient by constructing a native Card object from
     // the backend card object, instead of doing a separate fetch
-    override val card: Card?
-        get() = queuedCards.cardsList.firstOrNull()?.card?.id?.let {
-            col.getCard(it).apply { startTimer() }
-        }
+    override fun card() = queuedCards.cardsList.firstOrNull()?.card?.id?.let {
+        col.getCard(it).apply { startTimer() }
+    }
 
     private val queuedCards: QueuedCards
         get() = col.backend.getQueuedCards(fetchLimit = 1, intradayLearningOnly = false)

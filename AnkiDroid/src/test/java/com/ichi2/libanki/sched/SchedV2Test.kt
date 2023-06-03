@@ -122,7 +122,7 @@ open class SchedV2Test : RobolectricTest() {
         }
         c.flush(col)
         val v2 = SchedV2(col)
-        val schedCard = v2.card!!
+        val schedCard = v2.card()!!
         MatcherAssert.assertThat(schedCard, Matchers.notNullValue())
         v2.answerCard(schedCard, BUTTON_ONE)
         MatcherAssert.assertThat(
@@ -130,7 +130,7 @@ open class SchedV2Test : RobolectricTest() {
             v2.mLrnCount,
             Matchers.equalTo(1)
         )
-        val after = v2.card!!
+        val after = v2.card()!!
         MatcherAssert.assertThat("A card should be returned ", after, Matchers.notNullValue())
 
         /* Data from Anki - pp(self.reviewer.card)
@@ -276,7 +276,7 @@ open class SchedV2Test : RobolectricTest() {
         addNoteUsingBasicModel("Hello", "World")
         col.decks.allConf()[0].getJSONObject("new")
             .put("delays", JSONArray(listOf(0.01, 10)))
-        val c = col.sched.card
+        val c = col.sched.card()
         MatcherAssert.assertThat(c, Matchers.notNullValue())
         col.sched.answerCard(c!!, BUTTON_ONE)
     }
@@ -1335,21 +1335,21 @@ open class SchedV2Test : RobolectricTest() {
         col.reset()
         // ordinals should arrive in order
         val sched = col.sched
-        var c = sched.card
+        var c = sched.card()
         advanceRobolectricLooperWithSleep()
         sched.answerCard(
             c!!,
             sched.answerButtons(c) - 1
         ) // not upstream. But we are not expecting multiple getCard without review
         Assert.assertEquals(0, c.ord)
-        c = sched.card
+        c = sched.card()
         advanceRobolectricLooperWithSleep()
         sched.answerCard(
             c!!,
             sched.answerButtons(c) - 1
         ) // not upstream. But we are not expecting multiple getCard without review
         Assert.assertEquals(1, c.ord)
-        c = sched.card
+        c = sched.card()
         advanceRobolectricLooperWithSleep()
         sched.answerCard(
             c!!,
@@ -1886,13 +1886,13 @@ open class SchedV2Test : RobolectricTest() {
         var card: Card?
         for (i in 0..2) {
             advanceRobolectricLooperWithSleep()
-            card = sched.card
+            card = sched.card()
             assertNotNull(card)
             sched.answerCard(card, BUTTON_ONE)
         }
         advanceRobolectricLooperWithSleep()
         Assert.assertEquals(1, sched.lrnCount().toLong())
-        card = sched.card
+        card = sched.card()
         Assert.assertEquals(1, sched.counts(card!!).lrn.toLong())
         advanceRobolectricLooperWithSleep()
         sched.answerCard(card, BUTTON_ONE)

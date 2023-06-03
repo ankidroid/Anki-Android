@@ -976,7 +976,7 @@ class ContentProviderTest : InstrumentedTest() {
         var nextCard: Card? = null
         for (i in 0..9) { // minimizing fails, when sched.reset() randomly chooses between multiple cards
             col.reset()
-            nextCard = sched.card
+            nextCard = sched.card()
             waitToFinish()
             if (nextCard != null && nextCard.nid == noteID && nextCard.ord == cardOrd) break
             waitToFinish()
@@ -1031,7 +1031,7 @@ class ContentProviderTest : InstrumentedTest() {
             var nextCard: Card? = null
             for (i in 0..9) { // minimizing fails, when sched.reset() randomly chooses between multiple cards
                 col.reset()
-                nextCard = sched.card
+                nextCard = sched.card()
                 if (nextCard != null && nextCard.nid == noteID && nextCard.ord == cardOrd) break
                 try {
                     Thread.sleep(500)
@@ -1077,7 +1077,7 @@ class ContentProviderTest : InstrumentedTest() {
         val deckId = mTestDeckIds[0]
         col.decks.select(deckId)
         col.reset()
-        return col.sched.card
+        return col.sched.card()
     }
 
     /**
@@ -1110,7 +1110,7 @@ class ContentProviderTest : InstrumentedTest() {
         } catch (e: Exception) { /* do nothing */
         }
         col.reset()
-        val newCard = col.sched.card
+        val newCard = col.sched.card()
         if (newCard != null) {
             if (newCard.nid == card.nid && newCard.ord == card.ord) {
                 fail("Next scheduled card has not changed")

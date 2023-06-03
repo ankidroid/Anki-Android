@@ -52,7 +52,7 @@ class FinderTest : RobolectricTest() {
         val sched = upgradeToSchedV2() // needs to be first
         enableBurySiblings()
         super.addNoteUsingModelName("Basic (and reversed card)", "Front", "Back")
-        val toAnswer: Card = sched.card!!
+        val toAnswer: Card = sched.card()!!
 
         // act
         val siblingBuried = burySiblings(sched, toAnswer)

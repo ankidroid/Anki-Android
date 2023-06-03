@@ -116,41 +116,40 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     /**
      * Pop the next card from the queue. null if finished.
      */
-    override val card: Card?
-        get() {
-            _checkDay()
-            if (!haveQueues) {
-                resetQueues(false)
-            }
-            var card = _getCard()
-            if (card == null && !mHaveCounts) {
-                // maybe we didn't refill queues because counts were not
-                // set. This could only occur if the only card is a buried
-                // sibling. So let's try to set counts and check again.
-                reset()
-                card = _getCard()
-            }
-            if (card != null) {
-                col.log(card)
-                incrReps()
-                // In upstream, counts are decremented when the card is
-                // gotten; i.e. in _getLrnCard, _getRevCard and
-                // _getNewCard. This can not be done anymore since we use
-                // those methods to pre-fetch the next card. Instead we
-                // decrement the counts here, when the card is returned to
-                // the reviewer.
-                decrementCounts(card)
-                setCurrentCard(card)
-                card.startTimer()
-            } else {
-                discardCurrentCard()
-            }
-            if (!mHaveCounts) {
-                // Need to reset queues once counts are reset
-                TaskManager.launchCollectionTask(Reset())
-            }
-            return card
+    override fun card(): Card? {
+        _checkDay()
+        if (!haveQueues) {
+            resetQueues(false)
         }
+        var card = _getCard()
+        if (card == null && !mHaveCounts) {
+            // maybe we didn't refill queues because counts were not
+            // set. This could only occur if the only card is a buried
+            // sibling. So let's try to set counts and check again.
+            reset()
+            card = _getCard()
+        }
+        if (card != null) {
+            col.log(card)
+            incrReps()
+            // In upstream, counts are decremented when the card is
+            // gotten; i.e. in _getLrnCard, _getRevCard and
+            // _getNewCard. This can not be done anymore since we use
+            // those methods to pre-fetch the next card. Instead we
+            // decrement the counts here, when the card is returned to
+            // the reviewer.
+            decrementCounts(card)
+            setCurrentCard(card)
+            card.startTimer()
+        } else {
+            discardCurrentCard()
+        }
+        if (!mHaveCounts) {
+            // Need to reset queues once counts are reset
+            TaskManager.launchCollectionTask(Reset())
+        }
+        return card
+    }
 
     /** Ensures that reset is executed before the next card is selected  */
     override fun deferReset(undoneCard: Card?) {

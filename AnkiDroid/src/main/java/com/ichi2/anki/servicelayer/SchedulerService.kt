@@ -67,7 +67,7 @@ class SchedulerService {
             fun getCard(col: Collection, getCard: ActionAndNextCard): ComputeResult {
                 val sched = getCard.col.sched
                 Timber.i("Obtaining card")
-                val newCard = sched.card
+                val newCard = sched.card()
                 newCard?.render_output(col, true)
                 return Computation.ok(NextCard.withNoResult(newCard))
             }
@@ -207,7 +207,7 @@ class SchedulerService {
             // new card */
             Timber.d("Single card non-review change undo succeeded")
             col.reset()
-            return col.sched.card
+            return col.sched.card()
         }
     }
 
@@ -218,7 +218,7 @@ class SchedulerService {
                     col.sched.deferReset()
                     val result = task(col)
                     // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
-                    val maybeNextCard = col.sched.card
+                    val maybeNextCard = col.sched.card()
 
                     return@executeInTransaction NextCard(maybeNextCard, result)
                 }
@@ -249,7 +249,7 @@ class SchedulerService {
             actualActualTask()
             // In all cases schedule a new card so Reviewer doesn't sit on the old one
             col.reset()
-            return Computation.ok(Optional.ofNullable(sched.card))
+            return Computation.ok(Optional.ofNullable(sched.card()))
         }
     }
 }

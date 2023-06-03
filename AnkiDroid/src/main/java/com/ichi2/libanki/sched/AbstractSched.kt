@@ -21,9 +21,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CancelListener
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.DeckId
 import timber.log.Timber
 import java.lang.ref.WeakReference
 
@@ -47,7 +48,7 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
      *
      * @return the next card from the queue. null if finished.
      */
-    abstract val card: Card?
+    abstract fun card(): Card?
 
     /**
      * The collection saves some numbers such as counts, queues of cards to review, queues of decks potentially having some cards.

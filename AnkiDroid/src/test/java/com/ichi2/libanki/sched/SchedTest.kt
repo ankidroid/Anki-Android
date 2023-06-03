@@ -94,7 +94,7 @@ class SchedTest : RobolectricTest() {
     }
 
     private fun markNextCardAsGood(sched: Sched) {
-        val toAnswer: Card? = sched.card
+        val toAnswer: Card? = sched.card()
         assertThat(toAnswer, notNullValue())
         sched.answerCard(toAnswer!!, BUTTON_TWO) // Good
     }
@@ -113,7 +113,7 @@ class SchedTest : RobolectricTest() {
     private fun getCardInDefaultDeck(s: Sched): Card? {
         selectDefaultDeck()
         s.deferReset()
-        return s.card
+        return s.card()
     }
 
     private fun createBuriedCardInDefaultDeck(): Card {
@@ -153,7 +153,7 @@ class SchedTest : RobolectricTest() {
             val col = CollectionHelper.instance.getCol(targetContext)!!
             addNoteUsingBasicModel("Hello", "World")
             val sched = col.sched
-            val c = sched.card
+            val c = sched.card()
             time.setFrozen(true)
             val currentTime = time.getInternalTimeMs()
             sched.answerCard(c!!, BUTTON_ONE)
@@ -1052,21 +1052,21 @@ class SchedTest : RobolectricTest() {
         col.reset()
         // ordinals should arrive in order
         val sched = col.sched
-        var c = sched.card
+        var c = sched.card()
         sched.answerCard(
             c!!,
             sched.answerButtons(c) - 1
         ) // not upstream. But we are not expecting multiple getCard without review
         waitForAsyncTasksToComplete()
         assertEquals(0, c.ord)
-        c = sched.card
+        c = sched.card()
         sched.answerCard(
             c!!,
             sched.answerButtons(c) - 1
         ) // not upstream. But we are not expecting multiple getCard without review
         waitForAsyncTasksToComplete()
         assertEquals(1, c.ord)
-        c = sched.card
+        c = sched.card()
         sched.answerCard(
             c!!,
             sched.answerButtons(c) - 1
