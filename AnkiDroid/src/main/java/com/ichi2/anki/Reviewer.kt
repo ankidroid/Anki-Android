@@ -51,6 +51,7 @@ import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
 import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.CollectionManager.withOpenColOrNull
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
 import com.ichi2.anki.cardviewer.Gesture
@@ -338,7 +339,7 @@ open class Reviewer :
         GetCard().runWithHandler(answerCardHandler(false))
         disableDrawerSwipeOnConflicts()
         // Add a weak reference to current activity so that scheduler can talk to to Activity
-        sched!!.setContext(WeakReference(this))
+        col.sched.setContext(WeakReference(this))
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
@@ -959,7 +960,7 @@ open class Reviewer :
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, currentCard!!, button)
+            fun nextIvlStr(button: Int) = col.sched.nextIvlStr(this, currentCard!!, button)
 
             easeButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
             easeButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
@@ -973,7 +974,7 @@ open class Reviewer :
     }
 
     val buttonCount: Int
-        get() = sched!!.answerButtons(currentCard!!)
+        get() = col.sched.answerButtons(currentCard!!)
 
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
@@ -1021,10 +1022,10 @@ open class Reviewer :
         if (currentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = sched!!.counts(currentCard!!)
+        val counts = col.sched.counts(currentCard!!)
         if (actionBar != null) {
             if (mPrefShowETA) {
-                mEta = sched!!.eta(counts, false)
+                mEta = col.sched.eta(counts, false)
                 actionBar.subtitle = Utils.remainingTime(this, (mEta * 60).toLong())
             }
         }
@@ -1037,7 +1038,7 @@ open class Reviewer :
         // if this code is run as a card is being answered, currentCard may be non-null but
         // the queues may be empty - we can't call countIdx() in such a case
         if (counts.count() != 0) {
-            when (sched!!.countIdx(currentCard!!)) {
+            when (col.sched.countIdx(currentCard!!)) {
                 Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
                 Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
                 Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
@@ -1100,8 +1101,12 @@ open class Reviewer :
 
     override fun onStop() {
         super.onStop()
-        if (!isFinishing && colIsOpen() && sched != null) {
-            update(this)
+        if (!isFinishing) {
+            launchCatchingTask {
+                withOpenColOrNull {
+                    update(context)
+                }
+            }
         }
         saveCollectionInBackground()
     }
