@@ -31,7 +31,7 @@ import java.lang.ref.WeakReference
 
 /**
  * This code currently tries to fit within the constraints of the AbstractSched API. In the
- * future, it would be better for the reviewer to fetch queuedCards directly, so they only
+ * future, it would be better for the reviewer to fetch queuedCards() directly, so they only
  * need to be fetched once.
  */
 class SchedV3(col: CollectionV16) : AbstractSched(col) {
@@ -53,12 +53,11 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
 
     // could be made more efficient by constructing a native Card object from
     // the backend card object, instead of doing a separate fetch
-    override fun card() = queuedCards.cardsList.firstOrNull()?.card?.id?.let {
+    override fun card() = queuedCards().cardsList.firstOrNull()?.card?.id?.let {
         col.getCard(it).apply { startTimer() }
     }
 
-    private val queuedCards: QueuedCards
-        get() = col.backend.getQueuedCards(fetchLimit = 1, intradayLearningOnly = false)
+    private fun queuedCards() = col.backend.getQueuedCards(fetchLimit = 1, intradayLearningOnly = false)
 
     override fun preloadNextCard() {
         // if this proves necessary in the future, it could be implemented by increasing
@@ -66,7 +65,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
     }
 
     override fun answerCard(card: Card, ease: Int) {
-        val top = queuedCards.cardsList.first()
+        val top = queuedCards().cardsList.first()
         val answer = buildAnswer(card, top.states, ease)
         col.backend.answerCard(answer)
         reps += 1
@@ -110,7 +109,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
     }
 
     override fun counts(cancelListener: CancelListener?): Counts {
-        return queuedCards.let {
+        return queuedCards().let {
             Counts(it.newCount, it.learningCount, it.reviewCount)
         }
     }
@@ -121,7 +120,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
 
     /** Ignores provided card and uses top of queue */
     override fun countIdx(card: Card): Counts.Queue {
-        return when (queuedCards.cardsList.first().queue) {
+        return when (queuedCards().cardsList.first().queue) {
             QueuedCards.Queue.NEW -> Counts.Queue.NEW
             QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
             QueuedCards.Queue.REVIEW -> Counts.Queue.REV
