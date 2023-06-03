@@ -37,8 +37,7 @@ import java.lang.ref.WeakReference
 class SchedV3(col: CollectionV16) : AbstractSched(col) {
     private var activityForLeechNotification: WeakReference<Activity>? = null
 
-    override val today: Int
-        get() = col.backend.schedTimingToday().daysElapsed
+    override fun today() = col.backend.schedTimingToday().daysElapsed
 
     override fun reset() {
         // backend automatically resets queues as operations are performed

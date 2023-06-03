@@ -415,7 +415,7 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
         }
         val dues = ArrayList<IntArray>()
         val query = (
-            "SELECT (due - " + col.sched.today + ")/" + chunk +
+            "SELECT (due - " + col.sched.today() + ")/" + chunk +
                 " AS day, " + // day
                 "count(), " + // all cards
                 "sum(CASE WHEN ivl >= 21 THEN 1 ELSE 0 END) " + // mature cards

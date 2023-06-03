@@ -2610,11 +2610,7 @@ end)  """
 
     override val name: String
         get() = "std2"
-    override var today: Int
-        get() = mToday!!
-        set(today) {
-            mToday = today
-        }
+    override fun today() = mToday!!
 
     protected fun incrReps() {
         reps++

@@ -407,7 +407,7 @@ class Finder(private val col: Collection) {
         } else if ("buried" == `val`) {
             "c.queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")"
         } else if ("due" == `val`) {
-            "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and c.due <= " + col.sched.today +
+            "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and c.due <= " + col.sched.today() +
                 ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + col.sched.dayCutoff + ")"
         } else {
             null
@@ -495,7 +495,7 @@ class Finder(private val col: Collection) {
         // query
         var q = ""
         if ("due" == prop) {
-            `val` += col.sched.today
+            `val` += col.sched.today()
             // only valid for review/daily learning
             q =
                 "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ")) and "

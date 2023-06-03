@@ -517,7 +517,7 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         var totalRevlogCount = 0
         val thresExecRevlog = 1000
         val usn = dst.usn()
-        val aheadBy = (src.sched.today - dst.sched.today).toLong()
+        val aheadBy = (src.sched.today() - dst.sched.today()).toLong()
         dst.db.database.beginTransaction()
         try {
             src.db.query(

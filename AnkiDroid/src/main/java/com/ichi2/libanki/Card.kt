@@ -447,7 +447,7 @@ open class Card : Cloneable {
             return java.lang.Long.valueOf(due).toString()
         } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
             val time = TimeManager.time.intTime()
-            val nbDaySinceCreation = due - col.sched.today
+            val nbDaySinceCreation = due - col.sched.today()
             time + nbDaySinceCreation * Stats.SECONDS_PER_DAY
         } else {
             return ""

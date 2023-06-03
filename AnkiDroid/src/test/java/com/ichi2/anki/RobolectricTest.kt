@@ -403,7 +403,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         val card = note.firstCard(col)
         card.queue = Consts.QUEUE_TYPE_REV
         card.type = Consts.CARD_TYPE_REV
-        card.due = col.sched.today.toLong()
+        card.due = col.sched.today().toLong()
         return note
     }
 

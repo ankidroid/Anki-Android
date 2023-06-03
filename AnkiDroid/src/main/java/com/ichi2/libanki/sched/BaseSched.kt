@@ -475,7 +475,7 @@ abstract class BaseSched(val col: Collection) {
     fun totalRevForCurrentDeck(): Int {
         return col.db.queryScalar(
             "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
-            today,
+            today(),
             REPORT_LIMIT
         )
     }
@@ -483,8 +483,7 @@ abstract class BaseSched(val col: Collection) {
     /**
      * @return Number of days since creation of the collection.
      */
-    open val today: Int
-        get() = _timingToday().daysElapsed
+    open fun today() = _timingToday().daysElapsed
 
     /**
      * @return Timestamp of when the day ends. Takes into account hour at which day change for anki and timezone
@@ -566,7 +565,7 @@ abstract class BaseSched(val col: Collection) {
             .queryScalar(
                 "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
                     " LIMIT 1",
-                today
+                today()
             ) != 0
     }
 

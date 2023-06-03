@@ -513,7 +513,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         Assert.assertEquals(CARD_TYPE_REV, c.type)
         // should be due tomorrow, with an interval of 1
-        Assert.assertEquals((col.sched.today + 1).toLong(), c.due)
+        Assert.assertEquals((col.sched.today() + 1).toLong(), c.due)
         Assert.assertEquals(1, c.ivl)
         // or normal removal
         c.type = CARD_TYPE_NEW
@@ -539,7 +539,7 @@ open class SchedV2Test : RobolectricTest() {
         col.addNote(note)
         var c = note.cards(col)[0].apply {
             ivl = 100
-            due = col.sched.today.toLong()
+            due = col.sched.today().toLong()
             queue = QUEUE_TYPE_REV
             type = CARD_TYPE_REV
         }
@@ -558,7 +558,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(CARD_TYPE_REV, c.type)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         Assert.assertEquals(2, c.ivl)
-        Assert.assertEquals((col.sched.today + c.ivl).toLong(), c.due)
+        Assert.assertEquals((col.sched.today() + c.ivl).toLong(), c.due)
     }
 
     @Test
@@ -570,7 +570,7 @@ open class SchedV2Test : RobolectricTest() {
         col.addNote(note)
         var c = note.cards(col)[0].apply {
             ivl = 100
-            due = col.sched.today.toLong()
+            due = col.sched.today().toLong()
             queue = QUEUE_TYPE_REV
             type = CARD_TYPE_REV
         }
@@ -639,7 +639,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
         // answering it will place it in queue 3
         col.sched.answerCard(c, BUTTON_THREE)
-        Assert.assertEquals((col.sched.today + 1).toLong(), c.due)
+        Assert.assertEquals((col.sched.today() + 1).toLong(), c.due)
         Assert.assertEquals(QUEUE_TYPE_DAY_LEARN_RELEARN, c.queue)
         assertNull(card)
         // for testing, move it back a day
@@ -694,7 +694,7 @@ open class SchedV2Test : RobolectricTest() {
         var c = note.cards(col)[0].apply {
             type = CARD_TYPE_REV
             queue = QUEUE_TYPE_REV
-            due = (col.sched.today - 8).toLong()
+            due = (col.sched.today() - 8).toLong()
             factor = STARTING_FACTOR
             setReps(3)
             lapses = 1
@@ -713,7 +713,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         // the new interval should be (100) * 1.2 = 120
         Assert.assertTrue(AnkiAssert.checkRevIvl(c, 120))
-        Assert.assertEquals((col.sched.today + c.ivl).toLong(), c.due)
+        Assert.assertEquals((col.sched.today() + c.ivl).toLong(), c.due)
         // factor should have been decremented
         Assert.assertEquals(2350, c.factor)
         // check counters
@@ -726,7 +726,7 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_THREE)
         // the new interval should be (100 + 8/2) * 2.5 = 260
         Assert.assertTrue(AnkiAssert.checkRevIvl(c, 260))
-        Assert.assertEquals((col.sched.today + c.ivl).toLong(), c.due)
+        Assert.assertEquals((col.sched.today() + c.ivl).toLong(), c.due)
         // factor should have been left alone
         Assert.assertEquals(STARTING_FACTOR, c.factor)
         // ease 4
@@ -736,7 +736,7 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_FOUR)
         // the new interval should be (100 + 8) * 2.5 * 1.3 = 351
         Assert.assertTrue(AnkiAssert.checkRevIvl(c, 351))
-        Assert.assertEquals((col.sched.today + c.ivl).toLong(), c.due)
+        Assert.assertEquals((col.sched.today() + c.ivl).toLong(), c.due)
         // factor should have been increased
         Assert.assertEquals(2650, c.factor)
         // leech handling
@@ -833,7 +833,7 @@ open class SchedV2Test : RobolectricTest() {
         val c = note.cards(col)[0]
         c.type = CARD_TYPE_REV
         c.queue = QUEUE_TYPE_REV
-        c.due = col.sched.today.toLong()
+        c.due = col.sched.today().toLong()
         c.setReps(1)
         c.ivl = 1
         c.startTimer()
@@ -1134,7 +1134,7 @@ open class SchedV2Test : RobolectricTest() {
             queue = QUEUE_TYPE_REV
             type = CARD_TYPE_REV
             // due in 25 days, so it's been waiting 75 days
-            due = (col.sched.today + 25).toLong()
+            due = (col.sched.today() + 25).toLong()
             mod = 1
             factor = STARTING_FACTOR
         }
@@ -1178,7 +1178,7 @@ open class SchedV2Test : RobolectricTest() {
         // answer 'good'
         col.sched.answerCard(c, BUTTON_THREE)
         AnkiAssert.checkRevIvl(c, 90)
-        Assert.assertEquals((col.sched.today + c.ivl).toLong(), c.due)
+        Assert.assertEquals((col.sched.today() + c.ivl).toLong(), c.due)
         Assert.assertEquals(0L, c.oDue)
         // should not be in learning
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
@@ -1190,7 +1190,7 @@ open class SchedV2Test : RobolectricTest() {
 
         // due in 75 days, so it's been waiting 25 days
         c.ivl = 100
-        c.due = (col.sched.today + 75).toLong()
+        c.due = (col.sched.today() + 75).toLong()
         c.flush(col)
         col.sched.rebuildDyn(did)
         col.reset()
@@ -1464,7 +1464,7 @@ open class SchedV2Test : RobolectricTest() {
         val c = note.cards(col)[0]
         c.type = CARD_TYPE_REV
         c.queue = QUEUE_TYPE_REV
-        c.due = col.sched.today.toLong()
+        c.due = col.sched.today().toLong()
         c.flush(col)
         col.reset()
         Assert.assertEquals(Counts(0, 0, 1), col.sched.counts())
@@ -1687,13 +1687,13 @@ open class SchedV2Test : RobolectricTest() {
         val c = note.cards(col)[0]
         col.sched.reschedCards(listOf(c.id), 0, 0)
         c.load(col)
-        Assert.assertEquals(col.sched.today.toLong(), c.due)
+        Assert.assertEquals(col.sched.today().toLong(), c.due)
         Assert.assertEquals(1, c.ivl)
         Assert.assertEquals(QUEUE_TYPE_REV, c.type)
         Assert.assertEquals(CARD_TYPE_REV, c.queue)
         col.sched.reschedCards(listOf(c.id), 1, 1)
         c.load(col)
-        Assert.assertEquals((col.sched.today + 1).toLong(), c.due)
+        Assert.assertEquals((col.sched.today() + 1).toLong(), c.due)
         Assert.assertEquals(+1, c.ivl)
     }
 
@@ -1733,7 +1733,7 @@ open class SchedV2Test : RobolectricTest() {
         c.type = CARD_TYPE_REV
         c.queue = QUEUE_TYPE_REV
         c.ivl = 100
-        c.due = (col.sched.today - c.ivl).toLong()
+        c.due = (col.sched.today() - c.ivl).toLong()
         c.factor = STARTING_FACTOR
         c.setReps(3)
         c.lapses = 1

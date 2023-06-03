@@ -1850,7 +1850,7 @@ open class Collection(
                 "UPDATE cards SET due = ?, ivl = 1, mod = ?, usn = ? WHERE id IN " + Utils.ids2str(
                     ids
                 ),
-                sched.today,
+                sched.today(),
                 TimeManager.time.intTime(),
                 usn()
             )
