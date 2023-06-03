@@ -139,20 +139,6 @@ fun Fragment.launchCatchingTask(
     }
 }
 
-/** Launches a [CollectionManager.withCol] job while catching its errors with [launchCatchingTask] */
-fun <T> FragmentActivity.launchWithCol(block: Collection.() -> T): Job {
-    return launchCatchingTask {
-        withCol { block() }
-    }
-}
-
-/** See [FragmentActivity.launchWithCol] */
-fun <T> Fragment.launchWithCol(block: Collection.() -> T): Job {
-    return launchCatchingTask {
-        withCol { block() }
-    }
-}
-
 private fun showError(context: Context, msg: String, exception: Throwable) {
     try {
         AlertDialog.Builder(context).show {
