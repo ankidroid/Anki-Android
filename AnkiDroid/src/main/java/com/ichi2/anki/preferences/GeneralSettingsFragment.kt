@@ -48,7 +48,7 @@ class GeneralSettingsFragment : SettingsFragment() {
                 setValueIndex(valueIndex)
             }
             setOnPreferenceChangeListener { newValue ->
-                launchWithCol { set_config("addToCur", "0" == newValue) }
+                launchCatchingTask { withCol { set_config("addToCur", "0" == newValue) } }
             }
         }
         // Paste PNG
@@ -57,7 +57,7 @@ class GeneralSettingsFragment : SettingsFragment() {
         requirePreference<SwitchPreference>(R.string.paste_png_key).apply {
             launchCatchingTask { isChecked = withCol { get_config("pastePNG", false)!! } }
             setOnPreferenceChangeListener { newValue ->
-                launchWithCol { set_config("pastePNG", newValue) }
+                launchCatchingTask { withCol { set_config("pastePNG", newValue) } }
             }
         }
         // Error reporting mode

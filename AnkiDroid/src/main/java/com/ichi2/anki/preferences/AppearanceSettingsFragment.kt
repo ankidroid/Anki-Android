@@ -136,7 +136,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
         requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
             launchCatchingTask { isChecked = withCol { get_config_boolean("estTimes") } }
             setOnPreferenceChangeListener { newETA ->
-                launchWithCol { set_config("estTimes", newETA) }
+                launchCatchingTask { withCol { set_config("estTimes", newETA) } }
             }
         }
         // Show progress
@@ -145,7 +145,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
         requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
             launchCatchingTask { isChecked = withCol { get_config_boolean("dueCounts") } }
             setOnPreferenceChangeListener { newDueCountsValue ->
-                launchWithCol { set_config("dueCounts", newDueCountsValue) }
+                launchCatchingTask { withCol { set_config("dueCounts", newDueCountsValue) } }
             }
         }
     }
