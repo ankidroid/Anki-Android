@@ -1947,7 +1947,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             // add a leech tag
             val n = card.note()
             n.addTag("leech")
-            n.flush()
+            n.flush(col)
             // handle
             if (conf.getInt("leechAction") == Consts.LEECH_SUSPEND) {
                 card.queue = Consts.QUEUE_TYPE_SUSPENDED
@@ -2670,9 +2670,9 @@ end)  """
 
     override fun undoReview(card: Card, wasLeech: Boolean) {
         // remove leech tag if it didn't have it before
-        if (!wasLeech && card.note().hasTag("leech")) {
+        if (!wasLeech && card.note().hasTag(col, tag = "leech")) {
             card.note().delTag("leech")
-            card.note().flush()
+            card.note().flush(col)
         }
         Timber.i("Undo Review of card %d, leech: %b", card.id, wasLeech)
         // write old data

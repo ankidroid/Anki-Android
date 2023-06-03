@@ -790,7 +790,7 @@ open class CardBrowser :
             return
         }
         val result = withProgress { withCol { toggleNotesMarkForCardsIds(selectedCardIds, this) } }
-        updateCardsInList(getAllCards(getNotes(result.toList())))
+        updateCardsInList(getAllCards(col, getNotes(result.toList())))
         invalidateOptionsMenu() // maybe the availability of undo changed
         // reload if updated cards contain review card
         mReloadRequired = result.map { card -> card.id }.contains(reviewerCardId)
@@ -809,14 +809,14 @@ open class CardBrowser :
             val originalMarked: MutableList<Note> = mutableListOf()
             val originalUnmarked: MutableList<Note> = mutableListOf()
             for (n in notes) {
-                if (isMarked(n)) {
+                if (isMarked(col, n)) {
                     originalMarked.add(n)
                 } else {
                     originalUnmarked.add(n)
                 }
             }
             val hasUnmarked = originalUnmarked.isNotEmpty()
-            CardUtils.markAll(java.util.ArrayList(notes), hasUnmarked)
+            CardUtils.markAll(col, ArrayList(notes), hasUnmarked)
 
             // mark undo for all at once
             col.markUndo(UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked))
@@ -1046,7 +1046,7 @@ open class CardBrowser :
         if (mCheckedCards.isNotEmpty()) {
             checkSelectedCardsJob?.cancel()
             checkSelectedCardsJob = launchCatchingTask {
-                val result = withProgress { checkCardSelection(mCheckedCards) }
+                val result = withProgress { checkCardSelection(col, mCheckedCards) }
                 onSelectedCardsChecked(result)
             }
         }
@@ -1780,12 +1780,12 @@ open class CardBrowser :
                 .onEach { note ->
                     val previousTags: List<String> = note.tags
                     val updatedTags = getUpdatedTags(previousTags, selectedTags, indeterminateTags)
-                    note.setTagsFromStr(tags.join(updatedTags))
+                    note.setTagsFromStr(col, tags.join(updatedTags))
                 }
             Timber.i("CardBrowser:: editSelectedCardsTags: Saving note/s tags...")
             updateMultipleNotes(this, selectedNotes)
         }
-        val cardsToUpdate = updatedNotes.flatMap { n: Note -> n.cards() }
+        val cardsToUpdate = updatedNotes.flatMap { n: Note -> n.cards(col) }
         Timber.i("CardBrowser:: editSelectedCardsTags: Note/s updated, updating UI...")
         updateCardsInList(cardsToUpdate)
     }
@@ -2360,7 +2360,7 @@ open class CardBrowser :
                     6 -> R.attr.flagTurquoise
                     7 -> R.attr.flagPurple
                     else -> {
-                        if (isMarked(card.note())) {
+                        if (isMarked(col, card.note())) {
                             R.attr.markedColor
                         } else if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
                             R.attr.suspendedColor
@@ -2375,15 +2375,15 @@ open class CardBrowser :
             return when (key) {
                 Column.FLAGS -> Integer.valueOf(card.userFlag()).toString()
                 Column.SUSPENDED -> if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) "True" else "False"
-                Column.MARKED -> if (isMarked(card.note())) "marked" else null
-                Column.SFLD -> card.note(col).sFld()
+                Column.MARKED -> if (isMarked(col, card.note())) "marked" else null
+                Column.SFLD -> card.note().sFld(col)
                 Column.DECK -> col.decks.name(card.did)
-                Column.TAGS -> card.note().stringTags()
-                Column.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards()}"
+                Column.TAGS -> card.note().stringTags(col)
+                Column.CARD -> if (inCardMode) card.template().optString("name") else "${card.note().numberOfCards(col)}"
                 Column.DUE -> card.dueString
                 Column.EASE -> if (inCardMode) getEaseForCards() else getAvgEaseForNotes()
                 Column.CHANGED -> LanguageUtil.getShortDateFormatFromS(if (inCardMode) card.mod else card.note().mod)
-                Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.note().id)
+                Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
                 Column.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note().mod)
                 Column.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
                 Column.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote()).toString()

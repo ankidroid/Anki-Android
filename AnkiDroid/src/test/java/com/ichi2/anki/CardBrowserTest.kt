@@ -298,7 +298,7 @@ class CardBrowserTest : RobolectricTest() {
         val n = addNoteUsingBasicModel("1", "back")
         flagCardForNote(n, 1)
 
-        val cardId = n.cids()[0]
+        val cardId = n.cids(col)[0]
 
         val b = browserWithNoNewCards
 
@@ -334,7 +334,7 @@ class CardBrowserTest : RobolectricTest() {
     fun tagWithBracketsDisplaysProperly() = runTest {
         val n = addNoteUsingBasicModel("Hello", "World")
         n.addTag("sketchy::(1)")
-        n.flush()
+        n.flush(col)
 
         val b = browserWithNoNewCards
         b.filterByTag("sketchy::(1)")
@@ -363,8 +363,8 @@ class CardBrowserTest : RobolectricTest() {
     @Flaky(os = OS.WINDOWS, "IllegalStateException: Card '1596783600440' not found")
     fun previewWorksAfterSort() {
         // #7286
-        val cid1 = addNoteUsingBasicModel("Hello", "World").cards()[0].id
-        val cid2 = addNoteUsingBasicModel("Hello2", "World2").cards()[0].id
+        val cid1 = addNoteUsingBasicModel("Hello", "World").cards(col)[0].id
+        val cid2 = addNoteUsingBasicModel("Hello2", "World2").cards(col)[0].id
 
         val b = browserWithNoNewCards
 
@@ -458,7 +458,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     @Config(qualifiers = "en")
     fun resetDataTest() {
-        addNoteUsingBasicModel("Hello", "World").firstCard().apply {
+        addNoteUsingBasicModel("Hello", "World").firstCard(col).apply {
             due = 5
             queue = Consts.QUEUE_TYPE_REV
             type = Consts.CARD_TYPE_REV
@@ -550,7 +550,7 @@ class CardBrowserTest : RobolectricTest() {
         addNoteUsingBasicModel("Hello", "John")
         val deck = addDeck("Deck 1")
         col.decks.select(deck)
-        val c2 = addNoteUsingBasicModel("New", "world").firstCard()
+        val c2 = addNoteUsingBasicModel("New", "world").firstCard(col)
         c2.did = deck
         c2.flush()
 
@@ -607,7 +607,7 @@ class CardBrowserTest : RobolectricTest() {
         addNoteUsingBasicModel("Hello", "World")
         val deck = addDeck("Test Deck")
         col.decks.select(deck)
-        val c2 = addNoteUsingBasicModel("Front", "Back").firstCard()
+        val c2 = addNoteUsingBasicModel("Front", "Back").firstCard(col)
         c2.did = deck
         c2.flush()
 
@@ -641,7 +641,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private fun flagCardForNote(n: Note, flag: Int) {
-        val c = n.firstCard()
+        val c = n.firstCard(col)
         c.setUserFlag(flag)
         c.flush()
     }

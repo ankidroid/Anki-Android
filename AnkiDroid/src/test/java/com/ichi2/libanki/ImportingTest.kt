@@ -128,8 +128,8 @@ class ImportingTest : RobolectricTest() {
       assertEquals(1, dst.noteCount());
       // the front template should contain the text added in the 2nd package
       tlong cid = dst.findCards("")[0]  // only 1 note in collection
-      tNote note = dst.getCard(tcid).note();
-      assertThat(tnote.cards().get(0).template().getString("qfmt"), containsString("Changed Front Template"));
+      tNote note = dst.getCard(tcid).note(col);
+      assertThat(tnote.cards(col).get(0).template(col).getString("qfmt"), containsString("Changed Front Template"));
       }
 
       @Test
@@ -179,7 +179,7 @@ class ImportingTest : RobolectricTest() {
       // but importing should not clobber tags if they're unmapped
       Note n = col.getNote(col.getDb().queryLongScalar("select id from notes"));
       n.addTag("test");
-      n.flush();
+      n.flush(col);
       i.run();
       n.load();
       assertEqualsArrayList(new String [] {"test"}, n.tags);
@@ -240,7 +240,7 @@ class ImportingTest : RobolectricTest() {
       // https://stackoverflow.com/questions/23212435/permission-denied-to-write-to-my-temporary-file
       with NamedTemporaryFile(mode="w", delete=false) as tf:
       tf.write("1\tb\tc\n");
-      tf.flush();
+      tf.flush(col);
       TextImporter i = TextImporter(col, tf.name);
       i.initMapping();
       i.tagModified = "boom";
@@ -278,7 +278,7 @@ class ImportingTest : RobolectricTest() {
       // https://stackoverflow.com/questions/23212435/permission-denied-to-write-to-my-temporary-file
       with NamedTemporaryFile(mode="w", delete=false) as tf:
       tf.write("1\tb\tc\n");
-      tf.flush();
+      tf.flush(col);
       TextImporter i = TextImporter(col, tf.name);
       i.initMapping();
       i.tagModified = "five six";
@@ -311,7 +311,7 @@ class ImportingTest : RobolectricTest() {
       // https://stackoverflow.com/questions/23212435/permission-denied-to-write-to-my-temporary-file
       with NamedTemporaryFile(mode="w", delete=false) as tf:
       tf.write("1,2,3\n");
-      tf.flush();
+      tf.flush(col);
       TextImporter i = TextImporter(col, tf.name);
       i.initMapping();
       i.tagModified = "right";

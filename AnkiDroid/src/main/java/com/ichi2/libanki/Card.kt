@@ -461,7 +461,7 @@ open class Card : Cloneable {
         return LanguageUtil.getShortDateFormatFromS(date)
     } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
 
-    fun avgEaseOfNote() = avgEase(note())
+    fun avgEaseOfNote() = avgEase(col, note())
 
     /** Non libAnki  */
     val isInDynamicDeck: Boolean

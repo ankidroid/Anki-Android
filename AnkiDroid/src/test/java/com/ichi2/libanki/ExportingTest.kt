@@ -32,7 +32,7 @@ class ExportingTest : RobolectricTest() {
         var note = mCol.newNote()
         note.setItem("Front", "foo")
         note.setItem("Back", "bar<br>")
-        note.setTagsFromStr("tag, tag2")
+        note.setTagsFromStr(col, "tag, tag2")
         mCol.addNote(note)
         // with a different col
         note = mCol.newNote()

@@ -23,15 +23,17 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
 import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
-import java.util.*
 
 /**
  * The card template previewer intent must supply one or more cards to show and the index in the list from where
@@ -286,7 +288,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         currentCard!!.did = newDid
         val currentNote = currentCard!!.note()
         val tagsList = mNoteEditorBundle!!.getStringArrayList("tags")
-        NoteUtils.setTags(currentNote, tagsList)
+        NoteUtils.setTags(col, currentNote, tagsList)
         return currentCard
     }
 
@@ -406,6 +408,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                         ord
                     }
                     val context = TemplateManager.TemplateRenderContext.from_card_layout(
+                        col,
                         note(),
                         this,
                         model(),

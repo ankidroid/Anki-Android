@@ -132,9 +132,9 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         assertThat(javaScriptFunction.ankiGetCardFlag(), equalTo(1))
 
         // Card Mark
-        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(false))
+        assertThat(javaScriptFunction.ankiGetCardMark(col), equalTo(false))
         reviewer.currentCard!!.note().addTag("marked")
-        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(true))
+        assertThat(javaScriptFunction.ankiGetCardMark(col), equalTo(true))
     }
 
     @Test
@@ -185,7 +185,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Card mark test
         // ---------------
         // Before marking card
-        assertThat(javaScriptFunction.ankiGetCardMark(), equalTo(false))
+        assertThat(javaScriptFunction.ankiGetCardMark(col), equalTo(false))
 
         // call javascript function defined in card.js to mark card
         var markCardJs = "javascript:(function () {\n"
@@ -200,7 +200,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         markCardJs += "ankiMarkCard();\n"
 
         // get card mark status for test
-        markCardJs += "AnkiDroidJS.ankiGetCardMark();\n" +
+        markCardJs += "AnkiDroidJS.ankiGetCardMark(col);\n" +
             "})();"
 
         reviewer.webView!!.evaluateJavascript(markCardJs) { s -> assertThat(s, equalTo(true)) }
@@ -352,7 +352,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiResetProgressTest() {
         val n = addNoteUsingBasicModel("Front", "Back")
-        val c = n.firstCard()
+        val c = n.firstCard(col)
 
         // Make card review with 28L due and 280% ease
         c.type = Consts.CARD_TYPE_REV

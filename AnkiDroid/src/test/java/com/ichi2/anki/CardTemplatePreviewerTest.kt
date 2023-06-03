@@ -262,7 +262,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
     @Test
     fun cardTemplatePreviewerSecondOrd_issue8001() {
-        val cid = addNoteUsingBasicAndReversedModel("hello", "world").cards()[1].id
+        val cid = addNoteUsingBasicAndReversedModel("hello", "world").cards(col)[1].id
 
         val model = getCurrentDatabaseModelCopy("Basic (and reversed card)")
         val tempModelPath = TemporaryModel.saveTempModel(targetContext, model)
@@ -338,7 +338,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         for (i in fieldNames.indices) {
             n.setField(i, fieldNames[i])
         }
-        n.flush()
+        n.flush(col)
         return col.getNewLinkedCard(Card(col), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true)
     }
 

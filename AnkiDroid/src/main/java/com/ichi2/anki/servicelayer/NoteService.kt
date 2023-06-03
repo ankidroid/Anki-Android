@@ -26,9 +26,15 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
-import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.anki.multimediacard.fields.AudioRecordingField
+import com.ichi2.anki.multimediacard.fields.EFieldType
+import com.ichi2.anki.multimediacard.fields.IField
+import com.ichi2.anki.multimediacard.fields.ImageField
+import com.ichi2.anki.multimediacard.fields.MediaClipField
+import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
@@ -72,7 +78,7 @@ object NoteService {
         return null
     }
 
-    fun updateMultimediaNoteFromFields(col: com.ichi2.libanki.Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
+    fun updateMultimediaNoteFromFields(col: Collection, fields: Array<String>, modelId: NoteTypeId, mmNote: MultimediaEditableNote) {
         for (i in fields.indices) {
             val value = fields[i]
             val field: IField = if (value.startsWith("<img")) {
@@ -116,7 +122,7 @@ object NoteService {
      *
      * @param field
      */
-    fun importMediaToDirectory(col: com.ichi2.libanki.Collection, field: IField?) {
+    fun importMediaToDirectory(col: Collection, field: IField?) {
         var tmpMediaPath: String? = null
         when (field!!.type) {
             EFieldType.AUDIO_RECORDING, EFieldType.MEDIA_CLIP -> tmpMediaPath = field.audioPath
@@ -156,7 +162,7 @@ object NoteService {
      */
     @VisibleForTesting
     @CheckResult
-    fun getFieldsAsBundleForPreview(editFields: Collection<NoteField?>?, replaceNewlines: Boolean): Bundle {
+    fun getFieldsAsBundleForPreview(editFields: kotlin.collections.Collection<NoteField?>?, replaceNewlines: Boolean): Bundle {
         val fields = Bundle()
         // Save the content of all the note fields. We use the field's ord as the key to
         // easily map the fields correctly later.
@@ -181,8 +187,8 @@ object NoteService {
         }
     }
 
-    suspend fun toggleMark(note: Note) {
-        if (isMarked(note)) {
+    suspend fun toggleMark(col: Collection, note: Note) {
+        if (isMarked(col, note)) {
             note.delTag("marked")
         } else {
             note.addTag("marked")
@@ -190,15 +196,15 @@ object NoteService {
 
         withCol {
             if (BackendFactory.defaultLegacySchema) {
-                note.flush()
+                note.flush(col)
             } else {
                 newBackend.updateNote(note)
             }
         }
     }
 
-    fun isMarked(note: Note): Boolean {
-        return note.hasTag("marked")
+    fun isMarked(col: Collection, note: Note): Boolean {
+        return note.hasTag(col, tag = "marked")
     }
 
     //  TODO: should make a direct SQL query to do this
@@ -206,23 +212,23 @@ object NoteService {
      * returns the average ease of all the non-new cards in the note,
      * or if all the cards in the note are new, returns null
      */
-    fun avgEase(note: Note): Int? {
-        val nonNewCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW }
+    fun avgEase(col: Collection, note: Note): Int? {
+        val nonNewCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW }
 
         return nonNewCards.average { it.factor }?.let { it / 10 }?.toInt()
     }
 
     //  TODO: should make a direct SQL query to do this
-    fun totalLapses(note: Note) = note.cards().sumOf { it.lapses }
+    fun totalLapses(col: Collection, note: Note) = note.cards(col).sumOf { it.lapses }
 
-    fun totalReviews(note: Note) = note.cards().sumOf { it.reps }
+    fun totalReviews(col: Collection, note: Note) = note.cards(col).sumOf { it.reps }
 
     /**
      * Returns the average interval of all the non-new and non-learning cards in the note,
      * or if all the cards in the note are new or learning, returns null
      */
-    fun avgInterval(note: Note): Int? {
-        val nonNewOrLearningCards = note.cards().filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
+    fun avgInterval(col: Collection, note: Note): Int? {
+        val nonNewOrLearningCards = note.cards(col).filter { it.type != Consts.CARD_TYPE_NEW && it.type != Consts.CARD_TYPE_LRN }
 
         return nonNewOrLearningCards.average { it.ivl }?.toInt()
     }
@@ -235,8 +241,8 @@ object NoteService {
     }
 }
 
-fun Card.totalLapsesOfNote() = NoteService.totalLapses(note())
+fun Card.totalLapsesOfNote() = NoteService.totalLapses(col, note())
 
-fun Card.totalReviewsForNote() = NoteService.totalReviews(note())
+fun Card.totalReviewsForNote() = NoteService.totalReviews(col, note())
 
-fun Card.avgIntervalOfNote() = NoteService.avgInterval(note())
+fun Card.avgIntervalOfNote() = NoteService.avgInterval(col, note())

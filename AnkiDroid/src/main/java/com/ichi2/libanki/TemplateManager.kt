@@ -141,6 +141,7 @@ class TemplateManager {
             }
 
             fun from_card_layout(
+                col: Collection,
                 note: Note,
                 card: Card,
                 notetype: NoteType,
@@ -148,7 +149,7 @@ class TemplateManager {
                 fill_empty: bool
             ): TemplateRenderContext {
                 return TemplateRenderContext(
-                    note.col,
+                    col,
                     card,
                     note,
                     notetype = notetype,
@@ -160,14 +161,14 @@ class TemplateManager {
 
         fun col() = _col
 
-        fun fields(): Dict<str, str> {
+        fun fields(col: Collection): Dict<str, str> {
             Timber.w(".fields() is obsolete, use .note() or .card()")
             if (_fields == null) {
                 // fields from note
                 val fields = _note.items().map { Pair(it[0]!!, it[1]!!) }.toMap().toMutableMap()
 
                 // add (most) special fields
-                fields["Tags"] = _note.stringTags().trim()
+                fields["Tags"] = _note.stringTags(col).trim()
                 fields["Type"] = _note_type.name
                 fields["Deck"] = _col.decks.name(_card.oDid or _card.did)
                 fields["Subdeck"] = Decks.basename(fields["Deck"]!!)

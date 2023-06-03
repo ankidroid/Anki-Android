@@ -241,7 +241,7 @@ class ContentProviderTest : InstrumentedTest() {
         // Check that it looks as expected
         assertNotNull("check note URI path", newNoteUri!!.lastPathSegment)
         val addedNote = Note(col, newNoteUri.lastPathSegment!!.toLong())
-        addedNote.load()
+        addedNote.load(col)
         assertArrayEquals(
             "Check that fields were set correctly",
             addedNote.fields,
@@ -251,11 +251,11 @@ class ContentProviderTest : InstrumentedTest() {
         val model: JSONObject? = col.models.get(mModelId)
         assertNotNull("Check model", model)
         val expectedNumCards = model!!.getJSONArray("tmpls").length()
-        assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards())
+        assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards(col))
         // Now delete the note
         cr.delete(newNoteUri, null, null)
         try {
-            addedNote.load()
+            addedNote.load(col)
             fail("Expected RuntimeException to be thrown when deleting note")
         } catch (e: RuntimeException) {
             // Expect RuntimeException to be thrown when loading deleted note
@@ -1338,7 +1338,7 @@ class ContentProviderTest : InstrumentedTest() {
                     greaterThanOrEqualTo(1)
                 )
             )
-            for (c in newNote.cards()) {
+            for (c in newNote.cards(col)) {
                 c.did = did
                 c.flush()
             }

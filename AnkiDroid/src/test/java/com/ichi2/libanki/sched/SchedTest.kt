@@ -118,7 +118,7 @@ class SchedTest : RobolectricTest() {
 
     private fun createBuriedCardInDefaultDeck(): Card {
         val n = addNoteUsingBasicModel("Hello", "World")
-        val c = n.firstCard()
+        val c = n.firstCard(col)
         c.queue = QUEUE_TYPE_SIBLING_BURIED
         c.flush()
         return c
@@ -470,7 +470,7 @@ class SchedTest : RobolectricTest() {
         note.setItem("Back", "two")
         col.addNote(note)
         // set the card up as a review card, due 8 days ago
-        var c = note.cards()[0].apply {
+        var c = note.cards(col)[0].apply {
             type = CARD_TYPE_REV
             queue = QUEUE_TYPE_REV
             due = (col.sched.today - 8).toLong()
@@ -551,7 +551,7 @@ class SchedTest : RobolectricTest() {
         note.setItem("Front", "one")
         col.addNote(note)
         // 1 day ivl review card due now
-        val c = note.cards()[0]
+        val c = note.cards(col)[0]
         c.type = CARD_TYPE_REV
         c.queue = QUEUE_TYPE_REV
         c.due = col.sched.today.toLong()
@@ -577,7 +577,7 @@ class SchedTest : RobolectricTest() {
           note.setItem("Front","one");
           col.addNote(note);
           // simulate a review that was lapsed and is now due for its normal review
-          Card c = note.cards().get(0);
+          Card c = note.cards(col).get(0);
           c.setType(CARD_TYPE_REV);
           c.setQueue(QUEUE_TYPE_LRN);
           c.setDue(-1);
@@ -622,7 +622,7 @@ class SchedTest : RobolectricTest() {
         )
         // turn it into a review
         col.reset()
-        val c = note.cards()[0]
+        val c = note.cards(col)[0]
         c.startTimer()
         col.sched.answerCard(c, BUTTON_THREE)
         // nothing should be due tomorrow, as it's due in a week
@@ -709,7 +709,7 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        val c = note.cards()[0]
+        val c = note.cards(col)[0]
         // burying
         col.sched.buryNote(c.nid)
         col.reset()
@@ -726,7 +726,7 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        var c = note.cards()[0]
+        var c = note.cards(col)[0]
         // suspending
         col.reset()
         assertNotNull(card)
@@ -779,7 +779,7 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        var c = note.cards()[0].apply {
+        var c = note.cards(col)[0].apply {
             ivl = 100
             queue = QUEUE_TYPE_REV
             type = CARD_TYPE_REV
@@ -898,7 +898,7 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        val oldDue = note.cards()[0].due
+        val oldDue = note.cards(col)[0].due
         val did = addDynamicDeck("Cram")
         col.sched.rebuildDyn(did)
         col.reset()
@@ -1145,7 +1145,7 @@ class SchedTest : RobolectricTest() {
         note = col.newNote()
         note.setItem("Front", "three")
         col.addNote(note)
-        val c = note.cards()[0]
+        val c = note.cards(col)[0]
         c.apply {
             type = CARD_TYPE_REV
             queue = QUEUE_TYPE_REV
@@ -1168,7 +1168,7 @@ class SchedTest : RobolectricTest() {
             val note = col.newNote()
             note.setItem("Front", "num$i")
             col.addNote(note)
-            val c = note.cards()[0]
+            val c = note.cards(col)[0]
             c.apply {
                 type = CARD_TYPE_REV
                 queue = QUEUE_TYPE_REV
@@ -1234,7 +1234,7 @@ class SchedTest : RobolectricTest() {
         note.model().put("did", default1)
         col.addNote(note)
         // make it a review card
-        val c = note.cards()[0]
+        val c = note.cards(col)[0]
         c.queue = QUEUE_TYPE_REV
         c.due = 0
         c.flush()
@@ -1311,19 +1311,19 @@ class SchedTest : RobolectricTest() {
         val note2 = col.newNote()
         note2.setItem("Front", "two")
         col.addNote(note2)
-        assertEquals(2, note2.cards()[0].due)
+        assertEquals(2, note2.cards(col)[0].due)
         var found = false
         // 50/50 chance of being reordered
         for (i in 0..19) {
             col.sched.randomizeCards(1)
-            if (note.cards()[0].due != note.id) {
+            if (note.cards(col)[0].due != note.id) {
                 found = true
                 break
             }
         }
         assertTrue(found)
         col.sched.orderCards(1)
-        assertEquals(1, note.cards()[0].due)
+        assertEquals(1, note.cards(col)[0].due)
         // shifting
         val note3 = col.newNote()
         note3.setItem("Front", "three")
@@ -1331,13 +1331,13 @@ class SchedTest : RobolectricTest() {
         val note4 = col.newNote()
         note4.setItem("Front", "four")
         col.addNote(note4)
-        assertEquals(1, note.cards()[0].due)
-        assertEquals(2, note2.cards()[0].due)
-        assertEquals(3, note3.cards()[0].due)
-        assertEquals(4, note4.cards()[0].due)
+        assertEquals(1, note.cards(col)[0].due)
+        assertEquals(2, note2.cards(col)[0].due)
+        assertEquals(3, note3.cards(col)[0].due)
+        assertEquals(4, note4.cards(col)[0].due)
         /* todo sortCard
            col.getSched().sortCards(new long [] {note3.cards().get(0).getId(), note4.cards().get(0).getId()}, start=1, shift=true);
-           assertEquals(3, note.cards().get(0).getDue());
+           assertEquals(3, note.cards(col).get(0).getDue());
            assertEquals(4, note2.cards().get(0).getDue());
            assertEquals(1, note3.cards().get(0).getDue());
            assertEquals(2, note4.cards().get(0).getDue());
@@ -1351,7 +1351,7 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        val c = note.cards()[0].apply {
+        val c = note.cards(col)[0].apply {
             queue = QUEUE_TYPE_REV
             type = CARD_TYPE_REV
             ivl = 100
@@ -1372,7 +1372,7 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        val c = note.cards()[0]
+        val c = note.cards(col)[0]
         col.sched.reschedCards(listOf(c.id), 0, 0)
         c.load()
         assertEquals(col.sched.today.toLong(), c.due)
@@ -1393,7 +1393,7 @@ class SchedTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
-        val c = note.cards()[0].apply {
+        val c = note.cards(col)[0].apply {
             type = CARD_TYPE_REV
             queue = QUEUE_TYPE_REV
             due = 0
@@ -1418,7 +1418,7 @@ class SchedTest : RobolectricTest() {
         note.setItem("Front", "one")
         note.setItem("Back", "two")
         col.addNote(note)
-        var c = note.cards()[0].apply {
+        var c = note.cards(col)[0].apply {
             type = CARD_TYPE_REV
             queue = QUEUE_TYPE_REV
             ivl = 100

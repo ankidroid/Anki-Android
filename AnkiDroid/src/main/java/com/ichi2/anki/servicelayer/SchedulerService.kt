@@ -20,14 +20,17 @@ import androidx.annotation.StringRes
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.UndoAction
 import com.ichi2.libanki.UndoAction.Companion.revertCardToProvidedState
 import com.ichi2.libanki.UndoAction.UndoNameId
+import com.ichi2.libanki.Utils
 import com.ichi2.utils.Computation
 import timber.log.Timber
-import java.util.*
+import java.util.Optional
 import java.util.concurrent.CancellationException
-import kotlin.collections.ArrayList
 import com.ichi2.libanki.Collection as AnkiCollection
 
 typealias NextCardAnd<T> = Computation<NextCard<T>>
@@ -85,7 +88,7 @@ class SchedulerService {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
                 // collect undo information
-                col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_bury_note, card))
+                col.markUndo(UndoAction.revertNoteToProvidedState(col, R.string.menu_bury_note, card))
                 // then bury
                 col.sched.buryNote(card.note().id)
             }
@@ -97,7 +100,7 @@ class SchedulerService {
             return computeThenGetNextCardInTransaction {
                 val note: Note = card.note()
                 // collect undo information
-                val allCs = note.cards()
+                val allCs = note.cards(col)
                 col.markUndo(UndoDeleteNote(note, allCs, card))
                 // delete note
                 col.remNotes(longArrayOf(note.id))
@@ -125,12 +128,12 @@ class SchedulerService {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
                 // collect undo information
-                val cards = card.note().cards()
+                val cards = card.note().cards(col)
                 val cids = LongArray(cards.size)
                 for (i in cards.indices) {
                     cids[i] = cards[i].id
                 }
-                col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_suspend_note, card))
+                col.markUndo(UndoAction.revertNoteToProvidedState(col, R.string.menu_suspend_note, card))
                 // suspend note
                 col.sched.suspendCards(cids)
             }
@@ -178,7 +181,7 @@ class SchedulerService {
         override fun undo(col: AnkiCollection): Card {
             Timber.i("Undo: Delete note")
             val ids = ArrayList<Long>(allCs.size + 1)
-            note.flush(note.mod, false)
+            note.flush(col, note.mod, false)
             ids.add(note.id)
             for (c in allCs) {
                 c.flush(false)

@@ -35,17 +35,17 @@ class CollectionTest : RobolectricTest() {
         // Technically, editing a card with conditional fields can also cause this, but cloze cards are much more common
         val n = addNoteUsingModelName("Cloze", "{{c1::Hello}} {{c2::World}}", "Extra")
         val did = addDeck("Testing")
-        for (c in n.cards()) {
+        for (c in n.cards(col)) {
             c.did = did
             c.flush()
         }
-        assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
+        assertThat("two cloze notes should be generated", n.numberOfCards(col), equalTo(2))
 
         // create card 3
         n.setField(0, n.fields[0].toString() + "{{c3::third}}")
-        n.flush()
-        assertThat("A new card should be generated", n.numberOfCards(), equalTo(3))
-        assertThat("The new card should have the same did as the previous cards", n.cards()[2].did, equalTo(did))
+        n.flush(col)
+        assertThat("A new card should be generated", n.numberOfCards(col), equalTo(3))
+        assertThat("The new card should have the same did as the previous cards", n.cards(col)[2].did, equalTo(did))
     }
 
     @Test
@@ -118,18 +118,18 @@ class CollectionTest : RobolectricTest() {
         assertEquals(2, n)
         assertEquals(4, col.cardCount())
         // check q/a generation
-        val c0 = note.cards()[0]
+        val c0 = note.cards(col)[0]
         assertThat(c0.q(), Matchers.containsString("three"))
         // it should not be a duplicate
-        assertEquals(note.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT)
+        assertEquals(note.dupeOrEmpty(col), Note.DupeOrEmpty.CORRECT)
         // now let's make a duplicate
         val note2 = col.newNote()
         note2.setItem("Front", "one")
         note2.setItem("Back", "")
-        assertNotEquals(note2.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT)
+        assertNotEquals(note2.dupeOrEmpty(col), Note.DupeOrEmpty.CORRECT)
         // empty first field should not be permitted either
         note2.setItem("Front", " ")
-        assertNotEquals(note2.dupeOrEmpty(), Note.DupeOrEmpty.CORRECT)
+        assertNotEquals(note2.dupeOrEmpty(col), Note.DupeOrEmpty.CORRECT)
     }
 
     @Test
@@ -143,7 +143,7 @@ class CollectionTest : RobolectricTest() {
         assertEquals(-0xc2a6b03f, col.db.queryLongScalar("select csum from notes"))
         // changing the val should change the checksum
         note.setItem("Front", "newx")
-        note.flush()
+        note.flush(col)
         assertEquals(0x302811ae, col.db.queryLongScalar("select csum from notes"))
     }
 
@@ -158,13 +158,13 @@ class CollectionTest : RobolectricTest() {
         col.addNote(note2)
         // adding for a given id
         col.tags.bulkAdd(listOf(note.id), "foo")
-        note.load()
-        note2.load()
+        note.load(col)
+        note2.load(col)
         assertTrue(note.tags.contains("foo"))
         assertFalse(note2.tags.contains("foo"))
         // should be canonified
         col.tags.bulkAdd(listOf(note.id), "foo aaa")
-        note.load()
+        note.load(col)
         assertEquals("aaa", note.tags[0])
         assertEquals(2, note.tags.size)
     }
@@ -192,11 +192,11 @@ class CollectionTest : RobolectricTest() {
         val n = col.newNote()
         n.setItem("Front", "foo[abc]")
         col.addNote(n)
-        val c = n.cards()[0]
+        val c = n.cards(col)[0]
         assertTrue(c.q().endsWith("abc"))
         // and should avoid sound
         n.setItem("Front", "foo[sound:abc.mp3]")
-        n.flush()
+        n.flush(col)
         val question = c.q(true)
         assertThat("Question «$question» does not contains «anki:play».", question, Matchers.containsString("anki:play"))
         // it shouldn't throw an error while people are editing
@@ -207,8 +207,7 @@ class CollectionTest : RobolectricTest() {
 
     @Test
     fun test_filterToValidCards() {
-        val col = col
-        val cid = addNoteUsingBasicModel("foo", "bar").firstCard().id
+        val cid = addNoteUsingBasicModel("foo", "bar").firstCard(col).id
         assertEquals(ArrayList(setOf(cid)), col.filterToValidCards(longArrayOf(cid, cid + 1)))
     }
 }
