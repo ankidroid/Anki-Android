@@ -287,7 +287,7 @@ class Sched(col: Collection) : SchedV2(col) {
         mLrnCount = col.db.queryScalar(
             "SELECT sum(left / 1000) FROM (SELECT left FROM cards WHERE did IN " + _deckLimit() +
                 " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? and id != ? LIMIT ?)",
-            dayCutoff,
+            dayCutoff(),
             currentCardId(),
             mReportLimit
         )
@@ -327,7 +327,7 @@ class Sched(col: Collection) : SchedV2(col) {
          */mLrnQueue.setFilled()
         col.db.query(
             "SELECT due, id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ? AND id != ? LIMIT ?",
-            dayCutoff,
+            dayCutoff(),
             currentCardId(),
             mReportLimit
         ).use { cur ->
@@ -411,7 +411,7 @@ class Sched(col: Collection) : SchedV2(col) {
             card.due = time.intTime() + delay
 
             // due today?
-            if (card.due < dayCutoff) {
+            if (card.due < dayCutoff()) {
                 mLrnCount += card.left / 1000
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
@@ -424,7 +424,7 @@ class Sched(col: Collection) : SchedV2(col) {
                 _sortIntoLrn(card.due, card.id)
             } else {
                 // the card is due in one or more days, so we need to use the day learn queue
-                val ahead = (card.due - dayCutoff) / SECONDS_PER_DAY + 1
+                val ahead = (card.due - dayCutoff()) / SECONDS_PER_DAY + 1
                 card.due = mToday!! + ahead
                 card.queue = Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
             }
@@ -759,13 +759,13 @@ class Sched(col: Collection) : SchedV2(col) {
         card.due = delay + time.intTime()
         card.left = _startingLeft(card)
         // queue 1
-        if (card.due < dayCutoff) {
+        if (card.due < dayCutoff()) {
             mLrnCount += card.left / 1000
             card.queue = Consts.QUEUE_TYPE_LRN
             _sortIntoLrn(card.due, card.id)
         } else {
             // day learn queue
-            val ahead = (card.due - dayCutoff) / SECONDS_PER_DAY + 1
+            val ahead = (card.due - dayCutoff()) / SECONDS_PER_DAY + 1
             card.due = mToday!! + ahead
             card.queue = Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
         }
@@ -1048,9 +1048,9 @@ class Sched(col: Collection) : SchedV2(col) {
         // days since col created
         mToday = ((time.intTime() - col.crt) / SECONDS_PER_DAY).toInt()
         // end of day cutoff
-        dayCutoff = col.crt + (mToday!! + 1) * SECONDS_PER_DAY
+        _dayCutoff = col.crt + (mToday!! + 1) * SECONDS_PER_DAY
         if (mToday != oldToday) {
-            col.log(mToday, dayCutoff)
+            col.log(mToday, dayCutoff())
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead

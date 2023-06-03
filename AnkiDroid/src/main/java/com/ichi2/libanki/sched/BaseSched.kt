@@ -488,8 +488,7 @@ abstract class BaseSched(val col: Collection) {
     /**
      * @return Timestamp of when the day ends. Takes into account hour at which day change for anki and timezone
      */
-    open val dayCutoff: Long
-        get() = _timingToday().nextDayAt
+    open fun dayCutoff() = _timingToday().nextDayAt
 
     /* internal */
     fun _timingToday(): SchedTimingTodayResponse {
@@ -617,7 +616,7 @@ abstract class BaseSched(val col: Collection) {
                         "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime " +
                         "from revlog where id > " +
                         "?",
-                    (col.sched.dayCutoff - (10 * Stats.SECONDS_PER_DAY)) * 1000
+                    (col.sched.dayCutoff() - (10 * Stats.SECONDS_PER_DAY)) * 1000
                 ).use { cur ->
                     if (!cur.moveToFirst()) {
                         return -1

@@ -408,7 +408,7 @@ class Finder(private val col: Collection) {
             "c.queue in (" + Consts.QUEUE_TYPE_SIBLING_BURIED + ", " + Consts.QUEUE_TYPE_MANUALLY_BURIED + ")"
         } else if ("due" == `val`) {
             "(c.queue in (" + Consts.QUEUE_TYPE_REV + "," + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + ") and c.due <= " + col.sched.today() +
-                ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + col.sched.dayCutoff + ")"
+                ") or (c.queue = " + Consts.QUEUE_TYPE_LRN + " and c.due <= " + col.sched.dayCutoff() + ")"
         } else {
             null
         }
@@ -450,7 +450,7 @@ class Finder(private val col: Collection) {
             }
             ease = "and ease=" + r[1]
         }
-        val cutoff = (col.sched.dayCutoff - Stats.SECONDS_PER_DAY * days) * 1000
+        val cutoff = (col.sched.dayCutoff() - Stats.SECONDS_PER_DAY * days) * 1000
         return "c.id in (select cid from revlog where id>$cutoff $ease)"
     }
 
@@ -462,7 +462,7 @@ class Finder(private val col: Collection) {
             Timber.w(e)
             return null
         }
-        val cutoff = (col.sched.dayCutoff - Stats.SECONDS_PER_DAY * days) * 1000
+        val cutoff = (col.sched.dayCutoff() - Stats.SECONDS_PER_DAY * days) * 1000
         return "c.id > $cutoff"
     }
 

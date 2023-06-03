@@ -66,8 +66,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     protected var mHaveCounts = false
     protected var mToday: Int? = null
 
-    @KotlinCleanup("replace Sched.getDayCutoff() with dayCutoff")
-    final override var dayCutoff: Long = 0
+    @KotlinCleanup("replace Sched.getDayCutoff() with dayCutoff()")
+    final var _dayCutoff = 0L
+    final override fun dayCutoff() = _dayCutoff
     private var mLrnCutoff: Long = 0
     protected var mNewCount = 0
 
@@ -1212,11 +1213,11 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         card.due = time.intTime() + delay
 
         // due today?
-        if (card.due < dayCutoff) {
+        if (card.due < dayCutoff()) {
             // Add some randomness, up to 5 minutes or 25%
             val maxExtra = Math.min(300, (delay * 0.25).toInt())
             val fuzz = Random().nextInt(Math.max(maxExtra, 1))
-            card.due = Math.min(dayCutoff - 1, card.due + fuzz)
+            card.due = Math.min(dayCutoff() - 1, card.due + fuzz)
             card.queue = Consts.QUEUE_TYPE_LRN
             if (card.due < time.intTime() + col.get_config_int("collapseTime")) {
                 mLrnCount += 1
@@ -1231,7 +1232,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             }
         } else {
             // the card is due in one or more days, so we need to use the day learn queue
-            val ahead = (card.due - dayCutoff) / Stats.SECONDS_PER_DAY + 1
+            val ahead = (card.due - dayCutoff()) / Stats.SECONDS_PER_DAY + 1
             card.due = mToday!! + ahead
             card.queue = Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
         }
@@ -1337,7 +1338,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         val offset = Math.min(left, delays.length())
         for (i in 0 until offset) {
             now += (delays.getDouble(delays.length() - offset + i) * 60.0).toInt().toLong()
-            if (now > dayCutoff) {
+            if (now > dayCutoff()) {
                 break
             }
             ok = i
@@ -2032,9 +2033,9 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         val oldToday = if (mToday == null) 0 else mToday!!
         val timing = _timingToday()
         mToday = timing.daysElapsed
-        dayCutoff = timing.nextDayAt
+        _dayCutoff = timing.nextDayAt
         if (oldToday != mToday) {
-            col.log(mToday, dayCutoff)
+            col.log(mToday, dayCutoff())
         }
         // update all daily counts, but don't save decks to prevent needless conflicts. we'll save on card answer
         // instead
@@ -2063,7 +2064,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
     fun _checkDay() {
         // check if the day has rolled over
-        if (time.intTime() > dayCutoff) {
+        if (time.intTime() > dayCutoff()) {
             reset()
         }
     }

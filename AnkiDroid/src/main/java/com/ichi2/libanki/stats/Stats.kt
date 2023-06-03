@@ -123,7 +123,7 @@ class Stats(private val col: Collection, did: Long) {
                 "sum(case when type = " + Consts.CARD_TYPE_RELEARNING + " then 1 else 0 end) " + /* filter */
                 "from revlog " +
                 "where ease > 0 " + // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
-                "and id > " + (col.sched.dayCutoff - SECONDS_PER_DAY) * 1000 + " " + lim
+                "and id > " + (col.sched.dayCutoff() - SECONDS_PER_DAY) * 1000 + " " + lim
         Timber.d("todays statistics query: %s", query)
         var cards: Int
         var thetime: Int
@@ -147,7 +147,7 @@ class Stats(private val col: Collection, did: Long) {
             "select sum(case when ease > 0 then 1 else 0 end), " + /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
             "sum(case when ease = 1 then 0 else 1 end) from revlog " +
             "where ease > 0 " + // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008
-            "and lastIvl >= 21 and id > " + (col.sched.dayCutoff - SECONDS_PER_DAY) * 1000 + " " + lim
+            "and lastIvl >= 21 and id > " + (col.sched.dayCutoff() - SECONDS_PER_DAY) * 1000 + " " + lim
         Timber.d("todays statistics query 2: %s", query)
         var mcnt: Int
         var msum: Int
@@ -170,7 +170,7 @@ class Stats(private val col: Collection, did: Long) {
             } else {
                 "> "
             }
-            "id " + operator + (col.sched.dayCutoff - timespan.days * SECONDS_PER_DAY) * 1000
+            "id " + operator + (col.sched.dayCutoff() - timespan.days * SECONDS_PER_DAY) * 1000
         }
     }
 
@@ -179,7 +179,7 @@ class Stats(private val col: Collection, did: Long) {
         val num = getNum(timespan)
         val lims: MutableList<String?> = ArrayList(2)
         if (timespan != AxisType.TYPE_LIFE) {
-            lims.add("id > " + (col.sched.dayCutoff - num * chunk * SECONDS_PER_DAY) * 1000)
+            lims.add("id > " + (col.sched.dayCutoff() - num * chunk * SECONDS_PER_DAY) * 1000)
         }
         lims.add("did in " + _limit())
         val lim: String
@@ -197,7 +197,7 @@ class Stats(private val col: Collection, did: Long) {
         }
 
         @Suppress("UNUSED_VARIABLE")
-        val cut = col.sched.dayCutoff
+        val cut = col.sched.dayCutoff()
         val cardCount = col.db.queryScalar("select count(id) from cards $lim")
         var periodDays = _periodDays(timespan).toLong() // 30|365|-1
         if (periodDays == -1L) {
@@ -231,7 +231,7 @@ class Stats(private val col: Collection, did: Long) {
         period = if (t == 0.0) {
             1
         } else {
-            Math.max(1, (1 + (col.sched.dayCutoff - t / 1000) / SECONDS_PER_DAY).toInt()).toLong()
+            Math.max(1, (1 + (col.sched.dayCutoff() - t / 1000) / SECONDS_PER_DAY).toInt()).toLong()
         }
         return period
     }
@@ -275,7 +275,7 @@ class Stats(private val col: Collection, did: Long) {
         val cntquery =
             (
                 "SELECT  COUNT(*) numDays, MIN(day) firstDay, SUM(time_per_day) sum_time  from (" +
-                    " SELECT (cast((id/1000 - " + col.sched.dayCutoff + ") / " + SECONDS_PER_DAY + " AS INT)) AS day,  sum(time/1000.0/60.0) AS time_per_day" +
+                    " SELECT (cast((id/1000 - " + col.sched.dayCutoff() + ") / " + SECONDS_PER_DAY + " AS INT)) AS day,  sum(time/1000.0/60.0) AS time_per_day" +
                     " FROM revlog " + lim + " GROUP BY day ORDER BY day)"
                 )
         Timber.d("Count cntquery: %s", cntquery)
@@ -547,7 +547,7 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
         }
         val lims = ArrayList<String>(2)
         if (num != -1) {
-            lims.add("id > " + (col.sched.dayCutoff - (num + 1) * chunk * SECONDS_PER_DAY) * 1000)
+            lims.add("id > " + (col.sched.dayCutoff() - (num + 1) * chunk * SECONDS_PER_DAY) * 1000)
         }
         var lim = _getDeckFilter().replace("[\\[\\]]".toRegex(), "")
         if (lim.length > 0) {
@@ -588,7 +588,7 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
         val list = ArrayList<DoubleArray>()
         val query =
             (
-                "SELECT (cast((id/1000 - " + col.sched.dayCutoff + ") / " + SECONDS_PER_DAY + " AS INT))/" +
+                "SELECT (cast((id/1000 - " + col.sched.dayCutoff() + ") / " + SECONDS_PER_DAY + " AS INT))/" +
                     chunk + " AS day, " + "sum(CASE WHEN type = " + Consts.CARD_TYPE_NEW + " THEN " + ti + " ELSE 0 END)" +
                     tf +
                     ", " + // lrn
@@ -851,9 +851,9 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
         val rolloverHour = getDayOffset(col)
         val pd = _periodDays()
         if (pd > 0) {
-            lim += " and id > " + (col.sched.dayCutoff - SECONDS_PER_DAY * pd) * 1000
+            lim += " and id > " + (col.sched.dayCutoff() - SECONDS_PER_DAY * pd) * 1000
         }
-        val cutoff = col.sched.dayCutoff
+        val cutoff = col.sched.dayCutoff()
         val cut = cutoff - rolloverHour * 3600
         val list = ArrayList<DoubleArray>(24) // number of hours
         for (i in 0..23) {
@@ -976,13 +976,13 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
         if (lim.length > 0) {
             lim = " and $lim"
         }
-        val sd: Calendar = gregorianCalendar(col.sched.dayCutoff * 1000)
+        val sd: Calendar = gregorianCalendar(col.sched.dayCutoff() * 1000)
         var pd = _periodDays()
         if (pd > 0) {
             pd = Math.round((pd / 7).toFloat()) * 7
-            lim += " and id > " + (col.sched.dayCutoff - SECONDS_PER_DAY * pd) * 1000
+            lim += " and id > " + (col.sched.dayCutoff() - SECONDS_PER_DAY * pd) * 1000
         }
-        val cutoff = col.sched.dayCutoff
+        val cutoff = col.sched.dayCutoff()
         val list = ArrayList<DoubleArray>(7) // one by day of the week
         val query =
             "SELECT strftime('%w',datetime( cast(id/ 1000  -" + sd[Calendar.HOUR_OF_DAY] * 3600 +
@@ -1136,7 +1136,7 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
             -1
         }
         if (days > 0) {
-            lims.add("id > " + (col.sched.dayCutoff - days * SECONDS_PER_DAY) * 1000)
+            lims.add("id > " + (col.sched.dayCutoff() - days * SECONDS_PER_DAY) * 1000)
         }
 
         // Anki Desktop logs a '0' ease for manual reschedules, ignore them https://github.com/ankidroid/Anki-Android/issues/8008

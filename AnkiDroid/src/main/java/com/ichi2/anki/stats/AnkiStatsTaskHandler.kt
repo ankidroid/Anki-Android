@@ -136,7 +136,7 @@ class AnkiStatsTaskHandler private constructor(
             var minutes: Int
             /* cards, excludes rescheduled cards https://github.com/ankidroid/Anki-Android/issues/8592 */
             val query = "select sum(case when ease > 0 then 1 else 0 end), " +
-                "sum(time)/1000 from revlog where id > " + (col.sched.dayCutoff - Stats.SECONDS_PER_DAY) * 1000
+                "sum(time)/1000 from revlog where id > " + (col.sched.dayCutoff() - Stats.SECONDS_PER_DAY) * 1000
             Timber.d("DeckPreviewStatistics query: %s", query)
             col.db
                 .query(query).use { cur ->
