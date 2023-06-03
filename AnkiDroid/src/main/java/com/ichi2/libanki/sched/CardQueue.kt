@@ -19,7 +19,6 @@ package com.ichi2.libanki.sched
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 abstract class CardQueue<T : Card.Cache>(
@@ -29,7 +28,7 @@ abstract class CardQueue<T : Card.Cache>(
 ) {
     protected val queue = LinkedList<T>()
 
-    fun loadFirstCard() {
+    fun loadFirstCard(col: Collection) {
         if (!queue.isEmpty()) {
             // No need to reload. If the card was changed, reset would have been called and emptied the queue
             queue[0].loadQA(col, false, false)
@@ -37,7 +36,7 @@ abstract class CardQueue<T : Card.Cache>(
     }
 
     @Throws(NoSuchElementException::class)
-    fun removeFirstCard(): Card {
+    fun removeFirstCard(col: Collection): Card {
         return queue.remove()!!.card(col)
     }
 
@@ -67,8 +66,4 @@ abstract class CardQueue<T : Card.Cache>(
     fun listIterator(): MutableListIterator<T> {
         return queue.listIterator()
     }
-
-    @KotlinCleanup("make non-null")
-    protected val col: Collection
-        get() = sched.col
 }

@@ -347,7 +347,7 @@ class Sched(col: Collection) : SchedV2(col) {
                 cutoff += col.get_config_int("collapseTime").toLong()
             }
             if (mLrnQueue.firstDue < cutoff) {
-                return mLrnQueue.removeFirstCard()
+                return mLrnQueue.removeFirstCard(col)
                 // mLrnCount -= card.getLeft() / 1000; See decrementCount()
             }
         }

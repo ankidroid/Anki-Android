@@ -715,7 +715,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             resetQueues(false)
         }
         for (caches in _fillNextCard()) {
-            caches.loadFirstCard()
+            caches.loadFirstCard(col)
         }
     }
 
@@ -844,7 +844,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     protected fun _getNewCard(): Card? {
         return if (_fillNew()) {
             // mNewCount -= 1; see decrementCounts()
-            mNewQueue.removeFirstCard()
+            mNewQueue.removeFirstCard(col)
         } else {
             null
         }
@@ -1059,7 +1059,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
                 cutoff += col.get_config_int("collapseTime").toLong()
             }
             if (mLrnQueue.firstDue < cutoff) {
-                return mLrnQueue.removeFirstCard()
+                return mLrnQueue.removeFirstCard(col)
                 // mLrnCount -= 1; see decrementCounts()
             }
         }
@@ -1132,7 +1132,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     protected fun _getLrnDayCard(): Card? {
         return if (_fillLrnDay()) {
             // mLrnCount -= 1; see decrementCounts()
-            mLrnDayQueue.removeFirstCard()
+            mLrnDayQueue.removeFirstCard(col)
         } else {
             null
         }
@@ -1602,7 +1602,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     protected fun _getRevCard(): Card? {
         return if (_fillRev()) {
             // mRevCount -= 1; see decrementCounts()
-            mRevQueue.removeFirstCard()
+            mRevQueue.removeFirstCard(col)
         } else {
             null
         }
