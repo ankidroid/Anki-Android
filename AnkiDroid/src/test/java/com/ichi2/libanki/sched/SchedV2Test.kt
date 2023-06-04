@@ -760,7 +760,7 @@ open class SchedV2Test : RobolectricTest() {
         col.getSched().answerCard(c, BUTTON_ONE);
         assertTrue(hooked);
         assertEquals(QUEUE_TYPE_SUSPENDED, c.getQueue());
-        c.load();
+        c.load(col);
         assertEquals(QUEUE_TYPE_SUSPENDED, c.getQueue());
         */
     }
@@ -1048,20 +1048,20 @@ open class SchedV2Test : RobolectricTest() {
         val c2 = note.cards()[0]
         // burying
         col.sched.buryCards(longArrayOf(c.id), true)
-        c.load()
+        c.load(col)
         Assert.assertEquals(QUEUE_TYPE_MANUALLY_BURIED, c.queue)
         col.sched.buryCards(longArrayOf(c2.id), false)
-        c2.load()
+        c2.load(col)
         Assert.assertEquals(QUEUE_TYPE_SIBLING_BURIED, c2.queue)
         col.reset()
         assertNull(card)
         col.sched.unburyCardsForDeck(BaseSched.UnburyType.MANUAL)
-        c.load()
+        c.load(col)
         Assert.assertEquals(QUEUE_TYPE_NEW, c.queue)
-        c2.load()
+        c2.load(col)
         Assert.assertEquals(QUEUE_TYPE_SIBLING_BURIED, c2.queue)
         col.sched.unburyCardsForDeck(BaseSched.UnburyType.SIBLINGS)
-        c2.load()
+        c2.load(col)
         Assert.assertEquals(QUEUE_TYPE_NEW, c2.queue)
         col.sched.buryCards(longArrayOf(c.id, c2.id))
         col.sched.unburyCardsForDeck(BaseSched.UnburyType.ALL)
@@ -1105,7 +1105,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(CARD_TYPE_RELEARNING, c.type)
         col.sched.suspendCards(longArrayOf(c.id))
         col.sched.unsuspendCards(longArrayOf(c.id))
-        c.load()
+        c.load(col)
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
         Assert.assertEquals(CARD_TYPE_RELEARNING, c.type)
         Assert.assertEquals(due, c.due)
@@ -1114,11 +1114,11 @@ open class SchedV2Test : RobolectricTest() {
         c.flush()
         addDynamicDeck("tmp")
         col.sched.rebuildDyn()
-        c.load()
+        c.load(col)
         Assert.assertNotEquals(1, c.due)
         Assert.assertNotEquals(1, c.did)
         col.sched.suspendCards(longArrayOf(c.id))
-        c.load()
+        c.load(col)
         Assert.assertNotEquals(1, c.due)
         Assert.assertNotEquals(1, c.did)
         Assert.assertEquals(1, c.oDue)
@@ -1229,7 +1229,7 @@ open class SchedV2Test : RobolectricTest() {
         col.reset()
 
         // card should still be in learning state
-        c.load()
+        c.load(col)
         Assert.assertEquals(CARD_TYPE_LRN, c.queue)
         Assert.assertEquals(QUEUE_TYPE_LRN, c.type)
         Assert.assertEquals(2, c.left % 1000)
@@ -1244,7 +1244,7 @@ open class SchedV2Test : RobolectricTest() {
 
         // emptying the deck preserves learning state
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         Assert.assertEquals(CARD_TYPE_LRN, c.queue)
         Assert.assertEquals(QUEUE_TYPE_LRN, c.type)
         Assert.assertEquals(1, c.left % 1000)
@@ -1306,7 +1306,7 @@ open class SchedV2Test : RobolectricTest() {
 
         // emptying the filtered deck should restore card
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         Assert.assertEquals(QUEUE_TYPE_NEW, c.queue)
         Assert.assertEquals(0, c.reps)
         Assert.assertEquals(CARD_TYPE_NEW, c.type)
@@ -1688,13 +1688,13 @@ open class SchedV2Test : RobolectricTest() {
         col.addNote(note)
         val c = note.cards()[0]
         col.sched.reschedCards(listOf(c.id), 0, 0)
-        c.load()
+        c.load(col)
         Assert.assertEquals(col.sched.today.toLong(), c.due)
         Assert.assertEquals(1, c.ivl)
         Assert.assertEquals(QUEUE_TYPE_REV, c.type)
         Assert.assertEquals(CARD_TYPE_REV, c.queue)
         col.sched.reschedCards(listOf(c.id), 1, 1)
-        c.load()
+        c.load(col)
         Assert.assertEquals((col.sched.today + 1).toLong(), c.due)
         Assert.assertEquals(+1, c.ivl)
     }
@@ -1769,7 +1769,7 @@ open class SchedV2Test : RobolectricTest() {
 
         // the move to v2 should reset it to new
         col.changeSchedulerVer(2)
-        c.load()
+        c.load(col)
         Assert.assertEquals(QUEUE_TYPE_NEW, c.queue)
         Assert.assertEquals(CARD_TYPE_NEW, c.type)
 
@@ -1778,19 +1778,19 @@ open class SchedV2Test : RobolectricTest() {
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched.buryCards(longArrayOf(c.id))
-        c.load()
+        c.load(col)
         Assert.assertEquals(QUEUE_TYPE_MANUALLY_BURIED, c.queue)
 
         // revert to version 1
         col.changeSchedulerVer(1)
 
         // card should have moved queues
-        c.load()
+        c.load(col)
         Assert.assertEquals(QUEUE_TYPE_SIBLING_BURIED, c.queue)
 
         // and it should be new again when unburied
         col.sched.unburyCards()
-        c.load()
+        c.load(col)
         Assert.assertEquals(CARD_TYPE_NEW, c.queue)
         Assert.assertEquals(QUEUE_TYPE_NEW, c.type)
 
@@ -1798,7 +1798,7 @@ open class SchedV2Test : RobolectricTest() {
         col.changeSchedulerVer(2)
         // card with 100 day interval, answering again
         col.sched.reschedCards(listOf(c.id), 100, 100)
-        c.load()
+        c.load(col)
         c.due = 0
         c.flush()
         val conf = col.sched._cardConf(c)
@@ -1807,11 +1807,11 @@ open class SchedV2Test : RobolectricTest() {
         col.reset()
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
-        c.load()
+        c.load(col)
         Assert.assertEquals(50, c.ivl)
         // due should be correctly set when removed from learning early
         col.changeSchedulerVer(1)
-        c.load()
+        c.load(col)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
         Assert.assertEquals(CARD_TYPE_REV, c.type)
         Assert.assertEquals(50, c.due)
@@ -1840,7 +1840,7 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.rebuildDyn(did)
         col.sched.emptyDyn(did)
         col.reset()
-        c.load()
+        c.load(col)
         Assert.assertEquals(-5, c.due)
     }
 

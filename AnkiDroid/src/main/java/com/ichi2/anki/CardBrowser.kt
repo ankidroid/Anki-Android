@@ -826,7 +826,7 @@ open class CardBrowser :
 
             // reload cards because they'll be passed back to caller
             for (c in cards) {
-                c.load()
+                c.load(col)
             }
         }
         // pass cards back so more actions can be performed by the caller

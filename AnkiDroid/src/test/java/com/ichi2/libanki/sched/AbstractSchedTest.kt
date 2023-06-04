@@ -106,7 +106,7 @@ class AbstractSchedTest : RobolectricTest() {
         sched.answerCard(card, sched.goodNewButton)
         sched.card
         nonTaskUndo(col)
-        card.load()
+        card.load(col)
         assertThat(sched.newCount(), `is`(9))
         assertThat(sched.counts(card).new, `is`(10))
     }

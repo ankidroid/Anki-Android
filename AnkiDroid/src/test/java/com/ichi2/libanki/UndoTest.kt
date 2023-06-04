@@ -109,7 +109,7 @@ class UndoTest : RobolectricTest() {
             undo()
             reset()
             assertEquals(Counts(1, 0, 0), sched.counts())
-            c.load()
+            c.load(col)
             assertEquals(QUEUE_TYPE_NEW, c.queue)
             assertNotEquals(1001, c.left)
             assertNull(undoType())

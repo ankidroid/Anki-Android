@@ -273,8 +273,8 @@ class ModelTest : RobolectricTest() {
         assertEquals(1, c2.ord)
         // switch templates
         col.models.moveTemplate(m, c.template(), 1)
-        c.load()
-        c2.load()
+        c.load(col)
+        c2.load(col)
         assertEquals(1, c.ord)
         assertEquals(0, c2.ord)
         // removing a template should delete its cards
@@ -612,8 +612,8 @@ class ModelTest : RobolectricTest() {
         assertEquals(1, c1.ord)
         col.models.change(basic, note.id, basic, noOp, map)
         note.load()
-        c0.load()
-        c1.load()
+        c0.load(col)
+        c1.load(col)
         assertThat(c0.q(), containsString("note"))
         assertThat(c1.q(), containsString("b123"))
         assertEquals(1, c0.ord)
@@ -630,7 +630,7 @@ class ModelTest : RobolectricTest() {
         // }
         col.models.change(basic, note.id, basic, noOp, map)
         note.load()
-        c0.load()
+        c0.load(col)
         // the card was deleted
         // but we have two cards, as a new one was generated
         assertEquals(2, note.numberOfCards())

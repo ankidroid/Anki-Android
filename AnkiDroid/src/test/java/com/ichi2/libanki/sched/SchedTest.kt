@@ -361,7 +361,7 @@ class SchedTest : RobolectricTest() {
         c.oDue = 321
         c.flush()
         (col.sched as Sched).removeLrn()
-        c.load()
+        c.load(col)
         assertEquals(QUEUE_TYPE_REV, c.queue)
         assertEquals(321, c.due)
     }
@@ -754,7 +754,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(CARD_TYPE_REV, c.type)
         col.sched.suspendCards(longArrayOf(c.id))
         col.sched.unsuspendCards(longArrayOf(c.id))
-        c.load()
+        c.load(col)
         assertEquals(QUEUE_TYPE_REV, c.queue)
         assertEquals(CARD_TYPE_REV, c.type)
         assertEquals(1, c.due)
@@ -763,11 +763,11 @@ class SchedTest : RobolectricTest() {
         c.flush()
         addDynamicDeck("tmp")
         col.sched.rebuildDyn()
-        c.load()
+        c.load(col)
         assertNotEquals(1, c.due)
         assertNotEquals(1, c.did)
         col.sched.suspendCards(longArrayOf(c.id))
-        c.load()
+        c.load(col)
         assertEquals(1, c.due)
         assertEquals(1, c.did)
     }
@@ -857,7 +857,7 @@ class SchedTest : RobolectricTest() {
         // delete the deck, returning the card mid-study
         col.decks.rem(col.decks.selected())
         assertEquals(1, col.sched.deckDueTree().size.toLong())
-        c.load()
+        c.load(col)
         assertEquals(1, c.ivl)
         assertEquals((col.sched.today + 1).toLong(), c.due)
         // make it due
@@ -873,7 +873,7 @@ class SchedTest : RobolectricTest() {
         col.sched.rebuildDyn(did)
         col.reset()
         assertEquals(Counts(0, 0, 1), col.sched.counts())
-        c.load()
+        c.load(col)
         assertEquals(4, col.sched.answerButtons(c).toLong())
         // add a sibling so we can test minSpace, etc
         val c2 = c.clone()
@@ -910,7 +910,7 @@ class SchedTest : RobolectricTest() {
         assertNotEquals(c.due, oldDue)
         // if we terminate cramming prematurely it should be set back to new
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(QUEUE_TYPE_NEW, c.queue)
         assertEquals(CARD_TYPE_NEW, c.type)
         assertEquals(oldDue, c.due)
@@ -967,7 +967,7 @@ class SchedTest : RobolectricTest() {
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals((col.sched.today + 25).toLong(), c.due)
         // fail+grad early
@@ -979,7 +979,7 @@ class SchedTest : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched.answerCard(c, BUTTON_THREE)
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals((col.sched.today + 25).toLong(), c.due)
         // due cards - pass
@@ -991,7 +991,7 @@ class SchedTest : RobolectricTest() {
         c = card!!
         col.sched.answerCard(c, BUTTON_THREE)
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals(-25, c.due)
         // fail
@@ -1003,7 +1003,7 @@ class SchedTest : RobolectricTest() {
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched.emptyDyn(did)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals(-25, c.due)
         // fail with normal grad
@@ -1015,7 +1015,7 @@ class SchedTest : RobolectricTest() {
         c = card!!
         col.sched.answerCard(c, BUTTON_ONE)
         col.sched.answerCard(c, BUTTON_THREE)
-        c.load()
+        c.load(col)
         assertEquals(100, c.ivl)
         assertEquals(-25, c.due)
         // lapsed card pulled into cram
@@ -1374,13 +1374,13 @@ class SchedTest : RobolectricTest() {
         col.addNote(note)
         val c = note.cards()[0]
         col.sched.reschedCards(listOf(c.id), 0, 0)
-        c.load()
+        c.load(col)
         assertEquals(col.sched.today.toLong(), c.due)
         assertEquals(1, c.ivl)
         assertEquals(CARD_TYPE_REV, c.type)
         assertEquals(QUEUE_TYPE_REV, c.queue)
         col.sched.reschedCards(listOf(c.id), 1, 1)
-        c.load()
+        c.load(col)
         assertEquals((col.sched.today + 1).toLong(), c.due)
         assertEquals(+1, c.ivl)
     }

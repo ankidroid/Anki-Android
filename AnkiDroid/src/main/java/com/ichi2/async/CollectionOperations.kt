@@ -64,7 +64,7 @@ fun updateCard(
     return if (isFromReviewer) {
         if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
             editCard.apply {
-                load()
+                load(col)
                 q(true) // reload qa-cache
             }
         } else {
@@ -361,7 +361,7 @@ fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
 
         // reload cards because they'll be passed back to caller
         for (c in cards) {
-            c.load()
+            c.load(col)
         }
         sched.deferReset()
         // pass cards back so more actions can be performed by the caller
@@ -407,7 +407,7 @@ fun changeDeckMulti(
         val originalDids = LongArray(cards.size)
         for (i in cards.indices) {
             val card = cards[i]
-            card.load()
+            card.load(col)
             // save original did for undo
             originalDids[i] = card.did
             // then set the card ID to the new deck

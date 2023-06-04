@@ -94,7 +94,7 @@ class UndoChangeDeckMulti(private val cards: Array<Card>, private val originalDi
         // move cards to original deck
         for (i in cards.indices) {
             val card = cards[i]
-            card.load()
+            card.load(col)
             card.did = originalDids[i]
             val note = card.note()
             note.flush()

@@ -143,10 +143,10 @@ open class Card : Cloneable {
         render_output = null
         note = null
         this.id = id
-        load()
+        load(col)
     }
 
-    fun load() {
+    fun load(col: Collection) {
         col.db.query("SELECT * FROM cards WHERE id = ?", this.id).use { cursor ->
             if (!cursor.moveToFirst()) {
                 throw WrongId(this.id, "card")

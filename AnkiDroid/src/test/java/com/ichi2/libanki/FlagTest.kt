@@ -44,7 +44,7 @@ class FlagTest : RobolectricTest() {
         assertEquals(0, col.findCards("flag:1").size)
         // set flag 2
         col.setUserFlag(2, listOf(c.id))
-        c.load()
+        c.load(col)
         assertEquals(2, c.userFlag())
         // assertEquals(origBits, c.flags & origBits);TODO: create direct access to real flag value
         assertEquals(0, col.findCards("flag:0").size)
@@ -52,11 +52,11 @@ class FlagTest : RobolectricTest() {
         assertEquals(0, col.findCards("flag:3").size)
         // change to 3
         col.setUserFlag(3, listOf(c.id))
-        c.load()
+        c.load(col)
         assertEquals(3, c.userFlag())
         // unset
         col.setUserFlag(0, listOf(c.id))
-        c.load()
+        c.load(col)
         assertEquals(0, c.userFlag())
 
         // should work with Cards method as well

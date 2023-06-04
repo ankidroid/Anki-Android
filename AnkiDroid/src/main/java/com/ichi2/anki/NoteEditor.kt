@@ -758,7 +758,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 col.setDeck(longArrayOf(mCurrentEditedCard!!.id), deckId)
                 // refresh the card object to reflect the database changes from above
-                mCurrentEditedCard!!.load()
+                mCurrentEditedCard!!.load(col)
                 // also reload the note object
                 mEditorNote = mCurrentEditedCard!!.note()
                 // then set the card ID to the new deck
