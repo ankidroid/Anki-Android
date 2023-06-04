@@ -507,15 +507,15 @@ open class Card : Cloneable {
         }
 
         /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded.  */
-        protected constructor(cache: Cache) {
-            col = cache.col
+        protected constructor(col: Collection, cache: Cache) {
+            this.col = col
             this.id = cache.id
             mCard = cache.mCard
         }
 
         /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded.  */
-        constructor(card: Card) {
-            col = card.col
+        constructor(col: Collection, card: Card) {
+            this.col = col
             this.id = card.id
             mCard = card
         }
