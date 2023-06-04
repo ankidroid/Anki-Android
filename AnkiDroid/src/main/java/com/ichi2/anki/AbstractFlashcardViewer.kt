@@ -1535,10 +1535,10 @@ abstract class AbstractFlashcardViewer :
                 // If the question is displayed or if the question should be replayed, read the question
                 if (mTtsInitialized) {
                     if (!displayAnswer || doAudioReplay && replayQuestion) {
-                        readCardTts(SingleSoundSide.QUESTION)
+                        readCardTts(col, SingleSoundSide.QUESTION)
                     }
                     if (displayAnswer) {
-                        readCardTts(SingleSoundSide.ANSWER)
+                        readCardTts(col, SingleSoundSide.ANSWER)
                     }
                 } else {
                     mReplayOnTtsInit = true
@@ -1547,8 +1547,8 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private fun readCardTts(side: SingleSoundSide) {
-        val tags = legacyGetTtsTags(currentCard!!, side, this)
+    private fun readCardTts(col: Collection, side: SingleSoundSide) {
+        val tags = legacyGetTtsTags(col, currentCard!!, side, this)
         mTTS.readCardText(tags, currentCard!!, side.toSoundSide())
     }
 
@@ -1596,7 +1596,7 @@ abstract class AbstractFlashcardViewer :
      */
     protected fun showSelectTtsDialogue() {
         if (mTtsInitialized) {
-            mTTS.selectTts(this, currentCard!!, if (displayAnswer) SoundSide.ANSWER else SoundSide.QUESTION)
+            mTTS.selectTts(col, this, currentCard!!, if (displayAnswer) SoundSide.ANSWER else SoundSide.QUESTION)
         }
     }
 

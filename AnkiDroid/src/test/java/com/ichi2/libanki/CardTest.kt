@@ -35,7 +35,7 @@ import kotlin.test.assertNotNull
 class CardTest : RobolectricTest() {
 
     @Test
-    fun `pureAnswer() handled quoted html element`() {
+    fun `pureAnswer(col) handled quoted html element`() {
         // <hr id="answer"> is also used
         val modelName = addNonClozeModel("Test", arrayOf("One", "Two"), "{{One}}", "{{One}}<hr id=\"answer\">{{Two}}")
         val note = col.newNote(col.models.byName(modelName)!!)
@@ -44,7 +44,7 @@ class CardTest : RobolectricTest() {
         col.addNote(note)
         val card = note.cards()[0]
 
-        assertThat(card.pureAnswer(), equalTo("2"))
+        assertThat(card.pureAnswer(col), equalTo("2"))
     }
 
     /******************

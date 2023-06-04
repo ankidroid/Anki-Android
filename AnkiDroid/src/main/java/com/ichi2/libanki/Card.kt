@@ -325,7 +325,7 @@ open class Card : Cloneable {
     /*
      * Returns the answer with anything before the <hr id=answer> tag removed
      */
-    fun pureAnswer(): String {
+    fun pureAnswer(col: Collection): String {
         val s = render_output(col, false).answer_text
         for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
             val pos = s.indexOf(target)

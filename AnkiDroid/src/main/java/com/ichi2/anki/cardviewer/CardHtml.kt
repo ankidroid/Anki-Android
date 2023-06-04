@@ -217,10 +217,10 @@ class CardHtml(
             return newAnswerContent
         }
 
-        fun legacyGetTtsTags(card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {
+        fun legacyGetTtsTags(col: Collection, card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {
             val cardSideContent: String = when (cardSide) {
                 QUESTION -> card.q(true)
-                ANSWER -> card.pureAnswer()
+                ANSWER -> card.pureAnswer(col)
             }
             return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))
         }

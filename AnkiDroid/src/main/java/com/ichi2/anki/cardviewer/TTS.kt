@@ -23,6 +23,7 @@ import com.ichi2.anki.CardUtils
 import com.ichi2.anki.R
 import com.ichi2.anki.ReadText
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
 import com.ichi2.libanki.Utils
@@ -66,8 +67,8 @@ class TTS {
      * @param card The card to read text from
      * @param qa   The card question or card answer
      */
-    fun selectTts(context: Context, card: Card, qa: SoundSide) {
-        val textToRead = if (qa == SoundSide.QUESTION) card.q(true) else card.pureAnswer()
+    fun selectTts(col: Collection, context: Context, card: Card, qa: SoundSide) {
+        val textToRead = if (qa == SoundSide.QUESTION) card.q(true) else card.pureAnswer(col)
         // get the text from the card
         ReadText.selectTts(
             getTextForTts(context, textToRead),
