@@ -26,12 +26,16 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.convertDpToPixel
 import com.ichi2.themes.Themes
 
-private fun Menu.forEachOverflowItemRecursive(block: (MenuItem) -> Unit) {
+/**
+ * Apply the method to any item that is not presented as a button.
+ * It can be either in the overflow menu, or not displayed at all to users.
+ */
+private fun Menu.forEachNonButtonItemRecursive(block: (MenuItem) -> Unit) {
     (this as? MenuBuilder)?.flagActionItems()
 
     forEach { item ->
         if ((item as? MenuItemImpl)?.isActionButton == false) block(item)
-        item.subMenu?.forEachOverflowItemRecursive(block)
+        item.subMenu?.forEachNonButtonItemRecursive(block)
     }
 }
 
@@ -52,7 +56,7 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
         }
     }
 
-    menu.forEachOverflowItemRecursive { item ->
+    menu.forEachNonButtonItemRecursive { item ->
         item.icon?.let { icon ->
             if (icon !is Wrapper) item.icon = Wrapper(icon)
         }
@@ -67,7 +71,7 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
 fun Context.tintOverflowMenuIcons(menu: Menu, skipIf: ((MenuItem) -> Boolean)? = null) {
     val iconColor = Themes.getColorFromAttr(this, R.attr.overflowAndPopupMenuIconColor)
 
-    menu.forEachOverflowItemRecursive { item ->
+    menu.forEachNonButtonItemRecursive { item ->
         if (skipIf == null || !skipIf(item)) {
             item.icon?.setTint(iconColor)
         }
