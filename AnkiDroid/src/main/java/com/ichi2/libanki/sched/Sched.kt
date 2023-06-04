@@ -91,7 +91,7 @@ class Sched(col: Collection) : SchedV2(col) {
         } else {
             throw RuntimeException("Invalid queue")
         }
-        _updateStats(card, "time", card.timeTaken().toLong())
+        _updateStats(card, "time", card.timeTaken(col).toLong())
         card.mod = time.intTime()
         card.usn = col.usn()
         card.flushSched(col)

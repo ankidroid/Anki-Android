@@ -241,7 +241,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
         _answerCard(card, ease)
 
-        _updateStats(card, "time", card.timeTaken().toLong())
+        _updateStats(card, "time", card.timeTaken(col).toLong())
         card.mod = time.intTime()
         card.usn = col.usn()
         card.flushSched(col)
@@ -1392,7 +1392,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     ) {
         val lastIvl = -_delayForGrade(conf, lastLeft)
         val ivl = if (leaving) card.ivl else -_delayForGrade(conf, card.left)
-        log(card.id, col.usn(), ease, ivl, lastIvl, card.factor, card.timeTaken(), type)
+        log(card.id, col.usn(), ease, ivl, lastIvl, card.factor, card.timeTaken(col), type)
     }
 
     protected fun log(
@@ -1680,7 +1680,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             if (delay != 0) -delay else card.ivl,
             card.lastIvl,
             card.factor,
-            card.timeTaken(),
+            card.timeTaken(col),
             type
         )
     }

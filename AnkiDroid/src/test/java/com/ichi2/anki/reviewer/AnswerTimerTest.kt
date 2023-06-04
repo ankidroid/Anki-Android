@@ -149,7 +149,7 @@ class AnswerTimerTest {
         val timerCard: Card = mock {
             on { showTimer() } doReturn true
             on { timeLimit(any()) } doReturn 1000
-            on { timeTaken() } doReturn 1001
+            on { timeTaken(any()) } doReturn 1001
         }
 
         timer.setupForCard(col, timerCard)

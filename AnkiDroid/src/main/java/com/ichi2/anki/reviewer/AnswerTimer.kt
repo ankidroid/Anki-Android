@@ -115,8 +115,8 @@ class AnswerTimer(private val cardTimer: Chronometer) {
             return
         }
         // Then update and resume the UI timer. Set the base time as if the timer had started
-        // timeTaken() seconds ago.
-        cardTimer.base = elapsedRealTime - currentCard.timeTaken()
+        // timeTaken(col) seconds ago.
+        cardTimer.base = elapsedRealTime - currentCard.timeTaken(col)
         // Don't start the timer if we have already reached the time limit or it will tick over
         if (elapsedRealTime - cardTimer.base < currentCard.timeLimit(col)) {
             cardTimer.start()

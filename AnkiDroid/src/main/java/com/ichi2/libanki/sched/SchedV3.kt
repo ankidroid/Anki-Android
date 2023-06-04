@@ -87,7 +87,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
             newState = stateFromEase(states, ease)
             rating = ratingFromEase(ease)
             answeredAtMillis = time.intTimeMS()
-            millisecondsTaken = card.timeTaken()
+            millisecondsTaken = card.timeTaken(col)
         }
     }
 

@@ -300,7 +300,7 @@ open class Card : Cloneable {
     /*
      * Time taken to answer card, in integer MS.
      */
-    fun timeTaken(): Int {
+    fun timeTaken(col: Collection): Int {
         // Indeed an int. Difference between two big numbers is still small.
         val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
         return Math.min(total, timeLimit(col))
@@ -351,8 +351,8 @@ open class Card : Cloneable {
      *
      * Unlike the desktop client, AnkiDroid must pause and resume the process in the middle of
      * reviewing. This method is required to keep track of the actual amount of time spent in
-     * the reviewer and *must* be called on resume before any calls to timeTaken() take place
-     * or the result of timeTaken() will be wrong.
+     * the reviewer and *must* be called on resume before any calls to timeTaken(col) take place
+     * or the result of timeTaken(col) will be wrong.
      */
     fun resumeTimer() {
         timerStarted = TimeManager.time.intTimeMS() - elapsedTime
