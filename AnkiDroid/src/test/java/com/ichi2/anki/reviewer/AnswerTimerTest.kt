@@ -50,7 +50,7 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val card: Card = mock {
-            on { showTimer() } doReturn false
+            on { showTimer(any()) } doReturn false
         }
 
         timer.setupForCard(col, card)
@@ -69,7 +69,7 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val card: Card = mock {
-            on { showTimer() } doReturn true
+            on { showTimer(any()) } doReturn true
             on { timeLimit(any()) } doReturn 12
         }
 
@@ -95,11 +95,11 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer() } doReturn true
+            on { showTimer(any()) } doReturn true
         }
 
         val nonTimerCard: Card = mock {
-            on { showTimer() } doReturn false
+            on { showTimer(any()) } doReturn false
         }
 
         timer.setupForCard(col, timerCard)
@@ -129,7 +129,7 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer() } doReturn true
+            on { showTimer(any()) } doReturn true
             on { timeLimit(any()) } doReturn 1000
         }
 
@@ -147,7 +147,7 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val timerCard: Card = mock {
-            on { showTimer() } doReturn true
+            on { showTimer(any()) } doReturn true
             on { timeLimit(any()) } doReturn 1000
             on { timeTaken(any()) } doReturn 1001
         }
@@ -169,7 +169,7 @@ class AnswerTimerTest {
         val timer = getTimer()
 
         val nonTimerCard: Card = mock {
-            on { showTimer() } doReturn false
+            on { showTimer(any()) } doReturn false
         }
 
         timer.setupForCard(col, nonTimerCard)

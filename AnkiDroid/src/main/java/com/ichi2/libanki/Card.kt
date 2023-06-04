@@ -367,7 +367,7 @@ open class Card : Cloneable {
         return ++reps
     }
 
-    fun showTimer(): Boolean {
+    fun showTimer(col: Collection): Boolean {
         val options = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
         return DeckConfig.parseTimerOpt(options, true)
     }

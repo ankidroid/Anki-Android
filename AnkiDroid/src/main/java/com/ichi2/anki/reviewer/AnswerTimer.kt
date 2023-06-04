@@ -59,7 +59,7 @@ class AnswerTimer(private val cardTimer: Chronometer) {
      */
     fun setupForCard(col: Collection, newCard: Card) {
         currentCard = newCard
-        showTimer = newCard.showTimer()
+        showTimer = newCard.showTimer(col)
         if (showTimer && cardTimer.visibility == View.INVISIBLE) {
             cardTimer.visibility = View.VISIBLE
         } else if (!showTimer && cardTimer.visibility != View.INVISIBLE) {
