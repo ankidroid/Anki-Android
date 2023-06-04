@@ -877,7 +877,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     fun generateQuestionSoundList() {
-        val tags = Sound.extractTagsFromLegacyContent(currentCard!!.qSimple())
+        val tags = Sound.extractTagsFromLegacyContent(currentCard!!.qSimple(col))
         mSoundPlayer.addSounds(tags, SingleSoundSide.QUESTION)
     }
 

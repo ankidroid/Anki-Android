@@ -1075,7 +1075,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.DECK_ID -> rb.add(currentCard.did)
                 FlashCardsContract.Card.QUESTION -> rb.add(question)
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
-                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple())
+                FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple(col))
                 FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.render_output(col, false).answer_text)
                 FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer())
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")

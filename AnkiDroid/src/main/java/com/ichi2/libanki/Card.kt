@@ -318,7 +318,7 @@ open class Card : Cloneable {
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-    fun qSimple(): String {
+    fun qSimple(col: Collection): String {
         return render_output(col, false).question_text
     }
 
