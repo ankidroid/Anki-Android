@@ -186,8 +186,8 @@ class CardHtml(
         /**
          * @return the answer part of this card's template as entered by user, without any parsing
          */
-        private fun getAnswerFormat(card: Card): String {
-            val model = card.model()
+        private fun getAnswerFormat(col: Collection, card: Card): String {
+            val model = card.model(col)
             val template: JSONObject = if (model.isStd) {
                 model.getJSONArray("tmpls").getJSONObject(card.ord)
             } else {
@@ -204,7 +204,7 @@ class CardHtml(
          * @return The content stripped of audio due to {{FrontSide}} inclusion.
          */
         fun removeFrontSideAudio(col: Collection, card: Card, answerContent: String): String {
-            val answerFormat = getAnswerFormat(card)
+            val answerFormat = getAnswerFormat(col, card)
             var newAnswerContent = answerContent
             if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
                 val frontSideFormat = card.render_output(col, false).question_text

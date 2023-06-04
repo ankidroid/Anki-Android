@@ -388,8 +388,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
 
         /** Override the method that fetches the model so we can render unsaved models  */
-        override fun model(): Model {
-            return mEditedModel ?: super.model()
+        override fun model(col: Collection): Model {
+            return mEditedModel ?: super.model(col)
         }
 
         override fun render_output(col: Collection, reload: Boolean, browser: Boolean): TemplateRenderOutput {
@@ -397,7 +397,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                 render_output = if (BackendFactory.defaultLegacySchema) {
                     col.render_output_legacy(this, reload, browser)
                 } else {
-                    val index = if (model().isCloze) {
+                    val index = if (model(col).isCloze) {
                         0
                     } else {
                         ord
@@ -405,8 +405,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                     val context = TemplateManager.TemplateRenderContext.from_card_layout(
                         note(col),
                         this,
-                        model(),
-                        model().getJSONArray("tmpls")[index] as JSONObject,
+                        model(col),
+                        model(col).getJSONArray("tmpls")[index] as JSONObject,
                         fill_empty = false
                     )
                     context.render()

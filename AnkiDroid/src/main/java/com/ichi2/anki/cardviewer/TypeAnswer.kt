@@ -100,7 +100,7 @@ class TypeAnswer(
             fldTag = fldTag.split(":").toTypedArray()[1]
         }
         // loop through fields for a match
-        val flds: JSONArray = card.model().getJSONArray("flds")
+        val flds: JSONArray = card.model(col).getJSONArray("flds")
         for (fld in flds.jsonObjectIterable()) {
             val name = fld.getString("name")
             if (name == fldTag) {

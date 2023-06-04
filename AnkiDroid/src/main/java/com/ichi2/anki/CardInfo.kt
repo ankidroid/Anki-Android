@@ -317,7 +317,7 @@ class CardInfo : AnkiActivity() {
                 val lapses = c.lapses
                 val reviews = c.reps
                 val model = collection.models.get(c.note(collection).mid)
-                val cardType = getCardType(c, model)
+                val cardType = getCardType(collection, c, model)
                 val noteType = model!!.getString("name")
                 val deckName = collection.decks.get(c.did).getString("name")
                 val noteId = c.nid
@@ -356,9 +356,9 @@ class CardInfo : AnkiActivity() {
                 return CardInfoModel(addedDate, firstReview, latestReview, due, interval, easeInPercent, reviews, lapses, averageTime, totalTime, cardType, noteType, deckName, noteId, entries)
             }
 
-            protected fun getCardType(c: Card, model: Model?): String? {
+            protected fun getCardType(col: Collection, c: Card, model: Model?): String? {
                 return try {
-                    val ord = if (c.model().isCloze) {
+                    val ord = if (c.model(col).isCloze) {
                         0
                     } else {
                         c.ord

@@ -605,7 +605,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // changed note type?
         if (!addNote && mCurrentEditedCard != null) {
             val newModel: JSONObject? = currentlySelectedModel
-            val oldModel: JSONObject = mCurrentEditedCard!!.model()
+            val oldModel: JSONObject = mCurrentEditedCard!!.model(col)
             if (newModel != oldModel) {
                 return true
             }
@@ -724,7 +724,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         } else {
             // Check whether note type has been changed
             val newModel = currentlySelectedModel
-            val oldModel = if (mCurrentEditedCard == null) null else mCurrentEditedCard!!.model()
+            val oldModel = if (mCurrentEditedCard == null) null else mCurrentEditedCard!!.model(col)
             if (newModel != oldModel) {
                 mReloadRequired = true
                 if (mModelChangeCardMap!!.size < mEditorNote!!.numberOfCards() || mModelChangeCardMap!!.containsValue(
@@ -1983,7 +1983,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private inner class EditNoteTypeListener : OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
             // Get the current model
-            val noteModelId = mCurrentEditedCard!!.model().getLong("id")
+            val noteModelId = mCurrentEditedCard!!.model(col).getLong("id")
             // Get new model
             val newModel = col.models.get(mAllModelIds!![pos])
             if (newModel == null) {
@@ -2027,7 +2027,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 updateFieldsFromStickyText()
             } else {
                 populateEditFields(FieldChangeType.refresh(shouldReplaceNewlines()), false)
-                updateCards(mCurrentEditedCard!!.model())
+                updateCards(mCurrentEditedCard!!.model(col))
                 findViewById<View>(R.id.CardEditorTagButton).isEnabled = true
                 // ((LinearLayout) findViewById(R.id.CardEditorCardsButton)).setEnabled(false);
                 mDeckSpinnerSelection!!.setEnabledActionBarSpinner(true)

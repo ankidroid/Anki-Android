@@ -1549,7 +1549,7 @@ abstract class AbstractFlashcardViewer :
 
     private fun readCardTts(col: Collection, side: SingleSoundSide) {
         val tags = legacyGetTtsTags(col, currentCard!!, side, this)
-        mTTS.readCardText(tags, currentCard!!, side.toSoundSide())
+        mTTS.readCardText(col, tags, currentCard!!, side.toSoundSide())
     }
 
     private fun playSounds(questionAndAnswer: SoundSide) {

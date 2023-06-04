@@ -272,16 +272,16 @@ open class Card : Cloneable {
     }
 
     // not in upstream
-    open fun model(): Model {
+    open fun model(col: Collection): Model {
         return note(col).model()
     }
 
     fun template(): JSONObject {
-        val m = model()
+        val m = model(col)
         return if (m.isStd) {
             m.getJSONArray("tmpls").getJSONObject(ord)
         } else {
-            model().getJSONArray("tmpls").getJSONObject(0)
+            model(col).getJSONArray("tmpls").getJSONObject(0)
         }
     }
 
@@ -307,7 +307,7 @@ open class Card : Cloneable {
     }
 
     open fun isEmpty(col: Collection) = try {
-        Models.emptyCard(model(), ord, note(col).fields)
+        Models.emptyCard(model(col), ord, note(col).fields)
     } catch (er: TemplateError) {
         Timber.w("Card is empty because the card's template has an error: %s.", er.message(col.context))
         true

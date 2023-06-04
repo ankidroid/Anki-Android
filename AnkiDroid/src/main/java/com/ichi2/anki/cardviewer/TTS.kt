@@ -43,8 +43,8 @@ class TTS {
      * @param card The card to check the type of before determining the ordinal.
      * @return The card ordinal. If it's a Cloze card, returns 0.
      */
-    private fun getOrdUsingCardType(card: Card): Int {
-        return if (card.model().isCloze) {
+    private fun getOrdUsingCardType(col: Collection, card: Card): Int {
+        return if (card.model(col).isCloze) {
             0
         } else {
             card.ord
@@ -57,8 +57,8 @@ class TTS {
      * @param card     The card to play TTS for
      * @param cardSide The side of the current card to play TTS for
      */
-    fun readCardText(ttsTags: List<TTSTag>, card: Card, cardSide: SoundSide) {
-        ReadText.readCardSide(ttsTags, cardSide, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(card))
+    fun readCardText(col: Collection, ttsTags: List<TTSTag>, card: Card, cardSide: SoundSide) {
+        ReadText.readCardSide(ttsTags, cardSide, CardUtils.getDeckIdForCard(card), getOrdUsingCardType(col, card))
     }
 
     /**
@@ -73,7 +73,7 @@ class TTS {
         ReadText.selectTts(
             getTextForTts(context, textToRead),
             CardUtils.getDeckIdForCard(card),
-            getOrdUsingCardType(card),
+            getOrdUsingCardType(col, card),
             qa
         )
     }
