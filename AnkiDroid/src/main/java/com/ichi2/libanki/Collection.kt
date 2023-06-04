@@ -1382,7 +1382,7 @@ open class Collection(
 
     @RustCleanup("Hack for Card Template Previewer, needs review")
     fun render_output_legacy(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput {
-        val f = c.note(reload)
+        val f = c.note(col, reload)
         val m = c.model()
         val t = c.template()
         val did: DeckId = if (c.isInDynamicDeck) {

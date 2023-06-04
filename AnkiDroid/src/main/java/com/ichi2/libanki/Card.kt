@@ -261,10 +261,10 @@ open class Card : Cloneable {
     }
 
     open fun note(): Note {
-        return note(false)
+        return note(col, false)
     }
 
-    open fun note(reload: Boolean): Note {
+    open fun note(col: Collection, reload: Boolean): Note {
         if (note == null || reload) {
             note = col.getNote(nid)
         }
