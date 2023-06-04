@@ -186,7 +186,7 @@ class TemplateManager {
 
         /**
          * Returns the card being rendered.
-         * Be careful not to call .q() or .a() on the card, or you'll create an
+         * Be careful not to call .q() or .a(col) on the card, or you'll create an
          * infinite loop.
          */
         fun card() = _card

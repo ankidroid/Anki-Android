@@ -58,7 +58,7 @@ class ClozeTest : RobolectricTest() {
         f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "a {{c1::b}} {{c1::c}}")
         assertEquals(1, d.addNote(f))
-        assertThat(f.firstCard().a(), containsString("<span class=cloze>b</span> <span class=cloze>c</span>"))
+        assertThat(f.firstCard().a(col), containsString("<span class=cloze>b</span> <span class=cloze>c</span>"))
         // if we add another cloze, a card should be generated
         val cnt = d.cardCount()
         f.setItem("Text", "{{c2::hello}} {{c1::foo}}")
@@ -117,7 +117,7 @@ class ClozeTest : RobolectricTest() {
             )
         )
         assertThat(
-            f.firstCard().a(),
+            f.firstCard().a(col),
             containsString(
                 """
     <p>Cloze in html tag with <span class=cloze>multi-line

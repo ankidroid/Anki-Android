@@ -40,7 +40,7 @@ class TextCardExporter(col: Collection, did: DeckId?, includeHTML: Boolean) : Ex
             val c = col.getCard(cid)
             out.append(esc(c.q(col)))
             out.append("\t")
-            out.append(esc(c.a()))
+            out.append(esc(c.a(col)))
             out.append("\n")
         }
         BufferedWriter(

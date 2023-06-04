@@ -146,7 +146,7 @@ class CardHtml(
                 if (!BackendFactory.defaultLegacySchema) answerAv.filterIsInstance(SoundOrVideoTag::class.java) else null
 
             // legacy (slow) function to return the answer without the front side
-            fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(col, card, card.a())
+            fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(col, card, card.a(col))
 
             return CardHtml(content, card.ord, nightModeInversion, context, side, ::getAnswerWithoutFrontSideLegacy, questionSound, answerSound)
         }
@@ -162,7 +162,7 @@ class CardHtml(
                 return context.resources.getString(R.string.empty_card_warning)
             }
 
-            var content: String = if (side == Side.FRONT) card.q(col, reload) else card.a()
+            var content: String = if (side == Side.FRONT) card.q(col, reload) else card.a(col)
             content = Media.escapeImages(content)
             content = context.filterTypeAnswer(content, side)
             Timber.v("question: '%s'", content)

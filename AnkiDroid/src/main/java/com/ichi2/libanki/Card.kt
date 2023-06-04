@@ -232,7 +232,7 @@ open class Card : Cloneable {
         return render_output(col, reload, browser).question_and_style()
     }
 
-    fun a(): String {
+    fun a(col: Collection): String {
         return render_output(col).answer_and_style()
     }
 

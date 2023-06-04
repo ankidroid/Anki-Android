@@ -393,7 +393,7 @@ class ModelTest : RobolectricTest() {
             containsString("hello <span ${clozeClass()}${clozeData("world")}>[...]</span>")
         )
         assertThat(
-            note.cards()[0].a(),
+            note.cards()[0].a(col),
             containsString("hello <span ${clozeClass()}>world</span>")
         )
         // and with a comment
@@ -411,7 +411,7 @@ class ModelTest : RobolectricTest() {
             containsString("<span ${clozeClass()}${clozeData("world")}>[typical]</span>")
         )
         assertThat(
-            note.cards()[0].a(),
+            note.cards()[0].a(col),
             containsString("<span ${clozeClass()}>world</span>")
         )
         // and with 2 clozes
@@ -427,7 +427,7 @@ class ModelTest : RobolectricTest() {
             containsString("<span ${clozeClass()}${clozeData("world")}>[...]</span> bar")
         )
         assertThat(
-            c1.a(),
+            c1.a(col),
             containsString("<span ${clozeClass()}>world</span> bar")
         )
         assertThat(
@@ -435,7 +435,7 @@ class ModelTest : RobolectricTest() {
             containsString("world <span ${clozeClass()}${clozeData("bar")}>[...]</span>")
         )
         assertThat(
-            c2.a(),
+            c2.a(col),
             containsString("world <span ${clozeClass()}>bar</span>")
         )
         // if there are multiple answers for a single cloze, they are given in a
@@ -450,7 +450,7 @@ class ModelTest : RobolectricTest() {
         clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
         assertThat(
-            note.cards()[0].a(),
+            note.cards()[0].a(col),
             containsString("<span ${clozeClass()}>b</span> <span ${clozeClass()}>c</span>")
         )
         // if we add another cloze, a card should be generated
@@ -571,7 +571,7 @@ class ModelTest : RobolectricTest() {
         /* TODO: chained modifier
         assertThat("Question «"+question+"» does not contain the expected string", question, containsString("This <span class=cloze>[sentence]</span> demonstrates <span class=cloze>[chained]</span> clozes.")
                    );
-        assertThat(note.cards().get(0).a(), containsString("This <span class=cloze>phrase</span> demonstrates <span class=cloze>en chaine</span> clozes."
+        assertThat(note.cards().get(0).a(col), containsString("This <span class=cloze>phrase</span> demonstrates <span class=cloze>en chaine</span> clozes."
                                                     ));
 
          */
