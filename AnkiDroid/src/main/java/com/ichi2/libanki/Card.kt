@@ -292,7 +292,7 @@ open class Card : Cloneable {
     /**
      * Time limit for answering in milliseconds.
      */
-    fun timeLimit(): Int {
+    fun timeLimit(col: Collection): Int {
         val conf = col.decks.confForDid(if (!isInDynamicDeck) did else oDid)
         return conf.getInt("maxTaken") * 1000
     }
@@ -303,7 +303,7 @@ open class Card : Cloneable {
     fun timeTaken(): Int {
         // Indeed an int. Difference between two big numbers is still small.
         val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
-        return Math.min(total, timeLimit())
+        return Math.min(total, timeLimit(col))
     }
 
     open fun isEmpty() = try {

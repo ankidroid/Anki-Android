@@ -184,7 +184,11 @@ open class Reviewer :
     }
 
     override fun onResume() {
-        answerTimer.resume()
+        launchCatchingTask {
+            withCol {
+                answerTimer.resume(col)
+            }
+        }
         super.onResume()
         if (answerField != null) {
             answerField!!.focusWithKeyboard()
@@ -1138,7 +1142,7 @@ open class Reviewer :
 
     override fun displayCardQuestion() {
         // show timer, if activated in the deck's preferences
-        answerTimer.setupForCard(currentCard!!)
+        answerTimer.setupForCard(col, currentCard!!)
         delayedHide(100)
         super.displayCardQuestion()
     }
