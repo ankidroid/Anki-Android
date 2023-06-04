@@ -244,4 +244,4 @@ fun Card.totalLapsesOfNote(col: com.ichi2.libanki.Collection) = NoteService.tota
 
 fun Card.totalReviewsForNote(col: com.ichi2.libanki.Collection) = NoteService.totalReviews(note(col))
 
-fun Card.avgIntervalOfNote() = NoteService.avgInterval(note(col))
+fun Card.avgIntervalOfNote(col: com.ichi2.libanki.Collection) = NoteService.avgInterval(note(col))

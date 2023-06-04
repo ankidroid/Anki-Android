@@ -2428,7 +2428,7 @@ open class CardBrowser :
         }
 
         private fun queryAvgIntervalForNotes(): String {
-            val avgInterval = card.avgIntervalOfNote()
+            val avgInterval = card.avgIntervalOfNote(col)
 
             return if (avgInterval == null) {
                 "" // upstream does not display interval for notes with new or learning cards
