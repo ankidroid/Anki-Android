@@ -429,7 +429,7 @@ open class Card : Cloneable {
     }
 
     // not in Anki.
-    fun dueString(): String {
+    fun dueString(col: Collection): String {
         var t = nextDue(col)
         if (queue < 0) {
             t = "($t)"
