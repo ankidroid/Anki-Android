@@ -137,7 +137,7 @@ class TemplateManager {
 
         companion object {
             fun from_existing_card(col: Collection, card: Card, browser: bool): TemplateRenderContext {
-                return TemplateRenderContext(card.col, card, card.note(col), browser)
+                return TemplateRenderContext(col, card, card.note(col), browser)
             }
 
             fun from_card_layout(

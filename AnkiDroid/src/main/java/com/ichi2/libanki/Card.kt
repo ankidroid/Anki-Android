@@ -65,9 +65,6 @@ import java.util.concurrent.CancellationException
  * - lrn queue: integer timestamp
  */
 open class Card : Cloneable {
-    // Needed for tests
-    var col: Collection
-
     /**
      * Time in MS when timer was started
      */
@@ -117,12 +114,11 @@ open class Card : Cloneable {
     var lastIvl = 0
 
     constructor(col: Collection) {
-        this.col = col
         timerStarted = 0L
         render_output = null
         note = null
         // to flush, set nid, ord, and due
-        this.id = TimeManager.time.timestampID(this.col.db, "cards")
+        this.id = TimeManager.time.timestampID(col.db, "cards")
         did = 1
         this.type = Consts.CARD_TYPE_NEW
         queue = Consts.QUEUE_TYPE_NEW
@@ -138,7 +134,6 @@ open class Card : Cloneable {
     }
 
     constructor(col: Collection, id: Long) {
-        this.col = col
         timerStarted = 0L
         render_output = null
         note = null
