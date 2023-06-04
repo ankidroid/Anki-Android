@@ -232,7 +232,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                mTemplateCount = col.findTemplates(toPreview.note()).size
+                mTemplateCount = col.findTemplates(toPreview.note(col)).size
                 if (mTemplateCount >= 2) {
                     previewLayout!!.showNavigationButtons()
                 }
@@ -280,7 +280,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             currentCard!!.oDid = currentCard!!.did
         }
         currentCard!!.did = newDid
-        val currentNote = currentCard!!.note()
+        val currentNote = currentCard!!.note(col)
         val tagsList = mNoteEditorBundle!!.getStringArrayList("tags")
         NoteUtils.setTags(currentNote, tagsList)
         return currentCard
@@ -376,8 +376,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
 
         /** if we have an unsaved note saved, use it instead of a collection lookup  */
-        override fun note(): Note {
-            return mNote ?: super.note()
+        override fun note(col: Collection): Note {
+            return mNote ?: super.note(col)
         }
 
         /** if we have an unsaved note, never return empty  */
@@ -403,7 +403,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
                         ord
                     }
                     val context = TemplateManager.TemplateRenderContext.from_card_layout(
-                        note(),
+                        note(col),
                         this,
                         model(),
                         model().getJSONArray("tmpls")[index] as JSONObject,

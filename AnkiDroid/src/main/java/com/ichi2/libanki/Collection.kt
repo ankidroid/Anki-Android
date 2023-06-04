@@ -1435,7 +1435,7 @@ open class Collection(
     }
 
     fun markReview(card: Card) {
-        val wasLeech = card.note().hasTag("leech")
+        val wasLeech = card.note(col).hasTag("leech")
         val clonedCard = card.clone()
         markUndo(UndoReview(wasLeech, clonedCard))
     }

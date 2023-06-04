@@ -188,7 +188,7 @@ class ImportTest : InstrumentedTest() {
         assertEquals(1, testCol.noteCount().toLong())
         // the front template should contain the text added in the 2nd package
         val tcid = testCol.findCards("")[0]
-        val tnote = testCol.getCard(tcid).note()
+        val tnote = testCol.getCard(tcid).note(testCol)
         assertTrue(
             testCol.findTemplates(tnote)[0].getString("qfmt").contains("Changed Front Template")
         )

@@ -27,6 +27,7 @@ object CardService {
      */
     fun selectedNoteIds(selectedCardIds: List<Long>, col: com.ichi2.libanki.Collection) =
         CardUtils.getNotes(
+            col,
             selectedCardIds.map { col.getCard(it) }
         ).map { it.id }
 }

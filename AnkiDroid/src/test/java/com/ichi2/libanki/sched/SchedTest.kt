@@ -1295,7 +1295,7 @@ class SchedTest : RobolectricTest() {
         assertEquals(Counts(3, 0, 0), col.sched.counts())
         for (i in arrayOf("one", "three", "two")) {
             val c = card!!
-            assertEquals(c.note().getItem("Front"), i)
+            assertEquals(c.note(col).getItem("Front"), i)
             col.sched.answerCard(c, BUTTON_TWO)
         }
     }

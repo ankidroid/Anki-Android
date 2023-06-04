@@ -57,11 +57,12 @@ abstract class UndoAction
          * @return An UndoAction which, if executed, put back the `card` in the state given here
          */
         fun revertNoteToProvidedState(
+            col: Collection,
             @StringRes @UndoNameId
             undoNameId: Int,
             card: Card
         ): UndoAction {
-            return revertToProvidedState(undoNameId, card, card.note().cards())
+            return revertToProvidedState(undoNameId, card, card.note(col).cards())
         }
 
         /**

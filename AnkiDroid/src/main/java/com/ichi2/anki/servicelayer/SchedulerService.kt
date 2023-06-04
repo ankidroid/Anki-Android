@@ -89,7 +89,7 @@ class SchedulerService {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
                 // collect undo information
-                col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_bury_note, card))
+                col.markUndo(UndoAction.revertNoteToProvidedState(col, R.string.menu_bury_note, card))
                 // then bury
                 col.sched.buryNote(card.nid)
             }
@@ -99,7 +99,7 @@ class SchedulerService {
     class DeleteNote(val card: Card) : ActionAndNextCard() {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
-                val note: Note = card.note()
+                val note: Note = card.note(col)
                 // collect undo information
                 val allCs = note.cards()
                 col.markUndo(UndoDeleteNote(note, allCs, card))
@@ -129,12 +129,12 @@ class SchedulerService {
         override fun execute(): ComputeResult {
             return computeThenGetNextCardInTransaction {
                 // collect undo information
-                val cards = card.note().cards()
+                val cards = card.note(col).cards()
                 val cids = LongArray(cards.size)
                 for (i in cards.indices) {
                     cids[i] = cards[i].id
                 }
-                col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_suspend_note, card))
+                col.markUndo(UndoAction.revertNoteToProvidedState(col, R.string.menu_suspend_note, card))
                 // suspend note
                 col.sched.suspendCards(cids)
             }

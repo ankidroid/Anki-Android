@@ -137,7 +137,7 @@ class CollectionV16(
         reload: Boolean,
         browser: Boolean
     ): TemplateManager.TemplateRenderContext.TemplateRenderOutput {
-        return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
+        return TemplateManager.TemplateRenderContext.from_existing_card(col, c, browser).render()
     }
 
     override fun findCards(

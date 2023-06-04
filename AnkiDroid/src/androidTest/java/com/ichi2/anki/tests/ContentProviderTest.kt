@@ -1233,7 +1233,7 @@ class ContentProviderTest : InstrumentedTest() {
         // ----------------------
         val col = col
         val card = getFirstCardFromScheduler(col)
-        val note = card!!.note()
+        val note = card!!.note(col)
         val noteId = note.id
 
         // make sure the tag is what we expect initially

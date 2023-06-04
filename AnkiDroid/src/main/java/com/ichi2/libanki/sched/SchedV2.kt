@@ -1945,7 +1945,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         // if over threshold or every half threshold reps after that
         if (card.lapses >= lf && (card.lapses - lf) % Math.max(lf / 2, 1) == 0) {
             // add a leech tag
-            val n = card.note()
+            val n = card.note(col)
             n.addTag("leech")
             n.flush()
             // handle
@@ -2670,9 +2670,9 @@ end)  """
 
     override fun undoReview(card: Card, wasLeech: Boolean) {
         // remove leech tag if it didn't have it before
-        if (!wasLeech && card.note().hasTag("leech")) {
-            card.note().delTag("leech")
-            card.note().flush()
+        if (!wasLeech && card.note(col).hasTag("leech")) {
+            card.note(col).delTag("leech")
+            card.note(col).flush()
         }
         Timber.i("Undo Review of card %d, leech: %b", card.id, wasLeech)
         // write old data

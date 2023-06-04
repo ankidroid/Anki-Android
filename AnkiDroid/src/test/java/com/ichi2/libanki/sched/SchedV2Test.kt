@@ -1610,7 +1610,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(Counts(3, 0, 0), col.sched.counts())
         for (i in arrayOf("one", "three", "two")) {
             val c = card!!
-            Assert.assertEquals(i, c.note().getItem("Front"))
+            Assert.assertEquals(i, c.note(col).getItem("Front"))
             col.sched.answerCard(c, BUTTON_THREE)
         }
     }

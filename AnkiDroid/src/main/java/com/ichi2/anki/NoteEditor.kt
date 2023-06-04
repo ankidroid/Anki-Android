@@ -319,7 +319,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     finishWithoutAnimation()
                     return
                 }
-                mEditorNote = mCurrentEditedCard!!.note()
+                mEditorNote = mCurrentEditedCard!!.note(col)
                 addNote = false
             }
             CALLER_STUDYOPTIONS, CALLER_DECKPICKER, CALLER_REVIEWER_ADD, CALLER_CARDBROWSER_ADD, CALLER_NOTEEDITOR ->
@@ -331,7 +331,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     finishWithoutAnimation()
                     return
                 }
-                mEditorNote = mCurrentEditedCard!!.note()
+                mEditorNote = mCurrentEditedCard!!.note(col)
                 addNote = false
             }
             CALLER_NOTEEDITOR_INTENT_ADD -> {
@@ -760,7 +760,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // refresh the card object to reflect the database changes from above
                 mCurrentEditedCard!!.load(col)
                 // also reload the note object
-                mEditorNote = mCurrentEditedCard!!.note()
+                mEditorNote = mCurrentEditedCard!!.note(col)
                 // then set the card ID to the new deck
                 mCurrentEditedCard!!.did = deckId
                 modified = true

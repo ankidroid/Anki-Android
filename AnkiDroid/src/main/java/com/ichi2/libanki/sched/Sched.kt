@@ -948,7 +948,7 @@ class Sched(col: Collection) : SchedV2(col) {
         // if over threshold or every half threshold reps after that
         if (card.lapses >= lf && (card.lapses - lf) % Math.max(lf / 2, 1) == 0) {
             // add a leech tag
-            val n = card.note()
+            val n = card.note(col)
             n.addTag("leech")
             n.flush()
             // handle

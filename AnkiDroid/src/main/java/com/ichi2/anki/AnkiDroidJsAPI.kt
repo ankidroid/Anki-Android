@@ -30,6 +30,7 @@ import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
@@ -43,6 +44,9 @@ import timber.log.Timber
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val currentCard: Card
         get() = activity.currentCard!!
+
+    private val col: Collection
+        get() = activity.col
 
     /**
      Javascript Interface class for calling Java function from AnkiDroid WebView
@@ -208,7 +212,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiGetCardMark(): Boolean {
-        return currentCard.note().hasTag("marked")
+        return currentCard.note(col).hasTag("marked")
     }
 
     @JavascriptInterface
@@ -473,7 +477,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         val searchResult: MutableList<String> = ArrayList()
         for (s in cards) {
             val jsonObject = JSONObject()
-            val fieldsData = s.card.note().fields
+            val fieldsData = s.card.note(col).fields
             val fieldsName = s.card.model().fieldsNames
 
             val noteId = s.card.nid

@@ -111,7 +111,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         AbstractFlashcardViewer.editorCard = viewer.currentCard
 
-        val note = viewer.currentCard!!.note()
+        val note = viewer.currentCard!!.note(col)
         note.setField(1, "David")
 
         viewer.saveEditedCard()
@@ -138,7 +138,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         AbstractFlashcardViewer.editorCard = viewer.currentCard
 
-        val note = viewer.currentCard!!.note()
+        val note = viewer.currentCard!!.note(col)
         note.setField(1, "David")
 
         viewer.saveEditedCard()

@@ -96,7 +96,7 @@ class UndoChangeDeckMulti(private val cards: Array<Card>, private val originalDi
             val card = cards[i]
             card.load(col)
             card.did = originalDids[i]
-            val note = card.note()
+            val note = card.note(col)
             note.flush()
             card.flush()
         }

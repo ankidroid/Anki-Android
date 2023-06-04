@@ -136,8 +136,8 @@ class TemplateManager {
         private var extra_state: HashMap<str, Any> = Dict()
 
         companion object {
-            fun from_existing_card(card: Card, browser: bool): TemplateRenderContext {
-                return TemplateRenderContext(card.col, card, card.note(), browser)
+            fun from_existing_card(col: Collection, card: Card, browser: bool): TemplateRenderContext {
+                return TemplateRenderContext(card.col, card, card.note(col), browser)
             }
 
             fun from_card_layout(

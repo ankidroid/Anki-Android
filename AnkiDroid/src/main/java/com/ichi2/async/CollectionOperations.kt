@@ -48,7 +48,7 @@ fun updateCard(
 ): Card {
     Timber.d("doInBackgroundUpdateNote")
     // Save the note
-    val editNote = editCard.note()
+    val editNote = editCard.note(col)
     if (BackendFactory.defaultLegacySchema) {
         col.db.executeInTransaction {
             // TODO: undo integration
@@ -238,14 +238,14 @@ suspend fun renderBrowserQA(
  * Goes through selected cards and checks selected and marked attribute
  * @return If there are unselected cards, if there are unmarked cards
  */
-suspend fun checkCardSelection(checkedCards: Set<CardBrowser.CardCache>): Pair<Boolean, Boolean> = withContext(Dispatchers.IO) {
+suspend fun checkCardSelection(col: Collection, checkedCards: Set<CardBrowser.CardCache>): Pair<Boolean, Boolean> = withContext(Dispatchers.IO) {
     var hasUnsuspended = false
     var hasUnmarked = false
     for (c in checkedCards) {
         ensureActive() // check if job is not cancelled
         val card = c.card
         hasUnsuspended = hasUnsuspended || card.queue != Consts.QUEUE_TYPE_SUSPENDED
-        hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note())
+        hasUnmarked = hasUnmarked || !NoteService.isMarked(card.note(col))
         if (hasUnsuspended && hasUnmarked) break
     }
     Pair(hasUnsuspended, hasUnmarked)
@@ -313,7 +313,7 @@ fun deleteMultipleNotes(
         val sched = col.sched
         // list of all ids to pass to remNotes method.
         // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-        val notes = CardUtils.getNotes(listOf(*cards))
+        val notes = CardUtils.getNotes(col, listOf(*cards))
         val allCards = CardUtils.getAllCards(notes)
         // delete note
         val uniqueNoteIds = LongArray(notes.size)
@@ -412,7 +412,7 @@ fun changeDeckMulti(
             originalDids[i] = card.did
             // then set the card ID to the new deck
             card.did = newDid
-            val note = card.note()
+            val note = card.note(col)
             note.flush()
             // flush card too, in case, did has been changed
             card.flush()

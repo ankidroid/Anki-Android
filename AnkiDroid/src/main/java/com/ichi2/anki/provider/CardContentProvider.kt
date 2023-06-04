@@ -1091,7 +1091,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.ReviewInfo.CARD_ORD -> rb.add(currentCard.ord)
                 FlashCardsContract.ReviewInfo.BUTTON_COUNT -> rb.add(buttonCount)
                 FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES -> rb.add(nextReviewTimesJson.toString())
-                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.note().mid, currentCard.q() + currentCard.a())))
+                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.note(col).mid, currentCard.q() + currentCard.a())))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }

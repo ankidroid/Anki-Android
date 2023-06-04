@@ -92,7 +92,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         val previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
-        val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
+        val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note(col).fields
         assertThat(arr[0], equalTo("(" + fields[0] + ")"))
         assertThat(arr[1], equalTo("(" + fields[1] + ")"))
     }
@@ -113,7 +113,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         val previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
-        val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
+        val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note(col).fields
         assertThat(arr[0], equalTo(testCardTemplatePreviewer.getString(R.string.cloze_sample_text, "c1")))
         assertThat(arr[1], equalTo("(" + fields[1] + ")"))
     }
@@ -134,7 +134,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         val previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
         saveControllerForCleanup(previewerController)
         val testCardTemplatePreviewer = previewerController.get()
-        val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note().fields
+        val arr = testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.note(col).fields
         assertThat(arr[0], equalTo("(" + fields[0] + ")"))
         assertThat(arr[1], equalTo(testCardTemplatePreviewer.getString(R.string.basic_answer_sample_text)))
     }

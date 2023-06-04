@@ -260,7 +260,7 @@ open class Card : Cloneable {
         return render_output!!
     }
 
-    open fun note(): Note {
+    open fun note(col: Collection): Note {
         return note(col, false)
     }
 
@@ -273,7 +273,7 @@ open class Card : Cloneable {
 
     // not in upstream
     open fun model(): Model {
-        return note().model()
+        return note(col).model()
     }
 
     fun template(): JSONObject {
@@ -307,7 +307,7 @@ open class Card : Cloneable {
     }
 
     open fun isEmpty(col: Collection) = try {
-        Models.emptyCard(model(), ord, note().fields)
+        Models.emptyCard(model(), ord, note(col).fields)
     } catch (er: TemplateError) {
         Timber.w("Card is empty because the card's template has an error: %s.", er.message(col.context))
         true
@@ -458,7 +458,7 @@ open class Card : Cloneable {
         return LanguageUtil.getShortDateFormatFromS(date)
     } // In Anki Desktop, a card with oDue <> 0 && oDid == 0 is not marked as dynamic.
 
-    fun avgEaseOfNote() = avgEase(note())
+    fun avgEaseOfNote() = avgEase(note(col))
 
     /** Non libAnki  */
     val isInDynamicDeck: Boolean

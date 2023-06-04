@@ -58,7 +58,7 @@ class PreviewerTest : RobolectricTest() {
 
         assertThat("Initial content assumption", previewer.cardContent, not(containsString("Hi")))
 
-        cardToPreview.note().setField(0, "Hi")
+        cardToPreview.note(col).setField(0, "Hi")
 
         previewer.saveEditedCard()
 

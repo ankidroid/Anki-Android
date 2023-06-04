@@ -906,7 +906,7 @@ abstract class AbstractFlashcardViewer :
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
         dismiss(DeleteNote(currentCard!!)) {
-            showSnackbarWithUndoButtonText(TR.browsingCardsDeleted(currentCard!!.note().numberOfCards()))
+            showSnackbarWithUndoButtonText(TR.browsingCardsDeleted(currentCard!!.note(col).numberOfCards()))
         }
     }
 
@@ -1369,7 +1369,7 @@ abstract class AbstractFlashcardViewer :
         mBackButtonPressedToReturn = false
         setInterface()
         typeAnswer!!.input = ""
-        typeAnswer!!.updateInfo(currentCard!!, resources)
+        typeAnswer!!.updateInfo(col, currentCard!!, resources)
         if (!currentCard!!.isEmpty(col) && typeAnswer!!.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
             answerField!!.visibility = View.VISIBLE
@@ -1403,7 +1403,7 @@ abstract class AbstractFlashcardViewer :
 
         // TODO needs testing: changing a card's model without flipping it back to the front
         //  (such as editing a card, then editing the card template)
-        typeAnswer!!.updateInfo(currentCard!!, resources)
+        typeAnswer!!.updateInfo(col, currentCard!!, resources)
 
         // Explicitly hide the soft keyboard. It *should* be hiding itself automatically,
         // but sometimes failed to do so (e.g. if an OnKeyListener is attached).
@@ -1676,14 +1676,14 @@ abstract class AbstractFlashcardViewer :
 
     internal fun suspendNote(): Boolean {
         return dismiss(SuspendNote(currentCard!!)) {
-            val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, currentCard!!.note().numberOfCards(), currentCard!!.note().numberOfCards())
+            val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, currentCard!!.note(col).numberOfCards(), currentCard!!.note(col).numberOfCards())
             showSnackbarWithUndoButtonText(noteSuspended)
         }
     }
 
     internal fun buryNote(): Boolean {
         return dismiss(BuryNote(currentCard!!)) {
-            showSnackbarWithUndoButtonText(TR.studyingCardsBuried(currentCard!!.note().numberOfCards()))
+            showSnackbarWithUndoButtonText(TR.studyingCardsBuried(currentCard!!.note(col).numberOfCards()))
         }
     }
 
@@ -2127,7 +2127,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(currentCard!!.note())
+        return isMarked(currentCard!!.note(col))
     }
 
     protected fun <TResult : Computation<NextCard<*>>?> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {
@@ -2583,15 +2583,15 @@ abstract class AbstractFlashcardViewer :
 
     internal fun showTagsDialog() {
         val tags = ArrayList(col.tags.all())
-        val selTags = ArrayList(currentCard!!.note().tags)
+        val selTags = ArrayList(currentCard!!.note(col).tags)
         val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)
     }
 
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
-        if (currentCard!!.note().tags != selectedTags) {
+        if (currentCard!!.note(col).tags != selectedTags) {
             val tagString = selectedTags.joinToString(" ")
-            val note = currentCard!!.note()
+            val note = currentCard!!.note(col)
             note.setTagsFromStr(tagString)
             note.flush()
             // Reload current card to reflect tag changes
