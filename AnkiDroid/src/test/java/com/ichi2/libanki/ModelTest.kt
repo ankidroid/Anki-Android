@@ -272,7 +272,7 @@ class ModelTest : RobolectricTest() {
         assertEquals(0, c.ord)
         assertEquals(1, c2.ord)
         // switch templates
-        col.models.moveTemplate(m, c.template(), 1)
+        col.models.moveTemplate(m, c.template(col), 1)
         c.load(col)
         c2.load(col)
         assertEquals(1, c.ord)

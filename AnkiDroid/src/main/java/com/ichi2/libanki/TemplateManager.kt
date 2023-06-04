@@ -195,13 +195,13 @@ class TemplateManager {
         fun note_type() = _note_type
 
         @RustCleanup("legacy")
-        fun qfmt(): str {
-            return templates_for_card(card(), _browser).first
+        fun qfmt(col: Collection): str {
+            return templates_for_card(col, card(), _browser).first
         }
 
         @RustCleanup("legacy")
-        fun afmt(): str {
-            return templates_for_card(card(), _browser).second
+        fun afmt(col: Collection): str {
+            return templates_for_card(col, card(), _browser).second
         }
 
         fun render(): TemplateRenderOutput {
@@ -279,8 +279,8 @@ class TemplateManager {
         }
 
         @RustCleanup("legacy")
-        fun templates_for_card(card: Card, browser: bool): Pair<str, str> {
-            val template = card.template()
+        fun templates_for_card(col: Collection, card: Card, browser: bool): Pair<str, str> {
+            val template = card.template(col)
             var a: String? = null
             var q: String? = null
 

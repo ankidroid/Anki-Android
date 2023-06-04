@@ -76,7 +76,7 @@ class CardTest : RobolectricTest() {
         col.addNote(note)
         val c = note.cards()[0]
         col.models.current()!!.getLong("id")
-        assertEquals(0, c.template().getInt("ord"))
+        assertEquals(0, c.template(col).getInt("ord"))
     }
 
     @Test

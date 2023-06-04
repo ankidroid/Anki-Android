@@ -1060,7 +1060,7 @@ class CardContentProvider : ContentProvider() {
 
     private fun addCardToCursor(currentCard: Card, rv: MatrixCursor, @Suppress("UNUSED_PARAMETER") col: Collection, columns: Array<String>) {
         val cardName: String = try {
-            currentCard.template().getString("name")
+            currentCard.template(col).getString("name")
         } catch (je: JSONException) {
             throw IllegalArgumentException("Card is using an invalid template", je)
         }

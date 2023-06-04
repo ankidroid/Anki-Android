@@ -1885,7 +1885,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         for (i in 0 until tmpls.length()) {
             var name = tmpls.getJSONObject(i).optString("name")
             // If more than one card, and we have an existing card, underline existing card
-            if (!addNote && tmpls.length() > 1 && model === mEditorNote!!.model() && mCurrentEditedCard != null && mCurrentEditedCard!!.template()
+            if (!addNote && tmpls.length() > 1 && model === mEditorNote!!.model() && mCurrentEditedCard != null && mCurrentEditedCard!!.template(col)
                 .optString("name") == name
             ) {
                 name = "<u>$name</u>"

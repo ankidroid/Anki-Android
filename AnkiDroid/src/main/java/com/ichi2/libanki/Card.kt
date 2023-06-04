@@ -276,7 +276,7 @@ open class Card : Cloneable {
         return note(col).model()
     }
 
-    fun template(): JSONObject {
+    fun template(col: Collection): JSONObject {
         val m = model(col)
         return if (m.isStd) {
             m.getJSONArray("tmpls").getJSONObject(ord)

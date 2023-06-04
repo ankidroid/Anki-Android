@@ -1384,7 +1384,7 @@ open class Collection(
     fun render_output_legacy(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput {
         val f = c.note(col, reload)
         val m = c.model(col)
-        val t = c.template()
+        val t = c.template(col)
         val did: DeckId = if (c.isInDynamicDeck) {
             c.oDid
         } else {
