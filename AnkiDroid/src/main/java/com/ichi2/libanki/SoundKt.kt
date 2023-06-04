@@ -80,7 +80,7 @@ suspend fun getAvTag(card: Card, url: String): AvTag? {
         val questionSide = values[1] == "q"
         val index = values[2].toInt()
         val tags = withCol {
-            if (questionSide) { card.questionAvTags() } else { card.answerAvTags() }
+            if (questionSide) { card.questionAvTags() } else { card.answerAvTags(col) }
         }
         if (index < tags.size) {
             tags[index]

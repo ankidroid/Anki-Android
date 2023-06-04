@@ -245,7 +245,7 @@ open class Card : Cloneable {
         return render_output(col).question_av_tags
     }
 
-    fun answerAvTags(): List<AvTag> {
+    fun answerAvTags(col: Collection): List<AvTag> {
         return render_output(col).answer_av_tags
     }
 
