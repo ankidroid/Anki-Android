@@ -205,7 +205,7 @@ open class Card : Cloneable {
         col.log(this)
     }
 
-    fun flushSched() {
+    fun flushSched(col: Collection) {
         mod = TimeManager.time.intTime()
         usn = col.usn()
         assert(due < "4294967296".toLong())

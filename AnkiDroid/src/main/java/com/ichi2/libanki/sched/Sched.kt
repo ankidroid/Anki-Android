@@ -94,7 +94,7 @@ class Sched(col: Collection) : SchedV2(col) {
         _updateStats(card, "time", card.timeTaken().toLong())
         card.mod = time.intTime()
         card.usn = col.usn()
-        card.flushSched()
+        card.flushSched(col)
     }
 
     override fun counts(card: Card): Counts {

@@ -244,7 +244,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         _updateStats(card, "time", card.timeTaken().toLong())
         card.mod = time.intTime()
         card.usn = col.usn()
-        card.flushSched()
+        card.flushSched(col)
     }
 
     fun _answerCard(card: Card, @BUTTON_TYPE ease: Int) {
