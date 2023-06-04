@@ -18,6 +18,7 @@ package com.ichi2.anki
 
 import android.annotation.SuppressLint
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import anki.backend.backendError
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionV16
@@ -78,7 +79,7 @@ object CollectionManager {
      *
      *       context(Queue) suspend fun canOnlyBeRunInWithQueue()
      */
-    private suspend fun<T> withQueue(block: CollectionManager.() -> T): T {
+    private suspend fun<T> withQueue(@WorkerThread block: CollectionManager.() -> T): T {
         return withContext(queue) {
             this@CollectionManager.block()
         }
@@ -91,7 +92,7 @@ object CollectionManager {
      * sure the collection won't be closed or modified by another thread. This guarantee
      * does not hold if legacy code calls [getColUnsafe].
      */
-    suspend fun <T> withCol(block: Collection.() -> T): T {
+    suspend fun <T> withCol(@WorkerThread block: Collection.() -> T): T {
         return withQueue {
             ensureOpenInner()
             block(collection!!)
@@ -105,7 +106,7 @@ object CollectionManager {
      * these two cases, it should wrap the return value of the block in a class (eg Optional),
      * instead of returning a nullable object.
      */
-    suspend fun<T> withOpenColOrNull(block: Collection.() -> T): T? {
+    suspend fun<T> withOpenColOrNull(@WorkerThread block: Collection.() -> T): T? {
         return withQueue {
             if (collection != null && !collection!!.dbClosed) {
                 block(collection!!)

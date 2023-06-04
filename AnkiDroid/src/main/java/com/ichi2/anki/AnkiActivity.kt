@@ -20,6 +20,7 @@ import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.annotation.UiThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -59,6 +60,7 @@ import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.SyncStatus
 import timber.log.Timber
 
+@UiThread
 open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
 
     /** The name of the parent class (example: 'Reviewer')  */

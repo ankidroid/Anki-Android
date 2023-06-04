@@ -28,6 +28,7 @@ import android.content.res.Resources
 import android.database.sqlite.SQLiteDatabaseLockedException
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import anki.search.SearchNode
 import anki.search.SearchNodeKt
 import anki.search.searchNode
@@ -80,6 +81,7 @@ import kotlin.random.Random
 @KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
 @KotlinCleanup("ids.size != 0")
+@WorkerThread
 open class Collection(
     /**
      * @return The context that created this Collection.

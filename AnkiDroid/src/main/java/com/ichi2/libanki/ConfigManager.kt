@@ -17,9 +17,11 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
+import androidx.annotation.WorkerThread
 import org.json.JSONArray
 import org.json.JSONObject
 
+@WorkerThread
 abstract class ConfigManager {
     @CheckResult abstract fun has(key: String): Boolean
 

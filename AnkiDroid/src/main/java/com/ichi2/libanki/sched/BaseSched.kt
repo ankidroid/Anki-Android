@@ -23,6 +23,7 @@ import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import anki.ankidroid.schedTimingTodayLegacyRequest
 import anki.decks.DeckTreeNode
 import anki.scheduler.*
@@ -45,6 +46,8 @@ import net.ankiweb.rsdroid.RustCleanup
  * BackendFactory.defaultLegacySchema is false, so for now, SchedV2
  * will need to (conditionally) override them.
  */
+
+@WorkerThread
 abstract class BaseSched(val col: Collection) {
     /** Update a V1 scheduler collection to V2. Requires full sync. */
     fun upgradeToV2() {

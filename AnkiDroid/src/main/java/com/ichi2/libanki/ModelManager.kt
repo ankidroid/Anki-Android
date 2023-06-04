@@ -16,6 +16,7 @@
 
 package com.ichi2.libanki
 
+import androidx.annotation.WorkerThread
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.utils.Assert
@@ -23,6 +24,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
 
+@WorkerThread
 abstract class ModelManager(protected val col: Collection) {
 
     /*

@@ -330,7 +330,7 @@
     <issue id="Range" severity="ignore" />
     <issue id="ResourceType" severity="ignore" />
     <issue id="RestrictedApi" severity="ignore" />
-    <issue id="WrongThread" severity="ignore" />
+    <issue id="WrongThread" severity="informational" />
     <issue id="VisibleForTests" severity="ignore" />
     <issue id="ProtectedPermissions" severity="ignore" />
     <issue id="TextViewEdits" severity="ignore" />
