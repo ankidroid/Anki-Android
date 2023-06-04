@@ -2386,7 +2386,7 @@ open class CardBrowser :
                 Column.CREATED -> LanguageUtil.getShortDateFormatFromMs(card.nid)
                 Column.EDITED -> LanguageUtil.getShortDateFormatFromS(card.note(col).mod)
                 Column.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
-                Column.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote()).toString()
+                Column.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote(col)).toString()
                 Column.NOTE_TYPE -> card.model(col).optString("name")
                 Column.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote().toString()
                 Column.QUESTION -> {

@@ -240,7 +240,7 @@ object NoteService {
     }
 }
 
-fun Card.totalLapsesOfNote() = NoteService.totalLapses(note(col))
+fun Card.totalLapsesOfNote(col: com.ichi2.libanki.Collection) = NoteService.totalLapses(note(col))
 
 fun Card.totalReviewsForNote() = NoteService.totalReviews(note(col))
 
