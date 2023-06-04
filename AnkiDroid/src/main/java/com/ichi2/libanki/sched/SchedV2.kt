@@ -2676,7 +2676,7 @@ end)  """
         }
         Timber.i("Undo Review of card %d, leech: %b", card.id, wasLeech)
         // write old data
-        card.flush(false)
+        card.flush(col, false)
         val conf = _cardConf(card)
         val previewing = conf.isDyn && !conf.getBoolean("resched")
         if (!previewing) {

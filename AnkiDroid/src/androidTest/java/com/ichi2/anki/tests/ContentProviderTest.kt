@@ -1340,7 +1340,7 @@ class ContentProviderTest : InstrumentedTest() {
             )
             for (c in newNote.cards()) {
                 c.did = did
-                c.flush()
+                c.flush(col)
             }
             return Uri.withAppendedPath(
                 FlashCardsContract.Note.CONTENT_URI,

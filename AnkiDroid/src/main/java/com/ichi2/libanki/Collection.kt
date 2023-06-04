@@ -927,7 +927,7 @@ open class Collection(
         }
         card.due = _dueForDid(card.did, due).toLong()
         if (flush) {
-            card.flush()
+            card.flush(col)
         }
         return card
     }

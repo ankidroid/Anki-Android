@@ -467,7 +467,7 @@ class CardContentProvider : ContentProvider() {
                     Timber.d("CardContentProvider: Moving card to other deck...")
                     col.decks.flush()
                     currentCard.did = did
-                    currentCard.flush()
+                    currentCard.flush(col)
                     col.save()
                     updated++
                 } else {
@@ -752,7 +752,7 @@ class CardContentProvider : ContentProvider() {
                 col.addNote(newNote, allowEmpty)
                 for (card: Card in newNote.cards()) {
                     card.did = deckId
-                    card.flush()
+                    card.flush(col)
                 }
                 result++
             }

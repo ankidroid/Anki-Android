@@ -264,7 +264,7 @@ open class Reviewer :
         launchCatchingTask {
             card.setUserFlag(flag)
             if (BackendFactory.defaultLegacySchema) {
-                card.flush()
+                card.flush(col)
                 /* Following code would allow to update value of {{cardFlag}}.
                Anki does not update this value when a flag is changed, so
                currently this code would do something that anki itself

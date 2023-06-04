@@ -250,7 +250,7 @@ class NoteServiceTest : RobolectricTest() {
             card.apply {
                 type = Consts.CARD_TYPE_REV
                 factor = 3000 / (i + 1)
-                flush()
+                flush(col)
             }
         }
         // avg ease = (3000/10 + 1500/10 + 100/10 + 750/10) / 4 = [156.25] = 156
@@ -259,7 +259,7 @@ class NoteServiceTest : RobolectricTest() {
         // test case: one card is new
         note.cards()[2].apply {
             type = Consts.CARD_TYPE_NEW
-            flush()
+            flush(col)
         }
         // avg ease = (3000/10 + 1500/10 + 750/10) / 3 = [175] = 175
         assertEquals(175, NoteService.avgEase(note))
@@ -267,7 +267,7 @@ class NoteServiceTest : RobolectricTest() {
         // test case: all cards are new
         for (card in note.cards()) {
             card.type = Consts.CARD_TYPE_NEW
-            card.flush()
+            card.flush(col)
         }
         // no cards are rev, so avg ease cannot be calculated
         assertEquals(null, NoteService.avgEase(note))
@@ -285,7 +285,7 @@ class NoteServiceTest : RobolectricTest() {
             card.apply {
                 type = reviewOrRelearningList.shuffled().first()
                 ivl = 3000 / (i + 1)
-                flush()
+                flush(col)
             }
         }
 
@@ -295,7 +295,7 @@ class NoteServiceTest : RobolectricTest() {
         // case: one card is new or learning
         note.cards()[2].apply {
             type = newOrLearningList.shuffled().first()
-            flush()
+            flush(col)
         }
 
         // avg interval = (3000 + 1500 + 750) / 3 = [1750] = 1750
@@ -304,7 +304,7 @@ class NoteServiceTest : RobolectricTest() {
         // case: all cards are new or learning
         for (card in note.cards()) {
             card.type = newOrLearningList.shuffled().first()
-            card.flush()
+            card.flush(col)
         }
 
         // no cards are rev or relearning, so avg interval cannot be calculated

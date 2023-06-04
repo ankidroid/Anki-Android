@@ -37,7 +37,7 @@ class CollectionTest : RobolectricTest() {
         val did = addDeck("Testing")
         for (c in n.cards()) {
             c.did = did
-            c.flush()
+            c.flush(col)
         }
         assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
 

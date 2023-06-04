@@ -479,7 +479,7 @@ mw.col.sched.extendLimits(1, 0)
             cards[i]!!.queue = Consts.QUEUE_TYPE_LRN
             cards[i]!!.type = Consts.CARD_TYPE_LRN
             cards[i]!!.due = time.intTime() - 20 * 60 + i
-            cards[i]!!.flush()
+            cards[i]!!.flush(col)
         }
         col.reset()
         // Regression test success non deterministically without the sleep

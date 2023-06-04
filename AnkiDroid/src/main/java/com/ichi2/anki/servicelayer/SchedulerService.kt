@@ -185,7 +185,7 @@ class SchedulerService {
             note.flush(note.mod, false)
             ids.add(note.id)
             for (c in allCs) {
-                c.flush(false)
+                c.flush(col, false)
                 ids.add(c.id)
             }
             col.db.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids))
@@ -201,7 +201,7 @@ class SchedulerService {
         override fun undo(col: AnkiCollection): Card? {
             Timber.i("Undoing action of type %s on %d cards", javaClass, cardsCopied.size)
             for (card in cardsCopied) {
-                card.flush(false)
+                card.flush(col, false)
             }
             // /* card schedule change undone, reset and get
             // new card */

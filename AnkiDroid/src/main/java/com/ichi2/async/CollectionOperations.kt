@@ -54,7 +54,7 @@ fun updateCard(
             // TODO: undo integration
             editNote.flush()
             // flush card too, in case, did has been changed
-            editCard.flush()
+            editCard.flush(col)
         }
     } else {
         // TODO: the proper way to do this would be to call this in undoableOp() in a coroutine
@@ -415,7 +415,7 @@ fun changeDeckMulti(
             val note = card.note(col)
             note.flush()
             // flush card too, in case, did has been changed
-            card.flush()
+            card.flush(col)
         }
         val changeDeckMulti: UndoAction = UndoChangeDeckMulti(cards, originalDids)
         // mark undo for all at once

@@ -134,7 +134,7 @@ class CardTest : RobolectricTest() {
         // model default
         val c = note.cards()[1]
         c.did = newId
-        c.flush()
+        c.flush(col)
         note.setItem("Text", "{{c4::four}}")
         note.flush()
         assertEquals(newId, note.cards()[3].did)

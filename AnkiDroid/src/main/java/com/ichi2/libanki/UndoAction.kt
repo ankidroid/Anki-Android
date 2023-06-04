@@ -96,7 +96,7 @@ abstract class UndoAction
                 override fun undo(col: Collection): Card {
                     Timber.i("Undo: %d", undoNameId)
                     for (cc in cards) {
-                        cc.flush(false)
+                        cc.flush(col, false)
                     }
                     return card
                 }

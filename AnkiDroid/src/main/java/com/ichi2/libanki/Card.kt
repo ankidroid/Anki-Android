@@ -174,7 +174,7 @@ open class Card : Cloneable {
         note = null
     }
 
-    fun flush(changeModUsn: Boolean = true) {
+    fun flush(col: Collection, changeModUsn: Boolean = true) {
         if (changeModUsn) {
             mod = TimeManager.time.intTime()
             usn = col.usn()
