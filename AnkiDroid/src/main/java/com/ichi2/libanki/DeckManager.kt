@@ -18,6 +18,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.DeckComparator
@@ -27,6 +28,7 @@ import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
 import java.util.*
 
+@WorkerThread
 abstract class DeckManager {
 
     /*

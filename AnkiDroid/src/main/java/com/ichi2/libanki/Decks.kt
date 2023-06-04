@@ -24,6 +24,7 @@ package com.ichi2.libanki
 import android.content.ContentValues
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.DECK_STD
@@ -47,6 +48,7 @@ import java.util.regex.Pattern
 @KotlinCleanup("remove unused functions")
 @KotlinCleanup("where ever possible replace ArrayList() with mutableListOf()")
 @KotlinCleanup("nullability")
+@WorkerThread
 class Decks(private val col: Collection) : DeckManager() {
     @get:RustCleanup("This exists in Rust as DecksDictProxy, but its usage is warned against")
     @KotlinCleanup("lateinit")

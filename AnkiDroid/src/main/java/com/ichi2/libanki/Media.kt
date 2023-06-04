@@ -21,6 +21,7 @@ import android.database.Cursor
 import android.database.SQLException
 import android.net.Uri
 import androidx.annotation.VisibleForTesting
+import androidx.annotation.WorkerThread
 import com.ichi2.anki.CrashReportService
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.template.TemplateFilters
@@ -58,6 +59,7 @@ import kotlin.math.min
  * E.g: new File(dir(), "filename.jpg")
  */
 @KotlinCleanup("IDE Lint")
+@WorkerThread
 open class Media(private val col: Collection, server: Boolean) {
     private var mDir: String?
 

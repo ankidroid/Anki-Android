@@ -24,6 +24,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
+import androidx.annotation.WorkerThread
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionHelper
@@ -41,6 +42,7 @@ import timber.log.Timber
  * or the Android framework), and provides some helpers on top.
  */
 @KotlinCleanup("Improve documentation")
+@WorkerThread
 class DB(db: SupportSQLiteDatabase) {
     /**
      * The collection, which is actually an SQLite database.

@@ -18,6 +18,7 @@
 package com.ichi2.libanki
 
 import android.content.ContentValues
+import androidx.annotation.WorkerThread
 import com.ichi2.libanki.backend.model.TagUsnTuple
 import com.ichi2.libanki.utils.TimeManager
 import org.json.JSONObject
@@ -35,6 +36,7 @@ import java.util.regex.Pattern
  * instead of a JSONObject. It is much more convenient to work with a TreeMap in Java, but there
  * may be a performance penalty in doing so (on startup and shutdown).
  */
+@WorkerThread
 class Tags
 /**
  * Registry save/load
