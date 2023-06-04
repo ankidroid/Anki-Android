@@ -21,6 +21,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.TtsParser
 import com.ichi2.anki.cardviewer.CardAppearance.Companion.hasUserDefinedNightMode
 import com.ichi2.libanki.*
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Sound.SingleSoundSide
 import com.ichi2.libanki.Sound.SingleSoundSide.ANSWER
 import com.ichi2.libanki.Sound.SingleSoundSide.QUESTION
@@ -131,12 +132,12 @@ class CardHtml(
     }
 
     companion object {
-        fun createInstance(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
+        fun createInstance(col: Collection, card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
             val content = displayString(card, reload, side, context)
 
             val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
 
-            val renderOutput = card.render_output()
+            val renderOutput = card.render_output(col)
             val questionAv = renderOutput.question_av_tags
             val answerAv = renderOutput.answer_av_tags
             val questionSound: List<SoundOrVideoTag>? =
@@ -145,7 +146,7 @@ class CardHtml(
                 if (!BackendFactory.defaultLegacySchema) answerAv.filterIsInstance(SoundOrVideoTag::class.java) else null
 
             // legacy (slow) function to return the answer without the front side
-            fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.a())
+            fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(col, card, card.a())
 
             return CardHtml(content, card.ord, nightModeInversion, context, side, ::getAnswerWithoutFrontSideLegacy, questionSound, answerSound)
         }
@@ -202,11 +203,11 @@ class CardHtml(
          * @param answerContent     The content from which to remove front side audio.
          * @return The content stripped of audio due to {{FrontSide}} inclusion.
          */
-        fun removeFrontSideAudio(card: Card, answerContent: String): String {
+        fun removeFrontSideAudio(col: Collection, card: Card, answerContent: String): String {
             val answerFormat = getAnswerFormat(card)
             var newAnswerContent = answerContent
             if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
-                val frontSideFormat = card.render_output(false).question_text
+                val frontSideFormat = card.render_output(col, false).question_text
                 val audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat)
                 // remove the first instance of audio contained in "{{FrontSide}}"
                 while (audioReferences.find()) {

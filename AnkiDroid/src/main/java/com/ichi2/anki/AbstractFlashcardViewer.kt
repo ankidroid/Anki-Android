@@ -963,7 +963,7 @@ abstract class AbstractFlashcardViewer :
                 Timber.i("Answering card %d", oldCard.id)
                 col.sched.answerCard(oldCard, ease)
                 Timber.i("Obtaining next card")
-                sched.card?.apply { render_output(reload = true) }
+                sched.card?.apply { render_output(col, reload = true) }
             }
             // TODO: this handling code is unnecessarily complex, and would be easier to follow
             //  if written imperatively
@@ -1377,7 +1377,7 @@ abstract class AbstractFlashcardViewer :
         } else {
             answerField!!.visibility = View.GONE
         }
-        val content = mHtmlGenerator!!.generateHtml(currentCard!!, reload, Side.FRONT)
+        val content = mHtmlGenerator!!.generateHtml(col, currentCard!!, reload, Side.FRONT)
         updateCard(content)
         hideEaseButtons()
         automaticAnswer.onDisplayQuestion()
@@ -1419,7 +1419,7 @@ abstract class AbstractFlashcardViewer :
             typeAnswer!!.input = answerField!!.text.toString()
         }
         mIsSelecting = false
-        val answerContent = mHtmlGenerator!!.generateHtml(currentCard!!, false, Side.BACK)
+        val answerContent = mHtmlGenerator!!.generateHtml(col, currentCard!!, false, Side.BACK)
         updateCard(answerContent)
         displayAnswerBottomBar()
         automaticAnswer.onDisplayAnswer()

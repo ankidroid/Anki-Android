@@ -132,6 +132,7 @@ class CollectionV16(
     }
 
     override fun render_output(
+        col: Collection,
         c: Card,
         reload: Boolean,
         browser: Boolean

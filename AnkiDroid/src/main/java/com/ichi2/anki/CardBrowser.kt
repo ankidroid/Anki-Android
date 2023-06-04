@@ -2464,10 +2464,11 @@ open class CardBrowser :
                 return
             }
             // render question and answer
-            val qa = card.render_output(reload = true, browser = true)
+            val qa = card.render_output(col, reload = true, browser = true)
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
             if (qa.question_text.isEmpty() || qa.answer_text.isEmpty()) {
                 val (question_text, answer_text) = card.render_output(
+                    col,
                     reload = true,
                     browser = false
                 )

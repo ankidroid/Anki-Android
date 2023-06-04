@@ -20,14 +20,18 @@ import androidx.annotation.StringRes
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.UndoAction
 import com.ichi2.libanki.UndoAction.Companion.revertCardToProvidedState
 import com.ichi2.libanki.UndoAction.UndoNameId
+import com.ichi2.libanki.Utils
 import com.ichi2.utils.Computation
 import timber.log.Timber
-import java.util.*
+import java.util.Optional
 import java.util.concurrent.CancellationException
-import kotlin.collections.ArrayList
 import com.ichi2.libanki.Collection as AnkiCollection
 
 typealias NextCardAnd<T> = Computation<NextCard<T>>
@@ -56,15 +60,15 @@ class SchedulerService {
 
     class GetCard : ActionAndNextCard() {
         override fun execute(): ComputeResult {
-            return getCard(this)
+            return getCard(col, this)
         }
 
         companion object {
-            fun getCard(getCard: ActionAndNextCard): ComputeResult {
+            fun getCard(col: Collection, getCard: ActionAndNextCard): ComputeResult {
                 val sched = getCard.col.sched
                 Timber.i("Obtaining card")
                 val newCard = sched.card
-                newCard?.render_output(true)
+                newCard?.render_output(col, true)
                 return Computation.ok(NextCard.withNoResult(newCard))
             }
         }

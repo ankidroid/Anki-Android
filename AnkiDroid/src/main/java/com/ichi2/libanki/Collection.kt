@@ -1376,7 +1376,7 @@ open class Collection(
         _loadScheduler()
     }
 
-    open fun render_output(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput? {
+    open fun render_output(col: Collection, c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput? {
         return render_output_legacy(c, reload, browser)
     }
 

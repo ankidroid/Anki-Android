@@ -390,7 +390,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             return mEditedModel ?: super.model()
         }
 
-        override fun render_output(reload: Boolean, browser: Boolean): TemplateRenderOutput {
+        override fun render_output(col: Collection, reload: Boolean, browser: Boolean): TemplateRenderOutput {
             if (render_output == null || reload) {
                 render_output = if (BackendFactory.defaultLegacySchema) {
                     col.render_output_legacy(this, reload, browser)
