@@ -18,6 +18,7 @@ package com.ichi2.anki.cardviewer
 
 import com.ichi2.anki.cardviewer.CardAppearance.Companion.hasUserDefinedNightMode
 import com.ichi2.libanki.Card
+import com.ichi2.libanki.Collection
 import com.ichi2.testutils.assertFalse
 import org.junit.Test
 import org.mockito.Mockito
@@ -30,13 +31,14 @@ class CardAppearanceTest {
     @Test
     fun hasUserDefinedNightModeTest() {
         val mockCard = Mockito.mock(Card::class.java)
-        doReturn(".night_mode {}").whenever(mockCard).css()
-        assertTrue("CSS should have a night mode class", hasUserDefinedNightMode(mockCard))
+        val col: Collection = Mockito.mock()
+        doReturn(".night_mode {}").whenever(mockCard).css(col)
+        assertTrue("CSS should have a night mode class", hasUserDefinedNightMode(col, mockCard))
 
-        doReturn(".nightMode{}").whenever(mockCard).css()
-        assertTrue("CSS should have a night mode class", hasUserDefinedNightMode(mockCard))
+        doReturn(".nightMode{}").whenever(mockCard).css(col)
+        assertTrue("CSS should have a night mode class", hasUserDefinedNightMode(col, mockCard))
 
-        doReturn(".night_mode_old {}").whenever(mockCard).css()
-        assertFalse("CSS should not have a night mode class", hasUserDefinedNightMode(mockCard))
+        doReturn(".night_mode_old {}").whenever(mockCard).css(col)
+        assertFalse("CSS should not have a night mode class", hasUserDefinedNightMode(col, mockCard))
     }
 }

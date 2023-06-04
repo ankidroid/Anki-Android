@@ -237,7 +237,7 @@ open class Card : Cloneable {
     }
 
     @RustCleanup("legacy")
-    fun css(): String {
+    fun css(col: Collection): String {
         return "<style>${render_output(col).css}</style>"
     }
 
