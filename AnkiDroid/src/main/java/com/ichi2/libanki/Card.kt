@@ -241,7 +241,7 @@ open class Card : Cloneable {
         return "<style>${render_output(col).css}</style>"
     }
 
-    fun questionAvTags(): List<AvTag> {
+    fun questionAvTags(col: Collection): List<AvTag> {
         return render_output(col).question_av_tags
     }
 
