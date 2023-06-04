@@ -605,17 +605,17 @@ open class SchedV2Test : RobolectricTest() {
         col.reset()
         // should get '1' first
         var c = card!!
-        Assert.assertTrue(c.q().endsWith("1"))
+        Assert.assertTrue(c.q(col).endsWith("1"))
         // pass it so it's due in 10 minutes
         col.sched.answerCard(c, BUTTON_THREE)
         // get the other card
         c = card!!
-        Assert.assertTrue(c.q().endsWith("2"))
+        Assert.assertTrue(c.q(col).endsWith("2"))
         // fail it so it's due in 1 minute
         col.sched.answerCard(c, BUTTON_ONE)
         // we shouldn't get the same card again
         c = card!!
-        Assert.assertFalse(c.q().endsWith("2"))
+        Assert.assertFalse(c.q(col).endsWith("2"))
     }
 
     @Test

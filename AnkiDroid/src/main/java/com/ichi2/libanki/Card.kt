@@ -228,7 +228,7 @@ open class Card : Cloneable {
         col.log(this)
     }
 
-    fun q(reload: Boolean = false, browser: Boolean = false): String {
+    fun q(col: Collection, reload: Boolean = false, browser: Boolean = false): String {
         return render_output(col, reload, browser).question_and_style()
     }
 

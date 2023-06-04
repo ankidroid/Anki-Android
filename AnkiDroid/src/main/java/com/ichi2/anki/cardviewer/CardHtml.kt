@@ -162,7 +162,7 @@ class CardHtml(
                 return context.resources.getString(R.string.empty_card_warning)
             }
 
-            var content: String = if (side == Side.FRONT) card.q(reload) else card.a()
+            var content: String = if (side == Side.FRONT) card.q(col, reload) else card.a()
             content = Media.escapeImages(content)
             content = context.filterTypeAnswer(content, side)
             Timber.v("question: '%s'", content)
@@ -219,7 +219,7 @@ class CardHtml(
 
         fun legacyGetTtsTags(col: Collection, card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {
             val cardSideContent: String = when (cardSide) {
-                QUESTION -> card.q(true)
+                QUESTION -> card.q(col, true)
                 ANSWER -> card.pureAnswer(col)
             }
             return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))

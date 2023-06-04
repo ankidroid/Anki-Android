@@ -65,7 +65,7 @@ fun updateCard(
         if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
             editCard.apply {
                 load(col)
-                q(true) // reload qa-cache
+                q(col, true) // reload qa-cache
             }
         } else {
             col.sched.card!! // check: are there deleted too?

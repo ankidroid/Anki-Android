@@ -67,7 +67,7 @@ class ModelTest : RobolectricTest() {
         note.setItem("Front", "helloworld")
         col.addNote(note)
         val card = note.firstCard()
-        val q = card.q()
+        val q = card.q(col)
         assertThat(
             "field should be at the end of the template - empty string for front",
             q,
@@ -98,7 +98,7 @@ class ModelTest : RobolectricTest() {
         note.setItem("FrontSide2", "2")
         col.addNote(note)
         val card = note.firstCard()
-        val q = card.q()
+        val q = card.q(col)
         assertThat(
             "FrontSide should be an empty string, even though it was set",
             q,
@@ -283,7 +283,7 @@ class ModelTest : RobolectricTest() {
         // and should have updated the other cards' ordinals
         c = note.cards()[0]
         assertEquals(0, c.ord)
-        assertEquals("1", stripHTML(c.q()))
+        assertEquals("1", stripHTML(c.q(col)))
         // it shouldn't be possible to orphan notes by removing templates
         t = Models.newTemplate("template name")
         t.put("qfmt", "{{Front}}1")
@@ -347,7 +347,7 @@ class ModelTest : RobolectricTest() {
         val note = col.newNote()
         note.setItem("Front", "hello<b>world")
         col.addNote(note)
-        assertThat(note.cards()[0].q(), containsString("helloworld"))
+        assertThat(note.cards()[0].q(col), containsString("helloworld"))
     }
 
     @Test
@@ -389,7 +389,7 @@ class ModelTest : RobolectricTest() {
         }
 
         assertThat(
-            note.cards()[0].q(),
+            note.cards()[0].q(col),
             containsString("hello <span ${clozeClass()}${clozeData("world")}>[...]</span>")
         )
         assertThat(
@@ -407,7 +407,7 @@ class ModelTest : RobolectricTest() {
         clearId(note)
         assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
         assertThat(
-            note.cards()[0].q(),
+            note.cards()[0].q(col),
             containsString("<span ${clozeClass()}${clozeData("world")}>[typical]</span>")
         )
         assertThat(
@@ -423,7 +423,7 @@ class ModelTest : RobolectricTest() {
         val c1 = cards[0]
         val c2 = cards[1]
         assertThat(
-            c1.q(),
+            c1.q(col),
             containsString("<span ${clozeClass()}${clozeData("world")}>[...]</span> bar")
         )
         assertThat(
@@ -431,7 +431,7 @@ class ModelTest : RobolectricTest() {
             containsString("<span ${clozeClass()}>world</span> bar")
         )
         assertThat(
-            c2.q(),
+            c2.q(col),
             containsString("world <span ${clozeClass()}${clozeData("bar")}>[...]</span>")
         )
         assertThat(
@@ -504,20 +504,20 @@ class ModelTest : RobolectricTest() {
         )
         assertNotEquals(0, col.addNote(note))
         assertEquals(5, note.numberOfCards())
-        assertThat(note.cards()[0].q(), containsString(clozeClass()))
-        assertThat(note.cards()[1].q(), containsString(clozeClass()))
+        assertThat(note.cards()[0].q(col), containsString(clozeClass()))
+        assertThat(note.cards()[1].q(col), containsString(clozeClass()))
         assertThat(
-            note.cards()[2].q(),
+            note.cards()[2].q(col),
             not(containsString(clozeClass()))
         )
-        assertThat(note.cards()[3].q(), containsString(clozeClass()))
-        assertThat(note.cards()[4].q(), containsString(clozeClass()))
+        assertThat(note.cards()[3].q(col), containsString(clozeClass()))
+        assertThat(note.cards()[4].q(col), containsString(clozeClass()))
 
         note = col.newNote()
         note.setItem("Text", "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]")
         assertNotEquals(0, col.addNote(note))
         assertEquals(1, note.numberOfCards())
-        val question = note.cards()[0].q()
+        val question = note.cards()[0].q(col)
         if (!BackendFactory.defaultLegacySchema) {
             // below needs updating to support latest backend output
             return
@@ -539,7 +539,7 @@ class ModelTest : RobolectricTest() {
         note.setItem("Text", "hello {{c1::world}}")
         col.addNote(note)
         assertThat(
-            note.cards()[0].q(),
+            note.cards()[0].q(col),
             containsString("[[type:cloze:Text]]")
         )
     }
@@ -567,7 +567,7 @@ class ModelTest : RobolectricTest() {
         val a2 = "<i>chained</i>"
         note.setItem("Text", "This {{c1::$q1::$a1}} demonstrates {{c1::$q2::$a2}} clozes.")
         assertEquals(1, col.addNote(note))
-        note.cards()[0].q()
+        note.cards()[0].q(col)
         /* TODO: chained modifier
         assertThat("Question «"+question+"» does not contain the expected string", question, containsString("This <span class=cloze>[sentence]</span> demonstrates <span class=cloze>[chained]</span> clozes.")
                    );
@@ -606,16 +606,16 @@ class ModelTest : RobolectricTest() {
         // switch cards
         val c0 = note.cards()[0]
         val c1 = note.cards()[1]
-        assertThat(c0.q(), containsString("b123"))
-        assertThat(c1.q(), containsString("note"))
+        assertThat(c0.q(col), containsString("b123"))
+        assertThat(c1.q(col), containsString("note"))
         assertEquals(0, c0.ord)
         assertEquals(1, c1.ord)
         col.models.change(basic, note.id, basic, noOp, map)
         note.load()
         c0.load(col)
         c1.load(col)
-        assertThat(c0.q(), containsString("note"))
-        assertThat(c1.q(), containsString("b123"))
+        assertThat(c0.q(col), containsString("note"))
+        assertThat(c1.q(col), containsString("b123"))
         assertEquals(1, c0.ord)
         assertEquals(0, c1.ord)
         // .cards() returns cards in order
