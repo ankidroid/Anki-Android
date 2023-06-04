@@ -430,7 +430,7 @@ open class Card : Cloneable {
 
     // not in Anki.
     fun dueString(): String {
-        var t = nextDue()
+        var t = nextDue(col)
         if (queue < 0) {
             t = "($t)"
         }
@@ -439,7 +439,7 @@ open class Card : Cloneable {
 
     // as in Anki aqt/browser.py
     @VisibleForTesting
-    fun nextDue(): String {
+    fun nextDue(col: Collection): String {
         val date: Long
         val due = due
         date = if (isInDynamicDeck) {
