@@ -133,7 +133,7 @@ class CardHtml(
 
     companion object {
         fun createInstance(col: Collection, card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
-            val content = displayString(card, reload, side, context)
+            val content = displayString(col, card, reload, side, context)
 
             val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
 
@@ -157,8 +157,8 @@ class CardHtml(
          * Or warning if required
          * TODO: This is no longer entirely true as more post-processing occurs
          */
-        private fun displayString(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
-            if (side == Side.FRONT && card.isEmpty()) {
+        private fun displayString(col: Collection, card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
+            if (side == Side.FRONT && card.isEmpty(col)) {
                 return context.resources.getString(R.string.empty_card_warning)
             }
 

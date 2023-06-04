@@ -306,7 +306,7 @@ open class Card : Cloneable {
         return Math.min(total, timeLimit(col))
     }
 
-    open fun isEmpty() = try {
+    open fun isEmpty(col: Collection) = try {
         Models.emptyCard(model(), ord, note().fields)
     } catch (er: TemplateError) {
         Timber.w("Card is empty because the card's template has an error: %s.", er.message(col.context))

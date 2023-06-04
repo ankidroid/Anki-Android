@@ -30,7 +30,7 @@ class ClozeTest : RobolectricTest() {
         f.setItem("Text", "nothing")
         assertThat(d.addNote(f), greaterThan(0))
         val card = f.cards()[0]
-        assertTrue(card.isEmpty())
+        assertTrue(card.isEmpty(col))
         // try with one cloze
         f = d.newNote(d.models.byName("Cloze")!!)
         f.setItem("Text", "hello {{c1::world}}")

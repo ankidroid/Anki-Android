@@ -381,10 +381,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
 
         /** if we have an unsaved note, never return empty  */
-        override fun isEmpty() = if (mNote != null) {
+        override fun isEmpty(col: Collection) = if (mNote != null) {
             false
         } else {
-            super.isEmpty()
+            super.isEmpty(col)
         }
 
         /** Override the method that fetches the model so we can render unsaved models  */
