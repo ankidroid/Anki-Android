@@ -2388,7 +2388,7 @@ open class CardBrowser :
                 Column.INTERVAL -> if (inCardMode) queryIntervalForCards() else queryAvgIntervalForNotes()
                 Column.LAPSES -> (if (inCardMode) card.lapses else card.totalLapsesOfNote(col)).toString()
                 Column.NOTE_TYPE -> card.model(col).optString("name")
-                Column.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote().toString()
+                Column.REVIEWS -> if (inCardMode) card.reps.toString() else card.totalReviewsForNote(col).toString()
                 Column.QUESTION -> {
                     updateSearchItemQA()
                     mQa!!.first
