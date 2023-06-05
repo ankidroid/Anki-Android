@@ -124,5 +124,6 @@ class IncrementerNumberRangePreference : NumberRangePreference {
         // Make sure value is within range
         mLastValidEntry = super.getValidatedRangeFromInt(value)
         mEditText.setText(mLastValidEntry.toString())
+        mEditText.setSelection(mEditText.text.length)
     }
 }
