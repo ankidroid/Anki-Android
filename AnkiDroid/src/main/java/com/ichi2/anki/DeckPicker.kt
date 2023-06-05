@@ -687,7 +687,7 @@ open class DeckPicker :
             }
         })
 
-        (menuItem.actionView as SearchView).run {
+        (menuItem.actionView as SearchViewWithWhiteCursor).run {
             queryHint = getString(R.string.search_decks)
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
