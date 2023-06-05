@@ -127,7 +127,7 @@ open class Card : Cloneable {
         this.type = Consts.CARD_TYPE_NEW
         queue = Consts.QUEUE_TYPE_NEW
         ivl = 0
-        factor = 0
+        factor = Consts.STARTING_FACTOR
         reps = 0
         lapses = 0
         left = 0
