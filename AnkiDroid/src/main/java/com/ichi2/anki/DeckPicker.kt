@@ -114,7 +114,7 @@ import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.BadgeDrawableBuilder
-import com.ichi2.ui.CardBrowserSearchView
+import com.ichi2.ui.SearchViewWithWhiteCursor
 import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
@@ -234,7 +234,7 @@ open class DeckPicker :
 
     var importColpkgListener: ImportColpkgListener? = null
 
-    private var mToolbarSearchView: SearchView? = null
+    private var mToolbarSearchView: SearchViewWithWhiteCursor? = null
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
 
@@ -575,7 +575,7 @@ open class DeckPicker :
         mFloatingActionMenu.closeFloatingActionMenu()
         menuInflater.inflate(R.menu.deck_picker, menu)
         setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
-        mToolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as CardBrowserSearchView
+        mToolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchViewWithWhiteCursor
         // redraw menu synchronously to avoid flicker
         updateMenuFromState(menu)
         // ...then launch a task to possibly update the visible icons.

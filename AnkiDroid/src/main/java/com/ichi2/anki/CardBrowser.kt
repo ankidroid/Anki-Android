@@ -77,8 +77,8 @@ import com.ichi2.libanki.SortOrder.NoOrdering
 import com.ichi2.libanki.SortOrder.UseCollectionOrdering
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.themes.Themes.getColorFromAttr
-import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
+import com.ichi2.ui.SearchViewWithWhiteCursor
 import com.ichi2.upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
@@ -134,7 +134,7 @@ open class CardBrowser :
 
     @VisibleForTesting
     lateinit var cardsListView: ListView
-    private var mSearchView: CardBrowserSearchView? = null
+    private var mSearchView: SearchViewWithWhiteCursor? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: MultiColumnListAdapter
@@ -944,7 +944,7 @@ open class CardBrowser :
                     return true
                 }
             })
-            mSearchView = mSearchItem!!.actionView as CardBrowserSearchView
+            mSearchView = mSearchItem!!.actionView as SearchViewWithWhiteCursor
             mSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextChange(newText: String): Boolean {
                     if (mSearchView!!.shouldIgnoreValueChange()) {

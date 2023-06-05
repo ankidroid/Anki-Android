@@ -27,6 +27,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.ui.SearchViewWithWhiteCursor
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
 
@@ -57,7 +58,7 @@ class TagsDialog : AnalyticsDialogFragment {
     private var mDialogTitle: String? = null
     private var mTagsArrayAdapter: TagsArrayAdapter? = null
     private var mSelectedOption = -1
-    private var mToolbarSearchView: SearchView? = null
+    private var mToolbarSearchView: SearchViewWithWhiteCursor? = null
     private var mToolbarSearchItem: MenuItem? = null
     private var mNoTagsTextView: TextView? = null
     private var mTagsListRecyclerView: RecyclerView? = null
@@ -209,7 +210,7 @@ class TagsDialog : AnalyticsDialogFragment {
         }
         mToolbarSearchItem = toolbar.menu.findItem(R.id.tags_dialog_action_filter)
         val toolbarSearchItem: MenuItem? = mToolbarSearchItem
-        mToolbarSearchView = toolbarSearchItem?.actionView as SearchView
+        mToolbarSearchView = toolbarSearchItem?.actionView as SearchViewWithWhiteCursor
         val queryET = mToolbarSearchView!!.findViewById<EditText>(R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
         mToolbarSearchView!!.queryHint = getString(R.string.filter_tags)

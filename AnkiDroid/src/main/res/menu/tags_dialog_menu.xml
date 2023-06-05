@@ -6,7 +6,7 @@
         android:id="@+id/tags_dialog_action_filter"
         android:icon="@drawable/ic_search_white"
         android:title="@string/filter_tags"
-        ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
+        ankidroid:actionViewClass="com.ichi2.ui.SearchViewWithWhiteCursor"
         ankidroid:showAsAction="always|collapseActionView"/>
 
     <item

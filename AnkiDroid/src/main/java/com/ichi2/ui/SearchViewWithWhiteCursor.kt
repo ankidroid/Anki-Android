@@ -22,7 +22,8 @@ import android.view.ContextThemeWrapper
 import androidx.appcompat.widget.SearchView
 import com.ichi2.anki.R
 
-class CardBrowserSearchView @JvmOverloads constructor(
+// hack to change cursor color at specific SearchView only #13503
+class SearchViewWithWhiteCursor @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = androidx.appcompat.R.attr.searchViewStyle

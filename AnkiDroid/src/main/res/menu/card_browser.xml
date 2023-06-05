@@ -11,7 +11,7 @@
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white"
         android:title="@string/deck_conf_cram_search"
-        ankidroid:actionViewClass="com.ichi2.ui.CardBrowserSearchView"
+        ankidroid:actionViewClass="com.ichi2.ui.SearchViewWithWhiteCursor"
         ankidroid:showAsAction="always|collapseActionView"/>
 
     <item
