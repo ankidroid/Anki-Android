@@ -19,6 +19,7 @@
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
         <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
         <!-- Navigation drawer -->
         <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_dark</item>
