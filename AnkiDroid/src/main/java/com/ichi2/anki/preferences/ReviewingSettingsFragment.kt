@@ -24,7 +24,7 @@ import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.anki.preferences.Preferences.Companion.setDayOffset
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.preferences.NumberRangePreferenceCompat
-import com.ichi2.preferences.SeekBarPreferenceCompat
+import com.ichi2.preferences.SliderPreference
 
 class ReviewingSettingsFragment : SettingsFragment() {
     override val preferenceResource: Int
@@ -66,7 +66,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // Start of next day
         // Represents the collection pref "rollover"
         // in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
-        requirePreference<SeekBarPreferenceCompat>(R.string.day_offset_preference).apply {
+        requirePreference<SliderPreference>(R.string.day_offset_preference).apply {
             launchCatchingTask { value = getDayOffset() }
             setOnPreferenceChangeListener { newValue ->
                 launchCatchingTask { setDayOffset(requireContext(), newValue as Int) }
