@@ -19,6 +19,10 @@
     xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/accessibility"
     android:key="@string/pref_accessibility_screen_key">
+<!--TODO: Add a Unit Test which verify that any preference added to the accessibility screen is also added to the reset list-->
+    <Preference
+        android:key="@string/reset_accessibility_buttons_key"
+        android:title="@string/reset_custom_buttons" />
     <com.ichi2.preferences.SeekBarPreferenceCompat
         android:defaultValue="100"
         android:key="@string/card_zoom_preference"

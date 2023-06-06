@@ -84,6 +84,7 @@
     <string name="image_zoom_preference">imageZoom</string>
     <string name="answer_button_size_preference">answerButtonSize</string>
     <string name="show_large_answer_buttons_preference">showLargeAnswerButtons</string>
+    <string name="reset_accessibility_buttons_key">reset_accessibility_buttons</string>
     <!-- Custom sync server -->
     <string name="pref_custom_sync_server_screen_key">customSyncServerScreen</string>
     <string name="custom_sync_server_collection_url_key">syncBaseUrl</string>
