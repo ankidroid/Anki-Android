@@ -54,12 +54,11 @@
         android:summary="@string/reset_onboarding_desc"
         android:key="@string/pref_reset_onboarding_key"/>
     <PreferenceCategory
-        android:title="Create medias"
+        android:title="Create fake media"
         >
         <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
             android:key="@string/pref_fill_collection_number_file"
             android:title="Number of files to generate"
-            android:persistent="false"
             app1:useSimpleSummaryProvider="true"
             android:defaultValue="20"
             app:min="1"
@@ -68,13 +67,12 @@
             android:key="@string/pref_fill_collection_size_file"
             android:title="Size of the files to generate (in byte)"
             app1:useSimpleSummaryProvider="true"
-            android:persistent="false"
             android:defaultValue="1000000"
             app:min="1"
             />
         <Preference
             android:key="@string/pref_fill_collection"
-            android:title="Create the media"
+            android:title="Create files"
             />
     </PreferenceCategory>
 </PreferenceScreen>

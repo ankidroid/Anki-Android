@@ -24,6 +24,8 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.utils.show
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 
@@ -85,14 +87,14 @@ class DevOptionsFragment : SettingsFragment() {
         val numberOfFilePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_number_file))
 
         /*
-         * Debugging section
+         * Create fake media section
          */
         requirePreference<Preference>(R.string.pref_fill_collection).setOnPreferenceClickListener {
             val sizeOfFiles = sizePreference.getValue()
             val numberOfFiles = numberOfFilePreference.getValue()
             AlertDialog.Builder(requireContext()).show {
                 setTitle("Warning!")
-                setMessage("You'll add $numberOfFilePreference files with no meaningful content, potentially overriding existing files. Do not do it on a collection you care about.")
+                setMessage("You'll add $numberOfFiles files with no meaningful content, potentially overriding existing files. Do not do it on a collection you care about.")
                 setPositiveButton("OK") { _, _ ->
                     generateFiles(sizeOfFiles, numberOfFiles)
                 }
@@ -103,21 +105,24 @@ class DevOptionsFragment : SettingsFragment() {
     }
 
     private fun generateFiles(size: Int, numberOfFiles: Int) {
+        Timber.d("numberOf files: $numberOfFiles, size: $size")
         launchCatchingTask {
             withProgress("Generating $numberOfFiles files of size $size bytes") {
-                // Add 10.000 small files
                 val suffix = ".$size"
                 for (i in 1..numberOfFiles) {
-                    val f = File.createTempFile("00$i", suffix)
+                    val f = withContext(Dispatchers.IO) {
+                        File.createTempFile("00$i", suffix)
+                    }
                     f.appendBytes(ByteArray(size))
 
                     CollectionManager.withCol {
                         media.addFile(f)
                     }
                     if (i % 1000 == 0) {
-                        showSnackbar("$i files added.")
+                        UIUtils.showThemedToast(requireContext(), "$i files added.", true)
                     }
                 }
+                UIUtils.showThemedToast(requireContext(), "%i files added successfully", false)
             }
         }
     }

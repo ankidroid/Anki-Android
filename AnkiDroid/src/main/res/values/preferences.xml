@@ -113,9 +113,6 @@
     <string name="card_browser_external_context_menu_key">card_browser_enable_external_context_menu</string>
     <string name="anki_card_external_context_menu_key">anki_card_enable_external_context_menu</string>
     <string name="pref_reset_languages_key">resetLanguages</string>
-    <string name="pref_fill_collection">fillCollection</string>
-    <string name="pref_fill_collection_number_file">fillCollectionNumberFile</string>
-    <string name="pref_fill_collection_size_file">fillCollectionSizeFile</string>
     <string name="enable_v3_sched_key">v3sched</string>
     <!-- Advanced statistics -->
     <string name="pref_advanced_statistics_screen_key">advancedStatisticsScreen</string>
@@ -137,6 +134,10 @@
     <string name="pref_reset_onboarding_key">resetOnboarding</string>
     <string name="pref_rust_backend_key">useRustBackend</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
+    <!-- Developer options > Create fake media -->
+    <string name="pref_fill_collection">fillCollection</string>
+    <string name="pref_fill_collection_number_file">fillCollectionNumberFile</string>
+    <string name="pref_fill_collection_size_file">fillCollectionSizeFile</string>
     <!-- Messages displayed after the user enabled developer options, and warned remaining messages will be in English -->
     <string name="dev_options_enabled_msg">Enabled developer options</string>
     <!-- About -->
