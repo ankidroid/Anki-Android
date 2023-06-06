@@ -144,7 +144,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     private fun exportApkgOrColpkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
         activity.launchCatchingTask {
             val exportPkgPath = exportPath.path
-            activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
+            activity.withProgress(activity.resources.getString(R.string.export_preparation_in_progress)) {
                 withCol {
                     val exporter = if (did == null) {
                         AnkiPackageExporter(this, includeSched, includeMedia)

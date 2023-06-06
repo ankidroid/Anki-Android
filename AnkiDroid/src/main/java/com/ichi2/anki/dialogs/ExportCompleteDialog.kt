@@ -18,10 +18,10 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.R
+import com.ichi2.utils.*
 
 class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
     interface ExportCompleteDialogListener {
@@ -38,29 +38,18 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
     }
 
     @SuppressLint("CheckResult")
-    override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
-        super.onCreate(savedInstanceState)
-        val options = listOf(
-            getString(R.string.export_select_save_app),
-            getString(R.string.export_select_share_app)
-        )
-        return MaterialDialog(requireActivity()).show {
+    override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.show {
             title(text = notificationTitle)
-            message(text = notificationMessage)
-            listItems(items = options, waitForPositiveButton = false) { _, index, _ ->
-                listener.dismissAllDialogFragments()
-                when (index) {
-                    0 -> listener.saveExportFile(exportPath)
-                    1 -> listener.shareFile(exportPath)
-                }
-            }
-            negativeButton(R.string.dialog_cancel) { listener.dismissAllDialogFragments() }
+            positiveButton(R.string.export_choice_save_to) { listener.saveExportFile(exportPath) }
+            negativeButton(R.string.export_choice_share) { listener.shareFile(exportPath) }
         }
+        return builder.create()
     }
 
     override val notificationTitle: String
-        get() = res().getString(R.string.export_success_title)
+        get() = res().getString(R.string.export_ready_title)
 
-    override val notificationMessage: String
-        get() = res().getString(R.string.export_success_message)
+    override val notificationMessage: String? = null
 }
