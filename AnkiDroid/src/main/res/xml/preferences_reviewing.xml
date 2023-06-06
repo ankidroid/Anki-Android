@@ -33,14 +33,12 @@
             android:key="@string/new_spread_preference"
             android:title="@string/new_spread"
             app1:useSimpleSummaryProvider="true"/>
-        <com.ichi2.preferences.SeekBarPreferenceCompat
+        <com.ichi2.preferences.SliderPreference
             android:key="@string/day_offset_preference"
-            android:max="23"
+            android:valueFrom="0"
+            android:valueTo="23"
             android:title="@string/day_offset_with_description"
-            app:interval="1"
-            app:min="0"
-            app:xlabel="@string/xlabel_dayoffset_seekbar"
-            app:ylabel="@string/ylabel_dayoffset_seekbar"
+            app1:persistent="false"
             app1:summaryFormat="@string/day_offset_summary"/>
         <com.ichi2.preferences.NumberRangePreferenceCompat
             android:key="@string/learn_cutoff_preference"
@@ -70,20 +68,22 @@
             android:key="@string/automatic_answer_action_preference"
             android:title="@string/timeout_answer"
             app1:useSimpleSummaryProvider="true"/>
-        <com.ichi2.preferences.SeekBarPreferenceCompat
-            android:defaultValue="20"
-            android:dependency="@string/timeout_answer_preference"
+        <com.ichi2.preferences.SliderPreference
             android:key="@string/timeout_answer_seconds_preference"
-            android:max="30"
-            android:title="@string/timeout_answer_seconds"
-            app1:summaryFormat="@string/pref_summary_seconds"/>
-        <com.ichi2.preferences.SeekBarPreferenceCompat
-            android:defaultValue="60"
             android:dependency="@string/timeout_answer_preference"
+            android:title="@string/timeout_answer_seconds"
+            android:defaultValue="20"
+            android:valueFrom="0"
+            android:valueTo="30"
+            app1:displayFormat="@string/pref_summary_seconds"/>
+        <com.ichi2.preferences.SliderPreference
             android:key="@string/timeout_question_seconds_preference"
-            android:max="60"
+            android:dependency="@string/timeout_answer_preference"
+            android:defaultValue="60"
+            android:valueFrom="0"
+            android:valueTo="60"
             android:title="@string/timeout_question_seconds"
-            app1:summaryFormat="@string/pref_summary_seconds"/>
+            app1:displayFormat="@string/pref_summary_seconds"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_advanced">
         <SwitchPreference
