@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2023 Ashish Yadav <mailtoashish693@gmail.com>
+ *  Copyright (c) 2021 David Allison <davidallisongithub@gmail.com>
  *
  *  This program is free software; you can redistribute it and/or modify it under
  *  the terms of the GNU General Public License as published by the Free Software
@@ -13,23 +13,17 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.ichi2.ui
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.SearchView
-import com.ichi2.anki.R
 
-/** This class serves as a hack to overcome the cursor color issue in the app due to
- * the colorAscent, if there is a relevant solution in future remove this and use the
- * CardBrowserSearchView in the CardBrowser activity and relevant searchView at the places
- * where this class is used. See https://github.com/ankidroid/Anki-Android/pull/13503#pullrequestreview-1460175895 */
-class SearchViewWithWhiteCursor @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyle: Int = androidx.appcompat.R.attr.searchViewStyle
-) : SearchView(ContextThemeWrapper(context, R.style.SearchViewTheme), attrs, defStyle) {
+class CardBrowserSearchView : SearchView {
+    constructor(context: Context) : super(context) {}
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
     /** Whether an action to set text should be ignored  */
     private var mIgnoreValueChange = false

@@ -683,6 +683,9 @@ open class DeckPicker :
                 Timber.i("DeckPicker:: SearchItem closed")
                 // Show the floating action button if it is hidden
                 mFloatingActionMenu.showFloatingActionButton()
+                // clear the search filter when SearchView is collapsed
+                val adapter = recyclerView.adapter as Filterable?
+                adapter?.filter?.filter(null)
                 return true
             }
         })
