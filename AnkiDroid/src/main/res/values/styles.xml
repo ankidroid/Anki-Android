@@ -233,4 +233,16 @@
              TODO Remove if the app moves to material theming. -->
         <item name="android:letterSpacing">0</item>
     </style>
+    <style name="SliderLabelStyle" parent="Widget.MaterialComponents.Tooltip">
+        <item name="android:textColor">?attr/sliderLabelTextColor</item>
+    </style>
+
+    <style name="SliderStyle" parent="Base.Widget.MaterialComponents.Slider">
+        <item name="trackColorActive">@color/slider_active_track_color</item>
+        <item name="trackColorInactive">@color/slider_inactive_track_color</item>
+        <item name="haloColor">@color/slider_halo_color</item>
+        <item name="thumbColor">@color/slider_thumb_color</item>
+        <item name="labelStyle">@style/SliderLabelStyle</item>
+        <item name="tickVisible">false</item>
+    </style>
 </resources>
