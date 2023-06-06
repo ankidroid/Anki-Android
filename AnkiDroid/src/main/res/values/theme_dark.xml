@@ -165,6 +165,8 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_dark_primary</item>
+
+        <item name="sliderLabelTextColor">@color/black</item>
     </style>
 
     <!-- Filter Sheet Style -->

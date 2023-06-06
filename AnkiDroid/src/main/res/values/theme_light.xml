@@ -178,6 +178,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/white</item>
+
+        <item name="sliderLabelTextColor">@color/white</item>
     </style>
 
     <!-- Filter Sheet Style -->
