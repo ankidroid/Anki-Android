@@ -33,6 +33,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="preferenceCategoryTitleTextColor">@color/material_light_blue_800</item>
         <!-- Navigation drawer theme -->
         <item name="navDrawerItemColor">@color/drawer_item_text_light</item>
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_light</item>
