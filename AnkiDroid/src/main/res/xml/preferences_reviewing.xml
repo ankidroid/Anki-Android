@@ -54,7 +54,7 @@
             app1:summaryFormat="@string/pref_summary_minutes"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/timeout_answer_text" >
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:disableDependentsState="false"
             android:key="@string/timeout_answer_preference"
@@ -86,12 +86,12 @@
             app1:displayFormat="@string/pref_summary_seconds"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_advanced">
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/keep_screen_on_preference"
             android:summary="@string/pref_keep_screen_on_summ"
             android:title="@string/pref_keep_screen_on" />
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="@string/new_timezone_handling_preference"
             android:title="@string/new_timezone"
             android:defaultValue="false" />

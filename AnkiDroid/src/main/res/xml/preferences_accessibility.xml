@@ -42,7 +42,7 @@
         android:valueTo="200"
         android:stepSize="10"
         app:displayFormat="@string/pref_summary_percentage"/>
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:key="@string/show_large_answer_buttons_preference"
         android:defaultValue="false"
         android:summary="@string/show_large_answer_buttons_summ"

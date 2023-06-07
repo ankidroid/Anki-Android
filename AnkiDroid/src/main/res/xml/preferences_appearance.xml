@@ -57,7 +57,7 @@
             search:ignore="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/background_image_title" >
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:checked="false"
             android:defaultValue="0"
             android:key="@string/pref_deck_picker_background_key"
@@ -78,12 +78,12 @@
             android:entryValues="@array/full_screen_mode_values"
             android:title="@string/fullscreen_review"
             app:useSimpleSummaryProvider="true"/>
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/center_vertically_preference"
             android:summary="@string/vertical_centering_summ"
             android:title="@string/vertical_centering" />
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="@string/show_estimates_preference"
             android:summary="@string/show_estimates_summ"
             android:title="@string/show_estimates" />
@@ -94,16 +94,16 @@
             android:key="@string/answer_buttons_position_preference"
             android:title="@string/answer_buttons_position"
             app:useSimpleSummaryProvider="true"/>
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="@string/show_topbar_preference"
             android:defaultValue="true"
             android:summary="@string/show_top_bar_summ"
             android:title="@string/show_top_bar" />
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="@string/show_progress_preference"
             android:summary="@string/show_progress_summ"
             android:title="@string/show_progress" />
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="@string/show_eta_preference"
             android:defaultValue="true"
             android:summary="@string/show_eta_summ"
@@ -130,7 +130,7 @@
             app:useSimpleSummaryProvider="true"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/card_browser">
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:checked="false"
             android:defaultValue="false"
             android:key="@string/pref_display_filenames_in_browser_key"

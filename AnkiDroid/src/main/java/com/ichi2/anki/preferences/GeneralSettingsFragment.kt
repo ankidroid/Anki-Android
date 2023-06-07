@@ -18,7 +18,7 @@ package com.ichi2.anki.preferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.preference.ListPreference
-import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -54,7 +54,7 @@ class GeneralSettingsFragment : SettingsFragment() {
         // Paste PNG
         // Represents in the collection's pref "pastePNG" , i.e.
         // whether to convert clipboard uri to png format or not.
-        requirePreference<SwitchPreference>(R.string.paste_png_key).apply {
+        requirePreference<SwitchPreferenceCompat>(R.string.paste_png_key).apply {
             launchCatchingTask { isChecked = withCol { get_config("pastePNG", false)!! } }
             setOnPreferenceChangeListener { newValue ->
                 launchCatchingTask { withCol { set_config("pastePNG", newValue) } }
@@ -65,7 +65,7 @@ class GeneralSettingsFragment : SettingsFragment() {
             CrashReportService.onPreferenceChanged(requireContext(), newValue as String)
         }
         // Anki card context menu
-        requirePreference<SwitchPreference>(R.string.anki_card_external_context_menu_key).apply {
+        requirePreference<SwitchPreferenceCompat>(R.string.anki_card_external_context_menu_key).apply {
             title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.context_menu_anki_card_label))
             summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.context_menu_anki_card_label))
             setOnPreferenceChangeListener { newValue ->
@@ -73,7 +73,7 @@ class GeneralSettingsFragment : SettingsFragment() {
             }
         }
         // Card browser context menu
-        requirePreference<SwitchPreference>(R.string.card_browser_external_context_menu_key).apply {
+        requirePreference<SwitchPreferenceCompat>(R.string.card_browser_external_context_menu_key).apply {
             title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.card_browser_context_menu))
             summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.card_browser_context_menu))
             setOnPreferenceChangeListener { newValue ->
