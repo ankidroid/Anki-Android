@@ -629,7 +629,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                         }
                     } catch (e: Exception) {
                         Timber.e(e, "Error on saving deck in background")
-                        // TODO should this error be reported through our error reporting service?
+                        CrashReportService.sendExceptionReport(e, "AnkiActivity:: saveCollectionInBackground")
                     }
                 }
                 Timber.d("saveCollectionInBackground: finished")
