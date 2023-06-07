@@ -1275,7 +1275,7 @@ abstract class AbstractFlashcardViewer :
         if (mGesturesEnabled) {
             mGestureProcessor.init(preferences)
         }
-        if (preferences.getBoolean("keepScreenOn", false)) {
+        if (preferences.getBoolean("timeoutAnswer", false) || preferences.getBoolean("keepScreenOn", false)) {
             this.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
         return preferences

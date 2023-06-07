@@ -72,13 +72,6 @@ class ReviewingSettingsFragment : SettingsFragment() {
                 launchCatchingTask { setDayOffset(requireContext(), newValue as Int) }
             }
         }
-        // Automatic display answer
-        requirePreference<SwitchPreference>(R.string.timeout_answer_preference).setOnPreferenceChangeListener { newValue ->
-            // Enable `Keep screen on` along with the automatic display answer preference
-            if (newValue == true) {
-                requirePreference<SwitchPreference>(R.string.keep_screen_on_preference).isChecked = true
-            }
-        }
 
         /**
          * Timeout answer
