@@ -23,11 +23,11 @@
     xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_dev_options"
     android:key="@string/pref_dev_options_screen_key">
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:title="@string/dev_options_enabled_pref"
         android:key="@string/dev_options_enabled_by_user_key"
         android:defaultValue="true"/>
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/html_javascript_debugging_key"
         android:summary="@string/html_javascript_debugging_summ"
@@ -44,7 +44,7 @@
         android:title="Lock Database"
         android:summary="Touch here to lock the database (all threads block in-process, exception if using second process)"
         android:key="@string/pref_lock_database_key"/>
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:title="@string/show_onboarding"
         android:summary="@string/show_onboarding_desc"
         android:key="@string/pref_show_onboarding_key"

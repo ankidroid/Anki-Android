@@ -25,11 +25,11 @@
         android:key="@string/pref_notifications_minimum_cards_due_key"
         android:title="@string/notification_pref_title"
         app:useSimpleSummaryProvider="true"/>
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/pref_notifications_vibrate_key"
         android:title="@string/notification_minimum_cards_due_vibrate" />
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/pref_notifications_blink_key"
         android:title="@string/notification_minimum_cards_due_blink" />

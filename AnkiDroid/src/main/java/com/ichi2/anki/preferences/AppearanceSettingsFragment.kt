@@ -20,7 +20,7 @@ import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
@@ -35,7 +35,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class AppearanceSettingsFragment : SettingsFragment() {
-    private var mBackgroundImage: SwitchPreference? = null
+    private var mBackgroundImage: SwitchPreferenceCompat? = null
     override val preferenceResource: Int
         get() = R.xml.preferences_appearance
     override val analyticsScreenNameConstant: String
@@ -43,7 +43,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         // Configure background
-        mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
+        mBackgroundImage = requirePreference<SwitchPreferenceCompat>("deckPickerBackground")
         mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             if (mBackgroundImage!!.isChecked) {
                 try {
@@ -133,7 +133,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // Show estimate time
         // Represents the collection pref "estTime": i.e.
         // whether the buttons should indicate the duration of the interval if we click on them.
-        requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
+        requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
             launchCatchingTask { isChecked = withCol { get_config_boolean("estTimes") } }
             setOnPreferenceChangeListener { newETA ->
                 launchCatchingTask { withCol { set_config("estTimes", newETA) } }
@@ -142,7 +142,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // Show progress
         // Represents the collection pref "dueCounts": i.e.
         // whether the remaining number of cards should be shown.
-        requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
+        requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
             launchCatchingTask { isChecked = withCol { get_config_boolean("dueCounts") } }
             setOnPreferenceChangeListener { newDueCountsValue ->
                 launchCatchingTask { withCol { set_config("dueCounts", newDueCountsValue) } }

@@ -16,7 +16,7 @@
 package com.ichi2.anki.preferences
 
 import androidx.preference.ListPreference
-import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
@@ -88,7 +88,7 @@ class ReviewingSettingsFragment : SettingsFragment() {
             }
         }
         // New timezone handling
-        requirePreference<SwitchPreference>(R.string.new_timezone_handling_preference).apply {
+        requirePreference<SwitchPreferenceCompat>(R.string.new_timezone_handling_preference).apply {
             launchCatchingTask {
                 isChecked = withCol { sched._new_timezone_enabled() }
                 isEnabled = withCol { schedVer() > 1 }

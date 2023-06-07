@@ -8,7 +8,7 @@
     android:title="@string/advanced_statistics_title"
     android:key="@string/pref_advanced_statistics_screen_key">
 
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/pref_advanced_statistics_enabled_key"
         android:summary="@string/enable_advanced_statistics_summ"

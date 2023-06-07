@@ -18,7 +18,7 @@ package com.ichi2.anki.preferences
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
-import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.snackbar.showSnackbar
@@ -40,7 +40,7 @@ class DevOptionsFragment : SettingsFragment() {
         get() = "prefs.dev_options"
 
     override fun initSubscreen() {
-        val enableDevOptionsPref = requirePreference<SwitchPreference>(R.string.dev_options_enabled_by_user_key)
+        val enableDevOptionsPref = requirePreference<SwitchPreferenceCompat>(R.string.dev_options_enabled_by_user_key)
         /**
          * If it is a DEBUG build, hide the preference to disable developer options
          * If it is a RELEASE build, configure the preference to disable dev options
