@@ -57,21 +57,21 @@
         android:title="Create fake media"
         >
         <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
-            android:key="@string/pref_fill_collection_number_file"
+            android:key="@string/pref_fill_collection_number_file_key"
             android:title="Number of files to generate"
             app1:useSimpleSummaryProvider="true"
             android:defaultValue="20"
             app:min="1"
             />
         <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
-            android:key="@string/pref_fill_collection_size_file"
+            android:key="@string/pref_fill_collection_size_file_key"
             android:title="Size of the files to generate (in byte)"
             app1:useSimpleSummaryProvider="true"
             android:defaultValue="1000000"
             app:min="1"
             />
         <Preference
-            android:key="@string/pref_fill_collection"
+            android:key="@string/pref_fill_collection_key"
             android:title="Create files"
             />
     </PreferenceCategory>

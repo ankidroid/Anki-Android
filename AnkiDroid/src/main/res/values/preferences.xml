@@ -135,9 +135,9 @@
     <string name="pref_rust_backend_key">useRustBackend</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <!-- Developer options > Create fake media -->
-    <string name="pref_fill_collection">fillCollection</string>
-    <string name="pref_fill_collection_number_file">fillCollectionNumberFile</string>
-    <string name="pref_fill_collection_size_file">fillCollectionSizeFile</string>
+    <string name="pref_fill_collection_key">fillCollection</string>
+    <string name="pref_fill_collection_number_file_key">fillCollectionNumberFile</string>
+    <string name="pref_fill_collection_size_file_key">fillCollectionSizeFile</string>
     <!-- Messages displayed after the user enabled developer options, and warned remaining messages will be in English -->
     <string name="dev_options_enabled_msg">Enabled developer options</string>
     <!-- About -->

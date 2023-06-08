@@ -83,13 +83,13 @@ class DevOptionsFragment : SettingsFragment() {
             true
         }
 
-        val sizePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_size_file))
-        val numberOfFilePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_number_file))
+        val sizePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_size_file_key))
+        val numberOfFilePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_number_file_key))
 
         /*
          * Create fake media section
          */
-        requirePreference<Preference>(R.string.pref_fill_collection).setOnPreferenceClickListener {
+        requirePreference<Preference>(R.string.pref_fill_collection_key).setOnPreferenceClickListener {
             val sizeOfFiles = sizePreference.getValue()
             val numberOfFiles = numberOfFilePreference.getValue()
             AlertDialog.Builder(requireContext()).show {
@@ -122,7 +122,7 @@ class DevOptionsFragment : SettingsFragment() {
                         UIUtils.showThemedToast(requireContext(), "$i files added.", true)
                     }
                 }
-                UIUtils.showThemedToast(requireContext(), "%i files added successfully", false)
+                UIUtils.showThemedToast(requireContext(), "$numberOfFiles files added successfully", false)
             }
         }
     }
