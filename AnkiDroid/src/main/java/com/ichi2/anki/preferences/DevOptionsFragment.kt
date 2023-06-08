@@ -22,8 +22,12 @@ import androidx.preference.SwitchPreference
 import com.ichi2.anki.*
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
 import com.ichi2.utils.show
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.io.File
 
 /**
  * Fragment exclusive to DEBUG builds which can be used
@@ -77,6 +81,49 @@ class DevOptionsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_reset_onboarding_key).setOnPreferenceClickListener {
             OnboardingUtils.reset(requireContext())
             true
+        }
+
+        val sizePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_size_file_key))
+        val numberOfFilePreference = requirePreference<IncrementerNumberRangePreferenceCompat>(getString(R.string.pref_fill_collection_number_file_key))
+
+        /*
+         * Create fake media section
+         */
+        requirePreference<Preference>(R.string.pref_fill_collection_key).setOnPreferenceClickListener {
+            val sizeOfFiles = sizePreference.getValue()
+            val numberOfFiles = numberOfFilePreference.getValue()
+            AlertDialog.Builder(requireContext()).show {
+                setTitle("Warning!")
+                setMessage("You'll add $numberOfFiles files with no meaningful content, potentially overriding existing files. Do not do it on a collection you care about.")
+                setPositiveButton("OK") { _, _ ->
+                    generateFiles(sizeOfFiles, numberOfFiles)
+                }
+                setNegativeButton(R.string.dialog_cancel) { _, _ -> }
+            }
+            true
+        }
+    }
+
+    private fun generateFiles(size: Int, numberOfFiles: Int) {
+        Timber.d("numberOf files: $numberOfFiles, size: $size")
+        launchCatchingTask {
+            withProgress("Generating $numberOfFiles files of size $size bytes") {
+                val suffix = ".$size"
+                for (i in 1..numberOfFiles) {
+                    val f = withContext(Dispatchers.IO) {
+                        File.createTempFile("00$i", suffix)
+                    }
+                    f.appendBytes(ByteArray(size))
+
+                    CollectionManager.withCol {
+                        media.addFile(f)
+                    }
+                    if (i % 1000 == 0) {
+                        UIUtils.showThemedToast(requireContext(), "$i files added.", true)
+                    }
+                }
+                UIUtils.showThemedToast(requireContext(), "$numberOfFiles files added successfully", false)
+            }
         }
     }
 

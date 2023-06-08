@@ -19,6 +19,8 @@
 ~ at developers, who are assumed to speak English.
 -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_dev_options"
     android:key="@string/pref_dev_options_screen_key">
     <SwitchPreference
@@ -51,4 +53,26 @@
         android:title="@string/reset_onboarding"
         android:summary="@string/reset_onboarding_desc"
         android:key="@string/pref_reset_onboarding_key"/>
+    <PreferenceCategory
+        android:title="Create fake media"
+        >
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:key="@string/pref_fill_collection_number_file_key"
+            android:title="Number of files to generate"
+            app1:useSimpleSummaryProvider="true"
+            android:defaultValue="20"
+            app:min="1"
+            />
+        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
+            android:key="@string/pref_fill_collection_size_file_key"
+            android:title="Size of the files to generate (in byte)"
+            app1:useSimpleSummaryProvider="true"
+            android:defaultValue="1000000"
+            app:min="1"
+            />
+        <Preference
+            android:key="@string/pref_fill_collection_key"
+            android:title="Create files"
+            />
+    </PreferenceCategory>
 </PreferenceScreen>
