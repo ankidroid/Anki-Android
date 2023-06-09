@@ -289,12 +289,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
         }
     }
 
-    class FindEmptyCards : TaskDelegate<Int, List<Long>?>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): List<Long> {
-            return col.emptyCids(collectionTask)
-        }
-    }
-
     class Reset : TaskDelegate<Void, Void?>() {
         override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Void>): Void? {
             col.sched.reset()

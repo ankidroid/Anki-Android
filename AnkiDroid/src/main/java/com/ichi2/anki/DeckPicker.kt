@@ -2296,7 +2296,14 @@ open class DeckPicker :
     }
 
     private fun handleEmptyCards() {
-        mEmptyCardTask = TaskManager.launchCollectionTask(FindEmptyCards(), handlerEmptyCardListener())
+        mEmptyCardTask = TaskManager.launchCollectionTask(
+            object : TaskDelegate<Int, List<Long>?>() {
+                override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<Int>): List<Long> {
+                    return col.emptyCids(collectionTask)
+                }
+            },
+            handlerEmptyCardListener()
+        )
     }
 
     private fun handlerEmptyCardListener(): HandleEmptyCardListener {
