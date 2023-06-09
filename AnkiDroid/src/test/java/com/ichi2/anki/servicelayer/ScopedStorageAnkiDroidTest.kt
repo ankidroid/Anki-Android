@@ -88,14 +88,16 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
     fun migrate_essential_files_deletes_created_directory_on_failure() = runTest {
         setupCol()
 
-        File(col.path).delete()
+        val colPath = File(col.path)
+        CollectionManager.ensureClosed()
+        colPath.delete()
 
         val folder = getBestRootDirectory()
 
         assertFailsWith<MigrateEssentialFiles.UserActionRequiredException.MissingEssentialFileException> {
             migrateEssentialFilesForTest(
                 targetContext,
-                getMigrationSourcePath(),
+                colPath.parent!!,
                 destOverride = DestFolderOverride.Subfolder(folder)
             )
         }
