@@ -1665,15 +1665,15 @@ open class DeckPicker :
         }
     }
 
-    private fun importAddPostTask(result: ImporterData?) {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-            mProgressDialog!!.dismiss()
+    private fun importAddPostTask(result: ImporterData) {
+        mProgressDialog?.apply {
+            if (isShowing) dismiss()
         }
         // If result.errFlag and result are both set, we are signalling
         // some files were imported successfully & some errors occurred.
         // If result.impList is null & result.errList is set
         // we are signalling all the files which were selected threw error
-        if (result!!.impList == null && result.errList != null) {
+        if (result.impList == null && result.errList != null) {
             Timber.w("Import: Add Failed: %s", result.errList)
             showSimpleMessageDialog(result.errList)
         } else {
@@ -1687,7 +1687,7 @@ open class DeckPicker :
             for (data in result.impList!!) {
                 // Check if mLog is not null or empty
                 // If mLog is not null or empty that indicates an error has occurred.
-                if (data.log.isNullOrEmpty()) {
+                if (data.log.isEmpty()) {
                     fileCount += 1
                     totalCardCount += data.cardCount
                 } else { errorMsg += data.fileName + "\n" + data.log[0] + "\n" }
