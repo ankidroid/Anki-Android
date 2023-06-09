@@ -90,7 +90,7 @@ object CollectionManager {
     /**
      * Execute the provided block with the collection, opening if necessary.
      *
-     * Calls are serialized, and run in background Dispatchers.IO thread.
+     * Calls are serialized, and run in background [Dispatchers.IO] thread.
      *
      * Parallel calls to this function are guaranteed to be serialized, so you can be
      * sure the collection won't be closed or modified by another thread. This guarantee
