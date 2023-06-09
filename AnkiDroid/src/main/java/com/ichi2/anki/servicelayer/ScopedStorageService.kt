@@ -84,7 +84,7 @@ object ScopedStorageService {
      * This directory should exist if the preference is set
      *
      * If this preference is set and non-empty, then a [migration of user data][MigrateUserData] should be occurring
-     * @see userMigrationIsInProgress
+     * @see mediaMigrationIsInProgress
      * @see UserDataMigrationPreferences
      */
     const val PREF_MIGRATION_SOURCE = "migrationSourcePath"
@@ -98,7 +98,7 @@ object ScopedStorageService {
      * of reasons that `deckPath` could change, and it's a long-term risk to couple the two operations
      *
      * If this preference is set and non-empty, then a [migration of user data][MigrateUserData] should be occurring
-     * @see userMigrationIsInProgress
+     * @see mediaMigrationIsInProgress
      * @see UserDataMigrationPreferences
      */
     const val PREF_MIGRATION_DESTINATION = "migrationDestinationPath"
@@ -158,18 +158,18 @@ object ScopedStorageService {
      * @throws IllegalStateException If either [PREF_MIGRATION_SOURCE] or [PREF_MIGRATION_DESTINATION] is set (but not both)
      * It is a logic bug if only one is set
      */
-    fun userMigrationIsInProgress(context: Context): Boolean =
-        userMigrationIsInProgress(AnkiDroidApp.getSharedPrefs(context))
+    fun mediaMigrationIsInProgress(context: Context): Boolean =
+        mediaMigrationIsInProgress(AnkiDroidApp.getSharedPrefs(context))
 
     /**
      * Whether a user data scoped storage migration is taking place
      * This refers to the [MigrateUserData] operation of copying media which can take a long time.
      *
-     * @see userMigrationIsInProgress[Context]
+     * @see mediaMigrationIsInProgress[Context]
      * @throws IllegalStateException If either [PREF_MIGRATION_SOURCE] or [PREF_MIGRATION_DESTINATION] is set (but not both)
      * It is a logic bug if only one is set
      */
-    fun userMigrationIsInProgress(preferences: SharedPreferences) =
+    fun mediaMigrationIsInProgress(preferences: SharedPreferences) =
         UserDataMigrationPreferences.createInstance(preferences).migrationInProgress
 
     /**

@@ -130,7 +130,7 @@ fun isLoggedIn() = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).getString(
 
 fun millisecondsSinceLastSync(preferences: SharedPreferences) = TimeManager.time.intTimeMS() - preferences.getLong("lastSyncTime", 0)
 
-fun canSync(context: Context) = !ScopedStorageService.userMigrationIsInProgress(context)
+fun canSync(context: Context) = !ScopedStorageService.mediaMigrationIsInProgress(context)
 
 fun DeckPicker.handleNewSync(
     conflict: Connection.ConflictResolution?,

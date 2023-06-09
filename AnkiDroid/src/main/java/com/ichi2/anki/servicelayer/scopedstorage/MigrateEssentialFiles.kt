@@ -91,10 +91,6 @@ internal constructor(
      * @throws IllegalStateException If a lock cannot be acquired on the collection
      */
     fun execute() {
-        if (ScopedStorageService.userMigrationIsInProgress(context)) {
-            throw IllegalStateException("Migration is already in progress")
-        }
-
         val destinationPath = destinationDirectory.path
 
         ensureFolderIsEmpty(destinationPath)

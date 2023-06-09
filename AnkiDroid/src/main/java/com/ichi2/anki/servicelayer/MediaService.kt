@@ -25,7 +25,7 @@ import com.ichi2.anki.withProgress
 import com.ichi2.libanki.MediaCheckResult
 
 suspend fun AnkiActivity.checkMedia(): MediaCheckResult? {
-    if (ScopedStorageService.userMigrationIsInProgress(this)) {
+    if (ScopedStorageService.mediaMigrationIsInProgress(this)) {
         showSnackbar(
             R.string.functionality_disabled_during_storage_migration,
             Snackbar.LENGTH_SHORT
