@@ -174,19 +174,19 @@ fun DeckPicker.handleNewSync(
 fun MyAccount.handleNewLogin(username: String, password: String) {
     val endpoint = getEndpoint(this)
     launchCatchingTask {
-        val auth = try {
-            withProgress({}, onCancel = ::cancelSync) {
+        try {
+            val auth = withProgress({}, onCancel = ::cancelSync) {
                 withCol {
                     newBackend.syncLogin(username, password, endpoint)
                 }
             }
+            updateLogin(baseContext, username, auth.hkey)
+            finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
         } catch (exc: BackendSyncException.BackendSyncAuthFailedException) {
             // auth failed; clear out login details
             updateLogin(baseContext, "", "")
-            throw exc
+            exc.localizedMessage?.let { showSnackbar(it) }
         }
-        updateLogin(baseContext, username, auth.hkey)
-        finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
     }
 }
 
