@@ -22,11 +22,9 @@ import android.content.Context
 import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
 import com.ichi2.anki.AnkiSerialization.factory
-import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
-import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
@@ -160,31 +158,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 CollectionHelper.instance.closeCollection(true, "Check Database Completed")
                 Pair(true, result)
             }
-        }
-    }
-
-    class ImportAdd(private val pathList: List<String>) : TaskDelegate<String, ImporterData>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): ImporterData {
-            Timber.d("doInBackgroundImportAdd")
-            val res = AnkiDroidApp.instance.baseContext.resources
-
-            var impList = arrayListOf<AnkiPackageImporter>()
-            val errBuilder = StringBuilder()
-
-            for (path in pathList) {
-                val imp = AnkiPackageImporter(col, path)
-                imp.setProgressCallback(TaskManager.ProgressCallback(collectionTask, res))
-                try {
-                    imp.run()
-                    impList.add(imp)
-                } catch (e: ImportExportException) {
-                    Timber.w(e)
-                    errBuilder.append(File(path).name, "\n", e.message, "\n")
-                }
-            }
-
-            val errList = if (errBuilder.isEmpty()) null else errBuilder.toString()
-            return ImporterData(if (impList.isEmpty()) null else impList, errList)
         }
     }
 

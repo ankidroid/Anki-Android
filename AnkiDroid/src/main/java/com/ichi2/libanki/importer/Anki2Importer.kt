@@ -863,7 +863,13 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
      * @param postProcess Percentage of remaining tasks complete.
      */
     protected fun publishProgress(notesDone: Int, cardsDone: Int, postProcess: Int) {
-        progress?.publishProgress(res.getString(R.string.import_progress, notesDone, cardsDone, postProcess))
+        progress?.trySend(
+            ImportAddProgress(
+                notesDone = notesDone,
+                cardsDone = cardsDone,
+                postProcess = postProcess
+            )
+        )
     }
 
     /* The methods below are only used for testing. */
@@ -883,3 +889,16 @@ open class Anki2Importer(col: Collection?, file: String) : Importer(col!!, file)
         mDupeOnSchemaChange = false
     }
 }
+
+/**
+ * Data class which holds the intermediary status of the import add operation.
+ *
+ * @property notesDone Percentage of notes complete.
+ * @property cardsDone Percentage of cards complete.
+ * @property postProcess Percentage of remaining tasks complete.
+ */
+data class ImportAddProgress(
+    val notesDone: Int,
+    val cardsDone: Int,
+    val postProcess: Int
+)

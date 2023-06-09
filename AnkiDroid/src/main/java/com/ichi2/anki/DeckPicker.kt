@@ -80,6 +80,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.anki.exception.ImportExportException
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.notetype.ManageNotetypes
@@ -109,6 +110,8 @@ import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Collection.CheckDatabaseResult
+import com.ichi2.libanki.importer.AnkiPackageImporter
+import com.ichi2.libanki.importer.ImportAddProgress
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
@@ -1607,9 +1610,99 @@ open class DeckPicker :
     override fun importAdd(importPath: List<String>) {
         Timber.d("importAdd() for file %s", importPath)
         if (BackendFactory.defaultLegacySchema) {
-            TaskManager.launchCollectionTask(ImportAdd(importPath), importAddListener())
+            importAddLegacy(importPath)
         } else {
             importApkgs(importPath)
+        }
+    }
+
+    private fun importAddLegacy(pathList: List<String>) {
+        launchCatchingTask {
+            val importerData = withProgressDialog(this@DeckPicker, null) { progressDialog ->
+                Timber.d("doInBackgroundImportAdd")
+                @Suppress("DEPRECATION")
+                progressDialog.setMessage(resources.getString(R.string.import_title))
+                withChannel { progressChannel ->
+                    launch {
+                        for (importAddProgress: ImportAddProgress in progressChannel) {
+                            // TODO the current code doesn't show the name of the file currently
+                            //  being imported. This filename is available in Anki2Importer to be
+                            //  passed in, but the displayed string needs to be modified as we are
+                            //  combining all data into a single string(this makes it difficult for
+                            //  the UI to show long filenames correctly)
+                            @Suppress("DEPRECATION")
+                            progressDialog.setMessage(
+                                getString(
+                                    R.string.import_progress,
+                                    importAddProgress.notesDone,
+                                    importAddProgress.cardsDone,
+                                    importAddProgress.postProcess
+                                )
+                            )
+                        }
+                    }
+                    withCol {
+                        val impList = arrayListOf<AnkiPackageImporter>()
+                        val errBuilder = StringBuilder()
+
+                        for (path in pathList) {
+                            val imp = AnkiPackageImporter(this, path)
+                            imp.setProgressCallback(progressChannel)
+                            try {
+                                imp.run()
+                                impList.add(imp)
+                            } catch (e: ImportExportException) {
+                                Timber.w(e)
+                                errBuilder.append(File(path).name, "\n", e.message, "\n")
+                            }
+                        }
+                        val errList = if (errBuilder.isEmpty()) null else errBuilder.toString()
+                        ImporterData(if (impList.isEmpty()) null else impList, errList)
+                    }
+                }
+            }
+            importAddPostTask(importerData)
+        }
+    }
+
+    private fun importAddPostTask(result: ImporterData) {
+        mProgressDialog?.apply {
+            if (isShowing) dismiss()
+        }
+        // If result.errFlag and result are both set, we are signalling
+        // some files were imported successfully & some errors occurred.
+        // If result.impList is null & result.errList is set
+        // we are signalling all the files which were selected threw error
+        if (result.impList == null && result.errList != null) {
+            Timber.w("Import: Add Failed: %s", result.errList)
+            showSimpleMessageDialog(result.errList)
+        } else {
+            Timber.i("Import: Add succeeded")
+
+            var fileCount = 0
+            var totalCardCount = 0
+
+            var errorMsg = ""
+
+            for (data in result.impList!!) {
+                // Check if mLog is not null or empty
+                // If mLog is not null or empty that indicates an error has occurred.
+                if (data.log.isEmpty()) {
+                    fileCount += 1
+                    totalCardCount += data.cardCount
+                } else { errorMsg += data.fileName + "\n" + data.log[0] + "\n" }
+            }
+
+            var dialogMsg = resources.getQuantityString(R.plurals.import_complete_message, fileCount, fileCount, totalCardCount)
+            if (result.errList != null) {
+                errorMsg += result.errList
+            }
+            if (errorMsg.isNotEmpty()) {
+                dialogMsg += "\n\n" + resources.getString(com.ichi2.anki.R.string.import_stats_error, errorMsg)
+            }
+
+            showSimpleMessageDialog(dialogMsg)
+            updateDeckList()
         }
     }
 
