@@ -58,8 +58,10 @@ object CollectionManager {
     var emulateOpenFailure = false
 
     /**
-     * Execute the provided block on a serial queue, to ensure concurrent access
-     * does not happen.
+     * Execute the provided block on a serial background queue, to ensure
+     * concurrent access does not happen.
+     *
+     * The background queue is run in a [Dispatchers.IO] context.
      * It's important that the block is not suspendable - if it were, it would allow
      * multiple requests to be interleaved when a suspend point was hit.
      *
@@ -87,6 +89,8 @@ object CollectionManager {
 
     /**
      * Execute the provided block with the collection, opening if necessary.
+     *
+     * Calls are serialized, and run in background [Dispatchers.IO] thread.
      *
      * Parallel calls to this function are guaranteed to be serialized, so you can be
      * sure the collection won't be closed or modified by another thread. This guarantee
