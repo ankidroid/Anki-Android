@@ -93,6 +93,7 @@ import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.mediaMigrationIsInProgress
+import com.ichi2.anki.servicelayer.ScopedStorageService.prepareAndValidateSourceAndDestinationFolders
 import com.ichi2.anki.services.MediaMigrationState
 import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.PREF_MIGRATION_ERROR_TEXT
@@ -2583,15 +2584,12 @@ open class DeckPicker :
         launchCatchingTask {
             val elapsedMillisDuringEssentialFilesMigration = measureTimeMillis {
                 withProgress(getString(R.string.start_migration_progress_message)) {
-                    withContext(Dispatchers.IO) {
-                        loadDeckCounts?.cancel()
-                        CollectionHelper.instance.closeCollection(false, "migration to scoped storage")
-                        ScopedStorageService.migrateEssentialFiles(baseContext)
-
-                        updateDeckList()
-                        handleStartup()
-                        startMigrateUserDataService()
-                    }
+                    loadDeckCounts?.cancel()
+                    val folders = prepareAndValidateSourceAndDestinationFolders(baseContext)
+                    CollectionManager.migrateEssentialFiles(baseContext, folders)
+                    updateDeckList()
+                    handleStartup()
+                    startMigrateUserDataService()
                 }
             }
             if (elapsedMillisDuringEssentialFilesMigration > 800) {

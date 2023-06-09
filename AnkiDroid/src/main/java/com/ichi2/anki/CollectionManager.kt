@@ -17,9 +17,12 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.backend.backendError
+import com.ichi2.anki.servicelayer.ValidatedMigrationSourceAndDestination
+import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.Storage.collection
@@ -221,7 +224,7 @@ object CollectionManager {
             throw BackendException.BackendDbException.BackendDbLockedException(backendError {})
         }
         if (collection == null || collection!!.dbClosed) {
-            val path = createCollectionPath()
+            val path = collectionPathInValidFolder()
             collection =
                 collection(AnkiDroidApp.instance, path, server = false, log = true, backend)
         }
@@ -239,7 +242,7 @@ object CollectionManager {
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */
-    private fun createCollectionPath(): String {
+    fun collectionPathInValidFolder(): String {
         val dir = getCollectionDirectory().path
         CollectionHelper.initializeAnkiDroidDirectory(dir)
         return File(dir, "collection.anki2").absolutePath
@@ -385,7 +388,27 @@ object CollectionManager {
         withQueue {
             ensureClosedInner()
             ensureBackendInner()
-            importCollectionPackage(backend!!, createCollectionPath(), colpkgPath)
+            importCollectionPackage(backend!!, collectionPathInValidFolder(), colpkgPath)
+        }
+    }
+
+    /** Migrate collection and media databases to scoped storage.
+     * * Closes the collection, and performs the work in our queue so no
+     * other code can open the collection while the operation runs. Reopens
+     * at the end, and rolls back the path change if reopening fails.
+     */
+    suspend fun migrateEssentialFiles(context: Context, folders: ValidatedMigrationSourceAndDestination) {
+        withQueue {
+            ensureClosedInner(true)
+            val migrator = MigrateEssentialFiles(context, folders)
+            migrator.migrateFiles()
+            migrator.updateCollectionPath()
+            try {
+                ensureOpenInner()
+            } catch (e: Exception) {
+                migrator.restoreOldCollectionPath()
+                throw e
+            }
         }
     }
 
