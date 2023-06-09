@@ -17,6 +17,7 @@ package com.ichi2.libanki
 
 import android.content.Context
 import android.content.res.Resources
+import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.config.ConfigKey
 import com.ichi2.libanki.backend.*
@@ -249,6 +250,14 @@ class CollectionV16(
         val resp = backend.addNote(note.toBackendNote(), deckId)
         note.id = resp.noteId
         return resp.changes
+    }
+
+    fun getEmptyCards(): EmptyCardsReport {
+        return backend.getEmptyCards()
+    }
+
+    override fun removeCards(cardIds: Iterable<Long>) {
+        backend.removeCards(cardIds)
     }
 
     /** allowEmpty is ignored in the new schema */

@@ -707,14 +707,6 @@ open class Collection(
         return genCards<CollectionTask<Int, Int>>(nids.toLongArray(), model)
     }
 
-    fun <T> genCards(
-        nids: kotlin.collections.Collection<Long>,
-        model: Model,
-        task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
-        return genCards(nids.toLongArray(), model, task)
-    }
-
     fun genCards(nids: kotlin.collections.Collection<Long>, mid: NoteTypeId): ArrayList<Long>? {
         return genCards(nids, models.get(mid)!!)
     }
@@ -1004,10 +996,10 @@ open class Collection(
         _remNotes(nids)
     }
 
-    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int>?, T : CancelListener? {
+    fun emptyCids(): List<Long> {
         val rem: MutableList<Long> = ArrayList()
         for (m in models.all()) {
-            rem.addAll(genCards(models.nids(m), m, task)!!)
+            rem.addAll(genCards(models.nids(m), m)!!)
         }
         return rem
     }

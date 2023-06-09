@@ -153,8 +153,6 @@
 
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards…</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">No empty cards</string>
     <string name="empty_cards_count">Cards to delete: %d</string>
     <string name="empty_cards_deleted">Cards deleted: %d</string>
 

@@ -99,7 +99,7 @@ class CardTest : RobolectricTest() {
         t = m.getJSONArray("tmpls").getJSONObject(1)
         t.put("qfmt", "{{Back}}")
         mm.save(m, true)
-        val rep = col.emptyCids(null)
+        val rep = col.emptyCids()
         col.removeCards(rep)
         assertEquals(1, note.numberOfCards())
         // if we add to the note, a card should be automatically generated
