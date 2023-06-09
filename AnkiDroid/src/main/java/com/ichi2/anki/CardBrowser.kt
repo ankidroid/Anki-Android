@@ -34,7 +34,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.edit
 import anki.collection.OpChanges
-import com.afollestad.materialdialogs.list.SingleChoiceListener
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiFont.Companion.getTypeface
@@ -45,7 +44,7 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
-import com.ichi2.anki.dialogs.CardBrowserOrderDialog.Companion.newInstance
+import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -255,7 +254,11 @@ open class CardBrowser :
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private var mUnmountReceiver: BroadcastReceiver? = null
-    private val orderSingleChoiceDialogListener: SingleChoiceListener = { _, index: Int, _ -> changeCardOrder(index) }
+    private val orderSingleChoiceDialogListener: DialogInterface.OnClickListener =
+        DialogInterface.OnClickListener { dialog: DialogInterface, which: Int ->
+            dialog.dismiss()
+            changeCardOrder(which)
+        }
 
     init {
         ChangeManager.subscribe(this)
@@ -1159,7 +1162,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_sort_by_size -> {
-                showDialogFragment(newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
+                showDialogFragment(CardBrowserOrderDialog.newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
                 return true
             }
 
