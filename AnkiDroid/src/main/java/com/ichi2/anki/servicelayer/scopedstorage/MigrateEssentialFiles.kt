@@ -535,7 +535,6 @@ internal constructor(
         internal fun migrateEssentialFiles(
             context: Context,
             destination: File,
-            transformAlgo: ((MigrateEssentialFiles) -> MigrateEssentialFiles)? = null
         ) {
             val collectionPath: CollectionFilePath = CollectionHelper.instance.getCol(context)!!.path
             val sourceDirectory = File(collectionPath).parent!!
@@ -561,16 +560,13 @@ internal constructor(
             // ensure destination is under scoped storage
             val destinationAnkiDroidDirectory = ScopedAnkiDroidDirectory.createInstance(destinationDirectory, context) ?: throw IllegalStateException("Destination folder was not under scoped storage '$destinationDirectory'")
 
-            val originalAlgo = MigrateEssentialFiles(
-                context,
-                AnkiDroidDirectory.createInstance(sourceDirectory)!!, // !! is fine here - parent of collection.anki2 is a directory
-                destinationAnkiDroidDirectory
-            )
-
-            val algo = transformAlgo?.invoke(originalAlgo) ?: originalAlgo
-
-            // this executes the algorithm
-            RetryableException.retryOnce { algo.execute() }
+            RetryableException.retryOnce {
+                MigrateEssentialFiles(
+                    context,
+                    AnkiDroidDirectory.createInstance(sourceDirectory)!!, // !! is fine here - parent of collection.anki2 is a directory
+                    destinationAnkiDroidDirectory
+                ).execute()
+            }
         }
     }
 }
