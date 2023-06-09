@@ -26,6 +26,7 @@
 package com.ichi2.anki
 
 import android.Manifest
+import android.app.Activity
 import android.content.*
 import android.database.SQLException
 import android.graphics.PixelFormat
@@ -36,6 +37,7 @@ import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
 import android.widget.*
+import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
@@ -93,12 +95,9 @@ import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.mediaMigrationIsInProgress
-import com.ichi2.anki.servicelayer.ScopedStorageService.prepareAndValidateSourceAndDestinationFolders
 import com.ichi2.anki.services.MediaMigrationState
 import com.ichi2.anki.services.MigrationService
-import com.ichi2.anki.services.PREF_MIGRATION_ERROR_TEXT
 import com.ichi2.anki.services.getMediaMigrationState
-import com.ichi2.anki.services.withBoundTo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.web.HostNumFactory
@@ -125,6 +124,8 @@ import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.widget.WidgetStatus
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
 import makeLinksClickable
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
@@ -134,7 +135,9 @@ import java.io.File
 import java.lang.Runnable
 import java.lang.ref.WeakReference
 import kotlin.math.roundToLong
-import kotlin.system.measureTimeMillis
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTimedValue
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
 const val TIMES_STORAGE_MIGRATION_POSTPONED_KEY = "timesStorageMigrationPostponed"
@@ -418,6 +421,8 @@ open class DeckPicker :
         mShortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
 
         Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
+
+        launchShowingHidingEssentialFileMigrationProgressDialog()
     }
 
     private fun hasShownAppIntro(): Boolean {
@@ -471,7 +476,7 @@ open class DeckPicker :
                 return false
             }
             is MediaMigrationState.Ongoing.NotPaused -> {
-                startMigrateUserDataService()
+                MigrationService.start(baseContext)
                 return false
             }
             // App is already using Scoped Storage Directory for user data, no need to migrate & can proceed with startup
@@ -631,21 +636,15 @@ open class DeckPicker :
         val migrationProgressMenuItem = menu.findItem(R.id.action_migration_progress)
             .apply { isVisible = mediaMigrationState is MediaMigrationState.Ongoing.NotPaused }
 
-        suspend fun CircularProgressIndicator.publishProgress(progress: MigrationService.Progress) {
+        fun CircularProgressIndicator.publishProgress(progress: MigrationService.Progress.MovingMediaFiles) {
             when (progress) {
-                is MigrationService.Progress.CalculatingTransferSize -> {
+                is MigrationService.Progress.MovingMediaFiles.CalculatingNumberOfBytesToMove -> {
                     this.isIndeterminate = true
                 }
 
-                is MigrationService.Progress.Transferring -> {
+                is MigrationService.Progress.MovingMediaFiles.MovingFiles -> {
                     this.isIndeterminate = false
                     this.progress = (progress.ratio * Int.MAX_VALUE).toInt()
-                }
-
-                // TODO BEFORE-RELEASE Perhaps handle the cases of success & failure differently?
-                is MigrationService.Progress.Done -> {
-                    updateMenuState()
-                    updateMenuFromState(menu)
                 }
             }
         }
@@ -665,11 +664,25 @@ open class DeckPicker :
                 }
 
                 migrationProgressPublishingJob = lifecycleScope.launch {
-                    withBoundTo<MigrationService> { service ->
-                        service.flowOfProgress
-                            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                            .collect { progress -> progressIndicator.publishProgress(progress) }
-                    }
+                    MigrationService.flowOfProgress
+                        .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                        .filterNotNull()
+                        .collect { progress ->
+                            when (progress) {
+                                is MigrationService.Progress.CopyingEssentialFiles -> {
+                                    // Button is not shown when transferring essential files
+                                }
+
+                                is MigrationService.Progress.MovingMediaFiles -> {
+                                    progressIndicator.publishProgress(progress)
+                                }
+
+                                is MigrationService.Progress.Done -> {
+                                    updateMenuState()
+                                    updateMenuFromState(menu)
+                                }
+                            }
+                        }
                 }
             } else {
                 migrationProgressMenuItem.actionView = cachedMigrationProgressMenuItemActionView
@@ -789,12 +802,15 @@ open class DeckPicker :
 
     // TODO BEFORE-RELEASE This doesn't offer to migrate data if not logged in.
     //   This should be changed so that we offer to migrate regardless.
+    // TODO BEFORE-RELEASE Stop offering to migrate on every activity recreation.
+    //   Currently the dialog re-appears if you dismiss it and then e.g. toggle device dark theme.
     private fun shouldOfferToMigrate(): Boolean {
         // ALLOW_UNSAFE_MIGRATION skips ensuring that the user is backed up to AnkiWeb
         if (!BuildConfig.ALLOW_UNSAFE_MIGRATION && !isLoggedIn()) {
             return false
         }
-        return getMediaMigrationState() is MediaMigrationState.NotOngoing.Needed
+        return getMediaMigrationState() is MediaMigrationState.NotOngoing.Needed &&
+            MigrationService.flowOfProgress.value !is MigrationService.Progress.Running
     }
 
     private fun fetchSyncStatus(col: Collection): SyncIconState {
@@ -2531,31 +2547,31 @@ open class DeckPicker :
             return
         }
 
-        launchCatchingTask {
-            val elapsedMillisDuringEssentialFilesMigration = measureTimeMillis {
-                withProgress(getString(R.string.start_migration_progress_message)) {
-                    loadDeckCounts?.cancel()
-                    val folders = prepareAndValidateSourceAndDestinationFolders(baseContext)
-                    CollectionManager.migrateEssentialFiles(baseContext, folders)
-                    updateDeckList()
-                    handleStartup()
-                    startMigrateUserDataService()
-                }
-            }
-            if (elapsedMillisDuringEssentialFilesMigration > 800) {
-                showSnackbar(R.string.migration_part_1_done_resume)
-                refreshState()
-            }
-        }
+        loadDeckCounts?.cancel()
+
+        MigrationService.start(baseContext)
     }
 
-    /**
-     * Start migrating the user data. Assumes that
-     */
-    private fun startMigrateUserDataService() {
-        // TODO: Handle lack of disk space - most common error
-        Timber.i("Starting Migrate User Data Service")
-        ContextCompat.startForegroundService(this, Intent(this, MigrationService::class.java))
+    @OptIn(ExperimentalTime::class)
+    private fun launchShowingHidingEssentialFileMigrationProgressDialog() = lifecycleScope.launch {
+        while (true) {
+            MigrationService.flowOfProgress
+                .first { it is MigrationService.Progress.CopyingEssentialFiles }
+
+            val (progress, duration) = measureTimedValue {
+                withImmediatelyShownProgress(R.string.start_migration_progress_message) {
+                    MigrationService.flowOfProgress
+                        .first { it !is MigrationService.Progress.CopyingEssentialFiles }
+                }
+            }
+
+            if (progress is MigrationService.Progress.MovingMediaFiles && duration > 800.milliseconds) {
+                showSnackbar(R.string.migration_part_1_done_resume)
+            }
+
+            refreshState()
+            updateDeckList()
+        }
     }
 
     /**
@@ -2657,8 +2673,7 @@ open class DeckPicker :
             .setMessage(message)
             .setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             .setPositiveButton(R.string.migration__resume_after_failed_dialog__button_positive) { _, _ ->
-                getSharedPrefs(this@DeckPicker).edit { remove(PREF_MIGRATION_ERROR_TEXT) }
-                startMigrateUserDataService()
+                MigrationService.start(baseContext)
                 invalidateOptionsMenu()
             }
             .create()
@@ -2789,3 +2804,11 @@ class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
             ForceFullSyncDialog(message.data.getString("message"))
     }
 }
+
+// This is used to re-show the dialog immediately on activity recreation
+private suspend fun <T> Activity.withImmediatelyShownProgress(@StringRes messageId: Int, block: suspend () -> T) =
+    withProgressDialog(context = this, onCancel = null, delayMillis = 0L) { dialog ->
+        @Suppress("DEPRECATION") // ProgressDialog
+        dialog.setMessage(getString(messageId))
+        block()
+    }
