@@ -78,7 +78,7 @@ fun DeckPicker.showImportDialog() {
 }
 
 fun DeckPicker.showImportDialog(options: ImportOptions) {
-    if (ScopedStorageService.userMigrationIsInProgress(this)) {
+    if (ScopedStorageService.mediaMigrationIsInProgress(this)) {
         showSnackbar(
             R.string.functionality_disabled_during_storage_migration,
             Snackbar.LENGTH_SHORT

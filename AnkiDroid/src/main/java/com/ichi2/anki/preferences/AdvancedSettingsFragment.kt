@@ -230,7 +230,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
     private fun Preference.disableIfStorageMigrationInProgress() {
         try {
-            if (ScopedStorageService.userMigrationIsInProgress(requireContext())) {
+            if (ScopedStorageService.mediaMigrationIsInProgress(requireContext())) {
                 isEnabled = false
                 summaryProvider = null // needs to be disabled to set .summary
                 summary = getString(R.string.functionality_disabled_during_storage_migration)

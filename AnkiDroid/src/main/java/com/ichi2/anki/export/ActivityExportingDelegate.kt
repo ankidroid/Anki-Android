@@ -66,7 +66,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     private lateinit var mExportFileName: String
 
     fun showExportDialog(params: ExportDialogParams) {
-        if (ScopedStorageService.userMigrationIsInProgress(activity)) {
+        if (ScopedStorageService.mediaMigrationIsInProgress(activity)) {
             activity.showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
         }

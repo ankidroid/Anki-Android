@@ -372,7 +372,7 @@ sealed interface MediaMigrationState {
 fun Context.getMediaMigrationState(): MediaMigrationState {
     val preferences = AnkiDroidApp.getSharedPrefs(this)
 
-    fun migrationIsOngoing() = ScopedStorageService.userMigrationIsInProgress(preferences)
+    fun migrationIsOngoing() = ScopedStorageService.mediaMigrationIsInProgress(preferences)
     fun collectionIsInAppPrivateDirectory() = !ScopedStorageService.isLegacyStorage(this)
     fun collectionWillRemainAccessibleAfterReinstall() =
         !ScopedStorageService.collectionWillBeMadeInaccessibleAfterUninstall(this)

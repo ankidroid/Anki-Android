@@ -59,9 +59,9 @@ internal fun RobolectricTest.addUntrackedMediaFile(content: String, path: List<S
     addUntrackedMediaFile(col.media, content, path)
 
 fun RobolectricTest.assertMigrationInProgress() {
-    assertThat("the migration should be in progress", ScopedStorageService.userMigrationIsInProgress(this.targetContext), equalTo(true))
+    assertThat("the migration should be in progress", ScopedStorageService.mediaMigrationIsInProgress(this.targetContext), equalTo(true))
 }
 
 fun RobolectricTest.assertMigrationNotInProgress() {
-    assertThat("the migration should not be in progress", ScopedStorageService.userMigrationIsInProgress(this.targetContext), equalTo(false))
+    assertThat("the migration should not be in progress", ScopedStorageService.mediaMigrationIsInProgress(this.targetContext), equalTo(false))
 }

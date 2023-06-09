@@ -117,7 +117,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(0)
-                } else if (!ScopedStorageService.userMigrationIsInProgress(requireContext())) {
+                } else if (!ScopedStorageService.mediaMigrationIsInProgress(requireContext())) {
                     // fix integrity
                     options.add(res.getString(R.string.check_db))
                     values.add(1)

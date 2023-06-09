@@ -92,7 +92,7 @@ import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
-import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
+import com.ichi2.anki.servicelayer.ScopedStorageService.mediaMigrationIsInProgress
 import com.ichi2.anki.services.MediaMigrationState
 import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.PREF_MIGRATION_ERROR_TEXT
@@ -1037,7 +1037,7 @@ open class DeckPicker :
         val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
         val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
         val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
-        val isMigratingStorage = userMigrationIsInProgress(this)
+        val isMigratingStorage = mediaMigrationIsInProgress(this)
         if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection && !isMigratingStorage) {
             Timber.i("Triggering Automatic Sync")
             sync()
@@ -1391,7 +1391,7 @@ open class DeckPicker :
 
     // Show dialogs to deal with database loading issues etc
     open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
-        if (errorDialogType == DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK && userMigrationIsInProgress(this)) {
+        if (errorDialogType == DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK && mediaMigrationIsInProgress(this)) {
             showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
         }
@@ -1400,7 +1400,7 @@ open class DeckPicker :
     }
 
     override fun showMediaCheckDialog(dialogType: Int) {
-        if (dialogType == MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK && userMigrationIsInProgress(this)) {
+        if (dialogType == MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK && mediaMigrationIsInProgress(this)) {
             showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
         }
@@ -1461,7 +1461,7 @@ open class DeckPicker :
 
     // Callback method to handle database integrity check
     override fun integrityCheck() {
-        if (userMigrationIsInProgress(this)) {
+        if (mediaMigrationIsInProgress(this)) {
             // The only path which can still display this is a sync error, which shouldn't be possible
             showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
@@ -2570,7 +2570,7 @@ open class DeckPicker :
     fun migrate() {
         migrateStorageAfterMediaSyncCompleted = false
 
-        if (userMigrationIsInProgress(this) || !isLegacyStorage(this)) {
+        if (mediaMigrationIsInProgress(this) || !isLegacyStorage(this)) {
             // This should not ever occurs.
             return
         }
@@ -2644,7 +2644,7 @@ open class DeckPicker :
      */
     private fun showDialogThatOffersToMigrateStorage(shownAutomatically: Boolean) {
         Timber.i("Displaying dialog to migrate storage")
-        if (userMigrationIsInProgress(baseContext)) {
+        if (mediaMigrationIsInProgress(baseContext)) {
             // This should not occur. We should have not called the function in this case.
             return
         }
