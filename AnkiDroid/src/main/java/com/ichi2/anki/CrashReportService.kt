@@ -49,7 +49,7 @@ object CrashReportService {
     @JvmStatic
     private var logcatArgs = arrayOf(
         "-t",
-        "100",
+        "500",
         "-v",
         "time",
         "ActivityManager:I",
@@ -218,7 +218,7 @@ object CrashReportService {
         setAcraReportingMode(FEEDBACK_REPORT_NEVER)
         prefs.edit { putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER) }
         // Use a wider logcat filter in case crash reporting manually re-enabled
-        logcatArgs = arrayOf("-t", "300", "-v", "long", "ACRA:S")
+        logcatArgs = arrayOf("-t", "1500", "-v", "long", "ACRA:S")
         createAcraCoreConfigBuilder()
     }
 

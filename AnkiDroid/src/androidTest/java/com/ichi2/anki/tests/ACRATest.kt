@@ -49,7 +49,7 @@ class ACRATest : InstrumentedTest() {
     @get:Rule
     var runtimePermissionRule = GrantStoragePermission.instance
     private var mApp: AnkiDroidApp? = null
-    private val mDebugLogcatArguments = arrayOf("-t", "300", "-v", "long", "ACRA:S")
+    private val mDebugLogcatArguments = arrayOf("-t", "1500", "-v", "long", "ACRA:S")
 
     // private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
     @Before
