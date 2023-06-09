@@ -245,6 +245,7 @@ suspend fun <T> Fragment.withProgress(@StringRes messageId: Int, block: suspend 
 suspend fun <T> withProgressDialog(
     context: Activity,
     onCancel: (() -> Unit)?,
+    delayMillis: Long = 600,
     op: suspend (android.app.ProgressDialog) -> T
 ): T = coroutineScope {
     val dialog = android.app.ProgressDialog(context).apply {
@@ -257,7 +258,7 @@ suspend fun <T> withProgressDialog(
     context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     // reveal the dialog after 600ms
     val dialogJob = launch {
-        delay(600)
+        delay(delayMillis)
         dialog.show()
     }
     try {

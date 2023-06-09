@@ -29,7 +29,7 @@ import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.services.MigrationService
-import com.ichi2.anki.services.withBoundTo
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 /**
@@ -49,34 +49,40 @@ class MigrationProgressDialogFragment : DialogFragment() {
 
         progressBar.max = Int.MAX_VALUE
 
-        fun publishProgress(progress: MigrationService.Progress) {
+        fun publishProgress(progress: MigrationService.Progress.MovingMediaFiles) {
             when (progress) {
-                is MigrationService.Progress.CalculatingTransferSize -> {
+                is MigrationService.Progress.MovingMediaFiles.CalculatingNumberOfBytesToMove -> {
                     progressBar.isIndeterminate = true
                     textView.text = getString(R.string.migration__calculating_transfer_size)
                 }
 
-                is MigrationService.Progress.Transferring -> {
-                    val transferredSizeText = formatShortFileSize(requireContext(), progress.transferredBytes)
+                is MigrationService.Progress.MovingMediaFiles.MovingFiles -> {
+                    val movedSizeText = formatShortFileSize(requireContext(), progress.movedBytes)
                     val totalSizeText = formatShortFileSize(requireContext(), progress.totalBytes)
 
                     progressBar.isIndeterminate = false
                     progressBar.progress = (progress.ratio * Int.MAX_VALUE).toInt()
-                    textView.text = getString(R.string.migration__transferred_x_of_y, transferredSizeText, totalSizeText)
+                    textView.text = getString(R.string.migration__moved_x_of_y, movedSizeText, totalSizeText)
                 }
-
-                // MigrationSucceededDialogFragment or MigrationFailedDialogFragment
-                // is going to be shown instead.
-                is MigrationService.Progress.Done -> dismiss()
             }
         }
 
         lifecycleScope.launch {
-            requireContext().withBoundTo<MigrationService> { service ->
-                service.flowOfProgress
-                    .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                    .collect { progress -> publishProgress(progress) }
-            }
+            MigrationService.flowOfProgress
+                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .filterNotNull()
+                .collect { progress ->
+                    when (progress) {
+                        // The dialog should not be accessible when copying essential files
+                        is MigrationService.Progress.CopyingEssentialFiles -> {}
+
+                        is MigrationService.Progress.MovingMediaFiles -> publishProgress(progress)
+
+                        // MigrationSucceededDialogFragment or MigrationFailedDialogFragment
+                        // is going to be shown instead.
+                        is MigrationService.Progress.Done -> dismiss()
+                    }
+                }
         }
 
         return AlertDialog.Builder(activity)
