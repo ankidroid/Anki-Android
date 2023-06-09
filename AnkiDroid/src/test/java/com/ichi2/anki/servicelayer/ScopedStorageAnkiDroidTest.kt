@@ -19,18 +19,18 @@ package com.ichi2.anki.servicelayer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
+import com.ichi2.anki.servicelayer.scopedstorage.migrateEssentialFilesForTest
 import com.ichi2.anki.servicelayer.scopedstorage.setLegacyStorage
 import com.ichi2.libanki.Collection
 import com.ichi2.testutils.ShadowStatFs
-import com.ichi2.testutils.TestException
+import com.ichi2.testutils.assertFalse
 import com.ichi2.testutils.createTransientDirectory
 import io.mockk.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.hamcrest.Matchers.not
-import org.hamcrest.io.FileMatchers
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
@@ -41,57 +41,66 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
 
     override fun useInMemoryDatabase(): Boolean = false
 
+    private fun getMigrationSourcePath() = File(col.path).parent!!
+
     @Test
-    fun migrate_essential_files_successful() {
+    fun migrate_essential_files_successful() = runTest {
         val colPath = setupCol().path
         ShadowStatFs.markAsNonEmpty(getBestRootDirectory())
         val migratedFrom = File(colPath).parentFile!!
-        val migratedTo = ScopedStorageService.migrateEssentialFiles(targetContext)
+
+        val migratedTo = migrateEssentialFilesForTest(targetContext, getMigrationSourcePath())
+
+        // close collection again so -wal doesn't end up in the list
+        CollectionManager.ensureClosed()
 
         val from = migratedFrom.listFiles()!!.associateBy { it.name }.toMutableMap()
         val to = migratedTo.listFiles()!!.associateBy { it.name }.toMutableMap()
 
         assertThat("target folder name should be set", migratedTo.name, equalTo("AnkiDroid1"))
-        assertThat("target should be under scoped storage", ScopedStorageService.isLegacyStorage(migratedTo.absolutePath, targetContext), equalTo(false))
+        assertThat("target should be under scoped storage", ScopedStorageService.isLegacyStorage(migratedTo.absoluteFile, targetContext), equalTo(false))
         assertThat("bare files should be moved", to.keys, equalTo(from.keys))
     }
 
     @Test
-    fun migrate_essential_files_second_directory() {
+    fun migrate_essential_files_second_directory() = runTest {
         setupCol()
-        getBestRootDirectory().createTransientDirectory("AnkiDroid1")
-        mockkObject(MigrateEssentialFiles) {
-            val destinationFile = slot<File>()
-            every { MigrateEssentialFiles.migrateEssentialFiles(any(), destination = capture(destinationFile)) } returns Unit
+        val root = getBestRootDirectory()
+        root.createTransientDirectory("AnkiDroid1")
 
-            ScopedStorageService.migrateEssentialFiles(targetContext)
-
-            assertThat(destinationFile.captured.name, equalTo("AnkiDroid2"))
-        }
+        val destinationFile = migrateEssentialFilesForTest(targetContext, getMigrationSourcePath(), destOverride = DestFolderOverride.Root(root))
+        assertThat(destinationFile.name, equalTo("AnkiDroid2"))
     }
 
     @Test
-    fun migrate_essential_files_fails_on_no_available_directory() {
+    fun migrate_essential_files_fails_on_no_available_directory() = runTest {
         setupCol()
+        val root = getBestRootDirectory()
         for (i in 1..100) {
-            getBestRootDirectory().createTransientDirectory("AnkiDroid$i")
+            root.createTransientDirectory("AnkiDroid$i")
         }
 
         // if "AnkiDroid100" can't be created
-        assertFailsWith<NoSuchElementException> { ScopedStorageService.migrateEssentialFiles(targetContext) }
+        assertFailsWith<NoSuchElementException> { migrateEssentialFilesForTest(targetContext, getMigrationSourcePath(), destOverride = DestFolderOverride.Root(root)) }
     }
 
     @Test
-    fun migrate_essential_files_deletes_created_directory_on_failure() {
+    fun migrate_essential_files_deletes_created_directory_on_failure() = runTest {
         setupCol()
-        mockkObject(MigrateEssentialFiles) {
-            val destinationFile = slot<File>()
-            every { MigrateEssentialFiles.migrateEssentialFiles(any(), destination = capture(destinationFile)) } throws TestException("failed")
 
-            assertFailsWith<TestException> { ScopedStorageService.migrateEssentialFiles(targetContext) }
+        File(col.path).delete()
 
-            assertThat("destination was deleted on failure", destinationFile.captured, not(FileMatchers.anExistingDirectory()))
+        val folder = getBestRootDirectory()
+
+        assertFailsWith<MigrateEssentialFiles.UserActionRequiredException.MissingEssentialFileException> {
+            migrateEssentialFilesForTest(
+                targetContext,
+                getMigrationSourcePath(),
+                destOverride = DestFolderOverride.Subfolder(folder)
+            )
         }
+
+        assertFalse("folder should not exist", folder.exists())
     }
 
     /**
@@ -99,6 +108,7 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
      */
     private fun setupCol(): Collection {
         setLegacyStorage()
+        ShadowStatFs.markAsNonEmpty(getBestRootDirectory())
         return col
     }
 
