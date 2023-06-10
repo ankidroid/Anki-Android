@@ -278,10 +278,6 @@ class Sched(col: Collection) : SchedV2(col) {
     /**
      * Learning queues *********************************************************** ************************************
      */
-    override fun _resetLrnCount() {
-        _resetLrnCount(null)
-    }
-
     override fun _resetLrnCount(cancelListener: CancelListener?) {
         // sub-day
         mLrnCount = col.db.queryScalar(
@@ -513,13 +509,9 @@ class Sched(col: Collection) : SchedV2(col) {
         card.factor = conf.getInt("initialFactor")
     }
 
-    @VisibleForTesting
-    fun removeLrn() {
-        removeLrn(null)
-    }
-
     /** Remove cards from the learning queues.  */
-    private fun removeLrn(ids: LongArray?) {
+    @VisibleForTesting
+    fun removeLrn(ids: LongArray? = null) {
         val extra: String
         extra = if (ids != null && ids.size > 0) {
             " AND id IN " + Utils.ids2str(ids)
@@ -570,9 +562,8 @@ class Sched(col: Collection) : SchedV2(col) {
     protected fun _deckRevLimit(did: Long, considerCurrentCard: Boolean): Int {
         return _deckNewLimit(
             did,
-            { d: Deck? -> _deckRevLimitSingle(d, considerCurrentCard) },
             considerCurrentCard
-        )
+        ) { d: Deck? -> _deckRevLimitSingle(d, considerCurrentCard) }
     }
 
     /**
@@ -585,7 +576,11 @@ class Sched(col: Collection) : SchedV2(col) {
      * @param considerCurrentCard Whether current card should be counted if it is in this deck
      */
     @KotlinCleanup("remove nullable on deck")
-    override fun _deckRevLimitSingle(d: Deck?, considerCurrentCard: Boolean): Int {
+    override fun _deckRevLimitSingle(
+        d: Deck?,
+        considerCurrentCard: Boolean,
+        @Suppress("UNUSED_PARAMETER") parentLimit: Int?
+    ): Int {
         if (d!!.isDyn) {
             return mReportLimit
         }
@@ -614,12 +609,6 @@ class Sched(col: Collection) : SchedV2(col) {
             lim
         )
     }
-
-    @KotlinCleanup("see if these functions can be combined into one")
-    override fun _resetRevCount() {
-        _resetRevCount(null)
-    }
-
     override fun _resetRevCount(cancelListener: CancelListener?) {
         mRevCount = _walkingCount(
             { d: Deck? -> _deckRevLimitSingle(d, true) },
@@ -1069,13 +1058,9 @@ class Sched(col: Collection) : SchedV2(col) {
      * Deck finished state ******************************************************
      * *****************************************
      */
-    @KotlinCleanup("convert to expression")
-    override fun haveBuried(): Boolean {
-        return haveBuried(col.decks.active())
-    }
 
     @KotlinCleanup("convert to expression")
-    private fun haveBuried(allDecks: List<Long>): Boolean {
+    fun haveBuried(allDecks: List<Long> = col.decks.active()): Boolean {
         // Refactored to allow querying an arbitrary deck
         val sdids = Utils.ids2str(allDecks)
         val cnt = col.db.queryScalar(

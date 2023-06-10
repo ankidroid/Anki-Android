@@ -58,13 +58,6 @@ abstract class BaseSched(val col: Collection) {
     }
 
     /**
-     * @param cids Ids of cards to bury
-     */
-    fun buryCards(cids: LongArray) {
-        buryCards(cids, manual = true)
-    }
-
-    /**
      * @param ids Id of cards to suspend
      */
     open fun suspendCards(ids: LongArray) {
@@ -89,7 +82,7 @@ abstract class BaseSched(val col: Collection) {
      * @param manual Whether bury is made manually or not. Only useful for sched v2.
      */
     @VisibleForTesting
-    open fun buryCards(cids: LongArray, manual: Boolean) {
+    open fun buryCards(cids: LongArray, manual: Boolean = true) {
         val mode = if (manual) {
             BuryOrSuspendCardsRequest.Mode.BURY_USER
         } else {
@@ -119,7 +112,10 @@ abstract class BaseSched(val col: Collection) {
      * @param type Which kind of cards should be unburied. See [UnburyType]
      * @param did: the deck whose cards must be unburied
      */
-    open fun unburyCardsForDeck(did: DeckId, type: UnburyType = UnburyType.ALL) {
+    open fun unburyCardsForDeck(
+        did: DeckId = col.decks.selected(),
+        type: UnburyType = UnburyType.ALL
+    ) {
         val mode = when (type) {
             UnburyType.ALL -> UnburyDeckRequest.Mode.ALL
             UnburyType.MANUAL -> UnburyDeckRequest.Mode.USER_ONLY
@@ -146,13 +142,6 @@ abstract class BaseSched(val col: Collection) {
          * Represents cards that were buried because they are the siblings of a reviewed cards.
          */
         SIBLINGS
-    }
-
-    /**
-     * Unbury all buried cards in selected decks
-     */
-    fun unburyCardsForDeck(type: UnburyType = UnburyType.ALL) {
-        unburyCardsForDeck(col.decks.selected(), type)
     }
 
     /**
@@ -264,18 +253,15 @@ abstract class BaseSched(val col: Collection) {
     /** Rebuild a dynamic deck.
      * @param did The deck to rebuild. 0 means current deck.
      */
-    open fun rebuildDyn(did: DeckId) {
+    open fun rebuildDyn(did: DeckId = col.decks.selected()) {
         col.newBackend.backend.rebuildFilteredDeck(did)
-    }
-
-    fun rebuildDyn() {
-        rebuildDyn(col.decks.selected())
     }
 
     /** Remove all cards from a dynamic deck
      * @param did The deck to empty. 0 means current deck.
      */
     open fun emptyDyn(did: DeckId) {
+        arrayOf(3, 4).toList()
         col.newBackend.backend.emptyFilteredDeck(did)
     }
 

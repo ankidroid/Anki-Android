@@ -17,7 +17,11 @@
 package com.ichi2.libanki.sched
 
 import android.app.Activity
-import anki.scheduler.*
+import anki.scheduler.CardAnswer
+import anki.scheduler.QueuedCards
+import anki.scheduler.SchedulingState
+import anki.scheduler.SchedulingStates
+import anki.scheduler.cardAnswer
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CollectionV16
@@ -40,7 +44,7 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
         // backend automatically resets queues as operations are performed
     }
 
-    override fun resetCounts() {
+    override fun resetCounts(cancelListener: CancelListener?, checkCutoff: Boolean) {
         // backend automatically resets queues as operations are performed
     }
 

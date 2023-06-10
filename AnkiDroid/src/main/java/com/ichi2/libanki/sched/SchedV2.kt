@@ -167,25 +167,13 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     override fun reset() {
         col.decks.update_active()
         _updateCutoff()
-        resetCounts(false)
+        resetCounts(checkCutoff = false)
         resetQueues(false)
-    }
-
-    fun resetCounts(cancelListener: CancelListener?) {
-        resetCounts(cancelListener, true)
-    }
-
-    fun resetCounts(checkCutoff: Boolean) {
-        resetCounts(null, checkCutoff)
-    }
-
-    override fun resetCounts() {
-        resetCounts(null, true)
     }
 
     /** @param checkCutoff whether we should check cutoff before resetting
      */
-    private fun resetCounts(cancelListener: CancelListener?, checkCutoff: Boolean) {
+    override fun resetCounts(cancelListener: CancelListener?, checkCutoff: Boolean) {
         if (checkCutoff) {
             _updateCutoff()
         }
@@ -345,11 +333,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
      * Rev/lrn/time daily stats *************************************************
      * **********************************************
      */
-    protected fun _updateStats(card: Card, type: String) {
-        _updateStats(card, type, 1)
-    }
-
-    fun _updateStats(card: Card, type: String, cnt: Long) {
+    fun _updateStats(card: Card, type: String, cnt: Long = 1) {
         val key = type + "Today"
         val did = card.did
         val list = col.decks.parents(did).toMutableList()
@@ -434,18 +418,13 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
       Deck list **************************************************************** *******************************
      */
     /**
-     * Returns [deckname, did, rev, lrn, new]
+     * Returns sorted list of (deckname, did, rev, lrn, new)
      *
      * Return nulls when deck task is cancelled.
      */
     @KotlinCleanup("remove/set default")
-    private fun deckDueList(): List<DeckDueTreeNode> {
-        return deckDueList(null)!!
-    }
     // Overridden
-    /**
-     * Return sorted list of all decks. */
-    protected open fun deckDueList(collectionTask: CancelListener?): List<DeckDueTreeNode>? {
+    protected open fun deckDueList(collectionTask: CancelListener? = null): List<DeckDueTreeNode>? {
         _checkDay()
         col.decks.checkIntegrity()
         val allDecksSorted = col.decks.allSorted()
@@ -478,7 +457,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             // learning
             val lrn = _lrnForDeck(deck.getLong("id"))
             // reviews
-            val rlim = _deckRevLimitSingle(deck, plim, false)
+            val rlim = _deckRevLimitSingle(deck, false, plim)
             val rev = _revForDeck(deck.getLong("id"), rlim, childMap)
             // save to list
             deckNodes.add(
@@ -532,19 +511,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     }
 
     /**
-     * @return the tree with `allDecksSorted` content.
-     * @param allDecksSorted the set of all decks of the collection. Sorted.
-     * @param checkDone Whether the set of deck was checked. If false, we can't assume all decks have parents
-     * and that there is no duplicate. Instead, we'll ignore problems.
-     */
-    protected fun <T : AbstractDeckTreeNode> _groupChildren(
-        allDecksSorted: List<T>,
-        checkDone: Boolean
-    ): List<TreeNode<T>> {
-        return _groupChildren(allDecksSorted, 0, checkDone)
-    }
-
-    /**
      * @return the tree structure of all decks from @descendants, starting
      * at specified depth.
      * @param sortedDescendants a list of decks of dept at least depth, having all
@@ -554,10 +520,10 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
      * false, we can't assume all decks have parents and that there
      * is no duplicate. Instead, we'll ignore problems.
      */
-    protected fun <T : AbstractDeckTreeNode> _groupChildren(
+    private fun <T : AbstractDeckTreeNode> _groupChildren(
         sortedDescendants: List<T>,
-        depth: Int,
-        checkDone: Boolean
+        checkDone: Boolean,
+        depth: Int = 0
     ): List<TreeNode<T>> {
         val sortedChildren: MutableList<TreeNode<T>> = ArrayList()
         // group and recurse
@@ -603,7 +569,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             }
             // the childrenNode set contains direct child of `child`, but not
             // any descendants of the children of `child`...
-            val childrenNode = _groupChildren(sortedDescendantsOfChild, depth + 1, checkDone)
+            val childrenNode = _groupChildren(sortedDescendantsOfChild, checkDone, depth + 1)
 
             // Add the child nodes, and process the addition
             val toAdd = TreeNode(child)
@@ -709,7 +675,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     override fun preloadNextCard() {
         _checkDay()
         if (!mHaveCounts) {
-            resetCounts(false)
+            resetCounts(checkCutoff = false)
         }
         if (!haveQueues) {
             resetQueues(false)
@@ -783,11 +749,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
     }
 
-    protected fun _fillNew(): Boolean {
-        return _fillNew(false)
-    }
-
-    private fun _fillNew(allowSibling: Boolean): Boolean {
+    protected fun _fillNew(allowSibling: Boolean = false): Boolean {
         if (!mNewQueue.isEmpty) {
             return true
         }
@@ -889,15 +851,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
      *
      * @param considerCurrentCard Whether current card should be counted if it is in this deck
      */
-    protected fun _deckNewLimit(did: Long, considerCurrentCard: Boolean): Int {
-        return _deckNewLimit(did, null, considerCurrentCard)
-    }
-
-    /**
-     *
-     * @param considerCurrentCard Whether current card should be counted if it is in this deck
-     */
-    protected fun _deckNewLimit(did: Long, fn: LimitMethod?, considerCurrentCard: Boolean): Int {
+    protected fun _deckNewLimit(did: Long, considerCurrentCard: Boolean, fn: LimitMethod? = null): Int {
         @Suppress("NAME_SHADOWING")
         var fn = fn
         if (fn == null) {
@@ -978,13 +932,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             _resetLrn()
         }
     }
-
-    // Overridden: V1 has less queues
-    protected open fun _resetLrnCount() {
-        _resetLrnCount(null)
-    }
-
-    protected open fun _resetLrnCount(cancelListener: CancelListener?) {
+    protected open fun _resetLrnCount(cancelListener: CancelListener? = null) {
         _updateLrnCutoff(true)
         // sub-day
         mLrnCount = col.db.queryScalar(
@@ -1324,11 +1272,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     }
 
     /** the number of steps that can be completed by the day cutoff  */
-    protected fun _leftToday(delays: JSONArray, left: Int): Int {
-        return _leftToday(delays, left, 0)
-    }
-
-    private fun _leftToday(delays: JSONArray, left: Int, now: Long): Int {
+    protected fun _leftToday(delays: JSONArray, left: Int, now: Long = 0): Int {
         @Suppress("NAME_SHADOWING")
         var now = now
         if (now == 0L) {
@@ -1467,29 +1411,15 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
      * minus the number of rev cards seen today in deck d or a descendant
      * plus the number of extra cards to see today in deck d, a parent or a descendant.
      *
-     * Respects the limits of its ancestor
-     * Overridden: V1 does not consider parents limit
-     * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
-     */
-    protected open fun _deckRevLimitSingle(d: Deck?, considerCurrentCard: Boolean): Int {
-        return _deckRevLimitSingle(d, null, considerCurrentCard)
-    }
-
-    /**
-     * Maximal number of rev card still to see today in deck d. It's computed as:
-     * the number of rev card to see by day according to the deck options
-     * minus the number of rev cards seen today in deck d or a descendant
-     * plus the number of extra cards to see today in deck d, a parent or a descendant.
-     *
      * Respects the limits of its ancestor, either given as parentLimit, or through direct computation.
      * @param parentLimit Limit of the parent, this is an upper bound on the limit of this deck
      * @param considerCurrentCard whether the current card should be taken from the limit (if it belongs to this deck)
      */
     @KotlinCleanup("remove unused parameter")
-    private fun _deckRevLimitSingle(
+    protected open fun _deckRevLimitSingle(
         d: Deck?,
-        @Suppress("UNUSED_PARAMETER") parentLimit: Int?,
-        considerCurrentCard: Boolean
+        considerCurrentCard: Boolean,
+        @Suppress("UNUSED_PARAMETER") parentLimit: Int? = null
     ): Int {
         // invalid deck selected?
         if (d == null) {
@@ -1526,12 +1456,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     }
 
     // Overridden: V1 uses _walkingCount
-    @KotlinCleanup("see if the two versions of this function can be combined")
-    protected open fun _resetRevCount() {
-        _resetRevCount(null)
-    }
-
-    protected open fun _resetRevCount(cancelListener: CancelListener?) {
+    protected open fun _resetRevCount(cancelListener: CancelListener? = null) {
         val lim = _currentRevLimit(true)
         if (isCancelled(cancelListener)) return
         mRevCount = col.db.queryScalar(
@@ -1552,12 +1477,8 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         mRevQueue.clear()
     }
 
-    protected fun _fillRev(): Boolean {
-        return _fillRev(false)
-    }
-
     // Override: V1 loops over dids
-    protected open fun _fillRev(allowSibling: Boolean): Boolean {
+    protected open fun _fillRev(allowSibling: Boolean = false): Boolean {
         if (!mRevQueue.isEmpty) {
             return true
         }
@@ -2087,11 +2008,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
     }
 
-    fun haveBuriedSiblings(): Boolean {
-        return haveBuriedSiblings(col.decks.active())
-    }
-
-    private fun haveBuriedSiblings(allDecks: List<Long>): Boolean {
+    private fun haveBuriedSiblings(allDecks: List<Long> = col.decks.active()): Boolean {
         // Refactored to allow querying an arbitrary deck
         val sdids = Utils.ids2str(allDecks)
         val cnt = col.db.queryScalar(
@@ -2100,11 +2017,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         return cnt != 0
     }
 
-    fun haveManuallyBuried(): Boolean {
-        return haveManuallyBuried(col.decks.active())
-    }
-
-    private fun haveManuallyBuried(allDecks: List<Long>): Boolean {
+    private fun haveManuallyBuried(allDecks: List<Long> = col.decks.active()): Boolean {
         // Refactored to allow querying an arbitrary deck
         val sdids = Utils.ids2str(allDecks)
         val cnt = col.db.queryScalar(

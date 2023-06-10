@@ -21,9 +21,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.CancelListener
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
+import com.ichi2.libanki.DeckId
 import timber.log.Timber
 import java.lang.ref.WeakReference
 
@@ -60,18 +61,15 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
     abstract fun preloadNextCard()
 
     /** Recompute the counts of the currently selected deck.  */
-    abstract fun resetCounts()
-
-    /** Ensure that reset will be called before returning any card or count.  */
-    fun deferReset() {
-        deferReset(null)
-    }
+    abstract fun resetCounts(cancelListener: CancelListener? = null, checkCutoff: Boolean = true)
 
     /**
-     * Same as deferReset(). When `reset` is done, it then simulates that `getCard` returned undoneCard. I.e. it will
+     * Ensure that reset will be called before returning any card or count.
+     *
+     * When `reset` is done, it then simulates that `getCard` returned [undoneCard] if it's not null. I.e. it will
      * assume this card is currently in the reviewer and so should not be added in queue and should not be
      * counted. This is called by `undo` with the card send back to the reviewer. */
-    abstract fun deferReset(undoneCard: Card?)
+    abstract fun deferReset(undoneCard: Card? = null)
 
     /**
      * Does all actions required to answer the card. That is:
@@ -106,10 +104,7 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
      */
     // TODO: consider counting the card currently in the reviewer, this would simplify the code greatly
     // We almost never want to consider the card in the reviewer differently, and a lot of code is added to correct this.
-    abstract fun counts(cancelListener: CancelListener?): Counts
-    fun counts(): Counts {
-        return counts(null)
-    }
+    abstract fun counts(cancelListener: CancelListener? = null): Counts
 
     /**
      * @param card A card that should be added to the count result.
