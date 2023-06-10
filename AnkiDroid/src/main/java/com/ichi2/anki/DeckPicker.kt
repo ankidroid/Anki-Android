@@ -585,7 +585,7 @@ open class DeckPicker :
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         Timber.d("onCreateOptionsMenu()")
-        mFloatingActionMenu.closeFloatingActionMenu()
+        mFloatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
         menuInflater.inflate(R.menu.deck_picker, menu)
         setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
         mToolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
@@ -807,7 +807,7 @@ open class DeckPicker :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        mFloatingActionMenu.closeFloatingActionMenu()
+        mFloatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
 
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
@@ -1054,7 +1054,7 @@ open class DeckPicker :
         } else {
             Timber.i("Back key pressed")
             if (mFloatingActionMenu.isFABOpen) {
-                mFloatingActionMenu.closeFloatingActionMenu()
+                mFloatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
             } else {
                 if (!preferences.getBoolean("exitViaDoubleTapBack", false) || mBackButtonPressedToExit) {
                     automaticSync()
