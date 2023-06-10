@@ -49,7 +49,7 @@ abstract class TypedFilter<T>(private val getCurrentItems: (() -> List<T>)) : Fi
     @Suppress("UNCHECKED_CAST")
     override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
         // this is only ever called from performFiltering so we can guarantee the value can be cast to List<T>
-        if (results != null && results.values is List<*>) {
+        if (results?.values != null && results.values is List<*>) {
             val list = results.values as List<T>
             publishResults(constraint, list)
         }
