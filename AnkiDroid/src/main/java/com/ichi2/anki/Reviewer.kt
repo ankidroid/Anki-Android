@@ -169,10 +169,6 @@ open class Reviewer :
             finishWithAnimation(ActivityTransitionAnimation.Direction.END)
             return
         }
-        if (Intent.ACTION_VIEW == intent.action) {
-            Timber.d("onCreate() :: received Intent with action = %s", intent.action)
-            selectDeckFromExtra()
-        }
         mColorPalette = findViewById(R.id.whiteboard_editor)
         answerTimer = AnswerTimer(findViewById(R.id.card_time))
         mTextBarNew = findViewById(R.id.new_number)
@@ -342,6 +338,10 @@ open class Reviewer :
 
     override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
+        if (Intent.ACTION_VIEW == intent.action) {
+            Timber.d("onCreate() :: received Intent with action = %s", intent.action)
+            selectDeckFromExtra()
+        }
         // Load the first card and start reviewing. Uses the answer card
         // task to load a card, but since we send null
         // as the card to answer, no card will be answered.
