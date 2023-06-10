@@ -1935,8 +1935,8 @@ abstract class AbstractFlashcardViewer :
         }
 
         private val mScrollHandler = newHandler()
-        private val mScrollXRunnable = Runnable { mIsXScrolling = false }
-        private val mScrollYRunnable = Runnable { mIsYScrolling = false }
+        private val mScrollXRunnable = { mIsXScrolling = false }
+        private val mScrollYRunnable = { mIsYScrolling = false }
     }
 
     internal open inner class MyGestureDetector : SimpleOnGestureListener() {
