@@ -45,11 +45,8 @@ import com.ichi2.preferences.NumberRangePreference
 import com.ichi2.preferences.StepsPreference
 import com.ichi2.preferences.TimePreference
 import com.ichi2.themes.StyledProgressDialog
-import com.ichi2.themes.Themes
 import com.ichi2.ui.AppCompatPreferenceActivity
 import com.ichi2.utils.*
-import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.NamedJSONComparator
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONException
@@ -464,20 +461,10 @@ class DeckOptionsActivity :
     // conversion to fragments tracked as #5019 in github
     @Deprecated("Deprecated in Java")
     override fun onCreate(savedInstanceState: Bundle?) {
-        Themes.setTheme(this)
-        Themes.setLegacyActionBar(this)
         super.onCreate(savedInstanceState)
-
         if (!isColInitialized()) {
             return
         }
-        val extras = intent.extras
-        deck = if (extras != null && extras.containsKey("did")) {
-            col.decks.get(extras.getLong("did"))
-        } else {
-            col.decks.current()
-        }
-        registerExternalStorageListener()
 
         pref = DeckPreferenceHack()
         // #6068 - constructor can call finish()
@@ -492,21 +479,6 @@ class DeckOptionsActivity :
         }
         buildLists()
         updateSummaries()
-        // Set the activity title to include the name of the deck
-        var title = resources.getString(R.string.deckpreferences_title)
-        if (title.contains("XXX")) {
-            title = try {
-                title.replace("XXX", deck.getString("name"))
-            } catch (e: JSONException) {
-                Timber.w(e)
-                title.replace("XXX", "???")
-            }
-        }
-        setTitle(title)
-
-        // Add a home button to the actionbar
-        supportActionBar!!.setHomeButtonEnabled(true)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     // Workaround for bug 4611: http://code.google.com/p/android/issues/detail?id=4611

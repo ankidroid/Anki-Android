@@ -27,7 +27,6 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
 import com.ichi2.preferences.StepsPreference.Companion.convertFromJSON
 import com.ichi2.preferences.StepsPreference.Companion.convertToJSON
-import com.ichi2.themes.Themes
 import com.ichi2.ui.AppCompatPreferenceActivity
 import com.ichi2.utils.stringIterable
 import org.json.JSONArray
@@ -185,20 +184,11 @@ class FilteredDeckOptions :
     @Deprecated("Deprecated in Java")
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
-        Themes.setTheme(this)
-        Themes.setLegacyActionBar(this)
         super.onCreate(savedInstanceState)
         UsageAnalytics.sendAnalyticsScreenView(this)
         if (!isColInitialized()) {
             return
         }
-        val extras = intent.extras
-        deck = if (extras != null && extras.containsKey("did")) {
-            col.decks.get(extras.getLong("did"))
-        } else {
-            col.decks.current()
-        }
-        registerExternalStorageListener()
         if (deck.isStd) {
             Timber.w("Deck is not a dyn deck")
             finish()
@@ -210,22 +200,6 @@ class FilteredDeckOptions :
             buildLists()
             updateSummaries()
         }
-
-        // Set the activity title to include the name of the deck
-        var title = resources.getString(R.string.deckpreferences_title)
-        if (title.contains("XXX")) {
-            title = try {
-                title.replace("XXX", deck.getString("name"))
-            } catch (e: JSONException) {
-                Timber.w(e)
-                title.replace("XXX", "???")
-            }
-        }
-        this.title = title
-
-        // Add a home button to the actionbar
-        supportActionBar?.setHomeButtonEnabled(true)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     @Suppress("deprecation") // Tracked as #5019 on github: addPreferencesFromResource

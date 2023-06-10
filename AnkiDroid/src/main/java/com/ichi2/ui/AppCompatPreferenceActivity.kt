@@ -33,11 +33,13 @@ import com.ichi2.anki.R
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Deck
+import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import net.ankiweb.rsdroid.BackendException
+import org.json.JSONException
 import timber.log.Timber
 import java.util.*
 
@@ -181,13 +183,38 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     override fun onCreate(savedInstanceState: Bundle?) {
         delegate.installViewFactory()
         delegate.onCreate(savedInstanceState)
+        Themes.setTheme(this)
+        Themes.setLegacyActionBar(this)
         super.onCreate(savedInstanceState)
         val col = CollectionHelper.instance.getCol(this)
         if (col != null) {
             this.col = col
         } else {
             finish()
+            return
         }
+        val extras = intent.extras
+        deck = if (extras != null && extras.containsKey("did")) {
+            col.decks.get(extras.getLong("did"))
+        } else {
+            col.decks.current()
+        }
+
+        // Set the activity title to include the name of the deck
+        var title = resources.getString(R.string.deckpreferences_title)
+        if (title.contains("XXX")) {
+            title = try {
+                title.replace("XXX", deck.getString("name"))
+            } catch (e: JSONException) {
+                Timber.w(e)
+                title.replace("XXX", "???")
+            }
+        }
+        this.title = title
+
+        // Add a home button to the actionbar
+        supportActionBar?.setHomeButtonEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
