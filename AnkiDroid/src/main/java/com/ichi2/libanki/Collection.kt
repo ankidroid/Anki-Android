@@ -1495,7 +1495,7 @@ open class Collection(
         val currentTask = intArrayOf(1)
         // a few fixes are in all-models loops, the rest are one-offs
         val totalTasks = models.all().size * 4 + 27
-        val notifyProgress = Runnable { fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks) }
+        val notifyProgress = { fixIntegrityProgress(progressCallback, currentTask[0]++, totalTasks) }
         val executeIntegrityTask = Consumer { function: FunctionalInterfaces.FunctionThrowable<Runnable, List<String?>?> ->
             // DEFECT: notifyProgress will lag if an exception is thrown.
             try {
@@ -1517,7 +1517,7 @@ open class Collection(
         try {
             db.database.beginTransaction()
             save()
-            notifyProgress.run()
+            notifyProgress()
             if (!db.database.isDatabaseIntegrityOk) {
                 return result.markAsFailed()
             }
