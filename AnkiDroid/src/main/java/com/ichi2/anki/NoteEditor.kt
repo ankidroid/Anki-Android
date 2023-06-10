@@ -734,11 +734,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     // If cards will be lost via the new mapping then show a confirmation dialog before proceeding with the change
                     val dialog = ConfirmationDialog()
                     dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing))
-                    val confirm = Runnable {
+                    dialog.setConfirm {
                         // Bypass the check once the user confirms
                         changeNoteTypeWithErrorHandling(oldModel, newModel)
                     }
-                    dialog.setConfirm(confirm)
                     showDialogFragment(dialog)
                 } else {
                     // Otherwise go straight to changing note type
@@ -795,7 +794,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Libanki has determined we should ask the user to confirm first
             val dialog = ConfirmationDialog()
             dialog.setArgs(res.getString(R.string.full_sync_confirmation))
-            val confirm = Runnable {
+            dialog.setConfirm {
                 // Bypass the check once the user confirms
                 col.modSchemaNoCheck()
                 try {
@@ -805,7 +804,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     throw RuntimeException(e2)
                 }
             }
-            dialog.setConfirm(confirm)
             showDialogFragment(dialog)
         }
     }

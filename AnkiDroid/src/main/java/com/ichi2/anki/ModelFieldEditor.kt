@@ -181,7 +181,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         // Create dialogue to for schema change
                         val c = ConfirmationDialog()
                         c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                        val confirm = Runnable {
+                        c.setConfirm {
                             try {
                                 addField(fieldName, false)
                             } catch (e1: ConfirmModSchemaException) {
@@ -189,7 +189,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                                 // This should never be thrown
                             }
                         }
-                        c.setConfirm(confirm)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
                     collection.models.update(mModel)
@@ -307,7 +306,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                         // Handler mod schema confirmation
                         val c = ConfirmationDialog()
                         c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                        val confirm = Runnable {
+                        c.setConfirm {
                             collection.modSchemaNoCheck()
                             try {
                                 renameField()
@@ -316,7 +315,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                                 // This should never be thrown
                             }
                         }
-                        c.setConfirm(confirm)
                         this@ModelFieldEditor.showDialogFragment(c)
                     }
                 }
@@ -360,7 +358,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                             // Handle mod schema confirmation
                             val c = ConfirmationDialog()
                             c.setArgs(resources.getString(R.string.full_sync_confirmation))
-                            val confirm = Runnable {
+                            c.setConfirm {
                                 try {
                                     collection.modSchemaNoCheck()
                                     repositionField(pos - 1)
@@ -368,7 +366,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                                     throw RuntimeException(e1)
                                 }
                             }
-                            c.setConfirm(confirm)
                             this@ModelFieldEditor.showDialogFragment(c)
                         }
                     }
@@ -427,11 +424,10 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             // Handler mMod schema confirmation
             val c = ConfirmationDialog()
             c.setArgs(resources.getString(R.string.full_sync_confirmation))
-            val confirm = Runnable {
+            c.setConfirm {
                 collection.modSchemaNoCheck()
                 launchCatchingTask { changeSortField(mModel, currentPos) }
             }
-            c.setConfirm(confirm)
             this@ModelFieldEditor.showDialogFragment(c)
         }
     }

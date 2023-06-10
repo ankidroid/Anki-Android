@@ -1444,11 +1444,10 @@ open class CardBrowser :
         val title = getString(R.string.reset_card_dialog_title)
         val message = getString(R.string.reset_card_dialog_message)
         dialog.setArgs(title, message)
-        val confirm = Runnable {
+        dialog.setConfirm {
             Timber.i("CardBrowser:: ResetProgress button pressed")
             resetProgressNoConfirm(selectedCardIds)
         }
-        dialog.setConfirm(confirm)
         showDialogFragment(dialog)
     }
 

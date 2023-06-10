@@ -682,9 +682,8 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                         " AND queue = " + Consts.QUEUE_TYPE_NEW
                     val fullNewCount = col.db.queryScalar(query)
                     if (fullNewCount > 0) {
-                        val setNewTotalText = Runnable { textNewTotal.text = fullNewCount.toString() }
                         if (!Thread.currentThread().isInterrupted) {
-                            textNewTotal.post(setNewTotalText)
+                            textNewTotal.post { textNewTotal.text = fullNewCount.toString() }
                         }
                     }
                 }.apply {

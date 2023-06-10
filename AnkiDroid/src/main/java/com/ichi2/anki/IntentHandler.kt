@@ -70,9 +70,9 @@ class IntentHandler : Activity() {
         // as this requires nothing
         val runIfStoragePermissions = Consumer { runnable: Runnable -> performActionIfStorageAccessible(runnable, reloadIntent, action) }
         when (getLaunchType(intent)) {
-            LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
-            LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
-            LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })
+            LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept { handleFileImport(intent, reloadIntent, action) }
+            LaunchType.SYNC -> runIfStoragePermissions.accept { handleSyncIntent(reloadIntent, action) }
+            LaunchType.REVIEW -> runIfStoragePermissions.accept { handleReviewIntent(intent) }
             LaunchType.DEFAULT_START_APP_IF_NEW -> {
                 Timber.d("onCreate() performing default action")
                 launchDeckPickerIfNoOtherTasks(reloadIntent)

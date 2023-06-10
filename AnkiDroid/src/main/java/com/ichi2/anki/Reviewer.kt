@@ -682,12 +682,11 @@ open class Reviewer :
         val title = resources.getString(R.string.reset_card_dialog_title)
         val message = resources.getString(R.string.reset_card_dialog_message)
         dialog.setArgs(title, message)
-        val confirm = Runnable {
+        dialog.setConfirm {
             Timber.i("NoteEditor:: ResetProgress button pressed")
             val cardIds = listOf(currentCard!!.id)
             ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
         }
-        dialog.setConfirm(confirm)
         showDialogFragment(dialog)
     }
 

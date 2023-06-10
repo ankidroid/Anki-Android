@@ -2822,11 +2822,10 @@ class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
     override fun handleAsyncMessage(deckPicker: DeckPicker) {
         // Confirmation dialog for forcing full sync
         val dialog = ConfirmationDialog()
-        val confirm = Runnable {
+        dialog.setConfirm {
             // Bypass the check once the user confirms
             CollectionHelper.instance.getCol(AnkiDroidApp.instance)!!.modSchemaNoCheck()
         }
-        dialog.setConfirm(confirm)
         dialog.setArgs(message)
         deckPicker.showDialogFragment(dialog)
     }

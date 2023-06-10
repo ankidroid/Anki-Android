@@ -51,14 +51,13 @@ class HttpTest {
 
         // We have to carefully run things on the main thread here or the threading protections in BaseAsyncTask throw
         // The first one is just to run the static initializer, really
-        val onlineRunnable = Runnable {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
             try {
                 Class.forName("com.ichi2.async.Connection")
             } catch (e: Exception) {
                 Assert.fail("Unable to load Connection class: " + e.message)
             }
         }
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(onlineRunnable)
 
         // If we are not online this test is not nearly as interesting
         // TODO simulate offline programmatically - currently exercised by manually toggling an emulator offline pre-test
@@ -75,7 +74,7 @@ class HttpTest {
             return
         }
 
-        val r = Runnable {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
             val conn = Connection.login(testListener, invalidPayload)
             try {
                 // This forces us to synchronously wait for the AsyncTask to do it's work
@@ -84,7 +83,6 @@ class HttpTest {
                 Assert.fail("Caught exception while trying to login: " + e.message)
             }
         }
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(r)
         Assert.assertFalse(
             "Successful login despite invalid credentials",
             testListener.getPayload()!!.success

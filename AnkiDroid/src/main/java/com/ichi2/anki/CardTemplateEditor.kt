@@ -748,9 +748,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             )
             d.setArgs(msg)
 
-            val deleteCard = Runnable { deleteTemplate(tmpl, model) }
-            val confirm = Runnable { executeWithSyncCheck(deleteCard) }
-            d.setConfirm(confirm)
+            d.setConfirm { executeWithSyncCheck { deleteTemplate(tmpl, model) } }
             mTemplateEditor.showDialogFragment(d)
         }
 
@@ -770,9 +768,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             )
             d.setArgs(msg)
 
-            val addCard = Runnable { addNewTemplate(model) }
-            val confirm = Runnable { executeWithSyncCheck(addCard) }
-            d.setConfirm(confirm)
+            d.setConfirm { executeWithSyncCheck { addNewTemplate(model) } }
             mTemplateEditor.showDialogFragment(d)
         }
 
@@ -788,14 +784,12 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 e.log()
                 val d = ConfirmationDialog()
                 d.setArgs(resources.getString(R.string.full_sync_confirmation))
-                val confirm = Runnable {
+                d.setConfirm {
                     mTemplateEditor.col.modSchemaNoCheck()
                     schemaChangingAction.run()
                     mTemplateEditor.dismissAllDialogFragments()
                 }
-                val cancel = Runnable { mTemplateEditor.dismissAllDialogFragments() }
-                d.setConfirm(confirm)
-                d.setCancel(cancel)
+                d.setCancel { mTemplateEditor.dismissAllDialogFragments() }
                 mTemplateEditor.showDialogFragment(d)
             }
         }
