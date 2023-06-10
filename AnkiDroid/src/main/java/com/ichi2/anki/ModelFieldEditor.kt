@@ -228,7 +228,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Creates a dialog to delete the currently selected field
      */
     private fun deleteFieldDialog() {
-        val confirm = Runnable {
+        val confirm: () -> Unit = {
             collection.modSchemaNoCheck()
             deleteField()
 

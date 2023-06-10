@@ -26,8 +26,8 @@ import com.ichi2.anki.R
  * Create a new instance, call setArgs(...), setConfirm(), and setCancel() then show it via the fragment manager as usual.
  */
 class ConfirmationDialog : DialogFragment() {
-    private var mConfirm = Runnable {} // Do nothing by default
-    private var mCancel = Runnable {} // Do nothing by default
+    private var mConfirm = {} // Do nothing by default
+    private var mCancel = {} // Do nothing by default
     fun setArgs(message: String?) {
         setArgs("", message)
     }
@@ -39,11 +39,11 @@ class ConfirmationDialog : DialogFragment() {
         arguments = args
     }
 
-    fun setConfirm(confirm: Runnable) {
+    fun setConfirm(confirm: () -> Unit) {
         mConfirm = confirm
     }
 
-    fun setCancel(cancel: Runnable) {
+    fun setCancel(cancel: () -> Unit) {
         mCancel = cancel
     }
 
@@ -55,10 +55,10 @@ class ConfirmationDialog : DialogFragment() {
             title(text = (if ("" == title) res.getString(R.string.app_name) else title)!!)
             message(text = requireArguments().getString("message")!!)
             positiveButton(R.string.dialog_ok) {
-                mConfirm.run()
+                mConfirm()
             }
             negativeButton(R.string.dialog_cancel) {
-                mCancel.run()
+                mCancel()
             }
         }
     }
