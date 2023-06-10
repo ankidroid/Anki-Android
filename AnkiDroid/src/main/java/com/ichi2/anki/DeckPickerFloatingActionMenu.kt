@@ -79,9 +79,7 @@ class DeckPickerFloatingActionMenu(
                     // Changes the background color of FAB
                     mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
                 }
-                // Rotates FAB to 90 degrees
-                rotationBy(90f)
-                duration = 30
+                duration = 90
                 // Rise FAB animation
                 scaleX(1.3f)
                 scaleY(1.3f)
@@ -89,8 +87,7 @@ class DeckPickerFloatingActionMenu(
                     // At the end the Image is changed to Add Note Icon
                     mFabMain.setImageResource(addNoteIcon)
                     // Shrink back FAB
-                    mFabMain.animate().rotation(180f).setDuration(70).scaleX(1f).scaleY(1f)
-                        .start()
+                    mFabMain.animate().setDuration(70).scaleX(1f).scaleY(1f).start()
                 }.start()
             }
 
@@ -143,9 +140,7 @@ class DeckPickerFloatingActionMenu(
                 mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
                 // Close with animation
                 mFabMain.animate().apply {
-                    // Rotates FAB to 180 degrees
-                    rotation(-90f)
-                    duration = 40
+                    duration = 90
                     // Rise FAB animation
                     scaleX(1.3f)
                     scaleY(1.3f)
@@ -153,7 +148,7 @@ class DeckPickerFloatingActionMenu(
                         // At the end the image is changed to Add White Icon
                         mFabMain.setImageResource(addWhiteIcon)
                         // Shrink back FAB
-                        mFabMain.animate().rotation(-90f).setDuration(60).scaleX(1f).scaleY(1f)
+                        mFabMain.animate().setDuration(60).scaleX(1f).scaleY(1f)
                             .start()
                     }.start()
                 }
@@ -196,8 +191,6 @@ class DeckPickerFloatingActionMenu(
                 mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
                 // Close with animation
                 mFabMain.animate().apply {
-                    // Rotates FAB to 90 degrees
-                    rotation(-90f)
                     duration = 90
                     withEndAction {
                         // At the end the image is changed to Add White Icon
