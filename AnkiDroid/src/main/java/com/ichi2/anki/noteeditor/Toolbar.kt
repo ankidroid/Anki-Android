@@ -142,7 +142,7 @@ class Toolbar : FrameLayout {
         return super.onKeyUp(keyCode, event)
     }
 
-    fun insertItem(@IdRes id: Int, @DrawableRes drawable: Int, runnable: Runnable): AppCompatImageButton {
+    fun insertItem(@IdRes id: Int, @DrawableRes drawable: Int, runnable: () -> Unit): AppCompatImageButton {
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
         val themeContext: Context = ContextThemeWrapper(context, R.style.Theme_Light_Compat)
@@ -151,10 +151,10 @@ class Toolbar : FrameLayout {
     }
 
     fun insertItem(id: Int, drawable: Drawable?, formatter: TextFormatter): View {
-        return insertItem(id, drawable, Runnable { onFormat(formatter) })
+        return insertItem(id, drawable) { onFormat(formatter) }
     }
 
-    fun insertItem(@IdRes id: Int, drawable: Drawable?, runnable: Runnable): AppCompatImageButton {
+    fun insertItem(@IdRes id: Int, drawable: Drawable?, runnable: () -> Unit): AppCompatImageButton {
         val context = context
         val button = AppCompatImageButton(context)
         button.id = id
@@ -187,7 +187,7 @@ class Toolbar : FrameLayout {
             addViewToToolbar(button)
         }
         mCustomButtons.add(button)
-        button.setOnClickListener { runnable.run() }
+        button.setOnClickListener { runnable() }
 
         // Hack - items are truncated from the scrollview
         val v = findViewById<View>(R.id.toolbar_layout)

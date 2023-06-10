@@ -1706,7 +1706,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
             val clozeDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_cloze_black_24dp, null)
             clozeDrawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
-            val clozeButton = toolbar.insertItem(0, clozeDrawable, Runnable { toolbar.onFormat(clozeFormatter) })
+            val clozeButton = toolbar.insertItem(0, clozeDrawable) { toolbar.onFormat(clozeFormatter) }
             clozeButton.contentDescription = resources.getString(R.string.insert_cloze)
             TooltipCompat.setTooltipText(clozeButton, resources.getString(R.string.insert_cloze))
         }
@@ -1734,7 +1734,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Sets the add custom tag icon color.
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_add_toolbar_icon, null)
         drawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
-        val addButton = toolbar.insertItem(0, drawable, Runnable { displayAddToolbarDialog() })
+        val addButton = toolbar.insertItem(0, drawable) { displayAddToolbarDialog() }
         addButton.contentDescription = resources.getString(R.string.add_toolbar_item)
         TooltipCompat.setTooltipText(addButton, resources.getString(R.string.add_toolbar_item))
     }
