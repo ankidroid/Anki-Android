@@ -130,7 +130,6 @@ import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONException
 import timber.log.Timber
 import java.io.File
-import java.lang.Runnable
 import java.lang.ref.WeakReference
 import kotlin.math.roundToLong
 import kotlin.system.measureTimeMillis
@@ -2533,7 +2532,7 @@ open class DeckPicker :
         }
 
         // Animation utility methods used by renderPage() method
-        fun fadeIn(view: View?, duration: Int, translation: Float = 0f, startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE }): ViewPropertyAnimator {
+        fun fadeIn(view: View?, duration: Int, translation: Float = 0f, startAction: (() -> Unit)? = { view!!.visibility = View.VISIBLE }): ViewPropertyAnimator {
             view!!.alpha = 0f
             view.translationY = translation
             return view.animate()
@@ -2543,7 +2542,7 @@ open class DeckPicker :
                 .withStartAction(startAction)
         }
 
-        fun fadeOut(view: View?, duration: Int, translation: Float = 0f, endAction: Runnable? = Runnable { view!!.visibility = View.GONE }): ViewPropertyAnimator {
+        fun fadeOut(view: View?, duration: Int, translation: Float = 0f, endAction: (() -> Unit)? = { view!!.visibility = View.GONE }): ViewPropertyAnimator {
             view!!.alpha = 1f
             view.translationY = 0f
             return view.animate()
