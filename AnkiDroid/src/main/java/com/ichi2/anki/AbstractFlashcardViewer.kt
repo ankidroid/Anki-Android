@@ -1184,11 +1184,11 @@ abstract class AbstractFlashcardViewer :
                 }
             }
         }
-        val after = Runnable { flipCardLayout!!.visibility = View.GONE }
+        val after = { flipCardLayout!!.visibility = View.GONE }
 
         // hide "Show Answer" button
         if (animationDisabled()) {
-            after.run()
+            after()
         } else {
             flipCardLayout!!.alpha = 1f
             flipCardLayout!!.animate().alpha(0f).setDuration(shortAnimDuration.toLong()).withEndAction(after)
@@ -1196,12 +1196,12 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun hideEaseButtons() {
-        val after = Runnable { actualHideEaseButtons() }
+        val after = { actualHideEaseButtons() }
         val easeButtonsVisible = easeButtonsLayout!!.visibility == View.VISIBLE
         flipCardLayout!!.isClickable = true
         flipCardLayout!!.visibility = View.VISIBLE
         if (animationDisabled() || !easeButtonsVisible) {
-            after.run()
+            after()
         } else {
             flipCardLayout!!.alpha = 0f
             flipCardLayout!!.animate().alpha(1f).setDuration(shortAnimDuration.toLong()).withEndAction(after)
