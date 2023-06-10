@@ -23,7 +23,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.ichi2.anki.dialogs.CreateDeckDialog
@@ -300,6 +299,7 @@ class DeckPickerFloatingActionMenu(
         mFabBGLayout.setOnClickListener { closeFloatingActionMenu(applyRiseAndShrinkAnimation = true) }
         val addDeckListener = View.OnClickListener {
             if (isFABOpen) {
+                closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
                 val createDeckDialog = CreateDeckDialog(
                     context,
                     R.string.new_deck,
@@ -308,7 +308,6 @@ class DeckPickerFloatingActionMenu(
                 )
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
                 createDeckDialog.showDialog()
-                closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)
@@ -316,8 +315,6 @@ class DeckPickerFloatingActionMenu(
         val addSharedListener = View.OnClickListener {
             Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck")
             deckPicker.openAnkiWebSharedDecks()
-            mFabMain.backgroundTintList = ColorStateList.valueOf(fabNormalColor)
-            mFabMain.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_add_white))
         }
         addSharedButton.setOnClickListener(addSharedListener)
         addSharedLabel.setOnClickListener(addSharedListener)
