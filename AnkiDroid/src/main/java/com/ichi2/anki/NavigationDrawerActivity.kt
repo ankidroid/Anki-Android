@@ -72,7 +72,7 @@ abstract class NavigationDrawerActivity :
     /**
      * runnable that will be executed after the drawer has been closed.
      */
-    private var mPendingRunnable: Runnable? = null
+    private var mPendingRunnable: (() -> Unit)? = null
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
         val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
@@ -274,7 +274,7 @@ abstract class NavigationDrawerActivity :
          * This runnable will be executed in onDrawerClosed(...)
          * to make the animation more fluid on older devices.
          */
-        mPendingRunnable = Runnable {
+        mPendingRunnable = {
             // Take action if a different item selected
             when (item.itemId) {
                 R.id.nav_decks -> {
