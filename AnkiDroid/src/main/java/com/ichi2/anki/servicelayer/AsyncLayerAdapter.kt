@@ -41,7 +41,7 @@ fun <TProgress, TResult> TaskListenerBuilder<TProgress, TResult?>.execute(task: 
 fun <TProgress, TResult> TaskListenerBuilder<TProgress, TResult?>.toListener(): TaskListener<TProgress, TResult?> {
     return object : TaskListener<TProgress, TResult?>() {
         override fun onPreExecute() {
-            before?.run()
+            before?.let { it() }
         }
 
         override fun onPostExecute(result: TResult?) {
@@ -64,28 +64,28 @@ class TaskListenerBuilder<TProgress, TResult> constructor() {
     }
 
     fun replaceWith(listener: TaskListener<TProgress, TResult>) {
-        before = Runnable { listener.onPreExecute() }
+        before = { listener.onPreExecute() }
         after = Consumer<TResult> { x -> listener.onPostExecute(x) }
         onProgressUpdate = Consumer<TProgress> { x -> listener.onProgressUpdate(x) }
         onCancelled = Runnable { listener.onCancelled() }
     }
 
-    var before: Runnable? = null
+    var before: (() -> Unit)? = null
     var after: Consumer<TResult>? = null
     var onProgressUpdate: Consumer<TProgress>? = null
     var onCancelled: Runnable? = null
 
-    fun before(before: Runnable): TaskListenerBuilder<TProgress, TResult> {
+    fun before(before: () -> Unit): TaskListenerBuilder<TProgress, TResult> {
         this.before = before
         return this
     }
 
-    fun alsoExecuteBefore(before: Runnable): TaskListenerBuilder<TProgress, TResult> {
+    fun alsoExecuteBefore(before: () -> Unit): TaskListenerBuilder<TProgress, TResult> {
         val previousMethod = this.before
         if (previousMethod == null) {
             this.before = before
         } else {
-            this.before = Runnable { previousMethod.run(); before.run() }
+            this.before = { previousMethod(); before() }
         }
         return this
     }

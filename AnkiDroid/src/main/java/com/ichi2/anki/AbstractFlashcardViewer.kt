@@ -972,7 +972,7 @@ abstract class AbstractFlashcardViewer :
             // TODO: this handling code is unnecessarily complex, and would be easier to follow
             //  if written imperatively
             val handler = answerCardHandler(true)
-            handler.before?.run()
+            handler.before?.let { it() }
             handler.after?.accept(Computation.ok(NextCard.withNoResult(newCard)))
         }
     }
