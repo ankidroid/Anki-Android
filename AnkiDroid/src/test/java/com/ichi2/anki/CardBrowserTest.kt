@@ -713,7 +713,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     private fun removeCardFromCollection(cardId: CardId) {
-        col.removeCards(listOf(cardId))
+        col.removeCardsAndOrphanedNotes(listOf(cardId))
     }
 
     private val browserWithNoNewCards: CardBrowser

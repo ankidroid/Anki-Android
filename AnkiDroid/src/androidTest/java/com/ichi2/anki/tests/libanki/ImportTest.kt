@@ -95,7 +95,7 @@ class ImportTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         // and importing again will not duplicate, as the file content matches
-        empty.removeCards(empty.db.queryLongList("select id from cards"))
+        empty.removeCardsAndOrphanedNotes(empty.db.queryLongList("select id from cards"))
         imp = Anki2Importer(empty, testCol.path)
         imp.run()
         expected = listOf("foo.mp3")
@@ -105,7 +105,7 @@ class ImportTest : InstrumentedTest() {
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
         assertTrue("foo.mp3" in n.fields[0])
         // if the local file content is different, and import should trigger a rename
-        empty.removeCards(empty.db.queryLongList("select id from cards"))
+        empty.removeCardsAndOrphanedNotes(empty.db.queryLongList("select id from cards"))
         os = FileOutputStream(File(empty.media.dir(), "foo.mp3"), false)
         os.write("bar".toByteArray())
         os.close()
@@ -118,7 +118,7 @@ class ImportTest : InstrumentedTest() {
         n = empty.getNote(empty.db.queryLongScalar("select id from notes"))
         assertTrue(n.fields[0].contains("_"))
         // if the localized media file already exists, we rewrite the note and media
-        empty.removeCards(empty.db.queryLongList("select id from cards"))
+        empty.removeCardsAndOrphanedNotes(empty.db.queryLongList("select id from cards"))
         os = FileOutputStream(File(empty.media.dir(), "foo.mp3"))
         os.write("bar".toByteArray())
         os.close()
@@ -152,7 +152,7 @@ class ImportTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         // import again should be idempotent in terms of media
-        testCol.removeCards(testCol.db.queryLongList("select id from cards"))
+        testCol.removeCardsAndOrphanedNotes(testCol.db.queryLongList("select id from cards"))
         imp = AnkiPackageImporter(testCol, apkg)
         imp.run()
         expected = listOf("foo.wav")
@@ -160,7 +160,7 @@ class ImportTest : InstrumentedTest() {
         actual.retainAll(expected)
         assertEquals(expected.size.toLong(), actual.size.toLong())
         // but if the local file has different data, it will rename
-        testCol.removeCards(testCol.db.queryLongList("select id from cards"))
+        testCol.removeCardsAndOrphanedNotes(testCol.db.queryLongList("select id from cards"))
         val os = FileOutputStream(File(testCol.media.dir(), "foo.wav"), false)
         os.write("xyz".toByteArray())
         os.close()

@@ -633,7 +633,7 @@ open class Collection(
     open fun remNotes(ids: LongArray) {
         val list = db
             .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids))
-        removeCards(list)
+        removeCardsAndOrphanedNotes(list)
     }
 
     /**
@@ -969,14 +969,14 @@ open class Collection(
     /**
      * Bulk delete cards by ID.
      */
-    open fun removeCards(cardIds: Iterable<Long>) {
-        removeCards(cardIds, true)
+    open fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
+        removeCardsAndOrphanedNotes(cardIds, true)
     }
 
     /**
      * Bulk delete cards by ID.
      */
-    fun removeCards(ids: Iterable<Long>, notes: Boolean) {
+    fun removeCardsAndOrphanedNotes(ids: Iterable<Long>, notes: Boolean) {
         if (!ids.iterator().hasNext()) {
             return
         }
@@ -1979,7 +1979,7 @@ open class Collection(
         notifyProgress.run()
         if (ids.size != 0) {
             problems.add("Deleted " + ids.size + " card(s) with missing note.")
-            removeCards(ids)
+            removeCardsAndOrphanedNotes(ids)
         }
         return problems
     }
@@ -2078,7 +2078,7 @@ open class Collection(
             )
             if (ids.isNotEmpty()) {
                 problems.add("Deleted " + ids.size + " card(s) with missing template.")
-                removeCards(ids)
+                removeCardsAndOrphanedNotes(ids)
             }
         }
         return problems

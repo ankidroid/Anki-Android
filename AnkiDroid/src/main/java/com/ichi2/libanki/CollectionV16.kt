@@ -256,7 +256,7 @@ class CollectionV16(
         return backend.getEmptyCards()
     }
 
-    override fun removeCards(cardIds: Iterable<Long>) {
+    override fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
         backend.removeCards(cardIds)
     }
 

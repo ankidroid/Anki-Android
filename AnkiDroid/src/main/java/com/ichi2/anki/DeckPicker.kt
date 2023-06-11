@@ -2316,7 +2316,7 @@ open class DeckPicker :
                     setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
                         launchCatchingTask {
                             withProgress(TR.emptyCardsDeleting()) {
-                                withCol { removeCards(emptyCids) }
+                                withCol { removeCardsAndOrphanedNotes(emptyCids) }
                             }
                         }
                         showSnackbar(getString(R.string.empty_cards_deleted, emptyCids.size))

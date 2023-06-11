@@ -59,7 +59,7 @@ class CardTest : RobolectricTest() {
         val cid = note.cards()[0].id
         col.reset()
         col.sched.answerCard(col.sched.card!!, Consts.BUTTON_TWO)
-        col.removeCards(listOf(cid))
+        col.removeCardsAndOrphanedNotes(listOf(cid))
         assertEquals(0, col.cardCount())
         assertEquals(0, col.noteCount())
         assertEquals(0, col.db.queryScalar("select count() from notes"))
@@ -100,7 +100,7 @@ class CardTest : RobolectricTest() {
         t.put("qfmt", "{{Back}}")
         mm.save(m, true)
         val rep = col.emptyCids()
-        col.removeCards(rep)
+        col.removeCardsAndOrphanedNotes(rep)
         assertEquals(1, note.numberOfCards())
         // if we add to the note, a card should be automatically generated
         note.load()
