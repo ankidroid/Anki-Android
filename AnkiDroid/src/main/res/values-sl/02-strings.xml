@@ -60,9 +60,9 @@
     <string name="no_tags">Niste dodali še nobene oznake</string>
     <string name="updated_version">Posodobljen na različico %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="save_whiteboard">Shrani tablo</string>
+    <string name="enable_stylus">Omogoči način stylus</string>
+    <string name="disable_stylus">Onemogoči način stylus</string>
     <string name="enable_whiteboard">Omogoči belo tablo</string>
     <string name="disable_whiteboard">Onemogoči belo tablo</string>
     <string name="show_whiteboard">Prikaži belo tablo</string>
@@ -72,9 +72,9 @@
     <string name="leech_suspend_notification">Kartica označena kot odvečna in je bila pridržana</string>
     <string name="leech_notification">Kartica označena kot odvečna</string>
     <string name="corrupt_font">Pokvarjena datoteka pisave %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_unknown">Neznana napaka</string>
+    <string name="webview_crash_unknwon_detailed">To je povzročila notranja napaka v WebViewu</string>
+    <string name="webview_crash_oom">Zmanjkalo je pomnilnika</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
@@ -97,16 +97,16 @@
         <item>Interval</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Spremenjena kartica</item>
+        <item>Ustvarjeno</item>
+        <item>Spremenjen zapisek</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Uporabi</string>
+    <string name="filter_by_flags">Oznaka</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Povečaj omejitev novih kartic za danes</string>
+    <string name="custom_study_increase_review_limit">Povečaj današnjo omejitev kartic za pregled</string>
     <string name="custom_study_review_forgotten">Preglej pozabljene kartice</string>
     <string name="custom_study_review_ahead">Preglej vnaprej</string>
     <string name="custom_study_random_selection">Preučite naključno izbiro kartic</string>
@@ -115,13 +115,13 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Uredi zapisek</string>
     <string name="discard_unsaved_changes">Zapri in izgubi trenutni vnos?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cards_created">Nobena kartica ni bila ustvarjena. Prosim izpolni več polj.</string>
+    <string name="note_editor_no_first_field">Prvo polje je prazno.</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Shranjevanje zapiska</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Način shranjevanja zapiska</string>
     <string name="save">Shrani</string>
     <string name="close">Zapri</string>
     <string name="select">Izberi</string>
@@ -144,12 +144,12 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Kartica AnkiDroid</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">Kopiraj zapisek</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Ponastavi napredek</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Predogled</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d od%2$d</string>
     <string name="error_insufficient_memory">Opravila ni mogoče izvesti, ker je na napravi na voljo premalo pomnilnika</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Preimenuj</string>
     <string name="default_conf_delete_error">Privzete skupine možnosti ni mogoče premakniti</string>
@@ -171,26 +171,26 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">To bo izbrisalo vašo obstoječo zbirko in jo nadomestilo s podatki datoteke %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="one">Dodaj %s  zbirki? To lahko vzame veliko časa.</item>
         <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
         <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
+    <string name="import_log_no_apkg">To ni veljavna datoteka Anki package.</string>
+    <string name="import_title_error" comment="Title of error dialog">Napaka</string>
+    <string name="import_log_failed_unzip">Neuspešna razširitev datoteke apkg: %s</string>
+    <string name="import_log_failed_copy_to">Neuspešno kopiranje datoteke apkg v %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
     <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_error_handle_exception">Napaka pri uvažanju datoteke\n\n%s</string>
+    <string name="import_error_not_apkg_extension">Datoteka %s nima končnice .apkg ali .colpkg</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Izbrane datoteke AnkiDroid ni mogel samodejno uvoziti. Oglejte si uporabniški priročnik o načinu ročnega uvoza datotek anki: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">Več colpkg datotek je bilo izbranih.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Nadomeščanje zbirke &#8230;</string>

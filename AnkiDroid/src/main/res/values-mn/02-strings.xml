@@ -45,36 +45,36 @@
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer strings -->
-    <string name="drawer_open">Open drawer</string>
-    <string name="drawer_close">Close drawer</string>
-    <string name="CardEditorCardDeck">Card deck:</string>
-    <string name="CardEditorNoteDeck">Deck:</string>
-    <string name="CardEditorModel">Type:</string>
-    <string name="CardEditorTags">Tags: %1$s</string>
-    <string name="CardEditorCards">Cards: %1$s</string>
-    <string name="tag_name">Tag name</string>
-    <string name="add_new_filter_tags">Add/filter tags</string>
-    <string name="add_tag">Add tag</string>
-    <string name="check_all_tags">Check/uncheck all tags</string>
-    <string name="filter_tags">Filter tags</string>
-    <string name="no_tags">You haven’t added any tags yet</string>
-    <string name="updated_version">Updated to version %s</string>
+    <string name="drawer_open">Шургуулгыг нээх</string>
+    <string name="drawer_close">Шургуулгыг хаах</string>
+    <string name="CardEditorCardDeck">Картны Багц</string>
+    <string name="CardEditorNoteDeck">Багц:</string>
+    <string name="CardEditorModel">Төрөл:</string>
+    <string name="CardEditorTags">Шошгонууд:%1$s</string>
+    <string name="CardEditorCards">Картнууд: %1$s</string>
+    <string name="tag_name">Шошгоны нэр</string>
+    <string name="add_new_filter_tags">Шошго нэмэх/ангилах</string>
+    <string name="add_tag">Шошго нэмэх</string>
+    <string name="check_all_tags">Бүх шошгуудыг зөвлөх/эс зөвлөх</string>
+    <string name="filter_tags">Шошгуудыг ангилах</string>
+    <string name="no_tags">Та одоохондоо ямар ч шошго нэмээгүй байна</string>
+    <string name="updated_version">%s хувилбар луу шинэчлэгдлээ</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Зурсан зургаа хадгалах</string>
     <string name="enable_stylus">Enable stylus mode</string>
     <string name="disable_stylus">Disable stylus mode</string>
-    <string name="enable_whiteboard">Enable whiteboard</string>
-    <string name="disable_whiteboard">Disable whiteboard</string>
-    <string name="show_whiteboard">Show whiteboard</string>
-    <string name="hide_whiteboard">Hide whiteboard</string>
-    <string name="clear_whiteboard">Clear whiteboard</string>
-    <string name="replay_audio">Replay audio</string>
+    <string name="enable_whiteboard">Зураг зурах горимыг идэвхжүүлэх </string>
+    <string name="disable_whiteboard">Зураг зурах горимыг унтраах</string>
+    <string name="show_whiteboard">Зурсан зургыг харуулах</string>
+    <string name="hide_whiteboard">Зурсан зургыг нуух</string>
+    <string name="clear_whiteboard">Зурсан зургыг арилгах</string>
+    <string name="replay_audio">Аудиог дахин сонсох</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
-    <string name="corrupt_font">Corrupt font file %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
+    <string name="corrupt_font">Фонт ажиллахгүй болсон байна %s</string>
+    <string name="webview_crash_unknown">Тодорхойгүй алдаа</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_oom">Багтаамж дүүрсэн байна </string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
@@ -82,34 +82,34 @@
     <string name="webview_crash_loop_dialog_content">System WebView failed to render card \'%1$s\'.\n %2$s</string>
     <!-- Browser -->
     <string-array name="browser_column1_headings">
-        <item>Question</item>
-        <item>Sort field</item>
+        <item>Асуулт</item>
+        <item>Хэсгийг эрэмбэлэх</item>
     </string-array>
     <string-array name="browser_column2_headings">
-        <item>Answer</item>
-        <item>Card</item>
-        <item>Deck</item>
-        <item>Note</item>
-        <item>Question</item>
-        <item>Tags</item>
-        <item>Lapses</item>
-        <item>Reviews</item>
-        <item>Interval</item>
-        <item>Ease</item>
-        <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Хариулт</item>
+        <item>Картаар</item>
+        <item>Багц</item>
+        <item>Тэмдэглэл</item>
+        <item>Асуулт</item>
+        <item>Шошгууд</item>
+        <item>Явц</item>
+        <item>Үнэлгээний тоогоор</item>
+        <item>Завсар</item>
+        <item>Хэцүү, амраар</item>
+        <item>Дуусах хугацаагаар</item>
+        <item>Картыг өөрчилсөн хугацаагаар нь</item>
+        <item>Үүсгэснээр нь</item>
+        <item>Өөрчилсөн тэмдэглэл</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Ашиглах</string>
+    <string name="filter_by_flags">Дарцагнууд </string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
-    <string name="custom_study_review_forgotten">Review forgotten cards</string>
-    <string name="custom_study_review_ahead">Review ahead</string>
-    <string name="custom_study_random_selection">Study a random selection of cards</string>
+    <string name="custom_study_increase_new_limit">Өнөөдрийн судлах картны тоог өөрчлөх</string>
+    <string name="custom_study_increase_review_limit">Өнөөдрийн үнэлэх картны тоог өөрчлөх</string>
+    <string name="custom_study_review_forgotten">Мартсан картуудаа үнэлэх</string>
+    <string name="custom_study_review_ahead">Цагаас нь эрт үнэлэх</string>
+    <string name="custom_study_random_selection">Ямар ч хамаагүй хэсэг картыг судлах</string>
     <string name="custom_study_preview_new">Preview new cards</string>
     <string name="custom_study_limit_tags">Limit to particular tags</string>
     <!-- Card editor -->
@@ -168,8 +168,8 @@
         <item quantity="one">Add “%s” to collection? This may take a long time</item>
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_log_no_apkg">Энэ Anki - д тохирох файл биш байна</string>
+    <string name="import_title_error" comment="Title of error dialog">Алдаа</string>
     <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
     <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
     <string name="import_log_failed_validate">apkg failed validation</string>
@@ -177,8 +177,8 @@
     <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
     <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
     <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_error_handle_exception">Файлыг зөөхөд асуудал гарлаа\n\n%s</string>
+    <string name="import_error_not_apkg_extension">“%s” файлд .apkg эсвэл .colpkg гэх файлын төрөл алга байна</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
@@ -187,9 +187,9 @@
     <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
     <string name="import_replacing">Replacing collection&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
-    <string name="export_include_schedule">Include scheduling</string>
-    <string name="export_include_media">Include media</string>
-    <string name="confirm_apkg_export">Export collection as Anki package?</string>
+    <string name="export_include_schedule">Цагын хуваарийг нь оролцуулах</string>
+    <string name="export_include_media">Медиаг нь оролцуулах</string>
+    <string name="confirm_apkg_export">Цуглуулгыг Anki төрлөөр гаргах</string>
     <string name="confirm_apkg_export_deck">Export “%s” as apkg file?</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">Export selected card as apkg file?</item>
@@ -225,7 +225,7 @@
     <string name="dyn_deck_desc">This is a special deck for studying outside of the normal schedule. Cards will be automatically returned to their original decks after you review them. Deleting this deck from the deck list will return all remaining cards to their original deck.</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
-    <string name="sched_end">(end)</string>
+    <string name="sched_end">(төгсгөл)</string>
     <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
     <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
@@ -252,13 +252,13 @@
         <item quantity="other">%s months</item>
     </plurals>
     <plurals name="time_span_years">
-        <item quantity="one">%s year</item>
-        <item quantity="other">%s years</item>
+        <item quantity="one">%s жил</item>
+        <item quantity="other">%s жил</item>
     </plurals>
     <!-- A decimal number of seconds.
     Please give this a best-effort translation and explain the requirements for
     formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
+    <string name="time_span_decimal_seconds">%s секунд</string>
     <!-- The reason for making a simple “< x” translatable are RTL
          languages which apparently use the other symbol to mean less
          than. -->
@@ -286,18 +286,18 @@
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Select image</string>
     <!-- Card Template Browser Appearance -->
-    <string name="restore_default">Restore Default</string>
+    <string name="restore_default">Өгөгдмөл горим руу шилжих</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">жэшээ</string>
+    <string name="basic_answer_sample_text">жишээ</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Хоосон</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
-    <string name="white_board_image_saved">Whiteboard image saved to %s</string>
-    <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
+    <string name="white_board_image_saved">%s -д Зурсан зургийг тань хадгаллаа</string>
+    <string name="title_whiteboard_pen_color">Зурах балны өнгө</string>
     <string name="title_whiteboard_editor">Whiteboard editor</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
@@ -305,10 +305,10 @@
     <string name="invalid_json_data">Card provided invalid data. %s</string>
     <string name="valid_js_api_version">Invalid AnkiDroid JS API version. Contact developer %s, or view wiki</string>
     <string name="update_js_api_version">AnkiDroid JS API update available. Contact developer %s, or view wiki</string>
-    <string name="reviewer_invalid_api_version_visit_documentation">View</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="reviewer_invalid_api_version_visit_documentation">Үзэх</string>
+    <string name="anki_js_error_code">(Алдааны код: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Копидлоо</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copying debug information to clipboard</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Card Content Error: Failed to load ‘%s’</string>
@@ -324,7 +324,7 @@
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">Show toolbar</string>
     <string name="format_insert_bold">Format as Bold</string>
     <string name="format_insert_italic">Format as Italic</string>
-    <string name="format_insert_underline">Format as Underline</string>
+    <string name="format_insert_underline">Доогуур нь зурах</string>
     <string name="insert_horizontal_line">Insert Horizontal Line</string>
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Change Font Size</string>
@@ -348,27 +348,27 @@
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
     <string name="minus_sign" comment="Label for decrement button in IncrementerNumberRangePreference">-</string>
     <!-- Used for credential empty warning message -->
-    <string name="email_id_empty">Email address is required</string>
-    <string name="password_empty">Password is required</string>
-    <string name="back_pressed_once">Press back again to exit</string>
+    <string name="email_id_empty">Заавал Э-Мэйл хаяг хийх шаардлагатай</string>
+    <string name="password_empty">Заавал нууц үг шаардлагатай</string>
+    <string name="back_pressed_once">Гарахын тулд дахиад буцах товчоо дарна уу</string>
     <string name="back_pressed_once_reviewer">Press back again to return</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
-    <string name="download_deck">Download deck</string>
-    <string name="try_again">Try Again</string>
-    <string name="cancel_download">Cancel download</string>
-    <string name="cancel_download_question_title">Cancel download?</string>
-    <string name="downloading_file">Downloading %s</string>
+    <string name="download_deck">Багцыг татаж авах</string>
+    <string name="try_again">Дахин оролдох</string>
+    <string name="cancel_download">Татан авалтыг цуцлах</string>
+    <string name="cancel_download_question_title">Татан авалтыг цуцлах?</string>
+    <string name="downloading_file">Татан авч байна %s</string>
     <string name="import_deck">Import Deck</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
-    <string name="deck_download_progress_message">You can use other apps while the download is running</string>
-    <string name="check_network">Please check your network connection</string>
+    <string name="something_wrong">Алдаа гарлаа, та дахин оролдоно уу</string>
+    <string name="download_failed">Татан авалт амжилтгүй</string>
+    <string name="deck_download_progress_message">Энэ татан авалт явагдаж байхад та өөр зүйл хийж байж болно.</string>
+    <string name="check_network">Та интэрнэт холболтоо шалгана уу</string>
     <string name="search_using_deck_name">Search using deck name</string>
     <string name="home">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Картыг буллаа</string>
     <plurals name="note_suspended">
         <item quantity="one">%d card suspended.</item>
         <item quantity="other">%d cards suspended.</item>

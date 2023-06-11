@@ -47,7 +47,7 @@
     <string name="check_db_title">Preveri podatkovno zbirko?</string>
     <string name="check_db_warning">To lahko traja dolgo časa</string>
     <string name="check_db_acknowledge">Podatkovna zbirka preverjena</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
+    <string name="check_db_acknowledge_shrunk">Podatkovna baza preverjena in optimizirana.\nZmanjšana za %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Izbriši komplet</string>
     <string name="delete_deck_default_deck">Privzetega kompleta ni mogoče izbrisati</string>
     <string name="delete_deck_title">Izbriši komplet?</string>
@@ -61,11 +61,11 @@
     <string name="no_tts_available_message">Noben jezik pretvorbe besedila v govor ni na voljo</string>
     <string name="initializing_tts">Začenjanje TTS-a &#8230;</string>
     <string name="tts_no_tts">Bodite tiho</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="unused_strings">\n\nNeuporabljene datoteke:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Predogled</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">Prestavi novo kartico</string>
+    <string name="reposition_card_dialog_message">Začetni položaj:</string>
+    <string name="reposition_card_not_new_error">Prerazporedite lahko samo nove kartice.</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">%d card repositioned</item>
         <item quantity="two">%d cards repositioned</item>
