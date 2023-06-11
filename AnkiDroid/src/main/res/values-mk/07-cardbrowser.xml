@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">Избришете “%1$s“?</string>
     <string name="card_browser_change_display_order">Промена на редоследот на прикажувања</string>
     <string name="card_browser_change_display_order_title">Изберете редослед на прикажување</string>
-    <string name="card_browser_change_display_order_reverse">Изберете го полето двапати за да се смени</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Доспеано</string>
     <string name="card_details_tags">Ознаки</string>
     <string-array name="card_browser_order_labels">

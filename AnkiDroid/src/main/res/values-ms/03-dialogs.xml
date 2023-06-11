@@ -157,8 +157,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Tunggakan</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Mencari kad kosong&#8230;</string>
-    <string name="confirm_cancel">Anda mahu batalkan?</string>
-    <string name="empty_cards_none">Tiada kad kosong</string>
     <string name="empty_cards_count">Kad untuk dipadam: %d</string>
     <string name="empty_cards_deleted">Kad telah dipadam: %d</string>
     <!-- Multimedia - Edit Field Activity -->

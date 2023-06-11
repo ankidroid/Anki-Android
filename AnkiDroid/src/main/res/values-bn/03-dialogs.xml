@@ -166,8 +166,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">No empty cards</string>
     <string name="empty_cards_count">Cards to delete: %d</string>
     <string name="empty_cards_deleted">Cards deleted: %d</string>
     <!-- Multimedia - Edit Field Activity -->

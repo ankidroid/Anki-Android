@@ -73,7 +73,6 @@
     <string name="card_browser_list_my_searches_remove_content">\"%1$s\"을 삭제할까요?</string>
     <string name="card_browser_change_display_order">표시 순서 변경</string>
     <string name="card_browser_change_display_order_title">표시 순서를 선택하세요</string>
-    <string name="card_browser_change_display_order_reverse">역순으로 정렬하려면 필드를 두번 선택하세요</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">예정</string>
     <string name="card_details_tags">태그</string>
     <string-array name="card_browser_order_labels">

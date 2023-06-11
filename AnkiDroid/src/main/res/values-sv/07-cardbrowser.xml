@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">Ta bort \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Ändra visningsordning</string>
     <string name="card_browser_change_display_order_title">Välj visningsordning</string>
-    <string name="card_browser_change_display_order_reverse">Välj ett fält två gånger för att vända.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">I kö</string>
     <string name="card_details_tags">Etiketter</string>
     <string-array name="card_browser_order_labels">

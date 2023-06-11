@@ -166,8 +166,6 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Nakatakda</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Paghahanap ng mga walang laman na kard&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">Walang mga kard na walang laman</string>
     <string name="empty_cards_count">Mga kard na tatanggalin:%d</string>
     <string name="empty_cards_deleted">Ang mga kard ay tinanggal na%d</string>
     <!-- Multimedia - Edit Field Activity -->

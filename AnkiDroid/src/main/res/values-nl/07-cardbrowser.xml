@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">Verwijder “%1$s”?</string>
     <string name="card_browser_change_display_order">Weergavevolgorde wijzigen</string>
     <string name="card_browser_change_display_order_title">Kies weergavevolgorde</string>
-    <string name="card_browser_change_display_order_reverse">Selecteer een veld tweemaal om de volgorde om te keren.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Te doen</string>
     <string name="card_details_tags">Labels</string>
     <string-array name="card_browser_order_labels">

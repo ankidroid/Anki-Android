@@ -165,8 +165,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">देय</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">रिक्त कार्ड शोधत आहे ...</string>
-    <string name="confirm_cancel">आपण रद्द करू इच्छिता?</string>
-    <string name="empty_cards_none">रिक्त कार्डे नाहीत</string>
     <string name="empty_cards_count">हटविण्यासाठी कार्डे:%d</string>
     <string name="empty_cards_deleted">कार्ड हटविली:%d</string>
     <!-- Multimedia - Edit Field Activity -->

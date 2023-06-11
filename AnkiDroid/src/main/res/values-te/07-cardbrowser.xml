@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">తొలగించు\"%1$s\"?</string>
     <string name="card_browser_change_display_order">ప్రదర్శన క్రమం మార్చండి</string>
     <string name="card_browser_change_display_order_title">ప్రదర్శన క్రమాన్ని ఎంచుకోండి</string>
-    <string name="card_browser_change_display_order_reverse">రివర్స్ చేయడానికి రెండుసార్లు ఒక ఫీల్డ్ను ఎంచుకోండి</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">కారణంగా</string>
     <string name="card_details_tags">టాగ్లు</string>
     <string-array name="card_browser_order_labels">

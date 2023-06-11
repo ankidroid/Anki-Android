@@ -73,7 +73,6 @@
     <string name="card_browser_list_my_searches_remove_content">Xóa “%1$s”?</string>
     <string name="card_browser_change_display_order">Thay đổi thứ tự hiển thị</string>
     <string name="card_browser_change_display_order_title">Chọn thứ tự hiển thị</string>
-    <string name="card_browser_change_display_order_reverse">Chọn một trường hai lần để đảo ngược</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Đến hạn</string>
     <string name="card_details_tags">Thẻ</string>
     <string-array name="card_browser_order_labels">

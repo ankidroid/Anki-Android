@@ -83,7 +83,6 @@
     <string name="card_browser_list_my_searches_remove_content">هل تريد حذف “%1$s”؟</string>
     <string name="card_browser_change_display_order">تغيير ترتيب العرض</string>
     <string name="card_browser_change_display_order_title">اختر ترتيب العرض</string>
-    <string name="card_browser_change_display_order_reverse">حدد حقل مرتين لتعكس</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">ينتظر المراجعة</string>
     <string name="card_details_tags">وسوم</string>
     <string-array name="card_browser_order_labels">

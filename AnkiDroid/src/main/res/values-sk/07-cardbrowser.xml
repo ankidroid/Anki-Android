@@ -79,7 +79,6 @@
     <string name="card_browser_list_my_searches_remove_content">Vymazať “%1$s”?</string>
     <string name="card_browser_change_display_order">Zmeniť poradie zobrazenia</string>
     <string name="card_browser_change_display_order_title">Zvoliť poradie zobrazenia</string>
-    <string name="card_browser_change_display_order_reverse">Pre prevrátenie vyberte pole dvakrát.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Na preskúšanie</string>
     <string name="card_details_tags">Štítky</string>
     <string-array name="card_browser_order_labels">

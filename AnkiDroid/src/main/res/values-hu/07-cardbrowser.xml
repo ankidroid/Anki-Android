@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">Törlés “%1$s”?</string>
     <string name="card_browser_change_display_order">Megjelenítési sorrend módosítása</string>
     <string name="card_browser_change_display_order_title">Válassz megjelenítési sorrendet</string>
-    <string name="card_browser_change_display_order_reverse">Fordított sorrendhez válaszd ki a mezőt kétszer.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Esedékes</string>
     <string name="card_details_tags">Címkék</string>
     <string-array name="card_browser_order_labels">

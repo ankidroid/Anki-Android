@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">»%1$s« löschen?</string>
     <string name="card_browser_change_display_order">Anzeigereihenfolge ändern</string>
     <string name="card_browser_change_display_order_title">Anzeigereihenfolge auswählen</string>
-    <string name="card_browser_change_display_order_reverse">Wählen Sie zum Umkehren der Reihenfolge ein Feld zweifach aus</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Fällig</string>
     <string name="card_details_tags">Schlagwörter</string>
     <string-array name="card_browser_order_labels">

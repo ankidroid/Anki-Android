@@ -79,7 +79,6 @@
     <string name="card_browser_list_my_searches_remove_content">למחוק את ”%1$s”?</string>
     <string name="card_browser_change_display_order">שינוי סדר ההצגה</string>
     <string name="card_browser_change_display_order_title">בחירת סדר ההצגה</string>
-    <string name="card_browser_change_display_order_reverse">יש לבחור את השדה פעמיים כדי להפוך את הסדר</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">תאריך יעד</string>
     <string name="card_details_tags">תגיות</string>
     <string-array name="card_browser_order_labels">

@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">“%1$s” हटवायचे?</string>
     <string name="card_browser_change_display_order">प्रदर्शन क्रम बदला</string>
     <string name="card_browser_change_display_order_title">प्रदर्शन क्रम निवडा</string>
-    <string name="card_browser_change_display_order_reverse">उलट करण्यासाठी दोनदा फील्ड निवडा</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">देय</string>
     <string name="card_details_tags">टॅग्ज</string>
     <string-array name="card_browser_order_labels">

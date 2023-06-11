@@ -157,8 +157,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">期日到来済</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">白紙カード（表側に何も表示されないカード）がないか確認しています&#8230;</string>
-    <string name="confirm_cancel">キャンセルしますか？</string>
-    <string name="empty_cards_none">白紙カードはありません</string>
     <string name="empty_cards_count">白紙カードが%d枚見つかりました。削除しますか？</string>
     <string name="empty_cards_deleted">%d枚のカードを削除しました</string>
     <!-- Multimedia - Edit Field Activity -->
