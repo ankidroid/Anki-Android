@@ -49,7 +49,7 @@
     <string name="check_db_acknowledge">მონაცემთა ბაზა შემოწმდა</string>
     <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">დასტის წაშლა</string>
-    <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
+    <string name="delete_deck_default_deck">ნაგულისხმევი დასტის წაშლა შეუძლებელია</string>
     <string name="delete_deck_title">წაიშალოს დასტა?</string>
     <plurals name="delete_deck_message">
         <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
@@ -113,8 +113,8 @@
     <string name="import_update_details">განახლდა %1$d შენივნა %2$d არსებული შენიშვნიდან.</string>
     <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
     <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
+        <item quantity="one">იმპორტირებული ბარათი: %2$d</item>
+        <item quantity="other">იმპორტირებული ფაილი: %1$d\n იმპორტირებული ბარათი ჯამში: %2$d</item>
     </plurals>
     <string name="storage_full_title">მეხსიერება სავსეა</string>
     <string name="storage_almost_full_title">მეხსიერება თითქმის გავსებულია</string>

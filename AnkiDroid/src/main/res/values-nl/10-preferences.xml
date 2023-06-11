@@ -200,8 +200,8 @@
     <string name="custom_buttons_setting_if_room">Toon als er ruimte is</string>
     <string name="custom_buttons_setting_menu_only">Alleen menu</string>
     <string name="reset_custom_buttons" maxLength="41">Standaardinstellingen herstellen</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Instellingen terugzetten op standaard</string>
+    <string name="reset">Resetten</string>
     <string name="thirdparty_apps_title" maxLength="41">API-apps van derden</string>
     <string name="thirdparty_apps_summary">Raadpleeg de lijst van applicaties die gebruik maken van de AnkiDroid API zoals woordenboeken, hulpprogramma\'s.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript debugging</string>
@@ -363,7 +363,7 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
+    <string name="pref__backup_options__title" maxLength="41">Back-up opties</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.
@@ -380,9 +380,9 @@
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Ruimte beheren</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Foutmelding</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d file\n%2$s</item>
@@ -392,34 +392,34 @@
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
     <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Ongebruikte mediabestanden verwijderen</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Back-ups verwijderen</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Back-ups verwijderen</string>
     <string name="progress__deleting_backups">Back-ups verwijderen&#8230;</string>
     <!-- Delete collection -->
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Verwijder collectie</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
+    <string name="pref__delete_collection__summary">Verzameling, media en back-ups verwijderen. App-instellingen worden niet verwijderd</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Verwijder collectie</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="progress__deleting_collection">Collectie verwijderen&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Alles verwijderen</string>
+    <string name="pref__delete_everything__summary">Collectie, media, back-ups en instellingen verwijderen</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Alles verwijderen?</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">App-gegevens verwijderen</string>
+    <string name="pref__delete_app_data__summary">Instellingen en andere app-gegevens verwijderen</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">App-gegevens verwijderen</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Geen collectie</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Foutmelding</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Ophalen&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Berekenen&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collectie bestaat niet</string>
 </resources>
