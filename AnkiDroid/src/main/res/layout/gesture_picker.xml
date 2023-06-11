@@ -21,17 +21,18 @@
     tools:layout_height="500dp"
     tools:layout_width="400dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <com.ichi2.ui.GestureDisplay
         android:id="@+id/gestureDisplay"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_height="400dp"
-        tools:layout_width="400dp" />
+        app:layout_constraintBottom_toTopOf="@id/spinner_gesture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"/>
 
     <Spinner
         android:id="@+id/spinner_gesture"
@@ -42,6 +43,6 @@
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gestureDisplay"/>
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
