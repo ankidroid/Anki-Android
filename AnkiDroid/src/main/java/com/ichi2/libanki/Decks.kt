@@ -343,7 +343,7 @@ class Decks(private val col: Collection) : DeckManager() {
                     did,
                     did
                 )
-                col.remCards(cids)
+                col.removeCards(cids)
             }
         }
         // delete the deck and add a grave

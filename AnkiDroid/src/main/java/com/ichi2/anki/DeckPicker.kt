@@ -2373,7 +2373,7 @@ open class DeckPicker :
                 val dialog = ConfirmationDialog()
                 dialog.setArgs(msg)
                 dialog.setConfirm {
-                    context.col.remCards(result.requireNoNulls())
+                    context.col.removeCards(result.requireNoNulls())
                     val message = context.resources.getString(R.string.empty_cards_deleted, result.size)
                     context.showSnackbar(message)
                 }

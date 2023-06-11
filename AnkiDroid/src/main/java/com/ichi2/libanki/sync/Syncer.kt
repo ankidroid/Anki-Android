@@ -619,7 +619,7 @@ class Syncer(
         // notes first, so we don't end up with duplicate graves
         col._remNotes(graves.getJSONArray("notes").toLongList())
         // then cards
-        col.remCards(graves.getJSONArray("cards").toLongList(), false)
+        col.removeCards(graves.getJSONArray("cards").toLongList(), false)
         // and decks
         val decks = graves.getJSONArray("decks")
         for (did in decks.longIterable()) {
