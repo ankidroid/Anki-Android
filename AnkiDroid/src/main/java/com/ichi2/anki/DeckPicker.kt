@@ -2297,84 +2297,33 @@ open class DeckPicker :
     }
 
     private fun handleEmptyCards() {
-        mEmptyCardTask = TaskManager.launchCollectionTask(FindEmptyCards(), handlerEmptyCardListener())
-    }
-
-    private fun handlerEmptyCardListener(): HandleEmptyCardListener {
-        return HandleEmptyCardListener(this)
-    }
-
-    private class HandleEmptyCardListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Int, List<Long?>?>(deckPicker) {
-        private val mNumberOfCards: Int = deckPicker.col.cardCount()
-        private val mOnePercent: Int = mNumberOfCards / 100
-        private var mIncreaseSinceLastUpdate = 0
-        private fun confirmCancel(deckPicker: DeckPicker, task: Cancellable) {
-            AlertDialog.Builder(deckPicker).show {
-                message(R.string.confirm_cancel)
-                positiveButton(R.string.dialog_yes) {
-                    task.safeCancel()
-                }
-                negativeButton(R.string.dialog_no) {
-                    actualOnPreExecute(deckPicker)
+        launchCatchingTask {
+            val emptyCids = withProgress(R.string.emtpy_cards_finding) {
+                withCol {
+                    if (!BackendFactory.defaultLegacySchema) {
+                        newBackend.getEmptyCards().notesList.flatMap { it.cardIdsList }
+                    } else {
+                        emptyCids()
+                    }
                 }
             }
-        }
-
-        @KotlinCleanup("Material Progress Dialog")
-        override fun actualOnPreExecute(context: DeckPicker) {
-            val onCancel = DialogInterface.OnCancelListener { _: DialogInterface? ->
-                val emptyCardTask = context.mEmptyCardTask
-                emptyCardTask?.let { confirmCancel(context, it) }
-            }
-            @Suppress("Deprecation")
-            context.mProgressDialog = android.app.ProgressDialog(context).apply {
-                progress = mNumberOfCards
-                setTitle(R.string.emtpy_cards_finding)
-                setCancelable(true)
-                show()
-                setOnCancelListener(onCancel)
-                setCanceledOnTouchOutside(false)
-            }
-        }
-
-        override fun actualOnProgressUpdate(context: DeckPicker, value: Int) {
-            mIncreaseSinceLastUpdate += value
-            // Increase each time at least a percent of card has been processed since last update
-            if (mIncreaseSinceLastUpdate > mOnePercent) {
-                @Suppress("Deprecation")
-                context.mProgressDialog!!.incrementProgressBy(mIncreaseSinceLastUpdate)
-                mIncreaseSinceLastUpdate = 0
-            }
-        }
-
-        override fun actualOnCancelled(context: DeckPicker) {
-            context.mEmptyCardTask = null
-        }
-
-        /**
-         * @param context
-         * @param result Null if it is cancelled (in this case we should not have called this method) or a list of cids
-         */
-        override fun actualOnPostExecute(context: DeckPicker, result: List<Long?>?) {
-            context.mEmptyCardTask = null
-            if (result == null) {
-                return
-            }
-            if (result.isEmpty()) {
-                context.showSimpleMessageDialog(context.resources.getString(R.string.empty_cards_none))
-            } else {
-                val msg = String.format(context.resources.getString(R.string.empty_cards_count), result.size)
-                val dialog = ConfirmationDialog()
-                dialog.setArgs(msg)
-                dialog.setConfirm {
-                    context.col.remCards(result.requireNoNulls())
-                    val message = context.resources.getString(R.string.empty_cards_deleted, result.size)
-                    context.showSnackbar(message)
+            AlertDialog.Builder(this@DeckPicker).show {
+                setTitle(TR.emptyCardsWindowTitle())
+                if (emptyCids.isEmpty()) {
+                    setMessage(TR.emptyCardsNotFound())
+                    setPositiveButton(R.string.dialog_ok) { _, _ -> }
+                } else {
+                    setMessage(getString(R.string.empty_cards_count, emptyCids.size))
+                    setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
+                        launchCatchingTask {
+                            withProgress(TR.emptyCardsDeleting()) {
+                                withCol { removeCardsAndOrphanedNotes(emptyCids) }
+                            }
+                        }
+                        showSnackbar(getString(R.string.empty_cards_deleted, emptyCids.size))
+                    }
+                    setNegativeButton(R.string.dialog_cancel) { _, _ -> }
                 }
-                context.showDialogFragment(dialog)
-            }
-            if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-                context.mProgressDialog!!.dismiss()
             }
         }
     }

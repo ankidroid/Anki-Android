@@ -200,7 +200,7 @@ class Models(col: Collection) : ModelManager(col) {
         val id = m.getLong("id")
         val current = current()!!.getLong("id") == id
         // delete notes/cards
-        col.remCards(
+        col.removeCardsAndOrphanedNotes(
             col.db.queryLongList(
                 "SELECT id FROM cards WHERE nid IN (SELECT id FROM notes WHERE mid = ?)",
                 id
@@ -524,7 +524,7 @@ class Models(col: Collection) : ModelManager(col) {
         // ok to proceed; remove cards
         Timber.d("remTemplate proceeding to delete the template and %d cards", cids.size)
         col.modSchema()
-        col.remCards(cids)
+        col.removeCardsAndOrphanedNotes(cids)
         // shift ordinals
         col.db
             .execute(
@@ -681,7 +681,7 @@ class Models(col: Collection) : ModelManager(col) {
             }
         }
         col.db.executeMany("update cards set ord=?,usn=?,mod=? where id=?", d)
-        col.remCards(deleted)
+        col.removeCardsAndOrphanedNotes(deleted)
     }
 
     /*

@@ -567,7 +567,7 @@ open class Collection(
     /**
      * Deletion logging ********************************************************* **************************************
      */
-    fun _logRem(ids: kotlin.collections.Collection<Long>, @Consts.REM_TYPE type: Int) {
+    fun _logRem(ids: Iterable<Long>, @Consts.REM_TYPE type: Int) {
         for (id in ids) {
             val values = ContentValues().apply {
                 put("usn", usn())
@@ -633,7 +633,7 @@ open class Collection(
     open fun remNotes(ids: LongArray) {
         val list = db
             .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids))
-        remCards(list)
+        removeCardsAndOrphanedNotes(list)
     }
 
     /**
@@ -705,14 +705,6 @@ open class Collection(
     @KotlinCleanup("change to ArrayList!")
     fun genCards(nids: kotlin.collections.Collection<Long>, model: Model): ArrayList<Long>? {
         return genCards<CollectionTask<Int, Int>>(nids.toLongArray(), model)
-    }
-
-    fun <T> genCards(
-        nids: kotlin.collections.Collection<Long>,
-        model: Model,
-        task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
-        return genCards(nids.toLongArray(), model, task)
     }
 
     fun genCards(nids: kotlin.collections.Collection<Long>, mid: NoteTypeId): ArrayList<Long>? {
@@ -977,13 +969,15 @@ open class Collection(
     /**
      * Bulk delete cards by ID.
      */
-    fun remCards(ids: List<Long>) {
-        remCards(ids, true)
+    open fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
+        removeCardsAndOrphanedNotes(cardIds, true)
     }
 
-    @KotlinCleanup("add overloads")
-    fun remCards(ids: kotlin.collections.Collection<Long>, notes: Boolean) {
-        if (ids.isEmpty()) {
+    /**
+     * Bulk delete cards by ID.
+     */
+    fun removeCardsAndOrphanedNotes(ids: Iterable<Long>, notes: Boolean) {
+        if (!ids.iterator().hasNext()) {
             return
         }
         val sids = Utils.ids2str(ids)
@@ -1002,10 +996,10 @@ open class Collection(
         _remNotes(nids)
     }
 
-    fun <T> emptyCids(task: T?): List<Long> where T : ProgressSender<Int>?, T : CancelListener? {
+    fun emptyCids(): List<Long> {
         val rem: MutableList<Long> = ArrayList()
         for (m in models.all()) {
-            rem.addAll(genCards(models.nids(m), m, task)!!)
+            rem.addAll(genCards(models.nids(m), m)!!)
         }
         return rem
     }
@@ -1985,7 +1979,7 @@ open class Collection(
         notifyProgress.run()
         if (ids.size != 0) {
             problems.add("Deleted " + ids.size + " card(s) with missing note.")
-            remCards(ids)
+            removeCardsAndOrphanedNotes(ids)
         }
         return problems
     }
@@ -2084,7 +2078,7 @@ open class Collection(
             )
             if (ids.isNotEmpty()) {
                 problems.add("Deleted " + ids.size + " card(s) with missing template.")
-                remCards(ids)
+                removeCardsAndOrphanedNotes(ids)
             }
         }
         return problems
