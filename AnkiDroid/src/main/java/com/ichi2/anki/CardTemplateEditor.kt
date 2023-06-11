@@ -173,7 +173,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (tempModel == null) {
-            tempModel = TemporaryModel(Model(col.models.get(mModelId).toString()))
+            tempModel = TemporaryModel(col.models.get(mModelId)!!.deepClone())
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
         mFieldNames = tempModel!!.model.fieldsNames
