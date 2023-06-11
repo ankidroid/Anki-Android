@@ -165,8 +165,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Pendientes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Buscando tarjetas vacías&#8230;</string>
-    <string name="confirm_cancel">¿Desea cancelar?</string>
-    <string name="empty_cards_none">No hay tarjetas vacías</string>
     <string name="empty_cards_count">Tarjetas a eliminar: %d</string>
     <string name="empty_cards_deleted">Tarjetas eliminadas: %d</string>
     <!-- Multimedia - Edit Field Activity -->

@@ -165,8 +165,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">სასწავლო</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">იძებნება ცარიელი ბარათები&#8230;</string>
-    <string name="confirm_cancel">პროცესი გაუქმდეს?</string>
-    <string name="empty_cards_none">არ არის ცარიელი ბარათები</string>
     <string name="empty_cards_count">წასაშლელი ბარათი: %d</string>
     <string name="empty_cards_deleted">წაიშალა %d ბარათი</string>
     <!-- Multimedia - Edit Field Activity -->

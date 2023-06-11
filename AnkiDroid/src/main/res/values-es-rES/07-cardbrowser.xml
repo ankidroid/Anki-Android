@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">¿Eliminar \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Orden de presentación</string>
     <string name="card_browser_change_display_order_title">Elige el orden de presentación</string>
-    <string name="card_browser_change_display_order_reverse">Selecciona un campo dos veces para invertir.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Programada</string>
     <string name="card_details_tags">Etiquetas</string>
     <string-array name="card_browser_order_labels">

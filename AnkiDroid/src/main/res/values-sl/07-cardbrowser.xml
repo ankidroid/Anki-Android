@@ -79,7 +79,6 @@
     <string name="card_browser_list_my_searches_remove_content">Izbriši \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Spremeni vrstni red prikaza</string>
     <string name="card_browser_change_display_order_title">Izberite vrstni red prikaza</string>
-    <string name="card_browser_change_display_order_reverse">Dvakrat izberite polje, da obrnete</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Zapade</string>
     <string name="card_details_tags">Oznake</string>
     <string-array name="card_browser_order_labels">

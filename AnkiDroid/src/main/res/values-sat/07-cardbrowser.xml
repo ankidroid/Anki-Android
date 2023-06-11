@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ᱜᱮᱫ ᱜᱤᱰᱤᱼᱟ?</string>
     <string name="card_browser_change_display_order">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
     <string name="card_browser_change_display_order_title">ᱧᱮᱞᱚᱜ ᱵᱚᱫᱚᱞ ᱛᱷᱟᱨ</string>
-    <string name="card_browser_change_display_order_reverse">ᱩᱞᱴᱟ ᱞᱟᱹᱜᱤᱫ ᱒ ᱡᱟᱭᱜᱟ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
     <string name="card_details_tags">ᱴᱮᱜᱥ</string>
     <string-array name="card_browser_order_labels">

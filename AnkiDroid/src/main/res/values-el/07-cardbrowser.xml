@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">Διαγραφή του «%1$s»;</string>
     <string name="card_browser_change_display_order">Αλλαγή σειράς εμφάνισης</string>
     <string name="card_browser_change_display_order_title">Επιλέξτε τη σειρά εμφάνισης</string>
-    <string name="card_browser_change_display_order_reverse">Επιλέξτε ένα πεδίο δύο φορές για να αντιστρέψετε.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Προγρ/μένος</string>
     <string name="card_details_tags">Ετικέτες</string>
     <string-array name="card_browser_order_labels">

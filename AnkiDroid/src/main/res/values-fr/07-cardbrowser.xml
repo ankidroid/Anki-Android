@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">Supprimer « %1$s » ?</string>
     <string name="card_browser_change_display_order">Changer l\'ordre d\'affichage</string>
     <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>
-    <string name="card_browser_change_display_order_reverse">Inversez l’ordre par double-sélection du champ.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Dû</string>
     <string name="card_details_tags">Étiquettes</string>
     <string-array name="card_browser_order_labels">

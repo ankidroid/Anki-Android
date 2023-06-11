@@ -157,8 +157,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">到期</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">正在搜尋空白卡片&#8230;&#8230;</string>
-    <string name="confirm_cancel">是否取消？</string>
-    <string name="empty_cards_none">沒有空白卡片</string>
     <string name="empty_cards_count">將要刪除卡片：%d</string>
     <string name="empty_cards_deleted">已刪除卡片：%d</string>
     <!-- Multimedia - Edit Field Activity -->

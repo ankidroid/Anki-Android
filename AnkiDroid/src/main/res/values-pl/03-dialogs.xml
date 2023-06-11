@@ -181,8 +181,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Do przejrzenia</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Wyszukiwanie pustych kart&#8230;</string>
-    <string name="confirm_cancel">Czy chcesz przerwać?</string>
-    <string name="empty_cards_none">Brak pustych kart</string>
     <string name="empty_cards_count">Kart do usunięcia: %d</string>
     <string name="empty_cards_deleted">Usuniętych kart: %d</string>
     <!-- Multimedia - Edit Field Activity -->

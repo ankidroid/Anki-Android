@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">“%1$s” ଵିଲୋପ କରିବେ ତ?</string>
     <string name="card_browser_change_display_order">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="card_browser_change_display_order_title">ପ୍ରଦର୍ଶନ କ୍ରମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
-    <string name="card_browser_change_display_order_reverse">ଓଲଟା କରିବାକୁ ଦୁଇଥର ଏକ କ୍ଷେତ୍ର ଚୟନ କରନ୍ତୁ</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">ବାକି </string>
     <string name="card_details_tags">ଟ୍ୟାଗ୍ </string>
     <string-array name="card_browser_order_labels">

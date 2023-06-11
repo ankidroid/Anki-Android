@@ -165,8 +165,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">గడువు</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ఖాళీ కార్డ్లు కనుగొనడం&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">ఖాళీ కార్డ్లు లేవు</string>
     <string name="empty_cards_count">తొలగించడానికి కార్డులు:%d</string>
     <string name="empty_cards_deleted">కార్డ్లు తొలగించబడ్డాయి:%d</string>
     <!-- Multimedia - Edit Field Activity -->

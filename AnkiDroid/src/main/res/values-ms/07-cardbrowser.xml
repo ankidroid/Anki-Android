@@ -73,7 +73,6 @@
     <string name="card_browser_list_my_searches_remove_content">Padam “%1$s”?</string>
     <string name="card_browser_change_display_order">Ubah susunan paparan</string>
     <string name="card_browser_change_display_order_title">Pilih susunan paparan</string>
-    <string name="card_browser_change_display_order_reverse">Pilih medan dua kali untuk tarik balik</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Tunggak</string>
     <string name="card_details_tags">Tag</string>
     <string-array name="card_browser_order_labels">

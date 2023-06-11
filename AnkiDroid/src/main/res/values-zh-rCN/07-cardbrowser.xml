@@ -73,7 +73,6 @@
     <string name="card_browser_list_my_searches_remove_content">确认删除「%1$s」？</string>
     <string name="card_browser_change_display_order">改变排序方式</string>
     <string name="card_browser_change_display_order_title">排序方式</string>
-    <string name="card_browser_change_display_order_reverse">点击两次选项以翻转。</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">到期时间</string>
     <string name="card_details_tags">标签</string>
     <string-array name="card_browser_order_labels">

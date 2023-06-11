@@ -73,7 +73,6 @@
     <string name="card_browser_list_my_searches_remove_content">「%1$s」を削除しますか？</string>
     <string name="card_browser_change_display_order">表示順を変更</string>
     <string name="card_browser_change_display_order_title">表示順の選択</string>
-    <string name="card_browser_change_display_order_reverse">現在選択されている項目をタップすると、昇順 (▲)・降順 (▼) が切り替わります</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">期日</string>
     <string name="card_details_tags">タグ</string>
     <string-array name="card_browser_order_labels">

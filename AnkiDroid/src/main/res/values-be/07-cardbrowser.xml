@@ -79,7 +79,6 @@
     <string name="card_browser_list_my_searches_remove_content">Выдаліць \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Змяніць парадак адлюстравання</string>
     <string name="card_browser_change_display_order_title">Змяніць парадак адлюстравання</string>
-    <string name="card_browser_change_display_order_reverse">Выберыце поле двойчы, каб сартаваць у адваротным парадку</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Будзе паўторана</string>
     <string name="card_details_tags">Меткі</string>
     <string-array name="card_browser_order_labels">

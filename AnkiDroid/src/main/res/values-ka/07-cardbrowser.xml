@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">„%1$s“ წაიშალოს?</string>
     <string name="card_browser_change_display_order">ჩვენების თანმიმდევრობის შეცვლა</string>
     <string name="card_browser_change_display_order_title">ჩვენების თანმიმდევრობის არჩევა</string>
-    <string name="card_browser_change_display_order_reverse">თანმიმდევრობის ამოსაბრუნებლად ველი ორჯერ მონიშნეთ</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">სასწავლო</string>
     <string name="card_details_tags">იარლიყები</string>
     <string-array name="card_browser_order_labels">

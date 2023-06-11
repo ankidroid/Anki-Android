@@ -165,8 +165,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Esedékes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Üres kártyák keresése&#8230;</string>
-    <string name="confirm_cancel">Meg akarod szakítani?</string>
-    <string name="empty_cards_none">Nem találtam üres kártyát</string>
     <string name="empty_cards_count">%d darab törlendő kártya</string>
     <string name="empty_cards_deleted">%d darab kártya törölve</string>
     <!-- Multimedia - Edit Field Activity -->

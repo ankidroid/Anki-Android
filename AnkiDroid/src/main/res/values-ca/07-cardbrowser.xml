@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">Voleu suprimir \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Canvia l\'ordre de presentació</string>
     <string name="card_browser_change_display_order_title">Trieu l\'ordre de visualització</string>
-    <string name="card_browser_change_display_order_reverse">Seleccioneu un camp dues vegades per invertir-lo.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Pendents</string>
     <string name="card_details_tags">Etiquetes</string>
     <string-array name="card_browser_order_labels">

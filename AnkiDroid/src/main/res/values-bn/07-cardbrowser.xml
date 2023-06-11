@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">“%1$s” মুছব?</string>
     <string name="card_browser_change_display_order">প্রদর্শন-ক্রম বদলাও</string>
     <string name="card_browser_change_display_order_title">প্রদর্শন-ক্রম বাছুন</string>
-    <string name="card_browser_change_display_order_reverse">অধঃক্রমে সাজাতে একটি ফিল্ড ২বার বাছুন</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">বেঁধেদেয়া সময়</string>
     <string name="card_details_tags">ট্যাগসমূহ</string>
     <string-array name="card_browser_order_labels">

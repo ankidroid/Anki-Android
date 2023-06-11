@@ -157,8 +157,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">예정</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">빈 카드를 찾는 중...</string>
-    <string name="confirm_cancel">취소하시겠습니까?</string>
-    <string name="empty_cards_none">빈 카드 없음</string>
     <string name="empty_cards_count">삭제할 카드: %d</string>
     <string name="empty_cards_deleted">삭제된 카드: %d</string>
     <!-- Multimedia - Edit Field Activity -->

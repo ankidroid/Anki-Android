@@ -165,8 +165,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Te doen</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Lege kaarten aan het zoeken...</string>
-    <string name="confirm_cancel">Wilt u annuleren?</string>
-    <string name="empty_cards_none">Geen lege kaarten</string>
     <string name="empty_cards_count">Kaarten te verwijderen: %d</string>
     <string name="empty_cards_deleted">Kaarten verwijderd: %d</string>
     <!-- Multimedia - Edit Field Activity -->

@@ -79,7 +79,6 @@
     <string name="card_browser_list_my_searches_remove_content">Ar norite ištrinti „%1$s“?</string>
     <string name="card_browser_change_display_order">Keisti rodymo tvarką</string>
     <string name="card_browser_change_display_order_title">Pasirinkite rodymo tvarką</string>
-    <string name="card_browser_change_display_order_reverse">Norėdami matyti atvirkštine tvarka, laukelį pasirinkite dukart</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Numatytos</string>
     <string name="card_details_tags">Žymos</string>
     <string-array name="card_browser_order_labels">

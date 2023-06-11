@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">%1$s حذف شود؟</string>
     <string name="card_browser_change_display_order">تغییر تنظیم صفحه نمایش</string>
     <string name="card_browser_change_display_order_title">تغییر تنظیم صفحه نمایش</string>
-    <string name="card_browser_change_display_order_reverse">انتخاب مجدد یک فیلد به صورت وارونه.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">موعد</string>
     <string name="card_details_tags">برچسب ها</string>
     <string-array name="card_browser_order_labels">

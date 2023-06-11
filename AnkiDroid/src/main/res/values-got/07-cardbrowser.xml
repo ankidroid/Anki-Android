@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">Delete “%1$s”?</string>
     <string name="card_browser_change_display_order">Inmaidei ataugjando wikon</string>
     <string name="card_browser_change_display_order_title">Walei ataugjando wikon</string>
-    <string name="card_browser_change_display_order_reverse">Select a field twice to reverse</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Nauh</string>
     <string name="card_details_tags">Tags</string>
     <string-array name="card_browser_order_labels">

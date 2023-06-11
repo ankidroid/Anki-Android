@@ -75,7 +75,6 @@
     <string name="card_browser_list_my_searches_remove_content">Slette “%1$s”?</string>
     <string name="card_browser_change_display_order">Endre visningsrekkefølgen</string>
     <string name="card_browser_change_display_order_title">Velg visningsrekkefølge</string>
-    <string name="card_browser_change_display_order_reverse">Velg et felt to ganger for å reversere</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Gjenstående</string>
     <string name="card_details_tags">Emneord</string>
     <string-array name="card_browser_order_labels">

@@ -165,8 +165,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">बाकी</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">रिक्त कार्ड ढूंढ रहा है.. ।</string>
-    <string name="confirm_cancel">क्या आप रद्द करना चाहते हैं?</string>
-    <string name="empty_cards_none">कोई खाली कार्ड नहीं</string>
     <string name="empty_cards_count">कार्ड हटाने के लिए: %d</string>
     <string name="empty_cards_deleted">हटाई गई फ़ाइलें: %d</string>
     <!-- Multimedia - Edit Field Activity -->

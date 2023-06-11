@@ -77,7 +77,6 @@
     <string name="card_browser_list_my_searches_remove_content">Да обришем \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Промени сортирање</string>
     <string name="card_browser_change_display_order_title">Промени сортирање</string>
-    <string name="card_browser_change_display_order_reverse">Изабери поље два пута за окретање.</string>
     <string name="card_details_due" comment="Date at which a card will be due to review again.">Понављање</string>
     <string name="card_details_tags">Ознаке</string>
     <string-array name="card_browser_order_labels">
