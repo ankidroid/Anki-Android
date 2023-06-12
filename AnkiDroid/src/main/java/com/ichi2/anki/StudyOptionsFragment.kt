@@ -506,8 +506,10 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         updateValuesFromDeckJob?.cancel()
         // Load the deck counts for the deck from Collection asynchronously
         updateValuesFromDeckJob = launchCatchingTask {
-            val result = withCol { updateValuesFromDeck(this, resetSched) }
-            rebuildUi(result, resetDecklist)
+            if (CollectionManager.isOpenUnsafe()) {
+                val result = withCol { updateValuesFromDeck(this, resetSched) }
+                rebuildUi(result, resetDecklist)
+            }
         }
     }
 
