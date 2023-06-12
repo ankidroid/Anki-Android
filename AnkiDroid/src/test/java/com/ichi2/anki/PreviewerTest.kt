@@ -137,7 +137,7 @@ class PreviewerTest : RobolectricTest() {
         return getPreviewerPreviewingList(arrayList, c)
     }
 
-    private fun setDeck(name: String?, card: Card) {
+    private fun setDeck(name: String, card: Card) {
         val did = addDeck(name)
         card.did = did
         card.flush()
