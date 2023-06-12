@@ -425,17 +425,27 @@ open class RobolectricTest : AndroidTest {
         }
     }
 
-    protected fun addDeck(deckName: String?): Long {
+    /**
+     * Return a new standard deck and set it as the current deck.
+     * If a deck with this name already exists, returns it instead.
+     * It may be dynamic.
+     */
+    protected fun addDeck(deckName: String): Long {
         return try {
-            col.decks.id(deckName!!)
+            col.decks.id(deckName)
         } catch (filteredAncestor: DeckRenameException) {
             throw RuntimeException(filteredAncestor)
         }
     }
 
-    protected fun addDynamicDeck(name: String?): Long {
+    /**
+     * Return a new dynamic deck and set it as the current deck.
+     * If a deck with this name already exists, returns it instead.
+     * It may be non-dynamic.
+     */
+    protected fun addDynamicDeck(name: String): Long {
         return try {
-            col.decks.newDyn(name!!)
+            col.decks.newDyn(name)
         } catch (filteredAncestor: DeckRenameException) {
             throw RuntimeException(filteredAncestor)
         }
