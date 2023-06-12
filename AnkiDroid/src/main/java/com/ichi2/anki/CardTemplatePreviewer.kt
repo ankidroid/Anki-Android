@@ -23,15 +23,17 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
 import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
-import java.util.*
 
 /**
  * The card template previewer intent must supply one or more cards to show and the index in the list from where
@@ -301,16 +303,15 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     private fun getBundleEditFields(noteEditorBundle: Bundle?): MutableList<String> {
         val noteFields = noteEditorBundle!!.getBundle("editFields")
-            ?: return ArrayList()
+            ?: return mutableListOf()
         // we map from "int" -> field, but the order isn't guaranteed, and there may be skips.
         // so convert this to a list of strings, with null in place of the invalid fields
         val elementCount = noteFields.keySet().stream().map { s: String -> s.toInt() }.max { obj: Int, anotherInteger: Int? -> obj.compareTo(anotherInteger!!) }.orElse(-1) + 1
-        val ret = arrayOfNulls<String>(elementCount)
-        Arrays.fill(ret, "") // init array, nulls cause a crash
+        val ret = Array(elementCount) { "" } // init array, nulls cause a crash
         for (fieldOrd in noteFields.keySet()) {
-            ret[fieldOrd.toInt()] = noteFields.getString(fieldOrd)
+            ret[fieldOrd.toInt()] = noteFields.getString(fieldOrd)!!
         }
-        return ArrayList(listOf(*ret))
+        return mutableListOf(*ret)
     }
 
     /**
