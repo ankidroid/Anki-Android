@@ -1,15 +1,13 @@
 plugins {
- // Gradle plugin portal
- id 'com.github.triplet.play' version '3.8.4'
- id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.10'
+    // Gradle plugin portal
+    id 'com.github.triplet.play' version '3.8.4'
+    id 'com.android.application'
+    id 'app.brant.amazonappstorepublisher'
+    id 'idea'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
-
-apply plugin: 'com.android.application'
-apply plugin: 'app.brant.amazonappstorepublisher'
-apply plugin: 'idea'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-parcelize'
-
 
 repositories {
     google()
