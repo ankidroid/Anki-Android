@@ -214,7 +214,12 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         // To fix issue #1336, just make the whiteboard big and square.
         val p = displayDimensions
         val bitmapSize = max(p.x, p.y)
-        createBitmap(bitmapSize, bitmapSize)
+        if (bitmapSize > 0) {
+            createBitmap(bitmapSize, bitmapSize)
+        } else {
+            // Handles the case where bitmapSize is 0 or negative.
+            Timber.e("Bitmap size less than zero")
+        }
     }
 
     /**
