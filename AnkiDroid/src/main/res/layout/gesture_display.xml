@@ -22,7 +22,6 @@
     tools:layout_width="400dp">
 
 
-
     <ImageView
         android:id="@+id/top_left"
         style="@style/binding_gesture_tap_button"
@@ -80,7 +79,8 @@
     <ImageView
         android:id="@+id/bottom_center"
         style="@style/binding_gesture_tap_button"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_left"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -88,7 +88,8 @@
         android:id="@+id/bottom_right"
         style="@style/binding_gesture_tap_button"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_center"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
