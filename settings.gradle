@@ -1,3 +1,0 @@
-include ':lint-rules'
-include ':api'
-include ':AnkiDroid'
