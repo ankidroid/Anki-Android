@@ -113,6 +113,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
             // Make sure value is within range
             mLastValidEntry = numberRangePreference.getValidatedRangeFromInt(value)
             editText.setText(mLastValidEntry.toString())
+            editText.setSelection(editText.text.length)
         }
     }
 
