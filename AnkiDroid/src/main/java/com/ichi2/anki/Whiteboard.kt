@@ -214,12 +214,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         // To fix issue #1336, just make the whiteboard big and square.
         val p = displayDimensions
         val bitmapSize = max(p.x, p.y)
-        if (bitmapSize > 0) {
-            createBitmap(bitmapSize, bitmapSize)
-        } else {
-            // Handles the case where bitmapSize is 0 or negative.
-            Timber.e("Bitmap size less than zero")
-        }
+        createBitmap(bitmapSize, bitmapSize)
     }
 
     /**
@@ -228,9 +223,25 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
      */
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        val scaledBitmap: Bitmap = Bitmap.createScaledBitmap(mBitmap, w, h, true)
-        mBitmap = scaledBitmap
-        mCanvas = Canvas(mBitmap)
+        if (w > 0 && h > 0) {
+            val scaledBitmap: Bitmap? = try {
+                Bitmap.createScaledBitmap(mBitmap, w, h, true)
+            } catch (e: IllegalArgumentException) {
+                Timber.e("Bitmap size less than zero")
+                null
+            }
+            if (scaledBitmap != null) {
+                mBitmap.recycle()
+                mBitmap = scaledBitmap
+                mCanvas = Canvas(mBitmap)
+            } else {
+                val validWidth = 500
+                val validHeight = 500
+                mBitmap.recycle()
+                mBitmap = Bitmap.createBitmap(validWidth, validHeight, Bitmap.Config.ARGB_8888)
+                mCanvas = Canvas(mBitmap)
+            }
+        }
     }
 
     private fun drawStart(x: Float, y: Float) {
