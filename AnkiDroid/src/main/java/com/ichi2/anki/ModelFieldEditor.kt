@@ -173,7 +173,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.isSingleLine = true
             AlertDialog.Builder(this).show {
-                customView(_fieldNameInput, marginLeft = 64, marginRight = 64, marginTop = 32)
+                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(R.string.model_field_editor_add)
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
@@ -296,7 +296,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             _fieldNameInput.setText(mFieldsLabels[currentPos])
             _fieldNameInput.setSelection(_fieldNameInput.text!!.length)
             AlertDialog.Builder(this).show {
-                customView(_fieldNameInput, marginLeft = 64, marginRight = 64, marginTop = 32)
+                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(R.string.model_field_editor_rename)
                 positiveButton(R.string.rename) {
                     if (uniqueName(_fieldNameInput) == null) {
@@ -339,7 +339,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
             AlertDialog.Builder(this).show {
-                customView(_fieldNameInput)
+                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, mFieldsLabels.size))
                 positiveButton(R.string.dialog_ok) {
                     val newPosition = _fieldNameInput.text.toString()

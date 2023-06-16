@@ -160,30 +160,22 @@ fun AlertDialog.Builder.checkBoxPrompt(
 }
 
 fun AlertDialog.Builder.customView(
-    editText: View,
-    marginTop: Int = 0,
-    marginBottom: Int = 0,
-    marginLeft: Int = 0,
-    marginRight: Int = 0
+    view: View,
+    paddingTop: Int = 0,
+    paddingBottom: Int = 0,
+    paddingLeft: Int = 0,
+    paddingRight: Int = 0
 ): AlertDialog.Builder {
     val container = FrameLayout(context)
-    container.addView(editText)
+
     val containerParams = FrameLayout.LayoutParams(
         FrameLayout.LayoutParams.MATCH_PARENT,
         FrameLayout.LayoutParams.WRAP_CONTENT
     )
 
-    containerParams.topMargin = marginTop
-    containerParams.leftMargin = marginLeft
-    containerParams.rightMargin = marginRight
-    containerParams.bottomMargin = marginBottom
-
-    container.layoutParams = containerParams
-
-    val superContainer = FrameLayout(context)
-    superContainer.addView(container)
-
-    setView(superContainer)
+    container.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+    container.addView(view, containerParams)
+    setView(container)
 
     return this
 }
