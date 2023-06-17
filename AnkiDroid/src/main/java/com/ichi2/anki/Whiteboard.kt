@@ -223,25 +223,10 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
      */
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        if (w > 0 && h > 0) {
-            val scaledBitmap: Bitmap? = try {
-                Bitmap.createScaledBitmap(mBitmap, w, h, true)
-            } catch (e: IllegalArgumentException) {
-                Timber.e("Bitmap size less than zero")
-                null
-            }
-            if (scaledBitmap != null) {
-                mBitmap.recycle()
-                mBitmap = scaledBitmap
-                mCanvas = Canvas(mBitmap)
-            } else {
-                val validWidth = 500
-                val validHeight = 500
-                mBitmap.recycle()
-                mBitmap = Bitmap.createBitmap(validWidth, validHeight, Bitmap.Config.ARGB_8888)
-                mCanvas = Canvas(mBitmap)
-            }
-        }
+        if (w == 0 && h == 0) return
+        val scaledBitmap: Bitmap = Bitmap.createScaledBitmap(mBitmap, w, h, true)
+        mBitmap = scaledBitmap
+        mCanvas = Canvas(mBitmap)
     }
 
     private fun drawStart(x: Float, y: Float) {
