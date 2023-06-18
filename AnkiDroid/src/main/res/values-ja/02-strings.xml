@@ -51,7 +51,7 @@
     <string name="CardEditorNoteDeck">デッキ:</string>
     <string name="CardEditorModel">ノートタイプ:</string>
     <string name="CardEditorTags">タグ: %1$s</string>
-    <string name="CardEditorCards">カード:%1$s</string>
+    <string name="CardEditorCards">カード: %1$s</string>
     <string name="tag_name">タグ名</string>
     <string name="add_new_filter_tags">タグフィルター / 新規タグ追加</string>
     <string name="add_tag">タグを追加</string>
@@ -119,7 +119,7 @@
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
     <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め箇所が含まれている必要があります</string>
     <string name="note_editor_no_cards_created_all_fields">現在のノートタイプではカードを生成できませんでした。\n別のノートタイプを選択するか、「カード」をタップしてフィールドを挿入してください。</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め箇所を示す文字列は、Cloze (穴埋め問題) 型のノートタイプでのみ機能します</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め箇所を示す文字列は、穴埋め型のノートタイプでのみ機能します</string>
     <string name="saving_facts">ノートを保存しています</string>
     <string name="saving_model">ノートタイプを保存しています</string>
     <string name="save">保存</string>

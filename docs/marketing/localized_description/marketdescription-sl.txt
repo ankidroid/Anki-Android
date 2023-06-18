@@ -4,7 +4,7 @@ AnkiDroid vam omogoča zelo učinkovito učenje pomnilnih kartic z njihovim prik
 
 Preučite vse vrste stvari, kadarkoli in kjerkoli želite. Dobro izkoristite čas čakanja na avtobusu, supermarketih ali v kateremkoli drugem primeru čakanja.
 
-Ustvarite svoje komplete pomnilnih kartic ali prejmite brezplačne, ki so bili zbrani za več jezikov in tem (na voljo jih je več kot 6000).
+Ustvarite svoje komplete kartic za učenje ali si naložite brezplačne, v mnogih jezikih in o mnogih temah (na voljo jih je več kot 6000).
 
 Dodajte snov preko namiznega programa Anki ali neposredno preko AnkiDroida. Program podpira celo samodejno dodajanje snovi iz slovarja!
 

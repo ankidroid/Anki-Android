@@ -61,8 +61,8 @@
     <string name="updated_version">Actualitzeu a la versió %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Desar pissarra</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Activa el mode de llapis</string>
+    <string name="disable_stylus">Desactiva el mode de llapis</string>
     <string name="enable_whiteboard">Activar pissarra</string>
     <string name="disable_whiteboard">Desactiva la pissarra</string>
     <string name="show_whiteboard">Mostra la pissarra</string>
@@ -308,7 +308,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Veure</string>
     <string name="anki_js_error_code">(Codi d\'error: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">S\'ha copiat al porta-retalls</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copiant al porta-retalls informació de depuració</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contingut de la carta: Error al carregar \'%s\'</string>
@@ -316,7 +316,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Error al carregar paquet \'%s\'</string>
     <string name="search_decks">Cerca de paquets</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostra el progrés de la migració</string>
     <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid confia en el sistema WebView que no està disponible. Això pot passar si el sistema instal·la actualitzacions. Torneu-ho a provar d\'aquí a uns quants minuts.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -368,9 +368,9 @@
     <string name="home">Inici</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">S\'ha enterrat la targeta.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
+        <item quantity="one">%d fitxa suspesa</item>
         <item quantity="other">%d cards suspended.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
@@ -407,7 +407,7 @@
     <string name="deck_created">S\'ha generat un paquet</string>
     <string name="deck_renamed">S\'ha canviat el nom del paquet</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">S\'ha suprimit el paquet. Si us plau, elimineu la drecera</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Targetes</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
@@ -415,10 +415,10 @@
     <string name="toggle_browser_mode_help">Alterna entre mostrar targetes i notes al navegador</string>
     <string name="truncate_content_help">Trunca l\'alçada de cada fila del navegador per mostrar només les 3 primeres línies de contingut</string>
     <string name="browser_options_dialog_heading">Opcions del navegador</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Aquesta funcionalitat no està disponible durant una migració d\'emmagatzematge
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toqueu per iniciar la migració d\'emmagatzematge</string>
+    <string name="media_sync_required_title">Cal sincronitzar els mitjans</string>
+    <string name="media_sync_unavailable_message">La sincronització multimèdia està desactivada als paràmetres. Si us plau, abans de continuar, sincronitzeu i feu una còpia de seguretat de qualsevol mitjà que no s\'hagi sincronitzat</string>
+    <string name="remember_sync_metered_checkbox_msg">No ho tornis a preguntar (aquest avís es pot tornar a activar des dels paràmetres de la sincronització)</string>
 </resources>

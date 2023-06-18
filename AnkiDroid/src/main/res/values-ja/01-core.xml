@@ -185,17 +185,17 @@
     <string name="title_activity_template_editor">カードタイプ</string>
     <string name="card_template_editor_front">表面のテンプレート</string>
     <string name="card_template_editor_back">裏面のテンプレート</string>
-    <string name="card_template_editor_styling">書式</string>
+    <string name="card_template_editor_styling">スタイル</string>
     <string name="card_template_editor_menu_card_browser_appearance">カードブラウザ用の表示設定</string>
     <string name="card_template_editor_deck_override">デッキ選択を上書き</string>
     <string name="card_template_editor_insert_field">フィールドを挿入</string>
     <string name="card_template_editor_select_field">挿入するフィールドを選択してください</string>
     <string name="card_template_editor_cant_delete">カードタイプは少なくとも１種類必要です。</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="other">%1$d 枚のカードを作成します。続行しますか？</item>
+        <item quantity="other">%1$d枚のカードを作成します。続行しますか？</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d 枚を削除しますか？</item>
+        <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d枚を削除しますか？</item>
     </plurals>
     <string name="invalid_template">カードを作成できませんでした</string>
     <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１枚または複数枚のノートが削除されます。先に新しいカードタイプを追加し保存してください。</string>

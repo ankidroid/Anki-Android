@@ -26,17 +26,17 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="front_field_name">表面</string>
+    <string name="back_field_name">裏面</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">テキスト</string>
+    <string name="extra_field_name_new">裏面追記</string>
+    <string name="field_to_ask_front_name">反転カード追加（各裏面追記）</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">カード %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
-    <string name="cloze_model_name">Cloze</string>
+    <string name="basic_model_name">基本</string>
+    <string name="cloze_model_name">穴埋め</string>
     <string name="basic_typing_model_name">Basic (解答キーボード入力)</string>
-    <string name="forward_reverse_model_name">Basic (裏表反転カード付き)</string>
-    <string name="forward_optional_reverse_model_name">Basic (裏表反転カード追加可能)</string>
+    <string name="forward_reverse_model_name">基本 (裏表反転カード付き)</string>
+    <string name="forward_optional_reverse_model_name">基本 (裏表反転カード追加可能)</string>
 </resources>
