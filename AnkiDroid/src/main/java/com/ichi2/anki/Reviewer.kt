@@ -315,18 +315,6 @@ open class Reviewer :
         col.sched.deferReset()
     }
 
-    override fun setTitle() {
-        val title: String = if (colIsOpen()) {
-            Decks.basename(col.decks.current().getString("name"))
-        } else {
-            Timber.e("Could not set title in reviewer because collection closed")
-            ""
-        }
-        supportActionBar!!.title = title
-        super.setTitle(title)
-        supportActionBar!!.subtitle = ""
-    }
-
     override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
         return when (fullscreenMode) {
             FullScreenMode.BUTTONS_ONLY -> R.layout.reviewer_fullscreen

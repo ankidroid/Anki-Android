@@ -45,7 +45,6 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Int? = null
         private var mLastTime = 0
-        override fun setTitle() {}
         override fun performReload() {
             // intentionally blank
         }

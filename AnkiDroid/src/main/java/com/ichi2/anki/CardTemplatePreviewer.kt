@@ -132,12 +132,6 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         closeCardTemplatePreviewer()
     }
 
-    override fun setTitle() {
-        if (supportActionBar != null) {
-            supportActionBar?.setTitle(R.string.preview_title)
-        }
-    }
-
     override fun initLayout() {
         super.initLayout()
         topBarLayout!!.visibility = View.GONE

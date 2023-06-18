@@ -42,7 +42,6 @@ import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
 import org.mockito.kotlin.whenever
 import timber.log.Timber
-import java.lang.Exception
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerKeyboardInputTest : RobolectricTest() {
@@ -330,11 +329,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             whenever(keyEvent.isAltPressed).thenReturn(false)
             return keyEvent
         }
-
-        override fun setTitle() {
-            // required for interface. Intentionally left blank
-        }
-
         fun focusTextField(): KeyboardInputTestReviewer {
             mFocusTextField = true
             return this
