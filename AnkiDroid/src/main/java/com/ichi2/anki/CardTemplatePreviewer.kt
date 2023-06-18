@@ -23,8 +23,11 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.libanki.*
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Model
+import com.ichi2.libanki.Note
+import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
 import net.ankiweb.rsdroid.BackendFactory
@@ -128,12 +131,6 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     override fun onNavigationPressed() {
         Timber.i("CardTemplatePreviewer:: Navigation button pressed")
         closeCardTemplatePreviewer()
-    }
-
-    override fun setTitle() {
-        if (supportActionBar != null) {
-            supportActionBar?.setTitle(R.string.preview_title)
-        }
     }
 
     override fun initLayout() {

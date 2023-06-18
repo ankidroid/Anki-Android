@@ -568,8 +568,6 @@ abstract class AbstractFlashcardViewer :
         refreshActionBar()
     }
 
-    protected abstract fun setTitle()
-
     // Finish initializing the activity after the collection has been correctly loaded
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
@@ -601,7 +599,6 @@ abstract class AbstractFlashcardViewer :
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
-        setTitle()
         mHtmlGenerator = createInstance(this, typeAnswer!!, mBaseUrl!!)
 
         // Initialize text-to-speech. This is an asynchronous operation.
@@ -631,7 +628,6 @@ abstract class AbstractFlashcardViewer :
         }
         automaticAnswer.enable()
         // Reset the activity title
-        setTitle()
         updateActionBar()
         selectNavigationItem(-1)
     }

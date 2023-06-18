@@ -144,10 +144,6 @@ class Previewer : AbstractFlashcardViewer() {
         throw IllegalStateException("newCardList was empty")
     }
 
-    override fun setTitle() {
-        supportActionBar!!.setTitle(R.string.preview_title)
-    }
-
     override fun initLayout() {
         super.initLayout()
         topBarLayout!!.visibility = View.GONE
