@@ -44,7 +44,7 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
+    <string name="backup_deck_no_storage_left">ବ୍ୟାକଅପ୍ ସଞ୍ଚୟ ହୋଇନାହିଁ। ଆପଣଙ୍କ ଷ୍ଟୋରେଜ୍‌ରେ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ବାକି ନାହିଁ। ବ୍ୟାକଅପ୍ ଗଭୀରତାକୁ କମ୍ କରନ୍ତୁ କିମ୍ବା ଅନ୍ୟ କିଛିଟା ଫାଇଲ୍ ଅପସାରଣ କରନ୍ତୁ।</string>
     <string name="storage_warning">ଆପଣଙ୍କ ଷ୍ଟୋରେଜ୍‌ରେ %d MBରୁ କମ୍ ସ୍ଥାନ ବାକି ଅଛି।\nଡାଟା କ୍ଷତି ଏଡ଼ାଇବା ପାଇଁ କିଛି ସ୍ଥାନ ଖାଲି କରନ୍ତୁ।</string>
     <string name="backup_restore">ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର</string>
     <string name="backup_new_collection">ନୂତନ ସଂଗ୍ରହ</string>

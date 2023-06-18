@@ -59,7 +59,7 @@
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">同期</string>
     <string name="pref_cat_scheduling" maxLength="41">スケジュール</string>
     <string name="pref_cat_whiteboard" maxLength="41">ホワイトボード機能</string>
-    <string name="pref_cat_appearance" maxLength="41">デザインと表示</string>
+    <string name="pref_cat_appearance" maxLength="41">外観</string>
     <string name="pref_cat_themes" maxLength="41">テーマ</string>
     <string name="pref_cat_fonts" maxLength="41">フォント</string>
     <string name="pref_cat_gestures" maxLength="41">ジェスチャー</string>
@@ -181,8 +181,8 @@
     <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの既定の追加先デッキ</string>
     <string name="new_spread" maxLength="41">新規カードの位置</string>
-    <string name="learn_cutoff" maxLength="41">習得学習の前倒し可能時間</string>
-    <string name="time_limit" maxLength="41">タイムボックス（時間の目標・区切り）</string>
+    <string name="learn_cutoff" maxLength="41">習得学習の前倒し許容時間</string>
+    <string name="time_limit" maxLength="41">タイムボックス（学習時間の目標・区切り）</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
     <string name="day_offset_summary">%s時</string>
