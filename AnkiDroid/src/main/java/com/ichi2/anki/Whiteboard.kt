@@ -223,6 +223,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
      */
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        Timber.w("Whiteboard::onSizeChanged width:$w height:$h")
         if (w == 0 || h == 0) return
         val scaledBitmap: Bitmap = Bitmap.createScaledBitmap(mBitmap, w, h, true)
         mBitmap = scaledBitmap
