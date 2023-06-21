@@ -10,12 +10,12 @@ buildscript {
     ext.ankidroid_backend_version = '0.1.21-anki2.1.61'
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.9.3'
-    ext.coroutines_version = '1.6.4'
+    ext.coroutines_version = '1.7.1'
     ext.fragments_version = "1.6.0"
     ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
     ext.androidx_test_junit_version = '1.1.5'
-    ext.robolectric_version = '4.10.2'
+    ext.robolectric_version = '4.10.3'
 
     repositories {
         google()
