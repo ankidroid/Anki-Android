@@ -68,6 +68,7 @@ import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.time.Duration.Companion.milliseconds
 
 open class RobolectricTest : CollectionGetter, AndroidTest {
 
@@ -641,7 +642,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         dispatchTimeoutMs: Long = 60_000L,
         testBody: suspend TestScope.() -> Unit
     ) {
-        kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs) {
+        runTest(context, dispatchTimeoutMs.milliseconds) {
             CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
             testBody()
         }
