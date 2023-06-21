@@ -131,8 +131,8 @@
     <!-- Timebox -->
     <string name="timebox_reached_title">ସମୟବାକ୍ସ ପହଞ୍ଚିଛି</string>
     <plurals name="timebox_reached">
-        <item quantity="one">%1$dଟିଏ ପତ୍ର %2$s ରେ ଅଧ୍ୟୟନ କଲେ</item>
-        <item quantity="other">%1$dଟି ପତ୍ର %2$s ରେ ଅଧ୍ୟୟନ କଲେ</item>
+        <item quantity="one">%1$dଟିଏ ପତ୍ର %2$s‌ରେ ଅଧ୍ୟୟନ କଲେ</item>
+        <item quantity="other">%1$dଟି ପତ୍ର %2$s‌ରେ ଅଧ୍ୟୟନ କଲେ</item>
     </plurals>
     <!-- minutes used in \'[studied in] x minutes\' context, causing inflexion in some languages -->
     <plurals name="in_minutes">

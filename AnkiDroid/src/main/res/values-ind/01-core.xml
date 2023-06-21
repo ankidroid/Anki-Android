@@ -159,7 +159,7 @@
     <string name="custom_study_deck_exists">Ubah nama dek belajar kustom yang ada</string>
     <string name="empty_deck">Dek ini kosong</string>
     <string name="search_deck" comment="Deck search for selecting it">Mencari Dek</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Pencarian Dek</string>
     <string name="invalid_deck_name">Nama dek tidak valid</string>
     <string name="studyoptions_empty">Dek Ini kosong. Tekan tombol + untuk menambah konten baru.</string>
     <string name="studyoptions_limit_reached">Batas belajar harian tercapai</string>
@@ -172,7 +172,7 @@
     <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
     <string name="empty_cloze_warning">Edit catatan ini dan menambahkan beberapa kloza deletasi (titik-titik). (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinkronisasi</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">Migrasi ke scoped storage</string>
     <string name="cancel_sync_confirm">Batalkan sinkronisasi?</string>
     <string name="continue_sync">Lanjutkan sinkronisasi</string>
     <string name="sync_cancelled">Sinkronisasi dibatalkan</string>
@@ -234,39 +234,39 @@
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Tidak dapat menulis atau membuat file %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Beberapa error, paling terkini: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Beberapa error berurutan tanpa kemajuan, paling terkini: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_data">Migrating data</string>
-    <string name="migration__calculating_transfer_size">Calculating transfer size&#8230;</string>
-    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Transferred %1$s of %2$s</string>
-    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migration successful</string>
-    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
-        AnkiDroid is fully functional again, and you can sync.
+    <string name="migration__migrating_data">Migrasi data</string>
+    <string name="migration__calculating_transfer_size">Menghitung ukuran transfer&#8230;</string>
+    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Berhasil mentransfer %1$s dari %2$s</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migrasi berhasil</string>
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Data anda telah berhasil dimigrasi.
+        AnkiDroid sudah berfungsi penuh kembali, dan anda bisa melakukan sinkronisasi.
         \n
-        \nNote that your collection is now located in a folder that is removed when uninstalling the app.
-        Please make sure that your data is safe by regularly syncing or exporting backups.
+        \nPerlu diingat bahwa koleksi anda berada pada folder yang akan ikut terhapus saat menghapus aplikasi.
+        Mohon pastikan data anda aman dengan sinkronisasi rutin atau mengekspor backup.
     </string>
-    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migration failed</string>
-    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migrasi gagal</string>
+    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Migrasi penyimpanan dijeda akibat error: %1$s.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space, or-reconnect the missing media.
+        Mohon coba jalankan ulang migrasi.
+        Untuk menyelesaikan masalah, anda mungkin butuh untuk membebaskan beberapa ruang penyimpanan, atau menghubungkan ulang media yang hilang.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Pelajari lebih lanjut dan dapatkan bantuan</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Migrasi penyimpanan dijeda akibat error: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Pelajari lebih lanjut dan dapatkan bantuan</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Lanjutkan migrasi</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Koleksi tidak dapat diakses</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Kami tidak dapat mengakses koleksi anda setelah AnkiDroid dihapus akibat sari perubahan Kebijakan Play Store\n\nData anda aman dan dapat dipulihkan. Data anda berada di\n%s\n\nPilih salah satu opsi berikut untuk memulihkan:</string>
+    <string name="restore_data_from_ankiweb">Pulihkan dari AnkiWeb (disarankan)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Pulihkan akses folder (disarankan)</string>
+    <string name="install_non_play_store_ankidroid">Pulihkan akses folder (lanjutan)</string>
+    <string name="restore_data_from_backup">Pulihkan dari backup .colpkg (lanjutan)</string>
+    <string name="create_new_collection">Buat koleksi baru.</string>
+    <string name="new_unsafe_collection">Koleksi baru ini akan dihapus dari perangkat apabila AnkiDroid dihapus.</string>
 </resources>
