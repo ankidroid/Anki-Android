@@ -86,7 +86,7 @@
     <string name="sync_remote_db_error">بانک اطلاعات دریافت شده خراب شده بود. لطفا مجددا امتحان نمایید.</string>
     <string name="sync_overwrite_error">مجموعه فعلی شما با فایل دانلود شده نمی تواند رونویسی شود.</string>
     <string name="sync_connection_error">مدت اتصال به اینترنت به پایان رسید. یا به خاطر مشکلات اتصال اینترنت شما یا به خاطر حجیم بودن فایل در پوشه رسانه.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">فایل دانلود شده نمی تواند بر روی کارت حافظه ذخیره شود. یا کارت حافظه شما بصورت فقط خواندنی نصب شده و یا فضای کافی وجود ندارد.</string>
     <string name="sync_error_invalid_sync_server">سرور همسان‌سازی (Sync Server) مشخص شده در تنظیمات پیشرفته، معتبر نیست (%s). لطفا یک سرور معتبر وارد کنید یا این تنظیم را غیر فعال کنید.</string>
     <string name="sync_deletions_message">حذف همگام سازی...</string>
     <string name="sync_small_objects_message">همگام سازی موارد کوچک&#8230;</string>

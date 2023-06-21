@@ -50,8 +50,8 @@
         <item quantity="other">%d کارت نمایش داده شده</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d یادداشت نمایش داده‌شده</item>
+        <item quantity="other">%d یادداشت نمایش داده شده</item>
     </plurals>
     <string name="card_browser_all_decks">همه دسته ها</string>
     <string name="card_browser_delete_card">حذف یادداشت‌ها</string>
@@ -99,12 +99,12 @@
     <string name="card_browser_unknown_deck_name">ناشناخته</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">محتوا را کوتاه کن</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">خروجی گرفتن کارت</item>
+        <item quantity="other">خروجی گرفتن کارت‌ها</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">خروجی گرفتن یادداشت</item>
+        <item quantity="other">خروجی گرفتن یادداشت‌ها</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d کارت حذف شده</item>

@@ -94,7 +94,7 @@
     <string name="answering_error_title">خطای پایگاه داده</string>
     <string name="answering_error_message">ذخیرۀ مجموعه انجام نشد. دیتابیس ممکن است خراب باشد یا ممکن است فضای کافی نداشته باشید.\n\nاگر این اتفاق غالباً رخ می‌دهد، بررسی دیتابیس، تعمیر مجموعه یا بازنشانی مجموعه از یک فایل پشتیبان قبلی را برای حل کردن مشکل امتحان کنید. برای این کار به \"گزینه‌ها\" مراجعه کنید.\nاین خطا همچنین ممکن است به دلیل مشکل در آنکی‌دروید باشد؛ اگر هیچ یک از موارد بالا مشکل شما را حل نکرد، لطفاً خطا را به ما گزارش دهید تا ما بتوانیم به بررسی آن بپردازیم.</string>
     <string name="answering_error_report">گزارش خطا</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">فضای خالی کافی برای باز شدن انکی‌دروید وجود ندارد. کمی فضای خالی برای ادامه دادن کار، ایجاد کنید.</string>
     <string name="repair_deck_dialog">آیا شما واقعا می خواهید پایگاه داده را تعمیر کنید؟\n\nقبل از شروع , یک کپی در پوشه فرعی \'%s\' به وجود خواهد آمد .</string>
     <string name="intent_aedict_empty">مجموعه \'پیش فرض\' خالی است</string>
     <string name="intent_aedict_category">اضافه کردن کارت به آنکی دروید سبب حذف همه یادداشت های مجموعه ها یا اضافه کردن یک نام پیش فرض به آنها می شود</string>
@@ -247,7 +247,7 @@
         <item quantity="one">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
         <item quantity="other">همگام سازی خودکار %d ثانیه دیگر آغاز میشود</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">ارتباط‌ شما دارای اندازه‌گیری است. انتقال داده می‌تواند هزینه اضافه داشته باشد.</string>
     <string name="deck_picker_new">تعداد کارت های جدیدی که امروز در این دسته خواهید دید.</string>
     <string name="deck_picker_rev">تعداد کارت های تا مهلت امروز در این دسته</string>
     <string name="deck_picker_lrn">تعداد کارت های در حال یاد‌گیری در این دسته.</string>
@@ -257,19 +257,17 @@
     <string name="deck_picker_counts">صفحه ی مرور دسته کارت را که شامل تعداد کارت هایی که امروز باید ببینید را باز کن.</string>
     <string name="import_deck_package">بسته ی دسته کارت (.apkg)</string>
     <string name="import_collection_package">بسته ی مجموعه (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">فایل‌ متنی (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">شما نمیتوانید برای همه دسته ها یک زیردسته درست کنید</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
+    <string name="backup_your_collection">پشتیبان گرفتن از مجموعه</string>
+    <string name="backup_collection_message">شما مدتی است که از مجموعه خود پشتیبانی نگرفته‌اید. بهتر است برای از دست ندادن داده‌ها، این کار را انجام دهید</string>
+    <string name="button_backup">پشتیبان‌گیری</string>
+    <string name="button_disable_reminder">غیرفعال کردن یادآوری</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">بعداً</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">دوباره نشان نده</string>
+    <string name="dismiss_backup_warning_title">خطر از دست رفتن داده‌ها</string>
+    <string name="dismiss_backup_warning_new_user">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک نیز حذف خواهند شد    </string>
+    <string name="dismiss_backup_warning_upgrade">        بنابر تغییرات حریم خصوصی اندروید، در صورت پاک کردن اپلیکیشن از روی موبایل، داده‌ها و پشتیبان‌های اتوماتیک، از دسترس خارج خواهند شد    </string>
 </resources>
