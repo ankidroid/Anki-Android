@@ -279,10 +279,10 @@ dependencies {
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
     compileOnly 'org.jetbrains:annotations:24.0.1'
-    compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
-    annotationProcessor "com.google.auto.service:auto-service:1.0.1"
+    compileOnly "com.google.auto.service:auto-service-annotations:1.1.1"
+    annotationProcessor "com.google.auto.service:auto-service:1.1.1"
 
-    implementation 'androidx.activity:activity-ktx:1.7.1'
+    implementation 'androidx.activity:activity-ktx:1.7.2'
     implementation 'androidx.annotation:annotation:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
     implementation 'androidx.browser:browser:1.5.0'
@@ -296,7 +296,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.webkit:webkit:1.6.1'
+    implementation 'androidx.webkit:webkit:1.7.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     // Changing the version from 1.8.0 to 1.7.0 because the item in navigation drawer is getting bold unnecessarily
     implementation 'com.google.android.material:material:1.7.0'
