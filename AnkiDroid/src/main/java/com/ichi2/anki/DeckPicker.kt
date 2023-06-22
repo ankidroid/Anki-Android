@@ -2385,7 +2385,7 @@ open class DeckPicker :
             }
             val count = databaseResult.cardsWithFixedHomeDeckCount
             if (count != 0) {
-                val message = resources.getString(R.string.integrity_check_fixed_no_home_deck, count)
+                val message = resources.getQuantityString(R.plurals.integrity_check_fixed_no_home_deck_new, count, count)
                 showThemedToast(this@DeckPicker, message, false)
             }
             val msg: String

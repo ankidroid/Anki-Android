@@ -554,8 +554,9 @@ fun DeckPicker.createSyncListener(isFetchingMedia: Boolean) = object : Connectio
                         dialogMessage = when {
                             diff >= 86100 -> {
                                 // The difference if more than a day minus 5 minutes acceptable by ankiweb error
-                                res.getString(
-                                    R.string.sync_log_clocks_unsynchronized,
+                                res.getQuantityString(
+                                    R.plurals.sync_log_clocks_unsynchronized_new,
+                                    diff.toInt(),
                                     diff,
                                     res.getString(R.string.sync_log_clocks_unsynchronized_date)
                                 )
@@ -563,14 +564,15 @@ fun DeckPicker.createSyncListener(isFetchingMedia: Boolean) = object : Connectio
                             abs(diff % 3600.0 - 1800.0) >= 1500.0 -> {
                                 // The difference would be within limit if we adjusted the time by few hours
                                 // It doesn't work for all timezones, but it covers most and it's a guess anyway
-                                res.getString(
-                                    R.string.sync_log_clocks_unsynchronized,
+                                res.getQuantityString(
+                                    R.plurals.sync_log_clocks_unsynchronized_new,
+                                    diff.toInt(),
                                     diff,
                                     res.getString(R.string.sync_log_clocks_unsynchronized_tz)
                                 )
                             }
                             else -> {
-                                res.getString(R.string.sync_log_clocks_unsynchronized, diff, "")
+                                res.getQuantityString(R.plurals.sync_log_clocks_unsynchronized_new, diff.toInt(), diff, "")
                             }
                         }
                         showSyncErrorMessage(
