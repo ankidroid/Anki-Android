@@ -22,15 +22,25 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.4.2'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath "app.brant:amazonappstorepublisher:0.1.0"
+        classpath "com.github.BrantApps.gradle-amazon-app-store-publisher:amazonappstorepublisher:master-SNAPSHOT"
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:11.4.1"
+    }
+    configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'org.jetbrains.kotlinx'
+                    && details.requested.name.contains('kotlinx-serialization-runtime')
+                    && details.requested.version.contains('0.11.0')) {
+                details.useVersion "0.14.0"
+            }
+        }
     }
 }
 
