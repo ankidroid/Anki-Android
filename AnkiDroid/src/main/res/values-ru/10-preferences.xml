@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">Новая обработка часовых поясов</string>
     <string name="day_offset_with_description" maxLength="41">Начало нового дня</string>
     <string name="day_offset_summary">%s ч. после полуночи</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Полночь</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
     <string name="convert_fen_text" maxLength="41">Поддержка шахматной нотации</string>

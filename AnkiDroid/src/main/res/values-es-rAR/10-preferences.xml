@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">Nuevo manejo de zona horaria</string>
     <string name="day_offset_with_description" maxLength="41">Comienzo del día siguiente (0 es medianoche, 23 es 11PM)</string>
     <string name="day_offset_summary">%s horas después de medianoche</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Medianoche</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11 PM</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantener la pantalla encendida</string>
     <string name="pref_keep_screen_on_summ">Desactivar el tiempo de espera de pantalla</string>
     <string name="convert_fen_text" maxLength="41">Soporte para notación de ajedrez</string>

@@ -75,7 +75,12 @@
     <string name="sync_downloading_message">Prejemanje &#8230;</string>
     <string name="sync_title">Sinhronizacija</string>
     <string name="sync_log_uploading_message">Polna sin. iz lokalne pom. naprave</string>
-    <string name="sync_log_clocks_unsynchronized">Vaša ura je zamaknjena za %1$d s%2$s. Prepričajte se, da so datum, čas in časovni pas na vašem telefonu pravilno nastavljeni in potem sinhronizirajte znova.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="two">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, časovni pas je verjetno napačen</string>
     <string name="sync_log_clocks_unsynchronized_date">, datum je verjetno napačen</string>
     <string name="sync_no_changes_message">Sprememb ni bilo mogoče najti</string>
@@ -102,9 +107,30 @@
     <string name="sync_media_find">Iskanje spremenjene predstavnosti &#8230;</string>
     <string name="sync_media_no_changes">Ni sprememb v datotekah predstavnosti</string>
     <string name="sync_media_success">Predstavnost sinhronizirana</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d sprememb predstavnosti za pošiljanje</string>
-    <string name="sync_media_downloaded_count">Prejetih %d sprememb predstavnosti</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="two">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="two">%d media files uploaded.</item>
+        <item quantity="few">%d media files uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="two">%d media changes to upload</item>
+        <item quantity="few">%d media changes to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="two">%d media files downloaded</item>
+        <item quantity="few">%d media files downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Po sinhronizaciji je zbirka v nedoslednem stanju. Za popravilo te težave bo AnkiDroid vsilil polno sinhronizacijo. Izberite stran, ki jo želite ohraniti.</string>
     <string name="sync_media_sanity_failed">Sinhronizacija predstavnosti končana, vendar se števec predstavnosti ne ujema s strežnikom. Naslednja sinhronizacija predstavnosti bo polna, da se popravijo morebitne napake.</string>
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>

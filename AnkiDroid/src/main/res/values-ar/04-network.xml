@@ -75,7 +75,14 @@
     <string name="sync_downloading_message">تنزيل...</string>
     <string name="sync_title">المزامنة</string>
     <string name="sync_log_uploading_message">مزامنة كاملة من القرص المحلي</string>
-    <string name="sync_log_clocks_unsynchronized">ساعتك مخطئة بمقدار %1$d ثانية%2$s. تأكد من ضبط التاريخ، والوقت، والمنطقة الزمنية في هاتفك بشكل صحيح، ثم زامن مجددًا.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="zero">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="two">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">، من المحتمل أن المنطقة الزمنية للجهاز غير صحيحة</string>
     <string name="sync_log_clocks_unsynchronized_date">، من المحتمل أن تاريخ الجهاز غير صحيح</string>
     <string name="sync_no_changes_message">لا توجد تغييرات.</string>
@@ -102,9 +109,38 @@
     <string name="sync_media_find">إيجاد الوسائط المتغيرة...</string>
     <string name="sync_media_no_changes">لا توجد تغييرات في ملفات الوسائط.</string>
     <string name="sync_media_success">تمت مزامنة الوسائط بنجاح.</string>
-    <string name="sync_media_partial_updated">اكتملت المزامنة جزئيًا:\nتم تحميل %1$d ملف وسائط.\nتم رفع %2$d ملف وسائط.</string>
-    <string name="sync_media_changes_count">%d تغيير وسائط بانتظار الرفع</string>
-    <string name="sync_media_downloaded_count">تم تنزيل %d ملف وسائط</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="zero">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="two">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="zero">%d media files uploaded.</item>
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="two">%d media files uploaded.</item>
+        <item quantity="few">%d media files uploaded.</item>
+        <item quantity="many">%d media files uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="zero">%d media changes to upload</item>
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="two">%d media changes to upload</item>
+        <item quantity="few">%d media changes to upload</item>
+        <item quantity="many">%d media changes to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="zero">%d media files downloaded</item>
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="two">%d media files downloaded</item>
+        <item quantity="few">%d media files downloaded</item>
+        <item quantity="many">%d media files downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">بعد المزامنة، أصبحت المجموعة في حالة غير مستقرة. لإصلاح هذه المشكلة، سيفرض أنكي مزامنة كاملة. اختر الجانب الذي تريد إبقاءه.</string>
     <string name="sync_media_sanity_failed">اكتملت مزامنة الوسائط، ولكن عدد الوسائط لا يتوافق مع الخادم. ستكون مزامنة الوسائط القادمة كاملة لتصحيح أي خطأ.</string>
     <string name="sync_media_db_error">فشلت مزامنة الوسائط لأن قاعدة البيانات الحالية تالفة. يُنصح بفحص الوسائط.</string>

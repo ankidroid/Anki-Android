@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">डाउनलोड करीत आहे&#8230;</string>
     <string name="sync_title">सिंक्रोनाइझेशन</string>
     <string name="sync_log_uploading_message">स्थानिक कडून पूर्ण संकालन</string>
-    <string name="sync_log_clocks_unsynchronized">आपले घड्याळ%1$d सेकंद%2$s ने बंद आहे. आपल्या फोनवरील तारीख, वेळ आणि वेळ क्षेत्र योग्यरित्या सेट केले असल्याचे सुनिश्चित करा, त्यानंतर पुन्हा संकालन करा.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, टाईम झोन शक्यतो चुकीचा आहे</string>
     <string name="sync_log_clocks_unsynchronized_date">, तारीख शक्यतो चुकीची आहे</string>
     <string name="sync_no_changes_message">कोणतेही बदल आढळले नाहीत</string>
@@ -102,9 +105,22 @@
     <string name="sync_media_find">बदललेला मीडिया शोधत आहे&#8230;</string>
     <string name="sync_media_no_changes">मीडिया फायलींमध्ये कोणतेही बदल नाहीत</string>
     <string name="sync_media_success">मीडिया समक्रमित</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d मीडिया अपलोड करण्यासाठी बदलते</string>
-    <string name="sync_media_downloaded_count">%d मीडिया फायली डाउनलोड केल्या</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">समक्रमित केल्यानंतर, संग्रह विसंगत स्थितीत होता. या समस्येचे निराकरण करण्यासाठी, AnkiDroid संपूर्ण संकालनास भाग पाडेल. आपण कोणती बाजू ठेवू इच्छिता ते निवडा.</string>
     <string name="sync_media_sanity_failed">मीडिया समक्रमण पूर्ण झाले, परंतु मीडिया गणना सर्व्हरशी सहमत नाही. पुढील मीडिया संकालन कोणत्याही त्रुटी सुधारण्यासाठी पूर्ण असेल.</string>
     <string name="sync_media_db_error">मीडिया संकालन अयशस्वी झाले कारण वर्तमान डेटाबेस दूषित आहे. मीडिया तपासणीची शिफारस केली जाते.</string>

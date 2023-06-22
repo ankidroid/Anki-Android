@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">Изтегляне...</string>
     <string name="sync_title">Синхронизиране</string>
     <string name="sync_log_uploading_message">Пълно синхронизиране от местни</string>
-    <string name="sync_log_clocks_unsynchronized">Вашият часовник е неправилен с %1$d секунди%2$s. Уверете се, че датата, часа и часовата зона на телефона са зададени правилно и тогава синхронизирайте отново.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, часовата зона на устройството е вероятно грешна</string>
     <string name="sync_log_clocks_unsynchronized_date">, датата на устройството е вероятно грешна</string>
     <string name="sync_no_changes_message">Не са намерени промени.</string>
@@ -102,9 +105,22 @@
     <string name="sync_media_find">Търсене на променени медийни файлове&#8230;</string>
     <string name="sync_media_no_changes">Без промени в медийните файлове</string>
     <string name="sync_media_success">Медите са синхронизирани</string>
-    <string name="sync_media_partial_updated">Синхронизирането на медийните файлове е частично завършено:\n%1$d медийни файла изтеглени.\n%2$d медийни файла са качени.</string>
-    <string name="sync_media_changes_count">%d промени в медийните файлове за качване</string>
-    <string name="sync_media_downloaded_count">%d промени в медийните файлове за изтегляне</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">След синхронизирането възникна проблем във Вашите колекции. За да го разреши, AnkiDroid ще извърши пълно синхронизиране. Изберете коя страна искате да запазите.</string>
     <string name="sync_media_sanity_failed">Синхронизирането на медии приключи, но броят на файлове на мобилното устройство не съвпада с броя им на сървъра. При следващото им синхронизиране грешката ще бъде отстранена.</string>
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>

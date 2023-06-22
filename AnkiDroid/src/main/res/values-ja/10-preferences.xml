@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
     <string name="day_offset_with_description" maxLength="41">日付更新時刻</string>
     <string name="day_offset_summary">%s時</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">午前 0 時</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">午後11時</string>
     <string name="pref_keep_screen_on" maxLength="41">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
     <string name="convert_fen_text" maxLength="41">チェス表記のサポート</string>

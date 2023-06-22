@@ -75,7 +75,9 @@
     <string name="sync_downloading_message">下載中...</string>
     <string name="sync_title">同步</string>
     <string name="sync_log_uploading_message">由本地端完整同步</string>
-    <string name="sync_log_clocks_unsynchronized">你裝置上的時鐘是不正確的，誤差%2$s %1$d 秒；要同步的話，需要兩邊的時鐘和時區都是正確的，不然可能會有問題。請確定手機上的日期、時間、時區都是正確的，然後再同步一次。</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">，裝置的時區可能是錯誤的</string>
     <string name="sync_log_clocks_unsynchronized_date">，裝置的日期可能是錯誤的</string>
     <string name="sync_no_changes_message">未發現資料變動</string>
@@ -102,9 +104,18 @@
     <string name="sync_media_find">尋找變更的媒體檔&#8230;</string>
     <string name="sync_media_no_changes">媒體檔無變更</string>
     <string name="sync_media_success">成功同步媒體檔</string>
-    <string name="sync_media_partial_updated">媒體同步已部分完成:\n%1$d 媒體檔案已下載。\n%2$d 媒體檔案已上傳。</string>
-    <string name="sync_media_changes_count">將上傳 %d 個媒體檔變更</string>
-    <string name="sync_media_downloaded_count">已下載 %d 個媒體檔案</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">你的集合狀態在同步以後不一致，AnkiDroid 會強制進行完整同步來修復這問題。請選擇你想要保留哪一邊的檔案。如果你想要稍後進行同步，請選擇取消。</string>
     <string name="sync_media_sanity_failed">媒體檔案同步完成，不過媒體檔數量與伺服器上的不相等。下次將進行完整同步來更正這問題。</string>
     <string name="sync_media_db_error">媒體同步失敗，當前資料庫已損毀。建議執行媒體檢查。</string>

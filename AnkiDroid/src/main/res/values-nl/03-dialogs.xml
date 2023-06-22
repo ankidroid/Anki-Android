@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">Toch doorgaan</string>
     <string name="integrity_check_insufficient_space">Controle van de database gebruikt een grote hoeveelheid tijdelijke geheugen.\n\nHet wordt sterk aanbevolen dat u ten minste %s vrije ruimte op uw toestel hebt voordat u verder gaat.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nU hebt momenteel %s vrij.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d kaarten met verkeerde sets werden hersteld. Raadpleeg de handleiding voor meer informatie.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Kon video niet afspelen</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Kon de set niet wijzigen</string>

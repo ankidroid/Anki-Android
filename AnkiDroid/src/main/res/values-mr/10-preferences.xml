@@ -187,8 +187,6 @@
     <string name="new_timezone" maxLength="41">नवीन टाईमझोन हाताळणी</string>
     <string name="day_offset_with_description" maxLength="41">पुढील दिवसाची सुरुवात (0 मध्यरात्री आहे, 23 11PM आहेत)</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
     <string name="pref_keep_screen_on_summ">स्क्रीन कालबाह्य अक्षम करा</string>
     <string name="convert_fen_text" maxLength="41">बुद्धीबळ संकेत समर्थन</string>

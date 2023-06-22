@@ -61,8 +61,8 @@
     <string name="updated_version">సంస్కరణకు నవీకరించబడింది %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">వైట్బోర్డ్ ప్రారంభించండి</string>
     <string name="disable_whiteboard">వైట్బోర్డ్ను ఆపివేయి</string>
     <string name="show_whiteboard">వైట్బోర్డ్ చూపించు</string>

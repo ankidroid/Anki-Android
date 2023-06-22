@@ -187,8 +187,6 @@
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Start på neste dag</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnatt</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">Kl. 23</string>
     <string name="pref_keep_screen_on" maxLength="41">Behold skjermen på</string>
     <string name="pref_keep_screen_on_summ">Deaktiver skjermtidsavbrudd</string>
     <string name="convert_fen_text" maxLength="41">Støtte for sjakk-notasjon</string>

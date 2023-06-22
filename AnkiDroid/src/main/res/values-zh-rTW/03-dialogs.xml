@@ -172,7 +172,9 @@
     <string name="integrity_check_continue_anyway">仍要繼續</string>
     <string name="integrity_check_insufficient_space">檢查資料庫將使用大量暫存。\n\n強烈推薦您在繼續前保證裝置上至少擁有 %s 閒置空間。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n你當前擁有 %s 空閒。</string>
-    <string name="integrity_check_fixed_no_home_deck">%d個包括錯誤歸屬牌組的卡片已被移除。請見用戶手冊以取得更多資訊。</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">無法播放影片</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">無法變更牌組</string>

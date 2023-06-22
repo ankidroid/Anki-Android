@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">Gestione noa de su fusu oràriu</string>
     <string name="day_offset_with_description" maxLength="41">Incumintzu de sa die chi benit</string>
     <string name="day_offset_summary">%s oras a pustis de mesanote</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Mesanote</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantene s\'ischermu allutu</string>
     <string name="pref_keep_screen_on_summ">Disabìlita s\'istudadura automàtica de s\'ischermu</string>
     <string name="convert_fen_text" maxLength="41">Suportu pro sa notatzione de sos iscacos</string>

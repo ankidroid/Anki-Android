@@ -61,8 +61,8 @@
     <string name="updated_version">Обновено до версия %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Запазете бялата дъска</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Разрешаване на бяла дъска</string>
     <string name="disable_whiteboard">Забраняване на бяла дъска</string>
     <string name="show_whiteboard">Покажи бялатадъска</string>

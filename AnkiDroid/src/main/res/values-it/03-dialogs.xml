@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">Continua comunque</string>
     <string name="integrity_check_insufficient_space">Il controllo banca dati utilizza una grande quantità di memoria temporanea.\n\nSi raccomanda vivamente di avere almeno %s spazio libero sul dispositivo prima di continuare.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAttualmente hai %s liberi.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d carte con mazzi di origine non corretti sono state recuperate. Si prega di vedere il manuale per maggiori informazioni.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Impossibile riprodurre il video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Impossibile cambiare mazzo</string>

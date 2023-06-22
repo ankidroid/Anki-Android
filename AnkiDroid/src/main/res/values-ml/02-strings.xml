@@ -61,8 +61,8 @@
     <string name="updated_version">%S പതിപ്പിലേക്ക് അപ്‌ഡേറ്റുചെയ്‌തു</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">വൈറ്റ്ബോർഡ് സംരക്ഷിക്കുക</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">വൈറ്റ്ബോർഡ് പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="disable_whiteboard">വൈറ്റ്ബോർഡ് അപ്രാപ്തമാക്കുക</string>
     <string name="show_whiteboard">വൈറ്റ്ബോർഡ് കാണിക്കുക</string>

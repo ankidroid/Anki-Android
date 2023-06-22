@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">A descargar&#8230;</string>
     <string name="sync_title">Sincronización</string>
     <string name="sync_log_uploading_message">Sincronización completa dos datos locais</string>
-    <string name="sync_log_clocks_unsynchronized">A hora está desfasada en %1$d segundos%2$s. Verifica que a data, hora e o fuso horario do teu teléfono son correctos e sincroniza de novo.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, parece que o fuso horario é incorrecto</string>
     <string name="sync_log_clocks_unsynchronized_date">, parece que a data é incorrecta</string>
     <string name="sync_no_changes_message">Non se atoparon cambios</string>
@@ -102,9 +105,22 @@
     <string name="sync_media_find">Buscando medios modificados&#8230;</string>
     <string name="sync_media_no_changes">Sen cambios nos ficheiros de medios</string>
     <string name="sync_media_success">Medios sincronizados</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d cambios nos medios para subir</string>
-    <string name="sync_media_downloaded_count">%d ficheiros de medios para descargar</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Despois de sincronizar, a colección quedou nun estado inconsistente. Para arranxar o problema, AnkiDroid realizará unha sincronización completa. Escolle que lado desexas manter ou cancela se prefires sincronizar máis tarde.</string>
     <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>

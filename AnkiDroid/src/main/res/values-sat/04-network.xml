@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱠᱟᱱᱟ&#8230;</string>
     <string name="sync_title">ᱟᱭᱩᱨ ᱤᱫᱤᱜ ᱪᱟᱹᱞᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="sync_log_uploading_message">ᱞᱚᱠᱟᱞ ᱠᱷᱚᱱ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ</string>
-    <string name="sync_log_clocks_unsynchronized">ᱟᱢᱟᱜ ᱥᱚᱢᱚᱭ %1$d ᱴᱤᱡ %2$s ᱠᱷᱚᱱ ᱵᱚᱸᱫ ᱜᱮᱭᱟ ᱾  Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, ᱚᱠᱛᱚ ᱡᱟᱭᱜᱟ ᱵᱷᱩᱞᱽ</string>
     <string name="sync_log_clocks_unsynchronized_date">, ᱢᱟᱹᱦᱤᱛ ᱵᱷᱩᱞ</string>
     <string name="sync_no_changes_message">ᱵᱟᱭ ᱵᱚᱫᱚᱞ ᱠᱟᱱᱟ</string>
@@ -102,9 +105,22 @@
     <string name="sync_media_find">ᱵᱚᱫᱚᱞ ᱠᱚᱜ ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱯᱟᱱᱛᱮ&#8230;</string>
     <string name="sync_media_no_changes">ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱨᱮ ᱪᱮᱫ ᱵᱚᱫᱚᱞ ᱵᱟᱝᱟ</string>
     <string name="sync_media_success">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱮᱱᱟ</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d ᱞᱟᱫᱮ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱰᱤᱭᱟ ᱵᱚᱫᱚᱞᱮᱱᱟ</string>
-    <string name="sync_media_downloaded_count">%d ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱮᱟ</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱯᱚᱨᱮ, ᱴᱩᱢᱟᱹᱞ ᱴᱷᱤᱠ ᱚᱵᱚᱥᱛᱷᱟ ᱨᱮ ᱵᱟᱱᱤᱜᱜᱽᱟ ᱾ ᱰᱤᱜᱟᱹᱣ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ, AnkiDroid ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱟᱭ ᱾ ᱚᱠᱟ ᱟᱦᱴᱟ ᱫᱦᱚ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱪᱚᱭᱟᱱ ᱢᱮ ᱾</string>
     <string name="sync_media_sanity_failed">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱵᱟᱭᱱᱟ, ᱢᱮᱰᱤᱭᱟ ᱥᱚᱨᱵᱷᱚᱨ ᱥᱟᱞᱟᱜ ᱛᱟᱞᱢᱮᱞ ᱴᱷᱤᱠ ᱵᱟᱝᱟ ᱾ ᱤᱱᱟ ᱛᱟᱭᱚᱢ ᱵᱷᱩᱞ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱚᱜᱟ ᱾</string>
     <string name="sync_media_db_error">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱦᱩᱲᱟᱜ ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱜᱮᱭᱟ ᱾ ᱢᱮᱰᱩᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ ᱾</string>

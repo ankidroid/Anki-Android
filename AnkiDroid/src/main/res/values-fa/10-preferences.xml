@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">مدیریت منطقه زمانی جدید</string>
     <string name="day_offset_with_description" maxLength="41">شروع روز بعد</string>
     <string name="day_offset_summary">%s ساعت پس از نیمه شب</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">نیمه‌شب</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11 شب</string>
     <string name="pref_keep_screen_on" maxLength="41">روشن نگه‌داشتن صفحه</string>
     <string name="pref_keep_screen_on_summ">غیرفعال کردن زمان خاموش شدن صفحه نمایش</string>
     <string name="convert_fen_text" maxLength="41">پشتیبانی از ثبت حرکات شطرنج</string>

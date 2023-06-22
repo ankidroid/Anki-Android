@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">Yine de devam et</string>
     <string name="integrity_check_insufficient_space">Veritabanı Kontrolü büyük miktarda geçici depolama alanı kullanıyor.\n\nDevam etmeden önce cihazınızda en az %s boş alanın olması şiddetle önerilir.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nŞu anda %s boş alanınız var. </string>
-    <string name="integrity_check_fixed_no_home_deck">Hatalı ev destesine sahip %d adet kart kurtarıldı. Daha fazla bilgi için lütfen kılavuza bakın.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Video oynatılamadı</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Deste değiştirilemedi</string>

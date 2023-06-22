@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">Obsługa nowej strefy czasowej</string>
     <string name="day_offset_with_description" maxLength="41">Początek nowego dnia</string>
     <string name="day_offset_summary">%s godzin po północy</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Północ</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
     <string name="convert_fen_text" maxLength="41">Obsługa notacji szachowej</string>

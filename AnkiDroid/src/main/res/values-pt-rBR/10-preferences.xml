@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">Processando novo fuso horário</string>
     <string name="day_offset_with_description" maxLength="41">Início do dia seguinte</string>
     <string name="day_offset_summary">%s horas depois da meia-noite</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Meia-noite</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Manter tela ligada</string>
     <string name="pref_keep_screen_on_summ">Desativar tempo limite da tela</string>
     <string name="convert_fen_text" maxLength="41">Suporte para notação de xadrez</string>

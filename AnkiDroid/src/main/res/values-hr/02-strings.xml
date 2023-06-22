@@ -61,8 +61,8 @@
     <string name="updated_version">Ažurirano na verziju %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Save whiteboard</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Omogući ploču</string>
     <string name="disable_whiteboard">Onemogući ploču </string>
     <string name="show_whiteboard">Pokaži ploču</string>

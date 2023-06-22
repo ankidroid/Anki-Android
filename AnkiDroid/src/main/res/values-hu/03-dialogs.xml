@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">Folytatás Mindenképpen</string>
     <string name="integrity_check_insufficient_space">Az Adatbázis ellenőrzés sok ideiglenes helyet használ.\n\n.Erősen ajánlott, hogy legalább %s szabad tárhelyed legyen a készüléken mielőtt folytatnád.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nJelenleg %s szabad hely van.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d kártya helytelen főkártyával lett visszaszerezve. Kérjük olvassa el az útmutatót további információért.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Nem sikerült lejátszani a videót</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Nem sikerült paklit változtatni</string>

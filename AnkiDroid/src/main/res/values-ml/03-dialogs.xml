@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">എന്തായാലും തുടരുക</string>
     <string name="integrity_check_insufficient_space">ചെക്ക് ഡാറ്റാബേസ് ഒരു വലിയ അളവിലുള്ള താൽക്കാലിക സംഭരണം ഉപയോഗിക്കുന്നു. \n\n തുടരുന്നതിന് മുമ്പ് നിങ്ങളുടെ ഉപകരണത്തിൽ കുറഞ്ഞത് %s സ space ജന്യ സ്ഥലമെങ്കിലും ഉണ്ടായിരിക്കണമെന്ന് ശക്തമായി ശുപാർശ ചെയ്യുന്നു.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nനിങ്ങൾക്ക് നിലവിൽ %s സ .ജന്യമാണ്.</string>
-    <string name="integrity_check_fixed_no_home_deck">തെറ്റായ ഹോം ഡെക്കുകളുള്ള %d കാർഡുകൾ കണ്ടെടുത്തു. കൂടുതൽ വിവരങ്ങൾക്ക് മാനുവൽ കാണുക</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">വീഡിയോ പ്ലേ ചെയ്യാൻ കഴിഞ്ഞില്ല</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">ഡെക്ക് മാറ്റാൻ കഴിഞ്ഞില്ല</string>

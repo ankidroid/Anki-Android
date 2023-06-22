@@ -172,7 +172,9 @@
     <string name="integrity_check_continue_anyway">仍要继续</string>
     <string name="integrity_check_insufficient_space">检查数据库使用大量临时存储。\n\n强烈建议您在继续之前在设备上至少有 %s 可用空间。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n您当前有 %s 可用。</string>
-    <string name="integrity_check_fixed_no_home_deck">已恢复了 %d 张主页牌组不正确的卡片。请查看手册以了解更多信息。</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">无法播放视频</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">无法更改牌组</string>

@@ -187,8 +187,6 @@
     <string name="new_timezone" maxLength="41">טיפול באזור זמן חדש</string>
     <string name="day_offset_with_description" maxLength="41">התחל את היום הבא</string>
     <string name="day_offset_summary">%s שעות אחרי חצות</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">חצות</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11 בלילה</string>
     <string name="pref_keep_screen_on" maxLength="41">להשאיר את המסך דולק</string>
     <string name="pref_keep_screen_on_summ">השבת כיבוי מסך</string>
     <string name="convert_fen_text" maxLength="41">תמיכה בסימון שחמט</string>

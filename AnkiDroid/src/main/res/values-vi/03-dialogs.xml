@@ -172,7 +172,9 @@
     <string name="integrity_check_continue_anyway">Vẫn tiếp tục</string>
     <string name="integrity_check_insufficient_space">Kiểm tra Cơ sở dữ liệu sử dụng một lượng lớn dung lượng lưu trữ tạm thời.\n\nBạn nên có ít nhất %s dung lượng trống trên thiết bị của mình trước khi tiếp tục.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nBạn hiện có %s trống.</string>
-    <string name="integrity_check_fixed_no_home_deck">Đã khôi phục %d thẻ có bộ thẻ không chính xác. Vui lòng xem hướng dẫn sử dụng để biết thêm thông tin.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Không thể phát video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Không thể thay đổi bộ thẻ</string>

@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">درحال بارگيري...</string>
     <string name="sync_title">همگام سازى</string>
     <string name="sync_log_uploading_message">همگام سازی کامل از دستگاه</string>
-    <string name="sync_log_clocks_unsynchronized">ساعت دستگاهتان تا %1$d ثانیه%2$s صحیح نیست; برای همگامسازی و به منظور  جلوگیری از خطا لازم است که هر دو ساعت دستگاه و منطقه زمانی به طور صحیح تنظیم شوند. لطفا مطمئن شوید که تاریخ و زمان دستگاه شما بطور صحیح تنظیم گردیده, سپس دوباره همگامسازی کنید.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">منطقه زماني دستگاه احتمالا اشتباه است</string>
     <string name="sync_log_clocks_unsynchronized_date">تاريخ دستگاه احتمالا اشتباه است</string>
     <string name="sync_no_changes_message">هيچ تغييري يافت نشد.</string>
@@ -102,9 +105,22 @@
     <string name="sync_media_find">یافتن رسانه تغییر یافته...</string>
     <string name="sync_media_no_changes">فایل رسانه تغییری نکرده است.</string>
     <string name="sync_media_success">رسانه با موفقیت همگام سازی شد.</string>
-    <string name="sync_media_partial_updated">همگام سازی رسانه تا حدی کامل شد:\n%1$d فایل های رسانه دانلود شدند.\n%2$d فایل های رسانه ای بارگزاری شدند.</string>
-    <string name="sync_media_changes_count">%d تغییر در رسانه برای ارسال به سرور</string>
-    <string name="sync_media_downloaded_count">%d فایل رسانه دانلود شده است</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">پس از همگام سازی، این مجموعه در وضعیت متناقض بود. برای رفع این مشکل آنکی دروید یک همگامسازی کامل و تحمیلی انجام خواهد داد. لطفا آنچه را که دوست دارید نگه دارید انتخاب کنید، یا اگر ترجیح می دهید بعدا همگامسازی کنید آن را لغو کنید.</string>
     <string name="sync_media_sanity_failed">همگام سازی رسانه کامل شد, اما تعداد رسانه با سرویس دهنده یکسان نیست. برای رفع هر خطایی رسانه بعدی بطور کامل همگام سازی خواهد شد.</string>
     <string name="sync_media_db_error">همگام‌سازی رسانه انجام نشد چون دیتابیس فعلی خراب است. انجام بررسی رسانه را به شما پیشنهاد می‌کنیم.</string>

@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">طريقة المعالجة الجديدة للمناطق الزمنية</string>
     <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي (0 يعني منتصف الليل، 23 يعني الساعة 11 مساءً)</string>
     <string name="day_offset_summary">%s ساعة بعد منتصف الليل</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">منتصف الليل</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11م</string>
     <string name="pref_keep_screen_on" maxLength="41">إبقاء الشاشة مضيئة</string>
     <string name="pref_keep_screen_on_summ">تعطيل مهلة الشاشة</string>
     <string name="convert_fen_text" maxLength="41">دعم رموز الشطرنج</string>

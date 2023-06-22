@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">Pluigi malgraŭ tio</string>
     <string name="integrity_check_insufficient_space">Kontrolado de datumbazo uzos multon da provizora memoro.\n\nEstas tre konsilinde por ke vi havu almenaŭ %s da libera spaco en via aparato antaŭ pluigi.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nLibera spaco: %s.</string>
-    <string name="integrity_check_fixed_no_home_deck">Restarigis %d kartojn kun eraraj kartaroj. Legu la manlibron por pli da informoj.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Ne povis ludi filmeton</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Ne povis ŝanĝi kartaron</string>

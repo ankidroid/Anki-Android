@@ -196,7 +196,12 @@
     <string name="integrity_check_continue_anyway">Усё роўна працягнуць</string>
     <string name="integrity_check_insufficient_space">Праверка базы даных патрабуе вялікай колькасці часовага сховішча.\n\nВельмі пажадана мець прынамсі %s свабоднага месца на прыладзе для таго, каб паспяхова выканаць гэту аперацыю.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nЗараз у вас %s свабоднага месца.</string>
-    <string name="integrity_check_fixed_no_home_deck">Адноўлена %d картак з няправільнымі пачатковымі калодамі. Калі ласка, звярніцеся да даведніка за дадатковай інфармацыяй.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="few">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="many">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Не атрымалася ўзнавіць відэа</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Не атрымалася змяніць калоду</string>

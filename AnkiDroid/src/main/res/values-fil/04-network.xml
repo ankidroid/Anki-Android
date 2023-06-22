@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">Downloading&#8230;</string>
     <string name="sync_title">Pag-synchronize</string>
     <string name="sync_log_uploading_message">Buong pag-sync mula sa lokal</string>
-    <string name="sync_log_clocks_unsynchronized">Ang iyong orasan ay sa may diperensya na %1$d segundo%2$s. Tiyaking tama ang petsa, oras, at timezone sa iyong telepono, pagkatapos ay i-sync muli.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">ang time zone ay maaaring mali</string>
     <string name="sync_log_clocks_unsynchronized_date">ang date ay maaaring mali</string>
     <string name="sync_no_changes_message">Walang pagbabago na nakita</string>
@@ -102,9 +105,22 @@
     <string name="sync_media_find">Hinahanap ang mga pagbabago sa media&#8230;</string>
     <string name="sync_media_no_changes">Walang nakitang pagbabago sa mga media file</string>
     <string name="sync_media_success">Nai-sync na ang media</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d na mga pagbabago sa media ang i-upload</string>
-    <string name="sync_media_downloaded_count">%d na mga media files ang nai-download</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Pagkatapos ng pag-sync, ang koleksyon ay nasa isang hindi pantay na estado. Upang ayusin ang problemang ito, pipilitin ng AnkiDroid ang isang buong pag-sync. Piliin kung aling bahagi ang nais mong panatilihin.</string>
     <string name="sync_media_sanity_failed">Natapos ang pag-sync ng media, ngunit ang bilang ng media ay hindi sumasang-ayon sa server. Ang susunod na pag-sync ng media ay puno upang itama ang anumang error.</string>
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
