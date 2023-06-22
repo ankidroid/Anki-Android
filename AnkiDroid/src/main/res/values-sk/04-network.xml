@@ -75,7 +75,12 @@
     <string name="sync_downloading_message">Sťahovanie...</string>
     <string name="sync_title">Synchronizácia</string>
     <string name="sync_log_uploading_message">Úplná synchronizácia z AnkiDroid na server Ankiweb</string>
-    <string name="sync_log_clocks_unsynchronized">Čas vo vašom prístroji je nepresný o %1$d sekúnd%2$s. Prosím uistite sa, že dátum, čas a časové pásmo na vašom zariadení sú nastavené správne, potom synchronizáciu zopakujte.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo zariadenia pravdepodobne nie je správne</string>
     <string name="sync_log_clocks_unsynchronized_date">, dátum zariadenia pravdepodobne nie je správny</string>
     <string name="sync_no_changes_message">Nenašli sa žiadne zmeny.</string>
@@ -102,9 +107,30 @@
     <string name="sync_media_find">Hľadajú sa zmenené multimédiá&#8230;</string>
     <string name="sync_media_no_changes">Žiadne zmeny multimediálnych súborov</string>
     <string name="sync_media_success">Multimédia synchronizované</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d multimediálnych zmien pre nahratie</string>
-    <string name="sync_media_downloaded_count">%d multimediálnych súborov stiahnutých</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="few">%d media files uploaded.</item>
+        <item quantity="many">%d media files uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="few">%d media changes to upload</item>
+        <item quantity="many">%d media changes to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="few">%d media files downloaded</item>
+        <item quantity="many">%d media files downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Po synchronizácii bola zbierka v nekonzistentnom stave. Pre vyriešenie tohto problému, AnkiDroid vykoná úplnú synchronizáciu. Zvoľte prosím, ktorú stranu by ste chceli zachovať.</string>
     <string name="sync_media_sanity_failed">Synchronizácia multimédií bola dokončená, ale počet médií nesúhlasí so serverom. Nasledujúca synchronizácia multimédií bude úplná, aby sa napravili akékoľvek chyby.</string>
     <string name="sync_media_db_error">Synchronizácia médií zlyhala, pretože aktuálna databáza je poškodená. Odporúča sa kontrola médií.</string>

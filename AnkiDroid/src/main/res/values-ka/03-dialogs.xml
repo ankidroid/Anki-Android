@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">მაინც გაგრძელება</string>
     <string name="integrity_check_insufficient_space">„მონაცემთა ბაზის შემოწმება“ დიდი რაოდენობის დროებით მეხსიერებას მოითხოვს.\n\nდაბეჯითებით გირჩევთ %s-ის ადგილი მაინც გქონდეთ განთავისუფლებული მანამ, სანამ გააგრძელებთ.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nამჟამად თავისუფალია %s.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">ვიდეოს გაშვება ვერ მოხერხდა</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">დასტა ვერ შეიცვალა</string>

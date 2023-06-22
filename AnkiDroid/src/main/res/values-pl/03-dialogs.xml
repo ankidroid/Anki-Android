@@ -196,7 +196,12 @@
     <string name="integrity_check_continue_anyway">Kontynuuj mimo to</string>
     <string name="integrity_check_insufficient_space">Funkcja \"sprawdź bazę danych\" używa dużej ilości pamięci tymczasowej.\n\nZalecane jest, aby przed kontynuowaniem na urządzeniu było dostępne przynajmniej  %s wolnego miejsca.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nObecnie jest dostępne %s</string>
-    <string name="integrity_check_fixed_no_home_deck">Odzyskano %d kart z nieprawidłowymi taliami głównymi. Więcej informacji znajdziesz w podręczniku.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="few">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="many">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Nie udało się odtworzyć nagrania</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Nie udało się zmienić talii</string>

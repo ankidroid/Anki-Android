@@ -61,8 +61,8 @@
     <string name="updated_version">اپڈیٹ کر دیا گیا ورژن %s پہ</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">وائٹ بورڈ کو محفوظ کریں</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">وائٹ بورڈ فعال کریں</string>
     <string name="disable_whiteboard">وائٹ بورڈ غیرفعال کریں</string>
     <string name="show_whiteboard">وائٹ بورڈ دکھائیں</string>

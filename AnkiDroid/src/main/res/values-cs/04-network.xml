@@ -75,7 +75,12 @@
     <string name="sync_downloading_message">Stahování...</string>
     <string name="sync_title">Synchronizace</string>
     <string name="sync_log_uploading_message">Úplná synchronizace z místního úložiště</string>
-    <string name="sync_log_clocks_unsynchronized">Čas na vašem zařízení je rozdílný o %1$d sekund %2$s. Ujistěte se, že datum, čas a časové pásmo jsou na telefonu nastaveny správně, pak znovu synchronizujte.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo je možná špatné</string>
     <string name="sync_log_clocks_unsynchronized_date">, datum je možná špatné</string>
     <string name="sync_no_changes_message">Nenalezeny žádné změny</string>
@@ -102,9 +107,30 @@
     <string name="sync_media_find">Hledání změněných multimédií...</string>
     <string name="sync_media_no_changes">Žádné změny multimediálních souborů</string>
     <string name="sync_media_success">Multimédia úspěšně synchronizovány</string>
-    <string name="sync_media_partial_updated">Synchronizace multimédií byla částečně dokončena:\n%1$d multimediálních souborů staženo.\n%2$d multimediálních souborů nahráno.</string>
-    <string name="sync_media_changes_count">%d změn v multimédiích k odeslání</string>
-    <string name="sync_media_downloaded_count">%d multimediálních souborů staženo</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="few">%d media files uploaded.</item>
+        <item quantity="many">%d media files uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="few">%d media changes to upload</item>
+        <item quantity="many">%d media changes to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="few">%d media files downloaded</item>
+        <item quantity="many">%d media files downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Po synchronizaci byla kolekce v nekonzistentním stavu. Aby se tento problém vyřešil, AnkiDroid vynutí úplnou synchronizaci. Vyberte si, na které straně chcete ponechat kolekci.</string>
     <string name="sync_media_sanity_failed">Synchronizace multimédií dokončena, ale počet multimédií nesouhlasí se serverem. Další synchronizace multimédií bude úplná, aby se opravily případné chyby.</string>
     <string name="sync_media_db_error">Synchronizace multimédií se nezdařila, protože je poškozena současná databáze. Doporučuje se zkontrolovat multimédia.</string>

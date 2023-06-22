@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">Iscarrighende&#8230;</string>
     <string name="sync_title">Sincronizatzione</string>
     <string name="sync_log_uploading_message">Sincronizatzione totale dae locale</string>
-    <string name="sync_log_clocks_unsynchronized">Su rellògiu tuo est isballiadu de %1$d segundos%2$s. Assegura·ti chi sa data, s\'ora e su fusu oràriu in su telèfonu tuo siant impostados in manera curreta e torra a proare.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, podet dare chi su fusu oràriu siat isballiadu</string>
     <string name="sync_log_clocks_unsynchronized_date">, podet dare chi sa data siat isballiada</string>
     <string name="sync_no_changes_message">Peruna modìfica agatada</string>
@@ -104,9 +107,22 @@
     <string name="sync_media_find">Chirchende mèdios modificados&#8230;</string>
     <string name="sync_media_no_changes">Peruna modìfica a sos documentos multimediales</string>
     <string name="sync_media_success">Mèdios sincronizados</string>
-    <string name="sync_media_partial_updated">Sincronizatione multimediale fata in parte:\n%1$d documentu multimediale iscarrigados.\n%2$d documentos multimediales carrigados.</string>
-    <string name="sync_media_changes_count">%d modìficas multimediales de carrigare</string>
-    <string name="sync_media_downloaded_count">%d documentos multimediales iscarrigados</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">A pustis de sa sincronizatzione sa colletzione fiat in un\'istadu inconsistente. Pro acontzare custu problema AnkiDroid at a fortzare una sincronizatzione totale. Issèbera sos datos de mantènnere.</string>
     <string name="sync_media_sanity_failed">Sa sincronizatzione multimediale est agabbada, ma su nùmeru de sos mèdios non currispondet cun su serbidore. Sa sincronizatzione multimediale imbeniente at a èssere totale pro currègere cale si siat faddina.</string>
     <string name="sync_media_db_error">Sa sincronizatzione multimediale est fallida ca sa base de datos atuale est corrùmpida. Ti racumandamus una verìfica de sos mèdios.</string>

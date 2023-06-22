@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">तरीही सुरू ठेवा</string>
     <string name="integrity_check_insufficient_space">तपासणी डेटाबेसमध्ये मोठ्या प्रमाणात तात्पुरते संचयन वापरले जाते. Continuing \n\n सुरू ठेवण्यापूर्वी आपल्याकडे कमीतकमी %s मोकळी जागा असावी अशी जोरदार शिफारस केली जाते.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n आपल्याकडे सध्या%s विनामूल्य आहे.</string>
-    <string name="integrity_check_fixed_no_home_deck">चुकीच्या होम डेकसह %d कार्ड पुनर्प्राप्त केली. अधिक माहितीसाठी कृपया मॅन्युअल पहा.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">व्हिडिओ प्ले करू शकलो नाही</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">डेक बदलणे शक्य झाले नाही</string>

@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">時區變更處理</string>
     <string name="day_offset_with_description" maxLength="41">下一天開始的時間</string>
     <string name="day_offset_summary">午夜過後%s小時</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
     <string name="pref_keep_screen_on" maxLength="41">保持螢幕開啟</string>
     <string name="pref_keep_screen_on_summ">關閉螢幕逾時</string>
     <string name="convert_fen_text" maxLength="41">支援國際象棋記譜法</string>

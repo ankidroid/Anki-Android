@@ -197,7 +197,12 @@
     <string name="integrity_check_continue_anyway">Всё равно продолжить</string>
     <string name="integrity_check_insufficient_space">Проверка базы данных использует большое количество временного хранилища.\n\nЖелательно иметь по крайней мере %s свободного места на вашем устройстве, прежде чем продолжить.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nСейчас свободно %s.</string>
-    <string name="integrity_check_fixed_no_home_deck">Восстановлено %d карточек с неправильной колодой. Подробнее см. в руководстве.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="few">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="many">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Не удалось воспроизвести видео</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Не удалось сменить колоду</string>

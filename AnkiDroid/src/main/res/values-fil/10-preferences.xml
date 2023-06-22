@@ -187,8 +187,6 @@
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="pref_keep_screen_on" maxLength="41">Panatilihin ang screen</string>
     <string name="pref_keep_screen_on_summ">Huwag paganahin ang timeout ng screen</string>
     <string name="convert_fen_text" maxLength="41">Suporta ng nota ng tsismis</string>

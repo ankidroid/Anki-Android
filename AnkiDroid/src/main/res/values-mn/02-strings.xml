@@ -61,8 +61,8 @@
     <string name="updated_version">%s хувилбар луу шинэчлэгдлээ</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Зурсан зургаа хадгалах</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Зураг зурах горимыг идэвхжүүлэх </string>
     <string name="disable_whiteboard">Зураг зурах горимыг унтраах</string>
     <string name="show_whiteboard">Зурсан зургыг харуулах</string>

@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">Continuar igualmente</string>
     <string name="integrity_check_insufficient_space">Compruebar de la base de datos utiliza una gran cantidad de almacenamiento temporal.\n\nEs altamente recomendable que tenga al menos %s espacio libre en su dispositivo antes de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualmente tienes %s libre.</string>
-    <string name="integrity_check_fixed_no_home_deck">Se recuperaron %d tarjetas con mazos de inicio incorrectos. Consulte el manual para obtener más información.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Reproducción de vídeo fallida</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">No se pudo cambiar el mazo</string>

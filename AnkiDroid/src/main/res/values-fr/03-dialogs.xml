@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">Continuer quand même</string>
     <string name="integrity_check_insufficient_space">La vérification de la base de données exige beaucoup d’espace de stockage temporaire. \n\n Il est fortement recommandé d’avoir au moins %s d’espace libre sur votre appareil avant de continuer.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nVous avez actuellement %s libres.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cartes avec des paquets incorrects ont été récupérées. Veuillez consulter le manuel pour plus d\'informations.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Impossible de lire la vidéo.</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Impossible de changer de paquet</string>

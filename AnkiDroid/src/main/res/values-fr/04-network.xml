@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">Téléchargement...</string>
     <string name="sync_title">Synchronisation</string>
     <string name="sync_log_uploading_message">Synchronisation complète depuis la version locale</string>
-    <string name="sync_log_clocks_unsynchronized">L’heure sur votre appareil est incorrecte de %1$d secondes %2$s; La synchronisation requiert que votre horloge et le fuseau horaire soient définis correctement afin d’éviter les erreurs. Veuillez vous assurer que les date, heure et fuseau horaire sur votre appareil sont correctement réglés, puis resynchronisez.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, le fuseau horaire de l\'appareil est peut-être erroné</string>
     <string name="sync_log_clocks_unsynchronized_date">, la date de l\'appareil est peut-être erronée</string>
     <string name="sync_no_changes_message">Aucun changement trouvé.</string>
@@ -102,9 +105,22 @@
     <string name="sync_media_find">Recherche des médias modifiés...</string>
     <string name="sync_media_no_changes">Pas de changements des fichiers médias</string>
     <string name="sync_media_success">Médias synchronisés avec succès.</string>
-    <string name="sync_media_partial_updated">Synchronisation partielle des médias terminée :\n%1$d fichiers multimédias téléchargés.\n%2$d fichiers multimédias téléversés.</string>
-    <string name="sync_media_changes_count">%d modifications de médias à envoyer</string>
-    <string name="sync_media_downloaded_count">%d médias téléchargés</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Après la synchronisation, la collection s’est retrouvée dans un état incohérent. Pour résoudre ce problème, AnkiDroid va forcer une synchronisation complète. Veuillez choisir avec quelle version vous voulez continuer, ou annulez si vous voulez synchroniser plus tard.</string>
     <string name="sync_media_sanity_failed">La synchronisation des médias est achevée mais le nombre de médias ne correspond pas à celui du serveur. La prochaine synchronisation des médias sera complète afin de corriger d’éventuelles erreurs.</string>
     <string name="sync_media_db_error">La synchronisation des médias a échoué car la base de données actuelle est corrompue. Une vérification des médias est recommandée.</string>

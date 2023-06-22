@@ -187,8 +187,6 @@
     <string name="new_timezone" maxLength="41">Nové spracovanie časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začiatok ďalšieho dňa</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Polnoc</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">2300</string>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínať obrazovku</string>
     <string name="pref_keep_screen_on_summ">Zakázať vypínanie obrazovky</string>
     <string name="convert_fen_text" maxLength="41">Podpora šachového zápisu</string>

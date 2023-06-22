@@ -180,7 +180,10 @@
     <string name="integrity_check_continue_anyway">ᱡᱟᱦᱟᱸ ᱞᱮᱠᱟᱛᱮ ᱞᱮᱛᱟᱲ ᱢᱮ</string>
     <string name="integrity_check_insufficient_space">ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱟᱰᱤᱜᱟᱱ ᱥᱩᱭᱫᱚᱢᱟᱠ ᱡᱟᱭᱜᱟ ᱤᱫᱤᱟᱭ ᱾\n\n ᱞᱮᱛᱟᱲ ᱢᱟᱲᱟᱝ ᱨᱮ ᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ ᱛᱟᱦᱮᱱ ᱠᱟᱛᱷᱟ ᱾</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱞᱤ ᱡᱟᱭᱜᱟ ᱢᱮᱱᱟᱜᱼᱟ.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d ᱵᱷᱩᱞᱟᱠᱟᱱ ᱚᱲᱟᱜ ᱰᱮᱠ ᱠᱚ ᱫᱚᱦᱲᱟ ᱧᱟᱢᱨᱩᱟᱸᱲ ᱮᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱟᱢ ᱢᱮᱱᱩᱟᱹᱞ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ ᱾</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">ᱧᱮᱱᱮᱞᱚᱢ ᱵᱟᱭ ᱮᱱᱮᱡ ᱪᱷᱚᱭᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">ᱰᱮᱠ ᱵᱟᱭ ᱵᱚᱫᱚᱞᱚᱜ ᱠᱟᱱᱟ</string>

@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">Downloaden ...</string>
     <string name="sync_title">Synchronisatie</string>
     <string name="sync_log_uploading_message">Volledige synchronisatie vanaf lokale kant</string>
-    <string name="sync_log_clocks_unsynchronized">De klok op uw apparaat is %1$d seconden verkeerd%2$s; Synchronisatie vereist dat zowel uw klok als uw tijdszone correct ingesteld zijn om fouten te voorkomen. Gelieve ervoor te zorgen dat de datum, tijd en tijdszone op uw mobiel apparaat correct zijn ingesteld alvorens opnieuw te synchroniseren.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, de tijdzone van het apparaat is mogelijk verkeerd</string>
     <string name="sync_log_clocks_unsynchronized_date">, de datum van het apparaat is mogelijk verkeerd ingesteld</string>
     <string name="sync_no_changes_message">Geen wijzigingen gevonden.</string>
@@ -102,9 +105,22 @@
     <string name="sync_media_find">Bezig met het opsporen van wijzigingen aan de media...</string>
     <string name="sync_media_no_changes">Mediabestanden bleven ongewijzigd.</string>
     <string name="sync_media_success">Media met succes gesynchroniseerd.</string>
-    <string name="sync_media_partial_updated">Media-synchronisatie gedeeltelijk voltooid:\n%1$d mediabestanden gedownload.\n%2$d mediabestanden geüpload.</string>
-    <string name="sync_media_changes_count">%d mediawijzigingen te uploaden</string>
-    <string name="sync_media_downloaded_count">%d mediabestanden gedownload</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Na synchronisatie was de collectie in een inconsistente staat. Om dit probleem op te lossen zal AnkiDroid een volledige synchronisatie uitvoeren. Gelieve te kiezen welke zijde u wenst te behouden, of de operatie te onderbreken indien u liever later synchroniseert.</string>
     <string name="sync_media_sanity_failed">Synchronisatie van de media voltooid, maar het aantal mediabestanden komt niet overeen met dat op de server. De volgende keer zal een volledige synchronisatie van de media worden uitgevoerd om fouten te corrigeren.</string>
     <string name="sync_media_db_error">Media-synchronisatie is mislukt omdat de huidige database beschadigd is. Een media-controle wordt aanbevolen.</string>

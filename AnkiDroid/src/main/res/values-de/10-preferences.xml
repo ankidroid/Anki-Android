@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">Umgang mit neuer Zeitzone</string>
     <string name="day_offset_with_description" maxLength="41">Start des nächsten Tages (0 ist Mitternacht, 23 ist 23 Uhr)</string>
     <string name="day_offset_summary">%s Stunden nach Mitternacht</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Mitternacht</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23 Uhr</string>
     <string name="pref_keep_screen_on" maxLength="41">Bildschirm eingeschaltet lassen</string>
     <string name="pref_keep_screen_on_summ">Bildschirm-Timeout deaktivieren</string>
     <string name="convert_fen_text" maxLength="41">Unterstützung für Schach-Notation</string>

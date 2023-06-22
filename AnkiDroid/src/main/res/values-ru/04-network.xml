@@ -77,7 +77,12 @@
     <string name="sync_downloading_message">Загружается&#8230;</string>
     <string name="sync_title">Синхронизация</string>
     <string name="sync_log_uploading_message">Полностью синхронизировано с устройством</string>
-    <string name="sync_log_clocks_unsynchronized">Часы устройства сбиты на %1$d с %2$s. Проверьте, что дата, время и часовой пояс выставлены правильно и попробуйте снова.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, неверный часовой пояс</string>
     <string name="sync_log_clocks_unsynchronized_date">, неверная дата</string>
     <string name="sync_no_changes_message">Изменений нет</string>
@@ -105,9 +110,30 @@
 сравниваются&#8230;</string>
     <string name="sync_media_no_changes">Изменений в медифайлах нет</string>
     <string name="sync_media_success">Медиафайлы сихронизированы</string>
-    <string name="sync_media_partial_updated">Синхронизация медиафайлов частично выполнена:\n%1$d файлов загружено.\n%2$d файлов выгружено.</string>
-    <string name="sync_media_changes_count">Будут выгружены %d изменённых медиафайлов</string>
-    <string name="sync_media_downloaded_count">%d медиафайлов загружено</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="few">%d media files uploaded.</item>
+        <item quantity="many">%d media files uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="few">%d media changes to upload</item>
+        <item quantity="many">%d media changes to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="few">%d media files downloaded</item>
+        <item quantity="many">%d media files downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">После синхронизации коллекция в несогласованном состоянии. Будет запущена полная синхронизации. Выберите версию коллекции, которая останется.</string>
     <string name="sync_media_sanity_failed">Синхронизация медиафайлов завершена, но количество файлов не совпадает. В следующей раз будет произведена полная синхронизация.</string>
     <string name="sync_media_db_error">Не удалось синхронизировать медиафайлы, потому что текущая база данных повреждена. Запустите проверку медиафайлов.</string>

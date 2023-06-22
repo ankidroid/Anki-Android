@@ -196,7 +196,12 @@
     <string name="integrity_check_continue_anyway">Napriek tomu pokračovať</string>
     <string name="integrity_check_insufficient_space">Kontrola databázy využíva veľké množstvo dočasného úložiska.\n\nPredtým než budete pokračovať, odporúčame, aby ste mali aspoň %s voľného miesta vo vašom zariadení.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálne máte %s voľného miesta.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d vymazaných kartičiek s nesprávnym domovským balíčkom. Prosím, pozrite si manuál pre viac informácií.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="few">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="many">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Nepodarilo sa prehrať video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Nepodarilo sa zmeniť balíček</string>

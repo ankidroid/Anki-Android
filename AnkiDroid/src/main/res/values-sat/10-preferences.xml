@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">ᱱᱟᱣᱟ ᱚᱠᱛᱚ ᱴᱷᱟᱶ ᱪᱟᱹᱞᱩ</string>
     <string name="day_offset_with_description" maxLength="41">ᱜᱟᱯᱟ ᱫᱤᱱ ᱟᱜ ᱮᱛᱦᱚᱵ </string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">ᱛᱟᱞᱟ ᱧᱤᱸᱫᱟᱹ</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11pm</string>
     <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
     <string name="convert_fen_text" maxLength="41">Chess notation support</string>

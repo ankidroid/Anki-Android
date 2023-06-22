@@ -187,8 +187,6 @@
     <string name="new_timezone" maxLength="41">Penanganan baru zona waktu</string>
     <string name="day_offset_with_description" maxLength="41">Dimulainya hari esok</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Tengah malam</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">Jam 11 Malam</string>
     <string name="pref_keep_screen_on" maxLength="41">Layar tetap menyala</string>
     <string name="pref_keep_screen_on_summ">Nonaktifkan batas waktu layar mati</string>
     <string name="convert_fen_text" maxLength="41">Dukungan notasi catur</string>

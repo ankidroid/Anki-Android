@@ -61,8 +61,8 @@
     <string name="updated_version">Atualizadu a sa versione %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Sarva sa lavagna</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Abìlita sa lavagna</string>
     <string name="disable_whiteboard">Disabìlita sa lavagna</string>
     <string name="show_whiteboard">Ammustra sa lavagna</string>

@@ -75,7 +75,12 @@
     <string name="sync_downloading_message">Pobieranie...</string>
     <string name="sync_title">Synchronizacja</string>
     <string name="sync_log_uploading_message">Pełna synchronizacja do serwera</string>
-    <string name="sync_log_clocks_unsynchronized">Zegar na Twoim urządzeniu działa nieprawidłowo (o %1$d sekund%2$s); synchronizacja wymaga prawidłowego ustawienia zegara i strefy czasowej aby uniknąć błędów. Upewnij się, że w Twoim telefonie data, czas i Twoja strefa czasowa są ustawione prawidłowo i spróbuj ponownie zsynchronizować.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, być może źle ustawiono strefę czasową</string>
     <string name="sync_log_clocks_unsynchronized_date">, być może źle ustawiono datę</string>
     <string name="sync_no_changes_message">Nie znaleziono zmian.</string>
@@ -102,9 +107,30 @@
     <string name="sync_media_find">Wyszukiwanie zmienionych mediów...</string>
     <string name="sync_media_no_changes">Brak zmian w plikach mediów.</string>
     <string name="sync_media_success">Media zsynchronizowane.</string>
-    <string name="sync_media_partial_updated">Synchronizacja mediów częściowo zakończona:\n%1$d pobranych plików.\n%2$d przesłanych plików.</string>
-    <string name="sync_media_changes_count">%d zmian mediów do wysłania</string>
-    <string name="sync_media_downloaded_count">Pobrane %d plików mediów</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="few">%d media files uploaded.</item>
+        <item quantity="many">%d media files uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="few">%d media changes to upload</item>
+        <item quantity="many">%d media changes to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="few">%d media files downloaded</item>
+        <item quantity="many">%d media files downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Po synchronizacji kolekcja była niespójna. Aby to naprawić AnkiDroid wymusi pełną synchronizację. Wybierz którą wersję chcesz zatrzymać (lokalną czy z serwera) lub anuluj, jeśli chcesz synchronizować później.</string>
     <string name="sync_media_sanity_failed">Synchronizacja mediów zakończona ale licznik mediów nie zgadza się z serwerem. Następna synchronizacja mediów będzie pełną synchronizacją aby naprawić błędy.</string>
     <string name="sync_media_db_error">Synchronizacja mediów nie powiodła się ponieważ baza danych jest uszkodzona. Zaleca się użycie opcji \"sprawdź media\"</string>

@@ -75,7 +75,11 @@
     <string name="sync_downloading_message">Преузимање у току...</string>
     <string name="sync_title">Синхронизација</string>
     <string name="sync_log_uploading_message">Потпуно синхронизовано са локалним подацима</string>
-    <string name="sync_log_clocks_unsynchronized">Сат на вашем уређају је нетачан за %1$d секунди%2$s; За синхронизацију је неопходно да сат и временска зона буду приказани коректно. Поставите коректан датум, временску зону вашег телефона и покрените синхронизацију поново.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, постављена временска зона уређаја је вероватно погрешна</string>
     <string name="sync_log_clocks_unsynchronized_date">, датум, постављен на уређају је вероватно погрешан</string>
     <string name="sync_no_changes_message">Нема промена.</string>
@@ -102,9 +106,26 @@
     <string name="sync_media_find">Претрага промењених медија датотека...</string>
     <string name="sync_media_no_changes">Медија датотеке нису промењене.</string>
     <string name="sync_media_success">Медија датотеке су успешно синхронизоване.</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d медијске промене за отпремање</string>
-    <string name="sync_media_downloaded_count">%d медијске промене за преузимање</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="few">%d media files uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="few">%d media changes to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="few">%d media files downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">После синхронизације, неки подаци из ваше колекције су противречни. Да би уклонио тај проблем AnkiDroid ће извршити потпуну синхронизацију. Изаберите коју верзију желите да оставите, или откажите, ако желите да синхронизујете касније.</string>
     <string name="sync_media_sanity_failed">Синхронизација медија датотека је завршена, али број медија датотека на вашем мобилном уређају се не слаже са бројем на серверу. При следећој синхронизацији ће бити уклоњене све грешке.</string>
     <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>

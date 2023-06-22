@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">ନୂତନ ସମୟମଣ୍ଡଳ ପରିଚାଳନା</string>
     <string name="day_offset_with_description" maxLength="41">ପରଵର୍ତ୍ତୀ ଦିନର ଆରମ୍ଭ</string>
     <string name="day_offset_summary">ମଧ୍ୟରାତ୍ରିରୁ %s ଘଣ୍ଟା ପରେ</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">ମଧ୍ୟରାତ୍ରି</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="pref_keep_screen_on" maxLength="41">ସ୍କ୍ରୀନ୍ ସଚଳ ରଖିବା</string>
     <string name="pref_keep_screen_on_summ">ସ୍କ୍ରୀନ୍ ସମୟ-ସମାପ୍ତି ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="convert_fen_text" maxLength="41">ଚେସ୍ ଅଙ୍କନ ସମର୍ଥନ</string>

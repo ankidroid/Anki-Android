@@ -172,7 +172,9 @@
     <string name="integrity_check_continue_anyway">Teruskan Juga</string>
     <string name="integrity_check_insufficient_space">Periksa Pangkalan Data menggunakan storan sementara yang besar.\n\nSangat digalakkan anda sekurang-kurangnya mengandungi %s ruang kosong pada peranti anda dahulu.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAnda kini mengandungi %s ruang kosong.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d kad dengan laman utama dek salah telah dipulihkan. Sila lihat panduan untuk maklumat lanjut.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Tidak dapat memainkan video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Tidak dapat tukar dek</string>

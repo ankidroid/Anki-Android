@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">새 시간대 다루기</string>
     <string name="day_offset_with_description" maxLength="41">다음 날의 시작</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">자정</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">오후 11시</string>
     <string name="pref_keep_screen_on" maxLength="41">화면을 켜진 상태로 유지</string>
     <string name="pref_keep_screen_on_summ">화면 꺼짐 시간 비활성화</string>
     <string name="convert_fen_text" maxLength="41">체스 표기법 지원</string>

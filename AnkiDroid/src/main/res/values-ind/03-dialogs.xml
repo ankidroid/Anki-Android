@@ -172,7 +172,9 @@
     <string name="integrity_check_continue_anyway">Tetap lanjutkan</string>
     <string name="integrity_check_insufficient_space">Memeriksa Basisdata memerlukan jumlah penyimpanan sementara yang besar.\n\nSangat disarankan untuk memiliki setidaknya %s ruang kosong sebelum melanjutkan.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nKamu memiliki %s bebas saat ini.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d kartu dengan rumah dek yang salah dipulihkan. Harap lihat manual untuk informasi lebih lanjut.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">Tidak dapat memutar video</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">Tidak dapat mengubah dek</string>

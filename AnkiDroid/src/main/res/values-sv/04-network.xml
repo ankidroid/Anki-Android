@@ -75,7 +75,10 @@
     <string name="sync_downloading_message">Hämtar...</string>
     <string name="sync_title">Synkronisering</string>
     <string name="sync_log_uploading_message">Fullständig synkronisering från lokal sida</string>
-    <string name="sync_log_clocks_unsynchronized">Klockan på din enhet gick fel med %1$d sekunder%2$s; Synkronisering kräver att både din klocka och tidszon är korrekt inställda för att undvika fel. Vänligen kontrollera att datum, tid och tidszon på din telefon är korrekt inställda och synkronisera igen.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, enhetens tidszon kan vara felaktig</string>
     <string name="sync_log_clocks_unsynchronized_date">, enhetens datum kan vara felaktigt</string>
     <string name="sync_no_changes_message">Inga ändringar hittades.</string>
@@ -102,9 +105,22 @@
     <string name="sync_media_find">Söker efter ändrade media...</string>
     <string name="sync_media_no_changes">Inga ändringar i mediafiler</string>
     <string name="sync_media_success">Media har synkroniserats</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d mediaförändringar att ladda upp</string>
-    <string name="sync_media_downloaded_count">%d mediafiler nedladdade</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="one">%d media file uploaded.</item>
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="one">%d media change to upload</item>
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="one">%d media file downloaded</item>
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Vid synkronisering var den lokala samlingen och den på AnkiWeb i ett oförenligt läge. För att fixa det här kommer AnkiDroid tvinga en full synkronisering. Vänligen välj vilken sida du vill behålla, eller avbryt om du vill synkronisera senare.</string>
     <string name="sync_media_sanity_failed">Mediasynkroniseringen slutfördes, men antalet mediafiler stämmer inte överens med antalet på servern. Nästa mediasynkronisering kommer bli en fullständig synkronisering för att rätta till det som är fel.</string>
     <string name="sync_media_db_error">Mediasynkronisering misslyckades då den aktuella databasen är korrumperad. En mediakontroll rekommenderas.</string>

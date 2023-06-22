@@ -75,7 +75,9 @@
     <string name="sync_downloading_message">Đang tải xuống&#8230;</string>
     <string name="sync_title">Đồng bộ</string>
     <string name="sync_log_uploading_message">Đồng bộ hoàn toàn từ thiết bị</string>
-    <string name="sync_log_clocks_unsynchronized">Đồng hồ của bạn lệch %1$d giây%2$s. Hãy chắc chắn rằng ngày tháng, thời gian và múi giờ trên điện thoại được thiết lập chính xác rồi đồng bộ lại.</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, có thể múi giờ bị sai</string>
     <string name="sync_log_clocks_unsynchronized_date">, có thể ngày tháng bị sai</string>
     <string name="sync_no_changes_message">Không thấy thay đổi nào</string>
@@ -102,9 +104,18 @@
     <string name="sync_media_find">Đang tìm tệp đa phương tiện đã đổi&#8230;</string>
     <string name="sync_media_no_changes">Tệp đa phương tiện không có thay đổi</string>
     <string name="sync_media_success">Đã đồng bộ tệp đa phương tiện</string>
-    <string name="sync_media_partial_updated">Đồng bộ hóa phương tiện xong một phần:\n%1$d Tệp phương tiện tải xong.\n%2$d  Tệp phương tiện đã được tải lên</string>
-    <string name="sync_media_changes_count">có %d thay đổi đa phương tiện phải tải lên</string>
-    <string name="sync_media_downloaded_count">có %d tệp đa phương tiện phải tải về</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">Sau khi đồng bộ, bộ sưu tập ở trong tình trạng bất ổn. Để khắc phục vấn đề này, AnkiDroid sẽ thực hiện đồng bộ đầy đủ. Lựa chọn phía mà bạn muốn giữ.</string>
     <string name="sync_media_sanity_failed">Đã hoàn thành đồng bộ đa phương tiện, nhưng số lượng không đúng so với máy chủ. Kế tiếp sẽ là đồng bộ đầy đủ để sửa lỗi.</string>
     <string name="sync_media_db_error">Đồng bộ hóa phương tiện không thành công vì cơ sở dữ liệu hiện tại bị hỏng. Hãy kiểm tra file đa phương tiện.</string>

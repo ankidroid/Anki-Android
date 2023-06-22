@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">Nouvelle gestion du fuseau horaire</string>
     <string name="day_offset_with_description" maxLength="41">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
     <string name="day_offset_summary">%s heures après minuit</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Minuit</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23h00</string>
     <string name="pref_keep_screen_on" maxLength="41">Garder l’écran allumé</string>
     <string name="pref_keep_screen_on_summ">Désactiver l’extinction automatique de l’écran</string>
     <string name="convert_fen_text" maxLength="41">Support de la notation algébrique (échecs)</string>

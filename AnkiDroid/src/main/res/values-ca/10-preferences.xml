@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">Gestió de nova zona horària</string>
     <string name="day_offset_with_description" maxLength="41">Principi del proper dia</string>
     <string name="day_offset_summary">%s hores passada la mitjanit</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Mitjanit</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11 PM</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantenir la pantalla encesa</string>
     <string name="pref_keep_screen_on_summ">Desactiva la pantalla de bloqueig</string>
     <string name="convert_fen_text" maxLength="41">Suport de notació d\'escacs</string>

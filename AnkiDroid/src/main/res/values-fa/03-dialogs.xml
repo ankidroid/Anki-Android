@@ -182,7 +182,10 @@
     <string name="integrity_check_continue_anyway">ادامه بده</string>
     <string name="integrity_check_insufficient_space">بررسی دیتابیس حجم زیادی از حافظۀ موقت را اشغال خواهد کرد.\n\nبه شدت پیشنهاد می‌کنیم قبل از اجرای بررسی دیتابیس از خالی بودن حداقل %s از حافظۀ موقت دستگاهتان اطمینان حاصل کنید.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n%sاز حافظۀ موقت شما خالی است.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d کارت که در دستۀ اشتباه بودند بازیابی شدند. برای اطلاعات بیشتر به راهنما مراجعه کنید.</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">ویدیو پخش نشد</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">تغییر دسته انجام نشد</string>

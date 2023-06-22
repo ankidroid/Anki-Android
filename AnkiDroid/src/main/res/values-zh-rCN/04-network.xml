@@ -75,7 +75,9 @@
     <string name="sync_downloading_message">正在下载&#8230;</string>
     <string name="sync_title">同步</string>
     <string name="sync_log_uploading_message">从本地完全同步</string>
-    <string name="sync_log_clocks_unsynchronized">你设备上的时间有%1$d秒%2$s的误差；为避免出现错误，你的时间和时区需要设置正确才能进行同步。请确保你手机上的日期、时间和时区都已设置正确再进行同步。</string>
+    <plurals name="sync_log_clocks_unsynchronized_new">
+        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+    </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">，设备的时区可能是错误的</string>
     <string name="sync_log_clocks_unsynchronized_date">，设备的日期可能是错误的</string>
     <string name="sync_no_changes_message">没有发现变化</string>
@@ -102,9 +104,18 @@
     <string name="sync_media_find">查找更改过的媒体&#8230;&#8230;</string>
     <string name="sync_media_no_changes">媒体文件无更改。</string>
     <string name="sync_media_success">媒体同步成功。</string>
-    <string name="sync_media_partial_updated">媒体同步部分完成：\n%1$d 个媒体文件已下载。\n%2$d 个媒体文件已上传。</string>
-    <string name="sync_media_changes_count">%d个媒体文件待上传</string>
-    <string name="sync_media_downloaded_count">已下载%d个媒体文件</string>
+    <plurals name="sync_media_partial_downloaded_files">
+        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+    </plurals>
+    <plurals name="sync_media_partial_uploaded_files">
+        <item quantity="other">%d media files uploaded.</item>
+    </plurals>
+    <plurals name="sync_media_changes_count_new">
+        <item quantity="other">%d media changes to upload</item>
+    </plurals>
+    <plurals name="sync_media_downloaded_count_new">
+        <item quantity="other">%d media files downloaded</item>
+    </plurals>
     <string name="sync_sanity_failed">同步之后，牌组集合处于不一致的状态。AnkiDroid将会强制完全同步以修复这一问题。请选择你想保留哪一方的状态，如果你想稍后再同步，请取消</string>
     <string name="sync_media_sanity_failed">媒体同步完成，但媒体数量与服务器不一致。下一次将进行全部同步，以纠正错误。</string>
     <string name="sync_media_db_error">媒体同步失败，因为当前数据库已损坏。建议检查媒体。</string>

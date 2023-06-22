@@ -172,7 +172,9 @@
     <string name="integrity_check_continue_anyway">続ける</string>
     <string name="integrity_check_insufficient_space">データベースのチェックには一時ファイル用のデータ領域が必要です。\n\n続行する前に、お使いのデバイスに少なくとも %s の空き領域を確保してください。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n現在の空き容量は %s です。</string>
-    <string name="integrity_check_fixed_no_home_deck">%d 枚のカードが復元されました。詳細はマニュアルをご覧ください。</string>
+    <plurals name="integrity_check_fixed_no_home_deck_new">
+        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+    </plurals>
     <string name="video_creation_error">動画を再生できませんでした</string>
     <!-- Card Browser -->
     <string name="card_browser_deck_change_error">デッキを変更できませんでした</string>

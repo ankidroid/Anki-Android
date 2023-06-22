@@ -186,8 +186,6 @@
     <string name="new_timezone" maxLength="41">Nieuwe tijdzone afhandeling</string>
     <string name="day_offset_with_description" maxLength="41">Begin van de volgende dag (0 is middernacht, 23 is 11PM)</string>
     <string name="day_offset_summary">%s uur na middernacht</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Middernacht</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Scherm aanlaten</string>
     <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>
     <string name="convert_fen_text" maxLength="41">Schaaknotaties</string>
@@ -389,7 +387,7 @@
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Ongebruikte mediabestanden verwijderen</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
     <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Ongebruikte mediabestanden verwijderen</string>
