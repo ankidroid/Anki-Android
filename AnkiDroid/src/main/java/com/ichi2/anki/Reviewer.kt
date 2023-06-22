@@ -436,12 +436,7 @@ open class Reviewer :
             }
             R.id.action_change_whiteboard_pen_color -> {
                 Timber.i("Reviewer:: Pen Color button pressed")
-                if (mColorPalette.visibility == View.GONE) {
-                    mColorPalette.visibility = View.VISIBLE
-                } else {
-                    mColorPalette.visibility = View.GONE
-                }
-                updateWhiteboardEditorPosition()
+                changeWhiteboardPenColor()
             }
             R.id.action_save_whiteboard -> {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
@@ -457,9 +452,7 @@ open class Reviewer :
             }
             R.id.action_clear_whiteboard -> {
                 Timber.i("Reviewer:: Clear whiteboard button pressed")
-                if (whiteboard != null) {
-                    whiteboard!!.clear()
-                }
+                clearWhiteboard()
             }
             R.id.action_hide_whiteboard -> { // toggle whiteboard visibility
                 Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard)
@@ -546,6 +539,21 @@ open class Reviewer :
             mColorPalette.visibility = View.GONE
         }
         refreshActionBar()
+    }
+
+    public override fun clearWhiteboard() {
+        if (whiteboard != null) {
+            whiteboard!!.clear()
+        }
+    }
+
+    public override fun changeWhiteboardPenColor() {
+        if (mColorPalette.visibility == View.GONE) {
+            mColorPalette.visibility = View.VISIBLE
+        } else {
+            mColorPalette.visibility = View.GONE
+        }
+        updateWhiteboardEditorPosition()
     }
 
     override fun replayVoice() {

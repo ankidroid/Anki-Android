@@ -1782,6 +1782,14 @@ abstract class AbstractFlashcardViewer :
                     toggleWhiteboard()
                     true
                 }
+                ViewerCommand.CLEAR_WHITEBOARD -> {
+                    clearWhiteboard()
+                    true
+                }
+                ViewerCommand.CHANGE_WHITEBOARD_PEN_COLOR -> {
+                    changeWhiteboardPenColor()
+                    true
+                }
                 ViewerCommand.SHOW_HINT -> {
                     loadUrlInViewer("javascript: showHint();")
                     true
@@ -1811,6 +1819,14 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun toggleWhiteboard() {
+        // intentionally blank
+    }
+
+    protected open fun clearWhiteboard() {
+        // intentionally blank
+    }
+
+    protected open fun changeWhiteboardPenColor() {
         // intentionally blank
     }
 
