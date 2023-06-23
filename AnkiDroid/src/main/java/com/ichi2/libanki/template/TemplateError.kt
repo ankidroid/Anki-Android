@@ -34,7 +34,7 @@ abstract class TemplateError : NoSuchElementException() {
         }
     }
 
-    class WrongConditionalClosed(val expected: String, val found: String) : TemplateError() {
+    class WrongConditionalClosed(val found: String, val expected: String) : TemplateError() {
         override fun message(context: Context): String {
             return context.getString(R.string.wrong_tag_closed, found, expected)
         }
