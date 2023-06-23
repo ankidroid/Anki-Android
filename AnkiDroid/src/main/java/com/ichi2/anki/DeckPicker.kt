@@ -962,6 +962,7 @@ open class DeckPicker :
 
     override fun onResume() {
         Timber.d("onResume()")
+        mActivityPaused = false
         // stop onResume() processing the message.
         // we need to process the message after `loadDeckCounts` is added in refreshState
         // As `loadDeckCounts` is cancelled in `migrate()`
@@ -972,7 +973,6 @@ open class DeckPicker :
     }
 
     fun refreshState() {
-        mActivityPaused = false
         // Due to the App Introduction, this may be called before permission has been granted.
         if (mSyncOnResume && hasStorageAccessPermission(this)) {
             Timber.i("Performing Sync on Resume")
