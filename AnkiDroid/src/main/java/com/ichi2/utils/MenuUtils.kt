@@ -45,6 +45,8 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
     val extraPadding = convertDpToPixel(5f, this).toInt()
 
     class Wrapper(drawable: Drawable) : DrawableWrapperCompat(drawable) {
+        override fun mutate() = drawable!!.mutate() // DrawableWrapperCompat fails to delegate this
+
         override fun getIntrinsicWidth() = super.getIntrinsicWidth() + extraPadding * 2
 
         override fun setBounds(left: Int, top: Int, right: Int, bottom: Int) {
@@ -60,7 +62,7 @@ fun Context.increaseHorizontalPaddingOfOverflowMenuIcons(menu: Menu) {
 }
 
 /**
- * Recursively tints the icons of the items of the given overflow or popup menu
+ * Recursively mutates and tints the icons of the items of the given overflow or popup menu
  * with the color [R.attr.overflowAndPopupMenuIconColor] that is specified in the theme.
  * Has no effect for items that have no icon.
  */
@@ -69,7 +71,7 @@ fun Context.tintOverflowMenuIcons(menu: Menu, skipIf: ((MenuItem) -> Boolean)? =
 
     menu.forEachOverflowItemRecursive { item ->
         if (skipIf == null || !skipIf(item)) {
-            item.icon?.setTint(iconColor)
+            item.icon?.mutate()?.setTint(iconColor)
         }
     }
 }
