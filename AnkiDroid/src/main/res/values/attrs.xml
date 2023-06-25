@@ -56,6 +56,7 @@
         <attr name="displayValue" format="boolean"/>
     </declare-styleable>
 
+    <attr name="widgetColorActivated" format="color"/>
     <!-- App buttons -->
     <attr name="largeButtonBackgroundColor" format="color"/>
     <attr name="largeButtonBackgroundColorFocused" format="color"/>

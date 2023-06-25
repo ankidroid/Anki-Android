@@ -14,11 +14,15 @@
         <item name="colorPrimary">@color/theme_dark_primary</item>
         <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
         <item name="colorAccent">@color/material_blue_400</item>
+        <item name="colorOnSurface">@color/white</item>
         <item name="android:textColor">@color/text_color_dark</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
-        <item name="colorControlActivated">?attr/colorAccent</item>
+        <!-- Widget colors -->
+        <item name="widgetColorActivated">?attr/colorAccent</item>
+        <item name="trackTint">@color/switch_track_tint</item>
+        <item name="thumbTint">@color/switch_thumb_tint</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
         <!-- Navigation drawer -->
         <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
