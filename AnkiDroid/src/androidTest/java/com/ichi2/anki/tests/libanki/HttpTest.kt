@@ -25,6 +25,12 @@ import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.async.Connection
 import com.ichi2.libanki.sync.HostNum
 import com.ichi2.utils.NetworkUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -40,10 +46,8 @@ class HttpTest {
         Manifest.permission.ACCESS_NETWORK_STATE
     )
 
-    // #7108: AsyncTask
-    @Suppress("DEPRECATION")
     @Test
-    fun testLogin() {
+    fun testLogin() = runBlocking {
         val username = "AnkiDroidInstrumentedTestUser"
         val password = "AnkiDroidInstrumentedTestInvalidPass"
         val invalidPayload = Connection.Payload(arrayOf(username, password, HostNum(null)))
@@ -66,29 +70,35 @@ class HttpTest {
             Connection.login(testListener, invalidPayload)
             Assert.assertFalse(
                 "Successful login despite being offline",
-                testListener.getPayload()!!.success
+                testListener.getPayload()?.success ?: false
             )
             Assert.assertTrue(
                 "onDisconnected not called despite being offline",
                 testListener.disconnectedCalled
             )
-            return
+            return@runBlocking
         }
 
-        val r = Runnable {
-            val conn = Connection.login(testListener, invalidPayload)
+        CoroutineScope(Dispatchers.Main).launch {
+            val conn = async {
+                Connection.login(testListener, invalidPayload)
+            }
             try {
-                // This forces us to synchronously wait for the AsyncTask to do it's work
-                conn!!.get()
+                runBlocking {
+                    conn.await() // Await for the login response
+                    if (conn.isCancelled) {
+                        Assert.fail("Login task was cancelled")
+                    } else {
+                        Assert.assertFalse(
+                            "Successful login despite invalid credentials",
+                            testListener.getPayload()?.success ?: false
+                        )
+                    }
+                }
             } catch (e: Exception) {
-                Assert.fail("Caught exception while trying to login: " + e.message)
+                Assert.fail("Caught exception while trying to login: ${e.message}")
             }
         }
-        InstrumentationRegistry.getInstrumentation().runOnMainSync(r)
-        Assert.assertFalse(
-            "Successful login despite invalid credentials",
-            testListener.getPayload()!!.success
-        )
     }
 
     class TestTaskListener(payload: Connection.Payload) :
