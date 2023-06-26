@@ -41,8 +41,6 @@ import timber.log.Timber
 
 private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
 
-private const val GITHUB_COMMITS = "https://github.com/ankidroid/Anki-Android/commits/main"
-
 /**
  * Shows an about box, which is a small HTML page.
  */
@@ -131,7 +129,7 @@ class Info : AnkiActivity() {
                         // Excludes the url that are opened inside the changelog.html
                         // and redirect the user to the browser
                         val url = request?.url?.toString() ?: return false
-                        if (url in arrayListOf(CHANGE_LOG_URL, GITHUB_COMMITS)) {
+                        if (url == CHANGE_LOG_URL) {
                             return false
                         }
                         if (!AdaptionUtil.hasWebBrowser(this@Info)) {
@@ -142,9 +140,7 @@ class Info : AnkiActivity() {
                                 false
                             )
                         } else {
-                            Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
-                                startActivity(this)
-                            }
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                         }
                         return true
                     }
