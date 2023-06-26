@@ -130,18 +130,19 @@ class Info : AnkiActivity() {
                     ): Boolean {
                         // Excludes the url that are opened inside the changelog.html
                         // and redirect the user to the browser
-                        if (request?.url.toString() in arrayListOf(CHANGE_LOG_URL, GITHUB_COMMITS)) {
+                        val url = request?.url?.toString() ?: return false
+                        if (url in arrayListOf(CHANGE_LOG_URL, GITHUB_COMMITS)) {
                             return false
                         }
                         if (!AdaptionUtil.hasWebBrowser(this@Info)) {
                             // snackbar can't be used here as it's a webview and lack coordinator layout
                             UIUtils.showThemedToast(
                                 this@Info,
-                                resources.getString(R.string.no_browser_notification) + request?.url.toString(),
+                                resources.getString(R.string.no_browser_notification) + url,
                                 false
                             )
                         } else {
-                            Intent(Intent.ACTION_VIEW, Uri.parse(request?.url.toString())).apply {
+                            Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
                                 startActivity(this)
                             }
                         }
