@@ -127,7 +127,7 @@
     <string name="sync_sanity_remote">Từ xa</string>
     <string name="force_full_sync_title">Thực hiện đồng bộ đầy đủ</string>
     <string name="force_full_sync_summary">Trong lần đồng bộ kế tiếp, buộc các thay đổi theo một hướng</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Buộc đồng bộ hóa hoàn toàn</string>
     <string name="full_sync_confirmation">Thay đổi theo yêu cầu đòi hỏi tải lên đầy đủ CSDL trong lần đồng bộ bộ sưu tập tiếp theo. Nếu có thẻ ôn tập hoặc các thay đổi đang chờ trên thiết bị khác mà chưa được đồng bộ ở đây, chúng sẽ bị mất. Vẫn tiếp tục chứ?</string>
     <string name="full_sync_confirmation_upgrade">Do lỗi của phiên bản AnkiDroid đã cài đặt trước đó, đề nghị thực hiện đồng bộ hoàn toàn.</string>
     <string name="sync_error_407_proxy_required">Máy chủ proxy yêu cầu xác thực.</string>
