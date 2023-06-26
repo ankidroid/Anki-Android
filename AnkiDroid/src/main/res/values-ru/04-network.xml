@@ -111,28 +111,28 @@
     <string name="sync_media_no_changes">Изменений в медифайлах нет</string>
     <string name="sync_media_success">Медиафайлы сихронизированы</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">Частичная синхронизация завершена:\n%d медиафайл загружено.</item>
+        <item quantity="few">Частичная синхронизация завершена:\n%d медиафайла загружено.</item>
+        <item quantity="many">Частичная синхронизация завершена:\n%d медиафайлов загружено.</item>
+        <item quantity="other">Частичная синхронизация завершена:\n%d медиафайлов загружено.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="few">%d media files uploaded.</item>
-        <item quantity="many">%d media files uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">%d медиафайл выгружен</item>
+        <item quantity="few">%d медиафайла выгружены</item>
+        <item quantity="many">%d медиафайлов выгружены</item>
+        <item quantity="other">%d медиафайлов выгружено</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="few">%d media changes to upload</item>
-        <item quantity="many">%d media changes to upload</item>
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="one">%d медиафайл для выгрузки</item>
+        <item quantity="few">%d медиафайла для выгрузки</item>
+        <item quantity="many">%d медиафайлов для выгрузки</item>
+        <item quantity="other">%d медиафайлов для выгрузки</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="few">%d media files downloaded</item>
-        <item quantity="many">%d media files downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">%d медиафайл загружен</item>
+        <item quantity="few">%d медиафайла загружены</item>
+        <item quantity="many">%d медиафайлов загружено</item>
+        <item quantity="other">%d медиафайлов загружено</item>
     </plurals>
     <string name="sync_sanity_failed">После синхронизации коллекция в несогласованном состоянии. Будет запущена полная синхронизации. Выберите версию коллекции, которая останется.</string>
     <string name="sync_media_sanity_failed">Синхронизация медиафайлов завершена, но количество файлов не совпадает. В следующей раз будет произведена полная синхронизация.</string>

@@ -76,7 +76,7 @@
     <string name="sync_title">同期</string>
     <string name="sync_log_uploading_message">この端末側のコレクションによる完全同期が完了しました</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">このデバイスの時計が %1$d秒%2$s ずれています。デバイスのシステムの日付、時刻、タイムゾーンが正しく設定されていることを確認してから、再び同期してください。</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">。端末のタイムゾーンが間違っている可能性があります</string>
     <string name="sync_log_clocks_unsynchronized_date">。端末の日付が間違っている可能性があります</string>
@@ -105,16 +105,16 @@
     <string name="sync_media_no_changes">メディアファイルに変更はありません</string>
     <string name="sync_media_success">メディアの同期が完了しました</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">メディアの同期が部分的に完了しました:\n%d個のメディアファイルをダウンロードしました。</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="other">%d個のメディアファイルをアップロードしました</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="other">%d個のメディアの変更をアップロードします</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="other">%d個のメディアファイルをダウンロードしました</item>
     </plurals>
     <string name="sync_sanity_failed">同期中にコレクションの不整合が発見されました。この問題を解決するためには完全同期が必要です。Ankiweb側（クラウド）と AnkiDroid側（ローカル）のいずれのコレクションを保持するかを選択してください。</string>
     <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数がAnkiWeb上のものと一致しません。次にメディアを同期するときには、エラーを修正するために完全同期を行います。</string>

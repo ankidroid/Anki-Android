@@ -422,7 +422,7 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Развернуть метку «%s»</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Не удалось получить доступ к коллекции. Попробуйте еще раз!</string>
+    <string name="field_editor_model_not_available">Не удалось получить доступ к коллекции. Попробуйте еще раз.</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Учиться эффективнее</string>
     <string name="intro_ankidroid_tagline_two">Запоминать больше</string>

@@ -76,7 +76,7 @@
     <string name="sync_title">同步</string>
     <string name="sync_log_uploading_message">从本地完全同步</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">您的时钟有%1$d 秒%2$s 的误差。 请确保您手机上的日期、时间和时区设置正确，然后重新同步。</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">，设备的时区可能是错误的</string>
     <string name="sync_log_clocks_unsynchronized_date">，设备的日期可能是错误的</string>
@@ -105,16 +105,16 @@
     <string name="sync_media_no_changes">媒体文件无更改。</string>
     <string name="sync_media_success">媒体同步成功。</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">媒体同步已部分完成：已下载 \n%d 个媒体文件。</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="other">已上传 %d 个媒体文件。</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="other">有 %d 个媒体文件待上传</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="other">已下载 %d 个媒体文件</item>
     </plurals>
     <string name="sync_sanity_failed">同步之后，牌组集合处于不一致的状态。AnkiDroid将会强制完全同步以修复这一问题。请选择你想保留哪一方的状态，如果你想稍后再同步，请取消</string>
     <string name="sync_media_sanity_failed">媒体同步完成，但媒体数量与服务器不一致。下一次将进行全部同步，以纠正错误。</string>
