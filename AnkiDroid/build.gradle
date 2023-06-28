@@ -30,6 +30,11 @@ android {
 
     compileSdkVersion 33 // change api compileSdkVersion at the same time
 
+    buildFeatures {
+        buildConfig = true
+        aidl = true
+    }
+
     defaultConfig {
         applicationId "com.ichi2.anki"
         buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()

@@ -16,6 +16,10 @@ android {
     namespace 'com.ichi2.anki.api'
     compileSdkVersion 33
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdkVersion 16
         //noinspection OldTargetApi
