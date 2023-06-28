@@ -16,3 +16,5 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           set-distribution-checksum: false
+          base-branch: dependency-updates
+          target-branch: dependency-updates
