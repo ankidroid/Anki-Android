@@ -407,7 +407,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             )
             return
         }
-        val toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary)
+        val toolbarColor = Themes.getColorFromAttr(this, com.google.android.material.R.attr.colorPrimary)
         val navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor)
         val colorSchemeParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(toolbarColor)

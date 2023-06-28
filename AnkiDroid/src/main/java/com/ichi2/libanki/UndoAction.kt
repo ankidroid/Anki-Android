@@ -17,9 +17,7 @@
 package com.ichi2.libanki
 
 import android.content.res.Resources
-import androidx.annotation.IntDef
 import androidx.annotation.StringRes
-import com.ichi2.anki.R
 import com.ichi2.utils.LanguageUtil.getLocaleCompat
 import timber.log.Timber
 import java.util.*
@@ -32,7 +30,6 @@ abstract class UndoAction
     val undoNameId: Int
 ) {
     @Retention(AnnotationRetention.SOURCE)
-    @IntDef(R.string.undo_action_change_deck_multi, R.string.menu_delete_note, R.string.card_browser_delete_card, R.string.card_browser_mark_card, R.string.card_browser_unmark_card, R.string.menu_suspend_card, R.string.card_browser_unsuspend_card, R.string.undo_action_review, R.string.menu_bury_note, R.string.menu_suspend_note, R.string.card_editor_reposition_card, R.string.card_editor_reschedule_card, R.string.menu_bury_card, R.string.card_editor_reset_card)
     annotation class UndoNameId
 
     private fun getLocale(resources: Resources): Locale? {

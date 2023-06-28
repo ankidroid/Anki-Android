@@ -40,7 +40,7 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
     }
 
     override fun onCreateActionView(forItem: MenuItem): View {
-        val actionView = ImageButton(context, null, R.attr.actionButtonStyle)
+        val actionView = ImageButton(context, null, com.google.android.material.R.attr.actionButtonStyle)
         TooltipCompat.setTooltipText(actionView, forItem.title)
         forItem.icon?.let {
             it.isAutoMirrored = true
