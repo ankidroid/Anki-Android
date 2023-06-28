@@ -765,12 +765,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 mCurrentEditedCard!!.did = deckId
                 modified = true
             }
+            // Check if the front of the card is not empty
+            if (getCurrentFieldText(0).isEmpty()) {
+                displayErrorSavingNote()
+                return
+            }
             // now load any changes to the fields from the form
             for (f in mEditFields!!) {
-                if (getCurrentFieldText(0).isEmpty()) {
-                    displayErrorSavingNote()
-                    return
-                }
                 modified = modified or updateField(f)
             }
             // added tag?
