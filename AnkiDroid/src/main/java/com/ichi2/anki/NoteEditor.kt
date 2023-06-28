@@ -767,6 +767,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             // now load any changes to the fields from the form
             for (f in mEditFields!!) {
+                if (getCurrentFieldText(0).isEmpty()) {
+                    displayErrorSavingNote()
+                    return
+                }
                 modified = modified or updateField(f)
             }
             // added tag?
