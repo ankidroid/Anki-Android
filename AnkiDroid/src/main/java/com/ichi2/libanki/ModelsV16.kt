@@ -294,7 +294,7 @@ class ModelsV16(col: CollectionV16) : ModelManager(col) {
     private fun newBasicNotetype(): NoteType {
         return NoteType(
             BackendUtils.from_json_bytes(
-                col.backend.getStockNotetypeLegacy(StockNotetype.Kind.BASIC)
+                col.backend.getStockNotetypeLegacy(StockNotetype.Kind.KIND_BASIC)
             )
         )
     }

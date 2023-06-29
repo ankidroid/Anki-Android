@@ -218,11 +218,11 @@ class TemplateManager {
             }
 
             val qtext = apply_custom_filters(partial.qnodes, this, front_side = null)
-            val qout = col().backend.extractAVTags(text = qtext, questionSide = true)
+            val qout = col().backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
             val atext = apply_custom_filters(partial.anodes, this, front_side = qout.text)
-            val aout = col().backend.extractAVTags(text = atext, questionSide = false)
+            val aout = col().backend.extractAvTags(text = atext, questionSide = false)
             var aoutText = aout.text
 
             if (!_browser) {
@@ -251,11 +251,12 @@ class TemplateManager {
                         _note.toBackendNote(),
                         _card.ord,
                         BackendUtils.to_json_bytes(_template!!.deepClone()),
-                        _fill_empty
+                        _fill_empty,
+                        true
                     )
                 } else {
                     // existing card (eg study mode)
-                    backend.renderExistingCard(_card.id, _browser)
+                    backend.renderExistingCard(_card.id, _browser, true)
                 }
             }
             return PartiallyRenderedCard.from_proto(proto)

@@ -63,7 +63,7 @@ android {
         // needed for upgrades to be offered correctly.
         versionCode=21600204
         versionName="2.16.0beta4"
-        minSdkVersion 21
+        minSdkVersion 23
         //noinspection OldTargetApi - also performed in api/build.fradle
         targetSdkVersion 31 // change .tests_emulator.yml
         testApplicationId "com.ichi2.anki.tests"
@@ -220,7 +220,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
-    ndkVersion "22.0.7026061"
 }
 
 play {
@@ -307,7 +306,7 @@ dependencies {
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin:3.23.3' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin-lite:3.23.3' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {

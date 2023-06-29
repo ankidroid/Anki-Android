@@ -161,28 +161,28 @@ class SchedV3(col: CollectionV16) : AbstractSched(col) {
     }
 
     private fun intervalForState(state: SchedulingState): Long {
-        return when (state.valueCase) {
-            SchedulingState.ValueCase.NORMAL -> intervalForNormalState(state.normal)
-            SchedulingState.ValueCase.FILTERED -> intervalForFilteredState(state.filtered)
-            SchedulingState.ValueCase.VALUE_NOT_SET, null -> TODO("invalid scheduling state")
+        return when (state.kindCase) {
+            SchedulingState.KindCase.NORMAL -> intervalForNormalState(state.normal)
+            SchedulingState.KindCase.FILTERED -> intervalForFilteredState(state.filtered)
+            SchedulingState.KindCase.KIND_NOT_SET, null -> TODO("invalid scheduling state")
         }
     }
 
     private fun intervalForNormalState(normal: SchedulingState.Normal): Long {
-        return when (normal.valueCase) {
-            SchedulingState.Normal.ValueCase.NEW -> 0
-            SchedulingState.Normal.ValueCase.LEARNING -> normal.learning.scheduledSecs.toLong()
-            SchedulingState.Normal.ValueCase.REVIEW -> normal.review.scheduledDays.toLong() * 86400
-            SchedulingState.Normal.ValueCase.RELEARNING -> normal.relearning.learning.scheduledSecs.toLong()
-            SchedulingState.Normal.ValueCase.VALUE_NOT_SET, null -> TODO("invalid normal state")
+        return when (normal.kindCase) {
+            SchedulingState.Normal.KindCase.NEW -> 0
+            SchedulingState.Normal.KindCase.LEARNING -> normal.learning.scheduledSecs.toLong()
+            SchedulingState.Normal.KindCase.REVIEW -> normal.review.scheduledDays.toLong() * 86400
+            SchedulingState.Normal.KindCase.RELEARNING -> normal.relearning.learning.scheduledSecs.toLong()
+            SchedulingState.Normal.KindCase.KIND_NOT_SET, null -> TODO("invalid normal state")
         }
     }
 
     private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long {
-        return when (filtered.valueCase) {
-            SchedulingState.Filtered.ValueCase.PREVIEW -> filtered.preview.scheduledSecs.toLong()
-            SchedulingState.Filtered.ValueCase.RESCHEDULING -> intervalForNormalState(filtered.rescheduling.originalState)
-            SchedulingState.Filtered.ValueCase.VALUE_NOT_SET, null -> TODO("invalid filtered state")
+        return when (filtered.kindCase) {
+            SchedulingState.Filtered.KindCase.PREVIEW -> filtered.preview.scheduledSecs.toLong()
+            SchedulingState.Filtered.KindCase.RESCHEDULING -> intervalForNormalState(filtered.rescheduling.originalState)
+            SchedulingState.Filtered.KindCase.KIND_NOT_SET, null -> TODO("invalid filtered state")
         }
     }
 }
