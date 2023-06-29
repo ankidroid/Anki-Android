@@ -19,9 +19,8 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.DeckPicker
@@ -34,6 +33,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.requireLong
 import com.ichi2.utils.ExtendedFragmentFactory
 import com.ichi2.utils.FragmentFactoryUtils
+import com.ichi2.utils.cancelable
 import timber.log.Timber
 import java.util.function.Supplier
 
@@ -52,14 +52,14 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
         val title = collection.decks.name(deckId)
-        return MaterialDialog(requireActivity())
-            .title(text = title)
-            .cancelable(true)
-            .noAutoDismiss()
-            .listItems(items = contextMenuOptions.map { resources.getString(it.optionName) }) {
-                    _: MaterialDialog, index: Int, _: CharSequence ->
-                handleActionOnLongClick(contextMenuOptions[index])
+        return AlertDialog.Builder(requireContext())
+            .setTitle(title)
+            .setItems(contextMenuOptions.map { resources.getString(it.optionName) }.toTypedArray()) {
+                    _, i ->
+                handleActionOnLongClick(contextMenuOptions[i])
             }
+            .cancelable(true)
+            .create()
     }
 
     /**
