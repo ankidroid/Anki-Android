@@ -33,9 +33,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.dialogs.ExportDialogParams
+import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
@@ -57,10 +57,10 @@ import java.util.function.Supplier
  * Must be constructed before calling {@link AnkiActivity#onCreate(Bundle, PersistableBundle)}, this is to fragment
  * factory {@link #mDialogsFactory} is set correctly.
  *
- * @param activity the calling activity (must implement {@link ExportCompleteDialogListener})
+ * @param activity the calling activity (must implement {@link ExportReadyDialogListener})
  * @param collectionSupplier a predicate that supplies a collection instance
 */
-class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportDialogListener, ExportCompleteDialogListener {
+class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportDialogListener, ExportReadyDialogListener {
     private val mDialogsFactory: ExportDialogsFactory
     private val mSaveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var mExportFileName: String
@@ -109,7 +109,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             if (includeSched) {
                 activity.launchCatchingTask {
                     activity.exportColpkg(exportPath.path, includeMedia)
-                    val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
+                    val dialog = mDialogsFactory.newExportReadyDialog().withArguments(exportPath.path)
                     activity.showAsyncDialogFragment(dialog)
                 }
             } else {
@@ -154,7 +154,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
                     exporter.exportInto(exportPkgPath, context)
                 }
             }
-            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPkgPath)
+            val dialog = mDialogsFactory.newExportReadyDialog().withArguments(exportPkgPath)
             activity.showAsyncDialogFragment(dialog)
         }
     }
@@ -163,7 +163,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     private fun exportNewBackendApkg(exportPath: File, includeSched: Boolean, includeMedia: Boolean, limit: ExportLimit) {
         activity.launchCatchingTask {
             activity.exportApkg(exportPath.path, includeSched, includeMedia, limit)
-            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
+            val dialog = mDialogsFactory.newExportReadyDialog().withArguments(exportPath.path)
             activity.showAsyncDialogFragment(dialog)
         }
     }

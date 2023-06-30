@@ -23,8 +23,8 @@ import androidx.core.os.bundleOf
 import com.ichi2.anki.R
 import com.ichi2.utils.*
 
-class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) : AsyncDialogFragment() {
-    interface ExportCompleteDialogListener {
+class ExportReadyDialog(private val listener: ExportReadyDialogListener) : AsyncDialogFragment() {
+    interface ExportReadyDialogListener {
         fun dismissAllDialogFragments()
         fun shareFile(path: String) // path of the file to be shared
         fun saveExportFile(exportPath: String)
@@ -32,7 +32,7 @@ class ExportCompleteDialog(private val listener: ExportCompleteDialogListener) :
     private val exportPath
         get() = requireArguments().getString("exportPath")!!
 
-    fun withArguments(exportPath: String): ExportCompleteDialog {
+    fun withArguments(exportPath: String): ExportReadyDialog {
         arguments = (arguments ?: bundleOf(Pair("exportPath", exportPath)))
         return this
     }
