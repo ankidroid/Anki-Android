@@ -116,7 +116,7 @@ abstract class NavigationDrawerActivity :
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
-        mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, com.google.android.material.R.attr.colorPrimary))
+        mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, android.R.attr.colorPrimary))
         // Setup toolbar and hamburger
         mNavigationView = mDrawerLayout.findViewById(R.id.navdrawer_items_container)
         mNavigationView.setNavigationItemSelectedListener(this)

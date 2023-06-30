@@ -1324,7 +1324,7 @@ open class Reviewer :
         // Show / hide the Action bar together with the status bar
         val prefs = AnkiDroidApp.getSharedPrefs(a)
         val fullscreenMode = fromPreference(prefs)
-        a.window.statusBarColor = getColorFromAttr(a, com.google.android.material.R.attr.colorPrimary)
+        a.window.statusBarColor = getColorFromAttr(a, android.R.attr.colorPrimary)
         val decorView = a.window.decorView
         decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
             val toolbar = a.findViewById<View>(R.id.toolbar)
@@ -1559,7 +1559,7 @@ open class Reviewer :
         @MenuRes subMenuRes: Int,
         onMenuItemSelection: (MenuItem) -> Boolean,
         showsSubMenu: () -> Boolean
-    ): View = ImageButton(context, null, com.google.android.material.R.attr.actionButtonStyle).apply {
+    ): View = ImageButton(context, null, android.R.attr.actionButtonStyle).apply {
         TooltipCompat.setTooltipText(this, menuItem.title)
         menuItem.icon?.isAutoMirrored = true
         setImageDrawable(menuItem.icon)
