@@ -40,8 +40,9 @@ abstract class CardQueue<T : Card.Cache>(
         return queue.remove()!!.card
     }
 
-    fun remove(cid: CardId) =
-        queue.removeIf { card -> card.id == cid }
+    fun remove(cid: CardId): Boolean {
+        return queue.remove(Card.Cache(col, cid))
+    }
 
     fun add(elt: T) {
         queue.add(elt)
