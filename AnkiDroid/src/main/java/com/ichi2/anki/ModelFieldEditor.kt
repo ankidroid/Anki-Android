@@ -27,10 +27,9 @@ import android.widget.EditText
 import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.withCol
@@ -46,7 +45,11 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Model
 import com.ichi2.ui.FixedEditText
-import com.ichi2.utils.displayKeyboard
+import com.ichi2.utils.customView
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 import com.ichi2.utils.toStringList
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
@@ -164,11 +167,13 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     * Creates a dialog to create a field
     */
     private fun addFieldDialog() {
-        fieldNameInput = FixedEditText(this)
+        fieldNameInput = FixedEditText(this).apply {
+            focusWithKeyboard()
+        }
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.isSingleLine = true
-            MaterialDialog(this).show {
-                customView(view = _fieldNameInput, horizontalPadding = true)
+            AlertDialog.Builder(this).show {
+                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(R.string.model_field_editor_add)
                 positiveButton(R.string.dialog_ok) {
                     // Name is valid, now field is added
@@ -197,7 +202,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                 }
                 negativeButton(R.string.dialog_cancel)
             }
-                .displayKeyboard(_fieldNameInput)
         }
     }
 
@@ -286,13 +290,13 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Processing time is constant
      */
     private fun renameFieldDialog() {
-        fieldNameInput = FixedEditText(this)
+        fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.isSingleLine = true
             _fieldNameInput.setText(mFieldsLabels[currentPos])
             _fieldNameInput.setSelection(_fieldNameInput.text!!.length)
-            MaterialDialog(this).show {
-                customView(view = _fieldNameInput, horizontalPadding = true)
+            AlertDialog.Builder(this).show {
+                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(R.string.model_field_editor_rename)
                 positiveButton(R.string.rename) {
                     if (uniqueName(_fieldNameInput) == null) {
@@ -321,7 +325,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
-                displayKeyboard(_fieldNameInput)
             }
         }
     }
@@ -332,11 +335,11 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      * Processing time is scales with number of items
      */
     private fun repositionFieldDialog() {
-        fieldNameInput = FixedEditText(this)
+        fieldNameInput = FixedEditText(this).apply { focusWithKeyboard() }
         fieldNameInput?.let { _fieldNameInput ->
             _fieldNameInput.setRawInputType(InputType.TYPE_CLASS_NUMBER)
-            MaterialDialog(this).show {
-                customView(view = _fieldNameInput, horizontalPadding = true)
+            AlertDialog.Builder(this).show {
+                customView(view = _fieldNameInput, paddingLeft = 64, paddingRight = 64, paddingTop = 32)
                 title(text = String.format(resources.getString(R.string.model_field_editor_reposition), 1, mFieldsLabels.size))
                 positiveButton(R.string.dialog_ok) {
                     val newPosition = _fieldNameInput.text.toString()
@@ -371,15 +374,10 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                             c.setConfirm(confirm)
                             this@ModelFieldEditor.showDialogFragment(c)
                         }
-                        this.dismiss()
                     }
                 }
-                negativeButton(R.string.dialog_cancel) {
-                    this.dismiss()
-                }
+                negativeButton(R.string.dialog_cancel)
             }
-                .noAutoDismiss()
-                .displayKeyboard(_fieldNameInput)
         }
     }
 
