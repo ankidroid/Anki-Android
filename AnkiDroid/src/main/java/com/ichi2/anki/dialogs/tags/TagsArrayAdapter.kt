@@ -86,10 +86,10 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
          * Get or set the checkbox state of the currently bound ViewHolder.
          * [vh] must be nonnull.
          */
-        private var checkBoxState: CheckBoxTriStates.State
-            get() = vh!!.mCheckBoxView.state
+        private var checkBoxState: CheckBoxTriStates.State?
+            get() = vh?.mCheckBoxView?.state
             set(state) {
-                vh!!.mCheckBoxView.state = state
+                state?.let { vh?.mCheckBoxView?.state = it }
             }
 
         /**
@@ -135,8 +135,8 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
         fun updateCheckBoxCycleStyle(tags: TagsList) {
             val realSubtreeCnt = subtreeCheckedCnt - if (tags.isChecked(tag)) 1 else 0
             val hasDescendantChecked = realSubtreeCnt > 0
-            vh!!.mCheckBoxView.cycleIndeterminateToChecked = hasDescendantChecked
-            vh!!.mCheckBoxView.cycleCheckedToIndeterminate = hasDescendantChecked
+            vh?.mCheckBoxView?.cycleIndeterminateToChecked = hasDescendantChecked
+            vh?.mCheckBoxView?.cycleCheckedToIndeterminate = hasDescendantChecked
         }
 
         /**
