@@ -106,7 +106,7 @@ suspend fun AnkiActivity.exportApkg(
     withProgress(
         extractProgress = {
             if (progress.hasExporting()) {
-                text = progress.exporting
+                text = getString(R.string.export_preparation_in_progress)
             }
         }
     ) {
@@ -123,7 +123,7 @@ suspend fun AnkiActivity.exportColpkg(
     withProgress(
         extractProgress = {
             if (progress.hasExporting()) {
-                text = progress.exporting
+                text = getString(R.string.export_preparation_in_progress)
             }
         }
     ) {
