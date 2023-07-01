@@ -16,34 +16,32 @@
 
 package com.ichi2.anki.dialogs
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.libanki.DeckId
 import com.ichi2.utils.BundleUtils.requireLong
-import com.ichi2.utils.iconAttr
 
 class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
     val deckId get() = requireArguments().requireLong("deckId")
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        return MaterialDialog(requireActivity()).show {
-            title(R.string.delete_deck_title)
-            message(text = requireArguments().getString("dialogMessage")!!)
-            iconAttr(R.attr.dialogErrorIcon)
-            positiveButton(R.string.dialog_positive_delete) {
+        return AlertDialog.Builder(requireActivity())
+            .setTitle(R.string.delete_deck_title)
+            .setMessage(requireArguments().getString("dialogMessage"))
+            .setIconAttribute(R.attr.dialogErrorIcon)
+            .setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
                 (activity as DeckPicker).deleteDeck(deckId)
                 (activity as DeckPicker).dismissAllDialogFragments()
             }
-            negativeButton(R.string.dialog_cancel) {
+            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
                 (activity as DeckPicker).dismissAllDialogFragments()
             }
-            cancelable(true)
-        }
+            .create()
     }
 
     companion object {
