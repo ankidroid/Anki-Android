@@ -224,7 +224,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 dismissAllDialogFragments()
                             } else {
                                 // otherwise show an error dialog
-                                MaterialDialog(requireActivity()).show {
+                                AlertDialog.Builder(requireActivity()).show {
                                     title(R.string.vague_error)
                                     message(R.string.backup_invalid_file_error)
                                     positiveButton(R.string.dialog_ok)
