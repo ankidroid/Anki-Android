@@ -100,6 +100,7 @@ import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.getMediaMigrationState
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
+import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -472,7 +473,9 @@ open class DeckPicker :
                 return false // TODO BEFORE-RELEASE Allow startup normally
             }
             is MediaMigrationState.Ongoing.PausedDueToError -> {
-                showDialogThatOffersToResumeMigrationAfterError(mediaMigrationState.errorText)
+                if (!storageMigrationFailedDialogIsShownOrPending(this)) {
+                    showDialogThatOffersToResumeMigrationAfterError(mediaMigrationState.errorText)
+                }
                 return false
             }
             is MediaMigrationState.Ongoing.NotPaused -> {
@@ -487,6 +490,11 @@ open class DeckPicker :
     /**
      * The first call in showing dialogs for startup - error or success.
      * Attempts startup if storage permission has been acquired, else, it requests the permission
+     *
+     * TODO This method is run on every activity recreation, which can happen often.
+     *   It seems that the original idea was for for this to only run once, on app start.
+     *   This method triggers backups, sync, and may re-show dialogs
+     *   that may have been dismissed. Make this run only once?
      */
     fun handleStartup() {
         val storagePermissionsResult = startupStoragePermissionManager.checkPermissions()
@@ -1132,7 +1140,12 @@ open class DeckPicker :
 
         launchCatchingTask {
             val shownBackupDialog = BackupPromptDialog.showIfAvailable(this@DeckPicker)
-            if (!shownBackupDialog && shouldOfferToMigrate() && timeToShowStorageMigrationDialog()) {
+            if (
+                !shownBackupDialog &&
+                shouldOfferToMigrate() &&
+                timeToShowStorageMigrationDialog() &&
+                !storageMigrationFailedDialogIsShownOrPending(this@DeckPicker)
+            ) {
                 showDialogThatOffersToMigrateStorage(shownAutomatically = true)
             }
         }
