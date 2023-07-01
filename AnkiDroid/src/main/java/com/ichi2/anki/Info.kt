@@ -94,7 +94,7 @@ class Info : AnkiActivity() {
         val backgroundColor = typedArray.getColor(0, -1)
         val textColor = typedArray.getColor(1, -1).toRGBHex()
 
-        val anchorTextThemeColor = ThemeUtils.getThemeAttrColor(this, R.attr.colorAccent)
+        val anchorTextThemeColor = ThemeUtils.getThemeAttrColor(this, android.R.attr.colorAccent)
         val anchorTextColor = anchorTextThemeColor.toRGBHex()
 
         mWebView!!.setBackgroundColor(backgroundColor)

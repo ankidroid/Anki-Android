@@ -1,6 +1,6 @@
 plugins {
  // Gradle plugin portal
- id 'com.github.triplet.play' version '3.8.3'
+ id 'com.github.triplet.play' version '3.8.4'
 }
 
 apply plugin: 'com.android.application'
@@ -29,6 +29,11 @@ android {
     namespace "com.ichi2.anki"
 
     compileSdkVersion 33 // change api compileSdkVersion at the same time
+
+    buildFeatures {
+        buildConfig = true
+        aidl = true
+    }
 
     defaultConfig {
         applicationId "com.ichi2.anki"
@@ -358,7 +363,7 @@ dependencies {
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
     // build via AnkiDroidApp.
-    implementation 'com.squareup.leakcanary:leakcanary-android:2.11'
+    implementation 'com.squareup.leakcanary:leakcanary-android:2.12'
 
     api project(":api")
 

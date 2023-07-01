@@ -229,7 +229,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
             Timber.e("The latest dialog has already been dismissed.")
             return null
         }
-        return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
+        return dialog.view.contentLayout.findViewById<TextView>(com.afollestad.materialdialogs.R.id.md_text_message).text.toString()
     }
 
     /**

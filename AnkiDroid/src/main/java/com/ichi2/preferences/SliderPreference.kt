@@ -78,10 +78,10 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
     init {
         layoutResource = R.layout.preference_slider
 
-        context.withStyledAttributes(attrs, R.styleable.Slider) {
-            valueFrom = getIntOrThrow(R.styleable.Slider_android_valueFrom)
-            valueTo = getIntOrThrow(R.styleable.Slider_android_valueTo)
-            stepSize = getFloat(R.styleable.Slider_android_stepSize, 1F)
+        context.withStyledAttributes(attrs, com.google.android.material.R.styleable.Slider) {
+            valueFrom = getIntOrThrow(com.google.android.material.R.styleable.Slider_android_valueFrom)
+            valueTo = getIntOrThrow(com.google.android.material.R.styleable.Slider_android_valueTo)
+            stepSize = getFloat(com.google.android.material.R.styleable.Slider_android_stepSize, 1F)
         }
 
         context.withStyledAttributes(attrs, R.styleable.CustomPreference) {

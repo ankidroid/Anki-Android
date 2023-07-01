@@ -106,7 +106,7 @@ class DeckPickerTest {
         onView(withId(R.id.fab_main)).perform(click())
         onView(withId(R.id.add_deck_action)).perform(click())
         onView(withId(R.id.action_edit)).perform(typeText("TestDeck$testString"))
-        onView(withId(R.id.md_button_positive)).perform(click())
+        onView(withId(com.afollestad.materialdialogs.R.id.md_button_positive)).perform(click())
 
         // The deck is currently empty, so if we tap on it, it becomes the selected deck but doesn't enter
         onView(withId(R.id.files)).perform(

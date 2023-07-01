@@ -116,7 +116,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         whenever(mockCollection.sched).thenReturn(mockSched)
         whenever(mockSched.newCount()).thenReturn(0)
         val factory = CustomStudyDialogFactory({ mockCollection }, mMockListener)
-        val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(CustomStudyDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: CustomStudyDialog ->
             val dialog = f.dialog as MaterialDialog?
