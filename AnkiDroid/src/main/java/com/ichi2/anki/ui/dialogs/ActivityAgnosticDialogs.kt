@@ -21,13 +21,16 @@ import android.app.Application
 import android.app.Dialog
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.edit
 import androidx.core.os.bundleOf
 import androidx.core.text.parseAsHtml
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager.getDefaultSharedPreferences
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs.Companion.MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.utils.copyToClipboardAndShowConfirmation
 import makeLinksClickable
@@ -96,6 +99,8 @@ class MigrationFailedDialogFragment : DialogFragment() {
         private const val STACKTRACE_KEY = "stacktrace"
         private const val CHANGES_ROLLED_BACK_KEY = "changes rolled back"
 
+        const val TAG = "MigrationFailedDialogFragment"
+
         fun show(activity: FragmentActivity, errorText: CharSequence, stacktrace: String, changesRolledBack: Boolean) {
             MigrationFailedDialogFragment()
                 .apply {
@@ -105,7 +110,7 @@ class MigrationFailedDialogFragment : DialogFragment() {
                         CHANGES_ROLLED_BACK_KEY to changesRolledBack
                     )
                 }
-                .show(activity.supportFragmentManager, "MigrationFailedDialogFragment")
+                .show(activity.supportFragmentManager, TAG)
         }
     }
 }
@@ -184,7 +189,7 @@ class ActivityAgnosticDialogs private constructor(private val application: Appli
     companion object {
         private const val MIGRATION_SUCCEEDED_DIALOG_PENDING_KEY = "migration succeeded dialog pending"
 
-        private const val MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY = "migration failed dialog error text"
+        const val MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY = "migration failed dialog error text"
         private const val MIGRATION_FAILED_DIALOG_STACKTRACE_KEY = "migration failed dialog stacktrace"
         private const val MIGRATION_FAILED_DIALOG_CHANGES_ROLLED_BACK_KEY = "migration failed dialog changes rolled back"
 
@@ -192,6 +197,11 @@ class ActivityAgnosticDialogs private constructor(private val application: Appli
             .apply { registerCallbacks() }
     }
 }
+
+fun storageMigrationFailedDialogIsShownOrPending(activity: AppCompatActivity) =
+    activity.supportFragmentManager.findFragmentByTag(MigrationFailedDialogFragment.TAG) != null ||
+        AnkiDroidApp.getSharedPrefs(activity)
+        .getString(MIGRATION_FAILED_DIALOG_ERROR_TEXT_KEY, null) != null
 
 interface DefaultActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
