@@ -58,7 +58,7 @@ class DeckPickerContextMenuAndroidTest : RobolectricTest() {
             .arguments
 
         val factory = DeckPickerContextMenu.Factory { col }
-        FragmentScenario.launch(DeckPickerContextMenu::class.java, args, R.style.Theme_AppCompat, factory)
+        FragmentScenario.launch(DeckPickerContextMenu::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
             .use { scenario ->
                 scenario.moveToState(Lifecycle.State.STARTED)
                 scenario.onFragment { f: DeckPickerContextMenu ->

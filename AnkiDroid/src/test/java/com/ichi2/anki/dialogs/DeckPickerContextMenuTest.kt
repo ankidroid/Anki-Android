@@ -237,7 +237,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
         val actualTitle =
             (ShadowDialog.getLatestDialog() as MaterialDialog)
                 .view
-                .findViewById<RtlTextView>(R.id.md_text_title)
+                .findViewById<RtlTextView>(com.afollestad.materialdialogs.R.id.md_text_title)
                 ?.text
         Timber.d("titles = \"$actualTitle\", \"$expectedTitle\"")
         assertEquals(expectedTitle, "$actualTitle")
@@ -253,7 +253,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
                 .itemView.performLongClick()
 
             val dialogRecyclerView = (ShadowDialog.getLatestDialog() as MaterialDialog?)!!
-                .view.findViewById<RecyclerView>(R.id.md_recyclerview_content)
+                .view.findViewById<RecyclerView>(com.afollestad.materialdialogs.R.id.md_recyclerview_content)
 
             dialogRecyclerView.apply {
                 scrollToPosition(index)

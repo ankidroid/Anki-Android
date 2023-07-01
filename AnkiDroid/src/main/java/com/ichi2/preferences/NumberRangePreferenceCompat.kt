@@ -36,8 +36,8 @@ open class NumberRangePreferenceCompat
 constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.editTextPreferenceStyle,
-    defStyleRes: Int = R.style.Preference_DialogPreference_EditTextPreference
+    defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
+    defStyleRes: Int = androidx.preference.R.style.Preference_DialogPreference_EditTextPreference
 ) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes), DialogFragmentProvider {
 
     var defaultValue: String? = null
