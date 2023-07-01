@@ -9,9 +9,8 @@ import android.text.method.ScrollingMovementMethod
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.libanki.MediaCheckResult
@@ -27,23 +26,19 @@ class MediaCheckDialog : AsyncDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreate(savedInstanceState)
-        val dialog = MaterialDialog(requireActivity())
-        dialog.title(text = notificationTitle)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle(notificationTitle)
         return when (requireArguments().getInt("dialogType")) {
             DIALOG_CONFIRM_MEDIA_CHECK -> {
-                dialog.show {
-                    message(text = notificationMessage)
-                    positiveButton(R.string.dialog_ok) {
-                        (activity as MediaCheckDialogListener).mediaCheck()
-                        (activity as MediaCheckDialogListener?)
-                            ?.dismissAllDialogFragments()
+                dialog.setMessage(notificationMessage)
+                    .setPositiveButton(R.string.dialog_ok) { _, _ ->
+                        (activity as MediaCheckDialogListener?)?.mediaCheck()
+                        (activity as MediaCheckDialogListener?)?.dismissAllDialogFragments()
                     }
-                    negativeButton(R.string.dialog_cancel) {
-                        (activity as MediaCheckDialogListener?)
-                            ?.dismissAllDialogFragments()
+                    .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                        (activity as MediaCheckDialogListener?)?.dismissAllDialogFragments()
                     }
-                    cancelable(true)
-                }
+                    .create()
             }
             DIALOG_MEDIA_CHECK_RESULTS -> {
                 val nohave = requireArguments().getStringArrayList("nohave")
@@ -86,24 +81,22 @@ class MediaCheckDialog : AsyncDialogFragment() {
                     fileListTextView.append(unused.joinToString("\n"))
                     fileListTextView.isScrollbarFadingEnabled = unused.size <= fileListTextView.maxLines
                     fileListTextView.movementMethod = ScrollingMovementMethod.getInstance()
-                    dialog.positiveButton(R.string.check_media_delete_unused) {
-                        (activity as MediaCheckDialogListener).deleteUnused(unused)
+                    dialog.setPositiveButton(R.string.check_media_delete_unused) { _, _ ->
+                        (activity as MediaCheckDialogListener?)?.deleteUnused(unused)
                         dismissAllDialogFragments()
                     }
-                        .negativeButton(R.string.dialog_cancel) {
-                            (activity as MediaCheckDialogListener?)
-                                ?.dismissAllDialogFragments()
+                        .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+                            (activity as MediaCheckDialogListener?)?.dismissAllDialogFragments()
                         }
                 } else {
                     fileListTextView.visibility = View.GONE
-                    dialog.negativeButton(R.string.dialog_ok) {
+                    dialog.setNegativeButton(R.string.dialog_ok) { _, _ ->
                         (activity as MediaCheckDialogListener).dismissAllDialogFragments()
                     }
                 }
-                dialog.show {
-                    customView(view = dialogBody)
-                    cancelable(false)
-                }
+                dialog.setView(dialogBody)
+                    .setCancelable(false)
+                    .create()
             }
             else -> null!!
         }
