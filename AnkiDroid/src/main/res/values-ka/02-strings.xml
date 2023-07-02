@@ -415,10 +415,10 @@
     <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების საძიებოში ჩვენების გადართვა</string>
     <string name="truncate_content_help">ბრაუზერის თითო მწკრივის სიმაღლის ისე დამოკლება, რომ მხოლოდ შიგთავსის პირველი 3 სტრიქონი აჩვენოს</string>
     <string name="browser_options_dialog_heading">ბარათების საძიებოს პარამეტრები</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        ეს ფუნქცია მიუწვდომელია საცავის მიგრაციისას
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">შეეხეთ საცავის მიგრაციისათვის</string>
     <string name="media_sync_required_title">საჭიროა მედიაფაილების სინქრონიზაცია</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="media_sync_unavailable_message">მედიაფაილების სინქრონიზაცია გამორთულია პარამეტრებში. გთხოვთ დაასინქრონოთ და სარეზერვო ფაილად შეინახოთ ყველა მედიაფაილი, რომელიც ჯერ არაა სინქრონიზებული</string>
     <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

@@ -76,8 +76,8 @@
     <string name="sync_title">Synchronisation</string>
     <string name="sync_log_uploading_message">Vollsynchronisation des lokalen Stapels</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="one">Die Uhr auf Ihrem Gerät geht falsch um %1$d Sekunde%2$s; Stellen Sie sicher, dass Datum, Zeit und Zeitzone auf Ihrem Handy korrekt sind und synchronisieren Sie nochmals.</item>
+        <item quantity="other">Die Uhr auf Ihrem Gerät geht falsch um %1$d Sekunden%2$s; Stellen Sie sicher, dass Datum, Zeit und Zeitzone auf Ihrem Handy korrekt sind und synchronisieren Sie nochmals.</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz"> (Die Zeitzone ist vermutlich falsch eingestellt.)</string>
     <string name="sync_log_clocks_unsynchronized_date"> (Vermutlich stimmt das Datum nicht.)</string>
@@ -106,20 +106,20 @@
     <string name="sync_media_no_changes">Keine Mediendateien verändert</string>
     <string name="sync_media_success">Mediendateien synchronisiert</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">Mediensynchronisierung teilweise abgeschlossen:\n%d Mediendatei heruntergeladen.</item>
+        <item quantity="other">Mediensynchronisierung teilweise abgeschlossen:\n%d Mediendateien heruntergeladen.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">%d Mediendatei heruntergeladen.</item>
+        <item quantity="other">%d Mediendateien heruntergeladen.</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="one">%d veränderte Mediendatei zum Hochladen</item>
+        <item quantity="other">%d veränderte Mediendateien zum Hochladen</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">%d Mediendatei heruntergeladen</item>
+        <item quantity="other">%d Mediendateien heruntergeladen</item>
     </plurals>
     <string name="sync_sanity_failed">Nach dem Synchronisieren war die Sammlung in einem widersprüchlichen Zustand. Zur Behebung dieses Problems wird AnkiDroid eine Vollsynchronisation erzwingen. Bitte wählen Sie die Seite, die Sie behalten möchten oder brechen Sie ab, um zu einem späteren Zeitpunkt zu synchronisieren.</string>
     <string name="sync_media_sanity_failed">Die Mediensynchronisation wurde abgeschlossen, jedoch stimmt die Anzahl der Medien nicht mit der auf dem Server überein. Die nächste Mediensynchronisation wird die Medien vollständig synchronisieren, um jegliche Fehler zu beheben.</string>
