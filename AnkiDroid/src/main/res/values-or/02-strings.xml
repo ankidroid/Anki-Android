@@ -199,12 +199,11 @@
         <item quantity="one">ମନୋନୀତ ନୋଟ୍‌କୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
         <item quantity="other">ମନୋନୀତ ନୋଟ୍‌ଗୁଡ଼ିକୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
     </plurals>
-    <string name="export_in_progress">Anki package ଫାଇଲ୍ ରପ୍ତାନି କରୁଛି&#8230;</string>
-    <string name="export_success_title">ସଂଗ୍ରହ ସଫଳତାର ସହିତ ରପ୍ତାନି ହେଲା</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">apkg ପରିଚାଳନା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଞ୍ଚୟ ହେଉଛି...</string>
     <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ Anki package ସଂରକ୍ଷିତ ହେଲା</string>
     <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">ଏହାର ଉପଯୋଗ କରି Anki package ପଠାଇବା</string>
     <string name="export_email_subject">AnkiDroid ଫ୍ଲାସକାର୍ଡ ରପ୍ତାନି କଲା: %s</string>
     <string name="export_email_text"><![CDATA[        ନମସ୍କାର!
@@ -214,8 +213,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">ଫାଇଲ୍ କେଉଁଠାରେ ସଞ୍ଚୟ କରାଯିବ ଚୟନ କରିବା</string>
-    <string name="export_select_share_app">ଅଂଶୀଦାର ନିମନ୍ତେ ଆପ୍ ଚୟନ କରିବା</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ଵିକଳ୍ପ</string>
     <string name="menu__deck_options">ତାସଖଣ୍ଡ ଵିକଳ୍ପ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ଵିକଳ୍ପ</string>

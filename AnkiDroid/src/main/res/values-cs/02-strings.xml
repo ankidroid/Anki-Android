@@ -211,12 +211,11 @@
         <item quantity="many">Exportovat %d vybrané poznámky jako soubor apkg?</item>
         <item quantity="other">Exportovat %d vybraných poznámek jako soubor apkg?</item>
     </plurals>
-    <string name="export_in_progress">Exportuje se Anki balíček&#8230;</string>
-    <string name="export_success_title">Kolekce úspěšně exportována</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se...</string>
     <string name="export_save_apkg_successful">Anki balíček úspěšně uložen</string>
     <string name="export_save_apkg_unsuccessful">Nepodařilo se uložit Anki balíček</string>
-    <string name="export_success_message">Můžete zvolit umístění, kam se soubor uloží, nebo jej sdílet jinou aplikací.</string>
     <string name="export_share_title">Odeslat Anki balíček pomocí</string>
     <string name="export_email_subject">AnkiDroid exportované kartičky: %s</string>
     <string name="export_email_text"><![CDATA[        Ahoj!
@@ -226,8 +225,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Vyberte, kam uložit soubor</string>
-    <string name="export_select_share_app">Vyberte aplikaci pro sdílení</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
     <string name="menu__deck_options">Nastavení balíčku</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>

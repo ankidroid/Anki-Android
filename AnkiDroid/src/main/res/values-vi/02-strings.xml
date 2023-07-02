@@ -193,12 +193,11 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">Xuất %d ghi chú đã chọn dưới dạng tệp apkg?</item>
     </plurals>
-    <string name="export_in_progress">Đang kết xuất gói tệp tin Anki&#8230;</string>
-    <string name="export_success_title">Bộ sưu tập đã được xuất thành công</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Không có ứng dụng nào khả dụng để xử lý apkg. Đang lưu...</string>
     <string name="export_save_apkg_successful">Lưu gói Anki thành công</string>
     <string name="export_save_apkg_unsuccessful">Lưu gói Anki thất bại</string>
-    <string name="export_success_message">Bạn có thể chọn vị trí lưu tệp hoặc chia sẻ nó với một ứng dụng khác.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid đã kết xuất các thẻ ghi nhớ: %s</string>
     <string name="export_email_text"><![CDATA[        Xin chào!
@@ -208,8 +207,8 @@
         [1]%1$s<br/>
         [2]%2$s
         ]]></string>
-    <string name="export_select_save_app">Chọn nơi lưu tệp</string>
-    <string name="export_select_share_app">Chọn ứng dụng để chia sẻ</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tuỳ chọn</string>
     <string name="menu__deck_options">Tùy chọn bộ thẻ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tùy chọn học tập</string>

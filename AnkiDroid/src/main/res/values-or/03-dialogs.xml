@@ -108,7 +108,7 @@
     <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ଵାଵଲୋକନ କରିବା:</string>
     <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ </string>
     <string name="importing_collection">ସଂଗ୍ରହ ଆମଦାନି କରୁଛି&#8230;</string>
-    <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକ ଆମଦାନୀ କରୁଛି %1$d%%&#8230;</string>
+    <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲ୍ ଆମଦାନୀ ଚାଲିଛି %1$d%%&#8230;</string>
     <string name="import_progress">• ନୋଟ୍ ଆମଦାନି: %1$d%%\n• ପତ୍ର ଆମଦାନି: %2$d%%\n• ପରଵର୍ତ୍ତୀ ପ୍ରକ୍ରିୟାକରଣ: %3$d%%</string>
     <string name="import_update_details">%2$dଟି ଵିଦ୍ୟମାନ ନୋଟ୍ ମଧ୍ୟରୁ %1$dଟି ଅଦ୍ୟତନ କରାଗଲା।</string>
     <string name="import_update_ignored">ନୋଟ୍ ପ୍ରକାର ବଦଳିଥିବାରୁ କିଛିଟା ଅଦ୍ୟତନ ଅଣଦେଖା ହୋଇଛି</string>

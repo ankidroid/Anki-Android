@@ -199,12 +199,11 @@
         <item quantity="one">Seçili not apkg dosyası olarak dışarı aktarılsın mı?</item>
         <item quantity="other">Seçili %d notlar apkg dosyası olarak dışarı aktarılsın mı?</item>
     </plurals>
-    <string name="export_in_progress">Anki paketi dosyası dışarı aktarılıyor&#8230;</string>
-    <string name="export_success_title">Koleksiyon başarıyla dışarı aktarıldı</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Apkg işleyecek uygulama yok. Kaydediliyor...</string>
     <string name="export_save_apkg_successful">Anki paketi başarıyla kaydedildi</string>
     <string name="export_save_apkg_unsuccessful">Anki paketi kaydı başarısız oldu</string>
-    <string name="export_success_message">Kaydetmek için bir dosya konumu seçebilir, veya başka bir uygulamayla paylaşabilirsiniz.</string>
     <string name="export_share_title">Anki paketini göndermek için kullan</string>
     <string name="export_email_subject">AnkiDroid\'den dışa aktarılan bilgi kartları: %s</string>
     <string name="export_email_text"><![CDATA[        Selam!
@@ -214,8 +213,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Dosyanın nereye kaydedileceğini seçin</string>
-    <string name="export_select_share_app">Paylaşılacak uygulamayı seçin</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Seçenekler</string>
     <string name="menu__deck_options">Deste seçenekleri</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Çalışma seçenekleri</string>

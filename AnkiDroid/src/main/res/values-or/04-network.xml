@@ -103,23 +103,23 @@
     <string name="sync_check_upload_file">ଅପଲୋଡ୍ ପୂର୍ବରୁ ଫାଇଲ୍ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
     <string name="sync_check_download_file">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
     <string name="sync_media_find">ପରିବର୍ତ୍ତିତ ମିଡିଆ ଖୋଜାହଉଛି&#8230;</string>
-    <string name="sync_media_no_changes">ମିଡ଼ିଆ ଫାଇଲରେ କୌଣସି ପରିବର୍ତ୍ତନ ନାହିଁ</string>
+    <string name="sync_media_no_changes">ମିଡ଼ିଆ ଫାଇଲ୍‌ଗୁଡ଼ିକରେ କୌଣସି ପରିବର୍ତ୍ତନ ନାହିଁ</string>
     <string name="sync_media_success">ମିଡ଼ିଆ ସୀଙ୍କ୍ ହୋଇଛି</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">ମିଡ଼ିଆ ସୀଙ୍କ୍ ଆଂଶିକ ଭାବେ ସରିଛି:\n%dଟିଏ ମିଡ଼ିଆ ଫାଇଲ୍ ଡାଉନଲୋଡ୍ ହୋଇଛି।</item>
+        <item quantity="other">ମିଡ଼ିଆ ସୀଙ୍କ୍ ଆଂଶିକ ଭାବେ ସରିଛି:\n%dଟି ମିଡ଼ିଆ ଫାଇଲ୍ ଡାଉନଲୋଡ୍ ହୋଇଛି।</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">%dଟିଏ ମିଡ଼ିଆ ଫାଇଲ୍ ଅପଲୋଡ୍ ହୋଇଛି।</item>
+        <item quantity="other">%dଟି ମିଡ଼ିଆ ଫାଇଲ୍ ଅପଲୋଡ୍ ହୋଇଛି।</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
         <item quantity="one">%d media change to upload</item>
         <item quantity="other">%d media changes to upload</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">%dଟିଏ ମିଡ଼ିଆ ଫାଇଲ୍ ଡାଉନଲୋଡ୍ ହୋଇଛି</item>
+        <item quantity="other">%dଟି ମିଡ଼ିଆ ଫାଇଲ୍ ଡାଉନଲୋଡ୍ ହୋଇଛି</item>
     </plurals>
     <string name="sync_sanity_failed">ସିଙ୍କ୍ କରିବା ପରେ, ସଂଗ୍ରହ ଏକ ଅସଙ୍ଗତ ଅବସ୍ଥାରେ ଥିଲା। ଏହି ସମସ୍ୟାର ସମାଧାନ ପାଇଁ, AnkiDroid ଗୋଟେ ପୂର୍ଣ୍ଣ ସିଙ୍କ୍ ବାଧ୍ୟ କରାଇବ। ଆପଣ କେଉଁ ପାର୍ଶ୍ୱକୁ ରଖିବାକୁ ଚାହୁଁଛନ୍ତି ବାଛନ୍ତୁ।</string>
     <string name="sync_media_sanity_failed">ମିଡ଼ିଆ ସିଙ୍କ୍ ସମାପ୍ତ ହୋଇଛି, କିନ୍ତୁ ମିଡ଼ିଆ ଗଣନା ସର୍ଵର୍ ସହ ସହମତ ନୁହେଁ। ଯେକୌଣସି ତ୍ରୁଟି ସଂଶୋଧନ କରିବାକୁ ପରଵର୍ତ୍ତୀ ମିଡ଼ିଆ ସିଙ୍କ୍ ରେ ପୂର୍ଣ୍ଣସିଙ୍କ୍ କରାଯିବ।</string>

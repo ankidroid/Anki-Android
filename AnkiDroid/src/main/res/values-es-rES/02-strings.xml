@@ -199,12 +199,11 @@
         <item quantity="one">¿Exportar la nota seleccionada como archivo apkg?</item>
         <item quantity="other">¿Exportar %d notas seleccionadas como archivo apkg?</item>
     </plurals>
-    <string name="export_in_progress">Exportando archivo de paquete Anki&#8230;</string>
-    <string name="export_success_title">Colección exportada exitosamente</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando...</string>
     <string name="export_save_apkg_successful">Paquete Anki guardado correctamente</string>
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
-    <string name="export_success_message">Puedes elegir un lugar donde guardar tu documento o compartirlo con otra aplicación.</string>
     <string name="export_share_title">Enviar paquete Anki usando</string>
     <string name="export_email_subject">Tarjetas AnkiDroid exportadas: %s</string>
     <string name="export_email_text"><![CDATA[        ¡Hola!
@@ -214,8 +213,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Elige donde guardar el documento</string>
-    <string name="export_select_share_app">Selecciona una aplicación para compartir</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opciones</string>
     <string name="menu__deck_options">Opciones de mazo</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opciones de estudio</string>

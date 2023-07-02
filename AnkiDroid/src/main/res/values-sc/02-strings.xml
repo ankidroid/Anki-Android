@@ -205,12 +205,11 @@
         <item quantity="one">Esportare sa nota seletzionada comente archìviu apkg?</item>
         <item quantity="other">Esportare sas %d notas seletzionadas comente archìviu apkg?</item>
     </plurals>
-    <string name="export_in_progress">Esportende su documentu de pachete de Anki&#8230;</string>
-    <string name="export_success_title">Colletzione esportada chene problemas</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Peruna aplicatzione a disponimentu pro gestire apkg. Sarvende…</string>
     <string name="export_save_apkg_successful">Pachete de Anki sarvadu in manera curreta</string>
     <string name="export_save_apkg_unsuccessful">Sarvamentu de su pachete de Anki fallidu</string>
-    <string name="export_success_message">Podes isseberare una positzione in ue sarvare su documentu o lu podes cumpartzire cun un\'àtera aplicatzione.</string>
     <string name="export_share_title">Imbia su pachete de Anki impreende</string>
     <string name="export_email_subject">Cartas mnemònicas esportadas dae AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Salude!
@@ -220,8 +219,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Seletziona in ue sarvare su documentu</string>
-    <string name="export_select_share_app">Seletziona s\'aplicatzione pro cumpartzire</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optziones</string>
     <string name="menu__deck_options">Optziones de sos matzos</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Optziones de istùdiu</string>

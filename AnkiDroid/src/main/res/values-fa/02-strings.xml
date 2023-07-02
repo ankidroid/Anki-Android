@@ -199,12 +199,11 @@
         <item quantity="one">مجموعه فلش کارت ها با پسوند apkg صادر شوند؟</item>
         <item quantity="other">Export %d selected cards as apkg file?</item>
     </plurals>
-    <string name="export_in_progress">در حال صدور فایل مجموعۀ آنکی...</string>
-    <string name="export_success_title">پیکربندی با موفقیت صادر شد</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">هیچ برنامه ای برای apkg در دسترس است. صرفه جویی در...</string>
     <string name="export_save_apkg_successful">بسته Anki با موفقیت ذخیره شد</string>
     <string name="export_save_apkg_unsuccessful">بسته انکی ذخیره نشد</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">فلش کارت های صادر شده: %s</string>
     <string name="export_email_text"><![CDATA[سلام!
@@ -212,8 +211,8 @@
 با استفاده از یکی از عوامل در دسترس Anki، آن را باز کنید[2] و از آموزش آسان و کارآمد لذت ببرید!<br/><br/>
 [1] %1$s<br/>
 [2]%2$s]]></string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">گزینه ها</string>
     <string name="menu__deck_options">گزینه های دسته</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">تنظیمات مطالعه</string>

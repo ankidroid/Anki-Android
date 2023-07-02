@@ -245,9 +245,11 @@
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"एकाधिक त्रुटी, सर्वात अलीकडील: %s"</string>
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">प्रगतीशिवाय अनेक सलग त्रुटी, सर्वात अलीकडील:%s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_data">डेटा स्थलांतरित करत आहे</string>
-    <string name="migration__calculating_transfer_size">हस्तांतरण आकार मोजत आहे&#8230;</string>
-    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">हस्तांतरित %1$s च्या %2$s</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copying&#8230;</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">हस्तांतरण आकार मोजत आहे&#8230;</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">स्थलांतर यशस्वी</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        तुमचा डेटा यशस्वीरित्या स्थलांतरित झाला आहे.
         AnkiDroid पुन्हा पूर्णपणे कार्यरत आहे आणि आपण समक्रमित करू शकता.
@@ -256,12 +258,27 @@
         कृपया नियमितपणे सिंक करून किंवा बॅकअप एक्सपोर्ट करून तुमचा डेटा सुरक्षित असल्याची खात्री करा
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">स्थलांतर अयशस्वी</string>
-    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        त्रुटीसह अयशस्वी झाल्यानंतर स्टोरेज स्थलांतरास विराम दिला आहे:%1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
         <br><br>
-        कृपया स्थलांतर पुन्हा चालवण्याचा प्रयत्न करा.
-        समस्येचे निराकरण करण्यासाठी, तुम्हाला काही डिस्क जागा मोकळी करावी लागेल, किंवा गहाळ मीडिया पुन्हा कनेक्ट करावा लागेल.
+        The changes were reverted.
         <br><br>
-        <a href="%2$s">अधिक जाणून घ्या आणि मदत मिळवा</a>
+        Please try re-running the migration.
+        To resolve the problem, you may need to free up some disk space,
+        or reconnect the removable storage that holds your collection.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+        <br><br>
+        The changes were <i>not</i> reverted.
+        While no data should’ve been lost,
+        the media files might be split between the old and the new folder.
+        <br><br>
+        Please try re-running the migration.
+        To resolve the problem, you may need to free up some disk space,
+        or reconnect the removable storage that holds your collection.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
     ]]></string>
     <string name="migration__resume_after_failed_dialog__message"><![CDATA[        त्रुटीसह अयशस्वी झाल्यानंतर स्टोरेज स्थलांतरास विराम दिला आहे:%1$s.
         <br><br>

@@ -193,12 +193,11 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">导出 %d 个选定笔记为 apkg 文件？</item>
     </plurals>
-    <string name="export_in_progress">正在导出 apkg 文件&#8230;</string>
-    <string name="export_success_title">成功导出集合</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
     <string name="export_save_apkg_successful">已成功保存 apkg 文件</string>
     <string name="export_save_apkg_unsuccessful">保存 apkg 文件失败</string>
-    <string name="export_success_message">您可以选择一个文件位置来保存它，或者与其他应用共享。</string>
     <string name="export_share_title">选择如何发送 apkg 文件</string>
     <string name="export_email_subject">AnkiDroid 导出卡片： %s</string>
     <string name="export_email_text"><![CDATA[        嗨！
@@ -208,8 +207,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">选择文件保存位置</string>
-    <string name="export_select_share_app">选择分享应用</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
     <string name="menu__deck_options">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>
