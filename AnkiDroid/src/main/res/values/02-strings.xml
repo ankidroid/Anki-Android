@@ -186,7 +186,7 @@
         <item quantity="one">Export selected note as apkg file?</item>
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing Export…</string>
+    <string name="export_preparation_in_progress">Preparing export…</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>

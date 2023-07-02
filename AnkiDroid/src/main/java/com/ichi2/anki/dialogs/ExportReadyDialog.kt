@@ -39,17 +39,17 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
 
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
-        val builder = AlertDialog.Builder(requireActivity())
-        builder.show {
-            title(text = notificationTitle)
-            positiveButton(R.string.export_choice_save_to) { listener.saveExportFile(exportPath) }
-            negativeButton(R.string.export_choice_share) { listener.shareFile(exportPath) }
-        }
-        return builder.create()
+        val dialog = AlertDialog.Builder(requireActivity())
+
+        dialog.setTitle(notificationTitle)
+            .positiveButton(R.string.export_choice_save_to) { listener.saveExportFile(exportPath) }
+            .negativeButton(R.string.export_choice_share) { listener.shareFile(exportPath) }
+
+        return dialog.create()
     }
 
     override val notificationTitle: String
         get() = res().getString(R.string.export_ready_title)
 
-    override val notificationMessage: String? = null
+//    override val notificationMessage: String? = null
 }
