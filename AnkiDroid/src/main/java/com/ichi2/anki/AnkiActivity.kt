@@ -55,7 +55,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.CollectionGetter
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
-import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.SyncStatus
 import timber.log.Timber
@@ -184,16 +183,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             view.clearAnimation()
         }
         super.setContentView(view)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // We can't access the icons yet on a TV, so show them all in the menu
-        if (AndroidUiUtils.isRunningOnTv(this)) {
-            for (i in 0 until menu.size()) {
-                menu.getItem(i).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            }
-        }
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun setContentView(view: View, params: ViewGroup.LayoutParams) {

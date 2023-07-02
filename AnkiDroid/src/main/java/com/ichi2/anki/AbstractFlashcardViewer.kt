@@ -99,7 +99,6 @@ import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
 import com.ichi2.utils.AdaptionUtil.hasWebBrowser
-import com.ichi2.utils.AndroidUiUtils.isRunningOnTv
 import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.ClipboardUtil.getText
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
@@ -518,13 +517,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun focusDefaultLayout() {
-        if (!isRunningOnTv(this)) {
-            findViewById<View>(R.id.root_layout).requestFocus()
-        } else {
-            val flip = findViewById<View>(R.id.answer_options_layout) ?: return
-            Timber.d("Requesting focus for flip button")
-            flip.requestFocus()
-        }
+        findViewById<View>(R.id.root_layout).requestFocus()
     }
 
     protected fun answerCardHandler(quick: Boolean): TaskListenerBuilder<Unit, Computation<NextCard<*>>?> {
