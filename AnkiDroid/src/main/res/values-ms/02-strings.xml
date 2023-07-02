@@ -193,12 +193,11 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">Eksport %d nota terpilih sebagai fail apkg?</item>
     </plurals>
-    <string name="export_in_progress">Mengeksport fail pakej Anki&#8230;</string>
-    <string name="export_success_title">Koleksi berjaya dieksport</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Tiada aplikasi tersedia mengendalikan apkg. Menyimpan...</string>
     <string name="export_save_apkg_successful">Berjaya simpan pakej Anki</string>
     <string name="export_save_apkg_unsuccessful">Gagal simpan pakej Anki</string>
-    <string name="export_success_message">Anda boleh pilih lokasi fail untuk simpan, atau kongsi dengan aplikasi lain.</string>
     <string name="export_share_title">Hantar pakej Anki menggunakan</string>
     <string name="export_email_subject">Kad imbasan dieksport AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -208,8 +207,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Pilih lokasi simpan fail</string>
-    <string name="export_select_share_app">Pilih aplikasi untuk kongsi</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tetapan</string>
     <string name="menu__deck_options">Tetapan dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tetapan ulang kaji</string>

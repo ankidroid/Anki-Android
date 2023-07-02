@@ -213,12 +213,11 @@
         <item quantity="many">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
         <item quantity="other">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
     </plurals>
-    <string name="export_in_progress">קובץ חבילה של Anki מיוצא&#8230;</string>
-    <string name="export_success_title">הכרטיסים יוצאו בהצלחה</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">לא נמצא יישום התומך ב- apkg. שומר...</string>
     <string name="export_save_apkg_successful">חבילת ה־Anki נשמרה בהצלחה</string>
     <string name="export_save_apkg_unsuccessful">שמירת חבילת Anki נכשלה</string>
-    <string name="export_success_message">ביכולתך לבחור מיקום קובץ כדי לשמור אותו, או לשתף אותו עם יישום אחר.</string>
     <string name="export_share_title">שלח חבילת אנקי באמצעות</string>
     <string name="export_email_subject">קלפי AnkiDroid שיוצאו: %s</string>
     <string name="export_email_text"><![CDATA[         היי!
@@ -228,8 +227,8 @@
          [1] %1$s<br/>
          [2] %2$s
          ]]></string>
-    <string name="export_select_save_app">בחר מיקום שמירת הקובץ</string>
-    <string name="export_select_share_app">בחר תוכנה לשיתוף</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">אפשרויות</string>
     <string name="menu__deck_options">אפשרויות חפיסה</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">אפשרויות למידה</string>

@@ -223,12 +223,11 @@
         <item quantity="many">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
         <item quantity="other">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
     </plurals>
-    <string name="export_in_progress">يجري تصدير ملف حزمة أنكي&#8230;</string>
-    <string name="export_success_title">تم تصدير المجموعة بنجاح</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ...</string>
     <string name="export_save_apkg_successful">تم حفظ حزمة أنكي بنجاح</string>
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
-    <string name="export_success_message">تستطيع اختيار ملف للحفظ فيه، أو المشاركة مع تطبيق آخر</string>
     <string name="export_share_title">إرسال حزمة أنكي باستخدام</string>
     <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
     <string name="export_email_text"><![CDATA[        مرحبًا
@@ -238,8 +237,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">حدد مكان حفظ الملف</string>
-    <string name="export_select_share_app">اختر تطبيقًا للمشاركة</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
     <string name="menu__deck_options">خيارات الرزمة</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>

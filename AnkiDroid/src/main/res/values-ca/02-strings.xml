@@ -199,12 +199,11 @@
         <item quantity="one">Voleu exportar com a fitxer apkg la bota que heu triat?</item>
         <item quantity="other">Voleu exportar com a fitxer apkg les %d notes que heu triat?</item>
     </plurals>
-    <string name="export_in_progress">Exportant arxiu de paquet Anki&#8230;</string>
-    <string name="export_success_title">La col·lecció s\'ha exportat correctament</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No hi ha aplicacions disponibles per a gestionar apkg. Desant...</string>
     <string name="export_save_apkg_successful">Paquet Anki desat amb èxit</string>
     <string name="export_save_apkg_unsuccessful">Error al desar paquet Anki</string>
-    <string name="export_success_message">Podeu triar una ubicació per desar el fitxer o compartir-ho amb una altra aplicació.</string>
     <string name="export_share_title">Voleu enviar el paquet Anki?</string>
     <string name="export_email_subject">Notes exportades a AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Hola!
@@ -214,8 +213,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Triu on voleu desar el fitxer</string>
-    <string name="export_select_share_app">Selecciona l\'aplicació per compartir</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcions d\'estudi</string>
     <string name="menu__deck_options">Opcions de paquet</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcions d\'estudi</string>

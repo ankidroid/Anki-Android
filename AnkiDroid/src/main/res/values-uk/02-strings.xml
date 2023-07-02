@@ -211,12 +211,11 @@
         <item quantity="many">Експортувати вибрані записи як файл apkg?</item>
         <item quantity="other">Експортувати вибрані записи як файл apkg?</item>
     </plurals>
-    <string name="export_in_progress">Вивантаження пакунку Anki&#8230;</string>
-    <string name="export_success_title">Колекція успішно експортована</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Не знайдено додатків для обробки apkg. Збереження...</string>
     <string name="export_save_apkg_successful">Пакунок Anki успішно збережено</string>
     <string name="export_save_apkg_unsuccessful">Не вдалося зберегти пакунок Anki</string>
-    <string name="export_success_message">Ви можете вибрати місце розташування файлу, щоб зберегти його або поділитися ним з іншою програмою.</string>
     <string name="export_share_title">Надіслати пакет Anki використовуючи </string>
     <string name="export_email_subject">AnkiDroid експортує картки: %s</string>
     <string name="export_email_text"><![CDATA[        Привіт!
@@ -226,8 +225,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Виберіть куди зберегти файл</string>
-    <string name="export_select_share_app">Виберіть додаток, щоб поділитися</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Налаштування</string>
     <string name="menu__deck_options">Параметри колоди</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Налаштування навчання</string>

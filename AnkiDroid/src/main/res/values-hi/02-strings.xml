@@ -199,12 +199,11 @@
         <item quantity="one">चयनित नोट को apkg फ़ाइल के रूप में निर्यात करें?</item>
         <item quantity="other">%d चयनित नोट्स को apkg फ़ाइल के रूप में निर्यात करें?</item>
     </plurals>
-    <string name="export_in_progress">निर्यात Anki पैकेज फ़ाइल ...</string>
-    <string name="export_success_title">संग्रह सफलतापूर्वक निर्यात किया गया</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">apkg को संभालने के लिए कोई एप्लिकेशन उपलब्ध नहीं है। सहेजा जा रहा है ...</string>
     <string name="export_save_apkg_successful">सफलतापूर्वक Anki पैकेज को सहेजा गया </string>
     <string name="export_save_apkg_unsuccessful">Anki पैकेज सहेजना विफल रहा </string>
-    <string name="export_success_message">आप इसे सहेजने के लिए फ़ाइल स्थान चुन सकते हैं, या इसे किसी अन्य एप्लिकेशन के साथ साझा कर सकते हैं।</string>
     <string name="export_share_title">Anki पैकेज का उपयोग करके भेजें</string>
     <string name="export_email_subject">AnkiDroid निर्यात किए गए स्पैनिश: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -214,8 +213,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">चुनें कि फाइल को कहां सेव करना है</string>
-    <string name="export_select_share_app">साझा करने के लिए आवेदन का चयन करें</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">विकल्प</string>
     <string name="menu__deck_options">डेक विकल्प</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">अध्ययन के विकल्प</string>
