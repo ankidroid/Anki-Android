@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.os.PowerManager
 import android.text.format.Formatter
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -38,6 +39,7 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.utils.getUserFriendlyErrorText
+import com.ichi2.anki.utils.withWakeLock
 import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.getOrSetLong
 import com.ichi2.utils.FileUtil
@@ -92,13 +94,6 @@ private const val PREF_INITIAL_TOTAL_MEDIA_BYTES_TO_MOVE = "migrationServiceTota
  *     An exception is is made for "completed progress notifications". See:
  *     https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/services/core/java/com/android/server/notification/NotificationManagerService.java
  *     https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/services/core/java/com/android/server/notification/RateEstimator.java
- *
- * TODO BEFORE-RELEASE Decide if this needs a wake lock.
- *   Copying files might take a long time.
- *   The user might decide to not use the phone for a while to let the migration run,
- *   expecting it to finish in an hour or two,
- *   only to find that during that time the migration has not progressed.
- *   A wake lock might make things proceed faster, but it also means more battery drain.
  */
 class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<MigrationService> {
     companion object {
@@ -144,62 +139,67 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
         Timber.w("onStartCommand(%s, ...)", intent)
 
         lifecycleScope.launch(Dispatchers.IO) {
-            if (getMediaMigrationState() is MediaMigrationState.NotOngoing.Needed) {
-                flowOfProgress.emit(Progress.CopyingEssentialFiles)
+            withWakeLock(
+                levelAndFlags = PowerManager.PARTIAL_WAKE_LOCK or PowerManager.ON_AFTER_RELEASE,
+                tag = "MigrationService"
+            ) {
+                if (getMediaMigrationState() is MediaMigrationState.NotOngoing.Needed) {
+                    flowOfProgress.emit(Progress.CopyingEssentialFiles)
 
-                try {
-                    val folders = prepareAndValidateSourceAndDestinationFolders(baseContext)
-                    CollectionManager.migrateEssentialFiles(baseContext, folders)
-                } catch (e: Exception) {
-                    Timber.w(e, "Essential file migration failed")
-                    CrashReportService.sendExceptionReport(e, "Essential file migration failed")
-                    flowOfProgress.emit(Progress.Failed(exception = e, changesRolledBack = true))
+                    try {
+                        val folders = prepareAndValidateSourceAndDestinationFolders(baseContext)
+                        CollectionManager.migrateEssentialFiles(baseContext, folders)
+                    } catch (e: Exception) {
+                        Timber.w(e, "Essential file migration failed")
+                        CrashReportService.sendExceptionReport(e, "Essential file migration failed")
+                        flowOfProgress.emit(Progress.Failed(exception = e, changesRolledBack = true))
+                    }
                 }
-            }
 
-            if (getMediaMigrationState() is MediaMigrationState.Ongoing) {
-                flowOfProgress.emit(Progress.MovingMediaFiles.CalculatingNumberOfBytesToMove)
+                if (getMediaMigrationState() is MediaMigrationState.Ongoing) {
+                    flowOfProgress.emit(Progress.MovingMediaFiles.CalculatingNumberOfBytesToMove)
 
-                try {
-                    migrateUserDataTask = MigrateUserData.createInstance(preferences)
+                    try {
+                        migrateUserDataTask = MigrateUserData.createInstance(preferences)
 
-                    val remainingBytesToMove = getRemainingMediaBytesToMove(migrateUserDataTask)
-                    val totalBytesToMove = preferences
-                        .getOrSetLong(PREF_INITIAL_TOTAL_MEDIA_BYTES_TO_MOVE) { remainingBytesToMove }
-                    var movedBytes = max(totalBytesToMove - remainingBytesToMove, 0)
+                        val remainingBytesToMove = getRemainingMediaBytesToMove(migrateUserDataTask)
+                        val totalBytesToMove = preferences
+                            .getOrSetLong(PREF_INITIAL_TOTAL_MEDIA_BYTES_TO_MOVE) { remainingBytesToMove }
+                        var movedBytes = max(totalBytesToMove - remainingBytesToMove, 0)
 
-                    migrateUserDataTask.migrateFiles(progressListener = { deltaMovedBytes ->
-                        movedBytes += deltaMovedBytes
-                        flowOfProgress.tryEmit(
-                            Progress.MovingMediaFiles.MovingFiles(
-                                movedBytes = movedBytes.coerceIn(0, totalBytesToMove),
-                                totalBytes = totalBytesToMove
+                        migrateUserDataTask.migrateFiles(progressListener = { deltaMovedBytes ->
+                            movedBytes += deltaMovedBytes
+                            flowOfProgress.tryEmit(
+                                Progress.MovingMediaFiles.MovingFiles(
+                                    movedBytes = movedBytes.coerceIn(0, totalBytesToMove),
+                                    totalBytes = totalBytesToMove
+                                )
                             )
-                        )
-                    })
+                        })
 
-                    // TODO BEFORE-RELEASE Consolidate setting/removing migration-related preferences.
-                    //   The existence of these determine if the *media* migration is taking place.
-                    //   These are currently set in MigrateEssentialFiles.updatePreferences
-                    //   on *background* thread, and removed here in another *background* thread.
-                    //   These are read from other threads, mostly via userMigrationIsInProgress,
-                    //   which might be a race condition and lead to subtle bugs.
-                    preferences.edit {
-                        remove(PREF_MIGRATION_DESTINATION)
-                        remove(PREF_MIGRATION_SOURCE)
-                        remove(PREF_INITIAL_TOTAL_MEDIA_BYTES_TO_MOVE)
+                        // TODO BEFORE-RELEASE Consolidate setting/removing migration-related preferences.
+                        //   The existence of these determine if the *media* migration is taking place.
+                        //   These are currently set in MigrateEssentialFiles.updatePreferences
+                        //   on *background* thread, and removed here in another *background* thread.
+                        //   These are read from other threads, mostly via userMigrationIsInProgress,
+                        //   which might be a race condition and lead to subtle bugs.
+                        preferences.edit {
+                            remove(PREF_MIGRATION_DESTINATION)
+                            remove(PREF_MIGRATION_SOURCE)
+                            remove(PREF_INITIAL_TOTAL_MEDIA_BYTES_TO_MOVE)
+                        }
+
+                        flowOfProgress.emit(Progress.Succeeded)
+                    } catch (e: Exception) {
+                        Timber.w(e, "Media migration failed")
+                        CrashReportService.sendExceptionReport(e, "Media migration failed")
+
+                        preferences.edit {
+                            putString(PREF_MIGRATION_ERROR_TEXT, getUserFriendlyErrorText(e))
+                        }
+
+                        flowOfProgress.emit(Progress.Failed(exception = e, changesRolledBack = false))
                     }
-
-                    flowOfProgress.emit(Progress.Succeeded)
-                } catch (e: Exception) {
-                    Timber.w(e, "Media migration failed")
-                    CrashReportService.sendExceptionReport(e, "Media migration failed")
-
-                    preferences.edit {
-                        putString(PREF_MIGRATION_ERROR_TEXT, getUserFriendlyErrorText(e))
-                    }
-
-                    flowOfProgress.emit(Progress.Failed(exception = e, changesRolledBack = false))
                 }
             }
         }
