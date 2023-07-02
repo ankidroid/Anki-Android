@@ -72,11 +72,6 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
         for ((itemId, value) in mCustomButtons) {
             if (value != MENU_DISABLED) {
                 val item = menu.findItem(itemId)
-                if (item == null) {
-                    // Happens with TV - removing flag icon
-                    Timber.w("Could not find Menu Item %d", itemId)
-                    continue
-                }
                 item.setShowAsAction(value)
                 val icon = item.icon
                 item.isEnabled = !reviewerUi.isControlBlocked
