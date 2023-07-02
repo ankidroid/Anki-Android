@@ -181,8 +181,8 @@
     <string name="integrity_check_insufficient_space">»Datenbank überprüfen« verwendet eine große Menge an temporärem Speicher.\n\nMindestens %s freien Speicherplatzes auf Ihrem Gerät werden daher dringend empfohlen, bevor Sie fortfahren.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAktuell sind %s frei.</string>
     <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="one">%d Karte mit falschem Herkunftsstapel wurde wiederhergestellt. Bitte schauen Sie ins Handbuch für weitere Informationen.</item>
+        <item quantity="other">%d Karten mit falschen Herkunftsstapeln wurden wiederhergestellt. Bitte schauen Sie ins Handbuch für weitere Informationen.</item>
     </plurals>
     <string name="video_creation_error">Video konnte nicht abgespielt werden</string>
     <!-- Card Browser -->

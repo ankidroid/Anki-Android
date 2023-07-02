@@ -96,7 +96,7 @@
     <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
     <string name="gestures_corner_touch" maxLength="41">9-წერტილიანი შეხება</string>
     <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">სრულეკრანიანი რეჟიმის ნავიგაციის პანელი</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
     <string name="gestures_none" maxLength="41">არცერთი</string>
     <string name="gestures_swipe_up" maxLength="41">ამოსმა</string>
@@ -124,16 +124,16 @@
     <string name="tts" maxLength="41">ტექსტის გახმოვანება</string>
     <string name="tts_summ">Reads out question and answer if no sound file is included</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
+    <string name="sync_fetch_missing_media" maxLength="41">მედიაფაილების სინქრონიზაცია</string>
     <string name="sync_account" maxLength="41">AnkiWeb ანგარიში</string>
     <string name="sync_account_summ_logged_out">არ ხართ შესული</string>
     <string name="automatic_sync_choice" maxLength="41">ავტომატური სინქრონიზაცია</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">ყოველთვის</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">მხოლოდ ულიმიტო ინტერნეტ-კავშირის ქონისას</string>
     <string name="sync_media_never">არასდროს</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
+    <string name="sync_status_badge" maxLength="41">სინქრონიზაციის სტატუსის ჩვენება</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">სინქრონიზაციის დაშვება ლიმიტირებული ტარიფის მქონე კავშირებით</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
@@ -409,7 +409,7 @@
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">აპლიკაციის მონაცემების წაშლა</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
+    <string name="pref__delete_app_data__summary">პარამეტრებისა და აპლიკაციის სხვა მონაცემების წაშლა</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">აპლიკაციის მონაცემების წაშლა</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
     <!-- #######################################################################################

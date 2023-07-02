@@ -110,16 +110,16 @@
         <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">აიტვირთა %d მედიაფაილი.</item>
+        <item quantity="other">აიტვირთა %d მედიაფაილი.</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="one">ასატვირთია %d მედიაფაილის ცვლილება</item>
+        <item quantity="other">ასატვირთია %d მედიაფაილის ცვლილება</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">ჩამოიტვირთა %d მედიაფაილი</item>
+        <item quantity="other">ჩამოიტვირთა %d მედიაფაილი</item>
     </plurals>
     <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
     <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>

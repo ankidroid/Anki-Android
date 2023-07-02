@@ -76,10 +76,10 @@
     <string name="sync_title">Сінхранізацыя</string>
     <string name="sync_log_uploading_message">Цалкам сінхранізавана з прыладай</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="one">Гадзіннік на вашай прыладзе паказвае час з памылкай на %1$d секунду %2$s. Пераканайцеся, што дата і часавы пояс прызначаныя слушна і паспрабуйце паўтарыць сінхранізацыю.</item>
+        <item quantity="few">Гадзіннік на вашай прыладзе паказвае час з памылкай на %1$d секунды %2$s. Пераканайцеся, што дата і часавы пояс прызначаныя слушна і паспрабуйце паўтарыць сінхранізацыю.</item>
+        <item quantity="many">Гадзіннік на вашай прыладзе паказвае час з памылкай на %1$d секунд %2$s. Пераканайцеся, што дата і часавы пояс прызначаныя слушна і паспрабуйце паўтарыць сінхранізацыю.</item>
+        <item quantity="other">Гадзіннік на вашай прыладзе паказвае час з памылкай на %1$d секунд %2$s. Пераканайцеся, што дата і часавы пояс прызначаныя слушна і паспрабуйце паўтарыць сінхранізацыю.</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">і магчыма, што часавы пояс прызначаны няправільна</string>
     <string name="sync_log_clocks_unsynchronized_date">і магчыма, што дата прызначаная няправільна</string>
@@ -108,16 +108,16 @@
     <string name="sync_media_no_changes">Медыяфайлы не змененыя</string>
     <string name="sync_media_success">Медыяфайлы сінхранізаваныя</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">Сінхранізацыя медыя часткова завершана:\n%d медыяфайл спампаваны.</item>
+        <item quantity="few">Сінхранізацыя медыя часткова завершана:\n%d медыяфайлы спампаваны.</item>
+        <item quantity="many">Сінхранізацыя медыя часткова завершана:\n%d медыяфайлаў спампаваны.</item>
+        <item quantity="other">Сінхранізацыя медыя часткова завершана:\n%d медыяфайлаў спампаваны.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="few">%d media files uploaded.</item>
-        <item quantity="many">%d media files uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">%d медыяфайл запампаваны.</item>
+        <item quantity="few">%d медыяфайлы запампаваны.</item>
+        <item quantity="many">%d медыяфайлаў запампаваны.</item>
+        <item quantity="other">%d медыяфайлаў запампаваны.</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
         <item quantity="one">%d media change to upload</item>
@@ -126,10 +126,10 @@
         <item quantity="other">%d media changes to upload</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="few">%d media files downloaded</item>
-        <item quantity="many">%d media files downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">%d медыяфайл спампаваны</item>
+        <item quantity="few">%d медыяфайлы спампаваны</item>
+        <item quantity="many">%d медыяфайлаў спампаваны</item>
+        <item quantity="other">%d медыяфайлаў спампаваны</item>
     </plurals>
     <string name="sync_sanity_failed">Пасля сінхранізацыі з\'явіліся канфлікты ў калекцыі. Праграма AnkiDroid выканае поўную сінхранізацыю, каб вырашыць гэту праблему. Выберыце, якую версію калекцыі вы хочаце пакінуць.</string>
     <string name="sync_media_sanity_failed">Сінхранізацыя завершаная, але колькасць медыяфайлаў на вашай прыладзе і серверы не супадаюць. Наступная сінхранізацыя медыяфайлаў цалкам выправіць усе праблемы.</string>
