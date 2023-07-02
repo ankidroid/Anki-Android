@@ -25,9 +25,6 @@
     <uses-feature android:name="android.hardware.camera.any" android:required="false" />
     <uses-feature android:name="android.hardware.audio.output" android:required="false" />
     <uses-feature android:name="android.software.app_widgets" android:required="false" />
-    <!-- Suggested if we add a TV Launcher icon. We do not use leanback currently -->
-    <uses-feature android:name="android.software.leanback" android:required="false" />
-    <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
     <uses-feature android:name="android.hardware.microphone" android:required="false" />
     <!-- `ScopedStorage` lint error is ignored:
         the recommended change is setting maxSDkVersion
@@ -92,7 +89,6 @@
         android:largeHeap="true"
         android:hasFragileUserData="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:banner="@drawable/tv_banner"
         android:requestLegacyExternalStorage="true"
         android:preserveLegacyExternalStorage="true"
         android:resizeableActivity="true"
@@ -126,7 +122,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
             <!-- *.apkg matcher. NOTE: when pathPattern is used, host and scheme must also be specified -->
             <intent-filter>
