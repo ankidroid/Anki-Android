@@ -51,5 +51,5 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
     override val notificationTitle: String
         get() = res().getString(R.string.export_ready_title)
 
-//    override val notificationMessage: String? = null
+    override val notificationMessage: String? = null
 }
