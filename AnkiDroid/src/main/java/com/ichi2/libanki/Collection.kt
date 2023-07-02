@@ -1391,8 +1391,8 @@ open class Collection(
             c.did
         }
         val qa: HashMap<String, String> = if (browser) {
-            val bqfmt = t.getString("bqfmt")
-            val bafmt = t.getString("bafmt")
+            val bqfmt = t.optString("bqfmt")
+            val bafmt = t.optString("bafmt")
             _renderQA(
                 cid = c.id,
                 model = m,
