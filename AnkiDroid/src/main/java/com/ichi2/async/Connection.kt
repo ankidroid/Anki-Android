@@ -586,7 +586,7 @@ class Connection : BaseAsyncTask<Connection.Payload, Any, Connection.Payload>() 
         val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         mWakeLock = pm.newWakeLock(
             PowerManager.PARTIAL_WAKE_LOCK,
-            AnkiDroidApp.appResources.getString(R.string.app_name) + ":Connection"
+            AnkiDroidApp.instance.packageName + ":Connection"
         )
     }
 }
