@@ -76,6 +76,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
@@ -1624,6 +1625,13 @@ open class Reviewer :
         }
     }
 
+    override fun onBackPressed() {
+        val sched = sched
+        if (!isDrawerOpen && sched is SchedV2) {
+            sched.discardCurrentCard()
+        }
+        super.onBackPressed()
+    }
     companion object {
         private const val ADD_NOTE = 12
         private const val REQUEST_AUDIO_PERMISSION = 0
