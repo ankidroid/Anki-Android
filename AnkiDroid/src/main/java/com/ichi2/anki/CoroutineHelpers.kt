@@ -60,7 +60,7 @@ suspend fun <T> FragmentActivity.runCatchingTask(
         throw cancellationException // CancellationException should be re-thrown to propagate it to the parent coroutine
     } catch (exc: BackendInterruptedException) {
         Timber.e(exc, errorMessage)
-        exc.localizedMessage?.let { showSnackbar(it) }
+        exc.localizedMessage?.let { this.showSnackbar(it) }
     } catch (exc: BackendException) {
         Timber.e(exc, errorMessage)
         showError(this, exc.localizedMessage!!, exc)
@@ -113,6 +113,32 @@ fun <T> FragmentActivity.runBlockingCatching(
 ): T? {
     return runBlocking {
         runCatchingTask(errorMessage) { block() }
+    }
+}
+
+/**
+ * Launch a job that survive current activity.
+ * It should only be used when some task must be executed even when the activity is being closed.
+ * Errors are only reported in Timber, and as crash report if not a BackendInterupException.
+ * Context is not kept at the end of the execution of this method.
+ */
+fun Context.launchSurvivingTask(
+    errorMessage: String? = null,
+    block: suspend CoroutineScope.() -> Unit
+): Job {
+    val contextName = this::class.java.simpleName
+    return GlobalScope.launch {
+        try {
+            block()
+        } catch (exc: BackendInterruptedException) {
+            Timber.e(exc, errorMessage)
+        } catch (exc: Exception) {
+            Timber.e(exc, errorMessage)
+            CrashReportService.sendExceptionReport(
+                exc,
+                origin = contextName
+            )
+        }
     }
 }
 

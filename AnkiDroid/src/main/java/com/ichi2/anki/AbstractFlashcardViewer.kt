@@ -622,13 +622,13 @@ abstract class AbstractFlashcardViewer :
 
     override fun onDestroy() {
         super.onDestroy()
-        launchCatchingTask {
+        launchSurvivingTask {
             withOpenColOrNull {
                 val sched = col.sched
                 // Tells the scheduler there is no more current cards. 0 is
                 // not a valid id.
                 if (sched is SchedV2) {
-                    (sched).discardCurrentCard()
+                    sched.discardCurrentCard()
                 }
             }
         }
