@@ -1626,12 +1626,22 @@ open class Reviewer :
     }
 
     override fun onBackPressed() {
-        val sched = sched
-        if (!isDrawerOpen && sched is SchedV2) {
-            sched.discardCurrentCard()
+        if (isDrawerOpen) {
+            super.onBackPressed()
+        } else {
+            currentCard = null
+            launchCatchingTask {
+                withCol {
+                    val sched = sched
+                    if (sched is SchedV2) {
+                        sched.discardCurrentCard()
+                    }
+                }
+                super.onBackPressed()
+            }
         }
-        super.onBackPressed()
     }
+
     companion object {
         private const val ADD_NOTE = 12
         private const val REQUEST_AUDIO_PERMISSION = 0
