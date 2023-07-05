@@ -832,8 +832,6 @@ open class DeckPicker :
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        mFloatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
-
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true
         }
