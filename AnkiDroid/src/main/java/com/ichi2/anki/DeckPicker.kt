@@ -322,7 +322,6 @@ open class DeckPicker :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        Timber.d("onCreate()")
         mExportingDelegate = ActivityExportingDelegate(this) { col }
         mCustomStudyDialogFactory = CustomStudyDialogFactory({ col }, this).attachToActivity(this)
         mContextMenuFactory = DeckPickerContextMenu.Factory { col }.attachToActivity(this)
@@ -967,7 +966,6 @@ open class DeckPicker :
     }
 
     override fun onResume() {
-        Timber.d("onResume()")
         mActivityPaused = false
         // stop onResume() processing the message.
         // we need to process the message after `loadDeckCounts` is added in refreshState
@@ -1023,7 +1021,6 @@ open class DeckPicker :
     }
 
     override fun onPause() {
-        Timber.d("onPause()")
         mActivityPaused = true
         // The deck count will be computed on resume. No need to compute it now
         loadDeckCounts?.cancel()
@@ -1031,7 +1028,6 @@ open class DeckPicker :
     }
 
     override fun onStop() {
-        Timber.d("onStop()")
         super.onStop()
         if (colIsOpen()) {
             WidgetStatus.update(this)
@@ -1048,7 +1044,6 @@ open class DeckPicker :
         if (mProgressDialog != null && mProgressDialog!!.isShowing) {
             mProgressDialog!!.dismiss()
         }
-        Timber.d("onDestroy()")
     }
 
     private fun automaticSync() {

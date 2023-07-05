@@ -36,7 +36,6 @@ class VideoPlayer : Activity(), SurfaceHolder.Callback {
     /** Called when the activity is first created.  */
     @Suppress("DEPRECATION") // #9332: UI Visibility -> Insets
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.i("onCreate")
         super.onCreate(savedInstanceState)
         Themes.disableXiaomiForceDarkMode(this)
         setContentView(R.layout.video_player)

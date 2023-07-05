@@ -52,7 +52,6 @@ class Info : AnkiActivity() {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         val res = resources
         val type = intent.getIntExtra(TYPE_EXTRA, TYPE_NEW_VERSION)

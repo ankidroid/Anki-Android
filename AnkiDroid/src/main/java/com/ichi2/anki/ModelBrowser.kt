@@ -107,11 +107,6 @@ class ModelBrowser : AnkiActivity() {
         startLoadingCollection()
     }
 
-    public override fun onResume() {
-        Timber.d("onResume()")
-        super.onResume()
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.model_browser, menu)

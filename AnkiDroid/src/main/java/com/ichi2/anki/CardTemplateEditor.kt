@@ -101,7 +101,6 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.card_template_editor_activity)
         // Load the args either from the intent or savedInstanceState bundle

@@ -349,8 +349,6 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        Timber.d("onSaveInstanceState - saving state")
-
         // This is used to tell the whole activity to shut down if it is restored from Activity restart.
         // Why? I am not really sure. Perhaps to avoid terrible bugs due to not implementing things correctly?
         outState.putBoolean(BUNDLE_KEY_SHUT_OFF, true)

@@ -508,7 +508,6 @@ open class CardBrowser :
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         mExportingDelegate = ActivityExportingDelegate(this) { col }
         super.onCreate(savedInstanceState)
-        Timber.d("onCreate()")
         if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this) && !Permissions.isExternalStorageManagerCompat()) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
             showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
@@ -870,7 +869,6 @@ open class CardBrowser :
     }
 
     override fun onStop() {
-        Timber.d("onStop()")
         // cancel rendering the question and answer, which has shared access to mCards
         super.onStop()
         if (!isFinishing) {
@@ -880,7 +878,6 @@ open class CardBrowser :
     }
 
     override fun onDestroy() {
-        Timber.d("onDestroy()")
         invalidate()
         super.onDestroy()
         if (mUnmountReceiver != null) {
@@ -913,7 +910,6 @@ open class CardBrowser :
     }
 
     override fun onResume() {
-        Timber.d("onResume()")
         super.onResume()
         selectNavigationItem(R.id.nav_browser)
     }
