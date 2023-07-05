@@ -26,7 +26,7 @@ import com.ichi2.utils.getInstanceFromClassName
 import org.xmlpull.v1.XmlPullParser
 import java.util.concurrent.atomic.AtomicReference
 
-object PreferenceUtils {
+object PreferenceTestUtils {
     private fun getFragmentsClassNamesFromXml(context: Context, @XmlRes xml: Int): List<String> {
         val fragments = mutableListOf<String>()
 
