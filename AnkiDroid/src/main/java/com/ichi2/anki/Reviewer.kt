@@ -40,7 +40,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.ActionProvider
 import androidx.core.view.MenuItemCompat
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import com.google.android.material.snackbar.Snackbar
@@ -837,8 +836,8 @@ open class Reviewer :
         // Setup bury / suspend providers
         val suspendIcon = menu.findItem(R.id.action_suspend)
         val buryIcon = menu.findItem(R.id.action_bury)
-        setupSubMenu(menu, R.id.action_suspend, SuspendProvider(this))
-        setupSubMenu(menu, R.id.action_bury, BuryProvider(this))
+        MenuItemCompat.setActionProvider(suspendIcon, SuspendProvider(this))
+        MenuItemCompat.setActionProvider(buryIcon, BuryProvider(this))
         if (suspendNoteAvailable()) {
             suspendIcon.setIcon(R.drawable.ic_action_suspend_dropdown)
             suspendIcon.setTitle(R.string.menu_suspend)
@@ -856,7 +855,7 @@ open class Reviewer :
         alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         buryIcon.iconAlpha = alpha
         suspendIcon.iconAlpha = alpha
-        setupSubMenu(menu, R.id.action_schedule, ScheduleProvider(this))
+        MenuItemCompat.setActionProvider(menu.findItem(R.id.action_schedule), ScheduleProvider(this))
         mOnboarding.onCreate()
 
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
@@ -898,11 +897,6 @@ open class Reviewer :
         } else {
             super.onKeyUp(keyCode, event)
         }
-    }
-
-    private fun <T> setupSubMenu(menu: Menu, @IdRes parentMenu: Int, subMenuProvider: T) where T : ActionProvider?, T : SubMenuProvider? {
-        MenuItemCompat.setActionProvider(menu.findItem(parentMenu), subMenuProvider)
-        return
     }
 
     override fun canAccessScheduler(): Boolean {
@@ -1407,7 +1401,7 @@ open class Reviewer :
     /**
      * Inner class which implements the submenu for the Suspend button
      */
-    internal inner class SuspendProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
+    internal inner class SuspendProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
 
         override fun onCreateActionView(forItem: MenuItem): View {
             return createActionViewWith(context, forItem, R.menu.reviewer_suspend, ::onMenuItemClick) {
@@ -1415,16 +1409,13 @@ open class Reviewer :
             }
         }
 
-        override val subMenu: Int
-            get() = R.menu.reviewer_suspend
-
         override fun hasSubMenu(): Boolean {
             return suspendNoteAvailable()
         }
 
         override fun onPrepareSubMenu(subMenu: SubMenu) {
             subMenu.clear()
-            menuInflater.inflate(this.subMenu, subMenu)
+            menuInflater.inflate(R.menu.reviewer_suspend, subMenu)
             for (i in 0 until subMenu.size()) {
                 subMenu.getItem(i).setOnMenuItemClickListener(this)
             }
@@ -1444,7 +1435,7 @@ open class Reviewer :
     /**
      * Inner class which implements the submenu for the Bury button
      */
-    internal inner class BuryProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
+    internal inner class BuryProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
 
         override fun onCreateActionView(forItem: MenuItem): View {
             return createActionViewWith(context, forItem, R.menu.reviewer_bury, ::onMenuItemClick) {
@@ -1452,16 +1443,13 @@ open class Reviewer :
             }
         }
 
-        override val subMenu: Int
-            get() = R.menu.reviewer_bury
-
         override fun hasSubMenu(): Boolean {
             return buryNoteAvailable()
         }
 
         override fun onPrepareSubMenu(subMenu: SubMenu) {
             subMenu.clear()
-            menuInflater.inflate(this.subMenu, subMenu)
+            menuInflater.inflate(R.menu.reviewer_bury, subMenu)
             for (i in 0 until subMenu.size()) {
                 subMenu.getItem(i).setOnMenuItemClickListener(this)
             }
@@ -1508,7 +1496,7 @@ open class Reviewer :
     /**
      * Inner class which implements the submenu for the Schedule button
      */
-    internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), SubMenuProvider {
+    internal inner class ScheduleProvider(context: Context) : ActionProviderCompat(context), MenuItem.OnMenuItemClickListener {
 
         override fun onCreateActionView(forItem: MenuItem): View {
             return createActionViewWith(context, forItem, R.menu.reviewer_schedule, ::onMenuItemClick) { true }
@@ -1520,7 +1508,7 @@ open class Reviewer :
 
         override fun onPrepareSubMenu(subMenu: SubMenu) {
             subMenu.clear()
-            menuInflater.inflate(this.subMenu, subMenu)
+            menuInflater.inflate(R.menu.reviewer_schedule, subMenu)
             for (i in 0 until subMenu.size()) {
                 subMenu.getItem(i).setOnMenuItemClickListener(this)
             }
@@ -1537,15 +1525,6 @@ open class Reviewer :
             }
             return false
         }
-
-        override val subMenu: Int
-            get() = R.menu.reviewer_schedule
-    }
-
-    private interface SubMenuProvider : MenuItem.OnMenuItemClickListener {
-        @get:MenuRes
-        val subMenu: Int
-        fun hasSubMenu(): Boolean
     }
 
     override fun javaScriptFunction(): AnkiDroidJsAPI {
