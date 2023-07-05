@@ -4,6 +4,7 @@ package com.ichi2.anki.dialogs
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -14,6 +15,10 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.ui.ButtonItemAdapter
+import com.ichi2.utils.message
+import com.ichi2.utils.negativeButton
+import com.ichi2.utils.positiveButton
+import com.ichi2.utils.show
 import timber.log.Timber
 
 // TODO: Add different classes for the two different dialogs
@@ -79,7 +84,7 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
     }
 
     private fun removeSearch(searchName: String) {
-        MaterialDialog(requireActivity()).show {
+        AlertDialog.Builder(requireActivity()).show {
             message(text = resources.getString(R.string.card_browser_list_my_searches_remove_content, searchName))
             positiveButton(android.R.string.ok) {
                 mySearchesDialogListener!!.onRemoveSearch(searchName)
@@ -90,9 +95,6 @@ class CardBrowserMySearchesDialog : AnalyticsDialogFragment() {
                     notifyAdapterDataSetChanged()
                 }
                 dialog?.dismiss() // Dismiss the root dialog
-                if (savedFilters!!.isEmpty()) {
-                    dialog!!.dismiss()
-                }
             }
             negativeButton(R.string.dialog_cancel)
         }
