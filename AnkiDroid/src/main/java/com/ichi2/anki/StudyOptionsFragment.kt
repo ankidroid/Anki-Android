@@ -137,7 +137,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.i("onCreate()")
         super.onCreate(savedInstanceState)
         // If we're being restored, don't launch deck options again.
         if (savedInstanceState == null && arguments != null) {
@@ -165,12 +164,10 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (mFullNewCountThread != null) {
             mFullNewCountThread!!.interrupt()
         }
-        Timber.i("onDestroy()")
     }
 
     override fun onResume() {
         super.onResume()
-        Timber.i("onResume()")
         refreshInterface(true)
     }
 

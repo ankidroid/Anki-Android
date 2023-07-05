@@ -56,7 +56,6 @@ class Previewer : AbstractFlashcardViewer() {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         mCardList = intent.getLongArrayExtra("cardList")!!
         mIndex = intent.getIntExtra("index", -1)

@@ -68,7 +68,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        Timber.d("onCreate()")
         sIsSubtitle = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_anki_stats)
@@ -129,7 +128,6 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
     }
 
     override fun onResume() {
-        Timber.d("onResume()")
         selectNavigationItem(R.id.nav_stats)
         super.onResume()
     }

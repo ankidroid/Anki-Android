@@ -158,7 +158,6 @@ open class Reviewer :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         if (handledLaunchFromWebBrowser(intent, this)) {
             this.setResult(RESULT_CANCELED)

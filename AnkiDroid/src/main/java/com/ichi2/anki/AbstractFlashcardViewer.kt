@@ -532,7 +532,6 @@ abstract class AbstractFlashcardViewer :
     // ANDROID METHODS
     // ----------------------------------------------------------------------------
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.d("onCreate()")
         restorePreferences()
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
@@ -603,7 +602,6 @@ abstract class AbstractFlashcardViewer :
     // Saves deck each time Reviewer activity loses focus
     override fun onPause() {
         super.onPause()
-        Timber.d("onPause()")
         automaticAnswer.disable()
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable)
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
@@ -632,7 +630,6 @@ abstract class AbstractFlashcardViewer :
         if (sched != null && sched is SchedV2) {
             (sched!! as SchedV2).discardCurrentCard()
         }
-        Timber.d("onDestroy()")
         mTTS.releaseTts(this)
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
