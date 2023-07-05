@@ -50,11 +50,6 @@
             android:key="@string/pref_reset_languages_key" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="@string/convert_fen_text_key"
-            android:summary="@string/convert_fen_text_summ"
-            android:title="@string/convert_fen_text" />
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
             android:key="@string/more_scrolling_buttons_key"
             android:summary="@string/more_scrolling_buttons_summ"
             android:title="@string/more_scrolling_buttons" />
