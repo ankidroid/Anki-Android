@@ -18,12 +18,14 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.system.Os
 import android.util.Log
@@ -182,6 +184,16 @@ open class AnkiDroidApp : Application() {
 
         // Register for notifications
         mNotifications.observeForever { NotificationService.triggerNotificationFor(this) }
+
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) { Timber.i("${activity::class.simpleName}::onCreate") }
+            override fun onActivityStarted(activity: Activity) { Timber.i("${activity::class.simpleName}::onStart") }
+            override fun onActivityResumed(activity: Activity) { Timber.i("${activity::class.simpleName}::onResume") }
+            override fun onActivityPaused(activity: Activity) { Timber.i("${activity::class.simpleName}::onPause") }
+            override fun onActivityStopped(activity: Activity) { Timber.i("${activity::class.simpleName}::onStop") }
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) { Timber.i("${activity::class.simpleName}::onSaveInstanceState") }
+            override fun onActivityDestroyed(activity: Activity) { Timber.i("${activity::class.simpleName}::onDestroy") }
+        })
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
     }

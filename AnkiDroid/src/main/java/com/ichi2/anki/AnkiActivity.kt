@@ -78,7 +78,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
 
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.i("AnkiActivity::onCreate - %s", mActivityName)
         // The hardware buttons should control the music volume
         volumeControlStream = AudioManager.STREAM_MUSIC
         // Set the theme
@@ -98,24 +97,16 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     }
 
     override fun onStart() {
-        Timber.i("AnkiActivity::onStart - %s", mActivityName)
         super.onStart()
         customTabActivityHelper.bindCustomTabsService(this)
     }
 
     override fun onStop() {
-        Timber.i("AnkiActivity::onStop - %s", mActivityName)
         super.onStop()
         customTabActivityHelper.unbindCustomTabsService(this)
     }
 
-    override fun onPause() {
-        Timber.i("AnkiActivity::onPause - %s", mActivityName)
-        super.onPause()
-    }
-
     override fun onResume() {
-        Timber.i("AnkiActivity::onResume - %s", mActivityName)
         super.onResume()
         UsageAnalytics.sendAnalyticsScreenView(this)
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).cancel(
@@ -123,11 +114,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         )
         // Show any pending dialogs which were stored persistently
         dialogHandler.executeMessage()
-    }
-
-    override fun onDestroy() {
-        Timber.i("AnkiActivity::onDestroy - %s", mActivityName)
-        super.onDestroy()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
