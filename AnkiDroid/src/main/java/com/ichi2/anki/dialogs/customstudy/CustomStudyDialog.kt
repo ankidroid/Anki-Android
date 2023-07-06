@@ -29,13 +29,13 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
@@ -51,6 +51,8 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.cancelable
+import com.ichi2.utils.title
 import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
@@ -98,14 +100,14 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Build a context menu for custom study
      * @param id the id type of the dialog
      */
-    private fun buildContextMenu(id: Int): MaterialDialog {
+    private fun buildContextMenu(id: Int): Dialog {
         val listIds = getListIds(ContextMenuConfiguration.fromInt(id)).map { it.value }.toIntArray()
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
-
-        return MaterialDialog(requireActivity())
+        return AlertDialog.Builder(requireActivity())
             .title(R.string.custom_study)
             .cancelable(true)
-            .listItems(items = getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }) { _: MaterialDialog, _: Int, charSequence: CharSequence ->
+            .setItems(getValuesFromKeys(keyValueMap, listIds).toList().map { it as CharSequence }.toTypedArray()) { _, index ->
+                val charSequence = getValuesFromKeys(keyValueMap, listIds).toList()[index]
                 when (ContextMenuOption.fromString(resources, charSequence.toString())) {
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
@@ -155,7 +157,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         customStudyListener?.showDialogFragment(d)
                     }
                 }
-            }
+            }.create()
     }
 
     @KotlinCleanup("make this use enum instead of Int")
