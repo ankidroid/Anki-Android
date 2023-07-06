@@ -33,6 +33,7 @@ import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
+import androidx.preference.PreferenceManager
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
@@ -342,9 +343,8 @@ open class AnkiDroidApp : Application() {
          * @param context Context to get preferences for.
          * @return A SharedPreferences object for this instance of the app.
          */
-        @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
         fun getSharedPrefs(context: Context?): SharedPreferences {
-            return android.preference.PreferenceManager.getDefaultSharedPreferences(context)
+            return PreferenceManager.getDefaultSharedPreferences(context!!)
         }
 
         val cacheStorageDirectory: String
