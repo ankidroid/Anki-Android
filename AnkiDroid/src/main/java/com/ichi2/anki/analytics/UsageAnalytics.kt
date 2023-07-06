@@ -206,17 +206,6 @@ object UsageAnalytics {
     }
 
     /**
-     * Send an arbitrary analytics event - these should be noun/verb pairs, e.g. "text to speech", "enabled"
-     *
-     * @param category the category of event, make your own but use a constant so reporting is good
-     * @param action   the action the user performed
-     */
-    @KotlinCleanup("remove when all callers are Kotlin")
-    fun sendAnalyticsEvent(category: String, action: String) {
-        sendAnalyticsEvent(category, action, Integer.MIN_VALUE, null)
-    }
-
-    /**
      * Send a detailed arbitrary analytics event, with noun/verb pairs and extra data if needed
      *
      * @param category the category of event, make your own but use a constant so reporting is good
@@ -224,7 +213,7 @@ object UsageAnalytics {
      * @param value    A value for the event, Integer.MIN_VALUE signifies caller shouldn't send the value
      * @param label    A label for the event, may be null
      */
-    fun sendAnalyticsEvent(category: String, action: String, value: Int = Int.MIN_VALUE, label: String? = null) {
+    fun sendAnalyticsEvent(category: String, action: String, value: Int? = null, label: String? = null) {
         Timber.d("sendAnalyticsEvent() category/action/value/label: %s/%s/%s/%s", category, action, value, label)
         if (!optIn) {
             return
@@ -233,7 +222,7 @@ object UsageAnalytics {
         if (label != null) {
             event.eventLabel(label)
         }
-        if (value > Int.MIN_VALUE) {
+        if (value != null) {
             event.eventValue(value)
         }
         event.sendAsync()
