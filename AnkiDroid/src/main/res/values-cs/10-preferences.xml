@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s hodin(y) po půlnoci</string>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínat obrazovku</string>
     <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>
-    <string name="convert_fen_text" maxLength="41">Podpora šachové notace</string>
-    <string name="convert_fen_text_summ">Vykreslení šachovnice z Forsyth-Edwardsovy notace. Notace musí být uzavřena mezi značky [fen][/fen]</string>
     <string name="enable_api_title" maxLength="41">Povolit AnkiDroid API</string>
     <string name="enable_api_summary">Umožnit ostatním aplikacím připojit se k AnkiDroid a číst/zapisovat data bez zásahu uživatele</string>
     <string name="custom_buttons" maxLength="41">Tlačítka na panelu aplikace</string>

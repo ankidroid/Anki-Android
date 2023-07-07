@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s horas depois da meia-noite</string>
     <string name="pref_keep_screen_on" maxLength="41">Manter tela ligada</string>
     <string name="pref_keep_screen_on_summ">Desativar tempo limite da tela</string>
-    <string name="convert_fen_text" maxLength="41">Suporte para notação de xadrez</string>
-    <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth-Edwards. A notação deve estar delimitada pelas tags [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Habilitar o AnkiDroid API</string>
     <string name="enable_api_summary">Deixe outros apps se conectarem ao AnkiDroid e ler / escrever dados sem a sua intervenção</string>
     <string name="custom_buttons" maxLength="41">Botões da App bar</string>

@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s horoj post noktmezo.</string>
     <string name="pref_keep_screen_on" maxLength="41">Teni ekranon ŝaltita</string>
     <string name="pref_keep_screen_on_summ">Ne malŝalti ekranon</string>
-    <string name="convert_fen_text" maxLength="41">Subteno por ŝaka skribsistemo</string>
-    <string name="convert_fen_text_summ">Bildigi ŝaktabulon laŭ Forsyth-Edwards-skribsistemo. La skribsistemo devas troviĝi ene etikedoj [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Aktivigi AnkiDroid-API</string>
     <string name="enable_api_summary">Ebligi al aliaj aplikaĵoj konekti al AnkiDroid kaj legi/skribi datumojn sen via ago</string>
     <string name="custom_buttons" maxLength="41">Butonoj de aplikaĵa breto</string>

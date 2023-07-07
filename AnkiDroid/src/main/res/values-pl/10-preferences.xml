@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s godzin po północy</string>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
-    <string name="convert_fen_text" maxLength="41">Obsługa notacji szachowej</string>
-    <string name="convert_fen_text_summ">Rysuj szachownicę z notacji Forsytha-Edwardsa. Notacja musi być w znacznikach [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Zezwól na AnkiDroid API</string>
     <string name="enable_api_summary">Pozwól innym aplikacjom na podłączanie do AnkiDroid i zapisywanie i odczyt danych bez Twojej ingerencji</string>
     <string name="custom_buttons" maxLength="41">Przyciski paska aplikacji</string>

@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s uur na middernacht</string>
     <string name="pref_keep_screen_on" maxLength="41">Scherm aanlaten</string>
     <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>
-    <string name="convert_fen_text" maxLength="41">Schaaknotaties</string>
-    <string name="convert_fen_text_summ">Teken schaakbord met de Forsyth-Edwards notering. Voor de notering gebruik de [fen][/fen] tags.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API inschakelen</string>
     <string name="enable_api_summary">Laat andere apps verbinding maken met AnkiDroid en gegevens zonder uw tussenkomst lezen/schrijven</string>
     <string name="custom_buttons" maxLength="41">App bar knoppen</string>

@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s гадз. пасля поўначы</string>
     <string name="pref_keep_screen_on" maxLength="41">Не выключаць экран</string>
     <string name="pref_keep_screen_on_summ">Адключыць час чакання экрана</string>
-    <string name="convert_fen_text" maxLength="41">Падтрымка шахматнай натацыі</string>
-    <string name="convert_fen_text_summ">Малюе шахматную дошку з натацыі Фарсайта — Эдвардса. Натацыя павінна быць абмежавана тэгамі [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Уключыць AnkiDroid API</string>
     <string name="enable_api_summary">Дазваляе іншым праграмам падлучацца да AnkiDroid для чытання / запісу даных без вашага ўдзелу</string>
     <string name="custom_buttons" maxLength="41">Панэль кнопак праграмы</string>

@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s ساعة بعد منتصف الليل</string>
     <string name="pref_keep_screen_on" maxLength="41">إبقاء الشاشة مضيئة</string>
     <string name="pref_keep_screen_on_summ">تعطيل مهلة الشاشة</string>
-    <string name="convert_fen_text" maxLength="41">دعم رموز الشطرنج</string>
-    <string name="convert_fen_text_summ">رسم لوحة الشطرنج باستخدام ترميز Forsyth–Edwards. يجب إحاطة هذه الرموز بعبارات [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">تفعيل واجهة برمجة أنكيدرويد</string>
     <string name="enable_api_summary">السماح للتطبيقات الأخرى بالاتصال بأنكيدرويد وقراءة/كتابة البيانات بدون تدخلك</string>
     <string name="custom_buttons" maxLength="41">أزرار شريط التطبيق</string>

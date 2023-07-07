@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="pref_keep_screen_on" maxLength="41">Håll skärm på</string>
     <string name="pref_keep_screen_on_summ">Inaktivera skärmtimeout</string>
-    <string name="convert_fen_text" maxLength="41">Stöd för schack-notation</string>
-    <string name="convert_fen_text_summ">Rita ett schackbräde med Forsyth–Edwards Notation. Notationen måste använda [fen][/fen]-märkning</string>
     <string name="enable_api_title" maxLength="41">Aktivera AnkiDroid API</string>
     <string name="enable_api_summary">Låt andra appar ansluta till AnkiDroid och läsa / skriva data utan din medverkan</string>
     <string name="custom_buttons" maxLength="41">Appfältets knappar</string>

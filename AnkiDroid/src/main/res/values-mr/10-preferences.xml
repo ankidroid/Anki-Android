@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
     <string name="pref_keep_screen_on_summ">स्क्रीन कालबाह्य अक्षम करा</string>
-    <string name="convert_fen_text" maxLength="41">बुद्धीबळ संकेत समर्थन</string>
-    <string name="convert_fen_text_summ">फोर्सिथ – एडवर्ड्स नोटेशन कडून चेसबोर्ड काढा. संकेतन [फॅन] [/ फेन] टॅगमध्ये जोडलेले असणे आवश्यक आहे.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API सक्षम करा</string>
     <string name="enable_api_summary">इतर अ‍ॅप्‍सना अंकीड्रोइडशी कनेक्ट होऊ द्या आणि आपल्‍या हस्तक्षेपाशिवाय डेटा वाचू / लिहा</string>
     <string name="custom_buttons" maxLength="41">अ‍ॅप बार बटणे</string>

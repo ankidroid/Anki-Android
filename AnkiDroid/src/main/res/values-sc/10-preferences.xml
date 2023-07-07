@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s oras a pustis de mesanote</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantene s\'ischermu allutu</string>
     <string name="pref_keep_screen_on_summ">Disabìlita s\'istudadura automàtica de s\'ischermu</string>
-    <string name="convert_fen_text" maxLength="41">Suportu pro sa notatzione de sos iscacos</string>
-    <string name="convert_fen_text_summ">Disinna s\'iscachiera in sa notatzione Forsyth–Edwards. Sa notatzione depet abarrare serrada in sas etichetas [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Abìlita s\'API de AnkiDroid</string>
     <string name="enable_api_summary">Permite a àteras aplicatziones de si connètere a AnkiDroid e lèghere / iscrìere datos chene s\'interventu tuo</string>
     <string name="custom_buttons" maxLength="41">Butones de sa barra de s\'aplicatzione</string>
