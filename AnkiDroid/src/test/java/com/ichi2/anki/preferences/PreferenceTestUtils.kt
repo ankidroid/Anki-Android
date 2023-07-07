@@ -27,8 +27,8 @@ import org.xmlpull.v1.XmlPullParser
 import java.util.concurrent.atomic.AtomicReference
 
 object PreferenceTestUtils {
-    private fun getFragmentsClassNamesFromXml(context: Context, @XmlRes xml: Int): List<String> {
-        val fragments = mutableListOf<String>()
+    private fun getAttrFromXml(context: Context, @XmlRes xml: Int, attrName: String, namespace: String = AnkiDroidApp.ANDROID_NAMESPACE): List<String> {
+        val occurrences = mutableListOf<String>()
 
         val xrp = context.resources.getXml(xml).apply {
             setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, true)
@@ -37,19 +37,19 @@ object PreferenceTestUtils {
 
         while (xrp.eventType != XmlPullParser.END_DOCUMENT) {
             if (xrp.eventType == XmlPullParser.START_TAG) {
-                val attr = xrp.getAttributeValue(AnkiDroidApp.ANDROID_NAMESPACE, "fragment")
+                val attr = xrp.getAttributeValue(namespace, attrName)
                 if (attr != null) {
-                    fragments.add(attr)
+                    occurrences.add(attr)
                 }
             }
             xrp.next()
         }
-        return fragments.toList()
+        return occurrences.toList()
     }
 
     /** @return fragments found on [xml] */
     private fun getFragmentsFromXml(context: Context, @XmlRes xml: Int): List<Fragment> {
-        return getFragmentsClassNamesFromXml(context, xml).map { getInstanceFromClassName(it) }
+        return getAttrFromXml(context, xml, "fragment").map { getInstanceFromClassName(it) }
     }
 
     /** @return recursively fragments found on [xml] and on their children **/
