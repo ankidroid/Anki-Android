@@ -15,7 +15,6 @@
  ****************************************************************************************/
 
 package com.ichi2.anki.dialogs
-
 import android.os.Bundle
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.BackupManager
