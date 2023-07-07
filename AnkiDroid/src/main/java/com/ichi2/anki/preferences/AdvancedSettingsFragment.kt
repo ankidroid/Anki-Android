@@ -89,7 +89,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 }
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
-            true
+            false
         }
 
         /*
@@ -130,7 +130,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
         // Third party apps
         requirePreference<Preference>(R.string.thirdparty_apps_key).setOnPreferenceClickListener {
             (requireActivity() as AnkiActivity).openUrl(R.string.link_third_party_api_apps)
-            true
+            false
         }
 
         // Enable API

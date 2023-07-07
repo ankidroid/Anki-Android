@@ -54,7 +54,7 @@ class SyncSettingsFragment : SettingsFragment() {
                 }
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
-            true
+            false
         }
         // Custom sync server
         requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
