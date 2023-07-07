@@ -22,6 +22,10 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 
+fun SharedPreferences.get(key: String): Any? {
+    return all[key]
+}
+
 /**
  * Sets the callback to be invoked when this preference is changed by the user
  * (but before the internal state has been updated) on the internal onPreferenceChangeListener,
