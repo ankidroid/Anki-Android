@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s jam selapas tengah malam</string>
     <string name="pref_keep_screen_on" maxLength="41">Terus hidupkan skrin</string>
     <string name="pref_keep_screen_on_summ">Lumpuhkan tamat masa skrin</string>
-    <string name="convert_fen_text" maxLength="41">Sokong tatatanda catur</string>
-    <string name="convert_fen_text_summ">Lukis papan catur daripada Tatatanda Forsyth–Edwards. Tatatanda hendaklah tertutup dalam tag [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Dayakan API AnkiDroid</string>
     <string name="enable_api_summary">Benarkan aplikasi lain sambung ke AnkiDroid dan baca / tulis data tanpa pengawasan anda</string>
     <string name="custom_buttons" maxLength="41">Butang bar aplikasi</string>

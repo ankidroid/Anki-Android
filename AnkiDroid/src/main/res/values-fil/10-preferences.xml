@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="pref_keep_screen_on" maxLength="41">Panatilihin ang screen</string>
     <string name="pref_keep_screen_on_summ">Huwag paganahin ang timeout ng screen</string>
-    <string name="convert_fen_text" maxLength="41">Suporta ng nota ng tsismis</string>
-    <string name="convert_fen_text_summ">Gumuhit ng chessboard mula sa Forsyth-Edwards Notation. Ang notasyon ay dapat na nakapaloob sa [fen] [/fen] na mga tag.</string>
     <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
     <string name="enable_api_summary">Hayaan ang iba pang apps na kumonekta sa AnkiDroid at basahin / isulat ang data nang wala ang iyong interbensyon</string>
     <string name="custom_buttons" maxLength="41">Mga pindutan ng bar ng app</string>

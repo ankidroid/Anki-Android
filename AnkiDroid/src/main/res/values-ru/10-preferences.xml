@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s ч. после полуночи</string>
     <string name="pref_keep_screen_on" maxLength="41">Не выключать экран</string>
     <string name="pref_keep_screen_on_summ">Отключает спящий режим экрана</string>
-    <string name="convert_fen_text" maxLength="41">Поддержка шахматной нотации</string>
-    <string name="convert_fen_text_summ">Рисует шахматную доску из нотации Форсайта — Эдвардса. Нотация должна быть заключена в [fen][/fen] теги.</string>
     <string name="enable_api_title" maxLength="41">Включить AnkiDroid API</string>
     <string name="enable_api_summary">Позволяет другим приложениям подключаться к AnkiDroid, читать и записывать данные без вашего вмешательства</string>
     <string name="custom_buttons" maxLength="41">Панель кнопок</string>

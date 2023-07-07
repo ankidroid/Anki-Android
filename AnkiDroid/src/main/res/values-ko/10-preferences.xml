@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="pref_keep_screen_on" maxLength="41">화면을 켜진 상태로 유지</string>
     <string name="pref_keep_screen_on_summ">화면 꺼짐 시간 비활성화</string>
-    <string name="convert_fen_text" maxLength="41">체스 표기법 지원</string>
-    <string name="convert_fen_text_summ">Forsyth–Edwards 표기법으로 체스판을 그립니다. 표기법은 [fen][/fen] 태그에서 묶어야 합니다.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API를 사용하도록 설정</string>
     <string name="enable_api_summary">사용자의 개입 없이 다른 앱이 AnkiDroid에 연결하고 데이터를 읽고 쓸 수 있도록 허용</string>
     <string name="custom_buttons" maxLength="41">앱 바 버튼</string>

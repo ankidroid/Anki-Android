@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s órával éjfél után</string>
     <string name="pref_keep_screen_on" maxLength="41">Ne kapcsolja ki a képernyőt</string>
     <string name="pref_keep_screen_on_summ">Képernyő időtúllépésének kikapcsolása</string>
-    <string name="convert_fen_text" maxLength="41">A sakk-jelölés támogatása</string>
-    <string name="convert_fen_text_summ">Sakktábla bevitele Forsyth-Edwards jelöléssel. A jelölést [fen][/fen] címkék közé kell tenni.</string>
     <string name="enable_api_title" maxLength="41">Engedélyezze az AnkiDroid API-t</string>
     <string name="enable_api_summary">Engedélyezd, hogy más alkalmazások csatlakozzanak az AnkiDroidhoz, és lehetővé tegyék az adatok beolvasását/írását automatikusan</string>
     <string name="custom_buttons" maxLength="41">Eszköztár gombok</string>

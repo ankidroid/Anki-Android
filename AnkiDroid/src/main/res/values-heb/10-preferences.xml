@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s שעות אחרי חצות</string>
     <string name="pref_keep_screen_on" maxLength="41">להשאיר את המסך דולק</string>
     <string name="pref_keep_screen_on_summ">השבת כיבוי מסך</string>
-    <string name="convert_fen_text" maxLength="41">תמיכה בסימון שחמט</string>
-    <string name="convert_fen_text_summ">צייר לוח שחמט מ-Forsyth–Edwards Notation. הסימון חייב להיות מוקף בתגיות [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">הפעלת ה־API של AnkiDroid</string>
     <string name="enable_api_summary">אפשר לאפליקציות אחרות להתחבר ל-AnkiDroid ולקרוא / לכתוב נתונים ללא התערבותך</string>
     <string name="custom_buttons" maxLength="41">כפתורי סרגל האפליקציה</string>

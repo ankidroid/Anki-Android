@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s годин після опівночі</string>
     <string name="pref_keep_screen_on" maxLength="41">Не вимикати екран</string>
     <string name="pref_keep_screen_on_summ">Відключити таймаут екрану</string>
-    <string name="convert_fen_text" maxLength="41">Підтримка шахової нотації</string>
-    <string name="convert_fen_text_summ">Намалювати шахову дошку з Нотації Форсайта — Едвардса. Нотацію потрібно укласти в [fen][/fen] теґи.</string>
     <string name="enable_api_title" maxLength="41">Увімкнути AnkiDroid API</string>
     <string name="enable_api_summary">Дозволяє іншим додаткам підключатися до AnkiDroid і читати / записувати дані без вашого втручання</string>
     <string name="custom_buttons" maxLength="41">Панель кнопок додатку</string>

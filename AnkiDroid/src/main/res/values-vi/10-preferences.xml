@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s giờ đã qua nửa đêm</string>
     <string name="pref_keep_screen_on" maxLength="41">Luôn bật màn hình</string>
     <string name="pref_keep_screen_on_summ">Tắt thời gian chờ của màn hình</string>
-    <string name="convert_fen_text" maxLength="41">Hỗ trợ ký hiệu cờ vua</string>
-    <string name="convert_fen_text_summ">Vẽ bàn cờ từ Forsyth – Edwards Notation. Ký hiệu phải được đặt trong thẻ [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Bật AnkiDroid API</string>
     <string name="enable_api_summary">Cho phép các ứng dụng khác kết nối với AnkiDroid và đọc / ghi dữ liệu mà không cần sự can thiệp của bạn</string>
     <string name="custom_buttons" maxLength="41">Các nút trên thanh ứng dụng</string>

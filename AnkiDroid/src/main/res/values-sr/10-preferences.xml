@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="pref_keep_screen_on" maxLength="41">Држи екран укљученим</string>
     <string name="pref_keep_screen_on_summ">Онемогући спавање екрана</string>
-    <string name="convert_fen_text" maxLength="41">Подршка шаховских бележака</string>
-    <string name="convert_fen_text_summ">Цртај шаховску таблу са Форсит-Едвардс нотацијом. Нотација мора да буде ограђена [fen][/fen] таговима.</string>
     <string name="enable_api_title" maxLength="41">Омогући AnkiDroid API</string>
     <string name="enable_api_summary">Нека се друге апликације повежу са AnkiDroid и читају/записују податке без ваше интервенције</string>
     <string name="custom_buttons" maxLength="41">App bar buttons</string>

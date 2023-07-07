@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s hores passada la mitjanit</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantenir la pantalla encesa</string>
     <string name="pref_keep_screen_on_summ">Desactiva la pantalla de bloqueig</string>
-    <string name="convert_fen_text" maxLength="41">Suport de notació d\'escacs</string>
-    <string name="convert_fen_text_summ">Dibuixar el tauler d\'escacs de notació Forsyth-Edwards. S\'ha de justificar la notació en etiquetes [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Activa l\'API de l\'AnkiDroid</string>
     <string name="enable_api_summary">Deixar altres apps connectar-se a AnkiDroid i llegir / escriure dades sense la seva intervenció</string>
     <string name="custom_buttons" maxLength="41">Butons de la barra lateral</string>
