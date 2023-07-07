@@ -303,8 +303,8 @@
 
     <string-array name="controls_summary_entries">
         <item>@string/pref_cat_gestures</item>
+        <item>@string/gamepad</item>
         <item>@string/keyboard</item>
-        <item>@string/bluetooth</item>
     </string-array>
 
     <string-array name="advanced_summary_entries">
