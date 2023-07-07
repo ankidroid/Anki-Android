@@ -22,6 +22,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.utils.getInstanceFromClassName
 import org.xmlpull.v1.XmlPullParser
 import java.util.concurrent.atomic.AtomicReference
@@ -65,6 +66,31 @@ object PreferenceTestUtils {
     fun getAllPreferencesFragments(context: Context): List<Fragment> {
         val fragments = getFragmentsFromXmlRecursively(context, R.xml.preference_headers) + HeaderFragment()
         return fragments.distinctBy { it::class } // and remove any repeated fragments
+    }
+
+    private fun attrValueToString(value: String, context: Context): String {
+        return if (value.startsWith("@")) {
+            context.getString(value.substring(1).toInt())
+        } else {
+            value
+        }
+    }
+
+    fun getKeysFromXml(context: Context, @XmlRes xml: Int): List<String> {
+        return getAttrFromXml(context, xml, "key").map { attrValueToString(it, context) }
+    }
+
+    private fun getControlPreferencesKeys(): List<String> {
+        // control preferences are built dynamically instead of statically in a XML
+        return ViewerCommand.values().map { it.preferenceKey }
+    }
+
+    fun getAllPreferenceKeys(context: Context): Set<String> {
+        return getAllPreferencesFragments(context)
+            .filterIsInstance<SettingsFragment>()
+            .map { it.preferenceResource }
+            .flatMap { getKeysFromXml(context, it) }
+            .union(getControlPreferencesKeys())
     }
 
     fun getAllCustomButtonKeys(context: Context): Set<String> {
