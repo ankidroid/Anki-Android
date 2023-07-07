@@ -169,8 +169,8 @@ class MediaCheckDialog : AsyncDialogFragment() {
         override fun handleAsyncMessage(deckPicker: DeckPicker) {
             // Media check results
             val id = dialogType
-            if (id != MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK) {
-                val checkList = MediaCheckResult(noHave!!, unused!!, invalid!!)
+            if (id != DIALOG_CONFIRM_MEDIA_CHECK) {
+                val checkList = MediaCheckResult(noHave ?: arrayListOf(), unused ?: arrayListOf(), invalid ?: arrayListOf())
                 deckPicker.showMediaCheckDialog(id, checkList)
             }
         }
