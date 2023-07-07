@@ -50,14 +50,14 @@
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Neniuj rezultoj</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Ĝenerala</string>
+    <string name="pref_cat_studying" maxLength="41">Studado</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Samtempigo</string>
+    <string name="pref_cat_scheduling" maxLength="41">Planado</string>
     <string name="pref_cat_whiteboard" maxLength="41">Skribtabulo</string>
     <string name="pref_cat_appearance" maxLength="41">Aspekto</string>
     <string name="pref_cat_themes" maxLength="41">Etoso</string>
@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Ebligi gestojn en anguloj de la ekrano</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Naviga tirmenuo sur plenekrano</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Malfermi navigan tirmenuon per ŝovumi dekstren sur la plenekrano</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Neniu</string>
     <string name="gestures_swipe_up" maxLength="41">Ŝovumi supren</string>
     <string name="gestures_swipe_down" maxLength="41">Ŝovumi suben</string>
     <string name="gestures_swipe_left" maxLength="41">Ŝovumi maldekstren</string>
@@ -129,9 +129,9 @@
     <string name="sync_account_summ_logged_out">Ne ensalutinta</string>
     <string name="automatic_sync_choice" maxLength="41">Aŭtomata samtempigado</string>
     <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Ĉiam</string>
     <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_never">Neniam</string>
     <string name="sync_status_badge" maxLength="41">Montri staton de samtempigo</string>
     <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
@@ -185,7 +185,7 @@
     <string name="time_limit" maxLength="41">Limigo de lernada tempero (timebox)</string>
     <string name="new_timezone" maxLength="41">Pritraktado de nova horzono</string>
     <string name="day_offset_with_description" maxLength="41">Komenco de tago (0 estas la horo 00:00. 23 estas la horo 23:00)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary">%s horoj post noktmezo.</string>
     <string name="pref_keep_screen_on" maxLength="41">Teni ekranon ŝaltita</string>
     <string name="pref_keep_screen_on_summ">Ne malŝalti ekranon</string>
     <string name="convert_fen_text" maxLength="41">Subteno por ŝaka skribsistemo</string>
@@ -198,8 +198,8 @@
     <string name="custom_buttons_setting_if_room">Nur se spaco disponebla</string>
     <string name="custom_buttons_setting_menu_only">Nur en menuo</string>
     <string name="reset_custom_buttons" maxLength="41">Restarigi normojn</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Restarigi agordojn al implicita.</string>
+    <string name="reset">Restarigi</string>
     <string name="thirdparty_apps_title" maxLength="41">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
     <string name="html_javascript_debugging" maxLength="41">Senerarigado de HTML / JavaScript</string>
@@ -378,16 +378,16 @@
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Administri spacon</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Eraro</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d file\n%2$s</item>
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Forigi neuzatajn aŭdvidaĵojn</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
     <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
@@ -415,9 +415,9 @@
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Neniu kolekto</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Eraro</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekto ne ekzistas</string>
 </resources>

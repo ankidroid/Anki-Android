@@ -178,7 +178,7 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
     <string name="import_error_content_provider">選択されたファイルをAnkiDroidによって自動的にインポートできませんでした。Ankiファイルを手動でインポートする方法については、マニュアルをご覧ください: \n %s</string>
     <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージ容量が不足している可能性があります）</string>
-    <string name="import_error_multiple_colpkg">複数の colpkg ファイルが選択されました。</string>
+    <string name="import_error_multiple_colpkg">複数の colpkgファイルが選択されました。</string>
     <string name="import_error_colpkg_apkg">apkgファイルとcolpkgファイルが選択されました。それらを一度にインポートすることはできません。</string>
     <string name="import_stats_error">下記のファイルをインポートする際にエラーが発生しました:\n%s</string>
     <string name="import_replacing">コレクションを上書きしています...</string>
@@ -193,8 +193,8 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">選択した%d枚のノートを apkgファイルとしてエクスポートしますか？</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">エクスポートの準備中...</string>
+    <string name="export_ready_title">エクスポートの準備完了</string>
     <string name="export_send_no_handlers">Ankiパッケージに対応する他のアプリがありません。ファイルを保存します...</string>
     <string name="export_save_apkg_successful">Ankiパッケージを保存しました</string>
     <string name="export_save_apkg_unsuccessful">Ankiパッケージの保存に失敗しました</string>
@@ -207,8 +207,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">共有</string>
+    <string name="export_choice_save_to">保存先を選択</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">オプション</string>
     <string name="menu__deck_options">デッキオプション</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学習オプション</string>

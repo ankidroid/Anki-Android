@@ -237,11 +237,11 @@
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"同一错误发生多次，最近造成该错误的原因： %s"</string>
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">同一错误连续发生多次，最近造成该错误的原因： %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copying&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">正在迁移数据库文件</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">正在复制&#8230;</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">正在迁移媒体文件</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">正在计算传输大小&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">已移动%1$s/%2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">迁移成功</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        您的数据已成功迁移。
         AnkiDroid 再次处于完全可正常工作状态，您可以同步。
@@ -250,27 +250,27 @@
         请通过定期同步或导出备份，确保您的数据安全。
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">迁移失败</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        复制数据库文件失败，错误为：%1$s
         <br><br>
-        The changes were reverted.
+        所有更改已还原
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        请重新进行迁移
+        要解决此问题，您可能需要释放一些磁盘空间，
+        或者重新连接储存您文件的移动性储存设备
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">了解更多并获取帮助</a>
     ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        移动媒体文件已暂停，错误：%1$s
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        所有更改<i>没有</i>还原
+        您的所有数据不会丢失，
+        媒体文件可能被分别储存在旧文件夹和新文件夹中
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
-        <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        请重新进行迁移
+        要解决此问题，您可能需要释放一些磁盘空间，
+        或重新连接储存了文件的可移动储存设备
+        <br>
+        <a href="%2$s">了解更多及获取帮助</a>
     ]]></string>
     <string name="migration__resume_after_failed_dialog__message"><![CDATA[        存储迁移在失败后暂停，错误: %1$s。
         <br><br>

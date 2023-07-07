@@ -50,8 +50,8 @@
         <item quantity="other">Montras %d kartojn</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d noto montrita</item>
+        <item quantity="other">%d notoj montrita</item>
     </plurals>
     <string name="card_browser_all_decks">Ĉiuj kartaroj</string>
     <string name="card_browser_delete_card">Forigi notojn</string>
@@ -97,14 +97,14 @@
     <string name="card_browser_no_cards_in_deck">Neniu karto trovita en la kartaro “%s”</string>
     <string name="card_browser_search_all_decks">Serĉi en ĉiuj kartaroj</string>
     <string name="card_browser_unknown_deck_name">Nekonata</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Senpintigi enhavon</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Elporti karton</item>
+        <item quantity="other">Elporti kartojn</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Elporti noton</item>
+        <item quantity="other">Elporti notojn</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">Forigis %d karton</item>

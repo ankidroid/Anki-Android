@@ -76,8 +76,8 @@
     <string name="sync_title">Samtempigo</string>
     <string name="sync_log_uploading_message">Plena samtempigo al la servilo</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="one">Via horloĝo estas deŝovita je %1$d sekundo%2$s. Certiĝu, ke la dato, tempo kaj horzono ĉe via telefono estas ĝuste agorditaj kaj reprovu.</item>
+        <item quantity="other">Via horloĝo estas deŝovita je %1$d sekundoj%2$s. Certiĝu, ke la dato, tempo kaj horzono ĉe via telefono estas ĝuste agorditaj kaj reprovu.</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">la horzono probable estas misagordita</string>
     <string name="sync_log_clocks_unsynchronized_date">la dato estas probable misagordita</string>
@@ -89,7 +89,7 @@
     <string name="sync_remote_db_error">La elŝutita datumbazo estas difektita. Bonvolu reprovi.</string>
     <string name="sync_overwrite_error">Via loka kolekto ne povas esti superskribita de la elŝutita dosiero</string>
     <string name="sync_connection_error">Tempolimo de konekto. Aŭ okazas problemo ĉe via interret-konekto aŭ vi havas tre grandan dosieron en via aŭdvidaĵa dosierujo.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
+    <string name="sync_write_access_error_on_storage">Ne povas konservi elŝutitan dosieron al via konservejo. Aŭ la konservejo estas nurlege aŭ libera spaco mankas.</string>
     <string name="sync_error_invalid_sync_server">La propra samtempiga servilo difinita en altnivelaj agordoj estas malĝusta (%s). Enigu ĝustan servilon.</string>
     <string name="sync_deletions_message">Samtempigado de forigoj&#8230;</string>
     <string name="sync_small_objects_message">Samtempigado de etaj objektoj&#8230;</string>
@@ -106,20 +106,20 @@
     <string name="sync_media_no_changes">Neniuj ŝanĝoj al aŭdvidaĵaj dosieroj</string>
     <string name="sync_media_success">Aŭdvidaĵoj estas samtempigitaj</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">Samtempigo de aŭdvidaĵoj estas parte finita:\n%d aŭdvidaĵa dosiero.</item>
+        <item quantity="other">Samtempigo de aŭdvidaĵoj estas parte finita:\n%d aŭdvidaĵaj dosieroj.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">%d aŭdvidaĵa dosiero alŝutitaj.</item>
+        <item quantity="other">%d aŭdvidaĵaj dosieroj alŝutitaj.</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="one">%d aŭdvidaĵa ŝanĝo por alŝuti</item>
+        <item quantity="other">%d aŭdvidaĵaj ŝanĝoj por alŝuti</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">%d aŭdvidaĵa dosiero elŝutita</item>
+        <item quantity="other">%d aŭdvidaĵaj dosieroj elŝutitaj</item>
     </plurals>
     <string name="sync_sanity_failed">Post samtempigado, la kolekto estis nekonsekvenca stato. Por ripari la problemon, AnkiDroid devigos plenan samtempigadon. Elektu, kiun version vi volas teni.</string>
     <string name="sync_media_sanity_failed">Samtempigado de aŭdvdaĵoj estas finita, sed ĝia nombro ne kongruas kun la servilo. La sekva samtempigado de aŭdvidaĵoj estos kompleta por ripari erarojn.</string>
@@ -132,7 +132,7 @@
     <string name="sync_sanity_remote">Fora</string>
     <string name="force_full_sync_title">Devigi plenan samtempigadon</string>
     <string name="force_full_sync_summary">Dum la sekva semtempigado devigi ŝanĝojn nur al unu direkto</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Devigita plena samtempigo</string>
     <string name="full_sync_confirmation">La petita ŝanĝo postulos plenan alŝuton de la datumbazo dum la sekva samtempigado de via kolekto. Se vi havas ripetojn aŭ aliajn ŝanĝojn atendantajn ĉe alia aparato, kiuj jam ne estas samtempigitajn tie ĉi, ili perdiĝos. Ĉu pluigi?</string>
     <string name="full_sync_confirmation_upgrade">Pro la eraro en antaŭe instalita versio de AnkiDroid, estas konsilinde devigi plenan samtempigadon.</string>
     <string name="sync_error_407_proxy_required">Fiaskis aŭtentigi retperanton.</string>
