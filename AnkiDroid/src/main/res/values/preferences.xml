@@ -104,7 +104,6 @@
     <string name="enable_api_key">providerEnabled</string>
     <string name="thirdparty_apps_key">thirdpartyapps_link</string>
     <string name="tts_key">tts</string>
-    <string name="convert_fen_text_key">convertFenText</string>
     <string name="more_scrolling_buttons_key">scrolling_buttons</string>
     <string name="double_scrolling_gap_key">double_scrolling</string>
     <string name="stats_default_deck_key">stats_default_deck</string>

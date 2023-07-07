@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="pref_keep_screen_on" maxLength="41">Laikyti ekraną įjungtą</string>
     <string name="pref_keep_screen_on_summ">Išjungti ekrano užgesimui skirtą laiką</string>
-    <string name="convert_fen_text" maxLength="41">Šachmatų žymėjimo pagalba</string>
-    <string name="convert_fen_text_summ">Nubraižykite šachmatų lentą pagal Forsyth-Edwards žymėjimą. Žymėjimą reikia įrašyti tarp [fen][/fen] žymių.</string>
     <string name="enable_api_title" maxLength="41">Įjungti „AnkiDroid“ programų sąsają</string>
     <string name="enable_api_summary">Leisti kitoms programoms jungtis prie „AnkiDroid“ ir nuskaityti/įrašyti duomenis be jūsų leidimo</string>
     <string name="custom_buttons" maxLength="41">Programos juostos mygtukai</string>

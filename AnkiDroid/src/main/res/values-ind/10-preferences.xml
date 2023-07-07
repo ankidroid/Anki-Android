@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="pref_keep_screen_on" maxLength="41">Layar tetap menyala</string>
     <string name="pref_keep_screen_on_summ">Nonaktifkan batas waktu layar mati</string>
-    <string name="convert_fen_text" maxLength="41">Dukungan notasi catur</string>
-    <string name="convert_fen_text_summ">Menggambar papan catur dari Notasi Forsyth-Edwards. Notasi harus tertutup dalam tag [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Aktifkan API AnkiDroid</string>
     <string name="enable_api_summary">Biarkan aplikasi lain terhubung ke AnkiDroid dan baca / tulis data tanpa intervensimu</string>
     <string name="custom_buttons" maxLength="41">Bar tombol aplikasi</string>

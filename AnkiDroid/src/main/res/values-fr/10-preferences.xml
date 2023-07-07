@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s heures après minuit</string>
     <string name="pref_keep_screen_on" maxLength="41">Garder l’écran allumé</string>
     <string name="pref_keep_screen_on_summ">Désactiver l’extinction automatique de l’écran</string>
-    <string name="convert_fen_text" maxLength="41">Support de la notation algébrique (échecs)</string>
-    <string name="convert_fen_text_summ">Échiquier avec la notation Forsyth-Edwards Notation. La notation doit être placée entre des balises [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Activer l\'API AnkiDroid</string>
     <string name="enable_api_summary">Laissez les autres applications se connecter à AnkiDroid et lire / écrire des données sans votre intervention</string>
     <string name="custom_buttons" maxLength="41">Boutons de la barre d’application</string>

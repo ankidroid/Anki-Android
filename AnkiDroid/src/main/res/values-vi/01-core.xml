@@ -192,7 +192,7 @@
     <string name="card_template_editor_select_field">Chọn trường</string>
     <string name="card_template_editor_cant_delete">Cần tối thiểu một loại thẻ</string>
     <plurals name="card_template_editor_confirm_add">
-        <item quantity="other">Điều này sẽ tạo %1$D thẻ. Bạn có muốn tiếp tục?</item>
+        <item quantity="other">Điều này sẽ tạo %1$d thẻ. Bạn có muốn tiếp tục?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="other">Xoá loại thẻ \"%2$s\" và (các) thẻ %1$d của nó?</item>

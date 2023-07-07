@@ -188,8 +188,6 @@
     <string name="day_offset_summary">Gece yarısından %s saat sonra</string>
     <string name="pref_keep_screen_on" maxLength="41">Ekranı açık tut</string>
     <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
-    <string name="convert_fen_text" maxLength="41">Satranç gösterimi desteği</string>
-    <string name="convert_fen_text_summ">Forsyth Edwards Notasyonundan satranç tahtası çiz. Notasyon [fen][/fen] etiketi içine alınmış olmalıdır.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API etkinleştir</string>
     <string name="enable_api_summary">Diğer uygulamaların AnkiDroid\'e bağlanmasına ve müdahaleniz olmadan veriyi okuyup / yazmasına izin verir</string>
     <string name="custom_buttons" maxLength="41">Uygulama çubuğundaki düğmeler</string>

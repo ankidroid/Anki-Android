@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s ore dopo la mezzanotte</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantieni schermo acceso</string>
     <string name="pref_keep_screen_on_summ">Disabilita il timeout dello schermo</string>
-    <string name="convert_fen_text" maxLength="41">Supporto per la notazione scacchistica</string>
-    <string name="convert_fen_text_summ">Disegna la scacchiera dalla notazione Forsyth-Edwards. La notazione deve essere racchiusa nelle etichette [fen] [/fen].</string>
     <string name="enable_api_title" maxLength="41">Attiva API AnkiDroid</string>
     <string name="enable_api_summary">Permetti ad altre applicazioni di connettersi ad AnkiDroid e di leggere / scrivere dati senza il tuo intervento</string>
     <string name="custom_buttons" maxLength="41">Pulsanti della barra dell\'app</string>

@@ -189,8 +189,6 @@
     <string name="day_offset_summary">ნაშუაღამევის %s საათზე</string>
     <string name="pref_keep_screen_on" maxLength="41">ეკრანი ჩართული დარჩეს</string>
     <string name="pref_keep_screen_on_summ">ეკრანის თვითგამორთვის გამორთვა</string>
-    <string name="convert_fen_text" maxLength="41">საჭადრაკო ნოტაციის მხარდაჭერა</string>
-    <string name="convert_fen_text_summ">ჭადრაკის დაფის დახატვა ფორსაით-ედუარდსის ნოტაციის მიხედვით. ნოტაცია უნდა მოთავსდეს [fen][/fen]-ტეგებს შორის.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API-ს ჩართვა</string>
     <string name="enable_api_summary">სხვა აპლიკაციებისთვის AnkiDroid-თან დაკავშირებისა და თქვენი ჩარევის გარეშე მონაცემების წაკითხვის / ჩაწერის უფლების მინიჭება</string>
     <string name="custom_buttons" maxLength="41">აპლიკაციის ზოლის ღილაკები</string>

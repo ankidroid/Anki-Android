@@ -188,8 +188,6 @@
     <string name="day_offset_summary">%s時</string>
     <string name="pref_keep_screen_on" maxLength="41">スクリーンをオンのままにする</string>
     <string name="pref_keep_screen_on_summ">画面の自動オフを無効にします</string>
-    <string name="convert_fen_text" maxLength="41">チェス表記のサポート</string>
-    <string name="convert_fen_text_summ">FEN (Forsyth-Edwards Notation) を使いチェス盤を描画します。この表記は [fen] と [/fen] との両タグで囲む必要があります</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API を有効にする</string>
     <string name="enable_api_summary">他のアプリがAnkiDroidに接続しデータを読み書きすることを許可します</string>
     <string name="custom_buttons" maxLength="41">アプリバーボタン</string>

@@ -188,8 +188,6 @@
     <string name="day_offset_summary">午夜過後%s小時</string>
     <string name="pref_keep_screen_on" maxLength="41">保持螢幕開啟</string>
     <string name="pref_keep_screen_on_summ">關閉螢幕逾時</string>
-    <string name="convert_fen_text" maxLength="41">支援國際象棋記譜法</string>
-    <string name="convert_fen_text_summ">使用福斯夫－愛德華茲記號法來畫棋盤。記號必須用[fen][/fen]標籤括起來。</string>
     <string name="enable_api_title" maxLength="41">開啟 AnkiDroid API</string>
     <string name="enable_api_summary">讓其他應用程式不需經過你同意，即可連結到 AnkiDroid 且讀寫檔案</string>
     <string name="custom_buttons" maxLength="41">頂欄按鈕</string>

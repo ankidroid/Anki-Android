@@ -189,8 +189,6 @@
     <string name="day_offset_summary">%s hours past midnight</string>
     <string name="pref_keep_screen_on" maxLength="41">స్క్రీన్పై ఉంచండి</string>
     <string name="pref_keep_screen_on_summ">స్క్రీన్ గడువు ముగియడాన్ని నిలిపివేయి</string>
-    <string name="convert_fen_text" maxLength="41">చదరంగం సంకేత మద్దతు</string>
-    <string name="convert_fen_text_summ">Forsyth–Edwards సంజ్ఞామానం నుండి ఒక చదరంగం బండి గీయండి. ఈ కోడ్ [fen] [/fen] ట్యాగ్ల్లో ఉండాలి.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ని ప్రారంభించండి</string>
     <string name="enable_api_summary">ఇతర అనువర్తనాలు AnkiDroid కు కనెక్ట్ చేయండి మరియు మీ ప్రమేయం లేకుండా డేటాను చదవడం / వ్రాయడం అనుమతించండి</string>
     <string name="custom_buttons" maxLength="41">అనువర్తన పట్టీ బటన్లు</string>
