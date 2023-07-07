@@ -343,8 +343,8 @@ open class AnkiDroidApp : Application() {
          * @param context Context to get preferences for.
          * @return A SharedPreferences object for this instance of the app.
          */
-        fun getSharedPrefs(context: Context?): SharedPreferences {
-            return PreferenceManager.getDefaultSharedPreferences(context!!)
+        fun getSharedPrefs(context: Context): SharedPreferences {
+            return PreferenceManager.getDefaultSharedPreferences(context)
         }
 
         val cacheStorageDirectory: String

@@ -41,7 +41,7 @@ object WidgetStatus {
      *             https://developer.android.com/guide/topics/appwidgets/#MetaData
      */
     @Suppress("deprecation") // #7108: AsyncTask
-    fun update(context: Context?) {
+    fun update(context: Context) {
         val preferences = AnkiDroidApp.getSharedPrefs(context)
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
         val notificationEnabled = preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")!!.toInt() < 1000000

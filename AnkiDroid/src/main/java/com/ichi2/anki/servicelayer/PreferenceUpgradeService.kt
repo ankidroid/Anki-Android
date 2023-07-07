@@ -41,7 +41,7 @@ private typealias VersionIdentifier = Int
 private typealias LegacyVersionIdentifier = Long
 
 object PreferenceUpgradeService {
-    fun upgradePreferences(context: Context?, previousVersionCode: LegacyVersionIdentifier): Boolean =
+    fun upgradePreferences(context: Context, previousVersionCode: LegacyVersionIdentifier): Boolean =
         upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode)
 
     /** @return Whether any preferences were upgraded */

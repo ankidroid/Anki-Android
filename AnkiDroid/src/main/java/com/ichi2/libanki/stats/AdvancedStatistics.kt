@@ -114,7 +114,7 @@ class AdvancedStatistics {
     fun calculateDueAsMetaInfo(
         metaInfo: StatsMetaInfo,
         type: AxisType,
-        context: Context?,
+        context: Context,
         dids: String
     ): StatsMetaInfo {
         if (!getSharedPrefs(context).getBoolean("advanced_statistics_enabled", false)) {
@@ -817,7 +817,7 @@ class AdvancedStatistics {
     /**
      * Stores global settings.
      */
-    private class Settings(context: Context?) {
+    private class Settings(context: Context) {
         val computeNDays: Int
         val computeMaxError: Double
         val simulateNIterations: Int
