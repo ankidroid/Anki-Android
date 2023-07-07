@@ -44,8 +44,8 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">Fiaskis konservi sekurkopion. Spaco mankas en via konservejo. Malpliigu nombron da sekurkopioj aŭ forigu kelkajn dosierojn.</string>
+    <string name="storage_warning">Malpli ol %d MB da spaco en via konservejo.\nLiberigu iom da spaco por ke ne perdu datumojn.</string>
     <string name="backup_restore">Restarigi el sekurkopio</string>
     <string name="backup_new_collection">Nova kolekto</string>
     <string name="backup_del_collection">Forigi kolekton kaj krei novan</string>

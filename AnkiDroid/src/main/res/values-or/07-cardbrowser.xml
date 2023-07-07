@@ -133,5 +133,5 @@
     <string name="card_info_revlog_review">ସମୀକ୍ଷାଧିନ</string>
     <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">ପୁନଃ ଶିକ୍ଷାଧିନ</string>
     <string name="card_info_revlog_filtered">ଶୋଧିତ</string>
-    <string name="card_info_ease_not_applicable">ପ୍ର/ନୁ</string>
+    <string name="card_info_ease_not_applicable">ଅପ୍ରଯୁଜ୍ୟ</string>
 </resources>

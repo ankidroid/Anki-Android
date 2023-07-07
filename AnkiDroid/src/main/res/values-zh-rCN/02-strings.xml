@@ -193,8 +193,8 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">导出 %d 个选定笔记为 apkg 文件？</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">正在准备导出&#8230;</string>
+    <string name="export_ready_title">已准备好导出</string>
     <string name="export_send_no_handlers">没有可用处理 apkg 的应用程序。正在保存...</string>
     <string name="export_save_apkg_successful">已成功保存 apkg 文件</string>
     <string name="export_save_apkg_unsuccessful">保存 apkg 文件失败</string>
@@ -207,8 +207,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">分享</string>
+    <string name="export_choice_save_to">保存至</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">选项</string>
     <string name="menu__deck_options">牌组选项</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学习选项</string>

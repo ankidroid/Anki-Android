@@ -344,7 +344,7 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ ଅପସାରଣ କରନ୍ତୁ</string>
-    <string name="bindings_already_bound">ଆଗରୁ %s କୁ ବନ୍ଧା</string>
+    <string name="bindings_already_bound">ଆଗରୁ ‘%s’କୁ ବନ୍ଧା</string>
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">ପ୍ରାୟୋଗିକ</string>
     <string name="experimental_pref_confirmation" maxLength="41">‘%s’ ସକ୍ଷମ କରିବା</string>
