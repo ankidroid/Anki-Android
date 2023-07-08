@@ -2,11 +2,6 @@ plugins {
     id 'kotlin'
 }
 
-repositories {
-    google()
-    mavenCentral()
-}
-
 tasks.withType(JavaCompile).configureEach {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
