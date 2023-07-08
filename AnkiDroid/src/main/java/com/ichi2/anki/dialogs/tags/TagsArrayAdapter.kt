@@ -28,7 +28,9 @@ import com.ichi2.ui.CheckBoxTriStates
 import com.ichi2.ui.CheckBoxTriStates.State.*
 import com.ichi2.utils.TagsUtil
 import com.ichi2.utils.TypedFilter
-import java.util.*
+import java.util.Locale
+import java.util.Stack
+import java.util.TreeSet
 
 /**
  * @param tags A reference to the {@link TagsList} passed.
