@@ -58,4 +58,6 @@ tools/crowdin_key.txt
 # Testing / quality remnants
 AnkiDroid/ACRA-INSTALLATION
 .codacy.json
-*.log
+
+#ignore the local insufficient memory for the Java Runtime Environment files
+hs_err_pid*
