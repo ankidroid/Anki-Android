@@ -1580,7 +1580,7 @@ open class DeckPicker :
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.
      */
-    override fun sync(conflict: ConflictResolution?) {
+    fun sync(conflict: ConflictResolution?, shouldFetchMedia: Boolean) {
         val preferences = getSharedPrefs(baseContext)
 
         if (!canSync(this)) {
@@ -1600,11 +1600,10 @@ open class DeckPicker :
          * the sync server and starts syncing the data */
         fun doSync() {
             if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(conflict, shouldFetchMedia(preferences))
+                handleNewSync(conflict, shouldFetchMedia)
             } else {
-                val fetchMedia = shouldFetchMedia(preferences)
-                val data = arrayOf(hkey, fetchMedia, conflict, HostNumFactory.getInstance(baseContext))
-                Connection.sync(createSyncListener(isFetchingMedia = fetchMedia), Connection.Payload(data))
+                val data = arrayOf(hkey, shouldFetchMedia, conflict, HostNumFactory.getInstance(baseContext))
+                Connection.sync(createSyncListener(isFetchingMedia = shouldFetchMedia), Connection.Payload(data))
             }
         }
         // Warn the user in case the connection is metered
@@ -1621,6 +1620,10 @@ open class DeckPicker :
         } else {
             doSync()
         }
+    }
+
+    override fun sync(conflict: ConflictResolution?) {
+        sync(conflict, shouldFetchMedia(getSharedPrefs(baseContext)))
     }
 
     override fun loginToSyncServer() {
@@ -2687,42 +2690,10 @@ open class DeckPicker :
             .show()
     }
 
-    // TODO BEFORE-RELEASE Fix the logic. As I understand, this works the following way,
-    //   which could make a little more sense:
-    //     if (media sync is not disabled,
-    //         and (either we sync media unconditionally or are on a suitable network),
-    //         and (either we are logged in, or unsafe migration is disallowed (the default))):
-    //       set flag migrate-after-media-synced, and
-    //       call sync, which may fail to actually sync or even fail to start syncing
-    //       (in these cases, migration might start unexpectedly after a successful sync);
-    //     else:
-    //       tell the user that migration is disabled in the settings (might not be true)
-    //       and tell them to sync & backup before continuing (which isn't possible),
-    //       and instead of offering them to force sync,
-    //       offer them to migrate regardless of the above.
     private fun performMediaSyncBeforeStorageMigration() {
-        // if we allow an unsafe migration, the 'sync required' dialog shows an unsafe migration confirmation dialog
-        val showUnsafeSyncDialog = (BuildConfig.ALLOW_UNSAFE_MIGRATION && !isLoggedIn())
-
-        if (shouldFetchMedia(getSharedPrefs(this)) && !showUnsafeSyncDialog) {
-            Timber.i("Syncing before storage migration")
-            migrateStorageAfterMediaSyncCompleted = true
-            sync()
-        } else {
-            Timber.i("media sync disabled: displaying dialog")
-            AlertDialog.Builder(this).show {
-                setTitle(R.string.media_sync_required_title)
-                iconAttr(R.attr.dialogErrorIcon)
-                setMessage(R.string.media_sync_unavailable_message)
-                setPositiveButton(getString(R.string.scoped_storage_migrate)) { _, _ ->
-                    Timber.i("Performing unsafe storage migration")
-                    migrate()
-                }
-                setNegativeButton(getString(R.string.scoped_storage_postpone)) { _, _ ->
-                    setMigrationWasLastPostponedAtToNow()
-                }
-            }
-        }
+        Timber.i("Syncing before storage migration")
+        migrateStorageAfterMediaSyncCompleted = true
+        sync(conflict = null, shouldFetchMedia = true)
     }
 
     // Scoped Storage migration
