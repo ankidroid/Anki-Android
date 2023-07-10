@@ -26,11 +26,12 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHolder
@@ -73,12 +74,13 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         inflateMenu(tagsDialogView, adapter)
 
         // Only show a negative button, use the RecyclerView for positive actions
-        val dialog = AlertDialog.Builder(activity)
-            .setView(tagsDialogView)
-            .setNegativeButton(R.string.dialog_cancel) { _, _ ->
+        // when changing to AlertDialog make sure the keyboard is being shown when clicking search in the dialog toolbar
+        val dialog = MaterialDialog(activity).show {
+            customView(view = tagsDialogView, noVerticalPadding = true)
+            negativeButton(text = getString(R.string.dialog_cancel)) {
                 mDialogHandler!!.onLocaleSelectionCancelled()
             }
-            .create()
+        }
 
         val window = dialog.window
         if (window != null) {
