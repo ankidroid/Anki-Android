@@ -21,6 +21,7 @@ package com.ichi2.anki
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.OnboardingUtils.Companion.SHOW_ONBOARDING
+import com.ichi2.anki.preferences.sharedPrefs
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -38,7 +39,7 @@ class OnboardingFlagTest : RobolectricTest() {
 
     @Before
     fun setShowOnboardingPreference() {
-        AnkiDroidApp.getSharedPrefs(targetContext).edit { putBoolean(SHOW_ONBOARDING, true) }
+        targetContext.sharedPrefs().edit { putBoolean(SHOW_ONBOARDING, true) }
     }
 
     @After

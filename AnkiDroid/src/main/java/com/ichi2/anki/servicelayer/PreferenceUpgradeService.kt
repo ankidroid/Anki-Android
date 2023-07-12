@@ -22,10 +22,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.LocaleListCompat
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.noteeditor.CustomToolbarButton
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
@@ -41,8 +41,8 @@ private typealias VersionIdentifier = Int
 private typealias LegacyVersionIdentifier = Long
 
 object PreferenceUpgradeService {
-    fun upgradePreferences(context: Context?, previousVersionCode: LegacyVersionIdentifier): Boolean =
-        upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode)
+    fun upgradePreferences(context: Context, previousVersionCode: LegacyVersionIdentifier): Boolean =
+        upgradePreferences(context.sharedPrefs(), previousVersionCode)
 
     /** @return Whether any preferences were upgraded */
     internal fun upgradePreferences(preferences: SharedPreferences, previousVersionCode: LegacyVersionIdentifier): Boolean {

@@ -62,7 +62,6 @@ import anki.collection.OpChanges
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
 import com.ichi2.anki.CollectionHelper.CollectionIntegrityStorageCheck
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -90,6 +89,7 @@ import com.ichi2.anki.permissions.PermissionManager
 import com.ichi2.anki.permissions.PermissionsRequestRawResults
 import com.ichi2.anki.permissions.PermissionsRequestResults
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
@@ -426,7 +426,7 @@ open class DeckPicker :
     }
 
     private fun hasShownAppIntro(): Boolean {
-        val prefs = getSharedPrefs(this)
+        val prefs = this.sharedPrefs()
 
         // if moving from 2.15 to 2.16 then we do not want to show the intro
         // remove this after ~2.17 and default to 'false' if the pref is not set
@@ -509,7 +509,7 @@ open class DeckPicker :
         val failure = InitialActivity.getStartupFailureType(this)
         mStartupError = if (failure == null) {
             // Show any necessary dialogs (e.g. changelog, special messages, etc)
-            val sharedPrefs = getSharedPrefs(this)
+            val sharedPrefs = this.sharedPrefs()
             showStartupScreensAndDialogs(sharedPrefs, 0)
             false
         } else {
@@ -577,7 +577,7 @@ open class DeckPicker :
     private fun applyDeckPickerBackground(): Boolean {
         val backgroundView = findViewById<ImageView>(R.id.background)
         // Allow the user to clear data and get back to a good state if they provide an invalid background.
-        if (!getSharedPrefs(this).getBoolean("deckPickerBackground", false)) {
+        if (!this.sharedPrefs().getBoolean("deckPickerBackground", false)) {
             Timber.d("No DeckPicker background preference")
             backgroundView.setBackgroundResource(0)
             return false
@@ -939,7 +939,7 @@ open class DeckPicker :
             return
         }
         if (requestCode == SHOW_INFO_NEW_VERSION) {
-            showStartupScreensAndDialogs(getSharedPrefs(baseContext), 3)
+            showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             mSyncOnResume = true
         } else if (requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS) {
@@ -1047,15 +1047,19 @@ open class DeckPicker :
     }
 
     private fun automaticSync() {
-        val preferences = getSharedPrefs(baseContext)
+        val preferences = baseContext.sharedPrefs()
 
         // Check whether the option is selected, the user is signed in, last sync was AUTOMATIC_SYNC_TIME ago
         // (currently 10 minutes), and is not under a metered connection (if not allowed by preference)
         val lastSyncTime = preferences.getLong("lastSyncTime", 0)
         val autoSyncIsEnabled = preferences.getBoolean("automaticSyncMode", false)
         val automaticSyncIntervalInMS = AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES * 60 * 1000
-        val syncIntervalPassed = TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
-        val isNotBlockedByMeteredConnection = preferences.getBoolean(getString(R.string.metered_sync_key), false) || !isActiveNetworkMetered()
+        val syncIntervalPassed =
+            TimeManager.time.intTimeMS() - lastSyncTime > automaticSyncIntervalInMS
+        val isNotBlockedByMeteredConnection = preferences.getBoolean(
+            getString(R.string.metered_sync_key),
+            false
+        ) || !isActiveNetworkMetered()
         val isMigratingStorage = mediaMigrationIsInProgress(this)
         if (isLoggedIn() && autoSyncIsEnabled && NetworkUtils.isOnline && syncIntervalPassed && isNotBlockedByMeteredConnection && !isMigratingStorage) {
             Timber.i("Triggering Automatic Sync")
@@ -1066,7 +1070,7 @@ open class DeckPicker :
     @Suppress("DEPRECATION") // onBackPressed
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        val preferences = getSharedPrefs(baseContext)
+        val preferences = baseContext.sharedPrefs()
         if (isDrawerOpen) {
             super.onBackPressed()
         } else {
@@ -1074,14 +1078,20 @@ open class DeckPicker :
             if (mFloatingActionMenu.isFABOpen) {
                 mFloatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
             } else {
-                if (!preferences.getBoolean("exitViaDoubleTapBack", false) || mBackButtonPressedToExit) {
+                if (!preferences.getBoolean(
+                        "exitViaDoubleTapBack",
+                        false
+                    ) || mBackButtonPressedToExit
+                ) {
                     automaticSync()
                     finishWithAnimation()
                 } else {
                     showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
                 }
                 mBackButtonPressedToExit = true
-                HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) { mBackButtonPressedToExit = false }
+                HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) {
+                    mBackButtonPressedToExit = false
+                }
             }
         }
     }
@@ -1581,7 +1591,7 @@ open class DeckPicker :
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.
      */
     override fun sync(conflict: ConflictResolution?) {
-        val preferences = getSharedPrefs(baseContext)
+        val preferences = baseContext.sharedPrefs()
 
         if (!canSync(this)) {
             warnNoSyncDuringMigration()
@@ -1603,19 +1613,29 @@ open class DeckPicker :
                 handleNewSync(conflict, shouldFetchMedia(preferences))
             } else {
                 val fetchMedia = shouldFetchMedia(preferences)
-                val data = arrayOf(hkey, fetchMedia, conflict, HostNumFactory.getInstance(baseContext))
-                Connection.sync(createSyncListener(isFetchingMedia = fetchMedia), Connection.Payload(data))
+                val data =
+                    arrayOf(hkey, fetchMedia, conflict, HostNumFactory.getInstance(baseContext))
+                Connection.sync(
+                    createSyncListener(isFetchingMedia = fetchMedia),
+                    Connection.Payload(data)
+                )
             }
         }
         // Warn the user in case the connection is metered
-        val meteredSyncIsAllowed = preferences.getBoolean(getString(R.string.metered_sync_key), false)
+        val meteredSyncIsAllowed =
+            preferences.getBoolean(getString(R.string.metered_sync_key), false)
         if (!meteredSyncIsAllowed && isActiveNetworkMetered()) {
             AlertDialog.Builder(this).show {
                 message(R.string.metered_sync_warning)
                 positiveButton(R.string.dialog_continue) { doSync() }
                 negativeButton(R.string.dialog_cancel)
                 checkBoxPrompt(R.string.remember_sync_metered_checkbox_msg) { isCheckboxChecked ->
-                    preferences.edit { putBoolean(getString(R.string.metered_sync_key), isCheckboxChecked) }
+                    preferences.edit {
+                        putBoolean(
+                            getString(R.string.metered_sync_key),
+                            isCheckboxChecked
+                        )
+                    }
                 }
             }
         } else {
@@ -2591,16 +2611,16 @@ open class DeckPicker :
      * Last time the user had chosen to postpone migration. Or 0 if never.
      */
     private var migrationWasLastPostponedAt: Long
-        get() = getSharedPrefs(baseContext).getLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, 0L)
-        set(timeInSecond) = getSharedPrefs(baseContext)
+        get() = baseContext.sharedPrefs().getLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, 0L)
+        set(timeInSecond) = baseContext.sharedPrefs()
             .edit { putLong(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS, timeInSecond) }
 
     /**
      * The number of times the storage migration was postponed. -1 for 'disabled'
      */
     private var timesStorageMigrationPostponed: Int
-        get() = getSharedPrefs(baseContext).getInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, 0)
-        set(value) = getSharedPrefs(baseContext)
+        get() = baseContext.sharedPrefs().getInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, 0)
+        set(value) = baseContext.sharedPrefs()
             .edit { putInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, value) }
 
     /** Whether the user has disabled the dialog from [showDialogThatOffersToMigrateStorage] */
@@ -2633,7 +2653,7 @@ open class DeckPicker :
                 this,
                 onCancel = { onPostponeOnce() },
                 onDisableReminder = {
-                    getSharedPrefs(this).edit {
+                    this.sharedPrefs().edit {
                         putInt(TIMES_STORAGE_MIGRATION_POSTPONED_KEY, -1)
                         remove(MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS)
                     }
@@ -2704,7 +2724,7 @@ open class DeckPicker :
         // if we allow an unsafe migration, the 'sync required' dialog shows an unsafe migration confirmation dialog
         val showUnsafeSyncDialog = (BuildConfig.ALLOW_UNSAFE_MIGRATION && !isLoggedIn())
 
-        if (shouldFetchMedia(getSharedPrefs(this)) && !showUnsafeSyncDialog) {
+        if (shouldFetchMedia(this.sharedPrefs()) && !showUnsafeSyncDialog) {
             Timber.i("Syncing before storage migration")
             migrateStorageAfterMediaSyncCompleted = true
             sync()

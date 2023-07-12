@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.ui.AppCompatPreferenceActivity
 import timber.log.Timber
 
@@ -65,9 +66,9 @@ object Themes {
         // after the time when the theme should be set
         // TODO (#5019): always use the context as the parameter for getSharedPrefs
         val prefs = if (context is AppCompatPreferenceActivity<*>) {
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+            AnkiDroidApp.instance.sharedPrefs()
         } else {
-            AnkiDroidApp.getSharedPrefs(context)
+            context.sharedPrefs()
         }
 
         currentTheme = if (themeFollowsSystem(prefs)) {

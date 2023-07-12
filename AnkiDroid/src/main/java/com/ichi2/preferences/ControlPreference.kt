@@ -23,7 +23,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.ListPreference
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.cardviewer.GestureProcessor
@@ -32,6 +31,7 @@ import com.ichi2.anki.dialogs.CardSideSelectionDialog
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils
 import com.ichi2.anki.dialogs.GestureSelectionDialogUtils.onGestureChanged
 import com.ichi2.anki.dialogs.KeySelectionDialogUtils
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromGesture
@@ -70,7 +70,7 @@ class ControlPreference : ListPreference {
         entryTitles.add(context.getString(R.string.binding_add_key))
         entryIndices.add(ADD_KEY_INDEX)
         // Put "Add gesture" option if gestures are enabled
-        if (AnkiDroidApp.getSharedPrefs(context).getBoolean(GestureProcessor.PREF_KEY, false)) {
+        if (context.sharedPrefs().getBoolean(GestureProcessor.PREF_KEY, false)) {
             entryTitles.add(context.getString(R.string.binding_add_gesture))
             entryIndices.add(ADD_GESTURE_INDEX)
         }
@@ -183,7 +183,7 @@ class ControlPreference : ListPreference {
 
     /** @return command where the binding is mapped excluding the current command */
     private fun getCommandWithBindingExceptThis(binding: MappableBinding): ViewerCommand? {
-        return MappableBinding.allMappings(AnkiDroidApp.getSharedPrefs(context))
+        return MappableBinding.allMappings(context.sharedPrefs())
             // filter to the commands which have a binding matching this one except this
             .firstOrNull { x -> x.second.any { cmdBinding -> cmdBinding == binding } && x.first.preferenceKey != key }?.first
     }

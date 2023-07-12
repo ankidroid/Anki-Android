@@ -20,7 +20,7 @@ import android.R
 import android.app.Activity
 import android.view.View
 import android.view.ViewGroup
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.preferences.sharedPrefs
 import timber.log.Timber
 import java.util.ArrayList
 
@@ -47,7 +47,7 @@ object ViewGroupUtils {
     }
 
     fun setRenderWorkaround(activity: Activity) {
-        if (AnkiDroidApp.getSharedPrefs(activity).getBoolean("softwareRender", false)) {
+        if (activity.sharedPrefs().getBoolean("softwareRender", false)) {
             Timber.i("ViewGroupUtils::setRenderWorkaround - software render requested, altering Views...")
             setContentViewLayerTypeSoftware(activity)
         } else {

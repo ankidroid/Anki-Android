@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
@@ -275,7 +276,7 @@ class DeckPickerTest : RobolectricTest() {
             grantWritePermissions()
             BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
             // We don't show it if the user is new.
-            AnkiDroidApp.getSharedPrefs(targetContext).edit().putString("lastVersion", "0.1")
+            targetContext.sharedPrefs().edit().putString("lastVersion", "0.1")
                 .apply()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java,
@@ -522,7 +523,7 @@ class DeckPickerTest : RobolectricTest() {
         val collectionDirectory = p.parent
 
         // set collection path
-        AnkiDroidApp.getSharedPrefs(targetContext).edit {
+        targetContext.sharedPrefs().edit {
             putString(CollectionHelper.PREF_COLLECTION_PATH, collectionDirectory)
         }
 

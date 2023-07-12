@@ -36,6 +36,7 @@ import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.async.*
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.*
@@ -337,7 +338,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
      * @see [editPreferences] for editing
      */
     fun getPreferences(): SharedPreferences {
-        return AnkiDroidApp.getSharedPrefs(targetContext)
+        return targetContext.sharedPrefs()
     }
 
     protected fun getResourceString(res: Int): String {

@@ -43,6 +43,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfigura
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
@@ -211,7 +212,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 }
                 when (contextMenuOption) {
                     STUDY_NEW -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendNew", n) }
+                        requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
                         val deck = collection.decks.get(did)
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
@@ -219,7 +220,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_REV -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendRev", n) }
+                        requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
                         val deck = collection.decks.get(did)
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
@@ -415,7 +416,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
     private val defaultValue: String
         get() {
-            val prefs = AnkiDroidApp.getSharedPrefs(requireActivity())
+            val prefs = requireActivity().sharedPrefs()
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> prefs.getInt("extendNew", 10).toString()
                 STUDY_REV -> prefs.getInt("extendRev", 50).toString()

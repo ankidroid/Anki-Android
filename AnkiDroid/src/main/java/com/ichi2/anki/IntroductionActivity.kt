@@ -30,6 +30,7 @@ import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.*
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.themes.Themes
@@ -95,7 +96,7 @@ class IntroductionActivity : AppIntro() {
     }
 
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {
-        AnkiDroidApp.getSharedPrefs(this).edit { putBoolean(INTRODUCTION_SLIDES_SHOWN, true) }
+        this.sharedPrefs().edit { putBoolean(INTRODUCTION_SLIDES_SHOWN, true) }
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         if (result == RESULT_SYNC_PROFILE) {

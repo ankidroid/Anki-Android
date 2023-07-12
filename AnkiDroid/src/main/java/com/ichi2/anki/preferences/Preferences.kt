@@ -251,11 +251,12 @@ class Preferences :
      */
     fun setDevOptionsEnabled(isEnabled: Boolean) {
         // Update the "devOptionsEnabledByUser" pref value
-        AnkiDroidApp.getSharedPrefs(this).edit {
+        this.sharedPrefs().edit {
             putBoolean(getString(R.string.dev_options_enabled_by_user_key), isEnabled)
         }
         // Show/hide the header
-        val headerFragment = supportFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
+        val headerFragment =
+            supportFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
         if (headerFragment is HeaderFragment) {
             headerFragment.setDevOptionsVisibility(isEnabled)
         }

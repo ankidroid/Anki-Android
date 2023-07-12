@@ -29,6 +29,7 @@ import com.brsanthu.googleanalytics.request.DefaultRequest
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.DisplayUtils
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.WebViewDebugging.hasSetDataDirectory
@@ -80,7 +81,7 @@ object UsageAnalytics {
                 .build()
         }
         installDefaultExceptionHandler()
-        val userPrefs = AnkiDroidApp.getSharedPrefs(context)
+        val userPrefs = context.sharedPrefs()
         optIn = userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false)
         userPrefs.registerOnSharedPreferenceChangeListener { sharedPreferences: SharedPreferences, key: String? ->
             if (key == ANALYTICS_OPTIN_KEY) {
@@ -289,12 +290,12 @@ object UsageAnalytics {
     // A listener on this preference handles the rest
     var isEnabled: Boolean
         get() {
-            val userPrefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+            val userPrefs = AnkiDroidApp.instance.sharedPrefs()
             return userPrefs.getBoolean(ANALYTICS_OPTIN_KEY, false)
         }
         set(value) {
             // A listener on this preference handles the rest
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit {
+            AnkiDroidApp.instance.sharedPrefs().edit {
                 putBoolean(ANALYTICS_OPTIN_KEY, value)
             }
         }

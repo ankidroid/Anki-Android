@@ -33,6 +33,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeUtils
@@ -77,7 +78,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private val mHandleMultiTouch: Boolean = handleMultiTouch
     private var mOnPaintColorChangeListener: OnPaintColorChangeListener? = null
     val currentStrokeWidth: Int
-        get() = AnkiDroidApp.getSharedPrefs(mAnkiActivity).getInt("whiteBoardStrokeWidth", 6)
+        get() = mAnkiActivity.sharedPrefs().getInt("whiteBoardStrokeWidth", 6)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -378,7 +379,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
 
     private fun saveStrokeWidth(wbStrokeWidth: Int) {
         mPaint.strokeWidth = wbStrokeWidth.toFloat()
-        AnkiDroidApp.getSharedPrefs(mAnkiActivity).edit {
+        mAnkiActivity.sharedPrefs().edit {
             putInt("whiteBoardStrokeWidth", wbStrokeWidth)
         }
     }

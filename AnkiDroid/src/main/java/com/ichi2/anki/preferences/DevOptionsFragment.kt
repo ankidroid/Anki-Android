@@ -155,7 +155,7 @@ class DevOptionsFragment : SettingsFragment() {
          * or if the user has enabled it with the secret on [com.ichi2.anki.preferences.AboutFragment]
          */
         fun isEnabled(context: Context): Boolean {
-            return BuildConfig.DEBUG || AnkiDroidApp.getSharedPrefs(context)
+            return BuildConfig.DEBUG || context.sharedPrefs()
                 .getBoolean(context.getString(R.string.dev_options_enabled_by_user_key), false)
         }
     }

@@ -20,10 +20,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.model.Directory
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.*
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
@@ -153,23 +153,33 @@ internal constructor(
      * Any error in opening the collection are thrown, and the preference change is reverted.
      */
     fun updateCollectionPath() {
-        val prefs = AnkiDroidApp.getSharedPrefs(context)
+        val prefs = context.sharedPrefs()
 
         // keep the old values in case we need to restore them
-        oldPrefValues = listOf(PREF_MIGRATION_SOURCE, PREF_MIGRATION_DESTINATION, CollectionHelper.PREF_COLLECTION_PATH)
+        oldPrefValues = listOf(
+            PREF_MIGRATION_SOURCE,
+            PREF_MIGRATION_DESTINATION,
+            CollectionHelper.PREF_COLLECTION_PATH
+        )
             .associateWith { prefs.getString(it, null) }
 
         prefs.edit {
             // specify that a migration is in progress
             putString(PREF_MIGRATION_SOURCE, folders.unscopedSourceDirectory.directory.absolutePath)
-            putString(PREF_MIGRATION_DESTINATION, folders.scopedDestinationDirectory.directory.absolutePath)
-            putString(CollectionHelper.PREF_COLLECTION_PATH, folders.scopedDestinationDirectory.directory.absolutePath)
+            putString(
+                PREF_MIGRATION_DESTINATION,
+                folders.scopedDestinationDirectory.directory.absolutePath
+            )
+            putString(
+                CollectionHelper.PREF_COLLECTION_PATH,
+                folders.scopedDestinationDirectory.directory.absolutePath
+            )
         }
     }
 
     /** Can be called if collection fails to open after migration completes. */
     fun restoreOldCollectionPath() {
-        val prefs = AnkiDroidApp.getSharedPrefs(context)
+        val prefs = context.sharedPrefs()
         prefs.edit {
             oldPrefValues?.forEach {
                 putString(it.key, it.value)

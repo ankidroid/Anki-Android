@@ -16,13 +16,17 @@
 package com.ichi2.anki
 
 import android.view.View
+import com.ichi2.anki.preferences.sharedPrefs
 
 class TestCardTemplatePreviewer : CardTemplatePreviewer() {
     var showingAnswer = false
         private set
 
     fun disableDoubleClickPrevention() {
-        lastClickTime = (AnkiDroidApp.getSharedPrefs(baseContext).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL) * -2).toLong()
+        lastClickTime = (
+            baseContext.sharedPrefs()
+                .getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL) * -2
+            ).toLong()
     }
 
     override fun displayCardAnswer() {

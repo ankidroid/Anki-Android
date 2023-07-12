@@ -31,6 +31,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ichi2.anki.*
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
@@ -103,10 +104,13 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
             if (serviceIsRunning) return
             serviceIsRunning = true
 
-            AnkiDroidApp.getSharedPrefs(context).edit { remove(PREF_MIGRATION_ERROR_TEXT) }
+            context.sharedPrefs().edit { remove(PREF_MIGRATION_ERROR_TEXT) }
             flowOfProgress.tryEmit(null)
 
-            ContextCompat.startForegroundService(context, Intent(context, MigrationService::class.java))
+            ContextCompat.startForegroundService(
+                context,
+                Intent(context, MigrationService::class.java)
+            )
         }
 
         val flowOfProgress: MutableStateFlow<Progress?> = MutableStateFlow(null)
@@ -131,7 +135,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
         data class Failed(val exception: Exception, val changesRolledBack: Boolean) : Done
     }
 
-    private val preferences get() = AnkiDroidApp.getSharedPrefs(this)
+    private val preferences get() = this.sharedPrefs()
 
     private lateinit var migrateUserDataTask: MigrateUserData
 
@@ -224,6 +228,7 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                             is Progress.Succeeded ->
                                 AnkiDroidApp.instance.activityAgnosticDialogs
                                     .showOrScheduleStorageMigrationSucceededDialog()
+
                             is Progress.Failed ->
                                 AnkiDroidApp.instance.activityAgnosticDialogs
                                     .showOrScheduleStorageMigrationFailedDialog(
@@ -242,9 +247,15 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
         val ignoredFiles = MigrateEssentialFiles.iterateEssentialFiles(task.source) +
             File(task.source.directory, MoveConflictedFile.CONFLICT_DIRECTORY)
         val ignoredSpace = ignoredFiles.sumOf { FileUtil.getSize(it) }
-        val folderSize = FileUtil.DirectoryContentInformation.fromDirectory(task.source.directory).totalBytes
+        val folderSize =
+            FileUtil.DirectoryContentInformation.fromDirectory(task.source.directory).totalBytes
         val remainingSpaceToMigrate = folderSize - ignoredSpace
-        Timber.d("folder size: %d, safe: %d, remaining: %d", folderSize, ignoredSpace, remainingSpaceToMigrate)
+        Timber.d(
+            "folder size: %d, safe: %d, remaining: %d",
+            folderSize,
+            ignoredSpace,
+            remainingSpaceToMigrate
+        )
         return remainingSpaceToMigrate
     }
 
@@ -408,7 +419,7 @@ sealed interface MediaMigrationState {
 // TODO Consider refactoring ScopedStorageService to remove its methods used here,
 //   inlining them, and use this method throughout the app for media migration state.
 fun Context.getMediaMigrationState(): MediaMigrationState {
-    val preferences = AnkiDroidApp.getSharedPrefs(this)
+    val preferences = this.sharedPrefs()
 
     fun migrationIsOngoing() = ScopedStorageService.mediaMigrationIsInProgress(preferences)
     fun collectionIsInAppPrivateDirectory() = !ScopedStorageService.isLegacyStorage(this)
@@ -420,6 +431,7 @@ fun Context.getMediaMigrationState(): MediaMigrationState {
         when {
             errorText.isNullOrBlank() ->
                 MediaMigrationState.Ongoing.NotPaused
+
             else ->
                 MediaMigrationState.Ongoing.PausedDueToError(errorText)
         }
@@ -427,8 +439,10 @@ fun Context.getMediaMigrationState(): MediaMigrationState {
         when {
             collectionIsInAppPrivateDirectory() ->
                 MediaMigrationState.NotOngoing.NotNeeded.CollectionIsInAppPrivateFolder
+
             collectionWillRemainAccessibleAfterReinstall() ->
                 MediaMigrationState.NotOngoing.NotNeeded.CollectionIsInPublicFolderButWillRemainAccessible
+
             else ->
                 MediaMigrationState.NotOngoing.Needed
         }

@@ -8,6 +8,7 @@ import android.content.Intent
 import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.Time
@@ -108,9 +109,13 @@ class BootService : BroadcastReceiver() {
 
         fun scheduleNotification(time: Time, context: Context) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val sp = AnkiDroidApp.getSharedPrefs(context)
+            val sp = context.sharedPrefs()
             // Don't schedule a notification if the due reminders setting is not enabled
-            if (sp.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY) {
+            if (sp.getString(
+                    Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION,
+                    Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)
+                )!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY
+            ) {
                 return
             }
             val calendar = time.calendar()
@@ -119,7 +124,12 @@ class BootService : BroadcastReceiver() {
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
             }
-            val notificationIntent = CompatHelper.compat.getImmutableBroadcastIntent(context, 0, Intent(context, NotificationService::class.java), 0)
+            val notificationIntent = CompatHelper.compat.getImmutableBroadcastIntent(
+                context,
+                0,
+                Intent(context, NotificationService::class.java),
+                0
+            )
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
@@ -129,19 +139,19 @@ class BootService : BroadcastReceiver() {
         }
 
         /** Returns the hour of day when rollover to the next day occurs  */
-        protected fun getRolloverHourOfDay(context: Context?): Int {
+        protected fun getRolloverHourOfDay(context: Context): Int {
             // TODO; We might want to use the BootService retry code here when called from preferences.
             val defValue = 4
             return try {
                 val col = CollectionHelper.instance.getCol(context)!!
                 when (col.schedVer()) {
                     1 -> {
-                        val sp = AnkiDroidApp.getSharedPrefs(context)
+                        val sp = context.sharedPrefs()
                         sp.getInt("dayOffset", defValue)
                     }
                     2 -> col.get_config("rollover", defValue)!!
                     else -> {
-                        val sp = AnkiDroidApp.getSharedPrefs(context)
+                        val sp = context.sharedPrefs()
                         sp.getInt("dayOffset", defValue)
                     }
                 }

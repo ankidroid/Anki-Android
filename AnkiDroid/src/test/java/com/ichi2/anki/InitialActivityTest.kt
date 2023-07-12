@@ -17,12 +17,14 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidFolder.*
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.CoreMatchers.equalTo
@@ -42,10 +44,12 @@ import org.robolectric.annotation.Config
 class InitialActivityTest : RobolectricTest() {
 
     private lateinit var mSharedPreferences: SharedPreferences
+    private val appContext: Context
+        get() = ApplicationProvider.getApplicationContext()
 
     @Before
     fun before() {
-        mSharedPreferences = AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext())
+        mSharedPreferences = appContext.sharedPrefs()
     }
 
     @Test
@@ -99,11 +103,18 @@ class InitialActivityTest : RobolectricTest() {
 
     @Test
     fun perform_setup_integration_test() {
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext())
-        val initialSetupResult = InitialActivity.performSetupFromFreshInstallOrClearedPreferences(AnkiDroidApp.getSharedPrefs(ApplicationProvider.getApplicationContext()))
+        val sharedPrefs = appContext.sharedPrefs()
+        val initialSetupResult = InitialActivity.performSetupFromFreshInstallOrClearedPreferences(
+            appContext.sharedPrefs()
+        )
         assertThat(initialSetupResult, equalTo(true))
-        val secondResult = InitialActivity.performSetupFromFreshInstallOrClearedPreferences(sharedPrefs)
-        assertThat("should not perform initial setup if setup has already occurred", secondResult, equalTo(false))
+        val secondResult =
+            InitialActivity.performSetupFromFreshInstallOrClearedPreferences(sharedPrefs)
+        assertThat(
+            "should not perform initial setup if setup has already occurred",
+            secondResult,
+            equalTo(false)
+        )
     }
 
     @Config(sdk = [BEFORE_Q])

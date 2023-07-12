@@ -20,24 +20,26 @@ import android.content.Context
 import android.content.DialogInterface
 import android.util.AttributeSet
 import androidx.core.content.edit
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.sharedPrefs
 
 // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019 see implementation at ResetLanguageDialogPreference
 @Suppress("Deprecation", "Unused")
 class CustomDialogPreference(private val context_: Context, attrs: AttributeSet?) : android.preference.DialogPreference(context_, attrs), DialogInterface.OnClickListener {
     override fun onClick(dialog: DialogInterface, which: Int) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            AnkiDroidApp.getSharedPrefs(context_).edit(commit = true) {
+            context_.sharedPrefs().edit(commit = true) {
                 when (title) {
                     context_.resources.getString(R.string.deck_conf_reset) -> {
                         // Deck Options :: Restore Defaults for Options Group
                         putBoolean("confReset", true)
                     }
+
                     context_.resources.getString(R.string.dialog_positive_remove) -> {
                         // Deck Options :: Remove Options Group
                         putBoolean("confRemove", true)
                     }
+
                     context_.resources.getString(R.string.deck_conf_set_subdecks) -> {
                         // Deck Options :: Set Options Group for all Sub-decks
                         putBoolean("confSetSubdecks", true)

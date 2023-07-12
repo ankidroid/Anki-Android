@@ -27,6 +27,7 @@ import com.ichi2.anki.cardviewer.Gesture.SWIPE_UP
 import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.WhiteboardPenColor
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding
@@ -259,7 +260,7 @@ class ReviewerNoParamTest : RobolectricTest() {
     private val gestureProcessor: GestureProcessor
         get() {
             val gestureProcessor = GestureProcessor(null)
-            gestureProcessor.init(AnkiDroidApp.getSharedPrefs(targetContext))
+            gestureProcessor.init(targetContext.sharedPrefs())
             return gestureProcessor
         }
 
@@ -276,13 +277,13 @@ class ReviewerNoParamTest : RobolectricTest() {
     }
 
     private fun setGestureSetting(value: Boolean) {
-        AnkiDroidApp.getSharedPrefs(targetContext).edit {
+        targetContext.sharedPrefs().edit {
             putBoolean(GestureProcessor.PREF_KEY, value)
         }
     }
 
     private fun disableGestures(vararg gestures: Gesture) {
-        val prefs = AnkiDroidApp.getSharedPrefs(targetContext)
+        val prefs = targetContext.sharedPrefs()
         for (command in ViewerCommand.values()) {
             for (mappableBinding in MappableBinding.fromPreference(prefs, command)) {
                 if (mappableBinding.binding.gesture in gestures) {
@@ -294,12 +295,12 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     /** Enables a gesture (without changing the overall setting of whether gestures are allowed)  */
     private fun enableGesture(gesture: Gesture) {
-        val prefs = AnkiDroidApp.getSharedPrefs(targetContext)
+        val prefs = targetContext.sharedPrefs()
         ViewerCommand.FLIP_OR_ANSWER_EASE1.addBinding(prefs, MappableBinding.fromGesture(gesture))
     }
 
     private fun startReviewerFullScreen(): ReviewerExt {
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(targetContext)
+        val sharedPrefs = targetContext.sharedPrefs()
         setPreference(sharedPrefs, FullScreenMode.BUTTONS_ONLY)
         return ReviewerTest.startReviewer(this, ReviewerExt::class.java)
     }

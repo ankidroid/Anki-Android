@@ -63,6 +63,7 @@ import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
@@ -969,16 +970,37 @@ abstract class AbstractFlashcardViewer :
         topBarLayout = findViewById(R.id.top_bar)
         mCardFrame = findViewById(R.id.flashcard)
         mCardFrameParent = mCardFrame!!.parent as ViewGroup
-        mTouchLayer = findViewById<FrameLayout>(R.id.touch_layer).apply { setOnTouchListener(mGestureListener) }
+        mTouchLayer =
+            findViewById<FrameLayout>(R.id.touch_layer).apply { setOnTouchListener(mGestureListener) }
         mCardFrame!!.removeAllViews()
 
         // Initialize swipe
         gestureDetector = GestureDetector(this, mGestureDetectorImpl)
         easeButtonsLayout = findViewById(R.id.ease_buttons)
-        easeButton1 = EaseButton(EASE_1, findViewById(R.id.flashcard_layout_ease1), findViewById(R.id.ease1), findViewById(R.id.nextTime1)).apply { setListeners(mEaseHandler) }
-        easeButton2 = EaseButton(EASE_2, findViewById(R.id.flashcard_layout_ease2), findViewById(R.id.ease2), findViewById(R.id.nextTime2)).apply { setListeners(mEaseHandler) }
-        easeButton3 = EaseButton(EASE_3, findViewById(R.id.flashcard_layout_ease3), findViewById(R.id.ease3), findViewById(R.id.nextTime3)).apply { setListeners(mEaseHandler) }
-        easeButton4 = EaseButton(EASE_4, findViewById(R.id.flashcard_layout_ease4), findViewById(R.id.ease4), findViewById(R.id.nextTime4)).apply { setListeners(mEaseHandler) }
+        easeButton1 = EaseButton(
+            EASE_1,
+            findViewById(R.id.flashcard_layout_ease1),
+            findViewById(R.id.ease1),
+            findViewById(R.id.nextTime1)
+        ).apply { setListeners(mEaseHandler) }
+        easeButton2 = EaseButton(
+            EASE_2,
+            findViewById(R.id.flashcard_layout_ease2),
+            findViewById(R.id.ease2),
+            findViewById(R.id.nextTime2)
+        ).apply { setListeners(mEaseHandler) }
+        easeButton3 = EaseButton(
+            EASE_3,
+            findViewById(R.id.flashcard_layout_ease3),
+            findViewById(R.id.ease3),
+            findViewById(R.id.nextTime3)
+        ).apply { setListeners(mEaseHandler) }
+        easeButton4 = EaseButton(
+            EASE_4,
+            findViewById(R.id.flashcard_layout_ease4),
+            findViewById(R.id.ease4),
+            findViewById(R.id.nextTime4)
+        ).apply { setListeners(mEaseHandler) }
         if (!mShowNextReviewTime) {
             easeButton1!!.hideNextReviewTime()
             easeButton2!!.hideNextReviewTime()
@@ -986,7 +1008,9 @@ abstract class AbstractFlashcardViewer :
             easeButton4!!.hideNextReviewTime()
         }
         val flipCard = findViewById<Button>(R.id.flip_card)
-        flipCardLayout = findViewById<LinearLayout>(R.id.flashcard_layout_flip).apply { setOnClickListener(mFlipCardListener) }
+        flipCardLayout = findViewById<LinearLayout>(R.id.flashcard_layout_flip).apply {
+            setOnClickListener(mFlipCardListener)
+        }
         if (animationEnabled()) {
             flipCard.setBackgroundResource(getResFromAttr(this, R.attr.hardButtonRippleRef))
         }
@@ -1008,7 +1032,7 @@ abstract class AbstractFlashcardViewer :
         initControls()
 
         // Position answer buttons
-        val answerButtonsPosition = AnkiDroidApp.getSharedPrefs(this).getString(
+        val answerButtonsPosition = this.sharedPrefs().getString(
             getString(R.string.answer_buttons_position_preference),
             "bottom"
         )
@@ -1016,7 +1040,8 @@ abstract class AbstractFlashcardViewer :
         val answerArea = findViewById<LinearLayout>(R.id.bottom_area_layout)
         val answerAreaParams = answerArea.layoutParams as RelativeLayout.LayoutParams
         val whiteboardContainer = findViewById<FrameLayout>(R.id.whiteboard)
-        val whiteboardContainerParams = whiteboardContainer.layoutParams as RelativeLayout.LayoutParams
+        val whiteboardContainerParams =
+            whiteboardContainer.layoutParams as RelativeLayout.LayoutParams
         val flashcardContainerParams = mCardFrame!!.layoutParams as RelativeLayout.LayoutParams
         val touchLayerContainerParams = mTouchLayer!!.layoutParams as RelativeLayout.LayoutParams
         when (answerButtonsPosition) {
@@ -1028,6 +1053,7 @@ abstract class AbstractFlashcardViewer :
                 answerArea.removeView(answerField)
                 answerArea.addView(answerField, 1)
             }
+
             "bottom",
             "none" -> {
                 whiteboardContainerParams.addRule(RelativeLayout.ABOVE, R.id.bottom_area_layout)
@@ -1038,6 +1064,7 @@ abstract class AbstractFlashcardViewer :
                 touchLayerContainerParams.addRule(RelativeLayout.BELOW, R.id.mic_tool_bar_layer)
                 answerAreaParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
             }
+
             else -> Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition)
         }
         answerArea.visibility = if (answerButtonsPosition == "none") View.GONE else View.VISIBLE
@@ -1245,7 +1272,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     protected open fun restorePreferences(): SharedPreferences {
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val preferences = baseContext.sharedPrefs()
         typeAnswer = createInstance(preferences)
         // mDeckFilename = preferences.getString("deckFilename", "");
         fullscreenMode = fromPreference(preferences)
@@ -1255,13 +1282,18 @@ abstract class AbstractFlashcardViewer :
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false)
         prefShowTopbar = preferences.getBoolean("showTopbar", true)
         mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false)
-        mDoubleTapTimeInterval = preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
+        mDoubleTapTimeInterval =
+            preferences.getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
         mExitViaDoubleTapBack = preferences.getBoolean("exitViaDoubleTapBack", false)
         mGesturesEnabled = preferences.getBoolean(GestureProcessor.PREF_KEY, false)
         if (mGesturesEnabled) {
             mGestureProcessor.init(preferences)
         }
-        if (preferences.getBoolean("timeoutAnswer", false) || preferences.getBoolean("keepScreenOn", false)) {
+        if (preferences.getBoolean("timeoutAnswer", false) || preferences.getBoolean(
+                "keepScreenOn",
+                false
+            )
+        ) {
             this.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
         return preferences
@@ -1271,7 +1303,7 @@ abstract class AbstractFlashcardViewer :
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
             mShowNextReviewTime = col.get_config_boolean("estTimes")
-            val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+            val preferences = baseContext.sharedPrefs()
             automaticAnswer = AutomaticAnswer.createInstance(this, preferences, col)
         } catch (ex: Exception) {
             Timber.w(ex)
@@ -1289,7 +1321,7 @@ abstract class AbstractFlashcardViewer :
     protected open fun recreateWebView() {
         if (webView == null) {
             webView = createWebView()
-            initializeDebugging(AnkiDroidApp.getSharedPrefs(this))
+            initializeDebugging(this.sharedPrefs())
             mCardFrame!!.addView(webView)
             mGestureDetectorImpl.onWebViewCreated(webView!!)
         }
@@ -1472,7 +1504,7 @@ abstract class AbstractFlashcardViewer :
         }
         cardContent = content.getTemplateHtml()
         Timber.d("base url = %s", mBaseUrl)
-        if (AnkiDroidApp.getSharedPrefs(this).getBoolean("html_javascript_debugging", false)) {
+        if (this.sharedPrefs().getBoolean("html_javascript_debugging", false)) {
             try {
                 FileOutputStream(
                     File(

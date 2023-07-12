@@ -20,10 +20,10 @@ import android.content.SharedPreferences
 import android.os.Looper.getMainLooper
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.AnkiSerialization
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.FileOperation
 import junit.framework.TestCase.*
 import org.hamcrest.MatcherAssert.assertThat
@@ -46,7 +46,7 @@ class AddonModelTest : RobolectricTest() {
 
     @Before
     fun before() {
-        mPrefs = AnkiDroidApp.getSharedPrefs(targetContext)
+        mPrefs = targetContext.sharedPrefs()
     }
 
     @Before

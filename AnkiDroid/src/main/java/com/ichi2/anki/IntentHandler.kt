@@ -27,6 +27,7 @@ import androidx.core.content.FileProvider
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
@@ -229,7 +230,7 @@ class IntentHandler : Activity() {
             analyticName = "DoSyncDialog"
         ) {
             override fun handleAsyncMessage(deckPicker: DeckPicker) {
-                val preferences = AnkiDroidApp.getSharedPrefs(deckPicker)
+                val preferences = deckPicker.sharedPrefs()
                 val res = deckPicker.resources
                 val hkey = preferences.getString("hkey", "")
                 val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
@@ -239,13 +240,22 @@ class IntentHandler : Activity() {
                 } else {
                     val err = res.getString(R.string.sync_error)
                     if (limited) {
-                        val remainingTimeInSeconds = max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
+                        val remainingTimeInSeconds =
+                            max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
                         // getQuantityString needs an int
                         val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
-                        val message = res.getQuantityString(R.plurals.sync_automatic_sync_needs_more_time, remaining, remaining)
+                        val message = res.getQuantityString(
+                            R.plurals.sync_automatic_sync_needs_more_time,
+                            remaining,
+                            remaining
+                        )
                         deckPicker.showSimpleNotification(err, message, Channel.SYNC)
                     } else {
-                        deckPicker.showSimpleNotification(err, res.getString(R.string.youre_offline), Channel.SYNC)
+                        deckPicker.showSimpleNotification(
+                            err,
+                            res.getString(R.string.youre_offline),
+                            Channel.SYNC
+                        )
                     }
                 }
                 deckPicker.finishWithoutAnimation()

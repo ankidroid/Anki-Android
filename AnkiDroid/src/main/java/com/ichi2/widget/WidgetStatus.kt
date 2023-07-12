@@ -19,6 +19,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.MetaDB
 import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.async.BaseAsyncTask
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.utils.KotlinCleanup
@@ -41,11 +42,14 @@ object WidgetStatus {
      *             https://developer.android.com/guide/topics/appwidgets/#MetaData
      */
     @Suppress("deprecation") // #7108: AsyncTask
-    fun update(context: Context?) {
-        val preferences = AnkiDroidApp.getSharedPrefs(context)
+    fun update(context: Context) {
+        val preferences = context.sharedPrefs()
         sSmallWidgetEnabled = preferences.getBoolean("widgetSmallEnabled", false)
-        val notificationEnabled = preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")!!.toInt() < 1000000
-        val canExecuteTask = sUpdateDeckStatusAsyncTask == null || sUpdateDeckStatusAsyncTask!!.status == android.os.AsyncTask.Status.FINISHED
+        val notificationEnabled =
+            preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "1000001")!!
+                .toInt() < 1000000
+        val canExecuteTask =
+            sUpdateDeckStatusAsyncTask == null || sUpdateDeckStatusAsyncTask!!.status == android.os.AsyncTask.Status.FINISHED
         if ((sSmallWidgetEnabled || notificationEnabled) && canExecuteTask) {
             Timber.d("WidgetStatus.update(): updating")
             sUpdateDeckStatusAsyncTask = UpdateDeckStatusAsyncTask()

@@ -68,7 +68,7 @@ object InitialActivity {
 
     /** @return Whether any preferences were upgraded
      */
-    fun upgradePreferences(context: Context?, previousVersionCode: Long): Boolean {
+    fun upgradePreferences(context: Context, previousVersionCode: Long): Boolean {
         return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode)
     }
 

@@ -113,7 +113,9 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 isEnabled = false
             }
             setSummaryProvider {
-                if (AnkiDroidApp.getSharedPrefs(requireContext()).getBoolean("advanced_statistics_enabled", false)) {
+                if (requireContext().sharedPrefs()
+                    .getBoolean("advanced_statistics_enabled", false)
+                ) {
                     getString(R.string.enabled)
                 } else {
                     getString(R.string.disabled)

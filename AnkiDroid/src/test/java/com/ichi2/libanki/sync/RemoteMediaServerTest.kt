@@ -20,6 +20,7 @@ import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.SyncPreferences
+import com.ichi2.anki.preferences.sharedPrefs
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Ignore
@@ -93,14 +94,14 @@ class RemoteMediaServerTest {
     }
 
     private fun setCustomServerWithNoUrl() {
-        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+        AnkiDroidApp.instance.sharedPrefs()
             .edit {
                 putBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, true)
             }
     }
 
     private fun setCustomMediaServer(s: String) {
-        AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+        AnkiDroidApp.instance.sharedPrefs()
             .edit {
                 putBoolean(SyncPreferences.CUSTOM_SYNC_ENABLED, true)
                 putString(SyncPreferences.CUSTOM_SYNC_URI, s)

@@ -22,7 +22,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.utils.*
 
@@ -40,7 +39,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                 title(R.string.reset_settings_to_default)
                 positiveButton(R.string.reset) {
                     // Reset the settings to default
-                    AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+                    requireContext().sharedPrefs().edit {
                         remove("customButtonUndo")
                         remove("customButtonScheduleCard")
                         remove("customButtonEditCard")

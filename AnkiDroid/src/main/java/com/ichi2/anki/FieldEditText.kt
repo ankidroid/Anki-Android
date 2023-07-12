@@ -36,6 +36,7 @@ import androidx.core.view.OnReceiveContentListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.core.view.inputmethod.InputConnectionCompat
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.FixedEditText
@@ -72,7 +73,7 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
     }
 
     private fun shouldDisableExtendedTextUi(): Boolean {
-        return AnkiDroidApp.getSharedPrefs(this.context).getBoolean("disableExtendedTextUi", false)
+        return this.context.sharedPrefs().getBoolean("disableExtendedTextUi", false)
     }
 
     @KotlinCleanup("Simplify")

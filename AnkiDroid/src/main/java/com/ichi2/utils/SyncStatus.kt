@@ -22,6 +22,7 @@ import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.SyncPreferences
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
 import net.ankiweb.rsdroid.BackendFactory
 
@@ -43,7 +44,7 @@ enum class SyncStatus {
             if (!BackendFactory.defaultLegacySchema) {
                 val output = col.newBackend.backend.syncStatus(auth)
                 if (output.hasNewEndpoint()) {
-                    AnkiDroidApp.getSharedPrefs(context).edit {
+                    context.sharedPrefs().edit {
                         putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
                     }
                 }
@@ -70,13 +71,13 @@ enum class SyncStatus {
 
         private val isDisabled: Boolean
             get() {
-                val preferences = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+                val preferences = AnkiDroidApp.instance.sharedPrefs()
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
 
         /** Whether data has been changed - to be converted to Rust  */
         fun hasDatabaseChanges(): Boolean {
-            return AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).getBoolean("changesSinceLastSync", false)
+            return AnkiDroidApp.instance.sharedPrefs().getBoolean("changesSinceLastSync", false)
         }
 
         /** To be converted to Rust  */
@@ -85,14 +86,14 @@ enum class SyncStatus {
                 return
             }
             sMarkedInMemory = true
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit { putBoolean("changesSinceLastSync", true) }
+            AnkiDroidApp.instance.sharedPrefs().edit { putBoolean("changesSinceLastSync", true) }
         }
 
         /** To be converted to Rust  */
         @KotlinCleanup("Convert these to @RustCleanup")
         fun markSyncCompleted() {
             sMarkedInMemory = false
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance).edit { putBoolean("changesSinceLastSync", false) }
+            AnkiDroidApp.instance.sharedPrefs().edit { putBoolean("changesSinceLastSync", false) }
         }
 
         fun ignoreDatabaseModification(runnable: Runnable) {

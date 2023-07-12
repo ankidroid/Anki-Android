@@ -349,7 +349,7 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
         return answerButtonsOverview
     }
 
-    fun calculateDue(context: Context?, type: AxisType): Boolean {
+    fun calculateDue(context: Context, type: AxisType): Boolean {
         // Not in libanki
         var metaInfo = StatsMetaInfo()
         metaInfo = AdvancedStatistics().calculateDueAsMetaInfo(metaInfo, type, context, _limit())
