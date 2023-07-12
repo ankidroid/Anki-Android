@@ -193,7 +193,6 @@ android {
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
-
         // We want the same version stream for all ABIs in debug but for release we can split them
         if (variant.buildType.name == 'release') {
             variant.outputs.all { output ->
@@ -221,6 +220,11 @@ android {
 
     testOptions {
         animationsDisabled true
+        kotlinOptions {
+            freeCompilerArgs += [
+                    '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
+            ]
+        }
     }
 
     compileOptions {
@@ -231,12 +235,19 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
 }
 
 play {
     serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
     track.set('alpha')
 }
+
 amazon {
     securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")
     applicationId = "amzn1.devportal.mobileapp.524a424d314931494c55383833305539"
@@ -284,10 +295,10 @@ dependencies {
             force 'org.jetbrains:annotations:24.0.1'
         }
     }
-
+    api project(":api")
     lintChecks project(":lint-rules")
-
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+
     compileOnly 'org.jetbrains:annotations:24.0.1'
     compileOnly "com.google.auto.service:auto-service-annotations:1.1.1"
     annotationProcessor "com.google.auto.service:auto-service:1.1.1"
@@ -330,10 +341,6 @@ dependencies {
         testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"
     }
 
-    // A path for a testing library which provide Parameterized Test
-    testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
-
     // May need a resolution strategy for support libs to our versions
     implementation "ch.acra:acra-http:$acra_version"
     implementation "ch.acra:acra-dialog:$acra_version"
@@ -365,8 +372,9 @@ dependencies {
     // build via AnkiDroidApp.
     implementation 'com.squareup.leakcanary:leakcanary-android:2.12'
 
-    api project(":api")
-
+    // A path for a testing library which provide Parameterized Test
+    testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
     testImplementation 'org.mockito:mockito-inline:5.2.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:5.1.0"
@@ -395,22 +403,4 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
     androidTestImplementation("androidx.fragment:fragment-testing:$fragments_version")
-}
-
-android {
-
-
-    packagingOptions {
-        resources {
-            excludes += ['META-INF/DEPENDENCIES']
-        }
-    }
-    namespace 'com.ichi2.anki'
-    testOptions {
-        kotlinOptions {
-            freeCompilerArgs += [
-                    '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
-            ]
-        }
-    }
 }
