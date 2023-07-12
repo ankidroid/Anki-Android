@@ -36,6 +36,7 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.dialogs.ExportDialogParams
 import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
@@ -305,14 +306,14 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
      */
     private fun saveSuccessfulCollectionExportIfRelevant() {
         if (::mExportFileName.isInitialized && !mExportFileName.endsWith(".colpkg")) return
-        AnkiDroidApp.getSharedPrefs(activity).edit {
+        activity.sharedPrefs().edit {
             putLong(
                 LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY,
                 TimeManager.time.intTime()
             )
         }
         val col = collectionSupplier.get()
-        AnkiDroidApp.getSharedPrefs(activity).edit {
+        activity.sharedPrefs().edit {
             putLong(
                 LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY,
                 col.mod

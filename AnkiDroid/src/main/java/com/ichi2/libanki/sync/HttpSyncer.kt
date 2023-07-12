@@ -23,6 +23,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.exception.UnknownHttpResponseException
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.anki.web.HttpFetcher
 import com.ichi2.async.Connection
@@ -137,9 +138,17 @@ open class HttpSyncer(
             postVars["c"] = if (comp != 0) 1 else 0
             for ((key, value) in postVars) {
                 buf.write(bdry + "\r\n")
-                buf.write(String.format(Locale.US, "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n", key, value))
+                buf.write(
+                    String.format(
+                        Locale.US,
+                        "Content-Disposition: form-data; name=\"%s\"\r\n\r\n%s\r\n",
+                        key,
+                        value
+                    )
+                )
             }
-            tmpFileBuffer = File.createTempFile("syncer", ".tmp", File(AnkiDroidApp.cacheStorageDirectory))
+            tmpFileBuffer =
+                File.createTempFile("syncer", ".tmp", File(AnkiDroidApp.cacheStorageDirectory))
             val fos = FileOutputStream(tmpFileBuffer)
             var bos = BufferedOutputStream(fos)
             val tgt: GZIPOutputStream
@@ -278,10 +287,15 @@ open class HttpSyncer(
     fun stream2String(stream: InputStream?, maxSize: Int): String {
         val rd: BufferedReader
         return try {
-            rd = BufferedReader(InputStreamReader(stream, "UTF-8"), if (maxSize == -1) 4096 else min(4096, maxSize))
+            rd = BufferedReader(
+                InputStreamReader(stream, "UTF-8"),
+                if (maxSize == -1) 4096 else min(4096, maxSize)
+            )
             var line: String
             val sb = StringBuilder()
-            while (rd.readLine().also { line = it } != null && (maxSize == -1 || sb.length < maxSize)) {
+            while (rd.readLine()
+                .also { line = it } != null && (maxSize == -1 || sb.length < maxSize)
+            ) {
                 sb.append(line)
                 bytesReceived.addAndGet(line.length.toLong())
                 publishProgress()
@@ -305,11 +319,12 @@ open class HttpSyncer(
         }
     }
 
-    val preferences: SharedPreferences get() = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+    val preferences: SharedPreferences get() = AnkiDroidApp.instance.sharedPrefs()
 
     open fun getDefaultSyncUrl() = "https://sync${hostNum ?: ""}.ankiweb.net/sync/"
 
-    open fun getCustomSyncUrlOrNull() = CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(preferences)
+    open fun getCustomSyncUrlOrNull() =
+        CustomSyncServer.getCollectionSyncUrlIfSetAndEnabledOrNull(preferences)
 
     fun syncURL() = getCustomSyncUrlOrNull() ?: getDefaultSyncUrl()
 
@@ -318,7 +333,8 @@ open class HttpSyncer(
 
     companion object {
         private const val BOUNDARY = "Anki-sync-boundary"
-        private val ANKI_POST_TYPE: MediaType = ("multipart/form-data; boundary=$BOUNDARY").toMediaType()
+        private val ANKI_POST_TYPE: MediaType =
+            ("multipart/form-data; boundary=$BOUNDARY").toMediaType()
         const val ANKIWEB_STATUS_OK = "OK"
         fun getInputStream(string: String): ByteArrayInputStream? {
             return try {
@@ -336,7 +352,8 @@ open class HttpSyncer(
         @KotlinCleanup("move to constructor")
         this.con = con
         @KotlinCleanup("combined declaration and initialization")
-        postVars = HashMapInit(0) // New map is created each time it is filled. No need to allocate room
+        postVars =
+            HashMapInit(0) // New map is created each time it is filled. No need to allocate room
         @KotlinCleanup("move to constructor")
         mHostNum = hostNum
     }

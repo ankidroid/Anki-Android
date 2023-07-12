@@ -19,7 +19,7 @@ package com.ichi2.anki.cardviewer
 import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.CheckResult
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
@@ -52,12 +52,22 @@ class HtmlGenerator(
     }
 
     companion object {
-        fun createInstance(context: Context, typeAnswer: TypeAnswer, baseUrl: String): HtmlGenerator {
-            val preferences = AnkiDroidApp.getSharedPrefs(context)
+        fun createInstance(
+            context: Context,
+            typeAnswer: TypeAnswer,
+            baseUrl: String
+        ): HtmlGenerator {
+            val preferences = context.sharedPrefs()
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(context), preferences)
             val cardHtmlTemplate = loadCardTemplate(context)
 
-            return HtmlGenerator(typeAnswer, cardAppearance, cardHtmlTemplate, context.resources, baseUrl)
+            return HtmlGenerator(
+                typeAnswer,
+                cardAppearance,
+                cardHtmlTemplate,
+                context.resources,
+                baseUrl
+            )
         }
 
         /**

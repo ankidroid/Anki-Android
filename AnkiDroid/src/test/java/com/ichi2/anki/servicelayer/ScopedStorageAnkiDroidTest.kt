@@ -17,10 +17,10 @@
 package com.ichi2.anki.servicelayer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateEssentialFilesForTest
 import com.ichi2.anki.servicelayer.scopedstorage.setLegacyStorage
@@ -115,7 +115,8 @@ class ScopedStorageAnkiDroidTest : RobolectricTest() {
     }
 
     private fun getBestRootDirectory(): File {
-        val collectionPath = AnkiDroidApp.getSharedPrefs(targetContext).getString(CollectionHelper.PREF_COLLECTION_PATH, null)!!
+        val collectionPath =
+            targetContext.sharedPrefs().getString(CollectionHelper.PREF_COLLECTION_PATH, null)!!
 
         // Get the scoped storage directory to migrate to. This is based on the location
         // of the current collection path

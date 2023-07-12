@@ -29,6 +29,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.ExceptionUtil.executeSafe
@@ -79,7 +80,8 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
     }
 
     private fun openChooserPrompt(initialMimeType: String, extraMimeTypes: Array<String>, @StringRes prompt: Int, resultCode: Int) {
-        val allowAllFiles = AnkiDroidApp.getSharedPrefs(this.mActivity).getBoolean("mediaImportAllowAllFiles", false)
+        val allowAllFiles =
+            this.mActivity.sharedPrefs().getBoolean("mediaImportAllowAllFiles", false)
         val i = Intent()
         i.type = if (allowAllFiles) "*/*" else initialMimeType
         if (!allowAllFiles && extraMimeTypes.any()) {
@@ -91,7 +93,10 @@ class BasicMediaClipFieldController : FieldControllerBase(), IFieldController {
         // Only get openable files, to avoid virtual files issues with Android 7+
         i.addCategory(Intent.CATEGORY_OPENABLE)
         val chooserPrompt = mActivity.resources.getString(prompt)
-        mActivity.startActivityForResultWithoutAnimation(Intent.createChooser(i, chooserPrompt), resultCode)
+        mActivity.startActivityForResultWithoutAnimation(
+            Intent.createChooser(i, chooserPrompt),
+            resultCode
+        )
     }
 
     @KotlinCleanup("make data non-null")

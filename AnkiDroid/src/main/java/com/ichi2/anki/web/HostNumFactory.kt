@@ -17,11 +17,11 @@
 package com.ichi2.anki.web
 
 import android.content.Context
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.sync.HostNum
 
 object HostNumFactory {
     fun getInstance(context: Context): HostNum {
-        return PreferenceBackedHostNum.fromPreferences(AnkiDroidApp.getSharedPrefs(context))
+        return PreferenceBackedHostNum.fromPreferences(context.sharedPrefs())
     }
 }

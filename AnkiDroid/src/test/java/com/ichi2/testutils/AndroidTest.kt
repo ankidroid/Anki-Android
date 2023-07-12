@@ -20,7 +20,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.core.app.ApplicationProvider
-import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.preferences.sharedPrefs
 
 /** Marker interface for classes annotated with `@RunWith(AndroidJUnit4.class)` */
 interface AndroidTest
@@ -42,7 +42,7 @@ val AndroidTest.targetContext: Context
  * Returns an instance of [SharedPreferences] using the test context
  * @see [editPreferences] for editing
  */
-fun AndroidTest.getSharedPrefs(): SharedPreferences = AnkiDroidApp.getSharedPrefs(targetContext)
+fun AndroidTest.getSharedPrefs(): SharedPreferences = targetContext.sharedPrefs()
 
 fun AndroidTest.getString(res: Int): String = targetContext.getString(res)
 

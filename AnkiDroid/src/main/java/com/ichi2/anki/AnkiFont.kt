@@ -3,6 +3,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.graphics.Typeface
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Utils
 import timber.log.Timber
 import java.io.File
@@ -101,7 +102,7 @@ class AnkiFont private constructor(val name: String, private val family: String,
             val createdFont = AnkiFont(name, family, attributes, path)
 
             // determine if override font or default font
-            val preferences = AnkiDroidApp.getSharedPrefs(ctx)
+            val preferences = ctx.sharedPrefs()
             val defaultFont = preferences.getString("defaultFont", "")
             val overrideFont = "1" == preferences.getString("overrideFontBehavior", "0")
             if (defaultFont.equals(name, ignoreCase = true)) {

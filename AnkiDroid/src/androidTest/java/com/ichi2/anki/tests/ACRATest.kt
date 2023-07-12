@@ -27,6 +27,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ALWAYS
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.testutil.GrantStoragePermission
 import org.acra.ACRA
 import org.acra.builder.ReportBuilder
@@ -276,5 +277,5 @@ class ACRATest : InstrumentedTest() {
     }
 
     private val sharedPrefs: SharedPreferences
-        get() = AnkiDroidApp.getSharedPrefs(testContext)
+        get() = testContext.sharedPrefs()
 }

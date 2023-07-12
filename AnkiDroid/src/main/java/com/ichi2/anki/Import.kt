@@ -24,6 +24,7 @@ import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.pages.CsvImporter
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.TaskListenerWithContext
@@ -91,7 +92,7 @@ fun DeckPicker.showImportDialog(options: ImportOptions) {
 class DatabaseRestorationListener(val deckPicker: DeckPicker, val newAnkiDroidDirectory: String) : ImportColpkgListener {
     override fun onImportColpkg(colpkgPath: String?) {
         Timber.i("Database restoration correct")
-        AnkiDroidApp.getSharedPrefs(deckPicker).edit {
+        deckPicker.sharedPrefs().edit {
             putString("deckPath", newAnkiDroidDirectory)
         }
         deckPicker.dismissAllDialogFragments()

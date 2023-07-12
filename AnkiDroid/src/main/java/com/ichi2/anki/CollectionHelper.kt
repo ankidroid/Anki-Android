@@ -26,6 +26,7 @@ import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
@@ -497,11 +498,13 @@ open class CollectionHelper {
          * @return the absolute path to the AnkiDroid directory.
          */
         fun getCurrentAnkiDroidDirectory(context: Context): String {
-            val preferences = AnkiDroidApp.getSharedPrefs(context)
+            val preferences = context.sharedPrefs()
             return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
                 // create an "androidTest" directory inside the current collection directory which contains the test data
                 // "/AnkiDroid/androidTest" would be a new collection path
-                val currentCollectionDirectory = preferences.getOrSetString(PREF_COLLECTION_PATH) { getDefaultAnkiDroidDirectory(context) }
+                val currentCollectionDirectory = preferences.getOrSetString(PREF_COLLECTION_PATH) {
+                    getDefaultAnkiDroidDirectory(context)
+                }
                 File(
                     currentCollectionDirectory,
                     "androidTest"
@@ -509,7 +512,11 @@ open class CollectionHelper {
             } else if (ankiDroidDirectoryOverride != null) {
                 ankiDroidDirectoryOverride!!
             } else {
-                preferences.getOrSetString(PREF_COLLECTION_PATH) { getDefaultAnkiDroidDirectory(context) }
+                preferences.getOrSetString(PREF_COLLECTION_PATH) {
+                    getDefaultAnkiDroidDirectory(
+                        context
+                    )
+                }
             }
         }
 
@@ -519,7 +526,7 @@ open class CollectionHelper {
          * this will represent a change from `/AnkiDroid` to `/Android/data/...`
          */
         fun resetAnkiDroidDirectory(context: Context) {
-            val preferences = AnkiDroidApp.getSharedPrefs(context)
+            val preferences = context.sharedPrefs()
             val directory = getDefaultAnkiDroidDirectory(context)
             Timber.d("resetting AnkiDroid directory to %s", directory)
             preferences.edit { putString(PREF_COLLECTION_PATH, directory) }

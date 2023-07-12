@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.ConfigurationCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.preferences.sharedPrefs
 import net.ankiweb.rsdroid.BackendFactory
 import java.text.DateFormat
 import java.util.*
@@ -208,7 +209,7 @@ object LanguageUtil {
 
     /** If locale is not provided, the current locale will be used. */
     fun setDefaultBackendLanguages(languageTag: String? = null) {
-        val langCode = languageTag ?: AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+        val langCode = languageTag ?: AnkiDroidApp.instance.sharedPrefs()
             .getString("language", SYSTEM_LANGUAGE_TAG)!!
 
         val localeLanguage = if (langCode == SYSTEM_LANGUAGE_TAG) {

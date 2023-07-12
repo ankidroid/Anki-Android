@@ -29,6 +29,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -43,7 +44,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
         Timber.d("SmallWidget: Widget enabled")
-        val preferences = AnkiDroidApp.getSharedPrefs(context)
+        val preferences = context.sharedPrefs()
         preferences.edit(commit = true) { putBoolean("widgetSmallEnabled", true) }
         UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "enabled")
     }
@@ -51,7 +52,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
         Timber.d("SmallWidget: Widget disabled")
-        val preferences = AnkiDroidApp.getSharedPrefs(context)
+        val preferences = context.sharedPrefs()
         preferences.edit(commit = true) { putBoolean("widgetSmallEnabled", false) }
         UsageAnalytics.sendAnalyticsEvent(this.javaClass.simpleName, "disabled")
     }

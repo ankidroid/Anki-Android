@@ -22,10 +22,10 @@ import android.content.SharedPreferences
 import android.os.Build
 import android.os.Environment
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.model.Directory
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
@@ -203,7 +203,7 @@ object ScopedStorageService {
      * It is a logic bug if only one is set
      */
     fun mediaMigrationIsInProgress(context: Context): Boolean =
-        mediaMigrationIsInProgress(AnkiDroidApp.getSharedPrefs(context))
+        mediaMigrationIsInProgress(context.sharedPrefs())
 
     /**
      * Whether a user data scoped storage migration is taking place
@@ -288,7 +288,7 @@ object ScopedStorageService {
      * if `isLegacyStorage` is called when obtaining the collection path
      */
     fun isLegacyStorage(context: Context, setCollectionPath: Boolean): Boolean? {
-        if (!setCollectionPath && !AnkiDroidApp.getSharedPrefs(context)
+        if (!setCollectionPath && !context.sharedPrefs()
             .contains(CollectionHelper.PREF_COLLECTION_PATH)
         ) {
             return null

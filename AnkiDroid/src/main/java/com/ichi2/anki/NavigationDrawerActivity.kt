@@ -43,6 +43,7 @@ import com.google.android.material.navigation.NavigationView
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.HelpDialog
 import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.CardId
@@ -75,7 +76,7 @@ abstract class NavigationDrawerActivity :
     private var mPendingRunnable: Runnable? = null
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val preferences = baseContext.sharedPrefs()
 
         // Using ClosableDrawerLayout as a parent view.
         val closableDrawerLayout = LayoutInflater.from(this).inflate(
@@ -116,7 +117,12 @@ abstract class NavigationDrawerActivity :
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
-        mDrawerLayout.setStatusBarBackgroundColor(Themes.getColorFromAttr(this, android.R.attr.colorPrimary))
+        mDrawerLayout.setStatusBarBackgroundColor(
+            Themes.getColorFromAttr(
+                this,
+                android.R.attr.colorPrimary
+            )
+        )
         // Setup toolbar and hamburger
         mNavigationView = mDrawerLayout.findViewById(R.id.navdrawer_items_container)
         mNavigationView.setNavigationItemSelectedListener(this)
@@ -132,7 +138,12 @@ abstract class NavigationDrawerActivity :
         }
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the sliding drawer and the action bar app icon
-        drawerToggle = object : ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+        drawerToggle = object : ActionBarDrawerToggle(
+            this,
+            mDrawerLayout,
+            R.string.drawer_open,
+            R.string.drawer_close
+        ) {
 
             override fun onDrawerClosed(drawerView: View) {
                 super.onDrawerClosed(drawerView)
@@ -201,7 +212,7 @@ abstract class NavigationDrawerActivity :
     }
 
     private val preferences: SharedPreferences
-        get() = AnkiDroidApp.getSharedPrefs(this@NavigationDrawerActivity)
+        get() = this@NavigationDrawerActivity.sharedPrefs()
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
@@ -226,20 +237,25 @@ abstract class NavigationDrawerActivity :
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
-    private val mPreferencesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        val preferences = preferences
-        Timber.i("Handling Activity Result: %d. Result: %d", REQUEST_PREFERENCES_UPDATE, result.resultCode)
-        CompatHelper.compat.setupNotificationChannel(applicationContext)
-        // Restart the activity on preference change
-        // collection path hasn't been changed so just restart the current activity
-        if (this is Reviewer && preferences.getBoolean("tts", false)) {
-            // Workaround to kick user back to StudyOptions after opening settings from Reviewer
-            // because onDestroy() of old Activity interferes with TTS in new Activity
-            finishWithoutAnimation()
-        } else {
-            recreate()
+    private val mPreferencesLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val preferences = preferences
+            Timber.i(
+                "Handling Activity Result: %d. Result: %d",
+                REQUEST_PREFERENCES_UPDATE,
+                result.resultCode
+            )
+            CompatHelper.compat.setupNotificationChannel(applicationContext)
+            // Restart the activity on preference change
+            // collection path hasn't been changed so just restart the current activity
+            if (this is Reviewer && preferences.getBoolean("tts", false)) {
+                // Workaround to kick user back to StudyOptions after opening settings from Reviewer
+                // because onDestroy() of old Activity interferes with TTS in new Activity
+                finishWithoutAnimation()
+            } else {
+                recreate()
+            }
         }
-    }
 
     @Suppress("deprecation") // onBackPressed
     override fun onBackPressed() {
@@ -284,10 +300,12 @@ abstract class NavigationDrawerActivity :
                     deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
                     startActivityWithAnimation(deckPicker, END)
                 }
+
                 R.id.nav_browser -> {
                     Timber.i("Navigating to card browser")
                     openCardBrowser()
                 }
+
                 R.id.nav_stats -> {
                     Timber.i("Navigating to stats")
                     val intent = if (BackendFactory.defaultLegacySchema) {
@@ -297,6 +315,7 @@ abstract class NavigationDrawerActivity :
                     }
                     startActivityWithAnimation(intent, START)
                 }
+
                 R.id.nav_settings -> {
                     Timber.i("Navigating to settings")
                     launchActivityForResultWithAnimation(
@@ -310,10 +329,12 @@ abstract class NavigationDrawerActivity :
                     // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
                     (this as? Statistics)?.finishWithAnimation(FADE)
                 }
+
                 R.id.nav_help -> {
                     Timber.i("Navigating to help")
                     showDialogFragment(HelpDialog.createInstance())
                 }
+
                 R.id.support_ankidroid -> {
                     Timber.i("Navigating to support AnkiDroid")
                     showDialogFragment(HelpDialog.createInstanceForSupportAnkiDroid(this))

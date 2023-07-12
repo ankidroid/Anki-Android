@@ -17,9 +17,9 @@ package com.ichi2.libanki.stats
 
 import android.content.Context
 import android.database.Cursor
-import com.ichi2.anki.AnkiDroidApp.Companion.getSharedPrefs
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.stats.StatsMetaInfo
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -117,7 +117,7 @@ class AdvancedStatistics {
         context: Context,
         dids: String
     ): StatsMetaInfo {
-        if (!getSharedPrefs(context).getBoolean("advanced_statistics_enabled", false)) {
+        if (!context.sharedPrefs().getBoolean("advanced_statistics_enabled", false)) {
             return metaInfo
         }
         // To indicate that we calculated the statistics so that Stats.java knows that it shouldn't display the standard Forecast chart.
@@ -858,7 +858,7 @@ class AdvancedStatistics {
         }
 
         init {
-            val prefs = getSharedPrefs(context)
+            val prefs = context.sharedPrefs()
             mCol = CollectionHelper.instance.getCol(context)!!
             computeNDays = prefs.getInt("advanced_forecast_stats_compute_n_days", 0)
             val computePrecision = prefs.getInt("advanced_forecast_stats_compute_precision", 90)

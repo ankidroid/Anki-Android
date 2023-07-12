@@ -29,6 +29,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.edit
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.web.HostNumFactory.getInstance
 import com.ichi2.async.Connection
@@ -59,11 +60,12 @@ open class MyAccount : AnkiActivity() {
     open fun switchToState(newState: Int) {
         when (newState) {
             STATE_LOGGED_IN -> {
-                val username = AnkiDroidApp.getSharedPrefs(baseContext).getString("username", "")
+                val username = baseContext.sharedPrefs().getString("username", "")
                 mUsernameLoggedIn.text = username
                 toolbar = mLoggedIntoMyAccountView.findViewById(R.id.toolbar)
                 if (toolbar != null) {
-                    toolbar!!.title = getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
+                    toolbar!!.title =
+                        getString(R.string.sync_account) // This can be cleaned up if all three main layouts are guaranteed to share the same toolbar object
                     setSupportActionBar(toolbar)
                 }
                 setContentView(mLoggedIntoMyAccountView)
@@ -127,7 +129,7 @@ open class MyAccount : AnkiActivity() {
     }
 
     private fun saveUserInformation(username: String, hkey: String) {
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val preferences = baseContext.sharedPrefs()
         preferences.edit {
             putString("username", username)
             putString("hkey", hkey)

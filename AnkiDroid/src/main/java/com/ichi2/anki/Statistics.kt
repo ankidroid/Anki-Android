@@ -40,6 +40,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.stats.AnkiStatsTaskHandler.Companion.getInstance
 import com.ichi2.anki.stats.ChartView
@@ -108,7 +109,7 @@ class Statistics : NavigationDrawerActivity(), DeckSelectionListener, SubtitleLi
         // Prepare options menu only after loading everything
         invalidateOptionsMenu()
         //        StatisticFragment.updateAllFragments();
-        when (val defaultDeck = AnkiDroidApp.getSharedPrefs(this).getString("stats_default_deck", "current")) {
+        when (val defaultDeck = this.sharedPrefs().getString("stats_default_deck", "current")) {
             "current" -> mStatsDeckId = col.decks.selected()
             "all" -> mStatsDeckId = Stats.ALL_DECKS_ID
             else -> Timber.w("Unknown defaultDeck: %s", defaultDeck)

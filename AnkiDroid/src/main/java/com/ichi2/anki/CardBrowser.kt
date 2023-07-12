@@ -55,6 +55,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.CardService.selectedNoteIds
 import com.ichi2.anki.servicelayer.NoteService.isMarked
@@ -272,12 +273,12 @@ open class CardBrowser :
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
                 col.set_config("sortType", fSortTypes[1])
-                AnkiDroidApp.getSharedPrefs(baseContext).edit {
+                baseContext.sharedPrefs().edit {
                     putBoolean("cardBrowserNoSorting", true)
                 }
             } else {
                 col.set_config("sortType", fSortTypes[mOrder])
-                AnkiDroidApp.getSharedPrefs(baseContext).edit {
+                baseContext.sharedPrefs().edit {
                     putBoolean("cardBrowserNoSorting", false)
                 }
             }
@@ -510,7 +511,11 @@ open class CardBrowser :
         super.onCreate(savedInstanceState)
         if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this) && !Permissions.isExternalStorageManagerCompat()) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
-            showThemedToast(this, getString(R.string.intent_handler_failed_no_storage_permission), false)
+            showThemedToast(
+                this,
+                getString(R.string.intent_handler_failed_no_storage_permission),
+                false
+            )
             displayDeckPickerForPermissionsDialog()
             return
         }
@@ -520,12 +525,13 @@ open class CardBrowser :
         // Load reference to action bar title
         mActionBarTitle = findViewById(R.id.toolbar_title)
         cardsListView = findViewById(R.id.card_browser_list)
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val preferences = baseContext.sharedPrefs()
         mColumn1Index = preferences.getInt("cardBrowserColumn1", 0)
         // Load default value for column2 selection
         mColumn2Index = preferences.getInt("cardBrowserColumn2", 0)
         // get the font and font size from the preferences
-        val sflRelativeFontSize = preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
+        val sflRelativeFontSize =
+            preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
         val sflCustomFont = preferences.getString("browserEditorFont", "")
         val columnsContent = arrayOf(COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index])
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
@@ -578,7 +584,7 @@ open class CardBrowser :
         super.onCollectionLoaded(col)
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
-        val preferences = AnkiDroidApp.getSharedPrefs(baseContext)
+        val preferences = baseContext.sharedPrefs()
 
         val colOrder = col.get_config_string("sortType")
         mOrder = fSortTypes.indexOf(colOrder).let { i -> if (i == -1) CARD_ORDER_NONE else i }
@@ -605,7 +611,7 @@ open class CardBrowser :
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn1Index) {
                     mColumn1Index = pos
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext).edit {
+                    AnkiDroidApp.instance.baseContext.sharedPrefs().edit {
                         putInt("cardBrowserColumn1", mColumn1Index)
                     }
                     val fromMap = cardsAdapter.fromMapping
@@ -634,7 +640,7 @@ open class CardBrowser :
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn2Index) {
                     mColumn2Index = pos
-                    AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext).edit {
+                    AnkiDroidApp.instance.baseContext.sharedPrefs().edit {
                         putInt("cardBrowserColumn2", mColumn2Index)
                     }
                     val fromMap = cardsAdapter.fromMapping
@@ -667,7 +673,10 @@ open class CardBrowser :
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (isInMultiSelectMode) {
                 var hasChanged = false
-                for (i in min(mLastSelectedPosition, position)..max(mLastSelectedPosition, position)) {
+                for (i in min(mLastSelectedPosition, position)..max(
+                    mLastSelectedPosition,
+                    position
+                )) {
                     val card = cardsListView.getItemAtPosition(i) as CardCache
 
                     // Add to the set of checked cards
@@ -700,8 +709,8 @@ open class CardBrowser :
             alwaysShowDefault = false,
             showFilteredDecks = true
         )
-        inCardsMode = AnkiDroidApp.getSharedPrefs(this).getBoolean("inCardsMode", true)
-        isTruncated = AnkiDroidApp.getSharedPrefs(this).getBoolean("isTruncated", false)
+        inCardsMode = this.sharedPrefs().getBoolean("inCardsMode", true)
+        isTruncated = this.sharedPrefs().getBoolean("isTruncated", false)
         deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
 
@@ -1348,7 +1357,7 @@ open class CardBrowser :
     }
 
     fun switchCardOrNote(newCardsMode: bool) {
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
+        val sharedPrefs = this.sharedPrefs()
 
         sharedPrefs.edit {
             this.putBoolean("inCardsMode", newCardsMode)
@@ -1360,7 +1369,7 @@ open class CardBrowser :
     }
 
     fun onTruncate(newTruncateValue: Boolean) {
-        val sharedPrefs = AnkiDroidApp.getSharedPrefs(this)
+        val sharedPrefs = this.sharedPrefs()
 
         sharedPrefs.edit {
             putBoolean("isTruncated", newTruncateValue)
@@ -2752,7 +2761,8 @@ open class CardBrowser :
 
         @CheckResult
         private fun formatQA(text: String, context: Context): String {
-            val showFilenames = AnkiDroidApp.getSharedPrefs(context).getBoolean("card_browser_show_media_filenames", false)
+            val showFilenames =
+                context.sharedPrefs().getBoolean("card_browser_show_media_filenames", false)
             return formatQAInternal(text, showFilenames)
         }
 

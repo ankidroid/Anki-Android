@@ -20,6 +20,7 @@ import android.content.SharedPreferences
 import android.text.format.DateFormat
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Utils
@@ -57,7 +58,7 @@ open class BackupManager {
      */
     @Suppress("PMD.NPathComplexity")
     fun performBackupInBackground(colPath: String, interval: Int, time: Time): Boolean {
-        val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext)
+        val prefs = AnkiDroidApp.instance.baseContext.sharedPrefs()
         if (hasDisabledBackups(prefs)) {
             Timber.w("backups are disabled")
             return false
@@ -154,11 +155,14 @@ open class BackupManager {
             CompatHelper.compat.copyFile(colPath, zos)
             zos.close()
             // Delete old backup files if needed
-            val prefs = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance.baseContext)
+            val prefs = AnkiDroidApp.instance.baseContext.sharedPrefs()
             deleteColBackups(colPath, prefs.getInt("backupMax", 8))
             // set timestamp of file in order to avoid creating a new backup unless its changed
             if (!backupFile.setLastModified(colFile.lastModified())) {
-                Timber.w("performBackupInBackground() setLastModified() failed on file %s", backupFile.name)
+                Timber.w(
+                    "performBackupInBackground() setLastModified() failed on file %s",
+                    backupFile.name
+                )
                 return false
             }
             Timber.i("Backup created successfully")

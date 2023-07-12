@@ -30,6 +30,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import androidx.appcompat.widget.ThemeUtils
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
@@ -57,7 +58,7 @@ class Info : AnkiActivity() {
         val type = intent.getIntExtra(TYPE_EXTRA, TYPE_NEW_VERSION)
         // If the page crashes, we do not want to display it again (#7135 maybe)
         if (type == TYPE_NEW_VERSION) {
-            val prefs = AnkiDroidApp.getSharedPrefs(this.baseContext)
+            val prefs = this.baseContext.sharedPrefs()
             InitialActivity.setUpgradedToLatestVersion(prefs)
         }
         setContentView(R.layout.info)
