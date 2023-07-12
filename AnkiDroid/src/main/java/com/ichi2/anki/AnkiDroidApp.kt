@@ -33,13 +33,13 @@ import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
-import androidx.preference.PreferenceManager
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
@@ -344,7 +344,7 @@ open class AnkiDroidApp : Application() {
          * @return A SharedPreferences object for this instance of the app.
          */
         fun getSharedPrefs(context: Context): SharedPreferences {
-            return PreferenceManager.getDefaultSharedPreferences(context)
+            return context.sharedPrefs()
         }
 
         val cacheStorageDirectory: String
