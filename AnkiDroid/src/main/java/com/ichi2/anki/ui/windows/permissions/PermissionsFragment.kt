@@ -40,6 +40,9 @@ abstract class PermissionsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         permissionItems.forEach { it.updateSwitchCheckedStatus() }
+        (activity as? PermissionsActivity)?.setContinueButtonEnabled(
+            permissionItems.all { it.isGranted }
+        )
     }
 
     /**
