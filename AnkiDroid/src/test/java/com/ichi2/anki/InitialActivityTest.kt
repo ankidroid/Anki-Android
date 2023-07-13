@@ -38,6 +38,7 @@ import org.mockito.Mockito.mockStatic
 import org.mockito.Mockito.times
 import org.mockito.kotlin.never
 import org.robolectric.annotation.Config
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class) // no point in Application init if we don't use it
@@ -174,17 +175,12 @@ class InitialActivityTest : RobolectricTest() {
     @Config(sdk = [R_OR_AFTER])
     @Test
     fun `Android 11 - After reinstall (with MANAGE_EXTERNAL_STORAGE)`() {
-        val expectedPermissions = arrayOf(android.Manifest.permission.MANAGE_EXTERNAL_STORAGE)
-
-        selectAnkiDroidFolder(
+        val ankiDroidFolder = selectAnkiDroidFolder(
             canManageExternalStorage = true,
             currentFolderIsAccessibleAndLegacy = false
-        ).let {
-            assertThat(
-                (it as PublicFolder).requiredPermissions.asIterable(),
-                contains(*expectedPermissions)
-            )
-        }
+        ) as PublicFolder
+
+        assertTrue(android.Manifest.permission.MANAGE_EXTERNAL_STORAGE in ankiDroidFolder.requiredPermissions)
     }
 
     @Config(sdk = [R_OR_AFTER])
@@ -195,6 +191,9 @@ class InitialActivityTest : RobolectricTest() {
             instanceOf(AppPrivateFolder::class.java)
         )
     }
+
+    private val AnkiDroidFolder.requiredPermissions
+        get() = permissionSet.permissions
 
     /**
      * Helper for [com.ichi2.anki.selectAnkiDroidFolder], making `currentFolderIsAccessibleAndLegacy` optional
