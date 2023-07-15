@@ -1,0 +1,26 @@
+<!--
+  ~ Copyright 2xxx, Google Material Design Icons
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+ -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960"
+    android:tint="@android:color/holo_blue_dark">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M445.93,764.07L445.93,514.07L195.93,514.07L195.93,445.93L445.93,445.93L445.93,195.93L514.07,195.93L514.07,445.93L764.07,445.93L764.07,514.07L514.07,514.07L514.07,764.07L445.93,764.07Z"/>
+</vector>
+

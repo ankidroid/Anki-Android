@@ -441,7 +441,7 @@ abstract class NavigationDrawerActivity :
             val reviewCardsShortcut = ShortcutInfo.Builder(context, "reviewCardsShortcutId")
                 .setShortLabel(context.getString(R.string.studyoptions_start))
                 .setLongLabel(context.getString(R.string.studyoptions_start))
-                .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
+                .setIcon(Icon.createWithResource(context, R.drawable.review_shortcut))
                 .setIntent(intentReviewCards)
                 .build()
 
@@ -453,7 +453,7 @@ abstract class NavigationDrawerActivity :
             val NoteEditorShortcut = ShortcutInfo.Builder(context, "noteEditorShortcutId")
                 .setShortLabel(context.getString(R.string.menu_add))
                 .setLongLabel(context.getString(R.string.menu_add))
-                .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
+                .setIcon(Icon.createWithResource(context, R.drawable.add_shortcut))
                 .setIntent(intentAddNote)
                 .build()
 
@@ -464,7 +464,7 @@ abstract class NavigationDrawerActivity :
             val cardBrowserShortcut = ShortcutInfo.Builder(context, "cardBrowserShortcutId")
                 .setShortLabel(context.getString(R.string.card_browser))
                 .setLongLabel(context.getString(R.string.card_browser))
-                .setIcon(Icon.createWithResource(context, R.drawable.ankidroid_logo))
+                .setIcon(Icon.createWithResource(context, R.drawable.browse_shortcut))
                 .setIntent(intentCardBrowser)
                 .build()
             shortcutManager.addDynamicShortcuts(
