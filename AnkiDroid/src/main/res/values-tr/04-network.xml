@@ -76,8 +76,8 @@
     <string name="sync_title">Senkronizasyon</string>
     <string name="sync_log_uploading_message">Yerelden tam senkronizasyon</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="one">Saatiniz %1$d saniye%2$s hatalı. Telefonunuzdaki tarih, saat ve zaman diliminin doğru ayarlı olduğundan emin olun, sonra tekrar senkronize edin.</item>
+        <item quantity="other">Saatiniz %1$d saniye%2$s hatalı. Telefonunuzdaki tarih, saat ve zaman diliminin doğru ayarlı olduğundan emin olun, sonra tekrar senkronize edin.</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, muhtemelen cihazınızın saat dilimi yanlış</string>
     <string name="sync_log_clocks_unsynchronized_date">, muhtemelen cihazınızın tarihi yanlış</string>
@@ -106,20 +106,20 @@
     <string name="sync_media_no_changes">Medya dosyalarında değişiklik yok.</string>
     <string name="sync_media_success">Medya başarıyla eşitlendi.</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">Medya senkronizasyonu kısmen tamamlandı:\n%d medya dosyası indirildi.</item>
+        <item quantity="other">Medya senkronizasyonu kısmen tamamlandı:\n%d medya dosyası indirildi.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">%d medya dosyası yüklendi.</item>
+        <item quantity="other">%d medya dosyası yüklendi.</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="one">Yüklenecek %d medya değişikliği</item>
+        <item quantity="other">Yüklenecek %d medya değişikliği</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">%d medya dosyası indirildi</item>
+        <item quantity="other">%d medya dosyası indirildi</item>
     </plurals>
     <string name="sync_sanity_failed">Senkronizasyondan sonra, koleksiyon tutarsız bir durumdaydı. Bu sorunu düzeltmek için, AnkiDroid bir tam senkronizasyon zorlayacak. Hangi tarafı tutmak istediğinizi seçin.</string>
     <string name="sync_media_sanity_failed">Medya eşitlemesi tamamlandı, ama medya sayısı sunucuyla uyuşmuyor. Bir sonraki medya eşitlemesi hataları düzeltmek için tam yapılacak.</string>

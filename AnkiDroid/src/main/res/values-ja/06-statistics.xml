@@ -49,7 +49,7 @@
     <string name="statistics_young_and_learn">復習 (未習熟期) + 習得中</string>
     <string name="statistics_unlearned">未学習</string>
     <string name="statistics_suspended">休止中</string>
-    <string name="statistics_buried">今日パス</string>
+    <string name="statistics_buried">明日に延期</string>
     <string name="statistics_relearn" comment="Label of the axis in the graph indicating the number of reviews of cards while they are in relearning mode.">再習得中</string>
     <string name="statistics_learn" comment="Label of the number of review of card in learning done in some amount of time">習得中</string>
     <string name="statistics_cram">フィルター学習</string>

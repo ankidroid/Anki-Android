@@ -219,8 +219,8 @@
     <string name="steps_error">習得ステップには1以上の数字を入力してください</string>
     <string name="steps_min_error">少なくとも 1 つの習得ステップが必要です</string>
     <string name="sched_end">（終了）</string>
-    <string name="sched_unbury_action">今それらを見る場合は、メニューの「パスを取り消す」をタップしてください</string>
-    <string name="sched_has_buried">関連カード、パスカードの学習は明日まで延期されます</string>
+    <string name="sched_unbury_action">今からそれらを学習したい場合は、メニューの「延期を取り消す」をタップしてください</string>
+    <string name="sched_has_buried">兄弟関係のカード、延期カードの学習は明日まで延期されます</string>
     <string name="tag_editor_add_feedback">「%1$s」の追加を確定するには「%2$s」をタップしてください</string>
     <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
     <!-- Time spans -->

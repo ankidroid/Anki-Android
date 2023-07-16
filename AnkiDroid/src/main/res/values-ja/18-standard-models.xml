@@ -36,7 +36,7 @@
     <!--Note type-->
     <string name="basic_model_name">基本</string>
     <string name="cloze_model_name">穴埋め</string>
-    <string name="basic_typing_model_name">Basic (解答キーボード入力)</string>
+    <string name="basic_typing_model_name">基本 (文字入力解答)</string>
     <string name="forward_reverse_model_name">基本 (裏表反転カード付き)</string>
     <string name="forward_optional_reverse_model_name">基本 (裏表反転カード追加可能)</string>
 </resources>

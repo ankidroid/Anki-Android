@@ -68,7 +68,7 @@
     <string name="pref_cat_workarounds" maxLength="41">Solutziones alternativas</string>
     <string name="pref_cat_plugins" maxLength="41">Estensiones</string>
     <!-- preferences.xml entries-->
-    <string name="whiteboard_stroke_width" maxLength="41">Grussària de du tratu</string>
+    <string name="whiteboard_stroke_width" maxLength="41">Grussària de su tratu</string>
     <string name="use_input_tag" maxLength="41">Iscrie sa risposta in sa carta</string>
     <string name="use_input_tag_summ">I</string>
     <string name="reset_languages" maxLength="41">Reseta sas limbas</string>
