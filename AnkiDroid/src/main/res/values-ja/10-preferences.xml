@@ -259,9 +259,9 @@
     <string name="deck_conf_easy_ivl" maxLength="41">簡単と回答してから復習までの間隔</string>
     <string name="deck_conf_start_ease" maxLength="41">「易しさ」(間隔の伸び率) の初期値</string>
     <string name="deck_conf_max_rev" maxLength="41">一日の復習カード出題上限枚数</string>
-    <string name="deck_conf_new_bury" maxLength="41">兄弟関係の新規カードをパス</string>
+    <string name="deck_conf_new_bury" maxLength="41">兄弟関係の新規カードを明日に延期</string>
     <string name="deck_conf_new_bury_summ">兄弟関係の (＝同じノートから作成された) 新規カードの学習を同じ日に行わず、翌日に延期します</string>
-    <string name="deck_conf_rev_bury" maxLength="41">兄弟関係のカードの復習をパス</string>
+    <string name="deck_conf_rev_bury" maxLength="41">兄弟関係の復習カードを明日に延期</string>
     <string name="deck_conf_rev_bury_summ">兄弟関係の (＝同じノートから作成された) カードの復習を同じ日に行わず、翌日に延期します</string>
     <string name="deck_conf_use_general_timeout_settings" maxLength="41">一般設定を使用する</string>
     <string name="deck_conf_use_general_timeout_settings_summ">このグループ独自の設定は行わず、ドロワーメニューの [設定]→[カードの学習]→[解答の自動表示] での一般的な設定をそのまま使用します</string>

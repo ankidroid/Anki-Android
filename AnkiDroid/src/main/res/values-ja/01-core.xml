@@ -94,7 +94,7 @@
     <string name="undo_action_change_deck_multi">デッキを変更</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">描線を一つ取り消す</string>
     <string name="move_all_to_deck">移動先デッキを選択</string>
-    <string name="unbury">パスを取り消す</string>
+    <string name="unbury">延期を取り消す</string>
     <string name="rename_deck">デッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
     <string name="browse_cards">カードをブラウザで表示</string>
@@ -102,11 +102,11 @@
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
     <string name="menu_dismiss_note">非表示 / 削除</string>
-    <string name="menu_bury_card">カードを今日はパス</string>
-    <string name="menu_bury_note">ノートを今日はパス</string>
+    <string name="menu_bury_card">カードを明日に延期</string>
+    <string name="menu_bury_note">ノートを明日に延期</string>
     <string name="menu_suspend_card">カードを休止</string>
     <string name="menu_suspend_note">ノートを休止</string>
-    <string name="menu_bury">今日はパス</string>
+    <string name="menu_bury">明日に延期</string>
     <string name="menu_suspend">休止</string>
     <string name="menu_delete_note">ノートを削除</string>
     <string name="menu_flag">フラグ</string>

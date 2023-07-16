@@ -199,7 +199,7 @@
         <item quantity="one">Geselecteerde notitie als apkg-bestand exporteren?</item>
         <item quantity="other">Exporteer %d geselecteerde notities als apkg-bestand?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_preparation_in_progress">Export voorbereiden&#8230;</string>
     <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Geen applicaties beschikbaar om apkg te verwerken. Opslaan...</string>
     <string name="export_save_apkg_successful">Anki-pakket succesvol opgeslagen</string>
@@ -213,7 +213,7 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
+    <string name="export_choice_share">Delen</string>
     <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opties</string>
     <string name="menu__deck_options">Setopties</string>

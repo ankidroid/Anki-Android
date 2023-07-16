@@ -73,9 +73,9 @@
     <string name="leech_notification">Thẻ được đánh dấu là thẻ khó</string>
     <string name="corrupt_font">Lỗi tệp phông chữ %s</string>
     <string name="webview_crash_unknown">Lỗi không xác định</string>
-    <string name="webview_crash_unknwon_detailed">Điều này là do lỗi nội bộ trong WebView</string>
+    <string name="webview_crash_unknwon_detailed">Lỗi nội bộ trong webview</string>
     <string name="webview_crash_oom">Không đủ bộ nhớ</string>
-    <string name="webview_crash_oom_details">WebView đã bị ngắt bởi hệ thống. Việc này thường xảy ra khi ứng dụng tràn bộ nhớ, font chữ hoặc file media quá lớn. </string>
+    <string name="webview_crash_oom_details">WebView đã bị ngắt bởi hệ thống. Việc này thường xảy ra khi ứng dụng hết bộ nhớ vì font chữ hoặc file media quá lớn. </string>
     <string name="webview_crash_nonfatal">Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
     <string name="webview_crash_fatal">Lỗi nghiêm trọng: Trình kết xuất WebView bị lỗi. Nguyên nhân: %s</string>
     <string name="webview_crash_loop_dialog_title">Hệ thống hiển thị WebView không thành công</string>
@@ -94,7 +94,7 @@
         <item>Các đuôi</item>
         <item>Lần sai</item>
         <item>Lần ôn tập</item>
-        <item>Khoảng thời gian</item>
+        <item>Khoảng nghỉ</item>
         <item>Độ khó</item>
         <item>Hạn</item>
         <item>Thẻ đã sửa đổi</item>
@@ -207,8 +207,8 @@
         [1]%1$s<br/>
         [2]%2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Chia sẻ</string>
+    <string name="export_choice_save_to">Lưu tới</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tuỳ chọn</string>
     <string name="menu__deck_options">Tùy chọn bộ thẻ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tùy chọn học tập</string>
@@ -356,7 +356,7 @@
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
     <plurals name="note_suspended">
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="other">%d thẻ bị khóa.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Make field %s sticky</string>
@@ -404,6 +404,6 @@
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Chạm để bắt đầu di chuyển bộ nhớ</string>
     <string name="media_sync_required_title">Yêu cầu đồng bộ hóa phương tiện</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="media_sync_unavailable_message">Chức năng đồng bộ dữ liệu đã bị tắt trong cài đặt. Vui lòng đồng bộ và sao lưu bất kỳ dữ liệu nào chưa được đồng bộ trước khi tiếp tục</string>
     <string name="remember_sync_metered_checkbox_msg">Đừng hỏi lại (cảnh báo này có thể được bật lại từ Cài đặt đồng bộ hóa)</string>
 </resources>
