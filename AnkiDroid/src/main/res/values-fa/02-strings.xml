@@ -415,5 +415,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">برای شروع مهاجرت حافظه، ضربه بزنید</string>
     <string name="media_sync_required_title">نیازمند سینک مدیاها</string>
     <string name="media_sync_unavailable_message">سینک مدیاها در بخش تنظیمات، غیرفعال شده است. لطفاً هر مدیایی که سینک و پشتیبان‌گیری نشده است را قبل از ادامه دادن، سینک کنید</string>
-    <string name="remember_sync_metered_checkbox_msg">دوباره سوال نکن (این اخطار می‌تواند از بخش تنظیمات سینک، دوباره فعال شود)</string>
 </resources>

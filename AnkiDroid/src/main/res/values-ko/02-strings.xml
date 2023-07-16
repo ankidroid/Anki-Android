@@ -408,5 +408,4 @@ Context | Request Context    [1]</string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

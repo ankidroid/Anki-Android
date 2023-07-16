@@ -447,5 +447,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Naciśnij, aby rozpocząć przenoszenie pamięci masowej</string>
     <string name="media_sync_required_title">Wymagana jest synchronizacja mediów</string>
     <string name="media_sync_unavailable_message">Synchronizacja multimediów jest wyłączona w ustawieniach. Proszę zsynchronizować i wykonać kopię zapasową multimediów, które nie zostały zsynchronizowane przed kontynuowaniem</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

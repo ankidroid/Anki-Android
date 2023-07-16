@@ -405,5 +405,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Chạm để bắt đầu di chuyển bộ nhớ</string>
     <string name="media_sync_required_title">Yêu cầu đồng bộ hóa phương tiện</string>
     <string name="media_sync_unavailable_message">Chức năng đồng bộ dữ liệu đã bị tắt trong cài đặt. Vui lòng đồng bộ và sao lưu bất kỳ dữ liệu nào chưa được đồng bộ trước khi tiếp tục</string>
-    <string name="remember_sync_metered_checkbox_msg">Đừng hỏi lại (cảnh báo này có thể được bật lại từ Cài đặt đồng bộ hóa)</string>
 </resources>

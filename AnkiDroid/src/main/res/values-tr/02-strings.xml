@@ -419,5 +419,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Depolama taşımayı başlatmak için dokunun</string>
     <string name="media_sync_required_title">Medya Senkronizasyonu Gerekiyor</string>
     <string name="media_sync_unavailable_message">Medya senkronizasyonu ayarlardan kapalı. Lütfen devam etmeden önce senkronize edilmemiş medyayı senkronize edin ve yedekleyin.</string>
-    <string name="remember_sync_metered_checkbox_msg">Tekrar sorma (Bu uyarıyı Senkronizasyon Ayarları\'nda tekrar etkinleştirebilirsin)</string>
 </resources>
