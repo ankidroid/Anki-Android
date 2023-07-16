@@ -447,5 +447,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Нажмите, чтобы начать перенос хранилища</string>
     <string name="media_sync_required_title">Требуется синхронизация медиафайлов</string>
     <string name="media_sync_unavailable_message">Синхронизация медиафайлов отключена в настройках. Пожалуйста, перед продолжением синхронизируйте и сделайте резервную копию всех медиафайлов, которые не были синхронизированы</string>
-    <string name="remember_sync_metered_checkbox_msg">Больше не спрашивать (предупреждение можно вернуть в настройках)</string>
 </resources>
