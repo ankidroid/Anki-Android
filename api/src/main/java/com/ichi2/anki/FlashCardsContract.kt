@@ -13,7 +13,7 @@ import com.ichi2.anki.api.BuildConfig
  * The contract between AnkiDroid and applications. Contains definitions for the supported URIs and
  * columns.
  *
- * ######
+ *
  * ### Overview
  *
  *
