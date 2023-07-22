@@ -71,8 +71,8 @@
     <string name="deckpreferences_title">XXX ପାଇଁ ବିକଳ୍ପଗୁଡ଼ିକ</string>
     <string name="sync_prepare_syncing">ସୀଙ୍କ୍ ପ୍ରସ୍ତୁତ ହେଉଛି&#8230;</string>
     <string name="sync_preparing_full_sync_message">ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ ପ୍ରସ୍ତୁତ ହେଉଛି&#8230;</string>
-    <string name="sync_uploading_message">ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
-    <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
+    <string name="sync_uploading_message">ଅପଲୋଡ୍ ଚାଲିଛି&#8230;</string>
+    <string name="sync_downloading_message">ଡାଉନଲୋଡ୍ ଚାଲିଛି&#8230;</string>
     <string name="sync_title">ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
     <string name="sync_log_uploading_message">ସ୍ଥାନୀୟ ଠାରୁ ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ କରାଗଲା</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
@@ -91,17 +91,17 @@
     <string name="sync_connection_error">ସଂଯୋଗ ସମୟ ସମାପ୍ତ ହୋଇଛି। ହୁଏତ ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ସମସ୍ୟାର ସମ୍ମୁଖୀନ ହେଉଛି, କିମ୍ବା ଆପଣଙ୍କର ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ବହୁତ ବଡ଼ ଫାଇଲ୍ ଅଛି।</string>
     <string name="sync_write_access_error_on_storage">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍‌ଟିକୁ ଆପଣଙ୍କ ଷ୍ଟୋରେଜ୍‌ରେ ସଞ୍ଚୟ କରିହେଲାନି। ହୁଏତ ଷ୍ଟୋରେଜ୍ କେଵଳ ପଠନଯୋଗ୍ୟ ଅଟେ କିମ୍ବା ସେଠାରେ ପର୍ଯ୍ୟାପ୍ତ ସ୍ଥାନ ନାହିଁ।</string>
     <string name="sync_error_invalid_sync_server">ଵିକଶିତ ସେଟିଂରେ କଷ୍ଟମ୍ ସିଙ୍କ୍ ସର୍ଵର୍ ଅମାନ୍ୟ ଅଟେ (%s)। ଦୟାକରି ଏକ ଵୈଧ ସର୍ଵର୍ ପ୍ରଵେଶ କରନ୍ତୁ, ନହେଲେ ସେଟିଂଟିକୁ ଅକ୍ଷମ କରଦିଅନ୍ତୁ।</string>
-    <string name="sync_deletions_message">ବିଲୋପଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରୁଛି&#8230;</string>
+    <string name="sync_deletions_message">ବିଲୋପଗୁଡ଼ିକ ସୀଙ୍କ୍ ହେଉଛି&#8230;</string>
     <string name="sync_small_objects_message">ଛୋଟ ବସ୍ତୁଗୁଡ଼ିକୁ ସିଙ୍କ୍ କରାହଉଛି&#8230;</string>
     <string name="sync_finish_message">ସିଙ୍କ୍ ସମାପ୍ତ ହେଲା&#8230;</string>
     <string name="sync_log_finish_error">ସର୍ଵର୍ କୁ ସମାପନ ନିର୍ଦ୍ଦେଶନା ପଠାଇବାରେ ତ୍ରୁଟି ଘଟିଛି</string>
     <string name="sync_writing_db">ଡାଟାବେସରେ ପରିବର୍ତ୍ତନ ଲେଖାହଉଛି&#8230;</string>
-    <string name="sync_download_chunk">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ଡାଉନଲୋଡ୍ କରୁଛି&#8230;</string>
-    <string name="sync_upload_chunk">ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ଅପଲୋଡ୍ କରୁଛି&#8230;</string>
+    <string name="sync_download_chunk">ପରିବର୍ତ୍ତନଗୁଡ଼ିକୁ ଡାଉନଲୋଡ୍ ହେଉଛି&#8230;</string>
+    <string name="sync_upload_chunk">ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ଅପଲୋଡ୍ ହେଉଛି&#8230;</string>
     <string name="sync_up_down_size">ଉପରକୁ: %1$d KB, ତଳକୁ: %2$d KB</string>
     <string name="sync_generic_error">ଏକ ତ୍ରୁଟି ଘଟିଛି। ପରେ ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ।</string>
-    <string name="sync_check_upload_file">ଅପଲୋଡ୍ ପୂର୍ବରୁ ଫାଇଲ୍ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
-    <string name="sync_check_download_file">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍ ଯାଞ୍ଚ କରୁଛି&#8230;</string>
+    <string name="sync_check_upload_file">ଅପଲୋଡ୍ ପୂର୍ବରୁ ଫାଇଲ୍ ଯାଞ୍ଚ ଚାଲିଛି&#8230;</string>
+    <string name="sync_check_download_file">ଡାଉନଲୋଡ୍ ହୋଇଥିବା ଫାଇଲ୍‌ର ଯାଞ୍ଚ ଚାଲିଛି&#8230;</string>
     <string name="sync_media_find">ପରିବର୍ତ୍ତିତ ମିଡିଆ ଖୋଜାହଉଛି&#8230;</string>
     <string name="sync_media_no_changes">ମିଡ଼ିଆ ଫାଇଲ୍‌ଗୁଡ଼ିକରେ କୌଣସି ପରିବର୍ତ୍ତନ ନାହିଁ</string>
     <string name="sync_media_success">ମିଡ଼ିଆ ସୀଙ୍କ୍ ହୋଇଛି</string>
@@ -145,5 +145,5 @@
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">ସୀଙ୍କ୍ (ପୂର୍ଣ୍ଣ)</string>
     <string name="sync_menu_title_no_account">ସୀଙ୍କ୍ (ଲଗ୍ ଇନ୍)</string>
-    <string name="sync_error_unknown_host_readable">AnkiWeb ସହିତ ସଂଯୋଗ ହୋଇପାରିଲା ନାହିଁ। ଆପଣଙ୍କର ଇଣ୍ଟରନେଟ୍ କାମ କରୁଛି କି?\n\n%s</string>
+    <string name="sync_error_unknown_host_readable">AnkiWeb ସହିତ ସଂଯୋଗ କରିହେଲା ନାହିଁ। ଆପଣଙ୍କର ଇଣ୍ଟର୍‌ନେଟ୍ କାମ କରୁଛି ତ?\n\n%s</string>
 </resources>

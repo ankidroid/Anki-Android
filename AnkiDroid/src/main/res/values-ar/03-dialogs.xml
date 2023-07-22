@@ -213,12 +213,12 @@
     <string name="integrity_check_insufficient_space">تستخدم ميزة فحص قاعدة البيانات مساحة كبيرة من التخزين المؤقت.\n\nينصح بشدة أن يكون لديك مساحة %s خالية على الأقل في جهازك قبل الاستمرار.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nلديك حاليًا مساحة %s خالية.</string>
     <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="zero">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="two">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-        <item quantity="few">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-        <item quantity="many">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="zero">تم استرجاع %d بطاقة ذات رزمة أصل غير صالحة. اطلع على دليل الاستخدام لمزيد من المعلومات.</item>
+        <item quantity="one">تم استرجاع %d بطاقة ذات رزمة أصل غير صالحة. اطلع على دليل الاستخدام لمزيد من المعلومات.</item>
+        <item quantity="two">تم استرجاع %d بطاقة ذات رزمة أصل غير صالحة. اطلع على دليل الاستخدام لمزيد من المعلومات.</item>
+        <item quantity="few">تم استرجاع %d بطاقات ذات رزمة أصل غير صالحة. اطلع على دليل الاستخدام لمزيد من المعلومات.</item>
+        <item quantity="many">تم استرجاع %d بطاقة ذات رزمة أصل غير صالحة. اطلع على دليل الاستخدام لمزيد من المعلومات.</item>
+        <item quantity="other">تم استرجاع %d بطاقة ذات رزمة أصل غير صالحة. اطلع على دليل الاستخدام لمزيد من المعلومات.</item>
     </plurals>
     <string name="video_creation_error">تعذر تشغيل الفيديو</string>
     <!-- Card Browser -->

@@ -57,7 +57,7 @@
     <string name="backup_retry_opening">ଖୋଲିବାକୁ ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ</string>
     <string name="backup_error_menu_repair">ଡାଟାବେସ୍ ମରାମତି କରନ୍ତୁ</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">ଡାଟାବେସ୍ ମରାମତି କରୁଅଛି&#8230;</string>
+    <string name="backup_repair_deck_progress">ଡାଟାବେସ୍ ମରାମତି ଚାଲିଛି&#8230;</string>
     <string name="backup_invalid_file_error">ବଚ୍ଛିତ ବ୍ୟାକଅପ୍ ଫାଇଲଟି ଅବୈଧ ଥିଲା</string>
     <string name="backup_restore_select_title">ପୁନରୁଦ୍ଧାର ପାଇଁ ବ୍ୟାକଅପ୍ ଚୟନ କରନ୍ତୁ</string>
     <string name="backup_restore_no_backups">ଏହି ଡିଵାଇସ୍ ରେ କୌଣସି ବ୍ୟାକ୍ଅପ୍ ଉପଲବ୍ଧ ନାହିଁ। ଯଦି ଆପଣଙ୍କର ଡେସ୍କଟପ୍ କମ୍ପ୍ୟୁଟରରେ ବ୍ୟାକ୍ଅପ୍ ଅଛି, ତେବେ ସେଗୁଡ଼ିକୁ ହସ୍ତକୃତ ଭାବରେ ଆପଣଙ୍କର AnkiDroid ଫୋଲ୍ଡରରେ ନକଲ କରନ୍ତୁ।</string>
