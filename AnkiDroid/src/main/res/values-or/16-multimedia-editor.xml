@@ -103,7 +103,7 @@
     <string name="multimedia_editor_audio_view_playing_failed">ଚଲେଇବା ଵିଫଳ ହେଲା</string>
     <string name="multimedia_editor_audio_view_create_failed">ରେକର୍ଡର୍-ଉପକରଣ-ଦଣ୍ଡିକା ସୃଷ୍ଟି କରିବାରେ ଅସମର୍ଥ</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">କ୍ଷେତ୍ରଟିକୁ ସମ୍ପାଦନ କରୁଛି</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">କ୍ଷେତ୍ରଟିର ସମ୍ପାଦନ ଚାଲିଛି</string>
     <!-- Network failure -->
     <string name="network_no_connection">କୌଣସି ସଂଯୋଗ ନାହିଁ</string>
     <!-- Crop function-->

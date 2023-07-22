@@ -277,11 +277,11 @@
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"أخطاء متعددة، آخر خطأ: %s"</string>
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">أخطاء متعددة متتابعة دون تقدم، آخر خطأ: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copying&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">ترحيل قاعدة البيانات</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">يجري النسخ&#8230;</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">ترحيل الوسائط</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">حسابة حجم التحويل&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">تم نقل %1$s من أصل %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">تم النقل بنجاح</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        تم ترحيل بياناتك بنجاح.
         AnkiDroid يعمل بشكل كامل مرة أخرى، ويمكنك المزامنة.
@@ -290,27 +290,27 @@
         الرجاء التأكد من أن بياناتك آمنة عن طريق مزامنة أو تصدير النسخ الاحتياطية بانتظام.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">فشلت عملية النقل</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        فشل نسخ ملفات قاعدة البيانات بسبب الخطأ: %1$s.
         <br><br>
-        The changes were reverted.
+        تم التراجع عن التغييرات.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        جرب إعادة إجراء عملية الترحيل.
+        قد تحتاج لتفريغ بعض المساحة لحل المشكلة،
+        أو لأن تعيد وصل التخزين القابل للإزالة الذي يحوي مجموعتك.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">تعلم المزيد واحصل على المساعدة</a>
     ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        تم إيقاف نقل الوسائط بسبب الخطأ: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        لم يتم التراجع عن التغييرات.
+        لم تفقد أي بيانات،
+        لكن ربما تم فصل الوسائط بين المجلد القديم والجديد.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        جرب إعادة إجراء عملية الترحيل.
+        قد تحتاج لتفريغ بعض المساحة لحل المشكلة،
+        أو لأن تعيد وصل التخزين القابل للإزالة الذي يحوي مجموعتك.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">تعلم المزيد واحصل على المساعدة</a>
     ]]></string>
     <string name="migration__resume_after_failed_dialog__message"><![CDATA[        توقف نقل التخزين بعد أن فشل بسبب هذا الخطأ: %1$s.
         <br><br>
