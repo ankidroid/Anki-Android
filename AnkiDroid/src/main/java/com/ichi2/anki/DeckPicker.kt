@@ -289,6 +289,7 @@ open class DeckPicker :
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
                 // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
                 mDeckListAdapter.notifyDataSetChanged()
+                updateDeckList()
             }
         } catch (e: Exception) {
             // Maybe later don't report if collectionIsOpen is false?
