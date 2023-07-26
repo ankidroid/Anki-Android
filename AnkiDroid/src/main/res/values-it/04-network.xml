@@ -76,8 +76,8 @@
     <string name="sync_title">Sincronizzazione</string>
     <string name="sync_log_uploading_message">Sincronizzazione completa da locale</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="one">Il tuo orologio è fuori di %1$d secondo%2$s. Assicurati che data, ora e fuso orario del tuo telefono siano corretti e riprova la sincronizzazione.</item>
+        <item quantity="other">Il tuo orologio è fuori di %1$d secondi%2$s. Assicurati che data, ora e fuso orario del tuo telefono siano corretti e riprova la sincronizzazione.</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, il fuso orario del dispositivo è forse sbagliato</string>
     <string name="sync_log_clocks_unsynchronized_date">, la data del dispositivo è forse sbagliata</string>
@@ -106,20 +106,20 @@
     <string name="sync_media_no_changes">Nessuna modifica ai file multimediali.</string>
     <string name="sync_media_success">Media sincronizzati con successo.</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">Sincronizzazione parzialmente completata:\n%d file multimediale scaricato.</item>
+        <item quantity="other">Sincronizzazione parzialmente completata:\n%d file multimediali scaricati.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">%d file multimediale caricato.</item>
+        <item quantity="other">%d file multimediali caricati.</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
         <item quantity="one">%d media change to upload</item>
         <item quantity="other">%d media changes to upload</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">%d file multimediale scaricato</item>
+        <item quantity="other">%d file multimediali scaricati</item>
     </plurals>
     <string name="sync_sanity_failed">Dopo la sincronizzazione, la collezione era in uno stato incoerente. Per risolvere questo problema, AnkiDroid forzerà una sincronizzazione completa. Scegliere quali dati vuoi mantenere, o annulla se preferisci sincronizzare più tardi.</string>
     <string name="sync_media_sanity_failed">Sincronizzazione dei contenuti multimediali terminata, ma il conteggio dei media non corrisponde con il server. La prossima volta verrà eseguita una sincronizzazione completa per correggere eventuali errori.</string>

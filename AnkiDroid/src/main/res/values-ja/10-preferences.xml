@@ -79,8 +79,8 @@
     <string name="image_zoom" maxLength="41">画像の拡大・縮小</string>
     <string name="button_size" maxLength="41">解答表示・回答ボタンのサイズ</string>
     <string name="card_browser_font_size" maxLength="41">カードブラウザのフォントサイズ</string>
-    <string name="card_browser_hide_media" maxLength="41">カードブラウザでファイル名も表示</string>
-    <string name="card_browser_hide_media_summary">カードブラウザのリスト画面の質問フィールド欄と解答フィールド欄に、メディア（画像・音声・動画）ファイル名も表示する</string>
+    <string name="card_browser_hide_media" maxLength="41">リストにファイル名も表示</string>
+    <string name="card_browser_hide_media_summary">カードブラウザのリスト画面の質問フィールド欄と解答フィールド欄に、メディア（画像・音声・動画）ファイル名も表示します</string>
     <string name="col_path" maxLength="41">AnkiDroidディレクトリ</string>
     <string name="fullscreen_review" maxLength="41">フルスクリーンモード</string>
     <string name="full_screen_off">オフ</string>
