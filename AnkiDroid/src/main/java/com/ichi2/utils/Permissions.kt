@@ -31,10 +31,6 @@ import timber.log.Timber
 import java.lang.Exception
 
 object Permissions {
-    fun canUseCamera(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.CAMERA)
-    }
-
     fun canRecordAudio(context: Context): Boolean {
         return hasPermission(context, Manifest.permission.RECORD_AUDIO)
     }
