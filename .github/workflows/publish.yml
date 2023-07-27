@@ -2,6 +2,11 @@ name: Publish
 
 on:
   workflow_dispatch:
+    inputs:
+      public:
+        description: "any non-empty value triggers a public build - version not auto-incremented / changelog required"
+        required: false
+        type: string
 
 jobs:
   release_app:
@@ -65,5 +70,10 @@ jobs:
           gunzip *gz
         shell: bash
 
-      - name: Build and Release
+      - name: Build and Release public release
+        if: "${{ github.event.inputs.public != '' }}"
+        run: ./tools/release.sh public
+
+      - name: Build and Release test release
+        if: "${{ github.event.inputs.public == '' }}"
         run: ./tools/release.sh
