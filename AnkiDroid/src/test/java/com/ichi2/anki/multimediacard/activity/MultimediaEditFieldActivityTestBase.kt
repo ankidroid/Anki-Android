@@ -33,12 +33,6 @@ import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 
 abstract class MultimediaEditFieldActivityTestBase : RobolectricTest() {
-    protected fun grantCameraPermission() {
-        val application = ApplicationProvider.getApplicationContext<Application>()
-        val app = Shadows.shadowOf(application)
-        app.grantPermissions(Manifest.permission.CAMERA)
-    }
-
     protected fun grantRecordAudioPermission() {
         val application = ApplicationProvider.getApplicationContext<Application>()
         val app = Shadows.shadowOf(application)
