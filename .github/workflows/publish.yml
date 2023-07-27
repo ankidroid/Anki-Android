@@ -72,7 +72,12 @@ jobs:
 
       - name: Build and Release public release
         if: "${{ github.event.inputs.public != '' }}"
-        run: ./tools/release.sh public
+        run: |
+          pushd ../
+          git clone git@github.com:ankidroid/ankidroiddocs
+          popd
+          ./tools/release.sh public
+        shell: bash
 
       - name: Build and Release test release
         if: "${{ github.event.inputs.public == '' }}"
