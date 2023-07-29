@@ -21,13 +21,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
+import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.Channel
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.compat.CompatHelper
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 
@@ -77,11 +77,12 @@ class NotificationService : BroadcastReceiver() {
                 val resultIntent = Intent(context, DeckPicker::class.java)
                 resultIntent.flags =
                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                val resultPendingIntent = CompatHelper.compat.getImmutableActivityIntent(
+                val resultPendingIntent = PendingIntentCompat.getActivity(
                     context,
                     0,
                     resultIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_UPDATE_CURRENT,
+                    false
                 )
                 builder.setContentIntent(resultPendingIntent)
                 // mId allows you to update the notification later on.

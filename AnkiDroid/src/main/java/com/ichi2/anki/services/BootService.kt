@@ -5,11 +5,11 @@ import android.app.AlarmManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.*
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
@@ -79,14 +79,15 @@ class BootService : BroadcastReceiver() {
             if (deckConfiguration.has("reminder")) {
                 val reminder = deckConfiguration.getJSONObject("reminder")
                 if (reminder.getBoolean("enabled")) {
-                    val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
+                    val reminderIntent = PendingIntentCompat.getBroadcast(
                         context,
                         deckConfiguration.getLong("id").toInt(),
                         Intent(context, ReminderService::class.java).putExtra(
                             ReminderService.EXTRA_DECK_OPTION_ID,
                             deckConfiguration.getLong("id")
                         ),
-                        0
+                        0,
+                        false
                     )
                     val calendar = DeckOptionsActivity.reminderToCalendar(TimeManager.time, reminder)
                     alarmManager.setRepeating(
@@ -124,11 +125,12 @@ class BootService : BroadcastReceiver() {
                 set(Calendar.MINUTE, 0)
                 set(Calendar.SECOND, 0)
             }
-            val notificationIntent = CompatHelper.compat.getImmutableBroadcastIntent(
+            val notificationIntent = PendingIntentCompat.getBroadcast(
                 context,
                 0,
                 Intent(context, NotificationService::class.java),
-                0
+                0,
+                false
             )
             alarmManager.setRepeating(
                 AlarmManager.RTC_WAKEUP,

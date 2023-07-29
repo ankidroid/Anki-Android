@@ -16,8 +16,6 @@
  */
 package com.ichi2.compat
 
-import android.annotation.SuppressLint
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -230,16 +228,6 @@ open class CompatV21 : Compat {
         audioManager.abandonAudioFocus(audioFocusChangeListener)
     }
 
-    @SuppressLint("WrongConstant")
-    override fun getImmutableActivityIntent(context: Context, requestCode: Int, intent: Intent, flags: Int): PendingIntent {
-        return PendingIntent.getActivity(context, requestCode, intent, flags or FLAG_IMMUTABLE)
-    }
-
-    @SuppressLint("WrongConstant")
-    override fun getImmutableBroadcastIntent(context: Context, requestCode: Int, intent: Intent, flags: Int): PendingIntent {
-        return PendingIntent.getBroadcast(context, requestCode, intent, flags or FLAG_IMMUTABLE)
-    }
-
     @Throws(FileNotFoundException::class)
     override fun saveImage(context: Context, bitmap: Bitmap, baseFileName: String, extension: String, format: CompressFormat, quality: Int): Uri {
         val pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
@@ -279,14 +267,5 @@ open class CompatV21 : Compat {
                 return paths[mOrd++]
             }
         }
-    }
-
-    companion object {
-        // Update to PendingIntent.FLAG_MUTABLE once available (API 31)
-        @Suppress("unused")
-        const val FLAG_MUTABLE = 1 shl 25
-
-        // Update to PendingIntent.FLAG_IMMUTABLE once available (API 23)
-        const val FLAG_IMMUTABLE = 1 shl 26
     }
 }

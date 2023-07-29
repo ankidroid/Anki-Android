@@ -24,13 +24,13 @@ import android.os.IBinder
 import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
+import androidx.core.app.PendingIntentCompat
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import kotlin.math.sqrt
@@ -152,11 +152,12 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
             val ankiDroidIntent = Intent(context, IntentHandler::class.java)
             ankiDroidIntent.action = Intent.ACTION_MAIN
             ankiDroidIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-            val pendingAnkiDroidIntent = CompatHelper.compat.getImmutableActivityIntent(
+            val pendingAnkiDroidIntent = PendingIntentCompat.getActivity(
                 context,
                 0,
                 ankiDroidIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT,
+                false
             )
             updateViews.setOnClickPendingIntent(R.id.ankidroid_widget_small_button, pendingAnkiDroidIntent)
             updateWidgetDimensions(context, updateViews, AnkiDroidWidgetSmall::class.java)
