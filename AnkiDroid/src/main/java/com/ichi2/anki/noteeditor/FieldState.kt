@@ -19,10 +19,10 @@ package com.ichi2.anki.noteeditor
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.BundleCompat
 import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
-import com.ichi2.compat.CompatHelper.Companion.getSparseParcelableArrayCompat
 import com.ichi2.libanki.Model
 import com.ichi2.libanki.Models
 import com.ichi2.utils.KotlinCleanup
@@ -112,7 +112,11 @@ class FieldState private constructor(private val editor: NoteEditor) {
         if (customViewIds == null || viewHierarchyState == null) {
             return
         }
-        val views = viewHierarchyState.getSparseParcelableArrayCompat<View.BaseSavedState>("android:views") ?: return
+        val views = BundleCompat.getSparseParcelableArray(
+            viewHierarchyState,
+            "android:views",
+            View.BaseSavedState::class.java
+        ) ?: return
         val important: MutableList<View.BaseSavedState> = ArrayList(customViewIds.size)
         for (i in customViewIds) {
             important.add(views[i!!] as View.BaseSavedState)

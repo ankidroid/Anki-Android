@@ -32,9 +32,6 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.SparseArray
 import android.view.View
 import android.widget.TimePicker
 import androidx.annotation.IntDef
@@ -85,13 +82,9 @@ interface Compat {
     fun getMinute(picker: TimePicker): Int
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder
-    fun <T> readSparseArray(parcel: Parcel, loader: ClassLoader, clazz: Class<T>): SparseArray<T>?
-    fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>?
     fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo>
-    fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T?
-    fun <T : Parcelable> getSparseParcelableArray(bundle: Bundle, key: String, clazz: Class<T>): SparseArray<T>?
 
     /**
      * Retrieve extended data from the intent.
@@ -100,14 +93,6 @@ interface Compat {
      * @return the value of an item previously added with putExtra(), or null if no [Serializable] value was found.
      */
     fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T?
-
-    /**
-     * Retrieve extended data from the intent.
-     * @param name – The name of the desired item.
-     * @param clazz – The type of the object expected.
-     * @return the value of an item previously added with putExtra(), or null if no [Parcelable] value was found.
-     */
-    fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
 
     /**
      * Returns the value associated with the given key, or `null` if:
@@ -120,13 +105,6 @@ interface Compat {
      * @return a Serializable value, or `null`
      */
     fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T?
-
-    /**
-     * Read and return a new Serializable object from the parcel.
-     * @return the Serializable object, or null if the Serializable name
-     * wasn't found in the parcel.
-     */
-    fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T?
 
     /**
      * Retrieve overall information about an application package that is
@@ -291,13 +269,6 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun contentOfDirectory(directory: File): FileStream
-
-    /**
-     * Read into an existing List object from the parcel at the current
-     * dataPosition(), using the given class loader to load any enclosed
-     * Parcelables.  If it is null, the default class loader is used.
-     */
-    fun <T> readList(parcel: Parcel, outVal: MutableList<in T>, classLoader: ClassLoader?, clazz: Class<T>)
 
     companion object {
         /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */
