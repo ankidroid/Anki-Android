@@ -63,7 +63,7 @@ class AnkiServer(
             "getNotetypeNames" -> withCol { getNotetypeNamesRaw(bytes) }
             "getDeckNames" -> withCol { getDeckNamesRaw(bytes) }
             "getCsvMetadata" -> withCol { getCsvMetadataRaw(bytes) }
-            "importCsv" -> withCol { importCsvRaw(bytes) }
+            "importCsv" -> activity.importCsvRaw(bytes)
             "getFieldNames" -> withCol { getFieldNamesRaw(bytes) }
             "cardStats" -> withCol { cardStatsRaw(bytes) }
             "getDeckConfig" -> withCol { getDeckConfigRaw(bytes) }
