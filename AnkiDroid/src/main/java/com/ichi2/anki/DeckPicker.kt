@@ -1518,11 +1518,7 @@ open class DeckPicker :
 
     private fun performIntegrityCheck() {
         Timber.i("performIntegrityCheck()")
-        if (BackendFactory.defaultLegacySchema) {
-            TaskManager.launchCollectionTask(CheckDatabase(), CheckDatabaseListener())
-        } else {
-            handleDatabaseCheck()
-        }
+        handleDatabaseCheck()
     }
 
     /**
