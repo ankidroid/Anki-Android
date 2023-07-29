@@ -82,7 +82,6 @@ import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.TaskListener
-import com.ichi2.async.updateCard
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
@@ -107,7 +106,6 @@ import com.ichi2.utils.HandlerUtils.newHandler
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
 import kotlinx.coroutines.Job
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.io.*
@@ -404,12 +402,22 @@ abstract class AbstractFlashcardViewer :
     }
 
     suspend fun saveEditedCard() {
-        val updatedCard: Card = withProgress {
+        val card = editorCard!!
+        withProgress {
+            // TODO: this should be undoableOp(); need to investigate why two tests
+            // hang when it is used
             withCol {
-                updateCard(this, editorCard!!, true, canAccessScheduler())
+                val changes = updateNote(card.note())
+                if (col.decks.active().contains(card.did) || !canAccessScheduler()) {
+                    card.apply {
+                        load()
+                        q(true)
+                    }
+                }
+                changes
             }
         }
-        onCardUpdated(updatedCard)
+        onCardUpdated(card)
     }
 
     private fun onCardUpdated(result: Card) {
@@ -821,13 +829,9 @@ abstract class AbstractFlashcardViewer :
                         .alsoExecuteAfter { showSnackbar(message, Snackbar.LENGTH_SHORT) }
                 )
             }
-            if (BackendFactory.defaultLegacySchema) {
-                legacyUndo()
-            } else {
-                return launchCatchingTask {
-                    if (!backendUndoAndShowPopup()) {
-                        legacyUndo()
-                    }
+            return launchCatchingTask {
+                if (!backendUndoAndShowPopup()) {
+                    legacyUndo()
                 }
             }
         }
@@ -2499,19 +2503,15 @@ abstract class AbstractFlashcardViewer :
         @NeedsTest("14221: 'playsound' should play the sound from the start")
         @BlocksSchemaUpgrade("handle TTS tags")
         private suspend fun controlSound(url: String) {
-            val replacedUrl = if (BackendFactory.defaultLegacySchema) {
-                url.replaceFirst("playsound:".toRegex(), "")
-            } else {
-                val filename = when (val tag = currentCard?.let { getAvTag(it, url) }) {
-                    is SoundOrVideoTag -> tag.filename
-                    // not currently supported
-                    is TTSTag -> null
-                    else -> null
-                }
-                filename?.let {
-                    Sound.getSoundPath(mBaseUrl!!, it)
-                } ?: return
+            val filename = when (val tag = currentCard?.let { getAvTag(it, url) }) {
+                is SoundOrVideoTag -> tag.filename
+                // not currently supported
+                is TTSTag -> null
+                else -> null
             }
+            val replacedUrl = filename?.let {
+                Sound.getSoundPath(mBaseUrl!!, it)
+            } ?: return
             mSoundPlayer.playSound(replacedUrl, null, soundErrorListener)
         }
 

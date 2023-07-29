@@ -86,7 +86,6 @@ import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.update
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.lang.ref.WeakReference
@@ -239,24 +238,8 @@ open class Reviewer :
         }
         launchCatchingTask {
             card.setUserFlag(flag)
-            if (BackendFactory.defaultLegacySchema) {
-                card.flush()
-                /* Following code would allow to update value of {{cardFlag}}.
-               Anki does not update this value when a flag is changed, so
-               currently this code would do something that anki itself
-               does not do. I hope in the future Anki will correct that
-               and this code may becomes useful.
-
-            card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
-            if (sDisplayAnswer) {
-                displayCardAnswer();
-            } else {
-                displayCardQuestion();
-                } */
-            } else {
-                withCol {
-                    setUserFlagForCards(listOf(card.id), flag)
-                }
+            withCol {
+                setUserFlagForCards(listOf(card.id), flag)
             }
             refreshActionBar()
             onFlagChanged()
@@ -441,11 +424,7 @@ open class Reviewer :
                 toggleWhiteboard()
             }
             R.id.action_open_deck_options -> {
-                val i = if (BackendFactory.defaultLegacySchema) {
-                    Intent(this, DeckOptionsActivity::class.java)
-                } else {
-                    com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current().id)
-                }
+                val i = com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current().id)
                 deckOptionsLauncher.launch(i)
             }
             R.id.action_select_tts -> {
@@ -685,13 +664,7 @@ open class Reviewer :
             showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
-        val intent = if (BackendFactory.defaultLegacySchema) {
-            Intent(this, CardInfo::class.java).apply {
-                putExtra("cardId", currentCard!!.id)
-            }
-        } else {
-            com.ichi2.anki.pages.CardInfo.getIntent(this, currentCard!!.id)
-        }
+        val intent = com.ichi2.anki.pages.CardInfo.getIntent(this, currentCard!!.id)
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         startActivityWithAnimation(intent, animation)

@@ -111,17 +111,8 @@ object Consts {
 
     const val STARTING_FACTOR = 2500
 
-    // deck schema & syncing vars
-    const val LEGACY_SCHEMA_VERSION = 11
-
     /** Only used by the dialog shown to user */
     const val BACKEND_SCHEMA_VERSION = 18
-
-    /** The database schema version that we can downgrade from  */
-    const val SYNC_MAX_BYTES = (2.5 * 1024 * 1024).toInt()
-    const val SYNC_MAX_FILES = 25
-
-    val DEFAULT_HOST_NUM: Int? = null
 
     const val SYNC_VER = 10
 
@@ -153,9 +144,6 @@ object Consts {
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
     const val DEFAULT_DECK_ID: Long = 1
-
-    /** Default dconf - can't be removed  */
-    const val DEFAULT_DECK_CONFIG_ID: Long = 1
 
     val FIELD_SEPARATOR = Character.toString('\u001f')
 

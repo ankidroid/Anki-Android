@@ -27,7 +27,6 @@ import com.afollestad.materialdialogs.internal.rtl.RtlTextView
 import com.ichi2.anki.*
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
-import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.not
@@ -117,20 +116,11 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun testShowDeckOptions() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
+            addDeck("Deck 1")
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
             openContextMenuAndSelectItem(recyclerView, 4)
-
-            val deckOptions = shadowOf(this).nextStartedActivity!!
-            if (BackendFactory.defaultLegacySchema) {
-                assertEquals(
-                    "com.ichi2.anki.DeckOptionsActivity",
-                    deckOptions.component!!.className
-                )
-                assertEquals(deckId, deckOptions.getLongExtra("did", 1))
-            }
         }
     }
 

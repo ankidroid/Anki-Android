@@ -25,8 +25,6 @@
  * displayed flag, without redrawing the entire review screen).
  */
 
-// BackendFactory.defaultLegacySchema must be false to use this code.
-
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting

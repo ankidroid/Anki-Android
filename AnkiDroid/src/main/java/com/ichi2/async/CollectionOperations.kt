@@ -25,7 +25,6 @@ import com.ichi2.utils.Computation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
@@ -35,45 +34,6 @@ import java.util.*
  * Remove this comment when migration has been completed
  * TODO: All functions associated to Collection can be converted to extension function to avoid redundant parameter [col] in each.
  */
-
-/**
- * Saves the newly updated card [editCard] to disk
- * @return updated card
- */
-fun updateCard(
-    col: Collection,
-    editCard: Card,
-    isFromReviewer: Boolean,
-    canAccessScheduler: Boolean
-): Card {
-    Timber.d("doInBackgroundUpdateNote")
-    // Save the note
-    val editNote = editCard.note()
-    if (BackendFactory.defaultLegacySchema) {
-        col.db.executeInTransaction {
-            // TODO: undo integration
-            editNote.flush()
-            // flush card too, in case, did has been changed
-            editCard.flush()
-        }
-    } else {
-        // TODO: the proper way to do this would be to call this in undoableOp() in a coroutine
-        col.updateNote(editNote)
-        // no need to flush card in new path
-    }
-    return if (isFromReviewer) {
-        if (col.decks.active().contains(editCard.did) || !canAccessScheduler) {
-            editCard.apply {
-                load()
-                q(true) // reload qa-cache
-            }
-        } else {
-            col.sched.card!! // check: are there deleted too?
-        }
-    } else {
-        editCard
-    }
-}
 
 // TODO: Move the operation where it is actually used, no need for a separate function since it is fairly simple
 /**

@@ -14,8 +14,6 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-// BackendFactory.defaultLegacySchema must be false to use this code.
-
 package com.ichi2.anki
 
 import com.ichi2.anki.CollectionManager.withCol

@@ -86,7 +86,6 @@ import com.ichi2.libanki.Note.DupeOrEmpty
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
-import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -748,11 +747,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
             if (mCurrentEditedCard != null && mCurrentEditedCard!!.did != deckId) {
                 mReloadRequired = true
-                if (BackendFactory.defaultLegacySchema) {
-                    // remove card from filtered deck first (new schema takes care of it
-                    // for us)
-                    col.sched.remFromDyn(longArrayOf(mCurrentEditedCard!!.id))
-                }
                 col.setDeck(longArrayOf(mCurrentEditedCard!!.id), deckId)
                 // refresh the card object to reflect the database changes from above
                 mCurrentEditedCard!!.load()

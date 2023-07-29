@@ -29,7 +29,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
-import com.ichi2.anki.servicelayer.DeckService.defaultDeckHasCards
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
@@ -41,7 +40,6 @@ import com.ichi2.utils.TypedFilter
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
@@ -210,11 +208,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
         // Set deck name and colour. Filtered decks have their own colour
         holder.deckName.text = node.lastDeckNameComponent
-        val filtered = if (!BackendFactory.defaultLegacySchema) {
+        val filtered =
             node.filtered
-        } else {
-            runBlocking { withCol { decks.isDyn(node.did) } }
-        }
         if (filtered) {
             holder.deckName.setTextColor(mDeckNameDynColor)
         } else {
@@ -258,11 +253,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     @RustCleanup("non suspend")
     private suspend fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
         val nodeValue = node.value
-        val collapsed = if (BackendFactory.defaultLegacySchema) {
-            withCol { decks.get(nodeValue.did).optBoolean("collapsed", false) }
-        } else {
-            node.value.collapsed
-        }
+        val collapsed = node.value.collapsed
         // Apply the correct expand/collapse drawable
         if (node.hasChildren()) {
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
@@ -291,22 +282,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private suspend fun processNodes(nodes: List<TreeNode<AbstractDeckTreeNode>>): List<TreeNode<AbstractDeckTreeNode>> {
         val result = mutableListOf<TreeNode<AbstractDeckTreeNode>>()
         for (node in nodes) {
-            if (BackendFactory.defaultLegacySchema) {
-                // If the default deck is empty, hide it by not adding it to the deck list.
-                // We don't hide it if it's the only deck or if it has sub-decks.
-                if (node.value.did == 1L && nodes.size > 1 && !node.hasChildren()) {
-                    if (withCol { !defaultDeckHasCards(col) }) {
-                        continue
-                    }
-                }
-            }
-            val isCollapsed = if (BackendFactory.defaultLegacySchema) {
-                withCol { decks.get(node.value.did).optBoolean("collapsed") }
-            } else {
-                // backend takes care of excluding default, and includes collapsed info
-                node.value.collapsed
-            }
-
+            val isCollapsed = node.value.collapsed
             result.add(node)
 
             // Process sub-decks

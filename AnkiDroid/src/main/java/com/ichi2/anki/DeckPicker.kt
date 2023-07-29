@@ -124,7 +124,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import makeLinksClickable
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONException
 import timber.log.Timber
@@ -891,11 +890,8 @@ open class DeckPicker :
             }
             R.id.action_model_browser_open -> {
                 Timber.i("DeckPicker:: Model browser button pressed")
-                val manageNoteTypesTarget = if (!BackendFactory.defaultLegacySchema) {
+                val manageNoteTypesTarget =
                     ManageNotetypes::class.java
-                } else {
-                    ModelBrowser::class.java
-                }
                 val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
                 startActivityForResultWithAnimation(noteTypeBrowser, 0, START)
                 return true
@@ -1130,13 +1126,6 @@ open class DeckPicker :
      * Automatic sync
      */
     private fun onFinishedStartup() {
-        // create backup in background if needed
-        if (BackendFactory.defaultLegacySchema) {
-            BackupManager.performBackupInBackground(col.path, TimeManager.time)
-        } else {
-            // new code triggers backup in updateDeckList()
-        }
-
         launchCatchingTask {
             val shownBackupDialog = BackupPromptDialog.showIfAvailable(this@DeckPicker)
             if (
@@ -1407,13 +1396,9 @@ open class DeckPicker :
             val isReview = undoReviewString == col.undoName(resources)
             Undo().runWithHandler(undoTaskListener(isReview))
         }
-        if (BackendFactory.defaultLegacySchema) {
-            legacyUndo()
-        } else {
-            launchCatchingTask {
-                if (!backendUndoAndShowPopup()) {
-                    legacyUndo()
-                }
+        launchCatchingTask {
+            if (!backendUndoAndShowPopup()) {
+                legacyUndo()
             }
         }
     }
@@ -1560,11 +1545,7 @@ open class DeckPicker :
     }
 
     fun restoreFromBackup(path: String) {
-        if (BackendFactory.defaultLegacySchema) {
-            importReplace(listOf(path))
-        } else {
-            importColpkg(path)
-        }
+        importColpkg(path)
     }
 
     // Helper function to check if there are any saved stacktraces
@@ -1640,12 +1621,8 @@ open class DeckPicker :
     // Callback to import a file -- replacing the existing collection
     @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file")
     override fun importReplace(importPath: List<String>) {
-        if (BackendFactory.defaultLegacySchema) {
-            TaskManager.launchCollectionTask(ImportReplace(importPath), importReplaceListener())
-        } else {
-            // multiple colpkg files is nonsensical
-            importColpkg(importPath[0])
-        }
+        // multiple colpkg files is nonsensical
+        importColpkg(importPath[0])
     }
 
     /**
@@ -1873,7 +1850,7 @@ open class DeckPicker :
 
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     private fun updateDeckList(quick: Boolean) {
-        if (!BackendFactory.defaultLegacySchema && Build.FINGERPRINT != "robolectric") {
+        if (Build.FINGERPRINT != "robolectric") {
             // uses user's desktop settings to determine whether a backup
             // actually happens
             performBackupInBackground()
@@ -2024,13 +2001,7 @@ open class DeckPicker :
             startActivityWithAnimation(i, FADE)
         } else {
             // otherwise open regular options
-            val intent = if (BackendFactory.defaultLegacySchema) {
-                Intent(this@DeckPicker, DeckOptionsActivity::class.java).apply {
-                    putExtra("did", did)
-                }
-            } else {
-                com.ichi2.anki.pages.DeckOptions.getIntent(this, did)
-            }
+            val intent = com.ichi2.anki.pages.DeckOptions.getIntent(this, did)
             startActivityWithAnimation(intent, FADE)
         }
     }
@@ -2096,47 +2067,16 @@ open class DeckPicker :
     }
 
     fun confirmDeckDeletion(did: DeckId): Job? {
-        if (!BackendFactory.defaultLegacySchema) {
-            dismissAllDialogFragments()
-            // No confirmation required, as undoable
-            return launchCatchingTask {
-                val changes = withProgress {
-                    undoableOp {
-                        decks.removeDecks(listOf(did))
-                    }
+        dismissAllDialogFragments()
+        // No confirmation required, as undoable
+        return launchCatchingTask {
+            val changes = withProgress {
+                undoableOp {
+                    decks.removeDecks(listOf(did))
                 }
-                showSnackbar(TR.browsingCardsDeleted(changes.count))
             }
+            showSnackbar(TR.browsingCardsDeleted(changes.count))
         }
-
-        val res = resources
-        if (!colIsOpen()) {
-            return null
-        }
-        if (did == 1L) {
-            showSnackbar(R.string.delete_deck_default_deck)
-            dismissAllDialogFragments()
-            return null
-        }
-        // Get the number of cards contained in this deck and its subdecks
-        val cnt = DeckService.countCardsInDeckTree(col, did)
-        val isDyn = col.decks.isDyn(did)
-        // Delete empty decks without warning. Filtered decks save filters in the deck data, so require confirmation.
-        if (cnt == 0 && !isDyn) {
-            deleteDeck(did)
-            dismissAllDialogFragments()
-            return null
-        }
-        // Otherwise we show a warning and require confirmation
-        val msg: String
-        val deckName = "'" + col.decks.name(did) + "'"
-        msg = if (isDyn) {
-            res.getString(R.string.delete_cram_deck_message, deckName)
-        } else {
-            res.getQuantityString(R.plurals.delete_deck_message, cnt, deckName, cnt)
-        }
-        showDialogFragment(DeckPickerConfirmDeleteDeckDialog.newInstance(msg, did))
-        return null
     }
 
     /**

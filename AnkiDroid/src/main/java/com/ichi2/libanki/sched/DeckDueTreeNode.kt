@@ -40,7 +40,6 @@ class DeckDueTreeNode(
     override var revCount: Int,
     override var lrnCount: Int,
     override var newCount: Int,
-    // only set when defaultLegacySchema is false
     override var collapsed: Boolean = false,
     override var filtered: Boolean = false
 ) : AbstractDeckTreeNode(fullDeckName, did, collapsed, filtered) {

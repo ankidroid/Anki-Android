@@ -41,10 +41,6 @@ import net.ankiweb.rsdroid.RustCleanup
 
 /**
  * Scheduler routines that are common to both V3 and V2.
- *
- * The open funs that reference the backend can only be used when
- * BackendFactory.defaultLegacySchema is false, so for now, SchedV2
- * will need to (conditionally) override them.
  */
 
 @WorkerThread
@@ -334,12 +330,6 @@ abstract class BaseSched(val col: Collection) {
         }
         return toLegacyNode(deckTree(includeCounts), "").children
     }
-
-    /*
-    *************************************************************************
-    * The routines below can be used even when defaultLegacySchema is true
-    *************************************************************************
-    */
 
     /**
      * @param context Some Context to access the lang

@@ -43,8 +43,6 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
-import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustCleanup
 import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import org.json.JSONException
@@ -362,27 +360,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
     }
 
-    override fun extendLimits(newc: Int, rev: Int) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.extendLimits(newc, rev)
-            return
-        }
-        val cur = col.decks.current()
-        val decks = col.decks.parents(cur.getLong("id")).toMutableList()
-        decks.add(cur)
-        for (did in col.decks.children(cur.getLong("id")).values) {
-            decks.add(col.decks.get(did))
-        }
-        for (g in decks) {
-            // add
-            var today = g.getJSONArray("newToday")
-            today.put(1, today.getInt(1) - newc)
-            today = g.getJSONArray("revToday")
-            today.put(1, today.getInt(1) - rev)
-            col.decks.save(g)
-        }
-    }
-
     /**
      * @param limFn Method sending a deck to the maximal number of card it can have. Normally into account both limits and cards seen today
      * @param cntFn Method sending a deck to the number of card it has got to see today.
@@ -496,39 +473,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             lims[Decks.normalizeName(deck.getString("name"))] = arrayOf(nlim, rlim)
         }
         return deckNodes
-    }
-
-    /** Similar to deck due tree, but ignore the number of cards.
-     *
-     * It may takes a lot of time to compute the number of card, it
-     * requires multiple database access by deck.  Ignoring this number
-     * lead to the creation of a tree more quickly. */
-    @RustCleanup("consider updating callers to use col.deckTreeLegacy() directly, and removing this")
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : AbstractDeckTreeNode> quickDeckDueTree(): List<TreeNode<T>> {
-        if (!BackendFactory.defaultLegacySchema) {
-            return super.quickDeckDueTree()
-        }
-
-        // Similar to deckDueList
-        @KotlinCleanup("simplify with map {}")
-        val allDecksSorted = ArrayList<DeckTreeNode>()
-        for (deck in col.decks.allSorted()) {
-            val g = DeckTreeNode(deck.getString("name"), deck.getLong("id"))
-            allDecksSorted.add(g)
-        }
-        // End of the similar part.
-        return (_groupChildren(allDecksSorted, false) as List<TreeNode<T>>)
-    }
-
-    @RustCleanup("once defaultLegacySchema is removed, cancelListener can be removed")
-    override fun deckDueTree(cancelListener: CancelListener?): List<TreeNode<DeckDueTreeNode>>? {
-        if (!BackendFactory.defaultLegacySchema) {
-            return super.deckDueTree(null)
-        }
-        _checkDay()
-        val allDecksSorted = deckDueList(cancelListener) ?: return null
-        return _groupChildren(allDecksSorted, true)
     }
 
     /**
@@ -1789,27 +1733,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
 
     /*
       Dynamic deck handling ******************************************************************
-      *****************************
-     */
-    override fun rebuildDyn(did: Long) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.rebuildDyn(did)
-            return
-        }
-        val deck = col.decks.get(did)
-        if (deck.isStd) {
-            Timber.e("error: deck is not a filtered deck")
-            return
-        }
-        // move any existing cards back first, then fill
-        emptyDyn(did)
-        val cnt = _fillDyn(deck)
-        if (cnt == 0) {
-            return
-        }
-        // and change to our new deck
-        col.decks.select(did)
-    }
+      *****************************/
 
     /**
      * Whether the filtered deck is empty
@@ -1839,14 +1763,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             total += ids.size
         }
         return total
-    }
-
-    override fun emptyDyn(did: Long) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.emptyDyn(did)
-            return
-        }
-        emptyDyn("did = $did")
     }
 
     /**
@@ -2069,24 +1985,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
     }
 
-    /** true if there are cards in learning, with review due the same
-     * day, in the selected decks.  */
-    /* not in upstream anki. As revDue and newDue, it's used to check
-     * what to do when a deck is selected in deck picker. When this
-     * method is called, we already know that no cards is due
-     * immediately. It answers whether cards will be due later in the
-     * same deck. */
-    override fun hasCardsTodayAfterStudyAheadLimit(): Boolean {
-        return if (!BackendFactory.defaultLegacySchema) {
-            super.hasCardsTodayAfterStudyAheadLimit()
-        } else {
-            col.db.queryScalar(
-                "SELECT 1 FROM cards WHERE did IN " + _deckLimit() +
-                    " AND queue = " + Consts.QUEUE_TYPE_LRN + " LIMIT 1"
-            ) != 0
-        }
-    }
-
     fun haveBuriedSiblings(): Boolean {
         return haveBuriedSiblings(col.decks.active())
     }
@@ -2113,13 +2011,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         return cnt != 0
     }
 
-    override fun haveBuried(): Boolean {
-        return if (!BackendFactory.defaultLegacySchema) {
-            super.haveBuried()
-        } else {
-            haveManuallyBuried() || haveBuriedSiblings()
-        }
-    }
     /*
       Next time reports ********************************************************
       ***************************************
@@ -2217,77 +2108,6 @@ end)  """
     }
 
     /**
-     * Suspend cards.
-     *
-     * Overridden: in V1 remove from dyn and lrn
-     */
-    override fun suspendCards(ids: LongArray) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.suspendCards(ids)
-            return
-        }
-        col.log(*ids.toTypedArray())
-        col.db.execute(
-            "UPDATE cards SET queue = " + Consts.QUEUE_TYPE_SUSPENDED + ", mod = ?, usn = ? WHERE id IN " +
-                Utils.ids2str(ids),
-            time.intTime(),
-            col.usn()
-        )
-    }
-
-    /**
-     * Unsuspend cards
-     */
-    override fun unsuspendCards(ids: LongArray) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.unsuspendCards(ids)
-            return
-        }
-        col.log(*ids.toTypedArray())
-        col.db.execute(
-            "UPDATE cards SET " + _restoreQueueSnippet() + ", mod = ?, usn = ?" +
-                " WHERE queue = " + Consts.QUEUE_TYPE_SUSPENDED + " AND id IN " + Utils.ids2str(ids),
-            time.intTime(),
-            col.usn()
-        )
-    }
-
-    // Overridden: V1 also remove from dyns and lrn
-    /**
-     * Bury all cards with id in cids. Set as manual bury if [manual]
-     */
-    @VisibleForTesting
-    override fun buryCards(cids: LongArray, manual: Boolean) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.buryCards(cids, manual)
-            return
-        }
-        val queue =
-            if (manual) Consts.QUEUE_TYPE_MANUALLY_BURIED else Consts.QUEUE_TYPE_SIBLING_BURIED
-        col.log(*cids.toTypedArray())
-        col.db.execute(
-            "update cards set queue=?,mod=?,usn=? where id in " + Utils.ids2str(cids),
-            queue,
-            time.intTime(),
-            col.usn()
-        )
-    }
-
-    /**
-     * Unbury the cards of deck [did] and its descendants.
-     * @param type See [UnburyType]
-     */
-    override fun unburyCardsForDeck(did: Long, type: UnburyType) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.unburyCardsForDeck(did, type)
-            return
-        }
-        val dids = col.decks.childDids(did, col.decks.childMap()).toMutableList()
-        dids.add(did)
-        unburyCardsForDeck(type, dids)
-    }
-
-    /**
      * Unbury the cards of some decks.
      * @param type See [UnburyType]
      * @param allDecks the decks from which cards should be unburied. If None, unbury for all decks.
@@ -2315,22 +2135,6 @@ end)  """
 
     override fun unburyCards() {
         unburyCardsForDeck(UnburyType.ALL, null)
-    }
-
-    /**
-     * Bury all cards for note until next session.
-     * @param nid The id of the targeted note.
-     */
-    override fun buryNote(nid: Long) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.buryNote(nid)
-            return
-        }
-        val cids = col.db.queryLongList(
-            "SELECT id FROM cards WHERE nid = ? AND queue >= " + Consts.CARD_TYPE_NEW,
-            nid
-        ).toLongArray()
-        buryCards(cids)
     }
 
     /**
@@ -2427,98 +2231,6 @@ end)  """
             d
         )
         col.log(ids)
-    }
-
-    /**
-     * Repositioning new cards **************************************************
-     * *********************************************
-     */
-    override fun sortCards(
-        cids: List<Long>,
-        start: Int,
-        step: Int,
-        shuffle: Boolean,
-        shift: Boolean
-    ) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.sortCards(cids, start, step, shuffle, shift)
-            return
-        }
-        val scids = Utils.ids2str(cids)
-        val now = time.intTime()
-        val nids = ArrayList<Long?>(cids.size)
-        // List of cid from `cids` and its `nid`
-        val cid2nid = ArrayList<Pair<Long, Long>>(cids.size)
-        for (id in cids) {
-            val nid = col.db.queryLongScalar("SELECT nid FROM cards WHERE id = ?", id)
-            if (!nids.contains(nid)) {
-                nids.add(nid)
-            }
-            cid2nid.add(Pair(id, nid))
-        }
-        if (nids.isEmpty()) {
-            // no new cards
-            return
-        }
-        // determine nid ordering
-        val due = HashUtil.HashMapInit<Long?, Long>(nids.size)
-        if (shuffle) {
-            Collections.shuffle(nids)
-        }
-        for (c in nids.indices) {
-            due[nids[c]] = (start + c * step).toLong()
-        }
-        val high = start + step * (nids.size - 1)
-        // shift?
-        if (shift) {
-            val low = col.db.queryScalar(
-                "SELECT min(due) FROM cards WHERE due >= ? AND type = " + Consts.CARD_TYPE_NEW + " AND id NOT IN " + scids,
-                start
-            )
-            if (low != 0) {
-                val shiftBy = high - low + 1
-                col.db.execute(
-                    "UPDATE cards SET mod = ?, usn = ?, due = due + ?" +
-                        " WHERE id NOT IN " + scids + " AND due >= ? AND type = " + Consts.CARD_TYPE_NEW,
-                    now,
-                    col.usn(),
-                    shiftBy,
-                    low
-                )
-            }
-        }
-        // reorder cards
-        val d = ArrayList<Array<Any?>>(cids.size)
-        for (pair in cid2nid) {
-            val cid = pair.first
-            val nid = pair.second
-            d.add(arrayOf(due[nid], now, col.usn(), cid))
-        }
-        col.db.executeMany("UPDATE cards SET due = ?, mod = ?, usn = ? WHERE id = ?", d)
-    }
-
-    override fun randomizeCards(did: Long) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.randomizeCards(did)
-            return
-        }
-        val cids: List<Long> = col.db.queryLongList(
-            "select id from cards where type = " + Consts.CARD_TYPE_NEW + " and did = ?",
-            did
-        )
-        sortCards(cids, 1, 1, true, false)
-    }
-
-    override fun orderCards(did: Long) {
-        if (!BackendFactory.defaultLegacySchema) {
-            super.orderCards(did)
-            return
-        }
-        val cids: List<Long> = col.db.queryLongList(
-            "SELECT id FROM cards WHERE type = " + Consts.CARD_TYPE_NEW + " AND did = ? ORDER BY nid",
-            did
-        )
-        sortCards(cids, 1, 1, false, false)
     }
 
     /**

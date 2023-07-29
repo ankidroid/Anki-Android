@@ -327,7 +327,6 @@ open class SchedV2Test : RobolectricTest() {
             val col = col
             col.changeSchedulerVer(2)
             ifV3 {
-                assumeThat(defaultLegacySchema, equalTo(false))
                 col.v3Enabled = true
             }
             return col
@@ -799,11 +798,7 @@ open class SchedV2Test : RobolectricTest() {
             c.due = 0
             c.flush()
         }
-        var parentIndex = 0
-        if (defaultLegacySchema) {
-            // position 0 is default deck. Different from upstream
-            parentIndex = 1
-        }
+        val parentIndex = 0
         var tree = col.sched.deckDueTree()[parentIndex]
         // (('parent', 1514457677462, 5, 0, 0, (('child', 1514457677463, 5, 0, 0, ()),)))
         Assert.assertEquals("parent", tree.value.fullDeckName)

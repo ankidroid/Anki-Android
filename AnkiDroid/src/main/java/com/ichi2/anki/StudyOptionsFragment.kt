@@ -54,7 +54,6 @@ import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.Job
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -253,15 +252,11 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         when (item.itemId) {
             R.id.action_undo -> {
                 Timber.i("StudyOptionsFragment:: Undo button pressed")
-                if (BackendFactory.defaultLegacySchema) {
-                    Undo().runWithHandler(mUndoListener)
-                } else {
-                    launchCatchingTask {
-                        if (requireActivity().backendUndoAndShowPopup()) {
-                            openReviewer()
-                        } else {
-                            Undo().runWithHandler(mUndoListener)
-                        }
+                launchCatchingTask {
+                    if (requireActivity().backendUndoAndShowPopup()) {
+                        openReviewer()
+                    } else {
+                        Undo().runWithHandler(mUndoListener)
                     }
                 }
                 return true
@@ -271,11 +266,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 if (col!!.decks.isDyn(col!!.decks.selected())) {
                     openFilteredDeckOptions()
                 } else {
-                    val i = if (BackendFactory.defaultLegacySchema) {
-                        Intent(activity, DeckOptionsActivity::class.java)
-                    } else {
-                        com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
-                    }
+                    val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
                     Timber.i("Opening deck options for activity result")
                     onDeckOptionsActivityResult.launch(i)
                     slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)

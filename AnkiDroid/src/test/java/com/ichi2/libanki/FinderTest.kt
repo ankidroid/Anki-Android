@@ -24,10 +24,8 @@ import com.ichi2.libanki.Consts.CARD_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
 import com.ichi2.libanki.sched.SchedV2
-import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
-import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThan
@@ -150,11 +148,7 @@ class FinderTest : RobolectricTest() {
         assertEquals(5, col.findCards("tag:*").size)
         assertEquals(1, col.findCards("tag:\\*").size)
         assertEquals(
-            if (BackendFactory.defaultLegacySchema) {
-                5
-            } else {
-                1
-            },
+            1,
             col.findCards("tag:%").size
         )
         assertEquals(2, col.findCards("tag:animal_1").size)
@@ -344,19 +338,6 @@ class FinderTest : RobolectricTest() {
             assertEquals(1, col.findCards("rated:1:2").size)
             assertEquals(2, col.findCards("rated:1").size)
             assertEquals(1, col.findCards("rated:2:2").size)
-            // added
-            if (BackendFactory.defaultLegacySchema) {
-                assertEquals(0, col.findCards("added:0").size)
-                col.db.execute(
-                    "update cards set id = id - " + Stats.SECONDS_PER_DAY * 1000 + " where id = ?",
-                    id
-                )
-                assertEquals(
-                    (col.cardCount() - 1),
-                    col.findCards("added:1").size
-                )
-                assertEquals(col.cardCount(), col.findCards("added:2").size)
-            }
         } else {
             Timber.w("some find tests disabled near cutoff")
         }
@@ -411,11 +392,7 @@ class FinderTest : RobolectricTest() {
         assertEquals(1, col.findCards("tag:cat1::something").size)
         assertEquals(2, col.findCards("tag:cat2::some").size)
         assertEquals(
-            if (BackendFactory.defaultLegacySchema) {
-                1
-            } else {
-                0
-            },
+            0,
             col.findCards("tag:cat2::some::").size
         )
     }

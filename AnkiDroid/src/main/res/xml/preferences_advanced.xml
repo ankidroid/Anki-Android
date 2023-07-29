@@ -53,20 +53,6 @@
             android:key="@string/double_scrolling_gap_key"
             android:summary="@string/double_scrolling_gap_summ"
             android:title="@string/double_scrolling_gap" />
-        <PreferenceCategory android:title="@string/statistics">
-            <ListPreference
-                android:entries="@array/stats_default_deck_labels"
-                android:entryValues="@array/stats_default_deck_values"
-                android:key="@string/stats_default_deck_key"
-                android:title="@string/stats_default_deck_title"
-                android:defaultValue="current"
-                app1:useSimpleSummaryProvider="true"/>
-            <Preference
-                android:key="@string/pref_advanced_statistics_key"
-                android:title="@string/advanced_statistics_title"
-                android:fragment="com.ichi2.anki.preferences.AdvancedStatisticsSettingsFragment"
-                search:ignore="true"/>
-        </PreferenceCategory>
         <PreferenceCategory
             android:key="@string/pref_cat_workarounds_key"
             android:title="@string/pref_cat_workarounds" >

@@ -31,7 +31,6 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.show
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
@@ -90,37 +89,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
             false
-        }
-
-        /*
-         * Statistics section
-         */
-
-        // Default deck for statistics
-        requirePreference<Preference>(R.string.stats_default_deck_key).apply {
-            // It doesn't have an effect on the new Statistics page,
-            // which is enabled together with the new backend
-            if (!BackendFactory.defaultLegacySchema) {
-                isEnabled = false
-            }
-        }
-
-        // Advanced statistics
-        requirePreference<Preference>(R.string.pref_advanced_statistics_key).apply {
-            // It doesn't have an effect on the new Statistics page,
-            // which is enabled together with the new backend
-            if (!BackendFactory.defaultLegacySchema) {
-                isEnabled = false
-            }
-            setSummaryProvider {
-                if (requireContext().sharedPrefs()
-                    .getBoolean("advanced_statistics_enabled", false)
-                ) {
-                    getString(R.string.enabled)
-                } else {
-                    getString(R.string.disabled)
-                }
-            }
         }
 
         /*

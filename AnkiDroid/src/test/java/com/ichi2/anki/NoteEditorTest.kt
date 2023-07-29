@@ -35,8 +35,6 @@ import com.ichi2.libanki.Note
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
@@ -99,34 +97,28 @@ class NoteEditorTest : RobolectricTest() {
         assertThat(actualResourceId, equalTo(R.string.note_editor_no_first_field))
     }
 
-    @Test
-    @RustCleanup("needs update for new backend")
-    fun errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() {
-        if (!BackendFactory.defaultLegacySchema) {
-            return
-        }
-        val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
-            .withFirstField("A")
-            .withSecondField("B")
-            .withThirdField("C")
-            .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created_all_fields))
-    }
-
-    @Test
-    @RustCleanup("needs update for new backend")
-    fun errorSavingInvalidNoteWitSomeFieldsDisplaysEnterMore() {
-        if (!BackendFactory.defaultLegacySchema) {
-            return
-        }
-        val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
-            .withFirstField("A")
-            .withThirdField("C")
-            .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
-    }
+//    @Test
+//    @RustCleanup("needs update for new backend")
+//    fun errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() {
+//        val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
+//            .withFirstField("A")
+//            .withSecondField("B")
+//            .withThirdField("C")
+//            .build()
+//        val actualResourceId = noteEditor.addNoteErrorResource
+//        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created_all_fields))
+//    }
+//
+//    @Test
+//    @RustCleanup("needs update for new backend")
+//    fun errorSavingInvalidNoteWitSomeFieldsDisplaysEnterMore() {
+//        val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
+//            .withFirstField("A")
+//            .withThirdField("C")
+//            .build()
+//        val actualResourceId = noteEditor.addNoteErrorResource
+//        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
+//    }
 
     @Test
     fun errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() {

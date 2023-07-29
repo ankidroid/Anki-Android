@@ -18,10 +18,7 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
@@ -66,11 +63,7 @@ class Note : Cloneable {
 
     constructor(col: Collection, model: Model) {
         this.col = col
-        this.id = if (BackendFactory.defaultLegacySchema) {
-            time.timestampID(col.db, "notes")
-        } else {
-            0
-        }
+        this.id = 0
         guId = Utils.guid64()
         mModel = model
         mid = model.getLong("id")

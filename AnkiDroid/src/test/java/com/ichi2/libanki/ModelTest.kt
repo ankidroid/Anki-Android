@@ -21,32 +21,20 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.stripHTML
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.json.JSONObject
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 import java.util.*
-import kotlin.test.assertFailsWith
 
 fun clozeClass(): String {
-    return if (BackendFactory.defaultLegacySchema) {
-        "class=cloze"
-    } else {
-        "class=\"cloze\""
-    }
+    return "class=\"cloze\""
 }
 
 fun clozeData(data: String): String {
-    return if (BackendFactory.defaultLegacySchema) {
-        ""
-    } else {
-        " data-cloze=\"${data}\""
-    }
+    return " data-cloze=\"${data}\""
 }
 
 @RunWith(AndroidJUnit4::class)
@@ -337,10 +325,8 @@ class ModelTest : RobolectricTest() {
     @Test
     fun test_cloze() {
         fun clearId(note: Note) {
-            if (!BackendFactory.defaultLegacySchema) {
-                // backend protects against adding the same note twice
-                note.id = 0
-            }
+            // backend protects against adding the same note twice
+            note.id = 0
         }
         val col = col
         col.models.setCurrent(col.models.byName("Cloze")!!)
@@ -353,9 +339,6 @@ class ModelTest : RobolectricTest() {
         assertEquals(1, col.addNote(note))
         clearId(note)
         assertEquals(1, col.addNote(note))
-        if (BackendFactory.defaultLegacySchema) {
-            assertEquals(0, col.addNote(note))
-        }
         // try with one cloze
         note = col.newNote()
         note.setItem("Text", "hello {{c1::world}}")
@@ -364,117 +347,6 @@ class ModelTest : RobolectricTest() {
         assertEquals(1, col.addNote(note))
         clearId(note)
         assertEquals(1, col.addNote(note))
-        if (BackendFactory.defaultLegacySchema) {
-            assertEquals(1, col.addNote(note))
-        }
-        if (!BackendFactory.defaultLegacySchema) {
-            // below needs updating to support latest backend output
-            return
-        }
-
-        assertThat(
-            note.cards()[0].q(),
-            containsString("hello <span ${clozeClass()}${clozeData("world")}>[...]</span>")
-        )
-        assertThat(
-            note.cards()[0].a(),
-            containsString("hello <span ${clozeClass()}>world</span>")
-        )
-        // and with a comment
-        note = col.newNote()
-        note.setItem("Text", "hello {{c1::world::typical}}")
-        assertEquals(1, col.addNote(note))
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        assertThat(
-            note.cards()[0].q(),
-            containsString("<span ${clozeClass()}${clozeData("world")}>[typical]</span>")
-        )
-        assertThat(
-            note.cards()[0].a(),
-            containsString("<span ${clozeClass()}>world</span>")
-        )
-        // and with 2 clozes
-        note = col.newNote()
-        note.setItem("Text", "hello {{c1::world}} {{c2::bar}}")
-        assertEquals(2, col.addNote(note))
-        val cards: List<Card> = note.cards()
-        assertEquals(2, cards.size)
-        val c1 = cards[0]
-        val c2 = cards[1]
-        assertThat(
-            c1.q(),
-            containsString("<span ${clozeClass()}${clozeData("world")}>[...]</span> bar")
-        )
-        assertThat(
-            c1.a(),
-            containsString("<span ${clozeClass()}>world</span> bar")
-        )
-        assertThat(
-            c2.q(),
-            containsString("world <span ${clozeClass()}${clozeData("bar")}>[...]</span>")
-        )
-        assertThat(
-            c2.a(),
-            containsString("world <span ${clozeClass()}>bar</span>")
-        )
-        // if there are multiple answers for a single cloze, they are given in a
-        // list
-        note.setItem("Text", "a {{c1::b}} {{c1::c}}")
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        assertThat(
-            note.cards()[0].a(),
-            containsString("<span ${clozeClass()}>b</span> <span ${clozeClass()}>c</span>")
-        )
-        // if we add another cloze, a card should be generated
-        note.setItem("Text", "{{c2::hello}} {{c1::foo}}")
-        clearId(note)
-        assertEquals(2, col.addNote(note))
-        clearId(note)
-        assertEquals(2, col.addNote(note))
-        clearId(note)
-        assertEquals(2, col.addNote(note))
-        clearId(note)
-        assertEquals(2, col.addNote(note))
-        // 0 or negative indices are not supported
-        note.setItem("Text", "{{c0::zero}} {{c-1:foo}}")
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        clearId(note)
-        assertEquals(1, col.addNote(note))
-        if (BackendFactory.defaultLegacySchema) {
-            assertEquals(0, col.addNote(note))
-        }
-
-        note = col.newNote()
-        note.setItem("Text", "hello {{c1::world}}")
-        col.addNote(note)
-        assertEquals(1, note.numberOfCards())
-        note.setItem("Text", "hello {{c2::world}}")
-        note.flush()
-        assertEquals(2, note.numberOfCards())
-        note.setItem("Text", "{{c1::hello}} {{c2::world}}")
-        note.flush()
-        assertEquals(2, note.numberOfCards())
-        note.setItem("Text", "{{c1::hello}} {{c3::world}}")
-        note.flush()
-        assertEquals(3, note.numberOfCards())
-        note.setItem("Text", "{{c0::hello}} {{c-1::world}}")
-        note.flush()
-        assertEquals(3, note.numberOfCards())
     }
 
     @Test
@@ -501,15 +373,6 @@ class ModelTest : RobolectricTest() {
         note.setItem("Text", "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]")
         assertNotEquals(0, col.addNote(note))
         assertEquals(1, note.numberOfCards())
-        val question = note.cards()[0].q()
-        if (!BackendFactory.defaultLegacySchema) {
-            // below needs updating to support latest backend output
-            return
-        }
-        assertTrue(
-            "Question «$question» does not end correctly",
-            question.endsWith("\\(a\\) <span ${clozeClass()}${clozeData("b")}>[...]</span> \\[ [...] \\]")
-        )
     }
 
     @Test
@@ -665,25 +528,6 @@ class ModelTest : RobolectricTest() {
             model.getJSONArray("req").length(),
             model.getJSONArray("tmpls").length()
         )
-    }
-
-    @Test
-    @Config(qualifiers = "en")
-    @RustCleanup("remove")
-    fun regression_test_pipe() {
-        if (!BackendFactory.defaultLegacySchema) {
-            return
-        }
-        val col = col
-        val mm = col.models
-        val basic = mm.byName("Basic")
-        val template = basic!!.getJSONArray("tmpls").getJSONObject(0)
-        template.put("qfmt", "{{|Front}}{{Front}}{{/Front}}{{Front}}")
-        assertFailsWith<Exception> {
-            // in V16, the "save" throws, in V11, the "add" throws
-            mm.save(basic, true)
-            addNoteUsingBasicModel("foo", "bar")
-        }
     }
 
     @Test

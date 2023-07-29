@@ -86,7 +86,6 @@ import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.update
 import kotlinx.coroutines.Job
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
@@ -982,11 +981,6 @@ open class CardBrowser :
             menuInflater.inflate(R.menu.card_browser_multiselect, menu)
             showBackIcon()
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
-
-            menu.findItem(R.id.action_export_selected).apply {
-                // Only visible if new backend is being used
-                this.isVisible = !BackendFactory.defaultLegacySchema
-            }
         }
         mActionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = col.undoAvailable()
@@ -1328,13 +1322,7 @@ open class CardBrowser :
                 val selectedCardIds = selectedCardIds
                 if (selectedCardIds.isNotEmpty()) {
                     val cardId = selectedCardIds[0]
-                    val intent = if (BackendFactory.defaultLegacySchema) {
-                        Intent(this, CardInfo::class.java).apply {
-                            putExtra("cardId", cardId)
-                        }
-                    } else {
-                        com.ichi2.anki.pages.CardInfo.getIntent(this, cardId)
-                    }
+                    val intent = com.ichi2.anki.pages.CardInfo.getIntent(this, cardId)
                     startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.FADE)
                 }
                 return true
@@ -1376,9 +1364,6 @@ open class CardBrowser :
     }
 
     fun exportSelected() {
-        if (BackendFactory.defaultLegacySchema) {
-            return
-        }
         if (!isInMultiSelectMode) {
             return
         }
@@ -1424,13 +1409,9 @@ open class CardBrowser :
     @VisibleForTesting
     fun onUndo() {
         if (col.undoAvailable()) {
-            if (BackendFactory.defaultLegacySchema) {
-                Undo().runWithHandler(mUndoHandler)
-            } else {
-                launchCatchingTask {
-                    if (!backendUndoAndShowPopup()) {
-                        Undo().runWithHandler(mUndoHandler)
-                    }
+            launchCatchingTask {
+                if (!backendUndoAndShowPopup()) {
+                    Undo().runWithHandler(mUndoHandler)
                 }
             }
         }
@@ -1879,12 +1860,13 @@ open class CardBrowser :
 
     private suspend fun saveEditedCard() {
         Timber.d("CardBrowser - saveEditedCard()")
-        val updatedCard: Card = withProgress {
-            withCol {
-                updateCard(this, cardBrowserCard!!, isFromReviewer = false, false)
+        val card = cardBrowserCard!!
+        withProgress {
+            undoableOp {
+                updateNote(card.note())
             }
         }
-        updateCardInList(updatedCard)
+        updateCardInList(card)
     }
 
     /**

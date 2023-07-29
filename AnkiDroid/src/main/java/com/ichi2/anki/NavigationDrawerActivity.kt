@@ -50,7 +50,6 @@ import com.ichi2.libanki.CardId
 import com.ichi2.themes.Themes
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 @KotlinCleanup("IDE-lint")
@@ -308,11 +307,7 @@ abstract class NavigationDrawerActivity :
 
                 R.id.nav_stats -> {
                     Timber.i("Navigating to stats")
-                    val intent = if (BackendFactory.defaultLegacySchema) {
-                        Intent(this@NavigationDrawerActivity, Statistics::class.java)
-                    } else {
-                        com.ichi2.anki.pages.Statistics.getIntent(this)
-                    }
+                    val intent = com.ichi2.anki.pages.Statistics.getIntent(this)
                     startActivityWithAnimation(intent, START)
                 }
 

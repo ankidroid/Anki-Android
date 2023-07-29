@@ -48,7 +48,7 @@ class HtmlGenerator(
     }
 
     fun expandSounds(content: String): String {
-        return Sound.expandSounds(baseUrl, content)
+        return Sound.expandSounds(content)
     }
 
     companion object {

@@ -52,7 +52,6 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -111,13 +110,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
                         val deckId = requireArguments().getLong("did")
-                        val i = if (BackendFactory.defaultLegacySchema) {
-                            Intent(requireContext(), DeckOptionsActivity::class.java).apply {
-                                putExtra("did", deckId)
-                            }
-                        } else {
-                            com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
-                        }
+                        val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
                         requireActivity().startActivity(i)
                     }
                     MORE_OPTIONS -> {

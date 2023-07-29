@@ -34,7 +34,6 @@ import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.getOrCreateFilteredDeck
 import com.ichi2.utils.displayKeyboard
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.function.Consumer
 
@@ -56,17 +55,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
         mInitialDeckName = withCol {
-            if (!BackendFactory.defaultLegacySchema) {
-                getOrCreateFilteredDeck(did = 0).name
-            } else {
-                val names = decks.allNames()
-                var n = 1
-                val namePrefix = context.resources.getString(R.string.filtered_deck_name) + " "
-                while (names.contains(namePrefix + n)) {
-                    n++
-                }
-                namePrefix + n
-            }
+            getOrCreateFilteredDeck(did = 0).name
         }
         showDialog()
     }

@@ -6,19 +6,15 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.view.Menu
 import androidx.core.content.edit
-import androidx.fragment.app.DialogFragment
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
-import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.testutils.*
-import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.utils.ResourceLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -181,28 +177,6 @@ class DeckPickerTest : RobolectricTest() {
         deckPicker.confirmDeckDeletion(did)
         advanceRobolectricLooperWithSleep()
         assertThat("deck was deleted", col.decks.count(), equalTo(1))
-    }
-
-    @Test
-    fun deletion_of_filtered_deck_shows_warning_issue_10238() {
-        if (!BackendFactory.defaultLegacySchema) {
-            // undoable
-            return
-        }
-        // Filtered decks contain their own options, deleting one can cause a significant loss of work.
-        // And they are more likely to be empty temporarily
-        val did = addDynamicDeck("filtered")
-        val deckPicker = startActivityNormallyOpenCollectionWithIntent(
-            DeckPicker::class.java,
-            Intent()
-        )
-        deckPicker.confirmDeckDeletion(did)
-        val fragment = deckPicker.getDialogFragment<DialogFragment>()
-        assertThat(
-            "deck deletion confirmation window should be shown",
-            fragment,
-            instanceOf(DeckPickerConfirmDeleteDeckDialog::class.java)
-        )
     }
 
     @Test
