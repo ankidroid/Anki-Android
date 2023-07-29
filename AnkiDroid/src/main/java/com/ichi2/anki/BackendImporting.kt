@@ -23,11 +23,10 @@ import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.pages.PagesActivity
-import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
-import com.ichi2.libanki.importer.importCsvRaw
+import com.ichi2.libanki.importCsvRaw
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
@@ -64,7 +63,7 @@ suspend fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray {
                     text = progress.importing
                 }
             },
-            op = { withCol { (this as CollectionV16).importCsvRaw(input) } }
+            op = { withCol { col.importCsvRaw(input) } }
         )
         val importResponse = ImportResponse.parseFrom(output)
         undoableOp { importResponse }

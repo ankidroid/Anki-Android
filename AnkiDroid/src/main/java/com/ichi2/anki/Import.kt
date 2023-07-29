@@ -28,7 +28,6 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.libanki.importer.AnkiPackageImporter
 import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.utils.Computation
 import com.ichi2.utils.ImportUtils
@@ -140,9 +139,3 @@ private class ImportReplaceListener(deckPicker: DeckPicker) : TaskListenerWithCo
         context.mProgressDialog!!.setMessage(value)
     }
 }
-
-/**
- * @param impList: List of packages to import
- * @param errList: a string describing the errors. Null if no error.
- */
-data class ImporterData(val impList: List<AnkiPackageImporter>?, val errList: String?)

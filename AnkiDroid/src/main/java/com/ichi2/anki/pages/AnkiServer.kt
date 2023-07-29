@@ -21,7 +21,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.importCsvRaw
 import com.ichi2.anki.runBlockingCatching
 import com.ichi2.libanki.*
-import com.ichi2.libanki.importer.getCsvMetadataRaw
 import com.ichi2.libanki.stats.*
 import fi.iki.elonen.NanoHTTPD
 import timber.log.Timber
@@ -63,8 +62,8 @@ class AnkiServer(
             "graphs" -> withCol { newBackend.graphsRaw(bytes) }
             "getNotetypeNames" -> withCol { newBackend.getNotetypeNamesRaw(bytes) }
             "getDeckNames" -> withCol { newBackend.getDeckNamesRaw(bytes) }
-            "getCsvMetadata" -> withCol { newBackend.getCsvMetadataRaw(bytes) }
-            "importCsv" -> activity.importCsvRaw(bytes)
+            "getCsvMetadata" -> withCol { getCsvMetadataRaw(bytes) }
+            "importCsv" -> withCol { importCsvRaw(bytes) }
             "getFieldNames" -> withCol { newBackend.getFieldNamesRaw(bytes) }
             "cardStats" -> withCol { newBackend.cardStatsRaw(bytes) }
             "getDeckConfig" -> withCol { newBackend.getDeckConfigRaw(bytes) }

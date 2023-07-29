@@ -77,7 +77,7 @@ fun importCollectionPackage(
  * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
  * create, but older clients can not read it.
  */
-fun CollectionV16.exportCollectionPackage(
+fun Collection.exportCollectionPackage(
     outPath: String,
     includeMedia: Boolean,
     legacy: Boolean = true
@@ -94,7 +94,7 @@ fun CollectionV16.exportCollectionPackage(
 /**
  * Import an .apkg file into the current collection.
  */
-fun CollectionV16.importAnkiPackage(path: String): ImportResponse {
+fun Collection.importAnkiPackage(path: String): ImportResponse {
     return backend.importAnkiPackage(packagePath = path)
 }
 
@@ -103,7 +103,7 @@ fun CollectionV16.importAnkiPackage(path: String): ImportResponse {
  * * If legacy is false, an apkg will be created that can only
  * be opened with recent Anki versions.
  */
-fun CollectionV16.exportAnkiPackage(
+fun Collection.exportAnkiPackage(
     outPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
@@ -111,4 +111,12 @@ fun CollectionV16.exportAnkiPackage(
     legacy: Boolean = true
 ) {
     backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
+}
+
+fun Collection.getCsvMetadataRaw(input: ByteArray): ByteArray {
+    return backend.getCsvMetadataRaw(input)
+}
+
+fun Collection.importCsvRaw(input: ByteArray): ByteArray {
+    return backend.importCsvRaw(input)
 }
