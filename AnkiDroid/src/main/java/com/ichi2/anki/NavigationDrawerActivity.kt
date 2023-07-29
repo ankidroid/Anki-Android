@@ -15,15 +15,10 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.ShortcutInfo
-import android.content.pm.ShortcutManager
 import android.content.res.Configuration
-import android.graphics.drawable.Icon
-import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -36,6 +31,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
@@ -426,22 +424,16 @@ abstract class NavigationDrawerActivity :
 
         const val EXTRA_STARTED_WITH_SHORTCUT = "com.ichi2.anki.StartedWithShortcut"
 
-        @TargetApi(Build.VERSION_CODES.N_MR1)
         fun enablePostShortcut(context: Context) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) {
-                return
-            }
-            val shortcutManager = context.getSystemService(ShortcutManager::class.java)
-
             // Review Cards Shortcut
             val intentReviewCards = Intent(context, Reviewer::class.java)
             intentReviewCards.action = Intent.ACTION_VIEW
             intentReviewCards.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentReviewCards.putExtra(EXTRA_STARTED_WITH_SHORTCUT, true)
-            val reviewCardsShortcut = ShortcutInfo.Builder(context, "reviewCardsShortcutId")
+            val reviewCardsShortcut = ShortcutInfoCompat.Builder(context, "reviewCardsShortcutId")
                 .setShortLabel(context.getString(R.string.studyoptions_start))
                 .setLongLabel(context.getString(R.string.studyoptions_start))
-                .setIcon(Icon.createWithResource(context, R.drawable.review_shortcut))
+                .setIcon(IconCompat.createWithResource(context, R.drawable.review_shortcut))
                 .setIntent(intentReviewCards)
                 .build()
 
@@ -450,10 +442,10 @@ abstract class NavigationDrawerActivity :
             intentAddNote.action = Intent.ACTION_VIEW
             intentAddNote.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             intentAddNote.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-            val NoteEditorShortcut = ShortcutInfo.Builder(context, "noteEditorShortcutId")
+            val noteEditorShortcut = ShortcutInfoCompat.Builder(context, "noteEditorShortcutId")
                 .setShortLabel(context.getString(R.string.menu_add))
                 .setLongLabel(context.getString(R.string.menu_add))
-                .setIcon(Icon.createWithResource(context, R.drawable.add_shortcut))
+                .setIcon(IconCompat.createWithResource(context, R.drawable.add_shortcut))
                 .setIntent(intentAddNote)
                 .build()
 
@@ -461,16 +453,17 @@ abstract class NavigationDrawerActivity :
             val intentCardBrowser = Intent(context, CardBrowser::class.java)
             intentCardBrowser.action = Intent.ACTION_VIEW
             intentCardBrowser.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-            val cardBrowserShortcut = ShortcutInfo.Builder(context, "cardBrowserShortcutId")
+            val cardBrowserShortcut = ShortcutInfoCompat.Builder(context, "cardBrowserShortcutId")
                 .setShortLabel(context.getString(R.string.card_browser))
                 .setLongLabel(context.getString(R.string.card_browser))
-                .setIcon(Icon.createWithResource(context, R.drawable.browse_shortcut))
+                .setIcon(IconCompat.createWithResource(context, R.drawable.browse_shortcut))
                 .setIntent(intentCardBrowser)
                 .build()
-            shortcutManager.addDynamicShortcuts(
+            ShortcutManagerCompat.addDynamicShortcuts(
+                context,
                 listOf(
                     reviewCardsShortcut,
-                    NoteEditorShortcut,
+                    noteEditorShortcut,
                     cardBrowserShortcut
                 )
             )
