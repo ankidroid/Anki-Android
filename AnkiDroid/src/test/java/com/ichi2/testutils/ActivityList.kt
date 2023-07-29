@@ -65,7 +65,6 @@ object ActivityList {
             get(Info::class.java),
             // NoteEditor has unhandled intents
             get(NoteEditor::class.java),
-            get(Statistics::class.java),
             get(Previewer::class.java),
             get(CardTemplatePreviewer::class.java),
             get(MultimediaEditFieldActivity::class.java),

@@ -321,8 +321,6 @@ abstract class NavigationDrawerActivity :
                         mPreferencesLauncher,
                         FADE
                     )
-                    // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
-                    (this as? Statistics)?.finishWithAnimation(FADE)
                 }
 
                 R.id.nav_help -> {

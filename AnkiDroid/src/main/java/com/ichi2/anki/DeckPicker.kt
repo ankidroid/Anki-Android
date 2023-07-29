@@ -99,7 +99,6 @@ import com.ichi2.anki.services.MediaMigrationState
 import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.getMediaMigrationState
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
@@ -1897,12 +1896,7 @@ open class DeckPicker :
         launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
         launchCatchingTask {
-            val reviewSummaryStatsSting = AnkiStatsTaskHandler.getReviewSummaryStatisticsString(this@DeckPicker)
-            mReviewSummaryTextView.apply {
-                text = reviewSummaryStatsSting ?: ""
-                visibility = View.VISIBLE
-                invalidate()
-            }
+            withCol { col.sched.studiedToday() }
         }
         Timber.d("Startup - Deck List UI Completed")
     }

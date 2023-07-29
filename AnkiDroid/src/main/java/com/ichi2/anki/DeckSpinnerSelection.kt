@@ -238,10 +238,6 @@ class DeckSpinnerSelection(
             decks.removeIf { x: SelectableDeck -> x.deckId == Consts.DEFAULT_DECK_ID }
         }
         val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
-        val did: DeckId? = (context as? Statistics)?.getCurrentDeckId()
-        if (did != null) {
-            dialog.requireArguments().putLong("currentDeckId", did)
-        }
         AnkiActivity.showDialogFragment(mFragmentManagerSupplier.getFragmentManager(), dialog)
     }
 

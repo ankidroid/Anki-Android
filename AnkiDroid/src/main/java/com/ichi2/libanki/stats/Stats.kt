@@ -22,7 +22,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview
-import com.ichi2.anki.stats.StatsMetaInfo
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.Time.Companion.gregorianCalendar
@@ -349,38 +348,11 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
         return answerButtonsOverview
     }
 
-    fun calculateDue(context: Context, type: AxisType): Boolean {
-        // Not in libanki
-        var metaInfo = StatsMetaInfo()
-        metaInfo = AdvancedStatistics().calculateDueAsMetaInfo(metaInfo, type, context, _limit())
-        return if (metaInfo.isStatsCalculated) {
-            mDynamicAxis = metaInfo.dynamicAxis
-            mHasColoredCumulative = metaInfo.hasColoredCumulative
-            mType = metaInfo.type
-            mTitle = metaInfo.title
-            mBackwards = metaInfo.backwards
-            mValueLabels = metaInfo.valueLabels
-            mColors = metaInfo.colors
-            mAxisTitles = metaInfo.axisTitles
-            mMaxCards = metaInfo.maxCards
-            mMaxElements = metaInfo.maxElements
-            mFirstElement = metaInfo.firstElement
-            mLastElement = metaInfo.lastElement
-            mZeroIndex = metaInfo.zeroIndex
-            cumulative = metaInfo.cumulative
-            mMcount = metaInfo.mcount
-            seriesList = metaInfo.seriesList
-            metaInfo.isDataAvailable
-        } else {
-            calculateDue(type)
-        }
-    }
-
     /**
      * Due and cumulative due
      * ***********************************************************************************************
      */
-    private fun calculateDue(type: AxisType): Boolean {
+    fun calculateDue(type: AxisType): Boolean {
         mHasColoredCumulative = false
         mType = type
         mDynamicAxis = true

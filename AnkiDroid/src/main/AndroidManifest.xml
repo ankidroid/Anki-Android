@@ -358,13 +358,6 @@
             android:finishOnTaskLaunch="true"
             />
         <activity
-            android:name="com.ichi2.anki.Statistics"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".DeckPicker"
-            >
-        </activity>
-        <activity
             android:name="com.ichi2.anki.Previewer"
             android:label="@string/preview_title"
             android:exported="false"

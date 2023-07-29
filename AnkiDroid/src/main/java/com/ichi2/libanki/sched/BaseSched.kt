@@ -473,6 +473,10 @@ abstract class BaseSched(val col: Collection) {
         )
     }
 
+    fun studiedToday(): String {
+        return col.backend.studiedToday()
+    }
+
     /**
      * @return Number of days since creation of the collection.
      */
