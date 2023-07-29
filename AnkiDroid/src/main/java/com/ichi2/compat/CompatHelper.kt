@@ -23,9 +23,6 @@ import android.content.pm.PackageManager.NameNotFoundException
 import android.content.pm.ResolveInfo
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.SparseArray
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
 import com.ichi2.compat.CompatHelper.Companion.compat
@@ -95,18 +92,6 @@ class CompatHelper private constructor() {
             return compat.getSerializableExtra(this, name, T::class.java)
         }
 
-        inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(name: String): T? {
-            return compat.getParcelableExtra(this, name, T::class.java)
-        }
-
-        inline fun <reified T : Parcelable> Bundle.getParcelableArrayListCompat(key: String, clazz: Class<T>): ArrayList<T>? {
-            return compat.getParcelableArrayList(this, key, clazz)
-        }
-
-        inline fun <reified T> Parcel.readSparseArrayCompat(loader: ClassLoader, clazz: Class<T>): SparseArray<T>? {
-            return compat.readSparseArray(this, loader, clazz)
-        }
-
         /**
          * Retrieve overall information about an application package that is
          * installed on the system.
@@ -128,10 +113,6 @@ class CompatHelper private constructor() {
         @Throws(NameNotFoundException::class)
         fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
             compat.getPackageInfo(this, packageName, flags)
-
-        inline fun <reified T> Parcel.readSerializableCompat(): T? {
-            return compat.readSerializable(this, T::class.java.classLoader, T::class.java)
-        }
 
         /**
          * Determine the best service to handle for a given Intent.
@@ -164,46 +145,6 @@ class CompatHelper private constructor() {
          */
         fun PackageManager.queryIntentActivitiesCompat(intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
             return compat.queryIntentActivities(this, intent, flags)
-        }
-
-        /**
-         * Returns the value associated with the given key or `null` if:
-         *  * No mapping of the desired type exists for the given key.
-         *  * A `null` value is explicitly associated with the key.
-         *  * The object is not of type `T`.
-         *
-         * **Note: ** if the expected value is not a class provided by the Android platform,
-         * you must call [.setClassLoader] with the proper [ClassLoader] first.
-         * Otherwise, this method might throw an exception or return `null`.
-         *
-         * @param key a String, or `null`
-         * @return a Parcelable value, or `null`
-         */
-        inline fun <reified T> Bundle.getParcelableCompat(key: String): T? {
-            return compat.getParcelable(this, key, T::class.java)
-        }
-
-        /**
-         * Read into an existing List object from the parcel at the current
-         * dataPosition(), using the given class loader to load any enclosed
-         * Parcelables.  If it is null, the default class loader is used.
-         */
-        inline fun <reified T> Parcel.readListCompat(outVal: MutableList<in T>) {
-            compat.readList(this, outVal, T::class.java.classLoader, T::class.java)
-        }
-
-        /**
-         * Returns the value associated with the given key, or null if:
-         *
-         * * No mapping of the desired type exists for the given key.
-         * * A null value is explicitly associated with the key.
-         * * The object is not of type T.
-         *
-         * @param key a String, or null
-         * @return a [SparseArray] of T values, or null
-         */
-        inline fun <reified T : Parcelable> Bundle.getSparseParcelableArrayCompat(key: String): SparseArray<T>? {
-            return compat.getSparseParcelableArray(this, key, T::class.java)
         }
 
         /**

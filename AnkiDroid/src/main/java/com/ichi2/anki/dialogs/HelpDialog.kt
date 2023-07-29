@@ -21,6 +21,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.os.ParcelCompat
 import androidx.fragment.app.DialogFragment
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.AnkiDroidApp
@@ -28,10 +29,8 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.anki.dialogs.HelpDialog.FunctionItem.ActivityConsumer
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Companion.createInstance
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader
-import com.ichi2.compat.CompatHelper.Companion.readSerializableCompat
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
@@ -205,7 +204,11 @@ object HelpDialog {
         }
 
         private constructor(source: Parcel) : super(source) {
-            mFunc = source.readSerializableCompat<ActivityConsumer>()!!
+            mFunc = ParcelCompat.readSerializable(
+                source,
+                ActivityConsumer::class.java.classLoader,
+                ActivityConsumer::class.java
+            )!!
         }
 
         override fun remove(toRemove: RecursivePictureMenu.Item?) {

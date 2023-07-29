@@ -29,9 +29,9 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.ContextCompat
+import androidx.core.content.IntentCompat
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.compat.CompatHelper.Companion.getParcelableExtraCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.stats.Stats
@@ -108,7 +108,11 @@ class CardInfo : AnkiActivity() {
     }
 
     override fun finish() {
-        val animation = intent.getParcelableExtraCompat<ActivityTransitionAnimation.Direction>(FINISH_ANIMATION_EXTRA)
+        val animation = IntentCompat.getParcelableExtra(
+            intent,
+            FINISH_ANIMATION_EXTRA,
+            ActivityTransitionAnimation.Direction::class.java
+        )
         if (animation != null) {
             finishWithAnimation(animation)
         } else {

@@ -42,6 +42,7 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
@@ -78,7 +79,6 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.Compat
 import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.CompatHelper.Companion.getParcelableExtraCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
@@ -1075,7 +1075,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         TemporaryModel.clearTempModelFiles()
 
         // Set the finish animation if there is one on the intent which created the activity
-        val animation = this.intent.getParcelableExtraCompat<ActivityTransitionAnimation.Direction>(FINISH_ANIMATION_EXTRA)
+        val animation = IntentCompat.getParcelableExtra(
+            this.intent,
+            FINISH_ANIMATION_EXTRA,
+            ActivityTransitionAnimation.Direction::class.java
+        )
         if (animation != null) {
             finishWithAnimation(animation)
             return

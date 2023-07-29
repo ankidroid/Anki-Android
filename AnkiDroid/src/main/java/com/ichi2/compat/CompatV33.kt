@@ -22,16 +22,10 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.SparseArray
 import java.io.Serializable
 
 @TargetApi(33)
 open class CompatV33 : CompatV31(), Compat {
-    override fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>? {
-        return bundle.getParcelableArrayList(key, clazz)
-    }
 
     override fun resolveActivity(
         packageManager: PackageManager,
@@ -45,24 +39,8 @@ open class CompatV33 : CompatV31(), Compat {
         return intent.getSerializableExtra(name, className)
     }
 
-    override fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T? {
-        return intent.getParcelableExtra(name, clazz)
-    }
-
     override fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T? {
         return bundle.getSerializable(key, clazz)
-    }
-
-    override fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T? {
-        return parcel.readSerializable(loader, clazz)
-    }
-
-    override fun <T> readSparseArray(
-        parcel: Parcel,
-        loader: ClassLoader,
-        clazz: Class<T>
-    ): SparseArray<T>? {
-        return parcel.readSparseArray(loader, clazz)
     }
 
     override fun getPackageInfo(packageManager: PackageManager, packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
@@ -78,26 +56,5 @@ open class CompatV33 : CompatV31(), Compat {
 
     override fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
         return packageManager.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flags.value))
-    }
-
-    override fun <T> readList(
-        parcel: Parcel,
-        outVal: MutableList<in T>,
-        classLoader: ClassLoader?,
-        clazz: Class<T>
-    ) {
-        parcel.readList(outVal, classLoader, clazz)
-    }
-
-    override fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T? {
-        return bundle.getParcelable(key, clazz)
-    }
-
-    override fun <T : Parcelable> getSparseParcelableArray(
-        bundle: Bundle,
-        key: String,
-        clazz: Class<T>
-    ): SparseArray<T>? {
-        return bundle.getSparseParcelableArray(key, clazz)
     }
 }

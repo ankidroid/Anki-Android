@@ -27,6 +27,7 @@ import android.widget.Filterable
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.os.BundleCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,7 +40,6 @@ import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper.Companion.getParcelableArrayListCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
@@ -119,7 +119,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     private fun getDeckNames(arguments: Bundle): ArrayList<SelectableDeck> =
-        arguments.getParcelableArrayListCompat(DECK_NAMES, SelectableDeck::class.java)!!
+        BundleCompat.getParcelableArrayList(arguments, DECK_NAMES, SelectableDeck::class.java)!!
 
     private val title: String
         get() = requireArguments().getString(TITLE)!!

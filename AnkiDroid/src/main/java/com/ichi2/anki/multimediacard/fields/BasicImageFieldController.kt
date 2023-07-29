@@ -52,6 +52,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContentResolverCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
+import androidx.core.os.BundleCompat
 import com.canhub.cropper.*
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
@@ -61,7 +62,6 @@ import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
 import com.ichi2.utils.Permissions.arePermissionsDefinedInAnkiDroidManifest
@@ -108,7 +108,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.i("loadInstanceState loading saved state...")
         mViewModel = ImageViewModel.fromBundle(savedInstanceState)
         mPreviousImagePath = savedInstanceState.getString("mPreviousImagePath")
-        mPreviousImageUri = savedInstanceState.getParcelableCompat<Uri>("mPreviousImageUri")
+        mPreviousImageUri = BundleCompat.getParcelable(savedInstanceState, "mPreviousImageUri", Uri::class.java)
     }
 
     override fun saveInstanceState(): Bundle {
@@ -392,7 +392,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             ACTIVITY_TAKE_PICTURE -> handleTakePictureResult()
             ACTIVITY_DRAWING -> {
                 // receive image from drawing activity
-                val savedImagePath = data!!.extras!!.getParcelableCompat<Uri>(DrawingActivity.EXTRA_RESULT_WHITEBOARD)
+                val savedImagePath = BundleCompat.getParcelable(
+                    data!!.extras!!,
+                    DrawingActivity.EXTRA_RESULT_WHITEBOARD,
+                    Uri::class.java
+                )
                 handleDrawingResult(savedImagePath)
             }
             else -> {
@@ -825,7 +829,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         companion object {
             fun fromBundle(savedInstanceState: Bundle): ImageViewModel {
                 val imagePath = savedInstanceState.getString("mImagePath")
-                val imageUri = savedInstanceState.getParcelableCompat<Uri>("mImageUri")
+                val imageUri = BundleCompat.getParcelable(savedInstanceState, "mImageUri", Uri::class.java)
                 return ImageViewModel(imagePath, imageUri)
             }
         }
