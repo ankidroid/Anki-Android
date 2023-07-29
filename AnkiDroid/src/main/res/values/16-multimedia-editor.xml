@@ -20,7 +20,6 @@
     <string name="multimedia_editor_popup_audio">Record audio</string>
     <string name="multimedia_editor_popup_text">Advanced editor</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
-    <string name="multimedia_editor_popup_clear_field">Clear field</string>
 
     <!-- Pronunciation activity (Beolingus) -->
     <string name="multimedia_editor_pron_load">Load</string>
