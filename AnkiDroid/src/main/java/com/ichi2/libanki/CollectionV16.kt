@@ -22,12 +22,9 @@ import anki.collection.OpChanges
 import anki.config.ConfigKey
 import com.ichi2.libanki.backend.*
 import com.ichi2.libanki.backend.model.toBackendNote
-import com.ichi2.libanki.backend.model.toProtoBuf
-import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.utils.TimeManager
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
-import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
 
 class CollectionV16(
@@ -115,48 +112,6 @@ class CollectionV16(
         browser: Boolean
     ): TemplateManager.TemplateRenderContext.TemplateRenderOutput {
         return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
-    }
-
-    override fun findCards(
-        search: String,
-        order: SortOrder
-    ): List<Long> {
-        val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
-            @Suppress("DEPRECATION")
-            SortOrder.BuiltinSortKind(
-                get_config("sortType", null as String?) ?: "noteFld",
-                get_config("sortBackwards", false) ?: false
-            )
-        } else {
-            order
-        }
-        val cardIdsList = try {
-            backend.searchCards(search, adjustedOrder.toProtoBuf())
-        } catch (e: BackendInvalidInputException) {
-            throw InvalidSearchException(e)
-        }
-        return cardIdsList
-    }
-
-    override fun findNotes(
-        query: String,
-        order: SortOrder
-    ): List<Long> {
-        val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
-            @Suppress("DEPRECATION")
-            SortOrder.BuiltinSortKind(
-                get_config("noteSortType", null as String?) ?: "noteFld",
-                get_config("browserNoteSortBackwards", false) ?: false
-            )
-        } else {
-            order
-        }
-        val noteIDsList = try {
-            backend.searchNotes(query, adjustedOrder.toProtoBuf())
-        } catch (e: BackendInvalidInputException) {
-            throw InvalidSearchException(e)
-        }
-        return noteIDsList
     }
 
     /** Takes raw input from TypeScript frontend and returns suitable translations. */

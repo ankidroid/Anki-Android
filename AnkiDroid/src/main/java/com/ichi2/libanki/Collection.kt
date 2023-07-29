@@ -40,6 +40,8 @@ import com.ichi2.async.CancelListener.Companion.isCancelled
 import com.ichi2.async.CollectionTask
 import com.ichi2.async.ProgressSender
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.backend.model.toProtoBuf
+import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.Sched
@@ -53,6 +55,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
+import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import org.jetbrains.annotations.Contract
 import org.json.JSONArray
 import org.json.JSONException
@@ -1152,58 +1155,63 @@ open class Collection(
         return backend.buildSearchString(node)
     }
 
+    fun findCards(
+        search: String,
+        order: SortOrder
+    ): List<Long> {
+        val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
+            @Suppress("DEPRECATION")
+            SortOrder.BuiltinSortKind(
+                get_config("sortType", null as String?) ?: "noteFld",
+                get_config("sortBackwards", false) ?: false
+            )
+        } else {
+            order
+        }
+        val cardIdsList = try {
+            backend.searchCards(search, adjustedOrder.toProtoBuf())
+        } catch (e: BackendInvalidInputException) {
+            throw InvalidSearchException(e)
+        }
+        return cardIdsList
+    }
+
+    fun findNotes(
+        query: String,
+        order: SortOrder = SortOrder.NoOrdering()
+    ): List<Long> {
+        val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
+            @Suppress("DEPRECATION")
+            SortOrder.BuiltinSortKind(
+                get_config("noteSortType", null as String?) ?: "noteFld",
+                get_config("browserNoteSortBackwards", false) ?: false
+            )
+        } else {
+            order
+        }
+        val noteIDsList = try {
+            backend.searchNotes(query, adjustedOrder.toProtoBuf())
+        } catch (e: BackendInvalidInputException) {
+            throw InvalidSearchException(e)
+        }
+        return noteIDsList
+    }
+
     /** Return a list of card ids  */
     @KotlinCleanup("set reasonable defaults")
     fun findCards(search: String): List<Long> {
         return findCards(search, SortOrder.NoOrdering())
     }
 
-    /**
-     * @return A list of card ids
-     * @throws com.ichi2.libanki.exception.InvalidSearchException Invalid search string
-     */
-    open fun findCards(search: String, order: SortOrder): List<Long> {
-        return Finder(this).findCards(search, order)
-    }
-
     /** Return a list of card ids  */
     @RustCleanup("Remove in V16.") // Not in libAnki
-    fun findOneCardByNote(query: String?): List<Long> {
-        return Finder(this).findOneCardByNote(query!!)
+    fun findOneCardByNote(query: String): List<Long> {
+        return findNotes(query, SortOrder.NoOrdering())
     }
 
-    /** Return a list of note ids
-     * @param order only used in overridden V16 findNotes() method
-     * */
-    open fun findNotes(query: String, order: SortOrder = SortOrder.NoOrdering()): List<Long> {
-        return Finder(this).findNotes(query)
-    }
-
-    fun findReplace(nids: List<Long?>, src: String, dst: String): Int {
-        return Finder.findReplace(this, nids, src, dst)
-    }
-
-    fun findReplace(nids: List<Long?>, src: String, dst: String, regex: Boolean): Int {
-        return Finder.findReplace(this, nids, src, dst, regex)
-    }
-
-    fun findReplace(nids: List<Long?>, src: String, dst: String, field: String?): Int {
-        return Finder.findReplace(this, nids, src, dst, field = field)
-    }
-
-    fun findReplace(
-        nids: List<Long?>,
-        src: String,
-        dst: String,
-        regex: Boolean,
-        field: String?,
-        fold: Boolean
-    ): Int {
-        return Finder.findReplace(this, nids, src, dst, regex, field, fold)
-    }
-
-    fun findDupes(fieldName: String?, search: String? = ""): List<Pair<String, List<Long>>> {
-        return Finder.findDupes(this, fieldName, search)
+    @RustCleanup("Calling code should handle returned OpChanges")
+    fun findReplace(nids: List<Long>, src: String, dst: String, regex: Boolean = false, field: String? = null, fold: Boolean = true): Int {
+        return backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
     }
 
     @KotlinCleanup("inline in Finder.java after conversion to Kotlin")

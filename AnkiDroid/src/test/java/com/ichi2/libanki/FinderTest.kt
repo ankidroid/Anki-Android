@@ -59,7 +59,7 @@ class FinderTest : RobolectricTest() {
         val manuallyBuriedCard = buryManually(sched, toAnswer.id)
 
         // perform the search
-        val buriedCards = Finder(col).findCards(searchQuery, SortOrder.NoOrdering())
+        val buriedCards = col.findCards(searchQuery, SortOrder.NoOrdering())
 
         // assert
         assertThat(
@@ -463,7 +463,7 @@ class FinderTest : RobolectricTest() {
         note2.load()
         assertEquals("qux", note2.getItem("Back"))
         // single field replace
-        assertEquals(1, col.findReplace(nids, "qux", "foo", "Front"))
+        assertEquals(1, col.findReplace(nids, "qux", "foo", field = "Front"))
         note.load()
         assertEquals("foo", note.getItem("Front"))
         note2.load()
@@ -475,40 +475,5 @@ class FinderTest : RobolectricTest() {
         assertEquals(1, col.findReplace(nids, "B.r", "reg", true))
         note.load()
         assertEquals(note.getItem("Back"), "reg")
-    }
-
-    @Test
-    fun test_findDupes() {
-        val col = col
-        val note = col.newNote()
-        note.setItem("Front", "foo")
-        note.setItem("Back", "bar")
-        col.addNote(note)
-        val note2 = col.newNote()
-        note2.setItem("Front", "baz")
-        note2.setItem("Back", "bar")
-        col.addNote(note2)
-        val note3 = col.newNote()
-        note3.setItem("Front", "quux")
-        note3.setItem("Back", "bar")
-        col.addNote(note3)
-        val note4 = col.newNote()
-        note4.setItem("Front", "quuux")
-        note4.setItem("Back", "nope")
-        col.addNote(note4)
-        var r: List<Pair<String, List<Long>>> = col.findDupes("Back")
-        var r0 = r[0]
-        assertEquals("bar", r0.first)
-        assertEquals(3, r0.second.size)
-        // valid search
-        r = col.findDupes("Back", "bar")
-        r0 = r[0]
-        assertEquals("bar", r0.first)
-        assertEquals(3, r0.second.size)
-        // excludes everything
-        r = col.findDupes("Back", "invalid")
-        assertEquals(0, r.size)
-        // front isn't dupe
-        assertEquals(0, col.findDupes("Front").size)
     }
 }
