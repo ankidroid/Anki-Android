@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.ListView
 import androidx.annotation.StringRes
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
@@ -538,7 +539,7 @@ class CardBrowserTest : RobolectricTest() {
         val shownDialog: Fragment? = cardBrowser.getDialogFragment()
         assertNotNull(shownDialog)
 
-        cardBrowser.recreate()
+        ActivityCompat.recreate(cardBrowser)
         advanceRobolectricUiLooper()
         val dialogAfterRecreate: Fragment? = cardBrowser.getDialogFragment()
         assertNull(dialogAfterRecreate)

@@ -28,6 +28,7 @@ import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceScreen
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.CollectionManager.withCol
@@ -667,7 +668,7 @@ class DeckOptionsActivity :
         }
 
     private fun restartActivity() {
-        recreate()
+        ActivityCompat.recreate(this)
     }
 
     companion object {

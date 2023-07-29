@@ -18,6 +18,7 @@ package com.ichi2.anki.preferences
 import android.os.Build
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
@@ -102,20 +103,20 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 updateCurrentTheme(requireContext())
 
                 if (previousThemeId != Themes.currentTheme.id) {
-                    requireActivity().recreate()
+                    ActivityCompat.recreate(requireActivity())
                 }
             }
         }
 
         dayThemePref.setOnPreferenceChangeListener { newValue ->
             if (newValue != dayThemePref.value && !systemIsInNightMode(requireContext()) && newValue != Themes.currentTheme.id) {
-                requireActivity().recreate()
+                ActivityCompat.recreate(requireActivity())
             }
         }
 
         nightThemePref.setOnPreferenceChangeListener { newValue ->
             if (newValue != nightThemePref.value && systemIsInNightMode(requireContext()) && newValue != Themes.currentTheme.id) {
-                requireActivity().recreate()
+                ActivityCompat.recreate(requireActivity())
             }
         }
 
