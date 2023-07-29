@@ -3,8 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp"
     android:paddingBottom="5dp">
 
     <LinearLayout
