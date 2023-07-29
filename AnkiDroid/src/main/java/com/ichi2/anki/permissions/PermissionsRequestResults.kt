@@ -19,6 +19,7 @@ package com.ichi2.anki.permissions
 import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import com.ichi2.anki.permissions.PermissionsRequestResults.PermissionRequestResult.*
 import com.ichi2.anki.permissions.PermissionsRequestResults.PermissionRequestResult.Companion.toPermissionRequestResult
 
@@ -91,7 +92,7 @@ class PermissionsRequestResults(permissions: Map<String, PermissionRequestResult
 
                 // Note: shouldShowRequestPermissionRationale will return FALSE if a permission dialog has not
                 // been shown. This may not happen here as we call getPermissionResult after we have dialog results
-                val isPermanentlyDenied = !activity.shouldShowRequestPermissionRationale(permission)
+                val isPermanentlyDenied = !ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
                 return if (isPermanentlyDenied) PERMANENTLY_DENIED else TEMPORARILY_DENIED
             }
         }

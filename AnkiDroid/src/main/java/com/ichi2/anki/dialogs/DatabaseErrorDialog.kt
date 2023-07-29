@@ -25,6 +25,7 @@ import android.os.Parcelable
 import android.view.KeyEvent
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
@@ -152,7 +153,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     listItems(items = titles.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (mRepairValues[index]) {
                             0 -> {
-                                (activity as DeckPicker).recreate()
+                                ActivityCompat.recreate(activity as DeckPicker)
                                 return@listItems
                             }
                             1 -> {
@@ -256,7 +257,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                         ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
                         val path1 = CollectionHelper.getCollectionPath(requireActivity())
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
-                            (activity as DeckPicker).recreate()
+                            ActivityCompat.recreate(activity as DeckPicker)
                         } else {
                             (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
                         }

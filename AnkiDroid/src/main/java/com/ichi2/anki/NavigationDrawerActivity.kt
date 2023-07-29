@@ -29,6 +29,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
@@ -251,7 +252,7 @@ abstract class NavigationDrawerActivity :
                 // because onDestroy() of old Activity interferes with TTS in new Activity
                 finishWithoutAnimation()
             } else {
-                recreate()
+                ActivityCompat.recreate(this)
             }
         }
 
