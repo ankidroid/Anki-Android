@@ -29,6 +29,7 @@ import android.preference.Preference
 import android.preference.PreferenceScreen
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.app.PendingIntentCompat
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.FADE
 import com.ichi2.anki.CollectionManager.withCol
@@ -36,7 +37,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.changeDeckConfiguration
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckConfig
@@ -343,14 +343,15 @@ class DeckOptionsActivity :
                                 mOptions.put("reminder", reminder)
 
                                 val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-                                val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
+                                val reminderIntent = PendingIntentCompat.getBroadcast(
                                     applicationContext,
                                     mOptions.getLong("id").toInt(),
                                     Intent(applicationContext, ReminderService::class.java).putExtra(
                                         ReminderService.EXTRA_DECK_OPTION_ID,
                                         mOptions.getLong("id")
                                     ),
-                                    0
+                                    0,
+                                    false
                                 )
 
                                 alarmManager.cancel(reminderIntent)
@@ -377,7 +378,7 @@ class DeckOptionsActivity :
 
                                 mOptions.put("reminder", reminder)
                                 val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-                                val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
+                                val reminderIntent = PendingIntentCompat.getBroadcast(
                                     applicationContext,
                                     mOptions.getLong("id").toInt(),
                                     Intent(
@@ -387,7 +388,8 @@ class DeckOptionsActivity :
                                         ReminderService.EXTRA_DECK_OPTION_ID,
                                         mOptions.getLong("id")
                                     ),
-                                    0
+                                    0,
+                                    false
                                 )
                                 alarmManager.cancel(reminderIntent)
 

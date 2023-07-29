@@ -21,12 +21,12 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckDueTreeNode
@@ -42,11 +42,12 @@ class ReminderService : BroadcastReceiver() {
             return
         }
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
+        val reminderIntent = PendingIntentCompat.getBroadcast(
             context,
             deckId.toInt(),
             Intent(context, ReminderService::class.java).putExtra(EXTRA_DECK_OPTION_ID, deckId),
-            0
+            0,
+            false
         )
         alarmManager.cancel(reminderIntent)
     }
@@ -75,11 +76,12 @@ class ReminderService : BroadcastReceiver() {
         }
         if (col.decks.getConf(dConfId) == null) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val reminderIntent = CompatHelper.compat.getImmutableBroadcastIntent(
+            val reminderIntent = PendingIntentCompat.getBroadcast(
                 context,
                 dConfId.toInt(),
                 Intent(context, ReminderService::class.java).putExtra(EXTRA_DECK_OPTION_ID, dConfId),
-                0
+                0,
+                false
             )
             alarmManager.cancel(reminderIntent)
         }
@@ -118,11 +120,12 @@ class ReminderService : BroadcastReceiver() {
                 .setSmallIcon(R.drawable.ic_star_notify)
                 .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
                 .setContentIntent(
-                    CompatHelper.compat.getImmutableActivityIntent(
+                    PendingIntentCompat.getActivity(
                         context,
                         deckId.toInt(),
                         getReviewDeckIntent(context, deckId),
-                        PendingIntent.FLAG_UPDATE_CURRENT
+                        PendingIntent.FLAG_UPDATE_CURRENT,
+                        false
                     )
                 )
                 .setAutoCancel(true)

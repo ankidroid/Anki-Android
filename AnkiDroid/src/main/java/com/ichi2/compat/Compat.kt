@@ -17,7 +17,6 @@
 
 package com.ichi2.compat
 
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -34,7 +33,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.TimePicker
-import androidx.annotation.IntDef
 import java.io.*
 import java.util.*
 
@@ -172,71 +170,6 @@ interface Compat {
     fun hasVideoThumbnail(path: String): Boolean
     fun requestAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
     fun abandonAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
-
-    @IntDef(
-        flag = true,
-        value = [
-            PendingIntent.FLAG_ONE_SHOT, PendingIntent.FLAG_NO_CREATE, PendingIntent.FLAG_CANCEL_CURRENT, PendingIntent.FLAG_UPDATE_CURRENT, // PendingIntent.FLAG_IMMUTABLE
-            // PendingIntent.FLAG_MUTABLE
-            Intent.FILL_IN_ACTION, Intent.FILL_IN_DATA, Intent.FILL_IN_CATEGORIES, Intent.FILL_IN_COMPONENT, Intent.FILL_IN_PACKAGE, Intent.FILL_IN_SOURCE_BOUNDS, Intent.FILL_IN_SELECTOR, Intent.FILL_IN_CLIP_DATA
-        ]
-    )
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class PendingIntentFlags
-
-    /**
-     * Retrieve a PendingIntent that will start a new activity, like calling
-     * [Context.startActivity(Intent)][Context.startActivity].
-     * Note that the activity will be started outside of the context of an
-     * existing activity, so you must use the [ Intent.FLAG_ACTIVITY_NEW_TASK][Intent.FLAG_ACTIVITY_NEW_TASK] launch flag in the Intent.
-     *
-     *
-     * For security reasons, the [android.content.Intent]
-     * you supply here should almost always be an *explicit intent*,
-     * that is specify an explicit component to be delivered to through
-     * [Intent.setClass]
-     *
-     * @param context The Context in which this PendingIntent should start
-     * the activity.
-     * @param requestCode Private request code for the sender
-     * @param intent Intent of the activity to be launched.
-     * @param flags May be [PendingIntent.FLAG_ONE_SHOT], [PendingIntent.FLAG_NO_CREATE],
-     * [PendingIntent.FLAG_CANCEL_CURRENT], [PendingIntent.FLAG_UPDATE_CURRENT],
-     * or any of the flags as supported by
-     * [Intent.fillIn()][Intent.fillIn] to control which unspecified parts
-     * of the intent that can be supplied when the actual send happens.
-     *
-     * @return Returns an existing or new PendingIntent matching the given
-     * parameters.  May return null only if [PendingIntent.FLAG_NO_CREATE] has been
-     * supplied.
-     */
-    fun getImmutableActivityIntent(context: Context, requestCode: Int, intent: Intent, @PendingIntentFlags flags: Int): PendingIntent
-
-    /**
-     * Retrieve a PendingIntent that will perform a broadcast, like calling
-     * [Context.sendBroadcast()][Context.sendBroadcast].
-     *
-     *
-     * For security reasons, the [android.content.Intent]
-     * you supply here should almost always be an *explicit intent*,
-     * that is specify an explicit component to be delivered to through
-     * [Intent.setClass]
-     *
-     * @param context The Context in which this PendingIntent should perform
-     * the broadcast.
-     * @param requestCode Private request code for the sender
-     * @param intent The Intent to be broadcast.
-     * @param flags May be [PendingIntent.FLAG_ONE_SHOT], [PendingIntent.FLAG_NO_CREATE],
-     * [PendingIntent.FLAG_CANCEL_CURRENT], [PendingIntent.FLAG_UPDATE_CURRENT],
-     * [PendingIntent.FLAG_IMMUTABLE] or any of the flags as supported by
-     * [Intent.fillIn()][Intent.fillIn] to control which unspecified parts
-     * of the intent that can be supplied when the actual send happens.
-     *
-     * @return Returns an existing or new PendingIntent matching the given
-     * parameters.  May return null only if [PendingIntent.FLAG_NO_CREATE] has been
-     * supplied.
-     */
-    fun getImmutableBroadcastIntent(context: Context, requestCode: Int, intent: Intent, @PendingIntentFlags flags: Int): PendingIntent
 
     /**
      * Writes an image represented by bitmap to the Pictures/AnkiDroid directory under the primary

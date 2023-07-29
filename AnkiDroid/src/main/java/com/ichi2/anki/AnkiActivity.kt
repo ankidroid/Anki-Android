@@ -29,6 +29,7 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.*
 import androidx.core.app.NotificationCompat
+import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -48,7 +49,6 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
-import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
@@ -527,11 +527,12 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             // Creates an explicit intent for an Activity in your app
             val resultIntent = Intent(this, DeckPicker::class.java)
             resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            val resultPendingIntent = compat.getImmutableActivityIntent(
+            val resultPendingIntent = PendingIntentCompat.getActivity(
                 this,
                 0,
                 resultIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT,
+                false
             )
             builder.setContentIntent(resultPendingIntent)
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager

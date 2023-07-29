@@ -18,12 +18,12 @@ package com.ichi2.anki.preferences
 import android.app.AlarmManager
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import androidx.core.app.PendingIntentCompat
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.R
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.anki.services.NotificationService
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.AdaptionUtil
 
@@ -52,11 +52,12 @@ class NotificationsSettingsFragment : SettingsFragment() {
                 if ((newValue as String).toInt() < Preferences.PENDING_NOTIFICATIONS_ONLY) {
                     scheduleNotification(TimeManager.time, requireContext())
                 } else {
-                    val intent = CompatHelper.compat.getImmutableBroadcastIntent(
+                    val intent = PendingIntentCompat.getBroadcast(
                         requireContext(),
                         0,
                         Intent(requireContext(), NotificationService::class.java),
-                        0
+                        0,
+                        false
                     )
                     val alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
                     alarmManager.cancel(intent)

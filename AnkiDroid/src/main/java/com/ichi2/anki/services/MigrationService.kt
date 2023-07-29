@@ -24,6 +24,7 @@ import android.os.Build
 import android.os.PowerManager
 import android.text.format.Formatter
 import androidx.core.app.NotificationCompat
+import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -41,7 +42,6 @@ import com.ichi2.anki.servicelayer.scopedstorage.MoveConflictedFile
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.anki.utils.withWakeLock
-import com.ichi2.compat.CompatHelper
 import com.ichi2.preferences.getOrSetLong
 import com.ichi2.utils.FileUtil
 import kotlinx.coroutines.Dispatchers
@@ -341,13 +341,23 @@ private fun Context.makeMigrationProgressNotification(progress: MigrationService
 
             val copyDebugInfoIntent = IntentHandler
                 .copyStringToClipboardIntent(this, progress.exception.stackTraceToString())
-            val copyDebugInfoPendingIntent = CompatHelper.compat
-                .getImmutableActivityIntent(this, 1, copyDebugInfoIntent, 0)
+            val copyDebugInfoPendingIntent = PendingIntentCompat.getActivity(
+                this,
+                1,
+                copyDebugInfoIntent,
+                0,
+                false
+            )
 
             val helpUrl = getString(R.string.migration_failed_help_url)
             val viewHelpUrlIntent = Intent(Intent.ACTION_VIEW, Uri.parse(helpUrl))
-            val viewHelpUrlPendingIntent = CompatHelper.compat
-                .getImmutableActivityIntent(this, 0, viewHelpUrlIntent, 0)
+            val viewHelpUrlPendingIntent = PendingIntentCompat.getActivity(
+                this,
+                0,
+                viewHelpUrlIntent,
+                0,
+                false
+            )
 
             builder.setContentTitle(getString(R.string.migration__failed__title))
             builder.setContentText(errorText)
