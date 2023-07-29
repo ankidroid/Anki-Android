@@ -415,7 +415,7 @@ class ReviewerTest : RobolectricTest() {
         @ParameterizedRobolectricTestRunner.Parameters(name = "SchedV{0}")
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2
-            return listOf(arrayOf(1), arrayOf(2))
+            return listOf(arrayOf(2))
         }
 
         fun startReviewer(testClass: RobolectricTest): Reviewer {

@@ -516,8 +516,7 @@ mw.col.sched.extendLimits(1, 0)
         @JvmStatic // required for initParameters
         @KotlinCleanup("fix array init")
         fun initParameters(): Collection<Array<Any>> {
-            // This does one run with schedVersion injected as 1, and one run as 2
-            return listOf(arrayOf(1), arrayOf(2))
+            return listOf(arrayOf(2))
         }
     }
 }
