@@ -882,8 +882,13 @@ abstract class AbstractFlashcardViewer :
 
     /** Consumers should use [.showDeleteNoteDialog]   */
     private fun deleteNoteWithoutConfirmation() {
-        dismiss(DeleteNote(currentCard!!)) {
-            showSnackbarWithUndoButtonText(TR.browsingCardsDeleted(currentCard!!.note().numberOfCards()))
+        val cardId = currentCard!!.id
+        launchCatchingTask {
+            withProgress() {
+                undoableOp {
+                    removeNotes(cids = listOf(cardId))
+                }
+            }
         }
     }
 
@@ -1380,7 +1385,7 @@ abstract class AbstractFlashcardViewer :
         setInterface()
         typeAnswer!!.input = ""
         typeAnswer!!.updateInfo(currentCard!!, resources)
-        if (!currentCard!!.isEmpty && typeAnswer!!.validForEditText()) {
+        if (typeAnswer!!.validForEditText()) {
             // Show text entry based on if the user wants to write the answer
             answerField!!.visibility = View.VISIBLE
             answerField!!.applyLanguageHint(typeAnswer!!.languageHint)

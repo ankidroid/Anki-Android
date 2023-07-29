@@ -21,7 +21,7 @@ import android.os.LocaleList
 import android.widget.EditText
 import androidx.annotation.CheckResult
 import com.ichi2.libanki.Model
-import com.ichi2.libanki.ModelManager
+import com.ichi2.libanki.Models
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
@@ -44,7 +44,7 @@ object LanguageHintService {
         return Locale.forLanguageTag(field.getString("ad-hint-locale"))
     }
 
-    fun setLanguageHintForField(models: ModelManager, model: Model, fieldPos: Int, selectedLocale: Locale) {
+    fun setLanguageHintForField(models: Models, model: Model, fieldPos: Int, selectedLocale: Locale) {
         val field = model.getField(fieldPos)
         field.put("ad-hint-locale", selectedLocale.toLanguageTag())
         models.save(model)

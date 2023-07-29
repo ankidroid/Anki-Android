@@ -782,7 +782,7 @@ open class SchedV2Test : RobolectricTest() {
         col.decks.updateConf(cconf)
         col.decks.setConf(child, cconf.getLong("id"))
         val m = col.models.current()
-        m!!.put("did", child.getLong("id"))
+        m.put("did", child.getLong("id"))
         col.models.save(m, false)
 
         // add some cards
@@ -1322,7 +1322,7 @@ open class SchedV2Test : RobolectricTest() {
         var t = Models.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m!!, t)
+        mm.addTemplateModChanged(m, t)
         t = Models.newTemplate("f2")
         t.put("qfmt", "{{Front}}1")
         t.put("afmt", "{{Back}}")

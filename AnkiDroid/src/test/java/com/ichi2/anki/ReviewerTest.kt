@@ -28,7 +28,7 @@ import com.ichi2.anki.reviewer.ActionButtonStatus
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Model
-import com.ichi2.libanki.ModelManager
+import com.ichi2.libanki.Models
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.MockTime
@@ -329,7 +329,7 @@ class ReviewerTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     private fun addNoteWithThreeCards() {
         val models = col.models
-        var m: Model? = models.copy(models.current()!!)
+        var m: Model? = models.copy(models.current())
         m!!.put("name", "Three")
         models.add(m)
         m = models.byName("Three")
@@ -345,7 +345,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Throws(ConfirmModSchemaException::class)
-    private fun cloneTemplate(models: ModelManager, m: Model?, extra: String) {
+    private fun cloneTemplate(models: Models, m: Model?, extra: String) {
         val tmpls = m!!.getJSONArray("tmpls")
         val defaultTemplate = tmpls.getJSONObject(0)
 

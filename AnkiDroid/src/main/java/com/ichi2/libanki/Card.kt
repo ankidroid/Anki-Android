@@ -28,7 +28,6 @@ import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.stats.Stats
-import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.LanguageUtil
@@ -255,7 +254,7 @@ open class Card : Cloneable {
     @RustCleanup("move col.render_output back to Card once the java collection is removed")
     open fun render_output(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (render_output == null || reload) {
-            render_output = col.render_output(this, reload, browser)
+            render_output = col.render_output(this, browser)
         }
         return render_output!!
     }
@@ -305,14 +304,6 @@ open class Card : Cloneable {
         val total = (TimeManager.time.intTimeMS() - timerStarted).toInt()
         return Math.min(total, timeLimit())
     }
-
-    open val isEmpty: Boolean
-        get() = try {
-            Models.emptyCard(model(), ord, note().fields)
-        } catch (er: TemplateError) {
-            Timber.w("Card is empty because the card's template has an error: %s.", er.message(col.context))
-            true
-        }
 
     /*
      * ***********************************************************

@@ -30,7 +30,6 @@ import com.ichi2.libanki.Note
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
-import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
@@ -231,7 +230,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                mTemplateCount = col.findTemplates(toPreview.note()).size
+                mTemplateCount = toPreview.note().model().templatesNames.size
                 if (mTemplateCount >= 2) {
                     previewLayout!!.showNavigationButtons()
                 }
@@ -344,9 +343,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             i++
         }
         try {
-            // TODO: Inefficient, we discard all but one of the elements.
-            val template = col.findTemplates(n)[index]
-            return col.getNewLinkedCard(PreviewerCard(col, n), n, template, 1, 0L, false)
+            // TODO: this needs migrating to python libanki's note.ephemeral_card()
+            return null
+//            val template =  col.findTemplates(n)[index]
+//            return col.getNewLinkedCard(PreviewerCard(col, n), n, template, 1, 0L, false)
         } catch (e: Exception) {
             // Calling code handles null return, so we can log this for developer's interest but move on
             Timber.d(e, "getDummyCard() unable to create card")
@@ -378,12 +378,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
 
         /** if we have an unsaved note, never return empty  */
-        override val isEmpty: Boolean
-            get() = if (mNote != null) {
-                false
-            } else {
-                super.isEmpty
-            }
+        val isEmpty: Boolean
+            get() = mNote != null
 
         /** Override the method that fetches the model so we can render unsaved models  */
         override fun model(): Model {
@@ -392,23 +388,20 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
         override fun render_output(reload: Boolean, browser: Boolean): TemplateRenderOutput {
             if (render_output == null || reload) {
-                render_output = if (BackendFactory.defaultLegacySchema) {
-                    col.render_output_legacy(this, reload, browser)
+                val index = if (model().isCloze) {
+                    0
                 } else {
-                    val index = if (model().isCloze) {
-                        0
-                    } else {
-                        ord
-                    }
-                    val context = TemplateManager.TemplateRenderContext.from_card_layout(
-                        note(),
-                        this,
-                        model(),
-                        model().getJSONArray("tmpls")[index] as JSONObject,
-                        fill_empty = false
-                    )
-                    context.render()
+                    ord
                 }
+                val context = TemplateManager.TemplateRenderContext.from_card_layout(
+                    note(),
+                    this,
+                    model(),
+                    model().getJSONArray("tmpls")[index] as JSONObject,
+                    fill_empty = false
+                )
+                render_output =
+                    context.render()
             }
             return render_output!!
         }

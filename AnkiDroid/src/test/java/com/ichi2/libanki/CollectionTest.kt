@@ -98,7 +98,7 @@ class CollectionTest : RobolectricTest() {
         val t = Models.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m!!, t)
+        mm.addTemplateModChanged(m, t)
         mm.save(m, true) // todo: remove true which is not upstream
         assertEquals(2, col.cardCount())
         // creating new notes should use both cards
@@ -178,7 +178,7 @@ class CollectionTest : RobolectricTest() {
         val mm = col.models
         val m = mm.current()
         // filter should work
-        m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}")
+        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}")
         mm.save(m)
         val n = col.newNote()
         n.setItem("Front", "foo[abc]")

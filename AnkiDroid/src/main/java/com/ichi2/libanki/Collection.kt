@@ -28,6 +28,8 @@ import android.content.res.Resources
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
+import anki.collection.OpChanges
+import anki.collection.OpChangesWithCount
 import anki.search.SearchNode
 import anki.search.SearchNodeKt
 import anki.search.searchNode
@@ -35,11 +37,8 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.async.CancelListener
-import com.ichi2.async.CancelListener.Companion.isCancelled
-import com.ichi2.async.CollectionTask
-import com.ichi2.async.ProgressSender
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
@@ -47,8 +46,6 @@ import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.sched.SchedV3
-import com.ichi2.libanki.template.ParsedNode
-import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
@@ -65,8 +62,6 @@ import java.io.*
 import java.util.*
 import java.util.concurrent.LinkedBlockingDeque
 import java.util.regex.Pattern
-import kotlin.math.max
-import kotlin.random.Random
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -111,9 +106,6 @@ open class Collection(
     open val newMedia: BackendMedia
         get() = throw Exception("invalid call to newMedia on old backend")
 
-    open val newModels: ModelsV16
-        get() = throw Exception("invalid call to newModels on old backend")
-
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun debugEnsureNoOpenPointers() {
         val result = backend.getActiveSequenceNumbers()
@@ -142,8 +134,6 @@ open class Collection(
     lateinit var decks: Decks
         protected set
 
-    @KotlinCleanup("change to lazy")
-    private var _models: ModelManager? = null
     val tags: Tags
 
     @KotlinCleanup(
@@ -219,10 +209,8 @@ open class Collection(
         return Tags(this)
     }
 
-    protected open fun initModels(): ModelManager {
-        val models = Models(this)
-        models.load(loadColumn("models"))
-        return models
+    protected open fun initModels(): Models {
+        return Models(this)
     }
 
     fun name(): String {
@@ -298,6 +286,7 @@ open class Collection(
                 mUsn = cursor.getInt(4)
                 ls = cursor.getLong(5)
             }
+        models = initModels()
         decks = initDecks()
         config = initConf()
     }
@@ -544,7 +533,7 @@ open class Collection(
      * @return The new note
      */
     fun newNote(forDeck: Boolean = true): Note {
-        return newNote(models.current(forDeck)!!)
+        return newNote(models.current(forDeck))
     }
 
     /**
@@ -554,38 +543,6 @@ open class Collection(
      */
     fun newNote(m: Model): Note {
         return Note(this, m)
-    }
-
-    /**
-     * Add a note and cards to the collection. If allowEmpty, at least one card is generated.
-     * @param note  The note to add to the collection
-     * @param allowEmpty Whether we accept to add it even if it should generate no card. Useful to import note even if buggy
-     * @return Number of card added
-     * @return Number of card added.
-     */
-    open fun addNote(note: Note, allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE): Int {
-        // check we have card models available, then save
-        val cms = findTemplates(note, allowEmpty)
-        // Todo: upstream, we accept to add a not even if it generates no card. Should be ported to ankidroid
-        if (cms.isEmpty()) {
-            return 0
-        }
-        note.flush()
-        // deck conf governs which of these are used
-        val due = nextID("pos")
-        // add cards
-        var ncards = 0
-        for (template in cms) {
-            _newCard(note, template, due)
-            ncards += 1
-        }
-        return ncards
-    }
-
-    open fun remNotes(ids: LongArray) {
-        val list = db
-            .queryLongList("SELECT id FROM cards WHERE nid IN " + Utils.ids2str(ids))
-        removeCardsAndOrphanedNotes(list)
     }
 
     /**
@@ -601,302 +558,6 @@ open class Collection(
         // more card templates
         _logRem(ids, Consts.REM_NOTE)
         db.execute("DELETE FROM notes WHERE id IN $strids")
-    }
-
-    /*
-      Card creation ************************************************************ ***********************************
-     */
-
-    /**
-     * @param note A note
-     * @param allowEmpty whether we allow to have a card which is actually empty if it is necessary to return a non-empty list
-     * @return (active), non-empty templates.
-     */
-    fun findTemplates(
-        note: Note,
-        allowEmpty: Models.AllowEmpty = Models.AllowEmpty.ONLY_CLOZE
-    ): ArrayList<JSONObject> {
-        val model = note.model()
-        val avail = Models.availOrds(model, note.fields, allowEmpty)
-        return _tmplsFromOrds(model, avail)
-    }
-
-    /**
-     * @param model A note type
-     * @param avail Ords of cards from this note type.
-     * @return One template by element i of avail, for the i-th card. For standard template, avail should contains only existing ords.
-     * for cloze, avail should contains only non-negative numbers, and the i-th card is a copy of the first card, with a different ord.
-     */
-    @KotlinCleanup("extract 'ok' and return without the return if")
-    private fun _tmplsFromOrds(model: Model, avail: ArrayList<Int>): ArrayList<JSONObject> {
-        val tmpls: JSONArray
-        return if (model.isStd) {
-            tmpls = model.getJSONArray("tmpls")
-            val ok = ArrayList<JSONObject>(avail.size)
-            for (ord in avail) {
-                ok.add(tmpls.getJSONObject(ord))
-            }
-            ok
-        } else {
-            // cloze - generate temporary templates from first
-            val template0 = model.getJSONArray("tmpls").getJSONObject(0)
-            val ok = ArrayList<JSONObject>(avail.size)
-            for (ord in avail) {
-                val t = template0.deepClone()
-                t.put("ord", ord)
-                ok.add(t)
-            }
-            ok
-        }
-    }
-
-    /**
-     * Generate cards for non-empty templates, return ids to remove.
-     */
-    @KotlinCleanup("Check CollectionTask<Int?, Int> - should be fine")
-    @KotlinCleanup("change to ArrayList!")
-    fun genCards(nids: kotlin.collections.Collection<Long>, model: Model): ArrayList<Long>? {
-        return genCards<CollectionTask<Int, Int>>(nids.toLongArray(), model)
-    }
-
-    fun genCards(nids: kotlin.collections.Collection<Long>, mid: NoteTypeId): ArrayList<Long>? {
-        return genCards(nids, models.get(mid)!!)
-    }
-
-    fun genCards(
-        nid: NoteId,
-        model: Model
-    ): ArrayList<Long>? {
-        return genCards("($nid)", model, task = null)
-    }
-
-    fun <T> genCards(
-        nid: NoteId,
-        model: Model,
-        task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
-        return genCards("($nid)", model, task)
-    }
-
-    /**
-     * @param nids All ids of nodes of a note type
-     * @param task Task to check for cancellation and update number of card processed
-     * @return Cards that should be removed because they should not be generated
-     */
-    fun <T> genCards(
-        nids: LongArray,
-        model: Model,
-        task: T? = null
-    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
-        // build map of (nid,ord) so we don't create dupes
-        val snids = Utils.ids2str(nids)
-        return genCards(snids, model, task)
-    }
-
-    /**
-     * @param snids All ids of nodes of a note type, separated by comma
-     * @param model
-     * @param task Task to check for cancellation and update number of card processed
-     * @return Cards that should be removed because they should not be generated
-     * @param <T>
-     </T> */
-    @KotlinCleanup("see if we can cleanup if (!have.containsKey(nid)) { to a default dict or similar?")
-    @KotlinCleanup("use task framework to handle cancellation, don't return null")
-    fun <T> genCards(
-        snids: String,
-        model: Model,
-        task: T?
-    ): ArrayList<Long>? where T : ProgressSender<Int>?, T : CancelListener? {
-        val nbCount = noteCount()
-        // For each note, indicates ords of cards it contains
-        val have = HashUtil.HashMapInit<Long, HashMap<Int, Long>>(nbCount)
-        // For each note, the deck containing all of its cards, or 0 if siblings in multiple deck
-        val dids = HashUtil.HashMapInit<Long, Long>(nbCount)
-        // For each note, an arbitrary due of one of its due card processed, if any exists
-        val dues = HashUtil.HashMapInit<Long, Long>(nbCount)
-        var nodes: List<ParsedNode?>? = null
-        if (model.getInt("type") != Consts.MODEL_CLOZE) {
-            nodes = model.parsedNodes()
-        }
-        db.query("select id, nid, ord, (CASE WHEN odid != 0 THEN odid ELSE did END), (CASE WHEN odid != 0 THEN odue ELSE due END), type from cards where nid in $snids")
-            .use { cur ->
-                while (cur.moveToNext()) {
-                    if (isCancelled(task)) {
-                        Timber.v("Empty card cancelled")
-                        return null
-                    }
-                    val id = cur.getLong(0)
-                    val nid = cur.getLong(1)
-                    val ord = cur.getInt(2)
-                    val did = cur.getLong(3)
-                    val due = cur.getLong(4)
-
-                    @Consts.CARD_TYPE val type = cur.getInt(5)
-
-                    // existing cards
-                    if (!have.containsKey(nid)) {
-                        have[nid] = HashMap()
-                    }
-                    have[nid]!![ord] = id
-                    // and their dids
-                    if (dids.containsKey(nid)) {
-                        if (dids[nid] != 0L && !Utils.equals(dids[nid], did)) {
-                            // cards are in two or more different decks; revert to model default
-                            dids[nid] = 0L
-                        }
-                    } else {
-                        // first card or multiple cards in same deck
-                        dids[nid] = did
-                    }
-                    if (!dues.containsKey(nid) && type == Consts.CARD_TYPE_NEW) {
-                        dues[nid] = due
-                    }
-                }
-            }
-        // build cards for each note
-        val data = ArrayList<Array<Any>>()
-
-        @Suppress("UNUSED_VARIABLE")
-        var ts = TimeManager.time.maxID(db)
-        val now = TimeManager.time.intTime()
-        val rem =
-            ArrayList<Long>(db.queryScalar("SELECT count() FROM notes where id in $snids"))
-        val usn = usn()
-        db.query("SELECT id, flds FROM notes WHERE id IN $snids").use { cur ->
-            while (cur.moveToNext()) {
-                if (isCancelled(task)) {
-                    Timber.v("Empty card cancelled")
-                    return null
-                }
-                val nid = cur.getLong(0)
-                val flds = cur.getString(1)
-                val avail =
-                    Models.availOrds(model, Utils.splitFields(flds), nodes, Models.AllowEmpty.TRUE)
-                task?.doProgress(avail.size)
-                var did = dids[nid]
-                // use sibling due if there is one, else use a new id
-                val due = dues.getOrElse(nid) { nextID("pos").toLong() }
-                if (did == null || did == 0L) {
-                    did = model.did
-                }
-                // add any missing cards
-                val tmpls = _tmplsFromOrds(model, avail)
-                for (t in tmpls) {
-                    val tord = t.getInt("ord")
-                    val doHave = have.containsKey(nid) && have[nid]!!.containsKey(tord)
-                    if (!doHave) {
-                        // check deck is not a cram deck
-                        var ndid: DeckId
-                        try {
-                            ndid = t.optLong("did", 0)
-                            if (ndid != 0L) {
-                                did = ndid
-                            }
-                        } catch (e: JSONException) {
-                            Timber.w(e)
-                            // do nothing
-                        }
-                        if (decks.isDyn(did!!)) {
-                            did = 1L
-                        }
-                        // if the deck doesn't exist, use default instead
-                        did = decks.get(did).getLong("id")
-                        // give it a new id instead
-                        data.add(arrayOf(ts, nid, did, tord, now, usn, due))
-                        ts += 1
-                    }
-                }
-                // note any cards that need removing
-                if (have.containsKey(nid)) {
-                    for ((key, value) in have[nid]!!) {
-                        if (!avail.contains(key)) {
-                            rem.add(value)
-                        }
-                    }
-                }
-            }
-        }
-        // bulk update
-        db.executeMany(
-            "INSERT INTO cards VALUES (?,?,?,?,?,?,0,0,?,0,0,0,0,0,0,0,0,\"\")",
-            data
-        )
-        return rem
-    }
-
-    /**
-     * Create a new card.
-     */
-    private fun _newCard(
-        note: Note,
-        template: JSONObject,
-        due: Int,
-        @Suppress("SameParameterValue") parameterDid: DeckId = 0L,
-        flush: Boolean = true
-    ): Card {
-        val card = Card(this)
-        return getNewLinkedCard(card, note, template, due, parameterDid, flush)
-    }
-
-    // This contains the original libanki implementation of _newCard, with the added parameter that
-    // you pass the Card object in. This allows you to work on 'Card' subclasses that may not have
-    // actual backing store (for instance, if you are previewing unsaved changes on templates)
-    // TODO: use an interface that we implement for card viewing, vs subclassing an active model to workaround libAnki
-    @KotlinCleanup("use card.nid in the query to remove the need for a few variables.")
-    fun getNewLinkedCard(
-        card: Card,
-        note: Note,
-        template: JSONObject,
-        due: Int,
-        parameterDid: DeckId,
-        flush: Boolean
-    ): Card {
-        val nid = note.id
-        card.nid = nid
-        val ord = template.getInt("ord")
-        card.ord = ord
-        var did =
-            db.queryLongScalar("select did from cards where nid = ? and ord = ?", nid, ord)
-        // Use template did (deck override) if valid, otherwise did in argument, otherwise model did
-        if (did == 0L) {
-            did = template.optLong("did", 0)
-            if (did > 0 && decks.get(did, false) != null) {
-                // did is valid
-            } else if (parameterDid != 0L) {
-                did = parameterDid
-            } else {
-                did = note.model().optLong("did", 0)
-            }
-        }
-        card.did = did
-        // if invalid did, use default instead
-        val deck = decks.get(card.did)
-        if (deck.isDyn) {
-            // must not be a filtered deck
-            card.did = Consts.DEFAULT_DECK_ID
-        } else {
-            card.did = deck.getLong("id")
-        }
-        card.due = _dueForDid(card.did, due).toLong()
-        if (flush) {
-            card.flush()
-        }
-        return card
-    }
-
-    private fun _dueForDid(did: DeckId, due: Int): Int {
-        val conf = decks.confForDid(did)
-        // in order due?
-        return if (conf.getJSONObject("new")
-            .getInt("order") == Consts.NEW_CARDS_DUE
-        ) {
-            due
-        } else {
-            // random mode; seed with note ts so all cards of this note get
-            // the same random number
-            val r = Random(due.toLong())
-            r.nextInt(max(due, 1000) - 1) + 1
-        }
     }
 
     /**
@@ -918,202 +579,8 @@ open class Collection(
         return cardCount(*dids) == 0
     }
 
-    /**
-     * Bulk delete cards by ID.
-     */
-    open fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
-        removeCardsAndOrphanedNotes(cardIds, true)
-    }
-
-    /**
-     * Bulk delete cards by ID.
-     */
-    fun removeCardsAndOrphanedNotes(ids: Iterable<Long>, notes: Boolean) {
-        if (!ids.iterator().hasNext()) {
-            return
-        }
-        val sids = Utils.ids2str(ids)
-        var nids: List<Long> = db.queryLongList("SELECT nid FROM cards WHERE id IN $sids")
-        // remove cards
-        _logRem(ids, Consts.REM_CARD)
-        db.execute("DELETE FROM cards WHERE id IN $sids")
-        // then notes
-        if (!notes) {
-            return
-        }
-        nids = db.queryLongList(
-            "SELECT id FROM notes WHERE id IN " + Utils.ids2str(nids) +
-                " AND id NOT IN (SELECT nid FROM cards)"
-        )
-        _remNotes(nids)
-    }
-
-    fun emptyCids(): List<Long> {
-        val rem: MutableList<Long> = ArrayList()
-        for (m in models.all()) {
-            rem.addAll(genCards(models.nids(m), m)!!)
-        }
-        return rem
-    }
-
     /** Returned data from [_fieldData] */
     private data class FieldData(val nid: NoteId, val modelId: NoteTypeId, val flds: String)
-
-    /**
-     * Field checksums and sorting fields ***************************************
-     * ********************************************************
-     */
-    private fun _fieldData(snids: String): ArrayList<FieldData> {
-        val result = ArrayList<FieldData>(
-            db.queryScalar("SELECT count() FROM notes WHERE id IN$snids")
-        )
-        db.query("SELECT id, mid, flds FROM notes WHERE id IN $snids").use { cur ->
-            while (cur.moveToNext()) {
-                result.add(FieldData(nid = cur.getLong(0), modelId = cur.getLong(1), flds = cur.getString(2)))
-            }
-        }
-        return result
-    }
-
-    /** Update field checksums and sort cache, after find&replace, etc.
-     * @param nids
-     */
-    fun updateFieldCache(nids: kotlin.collections.Collection<Long>) {
-        val snids = Utils.ids2str(nids)
-        updateFieldCache(snids)
-    }
-
-    /** Update field checksums and sort cache, after find&replace, etc.
-     * @param nids
-     */
-    fun updateFieldCache(nids: LongArray) {
-        val snids = Utils.ids2str(nids)
-        updateFieldCache(snids)
-    }
-
-    /** Update field checksums and sort cache, after find&replace, etc.
-     * @param snids comma separated nids
-     */
-    fun updateFieldCache(snids: String) {
-        val data = _fieldData(snids)
-        val r = ArrayList<Array<Any>>(data.size)
-        for (o in data) {
-            val fields = Utils.splitFields(o.flds)
-            val model = models.get(o.modelId)
-                ?: // note point to invalid model
-                continue
-            val csumAndStrippedFieldField = Utils.sfieldAndCsum(fields, models.sortIdx(model))
-            r.add(arrayOf(csumAndStrippedFieldField.first, csumAndStrippedFieldField.second, o.nid))
-        }
-        // apply, relying on calling code to bump usn+mod
-        db.executeMany("UPDATE notes SET sfld=?, csum=? WHERE id=?", r)
-    }
-    /*
-      Q/A generation *********************************************************** ************************************
-     */
-    /**
-     * Returns hash of id, question, answer.
-     */
-    fun _renderQA(
-        cid: CardId,
-        model: Model,
-        did: DeckId,
-        ord: Int,
-        tags: String,
-        flist: Array<String>,
-        flags: Int
-    ): HashMap<String, String> {
-        return _renderQA(cid, model, did, ord, tags, flist, flags, false, null, null)
-    }
-
-    @RustCleanup("#8951 - Remove FrontSide added to the front")
-    fun _renderQA(
-        cid: CardId,
-        model: Model,
-        did: DeckId,
-        ord: Int,
-        tags: String,
-        flist: Array<String>,
-        flags: Int,
-        browser: Boolean,
-        qfmtParam: String?,
-        afmtParam: String?
-    ): HashMap<String, String> {
-        // data is [cid, nid, mid, did, ord, tags, flds, cardFlags]
-        // unpack fields and create dict
-        var qfmt = qfmtParam
-        var afmt = afmtParam
-        val fmap = Models.fieldMap(model)
-        val maps: Set<Map.Entry<String, Pair<Int, JSONObject>>> = fmap.entries
-        val fields: MutableMap<String, String> = HashUtil.HashMapInit(maps.size + 8)
-        for ((key, value) in maps) {
-            fields[key] = flist[value.first]
-        }
-        val cardNum = ord + 1
-        fields["Tags"] = tags.trim { it <= ' ' }
-        fields["Type"] = model.getString("name")
-        fields["Deck"] = decks.name(did)
-        val baseName = Decks.basename(fields["Deck"]!!)
-        fields["Subdeck"] = baseName
-        fields["CardFlag"] = _flagNameFromCardFlags(flags)
-        val template: JSONObject = if (model.isStd) {
-            model.getJSONArray("tmpls").getJSONObject(ord)
-        } else {
-            model.getJSONArray("tmpls").getJSONObject(0)
-        }
-        fields["Card"] = template.getString("name")
-        fields[String.format(Locale.US, "c%d", cardNum)] = "1"
-        // render q & a
-        val d = HashUtil.HashMapInit<String, String>(2)
-        d["id"] = cid.toString()
-        qfmt = if (qfmt.isNullOrEmpty()) template.getString("qfmt") else qfmt
-        afmt = if (afmt.isNullOrEmpty()) template.getString("afmt") else afmt
-        for (p in arrayOf<Pair<String, String>>(Pair("q", qfmt!!), Pair("a", afmt!!))) {
-            val type = p.first
-            var format = p.second
-            if ("q" == type) {
-                format = fClozePatternQ.matcher(format)
-                    .replaceAll(String.format(Locale.US, "{{$1cq-%d:", cardNum))
-                format = fClozeTagStart.matcher(format)
-                    .replaceAll(String.format(Locale.US, "<%%cq:%d:", cardNum))
-                fields["FrontSide"] = ""
-            } else {
-                format = fClozePatternA.matcher(format)
-                    .replaceAll(String.format(Locale.US, "{{$1ca-%d:", cardNum))
-                format = fClozeTagStart.matcher(format)
-                    .replaceAll(String.format(Locale.US, "<%%ca:%d:", cardNum))
-                // the following line differs from libanki // TODO: why?
-                fields["FrontSide"] =
-                    d["q"]!! // fields.put("FrontSide", mMedia.stripAudio(d.get("q")));
-            }
-            var html: String
-            html = try {
-                ParsedNode.parse_inner(format).render(fields, "q" == type, context)
-            } catch (er: TemplateError) {
-                Timber.w(er)
-                er.message(context)
-            }
-            if (!browser) {
-                // browser don't show image. So compiling LaTeX actually remove information.
-                val svg = model.optBoolean("latexsvg", false)
-                html = LaTeX.mungeQA(html, this, svg)
-            }
-            d[type] = html
-            // empty cloze?
-            if ("q" == type && model.isCloze) {
-                if (Models._availClozeOrds(model, flist, false).isEmpty()) {
-                    val link = String.format(
-                        """<a href="%s">%s</a>""",
-                        context.resources.getString(R.string.link_ankiweb_docs_cloze_deletion),
-                        "help"
-                    )
-                    println(link)
-                    d["q"] = context.getString(R.string.empty_cloze_warning, link)
-                }
-            }
-        }
-        return d
-    }
 
     private fun _flagNameFromCardFlags(flags: Int): String {
         val flag = flags and 0b111
@@ -1332,53 +799,37 @@ open class Collection(
         _loadScheduler()
     }
 
-    open fun render_output(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput? {
-        return render_output_legacy(c, reload, browser)
+    @RustCleanup("switch to removeNotes")
+    fun remNotes(ids: LongArray) {
+        removeNotes(nids = ids.asIterable())
     }
 
-    @RustCleanup("Hack for Card Template Previewer, needs review")
-    fun render_output_legacy(c: Card, reload: Boolean, browser: Boolean): TemplateRenderOutput {
-        val f = c.note(reload)
-        val m = c.model()
-        val t = c.template()
-        val did: DeckId = if (c.isInDynamicDeck) {
-            c.oDid
-        } else {
-            c.did
-        }
-        val qa: HashMap<String, String> = if (browser) {
-            val bqfmt = t.optString("bqfmt")
-            val bafmt = t.optString("bafmt")
-            _renderQA(
-                cid = c.id,
-                model = m,
-                did = did,
-                ord = c.ord,
-                tags = f.stringTags(),
-                flist = f.fields,
-                flags = c.internalGetFlags(),
-                browser = browser,
-                qfmtParam = bqfmt,
-                afmtParam = bafmt
-            )
-        } else {
-            _renderQA(
-                cid = c.id,
-                model = m,
-                did = did,
-                ord = c.ord,
-                tags = f.stringTags(),
-                flist = f.fields,
-                flags = c.internalGetFlags()
-            )
-        }
-        return TemplateRenderOutput(
-            question_text = qa["q"]!!,
-            answer_text = qa["a"]!!,
-            question_av_tags = listOf(),
-            answer_av_tags = listOf(),
-            css = c.model().getString("css")
-        )
+    fun removeNotes(nids: Iterable<NoteId> = listOf(), cids: Iterable<CardId> = listOf()): OpChangesWithCount {
+        return backend.removeNotes(noteIds = nids, cardIds = cids)
+    }
+
+    fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
+        backend.removeCards(cardIds)
+    }
+
+    fun addNote(note: Note, deckId: DeckId): OpChanges {
+        val resp = backend.addNote(note.toBackendNote(), deckId)
+        note.id = resp.noteId
+        return resp.changes
+    }
+
+    /** allowEmpty is ignored in the new schema */
+    @RustCleanup("Remove this in favour of addNote() above; call addNote() inside undoableOp()")
+    fun addNote(note: Note): Int {
+        addNote(note, note.model().did)
+        return note.numberOfCards()
+    }
+
+    fun render_output(
+        c: Card,
+        browser: Boolean
+    ): TemplateRenderOutput {
+        return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
     }
 
     @VisibleForTesting
@@ -1508,32 +959,8 @@ open class Collection(
         )
     }
 
-    /**
-     * On first call, load the model if it was not loaded.
-     *
-     * Synchronized to ensure that loading does not occur twice.
-     * Normally the first call occurs in the background when
-     * collection is loaded.  The only exception being if the user
-     * perform an action (e.g. review) so quickly that
-     * loadModelsInBackground had no time to be called. In this case
-     * it will instantly finish. Note that loading model is a
-     * bottleneck anyway, so background call lose all interest.
-     *
-     * @return The model manager
-     */
-    val models: ModelManager
-        get() {
-            if (_models == null) {
-                _models = initModels()
-            }
-            return _models!!
-        }
-
-    /** Check if this collection is valid.  */
-    fun validCollection(): Boolean {
-        // TODO: more validation code
-        return models.validateModel()
-    }
+    lateinit var models: Models
+        protected set
 
     // region JSON-Related Config
     // Anki Desktop has a get_config and set_config method handling an "Any"
@@ -1742,6 +1169,16 @@ open class Collection(
             usn(),
             TimeManager.time.intTime()
         )
+    }
+
+    /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. This should
+     * not be used for adding new notes. */
+    fun updateNote(note: Note): OpChanges {
+        return backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
+    }
+
+    fun emptyCids(): List<CardId> {
+        return backend.getEmptyCards().notesList.flatMap { it.cardIdsList }
     }
 
     class CheckDatabaseResult(private val oldSize: Long) {

@@ -184,10 +184,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 var tmpCol: Collection? = null
                 try {
                     tmpCol = Storage.collection(context, colFile)
-                    if (!tmpCol.validCollection()) {
-                        tmpCol.close()
-                        return Computation.ERR
-                    }
                 } catch (e: Exception) {
                     Timber.e("Error opening new collection file... probably it's invalid")
                     try {

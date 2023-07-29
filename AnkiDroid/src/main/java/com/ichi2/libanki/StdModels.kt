@@ -31,15 +31,15 @@ class StdModels(
     private val defaultNameRes: Int
 ) {
     fun interface CreateStdModels {
-        fun create(mm: ModelManager, name: String): Model
+        fun create(mm: Models, name: String): Model
     }
 
-    private fun _new(mm: ModelManager): Model {
+    private fun _new(mm: Models): Model {
         val name: String = defaultName
         return _new(mm, name)
     }
 
-    private fun _new(mm: ModelManager, name: String): Model {
+    private fun _new(mm: Models, name: String): Model {
         return function.create(mm, name)
     }
 
@@ -63,7 +63,7 @@ class StdModels(
     companion object {
         // / create the standard models
         val BASIC_MODEL = StdModels(
-            { mm: ModelManager, name: String ->
+            { mm: Models, name: String ->
                 val m = mm.newModel(name)
                 val frontName = AnkiDroidApp.appResources.getString(R.string.front_field_name)
                 var fm = mm.newField(frontName)
@@ -81,7 +81,7 @@ class StdModels(
             R.string.basic_model_name
         )
         val BASIC_TYPING_MODEL = StdModels(
-            { mm: ModelManager, name: String ->
+            { mm: Models, name: String ->
                 val m = BASIC_MODEL._new(mm, name)
                 val t = m.getJSONArray("tmpls").getJSONObject(0)
                 val frontName = m.getJSONArray("flds").getJSONObject(0).getString("name")
@@ -93,7 +93,7 @@ class StdModels(
             R.string.basic_typing_model_name
         )
         private val FORWARD_REVERSE_MODEL = StdModels(
-            { mm: ModelManager, name: String ->
+            { mm: Models, name: String ->
                 val m = BASIC_MODEL._new(mm, name)
                 val frontName = m.getJSONArray("flds").getJSONObject(0).getString("name")
                 val backName = m.getJSONArray("flds").getJSONObject(1).getString("name")
@@ -107,7 +107,7 @@ class StdModels(
             R.string.forward_reverse_model_name
         )
         private val FORWARD_OPTIONAL_REVERSE_MODEL = StdModels(
-            { mm: ModelManager, name: String ->
+            { mm: Models, name: String ->
                 val m = FORWARD_REVERSE_MODEL._new(mm, name)
                 val av = AnkiDroidApp.appResources.getString(R.string.field_to_ask_front_name)
                 val fm = mm.newField(av)
@@ -119,7 +119,7 @@ class StdModels(
             R.string.forward_optional_reverse_model_name
         )
         private val CLOZE_MODEL = StdModels(
-            { mm: ModelManager, name: String? ->
+            { mm: Models, name: String? ->
                 val m = mm.newModel(
                     name!!
                 )

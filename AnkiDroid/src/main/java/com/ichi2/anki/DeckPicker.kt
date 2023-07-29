@@ -2238,11 +2238,7 @@ open class DeckPicker :
         launchCatchingTask {
             val emptyCids = withProgress(R.string.emtpy_cards_finding) {
                 withCol {
-                    if (!BackendFactory.defaultLegacySchema) {
-                        newBackend.getEmptyCards().notesList.flatMap { it.cardIdsList }
-                    } else {
-                        emptyCids()
-                    }
+                    emptyCids()
                 }
             }
             AlertDialog.Builder(this@DeckPicker).show {

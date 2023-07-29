@@ -81,7 +81,6 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
-import com.ichi2.libanki.Models.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Note.DupeOrEmpty
 import com.ichi2.themes.Themes
@@ -710,10 +709,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // adding current note to collection
             val noOfAddedCards = withProgress(resources.getString(R.string.saving_facts)) {
                 CollectionManager.withCol {
-                    models.current()!!.put("tags", tags)
+                    models.current().put("tags", tags)
                     models.setChanged()
                     db.executeInTransaction {
-                        addNote(mEditorNote!!, Models.AllowEmpty.ONLY_CLOZE)
+                        addNote(mEditorNote!!)
                     }
                 }
             }
@@ -1115,25 +1114,26 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun showCardTemplateEditor() {
-        val intent = Intent(this, CardTemplateEditor::class.java)
-        // Pass the model ID
-        intent.putExtra("modelId", currentlySelectedModel!!.getLong("id"))
-        Timber.d(
-            "showCardTemplateEditor() for model %s",
-            intent.getLongExtra("modelId", NOT_FOUND_NOTE_TYPE)
-        )
-        // Also pass the note id and ord if not adding new note
-        if (!addNote && mCurrentEditedCard != null) {
-            intent.putExtra("noteId", mCurrentEditedCard!!.note().id)
-            Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard!!.note().id)
-            intent.putExtra("ordId", mCurrentEditedCard!!.ord)
-            Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard!!.ord)
-        }
-        startActivityForResultWithAnimation(
-            intent,
-            REQUEST_TEMPLATE_EDIT,
-            START
-        )
+        return
+//        val intent = Intent(this, CardTemplateEditor::class.java)
+//        // Pass the model ID
+//        intent.putExtra("modelId", currentlySelectedModel!!.getLong("id"))
+//        Timber.d(
+//            "showCardTemplateEditor() for model %s",
+//            intent.getLongExtra("modelId", NOT_FOUND_NOTE_TYPE)
+//        )
+//        // Also pass the note id and ord if not adding new note
+//        if (!addNote && mCurrentEditedCard != null) {
+//            intent.putExtra("noteId", mCurrentEditedCard!!.note().id)
+//            Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard!!.note().id)
+//            intent.putExtra("ordId", mCurrentEditedCard!!.ord)
+//            Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard!!.ord)
+//        }
+//        startActivityForResultWithAnimation(
+//            intent,
+//            REQUEST_TEMPLATE_EDIT,
+//            START
+//        )
     }
 
     @Suppress("deprecation") // onActivityResult
@@ -1642,7 +1642,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     deckId = 1
                 }
             } else {
-                deckId = model!!.did
+                deckId = model.did
             }
         } else {
             deckId = mCurrentEditedCard!!.did
@@ -1659,7 +1659,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun setNote(note: Note?, changeType: FieldChangeType) {
         mEditorNote = if (note == null || addNote) {
             val model = col.models.current()
-            Note(col, model!!)
+            Note(col, model)
         } else {
             note
         }
@@ -1950,7 +1950,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
-            val oldModelId = col.models.current()!!.getLong("id")
+            val oldModelId = col.models.current().getLong("id")
             val newId = mAllModelIds!![pos]
             Timber.i("Changing note type to '%d", newId)
             if (oldModelId != newId) {

@@ -19,16 +19,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.MODEL_CLOZE
-import com.ichi2.libanki.Models.Companion.REQ_ALL
-import com.ichi2.libanki.Models.Companion.REQ_ANY
 import com.ichi2.libanki.Utils.stripHTML
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.json.JSONArray
 import org.json.JSONObject
 import org.junit.Assert.*
 import org.junit.Test
@@ -61,7 +57,7 @@ class ModelTest : RobolectricTest() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
         val col = col
         val m = col.models.current()
-        m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}")
+        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}")
         col.models.save(m)
         val note = col.newNote()
         note.setItem("Front", "helloworld")
@@ -87,7 +83,7 @@ class ModelTest : RobolectricTest() {
         val m = col.models.current()
 
         // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
-        col.models.addFieldModChanged(m!!, col.models.newField("FrontSide"))
+        col.models.addFieldModChanged(m, col.models.newField("FrontSide"))
         col.models.addFieldModChanged(m, col.models.newField("FrontSide2"))
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}{{FrontSide2}}")
         col.models.save(m)
@@ -118,7 +114,7 @@ class ModelTest : RobolectricTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         assertEquals(1, col.cardCount())
-        col.models.rem(col.models.current()!!)
+        col.models.rem(col.models.current())
         assertEquals(0, col.cardCount())
     }
 
@@ -126,7 +122,7 @@ class ModelTest : RobolectricTest() {
     fun test_modelCopy() {
         val col = col
         val m = col.models.current()
-        val m2 = col.models.copy(m!!)
+        val m2 = col.models.copy(m)
         assertEquals("Basic copy", m2.getString("name"))
         assertNotEquals(m2.getLong("id"), m.getLong("id"))
         assertEquals(2, m2.getJSONArray("flds").length())
@@ -150,7 +146,7 @@ class ModelTest : RobolectricTest() {
         col.addNote(note)
         val m = col.models.current()
         // make sure renaming a field updates the templates
-        col.models.renameField(m!!, m.getJSONArray("flds").getJSONObject(0), "NewFront")
+        col.models.renameField(m, m.getJSONArray("flds").getJSONObject(0), "NewFront")
         assertThat(
             m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"),
             containsString("{{NewFront}}")
@@ -257,7 +253,7 @@ class ModelTest : RobolectricTest() {
         var t = Models.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m!!, t)
+        mm.addTemplateModChanged(m, t)
         mm.save(m)
         val note = col.newNote()
         note.setItem("Front", "1")
@@ -309,7 +305,7 @@ class ModelTest : RobolectricTest() {
         val t = Models.newTemplate("ChainedCloze")
         t.put("qfmt", "{{text:cloze:Text}}")
         t.put("afmt", "{{text:cloze:Text}}")
-        mm.addTemplateModChanged(m!!, t)
+        mm.addTemplateModChanged(m, t)
         mm.save(m)
         col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
 
@@ -327,22 +323,10 @@ class ModelTest : RobolectricTest() {
     }
 
     @Test
-    fun test_cloze_empty() {
-        val col = col
-        val mm = col.models
-        val clozeModel = mm.byName("Cloze")
-        mm.setCurrent(clozeModel!!)
-        assertListEquals(
-            listOf(0, 1),
-            Models.availOrds(clozeModel, arrayOf("{{c1::Empty}} and {{c2::}}", ""))
-        )
-    }
-
-    @Test
     fun test_text() {
         val col = col
         val m = col.models.current()
-        m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}")
+        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}")
         col.models.save(m)
         val note = col.newNote()
         note.setItem("Front", "hello<b>world")
@@ -366,22 +350,22 @@ class ModelTest : RobolectricTest() {
         note.setItem("Text", "nothing")
         assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(1, col.addNote(note))
         if (BackendFactory.defaultLegacySchema) {
-            assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE))
+            assertEquals(0, col.addNote(note))
         }
         // try with one cloze
         note = col.newNote()
         note.setItem("Text", "hello {{c1::world}}")
         assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(1, col.addNote(note))
         if (BackendFactory.defaultLegacySchema) {
-            assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
+            assertEquals(1, col.addNote(note))
         }
         if (!BackendFactory.defaultLegacySchema) {
             // below needs updating to support latest backend output
@@ -401,11 +385,11 @@ class ModelTest : RobolectricTest() {
         note.setItem("Text", "hello {{c1::world::typical}}")
         assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
+        assertEquals(1, col.addNote(note))
         assertThat(
             note.cards()[0].q(),
             containsString("<span ${clozeClass()}${clozeData("world")}>[typical]</span>")
@@ -444,11 +428,11 @@ class ModelTest : RobolectricTest() {
         clearId(note)
         assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.FALSE))
+        assertEquals(1, col.addNote(note))
         assertThat(
             note.cards()[0].a(),
             containsString("<span ${clozeClass()}>b</span> <span ${clozeClass()}>c</span>")
@@ -458,21 +442,21 @@ class ModelTest : RobolectricTest() {
         clearId(note)
         assertEquals(2, col.addNote(note))
         clearId(note)
-        assertEquals(2, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(2, col.addNote(note))
         clearId(note)
-        assertEquals(2, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(2, col.addNote(note))
         clearId(note)
-        assertEquals(2, col.addNote(note, Models.AllowEmpty.FALSE))
+        assertEquals(2, col.addNote(note))
         // 0 or negative indices are not supported
         note.setItem("Text", "{{c0::zero}} {{c-1:foo}}")
         clearId(note)
         assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.TRUE))
+        assertEquals(1, col.addNote(note))
         clearId(note)
-        assertEquals(1, col.addNote(note, Models.AllowEmpty.ONLY_CLOZE))
+        assertEquals(1, col.addNote(note))
         if (BackendFactory.defaultLegacySchema) {
-            assertEquals(0, col.addNote(note, Models.AllowEmpty.FALSE))
+            assertEquals(0, col.addNote(note))
         }
 
         note = col.newNote()
@@ -557,7 +541,7 @@ class ModelTest : RobolectricTest() {
         val t = Models.newTemplate("ChainedCloze")
         t.put("qfmt", "{{cloze:text:Text}}")
         t.put("afmt", "{{cloze:text:Text}}")
-        mm.addTemplateModChanged(m!!, t)
+        mm.addTemplateModChanged(m, t)
         mm.save(m)
         col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
         val note = col.newNote()
@@ -588,7 +572,7 @@ class ModelTest : RobolectricTest() {
         val t = Models.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(basic!!, t)
+        mm.addTemplateModChanged(basic, t)
         mm.save(basic)
         var note = col.newNote()
         note.setItem("Front", "note")
@@ -684,66 +668,6 @@ class ModelTest : RobolectricTest() {
     }
 
     @Test
-    fun test_req() {
-        val col = col
-        val mm = col.models
-        val basic = mm.byName("Basic")
-        assertTrue(basic!!.has("req"))
-        reqSize(basic)
-        var r = basic.getJSONArray("req").getJSONArray(0)
-        assertEquals(0, r.getInt(0))
-        assertTrue(
-            listOf(REQ_ANY, REQ_ALL).contains(r.getString(1))
-        )
-        assertEquals(1, r.getJSONArray(2).length())
-        assertEquals(0, r.getJSONArray(2).getInt(0))
-
-        var opt = mm.byName("Basic (optional reversed card)")
-        reqSize(opt)
-
-        r = opt!!.getJSONArray("req").getJSONArray(0)
-        assertTrue(
-            listOf(REQ_ANY, REQ_ALL).contains(r.getString(1))
-        )
-        assertEquals(1, r.getJSONArray(2).length())
-        assertEquals(0, r.getJSONArray(2).getInt(0))
-
-        assertEquals(JSONArray("[1,\"all\",[1,2]]"), opt.getJSONArray("req").getJSONArray(1))
-
-        // testing any
-        opt.getJSONArray("tmpls").getJSONObject(1).put("qfmt", "{{Back}}{{Add Reverse}}")
-        mm.save(opt, true)
-        assertEquals(
-            JSONArray("[1, \"any\", [1, 2]]"),
-            opt.getJSONArray("req").getJSONArray(1)
-        )
-        // testing null
-        if (BackendFactory.defaultLegacySchema) {
-            // can't add front without field in v16
-            opt.getJSONArray("tmpls").getJSONObject(1)
-                .put("qfmt", "{{^Add Reverse}}{{/Add Reverse}}")
-            mm.save(opt, true)
-            assertEquals(
-                JSONArray("[1, \"none\", []]"),
-                opt.getJSONArray("req").getJSONArray(1)
-            )
-        }
-
-        opt = mm.byName("Basic (type in the answer)")
-        reqSize(opt)
-        r = opt!!.getJSONArray("req").getJSONArray(0)
-        assertTrue(
-            listOf(REQ_ANY, REQ_ALL).contains(r.getString(1))
-        )
-        if (col.models is ModelsV16) {
-            assertEquals(JSONArray("[0, 1]"), r.getJSONArray(2))
-        } else {
-            // TODO: Port anki@4e33775ed4346ef136ece6ef5efec5ba46057c6b
-            assertEquals(JSONArray("[0]"), r.getJSONArray(2))
-        }
-    }
-
-    @Test
     @Config(qualifiers = "en")
     @RustCleanup("remove")
     fun regression_test_pipe() {
@@ -763,20 +687,6 @@ class ModelTest : RobolectricTest() {
     }
 
     @Test
-    fun test_getNamesOfFieldContainingCloze() {
-        assertListEquals(ArrayList(), Models.getNamesOfFieldsContainingCloze(""))
-        val example = "{{cloze::foo}} <%cloze:bar%>"
-        assertListEquals(
-            listOf("foo", "bar"),
-            Models.getNamesOfFieldsContainingCloze(example)
-        )
-        assertListEquals(
-            listOf("foo", "bar"),
-            Models.getNamesOfFieldsContainingCloze(example)
-        )
-    }
-
-    @Test
     fun nonEmptyFieldTest() {
         val col = col
         val mm = col.models
@@ -791,150 +701,6 @@ class ModelTest : RobolectricTest() {
         assertEquals(s, basic.nonEmptyFields(arrayOf("P", "")))
         s.add("Back")
         assertEquals(s, basic.nonEmptyFields(arrayOf("P", "A")))
-    }
-
-    @Test
-    fun avail_standard_order_test() {
-        val col = col
-        val mm = col.models
-        val basic = mm.byName("Basic")!!
-        val reverse = mm.byName("Basic (and reversed card)")!!
-
-        assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "")))
-        assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "Back")))
-        assertListEquals(listOf(0), Models._availStandardOrds(basic, arrayOf("Foo", "")))
-        assertListEquals(listOf(), Models._availStandardOrds(basic, arrayOf("  \t ", "")))
-        assertListEquals(ArrayList(), Models._availStandardOrds(reverse, arrayOf("", "")))
-        assertListEquals(listOf(0), Models._availStandardOrds(reverse, arrayOf("Foo", "")))
-        assertListEquals(
-            listOf(0, 1),
-            Models._availStandardOrds(reverse, arrayOf("Foo", "Bar"))
-        )
-        assertListEquals(
-            listOf(1),
-            Models._availStandardOrds(reverse, arrayOf("  \t ", "Bar"))
-        )
-
-        assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", ""), false))
-        assertListEquals(ArrayList(), Models._availStandardOrds(basic, arrayOf("", "Back"), false))
-        assertListEquals(
-            listOf(0),
-            Models._availStandardOrds(basic, arrayOf("Foo", ""), false)
-        )
-        assertListEquals(
-            listOf(),
-            Models._availStandardOrds(basic, arrayOf("  \t ", ""), false)
-        )
-        assertListEquals(ArrayList(), Models._availStandardOrds(reverse, arrayOf("", ""), false))
-        assertListEquals(
-            listOf(0),
-            Models._availStandardOrds(reverse, arrayOf("Foo", ""), false)
-        )
-        assertListEquals(
-            listOf(0, 1),
-            Models._availStandardOrds(reverse, arrayOf("Foo", "Bar"), false)
-        )
-        assertListEquals(
-            listOf(1),
-            Models._availStandardOrds(reverse, arrayOf("  \t ", "Bar"), false)
-        )
-
-        assertListEquals(listOf(0), Models._availStandardOrds(basic, arrayOf("", ""), true))
-        assertListEquals(
-            listOf(0),
-            Models._availStandardOrds(basic, arrayOf("", "Back"), true)
-        )
-        assertListEquals(
-            listOf(0),
-            Models._availStandardOrds(basic, arrayOf("Foo", ""), true)
-        )
-        assertListEquals(
-            listOf(0),
-            Models._availStandardOrds(basic, arrayOf("  \t ", ""), true)
-        )
-        assertListEquals(
-            listOf(0),
-            Models._availStandardOrds(reverse, arrayOf("", ""), true)
-        )
-        assertListEquals(
-            listOf(0),
-            Models._availStandardOrds(reverse, arrayOf("Foo", ""), true)
-        )
-        assertListEquals(
-            listOf(0, 1),
-            Models._availStandardOrds(reverse, arrayOf("Foo", "Bar"), true)
-        )
-        assertListEquals(
-            listOf(1),
-            Models._availStandardOrds(reverse, arrayOf("  \t ", "Bar"), true)
-        )
-    }
-
-    @Test
-    fun avail_ords_test() {
-        val col = col
-        val mm = col.models
-        val basic = mm.byName("Basic")!!
-        val reverse = mm.byName("Basic (and reversed card)")!!
-
-        assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "")))
-        assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "Back")))
-        assertListEquals(listOf(0), Models.availOrds(basic, arrayOf("Foo", "")))
-        assertListEquals(listOf(), Models.availOrds(basic, arrayOf("  \t ", "")))
-        assertListEquals(ArrayList(), Models.availOrds(reverse, arrayOf("", "")))
-        assertListEquals(listOf(0), Models.availOrds(reverse, arrayOf("Foo", "")))
-        assertListEquals(listOf(0, 1), Models.availOrds(reverse, arrayOf("Foo", "Bar")))
-        assertListEquals(listOf(1), Models.availOrds(reverse, arrayOf("  \t ", "Bar")))
-
-        for (allow in arrayOf(Models.AllowEmpty.ONLY_CLOZE, Models.AllowEmpty.FALSE)) {
-            assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", ""), allow))
-            assertListEquals(ArrayList(), Models.availOrds(basic, arrayOf("", "Back"), allow))
-            assertListEquals(listOf(0), Models.availOrds(basic, arrayOf("Foo", ""), allow))
-            assertListEquals(listOf(), Models.availOrds(basic, arrayOf("  \t ", ""), allow))
-            assertListEquals(ArrayList(), Models.availOrds(reverse, arrayOf("", ""), allow))
-            assertListEquals(listOf(0), Models.availOrds(reverse, arrayOf("Foo", ""), allow))
-            assertListEquals(
-                listOf(0, 1),
-                Models.availOrds(reverse, arrayOf("Foo", "Bar"), allow)
-            )
-            assertListEquals(
-                listOf(1),
-                Models.availOrds(reverse, arrayOf("  \t ", "Bar"), allow)
-            )
-        }
-
-        assertListEquals(
-            listOf(0),
-            Models.availOrds(basic, arrayOf("", ""), Models.AllowEmpty.TRUE)
-        )
-        assertListEquals(
-            listOf(0),
-            Models.availOrds(basic, arrayOf("", "Back"), Models.AllowEmpty.TRUE)
-        )
-        assertListEquals(
-            listOf(0),
-            Models.availOrds(basic, arrayOf("Foo", ""), Models.AllowEmpty.TRUE)
-        )
-        assertListEquals(
-            listOf(0),
-            Models.availOrds(basic, arrayOf("  \t ", ""), Models.AllowEmpty.TRUE)
-        )
-        assertListEquals(
-            listOf(0),
-            Models.availOrds(reverse, arrayOf("", ""), Models.AllowEmpty.TRUE)
-        )
-        assertListEquals(
-            listOf(0),
-            Models.availOrds(reverse, arrayOf("Foo", ""), Models.AllowEmpty.TRUE)
-        )
-        assertListEquals(
-            listOf(0, 1),
-            Models.availOrds(reverse, arrayOf("Foo", "Bar"), Models.AllowEmpty.TRUE)
-        )
-        assertListEquals(
-            listOf(1),
-            Models.availOrds(reverse, arrayOf("  \t ", "Bar"), Models.AllowEmpty.TRUE)
-        )
     }
 
     /**

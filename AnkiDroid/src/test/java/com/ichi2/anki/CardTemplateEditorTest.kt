@@ -41,6 +41,7 @@ import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 import kotlin.test.junit5.JUnit5Asserter.assertNull
 import kotlin.test.junit5.JUnit5Asserter.assertTrue
 
+// @Ignore
 @RunWith(AndroidJUnit4::class)
 class CardTemplateEditorTest : RobolectricTest() {
     @Test

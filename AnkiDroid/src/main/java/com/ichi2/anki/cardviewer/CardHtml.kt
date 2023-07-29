@@ -157,10 +157,6 @@ class CardHtml(
          * TODO: This is no longer entirely true as more post-processing occurs
          */
         private fun displayString(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
-            if (side == Side.FRONT && card.isEmpty) {
-                return context.resources.getString(R.string.empty_card_warning)
-            }
-
             var content: String = if (side == Side.FRONT) card.q(reload) else card.a()
             content = Media.escapeImages(content)
             content = context.filterTypeAnswer(content, side)

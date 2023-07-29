@@ -300,35 +300,6 @@ fun saveModel(
     }
 }
 
-/**
- * Deletes all the card with given ids
- * @return Array<Cards> list of all deleted cards
- */
-fun deleteMultipleNotes(
-    col: Collection,
-    cardIds: List<Long>
-): Array<Card> {
-    val cards = cardIds.map { col.getCard(it) }.toTypedArray()
-    return col.db.executeInTransaction {
-        val sched = col.sched
-        // list of all ids to pass to remNotes method.
-        // Need Set (-> unique) so we don't pass duplicates to col.remNotes()
-        val notes = CardUtils.getNotes(listOf(*cards))
-        val allCards = CardUtils.getAllCards(notes)
-        // delete note
-        val uniqueNoteIds = LongArray(notes.size)
-        val notesArr = notes.toTypedArray()
-        for ((index, note) in notes.withIndex()) {
-            uniqueNoteIds[index] = note.id
-        }
-        col.markUndo(UndoDeleteNoteMulti(notesArr, allCards))
-        col.remNotes(uniqueNoteIds)
-        sched.deferReset()
-        // pass back all cards because they can't be retrieved anymore by the caller (since the note is deleted)
-        allCards.toTypedArray()
-    }
-}
-
 fun suspendCardMulti(col: Collection, cardIds: List<Long>): Array<Card> {
     val cards = cardIds.map { col.getCard(it) }.toTypedArray()
     return col.db.executeInTransaction {

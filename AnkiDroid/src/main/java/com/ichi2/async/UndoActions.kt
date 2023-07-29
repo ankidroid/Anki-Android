@@ -25,7 +25,6 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.UndoAction
-import com.ichi2.libanki.Utils
 import timber.log.Timber
 import java.util.ArrayList
 
@@ -62,26 +61,6 @@ class UndoSuspendCardMulti(
         }
         col.sched.suspendCards(toSuspendIdsArray)
         col.sched.unsuspendCards(toUnsuspendIdsArray)
-        return null // don't fetch new card
-    }
-}
-
-class UndoDeleteNoteMulti(private val notesArr: Array<Note>, private val allCards: List<Card>) : UndoAction(
-    R.string.card_browser_delete_card
-) {
-    override fun undo(col: Collection): Card? {
-        Timber.i("Undo: Delete notes")
-        // undo all of these at once instead of one-by-one
-        val ids = ArrayList<Long>(notesArr.size + allCards.size)
-        for (n in notesArr) {
-            n.flush(n.mod, false)
-            ids.add(n.id)
-        }
-        for (c in allCards) {
-            c.flush(false)
-            ids.add(c.id)
-        }
-        col.db.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids))
         return null // don't fetch new card
     }
 }

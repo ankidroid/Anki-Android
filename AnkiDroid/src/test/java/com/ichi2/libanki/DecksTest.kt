@@ -103,7 +103,7 @@ class DecksTest : RobolectricTest() {
         // parents with a different case should be handled correctly
         addDeck("ONE")
         val m = col.models.current()
-        m!!.put("did", addDeck("one::two"))
+        m.put("did", addDeck("one::two"))
         col.models.save(m, false)
         val n = col.newNote()
         n.setItem("Front", "abc")

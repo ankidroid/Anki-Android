@@ -27,7 +27,6 @@ import com.ichi2.utils.Computation
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.CancellationException
-import kotlin.collections.ArrayList
 import com.ichi2.libanki.Collection as AnkiCollection
 
 typealias NextCardAnd<T> = Computation<NextCard<T>>
@@ -88,19 +87,6 @@ class SchedulerService {
                 col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_bury_note, card))
                 // then bury
                 col.sched.buryNote(card.note().id)
-            }
-        }
-    }
-
-    class DeleteNote(val card: Card) : ActionAndNextCard() {
-        override fun execute(): ComputeResult {
-            return computeThenGetNextCardInTransaction {
-                val note: Note = card.note()
-                // collect undo information
-                val allCs = note.cards()
-                col.markUndo(UndoDeleteNote(note, allCs, card))
-                // delete note
-                col.remNotes(longArrayOf(note.id))
             }
         }
     }
@@ -167,25 +153,6 @@ class SchedulerService {
                 }
             }
             return inputCards.map { x -> NextCard(x.first.orElse(null), x.second) }
-        }
-    }
-
-    private class UndoDeleteNote(
-        private val note: Note,
-        private val allCs: ArrayList<Card>,
-        private val card: Card
-    ) : UndoAction(R.string.menu_delete_note) {
-        override fun undo(col: AnkiCollection): Card {
-            Timber.i("Undo: Delete note")
-            val ids = ArrayList<Long>(allCs.size + 1)
-            note.flush(note.mod, false)
-            ids.add(note.id)
-            for (c in allCs) {
-                c.flush(false)
-                ids.add(c.id)
-            }
-            col.db.execute("DELETE FROM graves WHERE oid IN " + Utils.ids2str(ids))
-            return card
         }
     }
 

@@ -75,7 +75,7 @@ class CardTest : RobolectricTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val c = note.cards()[0]
-        col.models.current()!!.getLong("id")
+        col.models.current().getLong("id")
         assertEquals(0, c.template().getInt("ord"))
     }
 
@@ -92,7 +92,7 @@ class CardTest : RobolectricTest() {
         var t = Models.newTemplate("rev")
         t.put("qfmt", "{{Front}}1")
         t.put("afmt", "")
-        mm.addTemplateModChanged(m!!, t)
+        mm.addTemplateModChanged(m, t)
         mm.save(m, true)
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
@@ -130,14 +130,6 @@ class CardTest : RobolectricTest() {
         note.setItem("Text", "{{c3::three}}")
         note.flush()
         assertEquals(1, note.cards()[2].did)
-        // if one of the cards is in a different col, it should revert to the
-        // model default
-        val c = note.cards()[1]
-        c.did = newId
-        c.flush()
-        note.setItem("Text", "{{c4::four}}")
-        note.flush()
-        assertEquals(newId, note.cards()[3].did)
     }
 
     @Test

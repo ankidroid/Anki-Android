@@ -49,7 +49,7 @@ class MediaTest : RobolectricTest() {
     @Test
     fun test_strings() {
         val col = col
-        val mid = col.models.current()!!.getLong("id")
+        val mid = col.models.current().getLong("id")
         assertEquals(0, col.media.filesInStr(mid, "aoeu").size.toLong())
         assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src='foo.jpg'>ao"))
         assertEqualsArrayList(arrayOf("foo.jpg"), col.media.filesInStr(mid, "aoeu<img src='foo.jpg' style='test'>ao"))

@@ -32,7 +32,7 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.DB.Companion.safeEndInTransaction
-import com.ichi2.libanki.Models.AllowEmpty
+import com.ichi2.libanki.Models
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.AbstractSched
@@ -652,12 +652,12 @@ class CardContentProvider : ContentProvider() {
                 col.remNotes(longArrayOf(uri.pathSegments[1].toLong()))
                 1
             }
-            MODELS_ID_EMPTY_CARDS -> {
-                val model = col.models.get(getModelIdFromUri(uri, col)) ?: return -1
-                val cids: List<Long> = col.genCards(col.models.nids(model), model)!!
-                col.removeCardsAndOrphanedNotes(cids)
-                cids.size
-            }
+//            MODELS_ID_EMPTY_CARDS -> {
+//                val model = col.models.get(getModelIdFromUri(uri, col)) ?: return -1
+//                val cids: List<Long> = col.genCards(col.models.nids(model), model)!!
+//                col.removeCardsAndOrphanedNotes(cids)
+//                cids.size
+//            }
             else -> throw UnsupportedOperationException()
         }
     }
@@ -718,7 +718,7 @@ class CardContentProvider : ContentProvider() {
             for (i in valuesArr.indices) {
                 val values: ContentValues = valuesArr[i]
                 val flds = values.getAsString(FlashCardsContract.Note.FLDS) ?: continue
-                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
+//                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 val thisModelId = values.getAsLong(FlashCardsContract.Note.MID)
                 if (thisModelId == null || thisModelId < 0) {
                     Timber.d("Unable to get model at index: %d", i)
@@ -747,7 +747,7 @@ class CardContentProvider : ContentProvider() {
                     newNote.setTagsFromStr(tags)
                 }
                 // Add to collection
-                col.addNote(newNote, allowEmpty)
+                col.addNote(newNote)
                 for (card: Card in newNote.cards()) {
                     card.did = deckId
                     card.flush()
@@ -778,7 +778,7 @@ class CardContentProvider : ContentProvider() {
                 val modelId = values!!.getAsLong(FlashCardsContract.Note.MID)
                 val flds = values.getAsString(FlashCardsContract.Note.FLDS)
                 val tags = values.getAsString(FlashCardsContract.Note.TAGS)
-                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
+//                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
                 val newNote = Note(col, col.models.get(modelId)!!)
                 // Set fields
@@ -797,7 +797,7 @@ class CardContentProvider : ContentProvider() {
                     newNote.setTagsFromStr(tags)
                 }
                 // Add to collection
-                col.addNote(newNote, allowEmpty)
+                col.addNote(newNote)
                 col.save()
                 Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, newNote.id.toString())
             }
@@ -878,7 +878,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID -> throw IllegalArgumentException("Not possible to insert model with specific ID")
             MODELS_ID_TEMPLATES -> {
                 run {
-                    val models: ModelManager = col.models
+                    val models: Models = col.models
                     val mid: NoteTypeId = getModelIdFromUri(uri, col)
                     val existingModel: Model = models.get(mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
@@ -907,7 +907,7 @@ class CardContentProvider : ContentProvider() {
             MODELS_ID_TEMPLATES_ID -> throw IllegalArgumentException("Not possible to insert template with specific ORD")
             MODELS_ID_FIELDS -> {
                 run {
-                    val models: ModelManager = col.models
+                    val models: Models = col.models
                     val mid: NoteTypeId = getModelIdFromUri(uri, col)
                     val existingModel: Model = models.get(mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
@@ -1018,7 +1018,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addModelToCursor(modelId: NoteTypeId, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
+    private fun addModelToCursor(modelId: NoteTypeId, models: Models, rv: MatrixCursor, columns: Array<String>) {
         val jsonObject = models.get(modelId)
         val rb = rv.newRow()
         try {
@@ -1135,7 +1135,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addTemplateToCursor(tmpl: JSONObject, model: Model?, id: Int, models: ModelManager, rv: MatrixCursor, columns: Array<String>) {
+    private fun addTemplateToCursor(tmpl: JSONObject, model: Model?, id: Int, models: Models, rv: MatrixCursor, columns: Array<String>) {
         try {
             val rb = rv.newRow()
             for (column in columns) {
@@ -1222,7 +1222,7 @@ class CardContentProvider : ContentProvider() {
     private fun getModelIdFromUri(uri: Uri, col: Collection): Long {
         val modelIdSegment = uri.pathSegments[1]
         val id: Long = if (modelIdSegment == FlashCardsContract.Model.CURRENT_MODEL_ID) {
-            col.models.current()!!.optLong("id", -1)
+            col.models.current().optLong("id", -1)
         } else {
             try {
                 uri.pathSegments[1].toLong()

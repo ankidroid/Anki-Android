@@ -18,10 +18,8 @@ package com.ichi2.libanki
 import android.content.Context
 import android.content.res.Resources
 import anki.card_rendering.EmptyCardsReport
-import anki.collection.OpChanges
 import anki.config.ConfigKey
 import com.ichi2.libanki.backend.*
-import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.TimeManager
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
@@ -35,10 +33,6 @@ class CollectionV16(
     backend: Backend
 ) : Collection(context, path, server, log, backend) {
 
-    override fun initModels(): ModelManager {
-        return ModelsV16(this)
-    }
-
     override fun initMedia(): BackendMedia {
         return BackendMedia(this, server)
     }
@@ -49,9 +43,6 @@ class CollectionV16(
     override val newMedia: BackendMedia
         get() = this.media as BackendMedia
 
-    override val newModels: ModelsV16
-        get() = this.models as ModelsV16
-
     /** True if the V3 scheduled is enabled when schedVer is 2. */
     override var v3Enabled: Boolean
         get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
@@ -61,6 +52,7 @@ class CollectionV16(
         }
 
     override fun load() {
+        models = initModels()
         decks = initDecks()
         config = initConf()
     }
@@ -104,14 +96,6 @@ class CollectionV16(
         for (m in all) {
             models.save(m) // equivalent to m.put("usn", -1)
         }
-    }
-
-    override fun render_output(
-        c: Card,
-        reload: Boolean,
-        browser: Boolean
-    ): TemplateManager.TemplateRenderContext.TemplateRenderOutput {
-        return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
     }
 
     /** Takes raw input from TypeScript frontend and returns suitable translations. */
@@ -161,17 +145,8 @@ class CollectionV16(
         return super.undo()
     }
 
-    override fun remNotes(ids: LongArray) {
-        backend.removeNotes(noteIds = ids.asIterable(), cardIds = listOf())
-    }
-
     override fun setDeck(cids: LongArray, did: Long) {
         backend.setDeck(cardIds = cids.asIterable(), deckId = did)
-    }
-
-    /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. */
-    fun updateNote(note: Note) {
-        backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
     }
 
     /** Change the flag color of the specified cards. flag=0 removes flag. */
@@ -179,24 +154,7 @@ class CollectionV16(
         backend.setFlag(cardIds = cids, flag = flag)
     }
 
-    fun addNote(note: Note, deckId: DeckId): OpChanges {
-        val resp = backend.addNote(note.toBackendNote(), deckId)
-        note.id = resp.noteId
-        return resp.changes
-    }
-
     fun getEmptyCards(): EmptyCardsReport {
         return backend.getEmptyCards()
-    }
-
-    override fun removeCardsAndOrphanedNotes(cardIds: Iterable<Long>) {
-        backend.removeCards(cardIds)
-    }
-
-    /** allowEmpty is ignored in the new schema */
-    @RustCleanup("Remove this in favour of addNote() above; call addNote() inside undoableOp()")
-    override fun addNote(note: Note, allowEmpty: Models.AllowEmpty): Int {
-        addNote(note, note.model().did)
-        return note.numberOfCards()
     }
 }

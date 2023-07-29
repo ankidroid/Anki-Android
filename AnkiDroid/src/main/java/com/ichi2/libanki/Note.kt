@@ -19,10 +19,10 @@ package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
+import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
@@ -113,37 +113,9 @@ class Note : Cloneable {
     /*
      * If fields or tags have changed, write changes to disk.
      */
-    @BlocksSchemaUpgrade("new path must update to native note adding/updating routine")
-    fun flush(mod: Long? = null, changeUsn: Boolean = true) {
-        assert(mScm == col.scm)
-        preFlush()
-        if (changeUsn) {
-            usn = col.usn()
-        }
-        val csumAndStrippedFieldField = Utils.sfieldAndCsum(
-            fields,
-            col.models.sortIdx(mModel)
-        )
-        val sfld = csumAndStrippedFieldField.first
-        val tags = stringTags()
-        val fields = joinedFields()
-        if (mod == null && col.db.queryScalar(
-                "select 1 from notes where id = ? and tags = ? and flds = ?",
-                this.id.toString(),
-                tags,
-                fields
-            ) > 0
-        ) {
-            return
-        }
-        val csum = csumAndStrippedFieldField.second
-        this.mod = mod ?: time.intTime()
-        col.db.execute(
-            "insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
-            this.id, guId!!, mid, this.mod, usn, tags, fields, sfld, csum, mFlags, mData!!
-        )
-        Timber.w("note.flush() does not register tags; code should migrate to col.updateNote()")
-        postFlush()
+    @RustCleanup("code should call col.updateNote() instead, in undoableOp {}")
+    fun flush() {
+        col.updateNote(this)
     }
 
     private fun joinedFields(): String {
@@ -313,26 +285,6 @@ class Note : Cloneable {
             }
         }
         return DupeOrEmpty.CORRECT
-    }
-
-    /**
-     * Flushing cloze notes
-     * ***********************************************************
-     */
-    /*
-     * have we been added yet?
-     */
-    private fun preFlush() {
-        mNewlyAdded = col.db.queryScalar("SELECT 1 FROM cards WHERE nid = ?", this.id) == 0
-    }
-
-    /*
-     * generate missing cards
-     */
-    private fun postFlush() {
-        if (!mNewlyAdded) {
-            col.genCards(this.id, mModel)
-        }
     }
 
     val sFld: String

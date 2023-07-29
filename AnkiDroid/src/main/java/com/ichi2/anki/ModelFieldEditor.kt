@@ -413,7 +413,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             .replace("[\\n\\r]".toRegex(), "")
         val field = mNoteFields.getJSONObject(currentPos)
         collection.models.renameField(mModel, field, fieldLabel)
-        collection.models.save()
         initialize()
     }
 
