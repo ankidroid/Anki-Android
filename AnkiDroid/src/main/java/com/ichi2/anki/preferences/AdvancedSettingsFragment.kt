@@ -182,15 +182,17 @@ class AdvancedSettingsFragment : SettingsFragment() {
 
         // v3 scheduler
         v3schedPref.apply {
-            launchCatchingTask { withCol { isChecked = v3Enabled } }
+            launchCatchingTask {
+                withCol { isChecked = v3Enabled }
+                setOnPreferenceChangeListener { newValue: Any ->
+                    Timber.d("v3 scheduler set to $newValue")
+                    launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
+                }
+            }
             // if new backend was enabled on local.properties, remove the pref dependency
             if (!BuildConfig.LEGACY_SCHEMA) {
                 dependency = null
                 isEnabled = true
-            }
-            setOnPreferenceChangeListener { newValue: Any ->
-                Timber.d("v3 scheduler set to $newValue")
-                launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
             }
         }
     }
