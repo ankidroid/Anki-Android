@@ -143,7 +143,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             openContextMenuAndSelectItem(recyclerView, 8)
 
-            assertThat(col.decks.allIds(), not(containsInAnyOrder(deckId)))
+            assertThat(col.decks.allNamesAndIds().map { it.id }, not(containsInAnyOrder(deckId)))
         }
     }
 

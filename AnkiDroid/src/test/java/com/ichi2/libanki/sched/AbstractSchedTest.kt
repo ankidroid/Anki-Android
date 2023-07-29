@@ -90,7 +90,7 @@ class AbstractSchedTest : RobolectricTest() {
         val sched = col.sched
         val dconf = col.decks.getConf(1)
         assertThat(dconf, notNullValue())
-        dconf!!.getJSONObject("new").put("perDay", 10)
+        dconf.getJSONObject("new").put("perDay", 10)
         col.decks.save(dconf)
         for (i in 0..19) {
             val note = col.newNote()
@@ -146,7 +146,7 @@ class AbstractSchedTest : RobolectricTest() {
         val sched = col.sched
         val dconf = col.decks.getConf(1)
         assertThat(dconf, notNullValue())
-        dconf!!.getJSONObject("new").put("bury", true)
+        dconf.getJSONObject("new").put("bury", true)
         col.decks.save(dconf)
         val nbNote = 2
         val notes = arrayOfNulls<Note>(nbNote)
@@ -198,7 +198,7 @@ class AbstractSchedTest : RobolectricTest() {
         private val mBId: Long = addDeck("A::B")
         private val mCId: Long = addDeck("A::B::C")
         private val mDId: Long = addDeck("A::B::D")
-        private val mDecks: DeckManager = col.decks
+        private val mDecks = col.decks
         private val mSched: AbstractSched = col.sched
 
         private fun assertNewCountIs(explanation: String, did: Long, expected: Int) {
@@ -237,7 +237,7 @@ class AbstractSchedTest : RobolectricTest() {
 
             val dconf = mDecks.getConf(1)
             assertThat(dconf, notNullValue())
-            dconf!!.getJSONObject("new").put("perDay", 0)
+            dconf.getJSONObject("new").put("perDay", 0)
             mDecks.save(dconf)
 
             val model = models.byName("Basic")
@@ -453,7 +453,7 @@ mw.col.sched.extendLimits(1, 0)
     fun regression_7066() {
         val col = col
         val dconf = col.decks.getConf(1)
-        dconf!!.getJSONObject("new").put("bury", true)
+        dconf.getJSONObject("new").put("bury", true)
         val sched = col.sched
         addNoteUsingBasicAndReversedModel("foo", "bar")
         addNoteUsingBasicModel("plop", "foo")

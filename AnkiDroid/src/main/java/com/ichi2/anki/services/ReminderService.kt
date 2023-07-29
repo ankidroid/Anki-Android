@@ -74,17 +74,6 @@ class ReminderService : BroadcastReceiver() {
             Timber.w("onReceive - null or closed collection, unable to process reminders")
             return
         }
-        if (col.decks.getConf(dConfId) == null) {
-            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val reminderIntent = PendingIntentCompat.getBroadcast(
-                context,
-                dConfId.toInt(),
-                Intent(context, ReminderService::class.java).putExtra(EXTRA_DECK_OPTION_ID, dConfId),
-                0,
-                false
-            )
-            alarmManager.cancel(reminderIntent)
-        }
         val notificationManager = NotificationManagerCompat.from(context)
         if (!notificationManager.areNotificationsEnabled()) {
             Timber.v("onReceive - notifications disabled, returning")
@@ -139,7 +128,7 @@ class ReminderService : BroadcastReceiver() {
     private fun getDeckOptionDue(col: Collection, dConfId: Long, recur: Boolean): List<DeckDueTreeNode>? {
         // Avoid crashes if the deck option group is deleted while we
         // are working
-        if (col.dbClosed || col.decks.getConf(dConfId) == null) {
+        if (col.dbClosed) {
             Timber.d("Deck option %s became unavailable while ReminderService was working. Ignoring", dConfId)
             return null
         }

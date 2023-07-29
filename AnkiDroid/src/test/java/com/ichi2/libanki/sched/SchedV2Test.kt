@@ -744,7 +744,7 @@ open class SchedV2Test : RobolectricTest() {
         // leech handling
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         val conf = col.decks.getConf(1)
-        conf!!.getJSONObject("lapse").put("leechAction", LEECH_SUSPEND)
+        conf.getJSONObject("lapse").put("leechAction", LEECH_SUSPEND)
         col.decks.save(conf)
         c = cardcopy.clone()
         c.lapses = 7
@@ -775,10 +775,10 @@ open class SchedV2Test : RobolectricTest() {
         val child = col.decks.get(addDeck("parent::child"))
         val pconf = col.decks.getConf(col.decks.confId("parentConf"))
         val cconf = col.decks.getConf(col.decks.confId("childConf"))
-        pconf!!.getJSONObject("rev").put("perDay", 5)
+        pconf.getJSONObject("rev").put("perDay", 5)
         col.decks.updateConf(pconf)
         col.decks.setConf(parent, pconf.getLong("id"))
-        cconf!!.getJSONObject("rev").put("perDay", 10)
+        cconf.getJSONObject("rev").put("perDay", 10)
         col.decks.updateConf(cconf)
         col.decks.setConf(child, cconf.getLong("id"))
         val m = col.models.current()

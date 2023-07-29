@@ -180,7 +180,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         return requireContext() as CollectionGetter
     }
 
-    protected val decks: DeckManager
+    protected val decks: Decks
         get() = requireCollectionGetter().col.decks
 
     /**

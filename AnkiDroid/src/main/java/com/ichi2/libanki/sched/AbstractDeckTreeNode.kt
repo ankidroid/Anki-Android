@@ -155,6 +155,6 @@ abstract class AbstractDeckTreeNode(
     }
 
     init {
-        mNameComponents = Decks.path(fullDeckName)
+        mNameComponents = Decks.legacyPath(fullDeckName)
     }
 }

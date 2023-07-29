@@ -123,7 +123,7 @@ class DeckOptionsActivity :
                     set("lapLeechThres", lapOptions.getString("leechFails"))
                     set("lapLeechAct", lapOptions.getString("leechAction"))
                     // options group management
-                    set("currentConf", col.decks.getConf(deck.getLong("conf"))!!.getString("name"))
+                    set("currentConf", col.decks.getConf(deck.getLong("conf")).getString("name"))
                 }
                 // reminders
                 if (mOptions.has("reminder")) {
@@ -252,7 +252,7 @@ class DeckOptionsActivity :
                             "deckConf" -> {
                                 val newConfId: Long = (value as String).toLong()
                                 confChangeHandler("change Deck configuration") {
-                                    mOptions = decks.getConf(newConfId)!!
+                                    mOptions = decks.getConf(newConfId)
                                     changeDeckConfiguration(deck, mOptions, this)
                                 }
                             }
@@ -448,7 +448,7 @@ class DeckOptionsActivity :
                     // Cards must be reordered according to the default conf.
                     val order = conf.getJSONObject("new").getInt("order")
                     val defaultOrder =
-                        col.decks.getConf(1)!!.getJSONObject("new").getInt("order")
+                        col.decks.getConf(1).getJSONObject("new").getInt("order")
                     if (order != defaultOrder) {
                         conf.getJSONObject("new").put("order", defaultOrder)
                         col.sched.resortConf(conf)
@@ -647,7 +647,7 @@ class DeckOptionsActivity :
     private val optionsGroupName: String
         get() {
             val confId = pref.getLong("deckConf", 0)
-            return col.decks.getConf(confId)!!.getString("name")
+            return col.decks.getConf(confId).getString("name")
         }
 
     /**

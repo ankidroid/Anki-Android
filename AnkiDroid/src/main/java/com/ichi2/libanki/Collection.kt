@@ -111,9 +111,6 @@ open class Collection(
     open val newModels: ModelsV16
         get() = throw Exception("invalid call to newModels on old backend")
 
-    open val newDecks: DecksV16
-        get() = throw Exception("invalid call to newDecks on old backend")
-
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun debugEnsureNoOpenPointers() {
         val result = backend.getActiveSequenceNumbers()
@@ -139,7 +136,7 @@ open class Collection(
     // private double mLastSave;
     val media: Media
 
-    lateinit var decks: DeckManager
+    lateinit var decks: Decks
         protected set
 
     @KotlinCleanup("change to lazy")
@@ -207,16 +204,8 @@ open class Collection(
         return Media(this, server)
     }
 
-    @KotlinCleanup("remove :DeckManager, remove ? on return value")
-    protected open fun initDecks(deckConf: String?): DeckManager? {
-        val deckManager: DeckManager = Decks(this)
-        // models.load(loadColumn("models")); This code has been
-        // moved to `CollectionHelper::loadLazyCollection` for
-        // efficiency Models are loaded lazily on demand. The
-        // application layer can asynchronously pre-fetch those parts;
-        // otherwise they get loaded when required.
-        deckManager.load(loadColumn("decks"), deckConf!!)
-        return deckManager
+    protected open fun initDecks(): Decks {
+        return Decks(this)
     }
 
     protected open fun initConf(): Config {
@@ -293,7 +282,6 @@ open class Collection(
      * DB-related *************************************************************** ********************************
      */
     open fun load() {
-        val deckConf: String?
         // Read in deck table columns
         db.query("""SELECT crt, mod, scm, dty, usn, ls, conf, dconf, tags FROM col""")
             .use { cursor ->
@@ -306,9 +294,8 @@ open class Collection(
                 dirty = cursor.getInt(3) == 1 // No longer used
                 mUsn = cursor.getInt(4)
                 ls = cursor.getLong(5)
-                deckConf = cursor.getString(7)
             }
-        decks = initDecks(deckConf)!!
+        decks = initDecks()
         config = initConf()
     }
 
@@ -393,7 +380,6 @@ open class Collection(
     fun save(name: String? = null, mod: Long = 0) {
         // let the managers conditionally flush
         models.flush()
-        decks.flush()
         // and flush deck + bump mod if db has been changed
         if (db.mod) {
             flush(mod)

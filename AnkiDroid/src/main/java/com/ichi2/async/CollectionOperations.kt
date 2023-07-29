@@ -170,8 +170,8 @@ fun changeDeckConfiguration(
 ) {
     val newConfId = conf.getLong("id")
     // If new config has a different sorting order, reorder the cards
-    val oldOrder = col.decks.getConf(deck.getLong("conf"))!!.getJSONObject("new").getInt("order")
-    val newOrder = col.decks.getConf(newConfId)!!.getJSONObject("new").getInt("order")
+    val oldOrder = col.decks.getConf(deck.getLong("conf")).getJSONObject("new").getInt("order")
+    val newOrder = col.decks.getConf(newConfId).getJSONObject("new").getInt("order")
     if (oldOrder != newOrder) {
         when (newOrder) {
             0 -> col.sched.randomizeCards(deck.getLong("id"))

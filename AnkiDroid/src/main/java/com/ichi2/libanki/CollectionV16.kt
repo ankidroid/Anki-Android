@@ -38,10 +38,6 @@ class CollectionV16(
     backend: Backend
 ) : Collection(context, path, server, log, backend) {
 
-    override fun initDecks(deckConf: String?): DeckManager {
-        return DecksV16(this)
-    }
-
     override fun initModels(): ModelManager {
         return ModelsV16(this)
     }
@@ -59,9 +55,6 @@ class CollectionV16(
     override val newModels: ModelsV16
         get() = this.models as ModelsV16
 
-    override val newDecks: DecksV16
-        get() = this.decks as DecksV16
-
     /** True if the V3 scheduled is enabled when schedVer is 2. */
     override var v3Enabled: Boolean
         get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
@@ -71,7 +64,7 @@ class CollectionV16(
         }
 
     override fun load() {
-        decks = initDecks(null)
+        decks = initDecks()
         config = initConf()
     }
 

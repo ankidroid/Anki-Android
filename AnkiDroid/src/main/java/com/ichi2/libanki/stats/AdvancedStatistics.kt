@@ -25,7 +25,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.DB
-import com.ichi2.libanki.DeckManager
+import com.ichi2.libanki.Decks
 import com.ichi2.libanki.stats.Stats.AxisType
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager.time
@@ -396,7 +396,7 @@ class AdvancedStatistics {
     }
 
     private inner class DeckFactory {
-        fun createDeck(did: Long, decks: DeckManager): Deck {
+        fun createDeck(did: Long, decks: Decks): Deck {
             Timber.d("Trying to get deck settings for deck with id=%s", did)
             val conf = decks.confForDid(did)
             var newPerDay = mSettings!!.maxNewPerDay
@@ -713,7 +713,7 @@ class AdvancedStatistics {
         private val mNewCardSimulator = NewCardSimulator()
         fun simNreviews(
             today: Int,
-            decks: DeckManager,
+            decks: Decks,
             didsStr: String,
             todayStats: TodayStats
         ): SimulationResult {

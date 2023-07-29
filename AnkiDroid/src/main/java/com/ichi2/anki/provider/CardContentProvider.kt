@@ -465,7 +465,6 @@ class CardContentProvider : ContentProvider() {
                 /* now update the card
                  */if (isDeckUpdate && did >= 0) {
                     Timber.d("CardContentProvider: Moving card to other deck...")
-                    col.decks.flush()
                     currentCard.did = did
                     currentCard.flush()
                     col.save()
@@ -712,7 +711,6 @@ class CardContentProvider : ContentProvider() {
         // for caching model information (so we don't have to query for each note)
         var modelId = Models.NOT_FOUND_NOTE_TYPE
         var model: Model? = null
-        col.decks.flush() // is it okay to move this outside the for-loop? Is it needed at all?
         val sqldb = col.db.database
         return try {
             var result = 0
@@ -958,7 +956,6 @@ class CardContentProvider : ContentProvider() {
                         return null
                     }
                 }
-                col.decks.flush()
                 Uri.withAppendedPath(FlashCardsContract.Deck.CONTENT_ALL_URI, did.toString())
             }
             DECK_SELECTED -> throw IllegalArgumentException("Selected deck can only be queried and updated")
