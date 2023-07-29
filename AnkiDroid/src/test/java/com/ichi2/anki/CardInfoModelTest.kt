@@ -58,7 +58,6 @@ class CardInfoModelTest : RobolectricTest() {
                 "insert into revlog values (1438983131213,1438962063638,1337,1,-60,-60,0,3123,3);" +
                 "insert into revlog values (1438983050444,1438962063638,1337,1,-60,-60,0,5282,0);"
         )
-        col.save()
 
         mModel = CardInfo.CardInfoModel.create(c, col)
     }

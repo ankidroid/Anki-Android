@@ -253,7 +253,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.dialog_positive_create) {
                         val ch = CollectionHelper.instance
                         val time = TimeManager.time
-                        ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
+                        ch.closeCollection("DatabaseErrorDialog: Before Create New Collection")
                         val path1 = CollectionHelper.getCollectionPath(requireActivity())
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
                             ActivityCompat.recreate(activity as DeckPicker)
@@ -435,7 +435,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.dialog_positive_create) {
                         Timber.w("Creating new collection")
                         val ch = CollectionHelper.instance
-                        ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
+                        ch.closeCollection("DatabaseErrorDialog: Before Create New Collection")
                         CollectionHelper.resetAnkiDroidDirectory(context)
                         context.exit()
                     }

@@ -201,7 +201,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                 try {
                     CollectionHelper.instance.getCol(context)
                     // unload collection
-                    CollectionHelper.instance.closeCollection(true, "Importing new collection")
+                    CollectionHelper.instance.closeCollection("Importing new collection")
                     CollectionHelper.instance.lockCollection()
                 } catch (e: Exception) {
                     Timber.w(e)

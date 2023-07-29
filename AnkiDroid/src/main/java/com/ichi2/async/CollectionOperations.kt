@@ -58,7 +58,7 @@ fun updateCard(
         }
     } else {
         // TODO: the proper way to do this would be to call this in undoableOp() in a coroutine
-        col.newBackend.updateNote(editNote)
+        col.updateNote(editNote)
         // no need to flush card in new path
     }
     return if (isFromReviewer) {
@@ -172,7 +172,6 @@ fun changeDeckConfiguration(
         }
     }
     col.decks.setConf(deck, newConfId)
-    col.save()
 }
 
 suspend fun renderBrowserQA(
@@ -282,7 +281,7 @@ fun saveModel(
         col.models.save(model, true)
         col.models.update(model)
         col.reset()
-        col.save()
+
         if (col.db.database.inTransaction()) {
             col.db.database.setTransactionSuccessful()
         } else {

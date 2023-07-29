@@ -255,7 +255,7 @@ open class Reviewer :
                 } */
             } else {
                 withCol {
-                    newBackend.setUserFlagForCards(listOf(card.id), flag)
+                    setUserFlagForCards(listOf(card.id), flag)
                 }
             }
             refreshActionBar()
@@ -348,7 +348,7 @@ open class Reviewer :
         when (item.itemId) {
             android.R.id.home -> {
                 Timber.i("Reviewer:: Home button pressed")
-                closeReviewer(RESULT_OK, true)
+                closeReviewer(RESULT_OK)
             }
             R.id.action_undo -> {
                 Timber.i("Reviewer:: Undo button pressed")
@@ -564,7 +564,7 @@ open class Reviewer :
         super.blockControls(quick)
     }
 
-    override fun closeReviewer(result: Int, saveDeck: Boolean) {
+    override fun closeReviewer(result: Int) {
         // Stop the mic recording if still pending
         audioView?.notifyStopRecord()
 
@@ -575,7 +575,7 @@ open class Reviewer :
                 tempAudioPathToDelete.delete()
             }
         }
-        super.closeReviewer(result, saveDeck)
+        super.closeReviewer(result)
     }
 
     /**
@@ -913,7 +913,7 @@ open class Reviewer :
             this.buttonCount
         } catch (e: RuntimeException) {
             CrashReportService.sendExceptionReport(e, "AbstractReviewer-showEaseButtons")
-            closeReviewer(DeckPicker.RESULT_DB_ERROR, true)
+            closeReviewer(DeckPicker.RESULT_DB_ERROR)
             return
         }
 
@@ -1096,7 +1096,6 @@ open class Reviewer :
         if (!isFinishing && colIsOpen() && sched != null) {
             update(this)
         }
-        saveCollectionInBackground()
     }
 
     override fun initControls() {

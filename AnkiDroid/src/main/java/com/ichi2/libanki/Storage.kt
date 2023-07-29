@@ -85,11 +85,7 @@ object Storage {
         backend: Backend? = null
     ): Collection {
         val backend2 = backend ?: BackendFactory.getBackend(context)
-        return if (backend2.legacySchema) {
-            Collection(context, path, server, log, backend2)
-        } else {
-            CollectionV16(context, path, server, log, backend2)
-        }
+        return Collection(context, path, server, log, backend2)
     }
 
     /**

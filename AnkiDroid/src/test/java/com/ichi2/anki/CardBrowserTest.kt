@@ -36,7 +36,6 @@ import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.OS
 import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
-import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Assert.assertArrayEquals
@@ -567,7 +566,6 @@ class CardBrowserTest : RobolectricTest() {
 
     /** PR #8553  */
     @Test
-    @RustCleanup("after legacy schema dropped, col.save() can be dropped and updatedMod can be taken from col.mod")
     fun checkDisplayOrderPersistence() {
         // Start the Card Browser with Basic Model
         ensureCollectionLoadIsSynchronous()
@@ -577,8 +575,6 @@ class CardBrowserTest : RobolectricTest() {
 
         // Make sure card has default value in sortType field
         assertThat("Initially Card Browser has order = noteFld", col.get_config_string("sortType"), equalTo("noteFld"))
-
-        col.db.execute("update col set mod = 0")
 
         // Change the display order of the card browser
         cardBrowserController.get().changeCardOrder(7) // order no. 7 corresponds to "cardEase"
@@ -591,8 +587,8 @@ class CardBrowserTest : RobolectricTest() {
         saveControllerForCleanup(cardBrowserController)
 
         // Find the current (after database has been changed) Mod time
-        col.save()
-        val updatedMod = col.db.queryScalar("select mod from col")
+
+        val updatedMod = col.mod
         assertThat("Card Browser has the new sortType field", col.get_config_string("sortType"), equalTo("cardEase"))
         assertNotEquals(0, updatedMod, "Modification time must change")
     }

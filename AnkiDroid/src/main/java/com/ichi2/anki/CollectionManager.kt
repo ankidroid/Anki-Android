@@ -24,7 +24,6 @@ import anki.backend.backendError
 import com.ichi2.anki.servicelayer.ValidatedMigrationSourceAndDestination
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.Storage.collection
 import com.ichi2.libanki.importCollectionPackage
 import com.ichi2.utils.Threads
@@ -186,19 +185,19 @@ object CollectionManager {
     /**
      * If the collection is open, close it.
      */
-    suspend fun ensureClosed(save: Boolean = true) {
+    suspend fun ensureClosed() {
         withQueue {
-            ensureClosedInner(save = save)
+            ensureClosedInner()
         }
     }
 
     /** See [ensureClosed]. This must only be run inside the queue. */
-    private fun ensureClosedInner(save: Boolean = true) {
+    private fun ensureClosedInner() {
         if (collection == null) {
             return
         }
         try {
-            collection!!.close(save = save)
+            collection!!.close()
         } catch (exc: Exception) {
             Timber.e("swallowing error on close: $exc")
         }
@@ -232,7 +231,7 @@ object CollectionManager {
 
     suspend fun deleteCollectionDirectory() {
         withQueue {
-            ensureClosedInner(save = false)
+            ensureClosedInner()
             getCollectionDirectory().deleteRecursively()
         }
     }
@@ -265,8 +264,8 @@ object CollectionManager {
         }
     }
 
-    fun closeCollectionBlocking(save: Boolean = true) {
-        runBlocking { ensureClosed(save = save) }
+    fun closeCollectionBlocking() {
+        runBlocking { ensureClosed() }
     }
 
     /**
@@ -349,39 +348,6 @@ object CollectionManager {
     }
 
     /**
-     * Execute block with the collection upgraded to the latest schema.
-     * If it was previously using the legacy schema, the collection is downgraded
-     * again after the block completes.
-     */
-    private suspend fun <T> withNewSchema(block: CollectionV16.() -> T): T {
-        return withCol {
-            if (BackendFactory.defaultLegacySchema) {
-                // Temporarily update to the latest schema.
-                discardBackendInner()
-                BackendFactory.defaultLegacySchema = false
-                ensureOpenInner()
-                try {
-                    (collection!! as CollectionV16).block()
-                } finally {
-                    BackendFactory.defaultLegacySchema = true
-                    discardBackendInner()
-                }
-            } else {
-                (this as CollectionV16).block()
-            }
-        }
-    }
-
-    /** Upgrade from v1 to v2 scheduler.
-     * Caller must have confirmed schema modification already.
-     */
-    suspend fun updateScheduler() {
-        withNewSchema {
-            sched.upgradeToV2()
-        }
-    }
-
-    /**
      * Replace the collection with the provided colpkg file if it is valid.
      */
     suspend fun importColpkg(colpkgPath: String) {
@@ -399,7 +365,7 @@ object CollectionManager {
      */
     suspend fun migrateEssentialFiles(context: Context, folders: ValidatedMigrationSourceAndDestination) {
         withQueue {
-            ensureClosedInner(true)
+            ensureClosedInner()
             val migrator = MigrateEssentialFiles(context, folders)
             migrator.migrateFiles()
             migrator.updateCollectionPath()

@@ -15,9 +15,8 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-// remove "LeakingThis" this after CollectionV16 is inlined
 // "FunctionName": many libAnki functions used to have leading _s
-@file:Suppress("LeakingThis", "FunctionName")
+@file:Suppress("FunctionName")
 
 package com.ichi2.libanki
 
@@ -28,14 +27,14 @@ import android.content.res.Resources
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
+import anki.card_rendering.EmptyCardsReport
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.config.ConfigKey
 import anki.search.SearchNode
 import anki.search.SearchNodeKt
 import anki.search.searchNode
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.backend.model.toBackendNote
@@ -100,9 +99,6 @@ open class Collection(
             return dbInternal == null
         }
 
-    open val newBackend: CollectionV16
-        get() = throw Exception("invalid call to newBackend on old backend")
-
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun debugEnsureNoOpenPointers() {
         val result = backend.getActiveSequenceNumbers()
@@ -117,9 +113,6 @@ open class Collection(
         get() = dbInternal!!
 
     var dbInternal: DB? = null
-
-    /** whether the v3 scheduler is enabled */
-    open var v3Enabled: Boolean = false
 
     /**
      * Getters/Setters ********************************************************** *************************************
@@ -136,7 +129,7 @@ open class Collection(
         "move accessor methods here, maybe reconsider return type." +
             "See variable: conf"
     )
-    protected var config: Config? = null
+    lateinit var config: Config
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
     lateinit var sched: AbstractSched
@@ -145,20 +138,32 @@ open class Collection(
     private var mStartTime: Long
     private var mStartReps: Int
 
-    // BEGIN: SQL table columns
-    open var crt: Long = 0
-    open var mod: Long = 0
-    open var scm: Long = 0
+    var mod: Long = 0
+        get() = db.queryLongScalar("select mod from col")
 
-    @RustCleanup("remove")
-    var dirty: Boolean = false
-    private var mUsn = 0
+    var crt: Long = 0
+        get() = db.queryLongScalar("select crt from col")
+
+    var scm: Long = 0
+        get() = db.queryLongScalar("select scm from col")
+
+    var lastSync: Long = 0
+        get() = db.queryLongScalar("select ls from col")
+
+    fun usn(): Int {
+        return -1
+    }
+
+    /** True if the V3 scheduled is enabled when schedVer is 2. */
+    var v3Enabled: Boolean
+        get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
+        set(value) {
+            backend.setConfigBool(ConfigKey.Bool.SCHED_2021, value, undoable = false)
+            _loadScheduler()
+        }
+
     var ls: Long = 0
     // END: SQL table columns
-
-    /* this getter is only for syncing routines, use usn() instead elsewhere */
-    val usnForSync
-        get() = mUsn
 
     // API 21: Use a ConcurrentLinkedDeque
     @KotlinCleanup("consider making this immutable")
@@ -173,9 +178,6 @@ open class Collection(
         log(path, VersionUtils.pkgVersionName)
         // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
         clearUndo()
-        if (crt == 0L) {
-            crt = UIUtils.getDayStart(TimeManager.time) / 1000
-        }
         mStartReps = 0
         mStartTime = 0
         _loadScheduler()
@@ -185,7 +187,6 @@ open class Collection(
         if (created) {
             Storage.addNoteTypes(col, backend)
             col.onCreate()
-            col.save()
         }
     }
 
@@ -234,7 +235,7 @@ open class Collection(
             sched = Sched(this)
         } else if (ver == 2) {
             sched = if (v3Enabled) {
-                SchedV3(this.newBackend)
+                SchedV3(this)
             } else {
                 SchedV2(this)
             }
@@ -268,24 +269,6 @@ open class Collection(
     /**
      * DB-related *************************************************************** ********************************
      */
-    open fun load() {
-        // Read in deck table columns
-        db.query("""SELECT crt, mod, scm, dty, usn, ls, conf, dconf, tags FROM col""")
-            .use { cursor ->
-                if (!cursor.moveToFirst()) {
-                    return
-                }
-                crt = cursor.getLong(0)
-                mod = cursor.getLong(1)
-                scm = cursor.getLong(2)
-                dirty = cursor.getInt(3) == 1 // No longer used
-                mUsn = cursor.getInt(4)
-                ls = cursor.getLong(5)
-            }
-        models = initModels()
-        decks = initDecks()
-        config = initConf()
-    }
 
     @KotlinCleanup("make sChunk lazy and remove this")
     private val chunk: Int
@@ -331,70 +314,13 @@ open class Collection(
     }
 
     /**
-     * Mark DB modified. DB operations and the deck/tag/model managers do this automatically, so this is only necessary
-     * if you modify properties of this object or the conf dict.
-     */
-    @RustCleanup("no longer required in v16 - all update immediately")
-    fun setMod() {
-        db.mod = true
-    }
-
-    /**
-     * Flush state to DB, updating mod time.
-     */
-    open fun flush(mod: Long = 0) {
-        Timber.i("flush - Saving information to DB...")
-        this.mod = if (mod == 0L) TimeManager.time.intTimeMS() else mod
-        val values = ContentValues().apply {
-            put("crt", this@Collection.crt)
-            put("mod", this@Collection.mod)
-            put("scm", scm)
-            put("dty", if (dirty) 1 else 0)
-            put("usn", mUsn)
-            put("ls", ls)
-        }
-        db.update("col", values)
-    }
-
-    protected open fun flushConf(): Boolean {
-        return true
-    }
-
-    /**
-     * Flush, commit DB, and take out another write lock.
-     */
-    @Synchronized
-    @Suppress("UNUSED_PARAMETER") // name is required by tests and likely should be used
-    fun save(name: String? = null, mod: Long = 0) {
-        // let the managers conditionally flush
-        models.flush()
-        // and flush deck + bump mod if db has been changed
-        if (db.mod) {
-            flush(mod)
-            db.commit()
-            db.mod = false
-        }
-        // undoing non review operation is handled differently in ankidroid
-//        _markOp(name);
-        // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
-    }
-
-    /**
      * Disconnect from DB.
+     * Python implementation has a save argument for legacy reasons;
+     * AnkiDroid always saves as changes are made.
      */
     @Synchronized
-    fun close(save: Boolean = true, downgrade: Boolean = false, forFullSync: Boolean = false) {
+    fun close(downgrade: Boolean = false, forFullSync: Boolean = false) {
         if (!dbClosed) {
-            try {
-                if (save) {
-                    db.executeInTransaction { this.save() }
-                } else {
-                    db.safeEndInTransaction()
-                }
-            } catch (e: RuntimeException) {
-                Timber.w(e)
-                CrashReportService.sendExceptionReport(e, "closeDB")
-            }
             if (!forFullSync) {
                 backend.closeCollection(downgrade)
             }
@@ -421,6 +347,12 @@ open class Collection(
         }
     }
 
+    fun load() {
+        models = initModels()
+        decks = initDecks()
+        config = initConf()
+    }
+
     /** Note: not in libanki.  Mark schema modified to force a full
      * sync, but with the confirmation checking function disabled This
      * is equivalent to `modSchema(False)` in Anki. A distinct method
@@ -428,8 +360,11 @@ open class Collection(
      * thrown when in fact it is never thrown.
      */
     open fun modSchemaNoCheck() {
-        scm = TimeManager.time.intTimeMS()
-        setMod()
+        db.execute(
+            "update col set scm=?, mod=?",
+            TimeManager.time.intTimeMS(),
+            TimeManager.time.intTimeMS()
+        )
     }
 
     /** Mark schema modified to force a full sync.
@@ -452,17 +387,8 @@ open class Collection(
     }
 
     /** True if schema changed since last sync.  */
-    open fun schemaChanged(): Boolean {
-        return scm > ls
-    }
-
-    @KotlinCleanup("maybe change to getter")
-    open fun usn(): Int {
-        return if (server) {
-            mUsn
-        } else {
-            -1
-        }
+    fun schemaChanged(): Boolean {
+        return scm > lastSync
     }
 
     /**
@@ -753,17 +679,41 @@ open class Collection(
         }
     }
 
-    open fun undoName(res: Resources): String {
+    fun undoName(res: Resources): String {
+        val status = undoStatus()
+        return status.undo ?: legacyUndoName(res)
+    }
+
+    open fun legacyUndoName(res: Resources): String {
         val type = undoType()
         return type?.name(res) ?: ""
     }
 
-    open fun undoAvailable(): Boolean {
+    fun undoAvailable(): Boolean {
+        val status = undoStatus()
+        Timber.i("undo: %s, %s", status, legacyUndoAvailable())
+        if (status.undo != null) {
+            // any legacy undo state is invalid after a backend op
+            clearUndo()
+            return true
+        }
+        // if no backend undo state, try legacy undo state
+        return legacyUndoAvailable()
+    }
+
+    fun legacyUndoAvailable(): Boolean {
         Timber.d("undoAvailable() undo size: %s", undo.size)
         return !undo.isEmpty()
     }
 
+    /** Provided for legacy code/tests; new code should call undoNew() directly
+     * so that OpChanges can be observed.
+     */
     open fun undo(): Card? {
+        if (undoStatus().undo != null) {
+            undoNew()
+            return null
+        }
         val lastUndo: UndoAction = undo.removeLast()
         Timber.d("undo() of type %s", lastUndo.javaClass)
         return lastUndo.undo(this)
@@ -964,37 +914,37 @@ open class Collection(
     // NOTE: get_config("key", 1) and get_config("key", 1L) will return different types
     fun has_config(key: String): Boolean {
         // not in libAnki
-        return config!!.has(key)
+        return config.has(key)
     }
 
     fun has_config_not_null(key: String): Boolean {
         // not in libAnki
-        return has_config(key) && !config!!.isNull(key)
+        return has_config(key) && !config.isNull(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     fun get_config_boolean(key: String): Boolean {
-        return config!!.getBoolean(key)
+        return config.getBoolean(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     fun get_config_long(key: String): Long {
-        return config!!.getLong(key)
+        return config.getLong(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     fun get_config_int(key: String): Int {
-        return config!!.getInt(key)
+        return config.getInt(key)
     }
 
     /** @throws JSONException object does not exist or can't be cast
      */
     @Suppress("unused")
     fun get_config_double(key: String): Double {
-        return config!!.getDouble(key)
+        return config.getDouble(key)
     }
 
     /**
@@ -1003,14 +953,14 @@ open class Collection(
      */
     @Suppress("unused")
     fun get_config_object(key: String): JSONObject {
-        return config!!.getJSONObject(key).deepClone()
+        return config.getJSONObject(key).deepClone()
     }
 
     /** Edits to the array are not persisted to the preferences
      * @throws JSONException object does not exist or can't be cast
      */
     fun get_config_array(key: String): JSONArray {
-        return config!!.getJSONArray(key).deepClone()
+        return config.getJSONArray(key).deepClone()
     }
 
     /**
@@ -1018,124 +968,111 @@ open class Collection(
      * @throws JSONException object does not exist, or can't be cast
      */
     fun get_config_string(key: String): String {
-        return config!!.getString(key)
+        return config.getString(key)
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Boolean?): Boolean? {
-        return if (config!!.isNull(key)) {
+        return if (config.isNull(key)) {
             defaultValue
         } else {
-            config!!.getBoolean(key)
+            config.getBoolean(key)
         }
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Long?): Long? {
-        return if (config!!.isNull(key)) {
+        return if (config.isNull(key)) {
             defaultValue
         } else {
-            config!!.getLong(key)
+            config.getLong(key)
         }
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Int?): Int? {
-        return if (config!!.isNull(key)) {
+        return if (config.isNull(key)) {
             defaultValue
         } else {
-            config!!.getInt(key)
+            config.getInt(key)
         }
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: Double?): Double? {
-        return if (config!!.isNull(key)) {
+        return if (config.isNull(key)) {
             defaultValue
         } else {
-            config!!.getDouble(key)
+            config.getDouble(key)
         }
     }
 
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: String?): String? {
-        return if (config!!.isNull(key)) {
+        return if (config.isNull(key)) {
             defaultValue
         } else {
-            config!!.getString(key)
+            config.getString(key)
         }
     }
 
     /** Edits to the config are not persisted to the preferences  */
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: JSONObject?): JSONObject? {
-        return if (config!!.isNull(key)) {
+        return if (config.isNull(key)) {
             if (defaultValue == null) null else defaultValue.deepClone()
         } else {
-            config!!.getJSONObject(key).deepClone()
+            config.getJSONObject(key).deepClone()
         }
     }
 
     /** Edits to the array are not persisted to the preferences  */
     @Contract("_, !null -> !null")
     fun get_config(key: String, defaultValue: JSONArray?): JSONArray? {
-        return if (config!!.isNull(key)) {
+        return if (config.isNull(key)) {
             if (defaultValue == null) null else JSONArray(defaultValue)
         } else {
-            JSONArray(config!!.getJSONArray(key))
+            JSONArray(config.getJSONArray(key))
         }
     }
 
     fun set_config(key: String, value: Boolean) {
-        setMod()
-        config!!.put(key, value)
+        config.put(key, value)
     }
 
     fun set_config(key: String, value: Long) {
-        setMod()
-        config!!.put(key, value)
+        config.put(key, value)
     }
 
     fun set_config(key: String, value: Int) {
-        setMod()
-        config!!.put(key, value)
+        config.put(key, value)
     }
 
     fun set_config(key: String, value: Double) {
-        setMod()
-        config!!.put(key, value)
+        config.put(key, value)
     }
 
     fun set_config(key: String, value: String?) {
-        setMod()
-        config!!.put(key, value!!)
+        config.put(key, value!!)
     }
 
     fun set_config(key: String, value: JSONArray?) {
-        setMod()
-        config!!.put(key, value!!)
+        config.put(key, value!!)
     }
 
     fun set_config(key: String, value: JSONObject?) {
-        setMod()
-        config!!.put(key, value!!)
+        config.put(key, value!!)
     }
 
     fun set_config(key: String, value: Any?) {
-        setMod()
-        config!!.put(key, value)
+        config.put(key, value)
     }
 
     fun remove_config(key: String) {
-        setMod()
-        config!!.remove(key)
+        config.remove(key)
     }
 
     //endregion
-
-    fun setUsnAfterSync(usn: Int) {
-        mUsn = usn
-    }
 
     fun crtGregorianCalendar(): GregorianCalendar {
         return Time.gregorianCalendar((crt * 1000))
@@ -1156,13 +1093,8 @@ open class Collection(
         }
     }
 
-    open fun setDeck(cids: LongArray, did: Long) {
-        db.execute(
-            "update cards set did=?,usn=?,mod=? where id in " + Utils.ids2str(cids),
-            did,
-            usn(),
-            TimeManager.time.intTime()
-        )
+    fun setDeck(cids: LongArray, did: Long) {
+        backend.setDeck(cardIds = cids.asIterable(), deckId = did)
     }
 
     /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. This should
@@ -1217,6 +1149,26 @@ open class Collection(
         private fun setLocked(@Suppress("SameParameterValue") value: Boolean) {
             databaseLocked = value
         }
+    }
+
+    /** Fixes and optimizes the database. If any errors are encountered, a list of
+     * problems is returned. Throws if DB is unreadable. */
+    fun fixIntegrity(): List<String> {
+        return backend.checkDatabase()
+    }
+
+    /** Change the flag color of the specified cards. flag=0 removes flag. */
+    fun setUserFlagForCards(cids: Iterable<Long>, flag: Int) {
+        backend.setFlag(cardIds = cids, flag = flag)
+    }
+
+    fun getEmptyCards(): EmptyCardsReport {
+        return backend.getEmptyCards()
+    }
+
+    /** Takes raw input from TypeScript frontend and returns suitable translations. */
+    fun i18nResourcesRaw(input: ByteArray): ByteArray {
+        return backend.i18nResourcesRaw(input = input)
     }
 
     /**

@@ -158,7 +158,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
                 CollectionHelper.instance.getCol(targetContext)!!.debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.instance.closeCollection(false, "RobolectricTest: End")
+            CollectionHelper.instance.closeCollection("RobolectricTest: End")
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
@@ -440,7 +440,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         t.put("afmt", afmt)
         col.models.addTemplateInNewModel(model, t)
         col.models.add(model)
-        col.models.flush()
         return name
     }
 

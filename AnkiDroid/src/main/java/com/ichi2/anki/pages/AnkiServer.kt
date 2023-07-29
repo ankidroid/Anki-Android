@@ -56,18 +56,18 @@ class AnkiServer(
 
     private suspend fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray? {
         return when (methodName) {
-            "i18nResources" -> withCol { newBackend.i18nResourcesRaw(bytes) }
-            "getGraphPreferences" -> withCol { newBackend.getGraphPreferencesRaw() }
-            "setGraphPreferences" -> withCol { newBackend.setGraphPreferencesRaw(bytes) }
-            "graphs" -> withCol { newBackend.graphsRaw(bytes) }
-            "getNotetypeNames" -> withCol { newBackend.getNotetypeNamesRaw(bytes) }
-            "getDeckNames" -> withCol { newBackend.getDeckNamesRaw(bytes) }
+            "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
+            "getGraphPreferences" -> withCol { getGraphPreferencesRaw() }
+            "setGraphPreferences" -> withCol { setGraphPreferencesRaw(bytes) }
+            "graphs" -> withCol { graphsRaw(bytes) }
+            "getNotetypeNames" -> withCol { getNotetypeNamesRaw(bytes) }
+            "getDeckNames" -> withCol { getDeckNamesRaw(bytes) }
             "getCsvMetadata" -> withCol { getCsvMetadataRaw(bytes) }
             "importCsv" -> withCol { importCsvRaw(bytes) }
-            "getFieldNames" -> withCol { newBackend.getFieldNamesRaw(bytes) }
-            "cardStats" -> withCol { newBackend.cardStatsRaw(bytes) }
-            "getDeckConfig" -> withCol { newBackend.getDeckConfigRaw(bytes) }
-            "getDeckConfigsForUpdate" -> withCol { newBackend.getDeckConfigsForUpdateRaw(bytes) }
+            "getFieldNames" -> withCol { getFieldNamesRaw(bytes) }
+            "cardStats" -> withCol { cardStatsRaw(bytes) }
+            "getDeckConfig" -> withCol { getDeckConfigRaw(bytes) }
+            "getDeckConfigsForUpdate" -> withCol { getDeckConfigsForUpdateRaw(bytes) }
             "updateDeckConfigs" -> activity.updateDeckConfigsRaw(bytes)
             else -> { Timber.w("Unhandled Anki request: %s", methodName); null }
         }

@@ -144,7 +144,7 @@ class FinderTest : RobolectricTest() {
         note.setItem("Front", "test")
         note.setItem("Back", "foo bar")
         col.addNote(note)
-        col.save()
+
         val latestCardIds = note.cids()
         // tag searches
         assertEquals(5, col.findCards("tag:*").size)
@@ -217,7 +217,7 @@ class FinderTest : RobolectricTest() {
         assertEquals(5, col.findCards("front:*").size)
         // ordering
         col.set_config("sortType", "noteCrt")
-        col.flush()
+
         assertTrue(
             latestCardIds.contains(
                 col.findCards(
@@ -235,7 +235,7 @@ class FinderTest : RobolectricTest() {
             )
         )
         col.set_config("sortType", "noteFld")
-        col.flush()
+
         assertEquals(catCard.id, col.findCards("", SortOrder.UseCollectionOrdering())[0])
         assertTrue(
             latestCardIds.contains(
@@ -246,7 +246,7 @@ class FinderTest : RobolectricTest() {
             )
         )
         col.set_config("sortType", "cardMod")
-        col.flush()
+
         assertTrue(
             latestCardIds.contains(
                 col.findCards(
@@ -257,7 +257,7 @@ class FinderTest : RobolectricTest() {
         )
         assertEquals(firstCardId, col.findCards("", SortOrder.UseCollectionOrdering())[0])
         col.set_config("sortBackwards", true)
-        col.flush()
+
         assertTrue(latestCardIds.contains(col.findCards("", SortOrder.UseCollectionOrdering())[0]))
         /* TODO: Port BuiltinSortKind
            assertEquals(firstCardId,
@@ -305,7 +305,7 @@ class FinderTest : RobolectricTest() {
             addDeck("Default::Child"),
             id
         )
-        col.save()
+
         assertEquals(7, col.findCards("deck:default").size)
         assertEquals(1, col.findCards("deck:default::child").size)
         assertEquals(6, col.findCards("deck:default -deck:default::*").size)
@@ -401,7 +401,7 @@ class FinderTest : RobolectricTest() {
         note.setItem("Back", "bar")
         note.addTag("cat2::some::something")
         col.addNote(note)
-        col.save()
+
         assertEquals(0, col.findCards("tag:cat").size)
         assertEquals(4, col.findCards("tag:cat*").size)
         assertEquals(2, col.findCards("tag:cat1").size)

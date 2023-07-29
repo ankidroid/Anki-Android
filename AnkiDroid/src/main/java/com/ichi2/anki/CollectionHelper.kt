@@ -118,9 +118,9 @@ open class CollectionHelper {
      * @param save whether or not save before closing
      */
     @Synchronized
-    fun closeCollection(save: Boolean, reason: String?) {
+    fun closeCollection(reason: String?) {
         Timber.i("closeCollection: %s", reason)
-        CollectionManager.closeCollectionBlocking(save)
+        CollectionManager.closeCollectionBlocking()
     }
 
     /**

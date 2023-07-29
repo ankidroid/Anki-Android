@@ -20,7 +20,7 @@ import android.app.Activity
 import anki.scheduler.*
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.CollectionV16
+import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.TimeManager.time
 import java.lang.ref.WeakReference
@@ -30,7 +30,7 @@ import java.lang.ref.WeakReference
  * future, it would be better for the reviewer to fetch queuedCards directly, so they only
  * need to be fetched once.
  */
-class SchedV3(col: CollectionV16) : AbstractSched(col) {
+class SchedV3(col: Collection) : AbstractSched(col) {
     private var activityForLeechNotification: WeakReference<Activity>? = null
 
     override val today: Int

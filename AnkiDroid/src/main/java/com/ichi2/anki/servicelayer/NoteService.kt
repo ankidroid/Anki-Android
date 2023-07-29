@@ -193,7 +193,7 @@ object NoteService {
             if (BackendFactory.defaultLegacySchema) {
                 note.flush()
             } else {
-                newBackend.updateNote(note)
+                updateNote(note)
             }
         }
     }

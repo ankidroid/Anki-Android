@@ -266,7 +266,6 @@ class DeckOptionsActivity :
                                 // reset configuration
                                 confChangeHandler("doInBackgroundConfReset") {
                                     decks.restoreToDefault(mOptions)
-                                    save()
                                 }
                             }
                             "confAdd" -> {
@@ -453,7 +452,6 @@ class DeckOptionsActivity :
                         conf.getJSONObject("new").put("order", defaultOrder)
                         col.sched.resortConf(conf)
                     }
-                    col.save()
                 }
                 deck.put("conf", 1)
             }

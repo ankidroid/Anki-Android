@@ -53,7 +53,7 @@ class ModelTest : InstrumentedTest() {
         }
         model.put(testString, buf.toString())
         // Buf should be more than 4MB, so at least two chunks from database.
-        models.flush()
+
         // Reload models
         mTestCol.load()
         val newModel = models.all()[0]

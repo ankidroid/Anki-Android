@@ -22,7 +22,6 @@ import android.webkit.WebView
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
-import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.undoableOp
 import com.ichi2.libanki.updateDeckConfigsRaw
 import kotlinx.coroutines.Dispatchers
@@ -63,7 +62,7 @@ class DeckOptions : PageFragment() {
 }
 
 suspend fun PagesActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
-    val output = CollectionManager.withCol { (this as CollectionV16).updateDeckConfigsRaw(input) }
+    val output = CollectionManager.withCol { updateDeckConfigsRaw(input) }
     undoableOp { OpChanges.parseFrom(output) }
     withContext(Dispatchers.Main) { finish() }
     return output

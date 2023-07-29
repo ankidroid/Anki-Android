@@ -173,10 +173,7 @@ class MigrateEssentialFilesTest : RobolectricTest() {
     }
 
     @Test
-    @Suppress("UNUSED_VARIABLE")
     fun fails_if_missing_essential_file() = runTest {
-        val unused = col.usnForSync
-
         col.close() // required for Windows, can't delete if locked.
 
         CompatHelper.compat.deleteFile(File(defaultCollectionSourcePath, "collection.anki2"))

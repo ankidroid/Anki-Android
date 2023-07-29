@@ -292,8 +292,6 @@ open class CardBrowser :
             mCards.reverse()
             updateList()
         }
-        // To update the collection
-        col.db.mod = true
     }
 
     private fun repositionCardHandler(): RepositionCardHandler {
@@ -394,7 +392,6 @@ open class CardBrowser :
             if (savedFiltersObj?.has(searchName) == true) {
                 savedFiltersObj.remove(searchName)
                 col.set_config("savedFilters", savedFiltersObj)
-                col.flush()
                 if (savedFiltersObj.length() == 0) {
                     mMySearchesItem!!.isVisible = false
                 }
@@ -413,7 +410,6 @@ open class CardBrowser :
             if (!savedFiltersObj.has(searchName)) {
                 savedFiltersObj.put(searchName, searchTerms)
                 col.set_config("savedFilters", savedFiltersObj)
-                col.flush()
                 mSearchView!!.setQuery("", false)
                 mMySearchesItem!!.isVisible = true
             } else {
@@ -883,7 +879,6 @@ open class CardBrowser :
         super.onStop()
         if (!isFinishing) {
             update(this)
-            saveCollectionInBackground()
         }
     }
 

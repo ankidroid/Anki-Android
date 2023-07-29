@@ -430,7 +430,7 @@ abstract class AbstractFlashcardViewer :
         if (currentCard == null) {
             // If the card is null means that there are no more cards scheduled for review.
             showProgressBar()
-            closeReviewer(RESULT_NO_MORE_CARDS, true)
+            closeReviewer(RESULT_NO_MORE_CARDS)
         }
         onCardEdited(currentCard!!)
         if (displayAnswer) {
@@ -491,12 +491,12 @@ abstract class AbstractFlashcardViewer :
             val displaySuccess = result!!.succeeded()
             if (!displaySuccess) {
                 // RuntimeException occurred on answering cards
-                closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
+                closeReviewer(DeckPicker.RESULT_DB_ERROR)
                 return
             }
             val nextCardAndResult = result.value
             if (nextCardAndResult.hasNoMoreCards()) {
-                closeReviewer(RESULT_NO_MORE_CARDS, true)
+                closeReviewer(RESULT_NO_MORE_CARDS)
 
                 // When launched with a shortcut, we want to display a message when finishing
                 if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
@@ -653,7 +653,7 @@ abstract class AbstractFlashcardViewer :
         } else {
             Timber.i("Back key pressed")
             if (!mExitViaDoubleTapBack || mBackButtonPressedToReturn) {
-                closeReviewer(RESULT_DEFAULT, false)
+                closeReviewer(RESULT_DEFAULT)
             } else {
                 showSnackbar(R.string.back_pressed_once_reviewer, Snackbar.LENGTH_SHORT)
             }
@@ -727,7 +727,7 @@ abstract class AbstractFlashcardViewer :
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
-            closeReviewer(DeckPicker.RESULT_DB_ERROR, false)
+            closeReviewer(DeckPicker.RESULT_DB_ERROR)
         }
         if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
             finishNoStorageAvailable()
@@ -920,7 +920,7 @@ abstract class AbstractFlashcardViewer :
             }
         } catch (e: RuntimeException) {
             CrashReportService.sendExceptionReport(e, "AbstractReviewer-getRecommendedEase")
-            closeReviewer(DeckPicker.RESULT_DB_ERROR, true)
+            closeReviewer(DeckPicker.RESULT_DB_ERROR)
             0
         }
     }
@@ -1739,7 +1739,7 @@ abstract class AbstractFlashcardViewer :
                     true
                 }
                 ViewerCommand.EXIT -> {
-                    closeReviewer(RESULT_DEFAULT, false)
+                    closeReviewer(RESULT_DEFAULT)
                     true
                 }
                 ViewerCommand.UNDO -> {
@@ -1842,7 +1842,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun abortAndSync() {
-        closeReviewer(RESULT_ABORT_AND_SYNC, true)
+        closeReviewer(RESULT_ABORT_AND_SYNC)
     }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
@@ -1896,15 +1896,12 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    protected open fun closeReviewer(result: Int, saveDeck: Boolean) {
+    protected open fun closeReviewer(result: Int) {
         automaticAnswer.disable()
         mPreviousAnswerIndicator!!.stopAutomaticHide()
         mLongClickHandler.removeCallbacks(mLongClickTestRunnable)
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
         this@AbstractFlashcardViewer.setResult(result)
-        if (saveDeck) {
-            saveCollectionInBackground()
-        }
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 

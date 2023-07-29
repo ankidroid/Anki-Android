@@ -344,13 +344,11 @@ class Preferences :
                 when (getSchedVer(this)) {
                     2 -> {
                         set_config("rollover", hours)
-                        flush()
                     }
                     else -> { // typically "1"
                         val date: Calendar = crtGregorianCalendar()
                         date[Calendar.HOUR_OF_DAY] = hours
                         crt = date.timeInMillis / 1000
-                        setMod()
                     }
                 }
             }

@@ -1133,7 +1133,7 @@ class Decks(private val col: Collection) {
 }
 
 // These take and return bytes that the frontend TypeScript code will encode/decode.
-fun CollectionV16.getDeckNamesRaw(input: ByteArray): ByteArray {
+fun Collection.getDeckNamesRaw(input: ByteArray): ByteArray {
     return backend.getDeckNamesRaw(input)
 }
 
@@ -1141,6 +1141,6 @@ fun CollectionV16.getDeckNamesRaw(input: ByteArray): ByteArray {
  * Gets the filtered deck with given [did]
  * or creates a new one if [did] = 0
  */
-fun CollectionV16.getOrCreateFilteredDeck(did: DeckId): FilteredDeckForUpdate {
+fun Collection.getOrCreateFilteredDeck(did: DeckId): FilteredDeckForUpdate {
     return backend.getOrCreateFilteredDeck(did = did)
 }

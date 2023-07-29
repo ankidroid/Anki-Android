@@ -267,7 +267,7 @@ private suspend fun handleDownload(
                     force = true,
                     waitForCompletion = true
                 )
-                close(save = true, downgrade = false, forFullSync = true)
+                close(downgrade = false, forFullSync = true)
                 fullDownload(auth)
             } finally {
                 reopen(afterFullSync = true)
@@ -291,7 +291,7 @@ private suspend fun handleUpload(
         onCancel = ::cancelSync
     ) {
         withCol {
-            close(save = true, downgrade = false, forFullSync = true)
+            close(downgrade = false, forFullSync = true)
             try {
                 fullUpload(auth)
             } finally {

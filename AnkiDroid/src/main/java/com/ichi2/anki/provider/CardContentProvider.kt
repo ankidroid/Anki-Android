@@ -467,7 +467,7 @@ class CardContentProvider : ContentProvider() {
                     Timber.d("CardContentProvider: Moving card to other deck...")
                     currentCard.did = did
                     currentCard.flush()
-                    col.save()
+
                     updated++
                 } else {
                     // User tries an operation that is not (yet?) supported.
@@ -525,7 +525,6 @@ class CardContentProvider : ContentProvider() {
                         updated++
                     }
                     col.models.save(model)
-                    col.save()
                 } catch (e: JSONException) {
                     Timber.e(e, "JSONException updating model")
                 }
@@ -573,7 +572,6 @@ class CardContentProvider : ContentProvider() {
                     templates.put(templateOrd, template)
                     existingModel.put("tmpls", templates)
                     col.models.save(existingModel, true)
-                    col.save()
                 } catch (e: JSONException) {
                     throw IllegalArgumentException("Model is malformed", e)
                 }
@@ -633,7 +631,6 @@ class CardContentProvider : ContentProvider() {
                         }
                     }
                 }
-                col.save()
             }
             else -> throw IllegalArgumentException("uri $uri is not supported")
         }
@@ -754,7 +751,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 result++
             }
-            col.save()
+
             sqldb.setTransactionSuccessful()
             result
         } finally {
@@ -798,7 +795,7 @@ class CardContentProvider : ContentProvider() {
                 }
                 // Add to collection
                 col.addNote(newNote)
-                col.save()
+
                 Uri.withAppendedPath(FlashCardsContract.Note.CONTENT_URI, newNote.id.toString())
             }
             NOTES_ID -> throw IllegalArgumentException("Not possible to insert note with specific ID")
@@ -866,7 +863,7 @@ class CardContentProvider : ContentProvider() {
                     }
                     // Add the model to collection (from this point on edits will require a full-sync)
                     mm.add(newModel)
-                    col.save()
+
                     // Get the mid and return a URI
                     val mid = newModel.getLong("id").toString()
                     Uri.withAppendedPath(FlashCardsContract.Model.CONTENT_URI, mid)
@@ -895,7 +892,7 @@ class CardContentProvider : ContentProvider() {
                         t.put("bafmt", bafmt)
                         models.addTemplate(existingModel, t)
                         models.save(existingModel)
-                        col.save()
+
                         return ContentUris.withAppendedId(uri, t.getInt("ord").toLong())
                     } catch (e: ConfirmModSchemaException) {
                         throw IllegalArgumentException("Unable to add template without user requesting/accepting full-sync", e)
@@ -916,7 +913,7 @@ class CardContentProvider : ContentProvider() {
                     val field: JSONObject = models.newField(name)
                     try {
                         models.addField(existingModel, field)
-                        col.save()
+
                         val flds: JSONArray = existingModel.getJSONArray("flds")
                         return ContentUris.withAppendedId(uri, (flds.length() - 1).toLong())
                     } catch (e: ConfirmModSchemaException) {

@@ -53,7 +53,7 @@ abstract class BaseSched(val col: Collection) {
     fun upgradeToV2() {
         col.modSchema()
         col.clearUndo()
-        col.newBackend.backend.upgradeScheduler()
+        col.backend.upgradeScheduler()
         col._loadScheduler()
     }
 
@@ -68,7 +68,7 @@ abstract class BaseSched(val col: Collection) {
      * @param ids Id of cards to suspend
      */
     open fun suspendCards(ids: LongArray) {
-        col.newBackend.backend.buryOrSuspendCards(
+        col.backend.buryOrSuspendCards(
             cardIds = ids.toList(),
             noteIds = listOf(),
             mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
@@ -79,7 +79,7 @@ abstract class BaseSched(val col: Collection) {
      * @param ids Id of cards to unsuspend
      */
     open fun unsuspendCards(ids: LongArray) {
-        col.newBackend.backend.restoreBuriedAndSuspendedCards(
+        col.backend.restoreBuriedAndSuspendedCards(
             cids = ids.toList()
         )
     }
@@ -95,7 +95,7 @@ abstract class BaseSched(val col: Collection) {
         } else {
             BuryOrSuspendCardsRequest.Mode.BURY_SCHED
         }
-        col.newBackend.backend.buryOrSuspendCards(
+        col.backend.buryOrSuspendCards(
             cardIds = cids.toList(),
             noteIds = listOf(),
             mode = mode
@@ -107,7 +107,7 @@ abstract class BaseSched(val col: Collection) {
      * @param nid The id of the targeted note.
      */
     open fun buryNote(nid: NoteId) {
-        col.newBackend.backend.buryOrSuspendCards(
+        col.backend.buryOrSuspendCards(
             cardIds = listOf(),
             noteIds = listOf(nid),
             mode = BuryOrSuspendCardsRequest.Mode.BURY_USER
@@ -125,7 +125,7 @@ abstract class BaseSched(val col: Collection) {
             UnburyType.MANUAL -> UnburyDeckRequest.Mode.USER_ONLY
             UnburyType.SIBLINGS -> UnburyDeckRequest.Mode.SCHED_ONLY
         }
-        col.newBackend.backend.unburyDeck(deckId = did, mode = mode)
+        col.backend.unburyDeck(deckId = did, mode = mode)
     }
 
     /**
@@ -168,7 +168,7 @@ abstract class BaseSched(val col: Collection) {
      * @return Whether there are buried card is selected deck
      */
     open fun haveBuried(): Boolean {
-        return col.newBackend.backend.congratsInfo().run {
+        return col.backend.congratsInfo().run {
             haveUserBuried && haveSchedBuried
         }
     }
@@ -177,7 +177,7 @@ abstract class BaseSched(val col: Collection) {
      * day, in the selected decks.
      */
     open fun hasCardsTodayAfterStudyAheadLimit(): Boolean {
-        return col.newBackend.backend.congratsInfo().secsUntilNextLearn < 86_400
+        return col.backend.congratsInfo().secsUntilNextLearn < 86_400
     }
 
     /**
@@ -190,7 +190,7 @@ abstract class BaseSched(val col: Collection) {
             restorePosition = false
             resetCounts = false
         }
-        col.newBackend.backend.scheduleCardsAsNewRaw(request.toByteArray())
+        col.backend.scheduleCardsAsNewRaw(request.toByteArray())
     }
 
     /**
@@ -207,7 +207,7 @@ abstract class BaseSched(val col: Collection) {
             cardIds.addAll(ids)
             days = "$imin-$imax!"
         }
-        col.newBackend.backend.setDueDateRaw(request.toByteArray())
+        col.backend.setDueDateRaw(request.toByteArray())
     }
 
     /**
@@ -224,7 +224,7 @@ abstract class BaseSched(val col: Collection) {
         shuffle: Boolean = false,
         shift: Boolean = false
     ) {
-        col.newBackend.backend.sortCards(
+        col.backend.sortCards(
             cardIds = cids,
             startingFrom = start,
             stepSize = step,
@@ -238,7 +238,7 @@ abstract class BaseSched(val col: Collection) {
      * @param did Id of a deck
      */
     open fun randomizeCards(did: DeckId) {
-        col.newBackend.backend.sortDeck(deckId = did, randomize = true)
+        col.backend.sortDeck(deckId = did, randomize = true)
     }
 
     /**
@@ -246,7 +246,7 @@ abstract class BaseSched(val col: Collection) {
      * @param did Id of a deck
      */
     open fun orderCards(did: DeckId) {
-        col.newBackend.backend.sortDeck(deckId = did, randomize = false)
+        col.backend.sortDeck(deckId = did, randomize = false)
     }
 
     /**
@@ -254,7 +254,7 @@ abstract class BaseSched(val col: Collection) {
      * @param rev Extra number of REV cards to see today in selected deck
      */
     open fun extendLimits(newc: Int, rev: Int) {
-        col.newBackend.backend.extendLimits(
+        col.backend.extendLimits(
             deckId = col.decks.selected(),
             newDelta = newc,
             reviewDelta = rev
@@ -265,7 +265,7 @@ abstract class BaseSched(val col: Collection) {
      * @param did The deck to rebuild. 0 means current deck.
      */
     open fun rebuildDyn(did: DeckId) {
-        col.newBackend.backend.rebuildFilteredDeck(did)
+        col.backend.rebuildFilteredDeck(did)
     }
 
     fun rebuildDyn() {
@@ -276,7 +276,7 @@ abstract class BaseSched(val col: Collection) {
      * @param did The deck to empty. 0 means current deck.
      */
     open fun emptyDyn(did: DeckId) {
-        col.newBackend.backend.emptyFilteredDeck(did)
+        col.backend.emptyFilteredDeck(did)
     }
 
     /**
@@ -302,7 +302,7 @@ abstract class BaseSched(val col: Collection) {
 
     /** Return the deck tree, in the native backend format. */
     fun deckTree(includeCounts: Boolean): DeckTreeNode {
-        return col.newBackend.backend.deckTree(now = if (includeCounts) TimeManager.time.intTime() else 0)
+        return col.backend.deckTree(now = if (includeCounts) TimeManager.time.intTime() else 0)
     }
 
     /**
@@ -512,7 +512,7 @@ abstract class BaseSched(val col: Collection) {
         } else {
             // this currently breaks a bunch of unit tests that assume a mocked time,
             // as it uses the real time to calculate daysElapsed
-            col.newBackend.backend.schedTimingToday()
+            col.backend.schedTimingToday()
         }
     }
 

@@ -110,7 +110,7 @@ suspend fun AnkiActivity.exportApkg(
         }
     ) {
         withCol {
-            newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, limit)
+            exportAnkiPackage(apkgPath, withScheduling, withMedia, limit)
         }
     }
 }
@@ -127,7 +127,7 @@ suspend fun AnkiActivity.exportColpkg(
         }
     ) {
         withCol {
-            newBackend.exportCollectionPackage(colpkgPath, withMedia, true)
+            exportCollectionPackage(colpkgPath, withMedia, true)
         }
     }
 }

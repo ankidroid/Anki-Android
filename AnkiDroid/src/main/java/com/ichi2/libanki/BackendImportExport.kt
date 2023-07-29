@@ -82,7 +82,7 @@ fun Collection.exportCollectionPackage(
     includeMedia: Boolean,
     legacy: Boolean = true
 ) {
-    close(save = true, downgrade = false, forFullSync = true)
+    close(downgrade = false, forFullSync = true)
     backend.exportCollectionPackage(
         outPath = outPath,
         includeMedia = includeMedia,

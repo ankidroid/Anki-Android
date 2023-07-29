@@ -161,7 +161,7 @@ class ContentProviderTest : InstrumentedTest() {
         if (remnantNotes.isNotEmpty()) {
             val noteIds = remnantNotes.toLongArray()
             col.remNotes(noteIds)
-            col.save()
+
             assertEquals(
                 "Check that remnant notes have been deleted",
                 0,
@@ -1273,7 +1273,7 @@ class ContentProviderTest : InstrumentedTest() {
         )
         val col = col
         col.models.all()[0].put("did", JSONObject.NULL)
-        col.save()
+
         val cr = contentResolver
         // Query all available models
         val allModels = cr.query(FlashCardsContract.Model.CONTENT_URI, null, null, null, null)
@@ -1281,7 +1281,7 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     private fun reopenCol(): com.ichi2.libanki.Collection {
-        CollectionHelper.instance.closeCollection(false, "ContentProviderTest: reopenCol")
+        CollectionHelper.instance.closeCollection("ContentProviderTest: reopenCol")
         return col
     }
 

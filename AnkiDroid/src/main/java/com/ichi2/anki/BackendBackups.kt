@@ -51,11 +51,11 @@ fun <Activity> Activity.importColpkg(colpkgPath: String) where Activity : AnkiAc
 private suspend fun createBackup(force: Boolean) {
     withCol {
         // this two-step approach releases the backend lock after the initial copy
-        newBackend.createBackup(
+        createBackup(
             BackupManager.getBackupDirectoryFromCollection(this.path),
             force,
             waitForCompletion = false
         )
-        newBackend.awaitBackupCompletion()
+        awaitBackupCompletion()
     }
 }

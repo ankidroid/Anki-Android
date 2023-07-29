@@ -100,7 +100,7 @@ open class SchedV2Test : RobolectricTest() {
         lapse.put("delays", JSONArray("[20]"))
         col.decks.save(homeDeckConf)
         ensureLapseMatchesSppliedAnkiDesktopConfig(lapse)
-        col.flush()
+
         val dynId = addDynamicDeck("Dyn")
 
         /*
@@ -328,7 +328,7 @@ open class SchedV2Test : RobolectricTest() {
             col.changeSchedulerVer(2)
             ifV3 {
                 assumeThat(defaultLegacySchema, equalTo(false))
-                col.newBackend.v3Enabled = true
+                col.v3Enabled = true
             }
             return col
         }
@@ -898,7 +898,7 @@ open class SchedV2Test : RobolectricTest() {
            c.setIvl(0);
            c.flush();
            // checkpoint
-           col.save();
+           ;
            col.getSched().reset();
            assertEquals(new Counts(0, 2, 0), col.getSched().counts());
            c = getCard();

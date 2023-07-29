@@ -57,7 +57,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
         mInitialDeckName = withCol {
             if (!BackendFactory.defaultLegacySchema) {
-                newBackend.getOrCreateFilteredDeck(did = 0).name
+                getOrCreateFilteredDeck(did = 0).name
             } else {
                 val names = decks.allNames()
                 var n = 1

@@ -42,7 +42,7 @@ enum class SyncStatus {
                 return NO_ACCOUNT
             }
             if (!BackendFactory.defaultLegacySchema) {
-                val output = col.newBackend.backend.syncStatus(auth)
+                val output = col.backend.syncStatus(auth)
                 if (output.hasNewEndpoint()) {
                     context.sharedPrefs().edit {
                         putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)

@@ -333,7 +333,7 @@ class ReviewerTest : RobolectricTest() {
         m!!.put("name", "Three")
         models.add(m)
         m = models.byName("Three")
-        models.flush()
+
         cloneTemplate(models, m, "1")
         cloneTemplate(models, m, "2")
 

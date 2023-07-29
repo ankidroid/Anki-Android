@@ -22,6 +22,5 @@ fun Collection.upgradeJSONIfNecessary(name: String, defaultValue: Boolean) =
             Timber.w(e1)
             // do nothing
         }
-        save()
         defaultValue
     }

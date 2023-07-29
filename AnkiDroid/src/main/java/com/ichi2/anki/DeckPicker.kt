@@ -1029,7 +1029,6 @@ open class DeckPicker :
         if (colIsOpen()) {
             WidgetStatus.update(this)
             // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
-            saveCollectionInBackground(true)
         }
     }
 
@@ -1269,7 +1268,6 @@ open class DeckPicker :
                             models.save(m)
                         }
                     }
-                    models.flush()
                 } catch (e: JSONException) {
                     Timber.e(e, "Failed to upgrade css definitions.")
                 }
@@ -1479,7 +1477,7 @@ open class DeckPicker :
             val result = withProgress(resources.getString(R.string.backup_repair_deck_progress)) {
                 withCol {
                     Timber.i("RepairCollection: Closing collection")
-                    close(false)
+                    close()
                     BackupManager.repairCollection(this)
                 }
             }
@@ -1547,7 +1545,7 @@ open class DeckPicker :
 
     fun exit() {
         Timber.i("exit()")
-        CollectionHelper.instance.closeCollection(false, "DeckPicker:exit()")
+        CollectionHelper.instance.closeCollection("DeckPicker:exit()")
         finishWithoutAnimation()
     }
 
@@ -1746,7 +1744,7 @@ open class DeckPicker :
                     if (!userAcceptsSchemaChange(col)) {
                         return@launchCatchingTask
                     }
-                    withProgress { CollectionManager.updateScheduler() }
+                    withProgress { withCol { sched.upgradeToV2() } }
                     showThemedToast(this@DeckPicker, col.tr.schedulingUpdateDone(), false)
                     refreshState()
                 }

@@ -86,7 +86,6 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         super.onStop()
         if (colIsOpen()) {
             WidgetStatus.update(this)
-            saveCollectionInBackground()
         }
     }
 

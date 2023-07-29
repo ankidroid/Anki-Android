@@ -150,9 +150,6 @@ class Models(val col: Collection) {
     }
 
     /** legacy */
-    fun flush() {
-        // intentionally left blank
-    }
 
     @RustCleanup("not necessary in V16")
     fun ensureNotEmpty(): Boolean {
@@ -837,42 +834,42 @@ private fun Deck.getLongOrNull(key: String): int? {
 }
 
 // These take and return bytes that the frontend TypeScript code will encode/decode.
-fun CollectionV16.getNotetypeNamesRaw(input: ByteArray): ByteArray {
+fun Collection.getNotetypeNamesRaw(input: ByteArray): ByteArray {
     return backend.getNotetypeNamesRaw(input)
 }
 
-fun CollectionV16.getFieldNamesRaw(input: ByteArray): ByteArray {
+fun Collection.getFieldNamesRaw(input: ByteArray): ByteArray {
     return backend.getFieldNamesRaw(input)
 }
 
-fun CollectionV16.updateNotetype(updatedNotetype: Notetype): OpChanges {
+fun Collection.updateNotetype(updatedNotetype: Notetype): OpChanges {
     return backend.updateNotetype(input = updatedNotetype)
 }
 
-fun CollectionV16.removeNotetype(notetypeId: Long): OpChanges {
+fun Collection.removeNotetype(notetypeId: Long): OpChanges {
     return backend.removeNotetype(ntid = notetypeId)
 }
 
-fun CollectionV16.addNotetype(newNotetype: Notetype): OpChangesWithId {
+fun Collection.addNotetype(newNotetype: Notetype): OpChangesWithId {
     return backend.addNotetype(input = newNotetype)
 }
 
-fun CollectionV16.getNotetypeNameIdUseCount(): List<NotetypeNameIdUseCount> {
+fun Collection.getNotetypeNameIdUseCount(): List<NotetypeNameIdUseCount> {
     return backend.getNotetypeNamesAndCounts()
 }
 
-fun CollectionV16.getNotetype(notetypeId: Long): Notetype {
+fun Collection.getNotetype(notetypeId: Long): Notetype {
     return backend.getNotetype(ntid = notetypeId)
 }
 
-fun CollectionV16.getNotetypeNames(): List<NotetypeNameId> {
+fun Collection.getNotetypeNames(): List<NotetypeNameId> {
     return backend.getNotetypeNames()
 }
 
-fun CollectionV16.addNotetypeLegacy(json: ByteString): OpChangesWithId {
+fun Collection.addNotetypeLegacy(json: ByteString): OpChangesWithId {
     return backend.addNotetypeLegacy(json = json)
 }
 
-fun CollectionV16.getStockNotetypeLegacy(kind: StockNotetype.Kind): ByteString {
+fun Collection.getStockNotetypeLegacy(kind: StockNotetype.Kind): ByteString {
     return backend.getStockNotetypeLegacy(kind = kind)
 }

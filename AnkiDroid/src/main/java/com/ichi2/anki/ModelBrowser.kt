@@ -131,7 +131,6 @@ class ModelBrowser : AnkiActivity() {
         super.onStop()
         if (!isFinishing) {
             update(this)
-            saveCollectionInBackground()
         }
     }
 
@@ -409,7 +408,6 @@ class ModelBrowser : AnkiActivity() {
                 withCol {
                     Timber.d("doInBackGroundDeleteModel")
                     col.models.rem(col.models.get(mCurrentID)!!)
-                    col.save()
                 }
             }
             refreshList()

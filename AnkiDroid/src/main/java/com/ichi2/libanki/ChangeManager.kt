@@ -91,9 +91,9 @@ object ChangeManager {
 
 /** Wrap a routine that returns OpChanges* or similar undo info with this
  * to notify change subscribers of the changes. */
-suspend fun <T> undoableOp(handler: Any? = null, block: CollectionV16.() -> T): T {
+suspend fun <T> undoableOp(handler: Any? = null, block: Collection.() -> T): T {
     return withCol {
-        val result = newBackend.block()
+        val result = block()
         // any backend operation clears legacy undo and resets study queues if it
         // succeeds
         clearUndo()

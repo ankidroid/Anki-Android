@@ -88,7 +88,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         super.onStop()
         if (!isFinishing) {
             WidgetStatus.update(this)
-            saveCollectionInBackground()
         }
     }
 
@@ -222,7 +221,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             withProgress {
                 withCol {
                     models.addFieldModChanged(mModel, col.models.newField(fieldName))
-                    save()
                 }
             }
             initialize()
@@ -269,7 +267,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                 val result = withCol {
                     try {
                         models.remField(mModel, mNoteFields.getJSONObject(currentPos))
-                        save()
                         true
                     } catch (e: ConfirmModSchemaException) {
                         // Should never be reached
@@ -388,7 +385,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
                     Timber.d("doInBackgroundRepositionField")
                     try {
                         models.moveField(mModel, mNoteFields.getJSONObject(currentPos), index)
-                        save()
                         true
                     } catch (e: ConfirmModSchemaException) {
                         e.log()
@@ -442,7 +438,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             CollectionManager.withCol {
                 Timber.d("doInBackgroundChangeSortField")
                 models.setSortIdx(model, idx)
-                save()
             }
         }
         initialize()

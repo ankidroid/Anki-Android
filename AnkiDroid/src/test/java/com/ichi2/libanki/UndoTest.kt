@@ -52,7 +52,7 @@ class UndoTest : RobolectricTest() {
             // should have no undo by default
             assertNull(undoType())
             // let's adjust a study option
-            save("studyopts")
+
             set_config("abc", 5)
             // it should be listed as undoable
             assertEquals("studyopts", undoName(targetContext.resources))
@@ -65,12 +65,12 @@ class UndoTest : RobolectricTest() {
             assertNull(undoType())
             assertFalse(has_config("abc"))
             // an (auto)save will clear the undo
-            save("foo")
+
             assertEquals("foo", undoName(targetContext.resources))
-            save()
+
             assertEquals("", undoName(targetContext.resources))
             // and a review will, too
-            save("add")
+
             val note = newNote()
             note.setItem("Front", "one")
             addNote(note)
@@ -134,7 +134,7 @@ class UndoTest : RobolectricTest() {
             c = sched.card
             sched.answerCard(c!!, Consts.BUTTON_THREE)
             assertThat(undoType(), instanceOf(UndoReview::class.java))
-            save("foo")
+
             // Upstream, "save" can be undone. This test fails here because it's not the case in AnkiDroid
             assumeThat(undoName(targetContext.resources), equalTo("foo"))
             undo()

@@ -50,7 +50,7 @@ data class UndoStatus(
  * directly mutating the database).
  */
 @RustCleanup("Once fully migrated, and v2 scheduler dropped, rename to undo()")
-fun CollectionV16.undoNew(): OpChangesAfterUndo {
+fun Collection.undoNew(): OpChangesAfterUndo {
     val changes = backend.undo()
     // clear legacy undo log
     clearUndo()
@@ -58,9 +58,9 @@ fun CollectionV16.undoNew(): OpChangesAfterUndo {
 }
 
 /** Redoes the previously-undone operation. See the docs for
-[CollectionV16.undoOperation]
+[Collection.undoOperation]
  */
-fun CollectionV16.redo(): OpChangesAfterUndo {
+fun Collection.redo(): OpChangesAfterUndo {
     val changes = backend.redo()
     // clear legacy undo log
     clearUndo()
@@ -68,6 +68,6 @@ fun CollectionV16.redo(): OpChangesAfterUndo {
 }
 
 /** See [UndoStatus] */
-fun CollectionV16.undoStatus(): UndoStatus {
+fun Collection.undoStatus(): UndoStatus {
     return UndoStatus.from(backend.getUndoStatus())
 }
