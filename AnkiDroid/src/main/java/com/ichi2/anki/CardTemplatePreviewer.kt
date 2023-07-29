@@ -358,10 +358,6 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     inner class PreviewerCard : Card {
         private val mNote: Note?
 
-        constructor(col: Collection, note: Note) : super(col) {
-            mNote = note
-        }
-
         constructor(col: Collection, id: Long) : super(col, id) {
             mNote = null
         }

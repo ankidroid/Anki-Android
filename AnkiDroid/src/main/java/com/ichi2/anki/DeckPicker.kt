@@ -211,7 +211,6 @@ open class DeckPicker :
 
     // Flag to keep track of startup error
     private var mStartupError = false
-    private var mEmptyCardTask: Cancellable? = null
 
     /** See [OptionsMenuState]. */
     @VisibleForTesting

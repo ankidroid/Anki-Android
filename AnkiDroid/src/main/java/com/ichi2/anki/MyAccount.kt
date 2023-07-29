@@ -25,7 +25,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.edit
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.preferences.sharedPrefs
@@ -44,8 +43,6 @@ open class MyAccount : AnkiActivity() {
     private lateinit var mPassword: TextInputEditField
     private lateinit var mUsernameLoggedIn: TextView
 
-    @Suppress("Deprecation")
-    private var mProgressDialog: android.app.ProgressDialog? = null
     var toolbar: Toolbar? = null
     private lateinit var mPasswordLayout: TextInputLayout
     private lateinit var mAnkidroidLogo: ImageView
@@ -105,14 +102,6 @@ open class MyAccount : AnkiActivity() {
         }
         Timber.i("Attempting auto-login")
         handleNewLogin(username, password)
-    }
-
-    private fun saveUserInformation(username: String, hkey: String) {
-        val preferences = baseContext.sharedPrefs()
-        preferences.edit {
-            putString("username", username)
-            putString("hkey", hkey)
-        }
     }
 
     private fun login() {

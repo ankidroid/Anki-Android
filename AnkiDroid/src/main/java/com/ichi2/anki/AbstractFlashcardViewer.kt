@@ -604,7 +604,7 @@ abstract class AbstractFlashcardViewer :
         registerExternalStorageListener()
         restoreCollectionPreferences(col)
         initLayout()
-        mHtmlGenerator = createInstance(this, typeAnswer!!, mBaseUrl!!)
+        mHtmlGenerator = createInstance(this, typeAnswer!!)
 
         // Initialize text-to-speech. This is an asynchronous operation.
         mTTS.initialize(this, ReadTextListener())

@@ -161,6 +161,7 @@ class RecursivePictureMenu : DialogFragment() {
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
+            @Suppress("unused_symbol")
             val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
                 override fun createFromParcel(parcel: Parcel): ItemHeader {
                     return ItemHeader(parcel)

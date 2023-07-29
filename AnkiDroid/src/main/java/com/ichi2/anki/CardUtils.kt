@@ -47,15 +47,6 @@ object CardUtils {
         }
     }
 
-    fun isIn(array: LongArray, value: Long): Boolean {
-        for (v in array) {
-            if (v == value) {
-                return true
-            }
-        }
-        return false
-    }
-
     /**
      * Returns the deck ID of the given [Card].
      *

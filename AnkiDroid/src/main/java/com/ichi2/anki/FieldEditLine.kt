@@ -246,6 +246,7 @@ class FieldEditLine : FrameLayout {
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
+            @Suppress("unused_symbol")
             val CREATOR: Parcelable.Creator<SavedState> = object : ClassLoaderCreator<SavedState> {
                 override fun createFromParcel(source: Parcel, loader: ClassLoader): SavedState {
                     return SavedState(source, loader)

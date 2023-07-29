@@ -55,9 +55,6 @@ class PermissionsRequestResults(permissions: Map<String, PermissionRequestResult
     enum class PermissionRequestResult {
         GRANTED,
 
-        // Pre 'M', we do not know if a permission is temporarily or permanently denied.
-        DENIED,
-
         TEMPORARILY_DENIED,
 
         PERMANENTLY_DENIED;

@@ -205,8 +205,6 @@ open class BackupManager {
         private const val BACKUP_INTERVAL = 5
         private val legacyDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm")
         private val newDateFormat = SimpleDateFormat("yyyy-MM-dd-HH.mm")
-        val isActivated: Boolean
-            get() = true
 
         fun getBackupDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BACKUP_SUFFIX)

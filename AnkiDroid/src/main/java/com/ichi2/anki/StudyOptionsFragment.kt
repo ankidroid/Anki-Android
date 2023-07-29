@@ -235,12 +235,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         ankiActivity.showDialogFragment(contextMenu)
     }
 
-    fun setFragmentContentView(newView: View?) {
-        val parent = this.view as ViewGroup?
-        parent!!.removeAllViews()
-        parent.addView(newView)
-    }
-
     private val mUndoListener: TaskListener<Unit, ComputeResult?> = object : TaskListener<Unit, ComputeResult?>() {
         override fun onPreExecute() {}
         override fun onPostExecute(result: ComputeResult?) {

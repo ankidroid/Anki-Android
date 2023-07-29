@@ -179,12 +179,6 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         CREATE_SHORTCUT(9, R.string.create_shortcut),
         BROWSE_CARDS(10, R.string.browse_cards),
         ADD_CARD(11, R.string.menu_add);
-
-        companion object {
-            fun fromId(targetId: Int): DeckPickerContextMenuOption {
-                return values().first { it.itemId == targetId }
-            }
-        }
     }
 
     class Factory(val collectionSupplier: Supplier<Collection>) : ExtendedFragmentFactory() {
