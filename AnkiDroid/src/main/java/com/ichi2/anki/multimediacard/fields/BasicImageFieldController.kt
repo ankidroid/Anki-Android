@@ -599,8 +599,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     // ensure the previous preview is not visible
     private fun hideImagePreview() {
         BitmapUtil.freeImageView(mImagePreview)
-        mCropButton.visibility = View.INVISIBLE
-        mImageFileSize.visibility = View.INVISIBLE
+        if (::mCropButton.isInitialized) mCropButton.visibility = View.INVISIBLE
+        if (::mImageFileSize.isInitialized) mImageFileSize.visibility = View.INVISIBLE
     }
 
     override fun onDestroy() {
