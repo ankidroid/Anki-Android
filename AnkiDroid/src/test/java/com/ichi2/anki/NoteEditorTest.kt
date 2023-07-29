@@ -310,19 +310,6 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    @Config(qualifiers = "en")
-    fun addToCurrentWithNoDeckSelectsDefault_issue_9616() {
-        assumeThat(col.backend.legacySchema, not(false))
-        col.conf.put("addToCur", false)
-        val cloze = assertNotNull(col.models.byName("Cloze"))
-        cloze.remove("did")
-        col.models.save(cloze)
-        val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
-        editor.setCurrentlySelectedModel(cloze.getLong("id"))
-        assertThat(editor.deckId, equalTo(Consts.DEFAULT_DECK_ID))
-    }
-
-    @Test
     fun pasteHtmlAsPlainTextTest() {
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
         editor.setCurrentlySelectedModel(col.models.byName("Basic")!!.getLong("id"))

@@ -54,7 +54,6 @@ import com.ichi2.libanki.template.TemplateError
 import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
@@ -156,7 +155,7 @@ open class Collection(
         "move accessor methods here, maybe reconsider return type." +
             "See variable: conf"
     )
-    protected var config: ConfigManager? = null
+    protected var config: Config? = null
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
     lateinit var sched: AbstractSched
@@ -225,8 +224,8 @@ open class Collection(
         return deckManager
     }
 
-    protected open fun initConf(conf: String): ConfigManager {
-        return Config(conf)
+    protected open fun initConf(): Config {
+        return Config(backend)
     }
 
     protected open fun initTags(): Tags {
@@ -312,10 +311,10 @@ open class Collection(
                 dirty = cursor.getInt(3) == 1 // No longer used
                 mUsn = cursor.getInt(4)
                 ls = cursor.getLong(5)
-                config = initConf(cursor.getString(6))
                 deckConf = cursor.getString(7)
             }
         decks = initDecks(deckConf)!!
+        config = initConf()
     }
 
     @KotlinCleanup("make sChunk lazy and remove this")
@@ -383,9 +382,6 @@ open class Collection(
             put("dty", if (dirty) 1 else 0)
             put("usn", mUsn)
             put("ls", ls)
-            if (flushConf()) {
-                put("conf", Utils.jsonToString(conf))
-            }
         }
         db.update("col", values)
     }
@@ -2205,27 +2201,6 @@ open class Collection(
         // TODO: more validation code
         return models.validateModel()
     }
-
-    // Anki sometimes set sortBackward to 0/1 instead of
-    // False/True. This should be repaired before setting mConf;
-    // otherwise this may save a faulty value in mConf, and if
-    // it's done just before the value is read, this may lead to
-    // bug #5523. This bug should occur only for people using anki
-    // prior to version 2.16 and has been corrected with
-    // dae/anki#347
-    var conf: JSONObject
-        get() = config!!.json
-        set(conf) {
-            // Anki sometimes set sortBackward to 0/1 instead of
-            // False/True. This should be repaired before setting mConf;
-            // otherwise this may save a faulty value in mConf, and if
-            // it's done just before the value is read, this may lead to
-            // bug #5523. This bug should occur only for people using anki
-            // prior to version 2.16 and has been corrected with
-            // dae/anki#347
-            upgradeJSONIfNecessary("sortBackwards", false)
-            config!!.json = conf
-        }
 
     // region JSON-Related Config
     // Anki Desktop has a get_config and set_config method handling an "Any"

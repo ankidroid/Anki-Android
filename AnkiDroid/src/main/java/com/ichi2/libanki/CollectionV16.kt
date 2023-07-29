@@ -46,14 +46,6 @@ class CollectionV16(
         return ModelsV16(this)
     }
 
-    override fun initConf(conf: String): ConfigManager {
-        return initConfV16()
-    }
-
-    private fun initConfV16(): ConfigV16 {
-        return ConfigV16(RustConfigBackend(backend))
-    }
-
     override fun initMedia(): BackendMedia {
         return BackendMedia(this, server)
     }
@@ -79,8 +71,8 @@ class CollectionV16(
         }
 
     override fun load() {
-        config = initConfV16()
         decks = initDecks(null)
+        config = initConf()
     }
 
     override fun flush(mod: Long) {

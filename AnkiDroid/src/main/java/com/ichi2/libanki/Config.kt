@@ -16,54 +16,112 @@
 
 package com.ichi2.libanki
 
+import com.google.protobuf.ByteString
+import com.ichi2.libanki.backend.BackendUtils
+import net.ankiweb.rsdroid.Backend
+import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.json.JSONArray
 import org.json.JSONObject
 
-class Config(configStr: String) : ConfigManager() {
-    override var json = JSONObject(configStr)
-
-    override fun has(key: String) = json.has(key)
-    override fun isNull(key: String) = json.isNull(key)
-    override fun getString(key: String) = json.getString(key)
-    override fun getBoolean(key: String) = json.getBoolean(key)
-    override fun getDouble(key: String) = json.getDouble(key)
-    override fun getInt(key: String) = json.getInt(key)
-    override fun getLong(key: String) = json.getLong(key)
-    override fun getJSONArray(key: String) = json.getJSONArray(key)
-    override fun getJSONObject(key: String) = json.getJSONObject(key)
-
-    override fun put(key: String, value: Boolean) {
-        json.put(key, value)
-    }
-    override fun put(key: String, value: Long) {
-        json.put(key, value)
+class Config(val backend: Backend) {
+    fun isNull(key: String): Boolean {
+        return try {
+            val ret = this.getJsonString(key)
+            return ret == "null"
+        } catch (ex: IllegalStateException) {
+            true
+        }
     }
 
-    override fun put(key: String, value: Int) {
-        json.put(key, value)
+    fun getString(key: String): String {
+        val string = getJsonString(key)
+        // remove the quotes
+        return string.substring(1, string.length - 1)
     }
 
-    override fun put(key: String, value: Double) {
-        json.put(key, value)
+    fun getBoolean(key: String): Boolean {
+        return getJsonString(key).toBoolean()
     }
 
-    override fun put(key: String, value: String) {
-        json.put(key, value)
+    fun getDouble(key: String): Double {
+        return getJsonString(key).toDouble()
     }
 
-    override fun put(key: String, value: JSONArray) {
-        json.put(key, value)
+    fun getInt(key: String): Int {
+        return getJsonString(key).toInt()
     }
 
-    override fun put(key: String, value: JSONObject) {
-        json.put(key, value)
+    fun getLong(key: String): Long {
+        return getJsonString(key).toLong()
     }
 
-    override fun put(key: String, value: Any?) {
-        json.put(key, value)
+    fun getJSONArray(key: String): JSONArray {
+        return BackendUtils.jsonToArray(getJsonBytes(key))
     }
 
-    override fun remove(key: String) {
-        json.remove(key)
+    fun getJSONObject(key: String): JSONObject {
+        return BackendUtils.from_json_bytes(getJsonBytes(key))
+    }
+
+    fun put(key: String, value: Boolean) {
+        set(key, value)
+    }
+
+    fun put(key: String, value: Long) {
+        set(key, value)
+    }
+
+    fun put(key: String, value: Int) {
+        set(key, value)
+    }
+
+    fun put(key: String, value: Double) {
+        set(key, value)
+    }
+
+    fun put(key: String, value: String) {
+        set(key, "\"" + value + "\"")
+    }
+
+    fun put(key: String, value: JSONArray) {
+        set(key, value)
+    }
+
+    fun put(key: String, value: JSONObject) {
+        set(key, value)
+    }
+
+    fun put(key: String, value: Any?) {
+        set(key, value)
+    }
+
+    // / True if key exists (even if null)
+    fun has(key: String): Boolean {
+        return try {
+            getJsonBytes(key)
+            true
+        } catch (ex: java.lang.IllegalStateException) {
+            false
+        }
+    }
+
+    fun remove(key: str) {
+        backend.removeConfig(key)
+    }
+
+    private fun getJsonBytes(key: str): ByteString {
+        try {
+            return backend.getConfigJson(key)
+        } catch (ex: BackendNotFoundException) {
+            throw IllegalStateException("'$key' not found", ex)
+        }
+    }
+
+    private fun getJsonString(key: str): String {
+        return BackendUtils.jsonToString(getJsonBytes(key))
+    }
+
+    private fun set(key: str, value: Any?) {
+        backend.setConfigJson(key, BackendUtils.to_json_bytes(value), false)
     }
 }

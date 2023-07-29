@@ -31,8 +31,6 @@ class ConfigTest : RobolectricTest() {
     fun string_serialization() {
         assertThat(col.get_config_string("sortType"), equalTo("noteFld"))
 
-        assertThat(col.conf.getString("sortType"), equalTo("noteFld"))
-
         col.set_config("sortType", "noteFld2")
 
         assertThat(col.get_config_string("sortType"), equalTo("noteFld2"))
