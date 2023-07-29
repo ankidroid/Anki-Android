@@ -114,9 +114,6 @@ open class Collection(
     open val newMedia: BackendMedia
         get() = throw Exception("invalid call to newMedia on old backend")
 
-    open val newTags: TagsV16
-        get() = throw Exception("invalid call to newTags on old backend")
-
     open val newModels: ModelsV16
         get() = throw Exception("invalid call to newModels on old backend")
 
@@ -153,7 +150,7 @@ open class Collection(
 
     @KotlinCleanup("change to lazy")
     private var _models: ModelManager? = null
-    val tags: TagManager
+    val tags: Tags
 
     @KotlinCleanup(
         "move accessor methods here, maybe reconsider return type." +
@@ -232,7 +229,7 @@ open class Collection(
         return Config(conf)
     }
 
-    protected open fun initTags(): TagManager {
+    protected open fun initTags(): Tags {
         return Tags(this)
     }
 
@@ -317,7 +314,6 @@ open class Collection(
                 ls = cursor.getLong(5)
                 config = initConf(cursor.getString(6))
                 deckConf = cursor.getString(7)
-                tags.load(cursor.getString(8))
             }
         decks = initDecks(deckConf)!!
     }
@@ -407,7 +403,6 @@ open class Collection(
         // let the managers conditionally flush
         models.flush()
         decks.flush()
-        tags.flush()
         // and flush deck + bump mod if db has been changed
         if (db.mod) {
             flush(mod)
@@ -505,28 +500,6 @@ open class Collection(
         } else {
             -1
         }
-    }
-
-    /** called before a full upload  */
-    fun beforeUpload() {
-        val tables = arrayOf("notes", "cards", "revlog")
-        for (t in tables) {
-            db.execute("UPDATE $t SET usn=0 WHERE usn=-1")
-        }
-        // we can save space by removing the log of deletions
-        db.execute("delete from graves")
-        mUsn += 1
-        models.beforeUpload()
-        tags.beforeUpload()
-        decks.beforeUpload()
-        modSchemaNoCheck()
-        ls = scm
-        Timber.i("Compacting database before full upload")
-        // ensure db is compacted before upload
-        db.execute("vacuum")
-        db.execute("analyze")
-        // downgrade the collection
-        close(save = true, downgrade = true)
     }
 
     /**
@@ -1597,13 +1570,6 @@ open class Collection(
         )
         executeIntegrityTask.accept(
             FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
-                rebuildTags(
-                    notifyProgressParam
-                )
-            }
-        )
-        executeIntegrityTask.accept(
-            FunctionalInterfaces.FunctionThrowable { notifyProgressParam: Runnable ->
                 this.updateFieldCache(
                     notifyProgressParam
                 )
@@ -1885,7 +1851,6 @@ open class Collection(
         Timber.d("rebuildTags")
         // tags
         notifyProgress.run()
-        tags.registerNotes()
         return emptyList<String>()
     }
 

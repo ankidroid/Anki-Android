@@ -38,10 +38,6 @@ class CollectionV16(
     backend: Backend
 ) : Collection(context, path, server, log, backend) {
 
-    override fun initTags(): TagManager {
-        return TagsV16(this)
-    }
-
     override fun initDecks(deckConf: String?): DeckManager {
         return DecksV16(this)
     }
@@ -67,9 +63,6 @@ class CollectionV16(
 
     override val newMedia: BackendMedia
         get() = this.media as BackendMedia
-
-    override val newTags: TagsV16
-        get() = this.tags as TagsV16
 
     override val newModels: ModelsV16
         get() = this.models as ModelsV16

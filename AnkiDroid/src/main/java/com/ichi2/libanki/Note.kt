@@ -142,11 +142,7 @@ class Note : Cloneable {
             "insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
             this.id, guId!!, mid, this.mod, usn, tags, fields, sfld, csum, mFlags, mData!!
         )
-        if (defaultLegacySchema) {
-            col.tags.register(this.tags)
-        } else {
-            // TODO: tags are not registered; calling code must switch to using backend add/update notes
-        }
+        Timber.w("note.flush() does not register tags; code should migrate to col.updateNote()")
         postFlush()
     }
 

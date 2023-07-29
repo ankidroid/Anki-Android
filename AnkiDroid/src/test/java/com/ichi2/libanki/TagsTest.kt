@@ -62,14 +62,4 @@ class TagsTest : RobolectricTest() {
         assertFalse(tags.inList("test1Content", tags_list))
         assertFalse(tags.inList("", ArrayList()))
     }
-
-    @Test
-    fun test_add_to_str() {
-        val col = col
-        val tags = Tags(col)
-
-        assertEquals(" Needs Revision Todo ", tags.addToStr("todo", "Todo todo Needs Revision"))
-        assertEquals(" Todo ", tags.addToStr("Todo", ""))
-        assertEquals(" Needs Revision Todo ", tags.addToStr("", "Todo todo Needs Revision"))
-    }
 }
