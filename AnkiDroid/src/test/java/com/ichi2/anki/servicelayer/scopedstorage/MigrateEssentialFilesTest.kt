@@ -28,7 +28,6 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.servicelayer.ScopedStorageService.prepareAndValidateSourceAndDestinationFolders
 import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.UserActionRequiredException.MissingEssentialFileException
 import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.bool
 import com.ichi2.testutils.CollectionDBCorruption
 import com.ichi2.testutils.createTransientDirectory
 import net.ankiweb.rsdroid.BackendException
@@ -196,7 +195,7 @@ suspend fun migrateEssentialFilesForTest(
     context: Context,
     ankiDroidFolder: String,
     destOverride: DestFolderOverride = DestFolderOverride.None,
-    checkSourceDir: bool = false
+    checkSourceDir: Boolean = false
 ): File {
     val destOverrideUpdated = when (destOverride) {
         is DestFolderOverride.None -> DestFolderOverride.Root(getMigrationDestinationPath(context))

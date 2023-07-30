@@ -1338,7 +1338,7 @@ open class CardBrowser :
         return super.onOptionsItemSelected(item)
     }
 
-    fun switchCardOrNote(newCardsMode: bool) {
+    fun switchCardOrNote(newCardsMode: Boolean) {
         val sharedPrefs = this.sharedPrefs()
 
         sharedPrefs.edit {

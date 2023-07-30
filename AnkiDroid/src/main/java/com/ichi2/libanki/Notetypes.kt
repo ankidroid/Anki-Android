@@ -124,10 +124,10 @@ class Notetypes(val col: Collection) {
     #############################################################
      */
 
-    private var _cache: Dict<int, NoteType> = Dict()
+    private var _cache: HashMap<int, NoteType> = HashMap()
 
     init {
-        _cache = Dict()
+        _cache = HashMap()
     }
 
     /** Save changes made to provided note type. */
@@ -188,7 +188,7 @@ class Notetypes(val col: Collection) {
     }
 
     // only used by importing code
-    fun have(id: int): bool = all_names_and_ids().any { it.id == id }
+    fun have(id: int): Boolean = all_names_and_ids().any { it.id == id }
 
     /*
     # Current note type
@@ -197,7 +197,7 @@ class Notetypes(val col: Collection) {
 
     /** Get current model.*/
     @RustCleanup("Should use defaultsForAdding() instead")
-    fun current(forDeck: bool = true): NoteType {
+    fun current(forDeck: Boolean = true): NoteType {
         var m = get(col.decks.current().getLongOrNull("mid"))
         if (!forDeck || m == null) {
             m = get(col.config.get("curModel") ?: 1L)
@@ -217,7 +217,7 @@ class Notetypes(val col: Collection) {
     #############################################################
      */
 
-    fun id_for_name(name: str): Long? {
+    fun id_for_name(name: String): Long? {
         return try {
             col.backend.getNotetypeIdByName(name)
         } catch (e: BackendNotFoundException) {
@@ -257,16 +257,16 @@ class Notetypes(val col: Collection) {
     }
 
     /** Get model with NAME. */
-    fun byName(name: str): NoteType? {
+    fun byName(name: String): NoteType? {
         val id = id_for_name(name)
         return id?.let { get(it) }
     }
 
     @RustCleanup("When we're kotlin only, rename to 'new', name existed due to Java compat")
-    fun newModel(name: str): NoteType = new(name)
+    fun newModel(name: String): NoteType = new(name)
 
     /** Create a new non-cloze model, and return it. */
-    fun new(name: str): NoteType {
+    fun new(name: String): NoteType {
         // caller should call save() after modifying
         val nt = newBasicNotetype()
         nt.flds = JSONArray()
@@ -375,7 +375,7 @@ class Notetypes(val col: Collection) {
      */
 
     @RustCleanup("Check JSONObject.NULL")
-    fun new_field(name: str): Field {
+    fun new_field(name: String): Field {
         val nt = newBasicNotetype()
         val field = nt.flds.getJSONObject(0)
         field.put("name", name)
@@ -404,7 +404,7 @@ class Notetypes(val col: Collection) {
         m.flds.insert(idx, field)
     }
 
-    fun rename_field(m: NoteType, field: Field, new_name: str) {
+    fun rename_field(m: NoteType, field: Field, new_name: String) {
         assert(m.flds.jsonObjectIterable().contains(field))
         field["name"] = new_name
     }
@@ -423,7 +423,7 @@ class Notetypes(val col: Collection) {
      legacy
      */
 
-    fun newField(name: str) = new_field(name)
+    fun newField(name: String) = new_field(name)
 
     @RustCleanup("Only exists for interface compatibility")
     fun getModels(): Map<Long, NoteType> = all().map { Pair(it.id, it) }.toMap()
@@ -445,7 +445,7 @@ class Notetypes(val col: Collection) {
         save(m)
     }
 
-    fun renameField(m: NoteType, field: Field, newName: str) {
+    fun renameField(m: NoteType, field: Field, newName: String) {
         rename_field(m, field, newName)
         save(m)
     }
@@ -502,7 +502,7 @@ class Notetypes(val col: Collection) {
      */
 
     @RustCleanup("Check JSONObject.NULL")
-    fun new_template(name: str): Template {
+    fun new_template(name: String): Template {
         val nt = newBasicNotetype()
         val template = nt.tmpls.getJSONObject(0)
         template["name"] = name
@@ -535,7 +535,7 @@ class Notetypes(val col: Collection) {
     }
 
     /** legacy */
-    fun newTemplate(name: str): Template = new_template(name)
+    fun newTemplate(name: String): Template = new_template(name)
 
     fun addTemplate(m: NoteType, template: Template) {
         add_template(m, template)
@@ -617,7 +617,7 @@ class Notetypes(val col: Collection) {
      */
 
     /** Return a hash of the schema, to see if models are compatible. */
-    fun scmhash(m: NoteType): str {
+    fun scmhash(m: NoteType): String {
         var s = ""
         for (f in m.flds.jsonObjectIterable()) {
             s += f["name"]

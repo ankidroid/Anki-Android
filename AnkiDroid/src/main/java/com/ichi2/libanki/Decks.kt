@@ -79,13 +79,13 @@ open class DeckV16 private constructor(private val deck: JSONObject) {
 
     fun hasKey(s: String): Boolean = deck.has(s)
 
-    var name: str
+    var name: String
         get() = deck.getString("name")
         set(value) {
             deck.put("name", value)
         }
 
-    var collapsed: bool
+    var collapsed: Boolean
         get() = deck.getBoolean("collapsed")
         set(value) {
             deck.put("collapsed", value)
@@ -108,7 +108,7 @@ open class DeckV16 private constructor(private val deck: JSONObject) {
 }
 
 // TODO: do we want optional<str>, or string here
-var Optional<DeckV16>.name: str
+var Optional<DeckV16>.name: String
     get() = this.get()!!.name
     set(value) {
         this.get()!!.name = value
@@ -138,19 +138,19 @@ abstract class DeckConfigV16 private constructor(val config: JSONObject) {
             config.put("conf", value)
         }
 
-    var id: dcid
+    var id: DeckConfigId
         get() = config.getLong("id")
         set(value) {
             config.put("id", value)
         }
 
-    var name: str
+    var name: String
         get() = config.getString("name")
         set(value) {
             config.put("name", value)
         }
 
-    var dyn: bool
+    var dyn: Boolean
         get() = config.getInt("dyn") == Consts.DECK_DYN
         set(value) {
             config.put("dyn", if (value) Consts.DECK_DYN else Consts.DECK_STD)
@@ -169,7 +169,7 @@ abstract class DeckConfigV16 private constructor(val config: JSONObject) {
     }
 }
 
-private typealias childMapNode = Dict<DeckId, Any>
+private typealias childMapNode = HashMap<DeckId, Any>
 // Change to Dict[int, "DeckManager.childMapNode"] when MyPy allow recursive type
 
 // TODO: col was a weakref
@@ -227,14 +227,14 @@ class Decks(private val col: Collection) {
 
     /* Deck save/load */
     @RustCleanup("only for java interface: newDyn was used for filtered decks")
-    fun id(name: str): DeckId {
+    fun id(name: String): DeckId {
         // use newDyn for now
         return id(name, true, 0).get()
     }
 
     /** "Add a deck with NAME. Reuse deck if already exists. Return id as int." */
     @Throws(DeckRenameException::class)
-    fun id(name: str, create: bool = true, type: Int = 0): Optional<DeckId> {
+    fun id(name: String, create: Boolean = true, type: Int = 0): Optional<DeckId> {
         val id = this.id_for_name(name)
         if (id != null) {
             return Optional.of(id)
@@ -257,7 +257,7 @@ class Decks(private val col: Collection) {
     }
 
     /** Remove the deck. If cardsToo, delete any cards inside. */
-    fun rem(did: DeckId, cardsToo: bool, childrenToo: bool) {
+    fun rem(did: DeckId, cardsToo: Boolean, childrenToo: Boolean) {
         assert(cardsToo && childrenToo)
         col.backend.removeDecks(listOf(did))
     }
@@ -273,15 +273,15 @@ class Decks(private val col: Collection) {
 
     /** A sorted sequence of deck names and IDs. */
     fun allNamesAndIds(
-        skip_empty_default: bool = false,
-        include_filtered: bool = true
-    ): ImmutableList<DeckNameId> {
+        skip_empty_default: Boolean = false,
+        include_filtered: Boolean = true
+    ): List<DeckNameId> {
         return col.backend.getDeckNames(skip_empty_default, include_filtered).map { entry ->
             DeckNameId(entry.name, entry.id)
         }
     }
 
-    fun id_for_name(name: str): DeckId? {
+    fun id_for_name(name: String): DeckId? {
         try {
             return col.backend.getDeckIdByName(name)
         } catch (ex: BackendNotFoundException) {
@@ -307,7 +307,7 @@ class Decks(private val col: Collection) {
         }
     }
 
-    fun get_all_legacy(): ImmutableList<DeckV16> {
+    fun get_all_legacy(): List<DeckV16> {
         return BackendUtils.from_json_bytes(col.backend.getAllDecksLegacy())
             .objectIterable { obj -> DeckV16.Generic(obj) }
             .toList()
@@ -317,7 +317,7 @@ class Decks(private val col: Collection) {
         keys().forEach { k -> yield(f(getJSONObject(k))) }
     }
 
-    fun new_deck_legacy(filtered: bool): DeckV16 {
+    fun new_deck_legacy(filtered: Boolean): DeckV16 {
         val deck = BackendUtils.from_json_bytes(col.backend.newDeckLegacy(filtered))
         return if (filtered) {
             // until migrating to the dedicated method for creating filtered decks,
@@ -335,7 +335,7 @@ class Decks(private val col: Collection) {
     }
 
     /** All decks. Expensive; prefer all_names_and_ids() */
-    fun all(): ImmutableList<Deck> {
+    fun all(): List<Deck> {
         return this.get_all_legacy().map { x -> Deck(x.getJsonObject()) }
     }
 
@@ -345,7 +345,7 @@ class Decks(private val col: Collection) {
     }
 
     @Deprecated("decks.allNames() is deprecated, use .all_names_and_ids()")
-    fun allNames(dyn: bool = true, force_default: bool = true): MutableList<str> {
+    fun allNames(dyn: Boolean = true, force_default: Boolean = true): MutableList<String> {
         return this.allNamesAndIds(
             skip_empty_default = !force_default,
             include_filtered = dyn
@@ -364,7 +364,7 @@ class Decks(private val col: Collection) {
         return len(this.allNamesAndIds())
     }
 
-    fun get(did: DeckId, _default: bool): Deck? {
+    fun get(did: DeckId, _default: Boolean): Deck? {
         val deck = this.get_legacy(did)
         return when {
             deck != null -> deck
@@ -374,7 +374,7 @@ class Decks(private val col: Collection) {
     }
 
     /** Get deck with NAME, ignoring case. */
-    fun byName(name: str): Deck? {
+    fun byName(name: String): Deck? {
         val id = this.id_for_name(name)
         if (id != null) {
             return this.get_legacy(id)
@@ -397,7 +397,7 @@ class Decks(private val col: Collection) {
     }
 
     /** Add or update an existing deck. Used for syncing and merging. */
-    fun update(g: DeckV16, preserve_usn: bool = true) {
+    fun update(g: DeckV16, preserve_usn: Boolean = true) {
         g.id = try {
             col.backend.addOrUpdateDeckLegacy(g.to_json_bytes(), preserve_usn)
         } catch (ex: BackendDeckIsFilteredException) {
@@ -410,7 +410,7 @@ class Decks(private val col: Collection) {
     }
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
-    fun rename(g: DeckV16, newName: str) {
+    fun rename(g: DeckV16, newName: String) {
         g.name = newName
         this.update(g, preserve_usn = false)
     }
@@ -418,7 +418,7 @@ class Decks(private val col: Collection) {
     /* Deck configurations */
 
     /** A list of all deck config. */
-    fun all_config(): ImmutableList<DeckConfigV16.Config> {
+    fun all_config(): List<DeckConfigV16.Config> {
         return BackendUtils.jsonToArray(col.backend.allDeckConfigLegacy())
             .jsonObjectIterable()
             .map { obj -> DeckConfigV16.Config(obj) }
@@ -441,13 +441,13 @@ class Decks(private val col: Collection) {
     }
 
     /* Backend will return default config if provided id doesn't exist. */
-    fun get_config(conf_id: dcid): DeckConfigV16 {
+    fun get_config(conf_id: DeckConfigId): DeckConfigV16 {
         val jsonObject = BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(conf_id))
         val config = DeckConfigV16.Config(jsonObject)
         return config
     }
 
-    fun update_config(conf: DeckConfigV16, preserve_usn: bool = false) {
+    fun update_config(conf: DeckConfigV16, preserve_usn: Boolean = false) {
         if (preserve_usn) {
             TODO("no longer supported; need to switch to new sync code")
         }
@@ -459,7 +459,7 @@ class Decks(private val col: Collection) {
     }
 
     fun add_config(
-        name: str,
+        name: String,
         clone_from: Optional<DeckConfigV16> = Optional.empty()
     ): DeckConfigV16 {
         val conf: DeckConfigV16
@@ -480,12 +480,12 @@ class Decks(private val col: Collection) {
     }
 
     fun add_config_returning_id(
-        name: str,
+        name: String,
         clone_from: Optional<DeckConfigV16> = Optional.empty()
-    ): dcid = this.add_config(name, clone_from).id
+    ): DeckConfigId = this.add_config(name, clone_from).id
 
     /** Remove a configuration and update all decks using it. */
-    fun remove_config(id: dcid) {
+    fun remove_config(id: DeckConfigId) {
         this.col.modSchema() // TODO: True was passed in as an arg
         for (g in this.all()) {
             // ignore cram decks
@@ -512,7 +512,7 @@ class Decks(private val col: Collection) {
     }
 
     @RustCleanup("maybe an issue here - grp was deckConfig in V16")
-    fun setConf(grp: DeckV16, id: dcid) {
+    fun setConf(grp: DeckV16, id: DeckConfigId) {
         grp.conf = id
         this.save(grp)
     }
@@ -544,7 +544,7 @@ class Decks(private val col: Collection) {
         all_config().map { x -> DeckConfig(x.config, x.source) }.toMutableList()
 
     /* Reverts to default if provided id missing */
-    fun getConf(confId: dcid): DeckConfig =
+    fun getConf(confId: DeckConfigId): DeckConfig =
         get_config(confId).let { x -> DeckConfig(x.config, x.source) }
 
     fun confId(name: String, cloneFrom: String): Long {
@@ -554,14 +554,14 @@ class Decks(private val col: Collection) {
     }
 
     fun updateConf(g: DeckConfig) = updateConf(DeckConfigV16.from(g), preserve_usn = false)
-    fun updateConf(conf: DeckConfigV16, preserve_usn: bool = false) =
+    fun updateConf(conf: DeckConfigV16, preserve_usn: Boolean = false) =
         update_config(conf, preserve_usn)
 
-    fun remConf(id: dcid) = remove_config(id)
+    fun remConf(id: DeckConfigId) = remove_config(id)
 
     /* Deck utils */
 
-    fun name(did: DeckId, _default: bool): str {
+    fun name(did: DeckId, _default: Boolean): String {
         val deck = this.get(did, _default = _default).toV16Optional()
         if (deck.isPresent) {
             return deck.name
@@ -570,7 +570,7 @@ class Decks(private val col: Collection) {
         return "[no deck]"
     }
 
-    fun cids(did: DeckId, children: bool): MutableList<Long> {
+    fun cids(did: DeckId, children: Boolean): MutableList<Long> {
         if (!children) {
             return this.col.db.queryLongList("select id from cards where did=?", did)
         }
@@ -625,9 +625,9 @@ class Decks(private val col: Collection) {
     class Node : HashMap<Long?, Node?>()
 
     /** All children of did, as (name, id). */
-    fun children(did: DeckId): TreeMap<str, DeckId> {
-        val name: str = this.get(did).toV16().name
-        val actv = TreeMap<str, DeckId>()
+    fun children(did: DeckId): TreeMap<String, DeckId> {
+        val name: String = this.get(did).toV16().name
+        val actv = TreeMap<String, DeckId>()
         for (g in this.allNamesAndIds()) {
             if (g.name.startsWith(name + "::")) {
                 actv.put(g.name, g.id)
@@ -640,7 +640,7 @@ class Decks(private val col: Collection) {
         return childDids(did, childMapNode(childMap))
     }
 
-    fun child_ids(parent_name: str): Iterable<DeckId> {
+    fun child_ids(parent_name: String): Iterable<DeckId> {
         val prefix = parent_name + "::"
         return allNamesAndIds().filter { x ->
             x.name.startsWith(prefix)
@@ -678,7 +678,7 @@ class Decks(private val col: Collection) {
 
         // go through all decks, sorted by name
         for (deck in sorted(this.all())) {
-            val node = Dict<DeckId, Any>()
+            val node = HashMap<DeckId, Any>()
             childMap[deck.id] = node
 
             // add note to immediate parent
@@ -709,17 +709,17 @@ class Decks(private val col: Collection) {
         return parents(did, Optional.empty())
     }
 
-    private fun sorted(all: ImmutableList<Deck>): ImmutableList<Deck> {
+    private fun sorted(all: List<Deck>): List<Deck> {
         return all.sortedBy { d -> d.getString("name") }
     }
 
     /** All parents of did. */
     fun parents(
         did: DeckId,
-        nameMap: Optional<Dict<str, Deck>> = Optional.empty()
+        nameMap: Optional<HashMap<String, Deck>> = Optional.empty()
     ): List<Deck> {
         // get parent and grandparent names
-        val parents_names: MutableList<str> = mutableListOf()
+        val parents_names: MutableList<String> = mutableListOf()
         for (part in immediate_parent_path(this.get(did).toV16Optional().name)) {
             if (parents_names.isNullOrEmpty()) {
                 parents_names.append(part)
@@ -741,7 +741,7 @@ class Decks(private val col: Collection) {
         return parents
     }
 
-    fun nameMap(): Map<str, Deck> {
+    fun nameMap(): Map<String, Deck> {
         return all().map { d -> Pair(d.name, d) }.toMap()
     }
 
@@ -750,7 +750,7 @@ class Decks(private val col: Collection) {
      */
 
     /** Return a new dynamic deck and set it as the current deck. */
-    fun newDyn(name: str): DeckId {
+    fun newDyn(name: String): DeckId {
         val did = this.id(name, type = 1).get()
         this.select(did)
         return did
@@ -772,7 +772,7 @@ class Decks(private val col: Collection) {
         return DeckV16.Generic(this)
     }
 
-    val Deck.name: str get() = this.getString("name")
+    val Deck.name: String get() = this.getString("name")
     val Deck.conf: Long get() = this.getLong("conf")
 
     /** Remove the deck. delete any cards inside and child decks. */
@@ -843,21 +843,21 @@ class Decks(private val col: Collection) {
     companion object {
         /* Parents/children */
 
-        fun path(name: str): ImmutableList<str> {
+        fun path(name: String): List<String> {
             return name.split("::")
         }
 
-        fun _path(name: str) = path(name)
+        fun _path(name: String) = path(name)
 
-        fun basename(name: str): str {
+        fun basename(name: String): String {
             return path(name).last()
         }
 
-        fun immediate_parent_path(name: str): MutableList<str> {
+        fun immediate_parent_path(name: String): MutableList<String> {
             return _path(name).dropLast(1).toMutableList()
         }
 
-        fun immediate_parent(name: str): Optional<str> {
+        fun immediate_parent(name: String): Optional<String> {
             val pp = immediate_parent_path(name)
             if (pp.isNotNullOrEmpty()) {
                 return Optional.of("::".join(pp))
@@ -865,7 +865,7 @@ class Decks(private val col: Collection) {
             return Optional.empty()
         }
 
-        fun key(deck: DeckV16): ImmutableList<str> {
+        fun key(deck: DeckV16): List<String> {
             return path(deck.name)
         }
 

@@ -34,7 +34,7 @@ import org.json.JSONObject
 import timber.log.Timber
 
 private typealias Union<A, B> = Pair<A, B>
-private typealias TemplateReplacementList = MutableList<Union<str?, TemplateManager.TemplateReplacement?>>
+private typealias TemplateReplacementList = MutableList<Union<String?, TemplateManager.TemplateReplacement?>>
 
 /**
  * Template.py in python. Called TemplateManager for technical reasons (conflict with Kotlin typealias)
@@ -50,7 +50,7 @@ private typealias TemplateReplacementList = MutableList<Union<str?, TemplateMana
  * the filter is skipped.
  */
 class TemplateManager {
-    data class TemplateReplacement(val field_name: str, var current_text: str, val filters: List<str>)
+    data class TemplateReplacement(val field_name: String, var current_text: String, val filters: List<String>)
     data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
         companion object {
             fun from_proto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
@@ -112,10 +112,10 @@ class TemplateManager {
         col: Collection,
         card: Card,
         note: Note,
-        browser: bool = false,
+        browser: Boolean = false,
         notetype: NoteType? = null,
         template: JSONObject? = null,
-        fill_empty: bool = false
+        fill_empty: Boolean = false
     ) {
 
         @RustCleanup("internal variables should be private, revert them once we're on V16")
@@ -123,14 +123,14 @@ class TemplateManager {
         internal val _col: Collection = col
         internal var _card: Card = card
         internal var _note: Note = note
-        internal var _browser: bool = browser
+        internal var _browser: Boolean = browser
         internal var _template: JSONObject? = template
-        internal var _fill_empty: bool = fill_empty
-        private var _fields: Dict<str, str>? = null
+        internal var _fill_empty: Boolean = fill_empty
+        private var _fields: HashMap<String, String>? = null
         internal var _note_type: NoteType = notetype ?: note.model()
 
         companion object {
-            fun from_existing_card(card: Card, browser: bool): TemplateRenderContext {
+            fun from_existing_card(card: Card, browser: Boolean): TemplateRenderContext {
                 return TemplateRenderContext(card.col, card, card.note(), browser)
             }
 
@@ -139,7 +139,7 @@ class TemplateManager {
                 card: Card,
                 notetype: NoteType,
                 template: JSONObject,
-                fill_empty: bool
+                fill_empty: Boolean
             ): TemplateRenderContext {
                 return TemplateRenderContext(
                     note.col,
@@ -154,7 +154,7 @@ class TemplateManager {
 
         fun col() = _col
 
-        fun fields(): Dict<str, str> {
+        fun fields(): HashMap<String, String> {
             Timber.w(".fields() is obsolete, use .note() or .card()")
             if (_fields == null) {
                 // fields from note
@@ -189,12 +189,12 @@ class TemplateManager {
         fun note_type() = _note_type
 
         @RustCleanup("legacy")
-        fun qfmt(): str {
+        fun qfmt(): String {
             return templates_for_card(card(), _browser).first
         }
 
         @RustCleanup("legacy")
-        fun afmt(): str {
+        fun afmt(): String {
             return templates_for_card(card(), _browser).second
         }
 
@@ -260,13 +260,13 @@ class TemplateManager {
         data class TemplateRenderOutput(
             @get:JvmName("getQuestionText")
             @set:JvmName("setQuestionText")
-            var question_text: str,
+            var question_text: String,
             @get:JvmName("getAnswerText")
             @set:JvmName("setAnswerText")
-            var answer_text: str,
+            var answer_text: String,
             val question_av_tags: List<AvTag>,
             val answer_av_tags: List<AvTag>,
-            val css: str = ""
+            val css: String = ""
         ) {
 
             fun question_and_style() = "<style>$css</style>$question_text"
@@ -274,7 +274,7 @@ class TemplateManager {
         }
 
         @RustCleanup("legacy")
-        fun templates_for_card(card: Card, browser: bool): Pair<str, str> {
+        fun templates_for_card(card: Card, browser: Boolean): Pair<String, String> {
             val template = card.template()
             var a: String? = null
             var q: String? = null
@@ -294,8 +294,8 @@ class TemplateManager {
         fun apply_custom_filters(
             rendered: TemplateReplacementList,
             @Suppress("unused_parameter") ctx: TemplateRenderContext,
-            front_side: str?
-        ): str {
+            front_side: String?
+        ): String {
             // template already fully rendered?
             if (len(rendered) == 1 && rendered[0].first != null) {
                 return rendered[0].first!!

@@ -37,7 +37,7 @@ class Config(val backend: Backend) {
         }
     }
 
-    inline fun<reified T> set(key: str, value: T) {
+    inline fun<reified T> set(key: String, value: T) {
         val valueString = when (value) {
             JSONObject.NULL -> "null"
             is JSONObject, is JSONArray -> value.toString()
@@ -46,7 +46,7 @@ class Config(val backend: Backend) {
         backend.setConfigJson(key, valueString.toByteStringUtf8(), false)
     }
 
-    fun remove(key: str) {
+    fun remove(key: String) {
         backend.removeConfig(key)
     }
 
