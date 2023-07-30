@@ -19,18 +19,11 @@
 package com.ichi2.async
 
 import android.content.Context
-import com.fasterxml.jackson.core.JsonToken
 import com.ichi2.anki.*
-import com.ichi2.anki.AnkiSerialization.factory
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.Computation
 import com.ichi2.utils.KotlinCleanup
-import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.IOException
 import java.util.concurrent.CancellationException
 import java.util.concurrent.ExecutionException
 
@@ -142,130 +135,6 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
     override fun onCancelled() {
         TaskManager.removeTask(this)
         listener?.onCancelled()
-    }
-
-    @KotlinCleanup("needs to handle null collection")
-    class ImportReplace(private val pathList: List<String>) : TaskDelegate<String, Computation<*>>() {
-        override fun task(col: Collection, collectionTask: ProgressSenderAndCancelListener<String>): Computation<*> {
-            Timber.d("doInBackgroundImportReplace")
-            val res = AnkiDroidApp.instance.baseContext.resources
-            val context = col.context
-            val colPath = col.path
-            // extract the deck from the zip file
-            val dir = File(File(colPath).parentFile, "tmpzip")
-            if (dir.exists()) {
-                BackupManager.removeDir(dir)
-            }
-            // from anki2.py
-            var colname = "collection.anki21"
-
-            for (path in pathList) {
-                val zip: ZipFile = try {
-                    ZipFile(File(path))
-                } catch (e: IOException) {
-                    Timber.e(e, "doInBackgroundImportReplace - Error while unzipping")
-                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace0")
-                    return Computation.ERR
-                }
-                try {
-                    // v2 scheduler?
-                    if (zip.getEntry(colname) == null) {
-                        colname = CollectionHelper.COLLECTION_FILENAME
-                    }
-                    Utils.unzipFiles(zip, dir.absolutePath, arrayOf(colname, "media"), null)
-                } catch (e: IOException) {
-                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace - unzip")
-                    return Computation.ERR
-                }
-                val colFile = File(dir, colname).absolutePath
-                if (!File(colFile).exists()) {
-                    return Computation.ERR
-                }
-                var tmpCol: Collection? = null
-                try {
-                    tmpCol = Storage.collection(context, colFile)
-                } catch (e: Exception) {
-                    Timber.e("Error opening new collection file... probably it's invalid")
-                    try {
-                        tmpCol!!.close()
-                    } catch (e2: Exception) {
-                        Timber.w(e2)
-                        // do nothing
-                    }
-                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace - open col")
-                    return Computation.ERR
-                } finally {
-                    tmpCol?.close()
-                }
-                collectionTask.doProgress(res.getString(R.string.importing_collection))
-                try {
-                    CollectionHelper.instance.getCol(context)
-                    // unload collection
-                    CollectionHelper.instance.closeCollection("Importing new collection")
-                    CollectionHelper.instance.lockCollection()
-                } catch (e: Exception) {
-                    Timber.w(e)
-                }
-                // overwrite collection
-                val f = File(colFile)
-                if (!f.renameTo(File(colPath))) {
-                    // Exit early if this didn't work
-                    return Computation.ERR
-                }
-                return try {
-                    CollectionHelper.instance.unlockCollection()
-
-                    // because users don't have a backup of media, it's safer to import new
-                    // data and rely on them running a media db check to get rid of any
-                    // unwanted media. in the future we might also want to duplicate this step
-                    // import media
-                    val nameToNum = HashMap<String, String>()
-                    val numToName = HashMap<String, String>()
-                    val mediaMapFile = File(dir.absolutePath, "media")
-                    if (mediaMapFile.exists()) {
-                        factory.createParser(mediaMapFile).use { jp ->
-                            var name: String
-                            var num: String
-                            check(jp.nextToken() == JsonToken.START_OBJECT) { "Expected content to be an object" }
-                            while (jp.nextToken() != JsonToken.END_OBJECT) {
-                                num = jp.currentName()
-                                name = jp.nextTextValue()
-                                nameToNum[name] = num
-                                numToName[num] = name
-                            }
-                        }
-                    }
-                    val mediaDir = getCollectionMediaPath(colPath)
-                    val total = nameToNum.size
-                    var i = 0
-                    for ((file, c) in nameToNum) {
-                        val of = File(mediaDir, file)
-                        if (!of.exists()) {
-                            Utils.unzipFiles(zip, mediaDir, arrayOf(c), numToName)
-                        }
-                        ++i
-                        collectionTask.doProgress(res.getString(R.string.import_media_count, (i + 1) * 100 / total))
-                    }
-                    zip.close()
-                    // delete tmp dir
-                    BackupManager.removeDir(dir)
-                    Computation.OK
-                } catch (e: RuntimeException) {
-                    Timber.e(e, "doInBackgroundImportReplace - RuntimeException")
-                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace1")
-                    Computation.ERR
-                } catch (e: FileNotFoundException) {
-                    Timber.e(e, "doInBackgroundImportReplace - FileNotFoundException")
-                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace2")
-                    Computation.ERR
-                } catch (e: IOException) {
-                    Timber.e(e, "doInBackgroundImportReplace - IOException")
-                    CrashReportService.sendExceptionReport(e, "doInBackgroundImportReplace3")
-                    Computation.ERR
-                }
-            }
-            return Computation.OK
-        }
     }
 
     class Reset : TaskDelegate<Void, Void?>() {
