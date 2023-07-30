@@ -31,26 +31,26 @@ class StdModels(
     private val defaultNameRes: Int
 ) {
     fun interface CreateStdModels {
-        fun create(mm: Notetypes, name: String): Model
+        fun create(mm: Notetypes, name: String): NotetypeJson
     }
 
-    private fun _new(mm: Notetypes): Model {
+    private fun _new(mm: Notetypes): NotetypeJson {
         val name: String = defaultName
         return _new(mm, name)
     }
 
-    private fun _new(mm: Notetypes, name: String): Model {
+    private fun _new(mm: Notetypes, name: String): NotetypeJson {
         return function.create(mm, name)
     }
 
-    fun add(col: Collection, name: String): Model {
+    fun add(col: Collection, name: String): NotetypeJson {
         val mm = col.notetypes
         val model = _new(mm, name)
         mm.add(model)
         return model
     }
 
-    fun add(col: Collection): Model {
+    fun add(col: Collection): NotetypeJson {
         val mm = col.notetypes
         val model = _new(mm)
         mm.add(model)

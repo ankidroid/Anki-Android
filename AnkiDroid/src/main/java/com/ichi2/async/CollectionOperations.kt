@@ -105,7 +105,7 @@ fun updateValuesFromDeck(
  *
  * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
  */
-suspend fun getAllModelsAndNotesCount(): Pair<List<Model>, List<Int>> = withContext(Dispatchers.IO) {
+suspend fun getAllModelsAndNotesCount(): Pair<List<NotetypeJson>, List<Int>> = withContext(Dispatchers.IO) {
     Timber.d("doInBackgroundLoadModels")
     val models = withCol { notetypes.all() }
     Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
@@ -209,26 +209,26 @@ suspend fun checkCardSelection(checkedCards: Set<CardBrowser.CardCache>): Pair<B
  */
 fun saveModel(
     col: Collection,
-    model: Model,
+    notetype: NotetypeJson,
     templateChanges: ArrayList<Array<Any>>
 ) {
     Timber.d("doInBackgroundSaveModel")
-    val oldModel = col.notetypes.get(model.getLong("id"))
+    val oldModel = col.notetypes.get(notetype.getLong("id"))
 
     // TODO need to save all the cards that will go away, for undo
     //  (do I need to remove them from graves during undo also?)
     //    - undo (except for cards) could just be Models.update(model) / Models.flush() / Collection.reset() (that was prior "undo")
-    val newTemplates = model.getJSONArray("tmpls")
+    val newTemplates = notetype.getJSONArray("tmpls")
     col.db.database.beginTransaction()
     try {
         for (change in templateChanges) {
             val oldTemplates = oldModel!!.getJSONArray("tmpls")
-            when (change[1] as TemporaryModel.ChangeType) {
-                TemporaryModel.ChangeType.ADD -> {
+            when (change[1] as CardTemplateNotetype.ChangeType) {
+                CardTemplateNotetype.ChangeType.ADD -> {
                     Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
                     col.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
                 }
-                TemporaryModel.ChangeType.DELETE -> {
+                CardTemplateNotetype.ChangeType.DELETE -> {
                     Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
                     col.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
                 }
@@ -237,9 +237,9 @@ fun saveModel(
 
         // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
         // This could be done better
-        model.put("mod", oldModel!!.getLong("mod"))
-        col.notetypes.save(model, true)
-        col.notetypes.update(model)
+        notetype.put("mod", oldModel!!.getLong("mod"))
+        col.notetypes.save(notetype, true)
+        col.notetypes.update(notetype)
         col.reset()
 
         if (col.db.database.inTransaction()) {

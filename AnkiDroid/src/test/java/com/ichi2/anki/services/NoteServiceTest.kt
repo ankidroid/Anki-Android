@@ -23,8 +23,8 @@ import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.createTransientFile
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.*
@@ -83,12 +83,12 @@ class NoteServiceTest : RobolectricTest() {
     @Test
     fun updateJsonNoteRuntimeErrorTest() {
         // model with ID 42
-        var testModel = Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"42\"}")
-        val multiMediaNoteWithID42: IMultimediaEditableNote? = NoteService.createEmptyNote(testModel)
+        var testNotetype = NotetypeJson("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"42\"}")
+        val multiMediaNoteWithID42: IMultimediaEditableNote? = NoteService.createEmptyNote(testNotetype)
 
         // model with ID 45
-        testModel = Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}")
-        val noteWithID45 = Note(testCol!!, testModel)
+        testNotetype = NotetypeJson("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}")
+        val noteWithID45 = Note(testCol!!, testNotetype)
         val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }

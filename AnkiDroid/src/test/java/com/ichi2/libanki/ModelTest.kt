@@ -39,7 +39,7 @@ fun clozeData(data: String): String {
 
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("improve kotlin code where possible")
-class ModelTest : RobolectricTest() {
+class NotetypeTest : RobolectricTest() {
     @Test
     fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
@@ -520,13 +520,13 @@ class ModelTest : RobolectricTest() {
         )
     }
 
-    private fun reqSize(model: Model?) {
-        if (model!!.getInt("type") == MODEL_CLOZE) {
+    private fun reqSize(notetype: NotetypeJson?) {
+        if (notetype!!.getInt("type") == MODEL_CLOZE) {
             return
         }
         assertEquals(
-            model.getJSONArray("req").length(),
-            model.getJSONArray("tmpls").length()
+            notetype.getJSONArray("req").length(),
+            notetype.getJSONArray("tmpls").length()
         )
     }
 

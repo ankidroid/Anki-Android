@@ -601,7 +601,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         // changed note type?
         if (!addNote && mCurrentEditedCard != null) {
-            val newModel: JSONObject? = currentlySelectedModel
+            val newModel: JSONObject? = currentlySelectedNotetype
             val oldModel: JSONObject = mCurrentEditedCard!!.model()
             if (newModel != oldModel) {
                 return true
@@ -719,7 +719,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
-            val newModel = currentlySelectedModel
+            val newModel = currentlySelectedNotetype
             val oldModel = if (mCurrentEditedCard == null) null else mCurrentEditedCard!!.model()
             if (newModel != oldModel) {
                 mReloadRequired = true
@@ -782,10 +782,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /**
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
      */
-    private fun changeNoteTypeWithErrorHandling(oldModel: Model?, newModel: Model?) {
+    private fun changeNoteTypeWithErrorHandling(oldNotetype: NotetypeJson?, newNotetype: NotetypeJson?) {
         val res = resources
         try {
-            changeNoteType(oldModel, newModel)
+            changeNoteType(oldNotetype, newNotetype)
         } catch (e: ConfirmModSchemaException) {
             e.log()
             // Libanki has determined we should ask the user to confirm first
@@ -795,7 +795,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // Bypass the check once the user confirms
                 col.modSchemaNoCheck()
                 try {
-                    changeNoteType(oldModel, newModel)
+                    changeNoteType(oldNotetype, newNotetype)
                 } catch (e2: ConfirmModSchemaException) {
                     // This should never be reached as we explicitly called modSchemaNoCheck()
                     throw RuntimeException(e2)
@@ -811,9 +811,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      * @throws ConfirmModSchemaException If a full sync will be required
      */
     @Throws(ConfirmModSchemaException::class)
-    private fun changeNoteType(oldModel: Model?, newModel: Model?) {
+    private fun changeNoteType(oldNotetype: NotetypeJson?, newNotetype: NotetypeJson?) {
         val noteId = mEditorNote!!.id
-        col.notetypes.change(oldModel!!, noteId, newModel!!, mModelChangeFieldMap!!, mModelChangeCardMap!!)
+        col.notetypes.change(oldNotetype!!, noteId, newNotetype!!, mModelChangeFieldMap!!, mModelChangeCardMap!!)
         // refresh the note object to reflect the database changes
         mEditorNote!!.load()
         // close note editor
@@ -991,8 +991,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             previewer.putExtra("ordinal", mCurrentEditedCard!!.ord)
         }
         previewer.putExtra(
-            TemporaryModel.INTENT_MODEL_FILENAME,
-            TemporaryModel.saveTempModel(this, mEditorNote!!.model())
+            CardTemplateNotetype.INTENT_MODEL_FILENAME,
+            CardTemplateNotetype.saveTempModel(this, mEditorNote!!.model())
         )
 
         // Send the previewer all our current editing information
@@ -1063,7 +1063,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             setResult(result)
         }
         // ensure there are no orphans from possible edit previews
-        TemporaryModel.clearTempModelFiles()
+        CardTemplateNotetype.clearTempModelFiles()
 
         // Set the finish animation if there is one on the intent which created the activity
         val animation = IntentCompat.getParcelableExtra(
@@ -1493,7 +1493,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     mModelChangeFieldMap!![idx] = newFieldIndex
                 }
                 // Reload the fields
-                updateFieldsFromMap(currentlySelectedModel)
+                updateFieldsFromMap(currentlySelectedNotetype)
                 true
             }
             popup.show()
@@ -1554,7 +1554,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun getFieldByName(name: String?): JSONObject? {
         val pair: Pair<Int, JSONObject>? = try {
-            Notetypes.fieldMap(currentlySelectedModel!!)[name]
+            Notetypes.fieldMap(currentlySelectedNotetype!!)[name]
         } catch (e: Exception) {
             Timber.w("Failed to obtain field '%s'", name)
             return null
@@ -1911,16 +1911,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return tags.joinToString(" ")
     }
 
-    private val currentlySelectedModel: Model?
+    private val currentlySelectedNotetype: NotetypeJson?
         get() = col.notetypes.get(mAllModelIds!![mNoteTypeSpinner!!.selectedItemPosition])
 
     /**
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
      */
-    private fun updateFieldsFromMap(newModel: Model?) {
-        val type = FieldChangeType.refreshWithMap(newModel, mModelChangeFieldMap, shouldReplaceNewlines())
+    private fun updateFieldsFromMap(newNotetype: NotetypeJson?) {
+        val type = FieldChangeType.refreshWithMap(newNotetype, mModelChangeFieldMap, shouldReplaceNewlines())
         populateEditFields(type, true)
-        updateCards(newModel)
+        updateCards(newNotetype)
     }
 
     /**
@@ -2121,7 +2121,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return ClozeUtils.getNextClozeIndex(fieldValues)
         }
     private val isClozeType: Boolean
-        get() = currentlySelectedModel!!.isCloze
+        get() = currentlySelectedNotetype!!.isCloze
 
     @VisibleForTesting
     fun startAdvancedTextEditor(index: Int) {

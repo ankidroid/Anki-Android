@@ -360,14 +360,14 @@ class CardInfo : AnkiActivity() {
                 return CardInfoModel(addedDate, firstReview, latestReview, due, interval, easeInPercent, reviews, lapses, averageTime, totalTime, cardType, noteType, deckName, noteId, entries)
             }
 
-            protected fun getCardType(c: Card, model: Model?): String? {
+            protected fun getCardType(c: Card, notetype: NotetypeJson?): String? {
                 return try {
                     val ord = if (c.model().isCloze) {
                         0
                     } else {
                         c.ord
                     }
-                    model!!.getJSONArray("tmpls").getJSONObject(ord).getString("name")
+                    notetype!!.getJSONArray("tmpls").getJSONObject(ord).getString("name")
                 } catch (e: Exception) {
                     Timber.w(e)
                     null

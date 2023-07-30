@@ -30,8 +30,8 @@ import com.ichi2.compat.Compat.Companion.ACTION_PROCESS_TEXT
 import com.ichi2.compat.Compat.Companion.EXTRA_PROCESS_TEXT
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
-import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -69,7 +69,7 @@ class NoteEditorTest : RobolectricTest() {
         assertThat("Bundle has fields edited value", fieldsBundle!!.getString("0"), equalTo("Preview Test"))
         assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), equalTo(ArrayList<Any>()))
         assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), equalTo(false))
-        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), equalTo(true))
+        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME), equalTo(true))
     }
 
     @Test
@@ -365,7 +365,7 @@ class NoteEditorTest : RobolectricTest() {
         return NoteEditorTestBuilder(n)
     }
 
-    private fun makeNoteForType(noteType: NoteType): Model? {
+    private fun makeNoteForType(noteType: NoteType): NotetypeJson? {
         return when (noteType) {
             NoteType.BASIC -> col.notetypes.byName("Basic")
             NoteType.CLOZE -> col.notetypes.byName("Cloze")
@@ -427,8 +427,8 @@ class NoteEditorTest : RobolectricTest() {
         BACK_TO_FRONT, THREE_FIELD_INVALID_TEMPLATE
     }
 
-    inner class NoteEditorTestBuilder(model: Model?) {
-        private val mModel: Model
+    inner class NoteEditorTestBuilder(notetype: NotetypeJson?) {
+        private val mNotetype: NotetypeJson
         private var mFirstField: String? = null
         private var mSecondField: String? = null
         private var mThirdField: String? = null
@@ -445,7 +445,7 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         fun <T : NoteEditor?> build(clazz: Class<T>): T {
-            col.notetypes.setCurrent(mModel)
+            col.notetypes.setCurrent(mNotetype)
             val noteEditor = getNoteEditorAddingNote(REVIEWER, clazz)
             advanceRobolectricLooper()
             noteEditor!!.setFieldValueFromUi(0, mFirstField)
@@ -478,8 +478,8 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         init {
-            assertNotNull(model) { "model was null" }
-            mModel = model
+            assertNotNull(notetype) { "model was null" }
+            mNotetype = notetype
         }
     }
 }

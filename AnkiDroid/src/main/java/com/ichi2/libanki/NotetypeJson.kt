@@ -30,7 +30,7 @@ import org.json.JSONObject
  */
 @KotlinCleanup("fix kotlin docs")
 @KotlinCleanup("IDE Lint")
-class Model : JSONObject {
+class NotetypeJson : JSONObject {
     /**
      * Creates a new empty model object
      */
@@ -41,7 +41,7 @@ class Model : JSONObject {
      *
      * This function will perform deepCopy on the passed object
      *
-     * @see Model.from
+     * @see NotetypeJson.from
      */
     @KotlinCleanup("non-null")
     constructor(json: JSONObject) : super() {
@@ -55,8 +55,8 @@ class Model : JSONObject {
     constructor(json: String?) : super(json!!) {}
 
     @CheckResult
-    fun deepClone(): Model {
-        val clone = Model()
+    fun deepClone(): NotetypeJson {
+        val clone = NotetypeJson()
         return deepClonedInto(clone)
     }
 

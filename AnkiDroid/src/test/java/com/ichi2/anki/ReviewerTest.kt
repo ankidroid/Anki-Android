@@ -27,7 +27,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.Model
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.Flaky
@@ -329,7 +329,7 @@ class ReviewerTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     private fun addNoteWithThreeCards() {
         val models = col.notetypes
-        var m: Model? = models.copy(models.current())
+        var m: NotetypeJson? = models.copy(models.current())
         m!!.put("name", "Three")
         models.add(m)
         m = models.byName("Three")
@@ -345,7 +345,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Throws(ConfirmModSchemaException::class)
-    private fun cloneTemplate(notetypes: Notetypes, m: Model?, extra: String) {
+    private fun cloneTemplate(notetypes: Notetypes, m: NotetypeJson?, extra: String) {
         val tmpls = m!!.getJSONArray("tmpls")
         val defaultTemplate = tmpls.getJSONObject(0)
 

@@ -271,7 +271,7 @@ class ContentProviderTest : InstrumentedTest() {
         val cr = contentResolver
         var col = col
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
-        var model: Model? = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
+        var model: NotetypeJson? = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
         val modelId = model!!.getLong("id")
         // Add the note
         val modelUri = ContentUris.withAppendedId(FlashCardsContract.Model.CONTENT_URI, modelId)
@@ -325,7 +325,7 @@ class ContentProviderTest : InstrumentedTest() {
         // Get required objects for test
         val cr = contentResolver
         var col = col
-        var model: Model? = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
+        var model: NotetypeJson? = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
         val modelId = model!!.getLong("id")
         val initialFieldsArr = model.getJSONArray("flds")
         val initialFieldCount = initialFieldsArr.length()

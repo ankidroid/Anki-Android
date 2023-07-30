@@ -379,9 +379,9 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
     }
 
     @Throws(JSONException::class)
-    protected fun getCurrentDatabaseModelCopy(modelName: String): Model {
+    protected fun getCurrentDatabaseModelCopy(modelName: String): NotetypeJson {
         val collectionModels = col.notetypes
-        return Model(collectionModels.byName(modelName).toString().trim { it <= ' ' })
+        return NotetypeJson(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
     protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
@@ -443,10 +443,10 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         return name
     }
 
-    private fun addField(model: Model, name: String) {
+    private fun addField(notetype: NotetypeJson, name: String) {
         val models = col.notetypes
         try {
-            models.addField(model, models.newField(name))
+            models.addField(notetype, models.newField(name))
         } catch (e: ConfirmModSchemaException) {
             throw RuntimeException(e)
         }

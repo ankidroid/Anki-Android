@@ -113,7 +113,7 @@ class TemplateManager {
         card: Card,
         note: Note,
         browser: Boolean = false,
-        notetype: NoteType? = null,
+        notetype: NotetypeJson? = null,
         template: JSONObject? = null,
         fill_empty: Boolean = false
     ) {
@@ -127,7 +127,7 @@ class TemplateManager {
         internal var _template: JSONObject? = template
         internal var _fill_empty: Boolean = fill_empty
         private var _fields: HashMap<String, String>? = null
-        internal var _note_type: NoteType = notetype ?: note.model()
+        internal var _note_type: NotetypeJson = notetype ?: note.model()
 
         companion object {
             fun from_existing_card(card: Card, browser: Boolean): TemplateRenderContext {
@@ -137,7 +137,7 @@ class TemplateManager {
             fun from_card_layout(
                 note: Note,
                 card: Card,
-                notetype: NoteType,
+                notetype: NotetypeJson,
                 template: JSONObject,
                 fill_empty: Boolean
             ): TemplateRenderContext {

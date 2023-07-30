@@ -20,7 +20,7 @@ import android.os.Build
 import android.os.LocaleList
 import android.widget.EditText
 import androidx.annotation.CheckResult
-import com.ichi2.libanki.Model
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
 import org.json.JSONObject
 import timber.log.Timber
@@ -44,10 +44,10 @@ object LanguageHintService {
         return Locale.forLanguageTag(field.getString("ad-hint-locale"))
     }
 
-    fun setLanguageHintForField(notetypes: Notetypes, model: Model, fieldPos: Int, selectedLocale: Locale) {
-        val field = model.getField(fieldPos)
+    fun setLanguageHintForField(notetypes: Notetypes, notetype: NotetypeJson, fieldPos: Int, selectedLocale: Locale) {
+        val field = notetype.getField(fieldPos)
         field.put("ad-hint-locale", selectedLocale.toLanguageTag())
-        notetypes.save(model)
+        notetypes.save(notetype)
 
         Timber.i("Set field locale to %s", selectedLocale)
     }

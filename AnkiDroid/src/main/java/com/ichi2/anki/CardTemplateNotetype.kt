@@ -22,8 +22,8 @@ import androidx.core.os.bundleOf
 import com.ichi2.async.saveModel
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.libanki.Model
 import com.ichi2.libanki.NoteTypeId
+import com.ichi2.libanki.NotetypeJson
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.ByteArrayInputStream
@@ -31,7 +31,8 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 
-class TemporaryModel(val model: Model) {
+/** A wrapper for a notetype in JSON format with helpers for editing the notetype. */
+class CardTemplateNotetype(val notetype: NotetypeJson) {
     enum class ChangeType {
         ADD, DELETE
     }
@@ -40,7 +41,7 @@ class TemporaryModel(val model: Model) {
     var editedModelFileName: String? = null
 
     fun toBundle(): Bundle = bundleOf(
-        INTENT_MODEL_FILENAME to saveTempModel(AnkiDroidApp.instance.applicationContext, model),
+        INTENT_MODEL_FILENAME to saveTempModel(AnkiDroidApp.instance.applicationContext, notetype),
         "mTemplateChanges" to mTemplateChanges
     )
 
@@ -54,24 +55,24 @@ class TemporaryModel(val model: Model) {
 
     fun getTemplate(ord: Int): JSONObject {
         Timber.d("getTemplate() on ordinal %s", ord)
-        return model.getJSONArray("tmpls").getJSONObject(ord)
+        return notetype.getJSONArray("tmpls").getJSONObject(ord)
     }
 
     val templateCount: Int
-        get() = model.getJSONArray("tmpls").length()
+        get() = notetype.getJSONArray("tmpls").length()
 
     val modelId: NoteTypeId
-        get() = model.getLong("id")
+        get() = notetype.getLong("id")
 
     fun updateCss(css: String?) {
-        model.put("css", css)
+        notetype.put("css", css)
     }
 
     val css: String
-        get() = model.getString("css")
+        get() = notetype.getString("css")
 
     fun updateTemplate(ordinal: Int, template: JSONObject) {
-        model.getJSONArray("tmpls").put(ordinal, template)
+        notetype.getJSONArray("tmpls").put(ordinal, template)
     }
 
     fun addNewTemplate(newTemplate: JSONObject) {
@@ -88,7 +89,7 @@ class TemporaryModel(val model: Model) {
         Timber.d("saveToDatabase() called")
         dumpChanges()
         clearTempModelFiles()
-        return saveModel(collection, model, adjustedTemplateChanges)
+        return saveModel(collection, notetype, adjustedTemplateChanges)
     }
 
     /**
@@ -292,7 +293,7 @@ class TemporaryModel(val model: Model) {
          * @param bundle a Bundle that should contain persisted JSON under INTENT_MODEL_FILENAME key
          * @return re-hydrated TemporaryModel or null if there was a problem, null means should reload from database
          */
-        fun fromBundle(bundle: Bundle): TemporaryModel? {
+        fun fromBundle(bundle: Bundle): CardTemplateNotetype? {
             val editedModelFileName = bundle.getString(INTENT_MODEL_FILENAME)
             // Bundle.getString is @Nullable, so we have to check.
             if (editedModelFileName == null) {
@@ -300,13 +301,13 @@ class TemporaryModel(val model: Model) {
                 return null
             }
             Timber.d("onCreate() loading saved model file %s", editedModelFileName)
-            val tempModelJSON: Model = try {
+            val tempNotetypeJSON: NotetypeJson = try {
                 getTempModel(editedModelFileName)
             } catch (e: IOException) {
                 Timber.w(e, "Unable to load saved model file")
                 return null
             }
-            val model = TemporaryModel(tempModelJSON)
+            val model = CardTemplateNotetype(tempNotetypeJSON)
             model.loadTemplateChanges(bundle)
             return model
         }
@@ -335,12 +336,12 @@ class TemporaryModel(val model: Model) {
          * @return JSONObject holding the model, or null if there was a problem
          */
         @Throws(IOException::class)
-        fun getTempModel(tempModelFileName: String): Model {
+        fun getTempModel(tempModelFileName: String): NotetypeJson {
             Timber.d("getTempModel() fetching tempModel %s", tempModelFileName)
             try {
                 ByteArrayOutputStream().use { target ->
                     compat.copyFile(tempModelFileName, target)
-                    return Model(target.toString())
+                    return NotetypeJson(target.toString())
                 }
             } catch (e: IOException) {
                 Timber.e(e, "Unable to read+parse tempModel from file %s", tempModelFileName)
@@ -371,7 +372,7 @@ class TemporaryModel(val model: Model) {
          * @param ord int representing an ordinal in the model, that might be an unsaved addition
          * @return boolean true if it is a pending addition from this editing session
          */
-        fun isOrdinalPendingAdd(model: TemporaryModel, ord: Int): Boolean {
+        fun isOrdinalPendingAdd(model: CardTemplateNotetype, ord: Int): Boolean {
             for (i in model.templateChanges.indices) {
                 // commented out to make the code compile, why is this unused?
                 // val change = model.templateChanges[i]
@@ -395,7 +396,7 @@ class TemporaryModel(val model: Model) {
          * @param changesIndex the index of the template in the changes array
          * @return either ordinal adjusted by any pending deletes if it is a pending add, or -1 if the ordinal is not an add
          */
-        fun getAdjustedAddOrdinalAtChangeIndex(model: TemporaryModel, changesIndex: Int): Int {
+        fun getAdjustedAddOrdinalAtChangeIndex(model: CardTemplateNotetype, changesIndex: Int): Int {
             if (changesIndex >= model.templateChanges.size) {
                 return -1
             }

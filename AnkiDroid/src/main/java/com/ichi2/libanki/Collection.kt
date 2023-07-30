@@ -372,7 +372,7 @@ open class Collection(
      * @param m The model to use for the new note
      * @return The new note
      */
-    fun newNote(m: Model): Note {
+    fun newNote(m: NotetypeJson): Note {
         return Note(this, m)
     }
 

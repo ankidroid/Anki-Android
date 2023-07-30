@@ -37,7 +37,7 @@ class Note : Cloneable {
     @get:VisibleForTesting
     var guId: String? = null
         private set
-    private lateinit var mModel: Model
+    private lateinit var mNotetype: NotetypeJson
 
     var mid: Long = 0
         private set
@@ -60,17 +60,17 @@ class Note : Cloneable {
         load()
     }
 
-    constructor(col: Collection, model: Model) {
+    constructor(col: Collection, notetype: NotetypeJson) {
         this.col = col
         this.id = 0
         guId = Utils.guid64()
-        mModel = model
-        mid = model.getLong("id")
+        mNotetype = notetype
+        mid = notetype.getLong("id")
         tags = ArrayList()
-        fields = Array(model.getJSONArray("flds").length()) { "" }
+        fields = Array(notetype.getJSONArray("flds").length()) { "" }
         mFlags = 0
         mData = ""
-        mFMap = Notetypes.fieldMap(mModel)
+        mFMap = Notetypes.fieldMap(mNotetype)
         mScm = col.scm
     }
 
@@ -92,14 +92,14 @@ class Note : Cloneable {
                 fields = Utils.splitFields(cursor.getString(5))
                 mFlags = cursor.getInt(6)
                 mData = cursor.getString(7)
-                mModel = col.notetypes.get(mid)!!
-                mFMap = Notetypes.fieldMap(mModel)
+                mNotetype = col.notetypes.get(mid)!!
+                mFMap = Notetypes.fieldMap(mNotetype)
                 mScm = col.scm
             }
     }
 
     fun reloadModel() {
-        mModel = col.notetypes.get(mid)!!
+        mNotetype = col.notetypes.get(mid)!!
     }
 
     /*
@@ -140,8 +140,8 @@ class Note : Cloneable {
     }
 
     @KotlinCleanup("replace with variable")
-    fun model(): Model {
-        return mModel
+    fun model(): NotetypeJson {
+        return mNotetype
     }
 
     /**

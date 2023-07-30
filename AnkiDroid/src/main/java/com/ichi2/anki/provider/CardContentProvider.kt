@@ -707,7 +707,7 @@ class CardContentProvider : ContentProvider() {
 
         // for caching model information (so we don't have to query for each note)
         var modelId = Notetypes.NOT_FOUND_NOTE_TYPE
-        var model: Model? = null
+        var model: NotetypeJson? = null
         val sqldb = col.db.database
         return try {
             var result = 0
@@ -877,7 +877,7 @@ class CardContentProvider : ContentProvider() {
                 run {
                     val notetypes: Notetypes = col.notetypes
                     val mid: NoteTypeId = getModelIdFromUri(uri, col)
-                    val existingModel: Model = notetypes.get(mid)
+                    val existingModel: NotetypeJson = notetypes.get(mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
                     val name: String = values!!.getAsString(FlashCardsContract.CardTemplate.NAME)
                     val qfmt: String = values.getAsString(FlashCardsContract.CardTemplate.QUESTION_FORMAT)
@@ -906,7 +906,7 @@ class CardContentProvider : ContentProvider() {
                 run {
                     val notetypes: Notetypes = col.notetypes
                     val mid: NoteTypeId = getModelIdFromUri(uri, col)
-                    val existingModel: Model = notetypes.get(mid)
+                    val existingModel: NotetypeJson = notetypes.get(mid)
                         ?: throw IllegalArgumentException("model missing: $mid")
                     val name: String = values!!.getAsString(FlashCardsContract.Model.FIELD_NAME)
                         ?: throw IllegalArgumentException("field name missing for model: $mid")
@@ -1132,20 +1132,20 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun addTemplateToCursor(tmpl: JSONObject, model: Model?, id: Int, notetypes: Notetypes, rv: MatrixCursor, columns: Array<String>) {
+    private fun addTemplateToCursor(tmpl: JSONObject, notetype: NotetypeJson?, id: Int, notetypes: Notetypes, rv: MatrixCursor, columns: Array<String>) {
         try {
             val rb = rv.newRow()
             for (column in columns) {
                 when (column) {
                     FlashCardsContract.CardTemplate._ID -> rb.add(id)
-                    FlashCardsContract.CardTemplate.MODEL_ID -> rb.add(model!!.getLong("id"))
+                    FlashCardsContract.CardTemplate.MODEL_ID -> rb.add(notetype!!.getLong("id"))
                     FlashCardsContract.CardTemplate.ORD -> rb.add(tmpl.getInt("ord"))
                     FlashCardsContract.CardTemplate.NAME -> rb.add(tmpl.getString("name"))
                     FlashCardsContract.CardTemplate.QUESTION_FORMAT -> rb.add(tmpl.getString("qfmt"))
                     FlashCardsContract.CardTemplate.ANSWER_FORMAT -> rb.add(tmpl.getString("afmt"))
                     FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT -> rb.add(tmpl.getString("bqfmt"))
                     FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT -> rb.add(tmpl.getString("bafmt"))
-                    FlashCardsContract.CardTemplate.CARD_COUNT -> rb.add(notetypes.tmplUseCount(model!!, tmpl.getInt("ord")))
+                    FlashCardsContract.CardTemplate.CARD_COUNT -> rb.add(notetypes.tmplUseCount(notetype!!, tmpl.getInt("ord")))
                     else -> throw UnsupportedOperationException(
                         "Support for column \"$column\" is not implemented"
                     )

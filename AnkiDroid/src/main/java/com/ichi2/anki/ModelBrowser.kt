@@ -40,7 +40,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.getAllModelsAndNotesCount
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Model
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.StdModels
 import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager
@@ -62,7 +62,7 @@ class ModelBrowser : AnkiActivity() {
     private var mModelListPosition = 0
 
     // Used exclusively to display model name
-    private var mModels: ArrayList<Model>? = null
+    private var mNotetypes: ArrayList<NotetypeJson>? = null
     private var mCardCounts: ArrayList<Int>? = null
     private var mModelIds: ArrayList<Long>? = null
     private var mModelDisplayList: ArrayList<DisplayPair>? = null
@@ -162,7 +162,7 @@ class ModelBrowser : AnkiActivity() {
                 getAllModelsAndNotesCount()
             }
             Timber.d("doInBackgroundLoadModels: Completed, refreshing UI")
-            mModels = ArrayList(allModelsAndNotesCount.first)
+            mNotetypes = ArrayList(allModelsAndNotesCount.first)
             mCardCounts = ArrayList(allModelsAndNotesCount.second)
             fillModelList()
         }
@@ -175,11 +175,11 @@ class ModelBrowser : AnkiActivity() {
      */
     private fun fillModelList() {
         // Anonymous class for handling list item clicks
-        mModelDisplayList = ArrayList(mModels!!.size)
-        mModelIds = ArrayList(mModels!!.size)
-        for (i in mModels!!.indices) {
-            mModelIds!!.add(mModels!![i].getLong("id"))
-            mModelDisplayList!!.add(DisplayPair(mModels!![i].getString("name"), mCardCounts!![i]))
+        mModelDisplayList = ArrayList(mNotetypes!!.size)
+        mModelIds = ArrayList(mNotetypes!!.size)
+        for (i in mNotetypes!!.indices) {
+            mModelIds!!.add(mNotetypes!![i].getLong("id"))
+            mModelDisplayList!!.add(DisplayPair(mNotetypes!![i].getString("name"), mCardCounts!![i]))
         }
         modelDisplayAdapter = DisplayPairAdapter(this, mModelDisplayList)
         mModelListView!!.adapter = modelDisplayAdapter
@@ -231,7 +231,7 @@ class ModelBrowser : AnkiActivity() {
 
         open class ModelInfo(val name: String, val label: String)
         class StandardModelInfo(val model: StdModels, name: String, label: String) : ModelInfo(name, label)
-        class UserModelInfo(val model: Model, name: String, label: String) : ModelInfo(name, label)
+        class UserModelInfo(val notetype: NotetypeJson, name: String, label: String) : ModelInfo(name, label)
 
         val infos = sequence {
             StdModels.STD_MODELS.forEach { model ->
@@ -240,7 +240,7 @@ class ModelBrowser : AnkiActivity() {
                 yield(StandardModelInfo(model, name, label))
             }
 
-            mModels!!.forEach { model ->
+            mNotetypes!!.forEach { model ->
                 val name = model.getString("name")
                 val label = String.format(cloneTemplate, name)
                 yield(UserModelInfo(model, name, label))
@@ -270,7 +270,7 @@ class ModelBrowser : AnkiActivity() {
                 sourceModelInfo.model.add(mCol)
             } else {
                 sourceModelInfo as UserModelInfo // Kotlin does not yet support sealed local classes
-                sourceModelInfo.model.deepClone().apply {
+                sourceModelInfo.notetype.deepClone().apply {
                     put("id", StdModels.BASIC_MODEL.add(mCol).getLong("id"))
                 }
             }
@@ -335,25 +335,25 @@ class ModelBrowser : AnkiActivity() {
         modelNameInput = FixedEditText(this)
         modelNameInput?.let { modelNameEditText ->
             modelNameEditText.isSingleLine = true
-            modelNameEditText.setText(mModels!![mModelListPosition].getString("name"))
+            modelNameEditText.setText(mNotetypes!![mModelListPosition].getString("name"))
             modelNameEditText.setSelection(modelNameEditText.text.length)
 
             MaterialDialog(this).show {
                 customView(view = modelNameEditText, scrollable = true)
                 title(R.string.rename_model)
                 positiveButton(R.string.rename) {
-                    val model = mModels!![mModelListPosition]
+                    val model = mNotetypes!![mModelListPosition]
                     var name = modelNameEditText.text.toString() // Anki desktop doesn't allow double quote characters in deck names
                         .replace("[\"\\n\\r]".toRegex(), "")
-                    if (mModels!!.any { it.getString("name") == name }) {
+                    if (mNotetypes!!.any { it.getString("name") == name }) {
                         name = randomizeName(name)
                     }
                     if (name.isNotEmpty()) {
                         model.put("name", name)
                         mCol.notetypes.update(model)
-                        mModels!![mModelListPosition].put("name", name)
+                        mNotetypes!![mModelListPosition].put("name", name)
                         mModelDisplayList!![mModelListPosition] = DisplayPair(
-                            mModels!![mModelListPosition].getString("name"),
+                            mNotetypes!![mModelListPosition].getString("name"),
                             mCardCounts!![mModelListPosition]
                         )
                         refreshList()
@@ -412,7 +412,7 @@ class ModelBrowser : AnkiActivity() {
             }
             refreshList()
         }
-        mModels!!.removeAt(mModelListPosition)
+        mNotetypes!!.removeAt(mModelListPosition)
         mModelIds!!.removeAt(mModelListPosition)
         mModelDisplayList!!.removeAt(mModelListPosition)
         mCardCounts!!.removeAt(mModelListPosition)

@@ -25,8 +25,8 @@ import com.ichi2.anki.cardviewer.PreviewLayout.Companion.createAndDisplay
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.utils.NoteUtils
@@ -42,7 +42,7 @@ import java.io.IOException
 @NeedsTest("after switch to new schema as default, add test to confirm audio tags rendered")
 open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private var mEditedModelFileName: String? = null
-    private var mEditedModel: Model? = null
+    private var mEditedNotetype: NotetypeJson? = null
     private var mOrdinal = 0
 
     /** The index of the card in cardList to show  */
@@ -78,7 +78,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
         if (parameters != null) {
             mNoteEditorBundle = parameters.getBundle("noteEditorBundle")
-            mEditedModelFileName = parameters.getString(TemporaryModel.INTENT_MODEL_FILENAME)
+            mEditedModelFileName = parameters.getString(CardTemplateNotetype.INTENT_MODEL_FILENAME)
             mCardList = parameters.getLongArray("cardList")
             mOrdinal = parameters.getInt("ordinal")
             mCardListIndex = parameters.getInt("cardListIndex")
@@ -87,8 +87,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         if (mEditedModelFileName != null) {
             Timber.d("onCreate() loading edited model from %s", mEditedModelFileName)
             try {
-                mEditedModel = TemporaryModel.getTempModel(mEditedModelFileName!!)
-                mCardType = mEditedModel!!.optString("name")
+                mEditedNotetype = CardTemplateNotetype.getTempModel(mEditedModelFileName!!)
+                mCardType = mEditedNotetype!!.optString("name")
             } catch (e: IOException) {
                 Timber.w(e, "Unable to load temp model from file %s", mEditedModelFileName)
                 closeCardTemplatePreviewer()
@@ -111,7 +111,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private fun closeCardTemplatePreviewer() {
         Timber.d("CardTemplatePreviewer:: closeCardTemplatePreviewer()")
         setResult(RESULT_OK)
-        TemporaryModel.clearTempModelFiles()
+        CardTemplateNotetype.clearTempModelFiles()
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
@@ -214,7 +214,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(TemporaryModel.INTENT_MODEL_FILENAME, mEditedModelFileName)
+        outState.putString(CardTemplateNotetype.INTENT_MODEL_FILENAME, mEditedModelFileName)
         outState.putLongArray("cardList", mCardList)
         outState.putInt("ordinal", mOrdinal)
         outState.putInt("cardListIndex", mCardListIndex)
@@ -241,9 +241,9 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // card template with associated card due to opening from note editor
             if (mCardList != null && mCardListIndex >= 0 && mCardListIndex < mCardList!!.size) {
                 currentCard = PreviewerCard(col, mCardList!![mCardListIndex])
-            } else if (mEditedModel != null) { // bare note type (not coming from note editor), or new card template
+            } else if (mEditedNotetype != null) { // bare note type (not coming from note editor), or new card template
                 Timber.d("onCreate() CardTemplatePreviewer started with edited model and template index, displaying blank to preview formatting")
-                currentCard = getDummyCard(mEditedModel!!, mOrdinal)
+                currentCard = getDummyCard(mEditedNotetype!!, mOrdinal)
                 if (currentCard == null) {
                     showThemedToast(applicationContext, getString(R.string.invalid_template), false)
                     closeCardTemplatePreviewer()
@@ -268,7 +268,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     private fun setCurrentCardFromNoteEditorBundle(col: Collection): Card? {
         assert(mNoteEditorBundle != null)
-        currentCard = getDummyCard(mEditedModel, templateIndex, getBundleEditFields(mNoteEditorBundle))
+        currentCard = getDummyCard(mEditedNotetype, templateIndex, getBundleEditFields(mNoteEditorBundle))
         // example: a basic card with no fields provided
         if (currentCard == null) {
             return null
@@ -310,23 +310,23 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
      * This method generates a note from a sample model, or fails if invalid
      * @param index The index in the templates for the model. NOT `ord`
      */
-    fun getDummyCard(model: Model, index: Int): Card? {
-        return getDummyCard(model, index, model.fieldsNames.toMutableList())
+    fun getDummyCard(notetype: NotetypeJson, index: Int): Card? {
+        return getDummyCard(notetype, index, notetype.fieldsNames.toMutableList())
     }
 
     /**
      * This method generates a note from a sample model, or fails if invalid
      * @param index The index in the templates for the model. NOT `ord`
      */
-    private fun getDummyCard(model: Model?, index: Int, fieldValues: MutableList<String>): Card? {
+    private fun getDummyCard(notetype: NotetypeJson?, index: Int, fieldValues: MutableList<String>): Card? {
         Timber.d("getDummyCard() Creating dummy note for index %s", index)
-        if (model == null) {
+        if (notetype == null) {
             return null
         }
         if (mAllFieldsNull) {
             getLabels(fieldValues)
         }
-        val n = col.newNote(model)
+        val n = col.newNote(notetype)
         var i = 0
         while (i < fieldValues.size && i < n.fields.size) {
             if (mAllFieldsNull) {
@@ -378,8 +378,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             get() = mNote != null
 
         /** Override the method that fetches the model so we can render unsaved models  */
-        override fun model(): Model {
-            return mEditedModel ?: super.model()
+        override fun model(): NotetypeJson {
+            return mEditedNotetype ?: super.model()
         }
 
         override fun render_output(reload: Boolean, browser: Boolean): TemplateRenderOutput {
