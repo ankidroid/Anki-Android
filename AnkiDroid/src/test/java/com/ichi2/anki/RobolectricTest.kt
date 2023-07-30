@@ -48,6 +48,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
 import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
 import net.ankiweb.rsdroid.BackendException
@@ -175,6 +176,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
 
             TimeManager.reset()
         }
+        Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
     }
 
@@ -642,6 +644,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         dispatchTimeoutMs: Long = 60_000L,
         testBody: suspend TestScope.() -> Unit
     ) {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
         runTest(context, dispatchTimeoutMs.milliseconds) {
             CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
             testBody()

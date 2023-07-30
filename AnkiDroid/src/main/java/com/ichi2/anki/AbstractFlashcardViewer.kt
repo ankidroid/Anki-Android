@@ -404,9 +404,7 @@ abstract class AbstractFlashcardViewer :
     suspend fun saveEditedCard() {
         val card = editorCard!!
         withProgress {
-            // TODO: this should be undoableOp(); need to investigate why two tests
-            // hang when it is used
-            withCol {
+            undoableOp {
                 val changes = updateNote(card.note())
                 if (col.decks.active().contains(card.did) || !canAccessScheduler()) {
                     card.apply {

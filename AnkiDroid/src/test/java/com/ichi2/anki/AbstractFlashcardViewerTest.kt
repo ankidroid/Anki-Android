@@ -149,7 +149,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         assertThat(viewer.correctTypedAnswer, equalTo("David"))
         assertThat(viewer.cardContent, not(containsString("World")))
-        assertThat(viewer.cardContent, containsString("David"))
+        // the saving will have caused the screen to switch back to question side
+        assertThat(viewer.cardContent, containsString("Hello"))
     }
 
     @Test
