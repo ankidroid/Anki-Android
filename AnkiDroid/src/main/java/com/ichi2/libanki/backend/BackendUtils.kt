@@ -32,10 +32,6 @@ object BackendUtils {
         return JSONArray(json.toStringUtf8())
     }
 
-    fun jsonToString(json: ByteString): String {
-        return json.toStringUtf8()
-    }
-
     @RustCleanup("Confirm edge cases")
     fun toByteString(conf: Any?): ByteString {
         val asString: String = conf.toString()

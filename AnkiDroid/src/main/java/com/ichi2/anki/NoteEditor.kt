@@ -709,7 +709,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             val noOfAddedCards = withProgress(resources.getString(R.string.saving_facts)) {
                 CollectionManager.withCol {
                     notetypes.current().put("tags", tags)
-                    notetypes.setChanged()
                     db.executeInTransaction {
                         addNote(mEditorNote!!)
                     }

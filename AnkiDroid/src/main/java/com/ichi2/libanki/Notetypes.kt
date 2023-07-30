@@ -27,7 +27,7 @@
 
 // This file is called models.py in the desktop code for legacy reasons.
 
-@file:Suppress("LiftReturnOrAssignment", "FunctionName", "unused")
+@file:Suppress("LiftReturnOrAssignment", "FunctionName")
 
 package com.ichi2.libanki
 
@@ -57,8 +57,6 @@ import org.json.JSONObject
 import timber.log.Timber
 
 class NoteTypeNameID(val name: String, val id: NoteTypeId)
-class NoteTypeNameIDUseCount(val id: Long, val name: String, val useCount: UInt)
-class BackendNote(val fields: MutableList<String>)
 
 private typealias int = Long
 
@@ -151,14 +149,6 @@ class Notetypes(val col: Collection) {
     fun load(@Suppress("UNUSED_PARAMETER") json: String) {
     }
 
-    /** legacy */
-
-    @RustCleanup("not necessary in V16")
-    fun ensureNotEmpty(): Boolean {
-        Timber.w("ensureNotEmpty is not necessary in V16")
-        return false
-    }
-
     /*
     # Caching
     #############################################################
@@ -180,10 +170,6 @@ class Notetypes(val col: Collection) {
         return _cache.get(ntid)
     }
 
-    fun _clear_cache() {
-        _cache = Dict()
-    }
-
     /*
     # Listing note types
     #############################################################
@@ -195,17 +181,7 @@ class Notetypes(val col: Collection) {
         }.asSequence()
     }
 
-    fun all_use_counts(): Sequence<NoteTypeNameIDUseCount> {
-        return col.backend.getNotetypeNamesAndCounts().map {
-            NoteTypeNameIDUseCount(it.id, it.name, it.useCount.toUInt())
-        }.asSequence()
-    }
-
     /* legacy */
-
-    fun allNames(): List<String> {
-        return all_names_and_ids().map { it.name }.toMutableList()
-    }
 
     fun ids(): Set<int> {
         return all_names_and_ids().map { it.id }.toSet()
@@ -312,13 +288,6 @@ class Notetypes(val col: Collection) {
         remove(m.id)
     }
 
-    fun remove_all_notetypes() {
-        for (nt in all_names_and_ids()) {
-            _remove_from_cache(nt.id)
-            col.backend.removeNotetype(nt.id)
-        }
-    }
-
     /** Modifies schema. */
     fun remove(id: int) {
         _remove_from_cache(id)
@@ -401,26 +370,6 @@ class Notetypes(val col: Collection) {
     }
 
     /*
-    # Fields
-    ##################################################
-     */
-
-    /** Mapping of field name : (ord, field). */
-    fun fieldMap(m: NoteType): Map<str, Tuple<int, Field>> {
-        return m.flds.jsonObjectIterable().map { f ->
-            Pair(f.getString("name"), Pair(f.getLong("ord"), f))
-        }.toMap()
-    }
-
-    fun fieldNames(m: NoteType): List<str> {
-        return m.flds.jsonObjectIterable().map { it.getString("name") }.toMutableList()
-    }
-
-    fun sortIdx(m: NoteType): Int {
-        return m.sortf
-    }
-
-    /*
     # Adding & changing fields
     ##################################################
      */
@@ -475,16 +424,6 @@ class Notetypes(val col: Collection) {
      */
 
     fun newField(name: str) = new_field(name)
-
-    @RustCleanup("remove")
-    fun beforeUpload() {
-        // intentionally blank - not needed
-    }
-
-    @RustCleanup("Unused ")
-    fun setChanged() {
-        // intentionally blank - not needed
-    }
 
     @RustCleanup("Only exists for interface compatibility")
     fun getModels(): Map<Long, NoteType> = all().map { Pair(it.id, it) }.toMap()
@@ -690,22 +629,6 @@ class Notetypes(val col: Collection) {
     }
 
     /*
-    # Cloze
-    ##########################################################################
-     */
-
-    @Suppress("UNUSED_PARAMETER")
-    fun _availClozeOrds(
-        m: NoteType,
-        flds: str,
-        allowEmpty: bool = true
-    ): kotlin.collections.Collection<Int> {
-        TODO("should no longer be needed")
-//        print("_availClozeOrds() is deprecated; use note.cloze_numbers_in_fields()")
-//        return modelsBackend.cloze_numbers_in_note(listOf(flds))
-    }
-
-    /*
      * Other stuff NOT IN LIBANKI
      * ***********************************************************************************************
      */
@@ -752,26 +675,6 @@ class Notetypes(val col: Collection) {
         }
         Timber.d("Deleting these cards will not orphan notes.")
         return cids
-    }
-
-    enum class AllowEmpty {
-        TRUE, FALSE, ONLY_CLOZE;
-
-        companion object {
-            /**
-             * @param allowEmpty a Boolean representing whether empty note should be allowed. Null is understood as default
-             * @return AllowEmpty similar to the boolean
-             */
-            fun fromBoolean(allowEmpty: Boolean?): AllowEmpty {
-                return if (allowEmpty == null) {
-                    ONLY_CLOZE
-                } else if (allowEmpty == true) {
-                    TRUE
-                } else {
-                    FALSE
-                }
-            }
-        }
     }
 
     // These are all legacy and should be removed when possible
