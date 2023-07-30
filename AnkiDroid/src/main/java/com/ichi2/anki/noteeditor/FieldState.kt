@@ -24,7 +24,7 @@ import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.libanki.Model
-import com.ichi2.libanki.Models
+import com.ichi2.libanki.Notetypes
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
 import org.json.JSONObject
@@ -94,7 +94,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
     private fun getFields(type: FieldChangeType): Array<Array<String>> {
         if (type.type == Type.REFRESH_WITH_MAP) {
             val items = editor.fieldsFromSelectedNote
-            val fMapNew = Models.fieldMap(type.newModel!!)
+            val fMapNew = Notetypes.fieldMap(type.newModel!!)
             return fromFieldMap(editor, items, fMapNew, type.modelChangeFieldMap)
         }
         return editor.fieldsFromSelectedNote

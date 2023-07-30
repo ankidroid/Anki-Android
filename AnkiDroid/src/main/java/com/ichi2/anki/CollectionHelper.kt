@@ -539,7 +539,7 @@ open class CollectionHelper {
          * No-op if data is already fetched
          */
         fun loadCollectionComplete(col: Collection) {
-            col.models
+            col.notetypes
         }
 
         @Throws(UnknownDatabaseVersionException::class)

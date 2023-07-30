@@ -341,7 +341,7 @@ class DeckPickerTest : RobolectricTest() {
             )
             assertThat(
                 "Collection Models Loaded",
-                d.col.models,
+                d.col.notetypes,
                 notNullValue()
             )
         } finally {

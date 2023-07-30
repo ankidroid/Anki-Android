@@ -780,9 +780,9 @@ open class SchedV2Test : RobolectricTest() {
         cconf.getJSONObject("rev").put("perDay", 10)
         col.decks.updateConf(cconf)
         col.decks.setConf(child, cconf.getLong("id"))
-        val m = col.models.current()
+        val m = col.notetypes.current()
         m.put("did", child.getLong("id"))
-        col.models.save(m, false)
+        col.notetypes.save(m, false)
 
         // add some cards
         for (i in 0..19) {
@@ -1312,13 +1312,13 @@ open class SchedV2Test : RobolectricTest() {
     fun test_ordcycleV2() {
         val col = colV2
         // add two more templates and set second active
-        val m = col.models.current()
-        val mm = col.models
-        var t = Models.newTemplate("Reverse")
+        val m = col.notetypes.current()
+        val mm = col.notetypes
+        var t = Notetypes.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
         mm.addTemplateModChanged(m, t)
-        t = Models.newTemplate("f2")
+        t = Notetypes.newTemplate("f2")
         t.put("qfmt", "{{Front}}1")
         t.put("afmt", "{{Back}}")
         mm.addTemplateModChanged(m, t)

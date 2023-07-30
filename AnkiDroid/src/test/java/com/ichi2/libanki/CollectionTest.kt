@@ -93,9 +93,9 @@ class CollectionTest : RobolectricTest() {
         var n = col.addNote(note)
         assertEquals(1, n)
         // test multiple cards - add another template
-        val m = col.models.current()
-        val mm = col.models
-        val t = Models.newTemplate("Reverse")
+        val m = col.notetypes.current()
+        val mm = col.notetypes
+        val t = Notetypes.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
         mm.addTemplateModChanged(m, t)
@@ -164,18 +164,18 @@ class CollectionTest : RobolectricTest() {
     fun test_timestamps() {
         val col = col
         val stdModelSize = StdModels.STD_MODELS.size
-        assertEquals(col.models.all().size, stdModelSize)
+        assertEquals(col.notetypes.all().size, stdModelSize)
         for (i in 0..99) {
             StdModels.BASIC_MODEL.add(col)
         }
-        assertEquals(col.models.all().size, (100 + stdModelSize))
+        assertEquals(col.notetypes.all().size, (100 + stdModelSize))
     }
 
     @Test
     @Ignore("Pending port of media search from Rust code")
     fun test_furigana() {
         val col = col
-        val mm = col.models
+        val mm = col.notetypes
         val m = mm.current()
         // filter should work
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}")

@@ -193,8 +193,8 @@ open class Collection(
         return Tags(this)
     }
 
-    protected open fun initModels(): Models {
-        return Models(this)
+    protected open fun initModels(): Notetypes {
+        return Notetypes(this)
     }
 
     fun name(): String {
@@ -288,7 +288,7 @@ open class Collection(
     }
 
     fun load() {
-        models = initModels()
+        notetypes = initModels()
         decks = initDecks()
         config = initConf()
     }
@@ -364,7 +364,7 @@ open class Collection(
      * @return The new note
      */
     fun newNote(forDeck: Boolean = true): Note {
-        return newNote(models.current(forDeck))
+        return newNote(notetypes.current(forDeck))
     }
 
     /**
@@ -670,14 +670,14 @@ open class Collection(
         }
         val badNotes = db.queryScalar(
             "select 1 from notes where id not in (select distinct nid from cards) " +
-                "or mid not in " + Utils.ids2str(models.ids()) + " limit 1"
+                "or mid not in " + Utils.ids2str(notetypes.ids()) + " limit 1"
         ) > 0
         // notes without cards or models
         if (badNotes) {
             return false
         }
         // invalid ords
-        for (m in models.all()) {
+        for (m in notetypes.all()) {
             // ignore clozes
             if (m.getInt("type") != Consts.MODEL_STD) {
                 continue
@@ -768,7 +768,7 @@ open class Collection(
         )
     }
 
-    lateinit var models: Models
+    lateinit var notetypes: Notetypes
         protected set
 
     //endregion

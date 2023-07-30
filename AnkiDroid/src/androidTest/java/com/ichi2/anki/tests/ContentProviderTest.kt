@@ -185,10 +185,10 @@ class ContentProviderTest : InstrumentedTest() {
 
     @Throws(Exception::class)
     private fun removeAllModelsByName(col: com.ichi2.libanki.Collection, name: String) {
-        var testModel = col.models.byName(name)
+        var testModel = col.notetypes.byName(name)
         while (testModel != null) {
-            col.models.rem(testModel)
-            testModel = col.models.byName(name)
+            col.notetypes.rem(testModel)
+            testModel = col.notetypes.byName(name)
         }
     }
 
@@ -247,7 +247,7 @@ class ContentProviderTest : InstrumentedTest() {
             TEST_NOTE_FIELDS
         )
         assertEquals("Check that tag was set correctly", TEST_TAG, addedNote.tags[0])
-        val model: JSONObject? = col.models.get(mModelId)
+        val model: JSONObject? = col.notetypes.get(mModelId)
         assertNotNull("Check model", model)
         val expectedNumCards = model!!.getJSONArray("tmpls").length()
         assertEquals("Check that correct number of cards generated", expectedNumCards, addedNote.numberOfCards())
@@ -296,7 +296,7 @@ class ContentProviderTest : InstrumentedTest() {
                 templateUri!!
             )
         )
-        model = col.models.get(modelId)
+        model = col.notetypes.get(modelId)
         assertNotNull("Check model", model)
         val template = model!!.getJSONArray("tmpls").getJSONObject(expectedOrd)
         assertEquals(
@@ -313,7 +313,7 @@ class ContentProviderTest : InstrumentedTest() {
         assertEquals("Check afmt", TEST_MODEL_AFMT[testIndex], template.getString("afmt"))
         assertEquals("Check bqfmt", TEST_MODEL_QFMT[testIndex], template.getString("bqfmt"))
         assertEquals("Check bafmt", TEST_MODEL_AFMT[testIndex], template.getString("bafmt"))
-        col.models.rem(model)
+        col.notetypes.rem(model)
     }
 
     /**
@@ -336,7 +336,7 @@ class ContentProviderTest : InstrumentedTest() {
         assertNotNull("Check field uri", fieldUri)
         // Ensure that the changes are physically saved to the DB
         col = reopenCol()
-        model = col.models.get(modelId)
+        model = col.notetypes.get(modelId)
         // Test the field is as expected
         val fieldId = ContentUris.parseId(fieldUri!!)
         assertEquals("Check field id", initialFieldCount.toLong(), fieldId)
@@ -352,7 +352,7 @@ class ContentProviderTest : InstrumentedTest() {
             TEST_FIELD_NAME,
             fldsArr.getJSONObject(fldsArr.length() - 1).optString("name", "")
         )
-        col.models.rem(model)
+        col.notetypes.rem(model)
     }
 
     /**
@@ -561,7 +561,7 @@ class ContentProviderTest : InstrumentedTest() {
         val mid = modelUri.lastPathSegment!!.toLong()
         var col = reopenCol()
         try {
-            var model: JSONObject? = col.models.get(mid)
+            var model: JSONObject? = col.notetypes.get(mid)
             assertNotNull("Check model", model)
             assertEquals("Check model name", TEST_MODEL_NAME, model!!.getString("name"))
             assertEquals(
@@ -590,7 +590,7 @@ class ContentProviderTest : InstrumentedTest() {
                 `is`(greaterThan(0))
             )
             col = reopenCol()
-            model = col.models.get(mid)
+            model = col.notetypes.get(mid)
             assertNotNull("Check model", model)
             assertEquals("Check css", TEST_MODEL_CSS, model!!.getString("css"))
             // Update each of the templates in model (to test updating MODELS_ID_TEMPLATES_ID Uri)
@@ -614,7 +614,7 @@ class ContentProviderTest : InstrumentedTest() {
                     )
                 )
                 col = reopenCol()
-                model = col.models.get(mid)
+                model = col.notetypes.get(mid)
                 assertNotNull("Check model", model)
                 val template = model!!.getJSONArray("tmpls").getJSONObject(i)
                 assertEquals(
@@ -631,9 +631,9 @@ class ContentProviderTest : InstrumentedTest() {
             // Delete the model (this will force a full-sync)
             col.modSchemaNoCheck()
             try {
-                val model = col.models.get(mid)
+                val model = col.notetypes.get(mid)
                 assertNotNull("Check model", model)
-                col.models.rem(model!!)
+                col.notetypes.rem(model!!)
             } catch (e: ConfirmModSchemaException) {
                 // This will never happen
             }
@@ -1271,7 +1271,7 @@ class ContentProviderTest : InstrumentedTest() {
             isEmulator()
         )
         val col = col
-        col.models.all()[0].put("did", JSONObject.NULL)
+        col.notetypes.all()[0].put("did", JSONObject.NULL)
 
         val cr = contentResolver
         // Query all available models
@@ -1325,7 +1325,7 @@ class ContentProviderTest : InstrumentedTest() {
             fields: Array<String>,
             tag: String
         ): Uri {
-            val newNote = Note(col, col.models.get(mid)!!)
+            val newNote = Note(col, col.notetypes.get(mid)!!)
             for (idx in fields.indices) {
                 newNote.setField(idx, fields[idx])
             }

@@ -54,7 +54,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Models.Companion.NOT_FOUND_NOTE_TYPE
+import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.FunctionalInterfaces
@@ -170,7 +170,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         // The first time the activity loads it has a model id but no edits yet, so no edited model
         // take the passed model id load it up for editing
         if (tempModel == null) {
-            tempModel = TemporaryModel(Model(col.models.get(mModelId).toString()))
+            tempModel = TemporaryModel(Model(col.notetypes.get(mModelId).toString()))
             // Timber.d("onCollectionLoaded() model is %s", mTempModel.getModel().toString(2));
         }
         mFieldNames = tempModel!!.model.fieldsNames
@@ -194,7 +194,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     fun modelHasChanged(): Boolean {
-        val oldModel: JSONObject? = col.models.get(mModelId)
+        val oldModel: JSONObject? = col.notetypes.get(mModelId)
         return tempModel != null && tempModel!!.model.toString() != oldModel.toString()
     }
 
@@ -495,7 +495,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 // isOrdinalPendingAdd method will check if there are any new card types added or not,
                                 // if TempModel has new card type then numAffectedCards will be 0 by default.
                                 val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel!!, ordinal)) {
-                                    col.models.tmplUseCount(tempModel.model, ordinal)
+                                    col.notetypes.tmplUseCount(tempModel.model, ordinal)
                                 } else {
                                     0
                                 }
@@ -521,7 +521,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                                 // Show confirmation dialog
                                 val numAffectedCards = if (!TemporaryModel.isOrdinalPendingAdd(tempModel, ordinal)) {
                                     Timber.d("Ordinal is not a pending add, so we'll get the current card count for confirmation")
-                                    col.models.tmplUseCount(tempModel.model, ordinal)
+                                    col.notetypes.tmplUseCount(tempModel.model, ordinal)
                                 } else {
                                     0
                                 }
@@ -676,7 +676,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             if (!TemporaryModel.isOrdinalPendingAdd(tempModel!!, position)) {
                 val currentDeletes = tempModel.getDeleteDbOrds(position)
                 // TODO - this is a SQL query on GUI thread - should see a DeckTask conversion ideally
-                if (col.models.getCardIdsForModel(tempModel.modelId, currentDeletes) == null) {
+                if (col.notetypes.getCardIdsForModel(tempModel.modelId, currentDeletes) == null) {
                     // It is possible but unlikely that a user has an in-memory template addition that would
                     // generate cards making the deletion safe, but we don't handle that. All users who do
                     // not already have cards generated making it safe will see this error message:
@@ -809,7 +809,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                 }
             }
             model.put("tmpls", newTemplates)
-            Models._updateTemplOrds(model)
+            Notetypes._updateTemplOrds(model)
             // Make sure the fragments reinitialize, otherwise the reused ordinal causes staleness
             (mTemplateEditor.viewPager.adapter as TemplatePagerAdapter).ordinalShift()
             mTemplateEditor.viewPager.adapter!!.notifyDataSetChanged()
@@ -825,7 +825,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val oldCardIndex = requireArguments().getInt(CARD_INDEX)
             val templates = model.getJSONArray("tmpls")
             val oldTemplate = templates.getJSONObject(oldCardIndex)
-            val newTemplate = Models.newTemplate(newCardName(templates))
+            val newTemplate = Notetypes.newTemplate(newCardName(templates))
             // Set up question & answer formats
             newTemplate.put("qfmt", oldTemplate.getString("qfmt"))
             newTemplate.put("afmt", oldTemplate.getString("afmt"))

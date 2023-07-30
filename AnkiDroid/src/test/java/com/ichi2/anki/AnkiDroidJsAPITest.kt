@@ -33,7 +33,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun initTest() {
-        val models = col.models
+        val models = col.notetypes
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -58,7 +58,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiGetNextTimeTest() {
-        val models = col.models
+        val models = col.notetypes
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -81,7 +81,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiTestCurrentCard() {
-        val models = col.models
+        val models = col.notetypes
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -139,7 +139,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiJsUiTest() {
-        val models = col.models
+        val models = col.notetypes
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -168,7 +168,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiMarkAndFlagCardTest() {
         // js api test for marking and flagging card
-        val models = col.models
+        val models = col.notetypes
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -235,7 +235,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // add five notes, four will be buried and suspended
         // count number of notes, if buried or suspended then
         // in scheduling the count will be less than previous scheduling
-        val models = col.models
+        val models = col.notetypes
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -314,7 +314,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiSetCardDueTest() {
-        val models = col.models
+        val models = col.notetypes
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))

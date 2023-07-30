@@ -58,7 +58,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun addCards() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val models = col.models
+            val models = col.notetypes
             val didA = addDeck("Deck 1")
             updateDeckList()
             col.decks.select(didA)
@@ -161,7 +161,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
 
             val deckId = addDeck("Deck 1")
-            col.models.byName("Basic")!!.put("did", deckId)
+            col.notetypes.byName("Basic")!!.put("did", deckId)
             val card = addNoteUsingBasicModel("front", "back").firstCard()
             col.sched.buryCards(longArrayOf(card.id))
             updateDeckList()

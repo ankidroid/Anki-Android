@@ -39,7 +39,7 @@ class MathJaxClozeTest : RobolectricTest() {
     fun verifyMathJaxClozeCards() {
         val c = col
 
-        val note = c.newNote(c.models.byName("Cloze")!!)
+        val note = c.newNote(c.notetypes.byName("Cloze")!!)
         note.setItem("Text", "{{c1::ok}} \\(2^2\\) {{c2::not ok}} \\(2^{{c3::2}}\\) \\(x^3\\) {{c4::blah}} {{c5::text with \\(x^2\\) jax}}")
         c.addNote(note)
         assertEquals(5, note.numberOfCards())

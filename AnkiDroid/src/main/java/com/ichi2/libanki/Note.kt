@@ -70,7 +70,7 @@ class Note : Cloneable {
         fields = Array(model.getJSONArray("flds").length()) { "" }
         mFlags = 0
         mData = ""
-        mFMap = Models.fieldMap(mModel)
+        mFMap = Notetypes.fieldMap(mModel)
         mScm = col.scm
     }
 
@@ -92,14 +92,14 @@ class Note : Cloneable {
                 fields = Utils.splitFields(cursor.getString(5))
                 mFlags = cursor.getInt(6)
                 mData = cursor.getString(7)
-                mModel = col.models.get(mid)!!
-                mFMap = Models.fieldMap(mModel)
+                mModel = col.notetypes.get(mid)!!
+                mFMap = Notetypes.fieldMap(mModel)
                 mScm = col.scm
             }
     }
 
     fun reloadModel() {
-        mModel = col.models.get(mid)!!
+        mModel = col.notetypes.get(mid)!!
     }
 
     /*

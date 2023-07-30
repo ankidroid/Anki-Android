@@ -38,7 +38,7 @@ class CardTest : RobolectricTest() {
     fun `pureAnswer handled quoted html element`() {
         // <hr id="answer"> is also used
         val modelName = addNonClozeModel("Test", arrayOf("One", "Two"), "{{One}}", "{{One}}<hr id=\"answer\">{{Two}}")
-        val note = col.newNote(col.models.byName(modelName)!!)
+        val note = col.newNote(col.notetypes.byName(modelName)!!)
         note.setItem("One", "1")
         note.setItem("Two", "2")
         col.addNote(note)
@@ -75,7 +75,7 @@ class CardTest : RobolectricTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val c = note.cards()[0]
-        col.models.current().getLong("id")
+        col.notetypes.current().getLong("id")
         assertEquals(0, c.template().getInt("ord"))
     }
 
@@ -86,10 +86,10 @@ class CardTest : RobolectricTest() {
         note.setItem("Back", "")
         col.addNote(note)
         assertEquals(1, note.numberOfCards())
-        val m = col.models.current()
-        val mm = col.models
+        val m = col.notetypes.current()
+        val mm = col.notetypes
         // adding a new template should automatically create cards
-        var t = Models.newTemplate("rev")
+        var t = Notetypes.newTemplate("rev")
         t.put("qfmt", "{{Front}}1")
         t.put("afmt", "")
         mm.addTemplateModChanged(m, t)
@@ -111,8 +111,8 @@ class CardTest : RobolectricTest() {
 
     @Test
     fun test_gendeck() {
-        val cloze = col.models.byName("Cloze")
-        col.models.setCurrent(cloze!!)
+        val cloze = col.notetypes.byName("Cloze")
+        col.notetypes.setCurrent(cloze!!)
         val note = col.newNote()
         note.setItem("Text", "{{c1::one}}")
         col.addNote(note)
@@ -121,7 +121,7 @@ class CardTest : RobolectricTest() {
         // set the model to a new default col
         val newId = addDeck("new")
         cloze.put("did", newId)
-        col.models.save(cloze, false)
+        col.notetypes.save(cloze, false)
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}")
         note.flush()
@@ -135,7 +135,7 @@ class CardTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_or() {
-        val models = col.models
+        val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
         models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "A")
@@ -147,7 +147,7 @@ class CardTest : RobolectricTest() {
         tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}")
         // ensure first card is always generated,
         // because at last one card is generated
-        val tmpl = Models.newTemplate("AND_OR")
+        val tmpl = Notetypes.newTemplate("AND_OR")
         tmpl.put("qfmt", "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}")
         models.addTemplate(model, tmpl)
         models.save(model)
@@ -184,7 +184,7 @@ class CardTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_not() {
-        val models = col.models
+        val models = col.notetypes
         val model = models.byName("Basic")
         assertNotNull(model)
         val tmpls = model.getJSONArray("tmpls")
@@ -197,7 +197,7 @@ class CardTest : RobolectricTest() {
         // ensure first card is always generated,
         // because at last one card is generated
         tmpls.getJSONObject(0).put("qfmt", "{{AddIfEmpty}}{{Front}}{{First}}")
-        val tmpl = Models.newTemplate("NOT")
+        val tmpl = Notetypes.newTemplate("NOT")
         tmpl.put("qfmt", "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    ")
         models.addTemplate(model, tmpl)
         models.save(model)

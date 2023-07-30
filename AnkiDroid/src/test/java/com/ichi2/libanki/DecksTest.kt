@@ -102,9 +102,9 @@ class DecksTest : RobolectricTest() {
         assertEqualsArrayList(arrayOf(childId), decks.active())
         // parents with a different case should be handled correctly
         addDeck("ONE")
-        val m = col.models.current()
+        val m = col.notetypes.current()
         m.put("did", addDeck("one::two"))
-        col.models.save(m, false)
+        col.notetypes.save(m, false)
         val n = col.newNote()
         n.setItem("Front", "abc")
         col.addNote(n)

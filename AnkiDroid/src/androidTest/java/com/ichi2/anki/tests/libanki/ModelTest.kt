@@ -42,7 +42,7 @@ class ModelTest : InstrumentedTest() {
             "This test is flaky on API29, ignoring",
             Build.VERSION.SDK_INT != Build.VERSION_CODES.Q
         )
-        val models = mTestCol.models
+        val models = mTestCol.notetypes
         val model = models.all()[0]
         val testString = "test"
         val size = testString.length * 1024 * 1024

@@ -107,11 +107,11 @@ fun updateValuesFromDeck(
  */
 suspend fun getAllModelsAndNotesCount(): Pair<List<Model>, List<Int>> = withContext(Dispatchers.IO) {
     Timber.d("doInBackgroundLoadModels")
-    val models = withCol { models.all() }
+    val models = withCol { notetypes.all() }
     Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
     val cardCount = models.map {
         ensureActive()
-        withCol { this.models.useCount(it) }
+        withCol { this.notetypes.useCount(it) }
     }
     Pair(models, cardCount)
 }
@@ -213,7 +213,7 @@ fun saveModel(
     templateChanges: ArrayList<Array<Any>>
 ) {
     Timber.d("doInBackgroundSaveModel")
-    val oldModel = col.models.get(model.getLong("id"))
+    val oldModel = col.notetypes.get(model.getLong("id"))
 
     // TODO need to save all the cards that will go away, for undo
     //  (do I need to remove them from graves during undo also?)
@@ -226,11 +226,11 @@ fun saveModel(
             when (change[1] as TemporaryModel.ChangeType) {
                 TemporaryModel.ChangeType.ADD -> {
                     Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                    col.models.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
+                    col.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
                 }
                 TemporaryModel.ChangeType.DELETE -> {
                     Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                    col.models.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
+                    col.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
                 }
             }
         }
@@ -238,8 +238,8 @@ fun saveModel(
         // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
         // This could be done better
         model.put("mod", oldModel!!.getLong("mod"))
-        col.models.save(model, true)
-        col.models.update(model)
+        col.notetypes.save(model, true)
+        col.notetypes.update(model)
         col.reset()
 
         if (col.db.database.inTransaction()) {

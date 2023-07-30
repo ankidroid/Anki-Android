@@ -25,6 +25,8 @@
  *
  */
 
+// This file is called models.py in the desktop code for legacy reasons.
+
 @file:Suppress("LiftReturnOrAssignment", "FunctionName", "unused")
 
 package com.ichi2.libanki
@@ -118,7 +120,7 @@ var NoteType.type: Int
         put("type", value)
     }
 
-class Models(val col: Collection) {
+class Notetypes(val col: Collection) {
     /*
     # Saving/loading registry
     #############################################################
@@ -516,7 +518,7 @@ class Models(val col: Collection) {
      */
     @RustCleanup("Since Kotlin doesn't have throws, this may not be needed")
     fun addFieldInNewModel(m: Model, field: JSONObject) {
-        Assert.that(Models.isModelNew(m), "Model was assumed to be new, but is not")
+        Assert.that(Notetypes.isModelNew(m), "Model was assumed to be new, but is not")
         try {
             _addField(m, field)
         } catch (e: ConfirmModSchemaException) {
@@ -529,7 +531,7 @@ class Models(val col: Collection) {
     fun addTemplateInNewModel(m: Model, template: JSONObject) {
         // similar to addTemplate, but doesn't throw exception;
         // asserting the model is new.
-        Assert.that(Models.isModelNew(m), "Model was assumed to be new, but is not")
+        Assert.that(Notetypes.isModelNew(m), "Model was assumed to be new, but is not")
 
         try {
             _addTemplate(m, template)

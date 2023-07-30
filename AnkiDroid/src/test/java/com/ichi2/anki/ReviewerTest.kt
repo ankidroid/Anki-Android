@@ -28,7 +28,7 @@ import com.ichi2.anki.reviewer.ActionButtonStatus
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Model
-import com.ichi2.libanki.Models
+import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.MockTime
@@ -228,7 +228,7 @@ class ReviewerTest : RobolectricTest() {
     @Test
     @Flaky(os = OS.WINDOWS, "startReviewer: NullPointerException - baseDeckName")
     fun baseDeckName() {
-        val models = col.models
+        val models = col.notetypes
 
         val decks = col.decks
         val didAb = addDeck("A::B")
@@ -244,7 +244,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Test
     fun jsAnkiGetDeckName() {
-        val models = col.models
+        val models = col.notetypes
         val decks = col.decks
 
         val didAb = addDeck("A::B")
@@ -328,7 +328,7 @@ class ReviewerTest : RobolectricTest() {
 
     @Throws(ConfirmModSchemaException::class)
     private fun addNoteWithThreeCards() {
-        val models = col.models
+        val models = col.notetypes
         var m: Model? = models.copy(models.current())
         m!!.put("name", "Three")
         models.add(m)
@@ -345,7 +345,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Throws(ConfirmModSchemaException::class)
-    private fun cloneTemplate(models: Models, m: Model?, extra: String) {
+    private fun cloneTemplate(notetypes: Notetypes, m: Model?, extra: String) {
         val tmpls = m!!.getJSONArray("tmpls")
         val defaultTemplate = tmpls.getJSONObject(0)
 
@@ -356,7 +356,7 @@ class ReviewerTest : RobolectricTest() {
         newTemplate.put("name", cardName)
         newTemplate.put("qfmt", newTemplate.getString("qfmt") + extra)
 
-        models.addTemplate(m, newTemplate)
+        notetypes.addTemplate(m, newTemplate)
     }
 
     private fun displayAnswer(reviewer: Reviewer) {

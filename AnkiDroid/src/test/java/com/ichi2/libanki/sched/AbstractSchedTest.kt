@@ -233,7 +233,7 @@ class AbstractSchedTest : RobolectricTest() {
 
         fun test() {
             val col = col
-            val models = col.models
+            val models = col.notetypes
 
             val dconf = mDecks.getConf(1)
             assertThat(dconf, notNullValue())

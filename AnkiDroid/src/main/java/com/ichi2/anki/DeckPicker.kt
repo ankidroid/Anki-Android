@@ -1246,7 +1246,7 @@ open class DeckPicker :
             if (previous < 20600123) {
                 Timber.i("Fixing font-family definition in templates")
                 try {
-                    val models = col.models
+                    val models = col.notetypes
                     for (m in models.all()) {
                         val css = m.getString("css")
                         @Suppress("SpellCheckingInspection")

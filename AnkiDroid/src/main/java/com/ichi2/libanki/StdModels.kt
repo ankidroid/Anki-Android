@@ -31,27 +31,27 @@ class StdModels(
     private val defaultNameRes: Int
 ) {
     fun interface CreateStdModels {
-        fun create(mm: Models, name: String): Model
+        fun create(mm: Notetypes, name: String): Model
     }
 
-    private fun _new(mm: Models): Model {
+    private fun _new(mm: Notetypes): Model {
         val name: String = defaultName
         return _new(mm, name)
     }
 
-    private fun _new(mm: Models, name: String): Model {
+    private fun _new(mm: Notetypes, name: String): Model {
         return function.create(mm, name)
     }
 
     fun add(col: Collection, name: String): Model {
-        val mm = col.models
+        val mm = col.notetypes
         val model = _new(mm, name)
         mm.add(model)
         return model
     }
 
     fun add(col: Collection): Model {
-        val mm = col.models
+        val mm = col.notetypes
         val model = _new(mm)
         mm.add(model)
         return model
@@ -63,7 +63,7 @@ class StdModels(
     companion object {
         // / create the standard models
         val BASIC_MODEL = StdModels(
-            { mm: Models, name: String ->
+            { mm: Notetypes, name: String ->
                 val m = mm.newModel(name)
                 val frontName = AnkiDroidApp.appResources.getString(R.string.front_field_name)
                 var fm = mm.newField(frontName)
@@ -72,7 +72,7 @@ class StdModels(
                 fm = mm.newField(backName)
                 mm.addFieldInNewModel(m, fm)
                 val cardOneName = AnkiDroidApp.appResources.getString(R.string.card_n_name, 1)
-                val t = Models.newTemplate(cardOneName)
+                val t = Notetypes.newTemplate(cardOneName)
                 t.put("qfmt", "{{$frontName}}")
                 t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{$backName}}")
                 mm.addTemplateInNewModel(m, t)
@@ -81,7 +81,7 @@ class StdModels(
             R.string.basic_model_name
         )
         val BASIC_TYPING_MODEL = StdModels(
-            { mm: Models, name: String ->
+            { mm: Notetypes, name: String ->
                 val m = BASIC_MODEL._new(mm, name)
                 val t = m.getJSONArray("tmpls").getJSONObject(0)
                 val frontName = m.getJSONArray("flds").getJSONObject(0).getString("name")
@@ -93,12 +93,12 @@ class StdModels(
             R.string.basic_typing_model_name
         )
         private val FORWARD_REVERSE_MODEL = StdModels(
-            { mm: Models, name: String ->
+            { mm: Notetypes, name: String ->
                 val m = BASIC_MODEL._new(mm, name)
                 val frontName = m.getJSONArray("flds").getJSONObject(0).getString("name")
                 val backName = m.getJSONArray("flds").getJSONObject(1).getString("name")
                 val cardTwoName = AnkiDroidApp.appResources.getString(R.string.card_n_name, 2)
-                val t = Models.newTemplate(cardTwoName)
+                val t = Notetypes.newTemplate(cardTwoName)
                 t.put("qfmt", "{{$backName}}")
                 t.put("afmt", "{{FrontSide}}\n\n<hr id=answer>\n\n{{$frontName}}")
                 mm.addTemplateInNewModel(m, t)
@@ -107,7 +107,7 @@ class StdModels(
             R.string.forward_reverse_model_name
         )
         private val FORWARD_OPTIONAL_REVERSE_MODEL = StdModels(
-            { mm: Models, name: String ->
+            { mm: Notetypes, name: String ->
                 val m = FORWARD_REVERSE_MODEL._new(mm, name)
                 val av = AnkiDroidApp.appResources.getString(R.string.field_to_ask_front_name)
                 val fm = mm.newField(av)
@@ -119,7 +119,7 @@ class StdModels(
             R.string.forward_optional_reverse_model_name
         )
         private val CLOZE_MODEL = StdModels(
-            { mm: Models, name: String? ->
+            { mm: Notetypes, name: String? ->
                 val m = mm.newModel(
                     name!!
                 )
@@ -133,7 +133,7 @@ class StdModels(
                 mm.addFieldInNewModel(m, fm)
                 val cardTypeClozeName =
                     AnkiDroidApp.appResources.getString(R.string.cloze_model_name)
-                val t = Models.newTemplate(cardTypeClozeName)
+                val t = Notetypes.newTemplate(cardTypeClozeName)
                 val fmt = "{{cloze:$txt}}"
                 m.put(
                     "css",

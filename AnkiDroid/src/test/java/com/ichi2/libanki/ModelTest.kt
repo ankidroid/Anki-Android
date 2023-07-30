@@ -44,9 +44,9 @@ class ModelTest : RobolectricTest() {
     fun test_frontSide_field() {
         // #8951 - Anki Special-cases {{FrontSide}} on the front to return empty string
         val col = col
-        val m = col.models.current()
+        val m = col.notetypes.current()
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}")
-        col.models.save(m)
+        col.notetypes.save(m)
         val note = col.newNote()
         note.setItem("Front", "helloworld")
         col.addNote(note)
@@ -68,13 +68,13 @@ class ModelTest : RobolectricTest() {
     fun test_field_named_frontSide() {
         // #8951 - A field named "FrontSide" is ignored - this matches Anki 2.1.34 (8af8f565)
         val col = col
-        val m = col.models.current()
+        val m = col.notetypes.current()
 
         // Add a field called FrontSide and FrontSide2 (to ensure that fields are added correctly)
-        col.models.addFieldModChanged(m, col.models.newField("FrontSide"))
-        col.models.addFieldModChanged(m, col.models.newField("FrontSide2"))
+        col.notetypes.addFieldModChanged(m, col.notetypes.newField("FrontSide"))
+        col.notetypes.addFieldModChanged(m, col.notetypes.newField("FrontSide2"))
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{Front}}{{FrontSide}}{{FrontSide2}}")
-        col.models.save(m)
+        col.notetypes.save(m)
 
         val note = col.newNote()
         note.setItem("Front", "helloworld")
@@ -102,15 +102,15 @@ class ModelTest : RobolectricTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         assertEquals(1, col.cardCount())
-        col.models.rem(col.models.current())
+        col.notetypes.rem(col.notetypes.current())
         assertEquals(0, col.cardCount())
     }
 
     @Test
     fun test_modelCopy() {
         val col = col
-        val m = col.models.current()
-        val m2 = col.models.copy(m)
+        val m = col.notetypes.current()
+        val m2 = col.notetypes.copy(m)
         assertEquals("Basic copy", m2.getString("name"))
         assertNotEquals(m2.getLong("id"), m.getLong("id"))
         assertEquals(2, m2.getJSONArray("flds").length())
@@ -121,7 +121,7 @@ class ModelTest : RobolectricTest() {
         )
         assertEquals(1, m.getJSONArray("tmpls").length())
         assertEquals(1, m2.getJSONArray("tmpls").length())
-        assertEquals(col.models.scmhash(m), col.models.scmhash(m2))
+        assertEquals(col.notetypes.scmhash(m), col.notetypes.scmhash(m2))
     }
 
     @Test
@@ -132,100 +132,100 @@ class ModelTest : RobolectricTest() {
         note.setItem("Front", "1")
         note.setItem("Back", "2")
         col.addNote(note)
-        val m = col.models.current()
+        val m = col.notetypes.current()
         // make sure renaming a field updates the templates
-        col.models.renameField(m, m.getJSONArray("flds").getJSONObject(0), "NewFront")
+        col.notetypes.renameField(m, m.getJSONArray("flds").getJSONObject(0), "NewFront")
         assertThat(
             m.getJSONArray("tmpls").getJSONObject(0).getString("qfmt"),
             containsString("{{NewFront}}")
         )
-        val h = col.models.scmhash(m)
+        val h = col.notetypes.scmhash(m)
         // add a field
-        var field: JSONObject? = col.models.newField("foo")
-        col.models.addField(m, field!!)
+        var field: JSONObject? = col.notetypes.newField("foo")
+        col.notetypes.addField(m, field!!)
         assertArrayEquals(
             arrayOf("1", "2", ""),
             col.getNote(
-                col.models.nids(
+                col.notetypes.nids(
                     m
                 )[0]
             ).fields
         )
-        assertNotEquals(h, col.models.scmhash(m))
+        assertNotEquals(h, col.notetypes.scmhash(m))
         // rename it
         field = m.getJSONArray("flds").getJSONObject(2)
-        col.models.renameField(m, field, "bar")
-        assertEquals("", col.getNote(col.models.nids(m)[0]).getItem("bar"))
+        col.notetypes.renameField(m, field, "bar")
+        assertEquals("", col.getNote(col.notetypes.nids(m)[0]).getItem("bar"))
         // delete back
-        col.models.remField(m, m.getJSONArray("flds").getJSONObject(1))
+        col.notetypes.remField(m, m.getJSONArray("flds").getJSONObject(1))
         assertArrayEquals(
             arrayOf("1", ""),
             col.getNote(
-                col.models.nids(
+                col.notetypes.nids(
                     m
                 )[0]
             ).fields
         )
         // move 0 -> 1
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
         assertArrayEquals(
             arrayOf("", "1"),
             col.getNote(
-                col.models.nids(
+                col.notetypes.nids(
                     m
                 )[0]
             ).fields
         )
         // move 1 -> 0
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(1), 0)
+        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(1), 0)
         assertArrayEquals(
             arrayOf("1", ""),
             col.getNote(
-                col.models.nids(
+                col.notetypes.nids(
                     m
                 )[0]
             ).fields
         )
         // add another and put in middle
-        field = col.models.newField("baz")
-        col.models.addField(m, field)
-        note = col.getNote(col.models.nids(m)[0])
+        field = col.notetypes.newField("baz")
+        col.notetypes.addField(m, field)
+        note = col.getNote(col.notetypes.nids(m)[0])
         note.setItem("baz", "2")
         note.flush()
         assertArrayEquals(
             arrayOf("1", "", "2"),
             col.getNote(
-                col.models.nids(
+                col.notetypes.nids(
                     m
                 )[0]
             ).fields
         )
         // move 2 -> 1
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(2), 1)
+        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(2), 1)
         assertArrayEquals(
             arrayOf("1", "2", ""),
             col.getNote(
-                col.models.nids(
+                col.notetypes.nids(
                     m
                 )[0]
             ).fields
         )
         // move 0 -> 2
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(0), 2)
+        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(0), 2)
         assertArrayEquals(
             arrayOf("2", "", "1"),
             col.getNote(
-                col.models.nids(
+                col.notetypes.nids(
                     m
                 )[0]
             ).fields
         )
         // move 0 -> 1
-        col.models.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
+        col.notetypes.moveField(m, m.getJSONArray("flds").getJSONObject(0), 1)
         assertArrayEquals(
             arrayOf("", "2", "1"),
             col.getNote(
-                col.models.nids(
+                col.notetypes.nids(
                     m
                 )[0]
             ).fields
@@ -236,9 +236,9 @@ class ModelTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     fun test_templates() {
         val col = col
-        val m = col.models.current()
-        val mm = col.models
-        var t = Models.newTemplate("Reverse")
+        val m = col.notetypes.current()
+        val mm = col.notetypes
+        var t = Notetypes.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
         mm.addTemplateModChanged(m, t)
@@ -256,23 +256,23 @@ class ModelTest : RobolectricTest() {
         assertEquals(0, c.ord)
         assertEquals(1, c2.ord)
         // switch templates
-        col.models.moveTemplate(m, c.template(), 1)
+        col.notetypes.moveTemplate(m, c.template(), 1)
         c.load()
         c2.load()
         assertEquals(1, c.ord)
         assertEquals(0, c2.ord)
         // removing a template should delete its cards
-        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        col.notetypes.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
         assertEquals(1, col.cardCount())
         // and should have updated the other cards' ordinals
         c = note.cards()[0]
         assertEquals(0, c.ord)
         assertEquals("1", stripHTML(c.q()))
         // it shouldn't be possible to orphan notes by removing templates
-        t = Models.newTemplate("template name")
+        t = Notetypes.newTemplate("template name")
         t.put("qfmt", "{{Front}}1")
         mm.addTemplateModChanged(m, t)
-        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        col.notetypes.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
         assertEquals(
             0,
             col.db.queryLongScalar(
@@ -285,17 +285,17 @@ class ModelTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     fun test_cloze_ordinals() {
         val col = col
-        col.models.setCurrent(col.models.byName("Cloze")!!)
-        val m = col.models.current()
-        val mm = col.models
+        col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
+        val m = col.notetypes.current()
+        val mm = col.notetypes
 
         // We replace the default Cloze template
-        val t = Models.newTemplate("ChainedCloze")
+        val t = Notetypes.newTemplate("ChainedCloze")
         t.put("qfmt", "{{text:cloze:Text}}")
         t.put("afmt", "{{text:cloze:Text}}")
         mm.addTemplateModChanged(m, t)
         mm.save(m)
-        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        col.notetypes.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
 
         val note = col.newNote()
         note.setItem("Text", "{{c1::firstQ::firstA}}{{c2::secondQ::secondA}}")
@@ -313,9 +313,9 @@ class ModelTest : RobolectricTest() {
     @Test
     fun test_text() {
         val col = col
-        val m = col.models.current()
+        val m = col.notetypes.current()
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{text:Front}}")
-        col.models.save(m)
+        col.notetypes.save(m)
         val note = col.newNote()
         note.setItem("Front", "hello<b>world")
         col.addNote(note)
@@ -329,7 +329,7 @@ class ModelTest : RobolectricTest() {
             note.id = 0
         }
         val col = col
-        col.models.setCurrent(col.models.byName("Cloze")!!)
+        col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         var note = col.newNote()
         assertEquals("Cloze", note.model().getString("name"))
         // a cloze model with no clozes is not empty
@@ -352,7 +352,7 @@ class ModelTest : RobolectricTest() {
     @Test
     fun test_cloze_mathjax() {
         val col = col
-        col.models.setCurrent(col.models.byName("Cloze")!!)
+        col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         var note = col.newNote()
         note.setItem(
             "Text",
@@ -378,10 +378,10 @@ class ModelTest : RobolectricTest() {
     @Test
     fun test_type_and_cloze() {
         val col = col
-        val m = col.models.byName("Cloze")
-        col.models.setCurrent(m!!)
+        val m = col.notetypes.byName("Cloze")
+        col.notetypes.setCurrent(m!!)
         m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{cloze:Text}}{{type:cloze:Text}}")
-        col.models.save(m)
+        col.notetypes.save(m)
         val note = col.newNote()
         note.setItem("Text", "hello {{c1::world}}")
         col.addNote(note)
@@ -396,17 +396,17 @@ class ModelTest : RobolectricTest() {
     @Suppress("SpellCheckingInspection") // chaine
     fun test_chained_mods() {
         val col = col
-        col.models.setCurrent(col.models.byName("Cloze")!!)
-        val m = col.models.current()
-        val mm = col.models
+        col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
+        val m = col.notetypes.current()
+        val mm = col.notetypes
 
         // We replace the default Cloze template
-        val t = Models.newTemplate("ChainedCloze")
+        val t = Notetypes.newTemplate("ChainedCloze")
         t.put("qfmt", "{{cloze:text:Text}}")
         t.put("afmt", "{{cloze:text:Text}}")
         mm.addTemplateModChanged(m, t)
         mm.save(m)
-        col.models.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
+        col.notetypes.remTemplate(m, m.getJSONArray("tmpls").getJSONObject(0))
         val note = col.newNote()
         val q1 = "<span style=\"color:red\">phrase</span>"
         val a1 = "<b>sentence</b>"
@@ -428,11 +428,11 @@ class ModelTest : RobolectricTest() {
     @Throws(ConfirmModSchemaException::class)
     fun test_modelChange() {
         val col = col
-        val cloze = col.models.byName("Cloze")
+        val cloze = col.notetypes.byName("Cloze")
         // enable second template and add a note
-        val basic = col.models.current()
-        val mm = col.models
-        val t = Models.newTemplate("Reverse")
+        val basic = col.notetypes.current()
+        val mm = col.notetypes
+        val t = Notetypes.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
         mm.addTemplateModChanged(basic, t)
@@ -446,7 +446,7 @@ class ModelTest : RobolectricTest() {
         val noOp = mapOf<Int, Int?>(0 to 0, 1 to 1)
         map[0] = 1
         map[1] = 0
-        col.models.change(basic, note.id, basic, map, noOp)
+        col.notetypes.change(basic, note.id, basic, map, noOp)
         note.load()
         assertEquals("b123", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
@@ -457,7 +457,7 @@ class ModelTest : RobolectricTest() {
         assertThat(c1.q(), containsString("note"))
         assertEquals(0, c0.ord)
         assertEquals(1, c1.ord)
-        col.models.change(basic, note.id, basic, noOp, map)
+        col.notetypes.change(basic, note.id, basic, noOp, map)
         note.load()
         c0.load()
         c1.load()
@@ -475,7 +475,7 @@ class ModelTest : RobolectricTest() {
         //     // The low precision timer on Windows reveals a race condition
         //     time.sleep(0.05);
         // }
-        col.models.change(basic, note.id, basic, noOp, map)
+        col.notetypes.change(basic, note.id, basic, noOp, map)
         note.load()
         c0.load()
         // the card was deleted
@@ -484,7 +484,7 @@ class ModelTest : RobolectricTest() {
         // an unmapped field becomes blank
         assertEquals("b123", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
-        col.models.change(basic, note.id, basic, map, noOp)
+        col.notetypes.change(basic, note.id, basic, map, noOp)
         note.load()
         assertEquals("", note.getItem("Front"))
         assertEquals("note", note.getItem("Back"))
@@ -495,25 +495,25 @@ class ModelTest : RobolectricTest() {
         col.addNote(note)
         // counts = col.getModels().all_use_counts();
         // Using older version of the test
-        assertEquals(2, col.models.useCount(basic))
-        assertEquals(0, col.models.useCount(cloze!!))
+        assertEquals(2, col.notetypes.useCount(basic))
+        assertEquals(0, col.notetypes.useCount(cloze!!))
         // Identity map
         map = HashMap()
         map[0] = 0
         map[1] = 1
-        col.models.change(basic, note.id, cloze, map, map)
+        col.notetypes.change(basic, note.id, cloze, map, map)
         note.load()
         assertEquals("f2", note.getItem("Text"))
         assertEquals(2, note.numberOfCards())
         // back the other way, with deletion of second ord
-        col.models.remTemplate(basic, basic.getJSONArray("tmpls").getJSONObject(1))
+        col.notetypes.remTemplate(basic, basic.getJSONArray("tmpls").getJSONObject(1))
         assertEquals(
             2,
             col.db.queryScalar("select count() from cards where nid = ?", note.id)
         )
         map = HashMap()
         map[0] = 0
-        col.models.change(cloze, note.id, basic, map, map)
+        col.notetypes.change(cloze, note.id, basic, map, map)
         assertEquals(
             1,
             col.db.queryScalar("select count() from cards where nid = ?", note.id)
@@ -533,7 +533,7 @@ class ModelTest : RobolectricTest() {
     @Test
     fun nonEmptyFieldTest() {
         val col = col
-        val mm = col.models
+        val mm = col.notetypes
         val basic = mm.byName("Basic")
         val s: MutableSet<String> = HashSet<String>()
         assertEquals(s, basic!!.nonEmptyFields(arrayOf("", "")))
@@ -555,7 +555,7 @@ class ModelTest : RobolectricTest() {
     @Test
     fun getDid_test() {
         val col = col
-        val mm = col.models
+        val mm = col.notetypes
         val basic = mm.byName("Basic")
         basic!!.put("did", 999L)
 

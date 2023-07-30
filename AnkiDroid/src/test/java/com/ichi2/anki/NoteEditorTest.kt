@@ -304,7 +304,7 @@ class NoteEditorTest : RobolectricTest() {
     @Test
     fun pasteHtmlAsPlainTextTest() {
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
-        editor.setCurrentlySelectedModel(col.models.byName("Basic")!!.getLong("id"))
+        editor.setCurrentlySelectedModel(col.notetypes.byName("Basic")!!.getLong("id"))
         val field = editor.getFieldForTest(0)
         field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", """<span style="color: red">text</span>"""))
         assertTrue(field.clipboard!!.hasPrimaryClip())
@@ -367,15 +367,15 @@ class NoteEditorTest : RobolectricTest() {
 
     private fun makeNoteForType(noteType: NoteType): Model? {
         return when (noteType) {
-            NoteType.BASIC -> col.models.byName("Basic")
-            NoteType.CLOZE -> col.models.byName("Cloze")
+            NoteType.BASIC -> col.notetypes.byName("Basic")
+            NoteType.CLOZE -> col.notetypes.byName("Cloze")
             NoteType.BACK_TO_FRONT -> {
                 val name = super.addNonClozeModel("Reversed", arrayOf("Front", "Back"), "{{Back}}", "{{Front}}")
-                col.models.byName(name)
+                col.notetypes.byName(name)
             }
             NoteType.THREE_FIELD_INVALID_TEMPLATE -> {
                 val name = super.addNonClozeModel("Invalid", arrayOf("Front", "Back", "Side"), "", "")
-                col.models.byName(name)
+                col.notetypes.byName(name)
             }
         }
     }
@@ -445,7 +445,7 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         fun <T : NoteEditor?> build(clazz: Class<T>): T {
-            col.models.setCurrent(mModel)
+            col.notetypes.setCurrent(mModel)
             val noteEditor = getNoteEditorAddingNote(REVIEWER, clazz)
             advanceRobolectricLooper()
             noteEditor!!.setFieldValueFromUi(0, mFirstField)
