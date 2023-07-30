@@ -73,10 +73,6 @@ abstract class ParsedNode {
     companion object {
         const val TEMPLATE_ERROR_LINK =
             "https://anki.tenderapp.com/kb/problems/card-template-has-a-problem"
-        const val TEMPLATE_BLANK_LINK =
-            "https://anki.tenderapp.com/kb/card-appearance/the-front-of-this-card-is-blank"
-        const val TEMPLATE_BLANK_CLOZE_LINK =
-            "https://anki.tenderapp.com/kb/problems/no-cloze-found-on-card"
 
         /**
          * Associate to each template its node, or the error it generates

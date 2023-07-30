@@ -64,22 +64,6 @@ import java.util.regex.Pattern
 
 data class DeckNameId(val name: String, val id: DeckId)
 
-data class DeckTreeNode(
-    val deck_id: Long,
-    val name: String,
-    val children: List<DeckTreeNode>,
-    val level: UInt,
-    val collapsed: Boolean,
-    val review_count: UInt,
-    val learn_count: UInt,
-    val new_count: UInt,
-    val filtered: Boolean
-)
-
-// legacy code may pass this in as the type argument to .id()
-const val defaultDeck = 0
-const val defaultDynamicDeck = 1
-
 /** Any kind of deck */
 // typealias Deck = Union<NonFilteredDeck, FilteredDeck>
 // typealias NonFilteredDeck = Dict<string, Any>
@@ -112,12 +96,6 @@ open class DeckV16 private constructor(private val deck: JSONObject) {
         get() = deck.getLong("id")
         set(value) {
             deck.put("id", value)
-        }
-
-    var browserCollapsed: bool
-        get() = deck.optBoolean("browserCollapsed", false)
-        set(value) {
-            deck.put("browserCollapsed", value)
         }
 
     var conf: Long
@@ -192,9 +170,6 @@ abstract class DeckConfigV16 private constructor(val config: JSONObject) {
     }
 }
 
-/** New/lrn/rev conf, from deck config */
-private typealias QueueConfig = Dict<str, Any>
-
 private typealias childMapNode = Dict<DeckId, Any>
 // Change to Dict[int, "DeckManager.childMapNode"] when MyPy allow recursive type
 
@@ -256,12 +231,6 @@ class Decks(private val col: Collection) {
     fun id(name: str): DeckId {
         // use newDyn for now
         return id(name, true, 0).get()
-    }
-
-    @RustCleanup("only for java interface - should be removed")
-    @RustCleanup("This needs major testing - the behavior had changed")
-    fun id_safe(name: String, @Suppress("UNUSED_PARAMETER") type: String): Long {
-        return id(name, create = true, type = 0).get()
     }
 
     /** "Add a deck with NAME. Reuse deck if already exists. Return id as int." */
@@ -389,13 +358,6 @@ class Decks(private val col: Collection) {
     fun collapse(did: DeckId) {
         val deck = this.get(did).toV16()
         deck.collapsed = !deck.collapsed
-        this.save(deck)
-    }
-
-    fun collapseBrowser(did: DeckId) {
-        val deck = this.get(did).toV16()
-        val collapsed = deck.browserCollapsed
-        deck.browserCollapsed = !collapsed
         this.save(deck)
     }
 
@@ -597,8 +559,6 @@ class Decks(private val col: Collection) {
         update_config(conf, preserve_usn)
 
     fun remConf(id: dcid) = remove_config(id)
-    fun confId(name: str, clone_from: Optional<DeckConfigV16> = Optional.empty()) =
-        add_config_returning_id(name, clone_from)
 
     /* Deck utils */
 
@@ -609,14 +569,6 @@ class Decks(private val col: Collection) {
         }
         // TODO: Needs i18n, but the Java did the same, appears to be dead code
         return "[no deck]"
-    }
-
-    fun nameOrNone(did: DeckId): Optional<str> {
-        val deck = this.get(did, _default = false).toV16Optional()
-        if (deck.isPresent) {
-            return Optional.of(deck.name)
-        }
-        return Optional.empty()
     }
 
     fun cids(did: DeckId, children: bool): MutableList<Long> {
@@ -633,10 +585,6 @@ class Decks(private val col: Collection) {
     @RustCleanup("needs testing")
     fun checkIntegrity() {
         // I believe this is now handled in libAnki
-    }
-
-    fun for_card_ids(cids: List<Long>): List<DeckId> {
-        return this.col.db.queryLongList("select did from cards where id in ${ids2str(cids)}")
     }
 
     /* Deck selection */
@@ -762,11 +710,6 @@ class Decks(private val col: Collection) {
         return parents(did, Optional.empty())
     }
 
-    @RustCleanup("not needed")
-    fun beforeUpload() {
-        // intentionally blank
-    }
-
     private fun sorted(all: ImmutableList<Deck>): ImmutableList<Deck> {
         return all.sortedBy { d -> d.getString("name") }
     }
@@ -796,26 +739,6 @@ class Decks(private val col: Collection) {
             }
             parents.append(deck)
         }
-        return parents
-    }
-
-    /** All existing parents of name */
-    fun parentsByName(name: str): MutableList<Deck> {
-        if (!name.contains("::")) {
-            return mutableListOf()
-        }
-        val names: MutableList<str> = immediate_parent_path(name)
-        val head: MutableList<str> = mutableListOf()
-        val parents: MutableList<Deck> = mutableListOf()
-
-        while (names.isNotNullOrEmpty()) {
-            head.append(names.pop(0))
-            val deck = this.byName("::".join(head))
-            if (deck != null) {
-                parents.append(deck)
-            }
-        }
-
         return parents
     }
 
@@ -852,9 +775,6 @@ class Decks(private val col: Collection) {
 
     val Deck.name: str get() = this.getString("name")
     val Deck.conf: Long get() = this.getLong("conf")
-
-    /** Same as id, but rename ancestors if filtered to avoid failure */
-    fun id_safe(name: String) = id_safe(name, Decks.DEFAULT_DECK)
 
     /** Remove the deck. delete any cards inside and child decks. */
     fun rem(did: DeckId) = rem(did, true)
@@ -924,22 +844,6 @@ class Decks(private val col: Collection) {
     companion object {
         /* Parents/children */
 
-        fun find_deck_in_tree(
-            node: anki.decks.DeckTreeNode,
-            deck_id: DeckId
-        ): Optional<anki.decks.DeckTreeNode> {
-            if (node.deckId == deck_id) {
-                return Optional.of(node)
-            }
-            for (child in node.childrenList) {
-                val match = find_deck_in_tree(child, deck_id)
-                if (match.isPresent) {
-                    return match
-                }
-            }
-            return Optional.empty()
-        }
-
         fun path(name: str): ImmutableList<str> {
             return name.split("::")
         }
@@ -949,8 +853,6 @@ class Decks(private val col: Collection) {
         fun basename(name: str): str {
             return path(name).last()
         }
-
-        fun _basename(str: str) = basename(str)
 
         fun immediate_parent_path(name: str): MutableList<str> {
             return _path(name).dropLast(1).toMutableList()
@@ -996,25 +898,6 @@ class Decks(private val col: Collection) {
                 "\"browserCollapsed\": false," + // added in beta11
                 "\"extendNew\": 0," +
                 "\"extendRev\": 0" +
-                "}"
-            )
-        private const val defaultDynamicDeck = (
-            "" +
-                "{" +
-                "\"newToday\": [0, 0]," +
-                "\"revToday\": [0, 0]," +
-                "\"lrnToday\": [0, 0]," +
-                "\"timeToday\": [0, 0]," +
-                "\"collapsed\": false," +
-                "\"dyn\": 1," +
-                "\"desc\": \"\"," +
-                "\"usn\": 0," +
-                "\"delays\": null," +
-                "\"separate\": true," + // list of (search, limit, order); we only use first element for now
-                "\"terms\": [[\"\", 100, 0]]," +
-                "\"resched\": true," +
-                "\"previewDelay\": 10," +
-                "\"browserCollapsed\": false" +
                 "}"
             )
         const val DEFAULT_CONF = (

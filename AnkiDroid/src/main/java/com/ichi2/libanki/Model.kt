@@ -17,11 +17,8 @@
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
-import com.ichi2.libanki.template.ParsedNode
-import com.ichi2.libanki.template.TemplateError
 import com.ichi2.utils.*
 import org.json.JSONObject
-import timber.log.Timber
 
 /**
  * Represents a note type, a.k.a. Model.
@@ -96,24 +93,5 @@ class Model : JSONObject {
             }
         }
         return nonemptyFields
-    }
-
-    /**
-     * @return A list of parsed nodes for each template's question. null in case of exception
-     */
-    fun parsedNodes(): List<ParsedNode?> {
-        val tmpls = getJSONArray("tmpls")
-        val nodes: MutableList<ParsedNode?> = ArrayList(tmpls.length())
-        for (tmpl in tmpls.jsonObjectIterable()) {
-            val format_question = tmpl.getString("qfmt")
-            var node: ParsedNode? = null
-            try {
-                node = ParsedNode.parse_inner(format_question)
-            } catch (er: TemplateError) {
-                Timber.w(er)
-            }
-            nodes.add(node)
-        }
-        return nodes
     }
 }

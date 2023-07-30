@@ -41,13 +41,6 @@ class DeckConfig : JSONObject {
         json.deepClonedInto(this)
     }
 
-    /**
-     * Creates a deck config object form a json string
-     */
-    constructor(json: String, source: Source) : super(json) {
-        this.source = source
-    }
-
     val isDyn: Boolean
         get() = getInt("dyn") == Consts.DECK_DYN
     val isStd: Boolean

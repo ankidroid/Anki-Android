@@ -19,10 +19,7 @@
 package com.ichi2.libanki
 
 import android.annotation.SuppressLint
-import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.StatFs
@@ -33,14 +30,10 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper.Companion.compat
-import com.ichi2.compat.CompatHelper.Companion.queryIntentActivitiesCompat
-import com.ichi2.compat.ResolveInfoFlagsCompat
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.HashUtil.HashSetInit
-import com.ichi2.utils.ImportUtils.isValidPackageName
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.RustCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
 import org.json.JSONArray
 import org.json.JSONException
@@ -63,7 +56,6 @@ import kotlin.math.*
 object Utils {
     // Used to format doubles with English's decimal separator system
     val ENGLISH_LOCALE = Locale("en_US")
-    const val CHUNK_SIZE = 32768
     private const val TIME_MINUTE_LONG: Long = 60 // seconds
     private const val TIME_HOUR_LONG = 60 * TIME_MINUTE_LONG
     private const val TIME_DAY_LONG = 24 * TIME_HOUR_LONG
@@ -91,7 +83,6 @@ object Utils {
     private const val ALL_CHARACTERS =
         "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
     private const val BASE91_EXTRA_CHARS = "!#$%&()*+,-./:;<=>?@[]^_`{|}~"
-    private const val FILE_COPY_BUFFER_SIZE = 1024 * 32
 
     /**
      * Return a string representing a time quantity
@@ -216,39 +207,6 @@ object Utils {
                 time_x,
                 remaining
             )
-        }
-    }
-
-    /**
-     * Return a string representing a time
-     * (If you want a certain unit, use the strings directly)
-     *
-     * @param context The application's environment.
-     * @param time_s The time to format, in seconds
-     * @return The formatted, localized time string. The time is always an integer.
-     * e.g. something like "3 seconds" or "1 year".
-     */
-    fun timeSpan(context: Context, time_s: Long): String {
-        val time_x: Int // Time in unit x
-        val res = context.resources
-        return if (abs(time_s) < TIME_MINUTE) {
-            time_x = time_s.toInt()
-            res.getQuantityString(R.plurals.time_span_seconds, time_x, time_x)
-        } else if (abs(time_s) < TIME_HOUR) {
-            time_x = (time_s / TIME_MINUTE).roundToInt()
-            res.getQuantityString(R.plurals.time_span_minutes, time_x, time_x)
-        } else if (abs(time_s) < TIME_DAY) {
-            time_x = (time_s / TIME_HOUR).roundToInt()
-            res.getQuantityString(R.plurals.time_span_hours, time_x, time_x)
-        } else if (abs(time_s) < TIME_MONTH) {
-            time_x = (time_s / TIME_DAY).roundToInt()
-            res.getQuantityString(R.plurals.time_span_days, time_x, time_x)
-        } else if (abs(time_s) < TIME_YEAR) {
-            time_x = (time_s / TIME_MONTH).roundToInt()
-            res.getQuantityString(R.plurals.time_span_months, time_x, time_x)
-        } else {
-            time_x = (time_s / TIME_YEAR).roundToInt()
-            res.getQuantityString(R.plurals.time_span_years, time_x, time_x)
         }
     }
 
@@ -489,35 +447,6 @@ object Utils {
         )
     }
 
-    // increment a guid by one, for note type conflicts
-    // used in Anki
-    fun incGuid(guid: String): String {
-        return StringBuffer(_incGuid(StringBuffer(guid).reverse().toString())).reverse().toString()
-    }
-
-    @KotlinCleanup("remove var guid")
-    private fun _incGuid(guidParam: String): String {
-        var guid = guidParam
-        val table = ALL_CHARACTERS + BASE91_EXTRA_CHARS
-        val idx = table.indexOf(guid.substring(0, 1))
-        guid = if (idx + 1 == table.length) {
-            // overflow
-            table.substring(0, 1) + _incGuid(guid.substring(1))
-        } else {
-            table.substring(idx + 1) + guid.substring(1)
-        }
-        return guid
-    }
-
-    @KotlinCleanup("exchange with map")
-    fun jsonArray2Objects(array: JSONArray): Array<Any> {
-        val o = arrayOfNulls<Any>(array.length())
-        for (i in 0 until array.length()) {
-            o[i] = array[i]
-        }
-        return o.requireNoNulls()
-    }
-
     /**
      * Fields
      * ***********************************************************************************************
@@ -593,14 +522,6 @@ object Utils {
     }
 
     /**
-     * @param data the string to generate hash from.
-     * @return 32 bit unsigned number from first 8 digits of sha1 hash
-     */
-    fun fieldChecksum(data: String): Long {
-        return fieldChecksumWithoutHtmlMedia(stripHTMLMedia(data))
-    }
-
-    /**
      * @param data the string to generate hash from. Html media should be removed
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
@@ -608,46 +529,6 @@ object Utils {
         return java.lang.Long.valueOf(checksum(data).substring(0, 8), 16)
     }
 
-    /**
-     * Generate the SHA1 checksum of a file.
-     * @param file The file to be checked
-     * @return A string of length 32 containing the hexadecimal representation of the SHA1 checksum of the file's contents.
-     */
-    fun fileChecksum(file: String?): String {
-        val buffer = ByteArray(1024)
-        var digest: ByteArray? = null
-        try {
-            val fis: InputStream = FileInputStream(file)
-            val md = MessageDigest.getInstance("SHA1")
-            var numRead: Int
-            do {
-                numRead = fis.read(buffer)
-                if (numRead > 0) {
-                    md.update(buffer, 0, numRead)
-                }
-            } while (numRead != -1)
-            fis.close()
-            digest = md.digest()
-        } catch (e: FileNotFoundException) {
-            Timber.e(e, "Utils.fileChecksum: File not found.")
-        } catch (e: NoSuchAlgorithmException) {
-            Timber.e(e, "Utils.fileChecksum: No such algorithm.")
-        } catch (e: IOException) {
-            Timber.e(e, "Utils.fileChecksum: IO exception.")
-        }
-        val biginteger = BigInteger(1, digest)
-        var result = biginteger.toString(16)
-        // pad with zeros to length of 40 - SHA1 is 160bit long
-        if (result.length < 40) {
-            result =
-                "0000000000000000000000000000000000000000".substring(0, 40 - result.length) + result
-        }
-        return result
-    }
-
-    fun fileChecksum(file: File): String {
-        return fileChecksum(file.absolutePath)
-    }
     /*
      *  Tempo files
      * ***********************************************************************************************
@@ -743,23 +624,6 @@ object Utils {
     }
 
     /**
-     * Given a ZipFile, iterate through the ZipEntries to determine the total uncompressed size
-     * TODO warning: vulnerable to resource exhaustion attack if entries contain spoofed sizes
-     *
-     * @param zipFile ZipFile of unknown total uncompressed size
-     * @return total uncompressed size of zipFile
-     */
-    fun calculateUncompressedSize(zipFile: ZipFile): Long {
-        var totalUncompressedSize: Long = 0
-        val e = zipFile.entries
-        while (e.hasMoreElements()) {
-            val ze = e.nextElement()
-            totalUncompressedSize += ze.size
-        }
-        return totalUncompressedSize
-    }
-
-    /**
      * Determine available storage space
      *
      * @param path the filesystem path you need free space information on
@@ -834,32 +698,6 @@ object Utils {
         } catch (e: IOException) {
             throw IOException(f.name + ": " + e.localizedMessage, e)
         }
-    }
-
-    /**
-     * Indicates whether the specified action can be used as an intent. This method queries the package manager for
-     * installed packages that can respond to an intent with the specified action. If no suitable package is found, this
-     * method returns false.
-     * @param context The application's environment.
-     * @param action The Intent action to check for availability.
-     * @return True if an Intent with the specified action can be sent and responded to, false otherwise.
-     */
-    fun isIntentAvailable(context: Context, action: String?): Boolean {
-        return isIntentAvailable(context, action, null)
-    }
-
-    @KotlinCleanup("Use @JmOverloads, remove fun passing null for ComponentName")
-    @KotlinCleanup("Simplify function body")
-    fun isIntentAvailable(
-        context: Context,
-        action: String?,
-        componentName: ComponentName?
-    ): Boolean {
-        val packageManager = context.packageManager
-        val intent = Intent(action)
-        intent.component = componentName
-        val list = packageManager.queryIntentActivitiesCompat(intent, ResolveInfoFlagsCompat.of(PackageManager.MATCH_DEFAULT_ONLY.toLong()))
-        return list.isNotEmpty()
     }
 
     /**
@@ -961,19 +799,6 @@ object Utils {
         return fonts
     }
 
-    /** Returns a list of apkg-files.  */
-    fun getImportableDecks(context: Context): List<File> {
-        val deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context)
-        val dir = File(deckPath)
-        val decks: MutableList<File> = ArrayList()
-        if (dir.exists() && dir.isDirectory) {
-            val deckList =
-                dir.listFiles { pathname: File -> pathname.isFile && isValidPackageName(pathname.name) }!!
-            decks.addAll(listOf(*deckList).subList(0, deckList.size))
-        }
-        return decks
-    }
-
     /**
      * Simply copy a file to another location
      * @param sourceFile The source file
@@ -996,36 +821,6 @@ object Utils {
      */
     fun jsonToString(json: JSONObject): String {
         return json.toString().replace("\\\\/".toRegex(), "/")
-    }
-
-    /**
-     * Like org.json.JSONArray except that it doesn't escape forward slashes
-     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape character '/'.
-     * The org.json.JSONArray parser accepts both escaped and unescaped forward slashes, so we only need to worry for
-     * our output, when we write to the database or syncing.
-     *
-     * @param json a json object to serialize
-     * @return the json serialization of the object
-     * @see org.json.JSONArray.toString
-     */
-    fun jsonToString(json: JSONArray): String {
-        return json.toString().replace("\\\\/".toRegex(), "/")
-    }
-
-    /**
-     * @return A description of the device, including the model and android version. No commas are present in the
-     * returned string.
-     */
-    @RustCleanup("can be removed when old syncing code retired")
-    fun platDesc(): String {
-        // AnkiWeb reads this string and uses , and : as delimiters, so we remove them.
-        val model = Build.MODEL.replace(',', ' ').replace(':', ' ')
-        return String.format(
-            Locale.US,
-            "android:%s:%s",
-            Build.VERSION.RELEASE,
-            model
-        )
     }
 
     /**
@@ -1059,49 +854,6 @@ object Utils {
     }
 
     /**
-     * Unescapes all sequences within the given string of text, interpreting them as HTML escaped characters.
-     *
-     *
-     * Not that this code strips any HTML tags untouched, so if the text contains any HTML tags, they will be ignored.
-     *
-     * @param htmlText the text to convert
-     * @return the unescaped text
-     */
-    fun unescape(htmlText: String?): String {
-        return HtmlCompat.fromHtml(htmlText!!, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
-    }
-
-    /**
-     * Return a random float within the range of min and max.
-     */
-    fun randomFloatInRange(min: Float, max: Float): Float {
-        val rand = Random()
-        return rand.nextFloat() * (max - min) + min
-    }
-
-    /**
-     * Set usn to 0 in every object.
-     *
-     * This method is called during full sync, before uploading, so
-     * during an instant, the value will be zero while the object is
-     * not actually online. This is not a problem because if the sync
-     * fails, a full sync will occur again next time.
-     *
-     * @return whether there was a non-zero usn; in this case the list
-     * should be saved before the upload.
-     */
-    fun markAsUploaded(ar: List<JSONObject>): Boolean {
-        var changed = false
-        for (obj in ar) {
-            if (obj.optInt("usn", 1) != 0) {
-                obj.put("usn", 0)
-                changed = true
-            }
-        }
-        return changed
-    }
-
-    /**
      * @param left An object of type T
      * @param right An object of type T
      * @param <T> A type on which equals can be called
@@ -1111,20 +863,6 @@ object Utils {
     @KotlinCleanup("remove")
     fun <T> equals(left: T?, right: T?): Boolean {
         return left === right || left != null && left == right
-    }
-
-    /**
-     * @param sflds Some fields
-     * @return Array with the same elements, trimmed
-     */
-    @KotlinCleanup("probably can be removed")
-    fun trimArray(sflds: Array<String>): Array<String?> {
-        val nbField = sflds.size
-        val fields = arrayOfNulls<String>(nbField)
-        for (i in 0 until nbField) {
-            fields[i] = sflds[i].trim { it <= ' ' }
-        }
-        return fields
     }
 
     /**

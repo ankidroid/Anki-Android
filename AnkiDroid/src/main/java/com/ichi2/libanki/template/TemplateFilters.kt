@@ -39,21 +39,6 @@ object TemplateFilters {
     const val CLOZE_REG = "(?si)\\{\\{(c)%s::(.*?)(::(.*?))?\\}\\}"
 
     /**
-     * @param txtInput The content of the field field_name
-     * @param filters a list of filter to apply to this text
-     * @param field_name A name of a field
-     * @param tag The entire part between {{ and }}
-     * @return The result of applying each filter successively to txt
-     */
-    fun apply_filters(txtInput: String, filters: List<String>, field_name: String, tag: String): String {
-        var txt = txtInput
-        for (filter in filters) {
-            txt = apply_filter(txt, filter, field_name, tag)
-        }
-        return txt
-    }
-
-    /**
      * @param txtInput The current text the filter may change. It may be changed by multiple filter.
      * @param filterInput The name of the filter to apply.
      * @param field_name The name of the field whose text is shown

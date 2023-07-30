@@ -129,12 +129,6 @@ class TemplateManager {
         private var _fields: Dict<str, str>? = null
         internal var _note_type: NoteType = notetype ?: note.model()
 
-        /**
-         * if you need to store extra state to share amongst rendering
-         * hooks, you can insert it into this dictionary
-         */
-        private var extra_state: HashMap<str, Any> = Dict()
-
         companion object {
             fun from_existing_card(card: Card, browser: bool): TemplateRenderContext {
                 return TemplateRenderContext(card.col, card, card.note(), browser)

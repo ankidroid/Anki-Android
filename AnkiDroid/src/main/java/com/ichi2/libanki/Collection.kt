@@ -21,7 +21,6 @@
 package com.ichi2.libanki
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
 import androidx.annotation.CheckResult
@@ -32,15 +31,12 @@ import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.search.SearchNode
-import anki.search.SearchNodeKt
-import anki.search.searchNode
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
-import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
@@ -60,7 +56,6 @@ import timber.log.Timber
 import java.io.*
 import java.util.*
 import java.util.concurrent.LinkedBlockingDeque
-import java.util.regex.Pattern
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -267,53 +262,6 @@ open class Collection(
     }
 
     /**
-     * DB-related *************************************************************** ********************************
-     */
-
-    @KotlinCleanup("make sChunk lazy and remove this")
-    private val chunk: Int
-        // reduce the actual size a little bit.
-        // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
-        get() {
-            if (sChunk != 0) {
-                return sChunk
-            }
-            // This is valid for the framework sqlite as far back as Android 5 / SDK21
-            // https://github.com/aosp-mirror/platform_frameworks_base/blob/ba35a77c7c4494c9eb74e87d8eaa9a7205c426d2/core/res/res/values/config.xml#L1141
-            val cursorWindowSize = SQLITE_WINDOW_SIZE_KB * 1024
-
-            // reduce the actual size a little bit.
-            // In case db is not an instance of DatabaseChangeDecorator, sChunk evaluated on default window size
-            sChunk = (cursorWindowSize * 15.0 / 16.0).toInt()
-            return sChunk
-        }
-
-    private fun loadColumn(columnName: String): String {
-        var pos = 1
-        val buf = StringBuilder()
-        while (true) {
-            db.query(
-                "SELECT substr($columnName, ?, ?) FROM col",
-                pos.toString(),
-                chunk.toString()
-            ).use { cursor ->
-                if (!cursor.moveToFirst()) {
-                    return buf.toString()
-                }
-                val res = cursor.getString(0)
-                if (res.isEmpty()) {
-                    return buf.toString()
-                }
-                buf.append(res)
-                if (res.length < chunk) {
-                    return buf.toString()
-                }
-                pos += chunk
-            }
-        }
-    }
-
-    /**
      * Disconnect from DB.
      * Python implementation has a save argument for legacy reasons;
      * AnkiDroid always saves as changes are made.
@@ -404,39 +352,10 @@ open class Collection(
     }
 
     /**
-     * Utils ******************************************************************** ***************************
-     */
-    fun nextID(typeParam: String): Int {
-        val type = "next" + Character.toUpperCase(typeParam[0]) + typeParam.substring(1)
-        val id: Int = try {
-            get_config_int(type)
-        } catch (e: JSONException) {
-            Timber.w(e)
-            1
-        }
-        set_config(type, id + 1)
-        return id
-    }
-
-    /**
      * Rebuild the queue and reload data after DB modified.
      */
     fun reset() {
         sched.deferReset()
-    }
-
-    /**
-     * Deletion logging ********************************************************* **************************************
-     */
-    fun _logRem(ids: Iterable<Long>, @Consts.REM_TYPE type: Int) {
-        for (id in ids) {
-            val values = ContentValues().apply {
-                put("usn", usn())
-                put("oid", id)
-                put("type", type)
-            }
-            db.insert("graves", values)
-        }
     }
 
     /**
@@ -466,21 +385,6 @@ open class Collection(
     }
 
     /**
-     * Bulk delete notes by ID. Don't call this directly.
-     */
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    fun _remNotes(ids: kotlin.collections.Collection<Long>) {
-        if (ids.isEmpty()) {
-            return
-        }
-        val strids = Utils.ids2str(ids)
-        // we need to log these independently of cards, as one side may have
-        // more card templates
-        _logRem(ids, Consts.REM_NOTE)
-        db.execute("DELETE FROM notes WHERE id IN $strids")
-    }
-
-    /**
      * Cards ******************************************************************** ***************************
      */
     val isEmpty: Boolean
@@ -499,17 +403,6 @@ open class Collection(
         return cardCount(*dids) == 0
     }
 
-    /** Returned data from [_fieldData] */
-    private data class FieldData(val nid: NoteId, val modelId: NoteTypeId, val flds: String)
-
-    private fun _flagNameFromCardFlags(flags: Int): String {
-        val flag = flags and 0b111
-        return if (flag == 0) {
-            ""
-        } else {
-            "flag$flag"
-        }
-    }
     /*
       Finding cards ************************************************************ ***********************************
      */
@@ -601,21 +494,6 @@ open class Collection(
         return backend.findAndReplace(nids, src, dst, regex, !fold, field ?: "").count
     }
 
-    @KotlinCleanup("inline in Finder.java after conversion to Kotlin")
-    fun buildFindDupesString(fieldName: String, search: String): String {
-        return buildSearchString(
-            searchNode {
-                group = SearchNodeKt.group {
-                    joiner = SearchNode.Group.Joiner.AND
-                    if (search.isNotEmpty()) {
-                        nodes += searchNode { literalText = search }
-                    }
-                    nodes += searchNode { this.fieldName = fieldName }
-                }
-            }
-        )
-    }
-
     /*
       Stats ******************************************************************** ***************************
      */
@@ -626,12 +504,6 @@ open class Collection(
     /*
      * Timeboxing *************************************************************** ********************************
      */
-
-    var timeLimit: Long
-        get() = get_config_long("timeLim")
-        set(seconds) {
-            set_config("timeLim", seconds)
-        }
 
     fun startTimebox() {
         mStartTime = TimeManager.time.intTime()
@@ -1084,15 +956,6 @@ open class Collection(
         return db.queryLongList("select id from cards where id in " + Utils.ids2str(cards))
     }
 
-    @Throws(UnknownDatabaseVersionException::class)
-    fun queryVer(): Int {
-        return try {
-            db.queryScalar("select ver from col")
-        } catch (e: Exception) {
-            throw UnknownDatabaseVersionException(e)
-        }
-    }
-
     fun setDeck(cids: LongArray, did: Long) {
         backend.setDeck(cardIds = cids.asIterable(), deckId = did)
     }
@@ -1104,7 +967,7 @@ open class Collection(
     }
 
     fun emptyCids(): List<CardId> {
-        return backend.getEmptyCards().notesList.flatMap { it.cardIdsList }
+        return getEmptyCards().notesList.flatMap { it.cardIdsList }
     }
 
     class CheckDatabaseResult(private val oldSize: Long) {
@@ -1122,16 +985,8 @@ open class Collection(
             mProblems.addAll(strings!!)
         }
 
-        fun hasProblems(): Boolean {
-            return mProblems.isNotEmpty()
-        }
-
         val problems: List<String?>
             get() = mProblems
-
-        fun setNewSize(size: Long) {
-            mNewSize = size
-        }
 
         val sizeChangeInKb: Double
             get() = (oldSize - mNewSize) / 1024.0
@@ -1178,17 +1033,7 @@ open class Collection(
     override val col: Collection
         get() = this
 
-    /** https://stackoverflow.com/questions/62150333/lateinit-property-mock-object-has-not-been-initialized */
-    @VisibleForTesting
-    fun setScheduler(sched: AbstractSched) {
-        this.sched = sched
-    }
-
     companion object {
-        @KotlinCleanup("Use kotlin's regex methods")
-        private val fClozePatternQ = Pattern.compile("\\{\\{(?!type:)(.*?)cloze:")
-        private val fClozePatternA = Pattern.compile("\\{\\{(.*?)cloze:")
-        private val fClozeTagStart = Pattern.compile("<%cloze:")
 
         /**
          * This is only used for collections which were created before
@@ -1210,9 +1055,6 @@ open class Collection(
                 "\"sortBackwards\": false, \"addToCur\": true }"
             ) // add new to currently selected deck?
         private const val UNDO_SIZE_MAX = 20
-        private var sChunk = 0
-
-        private const val SQLITE_WINDOW_SIZE_KB = 2048
     }
 }
 

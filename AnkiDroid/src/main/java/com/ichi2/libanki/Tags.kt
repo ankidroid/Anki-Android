@@ -24,7 +24,6 @@ import com.ichi2.libanki.utils.list
 import com.ichi2.libanki.utils.set
 import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
-import java.util.regex.Pattern
 
 /**
  * Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -104,32 +103,6 @@ class Tags(private val col: Collection) {
         return " ${" ".join(tags)} "
     }
 
-    // submethod of remFromStr in anki
-    private fun wildcard(pat: String, str: String): Boolean {
-        val patReplaced = Pattern.quote(pat).replace("\\*", ".*")
-        return Pattern.compile(patReplaced, Pattern.CASE_INSENSITIVE or Pattern.UNICODE_CASE)
-            .matcher(str).matches()
-    }
-
-    /** {@inheritDoc}   */
-    fun remFromStr(deltags: String, tags: String): String {
-        val currentTags: MutableList<String> = split(tags)
-        for (tag in split(deltags)) {
-            val remove: MutableList<String> =
-                ArrayList() // Usually not a lot of tags are removed simultaneously.
-            // So don't put initial capacity
-            for (tx in currentTags) {
-                if (tag.equals(tx, ignoreCase = true) || wildcard(tag, tx)) {
-                    remove.add(tx)
-                }
-            }
-            // remove them
-            for (r in remove) {
-                currentTags.remove(r)
-            }
-        }
-        return join(currentTags)
-    }
     /*
      * List-based utilities
      * ***********************************************************

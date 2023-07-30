@@ -153,20 +153,6 @@ object Storage {
         db.update("col", values)
     }
 
-    private fun _updateIndices(db: DB) {
-        db.execute("create index if not exists ix_notes_usn on notes (usn);")
-        db.execute("create index if not exists ix_cards_usn on cards (usn);")
-        db.execute("create index if not exists ix_revlog_usn on revlog (usn);")
-        db.execute("create index if not exists ix_cards_nid on cards (nid);")
-        db.execute("create index if not exists ix_cards_sched on cards (did, queue, due);")
-        db.execute("create index if not exists ix_revlog_cid on revlog (cid);")
-        db.execute("create index if not exists ix_notes_csum on notes (csum);)")
-    }
-
-    fun addIndices(db: DB) {
-        _updateIndices(db)
-    }
-
     fun setUseInMemory(useInMemoryDatabase: Boolean) {
         isInMemory = useInMemoryDatabase
     }

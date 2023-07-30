@@ -32,10 +32,6 @@ object Consts {
     const val NEW_CARDS_RANDOM = 0
     const val NEW_CARDS_DUE = 1
 
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(NEW_CARDS_RANDOM, NEW_CARDS_DUE)
-    annotation class NEW_CARDS_INSERTION
-
     // Queue types
     const val QUEUE_TYPE_MANUALLY_BURIED = -3
     const val QUEUE_TYPE_SIBLING_BURIED = -2
@@ -60,22 +56,7 @@ object Consts {
     @IntDef(CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING)
     annotation class CARD_TYPE
 
-    // removal types
-    const val REM_CARD = 0
-    const val REM_NOTE = 1
-    const val REM_DECK = 2
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(REM_CARD, REM_NOTE, REM_DECK)
-    annotation class REM_TYPE
-
-    // count display
-    const val COUNT_ANSWERED = 0
     const val COUNT_REMAINING = 1
-
-    // media log
-    const val MEDIA_ADD = 0
-    const val MEDIA_REM = 1
 
     // dynamic deck order
     const val DYN_OLDEST = 0
@@ -104,10 +85,6 @@ object Consts {
     // deck types
     const val DECK_STD = 0
     const val DECK_DYN = 1
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(DECK_STD, DECK_DYN)
-    annotation class DECK_TYPE
 
     const val STARTING_FACTOR = 2500
 

@@ -121,6 +121,7 @@ open class Media(private val col: Collection) {
     /**
      * Remove a file from the media directory if it exists and mark it as removed in the media database.
      */
+    @Suppress("unused")
     open fun removeFile(fname: String) {
         removeFiles(listOf(fname))
     }

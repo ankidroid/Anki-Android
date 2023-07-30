@@ -53,7 +53,6 @@ class Note : Cloneable {
         private set
     var mod: Long = 0
         private set
-    private var mNewlyAdded = false
 
     constructor(col: Collection, id: Long) {
         this.col = col
@@ -109,10 +108,6 @@ class Note : Cloneable {
     @RustCleanup("code should call col.updateNote() instead, in undoableOp {}")
     fun flush() {
         col.updateNote(this)
-    }
-
-    private fun joinedFields(): String {
-        return Utils.joinFields(fields)
     }
 
     fun numberOfCards(): Int {

@@ -21,7 +21,6 @@ package com.ichi2.libanki.sched
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.database.SQLException
 import android.database.sqlite.SQLiteConstraintException
 import androidx.annotation.VisibleForTesting
 import com.ichi2.async.CancelListener
@@ -32,10 +31,8 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Consts.CARD_QUEUE
-import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Consts.NEW_CARD_ORDER
 import com.ichi2.libanki.Consts.REVLOG_TYPE
-import com.ichi2.libanki.SortOrder.AfterSqlOrderBy
 import com.ichi2.libanki.sched.Counts.Queue.*
 import com.ichi2.libanki.sched.SchedV2.CountMethod
 import com.ichi2.libanki.sched.SchedV2.LimitMethod
@@ -408,157 +405,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     }
 
     /*
-      Deck list **************************************************************** *******************************
-     */
-    /**
-     * Returns [deckname, did, rev, lrn, new]
-     *
-     * Return nulls when deck task is cancelled.
-     */
-    @KotlinCleanup("remove/set default")
-    private fun deckDueList(): List<DeckDueTreeNode> {
-        return deckDueList(null)!!
-    }
-    // Overridden
-    /**
-     * Return sorted list of all decks. */
-    protected open fun deckDueList(collectionTask: CancelListener?): List<DeckDueTreeNode>? {
-        _checkDay()
-        col.decks.checkIntegrity()
-        val allDecksSorted = col.decks.allSorted()
-        val lims = HashUtil.HashMapInit<String?, Array<Int>>(allDecksSorted.size)
-        val deckNodes = ArrayList<DeckDueTreeNode>(allDecksSorted.size)
-        val childMap = col.decks.childMap()
-        for (deck in allDecksSorted) {
-            if (isCancelled(collectionTask)) {
-                return null
-            }
-            val deckName = deck.getString("name")
-            val p = Decks.parent(deckName)
-            // new
-            var nlim = _deckNewLimitSingle(deck, false)
-            var plim: Int? = null
-            if (p?.isNotEmpty() == true) {
-                val parentLims = lims[Decks.normalizeName(p)]
-                // 'temporary for diagnosis of bug #6383'
-                Assert.that(
-                    parentLims != null,
-                    "Deck %s is supposed to have parent %s. It has not be found.",
-                    deckName,
-                    p
-                )
-                nlim = Math.min(nlim, parentLims!![0])
-                // reviews
-                plim = parentLims[1]
-            }
-            val _new = _newForDeck(deck.getLong("id"), nlim)
-            // learning
-            val lrn = _lrnForDeck(deck.getLong("id"))
-            // reviews
-            val rlim = _deckRevLimitSingle(deck, plim, false)
-            val rev = _revForDeck(deck.getLong("id"), rlim, childMap)
-            // save to list
-            deckNodes.add(
-                DeckDueTreeNode(
-                    deck.getString("name"),
-                    deck.getLong("id"),
-                    rev,
-                    lrn,
-                    _new,
-                    false,
-                    false
-                )
-            )
-            // add deck as a parent
-            lims[Decks.normalizeName(deck.getString("name"))] = arrayOf(nlim, rlim)
-        }
-        return deckNodes
-    }
-
-    /**
-     * @return the tree with `allDecksSorted` content.
-     * @param allDecksSorted the set of all decks of the collection. Sorted.
-     * @param checkDone Whether the set of deck was checked. If false, we can't assume all decks have parents
-     * and that there is no duplicate. Instead, we'll ignore problems.
-     */
-    protected fun <T : AbstractDeckTreeNode> _groupChildren(
-        allDecksSorted: List<T>,
-        checkDone: Boolean
-    ): List<TreeNode<T>> {
-        return _groupChildren(allDecksSorted, 0, checkDone)
-    }
-
-    /**
-     * @return the tree structure of all decks from @descendants, starting
-     * at specified depth.
-     * @param sortedDescendants a list of decks of dept at least depth, having all
-     * the same first depth name elements, sorted in deck order.
-     * @param depth The depth of the tree we are creating
-     * @param checkDone whether the set of deck was checked. If
-     * false, we can't assume all decks have parents and that there
-     * is no duplicate. Instead, we'll ignore problems.
-     */
-    protected fun <T : AbstractDeckTreeNode> _groupChildren(
-        sortedDescendants: List<T>,
-        depth: Int,
-        checkDone: Boolean
-    ): List<TreeNode<T>> {
-        val sortedChildren: MutableList<TreeNode<T>> = ArrayList()
-        // group and recurse
-        val it = sortedDescendants.listIterator()
-        while (it.hasNext()) {
-            val child = it.next()
-            val head = child.getDeckNameComponent(depth)
-            val sortedDescendantsOfChild: MutableList<T> = ArrayList()
-            /* Compose the "sortedChildren" node list. The sortedChildren is a
-             * list of all the nodes that proceed the current one that
-             * contain the same at depth `depth`, except for the
-             * current one itself.  I.e., they are subdecks that stem
-             * from this descendant.  This is our version of python's
-             * itertools.groupby. */if (!checkDone && child.depth != depth) {
-                val deck = col.decks.get(child.did)
-                Timber.d(
-                    "Deck %s (%d)'s parent is missing. Ignoring for quick display.",
-                    deck.getString("name"),
-                    child.did
-                )
-                continue
-            }
-            while (it.hasNext()) {
-                val descendantOfChild = it.next()
-                if (head == descendantOfChild.getDeckNameComponent(depth)) {
-                    // Same head - add to tail of current head.
-                    if (!checkDone && descendantOfChild.depth == depth) {
-                        val deck = col.decks.get(descendantOfChild.did)
-                        Timber.d(
-                            "Deck %s (%d)'s is a duplicate name. Ignoring for quick display.",
-                            deck.getString("name"),
-                            descendantOfChild.did
-                        )
-                        continue
-                    }
-                    sortedDescendantsOfChild.add(descendantOfChild)
-                } else {
-                    // We've iterated past this head, so step back in order to use this descendant as the
-                    // head in the next iteration of the outer loop.
-                    it.previous()
-                    break
-                }
-            }
-            // the childrenNode set contains direct child of `child`, but not
-            // any descendants of the children of `child`...
-            val childrenNode = _groupChildren(sortedDescendantsOfChild, depth + 1, checkDone)
-
-            // Add the child nodes, and process the addition
-            val toAdd = TreeNode(child)
-            toAdd.children.addAll(childrenNode)
-            val childValues = childrenNode.map { it.value }
-            child.processChildren(col, childValues, "std" == name)
-            sortedChildren.add(toAdd)
-        }
-        return sortedChildren
-    }
-    /*
       Getting the next card ****************************************************
       *******************************************
      */
@@ -861,21 +707,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             }
         }
         return lim
-    }
-
-    /** New count for a single deck.  */
-    fun _newForDeck(did: Long, lim: Int): Int {
-        @Suppress("NAME_SHADOWING")
-        var lim = lim
-        if (lim == 0) {
-            return 0
-        }
-        lim = Math.min(lim, mReportLimit)
-        return col.db.queryScalar(
-            "SELECT count() FROM (SELECT 1 FROM cards WHERE did = ? AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
-            did,
-            lim
-        )
     }
 
     /**
@@ -1365,29 +1196,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
     }
 
-    // Overridden: uses left/1000 in V1
-    private fun _lrnForDeck(did: Long): Int {
-        return try {
-            val cnt = col.db.queryScalar(
-                "SELECT count() FROM (SELECT null FROM cards WHERE did = ?" +
-                    " AND queue = " + Consts.QUEUE_TYPE_LRN + " AND due < ?" +
-                    " LIMIT ?)",
-                did,
-                time.intTime() + col.get_config_int("collapseTime"),
-                mReportLimit
-            )
-            cnt + col.db.queryScalar(
-                "SELECT count() FROM (SELECT null FROM cards WHERE did = ?" +
-                    " AND queue = " + Consts.QUEUE_TYPE_DAY_LEARN_RELEARN + " AND due <= ?" +
-                    " LIMIT ?)",
-                did,
-                mToday!!,
-                mReportLimit
-            )
-        } catch (e: SQLException) {
-            throw RuntimeException(e)
-        }
-    }
     /*
       Reviews ****************************************************************** *****************************
      */
@@ -1454,19 +1262,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             lim--
         }
         return lim
-    }
-
-    protected fun _revForDeck(did: Long, lim: Int, childMap: Decks.Node): Int {
-        @Suppress("NAME_SHADOWING")
-        var lim = lim
-        val dids = col.decks.childDids(did, childMap).toMutableList()
-        dids.add(0, did)
-        lim = Math.min(lim, mReportLimit)
-        return col.db.queryScalar(
-            "SELECT count() FROM (SELECT 1 FROM cards WHERE did in " + Utils.ids2str(dids) + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
-            mToday!!,
-            lim
-        )
     }
 
     // Overridden: V1 uses _walkingCount
@@ -1735,93 +1530,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
       Dynamic deck handling ******************************************************************
       *****************************/
 
-    /**
-     * Whether the filtered deck is empty
-     * Overridden
-     */
-    private fun _fillDyn(deck: Deck): Int {
-        val start = -100000
-        var total = 0
-        var ids: List<Long?>
-        val terms = deck.getJSONArray("terms")
-        for (term in terms.jsonArrayIterable()) {
-            var search = term.getString(0)
-            val limit = term.getInt(1)
-            val order = term.getInt(2)
-            val orderLimit = _dynOrder(order, limit)
-            if (search.trim { it <= ' ' }.isNotEmpty()) {
-                search = String.format(Locale.US, "(%s)", search)
-            }
-            search = String.format(Locale.US, "%s -is:suspended -is:buried -deck:filtered", search)
-            ids = col.findCards(search, AfterSqlOrderBy(orderLimit))
-            if (ids.isEmpty()) {
-                return total
-            }
-            // move the cards over
-            col.log(deck.getLong("id"), ids)
-            _moveToDyn(deck.getLong("id"), ids, start + total)
-            total += ids.size
-        }
-        return total
-    }
-
-    /**
-     * Generates the required SQL for order by and limit clauses, for dynamic decks.
-     *
-     * @param o deck["order"]
-     * @param l deck["limit"]
-     * @return The generated SQL to be suffixed to "select ... from ... order by "
-     */
-    protected fun _dynOrder(@DYN_PRIORITY o: Int, l: Int): String {
-        val t: String
-        t = when (o) {
-            Consts.DYN_OLDEST -> "c.mod"
-            Consts.DYN_RANDOM -> "random()"
-            Consts.DYN_SMALLINT -> "ivl"
-            Consts.DYN_BIGINT -> "ivl desc"
-            Consts.DYN_LAPSES -> "lapses desc"
-            Consts.DYN_ADDED -> "n.id"
-            Consts.DYN_REVADDED -> "n.id desc"
-            Consts.DYN_DUEPRIORITY -> String.format(
-                Locale.US,
-                "(case when queue=" + Consts.QUEUE_TYPE_REV + " and due <= %d then (ivl / cast(%d-due+0.001 as real)) else 100000+due end)",
-                mToday,
-                mToday
-            )
-            Consts.DYN_DUE -> // if we don't understand the term, default to due order
-                "c.due"
-            else -> "c.due"
-        }
-        return "$t limit $l"
-    }
-
-    protected fun _moveToDyn(did: Long, ids: List<Long?>, start: Int) {
-        val deck = col.decks.get(did)
-        val data = ArrayList<Array<Any?>>(ids.size)
-        val u = col.usn()
-        var due = start
-        for (id in ids) {
-            data.add(
-                arrayOf(
-                    did,
-                    due,
-                    u,
-                    id
-                )
-            )
-            due += 1
-        }
-        var queue = ""
-        if (!deck.getBoolean("resched")) {
-            queue = ", queue = " + Consts.QUEUE_TYPE_REV + ""
-        }
-        col.db.executeMany(
-            "UPDATE cards SET odid = did, " +
-                "odue = due, did = ?, due = (case when due <= 0 then due else ? end), usn = ? " + queue + " WHERE id = ?",
-            data
-        )
-    }
-
     private fun _removeFromFiltered(card: Card) {
         if (card.isInDynamicDeck) {
             card.did = card.oDid
@@ -1985,10 +1693,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
     }
 
-    fun haveBuriedSiblings(): Boolean {
-        return haveBuriedSiblings(col.decks.active())
-    }
-
     private fun haveBuriedSiblings(allDecks: List<Long>): Boolean {
         // Refactored to allow querying an arbitrary deck
         val sdids = Utils.ids2str(allDecks)
@@ -1996,10 +1700,6 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             "select 1 from cards where queue = " + Consts.QUEUE_TYPE_SIBLING_BURIED + " and did in " + sdids + " limit 1"
         )
         return cnt != 0
-    }
-
-    fun haveManuallyBuried(): Boolean {
-        return haveManuallyBuried(col.decks.active())
     }
 
     private fun haveManuallyBuried(allDecks: List<Long>): Boolean {
@@ -2314,12 +2014,6 @@ end)  """
         return haveBuriedSiblings(all) || haveManuallyBuried(all)
     }
 
-    open fun unburyCardsForDeck(did: Long) {
-        val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
-        all.add(did)
-        unburyCardsForDeck(UnburyType.ALL, all)
-    }
-
     override val name: String
         get() = "std2"
     override var today: Int
@@ -2369,11 +2063,6 @@ end)  """
             }
         }
         i.add(LrnCard(col, due, id))
-    }
-
-    fun leechActionSuspend(card: Card): Boolean {
-        val conf = _cardConf(card).getJSONObject("lapse")
-        return conf.getInt("leechAction") == Consts.LEECH_SUSPEND
     }
 
     override fun setContext(contextReference: WeakReference<Activity>) {

@@ -109,9 +109,6 @@ open class Card : Cloneable {
     protected var render_output: TemplateRenderOutput?
     private var note: Note?
 
-    /** Used by Sched to determine which queue to move the card to after answering. */
-    var wasNew = false
-
     /** Used by Sched to record the original interval in the revlog after answering. */
     var lastIvl = 0
 
@@ -414,9 +411,6 @@ open class Card : Cloneable {
         flags = flag
     }
 
-    /** Should use [userFlag] */
-    fun internalGetFlags() = flags
-
     fun setUserFlag(flag: Int) {
         flags = setFlagInInt(flags, flag)
     }
@@ -505,13 +499,6 @@ open class Card : Cloneable {
             col = cache.col
             this.id = cache.id
             mCard = cache.mCard
-        }
-
-        /** Copy of cache. Useful to create a copy of a subclass without loosing card if it is loaded.  */
-        constructor(card: Card) {
-            col = card.col
-            this.id = card.id
-            mCard = card
         }
 
         /**

@@ -77,13 +77,6 @@ fun <E> MutableList<E>.toJsonArray(): JSONArray {
     return array
 }
 
-fun <K, V : Any> Map<K, V>.getOptional(k: K): Optional<V> {
-    if (!this.containsKey(k)) {
-        return Optional.empty()
-    }
-    return Optional.of(this[k]!!)
-}
-
 fun JSONArray.remove(jsonObject: JSONObject) {
     val index = this.index(jsonObject)
     if (!index.isPresent) {
