@@ -16,13 +16,15 @@
 
 package com.ichi2.anki.jsaddons
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.ichi2.anki.AnkiDroidJsAPIConstants.sCurrentJsApiVersion
-import com.ichi2.anki.AnkiSerialization
 import com.ichi2.anki.jsaddons.AddonsConst.ANKIDROID_JS_ADDON_KEYWORDS
 import com.ichi2.anki.jsaddons.AddonsConst.NOTE_EDITOR_ADDON
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.anki.jsaddons.NpmUtils.validateName
+import com.ichi2.anki.web.HttpFetcher
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.Json
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -36,6 +38,7 @@ import kotlin.jvm.Throws
  * ankiDroidJsApi, addonType and keywords, these fields distinguish other npm packages
  */
 
+@Serializable
 class AddonData(
     val name: String? = null, // name of npm package, it unique for each package listed on npm
     val addonTitle: String? = null, // for showing in AnkiDroid
@@ -49,8 +52,11 @@ class AddonData(
     val author: Map<String, String>? = null,
     val license: String? = null,
     val homepage: String? = null,
-    val dist: Map<String, String>? = null
+    val dist: DistInfo? = null
 )
+
+@Serializable
+data class DistInfo(val tarball: String)
 
 /**
  * Check if npm package is valid or not by fields ankidroidJsApi, keywords (ankidroid-js-addon) and
@@ -64,9 +70,13 @@ class AddonData(
  */
 @Throws(IOException::class)
 fun getAddonModelFromJson(packageJsonPath: String): Pair<AddonModel?, List<String>> {
-    val mapper = AnkiSerialization.objectMapper
-    val addonData: AddonData = mapper.readValue(File(packageJsonPath), AddonData::class.java)
-    return getAddonModelFromAddonData(addonData)
+    val data = File(packageJsonPath).readBytes().decodeToString()
+    return try {
+        val json = Json { ignoreUnknownKeys = true }
+        getAddonModelFromAddonData(json.decodeFromString(data))
+    } catch (exc: SerializationException) {
+        return Pair(null, listOf("Unable to parse manifest: $exc"))
+    }
 }
 
 /**
@@ -155,11 +165,14 @@ fun getAddonModelFromAddonData(addonData: AddonData): Pair<AddonModel?, List<Str
  */
 @Throws(IOException::class)
 fun getAddonModelListFromJson(packageJsonUrl: URL): Pair<List<AddonModel>, List<String>> {
+    val urlData = if (packageJsonUrl.protocol == "file") {
+        File(packageJsonUrl.path).readBytes().decodeToString()
+    } else {
+        HttpFetcher.fetchThroughHttp(packageJsonUrl.toString())
+    }
     val errorList: MutableList<String> = ArrayList()
-    val mapper = AnkiSerialization.objectMapper
-    // network request to fetch json from given url
-    val addonsData = mapper.readValue(packageJsonUrl, object : TypeReference<MutableList<AddonData>>() {})
-
+    val json = Json { ignoreUnknownKeys = true }
+    val addonsData = json.decodeFromString<List<AddonData>>(urlData)
     val addonsModelList = mutableListOf<AddonModel>()
     for (addon in addonsData) {
         val result = getAddonModelFromAddonData(addon)
