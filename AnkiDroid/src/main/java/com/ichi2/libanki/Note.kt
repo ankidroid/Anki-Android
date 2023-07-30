@@ -37,7 +37,7 @@ class Note : Cloneable {
     @get:VisibleForTesting
     var guId: String? = null
         private set
-    private lateinit var mNotetype: NotetypeJson
+    private lateinit var notetype: NotetypeJson
 
     var mid: Long = 0
         private set
@@ -64,13 +64,13 @@ class Note : Cloneable {
         this.col = col
         this.id = 0
         guId = Utils.guid64()
-        mNotetype = notetype
+        this.notetype = notetype
         mid = notetype.getLong("id")
         tags = ArrayList()
         fields = Array(notetype.getJSONArray("flds").length()) { "" }
         mFlags = 0
         mData = ""
-        mFMap = Notetypes.fieldMap(mNotetype)
+        mFMap = Notetypes.fieldMap(this.notetype)
         mScm = col.scm
     }
 
@@ -92,14 +92,14 @@ class Note : Cloneable {
                 fields = Utils.splitFields(cursor.getString(5))
                 mFlags = cursor.getInt(6)
                 mData = cursor.getString(7)
-                mNotetype = col.notetypes.get(mid)!!
-                mFMap = Notetypes.fieldMap(mNotetype)
+                notetype = col.notetypes.get(mid)!!
+                mFMap = Notetypes.fieldMap(notetype)
                 mScm = col.scm
             }
     }
 
     fun reloadModel() {
-        mNotetype = col.notetypes.get(mid)!!
+        notetype = col.notetypes.get(mid)!!
     }
 
     /*
@@ -141,7 +141,7 @@ class Note : Cloneable {
 
     @KotlinCleanup("replace with variable")
     fun model(): NotetypeJson {
-        return mNotetype
+        return notetype
     }
 
     /**
@@ -328,5 +328,35 @@ class Note : Cloneable {
             }
             return highestClozeId + 1
         }
+    }
+
+    fun ephemeralCard(
+        col: Collection,
+        ord: Int = 0,
+        fillEmpty: Boolean = false
+    ): Card {
+        val card = Card(col, null)
+        card.ord = ord
+        card.did = 1
+
+        val nt = notetype
+        val templateIdx = if (nt.type == Consts.MODEL_CLOZE) {
+            0
+        } else {
+            ord
+        }
+        val template = nt.tmpls[templateIdx] as JSONObject
+        template.put("ord", card.ord)
+
+        val output = TemplateManager.TemplateRenderContext.fromCardLayout(
+            this,
+            card,
+            notetype = nt,
+            template = template,
+            fillEmpty = fillEmpty
+        ).render()
+        card.renderOutput = output
+        card.setNote(this)
+        return card
     }
 }

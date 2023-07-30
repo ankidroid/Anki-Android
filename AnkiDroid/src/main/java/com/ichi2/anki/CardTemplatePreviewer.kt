@@ -343,10 +343,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             i++
         }
         try {
-            // TODO: this needs migrating to python libanki's note.ephemeral_card()
-            return null
-//            val template =  col.findTemplates(n)[index]
-//            return col.getNewLinkedCard(PreviewerCard(col, n), n, template, 1, 0L, false)
+            return n.ephemeralCard(col, index, false)
         } catch (e: Exception) {
             // Calling code handles null return, so we can log this for developer's interest but move on
             Timber.d(e, "getDummyCard() unable to create card")
@@ -383,23 +380,23 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         }
 
         override fun render_output(reload: Boolean, browser: Boolean): TemplateRenderOutput {
-            if (render_output == null || reload) {
+            if (renderOutput == null || reload) {
                 val index = if (model().isCloze) {
                     0
                 } else {
                     ord
                 }
-                val context = TemplateManager.TemplateRenderContext.from_card_layout(
+                val context = TemplateManager.TemplateRenderContext.fromCardLayout(
                     note(),
                     this,
                     model(),
                     model().getJSONArray("tmpls")[index] as JSONObject,
-                    fill_empty = false
+                    fillEmpty = false
                 )
-                render_output =
+                renderOutput =
                     context.render()
             }
-            return render_output!!
+            return renderOutput!!
         }
     }
 }

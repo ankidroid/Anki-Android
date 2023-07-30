@@ -104,9 +104,7 @@ open class Card : Cloneable {
     private lateinit var data: String
 
     // END SQL table entries
-    @set:JvmName("setRenderOutput")
-    @get:JvmName("getRenderOutput")
-    protected var render_output: TemplateRenderOutput?
+    var renderOutput: TemplateRenderOutput?
     private var note: Note?
 
     /** Used by Sched to record the original interval in the revlog after answering. */
@@ -115,7 +113,7 @@ open class Card : Cloneable {
     constructor(col: Collection) {
         this.col = col
         timerStarted = 0L
-        render_output = null
+        renderOutput = null
         note = null
         // to flush, set nid, ord, and due
         this.id = TimeManager.time.timestampID(this.col.db, "cards")
@@ -133,13 +131,18 @@ open class Card : Cloneable {
         data = ""
     }
 
-    constructor(col: Collection, id: Long) {
+    constructor(col: Collection, id: Long?) {
         this.col = col
         timerStarted = 0L
-        render_output = null
+        renderOutput = null
         note = null
-        this.id = id
-        load()
+        if (id != null) {
+            this.id = id
+            load()
+        } else {
+            // ephemeral card
+            this.id = 0
+        }
     }
 
     fun load() {
@@ -166,7 +169,7 @@ open class Card : Cloneable {
             flags = cursor.getInt(16)
             data = cursor.getString(17)
         }
-        render_output = null
+        renderOutput = null
         note = null
     }
 
@@ -250,10 +253,10 @@ open class Card : Cloneable {
      */
     @RustCleanup("move col.render_output back to Card once the java collection is removed")
     open fun render_output(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
-        if (render_output == null || reload) {
-            render_output = col.render_output(this, browser)
+        if (renderOutput == null || reload) {
+            renderOutput = col.render_output(this, browser)
         }
-        return render_output!!
+        return renderOutput!!
     }
 
     open fun note(): Note {
@@ -368,6 +371,10 @@ open class Card : Cloneable {
         } catch (e: CloneNotSupportedException) {
             throw RuntimeException(e)
         }
+    }
+
+    fun setNote(note: Note) {
+        this.note = note
     }
 
     override fun toString(): String {

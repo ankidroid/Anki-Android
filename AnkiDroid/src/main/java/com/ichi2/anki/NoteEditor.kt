@@ -84,6 +84,7 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Note.DupeOrEmpty
+import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
@@ -1107,26 +1108,25 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun showCardTemplateEditor() {
-        return
-//        val intent = Intent(this, CardTemplateEditor::class.java)
-//        // Pass the model ID
-//        intent.putExtra("modelId", currentlySelectedModel!!.getLong("id"))
-//        Timber.d(
-//            "showCardTemplateEditor() for model %s",
-//            intent.getLongExtra("modelId", NOT_FOUND_NOTE_TYPE)
-//        )
-//        // Also pass the note id and ord if not adding new note
-//        if (!addNote && mCurrentEditedCard != null) {
-//            intent.putExtra("noteId", mCurrentEditedCard!!.note().id)
-//            Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard!!.note().id)
-//            intent.putExtra("ordId", mCurrentEditedCard!!.ord)
-//            Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard!!.ord)
-//        }
-//        startActivityForResultWithAnimation(
-//            intent,
-//            REQUEST_TEMPLATE_EDIT,
-//            START
-//        )
+        val intent = Intent(this, CardTemplateEditor::class.java)
+        // Pass the model ID
+        intent.putExtra("modelId", currentlySelectedNotetype!!.id)
+        Timber.d(
+            "showCardTemplateEditor() for model %s",
+            intent.getLongExtra("modelId", NOT_FOUND_NOTE_TYPE)
+        )
+        // Also pass the note id and ord if not adding new note
+        if (!addNote && mCurrentEditedCard != null) {
+            intent.putExtra("noteId", mCurrentEditedCard!!.note().id)
+            Timber.d("showCardTemplateEditor() with note %s", mCurrentEditedCard!!.note().id)
+            intent.putExtra("ordId", mCurrentEditedCard!!.ord)
+            Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard!!.ord)
+        }
+        startActivityForResultWithAnimation(
+            intent,
+            REQUEST_TEMPLATE_EDIT,
+            START
+        )
     }
 
     @Suppress("deprecation") // onActivityResult

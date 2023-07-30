@@ -638,7 +638,7 @@ open class Collection(
         c: Card,
         browser: Boolean
     ): TemplateRenderOutput {
-        return TemplateManager.TemplateRenderContext.from_existing_card(c, browser).render()
+        return TemplateManager.TemplateRenderContext.fromExistingCard(c, browser).render()
     }
 
     @VisibleForTesting
