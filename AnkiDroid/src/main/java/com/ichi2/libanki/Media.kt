@@ -74,16 +74,6 @@ open class Media(private val col: Collection) {
         }
     }
 
-    /**
-     * Strips a string from media references.
-     *
-     * @param txt The string to be cleared of media references.
-     * @return The media-free string.
-     */
-    fun strip(txt: String): String {
-        return col.backend.stripAvTags(txt)
-    }
-
     fun findUnusedMediaFiles(): List<File> {
         return check().unusedFileNames.map { File(dir, it) }
     }

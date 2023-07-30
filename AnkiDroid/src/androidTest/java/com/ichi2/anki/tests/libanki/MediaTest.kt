@@ -129,22 +129,6 @@ class MediaTest : InstrumentedTest() {
         assertEquals(expected.size, actual.size)
     }
 
-    @Test
-    @Suppress("SpellCheckingInspection")
-    fun testAudioTags() {
-        assertEquals("aoeu", mTestCol!!.media.strip("a<audio src=yo>oeu"))
-        assertEquals("aoeu", mTestCol!!.media.strip("a<audio src='yo'>oeu"))
-        assertEquals("aoeu", mTestCol!!.media.strip("""a<audio src="yo">oeu"""))
-    }
-
-    @Test
-    @Suppress("SpellCheckingInspection")
-    fun testObjectTags() {
-        assertEquals("aoeu", mTestCol!!.media.strip("a<object data=yo>oeu"))
-        assertEquals("aoeu", mTestCol!!.media.strip("a<object data='yo'>oeu"))
-        assertEquals("aoeu", mTestCol!!.media.strip("""a<object data="yo">oeu"""))
-    }
-
     @Suppress("SpellCheckingInspection")
     @Throws(IOException::class)
     private fun createNonEmptyFile(@Suppress("SameParameterValue") fileName: String): File {

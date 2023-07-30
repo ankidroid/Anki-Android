@@ -172,7 +172,6 @@ class ContentProviderTest : InstrumentedTest() {
         for (did in mTestDeckIds) {
             col.decks.rem(did, cardsToo = true, childrenToo = true)
         }
-        col.decks.flush()
         assertEquals(
             "Check that all created decks have been deleted",
             mNumDecksBeforeTest,
