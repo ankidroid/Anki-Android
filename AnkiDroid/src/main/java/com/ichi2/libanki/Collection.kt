@@ -34,6 +34,7 @@ import anki.search.SearchNode
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
+import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
@@ -783,8 +784,8 @@ open class Collection(
         return db.queryLongList("select id from cards where id in " + Utils.ids2str(cards))
     }
 
-    fun setDeck(cids: LongArray, did: Long) {
-        backend.setDeck(cardIds = cids.asIterable(), deckId = did)
+    fun setDeck(cids: Iterable<CardId>, did: DeckId): OpChangesWithCount {
+        return backend.setDeck(cardIds = cids, deckId = did)
     }
 
     /** Save (flush) the note to the DB. Unlike note.flush(), this is undoable. This should
@@ -851,6 +852,11 @@ open class Collection(
     /** Takes raw input from TypeScript frontend and returns suitable translations. */
     fun i18nResourcesRaw(input: ByteArray): ByteArray {
         return backend.i18nResourcesRaw(input = input)
+    }
+
+    // Python code has a cardsOfNote, but not vice-versa yet
+    fun notesOfCards(cids: Iterable<CardId>): List<NoteId> {
+        return db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
     }
 
     /**

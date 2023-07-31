@@ -37,8 +37,7 @@ import anki.collection.OpChanges
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiFont.Companion.getTypeface
-import com.ichi2.anki.CardUtils.getAllCards
-import com.ichi2.anki.CardUtils.getNotes
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
@@ -451,41 +450,16 @@ open class CardBrowser :
      * Change Deck
      * @param did Id of the deck
      */
-    // TODO: This function can be simplified a lot
     @VisibleForTesting
-    fun moveSelectedCardsToDeck(did: DeckId) {
-        val selectedDeck = col.decks.get(did)
-        // TODO: Currently try-catch is at every level which isn't required, simplify that
-        try {
-            // #5932 - can't be dynamic
-            // TODO: Simplify, this is internally checked also in changeDeckMulti, executeChangeCollectionTask() -> changeDeckMulti()
-            if (Decks.isDynamic(selectedDeck)) {
-                Timber.w("Attempted to change cards to dynamic deck. Cancelling operation.")
-                displayCouldNotChangeDeck()
-                return
-            }
-        } catch (e: Exception) {
-            displayCouldNotChangeDeck()
-            Timber.e(e)
-            return
-        }
-        mNewDid = selectedDeck.getLong("id")
-        Timber.i("Changing selected cards to deck: %d", mNewDid)
-        selectedCardIds.run { // to prevent computing selectedCardIds multiple times
-            if (isEmpty()) {
-                endMultiSelectMode()
-                cardsAdapter.notifyDataSetChanged()
-            } else {
-                if (contains(reviewerCardId)) {
-                    mReloadRequired = true
+    fun moveSelectedCardsToDeck(did: DeckId): Job {
+        return launchCatchingTask {
+            val changed = withProgress {
+                undoableOp {
+                    setDeck(selectedCardIds, did)
                 }
-                executeChangeCollectionTask(this, mNewDid)
             }
+            showUndoSnackbar(TR.browsingCardsUpdated(changed.count))
         }
-    }
-
-    private fun displayCouldNotChangeDeck() {
-        showSnackbar(R.string.card_browser_deck_change_error, Snackbar.LENGTH_SHORT)
     }
 
     @get:VisibleForTesting
@@ -799,46 +773,18 @@ open class CardBrowser :
             Timber.i("Not marking cards - nothing selected")
             return
         }
-        val result = withProgress { withCol { toggleNotesMarkForCardsIds(selectedCardIds, this) } }
-        updateCardsInList(getAllCards(getNotes(result.toList())))
-        invalidateOptionsMenu() // maybe the availability of undo changed
-        // reload if updated cards contain review card
-        mReloadRequired = result.map { card -> card.id }.contains(reviewerCardId)
-    }
-
-    private fun toggleNotesMarkForCardsIds(
-        cardIds: List<Long>,
-        col: com.ichi2.libanki.Collection
-    ): Array<Card> {
-        val cards = cardIds.map { col.getCard(it) }.toTypedArray()
-        col.db.executeInTransaction {
-            // TODO: get note directly without loading cards,
-            //  We can create a db query that directly fetch the nids from the cards without loading all data from card table
-            val notes = getNotes(listOf(*cards))
-            // collect undo information
-            val originalMarked: MutableList<Note> = mutableListOf()
-            val originalUnmarked: MutableList<Note> = mutableListOf()
-            for (n in notes) {
-                if (isMarked(n)) {
-                    originalMarked.add(n)
+        val cardIds = selectedCardIds
+        withProgress {
+            undoableOp {
+                val wantMark = !getCard(selectedCardIds.first()).note().hasTag("marked")
+                val noteIds = notesOfCards(cardIds)
+                if (wantMark) {
+                    tags.bulkAdd(noteIds, "marked")
                 } else {
-                    originalUnmarked.add(n)
+                    tags.bulkRemove(noteIds, "marked")
                 }
             }
-            val hasUnmarked = originalUnmarked.isNotEmpty()
-            CardUtils.markAll(java.util.ArrayList(notes), hasUnmarked)
-
-            // mark undo for all at once
-            col.markUndo(UndoMarkNoteMulti(originalMarked, originalUnmarked, hasUnmarked))
-
-            // reload cards because they'll be passed back to caller
-            for (c in cards) {
-                c.load()
-            }
         }
-        // pass cards back so more actions can be performed by the caller
-        // (querying the cards again is unnecessarily expensive)
-        return cards
     }
 
     @VisibleForTesting
@@ -2629,30 +2575,6 @@ open class CardBrowser :
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val checkedCardIds: List<Long>
         get() = mCheckedCards.map { c -> c.id }
-
-    // should only be called from changeDeck()
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun executeChangeCollectionTask(ids: List<Long>, newDid: DeckId) {
-        mNewDid = newDid // line required for unit tests, not necessary, but a noop in regular call.
-        launchCatchingTask {
-            val result = withProgress {
-                withCol { changeDeckMulti(this, ids, newDid) }
-            }
-            if (result.succeeded()) {
-                searchCards()
-                endMultiSelectMode()
-                cardsAdapter.notifyDataSetChanged()
-                invalidateOptionsMenu() // maybe the availability of undo changed
-                // snackbar to offer undo
-                val deckName = col.decks.name(mNewDid)
-                val message = getString(R.string.changed_deck_message, deckName)
-                showUndoSnackbar(message)
-            } else {
-                Timber.i("changeDeckHandler failed, not offering undo")
-                displayCouldNotChangeDeck()
-            }
-        }
-    }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getPropertiesForCardId(cardId: CardId): CardCache {

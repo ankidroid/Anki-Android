@@ -67,7 +67,7 @@ class Tags(private val col: Collection) {
     }
 
     /** Add space-separate tags to provided notes. */
-    fun bulkAdd(noteIds: List<Long>, tags: String): OpChangesWithCount {
+    fun bulkAdd(noteIds: List<NoteId>, tags: String): OpChangesWithCount {
         return col.backend.addNoteTags(noteIds = noteIds, tags = tags)
     }
 
