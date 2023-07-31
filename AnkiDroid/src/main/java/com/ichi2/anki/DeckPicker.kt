@@ -46,6 +46,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -1641,7 +1642,12 @@ open class DeckPicker :
             val iFilter = IntentFilter()
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
             iFilter.addAction(SdCardReceiver.MEDIA_MOUNT)
-            registerReceiver(mUnmountReceiver, iFilter)
+            ContextCompat.registerReceiver(
+                this,
+                mUnmountReceiver,
+                iFilter,
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
         }
     }
 

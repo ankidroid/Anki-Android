@@ -31,6 +31,7 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import anki.collection.OpChanges
 import com.google.android.material.color.MaterialColors
@@ -2315,7 +2316,12 @@ open class CardBrowser :
             }
             val iFilter = IntentFilter()
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(mUnmountReceiver, iFilter)
+            ContextCompat.registerReceiver(
+                this,
+                mUnmountReceiver,
+                iFilter,
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
         }
     }
 

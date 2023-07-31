@@ -41,6 +41,7 @@ import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
@@ -1014,7 +1015,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             val iFilter = IntentFilter()
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(mUnmountReceiver, iFilter)
+            ContextCompat.registerReceiver(
+                this,
+                mUnmountReceiver,
+                iFilter,
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
         }
     }
 

@@ -42,6 +42,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.core.view.children
 import androidx.core.view.isVisible
@@ -756,7 +757,12 @@ abstract class AbstractFlashcardViewer :
             }
             val iFilter = IntentFilter()
             iFilter.addAction(SdCardReceiver.MEDIA_EJECT)
-            registerReceiver(mUnmountReceiver, iFilter)
+            ContextCompat.registerReceiver(
+                this@AbstractFlashcardViewer,
+                mUnmountReceiver,
+                iFilter,
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
         }
     }
 

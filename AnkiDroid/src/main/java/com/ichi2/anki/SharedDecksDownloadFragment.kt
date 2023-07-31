@@ -31,6 +31,7 @@ import android.webkit.URLUtil
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
@@ -159,7 +160,14 @@ class SharedDecksDownloadFragment : Fragment() {
         }
         // Register broadcast receiver for download completion.
         Timber.d("Registering broadcast receiver for download completion")
-        activity?.registerReceiver(mOnComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        activity?.let { ctx ->
+            ContextCompat.registerReceiver(
+                ctx,
+                mOnComplete,
+                IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
+                ContextCompat.RECEIVER_NOT_EXPORTED
+            )
+        }
 
         val currentFileName = URLUtil.guessFileName(
             fileToBeDownloaded.url,
