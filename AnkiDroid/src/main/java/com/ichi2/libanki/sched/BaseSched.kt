@@ -25,6 +25,8 @@ import android.text.style.StyleSpan
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import anki.ankidroid.schedTimingTodayLegacyRequest
+import anki.collection.OpChanges
+import anki.collection.OpChangesWithCount
 import anki.decks.DeckTreeNode
 import anki.scheduler.*
 import com.ichi2.anki.R
@@ -63,8 +65,8 @@ abstract class BaseSched(val col: Collection) {
     /**
      * @param ids Id of cards to suspend
      */
-    open fun suspendCards(ids: LongArray) {
-        col.backend.buryOrSuspendCards(
+    open fun suspendCards(ids: Iterable<CardId>): OpChangesWithCount {
+        return col.backend.buryOrSuspendCards(
             cardIds = ids.toList(),
             noteIds = listOf(),
             mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
@@ -74,8 +76,8 @@ abstract class BaseSched(val col: Collection) {
     /**
      * @param ids Id of cards to unsuspend
      */
-    open fun unsuspendCards(ids: LongArray) {
-        col.backend.restoreBuriedAndSuspendedCards(
+    open fun unsuspendCards(ids: Iterable<CardId>): OpChanges {
+        return col.backend.restoreBuriedAndSuspendedCards(
             cids = ids.toList()
         )
     }

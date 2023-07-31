@@ -1122,7 +1122,7 @@ class CardContentProvider : ContentProvider() {
                         sched.buryCards(longArrayOf(card.id))
                     } else {
                         // suspend
-                        sched.suspendCards(longArrayOf(card.id))
+                        sched.suspendCards(listOf(card.id))
                     }
                 }
             }

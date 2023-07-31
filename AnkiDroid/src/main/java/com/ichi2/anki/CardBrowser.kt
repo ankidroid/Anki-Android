@@ -1891,15 +1891,19 @@ open class CardBrowser :
     }
 
     private suspend fun suspendCards(cardIds: List<Long>) {
-        val result = withProgress {
-            withCol {
-                suspendCardMulti(this, cardIds)
+        if (cardIds.isEmpty()) {
+            return
+        }
+        withProgress {
+            undoableOp {
+                val wantSuspend = getCard(cardIds.first()).queue >= 0
+                if (wantSuspend) {
+                    sched.suspendCards(cardIds).changes
+                } else {
+                    sched.unsuspendCards(cardIds)
+                }
             }
         }
-        updateCardsInList(result.toList())
-        invalidateOptionsMenu() // maybe the availability of undo changed
-        val isUpdatedContainsReviewCard = result.map { card -> card.id }.contains(reviewerCardId)
-        if (isUpdatedContainsReviewCard) mReloadRequired = true
     }
 
     private fun showUndoSnackbar(message: CharSequence) {

@@ -99,9 +99,9 @@ class SchedulerService {
                 col.markUndo(revertCardToProvidedState(R.string.menu_suspend_card, suspendedCard))
                 // suspend card
                 if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
-                    col.sched.unsuspendCards(longArrayOf(card.id))
+                    col.sched.unsuspendCards(listOf(card.id))
                 } else {
-                    col.sched.suspendCards(longArrayOf(card.id))
+                    col.sched.suspendCards(listOf(card.id))
                 }
             }
         }
@@ -118,7 +118,7 @@ class SchedulerService {
                 }
                 col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_suspend_note, card))
                 // suspend note
-                col.sched.suspendCards(cids)
+                col.sched.suspendCards(cids.asIterable())
             }
         }
     }

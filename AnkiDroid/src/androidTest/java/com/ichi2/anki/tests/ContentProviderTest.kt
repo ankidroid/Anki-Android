@@ -1219,7 +1219,7 @@ class ContentProviderTest : InstrumentedTest() {
 
         // cleanup, unsuspend card and reschedule
         // --------------------------------------
-        col.sched.unsuspendCards(longArrayOf(cardId))
+        col.sched.unsuspendCards(listOf(cardId))
         col.reset()
     }
 

@@ -26,44 +26,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.UndoAction
 import timber.log.Timber
-import java.util.ArrayList
-
-/** @param hasUnsuspended  whether there were any unsuspended card (in which card the action was "Suspend",
- * otherwise the action was "Unsuspend")
- */
-class UndoSuspendCardMulti(
-    private val cards: Array<Card>,
-    private val originalSuspended: BooleanArray,
-    hasUnsuspended: Boolean
-) : UndoAction(if (hasUnsuspended) R.string.menu_suspend_card else R.string.card_browser_unsuspend_card) {
-    override fun undo(col: Collection): Card? {
-        Timber.i("Undo: Suspend multiple cards")
-        val nbOfCards = cards.size
-        val toSuspendIds: MutableList<Long> = ArrayList(nbOfCards)
-        val toUnsuspendIds: MutableList<Long> = ArrayList(nbOfCards)
-        for (i in 0 until nbOfCards) {
-            val card = cards[i]
-            if (originalSuspended[i]) {
-                toSuspendIds.add(card.id)
-            } else {
-                toUnsuspendIds.add(card.id)
-            }
-        }
-
-        // unboxing
-        val toSuspendIdsArray = LongArray(toSuspendIds.size)
-        val toUnsuspendIdsArray = LongArray(toUnsuspendIds.size)
-        for (i in toSuspendIds.indices) {
-            toSuspendIdsArray[i] = toSuspendIds[i]
-        }
-        for (i in toUnsuspendIds.indices) {
-            toUnsuspendIdsArray[i] = toUnsuspendIds[i]
-        }
-        col.sched.suspendCards(toSuspendIdsArray)
-        col.sched.unsuspendCards(toUnsuspendIdsArray)
-        return null // don't fetch new card
-    }
-}
 
 class UndoChangeDeckMulti(private val cards: Array<Card>, private val originalDids: LongArray) : UndoAction(
     R.string.undo_action_change_deck_multi

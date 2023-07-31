@@ -221,7 +221,7 @@ open class SchedV2Test : RobolectricTest() {
             col.cardCount(filteredDid),
             Matchers.equalTo(1)
         )
-        col.sched.suspendCards(longArrayOf(cardId))
+        col.sched.suspendCards(listOf(cardId))
         CollectionAssert.assertSuspended(col, cardId)
         col.sched.rebuildDyn(filteredDid)
         CollectionAssert.assertSuspended(col, cardId)
@@ -254,7 +254,7 @@ open class SchedV2Test : RobolectricTest() {
             col.cardCount(filteredDid),
             Matchers.equalTo(1)
         )
-        col.sched.suspendCards(longArrayOf(cardId))
+        col.sched.suspendCards(listOf(cardId))
         CollectionAssert.assertSuspended(col, cardId)
         col.sched.emptyDyn(filteredDid)
         CollectionAssert.assertSuspended(col, cardId)
@@ -1075,11 +1075,11 @@ open class SchedV2Test : RobolectricTest() {
         // suspending
         col.reset()
         assertNotNull(card)
-        col.sched.suspendCards(longArrayOf(c.id))
+        col.sched.suspendCards(listOf(c.id))
         col.reset()
         assertNull(card)
         // unsuspending
-        col.sched.unsuspendCards(longArrayOf(c.id))
+        col.sched.unsuspendCards(listOf(c.id))
         col.reset()
         assertNotNull(card)
         // should cope with rev cards being relearnt
@@ -1098,8 +1098,8 @@ open class SchedV2Test : RobolectricTest() {
         val due = c.due
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
         Assert.assertEquals(CARD_TYPE_RELEARNING, c.type)
-        col.sched.suspendCards(longArrayOf(c.id))
-        col.sched.unsuspendCards(longArrayOf(c.id))
+        col.sched.suspendCards(listOf(c.id))
+        col.sched.unsuspendCards(listOf(c.id))
         c.load()
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
         Assert.assertEquals(CARD_TYPE_RELEARNING, c.type)
@@ -1112,7 +1112,7 @@ open class SchedV2Test : RobolectricTest() {
         c.load()
         Assert.assertNotEquals(1, c.due)
         Assert.assertNotEquals(1, c.did)
-        col.sched.suspendCards(longArrayOf(c.id))
+        col.sched.suspendCards(listOf(c.id))
         c.load()
         Assert.assertNotEquals(1, c.due)
         Assert.assertNotEquals(1, c.did)
