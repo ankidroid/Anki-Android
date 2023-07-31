@@ -1679,29 +1679,57 @@ abstract class AbstractFlashcardViewer :
         invalidateOptionsMenu()
     }
 
-    internal fun buryCard(): Boolean {
-        return dismiss(BuryCard(currentCard!!)) {
+    fun buryCard(): Boolean {
+        launchCatchingTask {
+            withProgress {
+                undoableOp {
+                    sched.buryCards(listOf(currentCard!!.id))
+                }
+            }
             showSnackbarWithUndoButton(R.string.card_buried)
         }
+        return true
     }
 
-    internal fun suspendCard(): Boolean {
-        return dismiss(SuspendCard(currentCard!!)) {
+    @VisibleForTesting
+    open fun suspendCard(): Boolean {
+        launchCatchingTask {
+            withProgress {
+                undoableOp {
+                    sched.suspendCards(listOf(currentCard!!.id))
+                }
+            }
             showSnackbarWithUndoButtonText(TR.studyingCardSuspended())
         }
+        return true
     }
 
-    internal fun suspendNote(): Boolean {
-        return dismiss(SuspendNote(currentCard!!)) {
-            val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, currentCard!!.note().numberOfCards(), currentCard!!.note().numberOfCards())
+    @VisibleForTesting
+    open fun suspendNote(): Boolean {
+        launchCatchingTask {
+            val changed = withProgress {
+                undoableOp {
+                    sched.suspendNotes(listOf(currentCard!!.id))
+                }
+            }
+            val count = changed.count
+            val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, count, count)
             showSnackbarWithUndoButtonText(noteSuspended)
         }
+        return true
     }
 
-    internal fun buryNote(): Boolean {
-        return dismiss(BuryNote(currentCard!!)) {
-            showSnackbarWithUndoButtonText(TR.studyingCardsBuried(currentCard!!.note().numberOfCards()))
+    @VisibleForTesting
+    open fun buryNote(): Boolean {
+        launchCatchingTask {
+            val changed = withProgress {
+                undoableOp {
+                    sched.buryNotes(listOf(currentCard!!.id))
+                }
+            }
+            showSnackbarWithUndoButtonText(TR.studyingCardsBuried(changed.count))
         }
+        return true
     }
 
     override fun executeCommand(which: ViewerCommand, fromGesture: Gesture?): Boolean {

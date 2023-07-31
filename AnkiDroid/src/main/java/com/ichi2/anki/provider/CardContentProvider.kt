@@ -601,10 +601,10 @@ class CardContentProvider : ContentProvider() {
                     if (cardToAnswer != null) {
                         if (bury == 1) {
                             // bury card
-                            buryOrSuspendCard(col, col.sched, cardToAnswer, true)
+                            buryOrSuspendCard(col, cardToAnswer, true)
                         } else if (suspend == 1) {
                             // suspend card
-                            buryOrSuspendCard(col, col.sched, cardToAnswer, false)
+                            buryOrSuspendCard(col, cardToAnswer, false)
                         } else {
                             answerCard(col, col.sched, cardToAnswer, ease, timeTaken)
                         }
@@ -1112,18 +1112,15 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun buryOrSuspendCard(col: Collection, sched: AbstractSched, card: Card?, bury: Boolean) {
+    private fun buryOrSuspendCard(col: Collection, card: Card?, bury: Boolean) {
         try {
-            @KotlinCleanup("move lambda outside parentheses")
-            col.db.executeInTransaction {
-                if (card != null) {
-                    if (bury) {
-                        // bury
-                        sched.buryCards(longArrayOf(card.id))
-                    } else {
-                        // suspend
-                        sched.suspendCards(listOf(card.id))
-                    }
+            if (card != null) {
+                if (bury) {
+                    // bury
+                    col.sched.buryCards(listOf(card.id))
+                } else {
+                    // suspend
+                    col.sched.suspendCards(listOf(card.id))
                 }
             }
         } catch (e: RuntimeException) {

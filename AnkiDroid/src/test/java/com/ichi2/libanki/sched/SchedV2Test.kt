@@ -1042,10 +1042,10 @@ open class SchedV2Test : RobolectricTest() {
         col.addNote(note)
         val c2 = note.cards()[0]
         // burying
-        col.sched.buryCards(longArrayOf(c.id), true)
+        col.sched.buryCards(listOf(c.id), true)
         c.load()
         Assert.assertEquals(QUEUE_TYPE_MANUALLY_BURIED, c.queue)
-        col.sched.buryCards(longArrayOf(c2.id), false)
+        col.sched.buryCards(listOf(c2.id), false)
         c2.load()
         Assert.assertEquals(QUEUE_TYPE_SIBLING_BURIED, c2.queue)
         col.reset()
@@ -1058,7 +1058,7 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.unburyCardsForDeck(BaseSched.UnburyType.SIBLINGS)
         c2.load()
         Assert.assertEquals(QUEUE_TYPE_NEW, c2.queue)
-        col.sched.buryCards(longArrayOf(c.id, c2.id))
+        col.sched.buryCards(listOf(c.id, c2.id))
         col.sched.unburyCardsForDeck(BaseSched.UnburyType.ALL)
         col.reset()
         Assert.assertEquals(Counts(2, 0, 0), col.sched.counts())

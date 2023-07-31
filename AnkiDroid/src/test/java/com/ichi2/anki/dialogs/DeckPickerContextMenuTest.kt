@@ -163,7 +163,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             val deckId = addDeck("Deck 1")
             col.notetypes.byName("Basic")!!.put("did", deckId)
             val card = addNoteUsingBasicModel("front", "back").firstCard()
-            col.sched.buryCards(longArrayOf(card.id))
+            col.sched.buryCards(listOf(card.id))
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 

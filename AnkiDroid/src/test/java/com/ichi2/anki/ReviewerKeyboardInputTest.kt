@@ -26,13 +26,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_3
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.EASE_4
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
-import com.ichi2.anki.servicelayer.AnkiMethod
-import com.ichi2.anki.servicelayer.SchedulerService.BuryNote
-import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.anki.servicelayer.SchedulerService.SuspendCard
-import com.ichi2.anki.servicelayer.SchedulerService.SuspendNote
 import com.ichi2.libanki.Card
-import com.ichi2.utils.Computation
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -147,6 +141,8 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         assertThat("Bury Note should be called", underTest.buryNoteCalled)
     }
 
+//    override fun suspend
+
     @Test
     fun pressingAtWillSuspendCard() {
         val underTest = KeyboardInputTestReviewer.displayingAnswer()
@@ -244,7 +240,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             private set
         var markCardCalled = false
             private set
-        private var mDismissType: AnkiMethod<Computation<NextCard<*>>>? = null
         var undoCalled = false
             private set
         var replayAudioCalled = false
@@ -400,16 +395,8 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return null
         }
 
-        val suspendNoteCalled: Boolean
-            get() = mDismissType is SuspendNote
-        val buryNoteCalled: Boolean
-            get() = mDismissType is BuryNote
-
-        override fun dismiss(dismiss: AnkiMethod<Computation<NextCard<*>>>, executeAfter: Runnable): Boolean {
-            mDismissType = dismiss
-            return true
-        }
-
+        var suspendNoteCalled: Boolean = false
+        var buryNoteCalled: Boolean = false
         override fun editCard(fromGesture: Gesture?) {
             editCardCalled = true
         }
@@ -418,11 +405,25 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             markCardCalled = true
         }
 
-        val suspendCardCalled: Boolean
-            get() = mDismissType is SuspendCard
+        var suspendCardCalled: Boolean = false
+
+        override fun suspendCard(): Boolean {
+            suspendCardCalled = true
+            return true
+        }
 
         override fun playSounds(doAudioReplay: Boolean) {
             replayAudioCalled = true
+        }
+
+        override fun buryNote(): Boolean {
+            buryNoteCalled = true
+            return true
+        }
+
+        override fun suspendNote(): Boolean {
+            suspendNoteCalled = true
+            return true
         }
 
         override val isUndoAvailable: Boolean

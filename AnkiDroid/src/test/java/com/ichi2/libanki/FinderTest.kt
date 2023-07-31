@@ -91,7 +91,7 @@ class FinderTest : RobolectricTest() {
     }
 
     private fun buryManually(sched: SchedV2, id: Long): Card {
-        sched.buryCards(longArrayOf(id), true)
+        sched.buryCards(listOf(id), true)
         val manuallyBuriedCard = Card(col, id)
         assertThat(
             manuallyBuriedCard.queue,

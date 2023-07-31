@@ -58,8 +58,8 @@ abstract class BaseSched(val col: Collection) {
     /**
      * @param cids Ids of cards to bury
      */
-    fun buryCards(cids: LongArray) {
-        buryCards(cids, manual = true)
+    fun buryCards(cids: Iterable<CardId>): OpChangesWithCount {
+        return buryCards(cids, manual = true)
     }
 
     /**
@@ -69,6 +69,14 @@ abstract class BaseSched(val col: Collection) {
         return col.backend.buryOrSuspendCards(
             cardIds = ids.toList(),
             noteIds = listOf(),
+            mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
+        )
+    }
+
+    open fun suspendNotes(ids: Iterable<NoteId>): OpChangesWithCount {
+        return col.backend.buryOrSuspendCards(
+            cardIds = listOf(),
+            noteIds = ids,
             mode = BuryOrSuspendCardsRequest.Mode.SUSPEND
         )
     }
@@ -87,14 +95,14 @@ abstract class BaseSched(val col: Collection) {
      * @param manual Whether bury is made manually or not. Only useful for sched v2.
      */
     @VisibleForTesting
-    open fun buryCards(cids: LongArray, manual: Boolean) {
+    open fun buryCards(cids: Iterable<CardId>, manual: Boolean): OpChangesWithCount {
         val mode = if (manual) {
             BuryOrSuspendCardsRequest.Mode.BURY_USER
         } else {
             BuryOrSuspendCardsRequest.Mode.BURY_SCHED
         }
-        col.backend.buryOrSuspendCards(
-            cardIds = cids.toList(),
+        return col.backend.buryOrSuspendCards(
+            cardIds = cids,
             noteIds = listOf(),
             mode = mode
         )
@@ -104,10 +112,10 @@ abstract class BaseSched(val col: Collection) {
      * Bury all cards for note until next session.
      * @param nid The id of the targeted note.
      */
-    open fun buryNote(nid: NoteId) {
-        col.backend.buryOrSuspendCards(
+    open fun buryNotes(nids: List<NoteId>): OpChangesWithCount {
+        return col.backend.buryOrSuspendCards(
             cardIds = listOf(),
-            noteIds = listOf(nid),
+            noteIds = nids,
             mode = BuryOrSuspendCardsRequest.Mode.BURY_USER
         )
     }

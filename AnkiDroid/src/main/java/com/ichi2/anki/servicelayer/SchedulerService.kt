@@ -17,11 +17,9 @@
 package com.ichi2.anki.servicelayer
 
 import androidx.annotation.StringRes
-import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.libanki.*
-import com.ichi2.libanki.UndoAction.Companion.revertCardToProvidedState
 import com.ichi2.libanki.UndoAction.UndoNameId
 import com.ichi2.utils.Computation
 import timber.log.Timber
@@ -65,60 +63,6 @@ class SchedulerService {
                 val newCard = sched.card
                 newCard?.render_output(true)
                 return Computation.ok(NextCard.withNoResult(newCard))
-            }
-        }
-    }
-
-    class BuryCard(val card: Card) : ActionAndNextCard() {
-        override fun execute(): ComputeResult {
-            return computeThenGetNextCardInTransaction {
-                // collect undo information
-                col.markUndo(revertCardToProvidedState(R.string.menu_bury_card, card))
-                // then bury
-                col.sched.buryCards(longArrayOf(card.id))
-            }
-        }
-    }
-
-    class BuryNote(val card: Card) : ActionAndNextCard() {
-        override fun execute(): ComputeResult {
-            return computeThenGetNextCardInTransaction {
-                // collect undo information
-                col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_bury_note, card))
-                // then bury
-                col.sched.buryNote(card.note().id)
-            }
-        }
-    }
-
-    class SuspendCard(val card: Card) : ActionAndNextCard() {
-        override fun execute(): ComputeResult {
-            return computeThenGetNextCardInTransaction {
-                // collect undo information
-                val suspendedCard: Card = card.clone()
-                col.markUndo(revertCardToProvidedState(R.string.menu_suspend_card, suspendedCard))
-                // suspend card
-                if (card.queue == Consts.QUEUE_TYPE_SUSPENDED) {
-                    col.sched.unsuspendCards(listOf(card.id))
-                } else {
-                    col.sched.suspendCards(listOf(card.id))
-                }
-            }
-        }
-    }
-
-    class SuspendNote(val card: Card) : ActionAndNextCard() {
-        override fun execute(): ComputeResult {
-            return computeThenGetNextCardInTransaction {
-                // collect undo information
-                val cards = card.note().cards()
-                val cids = LongArray(cards.size)
-                for (i in cards.indices) {
-                    cids[i] = cards[i].id
-                }
-                col.markUndo(UndoAction.revertNoteToProvidedState(R.string.menu_suspend_note, card))
-                // suspend note
-                col.sched.suspendCards(cids.asIterable())
             }
         }
     }
@@ -175,24 +119,6 @@ class SchedulerService {
     }
 
     companion object {
-        fun <T> ActionAndNextCardV<T>.computeThenGetNextCardInTransaction(task: (AnkiCollection) -> T): Computation<NextCard<T>> {
-            return try {
-                val maybeNextCard = col.db.executeInTransaction {
-                    col.sched.deferReset()
-                    val result = task(col)
-                    // With sHadCardQueue set, getCard() resets the scheduler prior to getting the next card
-                    val maybeNextCard = col.sched.card
-
-                    return@executeInTransaction NextCard(maybeNextCard, result)
-                }
-                Computation.ok(maybeNextCard)
-            } catch (e: RuntimeException) {
-                Timber.e(e, "doInBackgroundDismissNote - RuntimeException on dismissing note, dismiss type %s", this.javaClass)
-                CrashReportService.sendExceptionReport(e, "doInBackgroundDismissNote")
-                Computation.err()
-            }
-        }
-
         fun AnkiMethod<*>.rescheduleRepositionReset(
             cards: Array<Card>,
             @UndoNameId @StringRes

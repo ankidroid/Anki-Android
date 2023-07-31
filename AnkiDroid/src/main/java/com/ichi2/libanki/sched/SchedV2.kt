@@ -1876,7 +1876,7 @@ end)  """
         }
         // then bury
         if (!toBury.isEmpty()) {
-            buryCards(toBury.toLongArray(), false)
+            buryCards(toBury, false)
         }
     }
     /*
