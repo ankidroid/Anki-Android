@@ -379,7 +379,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             return mEditedNotetype ?: super.model()
         }
 
-        override fun render_output(reload: Boolean, browser: Boolean): TemplateRenderOutput {
+        override fun renderOutput(reload: Boolean, browser: Boolean): TemplateRenderOutput {
             if (renderOutput == null || reload) {
                 val index = if (model().isCloze) {
                     0

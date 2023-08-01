@@ -228,33 +228,32 @@ open class Card : Cloneable {
     }
 
     fun q(reload: Boolean = false, browser: Boolean = false): String {
-        return render_output(reload, browser).question_and_style()
+        return renderOutput(reload, browser).question_and_style()
     }
 
     fun a(): String {
-        return render_output().answer_and_style()
+        return renderOutput().answer_and_style()
     }
 
     @RustCleanup("legacy")
     fun css(): String {
-        return "<style>${render_output().css}</style>"
+        return "<style>${renderOutput().css}</style>"
     }
 
     fun questionAvTags(): List<AvTag> {
-        return render_output().question_av_tags
+        return renderOutput().question_av_tags
     }
 
     fun answerAvTags(): List<AvTag> {
-        return render_output().answer_av_tags
+        return renderOutput().answer_av_tags
     }
 
     /**
      * @throws net.ankiweb.rsdroid.exceptions.BackendInvalidInputException: If the card does not exist
      */
-    @RustCleanup("move col.render_output back to Card once the java collection is removed")
-    open fun render_output(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
+    open fun renderOutput(reload: Boolean = false, browser: Boolean = false): TemplateRenderOutput {
         if (renderOutput == null || reload) {
-            renderOutput = col.render_output(this, browser)
+            renderOutput = TemplateManager.TemplateRenderContext.fromExistingCard(this, browser).render()
         }
         return renderOutput!!
     }
@@ -311,7 +310,7 @@ open class Card : Cloneable {
      * ***********************************************************
      */
     fun qSimple(): String {
-        return render_output(false).question_text
+        return renderOutput(false).question_text
     }
 
     /*
@@ -319,7 +318,7 @@ open class Card : Cloneable {
      */
     val pureAnswer: String
         get() {
-            val s = render_output(false).answer_text
+            val s = renderOutput(false).answer_text
             for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
                 val pos = s.indexOf(target)
                 if (pos == -1) continue
@@ -545,7 +544,7 @@ open class Card : Cloneable {
         }
 
         fun loadQA(reload: Boolean, browser: Boolean) {
-            card.render_output(reload, browser)
+            card.renderOutput(reload, browser)
         }
     }
 

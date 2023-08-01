@@ -31,7 +31,6 @@ import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.search.SearchNode
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
@@ -618,13 +617,6 @@ open class Collection(
     fun addNote(note: Note): Int {
         addNote(note, note.model().did)
         return note.numberOfCards()
-    }
-
-    fun render_output(
-        c: Card,
-        browser: Boolean
-    ): TemplateRenderOutput {
-        return TemplateManager.TemplateRenderContext.fromExistingCard(c, browser).render()
     }
 
     @VisibleForTesting

@@ -462,7 +462,7 @@ abstract class AbstractFlashcardViewer :
 
         val info = withCol {
             val card = sched.card
-            card?.render_output(true)
+            card?.renderOutput(true)
 
             NextCardInfo(card, timeboxReached())
         }

@@ -135,7 +135,7 @@ class CardHtml(
 
             val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
 
-            val renderOutput = card.render_output()
+            val renderOutput = card.renderOutput()
             val questionAv = renderOutput.question_av_tags
             val answerAv = renderOutput.answer_av_tags
             val questionSound: List<SoundOrVideoTag> =
@@ -200,7 +200,7 @@ class CardHtml(
             val answerFormat = getAnswerFormat(card)
             var newAnswerContent = answerContent
             if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
-                val frontSideFormat = card.render_output(false).question_text
+                val frontSideFormat = card.renderOutput(false).question_text
                 val audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat)
                 // remove the first instance of audio contained in "{{FrontSide}}"
                 while (audioReferences.find()) {
