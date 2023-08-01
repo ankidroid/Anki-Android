@@ -221,11 +221,6 @@ class DB(db: SupportSQLiteDatabase) {
                 )
             }
         }
-        executeInTransaction { executeManyNoTransaction(sql, list) }
-    }
-
-    /** Use this executeMany version with external transaction management  */
-    fun executeManyNoTransaction(@Language("SQL") sql: String, list: List<Array<out Any?>>) {
         for (o in list) {
             database.execSQL(sql, o)
         }
@@ -236,30 +231,6 @@ class DB(db: SupportSQLiteDatabase) {
      */
     val path: String
         get() = database.path ?: ":memory:"
-
-    fun <T> executeInTransaction(r: () -> T): T {
-        // Ported from code which started the transaction outside the try..finally
-        database.beginTransaction()
-        try {
-            val result = r()
-            if (database.inTransaction()) {
-                try {
-                    database.setTransactionSuccessful()
-                } catch (e: Exception) {
-                    // Unsure if this can happen - copied the structure from endTransaction()
-                    Timber.w(e)
-                }
-            } else {
-                Timber.w("Not in a transaction. Cannot mark transaction successful.")
-            }
-            return result
-        } finally {
-            database.safeEndInTransaction()
-        }
-    }
-    fun safeEndInTransaction() {
-        database.safeEndInTransaction()
-    }
 
     companion object {
         private val MOD_SQL_STATEMENTS = arrayOf("insert", "update", "delete")
@@ -284,19 +255,6 @@ class DB(db: SupportSQLiteDatabase) {
          */
         fun withRustBackend(backend: Backend): DB {
             return DB(AnkiSupportSQLiteDatabase.withRustBackend(backend))
-        }
-
-        fun SupportSQLiteDatabase.safeEndInTransaction() {
-            if (inTransaction()) {
-                try {
-                    endTransaction()
-                } catch (e: Exception) {
-                    // endTransaction throws about invalid transaction even when you check first!
-                    Timber.w(e)
-                }
-            } else {
-                Timber.w("Not in a transaction. Cannot end transaction.")
-            }
         }
     }
 }

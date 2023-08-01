@@ -194,39 +194,26 @@ fun saveModel(
     Timber.d("doInBackgroundSaveModel")
     val oldModel = col.notetypes.get(notetype.getLong("id"))
 
-    // TODO need to save all the cards that will go away, for undo
-    //  (do I need to remove them from graves during undo also?)
-    //    - undo (except for cards) could just be Models.update(model) / Models.flush() / Collection.reset() (that was prior "undo")
+    // TODO: make undoable
     val newTemplates = notetype.getJSONArray("tmpls")
-    col.db.database.beginTransaction()
-    try {
-        for (change in templateChanges) {
-            val oldTemplates = oldModel!!.getJSONArray("tmpls")
-            when (change[1] as CardTemplateNotetype.ChangeType) {
-                CardTemplateNotetype.ChangeType.ADD -> {
-                    Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
-                    col.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
-                }
-                CardTemplateNotetype.ChangeType.DELETE -> {
-                    Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
-                    col.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
-                }
+    for (change in templateChanges) {
+        val oldTemplates = oldModel!!.getJSONArray("tmpls")
+        when (change[1] as CardTemplateNotetype.ChangeType) {
+            CardTemplateNotetype.ChangeType.ADD -> {
+                Timber.d("doInBackgroundSaveModel() adding template %s", change[0])
+                col.notetypes.addTemplate(oldModel, newTemplates.getJSONObject(change[0] as Int))
+            }
+            CardTemplateNotetype.ChangeType.DELETE -> {
+                Timber.d("doInBackgroundSaveModel() deleting template currently at ordinal %s", change[0])
+                col.notetypes.remTemplate(oldModel, oldTemplates.getJSONObject(change[0] as Int))
             }
         }
-
-        // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
-        // This could be done better
-        notetype.put("mod", oldModel!!.getLong("mod"))
-        col.notetypes.save(notetype, true)
-        col.notetypes.update(notetype)
-        col.reset()
-
-        if (col.db.database.inTransaction()) {
-            col.db.database.setTransactionSuccessful()
-        } else {
-            Timber.i("CollectionTask::SaveModel was not in a transaction? Cannot mark transaction successful.")
-        }
-    } finally {
-        col.db.safeEndInTransaction()
     }
+
+    // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
+    // This could be done better
+    notetype.put("mod", oldModel!!.getLong("mod"))
+    col.notetypes.save(notetype, true)
+    col.notetypes.update(notetype)
+    col.reset()
 }

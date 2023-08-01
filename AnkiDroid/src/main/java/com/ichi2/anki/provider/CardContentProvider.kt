@@ -31,11 +31,9 @@ import com.ichi2.compat.CompatHelper.Companion.isMarshmallow
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
-import com.ichi2.libanki.DB.Companion.safeEndInTransaction
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.EmptyMediaException
-import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.findInDeckTree
@@ -606,7 +604,7 @@ class CardContentProvider : ContentProvider() {
                             // suspend card
                             buryOrSuspendCard(col, cardToAnswer, false)
                         } else {
-                            answerCard(col, col.sched, cardToAnswer, ease, timeTaken)
+                            answerCard(col, cardToAnswer, ease, timeTaken)
                         }
                         updated++
                     } else {
@@ -708,55 +706,48 @@ class CardContentProvider : ContentProvider() {
         // for caching model information (so we don't have to query for each note)
         var modelId = Notetypes.NOT_FOUND_NOTE_TYPE
         var model: NotetypeJson? = null
-        val sqldb = col.db.database
-        return try {
-            var result = 0
-            sqldb.beginTransaction()
-            for (i in valuesArr.indices) {
-                val values: ContentValues = valuesArr[i]
-                val flds = values.getAsString(FlashCardsContract.Note.FLDS) ?: continue
+        var result = 0
+        for (i in valuesArr.indices) {
+            val values: ContentValues = valuesArr[i]
+            val flds = values.getAsString(FlashCardsContract.Note.FLDS) ?: continue
 //                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
-                val thisModelId = values.getAsLong(FlashCardsContract.Note.MID)
-                if (thisModelId == null || thisModelId < 0) {
-                    Timber.d("Unable to get model at index: %d", i)
-                    continue
-                }
-                val fldsArray = Utils.splitFields(flds)
-                if (model == null || thisModelId != modelId) {
-                    // new modelId so need to recalculate model, modelId and invalidate duplicateChecker (which is based on previous model)
-                    model = col.notetypes.get(thisModelId)
-                    modelId = thisModelId
-                }
-
-                // Create empty note
-                val newNote = Note(col, model!!) // for some reason we cannot pass modelId in here
-                // Set fields
-                // Check that correct number of flds specified
-                if (fldsArray.size != newNote.fields.size) {
-                    throw IllegalArgumentException("Incorrect flds argument : $flds")
-                }
-                for (idx in fldsArray.indices) {
-                    newNote.setField(idx, fldsArray[idx])
-                }
-                // Set tags
-                val tags = values.getAsString(FlashCardsContract.Note.TAGS)
-                if (tags != null) {
-                    newNote.setTagsFromStr(tags)
-                }
-                // Add to collection
-                col.addNote(newNote)
-                for (card: Card in newNote.cards()) {
-                    card.did = deckId
-                    card.flush()
-                }
-                result++
+            val thisModelId = values.getAsLong(FlashCardsContract.Note.MID)
+            if (thisModelId == null || thisModelId < 0) {
+                Timber.d("Unable to get model at index: %d", i)
+                continue
+            }
+            val fldsArray = Utils.splitFields(flds)
+            if (model == null || thisModelId != modelId) {
+                // new modelId so need to recalculate model, modelId and invalidate duplicateChecker (which is based on previous model)
+                model = col.notetypes.get(thisModelId)
+                modelId = thisModelId
             }
 
-            sqldb.setTransactionSuccessful()
-            result
-        } finally {
-            sqldb.safeEndInTransaction()
+            // Create empty note
+            val newNote = Note(col, model!!) // for some reason we cannot pass modelId in here
+            // Set fields
+            // Check that correct number of flds specified
+            if (fldsArray.size != newNote.fields.size) {
+                throw IllegalArgumentException("Incorrect flds argument : $flds")
+            }
+            for (idx in fldsArray.indices) {
+                newNote.setField(idx, fldsArray[idx])
+            }
+            // Set tags
+            val tags = values.getAsString(FlashCardsContract.Note.TAGS)
+            if (tags != null) {
+                newNote.setTagsFromStr(tags)
+            }
+            // Add to collection
+            col.addNote(newNote, deckId)
+            for (card: Card in newNote.cards()) {
+                card.did = deckId
+                card.flush()
+            }
+            result++
         }
+
+        return result
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
@@ -1091,20 +1082,13 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun answerCard(col: Collection, sched: AbstractSched, cardToAnswer: Card?, @BUTTON_TYPE ease: Int, timeTaken: Long) {
+    private fun answerCard(col: Collection, cardToAnswer: Card?, @BUTTON_TYPE ease: Int, timeTaken: Long) {
         try {
-            val db = col.db
-            db.database.beginTransaction()
-            try {
-                if (cardToAnswer != null) {
-                    if (timeTaken != -1L) {
-                        cardToAnswer.timerStarted = TimeManager.time.intTimeMS() - timeTaken
-                    }
-                    sched.answerCard(cardToAnswer, ease)
+            if (cardToAnswer != null) {
+                if (timeTaken != -1L) {
+                    cardToAnswer.timerStarted = TimeManager.time.intTimeMS() - timeTaken
                 }
-                db.database.setTransactionSuccessful()
-            } finally {
-                db.safeEndInTransaction()
+                col.sched.answerCard(cardToAnswer, ease)
             }
         } catch (e: RuntimeException) {
             Timber.e(e, "answerCard - RuntimeException on answering card")

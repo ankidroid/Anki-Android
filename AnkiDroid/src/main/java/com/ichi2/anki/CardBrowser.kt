@@ -954,12 +954,10 @@ open class CardBrowser :
         // list of cards with updated flags
         val updatedCards = withProgress {
             withCol {
-                db.executeInTransaction {
-                    setUserFlag(flag, selectedCardIds)
-                    selectedCardIds
-                        .map { getCard(it) }
-                        .onEach { load() }
-                }
+                setUserFlag(flag, selectedCardIds)
+                selectedCardIds
+                    .map { getCard(it) }
+                    .onEach { load() }
             }
         }
         // TODO: try to offload the cards processing in updateCardsInList() on a background thread,
