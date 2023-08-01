@@ -876,14 +876,14 @@ class CardContentProvider : ContentProvider() {
                     val bqfmt: String = values.getAsString(FlashCardsContract.CardTemplate.BROWSER_QUESTION_FORMAT)
                     val bafmt: String = values.getAsString(FlashCardsContract.CardTemplate.BROWSER_ANSWER_FORMAT)
                     try {
-                        val t: JSONObject = Notetypes.newTemplate(name)
+                        var t: JSONObject = Notetypes.newTemplate(name)
                         t.put("qfmt", qfmt)
                         t.put("afmt", afmt)
                         t.put("bqfmt", bqfmt)
                         t.put("bafmt", bafmt)
                         notetypes.addTemplate(existingModel, t)
-                        notetypes.save(existingModel)
-
+                        notetypes.update(existingModel)
+                        t = existingModel.tmpls.get(existingModel.tmpls.length() - 1) as JSONObject
                         return ContentUris.withAppendedId(uri, t.getInt("ord").toLong())
                     } catch (e: ConfirmModSchemaException) {
                         throw IllegalArgumentException("Unable to add template without user requesting/accepting full-sync", e)

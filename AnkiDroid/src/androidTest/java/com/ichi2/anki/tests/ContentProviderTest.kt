@@ -33,7 +33,6 @@ import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.*
 import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
 import org.json.JSONObject
@@ -92,7 +91,6 @@ class ContentProviderTest : InstrumentedTest() {
     )
     @KotlinCleanup("remove 'requireNoNulls' and fix mDummyFields")
     fun setUp() {
-        assumeThat(defaultLegacySchema, `is`(true))
         Timber.i("setUp()")
         mCreatedNotes = ArrayList()
         val col = col
@@ -1289,7 +1287,7 @@ class ContentProviderTest : InstrumentedTest() {
         @JvmStatic // required for initParameters
         fun initParameters(): Collection<Array<Any>> {
             // This does one run with schedVersion injected as 1, and one run as 2
-            return listOf(arrayOf(1), arrayOf(2))
+            return listOf(arrayOf(2))
         }
 
         private const val BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F"
