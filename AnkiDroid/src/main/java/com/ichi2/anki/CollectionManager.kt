@@ -147,6 +147,14 @@ object CollectionManager {
             return backend!!.tr
         }
 
+    fun compareAnswer(expected: String, given: String): String {
+        if (backend == null) {
+            runBlocking { ensureBackend() }
+        }
+        // bypass the lock, as the type answer code is heavily nested in non-suspend funs
+        return backend!!.compareAnswer(expected, given)
+    }
+
     /**
      * Close the currently cached backend and discard it. Useful when enabling the V16 scheduler in the
      * dev preferences, or if the active language changes. Saves and closes the collection if open.
