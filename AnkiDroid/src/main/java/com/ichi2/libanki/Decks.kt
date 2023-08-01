@@ -881,24 +881,6 @@ class Decks(private val col: Collection) {
         // not in libAnki
         const val DECK_SEPARATOR = "::"
 
-        @KotlinCleanup("Maybe use triple quotes and @language? for these properties")
-        const val DEFAULT_DECK = (
-            "" +
-                "{" +
-                "\"newToday\": [0, 0]," + // currentDay, count
-                "\"revToday\": [0, 0]," +
-                "\"lrnToday\": [0, 0]," +
-                "\"timeToday\": [0, 0]," + // time in ms
-                "\"conf\": 1," +
-                "\"usn\": 0," +
-                "\"desc\": \"\"," +
-                "\"dyn\": 0," + // anki uses int/bool interchangeably here
-                "\"collapsed\": false," +
-                "\"browserCollapsed\": false," + // added in beta11
-                "\"extendNew\": 0," +
-                "\"extendRev\": 0" +
-                "}"
-            )
         const val DEFAULT_CONF = (
             "" +
                 "{" +

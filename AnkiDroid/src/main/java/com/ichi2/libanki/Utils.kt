@@ -35,13 +35,11 @@ import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.text.Normalizer
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -772,20 +770,6 @@ object Utils {
     }
 
     /**
-     * Like org.json.JSONObject except that it doesn't escape forward slashes
-     * The necessity for this method is due to python's 2.7 json.dumps() function that doesn't escape character '/'.
-     * The org.json.JSONObject parser accepts both escaped and unescaped forward slashes, so we only need to worry for
-     * our output, when we write to the database or syncing.
-     *
-     * @param json a json object to serialize
-     * @return the json serialization of the object
-     * @see org.json.JSONObject.toString
-     */
-    fun jsonToString(json: JSONObject): String {
-        return json.toString().replace("\\\\/".toRegex(), "/")
-    }
-
-    /**
      * @return The app version, OS version and device model, provided when syncing.
      */
     fun syncPlatform(): String {
@@ -798,21 +782,6 @@ object Utils {
             Build.VERSION.RELEASE,
             model
         )
-    }
-
-    /*
-     *  Return the input string in the Unicode normalized form. This helps with text comparisons, for example a ü
-     *  stored as u plus the dots but typed as a single character compare as the same.
-     *
-     * @param txt Text to be normalized
-     * @return The input text in its NFC normalized form form.
-    */
-    fun nfcNormalized(txt: String): String {
-        return if (!Normalizer.isNormalized(txt, Normalizer.Form.NFC)) {
-            Normalizer.normalize(txt, Normalizer.Form.NFC)
-        } else {
-            txt
-        }
     }
 
     /**

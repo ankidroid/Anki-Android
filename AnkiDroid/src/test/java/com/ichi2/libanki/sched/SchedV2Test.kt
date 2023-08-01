@@ -44,8 +44,6 @@ import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.libanki.CollectionAssert
 import com.ichi2.testutils.libanki.FilteredDeckUtil
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
-import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -178,30 +176,6 @@ open class SchedV2Test : RobolectricTest() {
         MatcherAssert.assertThat(lapse.getDouble("mult"), Matchers.equalTo(0.7))
         MatcherAssert.assertThat(lapse.getJSONArray("delays").length(), Matchers.equalTo(1))
         MatcherAssert.assertThat(lapse.getJSONArray("delays").getDouble(0), Matchers.equalTo(20.0))
-    }
-
-    @Test
-    fun ensureDeckTree() {
-        if (!defaultLegacySchema) {
-            // assertEquals() fails with the new backend, because the ids don't match.
-            // While it could be updated to work with the new backend, it would be easier
-            // to switch to the backend's tree calculation in the future, which is tested
-            // in the upstream code.
-            return
-        }
-        for (deckName in DecksTest.TEST_DECKS) {
-            addDeck(deckName)
-        }
-        val sched = col.sched
-        val tree = sched.deckDueTree()
-        Assert.assertEquals(
-            "Tree has not the expected structure",
-            expectedTree(
-                col,
-                true
-            ),
-            tree
-        )
     }
 
     @Test
@@ -768,7 +742,6 @@ open class SchedV2Test : RobolectricTest() {
     }
 
     @Test
-    @RustCleanup("the legacySchema special case can be removed")
     @Throws(Exception::class)
     fun test_review_limits() {
         TimeManager.reset()

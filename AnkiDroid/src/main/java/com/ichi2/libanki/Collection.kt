@@ -170,7 +170,6 @@ open class Collection(
         mStartTime = 0
         _loadScheduler()
         if (created) {
-            Storage.addNoteTypes(col, backend)
             col.onCreate()
         }
     }
@@ -811,7 +810,6 @@ open class Collection(
         get() = this
 
     companion object {
-
         /**
          * This is only used for collections which were created before
          * the new collections default was v2
@@ -821,16 +819,6 @@ open class Collection(
         private const val fDefaultSchedulerVersion = 1
         private val fSupportedSchedulerVersions = listOf(1, 2)
 
-        // other options
-        const val DEFAULT_CONF = (
-            "{" +
-                // review options
-                "\"activeDecks\": [1], " + "\"curDeck\": 1, " + "\"newSpread\": " + Consts.NEW_CARDS_DISTRIBUTE + ", " +
-                "\"collapseTime\": 1200, " + "\"timeLim\": 0, " + "\"estTimes\": true, " + "\"dueCounts\": true, \"dayLearnFirst\":false, " +
-                // other config
-                "\"curModel\": null, " + "\"nextPos\": 1, " + "\"sortType\": \"noteFld\", " +
-                "\"sortBackwards\": false, \"addToCur\": true }"
-            ) // add new to currently selected deck?
         private const val UNDO_SIZE_MAX = 20
     }
 }

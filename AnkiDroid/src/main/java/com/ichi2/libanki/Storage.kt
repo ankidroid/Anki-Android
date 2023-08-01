@@ -17,39 +17,19 @@
 
 package com.ichi2.libanki
 
-import android.content.ContentValues
 import android.content.Context
-import android.database.sqlite.SQLiteDatabaseLockedException
 import com.ichi2.anki.UIUtils.getDayStart
 import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
 
 object Storage {
     var isInMemory = false
-        private set
-    /**
-     * Whether the collection can be opened. If true, [.Collection]
-     * throws a [SQLiteDatabaseLockedException]
-     */
-    /**
-     * The collection is locked from being opened via the [Storage] class. All collection accesses in the app
-     * should use this class.
-     *
-     *
-     * Opening a collection will then throw [SQLiteDatabaseLockedException]
-     *
-     *
-     * A collection which was opened before sIsLocked was set will be usable until it is closed.
-     */
-    var isLocked = false
         private set
 
     /**
@@ -92,9 +72,6 @@ object Storage {
      * Called as part of Collection initialization. Don't call directly.
      */
     internal fun openDB(path: String, backend: Backend, afterFullSync: Boolean): Pair<DB, Boolean> {
-        if (isLocked) {
-            throw SQLiteDatabaseLockedException("AnkiDroid has locked the database")
-        }
         val dbFile = File(path)
         var create = !dbFile.exists()
         if (afterFullSync) {
@@ -106,81 +83,17 @@ object Storage {
 
         // initialize
         if (create) {
-            _createDB(db, time, backend)
+            _createDB(db, time)
         }
         return Pair(db, create)
     }
 
-    /**
-     * Add note types when creating database
-     */
-    @KotlinCleanup("col non-null")
-    fun addNoteTypes(col: Collection?, backend: Backend) {
-        if (!backend.legacySchema) {
-            Timber.i("skipping adding note types - already exist")
-            return
-        }
-        // add in reverse order so basic is default
-        for (i in StdModels.STD_MODELS.indices.reversed()) {
-            StdModels.STD_MODELS[i].add(col!!)
-        }
-    }
-
-    private fun _createDB(db: DB, time: Time, backend: Backend) {
-        if (backend.legacySchema) {
-            _setColVars(db, time)
-        }
+    private fun _createDB(db: DB, time: Time) {
         // This line is required for testing - otherwise Rust will override a mocked time.
         db.execute("update col set crt = ?", getDayStart(time) / 1000)
     }
 
-    private fun _setColVars(db: DB, time: Time) {
-        val g = JSONObject(Decks.DEFAULT_DECK)
-        g.put("id", 1)
-        g.put("name", "Default")
-        g.put("conf", 1)
-        g.put("mod", time.intTime())
-        val gc = JSONObject(Decks.DEFAULT_CONF)
-        gc.put("id", 1)
-        val ag = JSONObject()
-        ag.put("1", g)
-        val agc = JSONObject()
-        agc.put("1", gc)
-        val values = ContentValues()
-        values.put("conf", Collection.DEFAULT_CONF)
-        values.put("decks", Utils.jsonToString(ag))
-        values.put("dconf", Utils.jsonToString(agc))
-        db.update("col", values)
-    }
-
     fun setUseInMemory(useInMemoryDatabase: Boolean) {
         isInMemory = useInMemoryDatabase
-    }
-
-    /**
-     * Allows the collection to be opened
-     */
-    fun unlockCollection() {
-        isLocked = false
-        Timber.i("unlocked collection")
-    }
-
-    /**
-     * Stops the collection from being opened via throwing [SQLiteDatabaseLockedException].
-     * does not affect a currently open collection
-     *
-     *
-     * To ensure that the collection is locked and unopenable:
-     *
-     *
-     * * Lock the collection
-     * * Get an instance of the collection, if it succeeds, close it
-     * * Ensure the collection is locked by trying to open it, it should fail.
-     * * Perform your operation
-     * * Unlock the collection
-     */
-    fun lockCollection() {
-        isLocked = true
-        Timber.i("locked collection. Opening will throw SQLiteDatabaseLockedException")
     }
 }

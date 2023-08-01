@@ -217,10 +217,6 @@ class TypeAnswer(
             )
         }
 
-        /** Regex pattern used in removing tags from text before diff  */
-        private val spanPattern = Pattern.compile("</?span[^>]*>")
-        private val brPattern = Pattern.compile("<br\\s?/?>")
-
         /**
          * Return the correct answer to use for {{type::cloze::NN}} fields.
          *
