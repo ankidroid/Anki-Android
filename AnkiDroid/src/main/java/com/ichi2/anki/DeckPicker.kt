@@ -102,17 +102,14 @@ import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
-import com.ichi2.async.CollectionTask.*
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Collection.CheckDatabaseResult
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
 import com.ichi2.utils.NetworkUtils.isActiveNetworkMetered
@@ -128,7 +125,6 @@ import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
 import java.lang.ref.WeakReference
-import kotlin.math.roundToLong
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -942,7 +938,6 @@ open class DeckPicker :
                 }
             } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
                 Timber.i("Obtained Abort and Sync result")
-                TaskManager.waitForAllToFinish(4)
                 sync()
             }
         } else if (requestCode == REQUEST_PATH_UPDATE) {
@@ -1020,7 +1015,7 @@ open class DeckPicker :
     override fun onStop() {
         super.onStop()
         if (colIsOpen()) {
-            WidgetStatus.update(this)
+            WidgetStatus.updateInBackground(this)
             // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
         }
     }
@@ -2182,63 +2177,6 @@ open class DeckPicker :
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     val visibleDeckCount: Int
         get() = mDeckListAdapter.itemCount
-
-    @VisibleForTesting
-    internal inner class CheckDatabaseListener : TaskListener<String, Pair<Boolean, CheckDatabaseResult?>?>() {
-        override fun onPreExecute() {
-            mProgressDialog = StyledProgressDialog.show(
-                this@DeckPicker,
-                AnkiDroidApp.appResources.getString(R.string.app_name),
-                resources.getString(R.string.check_db_message),
-                false
-            )
-        }
-
-        override fun onPostExecute(result: Pair<Boolean, CheckDatabaseResult?>?) {
-            if (mProgressDialog != null && mProgressDialog!!.isShowing) {
-                mProgressDialog!!.dismiss()
-            }
-            val databaseResult = result!!.second
-            if (databaseResult == null) {
-                if (result.first) {
-                    Timber.w("Expected result data, got nothing")
-                } else {
-                    handleDbError()
-                }
-                return
-            }
-            if (!result.first || databaseResult.failed) {
-                if (databaseResult.databaseLocked) {
-                    handleDbLocked()
-                } else {
-                    handleDbError()
-                }
-                return
-            }
-            val count = databaseResult.cardsWithFixedHomeDeckCount
-            if (count != 0) {
-                val message = resources.getQuantityString(R.plurals.integrity_check_fixed_no_home_deck_new, count, count)
-                showThemedToast(this@DeckPicker, message, false)
-            }
-            val msg: String
-            val shrunkInMb = (databaseResult.sizeChangeInKb / 1024.0).roundToLong()
-            msg = if (shrunkInMb > 0.0) {
-                resources.getString(R.string.check_db_acknowledge_shrunk, shrunkInMb.toInt())
-            } else {
-                resources.getString(R.string.check_db_acknowledge)
-            }
-            // Show result of database check and restart the app
-            showSimpleMessageDialog(msg, reload = true)
-        }
-
-        /**
-         * @param value message
-         */
-        override fun onProgressUpdate(value: String) {
-            @Suppress("Deprecation")
-            mProgressDialog!!.setMessage(value)
-        }
-    }
 
     /**
      * Check if at least one deck is being displayed.

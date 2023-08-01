@@ -85,7 +85,7 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
     public override fun onStop() {
         super.onStop()
         if (colIsOpen()) {
-            WidgetStatus.update(this)
+            WidgetStatus.updateInBackground(this)
         }
     }
 

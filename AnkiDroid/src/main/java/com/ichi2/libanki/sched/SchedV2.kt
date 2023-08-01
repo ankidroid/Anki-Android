@@ -26,8 +26,6 @@ import androidx.annotation.VisibleForTesting
 import anki.collection.OpChanges
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
-import com.ichi2.async.CollectionTask.Reset
-import com.ichi2.async.TaskManager
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -143,7 +141,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             }
             if (!mHaveCounts) {
                 // Need to reset queues once counts are reset
-                TaskManager.launchCollectionTask(Reset())
+                reset()
             }
             return card
         }

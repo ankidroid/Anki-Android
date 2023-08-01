@@ -457,7 +457,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     override fun onStop() {
         super.onStop()
         if (!isFinishing) {
-            WidgetStatus.update(this)
+            WidgetStatus.updateInBackground(this)
         }
     }
 

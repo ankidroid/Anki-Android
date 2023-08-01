@@ -11,6 +11,7 @@ import com.ichi2.anki.model.WhiteboardPenColor.Companion.default
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.widget.SmallWidgetStatus
 import timber.log.Timber
 import java.util.regex.Pattern
 
@@ -530,7 +531,7 @@ object MetaDB {
         return due
     }
 
-    fun storeSmallWidgetStatus(context: Context, status: Pair<Int, Int>) {
+    fun storeSmallWidgetStatus(context: Context, status: SmallWidgetStatus) {
         openDBIfClosed(context)
         try {
             val metaDb = mMetaDb!!
@@ -540,7 +541,7 @@ object MetaDB {
                 metaDb.execSQL("DELETE FROM smallWidgetStatus")
                 metaDb.execSQL(
                     "INSERT INTO smallWidgetStatus(due, eta) VALUES (?, ?)",
-                    arrayOf<Any>(status.first, status.second)
+                    arrayOf<Any>(status.due, status.eta)
                 )
                 metaDb.setTransactionSuccessful()
             } finally {

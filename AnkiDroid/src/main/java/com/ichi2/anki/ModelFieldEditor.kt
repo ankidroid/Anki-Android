@@ -87,7 +87,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     override fun onStop() {
         super.onStop()
         if (!isFinishing) {
-            WidgetStatus.update(this)
+            WidgetStatus.updateInBackground(this)
         }
     }
 

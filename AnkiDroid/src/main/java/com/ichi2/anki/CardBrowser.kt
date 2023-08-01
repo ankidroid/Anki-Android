@@ -79,7 +79,7 @@ import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
-import com.ichi2.widget.WidgetStatus.update
+import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -745,7 +745,7 @@ open class CardBrowser :
         // cancel rendering the question and answer, which has shared access to mCards
         super.onStop()
         if (!isFinishing) {
-            update(this)
+            updateInBackground(this)
         }
     }
 
@@ -1398,7 +1398,6 @@ open class CardBrowser :
     // We spawn CollectionTasks that may create memory pressure, this transmits it so polling isCancelled sees the pressure
     override fun onTrimMemory(pressureLevel: Int) {
         super.onTrimMemory(pressureLevel)
-        TaskManager.cancelCurrentlyExecutingTask()
     }
 
     private val reviewerCardId: CardId
@@ -1684,30 +1683,6 @@ open class CardBrowser :
             else -> flagSearchTerm
         }
         searchWithFilterQuery(mSearchTerms)
-    }
-
-    internal abstract class ListenerWithProgressBar<Progress, Result>(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Progress, Result>(browser) {
-        override fun actualOnPreExecute(context: CardBrowser) {
-            context.showProgressBar()
-        }
-    }
-
-    /** Does not leak Card Browser.  */
-    private abstract class ListenerWithProgressBarCloseOnFalse<Progress, Result : Computation<*>?>(private val timber: String?, browser: CardBrowser) : ListenerWithProgressBar<Progress, Result>(browser) {
-        constructor(browser: CardBrowser) : this(null, browser)
-
-        override fun actualOnPostExecute(context: CardBrowser, result: Result) {
-            if (timber != null) {
-                Timber.d(timber)
-            }
-            if (result!!.succeeded()) {
-                actualOnValidPostExecute(context, result)
-            } else {
-                context.closeCardBrowser(DeckPicker.RESULT_DB_ERROR)
-            }
-        }
-
-        protected abstract fun actualOnValidPostExecute(browser: CardBrowser, result: Result)
     }
 
     /**

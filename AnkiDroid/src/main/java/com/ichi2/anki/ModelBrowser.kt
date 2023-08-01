@@ -47,7 +47,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.displayKeyboard
-import com.ichi2.widget.WidgetStatus.update
+import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
 import timber.log.Timber
 
@@ -130,7 +130,7 @@ class ModelBrowser : AnkiActivity() {
     public override fun onStop() {
         super.onStop()
         if (!isFinishing) {
-            update(this)
+            updateInBackground(this)
         }
     }
 

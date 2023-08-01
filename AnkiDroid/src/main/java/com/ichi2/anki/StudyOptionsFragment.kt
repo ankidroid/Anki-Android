@@ -39,8 +39,6 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask.*
-import com.ichi2.async.TaskManager
 import com.ichi2.async.updateValuesFromDeck
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -428,7 +426,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             launchCatchingTask { rebuildCram() }
         } else {
-            TaskManager.waitToFinish()
             refreshInterface(true)
         }
     }

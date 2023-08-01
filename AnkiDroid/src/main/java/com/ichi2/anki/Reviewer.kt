@@ -85,7 +85,7 @@ import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
-import com.ichi2.widget.WidgetStatus.update
+import com.ichi2.widget.WidgetStatus.updateInBackground
 import timber.log.Timber
 import java.io.File
 import java.lang.ref.WeakReference
@@ -1059,7 +1059,7 @@ open class Reviewer :
     override fun onStop() {
         super.onStop()
         if (!isFinishing && colIsOpen() && sched != null) {
-            update(this)
+            updateInBackground(this)
         }
     }
 

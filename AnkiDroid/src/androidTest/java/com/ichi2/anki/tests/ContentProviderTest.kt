@@ -30,7 +30,6 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
-import com.ichi2.async.TaskManager.Companion.waitToFinish
 import com.ichi2.libanki.*
 import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
@@ -979,9 +978,7 @@ class ContentProviderTest : InstrumentedTest() {
         for (i in 0..9) { // minimizing fails, when sched.reset() randomly chooses between multiple cards
             col.reset()
             nextCard = sched.card
-            waitToFinish()
             if (nextCard != null && nextCard.note().id == noteID && nextCard.ord == cardOrd) break
-            waitToFinish()
         }
         assertNotNull("Check that there actually is a next scheduled card", nextCard)
         assertEquals(

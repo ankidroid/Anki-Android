@@ -46,7 +46,6 @@ import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
-import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -66,8 +65,6 @@ import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
-import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
@@ -103,12 +100,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionHelper.instance.setColForTests(null)
-
-        if (mTaskScheduler.shouldRunInForeground()) {
-            runTasksInForeground()
-        } else {
-            runTasksInBackground()
-        }
 
         maybeSetupBackend()
 
@@ -178,24 +169,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         }
         Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
-    }
-
-    /**
-     * Ensure that each task in backgrounds are executed immediately instead of being queued.
-     * This may help debugging test without requiring to guess where `advanceRobolectricLooper` are needed.
-     */
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun runTasksInForeground() {
-        TaskManager.setTaskManager(ForegroundTaskManager(this))
-        mBackground = false
-    }
-
-    /**
-     * Set back the standard background process
-     */
-    fun runTasksInBackground() {
-        TaskManager.setTaskManager(SingleTaskManager())
-        mBackground = true
     }
 
     protected fun clickMaterialDialogButton(button: WhichButton, @Suppress("SameParameterValue") checkDismissed: Boolean) {
@@ -483,28 +456,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         // Sched inherits from schedv2...
         MatcherAssert.assertThat("sched should be v2", sched !is Sched)
         return sched as SchedV2
-    }
-
-    @Synchronized
-    @Throws(InterruptedException::class)
-    protected fun <Progress, Result : Computation<*>?> waitForTask(task: TaskDelegateBase<Progress, Result>, timeoutMs: Int) {
-        val completed = booleanArrayOf(false)
-        val listener: TaskListener<Progress, Result?> = object : TaskListener<Progress, Result?>() {
-            override fun onPreExecute() {}
-            override fun onPostExecute(result: Result?) {
-                require(!(result == null || !result.succeeded())) { "Task failed" }
-                completed[0] = true
-                val robolectricTest = ReentrantLock()
-                val condition = robolectricTest.newCondition()
-                robolectricTest.withLock { condition.signal() }
-                // synchronized(this@RobolectricTest) { this@RobolectricTest.notify() }
-            }
-        }
-        TaskManager.launchCollectionTask(task, listener)
-        advanceRobolectricLooper()
-        wait(timeoutMs.toLong())
-        advanceRobolectricLooper()
-        if (!completed[0]) { throw IllegalStateException("Task ${task.javaClass} didn't finish in $timeoutMs ms") }
     }
 
     /**
