@@ -94,7 +94,7 @@ suspend fun <T> undoableOp(handler: Any? = null, block: Collection.() -> T): T {
         val result = block()
         // any backend operation clears legacy undo and resets study queues if it
         // succeeds
-        clearUndo()
+        clearLegacyV2ReviewUndo()
         reset()
         result
     }.also {

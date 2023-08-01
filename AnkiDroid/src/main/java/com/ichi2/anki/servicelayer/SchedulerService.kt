@@ -16,23 +16,19 @@
 
 package com.ichi2.anki.servicelayer
 
-import androidx.annotation.StringRes
+import androidx.fragment.app.FragmentActivity
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.SchedulerService.NextCard
+import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.withProgress
 import com.ichi2.libanki.*
-import com.ichi2.libanki.UndoAction.UndoNameId
 import com.ichi2.utils.Computation
 import timber.log.Timber
-import java.util.*
-import java.util.concurrent.CancellationException
-import com.ichi2.libanki.Collection as AnkiCollection
 
 typealias NextCardAnd<T> = Computation<NextCard<T>>
 typealias ComputeResult = NextCardAnd<Any?>
 typealias ActionAndNextCard = AnkiMethod<ComputeResult>
-typealias ActionAndNextCardV<T> = AnkiMethod<NextCardAnd<T>>
-private typealias RepositionResetResult = NextCardAnd<Array<Card>>
-private typealias RepositionOrReset = AnkiMethod<RepositionResetResult>
 
 class SchedulerService {
 
@@ -66,79 +62,38 @@ class SchedulerService {
             }
         }
     }
+}
 
-    class RepositionCards(private val cardIds: List<Long>, private val startPosition: Int) : RepositionOrReset() {
-        override fun execute(): RepositionResetResult {
-            val inputCards = dismissNotes(cardIds) { cards ->
-                return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reposition_card) {
-                    col.sched.sortCards(cardIds, startPosition, 1, false, true)
-                }
-            }
-            return inputCards.map { x -> NextCard(x.first.orElse(null), x.second) }
+suspend fun FragmentActivity.rescheduleCards(cardIds: List<CardId>, newDays: Int) {
+    withProgress {
+        undoableOp {
+            col.sched.reschedCards(cardIds, newDays, newDays)
         }
     }
+    val count = cardIds.size
+    showSnackbar(
+        resources.getQuantityString(
+            R.plurals.reschedule_cards_dialog_acknowledge,
+            count,
+            count
+        ),
+        Snackbar.LENGTH_SHORT
+    )
+}
 
-    class RescheduleCards(val cardIds: List<Long>, private val interval: Int) : RepositionOrReset() {
-        override fun execute(): RepositionResetResult {
-            val inputCards = dismissNotes(cardIds) { cards ->
-                return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reschedule_card) {
-                    col.sched.reschedCards(cardIds, interval, interval)
-                }
-            }
-            return inputCards.map { x -> NextCard(x.first.orElse(null), x.second) }
+suspend fun FragmentActivity.resetCards(cardIds: List<CardId>) {
+    withProgress {
+        undoableOp {
+            col.sched.forgetCards(cardIds)
         }
     }
-
-    class ResetCards(val cardIds: List<Long>) : RepositionOrReset() {
-        override fun execute(): RepositionResetResult {
-            val inputCards = dismissNotes(cardIds) { cards ->
-                return@dismissNotes rescheduleRepositionReset(cards, R.string.card_editor_reset_card) {
-                    col.sched.forgetCards(cardIds)
-                }
-            }
-            return inputCards.map { x -> NextCard(x.first.orElse(null), x.second) }
-        }
-    }
-
-    class UndoRepositionRescheduleResetCards(
-        @StringRes @UndoNameId
-        undoNameId: Int,
-        private val cardsCopied: Array<Card>
-    ) : UndoAction(undoNameId) {
-        override fun undo(col: AnkiCollection): Card? {
-            Timber.i("Undoing action of type %s on %d cards", javaClass, cardsCopied.size)
-            for (card in cardsCopied) {
-                card.flush(false)
-            }
-            // /* card schedule change undone, reset and get
-            // new card */
-            Timber.d("Single card non-review change undo succeeded")
-            col.reset()
-            return col.sched.card
-        }
-    }
-
-    companion object {
-        fun AnkiMethod<*>.rescheduleRepositionReset(
-            cards: Array<Card>,
-            @UndoNameId @StringRes
-            undoNameId: Int,
-            actualActualTask: () -> Unit
-        ): Computation<Optional<Card>> {
-            val sched = col.sched
-            // collect undo information, sensitive to memory pressure, same for all 3 cases
-            try {
-                Timber.d("Saving undo information of type %s on %d cards", javaClass, cards.size)
-                val cards_copied = Card.deepCopyCardArray(cards, this)
-                val repositionRescheduleResetCards: UndoAction = UndoRepositionRescheduleResetCards(undoNameId, cards_copied)
-                col.markUndo(repositionRescheduleResetCards)
-            } catch (ce: CancellationException) {
-                Timber.i(ce, "Cancelled while handling type %s, skipping undo", undoNameId)
-            }
-            actualActualTask()
-            // In all cases schedule a new card so Reviewer doesn't sit on the old one
-            col.reset()
-            return Computation.ok(Optional.ofNullable(sched.card))
-        }
-    }
+    val count = cardIds.size
+    showSnackbar(
+        resources.getQuantityString(
+            R.plurals.reset_cards_dialog_acknowledge,
+            count,
+            count
+        ),
+        Snackbar.LENGTH_SHORT
+    )
 }

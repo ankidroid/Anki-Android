@@ -58,12 +58,9 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.CardService.selectedNoteIds
 import com.ichi2.anki.servicelayer.NoteService.isMarked
-import com.ichi2.anki.servicelayer.SchedulerService.NextCard
-import com.ichi2.anki.servicelayer.SchedulerService.RepositionCards
-import com.ichi2.anki.servicelayer.SchedulerService.RescheduleCards
-import com.ichi2.anki.servicelayer.SchedulerService.ResetCards
-import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.servicelayer.avgIntervalOfNote
+import com.ichi2.anki.servicelayer.rescheduleCards
+import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
@@ -287,84 +284,6 @@ open class CardBrowser :
             col.config.set("sortBackwards", mOrderAsc)
             mCards.reverse()
             updateList()
-        }
-    }
-
-    private fun repositionCardHandler(): RepositionCardHandler {
-        return RepositionCardHandler(this)
-    }
-
-    private class RepositionCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
-        override fun actualOnPreExecute(context: CardBrowser) {
-            Timber.d("CardBrowser::RepositionCardHandler() onPreExecute")
-        }
-
-        override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>?) {
-            Timber.d("CardBrowser::RepositionCardHandler() onPostExecute")
-            context.mReloadRequired = true
-            val cardCount: Int = result!!.value.result.size
-            context.showSnackbar(
-                context.resources.getQuantityString(
-                    R.plurals.reposition_card_dialog_acknowledge,
-                    cardCount,
-                    cardCount
-                ),
-                Snackbar.LENGTH_SHORT
-            )
-            context.reloadCards(result.value.result)
-            context.invalidateOptionsMenu()
-        }
-    }
-
-    private fun resetProgressCardHandler(): ResetProgressCardHandler {
-        return ResetProgressCardHandler(this)
-    }
-
-    private class ResetProgressCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
-        override fun actualOnPreExecute(context: CardBrowser) {
-            Timber.d("CardBrowser::ResetProgressCardHandler() onPreExecute")
-        }
-
-        override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>?) {
-            Timber.d("CardBrowser::ResetProgressCardHandler() onPostExecute")
-            context.mReloadRequired = true
-            val cardCount: Int = result!!.value.result.size
-            context.showSnackbar(
-                context.resources.getQuantityString(
-                    R.plurals.reset_cards_dialog_acknowledge,
-                    cardCount,
-                    cardCount
-                ),
-                Snackbar.LENGTH_SHORT
-            )
-            context.reloadCards(result.value.result)
-            context.invalidateOptionsMenu()
-        }
-    }
-
-    private fun rescheduleCardHandler(): RescheduleCardHandler {
-        return RescheduleCardHandler(this)
-    }
-
-    private class RescheduleCardHandler(browser: CardBrowser) : TaskListenerWithContext<CardBrowser, Unit, Computation<NextCard<Array<Card>>>?>(browser) {
-        override fun actualOnPreExecute(context: CardBrowser) {
-            Timber.d("CardBrowser::RescheduleCardHandler() onPreExecute")
-        }
-
-        override fun actualOnPostExecute(context: CardBrowser, result: Computation<NextCard<Array<Card>>>?) {
-            Timber.d("CardBrowser::RescheduleCardHandler() onPostExecute")
-            context.mReloadRequired = true
-            val cardCount: Int = result!!.value.result.size
-            context.showSnackbar(
-                context.resources.getQuantityString(
-                    R.plurals.reschedule_cards_dialog_acknowledge,
-                    cardCount,
-                    cardCount
-                ),
-                Snackbar.LENGTH_SHORT
-            )
-            context.reloadCards(result.value.result)
-            context.invalidateOptionsMenu()
         }
     }
 
@@ -933,7 +852,7 @@ open class CardBrowser :
         }
         mActionBarMenu?.findItem(R.id.action_undo)?.run {
             isVisible = col.undoAvailable()
-            title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+            title = col.undoLabel()
         }
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
@@ -1338,13 +1257,6 @@ open class CardBrowser :
         val noteCount = withProgress("Deleting selected notes") {
             val selectedIds = selectedCardIds
             undoableOp { removeNotes(cids = selectedIds) }.count
-            // opExecuted() gets notified of the change, and should be taking care of these
-            //            removeNotesView(deletedCards.map { it.id }, false)
-            //            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
-            //            invalidateOptionsMenu() // maybe the availability of undo changed
-            //            mCheckedCards.clear()
-            //            endMultiSelectMode()
-            //            cardsAdapter.notifyDataSetChanged()
         }
         val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
         showUndoSnackbar(deletedMessage)
@@ -1352,12 +1264,8 @@ open class CardBrowser :
 
     @VisibleForTesting
     fun onUndo() {
-        if (col.undoAvailable()) {
-            launchCatchingTask {
-                if (!backendUndoAndShowPopup()) {
-                    Undo().runWithHandler(mUndoHandler)
-                }
-            }
+        launchCatchingTask {
+            undoAndShowPopup()
         }
     }
 
@@ -1376,16 +1284,30 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun resetProgressNoConfirm(cardIds: List<Long>?) {
-        TaskManager.launchCollectionTask(ResetCards(cardIds!!).toDelegate(), resetProgressCardHandler())
+    fun resetProgressNoConfirm(cardIds: List<Long>) {
+        launchCatchingTask {
+            resetCards(cardIds)
+        }
     }
 
     @VisibleForTesting
-    fun repositionCardsNoValidation(cardIds: List<Long>?, position: Int?) {
-        TaskManager.launchCollectionTask(
-            RepositionCards(cardIds!!, position!!).toDelegate(),
-            repositionCardHandler()
-        )
+    fun repositionCardsNoValidation(cardIds: List<CardId>, position: Int) {
+        launchCatchingTask {
+            val changes = withProgress {
+                undoableOp {
+                    col.sched.sortCards(cardIds, position, 1, false, true)
+                }
+            }
+            val count = changes.count
+            showSnackbar(
+                resources.getQuantityString(
+                    R.plurals.reposition_card_dialog_acknowledge,
+                    count,
+                    count
+                ),
+                Snackbar.LENGTH_SHORT
+            )
+        }
     }
 
     protected fun onPreview() {
@@ -1425,11 +1347,10 @@ open class CardBrowser :
     }
 
     @VisibleForTesting
-    fun rescheduleWithoutValidation(selectedCardIds: List<Long>?, newDays: Int?) {
-        TaskManager.launchCollectionTask(
-            RescheduleCards(selectedCardIds!!, newDays!!).toDelegate(),
-            rescheduleCardHandler()
-        )
+    fun rescheduleWithoutValidation(selectedCardIds: List<CardId>, newDays: Int) {
+        launchCatchingTask {
+            rescheduleCards(selectedCardIds, newDays)
+        }
     }
 
     @KotlinCleanup("DeckSelectionListener is almost certainly a bug - deck!!")
@@ -1854,26 +1775,20 @@ open class CardBrowser :
 
     private fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message, Snackbar.LENGTH_LONG) {
-            setAction(R.string.undo) { TaskManager.launchCollectionTask(Undo().toDelegate(), mUndoHandler) }
+            setAction(R.string.undo) { launchCatchingTask { undoAndShowPopup() } }
             mUndoSnackbar = this
         }
     }
 
-    private val mUndoHandler = UndoHandler(this)
-
-    private class UndoHandler(browser: CardBrowser) : ListenerWithProgressBarCloseOnFalse<Unit, Computation<NextCard<*>>?>(browser) {
-        public override fun actualOnValidPostExecute(browser: CardBrowser, result: Computation<NextCard<*>>?) {
-            Timber.d("Card Browser - mUndoHandler.actualOnPostExecute(CardBrowser browser)")
-            browser.hideProgressBar()
-            // reload whole view
-            browser.forceRefreshSearch()
-            browser.endMultiSelectMode()
-            browser.cardsAdapter.notifyDataSetChanged()
-            browser.updatePreviewMenuItem()
-            browser.invalidateOptionsMenu() // maybe the availability of undo changed
-        }
+    private fun refreshAfterUndo() {
+        hideProgressBar()
+        // reload whole view
+        forceRefreshSearch()
+        endMultiSelectMode()
+        cardsAdapter.notifyDataSetChanged()
+        updatePreviewMenuItem()
+        invalidateOptionsMenu() // maybe the availability of undo changed
     }
-
     private fun saveScrollingState(position: Int) {
         mOldCardId = mCards[position].id
         mOldCardTopOffset = calculateTopOffset(position)
@@ -2614,7 +2529,7 @@ open class CardBrowser :
                 changes.card
             ) && handler !== this
         ) {
-            mUndoHandler.actualOnPostExecute(this@CardBrowser, Computation.ok(NextCard.withNoResult(null)))
+            refreshAfterUndo()
         }
     }
 

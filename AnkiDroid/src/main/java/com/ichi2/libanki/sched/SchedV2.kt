@@ -23,6 +23,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.database.sqlite.SQLiteConstraintException
 import androidx.annotation.VisibleForTesting
+import anki.collection.OpChanges
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
 import com.ichi2.async.CollectionTask.Reset
@@ -1883,13 +1884,12 @@ end)  """
      * Resetting **************************************************************** *******************************
      */
     /** Put cards at the end of the new queue.  */
-    override fun forgetCards(ids: List<Long>) {
-        // Currently disabled, as this causes a breakage in some tests due to
+    override fun forgetCards(ids: List<Long>): OpChanges {
+        // Currently disabled in robolectric, as this causes a breakage in some tests due to
         // the AnkiDroid implementation not using nextPos to determine next position.
-        //        if (!BackendFactory.getDefaultLegacySchema()) {
-        //            super.forgetCards(ids);
-        //            return;
-        //        }
+        if (!isRobolectric) {
+            return super.forgetCards(ids)
+        }
         remFromDyn(ids)
         col.db.execute(
             "update cards set type=" + Consts.CARD_TYPE_NEW + ",queue=" + Consts.QUEUE_TYPE_NEW + ",ivl=0,due=0,odue=0,factor=" + Consts.STARTING_FACTOR +
@@ -1900,6 +1900,7 @@ end)  """
         // takes care of mod + usn
         sortCards(ids, pmax + 1)
         col.log(ids)
+        return OpChanges.getDefaultInstance()
     }
 
     /**
@@ -1909,13 +1910,12 @@ end)  """
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    override fun reschedCards(ids: List<Long>, imin: Int, imax: Int) {
-        // Currently disabled, as this causes a breakage in the V2 tests due to
-        // the use of a mocked time.
-        //        if (!BackendFactory.getDefaultLegacySchema()) {
-        //            super.reschedCards(ids, imin, imax);
-        //            return;
-        //        }
+    override fun reschedCards(ids: List<Long>, imin: Int, imax: Int): OpChanges {
+        // Currently disabled in Robolectric, as this causes a breakage in the V2
+        // tests due to the use of a mocked time.
+        if (!isRobolectric) {
+            return super.reschedCards(ids, imin, imax)
+        }
         val d = ArrayList<Array<Any?>>(ids.size)
         val t = mToday!!
         val mod = time.intTime()
@@ -1931,6 +1931,7 @@ end)  """
             d
         )
         col.log(ids)
+        return OpChanges.getDefaultInstance()
     }
 
     /**
@@ -2101,6 +2102,7 @@ end)  """
         val type = arrayOf("new", "lrn", "rev")[n]
         _updateStats(card, type, -1)
         decrReps()
+        col.reset()
     }
 
     val time: Time

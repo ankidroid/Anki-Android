@@ -70,7 +70,8 @@ import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
 import com.ichi2.anki.servicelayer.SchedulerService.*
-import com.ichi2.anki.servicelayer.TaskListenerBuilder
+import com.ichi2.anki.servicelayer.rescheduleCards
+import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
 import com.ichi2.annotations.NeedsTest
@@ -142,17 +143,6 @@ open class Reviewer :
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
-    protected fun <T : Computation<NextCard<Array<Card>>>?> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
-        return nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { result: T ->
-            // BUG: If the method crashes, this will crash
-            invalidateOptionsMenu()
-            val cardCount: Int = result!!.value.result.size
-            showSnackbar(
-                resources.getQuantityString(toastResourceId, cardCount, cardCount),
-                Snackbar.LENGTH_SHORT
-            )
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -270,7 +260,7 @@ open class Reviewer :
 
         // Clear the undo history when selecting a new deck
         if (col.decks.selected() != did) {
-            col.clearUndo()
+            col.clearLegacyV2ReviewUndo()
         }
         // Select the deck
         col.decks.select(did)
@@ -626,7 +616,9 @@ open class Reviewer :
     private fun showRescheduleCardDialog() {
         val runnable = Consumer { days: Int ->
             val cardIds = listOf(currentCard!!.id)
-            RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
+            launchCatchingTask {
+                rescheduleCards(cardIds, days)
+            }
         }
         val dialog = rescheduleSingleCard(resources, currentCard!!, runnable)
         showDialogFragment(dialog)
@@ -643,7 +635,9 @@ open class Reviewer :
         val confirm = Runnable {
             Timber.i("NoteEditor:: ResetProgress button pressed")
             val cardIds = listOf(currentCard!!.id)
-            ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
+            launchCatchingTask {
+                resetCards(cardIds)
+            }
         }
         dialog.setConfirm(confirm)
         showDialogFragment(dialog)
@@ -724,7 +718,7 @@ open class Reviewer :
             if (whiteboardIsShownAndHasStrokes) {
                 undoIcon.title = resources.getString(R.string.undo_action_whiteboard_last_stroke)
             } else if (col.undoAvailable()) {
-                undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
+                undoIcon.title = col.undoLabel()
                 //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
             } else {
                 // In this case, there is no object word for the verb, "Undo",
@@ -1576,7 +1570,9 @@ open class Reviewer :
             }
 
             val cardIds = listOf(currentCard!!.id)
-            RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
+            launchCatchingTask {
+                rescheduleCards(cardIds, days)
+            }
             return true
         }
 
@@ -1588,7 +1584,9 @@ open class Reviewer :
                 return false
             }
             val cardIds = listOf(currentCard!!.id)
-            ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
+            launchCatchingTask {
+                resetCards(cardIds)
+            }
             return true
         }
     }

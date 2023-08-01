@@ -53,7 +53,7 @@ data class UndoStatus(
 fun Collection.undoNew(): OpChangesAfterUndo {
     val changes = backend.undo()
     // clear legacy undo log
-    clearUndo()
+    clearLegacyV2ReviewUndo()
     return changes
 }
 
@@ -63,7 +63,7 @@ fun Collection.undoNew(): OpChangesAfterUndo {
 fun Collection.redo(): OpChangesAfterUndo {
     val changes = backend.redo()
     // clear legacy undo log
-    clearUndo()
+    clearLegacyV2ReviewUndo()
     return changes
 }
 

@@ -29,6 +29,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
+import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.MockTime
@@ -260,6 +261,39 @@ class ReviewerTest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
         assertThat(javaScriptFunction.ankiGetDeckName(), equalTo("B"))
+    }
+
+    @Test
+    @Throws(InterruptedException::class)
+    fun testUndoResetsCardCountsToCorrectValue() = runTest {
+        val reviewer = startReviewer()
+
+        waitForAsyncTasksToComplete()
+
+        // #6587
+        addNoteUsingBasicModel("Hello", "World")
+
+        val col = col
+        val sched = col.sched
+        col.reset()
+
+        val cardBeforeUndo = sched.card
+        val countsBeforeUndo = sched.counts()
+        // Not shown in the UI, but there is a state where the card has been removed from the queue, but not answered
+        // where the counts are decremented.
+        assertThat(countsBeforeUndo, `is`(Counts(0, 0, 0)))
+
+        sched.answerCard(cardBeforeUndo!!, Consts.BUTTON_THREE)
+
+        reviewer.undoAndShowPopup()
+
+        val countsAfterUndo = sched.counts()
+
+        assertThat(
+            "Counts after an undo should be the same as before an undo",
+            countsAfterUndo,
+            `is`(countsBeforeUndo)
+        )
     }
 
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {

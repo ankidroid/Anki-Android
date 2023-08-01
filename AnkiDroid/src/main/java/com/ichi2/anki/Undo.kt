@@ -17,31 +17,48 @@
 package com.ichi2.anki
 
 import androidx.fragment.app.FragmentActivity
+import anki.collection.OpChangesAfterUndo
+import anki.collection.opChanges
 import com.ichi2.anki.CollectionManager.TR
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.undoNew
 import com.ichi2.libanki.undoableOp
-import com.ichi2.utils.BlocksSchemaUpgrade
 import net.ankiweb.rsdroid.BackendException
+import net.ankiweb.rsdroid.RustCleanup
 
-suspend fun FragmentActivity.backendUndoAndShowPopup(): Boolean {
-    return try {
-        val changes = withProgress() {
-            undoableOp {
-                undoNew()
+/** If there's an action pending in the review queue, undo it and show a pop-up. */
+suspend fun FragmentActivity.undoAndShowPopup() {
+    withProgress {
+        try {
+            val changes = undoableOp {
+                if (!undoAvailable()) {
+                    OpChangesAfterUndo.getDefaultInstance()
+                } else {
+                    undoNew()
+                }
             }
-        }
-
-        showSnackbar(TR.undoActionUndone(changes.operation))
-
-        true
-    } catch (exc: BackendException) {
-        @BlocksSchemaUpgrade("Backend module should export this as a separate Exception")
-        if (exc.localizedMessage == "UndoEmpty") {
-            // backend undo queue empty
-            false
-        } else {
-            throw exc
+            showSnackbar(TR.undoActionUndone(changes.operation))
+        } catch (exc: BackendException) {
+            @RustCleanup("Backend module should export this as a separate Exception")
+            if (exc.localizedMessage == "UndoEmpty") {
+                // backend undo queue empty; try legacy v2 undo
+                withCol {
+                    col.legacyV2ReviewUndo()
+                    reset()
+                }
+                // synthesize a change so screens update
+                undoableOp {
+                    opChanges {
+                        card = true
+                        deck = true
+                        note = true // may have been a leech
+                        studyQueues = true
+                        browserTable = true
+                    }
+                }
+                showSnackbar(TR.undoActionUndone(TR.schedulingReview()))
+            }
         }
     }
 }

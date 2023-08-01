@@ -390,9 +390,9 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             handleKeyPress(buttonCode, '\u0000')
         }
 
-        override fun undo(): Job? {
+        override fun undo(): Job {
             undoCalled = true
-            return null
+            return launchCatchingTask { }
         }
 
         var suspendNoteCalled: Boolean = false

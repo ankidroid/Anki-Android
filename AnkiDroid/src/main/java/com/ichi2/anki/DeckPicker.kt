@@ -92,7 +92,6 @@ import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.*
-import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
 import com.ichi2.anki.servicelayer.ScopedStorageService.mediaMigrationIsInProgress
 import com.ichi2.anki.services.MediaMigrationState
@@ -792,7 +791,7 @@ open class DeckPicker :
     suspend fun updateMenuState() {
         optionsMenuState = withOpenColOrNull {
             val searchIcon = decks.count() >= 10
-            val undoIcon = undoName(resources).ifEmpty { null }
+            val undoIcon = undoLabel()
             val syncIcon = fetchSyncStatus(col)
             val mediaMigrationState = getMediaMigrationState()
             val shouldShowStartMigrationButton = shouldOfferToMigrate() ||
@@ -1364,40 +1363,9 @@ open class DeckPicker :
         return previous
     }
 
-    private fun undoTaskListener(isReview: Boolean): UndoTaskListener {
-        return UndoTaskListener(isReview, this)
-    }
-
-    private class UndoTaskListener(private val isReview: Boolean, deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, Unit, Computation<NextCard<*>>?>(deckPicker) {
-        override fun actualOnCancelled(context: DeckPicker) {
-            context.hideProgressBar()
-        }
-
-        override fun actualOnPreExecute(context: DeckPicker) {
-            context.showProgressBar()
-        }
-
-        override fun actualOnPostExecute(context: DeckPicker, result: Computation<NextCard<*>>?) {
-            context.hideProgressBar()
-            Timber.i("Undo completed")
-            if (isReview) {
-                Timber.i("Review undone - opening reviewer.")
-                context.openReviewer()
-            }
-        }
-    }
-
     private fun undo() {
-        Timber.i("undo()")
-        fun legacyUndo() {
-            val undoReviewString = resources.getString(R.string.undo_action_review)
-            val isReview = undoReviewString == col.undoName(resources)
-            Undo().runWithHandler(undoTaskListener(isReview))
-        }
         launchCatchingTask {
-            if (!backendUndoAndShowPopup()) {
-                legacyUndo()
-            }
+            undoAndShowPopup()
         }
     }
 
@@ -1737,7 +1705,7 @@ open class DeckPicker :
     private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
         // Clear the undo history when selecting a new deck
         if (col.decks.selected() != did) {
-            col.clearUndo()
+            col.clearLegacyV2ReviewUndo()
         }
         if ((col.config.get("schedVer") ?: 1L) == 1L) {
             promptUserToUpdateScheduler()
@@ -2086,7 +2054,7 @@ open class DeckPicker :
                     Timber.d("doInBackgroundDeleteDeck")
                     col.decks.rem(did, true)
                     // TODO: if we had "undo delete note" like desktop client then we won't need this.
-                    col.clearUndo()
+                    col.clearLegacyV2ReviewUndo()
                 }
             }
 

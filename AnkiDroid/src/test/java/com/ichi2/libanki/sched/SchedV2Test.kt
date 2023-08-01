@@ -654,8 +654,11 @@ open class SchedV2Test : RobolectricTest() {
         // if we fail it, it should be back in the correct queue
         col.sched.answerCard(c, BUTTON_ONE)
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
-        col.undo()
-        col.reset()
+        if (v3) {
+            col.undoNew()
+        } else {
+            col.legacyV2ReviewUndo()
+        }
         c = card!!
         col.sched.answerCard(c, BUTTON_THREE)
         // simulate the passing of another two days
@@ -1829,7 +1832,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(1, sched.counts(card!!).lrn.toLong())
         advanceRobolectricLooperWithSleep()
         sched.answerCard(card, BUTTON_ONE)
-        AnkiAssert.assertDoesNotThrow { col.undo() }
+        AnkiAssert.assertDoesNotThrow { col.legacyV2ReviewUndo() }
     }
 
     companion object {

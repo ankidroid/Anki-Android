@@ -17,8 +17,6 @@ package com.ichi2.libanki.sched
 
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.anki.servicelayer.Undo
-import com.ichi2.anki.servicelayer.Undo.Companion.nonTaskUndo
 import com.ichi2.libanki.*
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
@@ -56,35 +54,6 @@ class AbstractSchedTest : RobolectricTest() {
     }
 
     @Test
-    @Throws(InterruptedException::class)
-    fun testUndoResetsCardCountsToCorrectValue() {
-        // #6587
-        addNoteUsingBasicModel("Hello", "World")
-
-        val col = col
-        val sched = col.sched
-        col.reset()
-
-        val cardBeforeUndo = sched.card
-        val countsBeforeUndo = sched.counts()
-        // Not shown in the UI, but there is a state where the card has been removed from the queue, but not answered
-        // where the counts are decremented.
-        assertThat(countsBeforeUndo, `is`(Counts(0, 0, 0)))
-
-        sched.answerCard(cardBeforeUndo!!, Consts.BUTTON_THREE)
-
-        waitForTask(Undo().toDelegate(), 5000)
-
-        val countsAfterUndo = sched.counts()
-
-        assertThat(
-            "Counts after an undo should be the same as before an undo",
-            countsAfterUndo,
-            `is`(countsBeforeUndo)
-        )
-    }
-
-    @Test
     fun ensureUndoCorrectCounts() {
         val col = col
         val sched = col.sched
@@ -105,10 +74,8 @@ class AbstractSchedTest : RobolectricTest() {
         assertThat(sched.counts(card!!).new, `is`(10))
         sched.answerCard(card, sched.goodNewButton)
         sched.card
-        nonTaskUndo(col)
-        card.load()
-        assertThat(sched.newCount(), `is`(9))
-        assertThat(sched.counts(card).new, `is`(10))
+        col.legacyV2ReviewUndo()
+        assertThat(sched.newCount(), `is`(10))
     }
 
     @Test
@@ -394,19 +361,18 @@ mw.col.sched.extendLimits(1, 0)
 
         assertNotNull(card)
 
-        card = nonTaskUndo(col)
+        col.legacyV2ReviewUndo()
         advanceRobolectricLooper()
-        assertNotNull(card)
         assertEquals(
             Counts(0, if (schedVersion == 1) 3 else 1, 0),
-            sched.counts(card)
+            sched.counts()
         )
-        sched.count()
         if (preload) {
             sched.preloadNextCard()
             advanceRobolectricLooper()
         }
 
+        card = sched.card!!
         sched.answerCard(card, sched.goodNewButton)
         advanceRobolectricLooper()
         card = sched.card

@@ -27,6 +27,7 @@ import androidx.annotation.WorkerThread
 import anki.ankidroid.schedTimingTodayLegacyRequest
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
+import anki.config.OptionalStringConfigKey
 import anki.decks.DeckTreeNode
 import anki.scheduler.*
 import com.ichi2.anki.R
@@ -50,7 +51,7 @@ abstract class BaseSched(val col: Collection) {
     /** Update a V1 scheduler collection to V2. Requires full sync. */
     fun upgradeToV2() {
         col.modSchema()
-        col.clearUndo()
+        col.clearLegacyV2ReviewUndo()
         col.backend.upgradeScheduler()
         col._loadScheduler()
     }
@@ -189,14 +190,14 @@ abstract class BaseSched(val col: Collection) {
     /**
      * @param ids Ids of cards to put at the end of the new queue.
      */
-    open fun forgetCards(ids: List<Long>) {
+    open fun forgetCards(ids: List<Long>): OpChanges {
         val request = scheduleCardsAsNewRequest {
             cardIds.addAll(ids)
             log = true
             restorePosition = false
             resetCounts = false
         }
-        col.backend.scheduleCardsAsNewRaw(request.toByteArray())
+        return col.backend.scheduleCardsAsNew(request)
     }
 
     /**
@@ -206,14 +207,8 @@ abstract class BaseSched(val col: Collection) {
      * @param imin the minimum interval (inclusive)
      * @param imax The maximum interval (inclusive)
      */
-    open fun reschedCards(ids: List<Long>, imin: Int, imax: Int) {
-        // there is an available non-raw method, but the config key arg
-        // is not declared as optional
-        val request = setDueDateRequest {
-            cardIds.addAll(ids)
-            days = "$imin-$imax!"
-        }
-        col.backend.setDueDateRaw(request.toByteArray())
+    open fun reschedCards(ids: List<Long>, imin: Int, imax: Int): OpChanges {
+        return col.backend.setDueDate(ids, "$imin-$imax!", OptionalStringConfigKey.getDefaultInstance())
     }
 
     /**
@@ -229,8 +224,8 @@ abstract class BaseSched(val col: Collection) {
         step: Int = 1,
         shuffle: Boolean = false,
         shift: Boolean = false
-    ) {
-        col.backend.sortCards(
+    ): OpChangesWithCount {
+        return col.backend.sortCards(
             cardIds = cids,
             startingFrom = start,
             stepSize = step,
@@ -413,19 +408,6 @@ abstract class BaseSched(val col: Collection) {
 
     fun remFromDyn(cids: LongArray) {
         remFromDyn(cids.toList())
-    }
-
-    /**
-     * Completely reset cards for export.
-     */
-    @RustCleanup("remove once old apkg exporter dropped")
-    open fun resetCards(ids: Array<Long>) {
-        val nonNew: List<Long> = col.db.queryLongList(
-            "select id from cards where id in " + Utils.ids2str(ids) + " and (queue != " + Consts.QUEUE_TYPE_NEW + " or type != " + Consts.CARD_TYPE_NEW + ")"
-        )
-        col.db.execute("update cards set reps=0, lapses=0 where id in " + Utils.ids2str(nonNew))
-        forgetCards(nonNew)
-        col.log(*ids)
     }
 
     /**

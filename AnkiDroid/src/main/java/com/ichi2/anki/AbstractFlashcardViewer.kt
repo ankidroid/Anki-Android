@@ -75,7 +75,6 @@ import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
-import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.services.migrationServiceWhileStartedOrNull
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
@@ -817,23 +816,10 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    open fun undo(): Job? {
-        if (isUndoAvailable) {
-            val undoneAction = col.undoName(resources)
-            val message = getString(R.string.undo_succeeded, undoneAction)
-            fun legacyUndo() {
-                Undo().runWithHandler(
-                    answerCardHandler(false)
-                        .alsoExecuteAfter { showSnackbar(message, Snackbar.LENGTH_SHORT) }
-                )
-            }
-            return launchCatchingTask {
-                if (!backendUndoAndShowPopup()) {
-                    legacyUndo()
-                }
-            }
+    open fun undo(): Job {
+        return launchCatchingTask {
+            undoAndShowPopup()
         }
-        return null
     }
 
     private fun finishNoStorageAvailable() {

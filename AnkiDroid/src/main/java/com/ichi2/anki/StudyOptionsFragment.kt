@@ -37,12 +37,9 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
-import com.ichi2.anki.servicelayer.ComputeResult
-import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.CollectionTask.*
-import com.ichi2.async.TaskListener
 import com.ichi2.async.TaskManager
 import com.ichi2.async.updateValuesFromDeck
 import com.ichi2.libanki.Collection
@@ -235,23 +232,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         ankiActivity.showDialogFragment(contextMenu)
     }
 
-    private val mUndoListener: TaskListener<Unit, ComputeResult?> = object : TaskListener<Unit, ComputeResult?>() {
-        override fun onPreExecute() {}
-        override fun onPostExecute(result: ComputeResult?) {
-            openReviewer()
-        }
-    }
-
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_undo -> {
                 Timber.i("StudyOptionsFragment:: Undo button pressed")
                 launchCatchingTask {
-                    if (requireActivity().backendUndoAndShowPopup()) {
-                        openReviewer()
-                    } else {
-                        Undo().runWithHandler(mUndoListener)
-                    }
+                    requireActivity().undoAndShowPopup()
+                    openReviewer()
                 }
                 return true
             }
@@ -378,8 +365,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 menu.findItem(R.id.action_undo).isVisible = false
             } else {
                 menu.findItem(R.id.action_undo).isVisible = true
-                val res = AnkiDroidApp.appResources
-                menu.findItem(R.id.action_undo).title = res.getString(R.string.studyoptions_congrats_undo, col!!.undoName(res))
+                menu.findItem(R.id.action_undo).title = col?.undoLabel()
             }
             // Set the back button listener
             if (!mFragmented) {

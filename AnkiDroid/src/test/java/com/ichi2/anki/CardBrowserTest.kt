@@ -444,7 +444,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun repositionDataTest() {
+    fun repositionDataTest() = runTest {
         val b = getBrowserWithNotes(1)
 
         b.checkCardsAtPositions(0)
@@ -455,12 +455,14 @@ class CardBrowserTest : RobolectricTest() {
 
         b.repositionCardsNoValidation(listOf(card.id), 2)
 
+        card.reload()
+
         assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("2"))
     }
 
     @Test
     @Config(qualifiers = "en")
-    fun resetDataTest() {
+    fun resetDataTest() = runTest {
         addNoteUsingBasicModel("Hello", "World").firstCard().apply {
             due = 5
             queue = Consts.QUEUE_TYPE_REV
@@ -478,12 +480,14 @@ class CardBrowserTest : RobolectricTest() {
 
         b.resetProgressNoConfirm(listOf(card.id))
 
+        card.reload()
+
         assertThat("Position of checked card after reset", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("1"))
     }
 
     @Test
     @Config(qualifiers = "en")
-    fun rescheduleDataTest() {
+    fun rescheduleDataTest() = runTest {
         val b = getBrowserWithNotes(1)
 
         b.checkCardsAtPositions(0)
@@ -493,6 +497,8 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("1"))
 
         b.rescheduleWithoutValidation(listOf(card.id), 5)
+
+        card.reload()
 
         assertThat("Due of checked card after reschedule", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("8/12/20"))
     }

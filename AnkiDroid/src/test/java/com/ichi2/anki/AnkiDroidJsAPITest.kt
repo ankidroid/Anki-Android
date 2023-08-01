@@ -313,7 +313,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     }
 
     @Test
-    fun ankiSetCardDueTest() {
+    fun ankiSetCardDueTest() = runTest {
         val models = col.notetypes
         val decks = col.decks
         val didA = addDeck("Test")
@@ -350,7 +350,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     }
 
     @Test
-    fun ankiResetProgressTest() {
+    fun ankiResetProgressTest() = runTest {
         val n = addNoteUsingBasicModel("Front", "Back")
         val c = n.firstCard()
 
