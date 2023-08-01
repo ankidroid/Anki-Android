@@ -23,7 +23,6 @@ import com.canhub.cropper.CropImageActivity
 import com.ichi2.anki.*
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_ANSWER_FORMAT
 import com.ichi2.anki.CardTemplateBrowserAppearanceEditor.Companion.INTENT_QUESTION_FORMAT
-import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.notetype.ManageNotetypes
 import com.ichi2.anki.pages.PagesActivity
@@ -70,7 +69,6 @@ object ActivityList {
             get(Previewer::class.java),
             get(CardTemplatePreviewer::class.java),
             get(MultimediaEditFieldActivity::class.java),
-            get(LoadPronunciationActivity::class.java),
             get(CardInfo::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
