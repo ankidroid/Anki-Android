@@ -15,7 +15,7 @@
  */
 package com.ichi2.anki.lint.rules
 
-import com.android.tools.lint.checks.infrastructure.TestFiles.*
+import com.android.tools.lint.checks.infrastructure.TestFiles
 import com.android.tools.lint.checks.infrastructure.TestLintTask.*
 import org.intellij.lang.annotations.Language
 import org.junit.Test
@@ -64,7 +64,7 @@ class DuplicateCrowdInStringsTest {
         lint()
             .allowMissingSdk()
             .allowCompilationErrors()
-            .files(xml("res/values/string.xml", mSelfInvalid))
+            .files(TestFiles.xml("res/values/string.xml", mSelfInvalid))
             .issues(DuplicateCrowdInStrings.ISSUE)
             .run()
             .expectErrorCount(1)
@@ -77,7 +77,7 @@ class DuplicateCrowdInStringsTest {
         lint()
             .allowMissingSdk()
             .allowCompilationErrors()
-            .files(xml("res/values-af/string.xml", mSelfInvalid))
+            .files(TestFiles.xml("res/values-af/string.xml", mSelfInvalid))
             .issues(DuplicateCrowdInStrings.ISSUE)
             .run()
             .expectErrorCount(0)
@@ -88,7 +88,7 @@ class DuplicateCrowdInStringsTest {
         lint()
             .allowMissingSdk()
             .allowCompilationErrors()
-            .files(xml("res/values/string.xml", mFirstCommentButInvalid))
+            .files(TestFiles.xml("res/values/string.xml", mFirstCommentButInvalid))
             .issues(DuplicateCrowdInStrings.ISSUE)
             .run()
             .expectErrorCount(1)
@@ -99,7 +99,7 @@ class DuplicateCrowdInStringsTest {
         lint()
             .allowMissingSdk()
             .allowCompilationErrors()
-            .files(xml("res/values/string.xml", mSecondCommentButInvalid))
+            .files(TestFiles.xml("res/values/string.xml", mSecondCommentButInvalid))
             .issues(DuplicateCrowdInStrings.ISSUE)
             .run()
             .expectErrorCount(1)
@@ -110,7 +110,7 @@ class DuplicateCrowdInStringsTest {
         lint()
             .allowMissingSdk()
             .allowCompilationErrors()
-            .files(xml("res/values/string.xml", mDuplicateBothValid))
+            .files(TestFiles.xml("res/values/string.xml", mDuplicateBothValid))
             .issues(DuplicateCrowdInStrings.ISSUE)
             .run()
             .expectErrorCount(0)
@@ -123,8 +123,8 @@ class DuplicateCrowdInStringsTest {
             .allowMissingSdk()
             .allowCompilationErrors()
             .files(
-                xml("res/values/constants.xml", mIgnoredFile),
-                xml("res/values/strings.xml", mNotIgnored)
+                TestFiles.xml("res/values/constants.xml", mIgnoredFile),
+                TestFiles.xml("res/values/strings.xml", mNotIgnored)
             )
             .issues(DuplicateCrowdInStrings.ISSUE)
             .run()
