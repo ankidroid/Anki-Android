@@ -501,8 +501,11 @@ open class Collection(
         mStartReps = sched.reps
     }
 
-    /* Return (elapsedTime, reps) if timebox reached, or null. */
-    fun timeboxReached(): Pair<Int, Int>? {
+    data class TimeboxReached(val secs: Int, val reps: Int)
+
+    /* Return (elapsedTime, reps) if timebox reached, or null.
+    * Automatically restarts timebox if expired. */
+    fun timeboxReached(): TimeboxReached? {
         if (sched.timeboxSecs() == 0) {
             // timeboxing disabled
             return null
@@ -510,10 +513,12 @@ open class Collection(
         val elapsed = TimeManager.time.intTime() - mStartTime
         val limit = sched.timeboxSecs()
         return if (elapsed > limit) {
-            Pair(
+            TimeboxReached(
                 limit,
                 sched.reps - mStartReps
-            )
+            ).also {
+                startTimebox()
+            }
         } else {
             null
         }

@@ -70,17 +70,13 @@ import com.ichi2.anki.reviewer.AutomaticAnswer.AutomaticallyAnswered
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.DEFAULT
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
-import com.ichi2.anki.servicelayer.AnkiMethod
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
 import com.ichi2.anki.servicelayer.NoteService.isMarked
-import com.ichi2.anki.servicelayer.SchedulerService.*
-import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.services.migrationServiceWhileStartedOrNull
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.TaskListener
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
@@ -459,75 +455,58 @@ abstract class AbstractFlashcardViewer :
         // intentionally blank
     }
 
-    internal inner class NextCardHandler<Result : Computation<NextCard<*>>?> :
-        TaskListener<Unit, Result>() {
-        override fun onPreExecute() {
-            dealWithTimeBox()
+    // this could be improved: it should also be fetching counts, v3 sched info, etc at the same
+    // time
+    internal suspend fun getNextCardAndRedraw() {
+        data class NextCardInfo(val card: Card?, val timeboxReached: Collection.TimeboxReached?)
+
+        val info = withCol {
+            val card = sched.card
+            card?.render_output(true)
+
+            NextCardInfo(card, timeboxReached())
         }
 
-        private fun dealWithTimeBox() {
-            val elapsed = col.timeboxReached()
-            if (elapsed != null) {
-                val nCards = elapsed.second
-                val nMins = elapsed.first / 60
-                val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
-                val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-                AlertDialog.Builder(this@AbstractFlashcardViewer).show {
-                    title(R.string.timebox_reached_title)
-                    message(text = timeboxMessage)
-                    positiveButton(R.string.dialog_continue) {
-                        col.startTimebox()
-                    }
-                    negativeButton(text = TR.studyingFinish()) {
-                        finishWithAnimation(ActivityTransitionAnimation.Direction.END)
-                    }
-                    cancelable(true)
-                    setOnCancelListener { col.startTimebox() }
-                }
+        info.timeboxReached?.let { dealWithTimeBox(it) }
+
+        currentCard = info.card
+        if (currentCard == null) {
+            closeReviewer(RESULT_NO_MORE_CARDS)
+            // When launched with a shortcut, we want to display a message when finishing
+            if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
+                showThemedToast(baseContext, R.string.studyoptions_congrats_finished, false)
             }
+            return
         }
 
-        override fun onPostExecute(result: Result) {
-            if (sched == null) {
-                // TODO: proper testing for restored activity
-                finishWithoutAnimation()
-                return
-            }
-            val displaySuccess = result!!.succeeded()
-            if (!displaySuccess) {
-                // RuntimeException occurred on answering cards
-                closeReviewer(DeckPicker.RESULT_DB_ERROR)
-                return
-            }
-            val nextCardAndResult = result.value
-            if (nextCardAndResult.hasNoMoreCards()) {
-                closeReviewer(RESULT_NO_MORE_CARDS)
+        // Start reviewing next card
+        hideProgressBar()
+        unblockControls()
+        displayCardQuestion()
+        // set the correct mark/unmark icon on action bar
+        refreshActionBar()
+        focusDefaultLayout()
+    }
 
-                // When launched with a shortcut, we want to display a message when finishing
-                if (intent.getBooleanExtra(EXTRA_STARTED_WITH_SHORTCUT, false)) {
-                    showThemedToast(baseContext, R.string.studyoptions_congrats_finished, false)
-                }
-                return
+    private fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
+        val nCards = timebox.reps
+        val nMins = timebox.secs / 60
+        val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
+        val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
+        AlertDialog.Builder(this@AbstractFlashcardViewer).show {
+            title(R.string.timebox_reached_title)
+            message(text = timeboxMessage)
+            positiveButton(R.string.dialog_continue) {}
+            negativeButton(text = TR.studyingFinish()) {
+                finishWithAnimation(ActivityTransitionAnimation.Direction.END)
             }
-            currentCard = nextCardAndResult.nextScheduledCard()
-
-            // Start reviewing next card
-            hideProgressBar()
-            unblockControls()
-            this@AbstractFlashcardViewer.displayCardQuestion()
-            // set the correct mark/unmark icon on action bar
-            refreshActionBar()
-            focusDefaultLayout()
+            cancelable(true)
+            setOnCancelListener { }
         }
     }
 
     private fun focusDefaultLayout() {
         findViewById<View>(R.id.root_layout).requestFocus()
-    }
-
-    protected fun answerCardHandler(quick: Boolean): TaskListenerBuilder<Unit, Computation<NextCard<*>>?> {
-        return nextCardHandler<Computation<NextCard<*>>?>()
-            .alsoExecuteBefore { blockControls(quick) }
     }
 
     open val answerButtonCount: Int
@@ -929,17 +908,11 @@ abstract class AbstractFlashcardViewer :
             mSoundPlayer.stopSounds()
             mCurrentEase = ease
             val oldCard = currentCard!!
-            val newCard = withCol {
+            withCol {
                 Timber.i("Answering card %d", oldCard.id)
                 col.sched.answerCard(oldCard, ease)
-                Timber.i("Obtaining next card")
-                sched.card?.apply { render_output(reload = true) }
             }
-            // TODO: this handling code is unnecessarily complex, and would be easier to follow
-            //  if written imperatively
-            val handler = answerCardHandler(true)
-            handler.before?.run()
-            handler.after?.accept(Computation.ok(NextCard.withNoResult(newCard)))
+            getNextCardAndRedraw()
         }
     }
 
@@ -2158,20 +2131,6 @@ abstract class AbstractFlashcardViewer :
         return isMarked(currentCard!!.note())
     }
 
-    protected fun <TResult : Computation<NextCard<*>>?> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {
-        return TaskListenerBuilder(NextCardHandler())
-    }
-
-    /**
-     * @param dismiss An action to execute, to ignore current card and get another one
-     * @return whether the action succeeded.
-     */
-    protected open fun dismiss(dismiss: AnkiMethod<Computation<NextCard<*>>>, executeAfter: Runnable): Boolean {
-        blockControls(false)
-        dismiss.runWithHandler(nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { executeAfter.run() })
-        return true
-    }
-
     val writeLock: Lock
         get() = mCardLock.writeLock()
     open var currentCard: Card? = null
@@ -2587,7 +2546,7 @@ abstract class AbstractFlashcardViewer :
 
     @VisibleForTesting
     fun loadInitialCard() {
-        GetCard().runWithHandler(answerCardHandler(false))
+        launchCatchingTask { getNextCardAndRedraw() }
     }
 
     val isDisplayingAnswer
@@ -2624,10 +2583,7 @@ abstract class AbstractFlashcardViewer :
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
         if ((changes.studyQueues || changes.noteText || changes.card) && handler !== this) {
-            // executing this only for the refresh side effects; there may be a better way
-            GetCard().runWithHandler(
-                answerCardHandler(false)
-            )
+            launchCatchingTask { getNextCardAndRedraw() }
         }
     }
 

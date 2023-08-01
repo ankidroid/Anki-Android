@@ -69,7 +69,6 @@ import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
-import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.rescheduleCards
 import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.showSnackbar
@@ -299,8 +298,7 @@ open class Reviewer :
             whiteboard!!.toggleStylus = toggleStylus
         }
         col.sched.deferReset() // Reset schedule in case card was previously loaded
-        col.startTimebox()
-        GetCard().runWithHandler(answerCardHandler(false))
+        launchCatchingTask { getNextCardAndRedraw() }
         disableDrawerSwipeOnConflicts()
         // Add a weak reference to current activity so that scheduler can talk to to Activity
         sched!!.setContext(WeakReference(this))
@@ -870,7 +868,7 @@ open class Reviewer :
 
     override fun performReload() {
         col.sched.deferReset()
-        GetCard().runWithHandler(answerCardHandler(false))
+        launchCatchingTask { getNextCardAndRedraw() }
     }
 
     override fun displayAnswerBottomBar() {

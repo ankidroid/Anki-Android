@@ -19,50 +19,9 @@ package com.ichi2.anki.servicelayer
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
-import com.ichi2.anki.servicelayer.SchedulerService.NextCard
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.withProgress
 import com.ichi2.libanki.*
-import com.ichi2.utils.Computation
-import timber.log.Timber
-
-typealias NextCardAnd<T> = Computation<NextCard<T>>
-typealias ComputeResult = NextCardAnd<Any?>
-typealias ActionAndNextCard = AnkiMethod<ComputeResult>
-
-class SchedulerService {
-
-    /**
-     * A pair of the next card from the scheduler, and an optional method result
-     */
-    class NextCard<out T>(private val card: Card?, val result: T) {
-        fun hasNoMoreCards(): Boolean = card == null
-
-        /** Returns the next scheduled card
-         * Only call if noMoreCards returns false */
-        fun nextScheduledCard(): Card = card!!
-        companion object {
-            fun withNoResult(card: Card?): NextCard<Unit> =
-                NextCard(card, Unit)
-        }
-    }
-
-    class GetCard : ActionAndNextCard() {
-        override fun execute(): ComputeResult {
-            return getCard(this)
-        }
-
-        companion object {
-            fun getCard(getCard: ActionAndNextCard): ComputeResult {
-                val sched = getCard.col.sched
-                Timber.i("Obtaining card")
-                val newCard = sched.card
-                newCard?.render_output(true)
-                return Computation.ok(NextCard.withNoResult(newCard))
-            }
-        }
-    }
-}
 
 suspend fun FragmentActivity.rescheduleCards(cardIds: List<CardId>, newDays: Int) {
     withProgress {
