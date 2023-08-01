@@ -49,6 +49,7 @@ import anki.config.ConfigKey
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -633,29 +634,17 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      * @param noOfAddedCards
      */
     @KotlinCleanup("return early and simplify if possible")
-    private fun onNoteAdded(noOfAddedCards: Int) {
+    private fun onNoteAdded() {
         var closeEditorAfterSave = false
         var closeIntent: Intent? = null
-        // if task executed without any exception
-        if (noOfAddedCards > 0) {
-            changed = true
-            sourceText = null
-            refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
-            showSnackbar(
-                resources.getQuantityString(R.plurals.factadder_cards_added, noOfAddedCards, noOfAddedCards),
-                Snackbar.LENGTH_SHORT
-            )
-        } else {
-            displayErrorSavingNote()
-        }
+        changed = true
+        sourceText = null
+        refreshNoteData(FieldChangeType.refreshWithStickyFields(shouldReplaceNewlines()))
+        showSnackbar(TR.addingAdded(), Snackbar.LENGTH_SHORT)
 
-        if (!addNote || caller == CALLER_NOTEEDITOR || aedictIntent) {
-            changed = true
+        if (caller == CALLER_NOTEEDITOR || aedictIntent) {
             closeEditorAfterSave = true
         } else if (caller == CALLER_NOTEEDITOR_INTENT_ADD) {
-            if (noOfAddedCards > 0) {
-                changed = true
-            }
             closeEditorAfterSave = true
             closeIntent = Intent().apply { putExtra(EXTRA_ID, intent.getStringExtra(EXTRA_ID)) }
         } else if (!mEditFields!!.isEmpty()) {
@@ -707,16 +696,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
             mReloadRequired = true
             // adding current note to collection
-            val noOfAddedCards = withProgress(resources.getString(R.string.saving_facts)) {
-                CollectionManager.withCol {
+            withProgress(resources.getString(R.string.saving_facts)) {
+                undoableOp {
                     notetypes.current().put("tags", tags)
-                    db.executeInTransaction {
-                        addNote(mEditorNote!!)
-                    }
+                    addNote(mEditorNote!!, deckId)
                 }
             }
             // update UI based on the result, noOfAddedCards
-            onNoteAdded(noOfAddedCards)
+            onNoteAdded()
             updateFieldsFromStickyText()
         } else {
             // Check whether note type has been changed
