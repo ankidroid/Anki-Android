@@ -34,26 +34,6 @@ import java.util.*
  * TODO: All functions associated to Collection can be converted to extension function to avoid redundant parameter [col] in each.
  */
 
-// TODO: Move the operation where it is actually used, no need for a separate function since it is fairly simple
-/**
- * Takes a list of edited notes and saves the change permanently to disk
- * @param col Collection
- * @param notesToUpdate a list of edited notes that is to be saved
- * @return list of updated (in disk) notes
- */
-fun updateMultipleNotes(
-    col: Collection,
-    notesToUpdate: List<Note>
-): List<Note> {
-    Timber.d("CollectionOperations: updateMultipleNotes")
-    return col.db.executeInTransaction {
-        for (note in notesToUpdate) {
-            note.flush()
-        }
-        notesToUpdate
-    }
-}
-
 /**
  * Takes a list of media file names and removes them from the Collection
  * @param col Collection from which media is to be deleted

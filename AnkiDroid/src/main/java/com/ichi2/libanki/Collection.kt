@@ -770,6 +770,10 @@ open class Collection(
         return backend.updateNotes(notes = listOf(note.toBackendNote()), skipUndoEntry = false)
     }
 
+    fun updateNotes(notes: Iterable<Note>): OpChanges {
+        return backend.updateNotes(notes = notes.map { it.toBackendNote() }, skipUndoEntry = false)
+    }
+
     fun emptyCids(): List<CardId> {
         return getEmptyCards().notesList.flatMap { it.cardIdsList }
     }
