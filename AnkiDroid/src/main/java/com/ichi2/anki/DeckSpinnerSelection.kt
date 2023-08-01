@@ -31,7 +31,6 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.FragmentManagerSupplier
-import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.asFragmentManagerSupplier
 import timber.log.Timber
 
@@ -229,8 +228,7 @@ class DeckSpinnerSelection(
      * Displays a [DeckSelectionDialog]
      */
     fun displayDeckSelectionDialog(col: Collection?) {
-        val filter = FunctionalInterfaces.Filter { d: Deck -> showFilteredDecks || !Decks.isDynamic(d) }
-        val decks = fromCollection(col!!, filter).toMutableList()
+        val decks = fromCollection(col!!) { d: Deck -> showFilteredDecks || !Decks.isDynamic(d) }.toMutableList()
         if (showAllDecks) {
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
         }

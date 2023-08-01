@@ -57,7 +57,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.jsonObjectIterable
 import org.json.JSONArray
@@ -622,8 +621,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             val explanation = getString(R.string.deck_override_explanation, name)
             // Anki Desktop allows Dynamic decks, have reported this as a bug:
             // https://forums.ankiweb.net/t/minor-bug-deck-override-to-filtered-deck/1493
-            val nonDynamic = FunctionalInterfaces.Filter { d: Deck -> !Decks.isDynamic(d) }
-            val decks = SelectableDeck.fromCollection(col, nonDynamic)
+            val decks = SelectableDeck.fromCollection(col) { d: Deck -> !Decks.isDynamic(d) }
             val title = getString(R.string.card_template_editor_deck_override)
             val dialog = DeckSelectionDialog.newInstance(title, explanation, true, decks)
             showDialogFragment(activity, dialog)

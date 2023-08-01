@@ -45,7 +45,6 @@ import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
-import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
 import kotlinx.parcelize.IgnoredOnParcel
@@ -360,11 +359,11 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @param filter A method deciding which deck to add
              * @return the list of all SelectableDecks from the collection satisfying filter
              */
-            fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
+            fun fromCollection(c: Collection, filter: ((Deck) -> Boolean) = { true }): List<SelectableDeck> {
                 val all = c.decks.all()
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)
                 for (d in all) {
-                    if (!filter.shouldInclude(d)) {
+                    if (!filter(d)) {
                         continue
                     }
                     ret.add(SelectableDeck(d))
