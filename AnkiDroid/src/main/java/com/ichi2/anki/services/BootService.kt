@@ -35,7 +35,6 @@ class BootService : BroadcastReceiver() {
             return
         }
         Timber.i("Executing Boot Service")
-        catchAlarmManagerErrors(context) { scheduleDeckReminder(context) }
         catchAlarmManagerErrors(context) { scheduleNotification(TimeManager.time, context) }
         mFailedToShowNotifications = false
         sWasRun = true
@@ -70,34 +69,6 @@ class BootService : BroadcastReceiver() {
         } catch (e: Exception) {
             Timber.e(e, "Failed to get collection for boot service - possibly media ejecting")
             null
-        }
-    }
-
-    private fun scheduleDeckReminder(context: Context) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        for (deckConfiguration in CollectionHelper.instance.getCol(context)!!.decks.allConf()) {
-            if (deckConfiguration.has("reminder")) {
-                val reminder = deckConfiguration.getJSONObject("reminder")
-                if (reminder.getBoolean("enabled")) {
-                    val reminderIntent = PendingIntentCompat.getBroadcast(
-                        context,
-                        deckConfiguration.getLong("id").toInt(),
-                        Intent(context, ReminderService::class.java).putExtra(
-                            ReminderService.EXTRA_DECK_OPTION_ID,
-                            deckConfiguration.getLong("id")
-                        ),
-                        0,
-                        false
-                    )
-                    val calendar = DeckOptionsActivity.reminderToCalendar(TimeManager.time, reminder)
-                    alarmManager.setRepeating(
-                        AlarmManager.RTC_WAKEUP,
-                        calendar.timeInMillis,
-                        AlarmManager.INTERVAL_DAY,
-                        reminderIntent
-                    )
-                }
-            }
         }
     }
 

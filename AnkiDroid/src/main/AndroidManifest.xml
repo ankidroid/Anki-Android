@@ -296,13 +296,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.DeckOptionsActivity"
-            android:label="@string/deckpreferences_title"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Theme_Light"
-            />
-        <activity
             android:name=".FilteredDeckOptions"
             android:label="@string/deckpreferences_title"
             android:exported="false"
