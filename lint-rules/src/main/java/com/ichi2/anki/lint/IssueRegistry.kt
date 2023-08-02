@@ -35,8 +35,6 @@ import com.ichi2.anki.lint.rules.FixedPreferencesTitleLength
 import com.ichi2.anki.lint.rules.HardcodedPreferenceKey
 import com.ichi2.anki.lint.rules.InvalidStringFormatDetector
 import com.ichi2.anki.lint.rules.JUnitNullAssertionDetector
-import com.ichi2.anki.lint.rules.KotlinMigrationBrokenEmails
-import com.ichi2.anki.lint.rules.KotlinMigrationFixLineBreaks
 import com.ichi2.anki.lint.rules.NonPositionalFormatSubstitutions
 import com.ichi2.anki.lint.rules.PrintStackTraceUsage
 import com.ichi2.anki.lint.rules.VariableNamingDetector
@@ -59,8 +57,6 @@ class IssueRegistry : IssueRegistry() {
                 DuplicateTextInPreferencesXml.ISSUE,
                 HardcodedPreferenceKey.ISSUE,
                 JUnitNullAssertionDetector.ISSUE,
-                KotlinMigrationBrokenEmails.ISSUE,
-                KotlinMigrationFixLineBreaks.ISSUE,
                 PrintStackTraceUsage.ISSUE,
                 NonPositionalFormatSubstitutions.ISSUE,
                 FixedPreferencesTitleLength.ISSUE_MAX_LENGTH,
