@@ -1,6 +1,7 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
+    tools:context=".DeckPicker">
     <group android:id="@+id/allItems">
         <item
             android:id="@+id/deck_picker_action_filter"
@@ -30,10 +31,9 @@
             ankidroid:showAsAction="always"/>
         <item
             android:id="@+id/action_undo"
-            android:title="@string/undo_action_review"
-            ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
             ankidroid:showAsAction="never"
-            android:visible="false"/>
+            android:visible="false"
+            tools:title="Undo X"/>
         <item
             android:id="@+id/action_new_filtered_deck"
             android:menuCategory="secondary"

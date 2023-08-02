@@ -732,18 +732,18 @@ open class DeckPicker :
         menu.setGroupVisible(R.id.allItems, optionsMenuState != null)
         optionsMenuState?.run {
             menu.findItem(R.id.deck_picker_action_filter).isVisible = searchIcon
-            updateUndoIconFromState(menu.findItem(R.id.action_undo), undoIcon)
+            updateUndoLabelFromState(menu.findItem(R.id.action_undo), undoLabel)
             updateSyncIconFromState(menu.findItem(R.id.action_sync), this)
             menu.findItem(R.id.action_scoped_storage_migrate).isVisible = shouldShowStartMigrationButton
             setupMigrationProgressMenuItem(menu, mediaMigrationState)
         }
     }
 
-    private fun updateUndoIconFromState(menuItem: MenuItem, undoTitle: String?) {
+    private fun updateUndoLabelFromState(menuItem: MenuItem, undoLabel: String?) {
         menuItem.run {
-            if (undoTitle != null) {
+            if (undoLabel != null) {
                 isVisible = true
-                title = resources.getString(R.string.studyoptions_congrats_undo, undoTitle)
+                title = undoLabel
             } else {
                 isVisible = false
             }
@@ -787,12 +787,12 @@ open class DeckPicker :
     suspend fun updateMenuState() {
         optionsMenuState = withOpenColOrNull {
             val searchIcon = decks.count() >= 10
-            val undoIcon = undoLabel()
+            val undoLabel = undoLabel()
             val syncIcon = fetchSyncStatus(col)
             val mediaMigrationState = getMediaMigrationState()
             val shouldShowStartMigrationButton = shouldOfferToMigrate() ||
                 mediaMigrationState is MediaMigrationState.Ongoing.PausedDueToError
-            OptionsMenuState(searchIcon, undoIcon, syncIcon, shouldShowStartMigrationButton, mediaMigrationState)
+            OptionsMenuState(searchIcon, undoLabel, syncIcon, shouldShowStartMigrationButton, mediaMigrationState)
         }
     }
 
@@ -2507,7 +2507,7 @@ open class DeckPicker :
 data class OptionsMenuState(
     val searchIcon: Boolean,
     /** If undo is available, a string describing the action. */
-    val undoIcon: String?,
+    val undoLabel: String?,
     val syncIcon: SyncIconState,
     val shouldShowStartMigrationButton: Boolean,
     val mediaMigrationState: MediaMigrationState
