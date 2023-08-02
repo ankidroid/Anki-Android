@@ -47,7 +47,6 @@ android {
     defaultConfig {
         applicationId "com.ichi2.anki"
         buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()
-        buildConfigField "Boolean", "LEGACY_SCHEMA", "true"
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
@@ -113,10 +112,6 @@ android {
                 // not profiled: optimization for build times
                 if (localProperties['enable_languages'] == "false") {
                     android.defaultConfig.resConfigs "en"
-                }
-                // allow overriding default schema version
-                if (localProperties["legacy_schema"] != null) {
-                    buildConfigField "Boolean", "LEGACY_SCHEMA", localProperties["legacy_schema"]
                 }
                 // allows the scoped storage migration when the user is not logged in
                 if (localProperties["allow_unsafe_migration"] != null) {
