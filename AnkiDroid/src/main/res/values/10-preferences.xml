@@ -191,17 +191,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Advanced statistics</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Enable advanced statistics</string>
-    <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Compute first n days, simulate remainder</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precision of computation</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Number of iterations of the simulation</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used"

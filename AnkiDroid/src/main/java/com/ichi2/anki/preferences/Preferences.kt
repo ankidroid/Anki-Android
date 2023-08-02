@@ -187,10 +187,6 @@ class Preferences :
         /** From [HeaderFragment.onCreatePreferences] */
         if (!AdaptionUtil.isXiaomiRestrictedLearningDevice) {
             searchConfig.index(R.xml.preferences_advanced)
-            // Advanced statistics is a subscreen of Advanced, so it should be indexed along with it
-            searchConfig.index(R.xml.preferences_advanced_statistics)
-                .addBreadcrumb(R.string.pref_cat_advanced)
-                .addBreadcrumb(R.string.statistics)
         }
 
         /** From [NotificationsSettingsFragment.initSubscreen] */
@@ -323,7 +319,6 @@ class Preferences :
                 R.xml.preferences_appearance -> AppearanceSettingsFragment()
                 R.xml.preferences_controls -> ControlsSettingsFragment()
                 R.xml.preferences_advanced -> AdvancedSettingsFragment()
-                R.xml.preferences_advanced_statistics -> AdvancedStatisticsSettingsFragment()
                 R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
                 R.xml.preferences_dev_options -> DevOptionsFragment()
                 R.xml.preferences_custom_buttons -> CustomButtonsSettingsFragment()
