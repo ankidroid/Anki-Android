@@ -79,7 +79,6 @@ import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.Compat
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
@@ -1268,11 +1267,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             previous = editLineView
             editLineView.setEnableAnimation(animationEnabled())
 
-            // TODO: Remove the >= M check - one callback works on API 11.
-            if (CompatHelper.sdkVersion >= Build.VERSION_CODES.M) {
-                // Use custom implementation of ActionMode.Callback customize selection and insert menus
-                editLineView.setActionModeCallbacks(ActionModeCallback(newEditText))
-            }
+            // Use custom implementation of ActionMode.Callback customize selection and insert menus
+            editLineView.setActionModeCallbacks(ActionModeCallback(newEditText))
             editLineView.setTypeface(customTypeface)
             editLineView.setHintLocale(getHintLocaleForField(editLineView.name))
             initFieldEditText(newEditText, i, !editModelMode)

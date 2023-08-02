@@ -16,11 +16,9 @@
 package com.ichi2.anki.reviewer
 
 import android.content.Context
-import android.os.Build
 import android.view.KeyEvent
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.cardviewer.Gesture
-import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.StringUtil
 import timber.log.Timber
 
@@ -28,7 +26,7 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
     constructor(gesture: Gesture?) : this(null, null, null, gesture)
 
     private fun getKeyCodePrefix(): String {
-        val keyPrefix = if (CompatHelper.sdkVersion >= Build.VERSION_CODES.M) KEY_PREFIX.toString() else ""
+        val keyPrefix = KEY_PREFIX.toString()
 
         if (keycode == null) {
             return keyPrefix

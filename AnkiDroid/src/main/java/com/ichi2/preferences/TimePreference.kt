@@ -6,7 +6,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.TimePicker
-import com.ichi2.compat.CompatHelper
 
 @Suppress("deprecation") // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5019
 class TimePreference(context: Context?, attrs: AttributeSet?) : android.preference.DialogPreference(context, attrs) {
@@ -35,14 +34,15 @@ class TimePreference(context: Context?, attrs: AttributeSet?) : android.preferen
 
     override fun onBindDialogView(view: View) {
         super.onBindDialogView(view)
-        CompatHelper.compat.setTime(mTimepicker, mHours, mMinutes)
+        mTimepicker.hour = mHours
+        mTimepicker.minute = mMinutes
     }
 
     override fun onDialogClosed(positiveResult: Boolean) {
         super.onDialogClosed(positiveResult)
         if (positiveResult) {
-            mHours = CompatHelper.compat.getHour(mTimepicker)
-            mMinutes = CompatHelper.compat.getMinute(mTimepicker)
+            mHours = mTimepicker.hour
+            mMinutes = mTimepicker.minute
             val time = String.format("%1$02d:%2$02d", mHours, mMinutes)
             if (callChangeListener(time)) {
                 persistString(time)
