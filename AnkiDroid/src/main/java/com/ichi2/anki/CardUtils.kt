@@ -22,17 +22,6 @@ object CardUtils {
     }
 
     /**
-     * @return All cards of all notes
-     */
-    fun getAllCards(notes: Set<Note>): List<Card> {
-        val allCards: MutableList<Card> = ArrayList(notes.size)
-        for (note in notes) {
-            allCards.addAll(note.cards())
-        }
-        return allCards
-    }
-
-    /**
      * Returns the deck ID of the given [Card].
      *
      * @param card The [Card] to get the deck ID

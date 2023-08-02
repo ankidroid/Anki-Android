@@ -51,7 +51,6 @@ import com.ichi2.libanki.Utils
 import com.ichi2.utils.*
 import timber.log.Timber
 import timber.log.Timber.DebugTree
-import java.io.InputStream
 import java.util.regex.Pattern
 
 /**
@@ -327,9 +326,6 @@ open class AnkiDroidApp : Application() {
         /** HACK: Whether an exception report has been thrown - TODO: Rewrite an ACRA Listener to do this  */
         @VisibleForTesting
         var sentExceptionReportHack = false
-        fun getResourceAsStream(name: String): InputStream {
-            return instance.applicationContext.classLoader.getResourceAsStream(name)
-        }
 
         @get:JvmName("isInitialized")
         val isInitialized: Boolean
@@ -355,8 +351,6 @@ open class AnkiDroidApp : Application() {
             }
         }
 
-        val cacheStorageDirectory: String
-            get() = instance.cacheDir.absolutePath
         val appResources: Resources
             get() = instance.resources
         val isSdCardMounted: Boolean

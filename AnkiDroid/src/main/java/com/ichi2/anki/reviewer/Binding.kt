@@ -93,10 +93,6 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
 
     val isGesture: Boolean = gesture != null
 
-    fun matchesModifier(event: KeyEvent): Boolean {
-        return modifierKeys == null || modifierKeys.matches(event)
-    }
-
     open class ModifierKeys internal constructor(private val shift: Boolean, private val ctrl: Boolean, private val alt: Boolean) {
         fun matches(event: KeyEvent): Boolean {
             // return false if Ctrl+1 is pressed and 1 is expected

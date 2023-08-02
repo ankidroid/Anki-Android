@@ -34,21 +34,6 @@ class StyledProgressDialog(context: Context?) : Dialog(context!!) {
         }
     }
 
-    @Suppress("unused_parameter")
-    fun setMax(max: Int) {
-        // TODO
-    }
-
-    @Suppress("unused_parameter")
-    fun setProgress(progress: Int) {
-        // TODO
-    }
-
-    @Suppress("unused_parameter")
-    fun setProgressStyle(style: Int) {
-        // TODO
-    }
-
     @Suppress("Deprecation") // ProgressDialog deprecation
     companion object {
         fun show(

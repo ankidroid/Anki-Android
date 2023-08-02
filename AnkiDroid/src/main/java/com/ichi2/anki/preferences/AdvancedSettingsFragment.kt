@@ -19,7 +19,6 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 import com.ichi2.anki.*
@@ -128,22 +127,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 Timber.d("v3 scheduler set to $newValue")
                 launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
             }
-        }
-    }
-
-    /**
-     * Shows a dialog to confirm if the user wants to enable an experimental preference
-     */
-    private fun confirmExperimentalChange(@StringRes prefTitle: Int, @StringRes message: Int? = null, onCancel: () -> Unit, onConfirm: () -> Unit) {
-        val prefTitleString = getString(prefTitle)
-        val dialogTitle = getString(R.string.experimental_pref_confirmation, prefTitleString)
-
-        AlertDialog.Builder(requireContext()).show {
-            setTitle(dialogTitle)
-            message?.let { setMessage(it) }
-            setPositiveButton(R.string.dialog_ok) { _, _ -> onConfirm() }
-            setNegativeButton(R.string.dialog_cancel) { _, _ -> onCancel() }
-            setCancelable(false) // to avoid `onCancel` not being triggered on outside cancels
         }
     }
 

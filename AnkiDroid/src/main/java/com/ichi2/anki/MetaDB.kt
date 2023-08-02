@@ -13,7 +13,6 @@ import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.widget.SmallWidgetStatus
 import timber.log.Timber
-import java.util.regex.Pattern
 
 /**
  * Used to store additional information besides what is stored in the deck itself.
@@ -35,9 +34,6 @@ object MetaDB {
 
     /** The Database Version, increase if you want updates to happen on next upgrade.  */
     private const val DATABASE_VERSION = 7
-
-    /** The pattern used to remove quotes from file names.  */
-    private val quotePattern = Pattern.compile("[\"']")
 
     /** The database object used by the meta-db.  */
     private var mMetaDb: SQLiteDatabase? = null

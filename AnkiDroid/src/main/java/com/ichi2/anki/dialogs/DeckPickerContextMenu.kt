@@ -166,19 +166,19 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
         }
     }
 
-    private enum class DeckPickerContextMenuOption(val itemId: Int, @StringRes val optionName: Int) {
-        RENAME_DECK(0, R.string.rename_deck),
-        DECK_OPTIONS(1, R.string.menu__deck_options),
-        CUSTOM_STUDY(2, R.string.custom_study),
-        DELETE_DECK(3, R.string.contextmenu_deckpicker_delete_deck),
-        EXPORT_DECK(4, R.string.export_deck),
-        UNBURY(5, R.string.unbury),
-        CUSTOM_STUDY_REBUILD(6, R.string.rebuild_cram_label),
-        CUSTOM_STUDY_EMPTY(7, R.string.empty_cram_label),
-        CREATE_SUBDECK(8, R.string.create_subdeck),
-        CREATE_SHORTCUT(9, R.string.create_shortcut),
-        BROWSE_CARDS(10, R.string.browse_cards),
-        ADD_CARD(11, R.string.menu_add);
+    private enum class DeckPickerContextMenuOption(@StringRes val optionName: Int) {
+        RENAME_DECK(R.string.rename_deck),
+        DECK_OPTIONS(R.string.menu__deck_options),
+        CUSTOM_STUDY(R.string.custom_study),
+        DELETE_DECK(R.string.contextmenu_deckpicker_delete_deck),
+        EXPORT_DECK(R.string.export_deck),
+        UNBURY(R.string.unbury),
+        CUSTOM_STUDY_REBUILD(R.string.rebuild_cram_label),
+        CUSTOM_STUDY_EMPTY(R.string.empty_cram_label),
+        CREATE_SUBDECK(R.string.create_subdeck),
+        CREATE_SHORTCUT(R.string.create_shortcut),
+        BROWSE_CARDS(R.string.browse_cards),
+        ADD_CARD(R.string.menu_add);
     }
 
     class Factory(val collectionSupplier: Supplier<Collection>) : ExtendedFragmentFactory() {

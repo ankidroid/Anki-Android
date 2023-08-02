@@ -40,6 +40,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 
+@Suppress("unused")
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val currentCard: Card
         get() = activity.currentCard!!

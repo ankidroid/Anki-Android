@@ -44,6 +44,7 @@ sealed interface State {
     }
 }
 
+@Suppress("unused")
 class NewBackendBackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider {
     override val collectionDirectory = CollectionManager.getCollectionDirectory()
 

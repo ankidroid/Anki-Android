@@ -35,7 +35,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.tools.AsyncDialogBuilder.CheckedItems
 import com.ichi2.anki.ui.dialogs.tools.DialogResult
 import com.ichi2.anki.ui.dialogs.tools.awaitDialog
-import com.ichi2.anki.ui.preferences.screens.BackupLimitsPresenter
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.async.deleteMedia
 import com.ichi2.preferences.TextWidgetPreference
@@ -82,14 +81,6 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
                 val unusedFilesSize = unusedFiles.sumOf(::calculateSize)
                 Size.FilesAndBytes(unusedFiles, unusedFilesSize)
             }
-        }
-    }
-
-    suspend fun performMediaCheck() {
-        try {
-            withCol { media.check() }
-        } finally {
-            launchSearchForUnusedMedia()
         }
     }
 
@@ -188,8 +179,6 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
 class ManageSpaceFragment : SettingsFragment() {
     override val preferenceResource = R.xml.manage_space
     override val analyticsScreenNameConstant = "manageSpace"
-
-    private val backupLimitsPresenter = BackupLimitsPresenter(this).also { it.observeLifecycle() }
 
     private val viewModel: ManageSpaceViewModel by viewModels()
 

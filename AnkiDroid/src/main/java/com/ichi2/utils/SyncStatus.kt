@@ -64,11 +64,6 @@ enum class SyncStatus {
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
 
-        /** Whether data has been changed - to be converted to Rust  */
-        fun hasDatabaseChanges(): Boolean {
-            return AnkiDroidApp.instance.sharedPrefs().getBoolean("changesSinceLastSync", false)
-        }
-
         /** To be converted to Rust  */
         fun markDataAsChanged() {
             if (sPauseCheckingDatabase) {
@@ -76,13 +71,6 @@ enum class SyncStatus {
             }
             sMarkedInMemory = true
             AnkiDroidApp.instance.sharedPrefs().edit { putBoolean("changesSinceLastSync", true) }
-        }
-
-        /** To be converted to Rust  */
-        @KotlinCleanup("Convert these to @RustCleanup")
-        fun markSyncCompleted() {
-            sMarkedInMemory = false
-            AnkiDroidApp.instance.sharedPrefs().edit { putBoolean("changesSinceLastSync", false) }
         }
 
         fun ignoreDatabaseModification(runnable: Runnable) {

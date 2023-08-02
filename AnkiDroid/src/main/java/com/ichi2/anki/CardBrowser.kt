@@ -163,9 +163,8 @@ open class CardBrowser :
     private var mOrderAsc = false
     private var mColumn1Index = 0
     private var mColumn2Index = 0
+
     // DEFECT: Doesn't need to be a local
-    /** The next deck for the "Change Deck" operation  */
-    private var mNewDid: DeckId = 0
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
@@ -2082,24 +2081,6 @@ open class CardBrowser :
                 cardsAdapter.notifyDataSetChanged()
             }
         }
-    }
-
-    /**
-     * Reloads the data of the cards, taking on their current values from the database.
-     */
-    protected fun reloadCards(cards: Array<Card>) {
-        if (cards.isEmpty()) return
-
-        val cardIds: MutableSet<Long> = HashSet()
-        for (c in cards) {
-            cardIds.add(c.id)
-        }
-        for (props in mCards) {
-            if (cardIds.contains(props.id)) {
-                props.reload()
-            }
-        }
-        cardsAdapter.notifyDataSetChanged()
     }
 
     private val allCardIds: LongArray

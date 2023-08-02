@@ -56,8 +56,6 @@ object Consts {
     @IntDef(CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING)
     annotation class CARD_TYPE
 
-    const val COUNT_REMAINING = 1
-
     // dynamic deck order
     const val DYN_OLDEST = 0
     const val DYN_RANDOM = 1

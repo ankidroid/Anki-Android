@@ -47,28 +47,6 @@ import kotlin.Throws
 @KotlinCleanup("convert to object")
 open class CollectionHelper {
     /**
-     * Prevents [com.ichi2.async.CollectionLoader] from spuriously re-opening the [Collection].
-     *
-     *
-     * Accessed only from synchronized methods.
-     */
-    @get:Synchronized
-    var isCollectionLocked = false
-        private set
-
-    @Synchronized
-    fun lockCollection() {
-        Timber.i("Locked Collection - Collection Loading should fail")
-        isCollectionLocked = true
-    }
-
-    @Synchronized
-    fun unlockCollection() {
-        Timber.i("Unlocked Collection")
-        isCollectionLocked = false
-    }
-
-    /**
      * Get the single instance of the [Collection], creating it if necessary  (lazy initialization).
      * @param context is no longer used, as the global AnkidroidApp instance is used instead
      * @return instance of the Collection

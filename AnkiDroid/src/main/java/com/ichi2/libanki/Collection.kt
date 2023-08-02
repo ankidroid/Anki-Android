@@ -778,42 +778,6 @@ open class Collection(
         return getEmptyCards().notesList.flatMap { it.cardIdsList }
     }
 
-    class CheckDatabaseResult(private val oldSize: Long) {
-        private val mProblems: MutableList<String?> = ArrayList()
-        var cardsWithFixedHomeDeckCount = 0
-        private var mNewSize: Long = 0
-
-        /** When the database was locked  */
-        var databaseLocked = false
-            private set
-
-        /** When the check failed with an error (or was locked)  */
-        var failed = false
-        fun addAll(strings: List<String?>?) {
-            mProblems.addAll(strings!!)
-        }
-
-        val problems: List<String?>
-            get() = mProblems
-
-        val sizeChangeInKb: Double
-            get() = (oldSize - mNewSize) / 1024.0
-
-        fun markAsFailed(): CheckDatabaseResult {
-            failed = true
-            return this
-        }
-
-        fun markAsLocked(): CheckDatabaseResult {
-            setLocked(true)
-            return markAsFailed()
-        }
-
-        private fun setLocked(@Suppress("SameParameterValue") value: Boolean) {
-            databaseLocked = value
-        }
-    }
-
     /** Fixes and optimizes the database. If any errors are encountered, a list of
      * problems is returned. Throws if DB is unreadable. */
     fun fixIntegrity(): List<String> {

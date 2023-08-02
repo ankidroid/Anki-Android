@@ -226,10 +226,6 @@ open class BackupManager {
             return directory
         }
 
-        fun performBackupInBackground(path: String, time: Time): Boolean {
-            return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, time)
-        }
-
         /**
          * @param colFile The current collection file to backup
          * @return the amount of free space required for a backup.

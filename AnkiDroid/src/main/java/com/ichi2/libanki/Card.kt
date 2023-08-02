@@ -20,10 +20,8 @@ package com.ichi2.libanki
 import android.content.ContentValues
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.NoteService.avgEase
-import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
@@ -33,9 +31,7 @@ import com.ichi2.utils.Assert
 import com.ichi2.utils.LanguageUtil
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
-import timber.log.Timber
 import java.util.*
-import java.util.concurrent.CancellationException
 
 /**
  * A Card is the ultimate entity subject to review; it encapsulates the scheduling parameters (from which to derive
@@ -572,23 +568,6 @@ open class Card : Cloneable {
             val extraData = flags and 7.inv()
             // flag in 3 fist bits, same data as in mFlags everywhere else
             return extraData or flag
-        }
-
-        @Throws(CancellationException::class)
-        fun deepCopyCardArray(originals: Array<Card>, cancelListener: CancelListener): Array<Card> {
-            val col = CollectionHelper.instance.getCol(AnkiDroidApp.instance)!!
-            val copies = mutableListOf<Card>()
-            for (i in originals.indices) {
-                if (cancelListener.isCancelled()) {
-                    Timber.i("Cancelled during deep copy, probably memory pressure?")
-                    throw CancellationException("Cancelled during deep copy")
-                }
-
-                // TODO: the performance-naive implementation loads from database instead of working in memory
-                // the high performance version would implement .clone() on Card and test it well
-                copies.add(Card(col, originals[i].id))
-            }
-            return copies.toTypedArray()
         }
     }
 }

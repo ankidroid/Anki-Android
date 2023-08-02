@@ -35,8 +35,6 @@ import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
 import org.apache.commons.compress.archivers.zip.ZipFile
-import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
@@ -366,19 +364,6 @@ object Utils {
         return sb.toString()
     }
 
-    /** Given a list of integers, return a string '(int1,int2,...)'.  */
-    @KotlinCleanup("Use scope function on StringBuilder")
-    fun ids2str(ids: Array<Long>?): String {
-        val sb = StringBuilder()
-        sb.append("(")
-        if (ids != null) {
-            val s = Arrays.toString(ids)
-            sb.append(s.substring(1, s.length - 1))
-        }
-        sb.append(")")
-        return sb.toString()
-    }
-
     /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator.  */
     @KotlinCleanup("Use scope function on StringBuilder, simplify inner for loop")
     fun <T> ids2str(ids: Iterable<T>): String {
@@ -395,29 +380,6 @@ object Utils {
         }
         sb.append(")")
         return sb.toString()
-    }
-
-    /** Given a list of integers, return a string '(int1,int2,...)'.  */
-    @KotlinCleanup("Use scope function on StringBuilder, simplify inner for loop")
-    fun ids2str(ids: JSONArray?): String {
-        val str = StringBuilder(512)
-        str.append("(")
-        if (ids != null) {
-            val len = ids.length()
-            for (i in 0 until len) {
-                try {
-                    if (i == len - 1) {
-                        str.append(ids.getLong(i))
-                    } else {
-                        str.append(ids.getLong(i)).append(",")
-                    }
-                } catch (e: JSONException) {
-                    Timber.e(e, "ids2str :: JSONException")
-                }
-            }
-        }
-        str.append(")")
-        return str.toString()
     }
 
     // used in ankiweb

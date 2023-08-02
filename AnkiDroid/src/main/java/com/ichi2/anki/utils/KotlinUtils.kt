@@ -13,10 +13,3 @@
  */
 
 package com.ichi2.anki.utils
-
-inline fun <T, reified R> Array<T>.mapToArray(transform: (T) -> R): Array<R> {
-    @Suppress("UNCHECKED_CAST")
-    return arrayOfNulls<R>(size).also { out ->
-        this.forEachIndexed { index, element -> out[index] = transform(element) }
-    } as Array<R>
-}
