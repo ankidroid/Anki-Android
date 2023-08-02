@@ -2031,7 +2031,7 @@ open class DeckPicker :
                     decks.removeDecks(listOf(did))
                 }
             }
-            showSnackbar(TR.browsingCardsDeleted(changes.count))
+            showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT)
         }
     }
 

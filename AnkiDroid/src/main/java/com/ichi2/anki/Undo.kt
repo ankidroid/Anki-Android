@@ -19,6 +19,7 @@ package com.ichi2.anki
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesAfterUndo
 import anki.collection.opChanges
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
@@ -38,7 +39,7 @@ suspend fun FragmentActivity.undoAndShowPopup() {
                     undoNew()
                 }
             }
-            showSnackbar(TR.undoActionUndone(changes.operation))
+            showSnackbar(TR.undoActionUndone(changes.operation), Snackbar.LENGTH_SHORT)
         } catch (exc: BackendException) {
             @RustCleanup("Backend module should export this as a separate Exception")
             if (exc.localizedMessage == "UndoEmpty") {
@@ -57,7 +58,7 @@ suspend fun FragmentActivity.undoAndShowPopup() {
                         browserTable = true
                     }
                 }
-                showSnackbar(TR.undoActionUndone(TR.schedulingReview()))
+                showSnackbar(TR.undoActionUndone(TR.schedulingReview()), Snackbar.LENGTH_SHORT)
             }
         }
     }
