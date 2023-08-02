@@ -530,6 +530,7 @@ object UsageAnalytics {
         "binding_SHOW_HINT",
         "binding_SHOW_ALL_HINTS",
         "binding_ADD_NOTE",
+        "binding_RESCHEDULE_NOTE",
         // Accessibility
         "cardZoom",
         "imageZoom",

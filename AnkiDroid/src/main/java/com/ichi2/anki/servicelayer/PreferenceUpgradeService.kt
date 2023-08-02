@@ -271,7 +271,8 @@ object PreferenceUpgradeService {
                 Pair(45, ViewerCommand.CHANGE_WHITEBOARD_PEN_COLOR),
                 Pair(41, ViewerCommand.SHOW_HINT),
                 Pair(42, ViewerCommand.SHOW_ALL_HINTS),
-                Pair(43, ViewerCommand.ADD_NOTE)
+                Pair(43, ViewerCommand.ADD_NOTE),
+                Pair(44, ViewerCommand.RESCHEDULE_NOTE)
             )
 
             override fun upgrade(preferences: SharedPreferences) {
