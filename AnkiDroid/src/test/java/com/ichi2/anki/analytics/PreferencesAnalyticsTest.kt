@@ -32,7 +32,6 @@ class PreferencesAnalyticsTest : RobolectricTest() {
     /** Keys of preferences that shouldn't be reported */
     private val excludedPrefs = setOf(
         "analyticsOptIn", // Share feature usage: analytics are only reported if this is enabled :)
-        "useRustBackend", // Rust backend: is going to be the default in the future
         // Screens: don't have a value
         "generalScreen",
         "reviewingScreen",

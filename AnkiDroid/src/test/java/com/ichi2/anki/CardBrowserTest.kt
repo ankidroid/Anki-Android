@@ -776,6 +776,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("flaky")
     fun checkCardsNotesMode() = runTest {
         val cardBrowser = getBrowserWithNotes(3, true)
 

@@ -153,46 +153,12 @@ class AdvancedSettingsFragment : SettingsFragment() {
         @RustCleanup("move this to Reviewing > Scheduling once the new backend is the default")
         val v3schedPref = requirePreference<SwitchPreferenceCompat>(R.string.enable_v3_sched_key)
 
-        // Use V16 backend
-        requirePreference<SwitchPreferenceCompat>(R.string.pref_rust_backend_key).apply {
-            if (!BuildConfig.LEGACY_SCHEMA) {
-                title = "New schema already enabled on local.properties"
-                isEnabled = false
-                isChecked = true
-            }
-            disableIfStorageMigrationInProgress()
-            setOnPreferenceChangeListener { newValue ->
-                if (newValue == true) {
-                    confirmExperimentalChange(
-                        R.string.use_rust_backend_title,
-                        R.string.use_rust_backend_warning,
-                        onCancel = { isChecked = false },
-                        onConfirm = {
-                            BackendFactory.defaultLegacySchema = false
-                            (requireActivity() as Preferences).restartWithNewDeckPicker()
-                        }
-                    )
-                } else {
-                    BackendFactory.defaultLegacySchema = true
-                    v3schedPref.isChecked = false
-                    (requireActivity() as Preferences).restartWithNewDeckPicker()
-                }
-            }
-        }
-
         // v3 scheduler
         v3schedPref.apply {
-            launchCatchingTask {
-                withCol { isChecked = v3Enabled }
-                setOnPreferenceChangeListener { newValue: Any ->
-                    Timber.d("v3 scheduler set to $newValue")
-                    launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
-                }
-            }
-            // if new backend was enabled on local.properties, remove the pref dependency
-            if (!BuildConfig.LEGACY_SCHEMA) {
-                dependency = null
-                isEnabled = true
+            launchCatchingTask { withCol { isChecked = v3Enabled } }
+            setOnPreferenceChangeListener { newValue: Any ->
+                Timber.d("v3 scheduler set to $newValue")
+                launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
             }
         }
     }

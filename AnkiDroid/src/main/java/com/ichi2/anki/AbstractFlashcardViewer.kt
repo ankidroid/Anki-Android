@@ -2449,13 +2449,7 @@ abstract class AbstractFlashcardViewer :
                 if (url.startsWith("intent:")) {
                     intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
                 } else if (url.startsWith("android-app:")) {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-                        intent = Intent.parseUri(url, 0)
-                        intent.data = null
-                        intent.setPackage(Uri.parse(url).host)
-                    } else {
-                        intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME)
-                    }
+                    intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME)
                 }
                 if (intent != null) {
                     if (packageManager.resolveActivityCompat(intent, ResolveInfoFlagsCompat.EMPTY) == null) {

@@ -343,9 +343,6 @@ this formatter is used if the bind only applies to both the question and the ans
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41">Experimental</string>
     <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
     <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
 
     <!-- Developer options -->

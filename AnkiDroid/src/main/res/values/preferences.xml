@@ -130,7 +130,6 @@
     <string name="pref_lock_database_key">debug_lock_database</string>
     <string name="pref_show_onboarding_key">showOnboarding</string>
     <string name="pref_reset_onboarding_key">resetOnboarding</string>
-    <string name="pref_rust_backend_key">useRustBackend</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <!-- Developer options > Create fake media -->
     <string name="pref_fill_collection_key">fillCollection</string>

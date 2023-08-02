@@ -323,7 +323,7 @@ dependencies {
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin:3.24.1' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin-lite:3.24.1' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
@@ -331,9 +331,7 @@ dependencies {
     }
     if (localProperties['local_backend'] == "true") {
         implementation files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")
-        testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing-${ankidroid_backend_version}.jar")
-        // On Windows, you can use something like
-        // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
+        testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")
     } else {
         implementation "io.github.david-allison-1:anki-android-backend:$ankidroid_backend_version"
         testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"

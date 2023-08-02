@@ -49,7 +49,6 @@ import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.*
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.io.InputStream
@@ -72,7 +71,6 @@ open class AnkiDroidApp : Application() {
      * On application creation.
      */
     override fun onCreate() {
-        BackendFactory.defaultLegacySchema = BuildConfig.LEGACY_SCHEMA
         try {
             Os.setenv("PLATFORM", Utils.syncPlatform(), false)
             // enable debug logging of sync actions
@@ -100,15 +98,6 @@ open class AnkiDroidApp : Application() {
         // Get preferences
         val preferences = this.sharedPrefs()
 
-        // TODO remove the following if-block once AnkiDroid uses the new schema by default
-        if (BuildConfig.LEGACY_SCHEMA) {
-            val isNewSchemaEnabledByPref =
-                preferences.getBoolean(getString(R.string.pref_rust_backend_key), false)
-            if (isNewSchemaEnabledByPref) {
-                Timber.i("New schema enabled by preference")
-                BackendFactory.defaultLegacySchema = false
-            }
-        }
         CrashReportService.initialize(this)
         if (BuildConfig.DEBUG) {
             // Enable verbose error logging and do method tracing to put the Class name as log tag

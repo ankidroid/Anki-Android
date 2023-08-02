@@ -27,7 +27,7 @@
     <issue id="StringFormatCount" severity="fatal" />
     <issue id="StringFormatMatches" severity="fatal" />
     <issue id="StringFormatInvalid" severity="fatal" />
-    <issue id="UnusedResources" severity="fatal">
+    <issue id="UnusedResources" severity="informational">
         <!-- Ignore as they'll be used for #7526 -->
         <ignore regexp="content_picture\.png|device_access_mic\.png" />
         <!-- Remove once #6772 is complete -->

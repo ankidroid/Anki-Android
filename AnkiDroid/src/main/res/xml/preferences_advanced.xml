@@ -142,13 +142,7 @@
         <PreferenceCategory
             android:title="@string/pref_cat_experimental">
             <SwitchPreferenceCompat
-                android:key="@string/pref_rust_backend_key"
-                android:title="@string/use_rust_backend_title"
-                android:summary="@string/use_rust_backend_summary"
-                android:defaultValue="false"/>
-            <SwitchPreferenceCompat
                 android:key="@string/enable_v3_sched_key"
-                android:dependency="@string/pref_rust_backend_key"
                 android:title="@string/enable_v3_sched_title"
                 android:defaultValue="false"/>
         </PreferenceCategory>
