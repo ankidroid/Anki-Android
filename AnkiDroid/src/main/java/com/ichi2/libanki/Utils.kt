@@ -31,10 +31,8 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.R
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
-import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
-import org.apache.commons.compress.archivers.zip.ZipFile
 import timber.log.Timber
 import java.io.*
 import java.math.BigInteger
@@ -513,74 +511,6 @@ object Utils {
             Timber.w(e)
         }
         return contentOfMyInputStream
-    }
-
-    @Throws(IOException::class)
-    fun unzipAllFiles(zipFile: ZipFile, targetDirectory: String) {
-        val entryNames: MutableList<String> = ArrayList()
-        val i = zipFile.entries
-        while (i.hasMoreElements()) {
-            val e = i.nextElement()
-            entryNames.add(e.name)
-        }
-        unzipFiles(zipFile, targetDirectory, entryNames.toTypedArray(), null)
-    }
-
-    /**
-     * @param zipFile A zip file
-     * @param targetDirectory Directory in which to unzip some of the zipped field
-     * @param zipEntries files of the zip directory to unzip
-     * @param zipEntryToFilenameMapInput Renaming rules from name in zip file to name in the device
-     * @throws IOException if the directory can't be created
-     */
-    @KotlinCleanup("default of zipEntryToFilenameMap")
-    @Throws(IOException::class)
-    fun unzipFiles(
-        zipFile: ZipFile,
-        targetDirectory: String,
-        zipEntries: Array<String>,
-        zipEntryToFilenameMapInput: Map<String, String>?
-    ) {
-        var zipEntryToFilenameMap = zipEntryToFilenameMapInput
-        val dir = File(targetDirectory)
-        if (!dir.exists() && !dir.mkdirs()) {
-            throw IOException("Failed to create target directory: $targetDirectory")
-        }
-        if (zipEntryToFilenameMap == null) {
-            zipEntryToFilenameMap = HashMapInit(0)
-        }
-        for (requestedEntry in zipEntries) {
-            val ze = zipFile.getEntry(requestedEntry)
-            if (ze != null) {
-                var name = ze.name
-                if (zipEntryToFilenameMap.containsKey(name)) {
-                    name = zipEntryToFilenameMap[name]
-                }
-                val destFile = File(dir, name)
-                if (!isInside(destFile, dir)) {
-                    Timber.e("Refusing to decompress invalid path: %s", destFile.canonicalPath)
-                    throw IOException("File is outside extraction target directory.")
-                }
-                if (!ze.isDirectory) {
-                    Timber.i("uncompress %s", name)
-                    zipFile.getInputStream(ze)
-                        .use { zis -> writeToFile(zis, destFile.absolutePath) }
-                }
-            }
-        }
-    }
-
-    /**
-     * Checks to see if a given file path resides inside a given directory.
-     * Useful for protection against path traversal attacks prior to creating the file
-     * @param file the file with an uncertain filesystem location
-     * @param dir the directory that should contain the file
-     * @return true if the file path is inside the directory
-     * @exception IOException if there are security or filesystem issues determining the paths
-     */
-    @Throws(IOException::class)
-    fun isInside(file: File, dir: File): Boolean {
-        return file.canonicalPath.startsWith(dir.canonicalPath)
     }
 
     /**
