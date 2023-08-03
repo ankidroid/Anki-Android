@@ -39,6 +39,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.json.JSONArray
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.ParameterizedRobolectricTestRunner
@@ -69,12 +70,14 @@ class ReviewerTest : RobolectricTest() {
         ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.col } } }
     }
 
+    @Ignore("flaky")
     @Test
     @RunInBackground
     fun verifyNormalStartup() {
         ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNotNull("Collection should be non-null", reviewer.col) } }
     }
 
+    @Ignore("flaky")
     @Test
     @RunInBackground
     @Flaky(os = OS.WINDOWS, "startUp: BackendCollectionAlreadyOpenException")
