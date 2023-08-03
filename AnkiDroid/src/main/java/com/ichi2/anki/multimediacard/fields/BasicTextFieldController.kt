@@ -51,10 +51,6 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         val p = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1F)
         createCloneButton(layoutTools, p)
         createClearButton(layoutTools, p)
-        // search buttons
-        val layoutTools2 = LinearLayout(mActivity)
-        layoutTools2.orientation = LinearLayout.HORIZONTAL
-        layout.addView(layoutTools2)
     }
 
     private fun gtxt(id: Int): String {
