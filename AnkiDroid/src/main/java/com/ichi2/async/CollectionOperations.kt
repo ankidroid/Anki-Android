@@ -17,14 +17,12 @@
 package com.ichi2.async
 
 import com.ichi2.anki.*
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
 
@@ -76,41 +74,6 @@ fun updateValuesFromDeck(
         Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
         null
     }
-}
-
-/**
- * Returns an ArrayList of all models alphabetically ordered and the number of notes
- * associated with each model.
- *
- * @return {ArrayList<JSONObject> models, ArrayList<Integer> cardCount}
- */
-suspend fun getAllModelsAndNotesCount(): Pair<List<NotetypeJson>, List<Int>> = withContext(Dispatchers.IO) {
-    Timber.d("doInBackgroundLoadModels")
-    val models = withCol { notetypes.all() }
-    Collections.sort(models, Comparator { a: JSONObject, b: JSONObject -> a.getString("name").compareTo(b.getString("name")) } as java.util.Comparator<JSONObject>)
-    val cardCount = models.map {
-        ensureActive()
-        withCol { this.notetypes.useCount(it) }
-    }
-    Pair(models, cardCount)
-}
-
-fun changeDeckConfiguration(
-    deck: Deck,
-    conf: DeckConfig,
-    col: Collection
-) {
-    val newConfId = conf.getLong("id")
-    // If new config has a different sorting order, reorder the cards
-    val oldOrder = col.decks.getConf(deck.getLong("conf")).getJSONObject("new").getInt("order")
-    val newOrder = col.decks.getConf(newConfId).getJSONObject("new").getInt("order")
-    if (oldOrder != newOrder) {
-        when (newOrder) {
-            0 -> col.sched.randomizeCards(deck.getLong("id"))
-            1 -> col.sched.orderCards(deck.getLong("id"))
-        }
-    }
-    col.decks.setConf(deck, newConfId)
 }
 
 suspend fun renderBrowserQA(

@@ -50,7 +50,6 @@ object ActivityList {
             },
             get(StudyOptionsActivity::class.java),
             get(CardBrowser::class.java),
-            get(ModelBrowser::class.java),
             get(ModelFieldEditor::class.java),
             // Likely has unhandled intents
             get(Reviewer::class.java),

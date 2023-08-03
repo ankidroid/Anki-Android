@@ -49,8 +49,6 @@ import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.libanki.utils.set
 import com.ichi2.utils.*
 
-// TODO when the new backend becomes the default delete the old implementation ModelBrowser and its
-//  related classes
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
