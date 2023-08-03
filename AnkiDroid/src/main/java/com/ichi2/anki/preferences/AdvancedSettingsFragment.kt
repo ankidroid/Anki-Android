@@ -30,7 +30,6 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.show
-import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 class AdvancedSettingsFragment : SettingsFragment() {
@@ -39,16 +38,8 @@ class AdvancedSettingsFragment : SettingsFragment() {
     override val analyticsScreenNameConstant: String
         get() = "prefs.advanced"
 
-    @RustCleanup(
-        "Remove 'Default deck for statistics' and 'Advanced statistics' preferences" +
-            "once the new backend is the default"
-    )
     override fun initSubscreen() {
         removeUnnecessaryAdvancedPrefs()
-
-        /*
-         * First section
-         */
 
         // Check that input is valid before committing change in the collection path
         requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
@@ -117,7 +108,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
          * Experimental
          */
 
-        @RustCleanup("move this to Reviewing > Scheduling once the new backend is the default")
+        // TODO move this to Reviewing > Scheduling once it is stable
         val v3schedPref = requirePreference<SwitchPreferenceCompat>(R.string.enable_v3_sched_key)
 
         // v3 scheduler
