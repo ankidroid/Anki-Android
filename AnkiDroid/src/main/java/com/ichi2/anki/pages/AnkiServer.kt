@@ -37,8 +37,10 @@ class AnkiServer(
         val mime = getMimeFromUri(uri)
 
         if (session.method == Method.GET) {
-            Timber.d("GET: Requested %s", uri)
-            return newChunkedResponse(Response.Status.OK, mime, this.javaClass.classLoader!!.getResourceAsStream("web$uri"))
+            val resourcePath = "web$uri"
+            val stream = this.javaClass.classLoader!!.getResourceAsStream(resourcePath)
+            Timber.d("GET: Requested %s (%s), stream %s", uri, resourcePath, stream)
+            return newChunkedResponse(Response.Status.OK, mime, stream)
         }
 
         if (session.method == Method.POST) {
