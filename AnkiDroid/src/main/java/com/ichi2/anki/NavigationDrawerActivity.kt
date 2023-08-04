@@ -32,7 +32,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.TaskStackBuilder
-import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -115,7 +114,7 @@ abstract class NavigationDrawerActivity :
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
-        window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
+        window.statusBarColor = getColor(R.color.transparent)
         mDrawerLayout.setStatusBarBackgroundColor(
             Themes.getColorFromAttr(
                 this,

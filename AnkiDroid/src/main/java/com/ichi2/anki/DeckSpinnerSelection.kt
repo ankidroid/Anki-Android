@@ -22,7 +22,6 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
-import androidx.core.content.ContextCompat
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
@@ -115,8 +114,8 @@ class DeckSpinnerSelection(
 
                 // If this item is selected
                 if (position == spinner.selectedItemPosition) {
-                    tv.setBackgroundColor(ContextCompat.getColor(context, R.color.note_editor_selected_item_background))
-                    tv.setTextColor(ContextCompat.getColor(context, R.color.note_editor_selected_item_text))
+                    tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
+                    tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
                 }
 
                 // Return the modified view

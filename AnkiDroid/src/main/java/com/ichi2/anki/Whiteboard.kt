@@ -30,7 +30,6 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.anki.preferences.sharedPrefs
@@ -333,19 +332,19 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 penColor = Color.BLACK
             }
             R.id.pen_color_red -> {
-                val redPenColor = ContextCompat.getColor(context, R.color.material_red_500)
+                val redPenColor = context.getColor(R.color.material_red_500)
                 penColor = redPenColor
             }
             R.id.pen_color_green -> {
-                val greenPenColor = ContextCompat.getColor(context, R.color.material_green_500)
+                val greenPenColor = context.getColor(R.color.material_green_500)
                 penColor = greenPenColor
             }
             R.id.pen_color_blue -> {
-                val bluePenColor = ContextCompat.getColor(context, R.color.material_blue_500)
+                val bluePenColor = context.getColor(R.color.material_blue_500)
                 penColor = bluePenColor
             }
             R.id.pen_color_yellow -> {
-                val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
+                val yellowPenColor = context.getColor(R.color.material_yellow_500)
                 penColor = yellowPenColor
             }
             R.id.pen_color_custom -> {

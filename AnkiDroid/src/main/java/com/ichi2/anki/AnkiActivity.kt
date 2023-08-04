@@ -30,7 +30,6 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -91,7 +90,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             )
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.transparent)
+            window.navigationBarColor = getColor(R.color.transparent)
         }
     }
 
@@ -511,7 +510,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                 .setSmallIcon(R.drawable.ic_star_notify)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
+                .setColor(this.getColor(R.color.material_light_blue_500))
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setTicker(ticker)

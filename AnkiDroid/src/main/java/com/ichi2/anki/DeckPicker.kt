@@ -44,7 +44,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
@@ -770,13 +769,13 @@ open class DeckPicker :
                 }
                 SyncIconState.PendingChanges -> {
                     BadgeDrawableBuilder(this)
-                        .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_warning))
+                        .withColor(getColor(R.color.badge_warning))
                         .replaceBadge(menuItem)
                 }
                 SyncIconState.FullSync, SyncIconState.NotLoggedIn -> {
                     BadgeDrawableBuilder(this)
                         .withText('!')
-                        .withColor(ContextCompat.getColor(this@DeckPicker, R.color.badge_error))
+                        .withColor(getColor(R.color.badge_error))
                         .replaceBadge(menuItem)
                 }
             }

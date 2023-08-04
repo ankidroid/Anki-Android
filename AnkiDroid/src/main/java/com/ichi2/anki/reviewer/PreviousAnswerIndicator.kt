@@ -17,7 +17,6 @@
 package com.ichi2.anki.reviewer
 
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.R
 import com.ichi2.anki.reviewer.PreviousAnswerIndicator.Companion.CHOSEN_ANSWER_DURATION_MS
@@ -91,7 +90,7 @@ class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
         timerHandler.removeCallbacks(removeChosenAnswerText)
     }
 
-    private fun getColor(color: Int) = ContextCompat.getColor(chosenAnswerText.context, color)
+    private fun getColor(color: Int) = chosenAnswerText.context.getColor(color)
 
     companion object {
         /** The amount of time to display the answer indicator (2 seconds) */

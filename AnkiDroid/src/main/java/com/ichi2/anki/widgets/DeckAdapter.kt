@@ -25,7 +25,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
@@ -391,13 +390,13 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             R.attr.collapseRef
         )
         val ta = context.obtainStyledAttributes(attrs)
-        mZeroCountColor = ta.getColor(0, ContextCompat.getColor(context, R.color.black))
-        mNewCountColor = ta.getColor(1, ContextCompat.getColor(context, R.color.black))
-        mLearnCountColor = ta.getColor(2, ContextCompat.getColor(context, R.color.black))
-        mReviewCountColor = ta.getColor(3, ContextCompat.getColor(context, R.color.black))
+        mZeroCountColor = ta.getColor(0, context.getColor(R.color.black))
+        mNewCountColor = ta.getColor(1, context.getColor(R.color.black))
+        mLearnCountColor = ta.getColor(2, context.getColor(R.color.black))
+        mReviewCountColor = ta.getColor(3, context.getColor(R.color.black))
         mRowCurrentDrawable = ta.getResourceId(4, 0)
-        mDeckNameDefaultColor = ta.getColor(5, ContextCompat.getColor(context, R.color.black))
-        mDeckNameDynColor = ta.getColor(6, ContextCompat.getColor(context, R.color.material_blue_A700))
+        mDeckNameDefaultColor = ta.getColor(5, context.getColor(R.color.black))
+        mDeckNameDynColor = ta.getColor(6, context.getColor(R.color.material_blue_A700))
         mExpandImage = ta.getDrawable(7)
         mExpandImage!!.isAutoMirrored = true
         mCollapseImage = ta.getDrawable(8)

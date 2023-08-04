@@ -22,7 +22,6 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.PendingIntentCompat
-import androidx.core.content.ContextCompat
 import com.ichi2.anki.Channel
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.IntentHandler
@@ -107,7 +106,7 @@ class ReminderService : BroadcastReceiver() {
                     )
                 )
                 .setSmallIcon(R.drawable.ic_star_notify)
-                .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
+                .setColor(context.getColor(R.color.material_light_blue_700))
                 .setContentIntent(
                     PendingIntentCompat.getActivity(
                         context,
