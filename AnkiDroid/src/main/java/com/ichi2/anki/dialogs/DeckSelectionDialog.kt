@@ -43,7 +43,6 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
@@ -340,14 +339,14 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
 
         /** "All decks" comes first. Then usual deck name order.  */
         override fun compareTo(other: SelectableDeck): Int {
-            if (deckId == Stats.ALL_DECKS_ID) {
-                return if (other.deckId == Stats.ALL_DECKS_ID) {
+            if (deckId == ALL_DECKS_ID) {
+                return if (other.deckId == ALL_DECKS_ID) {
                     0
                 } else {
                     -1
                 }
             }
-            return if (other.deckId == Stats.ALL_DECKS_ID) {
+            return if (other.deckId == ALL_DECKS_ID) {
                 1
             } else {
                 DeckNameComparator.INSTANCE.compare(name, other.name)
@@ -378,6 +377,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
+        const val ALL_DECKS_ID = 0L
         private const val SUMMARY_MESSAGE = "summaryMessage"
         private const val TITLE = "title"
         private const val KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton"
