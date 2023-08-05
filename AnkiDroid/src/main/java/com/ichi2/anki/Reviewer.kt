@@ -1168,6 +1168,10 @@ open class Reviewer :
                 openCardInfo(fromGesture)
                 return true
             }
+            ViewerCommand.RESCHEDULE_NOTE -> {
+                showRescheduleCardDialog()
+                return true
+            }
             else -> return super.executeCommand(which, fromGesture)
         }
     }
