@@ -328,11 +328,11 @@ class FinderTest : RobolectricTest() {
         if (!isNearCutoff()) {
             assertEquals(0, col.findCards("rated:1:1").size)
             assertEquals(0, col.findCards("rated:1:2").size)
-            c = card!!
+            c = col.sched.card!!
             col.sched.answerCard(c, Consts.BUTTON_TWO)
             assertEquals(0, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)
-            c = card!!
+            c = col.sched.card!!
             col.sched.answerCard(c, Consts.BUTTON_ONE)
             assertEquals(1, col.findCards("rated:1:1").size)
             assertEquals(1, col.findCards("rated:1:2").size)

@@ -526,13 +526,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         return activity
     }
 
-    protected val card: Card?
-        get() {
-            val card = col.sched.card
-            advanceRobolectricLooperWithSleep()
-            return card
-        }
-
     /**
      * Allows editing of preferences, followed by a call to [apply][SharedPreferences.Editor.apply]:
      *
