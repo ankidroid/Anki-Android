@@ -136,6 +136,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /* Null if adding a new card. Presently NonNull if editing an existing note - but this is subject to change */
     private var mCurrentEditedCard: Card? = null
     private var mSelectedTags: ArrayList<String>? = null
+    private var firstNonStickyIndex: Int? = null
 
     @get:VisibleForTesting
     var deckId: DeckId = 0
@@ -305,6 +306,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             Timber.i("NoteEditor:: Cards button pressed. Opening template editor")
             showCardTemplateEditor()
         }
+        firstNonStickyKey()
         aedictIntent = false
         mCurrentEditedCard = null
         when (caller) {
@@ -427,7 +429,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             if (getTextFromSearchView != null && getTextFromSearchView.isNotEmpty()) {
                 mEditFields!!.first!!.setText(getTextFromSearchView)
             }
-            mEditFields!!.first!!.requestFocus()
+            if (firstNonStickyIndex != null) {
+                mEditFields!![firstNonStickyIndex!!]!!.requestFocus()
+            }
         }
     }
 
@@ -661,7 +665,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             closeEditorAfterSave = true
             closeIntent = Intent().apply { putExtra(EXTRA_ID, intent.getStringExtra(EXTRA_ID)) }
         } else if (!mEditFields!!.isEmpty()) {
-            mEditFields!!.first!!.focusWithKeyboard()
+            if (firstNonStickyIndex != null) {
+                mEditFields!![firstNonStickyIndex!!]!!.focusWithKeyboard()
+            }
         }
 
         if (closeEditorAfterSave) {
@@ -670,6 +676,23 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Reset check for changes to fields
             isFieldEdited = false
             isTagsEdited = false
+        }
+    }
+    private fun firstNonStickyKey() {
+        if (mToggleStickyText.isEmpty()) {
+            firstNonStickyIndex = 0
+            return
+        }
+        val size = mEditFields!!.size
+        if (size == mToggleStickyText.size) {
+            firstNonStickyIndex = null
+            return
+        }
+        for (i in 0 until size) {
+            if (!mToggleStickyText.containsKey(i)) {
+                firstNonStickyIndex = i
+                return
+            }
         }
     }
 
@@ -718,6 +741,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     }
                 }
             }
+            firstNonStickyKey()
             // update UI based on the result, noOfAddedCards
             onNoteAdded(noOfAddedCards)
             updateFieldsFromStickyText()
