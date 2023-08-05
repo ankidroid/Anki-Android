@@ -18,6 +18,7 @@ package com.ichi2.anki.stats
 import android.R
 import android.webkit.WebView
 import com.ichi2.anki.R.string.*
+import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.DeckId
@@ -159,10 +160,10 @@ class OverviewStatsBuilder(private val webView: WebView, private val col: Collec
         // INTERVALS
         stringBuilder.append(_subtitle(res.getString(stats_review_intervals).uppercase(l)))
         stringBuilder.append(res.getString(stats_overview_average_interval))
-        stringBuilder.append(Utils.roundedTimeSpan(webView.context, (oStats.averageInterval * Stats.SECONDS_PER_DAY).roundToLong()))
+        stringBuilder.append(Utils.roundedTimeSpan(webView.context, (oStats.averageInterval * SECONDS_PER_DAY).roundToLong()))
         stringBuilder.append("<br>")
         stringBuilder.append(res.getString(stats_overview_longest_interval))
-        stringBuilder.append(Utils.roundedTimeSpan(webView.context, (oStats.longestInterval * Stats.SECONDS_PER_DAY).roundToLong()))
+        stringBuilder.append(Utils.roundedTimeSpan(webView.context, (oStats.longestInterval * SECONDS_PER_DAY).roundToLong()))
 
         // ANSWER BUTTONS
         stringBuilder.append(_subtitle(res.getString(stats_answer_buttons).uppercase(l)))

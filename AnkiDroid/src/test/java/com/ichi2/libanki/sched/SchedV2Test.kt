@@ -18,6 +18,7 @@ package com.ichi2.libanki.sched
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_FOUR
@@ -37,7 +38,6 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SIBLING_BURIED
 import com.ichi2.libanki.Consts.STARTING_FACTOR
 import com.ichi2.libanki.Consts.SYNC_VER
-import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
@@ -611,7 +611,7 @@ open class SchedV2Test : RobolectricTest() {
         ifV2 { Assert.assertEquals(1, (c.left / 1000).toLong()) }
         Assert.assertEquals(Counts(0, 1, 0), col.sched.counts())
         c = card!!
-        Assert.assertEquals(Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
+        Assert.assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
         // answering it will place it in queue 3
         col.sched.answerCard(c, BUTTON_THREE)
         Assert.assertEquals((col.sched.today + 1).toLong(), c.due)
@@ -624,7 +624,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(Counts(0, 1, 0), col.sched.counts())
         c = card!!
         // nextIvl should work
-        Assert.assertEquals(Stats.SECONDS_PER_DAY * 2, col.sched.nextIvl(c, BUTTON_THREE))
+        Assert.assertEquals(SECONDS_PER_DAY * 2, col.sched.nextIvl(c, BUTTON_THREE))
         // if we fail it, it should be back in the correct queue
         col.sched.answerCard(c, BUTTON_ONE)
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
@@ -640,7 +640,7 @@ open class SchedV2Test : RobolectricTest() {
         c.flush()
         col.reset()
         // the last pass should graduate it into a review card
-        Assert.assertEquals(Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
+        Assert.assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
         col.sched.answerCard(c, BUTTON_THREE)
         Assert.assertEquals(CARD_TYPE_REV, c.type)
         Assert.assertEquals(QUEUE_TYPE_REV, c.queue)
@@ -947,24 +947,24 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(30, col.sched.nextIvl(c, BUTTON_ONE))
         Assert.assertEquals(((30 + 180) / 2).toLong(), col.sched.nextIvl(c, BUTTON_TWO))
         Assert.assertEquals(180, col.sched.nextIvl(c, BUTTON_THREE))
-        Assert.assertEquals(4 * Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
+        Assert.assertEquals(4 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
         col.sched.answerCard(c, BUTTON_ONE)
         // cards in learning
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         Assert.assertEquals(30, col.sched.nextIvl(c, BUTTON_ONE))
         Assert.assertEquals(((30 + 180) / 2).toLong(), col.sched.nextIvl(c, BUTTON_TWO))
         Assert.assertEquals(180, col.sched.nextIvl(c, BUTTON_THREE))
-        Assert.assertEquals(4 * Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
+        Assert.assertEquals(4 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
         col.sched.answerCard(c, BUTTON_THREE)
         Assert.assertEquals(30, col.sched.nextIvl(c, BUTTON_ONE))
         ifV2 { Assert.assertEquals(((180 + 600) / 2).toLong(), col.sched.nextIvl(c, BUTTON_TWO)) }
         ifV3 { Assert.assertEquals(180, col.sched.nextIvl(c, BUTTON_TWO)) }
         Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_THREE))
-        Assert.assertEquals(4 * Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
+        Assert.assertEquals(4 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
         col.sched.answerCard(c, BUTTON_THREE)
         // normal graduation is tomorrow
-        Assert.assertEquals(Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
-        Assert.assertEquals(4 * Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
+        Assert.assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
+        Assert.assertEquals(4 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
         // lapsed cards
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c.type = CARD_TYPE_RELEARNING
@@ -972,8 +972,8 @@ open class SchedV2Test : RobolectricTest() {
         c.factor = STARTING_FACTOR
         c.flush()
         Assert.assertEquals(60, col.sched.nextIvl(c, BUTTON_ONE))
-        Assert.assertEquals(100 * Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
-        Assert.assertEquals(101 * Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
+        Assert.assertEquals(100 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
+        Assert.assertEquals(101 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
         // review cards
         // //////////////////////////////////////////////////////////////////////////////////////////////////
         c.type = CARD_TYPE_REV
@@ -986,7 +986,7 @@ open class SchedV2Test : RobolectricTest() {
         // or 1 day if relearn is false
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
         col.decks.save(conf)
-        Assert.assertEquals(Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_ONE))
+        Assert.assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_ONE))
         // (* 100 1.2 SECONDS_PER_DAY)10368000.0
         Assert.assertEquals(10368000, col.sched.nextIvl(c, BUTTON_TWO))
         // (* 100 2.5 SECONDS_PER_DAY)21600000.0
@@ -1131,13 +1131,13 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(4, col.sched.answerButtons(c).toLong())
         Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_ONE))
         Assert.assertEquals(
-            (75 * 1.2).roundToInt() * Stats.SECONDS_PER_DAY,
+            (75 * 1.2).roundToInt() * SECONDS_PER_DAY,
             col.sched.nextIvl(c, BUTTON_TWO)
         )
         val toLong = if (v3) {
-            fun (v: Double) = v.roundToLong() * Stats.SECONDS_PER_DAY
+            fun(v: Double) = v.roundToLong() * SECONDS_PER_DAY
         } else {
-            fun (v: Double) = v.toLong() * Stats.SECONDS_PER_DAY
+            fun(v: Double) = v.toLong() * SECONDS_PER_DAY
         }
         MatcherAssert.assertThat(
             col.sched.nextIvl(c, BUTTON_THREE),
@@ -1168,8 +1168,8 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.rebuildDyn(did)
         col.reset()
         c = card!!
-        Assert.assertEquals(60 * Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_TWO))
-        Assert.assertEquals(100 * Stats.SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
+        Assert.assertEquals(60 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_TWO))
+        Assert.assertEquals(100 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
         Assert.assertEquals(toLong(114.5), col.sched.nextIvl(c, BUTTON_FOUR))
     }
 

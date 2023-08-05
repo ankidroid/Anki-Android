@@ -24,6 +24,7 @@ import android.app.Activity
 import android.database.sqlite.SQLiteConstraintException
 import androidx.annotation.VisibleForTesting
 import anki.collection.OpChanges
+import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.async.CancelListener
 import com.ichi2.async.CancelListener.Companion.isCancelled
 import com.ichi2.libanki.*
@@ -35,7 +36,6 @@ import com.ichi2.libanki.Consts.REVLOG_TYPE
 import com.ichi2.libanki.sched.Counts.Queue.*
 import com.ichi2.libanki.sched.SchedV2.CountMethod
 import com.ichi2.libanki.sched.SchedV2.LimitMethod
-import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
@@ -1006,7 +1006,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             }
         } else {
             // the card is due in one or more days, so we need to use the day learn queue
-            val ahead = (card.due - dayCutoff) / Stats.SECONDS_PER_DAY + 1
+            val ahead = (card.due - dayCutoff) / SECONDS_PER_DAY + 1
             card.due = mToday!! + ahead
             card.queue = Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
         }
@@ -1736,15 +1736,15 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             if (conf.getJSONArray("delays").length() > 0) {
                 (conf.getJSONArray("delays").getDouble(0) * 60.0).toLong()
             } else {
-                _lapseIvl(card, conf) * Stats.SECONDS_PER_DAY
+                _lapseIvl(card, conf) * SECONDS_PER_DAY
             }
         } else {
             // review
             val early = card.isInDynamicDeck && card.oDue > mToday!!
             if (early) {
-                _earlyReviewIvl(card, ease) * Stats.SECONDS_PER_DAY
+                _earlyReviewIvl(card, ease) * SECONDS_PER_DAY
             } else {
-                _nextRevIvl(card, ease, false) * Stats.SECONDS_PER_DAY
+                _nextRevIvl(card, ease, false) * SECONDS_PER_DAY
             }
         }
     }
@@ -1767,7 +1767,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
                 conf,
                 true,
                 false
-            ) * Stats.SECONDS_PER_DAY
+            ) * SECONDS_PER_DAY
         } else { // ease == 3
             val left = card.left % 1000 - 1
             if (left <= 0) {
@@ -1777,7 +1777,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
                     conf,
                     false,
                     false
-                ) * Stats.SECONDS_PER_DAY
+                ) * SECONDS_PER_DAY
             } else {
                 _delayForGrade(conf, left).toLong()
             }

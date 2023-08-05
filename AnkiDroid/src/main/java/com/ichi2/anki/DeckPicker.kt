@@ -98,6 +98,7 @@ import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.getMediaMigrationState
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
+import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
@@ -2196,9 +2197,6 @@ open class DeckPicker :
     }
 
     companion object {
-
-        private const val ONE_DAY_IN_SECONDS: Int = 60 * 60 * 24
-
         /**
          * Result codes from other activities
          */
@@ -2480,7 +2478,7 @@ open class DeckPicker :
     private fun timeToShowStorageMigrationDialog(): Boolean {
         return !disabledScopedStorageReminder &&
             // A reminder was shown more than 4 days ago
-            migrationWasLastPostponedAt + ONE_DAY_IN_SECONDS * 4 <= TimeManager.time.intTime()
+            migrationWasLastPostponedAt + SECONDS_PER_DAY * 4 <= TimeManager.time.intTime()
     }
 
     override fun onImportColpkg(colpkgPath: String?) {

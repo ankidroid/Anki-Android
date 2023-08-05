@@ -31,13 +31,13 @@ import anki.config.OptionalStringConfigKey
 import anki.decks.DeckTreeNode
 import anki.scheduler.*
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Consts.CARD_TYPE_RELEARNING
 import com.ichi2.libanki.Consts.QUEUE_TYPE_DAY_LEARN_RELEARN
-import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
@@ -604,7 +604,7 @@ abstract class BaseSched(val col: Collection) {
                         "avg(case when type = " + Consts.CARD_TYPE_REV + " then case when ease > 1 then 1.0 else 0.0 end else null end) as relrnRate, avg(case when type = " + Consts.CARD_TYPE_REV + " then time else null end) as relrnTime " +
                         "from revlog where id > " +
                         "?",
-                    (col.sched.dayCutoff - (10 * Stats.SECONDS_PER_DAY)) * 1000
+                    (col.sched.dayCutoff - (10 * SECONDS_PER_DAY)) * 1000
                 ).use { cur ->
                     if (!cur.moveToFirst()) {
                         return -1

@@ -22,10 +22,10 @@ import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.NoteService.avgEase
+import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.stats.Stats
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.LanguageUtil
@@ -441,7 +441,7 @@ open class Card : Cloneable {
         } else if (queue == Consts.QUEUE_TYPE_REV || queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || type == Consts.CARD_TYPE_REV && queue < 0) {
             val time = TimeManager.time.intTime()
             val nbDaySinceCreation = due - col.sched.today
-            time + nbDaySinceCreation * Stats.SECONDS_PER_DAY
+            time + nbDaySinceCreation * SECONDS_PER_DAY
         } else {
             return ""
         }

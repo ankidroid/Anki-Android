@@ -19,6 +19,7 @@ package com.ichi2.libanki.stats
 import com.ichi2.anki.R
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats
 import com.ichi2.anki.stats.OverviewStatsBuilder.OverviewStats.AnswerButtonsOverview
+import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.KotlinCleanup
@@ -374,7 +375,6 @@ from cards where did in ${_limit()} and queue = ${Consts.QUEUE_TYPE_REV}"""
     }
 
     companion object {
-        const val SECONDS_PER_DAY = 86400L
         const val ALL_DECKS_ID = 0L
 
         /**
