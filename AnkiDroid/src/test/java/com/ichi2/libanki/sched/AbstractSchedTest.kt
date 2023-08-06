@@ -52,8 +52,8 @@ class AbstractSchedTest : RobolectricTest() {
         assertThat(sched.newCount(), `is`(10))
         val card = sched.card
         assertThat(sched.newCount(), `is`(10))
-        assertThat(sched.counts(card!!).new, `is`(10))
-        sched.answerCard(card, 3)
+        assertThat(sched.counts().new, `is`(10))
+        sched.answerCard(card!!, 3)
         sched.card
         col.undo()
         assertThat(sched.newCount(), `is`(10))
@@ -87,7 +87,7 @@ class AbstractSchedTest : RobolectricTest() {
 
         var card = sched.card
         assertNotNull(card)
-        assertEquals(Counts(1, 0, 0), sched.counts(card))
+        assertEquals(Counts(1, 0, 0), sched.counts())
 
         sched.answerCard(card, 3)
         advanceRobolectricLooper()
@@ -96,7 +96,7 @@ class AbstractSchedTest : RobolectricTest() {
         assertNotNull(card)
         assertEquals(
             Counts(0, 1, 0),
-            sched.counts(card)
+            sched.counts()
         )
 
         sched.answerCard(card, 3)
@@ -106,7 +106,7 @@ class AbstractSchedTest : RobolectricTest() {
         assertNotNull(card)
         assertEquals(
             Counts(0, 1, 0),
-            sched.counts(card)
+            sched.counts()
         )
 
         assertNotNull(card)
@@ -124,7 +124,7 @@ class AbstractSchedTest : RobolectricTest() {
         assertNotNull(card)
         assertEquals(
             Counts(0, 1, 0),
-            sched.counts(card)
+            sched.counts()
         )
         assertNotNull(card)
     }

@@ -26,7 +26,6 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import androidx.annotation.WorkerThread
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
@@ -210,20 +209,6 @@ class DB(db: SupportSQLiteDatabase) {
     /** insert must always be called via DB in order to mark the db as changed  */
     fun insert(table: String, values: ContentValues): Long {
         return database.insert(table, SQLiteDatabase.CONFLICT_NONE, values)
-    }
-
-    fun executeMany(@Language("SQL") sql: String, list: List<Array<out Any?>>) {
-        if (BuildConfig.DEBUG) {
-            if (list.size <= 1) {
-                Timber.w(
-                    "Query %s called with a list of at most one element. Usually that's not expected.",
-                    sql
-                )
-            }
-        }
-        for (o in list) {
-            database.execSQL(sql, o)
-        }
     }
 
     /**

@@ -33,7 +33,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.SECONDS_PER_DAY
-import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Collection
@@ -56,14 +55,6 @@ import java.lang.ref.WeakReference
 @WorkerThread
 open class Scheduler(val col: Collection) {
     private var activityForLeechNotification: WeakReference<Activity>? = null
-
-    fun reset() {
-        // backend automatically resets queues as operations are performed
-    }
-
-    fun resetCounts() {
-        // backend automatically resets queues as operations are performed
-    }
 
     // could be made more efficient by constructing a native Card object from
     // the backend card object, instead of doing a separate fetch
@@ -122,29 +113,26 @@ open class Scheduler(val col: Collection) {
     /**
      * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.
      */
-    fun count(): Int {
-        return counts(null).count()
+    fun totalCount(): Int {
+        return counts().count()
     }
 
-    @Suppress("unused_parameter")
-    fun counts(card: Card? = null): Counts {
+    fun counts(): Counts {
         return queuedCards.let {
             Counts(it.newCount, it.learningCount, it.reviewCount)
         }
     }
 
-    /** @return Number of new card in selected decks. Recompute it if we reseted.
-     */
+    // only used by tests
     fun newCount(): Int {
         // We need to actually recompute the three elements, because we potentially need to deal with undid card
         // in any deck where it may be
-        return counts(null).new
+        return counts().new
     }
 
-    /** @return Number of lrn card in selected decks. Recompute it if we reseted.
-     */
+    // only used by a test
     fun lrnCount(): Int {
-        return counts(null).lrn
+        return counts().lrn
     }
 
     /** Ignores provided card and uses top of queue */
@@ -162,8 +150,6 @@ open class Scheduler(val col: Collection) {
     fun answerButtons(card: Card): Int {
         return 4
     }
-
-    val name = "std3"
 
     /** @return Number of repetitions today. Note that a repetition is the fact that the scheduler sent a card, and not the fact that the card was answered.
      * So buried, suspended, ... cards are also counted as repetitions.
@@ -438,17 +424,8 @@ open class Scheduler(val col: Collection) {
         col.backend.emptyFilteredDeck(did)
     }
 
-    /**
-     * @param cancelListener A task that is potentially cancelled
-     * @return the due tree. null only if task is cancelled
-     */
-    @RustCleanup("cancelListener ignored, and never null")
-    open fun deckDueTree(cancelListener: CancelListener?): List<TreeNode<DeckDueTreeNode>>? {
-        return deckTreeLegacy(true)
-    }
-
     fun deckDueTree(): List<TreeNode<DeckDueTreeNode>> {
-        return deckDueTree(cancelListener = null)!!
+        return deckTreeLegacy(true)
     }
 
     /**
@@ -531,33 +508,6 @@ open class Scheduler(val col: Collection) {
             sb.append(context.getString(R.string.studyoptions_congrats_custom))
         }
         return sb.toString()
-    }
-
-    /**
-     * for post-import
-     */
-    @RustCleanup("remove after removing old apkg importer")
-    fun maybeRandomizeDeck(did: DeckId) {
-        val conf = col.decks.confForDid(did)
-        // in order due?
-        if (conf.getJSONObject("new").getInt("order") == Consts.NEW_CARDS_RANDOM) {
-            randomizeCards(did)
-        }
-    }
-
-    /**
-     * Sort or randomize all cards of all decks with this deck configuration.
-     * @param conf A deck configuration
-     */
-    fun resortConf(conf: DeckConfig) {
-        val dids = col.decks.didsForConf(conf)
-        for (did in dids) {
-            if (conf.getJSONObject("new").getLong("order") == 0L) {
-                randomizeCards(did)
-            } else {
-                orderCards(did)
-            }
-        }
     }
 
     fun _deckLimit(): String {

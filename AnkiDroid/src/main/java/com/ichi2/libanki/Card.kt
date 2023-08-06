@@ -17,7 +17,6 @@
  */
 package com.ichi2.libanki
 
-import android.content.ContentValues
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
@@ -102,9 +101,6 @@ open class Card : Cloneable {
     // END SQL table entries
     var renderOutput: TemplateRenderOutput?
     private var note: Note?
-
-    /** Used by Sched to record the original interval in the revlog after answering. */
-    var lastIvl = 0
 
     constructor(col: Collection) {
         this.col = col
@@ -197,29 +193,6 @@ open class Card : Cloneable {
             flags,
             data
         )
-        col.log(this)
-    }
-
-    fun flushSched() {
-        mod = TimeManager.time.intTime()
-        usn = col.usn()
-        assert(due < "4294967296".toLong())
-        val values = ContentValues()
-        values.put("mod", mod)
-        values.put("usn", usn)
-        values.put("type", this.type)
-        values.put("queue", queue)
-        values.put("due", due)
-        values.put("ivl", ivl)
-        values.put("factor", factor)
-        values.put("reps", reps)
-        values.put("lapses", lapses)
-        values.put("left", left)
-        values.put("odue", oDue)
-        values.put("odid", oDid)
-        values.put("did", did)
-        // TODO: The update DB call sets mod=true. Verify if this is intended.
-        col.db.update("cards", values, "id = ?", arrayOf(java.lang.Long.toString(this.id)))
         col.log(this)
     }
 
@@ -349,10 +322,6 @@ open class Card : Cloneable {
     @VisibleForTesting
     fun setReps(reps: Int): Int {
         return reps.also { this.reps = it }
-    }
-
-    fun incrReps(): Int {
-        return ++reps
     }
 
     fun showTimer(): Boolean {
@@ -537,10 +506,6 @@ open class Card : Cloneable {
             } else {
                 this.id == other.id
             }
-        }
-
-        fun loadQA(reload: Boolean, browser: Boolean) {
-            card.renderOutput(reload, browser)
         }
     }
 

@@ -421,11 +421,6 @@ abstract class AbstractFlashcardViewer :
             displayAnswer = false
         }
         currentCard = result
-        launchCatchingTask {
-            withCol {
-                sched.counts() // Ensure counts are recomputed if necessary, to know queue to look for
-            }
-        }
         if (currentCard == null) {
             // If the card is null means that there are no more cards scheduled for review.
             showProgressBar()

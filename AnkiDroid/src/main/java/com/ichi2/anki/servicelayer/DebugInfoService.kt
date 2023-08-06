@@ -21,20 +21,11 @@ import android.os.Build
 import android.webkit.WebView
 import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CrashReportService
-import com.ichi2.libanki.Collection
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import org.acra.util.Installation
-import timber.log.Timber
-import java.util.function.Supplier
 
 object DebugInfoService {
-    fun getDebugInfo(info: Context, col: Supplier<Collection>): String {
-        var schedName = "Not found"
-        try {
-            schedName = col.get().sched.name
-        } catch (e: Throwable) {
-            Timber.e(e, "Sched name not found")
-        }
+    fun getDebugInfo(info: Context): String {
         var dbV2Enabled = true
         val webviewUserAgent = getWebviewUserAgent(info)
         return """
@@ -53,8 +44,6 @@ object DebugInfoService {
                Webview User Agent = $webviewUserAgent
                
                ACRA UUID = ${Installation.id(info)}
-               
-               Scheduler = $schedName
                
                Crash Reports Enabled = ${isSendingCrashReports(info)}
                

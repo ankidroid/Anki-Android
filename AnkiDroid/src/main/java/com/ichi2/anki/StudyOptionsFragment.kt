@@ -47,7 +47,6 @@ import com.ichi2.libanki.Utils
 import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
-import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.Job
 import timber.log.Timber
 
@@ -149,7 +148,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             mToolbar!!.inflateMenu(R.menu.study_options_fragment)
             configureToolbar()
         }
-        refreshInterface(true)
+        refreshInterface()
         return studyOptionsView
     }
 
@@ -162,7 +161,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onResume() {
         super.onResume()
-        refreshInterface(true)
+        refreshInterface()
     }
 
     private fun closeStudyOptions(result: Int) {
@@ -260,7 +259,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
                 col!!.sched.unburyCardsForDeck()
-                refreshInterfaceAndDecklist(true)
+                refreshInterface(true)
                 item.isVisible = false
                 return true
             }
@@ -295,7 +294,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             withCol {
                 Timber.d("doInBackground - RebuildCram")
                 sched.rebuildDyn(decks.selected())
-                updateValuesFromDeck(this, true)
+                updateValuesFromDeck(this)
             }
         }
         rebuildUi(result, true)
@@ -307,7 +306,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             withCol {
                 Timber.d("doInBackgroundEmptyCram")
                 sched.emptyDyn(decks.selected())
-                updateValuesFromDeck(this, true)
+                updateValuesFromDeck(this)
             }
         }
         rebuildUi(result, true)
@@ -404,7 +403,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-            if (col!!.sched.count() > 0 && mStudyOptionsView != null) {
+            if (col!!.sched.totalCount() > 0 && mStudyOptionsView != null) {
                 mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
                     .showSnackbar(R.string.studyoptions_no_cards_due)
             }
@@ -426,7 +425,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
             launchCatchingTask { rebuildCram() }
         } else {
-            refreshInterface(true)
+            refreshInterface()
         }
     }
 
@@ -444,35 +443,20 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    fun refreshInterface() {
-        refreshInterface(resetSched = false, resetDecklist = false)
-    }
-
-    @KotlinCleanup("default value + add overloads")
-    private fun refreshInterfaceAndDecklist(resetSched: Boolean) {
-        refreshInterface(resetSched, true)
-    }
-
-    fun refreshInterface(resetSched: Boolean) {
-        refreshInterface(resetSched, false)
-    }
-
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
      *
-     * @param resetSched    Indicates whether to rebuild the queues as well. Set to true for any
-     *                      task that modifies queues (e.g., unbury or empty filtered deck).
      * @param resetDecklist Indicates whether to call back to the parent activity in order to
      *                      also refresh the deck list.
      */
     private var updateValuesFromDeckJob: Job? = null
-    private fun refreshInterface(resetSched: Boolean = false, resetDecklist: Boolean = false) {
+    fun refreshInterface(resetDecklist: Boolean = false) {
         Timber.d("Refreshing StudyOptionsFragment")
         updateValuesFromDeckJob?.cancel()
         // Load the deck counts for the deck from Collection asynchronously
         updateValuesFromDeckJob = launchCatchingTask {
             if (CollectionManager.isOpenUnsafe()) {
-                val result = withCol { updateValuesFromDeck(this, resetSched) }
+                val result = withCol { updateValuesFromDeck(this) }
                 rebuildUi(result, resetDecklist)
             }
         }

@@ -696,8 +696,4 @@ open class Collection(
      */
     override val col: Collection
         get() = this
-
-    companion object {
-        private const val UNDO_SIZE_MAX = 20
-    }
 }

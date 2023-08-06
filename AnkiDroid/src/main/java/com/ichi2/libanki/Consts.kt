@@ -29,7 +29,6 @@ object Consts {
     annotation class NEW_CARD_ORDER
 
     // new card insertion order
-    const val NEW_CARDS_RANDOM = 0
     const val NEW_CARDS_DUE = 1
 
     // Queue types
@@ -104,18 +103,6 @@ object Consts {
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(BUTTON_ONE, BUTTON_TWO, BUTTON_THREE, BUTTON_FOUR)
     annotation class BUTTON_TYPE
-
-    // Revlog types
-    // They are the same as Card Type except for CRAM. So one type may switch from one to other type
-    const val REVLOG_LRN = 0
-    const val REVLOG_REV = 1
-    const val REVLOG_RELRN = 2
-    const val REVLOG_CRAM = 3
-    const val REVLOG_MANUAL = 4
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(REVLOG_LRN, REVLOG_REV, REVLOG_RELRN, REVLOG_CRAM, REVLOG_MANUAL)
-    annotation class REVLOG_TYPE
 
     // The labels defined in consts.py are in AnkiDroid's resources files.
     const val DEFAULT_DECK_ID: Long = 1

@@ -1585,9 +1585,9 @@ open class SchedulerTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         Assert.assertEquals(1, sched.lrnCount().toLong())
         card = sched.card
-        Assert.assertEquals(1, sched.counts(card!!).lrn.toLong())
+        Assert.assertEquals(1, sched.counts().lrn.toLong())
         advanceRobolectricLooperWithSleep()
-        sched.answerCard(card, BUTTON_ONE)
+        sched.answerCard(card!!, BUTTON_ONE)
         AnkiAssert.assertDoesNotThrow { col.undo() }
     }
 

@@ -108,6 +108,6 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
 
     override fun onExtendStudyLimits() {
         // Sched needs to be reset so provide true argument
-        currentFragment!!.refreshInterface(true)
+        currentFragment!!.refreshInterface()
     }
 }

@@ -484,59 +484,14 @@ class Decks(private val col: Collection) {
         clone_from: Optional<DeckConfigV16> = Optional.empty()
     ): DeckConfigId = this.add_config(name, clone_from).id
 
-    /** Remove a configuration and update all decks using it. */
-    fun remove_config(id: DeckConfigId) {
-        this.col.modSchema() // TODO: True was passed in as an arg
-        for (g in this.all()) {
-            // ignore cram decks
-            if (!g.has("conf")) {
-                continue
-            }
-            if (g.conf.toString() == id.toString()) {
-                g.put("conf", 1L) // we need this as setConf() already is defined
-                this.save(g)
-            }
-        }
-        col.backend.removeDeckConfig(dcid = id)
-    }
-
     fun setConf(grp: Deck, id: Long) {
         setConf(DeckV16.Generic(grp), id)
-    }
-
-    fun didsForConf(conf: DeckConfig): List<Long> =
-        didsForConf(DeckConfigV16.from(conf))
-
-    fun restoreToDefault(conf: DeckConfig) {
-        restoreToDefault(DeckConfigV16.from(conf))
     }
 
     @RustCleanup("maybe an issue here - grp was deckConfig in V16")
     fun setConf(grp: DeckV16, id: DeckConfigId) {
         grp.conf = id
         this.save(grp)
-    }
-
-    fun didsForConf(conf: DeckConfigV16): MutableList<DeckId> {
-        val dids = mutableListOf<DeckId>()
-        for (deck in this.all()) {
-            if (deck.has("conf") && deck.conf == conf.id) {
-                dids.append(deck.id)
-            }
-        }
-        return dids
-    }
-
-    fun restoreToDefault(conf: DeckConfigV16) {
-        val oldOrder = conf.getJSONObject("new").getInt("order")
-        val new = newDeckConfigLegacy()
-        new.id = conf.id
-        new.name = conf.name
-        this.update_config(new)
-        // if it was previously randomized, re-sort
-        if (oldOrder == 0) {
-            this.col.sched.resortConf(DeckConfig(new.config, DeckConfig.Source.DECK_CONFIG))
-        }
     }
 
     // legacy
@@ -556,8 +511,6 @@ class Decks(private val col: Collection) {
     fun updateConf(g: DeckConfig) = updateConf(DeckConfigV16.from(g), preserve_usn = false)
     fun updateConf(conf: DeckConfigV16, preserve_usn: Boolean = false) =
         update_config(conf, preserve_usn)
-
-    fun remConf(id: DeckConfigId) = remove_config(id)
 
     /* Deck utils */
 
@@ -615,11 +568,6 @@ class Decks(private val col: Collection) {
         if (active != this.active()) {
             this.col.config.set(ACTIVE_DECKS, active.toJsonArray())
         }
-    }
-
-    /** don't use this, it will likely go away */
-    fun update_active() {
-        this.select(this.current().id)
     }
 
     class Node : HashMap<Long?, Node?>()

@@ -73,15 +73,6 @@ enum class SyncStatus {
             AnkiDroidApp.instance.sharedPrefs().edit { putBoolean("changesSinceLastSync", true) }
         }
 
-        fun ignoreDatabaseModification(runnable: Runnable) {
-            sPauseCheckingDatabase = true
-            try {
-                runnable.run()
-            } finally {
-                sPauseCheckingDatabase = false
-            }
-        }
-
         /** Whether a change in data has been detected - used as a heuristic to stop slow operations  */
         fun hasBeenMarkedAsChangedInMemory(): Boolean {
             return sMarkedInMemory

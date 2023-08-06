@@ -932,7 +932,7 @@ open class DeckPicker :
         } else if (requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS) {
             if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
                 // Show a message when reviewing has finished
-                if (col.sched.count() == 0) {
+                if (col.sched.totalCount() == 0) {
                     showSnackbar(R.string.studyoptions_congrats_finished)
                 } else {
                     showSnackbar(R.string.studyoptions_no_cards_due)
@@ -1831,7 +1831,7 @@ open class DeckPicker :
                 withProgress {
                     Timber.d("doInBackgroundLoadDeckCounts")
                     val deckData = withCol {
-                        Pair(sched.deckDueTree(null), this.isEmpty)
+                        Pair(sched.deckDueTree(), this.isEmpty)
                     }
                     onDecksLoaded(deckData.first, deckData.second)
                 }
@@ -2072,7 +2072,7 @@ open class DeckPicker :
                     Timber.d("rebuildFiltered: doInBackground - RebuildCram")
                     decks.select(did)
                     sched.rebuildDyn(decks.selected())
-                    updateValuesFromDeck(this, true)
+                    updateValuesFromDeck(this)
                 }
             }
             updateDeckList()
@@ -2087,7 +2087,7 @@ open class DeckPicker :
                 withCol {
                     Timber.d("doInBackgroundEmptyCram")
                     sched.emptyDyn(decks.selected())
-                    updateValuesFromDeck(this, true)
+                    updateValuesFromDeck(this)
                 }
             }
             updateDeckList()
@@ -2118,7 +2118,7 @@ open class DeckPicker :
 
     override fun onExtendStudyLimits() {
         if (fragmented) {
-            fragment!!.refreshInterface(true)
+            fragment!!.refreshInterface()
         }
         updateDeckList()
     }

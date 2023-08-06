@@ -970,7 +970,7 @@ open class Reviewer :
         if (currentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = sched!!.counts(currentCard!!)
+        val counts = sched!!.counts()
         if (actionBar != null) {
             if (mPrefShowETA) {
                 mEta = sched!!.eta(counts, false)
