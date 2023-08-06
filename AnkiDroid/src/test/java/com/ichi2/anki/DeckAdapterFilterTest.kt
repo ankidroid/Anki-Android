@@ -18,7 +18,7 @@ package com.ichi2.anki
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.AbstractDeckTreeNode
-import com.ichi2.libanki.sched.DeckTreeNode
+import com.ichi2.libanki.sched.DeckDueTreeNode
 import com.ichi2.libanki.sched.TreeNode
 import org.junit.Assert
 import org.junit.Before
@@ -62,16 +62,16 @@ class DeckAdapterFilterTest {
     private val deckList: MutableList<TreeNode<AbstractDeckTreeNode>>
         get() {
             val deckList: MutableList<TreeNode<AbstractDeckTreeNode>> = mutableListOf(
-                TreeNode(DeckTreeNode("Chanson", 0)),
-                TreeNode(DeckTreeNode("Chanson::A Vers", 1)),
-                TreeNode(DeckTreeNode("Chanson::A Vers::1", 2)),
-                TreeNode(DeckTreeNode("Chanson::A Vers::Other", 3)),
-                TreeNode(DeckTreeNode("Chanson::Math HW", 4)),
-                TreeNode(DeckTreeNode("Chanson::Math HW::Theory", 5)),
-                TreeNode(DeckTreeNode("Chanson::Important", 6)),
-                TreeNode(DeckTreeNode("Chanson::Important::Stuff", 7)),
-                TreeNode(DeckTreeNode("Chanson::Important::Math", 8)),
-                TreeNode(DeckTreeNode("Chanson::Important::Stuff::Other Stuff", 9))
+                TreeNode(DeckDueTreeNode("Chanson", 0)),
+                TreeNode(DeckDueTreeNode("Chanson::A Vers", 1)),
+                TreeNode(DeckDueTreeNode("Chanson::A Vers::1", 2)),
+                TreeNode(DeckDueTreeNode("Chanson::A Vers::Other", 3)),
+                TreeNode(DeckDueTreeNode("Chanson::Math HW", 4)),
+                TreeNode(DeckDueTreeNode("Chanson::Math HW::Theory", 5)),
+                TreeNode(DeckDueTreeNode("Chanson::Important", 6)),
+                TreeNode(DeckDueTreeNode("Chanson::Important::Stuff", 7)),
+                TreeNode(DeckDueTreeNode("Chanson::Important::Math", 8)),
+                TreeNode(DeckDueTreeNode("Chanson::Important::Stuff::Other Stuff", 9))
             )
 
             deckList.getByDid(0).children.addAll(deckList.getByDids(1, 4, 6))

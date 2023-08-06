@@ -1818,7 +1818,7 @@ open class DeckPicker :
             launchCatchingTask {
                 withProgress {
                     val deckData = withCol {
-                        val decks: List<TreeNode<com.ichi2.libanki.sched.DeckTreeNode>> = sched.quickDeckDueTree()
+                        val decks: List<TreeNode<com.ichi2.libanki.sched.DeckDueTreeNode>> = sched.quickDeckDueTree()
                         Pair(decks, isEmpty)
                     }
                     onDecksLoaded(deckData.first, deckData.second)

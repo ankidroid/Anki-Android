@@ -37,9 +37,9 @@ import kotlin.math.min
 class DeckDueTreeNode(
     fullDeckName: String,
     did: DeckId,
-    override var revCount: Int,
-    override var lrnCount: Int,
-    override var newCount: Int,
+    override var revCount: Int = 0,
+    override var lrnCount: Int = 0,
+    override var newCount: Int = 0,
     override var collapsed: Boolean = false,
     override var filtered: Boolean = false
 ) : AbstractDeckTreeNode(fullDeckName, did, collapsed, filtered) {
