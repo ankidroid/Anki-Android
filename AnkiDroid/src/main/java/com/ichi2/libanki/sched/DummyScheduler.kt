@@ -22,7 +22,7 @@ import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import java.lang.Exception
 
-class DummySched(col: Collection) : SchedV3(col) {
+class DummyScheduler(col: Collection) : Scheduler(col) {
     override val card: Card? = null
 
     override fun answerCard(card: Card, ease: Int) {

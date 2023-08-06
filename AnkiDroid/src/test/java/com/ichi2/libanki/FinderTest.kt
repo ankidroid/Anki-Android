@@ -23,7 +23,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.CARD_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
-import com.ichi2.libanki.sched.SchedV3
+import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
 import org.hamcrest.CoreMatchers.equalTo
@@ -82,14 +82,14 @@ class FinderTest : RobolectricTest() {
         col.decks.save(config)
     }
 
-    private fun burySiblings(sched: SchedV3, toManuallyBury: Card): Card {
+    private fun burySiblings(sched: Scheduler, toManuallyBury: Card): Card {
         sched.answerCard(toManuallyBury, Consts.BUTTON_ONE)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
         assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
         return siblingBuried
     }
 
-    private fun buryManually(sched: SchedV3, id: Long): Card {
+    private fun buryManually(sched: Scheduler, id: Long): Card {
         sched.buryCards(listOf(id), true)
         val manuallyBuriedCard = Card(col, id)
         assertThat(

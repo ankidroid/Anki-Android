@@ -29,7 +29,7 @@ import java.lang.ref.WeakReference
  * future, it would be better for the reviewer to fetch queuedCards directly, so they only
  * need to be fetched once.
  */
-open class SchedV3(col: Collection) : AbstractSched(col) {
+open class Scheduler(col: Collection) : AbstractSched(col) {
     private var activityForLeechNotification: WeakReference<Activity>? = null
 
 //    override val today: Int

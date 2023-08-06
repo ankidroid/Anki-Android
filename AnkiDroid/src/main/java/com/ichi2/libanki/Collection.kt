@@ -34,8 +34,8 @@ import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
-import com.ichi2.libanki.sched.DummySched
-import com.ichi2.libanki.sched.SchedV3
+import com.ichi2.libanki.sched.DummyScheduler
+import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
@@ -116,7 +116,7 @@ open class Collection(
     lateinit var config: Config
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
-    lateinit var sched: SchedV3
+    lateinit var sched: Scheduler
         protected set
 
     private var mStartTime: Long
@@ -204,12 +204,12 @@ open class Collection(
     fun _loadScheduler() {
         val ver = schedVer()
         if (ver == 1) {
-            sched = DummySched(this)
+            sched = DummyScheduler(this)
         } else {
             if (!backend.getConfigBool(ConfigKey.Bool.SCHED_2021)) {
                 backend.setConfigBool(ConfigKey.Bool.SCHED_2021, true, undoable = false)
             }
-            sched = SchedV3(this)
+            sched = Scheduler(this)
             config.set("localOffset", sched._current_timezone_offset())
         }
     }

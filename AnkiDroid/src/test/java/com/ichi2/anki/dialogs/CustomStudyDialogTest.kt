@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.dialogs
 
-import androidx.core.view.get
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -28,7 +27,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.sched.SchedV3
+import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.JsonUtils.toOrderedString
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.items
@@ -112,7 +111,7 @@ class CustomStudyDialogTest : RobolectricTest() {
         // so we don't get net/ankiweb/rsdroid/BackendException$BackendDbException$BackendDbLockedException
         ensureCollectionLoadIsSynchronous()
         val mockCollection = Mockito.mock(Collection::class.java, Mockito.RETURNS_DEEP_STUBS)
-        val mockSched = Mockito.mock(SchedV3::class.java)
+        val mockSched = Mockito.mock(Scheduler::class.java)
         whenever(mockCollection.sched).thenReturn(mockSched)
         whenever(mockSched.newCount()).thenReturn(0)
         val factory = CustomStudyDialogFactory({ mockCollection }, mMockListener)
