@@ -121,7 +121,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     }
 
     override fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean) {
-        val deckName = collectionSupplier.get().decks.name(did)
+        val deckName = collectionSupplier.get().decks.name(did).run { replace("/", "_") }
         val exportPath = getExportFileName(path, deckName, includeSched)
 
         if (BackendFactory.defaultLegacySchema) {
