@@ -87,7 +87,7 @@ import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling
 import com.ichi2.libanki.Sound.SingleSoundSide
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.SoundPlayer
-import com.ichi2.libanki.sched.AbstractSched
+import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
@@ -229,7 +229,7 @@ abstract class AbstractFlashcardViewer :
 
     @KotlinCleanup("made internal for tests")
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal var sched: AbstractSched? = null
+    internal var sched: Scheduler? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal lateinit var mSoundPlayer: Sound
@@ -424,7 +424,6 @@ abstract class AbstractFlashcardViewer :
         launchCatchingTask {
             withCol {
                 sched.counts() // Ensure counts are recomputed if necessary, to know queue to look for
-                sched.preloadNextCard()
             }
         }
         if (currentCard == null) {

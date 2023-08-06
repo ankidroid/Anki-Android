@@ -37,8 +37,7 @@ class StatsTest : RobolectricTest() {
        col.addNote(note);
        Card c = note.cards().get(0);
        // card stats
-       assertTrue(col.cardStats(c));
-       col.reset();
+       assertTrue(col.cardStats(c));;
        c = col.getSched().getCard();
        col.getSched().answerCard(c, 3);
        col.getSched().answerCard(c, 2);

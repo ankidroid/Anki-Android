@@ -51,7 +51,6 @@ abstract class BaseSched(val col: Collection) {
     /** Update a V1 scheduler collection to V2. Requires full sync. */
     fun upgradeToV2() {
         col.modSchema()
-        col.clearLegacyV2ReviewUndo()
         col.backend.upgradeScheduler()
         col._loadScheduler()
     }

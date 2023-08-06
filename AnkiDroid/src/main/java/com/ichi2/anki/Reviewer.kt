@@ -256,15 +256,8 @@ open class Reviewer :
             Timber.w("selectDeckFromExtra() deckId '%d' doesn't exist", did)
             return
         }
-
-        // Clear the undo history when selecting a new deck
-        if (col.decks.selected() != did) {
-            col.clearLegacyV2ReviewUndo()
-        }
         // Select the deck
         col.decks.select(did)
-        // Reset the schedule so that we get the counts for the currently selected deck
-        col.sched.deferReset()
     }
 
     override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
@@ -297,7 +290,6 @@ open class Reviewer :
             toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
             whiteboard!!.toggleStylus = toggleStylus
         }
-        col.sched.deferReset() // Reset schedule in case card was previously loaded
         launchCatchingTask { getNextCardAndRedraw() }
         disableDrawerSwipeOnConflicts()
         // Add a weak reference to current activity so that scheduler can talk to to Activity
@@ -867,7 +859,6 @@ open class Reviewer :
     }
 
     override fun performReload() {
-        col.sched.deferReset()
         launchCatchingTask { getNextCardAndRedraw() }
     }
 

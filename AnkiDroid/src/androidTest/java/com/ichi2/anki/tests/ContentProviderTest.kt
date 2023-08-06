@@ -947,7 +947,6 @@ class ContentProviderTest : InstrumentedTest() {
             reviewInfoCursor.getLong(reviewInfoCursor.getColumnIndex(FlashCardsContract.ReviewInfo.NOTE_ID))
         var nextCard: Card? = null
         for (i in 0..9) { // minimizing fails, when sched.reset() randomly chooses between multiple cards
-            col.reset()
             nextCard = sched.card
             if (nextCard != null && nextCard.note().id == noteID && nextCard.ord == cardOrd) break
         }
@@ -1000,7 +999,6 @@ class ContentProviderTest : InstrumentedTest() {
             col.decks.select(deckToTest)
             var nextCard: Card? = null
             for (i in 0..9) { // minimizing fails, when sched.reset() randomly chooses between multiple cards
-                col.reset()
                 nextCard = sched.card
                 if (nextCard != null && nextCard.note().id == noteID && nextCard.ord == cardOrd) break
                 try {
@@ -1046,7 +1044,6 @@ class ContentProviderTest : InstrumentedTest() {
     private fun getFirstCardFromScheduler(col: com.ichi2.libanki.Collection): Card? {
         val deckId = mTestDeckIds[0]
         col.decks.select(deckId)
-        col.reset()
         return col.sched.card
     }
 
@@ -1079,7 +1076,6 @@ class ContentProviderTest : InstrumentedTest() {
             Thread.currentThread().join(500)
         } catch (e: Exception) { /* do nothing */
         }
-        col.reset()
         val newCard = col.sched.card
         if (newCard != null) {
             if (newCard.note().id == card.note().id && newCard.ord == card.ord) {
@@ -1187,7 +1183,6 @@ class ContentProviderTest : InstrumentedTest() {
         // cleanup, unsuspend card and reschedule
         // --------------------------------------
         col.sched.unsuspendCards(listOf(cardId))
-        col.reset()
     }
 
     /**

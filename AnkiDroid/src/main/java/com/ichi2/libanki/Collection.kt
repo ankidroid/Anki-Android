@@ -45,7 +45,6 @@ import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
 import timber.log.Timber
 import java.io.*
 import java.util.*
-import java.util.concurrent.LinkedBlockingDeque
 
 // Anki maintains a cache of used tags so it can quickly present a list of tags
 // for autocomplete and in the browser. For efficiency, deletions are not
@@ -141,10 +140,6 @@ open class Collection(
     var ls: Long = 0
     // END: SQL table columns
 
-    // API 21: Use a ConcurrentLinkedDeque
-    @KotlinCleanup("consider making this immutable")
-    private lateinit var legacyV2ReviewUndo: LinkedBlockingDeque<LegacyV2ReviewUndoInfo>
-
     private var mLogHnd: PrintWriter? = null
 
     init {
@@ -152,8 +147,6 @@ open class Collection(
         tags = initTags()
         val created = reopen()
         log(path, VersionUtils.pkgVersionName)
-        // mLastSave = getTime().now(); // assigned but never accessed - only leaving in for upstream comparison
-        clearLegacyV2ReviewUndo()
         mStartReps = 0
         mStartTime = 0
         _loadScheduler()
@@ -302,13 +295,6 @@ open class Collection(
 
     fun getNote(id: Long): Note {
         return Note(this, id)
-    }
-
-    /**
-     * Rebuild the queue and reload data after DB modified.
-     */
-    fun reset() {
-        sched.deferReset()
     }
 
     /**
@@ -490,63 +476,15 @@ open class Collection(
      * Undo ********************************************************************* **************************
      */
 
-    fun clearLegacyV2ReviewUndo() {
-        legacyV2ReviewUndo = LinkedBlockingDeque<LegacyV2ReviewUndoInfo>()
-    }
-
     /** eg "Undo suspend card" if undo available */
     fun undoLabel(): String? {
-        val action = undoStatus().undo ?: legacyUndoName()
+        val action = undoStatus().undo
         return action?.let { tr.undoUndoAction(it) }
-    }
-
-    /** "review" if legacy undo available */
-    private fun legacyUndoName(): String? {
-        return if (legacyUndoAvailable()) {
-            tr.schedulingReview()
-        } else {
-            null
-        }
     }
 
     fun undoAvailable(): Boolean {
         val status = undoStatus()
-        Timber.i("undo: %s, %s", status, legacyUndoAvailable())
-        if (status.undo != null) {
-            // any legacy undo state is invalid after a backend op
-            clearLegacyV2ReviewUndo()
-            return true
-        }
-        // if no backend undo state, try legacy undo state
-        return legacyUndoAvailable()
-    }
-
-    private fun legacyUndoAvailable(): Boolean {
-        return !legacyV2ReviewUndo.isEmpty()
-    }
-
-    /** Provided for legacy code/tests; new code should call undo() directly
-     * so that OpChanges can be observed.
-     */
-    open fun legacyV2ReviewUndo() {
-        if (legacyV2ReviewUndo.isNotEmpty()) {
-            val lastUndo = legacyV2ReviewUndo.removeLast()
-            lastUndo.undo(this)
-        }
-    }
-
-    /**
-     * In the legacy schema, this adds the undo action to the undo list.
-     * In the new schema, this action is not useful, as the backend stores its own
-     * undo information, and will clear the [legacyV2ReviewUndo] list when the backend has an undo
-     * operation available. If you find an action is not undoable with the new backend,
-     * you probably need to be calling the relevant backend method to perform it,
-     * instead of trying to do it with raw SQL. */
-    fun saveLegacyV2ReviewInfo(undoAction: LegacyV2ReviewUndoInfo) {
-        legacyV2ReviewUndo.add(undoAction)
-        while (legacyV2ReviewUndo.size > UNDO_SIZE_MAX) {
-            legacyV2ReviewUndo.removeFirst()
-        }
+        return status.undo != null
     }
 
     open fun onCreate() {
@@ -580,20 +518,6 @@ open class Collection(
     fun addNote(note: Note): Int {
         addNote(note, note.model().did)
         return note.numberOfCards()
-    }
-
-    @VisibleForTesting
-    class LegacyV2ReviewUndoInfo(private val wasLeech: Boolean, private val clonedCard: Card) {
-        fun undo(col: Collection): Card {
-            col.sched.undoReview(clonedCard, wasLeech)
-            return clonedCard
-        }
-    }
-
-    fun markReview(card: Card) {
-        val wasLeech = card.note().hasTag("leech")
-        val clonedCard = card.clone()
-        saveLegacyV2ReviewInfo(LegacyV2ReviewUndoInfo(wasLeech, clonedCard))
     }
 
     /**

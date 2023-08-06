@@ -18,10 +18,13 @@ package com.ichi2.libanki.sched
 
 import android.app.Activity
 import anki.scheduler.*
-import com.ichi2.async.CancelListener
+import com.google.android.material.snackbar.Snackbar
+import com.ichi2.anki.R
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager.time
+import timber.log.Timber
 import java.lang.ref.WeakReference
 
 /**
@@ -29,27 +32,20 @@ import java.lang.ref.WeakReference
  * future, it would be better for the reviewer to fetch queuedCards directly, so they only
  * need to be fetched once.
  */
-open class Scheduler(col: Collection) : AbstractSched(col) {
+open class Scheduler(col: Collection) : BaseSched(col) {
     private var activityForLeechNotification: WeakReference<Activity>? = null
 
-//    override val today: Int
-//        get() = col.backend.schedTimingToday().daysElapsed
-
-    override fun reset() {
+    fun reset() {
         // backend automatically resets queues as operations are performed
     }
 
-    override fun resetCounts() {
-        // backend automatically resets queues as operations are performed
-    }
-
-    override fun deferReset(undoneCard: Card?) {
+    fun resetCounts() {
         // backend automatically resets queues as operations are performed
     }
 
     // could be made more efficient by constructing a native Card object from
     // the backend card object, instead of doing a separate fetch
-    override val card: Card?
+    open val card: Card?
         get() = queuedCards.cardsList.firstOrNull()?.card?.id?.let {
             col.getCard(it).apply { startTimer() }
         }
@@ -57,12 +53,7 @@ open class Scheduler(col: Collection) : AbstractSched(col) {
     private val queuedCards: QueuedCards
         get() = col.backend.getQueuedCards(fetchLimit = 1, intradayLearningOnly = false)
 
-    override fun preloadNextCard() {
-        // if this proves necessary in the future, it could be implemented by increasing
-        // fetchLimit above
-    }
-
-    override fun answerCard(card: Card, ease: Int) {
+    open fun answerCard(card: Card, ease: Int) {
         val top = queuedCards.cardsList.first()
         val answer = buildAnswer(card, top.states, ease)
         col.backend.answerCard(answer)
@@ -106,18 +97,37 @@ open class Scheduler(col: Collection) : AbstractSched(col) {
         }
     }
 
-    override fun counts(cancelListener: CancelListener?): Counts {
+    /**
+     * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.
+     */
+    fun count(): Int {
+        return counts(null).count()
+    }
+
+    @Suppress("unused_parameter")
+    fun counts(card: Card? = null): Counts {
         return queuedCards.let {
             Counts(it.newCount, it.learningCount, it.reviewCount)
         }
     }
 
-    override fun counts(card: Card): Counts {
-        return counts(null)
+    /** @return Number of new card in selected decks. Recompute it if we reseted.
+     */
+    fun newCount(): Int {
+        // We need to actually recompute the three elements, because we potentially need to deal with undid card
+        // in any deck where it may be
+        return counts(null).new
+    }
+
+    /** @return Number of lrn card in selected decks. Recompute it if we reseted.
+     */
+    fun lrnCount(): Int {
+        return counts(null).lrn
     }
 
     /** Ignores provided card and uses top of queue */
-    override fun countIdx(card: Card): Counts.Queue {
+    @Suppress("unused_parameter")
+    fun countIdx(card: Card): Counts.Queue {
         return when (queuedCards.cardsList.first().queue) {
             QueuedCards.Queue.NEW -> Counts.Queue.NEW
             QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
@@ -126,23 +136,20 @@ open class Scheduler(col: Collection) : AbstractSched(col) {
         }
     }
 
-    override fun answerButtons(card: Card): Int {
+    @Suppress("unused_parameter")
+    fun answerButtons(card: Card): Int {
         return 4
     }
 
-    override val goodNewButton: Int = 3
+    val name = "std3"
 
-    override val name = "std3"
+    /** @return Number of repetitions today. Note that a repetition is the fact that the scheduler sent a card, and not the fact that the card was answered.
+     * So buried, suspended, ... cards are also counted as repetitions.
+     */
+    var reps: Int = 0
 
-    override var reps: Int = 0
-
-    override fun setContext(contextReference: WeakReference<Activity>) {
+    fun setContext(contextReference: WeakReference<Activity>) {
         this.activityForLeechNotification = contextReference
-    }
-
-    override fun undoReview(card: Card, wasLeech: Boolean) {
-        // Only used by UndoTest
-        TODO("Not yet implemented")
     }
 
     /** Only provided for legacy unit tests. */
@@ -176,5 +183,24 @@ open class Scheduler(col: Collection) : AbstractSched(col) {
             SchedulingState.Filtered.KindCase.RESCHEDULING -> intervalForNormalState(filtered.rescheduling.originalState)
             SchedulingState.Filtered.KindCase.KIND_NOT_SET, null -> TODO("invalid filtered state")
         }
+    }
+}
+
+/**
+ * Tell the user the current card has leeched and whether it was suspended. Timber if no activity.
+ * @param card A card that just became a leech
+ * @param activity An activity on which a message can be shown
+ */
+fun leech(card: Card, activity: Activity?) {
+    if (activity != null) {
+        val res = activity.resources
+        val leechMessage: String = if (card.queue < 0) {
+            res.getString(R.string.leech_suspend_notification)
+        } else {
+            res.getString(R.string.leech_notification)
+        }
+        activity.showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
+    } else {
+        Timber.w("LeechHook :: could not show leech snackbar as activity was null")
     }
 }

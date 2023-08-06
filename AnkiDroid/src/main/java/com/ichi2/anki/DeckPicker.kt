@@ -1699,10 +1699,6 @@ open class DeckPicker :
     }
 
     private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
-        // Clear the undo history when selecting a new deck
-        if (col.decks.selected() != did) {
-            col.clearLegacyV2ReviewUndo()
-        }
         if ((col.config.get("schedVer") ?: 1L) == 1L) {
             promptUserToUpdateScheduler()
             return
@@ -2049,8 +2045,6 @@ open class DeckPicker :
                 withCol {
                     Timber.d("doInBackgroundDeleteDeck")
                     col.decks.rem(did, true)
-                    // TODO: if we had "undo delete note" like desktop client then we won't need this.
-                    col.clearLegacyV2ReviewUndo()
                 }
             }
 

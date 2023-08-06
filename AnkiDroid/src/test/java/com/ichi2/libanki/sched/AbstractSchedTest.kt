@@ -48,15 +48,14 @@ class AbstractSchedTest : RobolectricTest() {
             note.setField(0, "a")
             col.addNote(note)
         }
-        col.reset()
         assertThat(col.cardCount(), `is`(20))
         assertThat(sched.newCount(), `is`(10))
         val card = sched.card
         assertThat(sched.newCount(), `is`(10))
         assertThat(sched.counts(card!!).new, `is`(10))
-        sched.answerCard(card, sched.goodNewButton)
+        sched.answerCard(card, 3)
         sched.card
-        col.undoNew()
+        col.undo()
         assertThat(sched.newCount(), `is`(10))
     }
 
@@ -74,7 +73,8 @@ class AbstractSchedTest : RobolectricTest() {
         AnkiAssert.assertDoesNotThrow { col.sched.deckDueTree() }
     }
 
-    private fun undoAndRedo(preload: Boolean) {
+    @Test
+    fun undoAndRedo() {
         val col = col
         val conf = col.decks.confForDid(1)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 3.0, 5.0, 10.0)))
@@ -83,18 +83,13 @@ class AbstractSchedTest : RobolectricTest() {
         val sched = col.sched
 
         addNoteUsingBasicModel("foo", "bar")
-
-        col.reset()
         advanceRobolectricLooper()
 
         var card = sched.card
         assertNotNull(card)
         assertEquals(Counts(1, 0, 0), sched.counts(card))
-        if (preload) {
-            sched.preloadNextCard()
-        }
 
-        sched.answerCard(card, sched.goodNewButton)
+        sched.answerCard(card, 3)
         advanceRobolectricLooper()
 
         card = sched.card
@@ -103,11 +98,8 @@ class AbstractSchedTest : RobolectricTest() {
             Counts(0, 1, 0),
             sched.counts(card)
         )
-        if (preload) {
-            sched.preloadNextCard()
-        }
 
-        sched.answerCard(card, sched.goodNewButton)
+        sched.answerCard(card, 3)
         advanceRobolectricLooper()
 
         card = sched.card
@@ -116,47 +108,25 @@ class AbstractSchedTest : RobolectricTest() {
             Counts(0, 1, 0),
             sched.counts(card)
         )
-        if (preload) {
-            sched.preloadNextCard()
-            advanceRobolectricLooper()
-        }
 
         assertNotNull(card)
 
-        col.legacyV2ReviewUndo()
         advanceRobolectricLooper()
         assertEquals(
             Counts(0, 1, 0),
             sched.counts()
         )
-        if (preload) {
-            sched.preloadNextCard()
-            advanceRobolectricLooper()
-        }
 
         card = sched.card!!
-        sched.answerCard(card, sched.goodNewButton)
+        sched.answerCard(card, 3)
         advanceRobolectricLooper()
         card = sched.card
         assertNotNull(card)
-        if (preload) {
-            sched.preloadNextCard()
-        }
         assertEquals(
             Counts(0, 1, 0),
             sched.counts(card)
         )
         assertNotNull(card)
-    }
-
-    @Test
-    fun undoAndRedoPreload() {
-        undoAndRedo(true)
-    }
-
-    @Test
-    fun undoAndRedoNoPreload() {
-        undoAndRedo(false)
     }
 
     private fun addDeckWithExactName(name: String) {
@@ -175,22 +145,5 @@ class AbstractSchedTest : RobolectricTest() {
             hasMatch,
             `is`(true)
         )
-    }
-
-    @Test
-    fun regression_7066() {
-        val col = col
-        val dconf = col.decks.getConf(1)
-        dconf.getJSONObject("new").put("bury", true)
-        val sched = col.sched
-        addNoteUsingBasicAndReversedModel("foo", "bar")
-        addNoteUsingBasicModel("plop", "foo")
-        col.reset()
-        val card = sched.card
-        sched.preloadNextCard()
-        sched.answerCard(card!!, Consts.BUTTON_THREE)
-        @Suppress("UNUSED_VARIABLE")
-        var unusedCard = sched.card
-        AnkiAssert.assertDoesNotThrow { sched.preloadNextCard() }
     }
 }

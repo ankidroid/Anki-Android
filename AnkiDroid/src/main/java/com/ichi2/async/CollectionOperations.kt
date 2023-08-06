@@ -178,5 +178,4 @@ fun saveModel(
     notetype.put("mod", oldModel!!.getLong("mod"))
     col.notetypes.save(notetype, true)
     col.notetypes.update(notetype)
-    col.reset()
 }

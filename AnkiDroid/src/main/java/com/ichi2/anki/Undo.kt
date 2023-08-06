@@ -18,48 +18,22 @@ package com.ichi2.anki
 
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesAfterUndo
-import anki.collection.opChanges
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.libanki.undoNew
+import com.ichi2.libanki.undo
 import com.ichi2.libanki.undoableOp
-import net.ankiweb.rsdroid.BackendException
-import net.ankiweb.rsdroid.RustCleanup
 
 /** If there's an action pending in the review queue, undo it and show a pop-up. */
 suspend fun FragmentActivity.undoAndShowPopup() {
     withProgress {
-        try {
-            val changes = undoableOp {
-                if (!undoAvailable()) {
-                    OpChangesAfterUndo.getDefaultInstance()
-                } else {
-                    undoNew()
-                }
-            }
-            showSnackbar(TR.undoActionUndone(changes.operation), Snackbar.LENGTH_SHORT)
-        } catch (exc: BackendException) {
-            @RustCleanup("Backend module should export this as a separate Exception")
-            if (exc.localizedMessage == "UndoEmpty") {
-                // backend undo queue empty; try legacy v2 undo
-                withCol {
-                    col.legacyV2ReviewUndo()
-                    reset()
-                }
-                // synthesize a change so screens update
-                undoableOp {
-                    opChanges {
-                        card = true
-                        deck = true
-                        note = true // may have been a leech
-                        studyQueues = true
-                        browserTable = true
-                    }
-                }
-                showSnackbar(TR.undoActionUndone(TR.schedulingReview()), Snackbar.LENGTH_SHORT)
+        val changes = undoableOp {
+            if (!undoAvailable()) {
+                OpChangesAfterUndo.getDefaultInstance()
+            } else {
+                undo()
             }
         }
+        showSnackbar(TR.undoActionUndone(changes.operation), Snackbar.LENGTH_SHORT)
     }
 }

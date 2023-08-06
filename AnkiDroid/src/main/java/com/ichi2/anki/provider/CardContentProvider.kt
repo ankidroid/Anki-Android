@@ -319,7 +319,6 @@ class CardContentProvider : ContentProvider() {
                 }
 
                 // retrieve the number of cards provided by the selection parameter "limit"
-                col.sched.deferReset()
                 var k = 0
                 while (k < limit) {
                     val currentCard = col.sched.card ?: break

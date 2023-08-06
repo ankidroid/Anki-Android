@@ -57,7 +57,6 @@ class CardTest : RobolectricTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val cid = note.cards()[0].id
-        col.reset()
         col.sched.answerCard(col.sched.card!!, Consts.BUTTON_TWO)
         col.removeCardsAndOrphanedNotes(listOf(cid))
         assertEquals(0, col.cardCount())

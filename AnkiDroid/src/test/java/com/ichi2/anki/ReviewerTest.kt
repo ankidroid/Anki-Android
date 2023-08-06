@@ -195,12 +195,12 @@ class ReviewerTest : RobolectricTest() {
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[1], reviewer.currentCard!!)
-        reviewer.answerCard(col.sched.goodNewButton)
+        reviewer.answerCard(Consts.BUTTON_THREE)
         waitForAsyncTasksToComplete()
 
         equalFirstField(cards[2], reviewer.currentCard!!)
         time.addM(2)
-        reviewer.answerCard(col.sched.goodNewButton)
+        reviewer.answerCard(Consts.BUTTON_THREE)
         advanceRobolectricLooperWithSleep()
         equalFirstField(cards[0], reviewer.currentCard!!) // This failed in #6898 because this card was not in the queue
     }
@@ -255,7 +255,6 @@ class ReviewerTest : RobolectricTest() {
 
         val col = col
         val sched = col.sched
-        col.reset()
 
         val cardBeforeUndo = sched.card
         val countsBeforeUndo = sched.counts()
@@ -325,7 +324,7 @@ class ReviewerTest : RobolectricTest() {
     private fun answerCardOrdinalAsGood(r: Reviewer, i: Int) {
         assertCurrentOrdIs(r, i)
 
-        r.answerCard(col.sched.goodNewButton)
+        r.answerCard(Consts.BUTTON_THREE)
 
         waitForAsyncTasksToComplete()
     }

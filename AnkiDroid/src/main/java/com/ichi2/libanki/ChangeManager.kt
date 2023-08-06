@@ -91,12 +91,7 @@ object ChangeManager {
  * to notify change subscribers of the changes. */
 suspend fun <T> undoableOp(handler: Any? = null, block: Collection.() -> T): T {
     return withCol {
-        val result = block()
-        // any backend operation clears legacy undo and resets study queues if it
-        // succeeds
-        clearLegacyV2ReviewUndo()
-        reset()
-        result
+        block()
     }.also {
         withContext(Dispatchers.Main) {
             ChangeManager.notifySubscribers(it, handler)
