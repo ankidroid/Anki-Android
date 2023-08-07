@@ -798,7 +798,7 @@ open class Reviewer :
             }
             val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
             val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
-            val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, null)!!.mutate()
+            val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, this.theme)!!.mutate()
             if (mShowWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
