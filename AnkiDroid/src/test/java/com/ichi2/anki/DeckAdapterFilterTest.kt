@@ -15,6 +15,7 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import anki.decks.deckTreeNode
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.DeckNode
@@ -61,16 +62,16 @@ class DeckAdapterFilterTest {
     private val deckList: MutableList<TreeNode<DeckNode>>
         get() {
             val deckList: MutableList<TreeNode<DeckNode>> = mutableListOf(
-                TreeNode(DeckNode("Chanson", 0)),
-                TreeNode(DeckNode("Chanson::A Vers", 1)),
-                TreeNode(DeckNode("Chanson::A Vers::1", 2)),
-                TreeNode(DeckNode("Chanson::A Vers::Other", 3)),
-                TreeNode(DeckNode("Chanson::Math HW", 4)),
-                TreeNode(DeckNode("Chanson::Math HW::Theory", 5)),
-                TreeNode(DeckNode("Chanson::Important", 6)),
-                TreeNode(DeckNode("Chanson::Important::Stuff", 7)),
-                TreeNode(DeckNode("Chanson::Important::Math", 8)),
-                TreeNode(DeckNode("Chanson::Important::Stuff::Other Stuff", 9))
+                TreeNode(sampleNode("Chanson", 0)),
+                TreeNode(sampleNode("Chanson::A Vers", 1)),
+                TreeNode(sampleNode("Chanson::A Vers::1", 2)),
+                TreeNode(sampleNode("Chanson::A Vers::Other", 3)),
+                TreeNode(sampleNode("Chanson::Math HW", 4)),
+                TreeNode(sampleNode("Chanson::Math HW::Theory", 5)),
+                TreeNode(sampleNode("Chanson::Important", 6)),
+                TreeNode(sampleNode("Chanson::Important::Stuff", 7)),
+                TreeNode(sampleNode("Chanson::Important::Math", 8)),
+                TreeNode(sampleNode("Chanson::Important::Stuff::Other Stuff", 9))
             )
 
             deckList.getByDid(0).children.addAll(deckList.getByDids(1, 4, 6))
@@ -89,4 +90,12 @@ class DeckAdapterFilterTest {
     private fun List<TreeNode<DeckNode>>.getByDids(vararg dids: Long): List<TreeNode<DeckNode>> {
         return this.filter { it.value.did in dids }
     }
+}
+
+fun sampleNode(fullName: String, id: DeckId): DeckNode {
+    val node = deckTreeNode {
+        name = fullName.split("::").last()
+        deckId = id
+    }
+    return DeckNode(node, fullName)
 }

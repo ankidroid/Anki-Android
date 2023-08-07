@@ -453,13 +453,8 @@ open class Scheduler(val col: Collection) {
             }
             val treeNode = TreeNode(
                 DeckNode(
-                    thisName,
-                    node.deckId,
-                    node.reviewCount,
-                    node.learnCount,
-                    node.newCount,
-                    collapsed = node.collapsed,
-                    filtered = node.filtered
+                    node,
+                    thisName
                 )
             )
             treeNode.children.addAll(

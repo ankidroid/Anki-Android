@@ -15,32 +15,41 @@
  */
 package com.ichi2.libanki.sched
 
-import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.Decks
-import net.ankiweb.rsdroid.RustCleanup
+import anki.decks.DeckTreeNode
 import java.util.*
 
-/**
- * Holds the data for a single node (row) in the deck due tree (the user-visible list
- * of decks and their counts). A node also contains a list of nodes that refer to the
- * next level of sub-decks for that particular deck (which can be an empty list).
- *
- * The names field is an array of names that build a deck name from a hierarchy (i.e., a nested
- * deck will have an entry for every level of nesting). While the python version interchanges
- * between a string and a list of strings throughout processing, we always use an array for
- * this field and use getNamePart(0) for those cases.
- */
-@RustCleanup("after migration, consider dropping this and using backend tree structure directly")
 data class DeckNode(
-    val fullDeckName: String,
-    val did: DeckId,
-    var revCount: Int = 0,
-    var lrnCount: Int = 0,
-    var newCount: Int = 0,
-    var collapsed: Boolean = false,
-    var filtered: Boolean = false
+    val node: DeckTreeNode,
+    val fullDeckName: String
 ) {
-    private val mNameComponents: Array<String>
+    var collapsed = node.collapsed
+    val revCount = node.reviewCount
+    val newCount = node.newCount
+    val lrnCount = node.learnCount
+    val did = node.deckId
+    val filtered = node.filtered
+    val children = node.childrenList.map {
+        val fullChildName = if (fullDeckName.isEmpty()) {
+            it.name
+        } else {
+            "$fullDeckName::${it.name}"
+        }
+        DeckNode(it, fullChildName)
+    }
+
+    /**
+     * The part of the name displayed in deck picker, i.e. the
+     * part that does not belong to its parents. E.g.  for deck
+     * "A::B::C", returns "C".
+     */
+    val lastDeckNameComponent = node.name
+
+    /**
+     * @return The depth of a deck. Top level decks have depth 0,
+     * their children have depth 1, etc... So "A::B::C" would have
+     * depth 2.
+     */
+    val depth = node.level - 1
 
     override fun toString(): String {
         return String.format(
@@ -56,34 +65,6 @@ data class DeckNode(
 
     fun knownToHaveRep(): Boolean {
         return revCount > 0 || newCount > 0 || lrnCount > 0
-    }
-
-    /**
-     * For deck "A::B::C", `getDeckNameComponent(0)` returns "A",
-     * `getDeckNameComponent(1)` returns "B", etc...
-     */
-    fun getDeckNameComponent(part: Int): String {
-        return mNameComponents[part]
-    }
-
-    /**
-     * The part of the name displayed in deck picker, i.e. the
-     * part that does not belong to its parents. E.g.  for deck
-     * "A::B::C", returns "C".
-     */
-    val lastDeckNameComponent: String
-        get() = getDeckNameComponent(depth)
-
-    /**
-     * @return The depth of a deck. Top level decks have depth 0,
-     * their children have depth 1, etc... So "A::B::C" would have
-     * depth 2.
-     */
-    val depth: Int
-        get() = mNameComponents.size - 1
-
-    init {
-        mNameComponents = Decks.legacyPath(fullDeckName)
     }
 }
 
