@@ -38,27 +38,8 @@ abstract class AbstractDeckTreeNode(
     // only set when new backend active
     open var collapsed: Boolean = false,
     open var filtered: Boolean = false
-) : Comparable<AbstractDeckTreeNode> {
+) {
     private val mNameComponents: Array<String>
-
-    /**
-     * Sort on the head of the node.
-     */
-    override fun compareTo(other: AbstractDeckTreeNode): Int {
-        val minDepth = Math.min(depth, other.depth) + 1
-        // Consider each subdeck name in the ordering
-        for (i in 0 until minDepth) {
-            val cmp = mNameComponents[i].compareTo(other.mNameComponents[i])
-            if (cmp == 0) {
-                continue
-            }
-            return cmp
-        }
-        // If we made it this far then the arrays are of different length. The longer one should
-        // always come after since it contains all of the sections of the shorter one inside it
-        // (i.e., the short one is an ancestor of the longer one).
-        return Integer.compare(depth, other.depth)
-    }
 
     /** Line representing this string without its children. Used in timbers only.  */
     protected open fun toStringLine(): String? {
@@ -106,10 +87,6 @@ abstract class AbstractDeckTreeNode(
      */
     val depth: Int
         get() = mNameComponents.size - 1
-
-    override fun hashCode(): Int {
-        return fullDeckName.hashCode()
-    }
 
     /**
      * Whether both elements have the same structure and numbers.

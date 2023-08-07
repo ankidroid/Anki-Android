@@ -52,10 +52,6 @@ class DeckDueTreeNode(
         )
     }
 
-    override fun hashCode(): Int {
-        return fullDeckName.hashCode() + revCount + lrnCount + newCount
-    }
-
     /**
      * Whether both elements have the same structure and numbers.
      * @param other
