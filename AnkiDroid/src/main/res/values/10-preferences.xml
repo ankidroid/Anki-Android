@@ -156,7 +156,6 @@
     <string name="show_eta" maxLength="41">Show ETA</string>
     <string name="show_eta_summ">Show remaining time</string>
     <string name="use_current" maxLength="41">Deck for new cards</string>
-    <string name="new_spread" maxLength="41">New card position</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>

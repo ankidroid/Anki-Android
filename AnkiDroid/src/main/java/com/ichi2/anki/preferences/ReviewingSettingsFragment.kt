@@ -33,16 +33,6 @@ class ReviewingSettingsFragment : SettingsFragment() {
         get() = "prefs.reviewing"
 
     override fun initSubscreen() {
-        // New cards position
-        // Represents the collections pref "newSpread": i.e.
-        // whether the new cards are added at the end of the queue or randomly in it.
-        requirePreference<ListPreference>(R.string.new_spread_preference).apply {
-            launchCatchingTask { setValueIndex(withCol { sched.newSpread() }) }
-            setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.set("newSpread", (newValue as String).toInt()) } }
-            }
-        }
-
         // Learn ahead limit
         // Represents the collections pref "collapseTime": i.e.
         // if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes

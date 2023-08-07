@@ -742,12 +742,6 @@ open class Scheduler(val col: Collection) {
         return col.config.get("collapseTime") ?: 1200
     }
 
-    // Only v2
-    @Consts.NEW_CARD_ORDER
-    fun newSpread(): Int {
-        return col.config.get("newSpread") ?: 0
-    }
-
     fun timeboxSecs(): Int {
         return col.config.get("timeLim") ?: 0
     }

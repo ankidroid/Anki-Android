@@ -24,15 +24,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/pref_cat_reviewing"
-    android:key="@string/pref_reviewing_screen_key">
+    android:key="@string/pref_reviewing_screen_key"
+    tools:context=".preferences.ReviewingSettingsFragment">
     <PreferenceCategory android:title="@string/pref_cat_scheduling" >
-        <ListPreference
-            android:entries="@array/new_spread_labels"
-            android:entryValues="@array/new_spread_values"
-            android:key="@string/new_spread_preference"
-            android:title="@string/new_spread"
-            app1:useSimpleSummaryProvider="true"/>
         <com.ichi2.preferences.SliderPreference
             android:key="@string/day_offset_preference"
             android:valueFrom="0"

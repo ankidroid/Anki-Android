@@ -9,7 +9,6 @@
     <string name="error_reporting_mode_key">reportErrorMode</string>
     <!-- Reviewing -->
     <string name="pref_reviewing_screen_key">reviewingScreen</string>
-    <string name="new_spread_preference">newSpread</string>
     <string name="day_offset_preference">dayOffset</string>
     <string name="learn_cutoff_preference">learnCutoff</string>
     <string name="time_limit_preference">timeLimit</string>
