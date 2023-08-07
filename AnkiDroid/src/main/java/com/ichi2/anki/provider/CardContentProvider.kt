@@ -34,7 +34,7 @@ import com.ichi2.libanki.Consts.BUTTON_TYPE
 import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.EmptyMediaException
-import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
@@ -342,7 +342,7 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
                 val allDecks = col.sched.deckDueTree()
                 val rv = MatrixCursor(columns, 1)
-                fun forEach(nodeList: List<TreeNode<DeckDueTreeNode>>, fn: (DeckDueTreeNode) -> Unit) {
+                fun forEach(nodeList: List<TreeNode<DeckNode>>, fn: (DeckNode) -> Unit) {
                     for (node in nodeList) {
                         fn(node.value)
                         forEach(node.children, fn)
@@ -384,7 +384,7 @@ class CardContentProvider : ContentProvider() {
         }
     }
 
-    private fun getDeckCountsFromDueTreeNode(deck: DeckDueTreeNode): JSONArray = JSONArray().apply {
+    private fun getDeckCountsFromDueTreeNode(deck: DeckNode): JSONArray = JSONArray().apply {
         put(deck.lrnCount)
         put(deck.revCount)
         put(deck.newCount)

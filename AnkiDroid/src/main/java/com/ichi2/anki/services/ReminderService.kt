@@ -28,7 +28,7 @@ import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.DeckNode
 import org.json.JSONObject
 import timber.log.Timber
 
@@ -124,7 +124,7 @@ class ReminderService : BroadcastReceiver() {
     }
 
     // getDeckOptionDue information, will recur one time to workaround collection close if recur is true
-    private fun getDeckOptionDue(col: Collection, dConfId: Long, recur: Boolean): List<DeckDueTreeNode>? {
+    private fun getDeckOptionDue(col: Collection, dConfId: Long, recur: Boolean): List<DeckNode>? {
         // Avoid crashes if the deck option group is deleted while we
         // are working
         if (col.dbClosed) {
@@ -133,7 +133,7 @@ class ReminderService : BroadcastReceiver() {
         }
         try {
             val dues = col.sched.deckDueTree().map { it.value }
-            val decks: MutableList<DeckDueTreeNode> = ArrayList(dues.size)
+            val decks: MutableList<DeckNode> = ArrayList(dues.size)
             // This loop over top level deck only. No notification will ever occur for subdecks.
             for (node in dues) {
                 val deck: JSONObject? = col.decks.get(node.did, false)

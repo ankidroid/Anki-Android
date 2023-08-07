@@ -105,8 +105,7 @@ import com.ichi2.async.*
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.sched.AbstractDeckTreeNode
-import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
@@ -211,7 +210,7 @@ open class DeckPicker :
     var optionsMenuState: OptionsMenuState? = null
 
     @VisibleForTesting
-    var dueTree: List<TreeNode<AbstractDeckTreeNode>>? = null
+    var dueTree: List<TreeNode<DeckNode>>? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var searchDecksIcon: MenuItem? = null
@@ -1166,7 +1165,7 @@ open class DeckPicker :
             // update DB
             col.decks.collapse(did)
             // update stored state
-            findInDeckTree(dueTree!! as List<TreeNode<DeckDueTreeNode>>, did)?.run {
+            findInDeckTree(dueTree!!, did)?.run {
                 collapsed = !collapsed
             }
             renderPage(col.isEmpty)
@@ -1818,7 +1817,7 @@ open class DeckPicker :
             launchCatchingTask {
                 withProgress {
                     val deckData = withCol {
-                        val decks: List<TreeNode<com.ichi2.libanki.sched.DeckDueTreeNode>> = sched.quickDeckDueTree()
+                        val decks: List<TreeNode<com.ichi2.libanki.sched.DeckNode>> = sched.quickDeckDueTree()
                         Pair(decks, isEmpty)
                     }
                     onDecksLoaded(deckData.first, deckData.second)
@@ -1839,7 +1838,7 @@ open class DeckPicker :
         }
     }
 
-    private fun <T : AbstractDeckTreeNode> onDecksLoaded(result: List<TreeNode<T>>?, collectionIsEmpty: Boolean) {
+    private fun onDecksLoaded(result: List<TreeNode<DeckNode>>?, collectionIsEmpty: Boolean) {
         Timber.i("Updating deck list UI")
         hideProgressBar()
         // Make sure the fragment is visible
@@ -1852,7 +1851,7 @@ open class DeckPicker :
             return
         }
         @Suppress("UNCHECKED_CAST")
-        dueTree = result as List<TreeNode<AbstractDeckTreeNode>>?
+        dueTree = result
         launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
         launchCatchingTask {

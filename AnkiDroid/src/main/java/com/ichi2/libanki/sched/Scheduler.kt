@@ -424,16 +424,15 @@ open class Scheduler(val col: Collection) {
         col.backend.emptyFilteredDeck(did)
     }
 
-    fun deckDueTree(): List<TreeNode<DeckDueTreeNode>> {
+    fun deckDueTree(): List<TreeNode<DeckNode>> {
         return deckTreeLegacy(true)
     }
 
     /**
      * @return The tree of decks, without numbers
      */
-    @Suppress("unchecked_cast")
-    open fun <T : AbstractDeckTreeNode> quickDeckDueTree(): List<TreeNode<T>> {
-        return deckTreeLegacy(false) as List<TreeNode<T>>
+    open fun quickDeckDueTree(): List<TreeNode<DeckNode>> {
+        return deckTreeLegacy(false)
     }
 
     /** Return the deck tree, in the native backend format. */
@@ -445,15 +444,15 @@ open class Scheduler(val col: Collection) {
      * Mutate the backend reply into a format expected by legacy code. This is less efficient,
      * and AnkiDroid may wish to use .deckTree() in the future instead.
      */
-    fun deckTreeLegacy(includeCounts: Boolean): List<TreeNode<DeckDueTreeNode>> {
-        fun toLegacyNode(node: DeckTreeNode, parentName: String): TreeNode<DeckDueTreeNode> {
+    fun deckTreeLegacy(includeCounts: Boolean): List<TreeNode<DeckNode>> {
+        fun toLegacyNode(node: DeckTreeNode, parentName: String): TreeNode<DeckNode> {
             val thisName = if (parentName.isEmpty()) {
                 node.name
             } else {
                 "$parentName::${node.name}"
             }
             val treeNode = TreeNode(
-                DeckDueTreeNode(
+                DeckNode(
                     thisName,
                     node.deckId,
                     node.reviewCount,

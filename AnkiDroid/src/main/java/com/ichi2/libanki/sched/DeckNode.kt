@@ -31,15 +31,17 @@ import java.util.*
  * this field and use getNamePart(0) for those cases.
  */
 @RustCleanup("after migration, consider dropping this and using backend tree structure directly")
-class DeckDueTreeNode(
-    fullDeckName: String,
-    did: DeckId,
-    override var revCount: Int = 0,
-    override var lrnCount: Int = 0,
-    override var newCount: Int = 0,
-    override var collapsed: Boolean = false,
-    override var filtered: Boolean = false
-) : AbstractDeckTreeNode(fullDeckName, did, collapsed, filtered) {
+data class DeckNode(
+    val fullDeckName: String,
+    val did: DeckId,
+    var revCount: Int = 0,
+    var lrnCount: Int = 0,
+    var newCount: Int = 0,
+    var collapsed: Boolean = false,
+    var filtered: Boolean = false
+) {
+    private val mNameComponents: Array<String>
+
     override fun toString(): String {
         return String.format(
             Locale.US,
@@ -52,36 +54,36 @@ class DeckDueTreeNode(
         )
     }
 
-    /**
-     * Whether both elements have the same structure and numbers.
-     * @param other
-     * @return
-     */
-    override fun equals(other: Any?): Boolean {
-        if (other !is DeckDueTreeNode) {
-            return false
-        }
-        return Decks.equalName(fullDeckName, other.fullDeckName) &&
-            revCount == other.revCount &&
-            lrnCount == other.lrnCount &&
-            newCount == other.newCount
-    }
-
-    /** Line representing this string without its children. Used in timbers only.  */
-    override fun toStringLine(): String {
-        return String.format(
-            Locale.US,
-            "%s, %d, %d, %d, %d\n",
-            fullDeckName,
-            did,
-            revCount,
-            lrnCount,
-            newCount
-        )
-    }
-
-    override fun knownToHaveRep(): Boolean {
+    fun knownToHaveRep(): Boolean {
         return revCount > 0 || newCount > 0 || lrnCount > 0
+    }
+
+    /**
+     * For deck "A::B::C", `getDeckNameComponent(0)` returns "A",
+     * `getDeckNameComponent(1)` returns "B", etc...
+     */
+    fun getDeckNameComponent(part: Int): String {
+        return mNameComponents[part]
+    }
+
+    /**
+     * The part of the name displayed in deck picker, i.e. the
+     * part that does not belong to its parents. E.g.  for deck
+     * "A::B::C", returns "C".
+     */
+    val lastDeckNameComponent: String
+        get() = getDeckNameComponent(depth)
+
+    /**
+     * @return The depth of a deck. Top level decks have depth 0,
+     * their children have depth 1, etc... So "A::B::C" would have
+     * depth 2.
+     */
+    val depth: Int
+        get() = mNameComponents.size - 1
+
+    init {
+        mNameComponents = Decks.legacyPath(fullDeckName)
     }
 }
 
@@ -90,7 +92,7 @@ class DeckDueTreeNode(
  * This could be converted into a method if AnkiDroid returned a top-level
  * node instead of a list of nodes.
  */
-fun findInDeckTree(nodes: List<TreeNode<DeckDueTreeNode>>, deckId: Long): DeckDueTreeNode? {
+fun findInDeckTree(nodes: List<TreeNode<DeckNode>>, deckId: Long): DeckNode? {
     for (node in nodes) {
         if (node.value.did == deckId) {
             return node.value

@@ -30,8 +30,8 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.sched.AbstractDeckTreeNode
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.sched.TreeNode
 import com.ichi2.libanki.sched.associateNodeWithParent
 import com.ichi2.utils.KotlinCleanup
@@ -47,10 +47,10 @@ import java.util.*
 @RustCleanup("Lots of bad code: should not be using suspend functions inside an adapter")
 @RustCleanup("Differs from legacy backend: Create deck 'One', create deck 'One::two'. 'One::two' was not expanded")
 class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) : RecyclerView.Adapter<DeckAdapter.ViewHolder>(), Filterable {
-    private var mDeckList: List<TreeNode<AbstractDeckTreeNode>> = ArrayList()
+    private var mDeckList: List<TreeNode<DeckNode>> = ArrayList()
 
     /** A subset of mDeckList (currently displayed)  */
-    private var mCurrentDeckList: List<TreeNode<AbstractDeckTreeNode>> = ArrayList()
+    private var mCurrentDeckList: List<TreeNode<DeckNode>> = ArrayList()
     private val mZeroCountColor: Int
     private val mNewCountColor: Int
     private val mLearnCountColor: Int
@@ -129,11 +129,11 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private val mutex = Mutex()
 
     /**
-     * Consume a list of [AbstractDeckTreeNode]s to render a new deck list.
+     * Consume a list of [DeckNode]s to render a new deck list.
      * @param filter The string to filter the deck by
      */
     @NeedsTest("Ensure hasSubdecks is false if there are only top level decks")
-    suspend fun buildDeckList(nodes: List<TreeNode<AbstractDeckTreeNode>>, filter: CharSequence?) {
+    suspend fun buildDeckList(nodes: List<TreeNode<DeckNode>>, filter: CharSequence?) {
         Timber.d("buildDeckList")
         // TODO: This is a lazy hack to fix a bug. We hold the lock for far too long
         // and do I/O inside it. Better to calculate the new lists outside the lock, then swap
@@ -156,7 +156,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
     }
 
-    fun getNodeByDid(did: DeckId): TreeNode<AbstractDeckTreeNode> {
+    fun getNodeByDid(did: DeckId): TreeNode<DeckNode> {
         val pos = findDeckPosition(did)
         return deckList[pos]
     }
@@ -239,7 +239,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         view.background = background
     }
 
-    private fun isCurrentlySelectedDeck(node: AbstractDeckTreeNode): Boolean {
+    private fun isCurrentlySelectedDeck(node: DeckNode): Boolean {
         return node.did == currentDeckId
     }
 
@@ -248,7 +248,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     @RustCleanup("non suspend")
-    private suspend fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<AbstractDeckTreeNode>) {
+    private suspend fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: TreeNode<DeckNode>) {
         val nodeValue = node.value
         val collapsed = node.value.collapsed
         // Apply the correct expand/collapse drawable
@@ -276,8 +276,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
      * Afterwards, all depths are returned
      */
     @CheckResult
-    private suspend fun processNodes(nodes: List<TreeNode<AbstractDeckTreeNode>>): List<TreeNode<AbstractDeckTreeNode>> {
-        val result = mutableListOf<TreeNode<AbstractDeckTreeNode>>()
+    private suspend fun processNodes(nodes: List<TreeNode<DeckNode>>): List<TreeNode<DeckNode>> {
+        val result = mutableListOf<TreeNode<DeckNode>>()
         for (node in nodes) {
             val isCollapsed = node.value.collapsed
             result.add(node)
@@ -321,7 +321,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         } else {
             null
         }
-    private val deckList: List<TreeNode<AbstractDeckTreeNode>>
+    private val deckList: List<TreeNode<DeckNode>>
         get() = mCurrentDeckList
 
     override fun getFilter(): Filter {
@@ -329,24 +329,24 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     @VisibleForTesting
-    inner class DeckFilter(deckList: List<TreeNode<AbstractDeckTreeNode>> = mDeckList) : TypedFilter<TreeNode<AbstractDeckTreeNode>>(deckList) {
-        override fun filterResults(constraint: CharSequence, items: List<TreeNode<AbstractDeckTreeNode>>): List<TreeNode<AbstractDeckTreeNode>> {
+    inner class DeckFilter(deckList: List<TreeNode<DeckNode>> = mDeckList) : TypedFilter<TreeNode<DeckNode>>(deckList) {
+        override fun filterResults(constraint: CharSequence, items: List<TreeNode<DeckNode>>): List<TreeNode<DeckNode>> {
             val filterPattern = constraint.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
-            return items.mapNotNull { t: TreeNode<AbstractDeckTreeNode> -> filterDeckInternal(filterPattern, t) }
+            return items.mapNotNull { t: TreeNode<DeckNode> -> filterDeckInternal(filterPattern, t) }
         }
 
-        override fun publishResults(constraint: CharSequence?, results: List<TreeNode<AbstractDeckTreeNode>>) {
+        override fun publishResults(constraint: CharSequence?, results: List<TreeNode<DeckNode>>) {
             mCurrentDeckList = results.toList()
             notifyDataSetChanged()
         }
 
-        private fun filterDeckInternal(filterPattern: String, root: TreeNode<AbstractDeckTreeNode>): TreeNode<AbstractDeckTreeNode>? {
+        private fun filterDeckInternal(filterPattern: String, root: TreeNode<DeckNode>): TreeNode<DeckNode>? {
             // If a deck contains the string, then all its children are valid
             if (containsFilterString(filterPattern, root.value)) {
                 return root
             }
             val children = root.children
-            val ret: MutableList<TreeNode<AbstractDeckTreeNode>> = ArrayList(children.size)
+            val ret: MutableList<TreeNode<DeckNode>> = ArrayList(children.size)
             for (child in children) {
                 val returned = filterDeckInternal(filterPattern, child)
                 if (returned != null) {
@@ -363,7 +363,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             }
         }
 
-        private fun containsFilterString(filterPattern: String, root: AbstractDeckTreeNode): Boolean {
+        private fun containsFilterString(filterPattern: String, root: DeckNode): Boolean {
             val deckName = root.fullDeckName
             return deckName.lowercase(Locale.getDefault()).contains(filterPattern) || deckName.lowercase(Locale.ROOT).contains(filterPattern)
         }

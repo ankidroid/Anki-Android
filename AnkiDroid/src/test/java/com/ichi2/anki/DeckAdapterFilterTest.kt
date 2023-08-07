@@ -17,8 +17,7 @@ package com.ichi2.anki
 
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.sched.AbstractDeckTreeNode
-import com.ichi2.libanki.sched.DeckDueTreeNode
+import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.sched.TreeNode
 import org.junit.Assert
 import org.junit.Before
@@ -59,19 +58,19 @@ class DeckAdapterFilterTest {
         Assert.assertTrue(actual.isEmpty())
     }
 
-    private val deckList: MutableList<TreeNode<AbstractDeckTreeNode>>
+    private val deckList: MutableList<TreeNode<DeckNode>>
         get() {
-            val deckList: MutableList<TreeNode<AbstractDeckTreeNode>> = mutableListOf(
-                TreeNode(DeckDueTreeNode("Chanson", 0)),
-                TreeNode(DeckDueTreeNode("Chanson::A Vers", 1)),
-                TreeNode(DeckDueTreeNode("Chanson::A Vers::1", 2)),
-                TreeNode(DeckDueTreeNode("Chanson::A Vers::Other", 3)),
-                TreeNode(DeckDueTreeNode("Chanson::Math HW", 4)),
-                TreeNode(DeckDueTreeNode("Chanson::Math HW::Theory", 5)),
-                TreeNode(DeckDueTreeNode("Chanson::Important", 6)),
-                TreeNode(DeckDueTreeNode("Chanson::Important::Stuff", 7)),
-                TreeNode(DeckDueTreeNode("Chanson::Important::Math", 8)),
-                TreeNode(DeckDueTreeNode("Chanson::Important::Stuff::Other Stuff", 9))
+            val deckList: MutableList<TreeNode<DeckNode>> = mutableListOf(
+                TreeNode(DeckNode("Chanson", 0)),
+                TreeNode(DeckNode("Chanson::A Vers", 1)),
+                TreeNode(DeckNode("Chanson::A Vers::1", 2)),
+                TreeNode(DeckNode("Chanson::A Vers::Other", 3)),
+                TreeNode(DeckNode("Chanson::Math HW", 4)),
+                TreeNode(DeckNode("Chanson::Math HW::Theory", 5)),
+                TreeNode(DeckNode("Chanson::Important", 6)),
+                TreeNode(DeckNode("Chanson::Important::Stuff", 7)),
+                TreeNode(DeckNode("Chanson::Important::Math", 8)),
+                TreeNode(DeckNode("Chanson::Important::Stuff::Other Stuff", 9))
             )
 
             deckList.getByDid(0).children.addAll(deckList.getByDids(1, 4, 6))
@@ -83,11 +82,11 @@ class DeckAdapterFilterTest {
             return deckList
         }
 
-    private fun List<TreeNode<AbstractDeckTreeNode>>.getByDid(did: DeckId): TreeNode<AbstractDeckTreeNode> {
+    private fun List<TreeNode<DeckNode>>.getByDid(did: DeckId): TreeNode<DeckNode> {
         return this.first { it.value.did == did }
     }
 
-    private fun List<TreeNode<AbstractDeckTreeNode>>.getByDids(vararg dids: Long): List<TreeNode<AbstractDeckTreeNode>> {
+    private fun List<TreeNode<DeckNode>>.getByDids(vararg dids: Long): List<TreeNode<DeckNode>> {
         return this.filter { it.value.did in dids }
     }
 }
