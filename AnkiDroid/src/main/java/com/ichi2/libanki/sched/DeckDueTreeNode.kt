@@ -84,10 +84,6 @@ class DeckDueTreeNode(
         )
     }
 
-    override fun shouldDisplayCounts(): Boolean {
-        return true
-    }
-
     override fun knownToHaveRep(): Boolean {
         return revCount > 0 || newCount > 0 || lrnCount > 0
     }

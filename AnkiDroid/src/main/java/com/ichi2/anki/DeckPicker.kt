@@ -1711,7 +1711,7 @@ open class DeckPicker :
         mFocusedDeck = did
         // Get some info about the deck to handle special cases
         val deckDueTreeNode = mDeckListAdapter.getNodeByDid(did)
-        if (!deckDueTreeNode.value.shouldDisplayCounts() || deckDueTreeNode.value.knownToHaveRep()) {
+        if (deckDueTreeNode.value.knownToHaveRep()) {
             // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
             // If there is nothing to review, it'll come back to deck picker.
             openReviewerOrStudyOptions(selectionType)

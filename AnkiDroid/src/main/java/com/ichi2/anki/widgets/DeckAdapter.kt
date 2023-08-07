@@ -144,7 +144,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             mDeckList = newDecks.toList()
             mCurrentDeckList = newDecks.toList()
 
-            val topLevelNodes = nodes.filter { it.value.depth == 0 && it.value.shouldDisplayCounts() }
+            val topLevelNodes = nodes.filter { it.value.depth == 0 }
             mRev = topLevelNodes.sumOf { it.value.revCount }
             mLrn = topLevelNodes.sumOf { it.value.lrnCount }
             mNew = topLevelNodes.sumOf { it.value.newCount }
@@ -216,14 +216,12 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
 
         // Set the card counts and their colors
-        if (node.shouldDisplayCounts()) {
-            holder.deckNew.text = node.newCount.toString()
-            holder.deckNew.setTextColor(if (node.newCount == 0) mZeroCountColor else mNewCountColor)
-            holder.deckLearn.text = node.lrnCount.toString()
-            holder.deckLearn.setTextColor(if (node.lrnCount == 0) mZeroCountColor else mLearnCountColor)
-            holder.deckRev.text = node.revCount.toString()
-            holder.deckRev.setTextColor(if (node.revCount == 0) mZeroCountColor else mReviewCountColor)
-        }
+        holder.deckNew.text = node.newCount.toString()
+        holder.deckNew.setTextColor(if (node.newCount == 0) mZeroCountColor else mNewCountColor)
+        holder.deckLearn.text = node.lrnCount.toString()
+        holder.deckLearn.setTextColor(if (node.lrnCount == 0) mZeroCountColor else mLearnCountColor)
+        holder.deckRev.text = node.revCount.toString()
+        holder.deckRev.setTextColor(if (node.revCount == 0) mZeroCountColor else mReviewCountColor)
 
         // Store deck ID in layout's tag for easy retrieval in our click listeners
         holder.deckLayout.tag = node.did

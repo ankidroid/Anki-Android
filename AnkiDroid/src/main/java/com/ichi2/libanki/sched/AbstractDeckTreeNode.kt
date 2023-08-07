@@ -123,10 +123,6 @@ abstract class AbstractDeckTreeNode(
         return Decks.equalName(fullDeckName, other.fullDeckName)
     }
 
-    open fun shouldDisplayCounts(): Boolean {
-        return false
-    }
-
     /* Number of new cards to see today known to be in this deck and its descendants. The number to show to user*/
     open val newCount: Int
         get() {
