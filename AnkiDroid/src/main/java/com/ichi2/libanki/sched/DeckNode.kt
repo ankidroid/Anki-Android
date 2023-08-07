@@ -16,11 +16,15 @@
 package com.ichi2.libanki.sched
 
 import anki.decks.DeckTreeNode
+import com.ichi2.libanki.DeckId
+import com.ichi2.libanki.utils.append
+import java.lang.ref.WeakReference
 import java.util.*
 
 data class DeckNode(
     val node: DeckTreeNode,
-    val fullDeckName: String
+    val fullDeckName: String,
+    val parent: WeakReference<DeckNode>? = null
 ) {
     var collapsed = node.collapsed
     val revCount = node.reviewCount
@@ -34,7 +38,7 @@ data class DeckNode(
         } else {
             "$fullDeckName::${it.name}"
         }
-        DeckNode(it, fullChildName)
+        DeckNode(it, fullChildName, WeakReference(this@DeckNode))
     }
 
     /**
@@ -66,19 +70,75 @@ data class DeckNode(
     fun knownToHaveRep(): Boolean {
         return revCount > 0 || newCount > 0 || lrnCount > 0
     }
-}
 
-/** Locate node with a given deck ID in a list of nodes.
- *
- * This could be converted into a method if AnkiDroid returned a top-level
- * node instead of a list of nodes.
- */
-fun findInDeckTree(nodes: List<TreeNode<DeckNode>>, deckId: Long): DeckNode? {
-    for (node in nodes) {
-        if (node.value.did == deckId) {
-            return node.value
+    fun find(deckId: DeckId): DeckNode? {
+        if (node.deckId == deckId) {
+            return this
         }
-        return findInDeckTree(node.children, deckId) ?: continue
+        for (child in children) {
+            return child.find(deckId) ?: continue
+        }
+        return null
     }
-    return null
+
+    fun forEach(fn: (DeckNode) -> Unit) {
+        if (node.level > 0) {
+            fn(this)
+        }
+        for (child in children) {
+            child.forEach(fn)
+        }
+    }
+
+    /** Convert the tree into a flat list, where matching decks and the children/parents
+     * are included. Decks inside collapsed decks are not considered. */
+    fun filterAndFlatten(filter: CharSequence?): List<DeckNode> {
+        val filterPattern = if (filter.isNullOrBlank()) { null } else {
+            filter.toString().lowercase(Locale.getDefault()).trim { it <= ' ' }
+        }
+        val list = mutableListOf<DeckNode>()
+        filterAndFlattenInner(filterPattern, list)
+        return list
+    }
+
+    private fun filterAndFlattenInner(filter: CharSequence?, list: MutableList<DeckNode>) {
+        if (node.level > 0 && nameMatchesFilter(filter)) {
+            // if this deck matched, all children are included
+            addVisibleToList(list)
+            return
+        }
+
+        if (collapsed) {
+            return
+        }
+
+        if (node.level > 0) {
+            list.append(this)
+        }
+        val startingLen = list.size
+        for (child in children) {
+            child.filterAndFlattenInner(filter, list)
+        }
+        if (node.level > 0 && startingLen == list.size) {
+            // we don't include ourselves if no children matched
+            list.removeLast()
+        }
+    }
+
+    private fun nameMatchesFilter(filter: CharSequence?): Boolean {
+        return if (filter == null) {
+            true
+        } else {
+            return node.name.lowercase(Locale.getDefault()).contains(filter) || node.name.lowercase(Locale.ROOT).contains(filter)
+        }
+    }
+
+    fun addVisibleToList(list: MutableList<DeckNode>) {
+        list.append(this)
+        if (!collapsed) {
+            for (child in children) {
+                child.addVisibleToList(list)
+            }
+        }
+    }
 }

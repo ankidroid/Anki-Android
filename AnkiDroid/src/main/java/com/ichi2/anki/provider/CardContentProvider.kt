@@ -35,8 +35,6 @@ import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.DeckNode
-import com.ichi2.libanki.sched.TreeNode
-import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
 import com.ichi2.utils.KotlinCleanup
@@ -342,13 +340,7 @@ class CardContentProvider : ContentProvider() {
                 val columns = projection ?: FlashCardsContract.Deck.DEFAULT_PROJECTION
                 val allDecks = col.sched.deckDueTree()
                 val rv = MatrixCursor(columns, 1)
-                fun forEach(nodeList: List<TreeNode<DeckNode>>, fn: (DeckNode) -> Unit) {
-                    for (node in nodeList) {
-                        fn(node.value)
-                        forEach(node.children, fn)
-                    }
-                }
-                forEach(allDecks) {
+                allDecks.forEach {
                     addDeckToCursor(
                         it.did,
                         it.fullDeckName,
@@ -366,7 +358,7 @@ class CardContentProvider : ContentProvider() {
                 val rv = MatrixCursor(columns, 1)
                 val allDecks = col.sched.deckDueTree()
                 val desiredDeckId = uri.pathSegments[1].toLong()
-                findInDeckTree(allDecks, desiredDeckId)?.let {
+                allDecks.find(desiredDeckId)?.let {
                     addDeckToCursor(it.did, it.fullDeckName, getDeckCountsFromDueTreeNode(it), rv, col, columns)
                 }
                 rv

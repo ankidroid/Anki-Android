@@ -57,7 +57,6 @@ import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
-import java.text.Normalizer
 import java.util.*
 import java.util.regex.Pattern
 
@@ -882,26 +881,6 @@ class Decks(private val col: Collection) {
         }
 
         /*
-     * ******************************
-     * utils methods
-     * **************************************
-     */
-        private val normalized = HashMap<String?, String>()
-
-        @KotlinCleanup("nullability")
-        fun normalizeName(name: String?): String? {
-            if (!normalized.containsKey(name)) {
-                normalized[name] = Normalizer.normalize(name, Normalizer.Form.NFC).lowercase()
-            }
-            return normalized[name]
-        }
-
-        @KotlinCleanup("nullability")
-        fun equalName(name1: String?, name2: String?): Boolean {
-            return normalizeName(name1) == normalizeName(name2)
-        }
-
-        /*
     * ***********************************************************
     * The methods below are not in LibAnki.
     * ***********************************************************
@@ -909,29 +888,6 @@ class Decks(private val col: Collection) {
         @KotlinCleanup("nullability")
         fun isValidDeckName(deckName: String?): Boolean {
             return deckName != null && !deckName.trim { it <= ' ' }.isEmpty()
-        }
-
-        private val sParentCache = HashMap<String, String?>()
-        fun parent(deckName: String): String? {
-            // method parent, from sched's method deckDueList in python
-            if (!sParentCache.containsKey(deckName)) {
-                var parts = listOf(*legacyPath(deckName))
-                if (parts.size < 2) {
-                    sParentCache[deckName] = null
-                } else {
-                    parts = parts.subList(0, parts.size - 1)
-                    val parentName = parts.joinToString("::")
-                    sParentCache[deckName] = parentName
-                }
-            }
-            return sParentCache[deckName]
-        }
-
-        fun legacyPath(name: String): Array<String> {
-            if (!pathCache.containsKey(name)) {
-                pathCache[name] = name.split("::".toRegex()).toTypedArray()
-            }
-            return pathCache[name]!!
         }
 
         fun isDynamic(col: Collection, deckId: Long): Boolean {

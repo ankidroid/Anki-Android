@@ -95,7 +95,7 @@ object WidgetStatus {
         val total = Counts()
         status = CollectionManager.withCol {
             // Only count the top-level decks in the total
-            val nodes = col.sched.deckDueTree().map { it.value }
+            val nodes = col.sched.deckDueTree().children
             for (node in nodes) {
                 total.addNew(node.newCount)
                 total.addLrn(node.lrnCount)

@@ -629,11 +629,11 @@ open class SchedulerTest : RobolectricTest() {
             c.flush()
         }
         val parentIndex = 0
-        var tree = col.sched.deckDueTree()[parentIndex]
+        var tree = col.sched.deckDueTree().children[parentIndex]
         // (('parent', 1514457677462, 5, 0, 0, (('child', 1514457677463, 5, 0, 0, ()),)))
-        Assert.assertEquals("parent", tree.value.fullDeckName)
-        Assert.assertEquals(5, tree.value.revCount.toLong()) // paren, tree.review_count)t
-        Assert.assertEquals(10, tree.children[0].value.revCount.toLong())
+        Assert.assertEquals("parent", tree.fullDeckName)
+        Assert.assertEquals(5, tree.revCount.toLong()) // paren, tree.review_count)t
+        Assert.assertEquals(10, tree.children[0].revCount.toLong())
 
         // .counts() should match
         col.decks.select(child.getLong("id"))
@@ -643,9 +643,9 @@ open class SchedulerTest : RobolectricTest() {
         val c = col.sched.card!!
         col.sched.answerCard(c, BUTTON_THREE)
         Assert.assertEquals(Counts(0, 0, 9), col.sched.counts())
-        tree = col.sched.deckDueTree()[parentIndex]
-        Assert.assertEquals(4, tree.value.revCount.toLong())
-        Assert.assertEquals(9, tree.children[0].value.revCount.toLong())
+        tree = col.sched.deckDueTree().children[parentIndex]
+        Assert.assertEquals(4, tree.revCount.toLong())
+        Assert.assertEquals(9, tree.children[0].revCount.toLong())
     }
 
     @Test
@@ -1311,14 +1311,14 @@ open class SchedulerTest : RobolectricTest() {
         note.model().put("did", addDeck("foo::baz"))
         col.addNote(note)
         Assert.assertEquals(5, col.decks.allSortedNames().size.toLong())
-        val tree = col.sched.deckDueTree()[0]
-        Assert.assertEquals("Default", tree.value.lastDeckNameComponent)
+        val tree = col.sched.deckDueTree().children[0]
+        Assert.assertEquals("Default", tree.lastDeckNameComponent)
         // sum of child and parent
-        Assert.assertEquals(1, tree.value.did)
-        Assert.assertEquals(1, tree.value.revCount.toLong())
-        Assert.assertEquals(1, tree.value.newCount.toLong())
+        Assert.assertEquals(1, tree.did)
+        Assert.assertEquals(1, tree.revCount.toLong())
+        Assert.assertEquals(1, tree.newCount.toLong())
         // child count is just review
-        val (value) = tree.children[0]
+        val value = tree.children[0]
         Assert.assertEquals("1", value.lastDeckNameComponent)
         Assert.assertEquals(default1, value.did)
         Assert.assertEquals(1, value.revCount.toLong())
@@ -1337,7 +1337,7 @@ open class SchedulerTest : RobolectricTest() {
         addDeck("new2")
         // new should not appear twice in tree
         val names: MutableList<String> = ArrayList()
-        for ((value) in col.sched.deckDueTree()) {
+        for (value in col.sched.deckDueTree().children) {
             names.add(value.lastDeckNameComponent)
         }
         names.remove("new")

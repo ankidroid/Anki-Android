@@ -27,7 +27,6 @@ import anki.ankidroid.schedTimingTodayLegacyRequest
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.OptionalStringConfigKey
-import anki.decks.DeckTreeNode
 import anki.scheduler.*
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
@@ -41,7 +40,6 @@ import com.ichi2.libanki.DeckConfig
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.NoteId
 import com.ichi2.libanki.Utils
-import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
@@ -424,45 +422,12 @@ open class Scheduler(val col: Collection) {
         col.backend.emptyFilteredDeck(did)
     }
 
-    fun deckDueTree(): List<TreeNode<DeckNode>> {
-        return deckTreeLegacy(true)
+    fun deckDueTree(): DeckNode {
+        return deckTree(true)
     }
 
-    /**
-     * @return The tree of decks, without numbers
-     */
-    open fun quickDeckDueTree(): List<TreeNode<DeckNode>> {
-        return deckTreeLegacy(false)
-    }
-
-    /** Return the deck tree, in the native backend format. */
-    fun deckTree(includeCounts: Boolean): DeckTreeNode {
-        return col.backend.deckTree(now = if (includeCounts) TimeManager.time.intTime() else 0)
-    }
-
-    /**
-     * Mutate the backend reply into a format expected by legacy code. This is less efficient,
-     * and AnkiDroid may wish to use .deckTree() in the future instead.
-     */
-    fun deckTreeLegacy(includeCounts: Boolean): List<TreeNode<DeckNode>> {
-        fun toLegacyNode(node: DeckTreeNode, parentName: String): TreeNode<DeckNode> {
-            val thisName = if (parentName.isEmpty()) {
-                node.name
-            } else {
-                "$parentName::${node.name}"
-            }
-            val treeNode = TreeNode(
-                DeckNode(
-                    node,
-                    thisName
-                )
-            )
-            treeNode.children.addAll(
-                node.childrenList.asSequence().map { toLegacyNode(it, thisName) }
-            )
-            return treeNode
-        }
-        return toLegacyNode(deckTree(includeCounts), "").children
+    fun deckTree(includeCounts: Boolean): DeckNode {
+        return DeckNode(col.backend.deckTree(now = if (includeCounts) time.intTime() else 0), "")
     }
 
     /**

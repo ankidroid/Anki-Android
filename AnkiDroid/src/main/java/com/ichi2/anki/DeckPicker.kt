@@ -106,8 +106,6 @@ import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.DeckNode
-import com.ichi2.libanki.sched.TreeNode
-import com.ichi2.libanki.sched.findInDeckTree
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.ui.BadgeDrawableBuilder
 import com.ichi2.utils.*
@@ -210,7 +208,7 @@ open class DeckPicker :
     var optionsMenuState: OptionsMenuState? = null
 
     @VisibleForTesting
-    var dueTree: List<TreeNode<DeckNode>>? = null
+    var dueTree: DeckNode? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var searchDecksIcon: MenuItem? = null
@@ -970,7 +968,7 @@ open class DeckPicker :
         } else if (colIsOpen()) {
             selectNavigationItem(R.id.nav_decks)
             if (dueTree == null) {
-                updateDeckList(true)
+                updateDeckList()
             }
             updateDeckList()
             title = resources.getString(R.string.app_name)
@@ -1165,7 +1163,7 @@ open class DeckPicker :
             // update DB
             col.decks.collapse(did)
             // update stored state
-            findInDeckTree(dueTree!!, did)?.run {
+            dueTree?.find(did)?.run {
                 collapsed = !collapsed
             }
             renderPage(col.isEmpty)
@@ -1710,7 +1708,7 @@ open class DeckPicker :
         mFocusedDeck = did
         // Get some info about the deck to handle special cases
         val deckDueTreeNode = mDeckListAdapter.getNodeByDid(did)
-        if (deckDueTreeNode.value.knownToHaveRep()) {
+        if (deckDueTreeNode.knownToHaveRep()) {
             // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
             // If there is nothing to review, it'll come back to deck picker.
             openReviewerOrStudyOptions(selectionType)
@@ -1749,7 +1747,7 @@ open class DeckPicker :
         } else if (col.decks.isDyn(did)) {
             // Go to the study options screen if filtered deck with no cards to study
             openStudyOptions(false)
-        } else if (!deckDueTreeNode.hasChildren() && col.isEmptyDeck(did)) {
+        } else if (deckDueTreeNode.children.isEmpty() && col.isEmptyDeck(did)) {
             // If the deck is empty and has no children then show a message saying it's empty
             showSnackbar(R.string.empty_deck) {
                 addCallback(mSnackbarShowHideCallback)
@@ -1801,56 +1799,33 @@ open class DeckPicker :
      * This method also triggers an update for the widget to reflect the newly calculated counts.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    fun updateDeckList() {
-        updateDeckList(false)
-    }
-
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
-    private fun updateDeckList(quick: Boolean) {
+    fun updateDeckList() {
         if (Build.FINGERPRINT != "robolectric") {
             // uses user's desktop settings to determine whether a backup
             // actually happens
             performBackupInBackground()
         }
-        Timber.d("updateDeckList: quick: %b", quick)
-        if (quick) {
-            launchCatchingTask {
-                withProgress {
-                    val deckData = withCol {
-                        val decks: List<TreeNode<com.ichi2.libanki.sched.DeckNode>> = sched.quickDeckDueTree()
-                        Pair(decks, isEmpty)
-                    }
-                    onDecksLoaded(deckData.first, deckData.second)
-                }
-            }
-        } else {
-            loadDeckCounts?.cancel()
-            loadDeckCounts = launchCatchingTask {
+        Timber.d("updateDeckList")
+        loadDeckCounts?.cancel()
+        loadDeckCounts = launchCatchingTask {
+            withProgress {
                 Timber.d("Refreshing deck list")
-                withProgress {
-                    Timber.d("doInBackgroundLoadDeckCounts")
-                    val deckData = withCol {
-                        Pair(sched.deckDueTree(), this.isEmpty)
-                    }
-                    onDecksLoaded(deckData.first, deckData.second)
+                val deckData = withCol {
+                    Pair(sched.deckDueTree(), this.isEmpty)
                 }
+                onDecksLoaded(deckData.first, deckData.second)
             }
         }
     }
 
-    private fun onDecksLoaded(result: List<TreeNode<DeckNode>>?, collectionIsEmpty: Boolean) {
+    private fun onDecksLoaded(result: DeckNode, collectionIsEmpty: Boolean) {
         Timber.i("Updating deck list UI")
         hideProgressBar()
         // Make sure the fragment is visible
         if (fragmented) {
             mStudyoptionsFrame!!.visibility = View.VISIBLE
         }
-        if (result == null) {
-            Timber.e("null result loading deck counts")
-            showCollectionErrorDialog()
-            return
-        }
-        @Suppress("UNCHECKED_CAST")
         dueTree = result
         launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
@@ -1861,7 +1836,8 @@ open class DeckPicker :
     }
 
     private suspend fun renderPage(collectionIsEmpty: Boolean) {
-        if (dueTree == null) {
+        val tree = dueTree
+        if (tree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
             Timber.d("renderPage: recomputing dueTree")
@@ -1870,7 +1846,7 @@ open class DeckPicker :
         }
 
         // Check if default deck is the only available and there are no cards
-        val isEmpty = dueTree!!.size == 1 && dueTree!![0].value.did == 1L && collectionIsEmpty
+        val isEmpty = tree.children.size == 1 && tree.children[0].did == 1L && collectionIsEmpty
         if (animationDisabled()) {
             mDeckPickerContent.visibility = if (isEmpty) View.GONE else View.VISIBLE
             mNoDecksPlaceholder.visibility = if (isEmpty) View.VISIBLE else View.GONE
@@ -1911,7 +1887,7 @@ open class DeckPicker :
             // We're done here
             return
         }
-        mDeckListAdapter.buildDeckList(dueTree!!, currentFilter)
+        mDeckListAdapter.buildDeckList(tree, currentFilter)
 
         // Set the "x due in y minutes" subtitle
         try {

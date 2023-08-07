@@ -163,7 +163,7 @@ class DeckPickerTest : RobolectricTest() {
             DeckPicker::class.java,
             Intent()
         )
-        assertEquals(10, deckPicker.dueTree!![0].value.newCount.toLong())
+        assertEquals(10, deckPicker.dueTree!!.children[0].newCount.toLong())
     }
 
     @Test
