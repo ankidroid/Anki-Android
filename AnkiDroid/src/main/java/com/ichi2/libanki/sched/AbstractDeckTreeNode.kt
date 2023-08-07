@@ -15,7 +15,6 @@
  */
 package com.ichi2.libanki.sched
 
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import java.lang.UnsupportedOperationException
@@ -29,8 +28,6 @@ import java.util.*
  * deck will have an entry for every level of nesting). While the python version interchanges
  * between a string and a list of strings throughout processing, we always use an array for
  * this field and use getNamePart(0) for those cases.
- *
- * [processChildren] should be called if the children of this node are modified.
  */
 abstract class AbstractDeckTreeNode(
     /**
@@ -72,8 +69,6 @@ abstract class AbstractDeckTreeNode(
             did
         )
     }
-
-    abstract fun processChildren(col: Collection, children: List<AbstractDeckTreeNode>, addRev: Boolean)
 
     override fun toString(): String {
         val buf = StringBuffer()

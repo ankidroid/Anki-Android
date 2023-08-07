@@ -15,13 +15,10 @@
  */
 package com.ichi2.libanki.sched
 
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
-import kotlin.math.max
-import kotlin.math.min
 
 /**
  * Holds the data for a single node (row) in the deck due tree (the user-visible list
@@ -53,34 +50,6 @@ class DeckDueTreeNode(
             lrnCount,
             newCount
         )
-    }
-
-    private fun limitRevCount(limit: Int) {
-        revCount = max(0, min(revCount, limit))
-    }
-
-    private fun limitNewCount(limit: Int) {
-        newCount = max(0, min(newCount, limit))
-    }
-
-    override fun processChildren(col: Collection, children: List<AbstractDeckTreeNode>, addRev: Boolean) {
-        // tally up children counts
-        for (ch in children) {
-            lrnCount += ch.lrnCount
-            newCount += ch.newCount
-            if (addRev) {
-                revCount += ch.revCount
-            }
-        }
-        // limit the counts to the deck's limits
-        val conf = col.decks.confForDid(did)
-        if (conf.isStd) {
-            val deck = col.decks.get(did)
-            limitNewCount(conf.getJSONObject("new").getInt("perDay") - deck.getJSONArray("newToday").getInt(1))
-            if (addRev) {
-                limitRevCount(conf.getJSONObject("rev").getInt("perDay") - deck.getJSONArray("revToday").getInt(1))
-            }
-        }
     }
 
     override fun hashCode(): Int {
