@@ -23,6 +23,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
 import androidx.core.os.bundleOf
 import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.PreferenceManager.OnPreferenceTreeClickListener
@@ -78,6 +79,7 @@ abstract class SettingsFragment :
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         UsageAnalytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
         addPreferencesFromResource(preferenceResource)
+        allPreferences().forEach { it.isSingleLineTitle = false }
         initSubscreen()
     }
 
@@ -108,6 +110,21 @@ abstract class SettingsFragment :
         super.onStop()
         PreferenceManager.getDefaultSharedPreferences(requireContext())
             .unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    protected fun allPreferences(): List<Preference> {
+        val allPreferences = mutableListOf<Preference>()
+        for (i in 0 until preferenceScreen.preferenceCount) {
+            val pref = preferenceScreen.getPreference(i)
+            if (pref is PreferenceCategory) {
+                for (j in 0 until pref.preferenceCount) {
+                    allPreferences.add(pref.getPreference(j))
+                }
+            } else {
+                allPreferences.add(pref)
+            }
+        }
+        return allPreferences
     }
 
     companion object {
