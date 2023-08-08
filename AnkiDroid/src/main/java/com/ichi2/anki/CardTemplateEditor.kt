@@ -217,7 +217,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         val template = tempModel!!.getTemplate(ordinal)
         val templateName = template.getString("name")
 
-        if (deck != null && Decks.isDynamic(col, deck.deckId)) {
+        if (deck != null && col.decks.isDyn(deck.deckId)) {
             Timber.w("Attempted to set default deck of %s to dynamic deck %s", templateName, deck.name)
             showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return

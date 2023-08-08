@@ -1239,7 +1239,7 @@ abstract class AbstractFlashcardViewer :
         if (currentCard == null) return
         val actionBar = supportActionBar
         if (actionBar != null) {
-            val title = Decks.basename(col.decks.get(currentCard!!.did).getString("name"))
+            val title = Decks.basename(col.decks.name(currentCard!!.did))
             actionBar.title = title
         }
         if (!prefShowTopbar) {

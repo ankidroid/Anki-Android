@@ -44,7 +44,7 @@ class DecksTest : RobolectricTest() {
         val c = note.cards()[0]
         assertEquals(deck1, c.did)
         assertEquals(1, col.cardCount().toLong())
-        col.decks.rem(deck1)
+        col.decks.removeDecks(listOf(deck1))
         assertEquals(0, col.cardCount().toLong())
         // if we try to get it, we get the default
         assertEquals("[no deck]", col.decks.name(c.did))
@@ -59,7 +59,7 @@ class DecksTest : RobolectricTest() {
         // should be able to rename into a completely different branch, creating
         // parents as necessary
         val decks = col.decks
-        decks.rename(decks.get(id), "foo::bar")
+        decks.rename(decks.get(id)!!, "foo::bar")
         var names: List<String> = decks.allNamesAndIds().map { it.name }
         assertTrue(names.contains("foo"))
         assertTrue(names.contains("foo::bar"))
@@ -75,7 +75,7 @@ class DecksTest : RobolectricTest() {
         // when renaming, the children should be renamed too
         addDeck("one::two::three")
         id = addDeck("one")
-        col.decks.rename(col.decks.get(id), "yo")
+        col.decks.rename(col.decks.get(id)!!, "yo")
         names = decks.allNamesAndIds().map { it.name }
         for (n in arrayOf("yo", "yo::two", "yo::two::three")) {
             assertTrue(names.contains(n))
@@ -84,7 +84,7 @@ class DecksTest : RobolectricTest() {
         val filteredId = addDynamicDeck("filtered")
         col.decks.get(filteredId)
         val childId = addDeck("child")
-        val child = col.decks.get(childId)
+        val child = col.decks.get(childId)!!
         assertThrows(DeckRenameException::class.java) {
             col.decks.rename(
                 child,
@@ -168,9 +168,9 @@ class DecksTest : RobolectricTest() {
         val col = col
         val decks = col.decks
         val filteredId = addDynamicDeck("filtered")
-        val filtered = decks.get(filteredId)
+        val filtered = decks.get(filteredId)!!
         val deckId = addDeck("deck")
-        val deck = decks.get(deckId)
+        val deck = decks.get(deckId)!!
         assertThat(deck.isNormal, equalTo(true))
         assertThat(deck.isFiltered, equalTo(false))
         assertThat(filtered.isNormal, equalTo(false))

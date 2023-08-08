@@ -183,7 +183,7 @@ open class SchedulerTest : RobolectricTest() {
         }
         // give the child deck a different configuration
         val c2 = col.decks.confId("new conf")
-        col.decks.setConf(col.decks.get(deck2), c2)
+        col.decks.setConf(col.decks.get(deck2)!!, c2)
         // both confs have defaulted to a limit of 20
         Assert.assertEquals(20, col.sched.newCount().toLong())
         // first card we get comes from parent
@@ -954,7 +954,7 @@ open class SchedulerTest : RobolectricTest() {
         col.addNote(note2)
         // cram deck
         val did = addDynamicDeck("Cram")
-        val cram = col.decks.get(did)
+        val cram = col.decks.get(did)!!
         cram.put("resched", false)
         col.decks.save(cram)
         col.sched.rebuildDyn(did)
@@ -1448,7 +1448,7 @@ open class SchedulerTest : RobolectricTest() {
         val sched = col.sched
         addNoteUsingBasicModel("foo", "bar")
         val did = addDynamicDeck("test")
-        val deck = decks.get(did)
+        val deck = decks.get(did)!!
         deck.put("resched", false)
         sched.rebuildDyn(did)
         var card: Card?

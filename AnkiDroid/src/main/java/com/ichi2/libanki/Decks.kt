@@ -25,7 +25,6 @@
 
 package com.ichi2.libanki
 
-import androidx.annotation.CheckResult
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.decks.FilteredDeckForUpdate
@@ -35,60 +34,30 @@ import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.jsonObjectIterable
-import java8.util.Optional
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import org.json.JSONArray
-import org.json.JSONObject
 import java.util.*
 
 data class DeckNameId(val name: String, val id: DeckId)
 
 // TODO: col was a weakref
 
-/**
- * Untested WIP implementation of Decks for Schema V16.
- *
- * It's planned to consolidate interfaces between this and decks.py
- *
- * Afterwards, we can finish up the implementations, run our tests, and use this with a V16
- * collection, using decks as a separate table
- */
 class Decks(private val col: Collection) {
-    fun save(g: DeckConfig) {
-        // deck conf?
-        this.update_config(g)
-    }
-
-    fun save(g: Deck) {
-        this.update(g)
-    }
-
-    /* Deck save/load */
-    @RustCleanup("only for java interface: newDyn was used for filtered decks")
-    fun id(name: String): DeckId {
-        // use newDyn for now
-        return id(name, true, 0).get()
-    }
-
     /** "Add a deck with NAME. Reuse deck if already exists. Return id as int." */
-    @Throws(DeckRenameException::class)
-    fun id(name: String, create: Boolean = true, type: Int = 0): Optional<DeckId> {
-        val id = this.id_for_name(name)
+    fun id(name: String): DeckId {
+        val id = this.idForName(name)
         if (id != null) {
-            return Optional.of(id)
-        } else if (!create) {
-            return Optional.empty()
+            return id
         }
-
-        val deck = this.new_deck_legacy(type != 0)
+        val deck = this.newDeckLegacy(false)
         deck.name = name
         addDeckLegacy(deck)
-        return Optional.of(deck.id)
+        return deck.id
     }
 
-    fun addDeckLegacy(deck: Deck): OpChangesWithId {
+    private fun addDeckLegacy(deck: Deck): OpChangesWithId {
         val changes = col.backend.addDeckLegacy(
             json = BackendUtils.to_json_bytes(deck)
         )
@@ -96,19 +65,8 @@ class Decks(private val col: Collection) {
         return changes
     }
 
-    /** Remove the deck. If cardsToo, delete any cards inside. */
-    fun rem(did: DeckId, cardsToo: Boolean, childrenToo: Boolean) {
-        assert(cardsToo && childrenToo)
-        col.backend.removeDecks(listOf(did))
-    }
-
     fun removeDecks(deckIds: Iterable<Long>): OpChangesWithCount {
         return col.backend.removeDecks(dids = deckIds)
-    }
-
-    @Suppress("deprecation")
-    fun allNames(dyn: Boolean): List<String> {
-        return allNames(dyn = dyn, forcedefault = true)
     }
 
     /** A sorted sequence of deck names and IDs. */
@@ -121,19 +79,15 @@ class Decks(private val col: Collection) {
         }
     }
 
-    fun id_for_name(name: String): DeckId? {
-        try {
-            return col.backend.getDeckIdByName(name)
+    fun idForName(name: String): DeckId? {
+        return try {
+            col.backend.getDeckIdByName(name)
         } catch (ex: BackendNotFoundException) {
-            return null
+            null
         }
     }
 
-    fun get_legacy(did: DeckId): Deck? {
-        return get_deck_legacy(did)
-    }
-
-    private fun get_deck_legacy(did: DeckId): Deck? {
+    fun get(did: DeckId): Deck? {
         return try {
             Deck(BackendUtils.from_json_bytes(col.backend.getDeckLegacy(did)))
         } catch (ex: BackendNotFoundException) {
@@ -141,11 +95,7 @@ class Decks(private val col: Collection) {
         }
     }
 
-    private fun <T> JSONObject.objectIterable(f: (JSONObject) -> T) = sequence {
-        keys().forEach { k -> yield(f(getJSONObject(k))) }
-    }
-
-    fun new_deck_legacy(filtered: Boolean): Deck {
+    private fun newDeckLegacy(filtered: Boolean): Deck {
         val deck = BackendUtils.from_json_bytes(col.backend.newDeckLegacy(filtered))
         return Deck(
             if (filtered) {
@@ -164,23 +114,8 @@ class Decks(private val col: Collection) {
         )
     }
 
-    @Deprecated("decks.allIds() is deprecated, use .all_names_and_ids()")
-    fun allIds(): Set<DeckId> {
-        return this.allNamesAndIds().map { x -> x.id }.toSet()
-    }
-
-    @Deprecated("decks.allNames() is deprecated, use .all_names_and_ids()")
-    fun allNames(dyn: Boolean = true, forcedefault: Boolean = true): MutableList<String> {
-        return this.allNamesAndIds(
-            skipEmptyDefault = !forcedefault,
-            includeFiltered = dyn
-        ).map { x ->
-            x.name
-        }.toMutableList()
-    }
-
     fun collapse(did: DeckId) {
-        val deck = this.get(did)
+        val deck = this.get(did) ?: return
         deck.collapsed = !deck.collapsed
         this.save(deck)
     }
@@ -189,43 +124,31 @@ class Decks(private val col: Collection) {
         return len(this.allNamesAndIds())
     }
 
-    fun get(did: DeckId, default: Boolean): Deck? {
-        val deck = this.get_legacy(did)
-        return when {
-            deck != null -> deck
-            default -> this.get_legacy(1)
-            else -> null
-        }
-    }
-
     /** Get deck with NAME, ignoring case. */
     fun byName(name: String): Deck? {
-        val id = this.id_for_name(name)
+        val id = this.idForName(name)
         if (id != null) {
-            return this.get_legacy(id)
+            return get(id)
         }
         return null
     }
 
     /** Add or update an existing deck. Used for syncing and merging. */
-    fun update(g: Deck) {
-        g.set(
-            "id",
-            try {
-                col.backend.addOrUpdateDeckLegacy(
-                    BackendUtils.toByteString(g),
-                    preserveUsnAndMtime = false
-                ).toString()
-            } catch (ex: BackendDeckIsFilteredException) {
-                throw DeckRenameException.filteredAncestor(g.name, "")
-            }
-        )
+    fun save(g: Deck) {
+        g.id = try {
+            col.backend.addOrUpdateDeckLegacy(
+                BackendUtils.toByteString(g),
+                preserveUsnAndMtime = false
+            )
+        } catch (ex: BackendDeckIsFilteredException) {
+            throw DeckRenameException.filteredAncestor(g.name, "")
+        }
     }
 
     /** Rename deck prefix to NAME if not exists. Updates children. */
     fun rename(g: Deck, newName: String) {
         g.name = newName
-        this.update(g)
+        this.save(g)
     }
 
     /* Deck configurations */
@@ -238,31 +161,28 @@ class Decks(private val col: Collection) {
             .toList()
     }
 
+    /** Falls back on default config if deck or config missing */
     fun confForDid(did: DeckId): DeckConfig {
-        val deck = get(did)
-        return DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(deck.conf)))
+        val conf = get(did)?.conf ?: 1
+        return DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(conf)))
     }
 
-    fun update_config(conf: DeckConfig) {
-        conf.id = col.backend.addOrUpdateDeckConfigLegacy(conf.toString().toByteStringUtf8())
+    fun save(g: DeckConfig) {
+        g.id = col.backend.addOrUpdateDeckConfigLegacy(g.toString().toByteStringUtf8())
     }
 
-    fun add_config(
+    private fun addConfig(
         name: String
     ): DeckConfig {
         val conf = DeckConfig(newDeckConfigLegacy())
         conf.name = name
-        this.update_config(conf)
+        this.save(conf)
         return conf
     }
 
     private fun newDeckConfigLegacy(): DeckConfig {
         return DeckConfig(BackendUtils.from_json_bytes(col.backend.newDeckConfigLegacy()))
     }
-
-    fun add_config_returning_id(
-        name: String
-    ): DeckConfigId = this.add_config(name).id
 
     fun setConf(grp: Deck, id: DeckConfigId) {
         grp.conf = id
@@ -274,22 +194,7 @@ class Decks(private val col: Collection) {
         DeckConfig(BackendUtils.from_json_bytes(col.backend.getDeckConfigLegacy(confId)))
 
     fun confId(name: String): Long {
-        return add_config_returning_id(name)
-    }
-    /* Deck utils */
-
-    fun name(did: DeckId, default: Boolean): String {
-        val deck = this.get(did, default = default)
-        if (deck !== null) {
-            return deck.name
-        }
-        // TODO: Needs i18n, but the Java did the same, appears to be dead code
-        return "[no deck]"
-    }
-
-    @RustCleanup("needs testing")
-    fun checkIntegrity() {
-        // I believe this is now handled in libAnki
+        return addConfig(name).id
     }
 
     /* Deck selection */
@@ -309,7 +214,7 @@ class Decks(private val col: Collection) {
     }
 
     fun current(): Deck {
-        return this.get(this.selected())
+        return this.get(this.selected()) ?: this.get(1)!!
     }
 
     /** Select a new branch. */
@@ -323,29 +228,18 @@ class Decks(private val col: Collection) {
 
     /** Return a new dynamic deck and set it as the current deck. */
     fun newDyn(name: String): DeckId {
-        val did = this.id(name, type = 1).get()
-        this.select(did)
-        return did
+        val deck = this.newDeckLegacy(true)
+        deck.name = name
+        addDeckLegacy(deck)
+        this.select(deck.id)
+        return deck.id
     }
 
     fun isDyn(did: DeckId): Boolean {
-        return this.get(did).isFiltered
+        return this.get(did)?.isFiltered == true
     }
 
-    /** Remove the deck. delete any cards inside and child decks. */
-    fun rem(did: DeckId) = rem(did, true)
-
-    /** Remove the deck. Delete child decks. If cardsToo, delete any cards inside. */
-    fun rem(did: DeckId, cardsToo: Boolean = true) = rem(did, cardsToo, true)
-
-    /** An unsorted list of all deck names. */
-    fun allNames() = allNames(true)
-
-    /** Obtains the deck from the DeckID, or default if the deck was not found */
-    @CheckResult
-    fun get(did: DeckId): Deck = get(did, true)!!
-
-    fun name(did: DeckId): String = name(did, default = false)
+    fun name(did: DeckId): String = get(did)?.name ?: "[no deck]"
 
     /*
      * ***********************************************************
@@ -364,8 +258,8 @@ class Decks(private val col: Collection) {
         if (newName.isEmpty()) {
             return null
         }
-        val deck = get(did, false) ?: return null
-        return deck.getString("name") + Decks.DECK_SEPARATOR + subdeckName
+        val deck = get(did) ?: return null
+        return deck.getString("name") + DECK_SEPARATOR + subdeckName
     }
 
     /*
@@ -402,15 +296,7 @@ class Decks(private val col: Collection) {
     */
         @KotlinCleanup("nullability")
         fun isValidDeckName(deckName: String?): Boolean {
-            return deckName != null && !deckName.trim { it <= ' ' }.isEmpty()
-        }
-
-        fun isDynamic(col: Collection, deckId: Long): Boolean {
-            return isDynamic(col.decks.get(deckId))
-        }
-
-        fun isDynamic(deck: Deck): Boolean {
-            return deck.isFiltered
+            return deckName != null && deckName.trim { it <= ' ' }.isNotEmpty()
         }
     }
 }

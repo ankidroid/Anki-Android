@@ -180,7 +180,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             try {
                 val decks = col.decks
                 val deckId = decks.id(mPreviousDeckName!!)
-                decks.rename(decks.get(deckId), newName)
+                decks.rename(decks.get(deckId)!!, newName)
                 mOnNewDeckCreated!!.accept(deckId)
                 // 11668: Display feedback if a deck is renamed
                 showThemedToast(context, R.string.deck_renamed, true)

@@ -206,7 +206,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 when (contextMenuOption) {
                     STUDY_NEW -> {
                         requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
-                        val deck = collection.decks.get(did)
+                        val deck = collection.decks.get(did)!!
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(n, 0)
@@ -214,7 +214,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     }
                     STUDY_REV -> {
                         requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
-                        val deck = collection.decks.get(did)
+                        val deck = collection.decks.get(did)!!
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(0, n)
@@ -432,7 +432,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val did = requireArguments().getLong("did")
 
         val decks = collection.decks
-        val deckToStudyName = decks.get(did).getString("name")
+        val deckToStudyName = decks.name(did)
         val customStudyDeck = resources.getString(R.string.custom_study_deck_name)
         val cur = decks.byName(customStudyDeck)
         if (cur != null) {
@@ -452,7 +452,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
             dyn = try {
-                decks.get(decks.newDyn(customStudyDeck))
+                decks.get(decks.newDyn(customStudyDeck))!!
             } catch (ex: DeckRenameException) {
                 showThemedToast(requireActivity(), ex.getLocalizedMessage(this.resources), true)
                 return

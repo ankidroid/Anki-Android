@@ -608,7 +608,7 @@ open class CardBrowser :
         // If a valid value for last deck exists then use it, otherwise use libanki selected deck
         if (lastDeckId != null && lastDeckId == ALL_DECKS_ID) {
             selectAllDecks()
-        } else if (lastDeckId != null && col.decks.get(lastDeckId!!, false) != null) {
+        } else if (lastDeckId != null && col.decks.get(lastDeckId!!) != null) {
             deckSpinnerSelection!!.selectDeckById(lastDeckId!!, false)
         } else {
             deckSpinnerSelection!!.selectDeckById(col.decks.selected(), false)

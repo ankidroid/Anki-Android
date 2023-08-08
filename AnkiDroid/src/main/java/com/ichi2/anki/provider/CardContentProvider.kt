@@ -909,7 +909,7 @@ class CardContentProvider : ContentProvider() {
             DECKS -> {
                 // Insert new deck with specified name
                 val deckName = values!!.getAsString(FlashCardsContract.Deck.DECK_NAME)
-                var did = col.decks.id_for_name(deckName)
+                var did = col.decks.idForName(deckName)
                 if (did != null) {
                     throw IllegalArgumentException("Deck name already exists: $deckName")
                 }
@@ -921,7 +921,7 @@ class CardContentProvider : ContentProvider() {
                 } catch (filteredSubdeck: DeckRenameException) {
                     throw IllegalArgumentException(filteredSubdeck.message)
                 }
-                val deck: Deck = col.decks.get(did)
+                val deck: Deck = col.decks.get(did)!!
                 @KotlinCleanup("remove the null check if deck is found to be not null in DeckManager.get(Long)")
                 @Suppress("SENSELESS_COMPARISON")
                 if (deck != null) {
@@ -1150,7 +1150,7 @@ class CardContentProvider : ContentProvider() {
     }
 
     private fun selectDeckWithCheck(col: Collection, did: DeckId): Boolean {
-        return if (col.decks.get(did, false) != null) {
+        return if (col.decks.get(did) != null) {
             col.decks.select(did)
             true
         } else {

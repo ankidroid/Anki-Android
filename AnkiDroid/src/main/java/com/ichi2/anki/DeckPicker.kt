@@ -1932,7 +1932,7 @@ open class DeckPicker :
     fun exportDeck(did: DeckId) {
         mExportingDelegate.showExportDialog(
             ExportDialogParams(
-                message = resources.getString(R.string.confirm_apkg_export_deck, col.decks.get(did).getString("name")),
+                message = resources.getString(R.string.confirm_apkg_export_deck, col.decks.name(did)),
                 exportType = ExportType.ExportDeck(did)
             )
         )
@@ -1989,17 +1989,10 @@ open class DeckPicker :
         createDeckDialog.showDialog()
     }
 
-    fun confirmDeckDeletion(did: DeckId): Job? {
-        dismissAllDialogFragments()
+    fun confirmDeckDeletion(did: DeckId): Job {
         // No confirmation required, as undoable
-        return launchCatchingTask {
-            val changes = withProgress {
-                undoableOp {
-                    decks.removeDecks(listOf(did))
-                }
-            }
-            showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT)
-        }
+        dismissAllDialogFragments()
+        return deleteDeck(did)
     }
 
     /**
@@ -2007,30 +2000,14 @@ open class DeckPicker :
      * Use [.confirmDeckDeletion] for a confirmation dialog
      * @param did the deck to delete
      */
-    fun deleteDeck(did: DeckId) {
-        launchCatchingTask {
-            // Flag to indicate if the deck being deleted is the current deck.
-            val isRemovingCurrent = (did == col.decks.current().optLong("id"))
-            withProgress(resources.getString(R.string.delete_deck)) {
-                withCol {
-                    Timber.d("doInBackgroundDeleteDeck")
-                    col.decks.rem(did, true)
+    fun deleteDeck(did: DeckId): Job {
+        return launchCatchingTask {
+            val changes = withProgress(resources.getString(R.string.delete_deck)) {
+                undoableOp {
+                    col.decks.removeDecks(listOf(did))
                 }
             }
-
-            // After deleting a deck there is no more undo stack
-            // Rebuild options menu with side effect of resetting undo button state
-            invalidateOptionsMenu()
-
-            // In fragmented mode, if the deleted deck was the current deck, we need to reload
-            // the study options fragment with a valid deck and re-center the deck list to the
-            // new current deck. Otherwise we just update the list normally.
-            if (fragmented && isRemovingCurrent) {
-                updateDeckList()
-                openStudyOptions(false)
-            } else {
-                updateDeckList()
-            }
+            showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT)
         }
     }
 

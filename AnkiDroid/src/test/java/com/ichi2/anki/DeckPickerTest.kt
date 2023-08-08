@@ -527,7 +527,7 @@ class DeckPickerTest : RobolectricTest() {
         );
 
         fun isCollection(col: com.ichi2.libanki.Collection): Boolean {
-            return col.decks.allNames().contains(deckName)
+            return col.decks.byName(deckName) != null
         }
     }
 
