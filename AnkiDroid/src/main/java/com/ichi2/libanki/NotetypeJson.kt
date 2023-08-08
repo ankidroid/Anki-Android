@@ -18,6 +18,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
 import com.ichi2.utils.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 /**
@@ -94,4 +95,56 @@ class NotetypeJson : JSONObject {
         }
         return nonemptyFields
     }
+
+    /** Python method
+     * https://docs.python.org/3/library/stdtypes.html?highlight=dict#dict.update
+     *
+     * Update the dictionary with the provided key/value pairs, overwriting existing keys
+     */
+    fun update(updateFrom: NotetypeJson) {
+        for (k in updateFrom.keys()) {
+            put(k, updateFrom[k])
+        }
+    }
+
+    fun deepcopy(): NotetypeJson = NotetypeJson(this.deepClone())
+
+    var flds: JSONArray
+        get() = getJSONArray("flds")
+        set(value) {
+            put("flds", value)
+        }
+
+    var tmpls: JSONArray
+        get() = getJSONArray("tmpls")
+        set(value) {
+            put("tmpls", value)
+        }
+
+    var id: Long
+        get() = getLong("id")
+        set(value) {
+            put("id", value)
+        }
+
+    var name: String
+        get() = getString("name")
+        set(value) {
+            put("name", value)
+        }
+
+    /** Integer specifying which field is used for sorting in the browser */
+    var sortf: Int
+        get() = getInt("sortf")
+        set(value) {
+            put("sortf", value)
+        }
+
+    // TODO: Not constrained
+    @Consts.MODEL_TYPE
+    var type: Int
+        get() = getInt("type")
+        set(value) {
+            put("type", value)
+        }
 }

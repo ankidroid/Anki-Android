@@ -64,58 +64,6 @@ private typealias int = Long
 private typealias Field = JSONObject // Dict<str, Any>
 private typealias Template = JSONObject // Dict<str, Union3<str, int, Unit>>
 
-/** Python method
- * https://docs.python.org/3/library/stdtypes.html?highlight=dict#dict.update
- *
- * Update the dictionary with the provided key/value pairs, overwriting existing keys
- */
-fun NotetypeJson.update(updateFrom: NotetypeJson) {
-    for (k in updateFrom.keys()) {
-        put(k, updateFrom[k])
-    }
-}
-
-fun NotetypeJson.deepcopy(): NotetypeJson = NotetypeJson(this.deepClone())
-
-var NotetypeJson.flds: JSONArray
-    get() = getJSONArray("flds")
-    set(value) {
-        put("flds", value)
-    }
-
-var NotetypeJson.tmpls: JSONArray
-    get() = getJSONArray("tmpls")
-    set(value) {
-        put("tmpls", value)
-    }
-
-var NotetypeJson.id: int
-    get() = getLong("id")
-    set(value) {
-        put("id", value)
-    }
-
-var NotetypeJson.name: String
-    get() = getString("name")
-    set(value) {
-        put("name", value)
-    }
-
-/** Integer specifying which field is used for sorting in the browser */
-var NotetypeJson.sortf: Int
-    get() = getInt("sortf")
-    set(value) {
-        put("sortf", value)
-    }
-
-// TODO: Not constrained
-@Consts.MODEL_TYPE
-var NotetypeJson.type: Int
-    get() = getInt("type")
-    set(value) {
-        put("type", value)
-    }
-
 class Notetypes(val col: Collection) {
     /*
     # Saving/loading registry
