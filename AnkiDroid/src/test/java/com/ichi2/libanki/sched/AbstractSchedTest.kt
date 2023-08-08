@@ -18,7 +18,6 @@ package com.ichi2.libanki.sched
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.*
-import com.ichi2.testutils.AnkiAssert
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
@@ -57,20 +56,6 @@ class AbstractSchedTest : RobolectricTest() {
         sched.card
         col.undo()
         assertThat(sched.newCount(), `is`(10))
-    }
-
-    @Test
-    fun deckDueTreeInconsistentDecksPasses() {
-        // https://github.com/ankidroid/Anki-Android/issues/6383#issuecomment-686266966
-        // The bad data came from AnkiWeb, this passes using "addDeck" but we can't assume this is always called.
-        val parent = "DANNY SULLIVAN MCM DECK"
-        val child = "Danny Sullivan MCM Deck::*MCM_UNTAGGED_CARDS"
-
-        addDeckWithExactName(parent)
-        addDeckWithExactName(child)
-
-        col.decks.checkIntegrity()
-        AnkiAssert.assertDoesNotThrow { col.sched.deckDueTree() }
     }
 
     @Test
@@ -127,23 +112,5 @@ class AbstractSchedTest : RobolectricTest() {
             sched.counts()
         )
         assertNotNull(card)
-    }
-
-    private fun addDeckWithExactName(name: String) {
-        val decks = col.decks
-
-        val did = addDeck(name)
-        val d = decks.get(did)
-        d.put("name", name)
-        decks.update(d)
-
-        @KotlinCleanup("Replace stream() with kotlin collection operators")
-        val hasMatch = decks.all().stream().anyMatch { x: Deck -> name == x.getString("name") }
-        @KotlinCleanup("remove .format")
-        assertThat(
-            "Deck $name should exist",
-            hasMatch,
-            `is`(true)
-        )
     }
 }

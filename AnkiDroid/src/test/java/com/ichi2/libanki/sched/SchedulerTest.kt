@@ -40,8 +40,6 @@ import com.ichi2.libanki.Consts.SYNC_VER
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
-import com.ichi2.testutils.libanki.CollectionAssert
-import com.ichi2.testutils.libanki.FilteredDeckUtil
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
@@ -66,77 +64,11 @@ import kotlin.test.assertNull
 open class SchedulerTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
-    fun emptyFilteredDeckSuspendHandling() {
-        val col = col
-        val cardId = addNoteUsingBasicModel("Hello", "World").firstCard().id
-        val filteredDid = FilteredDeckUtil.createFilteredDeck(col, "Filtered", "(is:new or is:due)")
-        MatcherAssert.assertThat(
-            "No cards in filtered deck before rebuild",
-            col.cardCount(filteredDid),
-            Matchers.equalTo(0)
-        )
-        col.sched.rebuildDyn(filteredDid)
-        MatcherAssert.assertThat(
-            "Card is in filtered deck after rebuild",
-            col.cardCount(filteredDid),
-            Matchers.equalTo(1)
-        )
-        col.sched.suspendCards(listOf(cardId))
-        CollectionAssert.assertSuspended(col, cardId)
-        col.sched.rebuildDyn(filteredDid)
-        CollectionAssert.assertSuspended(col, cardId)
-        MatcherAssert.assertThat(
-            "Card should be moved to the home deck",
-            col.getCard(cardId).did,
-            Matchers.equalTo(1L)
-        )
-        MatcherAssert.assertThat(
-            "Card should not be in a filtered deck",
-            col.getCard(cardId).oDid,
-            Matchers.equalTo(0L)
-        )
-    }
-
-    @Test
-    @Throws(ConfirmModSchemaException::class)
-    fun rebuildFilteredDeckSuspendHandling() {
-        val col = col
-        val cardId = addNoteUsingBasicModel("Hello", "World").firstCard().id
-        val filteredDid = FilteredDeckUtil.createFilteredDeck(col, "Filtered", "(is:new or is:due)")
-        MatcherAssert.assertThat(
-            "No cards in filtered deck before rebuild",
-            col.cardCount(filteredDid),
-            Matchers.equalTo(0)
-        )
-        col.sched.rebuildDyn(filteredDid)
-        MatcherAssert.assertThat(
-            "Card is in filtered deck after rebuild",
-            col.cardCount(filteredDid),
-            Matchers.equalTo(1)
-        )
-        col.sched.suspendCards(listOf(cardId))
-        CollectionAssert.assertSuspended(col, cardId)
-        col.sched.emptyDyn(filteredDid)
-        CollectionAssert.assertSuspended(col, cardId)
-        MatcherAssert.assertThat(
-            "Card should be moved to the home deck",
-            col.getCard(cardId).did,
-            Matchers.equalTo(1L)
-        )
-        MatcherAssert.assertThat(
-            "Card should not be in a filtered deck",
-            col.getCard(cardId).oDid,
-            Matchers.equalTo(0L)
-        )
-    }
-
-    @Test
-    @Throws(ConfirmModSchemaException::class)
     fun handlesSmallSteps() {
         val col = col
         // a delay of 0 crashed the app (step of 0.01).
         addNoteUsingBasicModel("Hello", "World")
-        col.decks.allConf()[0].getJSONObject("new")
+        col.decks.allConfig()[0].getJSONObject("new")
             .put("delays", JSONArray(listOf(0.01, 10)))
         val c = col.sched.card
         MatcherAssert.assertThat(c, Matchers.notNullValue())
@@ -593,59 +525,6 @@ open class SchedulerTest : RobolectricTest() {
         c.load();
         assertEquals(QUEUE_TYPE_SUSPENDED, c.getQueue());
         */
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun test_review_limits() {
-        TimeManager.reset()
-        val col = col
-        val parent = col.decks.get(addDeck("parent"))
-        val child = col.decks.get(addDeck("parent::child"))
-        val pconf = col.decks.getConf(col.decks.confId("parentConf"))
-        val cconf = col.decks.getConf(col.decks.confId("childConf"))
-        pconf.getJSONObject("rev").put("perDay", 5)
-        col.decks.updateConf(pconf)
-        col.decks.setConf(parent, pconf.getLong("id"))
-        cconf.getJSONObject("rev").put("perDay", 10)
-        col.decks.updateConf(cconf)
-        col.decks.setConf(child, cconf.getLong("id"))
-        val m = col.notetypes.current()
-        m.put("did", child.getLong("id"))
-        col.notetypes.save(m, false)
-
-        // add some cards
-        for (i in 0..19) {
-            val note = col.newNote()
-            note.setItem("Front", "one")
-            note.setItem("Back", "two")
-            col.addNote(note)
-
-            // make them reviews
-            val c = note.cards()[0]
-            c.queue = QUEUE_TYPE_REV
-            c.type = CARD_TYPE_REV
-            c.due = 0
-            c.flush()
-        }
-        val parentIndex = 0
-        var tree = col.sched.deckDueTree().children[parentIndex]
-        // (('parent', 1514457677462, 5, 0, 0, (('child', 1514457677463, 5, 0, 0, ()),)))
-        Assert.assertEquals("parent", tree.fullDeckName)
-        Assert.assertEquals(5, tree.revCount.toLong()) // paren, tree.review_count)t
-        Assert.assertEquals(10, tree.children[0].revCount.toLong())
-
-        // .counts() should match
-        col.decks.select(child.getLong("id"))
-        Assert.assertEquals(Counts(0, 0, 10), col.sched.counts())
-
-        // answering a card in the child should decrement parent count
-        val c = col.sched.card!!
-        col.sched.answerCard(c, BUTTON_THREE)
-        Assert.assertEquals(Counts(0, 0, 9), col.sched.counts())
-        tree = col.sched.deckDueTree().children[parentIndex]
-        Assert.assertEquals(4, tree.revCount.toLong())
-        Assert.assertEquals(9, tree.children[0].revCount.toLong())
     }
 
     @Test

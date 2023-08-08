@@ -452,7 +452,7 @@ open class Scheduler(val col: Collection) {
             sb.append("\n\n")
             sb.append("").append(context.getString(R.string.sched_has_buried)).append(now)
         }
-        if (col.decks.current().isStd) {
+        if (col.decks.current().isNormal) {
             sb.append("\n\n")
             sb.append(context.getString(R.string.studyoptions_congrats_custom))
         }

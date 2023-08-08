@@ -27,7 +27,6 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.servicelayer.DeckService.deckExists
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
@@ -84,13 +83,6 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
                     return@input
                 }
-
-                if (deckExists(col, fullyQualifiedDeckName!!)) {
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
-                    dialog.getInputField().error = context.getString(R.string.validation_deck_already_exists)
-                    return@input
-                }
-
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
             }
             displayKeyboard(getInputField())

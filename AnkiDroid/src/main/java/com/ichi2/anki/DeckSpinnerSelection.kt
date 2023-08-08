@@ -25,7 +25,6 @@ import androidx.appcompat.app.ActionBar
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
-import com.ichi2.anki.servicelayer.DeckService.shouldShowDefaultDeck
 import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -212,13 +211,6 @@ class DeckSpinnerSelection(
         }
         val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
         AnkiActivity.showDialogFragment(mFragmentManagerSupplier.getFragmentManager(), dialog)
-    }
-
-    /**
-     * @return Whether default deck should appear in the list of deck
-     */
-    private fun shouldHideDefaultDeck(): Boolean {
-        return !alwaysShowDefault && !shouldShowDefaultDeck(collection)
     }
 
     companion object {

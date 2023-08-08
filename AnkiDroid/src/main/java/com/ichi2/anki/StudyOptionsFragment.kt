@@ -420,7 +420,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (mLoadWithDeckOptions) {
             mLoadWithDeckOptions = false
             val deck = col!!.decks.current()
-            if (deck.isDyn && deck.has("empty")) {
+            if (deck.isFiltered && deck.has("empty")) {
                 deck.remove("empty")
             }
             launchCatchingTask { rebuildCram() }
@@ -571,7 +571,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
 
             // Switch between the empty view, the ordinary view, and the "congratulations" view
-            val isDynamic = deck.isDyn
+            val isDynamic = deck.isFiltered
             if (result.numberOfCardsInDeck == 0 && !isDynamic) {
                 mCurrentContentView = CONTENT_EMPTY
                 deckInfoLayout.visibility = View.VISIBLE

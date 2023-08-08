@@ -199,7 +199,7 @@ class FilteredDeckOptions :
             col.decks.current()
         }
         registerExternalStorageListener()
-        if (deck.isStd) {
+        if (deck.isNormal) {
             Timber.w("Deck is not a dyn deck")
             finish()
             return

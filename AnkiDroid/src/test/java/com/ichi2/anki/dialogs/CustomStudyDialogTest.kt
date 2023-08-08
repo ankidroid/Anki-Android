@@ -73,7 +73,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             dialog!!.getActionButton(WhichButton.POSITIVE).callOnClick()
         }
         val customStudy = col.decks.current()
-        MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isDyn)
+        MatcherAssert.assertThat("Custom Study should be dynamic", customStudy.isFiltered)
         MatcherAssert.assertThat("could not find deck: Custom study session", customStudy, notNullValue())
         customStudy.remove("id")
         customStudy.remove("mod")

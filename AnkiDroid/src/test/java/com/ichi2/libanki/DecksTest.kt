@@ -171,34 +171,10 @@ class DecksTest : RobolectricTest() {
         val filtered = decks.get(filteredId)
         val deckId = addDeck("deck")
         val deck = decks.get(deckId)
-        assertThat(deck.isStd, equalTo(true))
-        assertThat(deck.isDyn, equalTo(false))
-        assertThat(filtered.isStd, equalTo(false))
-        assertThat(filtered.isDyn, equalTo(true))
-
-        val filteredConfig = decks.confForDid(filteredId)
-        val deckConfig = decks.confForDid(deckId)
-        assertThat(deckConfig.isStd, equalTo((true)))
-        assertThat(deckConfig.isDyn, equalTo((false)))
-        assertThat(filteredConfig.isStd, equalTo((false)))
-        assertThat(filteredConfig.isDyn, equalTo((true)))
-    }
-
-    @Test
-    fun confForDidReturnsDefaultIfNotFound() {
-        // https://github.com/ankitects/anki/commit/94d369db18c2a6ac3b0614498d8abcc7db538633
-        val decks = col.decks
-
-        val d = decks.all()[0]
-        d.put("conf", 12L)
-        decks.save()
-
-        val config = decks.confForDid(d.getLong("id"))
-        assertThat(
-            "If a config is not found, return the default",
-            config.getLong("id"),
-            equalTo(1L)
-        )
+        assertThat(deck.isNormal, equalTo(true))
+        assertThat(deck.isFiltered, equalTo(false))
+        assertThat(filtered.isNormal, equalTo(false))
+        assertThat(filtered.isFiltered, equalTo(true))
     }
 
     companion object {

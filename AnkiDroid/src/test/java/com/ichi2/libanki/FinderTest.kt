@@ -77,7 +77,7 @@ class FinderTest : RobolectricTest() {
     }
 
     private fun enableBurySiblings() {
-        val config = col.decks.allConf()[0]
+        val config = col.decks.allConfig()[0]
         config.getJSONObject("new").put("bury", true)
         col.decks.save(config)
     }

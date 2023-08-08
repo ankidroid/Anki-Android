@@ -437,7 +437,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val cur = decks.byName(customStudyDeck)
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck)
-            if (cur.isStd) {
+            if (cur.isNormal) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck)
                 showThemedToast(requireContext(), getString(R.string.custom_study_deck_exists), true)
                 return

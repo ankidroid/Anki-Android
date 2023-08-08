@@ -68,7 +68,6 @@ object Consts {
     annotation class MODEL_TYPE
 
     // deck types
-    const val DECK_STD = 0
     const val DECK_DYN = 1
 
     const val STARTING_FACTOR = 2500
