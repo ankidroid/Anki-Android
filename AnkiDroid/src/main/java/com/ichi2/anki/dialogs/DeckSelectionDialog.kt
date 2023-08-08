@@ -335,7 +335,7 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
         }
 
-        constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
+        constructor(d: DeckNameId) : this(d.id, d.name)
 
         /** "All decks" comes first. Then usual deck name order.  */
         override fun compareTo(other: SelectableDeck): Int {
@@ -358,13 +358,10 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @param filter A method deciding which deck to add
              * @return the list of all SelectableDecks from the collection satisfying filter
              */
-            fun fromCollection(c: Collection, filter: ((Deck) -> Boolean) = { true }): List<SelectableDeck> {
-                val all = c.decks.all()
+            fun fromCollection(c: Collection, includeFiltered: Boolean): List<SelectableDeck> {
+                val all = c.decks.allNamesAndIds(includeFiltered = includeFiltered)
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)
                 for (d in all) {
-                    if (!filter(d)) {
-                        continue
-                    }
                     ret.add(SelectableDeck(d))
                 }
                 return ret

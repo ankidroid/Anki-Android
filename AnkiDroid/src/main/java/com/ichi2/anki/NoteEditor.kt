@@ -169,7 +169,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return
         }
         deckId = deck.deckId
-        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner(mCurrentEditedCard, addNote)
+        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner()
         mDeckSpinnerSelection!!.selectDeckById(deck.deckId, false)
     }
 
@@ -367,7 +367,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 alwaysShowDefault = true,
                 showFilteredDecks = false
             )
-        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner(mCurrentEditedCard, addNote)
+        mDeckSpinnerSelection!!.initializeNoteEditorDeckSpinner()
         deckId = intent.getLongExtra(EXTRA_DID, deckId)
         val getTextFromSearchView = intent.getStringExtra(EXTRA_TEXT_FROM_SEARCH_VIEW)
         setDid(mEditorNote)

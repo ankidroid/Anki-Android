@@ -170,7 +170,7 @@ class CardBrowserTest : RobolectricTest() {
         val decks = b.validDecksForChangeDeck
 
         for (d in decks) {
-            if (d.getString("name") == "Hello") {
+            if (d.name == "Hello") {
                 return@runTest
             }
         }
@@ -185,7 +185,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val decks = b.validDecksForChangeDeck
 
-        if (decks.any { it.getString("name") == "World" }) {
+        if (decks.any { it.name == "World" }) {
             fail("Dynamic decks should not be transferred to by the browser.")
         }
     }
@@ -201,7 +201,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val decks = b.validDecksForChangeDeck
         for (d in decks) {
-            assertThat(validNames, hasItem(d.getString("name")))
+            assertThat(validNames, hasItem(d.name))
         }
         assertThat("Additional unexpected decks were present", decks.size, equalTo(2))
     }

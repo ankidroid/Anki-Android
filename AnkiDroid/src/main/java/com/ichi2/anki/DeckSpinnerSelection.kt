@@ -63,7 +63,7 @@ class DeckSpinnerSelection(
 
     private val mFragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
 
-    lateinit var dropDownDecks: List<Deck>
+    lateinit var dropDownDecks: List<DeckNameId>
         private set
     private var mDeckDropDownAdapter: DeckDropDownAdapter? = null
 
@@ -71,10 +71,10 @@ class DeckSpinnerSelection(
         actionBar.setDisplayShowTitleEnabled(false)
 
         // Add drop-down menu to select deck to action bar.
-        dropDownDecks = computeDropDownDecks()
+        dropDownDecks = computeDropDownDecks(includeFiltered = showFilteredDecks)
         mAllDeckIds = ArrayList(dropDownDecks.size)
         for (d in dropDownDecks) {
-            val thisDid = d.getLong("id")
+            val thisDid = d.id
             mAllDeckIds.add(thisDid)
         }
         mDeckDropDownAdapter = DeckDropDownAdapter(context, dropDownDecks)
@@ -82,30 +82,13 @@ class DeckSpinnerSelection(
         setSpinnerListener()
     }
 
-    fun initializeNoteEditorDeckSpinner(currentEditedCard: Card?, addNote: Boolean) {
-        val col = collection
-        dropDownDecks = computeDropDownDecks()
+    fun initializeNoteEditorDeckSpinner() {
+        dropDownDecks = computeDropDownDecks(includeFiltered = false)
         val deckNames = ArrayList<String>(dropDownDecks.size)
         mAllDeckIds = ArrayList(dropDownDecks.size)
         for (d in dropDownDecks) {
-            // add current deck and all other non-filtered decks to deck list
-            val thisDid = d.getLong("id")
-            val currentName = d.getString("name")
-            val lineContent: String = if (d.isStd) {
-                currentName
-            } else {
-                // We do not allow cards to be moved to dynamic deck.
-                // That mean we do not list dynamic decks in the spinner, with one exception
-                if (!addNote && currentEditedCard != null && currentEditedCard.did == thisDid) {
-                    // If the current card is in a dynamic deck, it can stay there. Hence current deck is added
-                    // to the spinner, even if it is dynamic.
-                    context.applicationContext.getString(R.string.current_and_default_deck, currentName, col.decks.name(currentEditedCard.oDid))
-                } else {
-                    continue
-                }
-            }
-            mAllDeckIds.add(thisDid)
-            deckNames.add(lineContent)
+            val currentName = d.name
+            deckNames.add(currentName)
         }
         val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -129,12 +112,8 @@ class DeckSpinnerSelection(
     /**
      * @return All decks, except maybe default if it should be hidden.
      */
-    fun computeDropDownDecks(): List<Deck> {
-        val sortedDecks = collection.decks.allSorted().toMutableList()
-        if (shouldHideDefaultDeck()) {
-            sortedDecks.removeIf { x: Deck -> x.getLong("id") == Consts.DEFAULT_DECK_ID }
-        }
-        return sortedDecks
+    fun computeDropDownDecks(includeFiltered: Boolean): List<DeckNameId> {
+        return collection.decks.allNamesAndIds(skipEmptyDefault = true, includeFiltered = includeFiltered)
     }
 
     fun setSpinnerListener() {
@@ -227,12 +206,9 @@ class DeckSpinnerSelection(
      * Displays a [DeckSelectionDialog]
      */
     fun displayDeckSelectionDialog(col: Collection?) {
-        val decks = fromCollection(col!!) { d: Deck -> showFilteredDecks || !Decks.isDynamic(d) }.toMutableList()
+        val decks = fromCollection(col!!, includeFiltered = false).toMutableList()
         if (showAllDecks) {
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
-        }
-        if (shouldHideDefaultDeck()) {
-            decks.removeIf { x: SelectableDeck -> x.deckId == Consts.DEFAULT_DECK_ID }
         }
         val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
         AnkiActivity.showDialogFragment(mFragmentManagerSupplier.getFragmentManager(), dialog)

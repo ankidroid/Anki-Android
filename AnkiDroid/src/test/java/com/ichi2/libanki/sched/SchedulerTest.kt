@@ -1308,7 +1308,7 @@ open class SchedulerTest : RobolectricTest() {
         note.setItem("Front", "three")
         note.model().put("did", addDeck("foo::baz"))
         col.addNote(note)
-        Assert.assertEquals(5, col.decks.allSortedNames().size.toLong())
+        Assert.assertEquals(5, col.decks.allNamesAndIds().size.toLong())
         val tree = col.sched.deckDueTree().children[0]
         Assert.assertEquals("Default", tree.lastDeckNameComponent)
         // sum of child and parent

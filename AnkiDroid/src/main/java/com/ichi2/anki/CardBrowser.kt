@@ -1605,9 +1605,8 @@ open class CardBrowser :
 
     /** Returns the decks which are valid targets for "Change Deck"  */
     @get:VisibleForTesting
-    val validDecksForChangeDeck: List<Deck>
-        get() = deckSpinnerSelection!!.computeDropDownDecks()
-            .filterNot { d -> Decks.isDynamic(d) }
+    val validDecksForChangeDeck: List<DeckNameId>
+        get() = deckSpinnerSelection!!.computeDropDownDecks(includeFiltered = false)
 
     @RustCleanup("this isn't how Desktop Anki does it")
     override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {

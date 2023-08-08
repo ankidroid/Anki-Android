@@ -400,14 +400,7 @@ abstract class AbstractFlashcardViewer :
         val card = editorCard!!
         withProgress {
             undoableOp {
-                val changes = updateNote(card.note())
-                if (col.decks.active().contains(card.did) || !canAccessScheduler()) {
-                    card.apply {
-                        load()
-                        q(true)
-                    }
-                }
-                changes
+                updateNote(card.note())
             }
         }
         onCardUpdated(card)

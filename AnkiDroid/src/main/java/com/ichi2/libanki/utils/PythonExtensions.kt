@@ -55,10 +55,6 @@ fun <T> List<T>?.isNullOrEmpty(): Boolean {
     return this == null || this.isEmpty()
 }
 
-fun <T> List<T>?.isNotNullOrEmpty(): Boolean {
-    return !this.isNullOrEmpty()
-}
-
 fun <T> list(vararg elements: T) = mutableListOf(elements)
 
 fun <T> list(values: Collection<T>): List<T> = ArrayList(values)

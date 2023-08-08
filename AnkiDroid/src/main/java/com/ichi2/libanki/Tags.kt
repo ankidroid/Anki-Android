@@ -20,9 +20,7 @@ package com.ichi2.libanki
 import androidx.annotation.WorkerThread
 import anki.collection.OpChangesWithCount
 import com.ichi2.libanki.utils.join
-import com.ichi2.libanki.utils.list
 import com.ichi2.libanki.utils.set
-import net.ankiweb.rsdroid.RustCleanup
 import java.util.*
 
 /**
@@ -38,23 +36,8 @@ class Tags(private val col: Collection) {
     /** all tags */
     fun all(): List<String> = col.backend.allTags()
 
-    @RustCleanup("remove after migrating to backend custom study code")
-    fun byDeck(did: DeckId, children: Boolean): List<String> {
-        val basequery = "select n.tags from cards c, notes n WHERE c.nid = n.id"
-        val query: String
-        val res: List<String>
-        if (!children) {
-            query = basequery + " AND c.did=?"
-            res = col.db.queryStringList(query, did)
-            return list(set(split(" ".join(res))))
-        }
-        val dids = mutableListOf(did)
-        for ((_, id) in col.decks.children(did)) {
-            dids.add(id)
-        }
-        query = basequery + " AND c.did IN " + Utils.ids2str(dids)
-        res = col.db.queryStringList(query)
-        return list(set(split(" ".join(res))))
+    fun byDeck(did: DeckId): List<String> {
+        return col.backend.customStudyDefaults(did).tagsList.map { it.name }
     }
 
     /* Legacy signature, used by unit tests. */

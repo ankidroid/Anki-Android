@@ -19,18 +19,6 @@ import androidx.annotation.IntDef
 import kotlin.annotation.Retention
 
 object Consts {
-    // whether new cards should be mixed with reviews, or shown first or last
-    const val NEW_CARDS_DISTRIBUTE = 0
-    const val NEW_CARDS_LAST = 1
-    const val NEW_CARDS_FIRST = 2
-
-    @Retention(AnnotationRetention.SOURCE)
-    @IntDef(NEW_CARDS_DISTRIBUTE, NEW_CARDS_LAST, NEW_CARDS_FIRST)
-    annotation class NEW_CARD_ORDER
-
-    // new card insertion order
-    const val NEW_CARDS_DUE = 1
-
     // Queue types
     const val QUEUE_TYPE_MANUALLY_BURIED = -3
     const val QUEUE_TYPE_SIBLING_BURIED = -2
@@ -92,7 +80,6 @@ object Consts {
 
     // Leech actions
     const val LEECH_SUSPEND = 0
-    const val LEECH_TAGONLY = 1
 
     // Buttons
     const val BUTTON_ONE = 1

@@ -89,8 +89,6 @@ class PagesActivity : AnkiActivity() {
          */
         const val EXTRA_PAGE_CLASS = "pageClass"
 
-        const val HOST_NAME = "localhost"
-
         /**
          * @param fragmentClass class of the [PageFragment] to be created
          * @param arguments to be passed to the created [PageFragment]

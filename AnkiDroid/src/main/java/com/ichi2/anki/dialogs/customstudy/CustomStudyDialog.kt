@@ -134,7 +134,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         val dialogFragment = TagsDialog().withArguments(
                             TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
                             ArrayList(),
-                            ArrayList(collection.tags.byDeck(currentDeck, true))
+                            ArrayList(collection.tags.byDeck(currentDeck))
                         )
                         customStudyListener?.showDialogFragment(dialogFragment)
                     }

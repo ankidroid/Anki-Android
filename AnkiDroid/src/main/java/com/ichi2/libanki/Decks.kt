@@ -23,30 +23,17 @@
  *
  */
 
-@file:Suppress(
-    "RedundantIf",
-    "LiftReturnOrAssignment",
-    "MemberVisibilityCanBePrivate",
-    "FunctionName",
-    "ConvertToStringTemplate",
-    "LocalVariableName"
-)
-
 package com.ichi2.libanki
 
 import androidx.annotation.CheckResult
-import androidx.annotation.VisibleForTesting
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.decks.FilteredDeckForUpdate
 import com.google.protobuf.ByteString
-import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.*
 import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.DeckComparator
-import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import com.ichi2.utils.jsonObjectIterable
@@ -58,7 +45,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
-import java.util.regex.Pattern
 
 data class DeckNameId(val name: String, val id: DeckId)
 
@@ -168,9 +154,6 @@ abstract class DeckConfigV16 private constructor(val config: JSONObject) {
     }
 }
 
-private typealias childMapNode = HashMap<DeckId, Any>
-// Change to Dict[int, "DeckManager.childMapNode"] when MyPy allow recursive type
-
 // TODO: col was a weakref
 
 /**
@@ -272,10 +255,10 @@ class Decks(private val col: Collection) {
 
     /** A sorted sequence of deck names and IDs. */
     fun allNamesAndIds(
-        skip_empty_default: Boolean = false,
-        include_filtered: Boolean = true
+        skipEmptyDefault: Boolean = false,
+        includeFiltered: Boolean = true
     ): List<DeckNameId> {
-        return col.backend.getDeckNames(skip_empty_default, include_filtered).map { entry ->
+        return col.backend.getDeckNames(skipEmptyDefault = skipEmptyDefault, includeFiltered = includeFiltered).map { entry ->
             DeckNameId(entry.name, entry.id)
         }
     }
@@ -346,8 +329,8 @@ class Decks(private val col: Collection) {
     @Deprecated("decks.allNames() is deprecated, use .all_names_and_ids()")
     fun allNames(dyn: Boolean = true, force_default: Boolean = true): MutableList<String> {
         return this.allNamesAndIds(
-            skip_empty_default = !force_default,
-            include_filtered = dyn
+            skipEmptyDefault = !force_default,
+            includeFiltered = dyn
         ).map { x ->
             x.name
         }.toMutableList()
@@ -458,16 +441,9 @@ class Decks(private val col: Collection) {
     }
 
     fun add_config(
-        name: String,
-        clone_from: Optional<DeckConfigV16> = Optional.empty()
+        name: String
     ): DeckConfigV16 {
-        val conf: DeckConfigV16
-        if (clone_from.isPresent) {
-            conf = clone_from.get().deepClone()
-            conf.id = 0L
-        } else {
-            conf = newDeckConfigLegacy()
-        }
+        val conf = newDeckConfigLegacy()
         conf.name = name
         this.update_config(conf)
         return conf
@@ -479,9 +455,8 @@ class Decks(private val col: Collection) {
     }
 
     fun add_config_returning_id(
-        name: String,
-        clone_from: Optional<DeckConfigV16> = Optional.empty()
-    ): DeckConfigId = this.add_config(name, clone_from).id
+        name: String
+    ): DeckConfigId = this.add_config(name).id
 
     fun setConf(grp: Deck, id: Long) {
         setConf(DeckV16.Generic(grp), id)
@@ -501,10 +476,8 @@ class Decks(private val col: Collection) {
     fun getConf(confId: DeckConfigId): DeckConfig =
         get_config(confId).let { x -> DeckConfig(x.config, x.source) }
 
-    fun confId(name: String, cloneFrom: String): Long {
-        val config: Optional<DeckConfigV16> =
-            Optional.of(DeckConfigV16.Config(JSONObject(cloneFrom)))
-        return add_config_returning_id(name, config)
+    fun confId(name: String): Long {
+        return add_config_returning_id(name)
     }
 
     fun updateConf(g: DeckConfig) = updateConf(DeckConfigV16.from(g), preserve_usn = false)
@@ -520,17 +493,6 @@ class Decks(private val col: Collection) {
         }
         // TODO: Needs i18n, but the Java did the same, appears to be dead code
         return "[no deck]"
-    }
-
-    fun cids(did: DeckId, children: Boolean): MutableList<Long> {
-        if (!children) {
-            return this.col.db.queryLongList("select id from cards where did=?", did)
-        }
-        val dids = mutableListOf(did)
-        for ((_, id) in this.children(did)) {
-            dids.append(id)
-        }
-        return this.col.db.queryLongList("select id from cards where did in " + ids2str(dids))
     }
 
     @RustCleanup("needs testing")
@@ -560,16 +522,8 @@ class Decks(private val col: Collection) {
 
     /** Select a new branch. */
     fun select(did: DeckId) {
-        // make sure arg is an int
-        // did = int(did) - code removed, logically impossible
         col.backend.setCurrentDeck(did)
-        val active = this.deck_and_child_ids(did)
-        if (active != this.active()) {
-            this.col.config.set(ACTIVE_DECKS, active.toJsonArray())
-        }
     }
-
-    class Node : HashMap<Long?, Node?>()
 
     /** All children of did, as (name, id). */
     fun children(did: DeckId): TreeMap<String, DeckId> {
@@ -581,115 +535,6 @@ class Decks(private val col: Collection) {
             }
         }
         return actv
-    }
-
-    fun childDids(did: DeckId, childMap: Decks.Node): List<Long> {
-        return childDids(did, childMapNode(childMap))
-    }
-
-    fun child_ids(parent_name: String): Iterable<DeckId> {
-        val prefix = parent_name + "::"
-        return allNamesAndIds().filter { x ->
-            x.name.startsWith(prefix)
-        }.map { d ->
-            d.id
-        }.toMutableList()
-    }
-
-    fun deck_and_child_ids(deck_id: DeckId): MutableList<DeckId> {
-        val parent_name = this.get_legacy(deck_id)!!.toV16().name
-        val out = mutableListOf(deck_id)
-        out.extend(this.child_ids(parent_name))
-        return out
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    fun childDids(did: DeckId, childMap: childMapNode): MutableList<DeckId> {
-        fun gather(node: childMapNode, arr: MutableList<DeckId>) {
-            for ((itemDid, child) in node.items()) {
-                arr.append(itemDid)
-                gather(child as childMapNode, arr)
-            }
-        }
-
-        val arr = mutableListOf<DeckId>()
-        gather(childMap[did] as childMapNode, arr)
-        return arr
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    @RustCleanup("used to return childMapNode")
-    fun childMap(): Decks.Node {
-        val nameMap = this.nameMap()
-        val childMap = childMapNode()
-
-        // go through all decks, sorted by name
-        for (deck in sorted(this.all())) {
-            val node = HashMap<DeckId, Any>()
-            childMap[deck.id] = node
-
-            // add note to immediate parent
-            val immediateParent = immediate_parent(deck.name)
-            if (immediateParent.isPresent) {
-                val pid = nameMap[immediateParent.get()]?.id
-                val value = childMap[pid] as childMapNode?
-                if (value != null) {
-                    value[deck.id] = node
-                }
-            }
-        }
-
-        return childMap.toNode()
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    @RustCleanup("needs testing")
-    fun childMapNode.toNode(): Decks.Node {
-        val ret = Decks.Node()
-        for (x in this) {
-            ret[x.key] = (x.value as childMapNode).toNode()
-        }
-        return ret
-    }
-
-    fun parents(did: DeckId): List<Deck> {
-        return parents(did, Optional.empty())
-    }
-
-    private fun sorted(all: List<Deck>): List<Deck> {
-        return all.sortedBy { d -> d.getString("name") }
-    }
-
-    /** All parents of did. */
-    fun parents(
-        did: DeckId,
-        nameMap: Optional<HashMap<String, Deck>> = Optional.empty()
-    ): List<Deck> {
-        // get parent and grandparent names
-        val parents_names: MutableList<String> = mutableListOf()
-        for (part in immediate_parent_path(this.get(did).toV16Optional().name)) {
-            if (parents_names.isNullOrEmpty()) {
-                parents_names.append(part)
-            } else {
-                parents_names.append(parents_names.last() + "::" + part)
-            }
-        }
-        val parents: MutableList<Deck> = mutableListOf()
-        // convert to objects
-        for (parent_name in parents_names) {
-            var deck: Deck
-            if (nameMap.isPresent) {
-                deck = nameMap.get()[parent_name]!!
-            } else {
-                deck = this.get(this.id(parent_name))
-            }
-            parents.append(deck)
-        }
-        return parents
-    }
-
-    fun nameMap(): Map<String, Deck> {
-        return all().map { d -> Pair(d.name, d) }.toMap()
     }
 
     /*
@@ -735,10 +580,7 @@ class Decks(private val col: Collection) {
     @CheckResult
     fun get(did: DeckId): Deck = get(did, true)!!
 
-    fun confId(name: String): Long = confId(name, Decks.DEFAULT_CONF)
-
     fun name(did: DeckId): String = name(did, _default = false)
-    fun cids(did: DeckId): MutableList<Long> = cids(did, false)
 
     /*
      * ***********************************************************
@@ -765,28 +607,6 @@ class Decks(private val col: Collection) {
      * Not in libAnki
      */
 
-    /**
-     * Return the same deck list from all() but sorted using a comparator that ensures the same
-     * sorting order for decks as the desktop client.
-     *
-     * This method does not exist in the original python module but *must* be used for any user
-     * interface components that display a deck list to ensure the ordering is consistent.
-     */
-    /** {@inheritDoc}  */
-    fun allSorted(): List<Deck> {
-        val decks: List<Deck> = all()
-        Collections.sort(decks, DeckComparator.INSTANCE)
-        return decks
-    }
-
-    @VisibleForTesting
-    @KotlinCleanup("potentially an extension function")
-    fun allSortedNames(): List<String> {
-        val names = allNames()
-        Collections.sort(names, DeckNameComparator.INSTANCE)
-        return names
-    }
-
     companion object {
         /* Parents/children */
 
@@ -794,26 +614,8 @@ class Decks(private val col: Collection) {
             return name.split("::")
         }
 
-        fun _path(name: String) = path(name)
-
         fun basename(name: String): String {
             return path(name).last()
-        }
-
-        fun immediate_parent_path(name: String): MutableList<String> {
-            return _path(name).dropLast(1).toMutableList()
-        }
-
-        fun immediate_parent(name: String): Optional<String> {
-            val pp = immediate_parent_path(name)
-            if (pp.isNotNullOrEmpty()) {
-                return Optional.of("::".join(pp))
-            }
-            return Optional.empty()
-        }
-
-        fun key(deck: DeckV16): List<String> {
-            return path(deck.name)
         }
 
         /** Invalid id, represents an id on an unfound deck  */
@@ -828,59 +630,7 @@ class Decks(private val col: Collection) {
         // not in libAnki
         const val DECK_SEPARATOR = "::"
 
-        const val DEFAULT_CONF = (
-            "" +
-                "{" +
-                "\"name\": \"Default\"," +
-                "\"dyn\": false," + // previously optional. Default was false
-                "\"new\": {" +
-                "\"delays\": [1, 10]," +
-                "\"ints\": [1, 4, 7]," + // 7 is not currently used
-                "\"initialFactor\": " + Consts.STARTING_FACTOR + "," +
-                "\"order\": " + Consts.NEW_CARDS_DUE + "," +
-                "\"perDay\": 20," + // may not be set on old decks
-                "\"bury\": false" +
-                "}," +
-                "\"lapse\": {" +
-                "\"delays\": [10]," +
-                "\"mult\": 0," +
-                "\"minInt\": 1," +
-                "\"leechFails\": 8," + // type 0=suspend, 1=tagonly
-                "\"leechAction\": " + Consts.LEECH_TAGONLY +
-                "}," +
-                "\"rev\": {" +
-                "\"perDay\": 200," +
-                "\"ease4\": 1.3," +
-                "\"hardFactor\": 1.2," +
-                "\"ivlFct\": 1," +
-                "\"maxIvl\": 36500," + // may not be set on old decks
-                "\"bury\": false" +
-                "}," +
-                "\"maxTaken\": 60," +
-                "\"timer\": 0," +
-                "\"autoplay\": true," +
-                "\"replayq\": true," +
-                "\"mod\": 0," +
-                "\"usn\": 0" +
-                "}"
-            )
-        private val pathCache = HashMap<String, Array<String>>()
-
-        private val spaceAroundSeparator = Pattern.compile("\\s*::\\s*")
-
-        @Suppress("NAME_SHADOWING")
-        @VisibleForTesting
-        fun strip(deckName: String): String {
-            // Ends of components are either the ends of the deck name, or near the ::.
-            // Deal with all spaces around ::
-            var deckName = deckName
-            deckName = spaceAroundSeparator.matcher(deckName).replaceAll("::")
-            // Deal with spaces at start/end of the deck name.
-            deckName = deckName.trim { it <= ' ' }
-            return deckName
-        }
-
-        /*
+    /*
     * ***********************************************************
     * The methods below are not in LibAnki.
     * ***********************************************************

@@ -21,7 +21,6 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
-import org.apache.http.util.Asserts
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Assert.assertThrows
@@ -33,35 +32,6 @@ import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 class DecksTest : RobolectricTest() {
-    @Test
-    @Suppress("SpellCheckingInspection")
-    fun ensureDeckList() {
-        val decks = col.decks
-        for (deckName in TEST_DECKS) {
-            addDeck(deckName)
-        }
-        val brokenDeck = decks.byName("cmxieunwoogyxsctnjmv::INSBGDS")
-        Asserts.notNull(brokenDeck, "We should get deck with given name")
-        // Changing the case. That could exists in an old collection or during sync.
-        brokenDeck!!.put("name", "CMXIEUNWOOGYXSCTNJMV::INSBGDS")
-        decks.save(brokenDeck)
-
-        decks.childMap()
-        for (deck in decks.all()) {
-            val did = deck.getLong("id")
-            for (parent in decks.parents(did)) {
-                Asserts.notNull(parent, "Parent should not be null")
-            }
-        }
-    }
-
-    @Test
-    fun trim() {
-        assertThat(Decks.strip("A\nB C\t D"), equalTo("A\nB C\t D"))
-        assertThat(Decks.strip("\n A\n\t"), equalTo("A"))
-        assertThat(Decks.strip("Z::\n A\n\t::Y"), equalTo("Z::A::Y"))
-    }
-
     @Test
     fun test_remove() {
         val col = col
@@ -90,7 +60,7 @@ class DecksTest : RobolectricTest() {
         // parents as necessary
         val decks = col.decks
         decks.rename(decks.get(id), "foo::bar")
-        var names: List<String?> = decks.allSortedNames()
+        var names: List<String> = decks.allNamesAndIds().map { it.name }
         assertTrue(names.contains("foo"))
         assertTrue(names.contains("foo::bar"))
         assertFalse(names.contains("hello::world"))
@@ -106,7 +76,7 @@ class DecksTest : RobolectricTest() {
         addDeck("one::two::three")
         id = addDeck("one")
         col.decks.rename(col.decks.get(id), "yo")
-        names = col.decks.allSortedNames()
+        names = decks.allNamesAndIds().map { it.name }
         for (n in arrayOf("yo", "yo::two", "yo::two::three")) {
             assertTrue(names.contains(n))
         }

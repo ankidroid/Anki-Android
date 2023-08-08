@@ -1155,19 +1155,15 @@ open class DeckPicker :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    @RustCleanup("make mDueTree a concrete DeckDueTreeNode")
-    @Suppress("UNCHECKED_CAST")
     suspend fun toggleDeckExpand(did: DeckId) {
-        if (!col.decks.children(did).isEmpty()) {
-            // update DB
-            col.decks.collapse(did)
-            // update stored state
-            dueTree?.find(did)?.run {
-                collapsed = !collapsed
-            }
-            renderPage(col.isEmpty)
-            dismissAllDialogFragments()
+        // update DB
+        col.decks.collapse(did)
+        // update stored state
+        dueTree?.find(did)?.run {
+            collapsed = !collapsed
         }
+        renderPage(col.isEmpty)
+        dismissAllDialogFragments()
     }
 
     fun addNote() {
@@ -1972,7 +1968,7 @@ open class DeckPicker :
 
     /** Disables the shortcut of the deck and the children belonging to it.*/
     fun disableDeckAndChildrenShortcuts(did: DeckId) {
-        val childDids = col.decks.childDids(did, col.decks.childMap()).map { it.toString() }
+        val childDids = dueTree?.find(did)?.filterAndFlatten(null)?.map { it.did.toString() } ?: listOf()
         val deckTreeDids = listOf(did.toString(), *childDids.toTypedArray())
         val errorMessage: CharSequence = getString(R.string.deck_shortcut_doesnt_exist)
         ShortcutManagerCompat.disableShortcuts(this, deckTreeDids, errorMessage)
