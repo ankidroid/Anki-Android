@@ -96,7 +96,8 @@ import java.util.function.Consumer
 open class Reviewer :
     AbstractFlashcardViewer(),
     ReviewerUi {
-    private var queueState: CurrentQueueState? = null
+    var queueState: CurrentQueueState? = null
+    val customSchedulingKey = TimeManager.time.intTimeMS().toString()
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
@@ -978,6 +979,9 @@ open class Reviewer :
         super.onPageFinished()
         onFlagChanged()
         onMarkChanged()
+        if (!displayAnswer) {
+            runStateMutationHook()
+        }
     }
 
     override suspend fun updateCurrentCard() {
@@ -1037,6 +1041,21 @@ open class Reviewer :
     override fun displayCardAnswer() {
         delayedHide(100)
         super.displayCardAnswer()
+    }
+
+    private fun runStateMutationHook() {
+        val state = queueState ?: return
+        if (state.customSchedulingJs.isEmpty()) {
+            return
+        }
+        val key = customSchedulingKey
+        val js = state.customSchedulingJs
+        webView?.evaluateJavascript(
+            """
+        anki.mutateNextCardStates('$key', async (states, customData, ctx) => {{ $js }})
+            .catch(err => console.log(err));
+"""
+        ) {}
     }
 
     override fun initLayout() {

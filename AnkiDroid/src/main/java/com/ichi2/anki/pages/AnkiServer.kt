@@ -84,7 +84,7 @@ open class AnkiServer(
         }
     }
 
-    private fun getSessionBytes(session: IHTTPSession): ByteArray {
+    fun getSessionBytes(session: IHTTPSession): ByteArray {
         val contentLength = session.headers["content-length"]!!.toInt()
         val bytes = ByteArray(contentLength)
         session.inputStream.read(bytes, 0, contentLength)

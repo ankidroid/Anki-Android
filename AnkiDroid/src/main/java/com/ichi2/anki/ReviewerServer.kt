@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import androidx.fragment.app.FragmentActivity
+import anki.frontend.SetSchedulingStatesRequest
 import com.ichi2.anki.pages.AnkiServer
 import com.ichi2.utils.AssetHelper
 import timber.log.Timber
@@ -40,7 +41,11 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
             }
             if (uri.startsWith("/assets/")) {
                 val mime = getMimeFromUri(uri)
-                val stream = this.javaClass.classLoader!!.getResourceAsStream(uri.substring(1))
+                val stream = if (uri == "/assets/reviewer_extras_bundle.js") {
+                    this.javaClass.classLoader!!.getResourceAsStream("web/reviewer_extras_bundle.js")
+                } else {
+                    this.javaClass.classLoader!!.getResourceAsStream(uri.substring(1))
+                }
                 if (stream != null) {
                     return newChunkedResponse(Response.Status.OK, mime, stream)
                 }
@@ -55,9 +60,46 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
                 // probably don't need this anymore
                 // resp.addHeader("Access-Control-Allow-Origin", "*")
             }
+        } else if (session.method == Method.POST) {
+            val inputBytes = getSessionBytes(session)
+            if (uri.startsWith(ANKI_PREFIX)) {
+                val data: ByteArray? = activity.runBlockingCatching {
+                    handlePostRequest(uri.substring(ANKI_PREFIX.length), inputBytes)
+                }
+                return newChunkedResponse(data)
+            }
         }
 
         Timber.d("not found: $uri")
         return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "")
+    }
+
+    private fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray? {
+        return when (methodName) {
+            "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
+            "setSchedulingStates" -> setSchedulingStates(bytes)
+            else -> {
+                Timber.w("Unhandled Anki request: %s", methodName); null
+            }
+        }
+    }
+
+    private fun reviewer(): Reviewer {
+        return (activity as Reviewer)
+    }
+
+    private fun getSchedulingStatesWithContext(): ByteArray {
+        val state = reviewer().queueState ?: return ByteArray(0)
+        return state.schedulingStatesWithContext().toByteArray()
+    }
+
+    private fun setSchedulingStates(bytes: ByteArray): ByteArray {
+        val reviewer = reviewer()
+        val state = reviewer.queueState ?: return ByteArray(0)
+        val req = SetSchedulingStatesRequest.parseFrom(bytes)
+        if (req.key == reviewer.customSchedulingKey) {
+            state.states = req.states
+        }
+        return ByteArray(0)
     }
 }

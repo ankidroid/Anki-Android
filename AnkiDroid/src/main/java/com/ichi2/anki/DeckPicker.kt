@@ -499,7 +499,6 @@ open class DeckPicker :
             showStartupScreensAndDialogs(sharedPrefs, 0)
             false
         } else {
-            Timber.e("**** startu pfail")
             // Show error dialogs
             handleStartupFailure(failure)
             true

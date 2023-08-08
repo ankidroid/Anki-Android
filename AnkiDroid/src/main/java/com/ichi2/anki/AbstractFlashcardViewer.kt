@@ -24,6 +24,7 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.*
 import android.content.res.Configuration
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
@@ -126,7 +127,7 @@ abstract class AbstractFlashcardViewer :
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
-    private var server: ReviewerServer? = null
+    var server: ReviewerServer? = null
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -2151,6 +2152,8 @@ abstract class AbstractFlashcardViewer :
         private val loader: WebViewAssetLoader?,
         private val onPageFinishedCallback: OnPageFinishedCallback? = null
     ) : WebViewClient() {
+        private var pageFinishedFired = true
+
         @TargetApi(Build.VERSION_CODES.N)
         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
             val url = request.url.toString()
@@ -2165,6 +2168,10 @@ abstract class AbstractFlashcardViewer :
                 mMissingImageHandler.processInefficientImage { displayMediaUpgradeRequiredSnackbar() }
             }
             return null
+        }
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            pageFinishedFired = false
         }
 
         @TargetApi(Build.VERSION_CODES.N)
@@ -2444,14 +2451,14 @@ abstract class AbstractFlashcardViewer :
 
         // Run any post-load events in javascript that rely on the window being completely loaded.
         override fun onPageFinished(view: WebView, url: String) {
-            Timber.d("Java onPageFinished triggered: %s", url)
-
-            // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
-            if (url == mViewerUrl) {
-                onPageFinishedCallback?.onPageFinished()
-                Timber.d("New URL, triggering JS onPageFinished: %s", url)
-                view.loadUrl("javascript:onPageFinished();")
+            if (pageFinishedFired) {
+                return
             }
+            pageFinishedFired = true
+            Timber.d("Java onPageFinished triggered: %s", url)
+            // onPageFinished will be called multiple times if the WebView redirects by setting window.location.href
+            onPageFinishedCallback?.onPageFinished()
+            view.loadUrl("javascript:onPageFinished();")
         }
 
         @TargetApi(Build.VERSION_CODES.O)

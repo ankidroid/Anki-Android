@@ -27,6 +27,7 @@ import anki.ankidroid.schedTimingTodayLegacyRequest
 import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.OptionalStringConfigKey
+import anki.frontend.SchedulingStatesWithContext
 import anki.scheduler.*
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
@@ -46,16 +47,24 @@ import timber.log.Timber
 
 data class CurrentQueueState(
     val topCard: Card,
-    val states: SchedulingStates,
+    var states: SchedulingStates,
     val context: SchedulingContext,
     val counts: Counts,
     val timeboxReached: Collection.TimeboxReached?,
-    val learnAheadSecs: Int
+    val learnAheadSecs: Int,
+    val customSchedulingJs: String
 ) {
     fun nextIvlStr(context: Context, @Consts.BUTTON_TYPE ease: Int): String {
         val state = stateFromEase(states, ease)
         val secs = intervalForState(state)
         return nextIvlStr(context, secs, learnAheadSecs)
+    }
+
+    fun schedulingStatesWithContext(): SchedulingStatesWithContext {
+        return anki.frontend.schedulingStatesWithContext {
+            states = this@CurrentQueueState.states
+            context = this@CurrentQueueState.context
+        }
     }
 }
 
@@ -76,7 +85,8 @@ open class Scheduler(val col: Collection) {
                 context = it.context,
                 counts = Counts(queue.newCount, queue.learningCount, queue.reviewCount),
                 timeboxReached = col.timeboxReached(),
-                learnAheadSecs = learnAheadSeconds()
+                learnAheadSecs = learnAheadSeconds(),
+                customSchedulingJs = col.config.get("cardStateCustomizer") ?: ""
             )
         }
     }
