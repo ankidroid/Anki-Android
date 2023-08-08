@@ -17,6 +17,7 @@
 
 package com.ichi2.anki.pages
 
+import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.importCsvRaw
 import com.ichi2.anki.runBlockingCatching
@@ -26,11 +27,19 @@ import fi.iki.elonen.NanoHTTPD
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
-class AnkiServer(
-    hostname: String?,
-    port: Int,
-    val activity: PagesActivity
-) : NanoHTTPD(hostname, port) {
+private const val PORT = 0
+// const val PORT = 40001
+
+// local debugging:
+// ~/Local/Android/Sdk/platform-tools/adb forward tcp:40001 tcp:40001
+
+open class AnkiServer(
+    val activity: FragmentActivity
+) : NanoHTTPD("127.0.0.1", PORT) {
+
+    fun baseUrl(): String {
+        return "http://127.0.0.1:$listeningPort/"
+    }
 
     override fun serve(session: IHTTPSession): Response {
         val uri = session.uri
@@ -39,7 +48,7 @@ class AnkiServer(
         if (session.method == Method.GET) {
             val resourcePath = "web$uri"
             val stream = this.javaClass.classLoader!!.getResourceAsStream(resourcePath)
-            Timber.d("GET: Requested %s (%s), stream %s", uri, resourcePath, stream)
+            Timber.d("GET: Requested %s (%s), found? %b", uri, resourcePath, stream != null)
             return newChunkedResponse(Response.Status.OK, mime, stream)
         }
 

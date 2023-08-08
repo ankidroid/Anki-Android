@@ -19,6 +19,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
+import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChanges
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
@@ -61,7 +62,7 @@ class DeckOptions : PageFragment() {
     }
 }
 
-suspend fun PagesActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
+suspend fun FragmentActivity.updateDeckConfigsRaw(input: ByteArray): ByteArray {
     val output = CollectionManager.withCol { updateDeckConfigsRaw(input) }
     undoableOp { OpChanges.parseFrom(output) }
     withContext(Dispatchers.Main) { finish() }

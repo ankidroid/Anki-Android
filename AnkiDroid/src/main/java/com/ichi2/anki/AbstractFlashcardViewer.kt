@@ -126,6 +126,7 @@ abstract class AbstractFlashcardViewer :
     private var mTtsInitialized = false
     private var mReplayOnTtsInit = false
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
+    private var server: ReviewerServer? = null
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
@@ -497,6 +498,11 @@ abstract class AbstractFlashcardViewer :
 
         setContentView(getContentViewAttr(fullscreenMode))
 
+        launchCatchingTask {
+            val mediaDir = withCol { media.dir }
+            server = ReviewerServer(this@AbstractFlashcardViewer, mediaDir).apply { start() }
+        }
+
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
         delegate.isHandleNativeActionModesEnabled = true
         val mainView = findViewById<View>(android.R.id.content)
@@ -585,6 +591,7 @@ abstract class AbstractFlashcardViewer :
 
     override fun onDestroy() {
         super.onDestroy()
+        server?.closeAllConnections()
         mTTS.releaseTts(this)
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
@@ -1530,7 +1537,8 @@ abstract class AbstractFlashcardViewer :
     private fun loadContentIntoCard(card: WebView?, content: String) {
         if (card != null) {
             card.settings.mediaPlaybackRequiresUserGesture = !mCardSoundConfig!!.autoplay
-            card.loadDataWithBaseURL(mViewerUrl, content, "text/html", "utf-8", null)
+            server?.reviewerHtml = content
+            card.loadUrl(server?.baseUrl() + "reviewer.html")
         }
     }
 

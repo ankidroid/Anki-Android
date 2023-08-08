@@ -124,8 +124,8 @@ class CardHtml(
         return when (requiresMathjax) {
             false -> ""
             true ->
-                """        <script src="file:///android_asset/mathjax/conf.js"> </script>
-        <script src="file:///android_asset/mathjax/tex-chtml.js"> </script>"""
+                """        <script src="/assets/mathjax/conf.js"> </script>
+        <script src="/assets/mathjax/tex-chtml.js"> </script>"""
         }
     }
 

@@ -17,10 +17,11 @@
 package com.ichi2.anki
 
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentActivity
 import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
+import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.pages.PagesActivity
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
@@ -53,7 +54,7 @@ fun AnkiActivity.importApkgs(apkgPaths: List<String>) {
 }
 
 @Suppress("BlockingMethodInNonBlockingContext") // ImportResponse.parseFrom
-suspend fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray {
+suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
     return withContext(Dispatchers.Main) {
         val output = withProgress(
             extractProgress = {
@@ -66,7 +67,7 @@ suspend fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray {
         val importResponse = ImportResponse.parseFrom(output)
         undoableOp { importResponse }
         AlertDialog.Builder(this@importCsvRaw).show {
-            message(text = summarizeReport(col.tr, importResponse))
+            message(text = summarizeReport(TR, importResponse))
             positiveButton(R.string.dialog_ok) {
                 this@importCsvRaw.finish()
             }
