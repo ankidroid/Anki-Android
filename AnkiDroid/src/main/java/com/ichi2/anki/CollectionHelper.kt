@@ -510,16 +510,6 @@ open class CollectionHelper {
             preferences.edit { putString(PREF_COLLECTION_PATH, directory) }
         }
 
-        /** Fetches additional collection data not required for
-         * application startup
-         *
-         * Allows mandatory startup procedures to return early, speeding up startup. Less important tasks are offloaded here
-         * No-op if data is already fetched
-         */
-        fun loadCollectionComplete(col: Collection) {
-            col.notetypes
-        }
-
         @Throws(UnknownDatabaseVersionException::class)
         fun getDatabaseVersion(context: Context): Int {
             // backend can't open a schema version outside range, so fall back to a pure DB implementation

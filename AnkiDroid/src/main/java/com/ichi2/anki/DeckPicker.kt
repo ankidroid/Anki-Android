@@ -785,7 +785,7 @@ open class DeckPicker :
         optionsMenuState = withOpenColOrNull {
             val searchIcon = decks.count() >= 10
             val undoLabel = undoLabel()
-            val syncIcon = fetchSyncStatus(col)
+            val syncIcon = fetchSyncStatus(this)
             val mediaMigrationState = getMediaMigrationState()
             val shouldShowStartMigrationButton = shouldOfferToMigrate() ||
                 mediaMigrationState is MediaMigrationState.Ongoing.PausedDueToError
@@ -971,11 +971,6 @@ open class DeckPicker :
             }
             updateDeckList()
             title = resources.getString(R.string.app_name)
-        }
-        /* Complete task and enqueue fetching nonessential data for
-          startup. */
-        if (colIsOpen()) {
-            launchCatchingTask { withCol { CollectionHelper.loadCollectionComplete(col) } }
         }
         // Update sync status (if we've come back from a screen)
         invalidateOptionsMenu()
@@ -1825,7 +1820,7 @@ open class DeckPicker :
         launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
         launchCatchingTask {
-            withCol { col.sched.studiedToday() }
+            withCol { sched.studiedToday() }
         }
         Timber.d("Startup - Deck List UI Completed")
     }
@@ -2004,7 +1999,7 @@ open class DeckPicker :
         return launchCatchingTask {
             val changes = withProgress(resources.getString(R.string.delete_deck)) {
                 undoableOp {
-                    col.decks.removeDecks(listOf(did))
+                    decks.removeDecks(listOf(did))
                 }
             }
             showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT)

@@ -220,7 +220,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
             Timber.d("doInBackgroundAddField")
             withProgress {
                 withCol {
-                    notetypes.addFieldModChanged(mNotetype, col.notetypes.newField(fieldName))
+                    notetypes.addFieldModChanged(mNotetype, notetypes.newField(fieldName))
                 }
             }
             initialize()

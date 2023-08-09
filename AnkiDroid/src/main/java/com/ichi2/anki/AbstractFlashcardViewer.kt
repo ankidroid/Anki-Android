@@ -447,7 +447,7 @@ abstract class AbstractFlashcardViewer :
         // Legacy tests assume the current card will be grabbed from the collection,
         // despite that making no sense outside of Reviewer.kt
         currentCard = withCol {
-            col.sched.card?.apply {
+            sched.card?.apply {
                 renderOutput()
             }
         }
@@ -871,7 +871,7 @@ abstract class AbstractFlashcardViewer :
     open suspend fun answerCardInner(@BUTTON_TYPE ease: Int) {
         // Legacy tests assume they can call answerCard() even outside of Reviewer
         withCol {
-            col.sched.answerCard(currentCard!!, ease)
+            sched.answerCard(currentCard!!, ease)
         }
     }
 

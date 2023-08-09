@@ -62,7 +62,7 @@ suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
                     text = progress.importing
                 }
             },
-            op = { withCol { col.importCsvRaw(input) } }
+            op = { withCol { importCsvRaw(input) } }
         )
         val importResponse = ImportResponse.parseFrom(output)
         undoableOp { importResponse }

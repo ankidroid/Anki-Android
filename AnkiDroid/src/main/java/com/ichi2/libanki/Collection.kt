@@ -51,7 +51,6 @@ import java.util.*
 // tracked, so unused tags can only be removed from the list with a DB check.
 //
 // This module manages the tag cache and tags for notes.
-@KotlinCleanup("Fix @Contract annotations to work in Kotlin")
 @KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
 @KotlinCleanup("ids.size != 0")
@@ -72,7 +71,7 @@ open class Collection(
      * at all (eg translations) are the exception.
      */
     val backend: Backend
-) : CollectionGetter {
+) {
     /** Access backend translations */
     val tr = backend.tr
 
@@ -151,7 +150,7 @@ open class Collection(
         mStartTime = 0
         _loadScheduler()
         if (created) {
-            col.onCreate()
+            onCreate()
         }
     }
 
@@ -689,11 +688,4 @@ open class Collection(
     fun notesOfCards(cids: Iterable<CardId>): List<NoteId> {
         return db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
     }
-
-    /**
-     * Allows a collection to be used as a CollectionGetter
-     * @return Itself.
-     */
-    override val col: Collection
-        get() = this
 }

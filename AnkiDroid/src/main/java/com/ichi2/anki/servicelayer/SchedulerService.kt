@@ -26,7 +26,7 @@ import com.ichi2.libanki.*
 suspend fun FragmentActivity.rescheduleCards(cardIds: List<CardId>, newDays: Int) {
     withProgress {
         undoableOp {
-            col.sched.reschedCards(cardIds, newDays, newDays)
+            sched.reschedCards(cardIds, newDays, newDays)
         }
     }
     val count = cardIds.size
@@ -43,7 +43,7 @@ suspend fun FragmentActivity.rescheduleCards(cardIds: List<CardId>, newDays: Int
 suspend fun FragmentActivity.resetCards(cardIds: List<CardId>) {
     withProgress {
         undoableOp {
-            col.sched.forgetCards(cardIds)
+            sched.forgetCards(cardIds)
         }
     }
     val count = cardIds.size

@@ -1292,7 +1292,7 @@ open class CardBrowser :
         launchCatchingTask {
             val changes = withProgress {
                 undoableOp {
-                    col.sched.sortCards(cardIds, position, 1, false, true)
+                    sched.sortCards(cardIds, position, 1, false, true)
                 }
             }
             val count = changes.count
@@ -2571,7 +2571,7 @@ suspend fun searchForCards(
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
         (if (inCardsMode) findCards(query, order) else findOneCardByNote(query)).asSequence()
-            .toCardCache(col, inCardsMode)
+            .toCardCache(this, inCardsMode)
             .toMutableList()
     }
 }
