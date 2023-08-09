@@ -27,10 +27,9 @@ import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.joinSyncMessages
-import com.ichi2.libanki.CollectionGetter
 
 class SyncErrorDialog : AsyncDialogFragment() {
-    interface SyncErrorDialogListener : CollectionGetter {
+    interface SyncErrorDialogListener {
         fun showSyncErrorDialog(dialogType: Int)
         fun showSyncErrorDialog(dialogType: Int, message: String?)
         fun loginToSyncServer()
