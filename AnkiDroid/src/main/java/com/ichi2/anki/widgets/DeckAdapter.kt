@@ -138,7 +138,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
             mNew = node.newCount
             mNumbersComputed = true
             // Filtering performs notifyDataSetChanged after the async work is complete
-            getFilter().filter(filter)
+            getFilter()?.filter(filter)
         }
     }
 
@@ -288,8 +288,8 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     private val deckList: List<DeckNode>
         get() = filteredDeckList
 
-    override fun getFilter(): Filter {
-        return DeckFilter(deckTree!!)
+    override fun getFilter(): Filter? {
+        return deckTree?.let { DeckFilter(it) }
     }
 
     @VisibleForTesting

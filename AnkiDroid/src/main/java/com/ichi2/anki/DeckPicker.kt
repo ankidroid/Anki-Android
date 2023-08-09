@@ -1871,7 +1871,7 @@ open class DeckPicker :
                 supportActionBar!!.subtitle = null
             }
             if (mToolbarSearchView != null) {
-                mDeckListAdapter.filter.filter(currentFilter)
+                mDeckListAdapter.filter?.filter(currentFilter)
             }
             Timber.d("Not rendering deck list as there are no cards")
             // We're done here
