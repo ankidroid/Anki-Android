@@ -267,7 +267,7 @@ open class DeckPicker :
         Timber.i("DeckPicker:: Selected deck with id %d", deckId)
         var collectionIsOpen = false
         try {
-            collectionIsOpen = colIsOpen()
+            collectionIsOpen = colIsOpenUnsafe()
             handleDeckSelection(deckId, selectionType)
             if (fragmented) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
@@ -308,9 +308,9 @@ open class DeckPicker :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        mExportingDelegate = ActivityExportingDelegate(this) { col }
-        mCustomStudyDialogFactory = CustomStudyDialogFactory({ col }, this).attachToActivity(this)
-        mContextMenuFactory = DeckPickerContextMenu.Factory { col }.attachToActivity(this)
+        mExportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
+        mCustomStudyDialogFactory = CustomStudyDialogFactory({ getColUnsafe }, this).attachToActivity(this)
+        mContextMenuFactory = DeckPickerContextMenu.Factory { getColUnsafe }.attachToActivity(this)
 
         // Then set theme and content view
         super.onCreate(savedInstanceState)
@@ -928,7 +928,7 @@ open class DeckPicker :
         } else if (requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS) {
             if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
                 // Show a message when reviewing has finished
-                if (col.sched.totalCount() == 0) {
+                if (getColUnsafe.sched.totalCount() == 0) {
                     showSnackbar(R.string.studyoptions_congrats_finished)
                 } else {
                     showSnackbar(R.string.studyoptions_no_cards_due)
@@ -964,7 +964,7 @@ open class DeckPicker :
             Timber.i("Performing Sync on Resume")
             sync()
             mSyncOnResume = false
-        } else if (colIsOpen()) {
+        } else if (colIsOpenUnsafe()) {
             selectNavigationItem(R.id.nav_decks)
             if (dueTree == null) {
                 updateDeckList()
@@ -1006,7 +1006,7 @@ open class DeckPicker :
 
     override fun onStop() {
         super.onStop()
-        if (colIsOpen()) {
+        if (colIsOpenUnsafe()) {
             WidgetStatus.updateInBackground(this)
             // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
         }
@@ -1096,7 +1096,7 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                handleDeckSelection(col.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
+                handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
             }
             else -> {}
         }
@@ -1126,7 +1126,7 @@ open class DeckPicker :
         if (mRecommendFullSync) {
             mRecommendFullSync = false
             try {
-                col.modSchema()
+                getColUnsafe.modSchema()
             } catch (e: ConfirmModSchemaException) {
                 Timber.w("Forcing full sync")
                 e.log()
@@ -1152,12 +1152,12 @@ open class DeckPicker :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     suspend fun toggleDeckExpand(did: DeckId) {
         // update DB
-        col.decks.collapse(did)
+        getColUnsafe.decks.collapse(did)
         // update stored state
         dueTree?.find(did)?.run {
             collapsed = !collapsed
         }
-        renderPage(col.isEmpty)
+        renderPage(getColUnsafe.isEmpty)
         dismissAllDialogFragments()
     }
 
@@ -1228,7 +1228,7 @@ open class DeckPicker :
             if (previous < 20600123) {
                 Timber.i("Fixing font-family definition in templates")
                 try {
-                    val models = col.notetypes
+                    val models = getColUnsafe.notetypes
                     for (m in models.all()) {
                         val css = m.getString("css")
                         @Suppress("SpellCheckingInspection")
@@ -1664,21 +1664,21 @@ open class DeckPicker :
 
     private fun promptUserToUpdateScheduler() {
         AlertDialog.Builder(this).show {
-            message(text = col.tr.schedulingUpdateRequired())
+            message(text = getColUnsafe.tr.schedulingUpdateRequired())
             positiveButton(R.string.dialog_ok) {
                 launchCatchingTask {
-                    if (!userAcceptsSchemaChange(col)) {
+                    if (!userAcceptsSchemaChange(getColUnsafe)) {
                         return@launchCatchingTask
                     }
                     withProgress { withCol { sched.upgradeToV2() } }
-                    showThemedToast(this@DeckPicker, col.tr.schedulingUpdateDone(), false)
+                    showThemedToast(this@DeckPicker, getColUnsafe.tr.schedulingUpdateDone(), false)
                     refreshState()
                 }
             }
             negativeButton(R.string.dialog_cancel)
             if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
                 @Suppress("DEPRECATION")
-                neutralButton(text = col.tr.schedulingUpdateMoreInfoButton()) {
+                neutralButton(text = getColUnsafe.tr.schedulingUpdateMoreInfoButton()) {
                     this@DeckPicker.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
                 }
             }
@@ -1686,12 +1686,12 @@ open class DeckPicker :
     }
 
     private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
-        if ((col.config.get("schedVer") ?: 1L) == 1L) {
+        if ((getColUnsafe.config.get("schedVer") ?: 1L) == 1L) {
             promptUserToUpdateScheduler()
             return
         }
         // Select the deck
-        col.decks.select(did)
+        getColUnsafe.decks.select(did)
         // Also forget the last deck used by the Browser
         CardBrowser.clearLastDeckId()
         // Reset the schedule so that we get the counts for the currently selected deck
@@ -1706,17 +1706,17 @@ open class DeckPicker :
         }
         // There are numbers
         // Figure out what action to take
-        if (col.sched.hasCardsTodayAfterStudyAheadLimit()) {
+        if (getColUnsafe.sched.hasCardsTodayAfterStudyAheadLimit()) {
             // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
             openStudyOptions(false)
-        } else if (col.sched.newDue() || col.sched.revDue()) {
+        } else if (getColUnsafe.sched.newDue() || getColUnsafe.sched.revDue()) {
             // If there are no cards to review because of the daily study limit then give "Study more" option
             showSnackbar(R.string.studyoptions_limit_reached) {
                 addCallback(mSnackbarShowHideCallback)
                 setAction(R.string.study_more) {
                     val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.ContextMenuConfiguration.LIMITS,
-                        col.decks.selected(),
+                        getColUnsafe.decks.selected(),
                         true
                     )
                     showDialogFragment(d)
@@ -1734,10 +1734,10 @@ open class DeckPicker :
                 // highlighted correctly.
                 updateDeckList()
             }
-        } else if (col.decks.isDyn(did)) {
+        } else if (getColUnsafe.decks.isDyn(did)) {
             // Go to the study options screen if filtered deck with no cards to study
             openStudyOptions(false)
-        } else if (deckDueTreeNode.children.isEmpty() && col.isEmptyDeck(did)) {
+        } else if (deckDueTreeNode.children.isEmpty() && getColUnsafe.isEmptyDeck(did)) {
             // If the deck is empty and has no children then show a message saying it's empty
             showSnackbar(R.string.empty_deck) {
                 addCallback(mSnackbarShowHideCallback)
@@ -1756,7 +1756,7 @@ open class DeckPicker :
                 setAction(R.string.custom_study) {
                     val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
-                        col.decks.selected(),
+                        getColUnsafe.decks.selected(),
                         true
                     )
                     showDialogFragment(d)
@@ -1912,7 +1912,7 @@ open class DeckPicker :
     // Callback to show study options for currently selected deck
     fun showContextMenuDeckOptions(did: DeckId) {
         // open deck options
-        if (col.decks.isDyn(did)) {
+        if (getColUnsafe.decks.isDyn(did)) {
             // open cram options if filtered deck
             val i = Intent(this@DeckPicker, FilteredDeckOptions::class.java)
             i.putExtra("did", did)
@@ -1927,7 +1927,7 @@ open class DeckPicker :
     fun exportDeck(did: DeckId) {
         mExportingDelegate.showExportDialog(
             ExportDialogParams(
-                message = resources.getString(R.string.confirm_apkg_export_deck, col.decks.name(did)),
+                message = resources.getString(R.string.confirm_apkg_export_deck, getColUnsafe.decks.name(did)),
                 exportType = ExportType.ExportDeck(did)
             )
         )
@@ -1942,8 +1942,8 @@ open class DeckPicker :
                     .putExtra("deckId", did)
             )
             .setIcon(IconCompat.createWithResource(context, R.mipmap.ic_launcher))
-            .setShortLabel(Decks.basename(col.decks.name(did)))
-            .setLongLabel(col.decks.name(did))
+            .setShortLabel(Decks.basename(getColUnsafe.decks.name(did)))
+            .setLongLabel(getColUnsafe.decks.name(did))
             .build()
         try {
             val success = ShortcutManagerCompat.requestPinShortcut(this, shortcut, null)
@@ -1970,7 +1970,7 @@ open class DeckPicker :
     }
 
     fun renameDeckDialog(did: DeckId) {
-        val currentName = col.decks.name(did)
+        val currentName = getColUnsafe.decks.name(did)
         val createDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.rename_deck, CreateDeckDialog.DeckDialogType.RENAME_DECK, null)
         createDeckDialog.deckName = currentName
         createDeckDialog.setOnNewDeckCreated {
@@ -2023,7 +2023,7 @@ open class DeckPicker :
     }
 
     fun emptyFiltered(did: DeckId) {
-        col.decks.select(did)
+        getColUnsafe.decks.select(did)
         launchCatchingTask {
             withProgress {
                 withCol {
@@ -2475,7 +2475,7 @@ class ForceFullSyncDialog(val message: String?) : DialogHandlerMessage(
         val dialog = ConfirmationDialog()
         val confirm = Runnable {
             // Bypass the check once the user confirms
-            CollectionHelper.instance.getCol(AnkiDroidApp.instance)!!.modSchemaNoCheck()
+            CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance)!!.modSchemaNoCheck()
         }
         dialog.setConfirm(confirm)
         dialog.setArgs(message)

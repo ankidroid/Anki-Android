@@ -201,7 +201,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         val nextBtnEnabled = isNextBtnEnabled(templateIndex)
         previewLayout!!.setPrevButtonEnabled(prevBtnEnabled)
         previewLayout!!.setNextButtonEnabled(nextBtnEnabled)
-        setCurrentCardFromNoteEditorBundle(col)
+        setCurrentCardFromNoteEditorBundle(getColUnsafe)
         displayCardQuestion()
     }
 
@@ -326,7 +326,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         if (mAllFieldsNull) {
             getLabels(fieldValues)
         }
-        val n = col.newNote(notetype)
+        val n = getColUnsafe.newNote(notetype)
         var i = 0
         while (i < fieldValues.size && i < n.fields.size) {
             if (mAllFieldsNull) {
@@ -343,7 +343,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             i++
         }
         try {
-            return n.ephemeralCard(col, index, false)
+            return n.ephemeralCard(getColUnsafe, index, false)
         } catch (e: Exception) {
             // Calling code handles null return, so we can log this for developer's interest but move on
             Timber.d(e, "getDummyCard() unable to create card")

@@ -265,22 +265,22 @@ open class CardBrowser :
             mOrderAsc = false
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
-                col.config.set("sortType", fSortTypes[1])
+                getColUnsafe.config.set("sortType", fSortTypes[1])
                 baseContext.sharedPrefs().edit {
                     putBoolean("cardBrowserNoSorting", true)
                 }
             } else {
-                col.config.set("sortType", fSortTypes[mOrder])
+                getColUnsafe.config.set("sortType", fSortTypes[mOrder])
                 baseContext.sharedPrefs().edit {
                     putBoolean("cardBrowserNoSorting", false)
                 }
             }
-            col.config.set("sortBackwards", mOrderAsc)
+            getColUnsafe.config.set("sortBackwards", mOrderAsc)
             searchCards()
         } else if (which != CARD_ORDER_NONE) {
             // if the same element is selected again, reverse the order
             mOrderAsc = !mOrderAsc
-            col.config.set("sortBackwards", mOrderAsc)
+            getColUnsafe.config.set("sortBackwards", mOrderAsc)
             mCards.reverse()
             updateList()
         }
@@ -292,14 +292,14 @@ open class CardBrowser :
 
     private val mMySearchesDialogListener: MySearchesDialogListener = object : MySearchesDialogListener {
         fun updateFilters(func: HashMap<String, String>.() -> Unit) {
-            val filters = savedFilters(col)
+            val filters = savedFilters(getColUnsafe)
             func(filters)
-            col.config.set("savedFilters", filters)
+            getColUnsafe.config.set("savedFilters", filters)
         }
 
         override fun onSelection(searchName: String?) {
             Timber.d("OnSelection using search named: %s", searchName)
-            savedFilters(col).get(searchName)?.apply {
+            savedFilters(getColUnsafe).get(searchName)?.apply {
                 Timber.d("OnSelection using search terms: %s", this)
                 mSearchTerms = this
                 mSearchView!!.setQuery(this, false)
@@ -402,7 +402,7 @@ open class CardBrowser :
             return
         }
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
-        mExportingDelegate = ActivityExportingDelegate(this) { col }
+        mExportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
         super.onCreate(savedInstanceState)
         if (wasLoadedFromExternalTextActionItem() && !hasStorageAccessPermission(this) && !Permissions.isExternalStorageManagerCompat()) {
             Timber.w("'Card Browser' Action item pressed before storage permissions granted.")
@@ -620,7 +620,7 @@ open class CardBrowser :
         mRestrictOnDeck = if (deckId == ALL_DECKS_ID) {
             ""
         } else {
-            val deckName = col.decks.name(deckId)
+            val deckName = getColUnsafe.decks.name(deckId)
             "deck:\"$deckName\" "
         }
         saveLastDeckId(deckId)
@@ -717,7 +717,7 @@ open class CardBrowser :
      * We use the Card ID to specify the preview target  */
     private fun openNoteEditorForCard(cardId: CardId) {
         mCurrentCardId = cardId
-        cardBrowserCard = col.getCard(mCurrentCardId)
+        cardBrowserCard = getColUnsafe.getCard(mCurrentCardId)
         // start note editor using the card we just loaded
         val editCard = Intent(this, NoteEditor::class.java)
             .putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_CARDBROWSER_EDIT)
@@ -796,7 +796,7 @@ open class CardBrowser :
             mSaveSearchItem = menu.findItem(R.id.action_save_search)
             mSaveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mMySearchesItem = menu.findItem(R.id.action_list_my_searches)
-            val savedFiltersObj = savedFilters(col)
+            val savedFiltersObj = savedFilters(getColUnsafe)
             mMySearchesItem!!.isVisible = savedFiltersObj.size > 0
             mSearchItem = menu.findItem(R.id.action_search)
             mSearchItem!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
@@ -850,8 +850,8 @@ open class CardBrowser :
             increaseHorizontalPaddingOfOverflowMenuIcons(menu)
         }
         mActionBarMenu?.findItem(R.id.action_undo)?.run {
-            isVisible = col.undoAvailable()
-            title = col.undoLabel()
+            isVisible = getColUnsafe.undoAvailable()
+            title = getColUnsafe.undoLabel()
         }
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
@@ -1005,7 +1005,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_list_my_searches -> {
-                val savedFilters = savedFilters(col)
+                val savedFilters = savedFilters(getColUnsafe)
                 showDialogFragment(
                     newInstance(
                         savedFilters,
@@ -1153,7 +1153,7 @@ open class CardBrowser :
                 // `selectedCardIds` getter does alot of work so save it in a val beforehand
                 val selectedCardIds = selectedCardIds
                 // Only new cards may be repositioned (If any non-new found show error dialog and return false)
-                if (selectedCardIds.any { col.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
+                if (selectedCardIds.any { getColUnsafe.getCard(it).queue != Consts.QUEUE_TYPE_NEW }) {
                     showDialogFragment(
                         SimpleMessageDialog.newInstance(
                             title = getString(R.string.vague_error),
@@ -1236,7 +1236,7 @@ open class CardBrowser :
                 )
             )
         } else {
-            val selectedNoteIds = selectedNoteIds(selectedCardIds, col)
+            val selectedNoteIds = selectedNoteIds(selectedCardIds, getColUnsafe)
             mExportingDelegate.showExportDialog(
                 ExportDialogParams(
                     message = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_notes, selectedNoteIds.size, selectedNoteIds.size),
@@ -1335,7 +1335,7 @@ open class CardBrowser :
         val rescheduleDialog: RescheduleDialog = selectedCardIds.run {
             val consumer = Consumer { newDays: Int -> rescheduleWithoutValidation(this, newDays) }
             if (size == 1) {
-                rescheduleSingleCard(resources, col.getCard(this[0]), consumer)
+                rescheduleSingleCard(resources, getColUnsafe.getCard(this[0]), consumer)
             } else {
                 rescheduleMultipleCards(resources, consumer, size)
             }
@@ -1404,9 +1404,9 @@ open class CardBrowser :
         if (selectedCardIds.isEmpty()) {
             Timber.d("showEditTagsDialog: called with empty selection")
         }
-        val allTags = col.tags.all()
+        val allTags = getColUnsafe.tags.all()
         val selectedNotes = selectedCardIds
-            .map { cardId: CardId? -> col.getCard(cardId!!).note() }
+            .map { cardId: CardId? -> getColUnsafe.getCard(cardId!!).note() }
             .distinct()
         val checkedTags = selectedNotes
             .flatMap { note: Note -> note.tags }
@@ -1438,7 +1438,7 @@ open class CardBrowser :
         val dialog = mTagsDialogFactory.newTagsDialog().withArguments(
             TagsDialog.DialogType.FILTER_BY_TAG,
             ArrayList(0),
-            col.tags.all()
+            getColUnsafe.tags.all()
         )
         showDialogFragment(dialog)
     }
@@ -1573,7 +1573,7 @@ open class CardBrowser :
     }
 
     private fun updateList() {
-        if (colIsOpen()) {
+        if (colIsOpenUnsafe()) {
             cardsAdapter.notifyDataSetChanged()
             deckSpinnerSelection!!.notifyDataSetChanged()
             onSelectionChanged()
@@ -1793,7 +1793,7 @@ open class CardBrowser :
             when (lastDeckId) {
                 null -> getString(R.string.card_browser_unknown_deck_name)
                 ALL_DECKS_ID -> getString(R.string.card_browser_all_decks)
-                else -> col.decks.name(lastDeckId!!)
+                else -> getColUnsafe.decks.name(lastDeckId!!)
             }
         } catch (e: Exception) {
             Timber.w(e, "Unable to get selected deck name")
@@ -2076,7 +2076,7 @@ open class CardBrowser :
             updateMultiselectMenu()
             mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
         } finally {
-            if (colIsOpen()) {
+            if (colIsOpenUnsafe()) {
                 cardsAdapter.notifyDataSetChanged()
             }
         }

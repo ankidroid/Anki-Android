@@ -193,7 +193,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
     }
 
     fun modelHasChanged(): Boolean {
-        val oldModel: JSONObject? = col.notetypes.get(mModelId)
+        val oldModel: JSONObject? = getColUnsafe.notetypes.get(mModelId)
         return tempModel != null && tempModel!!.notetype.toString() != oldModel.toString()
     }
 
@@ -217,7 +217,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         val template = tempModel!!.getTemplate(ordinal)
         val templateName = template.getString("name")
 
-        if (deck != null && col.decks.isDyn(deck.deckId)) {
+        if (deck != null && getColUnsafe.decks.isDyn(deck.deckId)) {
             Timber.w("Attempted to set default deck of %s to dynamic deck %s", templateName, deck.name)
             showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
@@ -484,7 +484,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
                     }
 
                     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                        val col = mTemplateEditor.col
+                        val col = mTemplateEditor.getColUnsafe
                         val tempModel = mTemplateEditor.tempModel
                         when (menuItem.itemId) {
                             R.id.action_add -> {
@@ -587,7 +587,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
 
         fun performPreview() {
-            val col = mTemplateEditor.col
+            val col = mTemplateEditor.getColUnsafe
             val tempModel = mTemplateEditor.tempModel
             Timber.i("CardTemplateEditor:: Preview on tab %s", mTemplateEditor.viewPager.currentItem)
             // Create intent for the previewer and add some arguments
@@ -773,14 +773,14 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          */
         private fun executeWithSyncCheck(schemaChangingAction: Runnable) {
             try {
-                mTemplateEditor.col.modSchema()
+                mTemplateEditor.getColUnsafe.modSchema()
                 schemaChangingAction.run()
             } catch (e: ConfirmModSchemaException) {
                 e.log()
                 val d = ConfirmationDialog()
                 d.setArgs(resources.getString(R.string.full_sync_confirmation))
                 val confirm = Runnable {
-                    mTemplateEditor.col.modSchemaNoCheck()
+                    mTemplateEditor.getColUnsafe.modSchemaNoCheck()
                     schemaChangingAction.run()
                     mTemplateEditor.dismissAllDialogFragments()
                 }

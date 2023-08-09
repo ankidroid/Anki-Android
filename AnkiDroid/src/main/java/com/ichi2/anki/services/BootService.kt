@@ -65,7 +65,7 @@ class BootService : BroadcastReceiver() {
         // #6239 - previously would crash if ejecting, we don't want a report if this happens so don't use
         // getInstance().getColSafe
         return try {
-            CollectionHelper.instance.getCol(context)
+            CollectionHelper.instance.getColUnsafe(context)
         } catch (e: Exception) {
             Timber.e(e, "Failed to get collection for boot service - possibly media ejecting")
             null
@@ -116,7 +116,7 @@ class BootService : BroadcastReceiver() {
             // TODO; We might want to use the BootService retry code here when called from preferences.
             val defValue = 4
             return try {
-                val col = CollectionHelper.instance.getCol(context)!!
+                val col = CollectionHelper.instance.getColUnsafe(context)!!
                 when (col.schedVer()) {
                     1 -> {
                         val sp = context.sharedPrefs()

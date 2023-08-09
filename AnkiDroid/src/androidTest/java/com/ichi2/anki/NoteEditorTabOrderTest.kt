@@ -89,6 +89,6 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     }
 
     private fun ensureCollectionLoaded() {
-        CollectionHelper.instance.getCol(targetContext)
+        CollectionHelper.instance.getColUnsafe(targetContext)
     }
 }

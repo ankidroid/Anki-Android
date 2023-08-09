@@ -49,14 +49,14 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun verifyStartupNoCollection() {
         enableNullCollection()
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.col } } }
+        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.getColUnsafe } } }
     }
 
     @Ignore("flaky")
     @Test
     @RunInBackground
     fun verifyNormalStartup() {
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNotNull("Collection should be non-null", reviewer.col) } }
+        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNotNull("Collection should be non-null", reviewer.getColUnsafe) } }
     }
 
     @Ignore("flaky")

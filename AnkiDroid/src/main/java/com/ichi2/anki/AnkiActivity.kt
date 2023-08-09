@@ -51,14 +51,13 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.CollectionGetter
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 @UiThread
-open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
+open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     /** The name of the parent class (example: 'Reviewer')  */
     private val mActivityName: String
@@ -132,11 +131,13 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         hideProgressBar()
     }
 
-    override val col: Collection
-        get() = CollectionHelper.instance.getCol(this)!!
+    /** Legacy code should migrate away from this, and use withCol {} instead.
+     * */
+    val getColUnsafe: Collection
+        get() = CollectionManager.getColUnsafe()
 
-    fun colIsOpen(): Boolean {
-        return CollectionHelper.instance.colIsOpen()
+    fun colIsOpenUnsafe(): Boolean {
+        return CollectionManager.isOpenUnsafe()
     }
 
     /**
@@ -319,9 +320,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     /** Method for loading the collection which is inherited by every [AnkiActivity]  */
     fun startLoadingCollection() {
         Timber.d("AnkiActivity.startLoadingCollection()")
-        if (colIsOpen()) {
+        if (colIsOpenUnsafe()) {
             Timber.d("Synchronously calling onCollectionLoaded")
-            onCollectionLoaded(col)
+            onCollectionLoaded(getColUnsafe)
             return
         }
         // Open collection asynchronously if it hasn't already been opened

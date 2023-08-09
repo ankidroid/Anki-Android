@@ -505,7 +505,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private fun addFieldLocaleHint(selectedLocale: Locale) {
-        setLanguageHintForField(col.notetypes, mNotetype, currentPos, selectedLocale)
+        setLanguageHintForField(getColUnsafe.notetypes, mNotetype, currentPos, selectedLocale)
         val format = getString(R.string.model_field_editor_language_hint_dialog_success_result, selectedLocale.displayName)
         showSnackbar(format, Snackbar.LENGTH_SHORT)
     }

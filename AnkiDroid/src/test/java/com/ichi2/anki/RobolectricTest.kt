@@ -67,7 +67,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
 
-open class RobolectricTest : CollectionGetter, AndroidTest {
+open class RobolectricTest : AndroidTest {
 
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
@@ -144,8 +144,8 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         mControllersForCleanup.clear()
 
         try {
-            if (CollectionHelper.instance.colIsOpen()) {
-                CollectionHelper.instance.getCol(targetContext)!!.debugEnsureNoOpenPointers()
+            if (CollectionHelper.instance.colIsOpenUnsafe()) {
+                CollectionHelper.instance.getColUnsafe(targetContext)!!.debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
             CollectionHelper.instance.closeCollection("RobolectricTest: End")
@@ -325,9 +325,9 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    override val col: Collection
+    val col: Collection
         get() = try {
-            CollectionHelper.instance.getCol(targetContext)!!
+            CollectionHelper.instance.getColUnsafe(targetContext)!!
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }
@@ -340,7 +340,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         CollectionManager.closeCollectionBlocking()
         CollectionHelper.setInstanceForTesting(object : CollectionHelper() {
             @Synchronized
-            override fun getCol(context: Context?): Collection? = null
+            override fun getColUnsafe(context: Context?): Collection? = null
         })
         CollectionManager.emulateOpenFailure = true
     }

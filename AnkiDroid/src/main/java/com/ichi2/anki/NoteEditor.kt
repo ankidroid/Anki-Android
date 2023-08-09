@@ -472,7 +472,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             KeyEvent.KEYCODE_D -> // null check in case Spinner is moved into options menu in the future
                 if (event.isCtrlPressed) {
-                    mDeckSpinnerSelection!!.displayDeckSelectionDialog(col)
+                    mDeckSpinnerSelection!!.displayDeckSelectionDialog(getColUnsafe)
                 }
             KeyEvent.KEYCODE_L -> if (event.isCtrlPressed) {
                 showCardTemplateEditor()
@@ -734,7 +734,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // changed did? this has to be done first as remFromDyn() involves a direct write to the database
             if (mCurrentEditedCard != null && mCurrentEditedCard!!.did != deckId) {
                 mReloadRequired = true
-                col.setDeck(listOf(mCurrentEditedCard!!.id), deckId)
+                getColUnsafe.setDeck(listOf(mCurrentEditedCard!!.id), deckId)
                 // refresh the card object to reflect the database changes from above
                 mCurrentEditedCard!!.load()
                 // also reload the note object
@@ -780,7 +780,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             dialog.setArgs(res.getString(R.string.full_sync_confirmation))
             val confirm = Runnable {
                 // Bypass the check once the user confirms
-                col.modSchemaNoCheck()
+                getColUnsafe.modSchemaNoCheck()
                 try {
                     changeNoteType(oldNotetype, newNotetype)
                 } catch (e2: ConfirmModSchemaException) {
@@ -800,7 +800,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     @Throws(ConfirmModSchemaException::class)
     private fun changeNoteType(oldNotetype: NotetypeJson?, newNotetype: NotetypeJson?) {
         val noteId = mEditorNote!!.id
-        col.notetypes.change(oldNotetype!!, noteId, newNotetype!!, mModelChangeFieldMap!!, mModelChangeCardMap!!)
+        getColUnsafe.notetypes.change(oldNotetype!!, noteId, newNotetype!!, mModelChangeFieldMap!!, mModelChangeCardMap!!)
         // refresh the note object to reflect the database changes
         mEditorNote!!.load()
         // close note editor
@@ -1074,7 +1074,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         if (mSelectedTags == null) {
             mSelectedTags = ArrayList(0)
         }
-        val tags = ArrayList(col.tags.all())
+        val tags = ArrayList(getColUnsafe.tags.all())
         val selTags = ArrayList(mSelectedTags!!)
         val dialog = mTagsDialogFactory!!.newTagsDialog()
             .withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
@@ -1132,7 +1132,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             @NeedsTest("test to guard against changes in the REQUEST_MULTIMEDIA_EDIT clause preventing text fields to be updated")
             REQUEST_MULTIMEDIA_EDIT -> {
                 if (resultCode != RESULT_CANCELED) {
-                    val col = col
+                    val col = getColUnsafe
                     val extras = data!!.extras ?: return
                     val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
                     val field = extras[MultimediaEditFieldActivity.EXTRA_RESULT_FIELD] as IField? ?: return
@@ -1178,7 +1178,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 } else {
                     Timber.d("onActivityResult() template edit return - current card exists")
                     // reload current card - the template ordinals are possibly different post-edit
-                    mCurrentEditedCard = col.getCard(mCurrentEditedCard!!.id)
+                    mCurrentEditedCard = getColUnsafe.getCard(mCurrentEditedCard!!.id)
                     updateCards(mEditorNote!!.model())
                 }
             }
@@ -1327,7 +1327,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mediaButton.setOnClickListener { v: View ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
             if (mEditorNote!!.items()[index][1]!!.isNotEmpty()) {
-                val col = CollectionHelper.instance.getCol(this@NoteEditor)!!
+                val col = CollectionHelper.instance.getColUnsafe(this@NoteEditor)!!
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
                 val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
@@ -1435,7 +1435,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private fun startMultimediaFieldEditorForField(index: Int, field: IField) {
-        val col = CollectionHelper.instance.getCol(this@NoteEditor)!!
+        val col = CollectionHelper.instance.getColUnsafe(this@NoteEditor)!!
         val note: IMultimediaEditableNote = getCurrentMultimediaEditableNote(col)
         note.setField(index, field)
         startMultimediaFieldEditor(index, note)
@@ -1606,10 +1606,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return
         }
         if (note == null || addNote || mCurrentEditedCard == null) {
-            val model = col.notetypes.current()
-            if (col.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
-                deckId = col.config.get(CURRENT_DECK) ?: 1
-                if (col.decks.isDyn(deckId)) {
+            val model = getColUnsafe.notetypes.current()
+            if (getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
+                deckId = getColUnsafe.config.get(CURRENT_DECK) ?: 1
+                if (getColUnsafe.decks.isDyn(deckId)) {
                     /*
                      * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
                      * and we set mCurrentDid to the Default deck. Otherwise, we keep the number that had been
@@ -1634,8 +1634,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /** Handles setting the current note (non-null afterwards) and rebuilding the UI based on this note  */
     private fun setNote(note: Note?, changeType: FieldChangeType) {
         mEditorNote = if (note == null || addNote) {
-            val model = col.notetypes.current()
-            Note(col, model)
+            val model = getColUnsafe.notetypes.current()
+            Note(getColUnsafe, model)
         } else {
             note
         }
@@ -1846,7 +1846,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         mTagsButton!!.text = resources.getString(
             R.string.CardEditorTags,
-            col.tags.join(col.tags.canonify(mSelectedTags!!)).trim { it <= ' ' }.replace(" ", ", ")
+            getColUnsafe.tags.join(getColUnsafe.tags.canonify(mSelectedTags!!)).trim { it <= ' ' }.replace(" ", ", ")
         )
     }
 
@@ -1895,7 +1895,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     private val currentlySelectedNotetype: NotetypeJson?
-        get() = col.notetypes.get(mAllModelIds!![mNoteTypeSpinner!!.selectedItemPosition])
+        get() = getColUnsafe.notetypes.get(mAllModelIds!![mNoteTypeSpinner!!.selectedItemPosition])
 
     /**
      * Update all the field EditText views based on the currently selected note type and the mModelChangeFieldMap
@@ -1926,21 +1926,21 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
             // If a new column was selected then change the key used to map from mCards to the column TextView
             // Timber.i("NoteEditor:: onItemSelected() fired on mNoteTypeSpinner");
-            val oldModelId = col.notetypes.current().getLong("id")
+            val oldModelId = getColUnsafe.notetypes.current().getLong("id")
             val newId = mAllModelIds!![pos]
             Timber.i("Changing note type to '%d", newId)
             if (oldModelId != newId) {
-                val model = col.notetypes.get(newId)
+                val model = getColUnsafe.notetypes.get(newId)
                 if (model == null) {
                     Timber.w("New model %s not found, not changing note type", newId)
                     return
                 }
-                col.notetypes.setCurrent(model)
-                val currentDeck = col.decks.current()
+                getColUnsafe.notetypes.setCurrent(model)
+                val currentDeck = getColUnsafe.decks.current()
                 currentDeck.put("mid", newId)
-                col.decks.save(currentDeck)
+                getColUnsafe.decks.save(currentDeck)
                 // Update deck
-                if (!col.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
+                if (!getColUnsafe.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
                     deckId = model.optLong("did", Consts.DEFAULT_DECK_ID)
                 }
                 refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))
@@ -1960,7 +1960,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             // Get the current model
             val noteModelId = mCurrentEditedCard!!.model().getLong("id")
             // Get new model
-            val newModel = col.notetypes.get(mAllModelIds!![pos])
+            val newModel = getColUnsafe.notetypes.get(mAllModelIds!![pos])
             if (newModel == null) {
                 Timber.w("newModel %s not found", mAllModelIds!![pos])
                 return

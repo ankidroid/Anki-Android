@@ -52,12 +52,12 @@ open class CollectionHelper {
      * @return instance of the Collection
      */
     @Synchronized
-    open fun getCol(context: Context?): Collection? {
+    open fun getColUnsafe(context: Context?): Collection? {
         return CollectionManager.getColUnsafe()
     }
 
     /**
-     * Calls [getCol] inside a try / catch statement.
+     * Calls [getColUnsafe] inside a try / catch statement.
      * Send exception report if [reportException] is set and return null if there was an exception.
      * @param context
      * @param reportException Whether to send a crash report if an [Exception] was thrown when opening the collection (excluding
@@ -65,10 +65,10 @@ open class CollectionHelper {
      * @return the [Collection] if it could be obtained, `null` otherwise.
      */
     @Synchronized
-    fun getColSafe(context: Context?, reportException: Boolean = true): Collection? {
+    fun tryGetColUnsafe(context: Context?, reportException: Boolean = true): Collection? {
         lastOpenFailure = null
         return try {
-            getCol(context)
+            getColUnsafe(context)
         } catch (e: BackendDbLockedException) {
             lastOpenFailure = CollectionOpenFailure.LOCKED
             Timber.w(e)
@@ -104,7 +104,7 @@ open class CollectionHelper {
     /**
      * @return Whether or not [Collection] and its child database are open.
      */
-    fun colIsOpen(): Boolean {
+    fun colIsOpenUnsafe(): Boolean {
         return CollectionManager.isOpenUnsafe()
     }
 

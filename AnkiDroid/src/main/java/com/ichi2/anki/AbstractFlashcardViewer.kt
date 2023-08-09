@@ -727,7 +727,7 @@ abstract class AbstractFlashcardViewer :
     // ----------------------------------------------------------------------------
     // Get the did of the parent deck (ignoring any subdecks)
     protected val parentDid: DeckId
-        get() = col.decks.selected()
+        get() = getColUnsafe.decks.selected()
 
     private fun redrawCard() {
         // #3654 We can call this from ActivityResult, which could mean that the card content hasn't yet been set
@@ -1239,7 +1239,7 @@ abstract class AbstractFlashcardViewer :
         if (currentCard == null) return
         val actionBar = supportActionBar
         if (actionBar != null) {
-            val title = Decks.basename(col.decks.name(currentCard!!.did))
+            val title = Decks.basename(getColUnsafe.decks.name(currentCard!!.did))
             actionBar.title = title
         }
         if (!prefShowTopbar) {
@@ -1808,7 +1808,7 @@ abstract class AbstractFlashcardViewer :
 
     @get:VisibleForTesting
     protected open val isUndoAvailable: Boolean
-        get() = col.undoAvailable()
+        get() = getColUnsafe.undoAvailable()
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
@@ -2077,7 +2077,7 @@ abstract class AbstractFlashcardViewer :
             mCardSoundConfig = if (card == null) {
                 null
             } else {
-                create(col, card)
+                create(getColUnsafe, card)
             }
         }
 
@@ -2504,7 +2504,7 @@ abstract class AbstractFlashcardViewer :
     val correctTypedAnswer get() = typeAnswer!!.correct
 
     internal fun showTagsDialog() {
-        val tags = ArrayList(col.tags.all())
+        val tags = ArrayList(getColUnsafe.tags.all())
         val selTags = ArrayList(currentCard!!.note().tags)
         val dialog = mTagsDialogFactory!!.newTagsDialog().withArguments(TagsDialog.DialogType.EDIT_TAGS, selTags, tags)
         showDialogFragment(dialog)

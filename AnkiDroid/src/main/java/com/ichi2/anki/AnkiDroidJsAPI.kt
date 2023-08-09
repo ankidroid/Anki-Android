@@ -338,7 +338,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiGetDeckName(): String {
-        return Decks.basename(activity.col.decks.name(currentCard.did))
+        return Decks.basename(activity.getColUnsafe.decks.name(currentCard.did))
     }
 
     @JavascriptInterface

@@ -320,7 +320,7 @@ class DeckPickerTest : RobolectricTest() {
             // Neither collection, not its models will be initialized without storage permission
 
             // assert: Lazy Collection initialization CollectionTask.LoadCollectionComplete fails
-            assertFailsWith<Exception> { d.col }
+            assertFailsWith<Exception> { d.getColUnsafe }
         } finally {
             disableNullCollection()
         }
@@ -336,12 +336,12 @@ class DeckPickerTest : RobolectricTest() {
             )
             assertThat(
                 "Collection initialization ensured by CollectionTask.LoadCollectionComplete",
-                d.col,
+                d.getColUnsafe,
                 notNullValue()
             )
             assertThat(
                 "Collection Models Loaded",
-                d.col.notetypes,
+                d.getColUnsafe.notetypes,
                 notNullValue()
             )
         } finally {
@@ -366,7 +366,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should now be open",
-                CollectionHelper.instance.colIsOpen()
+                CollectionHelper.instance.colIsOpenUnsafe()
             )
             assertThat(
                 CollectionType.SCHEMA_V_16.isCollection(
@@ -400,7 +400,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should not be open",
-                !CollectionHelper.instance.colIsOpen()
+                !CollectionHelper.instance.colIsOpenUnsafe()
             )
             assertThat(
                 "An error dialog should be displayed",
@@ -424,7 +424,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should not be open",
-                !CollectionHelper.instance.colIsOpen()
+                !CollectionHelper.instance.colIsOpenUnsafe()
             )
             assertThat(
                 "An error dialog should be displayed",
@@ -505,7 +505,7 @@ class DeckPickerTest : RobolectricTest() {
         // ensure collection not loaded yet
         assertThat(
             "collection should not be loaded",
-            CollectionHelper.instance.colIsOpen(),
+            CollectionHelper.instance.colIsOpenUnsafe(),
             equalTo(false)
         )
     }

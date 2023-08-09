@@ -64,12 +64,12 @@ class ReminderService : BroadcastReceiver() {
         val col: Collection?
         try {
             colHelper = CollectionHelper.instance
-            col = colHelper.getCol(context)
+            col = colHelper.getColUnsafe(context)
         } catch (t: Throwable) {
             Timber.w(t, "onReceive - unexpectedly unable to get collection. Returning.")
             return
         }
-        if (null == col || !colHelper.colIsOpen()) {
+        if (null == col || !colHelper.colIsOpenUnsafe()) {
             Timber.w("onReceive - null or closed collection, unable to process reminders")
             return
         }

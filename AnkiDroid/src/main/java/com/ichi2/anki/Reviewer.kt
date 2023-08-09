@@ -256,12 +256,12 @@ open class Reviewer :
         Timber.d("selectDeckFromExtra() with deckId = %d", did)
 
         // deckId does not exist, load default
-        if (col.decks.get(did) == null) {
+        if (getColUnsafe.decks.get(did) == null) {
             Timber.w("selectDeckFromExtra() deckId '%d' doesn't exist", did)
             return
         }
         // Select the deck
-        col.decks.select(did)
+        getColUnsafe.decks.select(did)
     }
 
     override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
@@ -406,7 +406,7 @@ open class Reviewer :
                 toggleWhiteboard()
             }
             R.id.action_open_deck_options -> {
-                val i = com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current().id)
+                val i = com.ichi2.anki.pages.DeckOptions.getIntent(this, getColUnsafe.decks.current().id)
                 deckOptionsLauncher.launch(i)
             }
             R.id.action_select_tts -> {
@@ -699,18 +699,18 @@ open class Reviewer :
             undoEnabled = true
         } else {
             undoIconId = R.drawable.ic_undo_white
-            undoEnabled = colIsOpen() && col.undoAvailable()
+            undoEnabled = colIsOpenUnsafe() && getColUnsafe.undoAvailable()
         }
         val alphaUndo = if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val undoIcon = menu.findItem(R.id.action_undo)
         undoIcon.setIcon(undoIconId)
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
         undoIcon.actionView!!.isEnabled = undoEnabled
-        if (colIsOpen()) { // Required mostly because there are tests where `col` is null
+        if (colIsOpenUnsafe()) { // Required mostly because there are tests where `col` is null
             if (whiteboardIsShownAndHasStrokes) {
                 undoIcon.title = resources.getString(R.string.undo_action_whiteboard_last_stroke)
-            } else if (col.undoAvailable()) {
-                undoIcon.title = col.undoLabel()
+            } else if (getColUnsafe.undoAvailable()) {
+                undoIcon.title = getColUnsafe.undoLabel()
                 //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
             } else {
                 // In this case, there is no object word for the verb, "Undo",
@@ -779,7 +779,7 @@ open class Reviewer :
         } else {
             toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
         }
-        if (colIsOpen() && col.decks.isDyn(parentDid)) {
+        if (colIsOpenUnsafe() && getColUnsafe.decks.isDyn(parentDid)) {
             menu.findItem(R.id.action_open_deck_options).isVisible = false
         }
         if (mTTS.enabled && !mActionButtons.status.selectTtsIsDisabled()) {
@@ -1087,7 +1087,7 @@ open class Reviewer :
 
     override fun onStop() {
         super.onStop()
-        if (!isFinishing && colIsOpen() && sched != null) {
+        if (!isFinishing && colIsOpenUnsafe() && sched != null) {
             updateInBackground(this)
         }
     }
@@ -1366,7 +1366,7 @@ open class Reviewer :
         return if (currentCard == null || isControlBlocked) {
             false
         } else {
-            col.db.queryScalar(
+            getColUnsafe.db.queryScalar(
                 "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
                 currentCard!!.nid,
                 currentCard!!.id
@@ -1380,7 +1380,7 @@ open class Reviewer :
         return if (currentCard == null || isControlBlocked) {
             false
         } else {
-            col.db.queryScalar(
+            getColUnsafe.db.queryScalar(
                 "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
                 currentCard!!.nid,
                 currentCard!!.id

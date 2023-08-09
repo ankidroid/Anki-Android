@@ -48,7 +48,7 @@ fun AnkiActivity.importApkgs(apkgPaths: List<String>) {
                     importAnkiPackage(apkgPath)
                 }
             }
-            showSimpleMessageDialog(summarizeReport(col.tr, report))
+            showSimpleMessageDialog(summarizeReport(getColUnsafe.tr, report))
         }
     }
 }

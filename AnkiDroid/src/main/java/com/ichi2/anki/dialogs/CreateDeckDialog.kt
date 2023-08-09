@@ -49,7 +49,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     }
 
     private val col
-        get() = CollectionHelper.instance.getCol(context)!!
+        get() = CollectionHelper.instance.getColUnsafe(context)!!
 
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")

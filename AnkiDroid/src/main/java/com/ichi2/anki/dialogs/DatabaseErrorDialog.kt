@@ -112,7 +112,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // to the previous dialog
                 val options = ArrayList<String>(6)
                 val values = ArrayList<Int>(6)
-                if (!(activity as AnkiActivity).colIsOpen()) {
+                if (!(activity as AnkiActivity).colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(0)
