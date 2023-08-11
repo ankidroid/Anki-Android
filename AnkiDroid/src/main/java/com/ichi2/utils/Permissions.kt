@@ -23,6 +23,7 @@ import android.content.pm.PackageManager.GET_PERMISSIONS
 import android.os.Build
 import android.os.Environment
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
@@ -171,5 +172,8 @@ object Permissions {
 }
 
 fun Fragment.hasAnyOfPermissionsBeenDenied(permissions: Collection<String>): Boolean {
-    return permissions.any { shouldShowRequestPermissionRationale(it) }
+    val activity = requireActivity()
+    return permissions.any {
+        ActivityCompat.shouldShowRequestPermissionRationale(activity, it)
+    }
 }
