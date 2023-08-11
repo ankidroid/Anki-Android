@@ -24,6 +24,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
+import net.ankiweb.rsdroid.exceptions.BackendNetworkException
 
 // TODO Remove BADGE_DISABLED from this enum, it doesn't belong here
 enum class SyncStatus {
@@ -40,13 +41,17 @@ enum class SyncStatus {
             if (auth == null) {
                 return NO_ACCOUNT
             }
-            val output = col.syncStatus(auth)
-            if (output.hasNewEndpoint()) {
-                context.sharedPrefs().edit {
-                    putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
+            return try {
+                val output = col.syncStatus(auth)
+                if (output.hasNewEndpoint()) {
+                    context.sharedPrefs().edit {
+                        putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
+                    }
                 }
+                syncStatusFromRequired(output.required)
+            } catch (_: BackendNetworkException) {
+                NO_CHANGES
             }
-            return syncStatusFromRequired(output.required)
         }
 
         private fun syncStatusFromRequired(required: SyncStatusResponse.Required?): SyncStatus {
