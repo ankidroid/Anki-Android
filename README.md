@@ -22,17 +22,17 @@ A semi-official port of the open source [Anki](https://apps.ankiweb.net/index.ht
 
 <div style="display:flex;">
  
-- night mode
-- whiteboard 
-- progress widget
-- detailed statistics
-- syncing with AnkiWeb
-- write answers (optional)
-- text-to-speech integration
-- more than 6000 premade decks
-- spaced repetition (supermemo 2 algorithm)
-- supported contents: text, images, sounds, MathJax
-- add cards by intent from other applications like dictionaries
+- Night mode
+- Whiteboard 
+- Progress widget
+- Detailed statistics
+- Syncing with AnkiWeb
+- Write answers (optional)
+- Text-to-speech integration
+- More than 6000 premade decks
+- Spaced repetition (supermemo 2 algorithm)
+- Supported contents: text, images, sounds, MathJax
+- Add cards by intent from other applications like dictionaries
 
 </div>
 
