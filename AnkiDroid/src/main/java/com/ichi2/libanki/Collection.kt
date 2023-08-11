@@ -29,6 +29,8 @@ import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.ConfigKey
 import anki.search.SearchNode
+import anki.sync.SyncAuth
+import anki.sync.SyncStatusResponse
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
@@ -677,6 +679,10 @@ open class Collection(
 
     fun getEmptyCards(): EmptyCardsReport {
         return backend.getEmptyCards()
+    }
+
+    fun syncStatus(auth: SyncAuth): SyncStatusResponse {
+        return backend.syncStatus(input = auth)
     }
 
     /** Takes raw input from TypeScript frontend and returns suitable translations. */

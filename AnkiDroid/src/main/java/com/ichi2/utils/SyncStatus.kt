@@ -40,7 +40,7 @@ enum class SyncStatus {
             if (auth == null) {
                 return NO_ACCOUNT
             }
-            val output = col.backend.syncStatus(auth)
+            val output = col.syncStatus(auth)
             if (output.hasNewEndpoint()) {
                 context.sharedPrefs().edit {
                     putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
