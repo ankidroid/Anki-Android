@@ -26,16 +26,16 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
-import androidx.appcompat.app.ActionBar
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
@@ -50,28 +50,32 @@ class Preferences :
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
 
-    // ----------------------------------------------------------------------------
-    // Overridden methods
-    // ----------------------------------------------------------------------------
+    override fun onTitleChanged(title: CharSequence?, color: Int) {
+        super.onTitleChanged(title, color)
+        findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.title = title
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
 
-        val actionBar = enableToolbar().apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-        }
+        enableToolbar().setDisplayHomeAsUpEnabled(true)
 
-        // Load initial fragment if activity is being first created.
-        // If activity is being recreated (i.e. savedInstanceState != null),
-        // which could happen on configuration changes as screen rotation and theme changes,
-        // don't replace the previous opened fragments
+        // Load initial fragment if activity is being first created
         if (savedInstanceState == null) {
             loadInitialFragment()
         }
-        updateActionBarTitle(supportFragmentManager, actionBar)
+        updateAppBarTitle()
         supportFragmentManager.addOnBackStackChangedListener {
-            updateActionBarTitle(supportFragmentManager, supportActionBar)
+            updateAppBarTitle()
+            // Expand bar in new fragments if scrolled to top
+            val fragment = supportFragmentManager.findFragmentById(R.id.settings_container)
+                as? PreferenceFragmentCompat ?: return@addOnBackStackChangedListener
+            fragment.listView.post {
+                val viewHolder = fragment.listView?.findViewHolderForAdapterPosition(0)
+                val isAtTop = viewHolder != null && viewHolder.itemView.top >= 0
+                findViewById<AppBarLayout>(R.id.appbar).setExpanded(isAtTop, false)
+            }
         }
     }
 
@@ -103,7 +107,7 @@ class Preferences :
     ): Boolean {
         val fragment = supportFragmentManager.fragmentFactory.instantiate(
             classLoader,
-            pref.fragment!!
+            pref.fragment ?: return false
         )
         fragment.arguments = pref.extras
         supportFragmentManager.commit {
@@ -113,18 +117,16 @@ class Preferences :
         return true
     }
 
-    private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
-        val fragment = fragmentManager.findFragmentById(R.id.settings_container)
+    private fun updateAppBarTitle() {
+        val fragment = supportFragmentManager.findFragmentById(R.id.settings_container)
 
-        if (fragment is SearchPreferenceFragment) {
-            return
-        }
+        if (fragment is SearchPreferenceFragment) return
 
-        actionBar?.title = when (fragment) {
+        title = when (fragment) {
             is SettingsFragment -> fragment.preferenceScreen.title
             is AboutFragment -> getString(R.string.pref_cat_about_title)
-            else -> getString(R.string.settings)
-        }
+            else -> null
+        } ?: getString(R.string.settings)
     }
 
     @Suppress("deprecation") // onBackPressed
