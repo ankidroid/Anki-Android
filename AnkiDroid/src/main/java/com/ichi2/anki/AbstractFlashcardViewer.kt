@@ -664,11 +664,20 @@ abstract class AbstractFlashcardViewer :
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        return if (processCardFunction { cardWebView: WebView? -> processHardwareButtonScroll(keyCode, cardWebView) }) {
-            true
-        } else {
-            super.onKeyDown(keyCode, event)
+        if (processCardFunction { cardWebView: WebView? -> processHardwareButtonScroll(keyCode, cardWebView) }) {
+            return true
         }
+
+        // Subclasses other than 'Reviewer' have not been setup with Gestures/KeyPresses
+        // so hardcode this functionality for now.
+        // This is in onKeyDown to match the gesture processor in the Reviewer
+        if (!displayAnswer && !answerFieldIsFocused()) {
+            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
+                displayCardAnswer()
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     public override val currentCardId: CardId? get() = currentCard?.id
@@ -703,19 +712,6 @@ abstract class AbstractFlashcardViewer :
             return true
         }
         return false
-    }
-
-    override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
-        if (answerFieldIsFocused()) {
-            return super.onKeyUp(keyCode, event)
-        }
-        if (!displayAnswer) {
-            if (keyCode == KeyEvent.KEYCODE_SPACE || keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER) {
-                displayCardAnswer()
-                return true
-            }
-        }
-        return super.onKeyUp(keyCode, event)
     }
 
     protected open fun answerFieldIsFocused(): Boolean {
