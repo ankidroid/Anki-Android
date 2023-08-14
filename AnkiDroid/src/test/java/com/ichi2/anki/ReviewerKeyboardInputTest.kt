@@ -36,7 +36,6 @@ import com.ichi2.utils.Computation
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
@@ -213,7 +212,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("Issue 14214")
     fun defaultKeyboardInputsFlipAndAnswersCard() {
         // Issue 14214
         val underTest = KeyboardInputTestReviewer.displayingQuestion()
