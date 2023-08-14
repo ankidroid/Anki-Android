@@ -536,6 +536,11 @@ abstract class AbstractFlashcardViewer :
         restorePreferences()
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         super.onCreate(savedInstanceState)
+
+        // Issue 14142: The reviewer had a focus highlight after answering using a keyboard.
+        // This theme removes the highlight, but there is likely a better way.
+        this.setTheme(R.style.ThemeOverlay_DisableKeyboardHighlight)
+
         setContentView(getContentViewAttr(fullscreenMode))
 
         // Make ACTION_PROCESS_TEXT for in-app searching possible on > Android 4.0
