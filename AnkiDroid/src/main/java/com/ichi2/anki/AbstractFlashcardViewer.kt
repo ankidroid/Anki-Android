@@ -1118,7 +1118,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     /** If a card is displaying the question, flip it, otherwise answer it  */
-    private fun flipOrAnswerCard(cardOrdinal: Int) {
+    internal open fun flipOrAnswerCard(cardOrdinal: Int) {
         if (!displayAnswer) {
             displayCardAnswer()
             return
