@@ -26,6 +26,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -369,7 +370,8 @@ abstract class NavigationDrawerActivity :
         mNavButtonGoesBack = false
     }
 
-    val isDrawerOpen: Boolean
+    @VisibleForTesting
+    open val isDrawerOpen: Boolean
         get() = mDrawerLayout.isDrawerOpen(GravityCompat.START)
 
     /**

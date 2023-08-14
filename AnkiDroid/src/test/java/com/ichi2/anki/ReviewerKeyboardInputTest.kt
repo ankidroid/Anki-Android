@@ -36,6 +36,7 @@ import com.ichi2.utils.Computation
 import kotlinx.coroutines.Job
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers
@@ -211,6 +212,21 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         assertThat("Undo should not be called as control are blocked", !underTest.undoCalled)
     }
 
+    @Test
+    @Ignore("Issue 14214")
+    fun defaultKeyboardInputsFlipAndAnswersCard() {
+        // Issue 14214
+        val underTest = KeyboardInputTestReviewer.displayingQuestion()
+
+        underTest.handleSpacebar()
+
+        assertThat("After a keypress the answer should be displayed", underTest.testIsDisplayingAnswer())
+
+        underTest.handleSpacebar()
+
+        assertThat("After a second keypress the question should be displayed", !underTest.testIsDisplayingAnswer())
+    }
+
     private fun assertGamepadButtonAnswers(keycodeButton: Int, ease: Int) {
         val underTest = KeyboardInputTestReviewer.displayingQuestion()
         assertThat("Assume: Initially should not display answer", !underTest.didDisplayAnswer())
@@ -237,6 +253,10 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             private set
         override var controlBlocked = ControlBlock.UNBLOCKED
         private var mUndoAvailable = false
+
+        private val cardFlips = mutableListOf<String>()
+        override val isDrawerOpen: Boolean
+            get() = false
         fun withControlsBlocked(value: ControlBlock): KeyboardInputTestReviewer {
             controlBlocked = value
             return this
@@ -251,12 +271,27 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         }
 
         override fun displayCardAnswer() {
-            mDisplayAnswer = true
+            cardFlips.add("answer")
+            displayAnswer = true
         }
 
-        fun didDisplayAnswer(): Boolean {
-            return mDisplayAnswer
+        override fun displayCardQuestion() {
+            cardFlips.add("question")
+            displayAnswer = false
         }
+
+        override fun flipOrAnswerCard(cardOrdinal: Int) {
+            if (displayAnswer) {
+                answerCard(cardOrdinal)
+                displayCardQuestion()
+            } else {
+                displayCardAnswer()
+            }
+        }
+
+        fun didDisplayAnswer() = cardFlips.contains("answer")
+
+        fun testIsDisplayingAnswer() = cardFlips.last() == "answer"
 
         fun handleUnicodeKeyPress(unicodeChar: Char) {
             val key = mockKeyEvent
