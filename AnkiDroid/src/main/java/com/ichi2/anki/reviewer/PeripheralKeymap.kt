@@ -57,7 +57,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         return if (!mHasSetup || event.repeatCount > 0) {
             false
         } else {
-            mKeyMap.onKeyUp(keyCode, event)
+            mKeyMap.onKeyDown(keyCode, event)
         }
     }
 
@@ -70,7 +70,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         val mBindingMap = HashMap<MappableBinding, ViewerCommand>()
 
         @Suppress("UNUSED_PARAMETER")
-        fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+        fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
             var ret = false
             val bindings = key(event!!)
             val side = fromAnswer(reviewerUI.isDisplayingAnswer)
