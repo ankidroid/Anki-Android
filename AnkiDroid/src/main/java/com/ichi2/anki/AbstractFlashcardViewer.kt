@@ -1106,6 +1106,9 @@ abstract class AbstractFlashcardViewer :
         // enable dom storage so that sessionStorage & localStorage can be used in webview
         webView.settings.domStorageEnabled = true
 
+        // enable third party cookies so that cookies can be used in webview
+        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
+
         return webView
     }
 
