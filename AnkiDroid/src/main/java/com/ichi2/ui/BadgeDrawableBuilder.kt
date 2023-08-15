@@ -70,7 +70,7 @@ class BadgeDrawableBuilder(private val context: Context) {
             }
             val icon = menuItem.icon
             if (icon is BadgeDrawable) {
-                menuItem.icon = icon.current
+                menuItem.icon = icon.drawable
                 Timber.d("Badge removed")
             }
         }
