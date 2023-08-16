@@ -25,12 +25,9 @@
 
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tag only</string>
 
 
     <!-- new_order_labels -->
-    <string name="new_order_random">New cards in random order</string>
-    <string name="new_order_order_added">New cards in order added</string>
 
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>

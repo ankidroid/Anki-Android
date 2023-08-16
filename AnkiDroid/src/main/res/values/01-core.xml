@@ -57,10 +57,6 @@
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
 
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
-    </plurals>
 
 
     <!-- flashcard_portrait.xml -->
@@ -151,13 +147,8 @@
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
 
     <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sync</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Continue sync</string>
-    <string name="sync_cancelled">Sync cancelled</string>
-    <string name="sync_cancel_message">Cancelling…\nThis may take some time.</string>
     <string name="export">Export</string>
     <string name="export_collection">Export collection</string>
     <string name="export_deck">Export deck</string>
@@ -188,7 +179,6 @@
 
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
 
     <!-- card Info -->
     <string name="card_info_title">Card info</string>
