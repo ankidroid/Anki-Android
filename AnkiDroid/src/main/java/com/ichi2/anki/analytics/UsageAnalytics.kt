@@ -534,6 +534,7 @@ object UsageAnalytics {
         "answerButtonSize",
         "showLargeAnswerButtons",
         "relativeCardBrowserFontSize",
+        "showCardAnswerButtonTime",
         // Advanced
         "deckPath", // AnkiDroid directory
         "backupMax", // Max number of backups

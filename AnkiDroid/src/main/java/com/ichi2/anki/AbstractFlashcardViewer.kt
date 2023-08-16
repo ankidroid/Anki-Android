@@ -145,6 +145,7 @@ abstract class AbstractFlashcardViewer :
     protected var fullscreenMode = DEFAULT
         private set
     private var mRelativeButtonSize = 0
+    private var minimalClickSpeed = 0
     private var mDoubleScrolling = false
     private var mGesturesEnabled = false
     private var mLargeAnswerButtons = false
@@ -894,8 +895,28 @@ abstract class AbstractFlashcardViewer :
             easeButton4!!.hideNextReviewTime()
         }
         val flipCard = findViewById<Button>(R.id.flip_card)
-        flipCardLayout = findViewById<LinearLayout>(R.id.flashcard_layout_flip).apply {
-            setOnClickListener(mFlipCardListener)
+        flipCardLayout = findViewById<LinearLayout>(R.id.flashcard_layout_flip)
+        flipCardLayout?.let { layout ->
+            if (minimalClickSpeed == 0) {
+                layout.setOnClickListener(mFlipCardListener)
+            } else {
+                val handler = Handler(Looper.getMainLooper())
+                layout.setOnTouchListener { _, event ->
+                    when (event.action) {
+                        MotionEvent.ACTION_DOWN -> {
+                            handler.postDelayed({
+                                mFlipCardListener.onClick(layout)
+                            }, minimalClickSpeed.toLong())
+                            false
+                        }
+                        MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_HOVER_ENTER -> {
+                            handler.removeCallbacksAndMessages(null)
+                            false
+                        }
+                        else -> false
+                    }
+                }
+            }
         }
         if (animationEnabled()) {
             flipCard.setBackgroundResource(getResFromAttr(this, R.attr.hardButtonRippleRef))
@@ -1150,6 +1171,7 @@ abstract class AbstractFlashcardViewer :
         val preferences = baseContext.sharedPrefs()
         typeAnswer = createInstance(preferences)
         // mDeckFilename = preferences.getString("deckFilename", "");
+        minimalClickSpeed = preferences.getInt("showCardAnswerButtonTime", 0)
         fullscreenMode = fromPreference(preferences)
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100)
         mTTS.enabled = preferences.getBoolean("tts", false)

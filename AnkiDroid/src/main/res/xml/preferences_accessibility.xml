@@ -55,4 +55,11 @@
         android:valueTo="200"
         android:stepSize="10"
         app:displayFormat="@string/pref_summary_percentage"/>
+    <com.ichi2.preferences.NumberRangePreferenceCompat
+        android:defaultValue="0"
+        android:key="@string/pref_card_minimal_click_time"
+        android:summary="@string/pref_show_answer_long_press_summary"
+        android:title="@string/pref_show_answer_long_press"
+        app:min="0"
+        android:max="2000" />
 </PreferenceScreen>
