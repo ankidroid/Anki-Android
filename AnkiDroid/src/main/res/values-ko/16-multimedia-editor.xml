@@ -46,15 +46,6 @@
     <string name="multimedia_editor_popup_audio">오디오 녹음</string>
     <string name="multimedia_editor_popup_text">고급 편집기</string>
     <string name="multimedia_editor_popup_cloze">빈칸 만들기</string>
-    <string name="multimedia_editor_popup_clear_field">필드 지우기</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">불러오기</string>
-    <string name="multimedia_editor_pron_looking_up">발음 찾는 중</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">발음 실패</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
-    <string name="multimedia_editor_word_search_try_lower_case">소문자만 사용해서 시도하세요</string>
-    <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">텍스트</string>
@@ -64,11 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">완료</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">발음</string>
     <string name="multimedia_editor_text_field_editing_clear">지우기</string>
     <string name="multimedia_editor_text_field_editing_clone">다음에서 복제</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">먼저 일부 텍스트를 입력하세요</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">다음으로부터 받기</string>
     <!-- Multimedia card editor activity -->
@@ -81,16 +69,6 @@
     <string name="multimedia_editor_import_audio">Audio</string>
     <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">다운로드 중</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">완료</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">단어를 찾을 수 없습니다</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">단어 검색 중</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">대기</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">무언가가 잘못되었습니다</string>
     <string name="multimedia_editor_svg_preview">SVG는 미리볼 수 없습니다</string>
@@ -104,8 +82,6 @@
     <string name="multimedia_editor_audio_view_create_failed">레코더 툴바를 생성할 수 없습니다</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">편집 필드</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">연결이 되어있지 않습니다</string>
     <!-- Crop function-->
     <string name="crop_image">이 이미지를 자르시겠습니까?</string>
     <string name="crop_button">이미지 자르기</string>

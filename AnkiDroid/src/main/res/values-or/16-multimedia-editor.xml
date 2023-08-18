@@ -46,15 +46,6 @@
     <string name="multimedia_editor_popup_audio">ଅଡ଼ିଓ ରେକର୍ଡ କର</string>
     <string name="multimedia_editor_popup_text">ଉନ୍ନତ ସମ୍ପାଦକ</string>
     <string name="multimedia_editor_popup_cloze">କ୍ଲୋଜ୍ ବିଲୋପ</string>
-    <string name="multimedia_editor_popup_clear_field">କ୍ଷେତ୍ର ସଫା କରନ୍ତୁ</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">ଲୋଡ୍</string>
-    <string name="multimedia_editor_pron_looking_up">ଉଚ୍ଚାରଣକୁ ଦେଖୁଛି</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">ଉଚ୍ଚାରଣ ବିଫଳ ହେଲା</string>
-    <string name="multimedia_editor_only_one_word">ଥରକୁ କେଵଳ ଗୋଟିଏ ଶବ୍ଦର ପ୍ରକ୍ରିୟାକରଣ ସୁଵିଧା ରହିଛି</string>
-    <string name="multimedia_editor_word_search_try_lower_case">କେଵଳ ସାନ ଅକ୍ଷର ଵ୍ୟଵହାର କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="multimedia_editor_poweredbeolingus">Beolingus ଦ୍ୱାରା ଚାଳିତ</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">ପାଠ୍ୟ</string>
@@ -64,11 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">ହେଲା</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">ଉଚ୍ଚାରଣ</string>
     <string name="multimedia_editor_text_field_editing_clear">ସଫା</string>
     <string name="multimedia_editor_text_field_editing_clone">ଏଥିରୁ ପ୍ରତିଲିପି ତିଆରି କରନ୍ତୁ</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">ପ୍ରଥମେ କିଛି ଲେଖା ପ୍ରବେଶ କରନ୍ତୁ</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">ଏଥିରୁ ନିଅ</string>
     <!-- Multimedia card editor activity -->
@@ -81,16 +69,6 @@
     <string name="multimedia_editor_import_audio">ଅଡ଼ିଓ</string>
     <string name="multimedia_editor_import_video">ଵିଡ଼ିଓ</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">ଡାଉନଲୋଡ୍ ହେଉଛି</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">ହେଲା</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">ଶବ୍ଦଟି ମିଳିଲା ନାହିଁ</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">ଶବ୍ଦ ଖୋଜୁଛି</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">ଅପେକ୍ଷା କର</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">କିଛି ଗଡ଼ବଡ଼ ଦେଖାଯାଇଛି</string>
     <string name="multimedia_editor_svg_preview">ପୂର୍ଵାଵଲୋକନ ପାଇଁ SVG ଉପଲବ୍ଧ ନାହିଁ</string>
@@ -104,8 +82,6 @@
     <string name="multimedia_editor_audio_view_create_failed">ରେକର୍ଡର୍-ଉପକରଣ-ଦଣ୍ଡିକା ସୃଷ୍ଟି କରିବାରେ ଅସମର୍ଥ</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">କ୍ଷେତ୍ରଟିର ସମ୍ପାଦନ ଚାଲିଛି</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">କୌଣସି ସଂଯୋଗ ନାହିଁ</string>
     <!-- Crop function-->
     <string name="crop_image">ଆପଣ ଏହି ପ୍ରତିଛବି କ୍ରପ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="crop_button">ପ୍ରତିଛବି କ୍ରପ୍ କରନ୍ତୁ</string>

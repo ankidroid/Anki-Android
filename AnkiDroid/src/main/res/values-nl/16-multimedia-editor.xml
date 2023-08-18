@@ -46,15 +46,6 @@
     <string name="multimedia_editor_popup_audio">Neem audio op</string>
     <string name="multimedia_editor_popup_text">Geavanceerde editor</string>
     <string name="multimedia_editor_popup_cloze">Invuloefening</string>
-    <string name="multimedia_editor_popup_clear_field">Veld leegmaken</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Laad</string>
-    <string name="multimedia_editor_pron_looking_up">Opzoeken van uitspraak</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">Uitspraak mislukt</string>
-    <string name="multimedia_editor_only_one_word">Er wordt slechts één woord per keer ondersteund</string>
-    <string name="multimedia_editor_word_search_try_lower_case">Probeer alleen kleine letters te gebruiken</string>
-    <string name="multimedia_editor_poweredbeolingus">Aangedreven door Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Tekst</string>
@@ -64,11 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Klaar</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">Uitspraak</string>
     <string name="multimedia_editor_text_field_editing_clear">Wissen</string>
     <string name="multimedia_editor_text_field_editing_clone">Kloon van</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">Voer eerst tekst in</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Pak van</string>
     <!-- Multimedia card editor activity -->
@@ -81,16 +69,6 @@
     <string name="multimedia_editor_import_audio">Audio</string>
     <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">Downloaden</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Klaar</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">Woord werd niet gevonden</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">Woord aan het zoeken</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Wachten</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Er is iets fout gegaan</string>
     <string name="multimedia_editor_svg_preview">SVG\'s zijn niet beschikbaar voor voorbeeldweergave</string>
@@ -104,8 +82,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Kan geen opnamewerkbalk aanmaken</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Veld wijzigen</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">Geen verbinding</string>
     <!-- Crop function-->
     <string name="crop_image">Wilt u deze afbeelding bijsnijden?</string>
     <string name="crop_button">Afbeelding bijsnijden</string>
