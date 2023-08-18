@@ -216,9 +216,9 @@
     <string name="more_information">More information</string>
     <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
     <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
+    <string name="missing_closing_bracket">\'%s\' эчендә \'}}\' җитми.</string>
     <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
+    <string name="wrong_tag_closed">\'{{/%1$s}}\' табылды, ләкин \'{{/%2$s}}\' көтелде</string>
     <string name="filter_error">Error in filter %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
@@ -241,7 +241,7 @@
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copying&#8230;</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Calculating transfer size&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%1$s/%2$s күчте</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migration successful</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Your data has been migrated successfully.
         AnkiDroid is fully functional again, and you can sync.

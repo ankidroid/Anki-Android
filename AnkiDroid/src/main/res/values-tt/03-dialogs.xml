@@ -85,7 +85,7 @@
     <string name="reschedule_card_dialog_new_card_warning">A new card is being rescheduled. Rescheduling also turns new cards into review cards. Use the ‘reposition card’ option to change a new card\'s position within the new queue</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Rescheduling also resets how the scheduler treats the card in the future (ease will be set to %d%%)</string>
     <string name="firefox_workaround_launched_reviewer_opening_deck">Select the deck in your file manager or visit the about:downloads page to import it</string>
-    <string name="answering_error_title">Database error</string>
+    <string name="answering_error_title">Мәгълүмат базасы хатасы</string>
     <string name="answering_error_message">Writing to the collection failed. The database could be corrupt or there may not to be enough empty space on disk.\n\nIf this happens more often, try checking the database, repairing the collection or restoring it from a backup. Touch “options” for that.\n\Or it could be an AnkiDroid bug as well; please report the error so that we can check this.</string>
     <string name="answering_error_report">Report error</string>
     <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
@@ -120,7 +120,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
     <string name="dialog_no">Юк</string>
-    <string name="dialog_yes">Yes</string>
+    <string name="dialog_yes">Әйе</string>
     <string name="dialog_continue">Дәвам итү</string>
     <string name="dialog_processing">Processing...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Ясарга</string>
@@ -221,15 +221,15 @@
     <string name="help_item_support_opencollective_donate">Donate</string>
     <string name="help_item_support_develop_ankidroid">Develop</string>
     <string name="help_item_support_rate_ankidroid">Rate</string>
-    <string name="help_item_support_other_ankidroid">Other</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="help_item_support_other_ankidroid">Башка</string>
+    <string name="multimedia_editor_trans_translate">Тәрҗемә итү</string>
     <string name="help_title_community">Community</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_anki_forums">Anki Форумлары</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
     <string name="help_title_privacy">Privacy</string>
-    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Privacy Policy</string>
+    <string name="help_item_ankidroid_privacy_policy">AnkiDroid Хосусыйлык Сәясәте</string>
     <string name="help_item_ankiweb_privacy_policy">AnkiWeb Privacy Policy</string>
     <string name="help_item_ankiweb_terms_and_conditions">AnkiWeb Terms and Conditions</string>
     <string name="help_title_send_exception">Send troubleshooting report</string>
@@ -256,7 +256,7 @@
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
     <string name="button_backup">Backup</string>
     <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Соңрак</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
     <string name="dismiss_backup_warning_title">Data loss warning</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled

@@ -109,7 +109,7 @@
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
     <string name="importing_collection">კოლექციის იმპორტირება&#8230;</string>
     <string name="import_media_count">მედიაფაილების %1$d%% იმპორტირება&#8230;</string>
-    <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
+    <string name="import_progress">• შენიშვნების იმპორტირება: %1$d%%\n• ბარათების იმპორტირება: %2$d%%\n• პოსტ-დამუშავება: %3$d%%</string>
     <string name="import_update_details">განახლდა %1$d შენივნა %2$d არსებული შენიშვნიდან.</string>
     <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
     <plurals name="import_complete_message">

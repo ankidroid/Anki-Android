@@ -211,8 +211,8 @@
         <item quantity="many">Wyeksportować zaznaczone notatki jako plik apkg?</item>
         <item quantity="other">Wyeksportować %d zaznaczonych notatek jako plik apkg?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">Trwa przygotowywanie do eksportu...</string>
+    <string name="export_ready_title">Eksportowanie zakończone</string>
     <string name="export_send_no_handlers">Nie znaleziono aplikacji, która obsługuje apkg. Zapisywanie...</string>
     <string name="export_save_apkg_successful">Pakiet Anki zapisany pomyślnie</string>
     <string name="export_save_apkg_unsuccessful">Zapis pliku pakietu Anki nieudany</string>
@@ -225,8 +225,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Udostępnij</string>
+    <string name="export_choice_save_to">Zapisz do</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcje</string>
     <string name="menu__deck_options">Opcje talii</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcje nauki</string>
@@ -341,7 +341,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nie udało się załadować talii: %s</string>
     <string name="search_decks">Przeszukaj talie</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Pokaż postęp migracji</string>
     <string name="ankidroid_init_failed_webview_title">Błąd krytyczny</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid do działania wymaga System WebView który jest teraz niedostępny. Może być to spowodowane trwającą teraz instalacją aktualizacji przez system. Spróbuj ponownie za kilka minut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -395,9 +395,9 @@
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Karta zakopana.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="few">%d cards suspended.</item>
-        <item quantity="many">%d cards suspended.</item>
+        <item quantity="one">%d karta zawieszona.</item>
+        <item quantity="few">%d karty zawieszone.</item>
+        <item quantity="many">%d kart zawieszonych.</item>
         <item quantity="other">%d kart zawieszonych.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->

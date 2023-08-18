@@ -64,7 +64,7 @@
     <string name="cram_deck_conf_order_relative_overdueness">Terlebih tunggak secara relatif</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Guna dek kini</string>
-    <string name="add_to_deck_decide_by_note_type">Putuskan menggunakan jenis nota</string>
+    <string name="add_to_deck_decide_by_note_type">Tentukan melalui jenis nota</string>
     <!-- new_spread_labels -->
     <string name="new_spread_mix_new_and_review">Campur kad baru dan semakan</string>
     <string name="new_spread_new_after_review">Kad baru selepas semakan</string>

@@ -242,14 +242,14 @@
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Meerdere fouten, meest recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Meerdere opeenvolgende fouten zonder voortgang, meest recent: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
-    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copying&#8230;</string>
-    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migreren van databasebestanden</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Kopiëren&#8230;</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Media migreren</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Calculating transfer size&#8230;</string>
-    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">%1$s van %2$s verplaatst</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migratie succesvol</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Uw data is succesvol overgedragen.
         Ankidroid is weer volledig functioneel, en u kan weer synchroniseren.
@@ -283,8 +283,8 @@
         <br><br>
         <a href="%2$s">Learn more and get help</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Migratie hervatten</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Ontoegankelijke collectie</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
     <string name="restore_data_from_ankiweb">Herstel vanaf AnkiWeb (aanbevolen)</string>
     <string name="install_non_play_store_ankidroid_recommended">Herstel toegang tot map (aanbevolen)</string>

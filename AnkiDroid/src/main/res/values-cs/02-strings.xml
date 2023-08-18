@@ -83,7 +83,7 @@
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Otázka</item>
-        <item>Pole pro třídění</item>
+        <item>Pole řazení</item>
     </string-array>
     <string-array name="browser_column2_headings">
         <item>Odpověď</item>

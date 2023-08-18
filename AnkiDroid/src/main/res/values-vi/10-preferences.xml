@@ -98,7 +98,7 @@
     <string name="gestures_corner_touch_summary">Cho phép cử chỉ chạm ở các góc màn hình</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Không</string>
     <string name="gestures_swipe_up" maxLength="41">Kéo lên</string>
     <string name="gestures_swipe_down" maxLength="41">Kéo xuống</string>
     <string name="gestures_swipe_left" maxLength="41">Kéo trái</string>
@@ -328,7 +328,7 @@
     <string name="binding_add_gesture">Add gesture</string>
     <string name="binding_replace_gesture">Thay thế cử chỉ</string>
     <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_replace_key">Thay thế khoá</string>
     <string name="key_picker_default_press_key">Press a key</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">Select card side</string>
@@ -374,7 +374,7 @@
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Quản lý dung lượng</string>
     <!-- TextWidgetPreference widget text -->
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Lỗi</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>

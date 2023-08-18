@@ -147,7 +147,7 @@
     <string name="notification_pref" maxLength="41">შეტყობინებები</string>
     <string name="notification_pref_title" maxLength="41">შეტყობინება როცა</string>
     <string name="never_notify">არასდროს შეტყობინება</string>
-    <string name="notify_when_pending">Pending messages available</string>
+    <string name="notify_when_pending">ხელმისაწვდომია განსახილველი შეტყობინებები</string>
     <string name="notification_minimum_cards_due">სასწავლოა %d-ზე მეტი ბარათი</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ვიბრაცია</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">სინათლის ციმციმი</string>
@@ -161,7 +161,7 @@
     <string name="software_render" maxLength="41">ბარათების აპარატული ვიზუალიზაციის გამორთვა</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display" maxLength="41">უსაფრთხო ჩვენების რეჟიმი</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="safe_display_summ">ყველა ანიმაციის გამორთვა და ბარათების საჩვენებლად უფრო უსაფრთხო მეთოდის გამოყენება. ელ-წამკითხველებისთვის ეს შეიძლება აუცილებელი იყოს.</string>
     <string name="disable_extended_text_ui" maxLength="41">ცალკე ველის რედაქტირების რეჟიმის გამორთვა</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>

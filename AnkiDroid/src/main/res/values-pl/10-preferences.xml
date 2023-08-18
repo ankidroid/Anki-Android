@@ -78,7 +78,7 @@
     <string name="card_zoom" maxLength="41">Powiększenie karty</string>
     <string name="image_zoom" maxLength="41">Powiększenie obrazów/grafiki</string>
     <string name="button_size" maxLength="41">Rozmiar przycisku odpowiedzi</string>
-    <string name="card_browser_font_size" maxLength="41">Skalowanie fontu przeglądania kart</string>
+    <string name="card_browser_font_size" maxLength="41">Skalowanie czcionki przeglądania kart</string>
     <string name="card_browser_hide_media" maxLength="41">Wyświetlaj nazwy plików w przeglądarce kart</string>
     <string name="card_browser_hide_media_summary">Wyświetlaj nazwy plików mediów w polach pytania/odpowiedzi w przeglądarce kart</string>
     <string name="col_path" maxLength="41">Katalog AnkiDroid</string>
@@ -128,7 +128,7 @@
     <string name="sync_account" maxLength="41">Konto AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Nie zalogowany</string>
     <string name="automatic_sync_choice" maxLength="41">Synchronizacja automatyczna</string>
-    <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zakończenia aplikacji jeżeli ostatnia synchronizacja była później niż 10 minut.</string>
+    <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zamykania aplikacji, jeżeli od ostatniej synchronizacji minęło ponad 10 minut.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Zawsze</string>
     <string name="sync_media_only_unmetered">Tylko przy połączeniach bez opłat</string>
     <string name="sync_media_never">Nigdy</string>
@@ -140,7 +140,7 @@
     <string name="day_theme" maxLength="41">Motyw na dzień</string>
     <string name="night_theme" maxLength="41">Motyw na noc</string>
     <string name="default_font" maxLength="41">Domyślna czcionka</string>
-    <string name="override_font" maxLength="41">Zastosowanie standardowego fontu</string>
+    <string name="override_font" maxLength="41">Zastosowanie standardowej czcionki</string>
     <string name="language" maxLength="41">Język</string>
     <string name="language_system">Język systemu</string>
     <string name="notification_pref" maxLength="41">Powiadomienia</string>
@@ -152,7 +152,7 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Migotanie</string>
     <string name="timeout_answer_text" maxLength="41">Automatyczne wyświetlanie odpowiedzi</string>
     <string name="timeout_answer" maxLength="41">Przekroczenie czasu na odpowiedź</string>
-    <string name="timeout_answer_summ">Pokaż odpowiedź automatycznie bez interakcji z użytkownikiem. Opóźnienie czas automatycznego odtwarzania plików dźwiękowych.</string>
+    <string name="timeout_answer_summ">Pokaż odpowiedź automatycznie nawet bez działania użytkownika. Opóźnienie zawiera czas na automatyczne odtworzenie dźwięku.</string>
     <string name="timeout_answer_seconds" maxLength="41">Czas do pokazania odpowiedzi</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Czas do pokazania kolejnego pytania</string>
@@ -183,7 +183,7 @@
     <string name="new_spread" maxLength="41">Pozycja nowych kart</string>
     <string name="learn_cutoff" maxLength="41">Limit nauki z wyprzedzeniem</string>
     <string name="time_limit" maxLength="41">Ograniczenie czasu</string>
-    <string name="new_timezone" maxLength="41">Obsługa nowej strefy czasowej</string>
+    <string name="new_timezone" maxLength="41">Nowa obsługa stref czasowych</string>
     <string name="day_offset_with_description" maxLength="41">Początek nowego dnia</string>
     <string name="day_offset_summary">%s godzin po północy</string>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
@@ -203,7 +203,7 @@
     <string name="html_javascript_debugging" maxLength="41">Debugowanie HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Włącz zdalne połączenia WebView i zapisz kartę HTML do katalogu AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Recenzent</string>
+    <string name="pref_cat_reviewer" maxLength="41">Ekran nauki</string>
     <string name="accessibility" maxLength="41">Ułatwienia dostępu</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Wklej zdjęcia ze schowka jako PNG</string>
@@ -226,7 +226,7 @@
     <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Liczba iteracji symulacji</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Własny serwer synchronizacji</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nie używane</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Brak</string>
     <string name="custom_sync_server_help2"><![CDATA[        Jako alternatywa dla synchronizacji z AnkiWeb,
         możesz użyć własnego serwera do synchronizacji.
         Jeśli nie jest ustawiony, zamiast tego zostanie użyty domyślny serwer AnkiWeb.
@@ -351,7 +351,7 @@
     <string name="pref_cat_experimental" maxLength="41">Eksperymentalne</string>
     <string name="experimental_pref_confirmation" maxLength="41">Włącz „%s”</string>
     <string name="use_rust_backend_title" maxLength="41">Użyj nowego backendu</string>
-    <string name="use_rust_backend_summary">Włącza nowsze funkcje Anki, takie jak silnik v3\nNIESTABILNY. Nie używaj na kolekcji, której nie możesz stracić. NIE cofaj po zamknięciu aplikacji</string>
+    <string name="use_rust_backend_summary">Włącza nowsze funkcje Anki, takie jak silnik v3\nNIESTABILNY. Nie używaj na kolekcji, której nie możesz stracić. NIE jest wycofywane po zamknięciu aplikacji</string>
     <string name="use_rust_backend_warning">Jest szansa, że instalacja może całkowicie uszkodzić, wymagać odinstalowania i usunięcia folderu AnkiDroid oraz ma szansę propagować uszkodzenie poprzez synchronizację z AnkiWeb.\n\nChętnie przyjmujemy testerów, ale upewnij się, że masz prawidłową kopię zapasową spoza AnkiWeb.</string>
     <string name="enable_v3_sched_title" maxLength="41">Użyj harmonogramu v3</string>
     <!-- Developer options -->

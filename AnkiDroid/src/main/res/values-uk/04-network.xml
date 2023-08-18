@@ -76,10 +76,10 @@
     <string name="sync_title">Синхронізація</string>
     <string name="sync_log_uploading_message">Повна синхронізація з пристрою</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="one">Час на вашому пристрої відрізняється на %1$d секунду%2$s. Переконайтеся, що дата, час і часовий пояс на вашому телефоні встановлені правильно та спробуйте синхронізувати знову.</item>
+        <item quantity="few">Час на вашому пристрої відрізняється на %1$d секунди%2$s. Переконайтеся, що дата, час і часовий пояс на вашому телефоні встановлені правильно та спробуйте синхронізувати знову.</item>
+        <item quantity="many">Час на вашому пристрої відрізняється на %1$d секунд%2$s. Переконайтеся, що дата, час і часовий пояс на вашому телефоні встановлені правильно та спробуйте синхронізувати знову.</item>
+        <item quantity="other">Час на вашому пристрої відрізняється на %1$d секунд%2$s. Переконайтеся, що дата, час і часовий пояс на вашому телефоні встановлені правильно та спробуйте синхронізувати знову.</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, часовий пояс на пристрої ймовірно не правильний</string>
     <string name="sync_log_clocks_unsynchronized_date">, дата на пристрої ймовірно не правильна</string>
@@ -108,28 +108,28 @@
     <string name="sync_media_no_changes">Жодних змін в медіа файлах.</string>
     <string name="sync_media_success">Медіа успішно синхронізовано.</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">Синхронізація медіа частково завершена:\n%d медіафайл завантажено.</item>
+        <item quantity="few">Синхронізація медіа частково завершена:\n%d медіафайли завантажено.</item>
+        <item quantity="many">Синхронізація медіа частково завершена:\n%d медіафайлів завантажено.</item>
+        <item quantity="other">Синхронізація медіа частково завершена:\n%d медіафайлів завантажено.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="few">%d media files uploaded.</item>
-        <item quantity="many">%d media files uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">%d медіафайл відвантажено.</item>
+        <item quantity="few">%d медіафайли відвантажено.</item>
+        <item quantity="many">%d медіафайлів відвантажено.</item>
+        <item quantity="other">%d медіафайлів відвантажено.</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="few">%d media changes to upload</item>
-        <item quantity="many">%d media changes to upload</item>
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="one">%d зміна у медіафайлах для відвантаження</item>
+        <item quantity="few">%d зміни у медіафайлах для відвантаження</item>
+        <item quantity="many">%d змін у медіафайлах для відвантаження</item>
+        <item quantity="other">%d змін у медіафайлах для відвантаження</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="few">%d media files downloaded</item>
-        <item quantity="many">%d media files downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">%d медіафайл завантажено</item>
+        <item quantity="few">%d медіафайли завантажено</item>
+        <item quantity="many">%d медіафайлів завантажено</item>
+        <item quantity="other">%d медіафайлів завантажено</item>
     </plurals>
     <string name="sync_sanity_failed">Після синхронізації, деякі дані вашої колекції виявилися в суперечливому стані. Щоб усунути цю проблему, AnkiDroid виконає повну синхронізацію. Будь ласка, виберіть яку версію Ви хочете залишити, або скасуйте, якщо ви хочете синхронізувати пізніше.</string>
     <string name="sync_media_sanity_failed">Синхронізацію медіа завершено, але кількість медіа файлів не співпала з кількістю файлів на сервері. Наступна синхронізація буде повною, щоб виправити будь-які помилки.</string>

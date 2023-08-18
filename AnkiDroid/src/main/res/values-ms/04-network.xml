@@ -76,7 +76,7 @@
     <string name="sync_title">Penyegerakan</string>
     <string name="sync_log_uploading_message">Penyegerakan penuh daripada tempatan</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="other">Jam anda mati %1$d saat%2$s. Pastikan tarikh, masa, dan zon masa pada telefon anda ditetapkan dengan betul, kemudian segerak sekali lagi.</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, zon masa mungkin salah</string>
     <string name="sync_log_clocks_unsynchronized_date">, tarikh mungkin salah</string>
@@ -105,16 +105,16 @@
     <string name="sync_media_no_changes">Tiada perubahan pada fail media</string>
     <string name="sync_media_success">Media telah disegerakkan</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="other">Penyegerakan media separa siap:\n%d fail media dimuat turun.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="other">%d fail media telah dimuat naik.</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="other">%d perubahan media untuk muat naik</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="other">%d fail media telah dimuat turun</item>
     </plurals>
     <string name="sync_sanity_failed">Selepas penyegerakan, koleksi terdahulu dalam keadaan tidak konsisten. Untuk menyelesaikan masalah ini, AnkiDroid akan memaksa penyegerakan penuh. Pilih mana satu yang anda mahu simpan.</string>
     <string name="sync_media_sanity_failed">Penyegerakan media selesai, namun bilangan media berlawanan dengan pelayan. Penyegerakan media seterusnya akan dijadikan penuh untuk membetulkan apa-apa ralat.</string>

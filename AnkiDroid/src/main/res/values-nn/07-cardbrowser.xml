@@ -55,9 +55,9 @@
     </plurals>
     <string name="card_browser_all_decks">Alle kortleikar</string>
     <string name="card_browser_delete_card">Slett notater</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
+    <string name="card_browser_suspend_card">Suspender kort</string>
     <string name="card_browser_change_deck">Byt kortleik</string>
-    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
+    <string name="card_browser_unsuspend_card">Av-suspender kort</string>
     <string name="card_browser_mark_card">Marker notater</string>
     <string name="card_browser_unmark_card">Fjern notatmarkering</string>
     <string name="delete_card_title">Slett notat</string>
@@ -65,7 +65,7 @@
     <string name="card_browser_show_marked">Filtrer merkede</string>
     <string name="card_browser_show_suspended">Filtrer suspenderte</string>
     <string name="card_browser_search_by_tag">Filtrer etter emneord</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_search_by_flag">Filtrer etter flagg</string>
     <string name="card_browser_list_my_searches">Mine søk</string>
     <string name="card_browser_list_my_searches_save">Lagre søk</string>
     <string name="card_browser_list_my_searches_title">Velg et lagret søk</string>
