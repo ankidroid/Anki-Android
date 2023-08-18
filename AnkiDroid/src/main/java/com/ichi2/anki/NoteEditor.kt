@@ -1391,10 +1391,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                             startAdvancedTextEditor(index)
                             return@setOnMenuItemClickListener true
                         }
-                        R.id.menu_multimedia_clear_field -> {
-                            Timber.i("NoteEditor:: Clear field button pressed")
-                            clearField(index)
-                        }
                     }
                     false
                 }
