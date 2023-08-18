@@ -46,15 +46,6 @@
     <string name="multimedia_editor_popup_audio">錄音</string>
     <string name="multimedia_editor_popup_text">進階編輯器</string>
     <string name="multimedia_editor_popup_cloze">克漏字測驗</string>
-    <string name="multimedia_editor_popup_clear_field">清除欄位</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">下載</string>
-    <string name="multimedia_editor_pron_looking_up">查尋發音</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">發音無效</string>
-    <string name="multimedia_editor_only_one_word">一次只支持一個單詞</string>
-    <string name="multimedia_editor_word_search_try_lower_case">請嘗試使用小寫字元</string>
-    <string name="multimedia_editor_poweredbeolingus">由 Beolingus 提供</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">文字</string>
@@ -64,11 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">完成</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">發音</string>
     <string name="multimedia_editor_text_field_editing_clear">清除 </string>
     <string name="multimedia_editor_text_field_editing_clone">複製自</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">首先輸入文字</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">拿取自</string>
     <!-- Multimedia card editor activity -->
@@ -81,16 +69,6 @@
     <string name="multimedia_editor_import_audio">音訊</string>
     <string name="multimedia_editor_import_video">影片</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">下載中</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">完成</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">找不到該單字</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">搜尋單字</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">等待</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">發生狀況</string>
     <string name="multimedia_editor_svg_preview">SVG 不可用於預覽</string>
@@ -104,8 +82,6 @@
     <string name="multimedia_editor_audio_view_create_failed">無法建立錄製器工具列</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">編輯欄位</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">沒有連線。</string>
     <!-- Crop function-->
     <string name="crop_image">是否裁剪此圖像？</string>
     <string name="crop_button">裁剪圖像</string>

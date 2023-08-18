@@ -46,15 +46,6 @@
     <string name="multimedia_editor_popup_audio">Registri sonon</string>
     <string name="multimedia_editor_popup_text">Altnivela redaktilo</string>
     <string name="multimedia_editor_popup_cloze">Truteksta malpleno</string>
-    <string name="multimedia_editor_popup_clear_field">Forviŝi kampon</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Ŝuti</string>
-    <string name="multimedia_editor_pron_looking_up">Elserĉado de elparolo</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">Elparolo fiaskis</string>
-    <string name="multimedia_editor_only_one_word">Nur unu vorto samtempe estas subtenata</string>
-    <string name="multimedia_editor_word_search_try_lower_case">Provu uzi nur etliterojn</string>
-    <string name="multimedia_editor_poweredbeolingus">Povigata de Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Teksto</string>
@@ -64,11 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Farita</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">Elparolo</string>
     <string name="multimedia_editor_text_field_editing_clear">Forviŝi</string>
     <string name="multimedia_editor_text_field_editing_clone">Kopii de</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">Unue enigi iom da teksto</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Transpreni de</string>
     <!-- Multimedia card editor activity -->
@@ -81,16 +69,6 @@
     <string name="multimedia_editor_import_audio">Sono</string>
     <string name="multimedia_editor_import_video">Filmeto</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">Elŝutado</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Farita</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">Ne trovis vorton</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">Serĉado de la vorto</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Atendi</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Io fiaskis</string>
     <string name="multimedia_editor_svg_preview">SVG-dosieroj ne povas esti antaŭrigardataj.</string>
@@ -104,8 +82,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Ne povas krei ilarstrion de registrado</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Redakti kampon</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">Senkonekte</string>
     <!-- Crop function-->
     <string name="crop_image">Ĉu vi volas pritondi tiun ĉi bildon?</string>
     <string name="crop_button">Pritondi bildon</string>
