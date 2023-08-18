@@ -69,8 +69,11 @@ android {
         versionCode=21603300
         versionName="2.16.3"
         minSdkVersion 21
-        //noinspection OldTargetApi - also performed in api/build.fradle
-        targetSdkVersion 31 // change .tests_emulator.yml
+        // change api/build.gradle
+        // change robolectricDownloader.gradle
+        // After #13695: change .tests_emulator.yml
+        // noinspection OldTargetApi
+        targetSdkVersion 32
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
