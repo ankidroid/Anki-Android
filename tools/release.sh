@@ -186,16 +186,17 @@ for FLAVOR in $FLAVORS; do
   github-release upload --tag v"$VERSION" --name AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk --file AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
 
-if [ "$PUBLIC" = "public" ]; then
-  ./gradlew --stop
-  echo "Running 'publishToAmazonAppStore' gradle target"
-  if ! ./gradlew publishToAmazonAppStore
-  then
-    echo "Unable to publish to amazon app store"
-    exit 1
-  fi
-  echo "Remember to add release notes and submit on Amazon: https://developer.amazon.com/apps-and-games/console/app/list"
-fi
+# Not publishing to amazon pending: https://github.com/ankidroid/Anki-Android/issues/14161
+#if [ "$PUBLIC" = "public" ]; then
+#  ./gradlew --stop
+#  echo "Running 'publishToAmazonAppStore' gradle target"
+#  if ! ./gradlew publishToAmazonAppStore
+#  then
+#    echo "Unable to publish to amazon app store"
+#    exit 1
+#  fi
+#  echo "Remember to add release notes and submit on Amazon: https://developer.amazon.com/apps-and-games/console/app/list"
+#fi
 
 # Now that Git is clean and the main release is done, run the parallel release script and upload them
 echo "Running parallel package build"
