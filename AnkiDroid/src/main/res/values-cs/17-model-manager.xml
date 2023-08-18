@@ -62,8 +62,8 @@
     <string name="model_field_editor_delete">Odstranit pole</string>
     <string name="model_field_editor_rename">Přejmenovat pole</string>
     <string name="model_field_editor_language_hint">Nastavit jazyk nápovědy klávesnice</string>
-    <string name="model_field_editor_reposition_menu">Změna umístění pole</string>
-    <string name="model_field_editor_reposition">Změna umístění pole (zadejte hodnotu %1$d – %2$d)</string>
+    <string name="model_field_editor_reposition_menu">Změnit umístění pole</string>
+    <string name="model_field_editor_reposition">Změnit umístění pole (zadejte hodnotu %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">Zapamatovat si poslední vstup při přidání</string>
     <string name="model_field_editor_changing">Aktualizace polí</string>
     <string name="model_field_editor_sort_field">Seřadit podle tohoto pole</string>

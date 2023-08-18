@@ -200,7 +200,7 @@
         <item quantity="other">Exporteer %d geselecteerde notities als apkg-bestand?</item>
     </plurals>
     <string name="export_preparation_in_progress">Export voorbereiden&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_ready_title">Export klaar</string>
     <string name="export_send_no_handlers">Geen applicaties beschikbaar om apkg te verwerken. Opslaan...</string>
     <string name="export_save_apkg_successful">Anki-pakket succesvol opgeslagen</string>
     <string name="export_save_apkg_unsuccessful">Opslaan Anki-pakket mislukt</string>
@@ -214,7 +214,7 @@
         [2] %2$s
         ]]></string>
     <string name="export_choice_share">Delen</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_save_to">Opslaan in</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opties</string>
     <string name="menu__deck_options">Setopties</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studieopties</string>
@@ -315,7 +315,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Laden van set ‘%s ’ mislukt</string>
     <string name="search_decks">Sets doorzoeken</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Toon migratie voortgang</string>
     <string name="ankidroid_init_failed_webview_title">Onherstelbare fout</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid berust op de System WebView die niet beschikbaar is. Dit kan gebeuren als het systeem bezig is met het installeren van updates. Probeer opnieuw na enkele minuten.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->

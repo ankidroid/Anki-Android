@@ -226,7 +226,7 @@
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="zero">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة به؟</item>
-        <item quantity="one">هل تريد حذف نوع البطاقة ”%2$s“، و %1$d بطاقة متعلقة بها؟</item>
+        <item quantity="one">هل أنت متأكد من حذف نوع البطاقة ”%2$s“، والبطاقة الواحدة المتعلقة به؟</item>
         <item quantity="two">هل تريد حذف نوع البطاقة ”%2$s“، و %1$d بطاقات متعلقة بها؟</item>
         <item quantity="few">هل تريد حذف نوع البطاقة ”%2$s“، والبطاقات الـ%1$d المتعلقة بها؟</item>
         <item quantity="many">هل تريد حذف نوع البطاقة ”%2$s“، والـ%1$d بطاقة المتعلقة بها؟</item>

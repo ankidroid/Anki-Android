@@ -193,8 +193,8 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">匯出 %d 個選定筆記為 apkg 文件？</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">準備匯出&#8230;</string>
+    <string name="export_ready_title">已準備好要匯出</string>
     <string name="export_send_no_handlers">無應用程式可用於處理 apkg。儲存中…</string>
     <string name="export_save_apkg_successful">成功儲存 Anki 套件</string>
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
@@ -207,8 +207,8 @@
         [1]%1$s<br/>
         [2]%2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">分享</string>
+    <string name="export_choice_save_to">儲存到…</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
     <string name="menu__deck_options">牌組選項</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>
@@ -302,7 +302,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">載入牌組 ‘%s’ 失敗</string>
     <string name="search_decks">搜尋牌組</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">顯示遷移進度</string>
     <string name="ankidroid_init_failed_webview_title">嚴重錯誤</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid 依賴於系統 WebView，但其不可用。這可能在系統安裝更新時發生。請等待幾分鐘後再試。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->

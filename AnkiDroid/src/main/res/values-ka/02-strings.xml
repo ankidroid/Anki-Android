@@ -199,8 +199,8 @@
         <item quantity="one">მონიშნული შენიშვნის APKG ფაილად შენახვა?</item>
         <item quantity="other">მონიშნული %d შენიშვნის APKG ფაილად შენახვა?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">ექსპორტის გამზადება&#8230;</string>
+    <string name="export_ready_title">ექსპორტი მზადაა</string>
     <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება…</string>
     <string name="export_save_apkg_successful">Anki-პაკეტი წარმატებით შეინახა</string>
     <string name="export_save_apkg_unsuccessful">Anki-პაკეტი ვერ შეინახა</string>
@@ -213,8 +213,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">გაზიარება</string>
+    <string name="export_choice_save_to">შენახვა</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">პარამეტრები</string>
     <string name="menu__deck_options">დასტის პარამეტრები</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">სწავლის პარამეტრები</string>

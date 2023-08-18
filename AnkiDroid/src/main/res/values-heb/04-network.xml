@@ -76,10 +76,10 @@
     <string name="sync_title">סנכרון</string>
     <string name="sync_log_uploading_message">סנכרון מלא מהמקומי</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="two">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="one">השעון שלך כבוי ב-%1$d שנייה%2$s.  ודא שהתאריך, השעה ואזור הזמן בטלפון שלך מוגדרים כהלכה, ולאחר מכן סנכרן שוב.</item>
+        <item quantity="two">השעון שלך כבוי ב-%1$d שניות%2$s.  ודא שהתאריך, השעה ואזור הזמן בטלפון שלך מוגדרים כהלכה, ולאחר מכן סנכרן שוב.</item>
+        <item quantity="many">השעון שלך כבוי ב-%1$d שניות%2$s.  ודא שהתאריך, השעה ואזור הזמן בטלפון שלך מוגדרים כהלכה, ולאחר מכן סנכרן שוב.</item>
+        <item quantity="other">השעון שלך כבוי ב-%1$d שניות%2$s.  ודא שהתאריך, השעה ואזור הזמן בטלפון שלך מוגדרים כהלכה, ולאחר מכן סנכרן שוב.</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">; יתכן שאיזור הזמן שגוי</string>
     <string name="sync_log_clocks_unsynchronized_date">; יתכן שהתאריך שגוי</string>
@@ -108,28 +108,28 @@
     <string name="sync_media_no_changes">אין שינויים בקבצי המדיה</string>
     <string name="sync_media_success">קבצי המדיה סונכרנו</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="two">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
+        <item quantity="one">סנכרון המדיה הושלם חלקית:\n%d קובץ מדיה הורד.</item>
+        <item quantity="two">סנכרון המדיה הושלם חלקית:\n%d קבצי מדיה הורדו.</item>
+        <item quantity="many">סנכרון המדיה הושלם חלקית:\n%d קבצי מדיה הורדו.</item>
+        <item quantity="other">סנכרון המדיה הושלם חלקית:\n%d קבצי מדיה הורדו.</item>
     </plurals>
     <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="two">%d media files uploaded.</item>
-        <item quantity="many">%d media files uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
+        <item quantity="one">קובץ מדיה %d הועלה.</item>
+        <item quantity="two">קבצי מדיה %d הועלו.</item>
+        <item quantity="many">קבצי מדיה %d הועלו.</item>
+        <item quantity="other">קבצי מדיה %d הועלו.</item>
     </plurals>
     <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="two">%d media changes to upload</item>
-        <item quantity="many">%d media changes to upload</item>
-        <item quantity="other">%d media changes to upload</item>
+        <item quantity="one">%d שינוי מדיה להעלאה</item>
+        <item quantity="two">%d שינויי מדיה להעלאה</item>
+        <item quantity="many">%d שינויי מדיה להעלאה</item>
+        <item quantity="other">%d שינויי מדיה להעלאה</item>
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="two">%d media files downloaded</item>
-        <item quantity="many">%d media files downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="one">הורד %d קובץ מדיה</item>
+        <item quantity="two">הורדו %d קובצי מדיה</item>
+        <item quantity="many">הורדו %d קובצי מדיה</item>
+        <item quantity="other">הורדו %d קובצי מדיה</item>
     </plurals>
     <string name="sync_sanity_failed">לאחר הסכנרון אוסף החפיסות נותר במצב בלתי עקבי. כדי לתקן את הבעיה, אפליקציית AnkiDroid תבצע סינכרון מלא. עליך לבחור איזה משני הצדדים תרצה לשמור.</string>
     <string name="sync_media_sanity_failed">סנכרון קבצי המדיה הושלם, אך קיימת חוסר התאמה בין קבצי המדיה המקומיים ואלה שבשרת. סנכרון המדיה הבא יהיה מלא, במטרה לתקן את התקלה.</string>

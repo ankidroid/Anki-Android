@@ -124,7 +124,7 @@
     <string name="tts" maxLength="41">Teks-ke-ucapan</string>
     <string name="tts_summ">Bacakan soalan dan jawapan jika tiada fail suara disediakan</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">Ambil media bila segerak</string>
+    <string name="sync_fetch_missing_media" maxLength="41">Peroleh media bila segerak</string>
     <string name="sync_account" maxLength="41">Akaun AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Belum log masuk</string>
     <string name="automatic_sync_choice" maxLength="41">Penyegerakan automatik</string>
@@ -153,7 +153,7 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Kelip lampu</string>
     <string name="timeout_answer_text" maxLength="41">Papar jawapan secara automatik</string>
     <string name="timeout_answer" maxLength="41">Jawapan tamat masa</string>
-    <string name="timeout_answer_summ">Tunjuk jawapan secara automatik tanpa input pengguna. Kelewatan termasuk masa untuk memainkan fail audio secara automatik.</string>
+    <string name="timeout_answer_summ">Tunjuk jawapan secara automatik tanpa input pengguna. Kiraan mula selepas memainkan fail audio secara automatik.</string>
     <string name="timeout_answer_seconds" maxLength="41">Masa untuk tunjuk jawapan</string>
     <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Masa untuk tunjuk soalan seterusnya</string>
@@ -169,7 +169,7 @@
     <string name="vertical_centering_summ">Tengahkan kandungan kad secara menegak</string>
     <string name="pref_backup_max" maxLength="41">Bilangan sandaran maksimum</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Selang sentuh dua kali (milisaat)</string>
-    <string name="pref_double_tap_time_interval_summary">Sentuhan kedua butang jawapan akan diabaikan jika masa ini belum berlalu. Ini elakkan sentuh dua kali tidak sengaja</string>
+    <string name="pref_double_tap_time_interval_summary">Sentuhan kedua butang jawapan akan diabaikan jika masa ini belum berlalu. Elakkan sentuh dua kali secara tidak sengaja</string>
     <string name="show_estimates" maxLength="41">Tunjuk masa</string>
     <string name="show_estimates_summ">Tunjuk masa semakan seterusnya pada butang jawapan</string>
     <string name="show_large_answer_buttons" maxLength="41">Tunjuk butang jawapan besar</string>
@@ -188,7 +188,7 @@
     <string name="day_offset_with_description" maxLength="41">Mula hari esok</string>
     <string name="day_offset_summary">%s jam selapas tengah malam</string>
     <string name="pref_keep_screen_on" maxLength="41">Terus hidupkan skrin</string>
-    <string name="pref_keep_screen_on_summ">Lumpuhkan tamat masa skrin</string>
+    <string name="pref_keep_screen_on_summ">Lumpuhkan skrin tamat masa</string>
     <string name="enable_api_title" maxLength="41">Dayakan API AnkiDroid</string>
     <string name="enable_api_summary">Benarkan aplikasi lain sambung ke AnkiDroid dan baca / tulis data tanpa pengawasan anda</string>
     <string name="custom_buttons" maxLength="41">Butang bar aplikasi</string>
@@ -210,7 +210,7 @@
     <string name="paste_as_png" maxLength="41">Tampal gambar papan keratan sebagai PNG</string>
     <string name="paste_as_png_summary">Secara lalai Anki tampal gambar pada papan keratan sebagai fail JPG untuk jimat ruang cakera. Anda boleh guna tetapan ini untuk sebaliknya tampal gambar PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Tekan kembali dua kali untuk kembali/keluar</string>
-    <string name="exit_via_double_tap_back_summ">Bagi mengelakkan keluar penyemak atau aplikasi secara tidak sengaja</string>
+    <string name="exit_via_double_tap_back_summ">Elak keluar dari penyemak atau aplikasi secara tidak sengaja</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Benarkan semua fail dalam import media</string>
     <string name="media_import_allow_all_files_summ">Jika Android tidak kenal pasti fail media</string>
@@ -310,7 +310,7 @@
     <!-- analytics options -->
     <string name="analytics_dialog_title">Bantu majukan AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Kongsi penggunaan ciri-ciri</string>
-    <string name="analytics_summ">Anda boleh sumbang kepada AnkiDroid dengan membantu pasukan pembangunan lihat ciri-ciri mana diguna orang ramai</string>
+    <string name="analytics_summ">Anda boleh sumbang kepada AnkiDroid dengan membantu para pembangun lihat ciri-ciri yang orang ramai guna</string>
     <string name="note_editor_replace_newlines" maxLength="41">Ganti baris baru dengan HTML</string>
     <string name="note_editor_replace_newlines_summ">Dalam Penyunting Nota, tukar mana-mana &lt;br&gt; kepada baris baru apabila sunting kad.</string>
     <string name="no_code_formatting" maxLength="41">Format jawapan taip ringkas</string>
@@ -413,7 +413,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Tiada koleksi</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Ralat</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Mendapatkan&#8230;</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Memperoleh&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Mengira&#8230;</string>
     <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Koleksi tidak wujud</string>
 </resources>

@@ -199,8 +199,8 @@
         <item quantity="one">Exporter les notes sélectionnées au format .apkg ?</item>
         <item quantity="other">Exporter les %d notes sélectionnées au format .apkg ?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">Préparation de l\'export...</string>
+    <string name="export_ready_title">Exportation prête</string>
     <string name="export_send_no_handlers">Aucune application disponible pour ouvrir le fichier APKG. Sauvegarde...</string>
     <string name="export_save_apkg_successful">Paquet Anki sauvegardé avec succès</string>
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du paquet Anki</string>
@@ -213,8 +213,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Partager</string>
+    <string name="export_choice_save_to">Enregistrer sous</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Options du deck</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Options de révision</string>

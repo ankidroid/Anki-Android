@@ -103,7 +103,7 @@
     </string-array>
     <!-- Filter Sheet -->
     <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="filter_by_flags">Байраклар</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Бугенге кәрт лимитын үзгәртү</string>
     <string name="custom_study_increase_review_limit">Бугенге кабатланган кәрт лимитын үзгәртү</string>
@@ -165,7 +165,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">Бу эшли торган Anki файлы түгел</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
+    <string name="import_title_error" comment="Title of error dialog">Хата</string>
     <string name="import_log_failed_unzip">Бу apkgны ачып булмады: %s</string>
     <string name="import_log_failed_copy_to">apkgны %sга копияләп булмады</string>
     <string name="import_log_failed_validate">apkgны тикшереп булмады</string>
@@ -200,14 +200,15 @@
     <string name="export_save_apkg_unsuccessful">Anki пакеты саклана алмады</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid экспортланган кәртләр: %s</string>
-    <string name="export_email_text"><![CDATA[        Hi!
+    <string name="export_email_text"><![CDATA[        Сәлам!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
-        [1] %1$s<br/>
-        [2] %2$s
+        Бу - AnkiDroid кушымтасыннан җибәрелгән Anki кәртләр колодасы[1].
+        Аны ачыр өчен,  Anki кушымтасын көйләгез[2] һәм җиңел һәм уңышлы итеп өйрәнегез!
+<br/><br/>
+        [1]%1$s<br/>
+        [2]%2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
+    <string name="export_choice_share">Уртаклашу</string>
     <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Көйләүләр</string>
     <string name="menu__deck_options">Deck options</string>
@@ -276,7 +277,7 @@
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
     <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
     <string name="basic_answer_sample_text">an example</string>
-    <string name="reviewer_tts_cloze_spoken_replacement">Blank</string>
+    <string name="reviewer_tts_cloze_spoken_replacement">Буш</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Please turn on fullscreen to use Show Navigation Drawer using JavaScript.</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">Please turn on fullscreen to use Show Options Menu using JavaScript.</string>
@@ -314,10 +315,10 @@
     <string name="insert_horizontal_line">Insert Horizontal Line</string>
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Change Font Size</string>
-    <string name="insert_mathjax">Insert MathJax Equation</string>
+    <string name="insert_mathjax">MathJax тигезләмәсен өстәү</string>
     <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="note_editor_toolbar_icon">Button text</string>
-    <string name="before_text">HTML Before Selection</string>
+    <string name="before_text">Сайлау алдыннан HTML</string>
     <string name="after_text">HTML After Selection</string>
     <string name="add_toolbar_item">Create Toolbar Item</string>
     <string name="edit_toolbar_item">Edit Toolbar Item</string>
@@ -351,7 +352,7 @@
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
-    <string name="home">Home</string>
+    <string name="home">Баш бит</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Card buried.</string>
@@ -394,7 +395,7 @@
     <!-- Deck Deletion -->
     <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Кәртләр</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
     <string name="toggle_cards_notes">Toggle Cards/Notes</string>
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>

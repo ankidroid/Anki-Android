@@ -97,7 +97,7 @@
     <string name="undo">বাতিল করুন</string>
     <string name="undo_action_review">সর্বশেষ রিভিউ</string>
     <string name="undo_action_change_deck_multi">ডেক পরিবর্তন করুন</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">স্ট্রোক ফিরত নাও</string>
     <string name="move_all_to_deck">সবগুলো ডেক এ সড়াও</string>
     <string name="unbury">অদাফন</string>
     <string name="rename_deck">ডেক পুনঃনামকরণ করুন</string>
@@ -177,7 +177,7 @@
     <string name="sd_card_not_mounted">ডিভাইস স্টোরেজ মাউন্টেড নয়</string>
     <string name="empty_cloze_warning">এই নোট সম্পাদনা করুন এবং কিছু ক্লোজ দিলিশন অ্যাড করুন (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">সিংক্রোনাইজ</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="button_upgrade" comment="Text of the sync button">স্কোপড স্টোরেজ এ স্থানান্তরিত হও</string>
     <string name="cancel_sync_confirm">আপনি সিঙ্ক বাতিল করতে চান?</string>
     <string name="continue_sync">সিংক বজায় রাখুন</string>
     <string name="sync_cancelled">সিংক বাতিল করা হয়েছে</string>
@@ -241,8 +241,8 @@
     </plurals>
     <string name="copy_note_type_name" comment="The new name of a copied note type">%s কপি</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__cannot_write_to_or_create_file">%s এ লিখা বা তৈরি করা যাচ্ছে না</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"অনেকগুলো ত্রুটি, সর্বশেষেরটি হলো: %s"</string>
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>

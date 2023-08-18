@@ -152,9 +152,9 @@
     </plurals>
     <string name="check_db">Periksa pangkalan data</string>
     <string name="check_media">Periksa media</string>
-    <string name="empty_cards">Kosongkan kad</string>
+    <string name="empty_cards">Kad kosong</string>
     <string name="check_db_message">Memeriksa pangkalan data&#8230;</string>
-    <string name="empty_card_warning">Kad kosong. Gunakan pilihan “Kosongkan kad” dalam menu pada skrin senarai dek.</string>
+    <string name="empty_card_warning">Kad kosong. Gunakan pilihan “Kad kosong” dalam menu pada skrin senarai dek.</string>
     <string name="unknown_type_field_warning">Taip jawapan: medan %s tidak diketahui</string>
     <string name="delete_deck">Memadam dek&#8230;</string>
     <string name="info_rate">Nilaikan AnkiDroid</string>
@@ -193,8 +193,8 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">Eksport %d nota terpilih sebagai fail apkg?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">Menyediakan eksport&#8230;</string>
+    <string name="export_ready_title">Eksport sedia</string>
     <string name="export_send_no_handlers">Tiada aplikasi tersedia mengendalikan apkg. Menyimpan...</string>
     <string name="export_save_apkg_successful">Berjaya simpan pakej Anki</string>
     <string name="export_save_apkg_unsuccessful">Gagal simpan pakej Anki</string>
@@ -207,8 +207,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Kongsi</string>
+    <string name="export_choice_save_to">Simpan ke</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Tetapan</string>
     <string name="menu__deck_options">Tetapan dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tetapan ulang kaji</string>

@@ -381,13 +381,13 @@
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Foutmelding</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d bestand\n%2$s</item>
+        <item quantity="other">%1$d bestanden\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Ongebruikte mediabestanden verwijderen</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
+    <string name="pref__delete_unused_media_files__summary">Verwijder afbeeldingen en andere media die niet zijn voorafgegaan door _ en niet worden genoemd door notities</string>
+    <string name="dialog__media_check_required__message">Er is een mediacontrole nodig om ongebruikte mediabestanden te vinden</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Ongebruikte mediabestanden verwijderen</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Back-ups verwijderen</string>
@@ -397,13 +397,13 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Verwijder collectie</string>
     <string name="pref__delete_collection__summary">Verzameling, media en back-ups verwijderen. App-instellingen worden niet verwijderd</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Verwijder collectie</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Weet je zeker dat je je verzameling, media en backups wilt verwijderen?\n\nOpmerking: deze actie zal het venster sluiten.</string>
     <string name="progress__deleting_collection">Collectie verwijderen&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Alles verwijderen</string>
     <string name="pref__delete_everything__summary">Collectie, media, back-ups en instellingen verwijderen</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Alles verwijderen?</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Weet je zeker dat je alle gegevens wilt verwijderen? Dit omvat je verzameling, media, back-ups en voorkeuren.\n\nOpmerking: deze actie sluit het venster.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">App-gegevens verwijderen</string>
     <string name="pref__delete_app_data__summary">Instellingen en andere app-gegevens verwijderen</string>

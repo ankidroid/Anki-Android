@@ -108,7 +108,7 @@
     <string name="sync_media_no_changes">Brak zmian w plikach mediów.</string>
     <string name="sync_media_success">Media zsynchronizowane.</string>
     <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
+        <item quantity="one">Synchronizacja multimediów częściowo zakończona:\n%d plik multimedialny został pobrany.</item>
         <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
         <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
         <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>

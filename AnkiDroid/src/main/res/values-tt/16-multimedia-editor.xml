@@ -76,10 +76,10 @@
     <!-- delete confirmation -->
     <!-- Image editing -->
     <!-- for buttons -->
-    <string name="multimedia_editor_image_field_editing_galery">Gallery</string>
+    <string name="multimedia_editor_image_field_editing_galery">Галерея</string>
     <string name="multimedia_editor_image_field_editing_photo">Камера</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
-    <string name="multimedia_editor_import_video">Video</string>
+    <string name="multimedia_editor_import_audio">Тавыш</string>
+    <string name="multimedia_editor_import_video">Видео</string>
     <!-- General -->
     <!-- message on the progress dialog for the user to wait, means process -->
     <string name="multimedia_editor_general_downloading">Downloading</string>
@@ -90,7 +90,7 @@
     <!-- failure when contacting glosbe or similar -->
     <string name="multimedia_editor_searching_word">Searching the word</string>
     <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Wait</string>
+    <string name="multimedia_editor_progress_wait_title">Көтегез</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Something went wrong</string>
     <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>

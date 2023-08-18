@@ -173,7 +173,7 @@
     <string name="integrity_check_insufficient_space">Periksa Pangkalan Data menggunakan storan sementara yang besar.\n\nSangat digalakkan anda sekurang-kurangnya mengandungi %s ruang kosong pada peranti anda dahulu.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAnda kini mengandungi %s ruang kosong.</string>
     <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="other">%d kad dengan dek utama incorrect telah dipulihkan. Sila lihat manual untuk maklumat lanjut.</item>
     </plurals>
     <string name="video_creation_error">Tidak dapat memainkan video</string>
     <!-- Card Browser -->
