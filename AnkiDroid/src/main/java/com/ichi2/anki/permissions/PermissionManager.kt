@@ -64,7 +64,7 @@ class PermissionManager private constructor(
                     return@registerForActivityResult
                 }
             }
-            callback.invoke(results)
+            callback.invoke(PermissionsRequestRawResults(results, requestedPermissions = true))
         }
     private val activityRef = WeakReference(activity)
 
@@ -116,7 +116,7 @@ class PermissionManager private constructor(
         if (permissions.requiresPermissionDialog) {
             this.launchPermissionDialog()
         } else {
-            callback.invoke(permissions.toPermissionsRequestRawResult()!!)
+            callback.invoke(permissions.toPermissionsRequestRawResult(requestedPermissions = permissions.permissions.any())!!)
         }
     }
 
