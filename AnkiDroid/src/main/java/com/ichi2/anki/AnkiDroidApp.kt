@@ -28,9 +28,13 @@ import android.os.Bundle
 import android.os.Environment
 import android.system.Os
 import android.util.Log
+import android.view.View
 import android.webkit.CookieManager
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.MutableLiveData
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -188,6 +192,12 @@ open class AnkiDroidApp : Application() {
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 Timber.i("${activity::class.simpleName}::onCreate")
+                (activity as? FragmentActivity)
+                    ?.supportFragmentManager
+                    ?.registerFragmentLifecycleCallbacks(
+                        FragmentLifecycleLogger(activity),
+                        true
+                    )
             }
 
             override fun onActivityStarted(activity: Activity) {
@@ -420,6 +430,71 @@ open class AnkiDroidApp : Application() {
                 return
             }
             super.log(priority, tag, message, t)
+        }
+    }
+
+    private class FragmentLifecycleLogger(
+        private val activity: Activity
+    ) : FragmentManager.FragmentLifecycleCallbacks() {
+        override fun onFragmentAttached(
+            fm: FragmentManager,
+            f: Fragment,
+            context: Context
+        ) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onAttach")
+        }
+
+        override fun onFragmentCreated(
+            fm: FragmentManager,
+            f: Fragment,
+            savedInstanceState: Bundle?
+        ) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onCreate")
+        }
+
+        override fun onFragmentViewCreated(
+            fm: FragmentManager,
+            f: Fragment,
+            v: View,
+            savedInstanceState: Bundle?
+        ) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onViewCreated")
+        }
+
+        override fun onFragmentStarted(fm: FragmentManager, f: Fragment) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onStart")
+        }
+
+        override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onResume")
+        }
+
+        override fun onFragmentPaused(fm: FragmentManager, f: Fragment) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onPause")
+        }
+
+        override fun onFragmentStopped(fm: FragmentManager, f: Fragment) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onStop")
+        }
+
+        override fun onFragmentSaveInstanceState(
+            fm: FragmentManager,
+            f: Fragment,
+            outState: Bundle
+        ) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onSaveInstanceState")
+        }
+
+        override fun onFragmentViewDestroyed(fm: FragmentManager, f: Fragment) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onViewDestroyed")
+        }
+
+        override fun onFragmentDestroyed(fm: FragmentManager, f: Fragment) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onDestroy")
+        }
+
+        override fun onFragmentDetached(fm: FragmentManager, f: Fragment) {
+            Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onDetach")
         }
     }
 }
