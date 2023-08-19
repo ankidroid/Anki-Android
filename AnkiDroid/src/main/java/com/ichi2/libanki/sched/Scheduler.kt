@@ -47,6 +47,7 @@ import timber.log.Timber
 
 data class CurrentQueueState(
     val topCard: Card,
+    val countsIndex: Counts.Queue,
     var states: SchedulingStates,
     val context: SchedulingContext,
     val counts: Counts,
@@ -81,6 +82,12 @@ open class Scheduler(val col: Collection) {
         return queue.cardsList.firstOrNull()?.let {
             CurrentQueueState(
                 topCard = Card(col, it.card),
+                countsIndex = when (it.queue) {
+                    QueuedCards.Queue.NEW -> Counts.Queue.NEW
+                    QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
+                    QueuedCards.Queue.REVIEW -> Counts.Queue.REV
+                    QueuedCards.Queue.UNRECOGNIZED, null -> TODO("unrecognized queue")
+                },
                 states = it.states,
                 context = it.context,
                 counts = Counts(queue.newCount, queue.learningCount, queue.reviewCount),
@@ -158,9 +165,8 @@ open class Scheduler(val col: Collection) {
         return counts().lrn
     }
 
-    /** Ignores provided card and uses top of queue */
-    @Suppress("unused_parameter")
-    fun countIdx(card: Card): Counts.Queue {
+    /** Only used by tests. */
+    fun countIdx(): Counts.Queue {
         return when (queuedCards.cardsList.first().queue) {
             QueuedCards.Queue.NEW -> Counts.Queue.NEW
             QueuedCards.Queue.LEARNING -> Counts.Queue.LRN

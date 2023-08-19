@@ -938,14 +938,16 @@ open class Reviewer :
     }
 
     private fun updateScreenCounts() {
-        if (currentCard == null) return
+        val queue = queueState ?: return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = sched!!.counts()
+        val counts = queue.counts
         if (actionBar != null) {
             if (mPrefShowETA) {
-                mEta = sched!!.eta(counts, false)
-                actionBar.subtitle = Utils.remainingTime(this, (mEta * 60).toLong())
+                launchCatchingTask {
+                    mEta = withCol { sched.eta(counts, false) }
+                    actionBar.subtitle = Utils.remainingTime(this@Reviewer, (mEta * 60).toLong())
+                }
             }
         }
         mNewCount = SpannableString(counts.new.toString())
@@ -957,7 +959,7 @@ open class Reviewer :
         // if this code is run as a card is being answered, currentCard may be non-null but
         // the queues may be empty - we can't call countIdx() in such a case
         if (counts.count() != 0) {
-            when (sched!!.countIdx(currentCard!!)) {
+            when (queue.countsIndex) {
                 Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
                 Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
                 Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
@@ -1087,7 +1089,7 @@ open class Reviewer :
 
     override fun onStop() {
         super.onStop()
-        if (!isFinishing && colIsOpenUnsafe() && sched != null) {
+        if (!isFinishing && colIsOpenUnsafe()) {
             updateInBackground(this)
         }
     }

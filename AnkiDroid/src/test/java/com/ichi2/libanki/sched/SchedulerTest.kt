@@ -1050,17 +1050,16 @@ open class SchedulerTest : RobolectricTest() {
         note2.setItem("Back", "two")
         col.addNote(note2)
         Assert.assertEquals(Counts(2, 0, 0), col.sched.counts())
-        var c = col.sched.card
+        var c = col.sched.card!!
         // getCard does not decrement counts
         Assert.assertEquals(Counts(2, 0, 0), col.sched.counts())
-        Assert.assertEquals(Counts.Queue.NEW, col.sched.countIdx(c!!))
+        Assert.assertEquals(Counts.Queue.NEW, col.sched.countIdx())
         // answer to move to learn queue
         col.sched.answerCard(c, BUTTON_ONE)
         Assert.assertEquals(Counts(1, 1, 0), col.sched.counts())
         // fetching next will not decrement the count
-        c = col.sched.card
         Assert.assertEquals(Counts(1, 1, 0), col.sched.counts())
-        Assert.assertEquals(Counts.Queue.NEW, col.sched.countIdx(c!!))
+        Assert.assertEquals(Counts.Queue.NEW, col.sched.countIdx())
     }
 
     @Test

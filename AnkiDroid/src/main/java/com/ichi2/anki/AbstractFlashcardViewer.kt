@@ -87,7 +87,6 @@ import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling
 import com.ichi2.libanki.Sound.SingleSoundSide
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.SoundPlayer
-import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
@@ -227,10 +226,6 @@ abstract class AbstractFlashcardViewer :
     private var mViewerUrl: String? = null
     private var mAssetLoader: WebViewAssetLoader? = null
     private val mFadeDuration = 300
-
-    @KotlinCleanup("made internal for tests")
-    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    internal var sched: Scheduler? = null
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     internal lateinit var mSoundPlayer: Sound
@@ -523,7 +518,6 @@ abstract class AbstractFlashcardViewer :
     // Finish initializing the activity after the collection has been correctly loaded
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
-        sched = col.sched
         val mediaDir = col.media.dir
         mBaseUrl = Utils.getBaseUrl(mediaDir).also { baseUrl ->
             mSoundPlayer = Sound(baseUrl).also { sound ->
