@@ -27,17 +27,17 @@ import com.ichi2.anki.permissions.PermissionsRequestResults.PermissionRequestRes
  * Data to build a [PermissionsRequestResults], when there is no [Activity] to create it
  * Maps from a permission to whether it was granted
  */
-typealias PermissionsRequestRawResults = Map<String, Boolean>
+data class PermissionsRequestRawResults(val permissions: Map<String, Boolean>, val requestedPermissions: Boolean)
 
 /**
  * The result of requesting permissions
  * After we perform a request, starting at API M, we can know if a permission is temporarily or permanently denied.
  */
-class PermissionsRequestResults(permissions: Map<String, PermissionRequestResult>) {
+class PermissionsRequestResults(permissions: Map<String, PermissionRequestResult>, requestedPermissions: Boolean) {
     // If the permissions request interaction with the user is interrupted.
     // then we get an empty results array
     // https://developer.android.com/reference/androidx/core/app/ActivityCompat.OnRequestPermissionsResultCallback
-    val cancelled = !permissions.any()
+    val cancelled = requestedPermissions && !permissions.any()
 
     val allGranted = !cancelled && permissions.all { it.value == GRANTED }
 
@@ -51,8 +51,8 @@ class PermissionsRequestResults(permissions: Map<String, PermissionRequestResult
 
     companion object {
         fun from(activity: Activity, rawResults: PermissionsRequestRawResults): PermissionsRequestResults {
-            val permissions = rawResults.mapValues { toPermissionRequestResult(activity, it.key, it.value) }
-            return PermissionsRequestResults(permissions)
+            val permissions = rawResults.permissions.mapValues { toPermissionRequestResult(activity, it.key, it.value) }
+            return PermissionsRequestResults(permissions, rawResults.requestedPermissions)
         }
     }
 

@@ -24,12 +24,13 @@ open class PermissionsCheckResult(val permissions: Map<String, Boolean>) {
     val requiresPermissionDialog: Boolean = permissions.any { !it.value }
 
     /**
+     * @param requestedPermissions Whether any permissions were requested
      * @return A [PermissionsRequestRawResults], or `null` if a permissions dialog is required.
      */
-    fun toPermissionsRequestRawResult(): PermissionsRequestRawResults? {
+    fun toPermissionsRequestRawResult(requestedPermissions: Boolean): PermissionsRequestRawResults? {
         if (requiresPermissionDialog) {
             return null
         }
-        return permissions
+        return PermissionsRequestRawResults(permissions, requestedPermissions)
     }
 }
