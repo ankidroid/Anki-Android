@@ -21,7 +21,6 @@ package com.ichi2.anki.permissions
  * @param permissions A map, containing an entry for each required permission, associating to it whether it's already granted
  */
 open class PermissionsCheckResult(val permissions: Map<String, Boolean>) {
-    val allGranted = permissions.all { it.value }
     val requiresPermissionDialog: Boolean = permissions.any { !it.value }
 
     /**
