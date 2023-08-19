@@ -50,13 +50,6 @@ class PermissionsRequestResults(permissions: Map<String, PermissionRequestResult
     val hasTemporarilyDeniedPermissions = permissions.any { it.value == TEMPORARILY_DENIED }
 
     companion object {
-        fun allGranted(checkResult: PermissionsCheckResult): PermissionsRequestResults {
-            if (!checkResult.allGranted) {
-                throw IllegalStateException("allGranted called when permissions were not all granted")
-            }
-            return PermissionsRequestResults(checkResult.permissions.mapValues { GRANTED })
-        }
-
         fun from(activity: Activity, rawResults: PermissionsRequestRawResults): PermissionsRequestResults {
             val permissions = rawResults.mapValues { toPermissionRequestResult(activity, it.key, it.value) }
             return PermissionsRequestResults(permissions)
