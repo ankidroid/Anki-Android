@@ -17,7 +17,8 @@
 ~
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
---><resources>
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Decks</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Card browser</string>
@@ -149,6 +150,10 @@
     <string name="sd_card_not_mounted">Device storage not mounted</string>
     <string name="button_sync" comment="Text of the sync button">Sync</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Do you want to cancel the sync?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling…\nThis may take some time.</string>
     <string name="export">Export</string>
     <string name="export_collection">Export collection</string>
     <string name="export_deck">Export deck</string>
