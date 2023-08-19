@@ -376,12 +376,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity
-            android:name=".CardInfo"
-            android:label="@string/card_info_title"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            />
-        <activity
             android:name=".SharedDecksActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/download_deck"

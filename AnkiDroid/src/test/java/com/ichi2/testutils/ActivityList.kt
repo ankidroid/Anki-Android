@@ -66,7 +66,6 @@ object ActivityList {
             get(Previewer::class.java),
             get(CardTemplatePreviewer::class.java),
             get(MultimediaEditFieldActivity::class.java),
-            get(CardInfo::class.java),
             get(CardTemplateEditor::class.java) { intentForCardTemplateEditor() },
             get(CardTemplateBrowserAppearanceEditor::class.java) { intentForCardTemplateBrowserAppearanceEditor() },
             get(SharedDecksActivity::class.java),
