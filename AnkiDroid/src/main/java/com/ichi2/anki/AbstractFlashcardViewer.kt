@@ -128,6 +128,9 @@ abstract class AbstractFlashcardViewer :
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
     var server: ReviewerServer? = null
 
+    /** Can be used to wait until async calls in onCreate() have finished. */
+    var asyncCreateJob: Job? = null
+
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
      */
@@ -487,7 +490,7 @@ abstract class AbstractFlashcardViewer :
 
         setContentView(getContentViewAttr(fullscreenMode))
 
-        launchCatchingTask {
+        asyncCreateJob = launchCatchingTask {
             val mediaDir = withCol { media.dir }
             server = ReviewerServer(this@AbstractFlashcardViewer, mediaDir).apply { start() }
         }
@@ -1523,10 +1526,14 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun loadContentIntoCard(card: WebView?, content: String) {
-        if (card != null) {
-            card.settings.mediaPlaybackRequiresUserGesture = !mCardSoundConfig!!.autoplay
+        launchCatchingTask {
+            asyncCreateJob?.join()
             server?.reviewerHtml = content
-            card.loadUrl(server?.baseUrl() + "reviewer.html")
+            if (card != null) {
+                card.settings.mediaPlaybackRequiresUserGesture = !mCardSoundConfig!!.autoplay
+                Timber.e("*** set server %s content to %s", server, content)
+                card.loadUrl(server?.baseUrl() + "reviewer.html")
+            }
         }
     }
 
