@@ -19,7 +19,7 @@
     android:viewportWidth="1000"
     android:viewportHeight="1000">
     <path
-        android:fillColor="#F5F5F5"
+        android:fillColor="#FFFFFF"
         android:strokeWidth="0"
         android:strokeMiterLimit="100"
         android:pathData="m500 58.9c238.1 0 431.1 193 431.1 431.1c0 238.1 -193 431.1 -431.1 431.1c-238.1 0 -431.1 -193 -431.1 -431.1c0 -238.1 193 -431.1 431.1 -431.1z" />
