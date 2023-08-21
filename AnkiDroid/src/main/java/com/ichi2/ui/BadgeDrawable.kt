@@ -104,6 +104,7 @@ class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
      *
      * @param dr the drawable to wrap
      */
+
     init {
         mPaint.apply {
             typeface = Typeface.DEFAULT_BOLD

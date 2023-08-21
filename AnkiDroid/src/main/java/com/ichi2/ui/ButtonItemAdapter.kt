@@ -57,6 +57,7 @@ class ButtonItemAdapter(
             title.text = items[position]
             button.tag = items[position]
         }
+
     }
 
     override fun getItemCount() = items.size
