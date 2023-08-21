@@ -53,8 +53,10 @@ class ButtonItemAdapter(
     }
 
     override fun onBindViewHolder(holder: ButtonVH, position: Int) {
-        holder.title.text = items[position]
-        holder.button.tag = items[position]
+        holder.apply {
+            title.text = items[position]
+            button.tag = items[position]
+        }
     }
 
     override fun getItemCount() = items.size

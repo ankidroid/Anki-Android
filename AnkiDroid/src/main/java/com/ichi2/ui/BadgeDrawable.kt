@@ -105,8 +105,10 @@ class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
      * @param dr the drawable to wrap
      */
     init {
-        mPaint.typeface = Typeface.DEFAULT_BOLD
-        mPaint.textAlign = Paint.Align.CENTER
-        mPaint.color = Color.WHITE
+        mPaint.apply {
+            typeface = Typeface.DEFAULT_BOLD
+            textAlign = Paint.Align.CENTER
+            color = Color.WHITE
+        }
     }
 }
