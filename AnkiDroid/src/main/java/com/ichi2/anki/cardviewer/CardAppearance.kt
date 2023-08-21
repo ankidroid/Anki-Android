@@ -25,7 +25,7 @@ import com.ichi2.themes.Themes.currentTheme
 /** Responsible for calculating CSS and element styles and modifying content on a flashcard  */
 class CardAppearance(private val customFonts: ReviewerCustomFonts, private val cardZoom: Int, private val imageZoom: Int, private val centerVertically: Boolean) {
     /** Below could be in a better abstraction.  */
-    fun appendCssStyle(style: StringBuilder) {
+    private fun appendCssStyle(style: StringBuilder) {
         // Zoom cards
         if (cardZoom != 100) {
             style.append("body { zoom: ${cardZoom / 100.0} }\n")
