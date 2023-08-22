@@ -190,6 +190,7 @@ open class CardBrowser :
         if (data != null &&
             (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))
         ) {
+            Timber.d("Reloading Card Browser due to activity result")
             // if reloadRequired or noteChanged flag was sent from note editor then reload card list
             searchCards()
             mShouldRestoreScroll = true
@@ -1676,7 +1677,9 @@ open class CardBrowser :
         val query = searchText!!
         val order = if (mOrder == CARD_ORDER_NONE) NoOrdering() else UseCollectionOrdering()
         launchCatchingTask {
+            Timber.d("performing search")
             val cards = withProgress { searchForCards(query, order, inCardsMode) }
+            Timber.d("Search returned %d cards", cards.size)
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
                 cards[i].load(false, mColumn1Index, mColumn2Index)
@@ -1710,6 +1713,7 @@ open class CardBrowser :
             mShouldRestoreScroll = false
             val newPosition = newPositionOfSelectedCard
             if (newPosition != CARD_NOT_AVAILABLE) {
+                Timber.d("Restoring scroll position after search")
                 autoScrollTo(newPosition)
             }
         }
