@@ -32,7 +32,6 @@ class ViewerCommandTest {
         assertEquals(
             "binding_SHOW_ANSWER, binding_FLIP_OR_ANSWER_EASE1, " +
                 "binding_FLIP_OR_ANSWER_EASE2, binding_FLIP_OR_ANSWER_EASE3, binding_FLIP_OR_ANSWER_EASE4, " +
-                "binding_FLIP_OR_ANSWER_RECOMMENDED, binding_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED, " +
                 "binding_UNDO, binding_EDIT, binding_MARK, binding_BURY_CARD, " +
                 "binding_SUSPEND_CARD, binding_DELETE, binding_PLAY_MEDIA, " +
                 "binding_EXIT, binding_BURY_NOTE, binding_SUSPEND_NOTE, binding_TOGGLE_FLAG_RED, " +

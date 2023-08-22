@@ -31,6 +31,7 @@ import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.libanki.Consts
 import com.ichi2.utils.HashUtil.HashSetInit
 import timber.log.Timber
@@ -60,7 +61,7 @@ object PreferenceUpgradeService {
      * Typically because the app has been run for the first time, or the preferences
      * have been deleted
      */
-    @JvmStatic // reqired for mockito for now
+    @JvmStatic // required for mockito for now
     fun setPreferencesUpToDate(preferences: SharedPreferences) {
         Timber.i("Marking preferences as up to date")
         PreferenceUpgrade.setPreferenceToLatestVersion(preferences)
@@ -89,6 +90,7 @@ object PreferenceUpgradeService {
                 yield(UpgradeFetchMedia())
                 yield(UpgradeAppLocale())
                 yield(RemoveScrollingButtons())
+                yield(RemoveAnswerRecommended())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -240,8 +242,6 @@ object PreferenceUpgradeService {
                 Pair(3, ViewerCommand.FLIP_OR_ANSWER_EASE2),
                 Pair(4, ViewerCommand.FLIP_OR_ANSWER_EASE3),
                 Pair(5, ViewerCommand.FLIP_OR_ANSWER_EASE4),
-                Pair(6, ViewerCommand.FLIP_OR_ANSWER_RECOMMENDED),
-                Pair(7, ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED),
                 Pair(8, ViewerCommand.UNDO),
                 Pair(9, ViewerCommand.EDIT),
                 Pair(10, ViewerCommand.MARK),
@@ -406,6 +406,24 @@ object PreferenceUpgradeService {
         internal class RemoveScrollingButtons : PreferenceUpgrade(11) {
             override fun upgrade(preferences: SharedPreferences) {
                 preferences.edit { remove("scrolling_buttons") }
+            }
+        }
+
+        internal class RemoveAnswerRecommended : PreferenceUpgrade(12) {
+            override fun upgrade(preferences: SharedPreferences) {
+                moveControlBindings(preferences, "binding_FLIP_OR_ANSWER_RECOMMENDED", ViewerCommand.FLIP_OR_ANSWER_EASE3.preferenceKey)
+                moveControlBindings(preferences, "binding_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED", ViewerCommand.FLIP_OR_ANSWER_EASE4.preferenceKey)
+            }
+
+            private fun moveControlBindings(preferences: SharedPreferences, sourcePrefKey: String, destinyPrefKey: String) {
+                val sourcePrefValue = preferences.getString(sourcePrefKey, null) ?: return
+                val destinyPrefValue = preferences.getString(destinyPrefKey, null)
+
+                val joinedBindings = MappableBinding.fromPreferenceString(destinyPrefValue) + MappableBinding.fromPreferenceString(sourcePrefValue)
+                preferences.edit {
+                    putString(destinyPrefKey, joinedBindings.toPreferenceString())
+                    remove(sourcePrefKey)
+                }
             }
         }
     }

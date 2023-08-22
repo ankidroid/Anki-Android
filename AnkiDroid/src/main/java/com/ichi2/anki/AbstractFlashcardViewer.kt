@@ -841,10 +841,6 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private fun getRecommendedEase(easy: Boolean): Int {
-        return if (easy) EASE_4 else EASE_3
-    }
-
     open fun answerCard(@BUTTON_TYPE ease: Int) {
         launchCatchingTask {
             if (mInAnswer) {
@@ -1656,14 +1652,6 @@ abstract class AbstractFlashcardViewer :
                 }
                 ViewerCommand.FLIP_OR_ANSWER_EASE4 -> {
                     flipOrAnswerCard(EASE_4)
-                    true
-                }
-                ViewerCommand.FLIP_OR_ANSWER_RECOMMENDED -> {
-                    flipOrAnswerCard(getRecommendedEase(false))
-                    true
-                }
-                ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED -> {
-                    flipOrAnswerCard(getRecommendedEase(true))
                     true
                 }
                 ViewerCommand.EXIT -> {

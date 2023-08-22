@@ -39,8 +39,6 @@ enum class ViewerCommand(val resourceId: Int) {
     FLIP_OR_ANSWER_EASE2(R.string.gesture_answer_2),
     FLIP_OR_ANSWER_EASE3(R.string.gesture_answer_3),
     FLIP_OR_ANSWER_EASE4(R.string.gesture_answer_4),
-    FLIP_OR_ANSWER_RECOMMENDED(R.string.gesture_answer_green),
-    FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED(R.string.gesture_answer_better_recommended),
     UNDO(R.string.undo),
     EDIT(R.string.cardeditor_title_edit_card),
     MARK(R.string.menu_mark_note),
@@ -138,18 +136,16 @@ enum class ViewerCommand(val resourceId: Int) {
                 FLIP_OR_ANSWER_EASE3 -> from(
                     keyCode(KeyEvent.KEYCODE_BUTTON_B, CardSide.BOTH),
                     keyCode(KeyEvent.KEYCODE_3, CardSide.ANSWER),
-                    keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER)
+                    keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_DPAD_CENTER, CardSide.BOTH),
+                    keyCode(KeyEvent.KEYCODE_SPACE, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_ENTER, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.ANSWER)
                 )
                 FLIP_OR_ANSWER_EASE4 -> from(
                     keyCode(KeyEvent.KEYCODE_BUTTON_A, CardSide.BOTH),
                     keyCode(KeyEvent.KEYCODE_4, CardSide.ANSWER),
                     keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER)
-                )
-                FLIP_OR_ANSWER_RECOMMENDED -> from(
-                    keyCode(KeyEvent.KEYCODE_DPAD_CENTER, CardSide.BOTH),
-                    keyCode(KeyEvent.KEYCODE_SPACE, CardSide.ANSWER),
-                    keyCode(KeyEvent.KEYCODE_ENTER, CardSide.ANSWER),
-                    keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.ANSWER)
                 )
                 EDIT -> from(keyCode(KeyEvent.KEYCODE_E, CardSide.BOTH))
                 MARK -> from(unicode('*', CardSide.BOTH))
