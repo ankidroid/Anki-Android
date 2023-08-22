@@ -161,11 +161,11 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val viewer: NonAbstractFlashcardViewer = getViewer(true)
 
         assertThat("Displaying question", viewer.isDisplayingAnswer, equalTo(false))
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
+        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
 
         assertThat("Displaying answer", viewer.isDisplayingAnswer, equalTo(true))
 
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
+        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
 
         assertThat(viewer.answered, notNullValue())
     }
@@ -222,14 +222,14 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     @Test
     fun shortcutShowsToastOnFinish() = runTest {
         val viewer: NonAbstractFlashcardViewer = getViewer(true, true)
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
+        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
         assertEquals(getResourceString(R.string.studyoptions_congrats_finished), ShadowToast.getTextOfLatestToast())
     }
 
     private fun showNextCard(viewer: NonAbstractFlashcardViewer) {
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
-        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED)
+        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
+        viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
     }
 
     @get:CheckResult
