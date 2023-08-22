@@ -75,10 +75,6 @@ class CompatHelper private constructor() {
         val isKindle: Boolean
             get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
 
-        fun hasKanaAndEmojiKeys(): Boolean {
-            return deviceHasKey(KEYCODE_SWITCH_CHARSET) && deviceHasKey(KEYCODE_PICTSYMBOLS)
-        }
-
         fun hasScrollKeys(): Boolean {
             return deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
         }

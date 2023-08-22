@@ -151,7 +151,6 @@ abstract class AbstractFlashcardViewer :
         private set
     private var mRelativeButtonSize = 0
     private var mDoubleScrolling = false
-    private var mScrollingButtons = false
     private var mGesturesEnabled = false
     private var mLargeAnswerButtons = false
     protected var mAnswerButtonsPosition: String? = "bottom"
@@ -691,20 +690,6 @@ abstract class AbstractFlashcardViewer :
             return true
         }
         if (keyCode == KeyEvent.KEYCODE_PAGE_DOWN) {
-            card!!.pageDown(false)
-            if (mDoubleScrolling) {
-                card.pageDown(false)
-            }
-            return true
-        }
-        if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_PICTSYMBOLS) {
-            card!!.pageUp(false)
-            if (mDoubleScrolling) {
-                card.pageUp(false)
-            }
-            return true
-        }
-        if (mScrollingButtons && keyCode == KeyEvent.KEYCODE_SWITCH_CHARSET) {
             card!!.pageDown(false)
             if (mDoubleScrolling) {
                 card.pageDown(false)
@@ -1282,7 +1267,6 @@ abstract class AbstractFlashcardViewer :
         fullscreenMode = fromPreference(preferences)
         mRelativeButtonSize = preferences.getInt("answerButtonSize", 100)
         mTTS.enabled = preferences.getBoolean("tts", false)
-        mScrollingButtons = preferences.getBoolean("scrolling_buttons", false)
         mDoubleScrolling = preferences.getBoolean("double_scrolling", false)
         prefShowTopbar = preferences.getBoolean("showTopbar", true)
         mLargeAnswerButtons = preferences.getBoolean("showLargeAnswerButtons", false)

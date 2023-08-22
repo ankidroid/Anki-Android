@@ -216,15 +216,8 @@ class AdvancedSettingsFragment : SettingsFragment() {
     private fun removeUnnecessaryAdvancedPrefs() {
         /** These preferences should be searchable or not based
          * on this same condition at [Preferences.configureSearchBar] */
-        // Disable the emoji/kana buttons to scroll preference if those keys don't exist
-        if (!CompatHelper.hasKanaAndEmojiKeys()) {
-            val emojiScrolling = findPreference<SwitchPreferenceCompat>("scrolling_buttons")
-            if (emojiScrolling != null) {
-                preferenceScreen.removePreference(emojiScrolling)
-            }
-        }
         // Disable the double scroll preference if no scrolling keys
-        if (!CompatHelper.hasScrollKeys() && !CompatHelper.hasKanaAndEmojiKeys()) {
+        if (!CompatHelper.hasScrollKeys()) {
             val doubleScrolling = findPreference<SwitchPreferenceCompat>("double_scrolling")
             if (doubleScrolling != null) {
                 preferenceScreen.removePreference(doubleScrolling)

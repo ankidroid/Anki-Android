@@ -50,11 +50,6 @@
             android:key="@string/pref_reset_languages_key" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="@string/more_scrolling_buttons_key"
-            android:summary="@string/more_scrolling_buttons_summ"
-            android:title="@string/more_scrolling_buttons" />
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
             android:key="@string/double_scrolling_gap_key"
             android:summary="@string/double_scrolling_gap_summ"
             android:title="@string/double_scrolling_gap" />
