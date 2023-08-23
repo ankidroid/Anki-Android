@@ -60,7 +60,7 @@
         <item name="newCountColor">@color/material_indigo_200</item>
         <item name="learnCountColor">@color/material_red_200</item>
         <item name="reviewCountColor">@color/material_green_200</item>
-        <item name="zeroCountColor">#808080</item>
+        <item name="zeroCountColor">#404040</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_dark_primary_light</item>
         <item name="maxTimerColor">@color/material_red_300</item>
