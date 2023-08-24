@@ -19,15 +19,15 @@ package com.ichi2.anki
 import com.ichi2.anki.reviewer.CardMarker
 
 class FlagToDisplay(
-    private val actualValue: Int,
+    private val actualFlag: Int,
     private val isOnAppBar: Boolean,
     private val isFullscreen: Boolean
 ) {
 
     fun get(): Int {
         return when {
-            !isOnAppBar -> actualValue
-            isFullscreen -> actualValue
+            !isOnAppBar -> actualFlag
+            isFullscreen -> actualFlag
             else -> CardMarker.FLAG_NONE
         }
     }
