@@ -90,11 +90,11 @@ import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
-import java.lang.Exception
 import java.lang.IllegalStateException
 import java.lang.StringBuilder
 import java.util.*
 import java.util.function.Consumer
+import kotlin.Exception
 import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -192,8 +192,8 @@ open class CardBrowser :
         ) {
             Timber.d("Reloading Card Browser due to activity result")
             // if reloadRequired or noteChanged flag was sent from note editor then reload card list
-            searchCards()
             mShouldRestoreScroll = true
+            searchCards()
             // in use by reviewer?
             if (reviewerCardId == mCurrentCardId) {
                 mReloadRequired = true
@@ -1694,6 +1694,7 @@ open class CardBrowser :
         updateList()
         /*check whether mSearchView is initialized as it is lateinit property.*/
         if (mSearchView == null || mSearchView!!.isIconified) {
+            restoreScrollPositionIfRequested()
             return
         }
         if (hasSelectedAllDecks()) {
@@ -1709,15 +1710,25 @@ open class CardBrowser :
                 setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
             }
         }
-        if (mShouldRestoreScroll) {
-            mShouldRestoreScroll = false
-            val newPosition = newPositionOfSelectedCard
-            if (newPosition != CARD_NOT_AVAILABLE) {
-                Timber.d("Restoring scroll position after search")
-                autoScrollTo(newPosition)
-            }
-        }
+        restoreScrollPositionIfRequested()
         updatePreviewMenuItem()
+    }
+
+    /**
+     * Restores the scroll position of the browser when requested (for example after editing a card)
+     */
+    @NeedsTest("Issue 14220: Ensure this is called if mSearchView == null. Use Espresso to test")
+    private fun restoreScrollPositionIfRequested() {
+        if (!mShouldRestoreScroll) {
+            Timber.d("Not restoring search position")
+            return
+        }
+        mShouldRestoreScroll = false
+        val newPosition = newPositionOfSelectedCard
+        if (newPosition != CARD_NOT_AVAILABLE) {
+            Timber.d("Restoring scroll position after search")
+            autoScrollTo(newPosition)
+        }
     }
 
     @VisibleForTesting
