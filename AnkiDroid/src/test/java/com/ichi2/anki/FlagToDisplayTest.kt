@@ -1,7 +1,6 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.reviewer.CardMarker.Companion.FLAG_BLUE
 import com.ichi2.anki.reviewer.CardMarker.Companion.FLAG_GREEN
 import com.ichi2.anki.reviewer.CardMarker.Companion.FLAG_NONE
@@ -13,9 +12,7 @@ import com.ichi2.anki.reviewer.CardMarker.Companion.FLAG_TURQUOISE
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class FlagToDisplayTest {
 
     @ParameterizedTest
