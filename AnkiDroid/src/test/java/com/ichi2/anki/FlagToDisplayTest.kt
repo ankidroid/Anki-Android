@@ -12,23 +12,11 @@ import com.ichi2.anki.reviewer.CardMarker.Companion.FLAG_RED
 import com.ichi2.anki.reviewer.CardMarker.Companion.FLAG_TURQUOISE
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class FlagToDisplayTest {
-
-    @ParameterizedTest
-    @CsvSource(
-        "false, false",
-        "false, true",
-        "true, false",
-        "false, false"
-    )
-    fun `is hidden if no flag is set`(toolbarButton: Boolean, fullscreen: Boolean) {
-        assertEquals(FLAG_NONE, FlagToDisplay(FLAG_NONE, toolbarButton, fullscreen).get())
-    }
 
     @ParameterizedTest
     @ValueSource(ints = [FLAG_NONE, FLAG_RED, FLAG_ORANGE, FLAG_GREEN, FLAG_BLUE, FLAG_PINK, FLAG_TURQUOISE, FLAG_PURPLE])
