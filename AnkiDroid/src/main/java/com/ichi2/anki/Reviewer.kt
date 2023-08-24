@@ -350,7 +350,6 @@ open class Reviewer :
                 Timber.i("Reviewer:: Home button pressed")
                 closeReviewer(RESULT_OK, true)
             }
-
             R.id.action_undo -> {
                 Timber.i("Reviewer:: Undo button pressed")
                 if (mShowWhiteboard && whiteboard != null && !whiteboard!!.undoEmpty()) {
@@ -359,38 +358,31 @@ open class Reviewer :
                     undo()
                 }
             }
-
             R.id.action_reset_card_progress -> {
                 Timber.i("Reviewer:: Reset progress button pressed")
                 showResetCardDialog()
             }
-
             R.id.action_mark_card -> {
                 Timber.i("Reviewer:: Mark button pressed")
                 onMark(currentCard)
             }
-
             R.id.action_replay -> {
                 Timber.i("Reviewer:: Replay audio button pressed (from menu)")
                 playSounds(true)
             }
-
             R.id.action_toggle_mic_tool_bar -> {
                 Timber.i("Reviewer:: Record mic")
                 // Check permission to record and request if not granted
                 openOrToggleMicToolbar()
             }
-
             R.id.action_tag -> {
                 Timber.i("Reviewer:: Tag button pressed")
                 showTagsDialog()
             }
-
             R.id.action_edit -> {
                 Timber.i("Reviewer:: Edit note button pressed")
                 editCard()
             }
-
             R.id.action_bury -> {
                 Timber.i("Reviewer:: Bury button pressed")
                 MenuItemCompat.getActionProvider(item)?.hasSubMenu()?.let { isAvailable ->
@@ -400,7 +392,6 @@ open class Reviewer :
                     }
                 } ?: Timber.w("Null ActionProvider for bury menu item in Reviewer!")
             }
-
             R.id.action_suspend -> {
                 Timber.i("Reviewer:: Suspend button pressed")
                 MenuItemCompat.getActionProvider(item)?.hasSubMenu()?.let { isAvailable ->
@@ -410,47 +401,35 @@ open class Reviewer :
                     }
                 } ?: Timber.w("Null ActionProvider for suspend menu item in Reviewer!")
             }
-
             R.id.action_delete -> {
                 Timber.i("Reviewer:: Delete note button pressed")
                 showDeleteNoteDialog()
             }
-
             R.id.action_change_whiteboard_pen_color -> {
                 Timber.i("Reviewer:: Pen Color button pressed")
                 changeWhiteboardPenColor()
             }
-
             R.id.action_save_whiteboard -> {
                 Timber.i("Reviewer:: Save whiteboard button pressed")
                 if (whiteboard != null) {
                     try {
                         val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(TimeManager.time).path
-                        showSnackbar(
-                            getString(R.string.white_board_image_saved, savedWhiteboardFileName),
-                            Snackbar.LENGTH_SHORT
-                        )
+                        showSnackbar(getString(R.string.white_board_image_saved, savedWhiteboardFileName), Snackbar.LENGTH_SHORT)
                     } catch (e: Exception) {
                         Timber.w(e)
-                        showSnackbar(
-                            getString(R.string.white_board_image_save_failed, e.localizedMessage),
-                            Snackbar.LENGTH_SHORT
-                        )
+                        showSnackbar(getString(R.string.white_board_image_save_failed, e.localizedMessage), Snackbar.LENGTH_SHORT)
                     }
                 }
             }
-
             R.id.action_clear_whiteboard -> {
                 Timber.i("Reviewer:: Clear whiteboard button pressed")
                 clearWhiteboard()
             }
-
             R.id.action_hide_whiteboard -> { // toggle whiteboard visibility
                 Timber.i("Reviewer:: Whiteboard visibility set to %b", !mShowWhiteboard)
                 setWhiteboardVisibility(!mShowWhiteboard)
                 refreshActionBar()
             }
-
             R.id.action_toggle_stylus -> { // toggle stylus mode
                 Timber.i("Reviewer:: Stylus set to %b", !toggleStylus)
                 toggleStylus = !toggleStylus
@@ -458,11 +437,9 @@ open class Reviewer :
                 MetaDB.storeWhiteboardStylusState(this, parentDid, toggleStylus)
                 refreshActionBar()
             }
-
             R.id.action_toggle_whiteboard -> {
                 toggleWhiteboard()
             }
-
             R.id.action_open_deck_options -> {
                 val i = if (BackendFactory.defaultLegacySchema) {
                     Intent(this, DeckOptionsActivity::class.java)
@@ -471,62 +448,50 @@ open class Reviewer :
                 }
                 deckOptionsLauncher.launch(i)
             }
-
             R.id.action_select_tts -> {
                 Timber.i("Reviewer:: Select TTS button pressed")
                 showSelectTtsDialogue()
             }
-
             R.id.action_add_note_reviewer -> {
                 Timber.i("Reviewer:: Add note button pressed")
                 addNote()
             }
-
             R.id.action_flag_zero -> {
                 Timber.i("Reviewer:: No flag")
                 onFlag(currentCard, CardMarker.FLAG_NONE)
             }
-
             R.id.action_flag_one -> {
                 Timber.i("Reviewer:: Flag one")
                 onFlag(currentCard, CardMarker.FLAG_RED)
             }
-
             R.id.action_flag_two -> {
                 Timber.i("Reviewer:: Flag two")
                 onFlag(currentCard, CardMarker.FLAG_ORANGE)
             }
-
             R.id.action_flag_three -> {
                 Timber.i("Reviewer:: Flag three")
                 onFlag(currentCard, CardMarker.FLAG_GREEN)
             }
-
             R.id.action_flag_four -> {
                 Timber.i("Reviewer:: Flag four")
                 onFlag(currentCard, CardMarker.FLAG_BLUE)
             }
-
             R.id.action_flag_five -> {
                 Timber.i("Reviewer:: Flag five")
                 onFlag(currentCard, CardMarker.FLAG_PINK)
             }
-
             R.id.action_flag_six -> {
                 Timber.i("Reviewer:: Flag six")
                 onFlag(currentCard, CardMarker.FLAG_TURQUOISE)
             }
-
             R.id.action_flag_seven -> {
                 Timber.i("Reviewer:: Flag seven")
                 onFlag(currentCard, CardMarker.FLAG_PURPLE)
             }
-
             R.id.action_card_info -> {
                 Timber.i("Card Viewer:: Card Info")
                 openCardInfo()
             }
-
             else -> {
                 return super.onOptionsItemSelected(item)
             }
@@ -682,10 +647,7 @@ open class Reviewer :
     private fun showRescheduleCardDialog() {
         val runnable = Consumer { days: Int ->
             val cardIds = listOf(currentCard!!.id)
-            RescheduleCards(
-                cardIds,
-                days
-            ).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
+            RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
         }
         val dialog = rescheduleSingleCard(resources, currentCard!!, runnable)
         showDialogFragment(dialog)
@@ -743,8 +705,7 @@ open class Reviewer :
         menuInflater.inflate(R.menu.reviewer, menu)
         displayIcons(menu)
         mActionButtons.setCustomButtonsStatus(menu)
-        var alpha =
-            if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
+        var alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val markCardIcon = menu.findItem(R.id.action_mark_card)
         if (currentCard != null && isMarked(currentCard!!.note())) {
             markCardIcon.setTitle(R.string.menu_unmark_note).setIcon(R.drawable.ic_star_white)
@@ -781,8 +742,7 @@ open class Reviewer :
             undoIconId = R.drawable.ic_undo_white
             undoEnabled = colIsOpen() && col.undoAvailable()
         }
-        val alphaUndo =
-            if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
+        val alphaUndo = if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val undoIcon = menu.findItem(R.id.action_undo)
         undoIcon.setIcon(undoIconId)
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
@@ -830,8 +790,7 @@ open class Reviewer :
             }
             val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
             val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
-            val whiteboardColorPaletteIcon =
-                VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, this.theme)!!.mutate()
+            val whiteboardColorPaletteIcon = VectorDrawableCompat.create(resources, R.drawable.ic_color_lens_white_24dp, this.theme)!!.mutate()
             if (mShowWhiteboard) {
                 whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
                 hideWhiteboardIcon.icon = whiteboardIcon
@@ -886,8 +845,7 @@ open class Reviewer :
             buryIcon.setIcon(R.drawable.ic_flip_to_back_white)
             buryIcon.setTitle(R.string.menu_bury_card)
         }
-        alpha =
-            if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
+        alpha = if (super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         buryIcon.iconAlpha = alpha
         suspendIcon.iconAlpha = alpha
         setupSubMenu(menu, R.id.action_schedule, ScheduleProvider(this))
@@ -934,11 +892,7 @@ open class Reviewer :
         }
     }
 
-    private fun <T> setupSubMenu(
-        menu: Menu,
-        @IdRes parentMenu: Int,
-        subMenuProvider: T
-    ) where T : ActionProvider?, T : SubMenuProvider? {
+    private fun <T> setupSubMenu(menu: Menu, @IdRes parentMenu: Int, subMenuProvider: T) where T : ActionProvider?, T : SubMenuProvider? {
         MenuItemCompat.setActionProvider(menu.findItem(parentMenu), subMenuProvider)
         return
     }
@@ -977,7 +931,6 @@ open class Reviewer :
                 easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
                 easeButton2!!.requestFocus()
             }
-
             3 -> {
                 // Ease 2 is good
                 easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
@@ -985,7 +938,6 @@ open class Reviewer :
                 easeButton3!!.setup(background[3], textColor[3], R.string.ease_button_easy)
                 easeButton2!!.requestFocus()
             }
-
             else -> {
                 // Ease 2 is "hard"
                 easeButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
@@ -1168,62 +1120,50 @@ open class Reviewer :
                 toggleFlag(CardMarker.FLAG_RED)
                 return true
             }
-
             ViewerCommand.TOGGLE_FLAG_ORANGE -> {
                 toggleFlag(CardMarker.FLAG_ORANGE)
                 return true
             }
-
             ViewerCommand.TOGGLE_FLAG_GREEN -> {
                 toggleFlag(CardMarker.FLAG_GREEN)
                 return true
             }
-
             ViewerCommand.TOGGLE_FLAG_BLUE -> {
                 toggleFlag(CardMarker.FLAG_BLUE)
                 return true
             }
-
             ViewerCommand.TOGGLE_FLAG_PINK -> {
                 toggleFlag(CardMarker.FLAG_PINK)
                 return true
             }
-
             ViewerCommand.TOGGLE_FLAG_TURQUOISE -> {
                 toggleFlag(CardMarker.FLAG_TURQUOISE)
                 return true
             }
-
             ViewerCommand.TOGGLE_FLAG_PURPLE -> {
                 toggleFlag(CardMarker.FLAG_PURPLE)
                 return true
             }
-
             ViewerCommand.UNSET_FLAG -> {
                 onFlag(currentCard, CardMarker.FLAG_NONE)
                 return true
             }
-
             ViewerCommand.MARK -> {
                 onMark(currentCard)
                 return true
             }
-
             ViewerCommand.ADD_NOTE -> {
                 addNote(fromGesture)
                 return true
             }
-
             ViewerCommand.CARD_INFO -> {
                 openCardInfo(fromGesture)
                 return true
             }
-
             ViewerCommand.RESCHEDULE_NOTE -> {
                 showRescheduleCardDialog()
                 return true
             }
-
             else -> return super.executeCommand(which, fromGesture)
         }
     }
@@ -1664,10 +1604,7 @@ open class Reviewer :
             }
 
             val cardIds = listOf(currentCard!!.id)
-            RescheduleCards(
-                cardIds,
-                days
-            ).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
+            RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
             return true
         }
 
