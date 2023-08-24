@@ -25,13 +25,10 @@ class FlagToDisplay(
 ) {
 
     fun get(): Int {
-        if (actualValue == CardMarker.FLAG_NONE) {
-            return CardMarker.FLAG_NONE
-        }
-        return if (isOnAppBar && !isFullscreen) {
-            CardMarker.FLAG_NONE
-        } else {
-            actualValue
+        return when {
+            !isOnAppBar -> actualValue
+            isFullscreen -> actualValue
+            else -> CardMarker.FLAG_NONE
         }
     }
 }
