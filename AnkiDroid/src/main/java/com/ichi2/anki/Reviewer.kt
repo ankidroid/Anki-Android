@@ -187,7 +187,6 @@ open class Reviewer :
         }
     }
 
-    @NeedsTest("is hidden if flag is on app bar")
     @NeedsTest("is not hidden if flag is not on app bar")
     @NeedsTest("is not hidden if flag is on app bar and fullscreen is enabled")
     protected val flagToDisplay: Int

@@ -20,15 +20,15 @@ import com.ichi2.anki.reviewer.CardMarker
 
 class FlagToDisplay(
     private val actualValue: Int,
-    private val shownAsToolbarButton: Boolean,
-    private val prefFullscreenReview: Boolean
+    private val isOnAppBar: Boolean,
+    private val isFullscreen: Boolean
 ) {
 
     fun get(): Int {
         if (actualValue == CardMarker.FLAG_NONE) {
             return CardMarker.FLAG_NONE
         }
-        return if (shownAsToolbarButton && !prefFullscreenReview) {
+        return if (isOnAppBar && !isFullscreen) {
             CardMarker.FLAG_NONE
         } else {
             actualValue
