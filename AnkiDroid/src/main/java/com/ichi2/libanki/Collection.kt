@@ -380,7 +380,6 @@ open class Collection(
         order: SortOrder
     ): List<Long> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
-            @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
                 config.get("sortType") ?: "noteFld",
                 config.get("sortBackwards") ?: false
@@ -401,7 +400,6 @@ open class Collection(
         order: SortOrder = SortOrder.NoOrdering()
     ): List<Long> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
-            @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
                 config.get("noteSortType") ?: "noteFld",
                 config.get("browserNoteSortBackwards") ?: false
