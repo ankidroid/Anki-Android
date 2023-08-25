@@ -10,7 +10,7 @@ buildscript {
     ext.ankidroid_backend_version = '0.1.21-anki2.1.61'
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.10.0'
-    ext.coroutines_version = '1.7.2'
+    ext.coroutines_version = '1.7.3'
     ext.fragments_version = "1.6.0"
     ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
