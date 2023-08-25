@@ -200,7 +200,7 @@
         <item quantity="other">ମନୋନୀତ ନୋଟ୍‌ଗୁଡ଼ିକୁ apkg ଫାଇଲ୍ ଭାଵରେ ରପ୍ତାନି କରିବେ ତ?</item>
     </plurals>
     <string name="export_preparation_in_progress">ରପ୍ତାନି ପ୍ରସ୍ତୁତି ଚାଲିଛି&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_ready_title">ରପ୍ତାନି ପ୍ରସ୍ତୁତ ହୋଇଅଛି</string>
     <string name="export_send_no_handlers">apkg ପରିଚାଳନା ପାଇଁ କୌଣସି ଆପ୍ ଉପଲବ୍ଧ ନାହିଁ। ସଞ୍ଚୟ ହେଉଛି...</string>
     <string name="export_save_apkg_successful">ସଫଳତାର ସହିତ Anki package ସଂରକ୍ଷିତ ହେଲା</string>
     <string name="export_save_apkg_unsuccessful">Anki package ସଂରକ୍ଷିତ ହେବାରେ ବିଫଳ ହେଲା</string>
@@ -213,8 +213,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">ଅଂଶୀଦାର କରିବା</string>
+    <string name="export_choice_save_to">ଏଠାରେ ସଞ୍ଚୟ କରିବା</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ଵିକଳ୍ପ</string>
     <string name="menu__deck_options">ତାସଖଣ୍ଡ ଵିକଳ୍ପ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ଅଧ୍ୟୟନ ଵିକଳ୍ପ</string>

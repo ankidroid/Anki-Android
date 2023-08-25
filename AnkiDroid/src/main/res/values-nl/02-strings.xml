@@ -402,7 +402,7 @@
     <string name="intro_sync_from_ankiweb">Synchronizeren vanaf AnkiWeb</string>
     <string name="already_logged_in">Reeds ingelogd</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="validation_deck_already_exists">Set bestaat</string>
     <string name="deck_created">Leerset aanmaken</string>
     <string name="deck_renamed">Setnaam wijzigen</string>
     <!-- Deck Deletion -->
