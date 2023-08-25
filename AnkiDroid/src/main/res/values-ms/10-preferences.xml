@@ -114,8 +114,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Sentuh tengah-tengah</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sentuh bawah kiri</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sentuh bawah kanan</string>
-    <string name="more_scrolling_buttons" maxLength="41">e-pembaca</string>
-    <string name="more_scrolling_buttons_summ">Juga gunakan butang kanji/katakana, emoji/kao-moji untuk tatal</string>
     <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Dayakan menu konteks ‘%s’ secara global</string>
     <string name="double_scrolling_gap" maxLength="41">Tatal dua kali</string>

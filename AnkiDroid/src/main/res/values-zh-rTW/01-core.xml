@@ -276,10 +276,10 @@
     <string name="migration__resume_after_failed_dialog__button_positive">重新遷移</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">無法存取收藏</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">從 AnkiWeb 回復（推薦）</string>
+    <string name="restore_data_from_ankiweb">從 AnkiWeb 回復 (推薦)</string>
     <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
     <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">從 .colpkg 備份中回復（進階使用者）</string>
+    <string name="restore_data_from_backup">從 .colpkg 備份中回復 (進階使用者)</string>
     <string name="create_new_collection">建立新的收藏</string>
     <string name="new_unsafe_collection">這個新牌組會在解除安裝 AnkiDroid 後刪除</string>
 </resources>

@@ -114,8 +114,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">触摸正中处</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">触摸左下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">触摸右下方</string>
-    <string name="more_scrolling_buttons" maxLength="41">电子书阅读器</string>
-    <string name="more_scrolling_buttons_summ">也使用 kanji/katakana， emoji/kao-moji 按钮来滚动</string>
     <string name="card_browser_enable_external_context_menu">“%s” 菜单</string>
     <string name="card_browser_enable_external_context_menu_summary">全局启用 “%s” 上下文菜单</string>
     <string name="double_scrolling_gap" maxLength="41">双滚动</string>
