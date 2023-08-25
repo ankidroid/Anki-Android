@@ -72,7 +72,7 @@
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">發生狀況</string>
     <string name="multimedia_editor_svg_preview">SVG 不可用於預覽</string>
-    <string name="multimedia_editor_png_paste_error">將剪贴板上的圖像轉換到PNG格式時出錯：%s</string>
+    <string name="multimedia_editor_png_paste_error">將剪貼簿上的圖像轉換到PNG格式時出錯：%s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">將多媒體內容新增到 %1$s 字段</string>
     <string name="multimedia_editor_attach_media">附上媒體檔</string>
     <!-- Audio view -->

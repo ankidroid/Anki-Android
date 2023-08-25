@@ -114,8 +114,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Dotyk v strede uprostred</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Dotyk dole vľavo</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Dotyk dole vpravo</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">Použiť tiež tlačidlá kanji/katakana, emoji/kao-moji pre posúvanie</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Povoliť globálne kontextové menu pre ‘%s’</string>
     <string name="double_scrolling_gap" maxLength="41">Dvojitý posun</string>

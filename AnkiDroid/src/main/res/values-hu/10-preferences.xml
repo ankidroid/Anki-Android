@@ -114,8 +114,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Érintés a közepén</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Érintés bal alul</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Érintés jobb alul</string>
-    <string name="more_scrolling_buttons" maxLength="41">e-Olvasó</string>
-    <string name="more_scrolling_buttons_summ">Kanji/Katakana használata is, az Emoji/Kao-moji gombok görgetéséhez</string>
     <string name="card_browser_enable_external_context_menu">\'%s\' Menü</string>
     <string name="card_browser_enable_external_context_menu_summary">Engedélyezi a \'%s\' kontextus menüt globálisan</string>
     <string name="double_scrolling_gap" maxLength="41">Dupla görgetés</string>

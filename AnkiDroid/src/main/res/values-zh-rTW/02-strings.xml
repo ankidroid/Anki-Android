@@ -341,7 +341,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">下載牌組</string>
-    <string name="try_again">再试一次</string>
+    <string name="try_again">再試一次</string>
     <string name="cancel_download">取消下載</string>
     <string name="cancel_download_question_title">取消下載？</string>
     <string name="downloading_file">下載 %s 中</string>
@@ -351,7 +351,7 @@
     <string name="deck_download_progress_message">在下載同時你可以使用其他的APP</string>
     <string name="check_network">請檢查你的網絡連接</string>
     <string name="search_using_deck_name">按卡片名字搜索</string>
-    <string name="home">首页</string>
+    <string name="home">首頁</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">卡片暫時隱藏。</string>
@@ -383,7 +383,7 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">少學習一點</string>
     <string name="intro_ankidroid_tagline_two">多記一點</string>
-    <string name="intro_short_ankidroid_explanation">Anki的卡片調度器通過增强你最薄弱的記憶和保存你最强大的記憶來節省時間</string>
+    <string name="intro_short_ankidroid_explanation">Anki的卡片調度器通過增強你最薄弱的記憶和保存你最強大的記憶來節省時間</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">快速入門</string>
     <string name="intro_sync_from_ankiweb">從AnkiWeb同步</string>
     <string name="already_logged_in">已登入</string>

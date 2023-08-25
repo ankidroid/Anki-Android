@@ -53,7 +53,7 @@
     <string name="menu_get_shared_decks">取得共享的牌組</string>
     <string name="connection_error_message">網路出了點問題。</string>
     <string name="not_logged_in_title">登入 AnkiWeb</string>
-    <string name="login_create_account_message">您必須登入到第三方帳號以使用云端同步服務。您可以在下一步建立一個帳號。</string>
+    <string name="login_create_account_message">您必須登入到第三方帳號以使用雲端同步服務。您可以在下一步建立一個帳號。</string>
     <!-- MyAccount.kt -->
     <string name="username">電子郵件地址</string>
     <string name="password">密碼</string>

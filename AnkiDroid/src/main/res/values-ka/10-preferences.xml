@@ -114,8 +114,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ცენტრის შუაგულში შეხება</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ქვედა მარცხენა კუთხეში შეხება</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ქვედა მარჯვენა კუთხეში შეხება</string>
-    <string name="more_scrolling_buttons" maxLength="41">ელ-წამკითხველი</string>
-    <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
     <string name="card_browser_enable_external_context_menu">„%s“-მენიუ</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">ორმაგი ჩამოყოლა</string>

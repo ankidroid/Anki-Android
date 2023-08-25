@@ -114,8 +114,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">中央をタップ</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">左下をタップ</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">右下をタップ</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">スクロール用に、漢字、カタカナ、絵文字、顔文字ボタンを使用</string>
     <string name="card_browser_enable_external_context_menu">「%s」メニュー</string>
     <string name="card_browser_enable_external_context_menu_summary">AnkiDroidおよび他のアプリ（ウェブブラウザなど）で、文字列を選択した際に表示されるコンテキストメニューに「%s」という項目を追加します</string>
     <string name="double_scrolling_gap" maxLength="41">ダブルスクロール</string>

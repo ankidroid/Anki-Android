@@ -68,7 +68,7 @@
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">新增：%1$s </string>
     <!--This prefix is used for standard note types-->
-    <string name="model_browser_add_clone">克隆：%1$s </string>
+    <string name="model_browser_add_clone">複製：%1$s </string>
     <!--Browser Appearance-->
     <string name="card_template_browser_appearance_summary">輸入卡片瀏覽器將用於展示你的卡片的模板。以此顯示更簡潔的答案。\n\n一種正面模板\n“{{國家}}的首都是：”\n會被卡片瀏覽器壓縮為\n“首都：{{國家}}”</string>
     <string name="card_template_browser_appearance_question_format">問題格式</string>
