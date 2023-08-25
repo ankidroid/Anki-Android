@@ -540,7 +540,6 @@ object UsageAnalytics {
         // Advanced
         "deckPath", // AnkiDroid directory
         "backupMax", // Max number of backups
-        "scrolling_buttons", // eReader
         "double_scrolling", // Double scrolling
         "softwareRender", // Disable card hardware render
         "safeDisplay", // Safe display mode
