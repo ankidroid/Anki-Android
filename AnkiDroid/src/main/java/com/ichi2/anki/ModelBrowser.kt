@@ -63,7 +63,7 @@ class ModelBrowser : AnkiActivity() {
     private var mModelListPosition = 0
 
     // Used exclusively to display model name
-    private var mModels: ArrayList<Model>? = null
+    private var mModels: MutableList<Model>? = null
     private var mCardCounts: ArrayList<Int>? = null
     private var mModelIds: ArrayList<Long>? = null
     private var mModelDisplayList: ArrayList<DisplayPair>? = null

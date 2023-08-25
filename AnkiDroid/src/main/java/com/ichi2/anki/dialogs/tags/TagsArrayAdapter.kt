@@ -190,7 +190,7 @@ class TagsArrayAdapter(private val tags: TagsList, private val resources: Resour
      * A subset of all tags in [tags] satisfying the user's search.
      * @see getFilter
      */
-    private val mFilteredList: ArrayList<String>
+    private val mFilteredList: MutableList<String>
 
     /**
      * The root node of the tag tree.
