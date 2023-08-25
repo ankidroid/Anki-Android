@@ -319,7 +319,7 @@
     <string name="type_in_answer_focus" maxLength="41">‘ଉତ୍ତର ଟାଇପ୍ କର’ ଉପରେ ଧ୍ୟାନ ଦିଅନ୍ତୁ</string>
     <string name="type_in_answer_focus_summ">ସମୀକ୍ଷକରେ ‘ଉତ୍ତର ଟାଇପ୍ କର’ କ୍ଷେତ୍ରକୁ ସ୍ୱଚାଳିତ ଭାଵେ କେନ୍ଦ୍ରୀଭୂତ କରିବା</string>
     <!-- About -->
-    <string name="open_changelog">ପରିବର୍ତ୍ତନ ଲଗ୍ ଖୋଲନ୍ତୁ</string>
+    <string name="open_changelog">ପରିବର୍ତ୍ତନ ପୋଥି ଖୋଲିବା</string>
     <string name="pref_cat_about_title" maxLength="41">ଵିଷୟରେ</string>
     <string name="contributors_title">ଯୋଗଦାତା</string>
     <string name="about_contributors_description"><![CDATA[ଏମାନେ ହେଉଛନ୍ତି ଆମର ଅଦ୍ଭୁତ <a href=\"%1$s\">ଯୋଗଦାତା</a>। ପ୍ରୋଗ୍ରାମିଂ, ଅନୁଵାଦ, ଦାନ ଓ <a href=\"%2$s\">ଆହୁରି ଅନେକ କିଛି</a> ଦ୍ୱାରା ଆପଣ ମଧ୍ୟ AnkiDroidକୁ ସାହାଯ୍ୟ କରିପାରିବେ!]]></string>
