@@ -390,6 +390,7 @@
     <string name="deck_download_progress_message">Môžete používať iné aplikácie kým prebieha sťahovanie</string>
     <string name="check_network">Prosím, skontrolujte vaše sieťové pripojenie</string>
     <string name="search_using_deck_name">Hľadať pomocou názvu balíčka</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Domov</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

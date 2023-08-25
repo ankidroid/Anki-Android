@@ -364,6 +364,7 @@
     <string name="deck_download_progress_message">ᱰᱟᱩᱱᱞᱳᱰᱤᱝ ᱚᱠᱛᱚᱨᱮ ᱟᱢ ᱮᱴᱟᱜ ᱟᱯᱥ ᱮᱢ ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮ ᱟᱫ-ᱟ</string>
     <string name="check_network">ᱫᱟᱭᱟᱠᱟᱛᱮ ᱟᱢᱟᱜ ᱱᱮᱴᱣᱟᱨᱠ ᱠᱳᱱᱮᱠᱥᱚᱱ ᱡᱟᱸᱪ ᱢᱮ</string>
     <string name="search_using_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱛᱮ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">ᱚᱲᱟᱜ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
