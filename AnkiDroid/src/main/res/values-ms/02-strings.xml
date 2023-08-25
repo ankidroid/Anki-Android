@@ -351,6 +351,7 @@
     <string name="deck_download_progress_message">Anda boleh guna aplikasi lain sementara memuat turun</string>
     <string name="check_network">Sila semak sambungan rangkaian anda</string>
     <string name="search_using_deck_name">Cari menggunakan nama dek</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Laman Utama</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
