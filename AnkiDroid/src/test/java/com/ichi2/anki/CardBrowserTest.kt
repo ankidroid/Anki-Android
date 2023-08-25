@@ -39,7 +39,6 @@ import com.ichi2.ui.FixedTextView
 import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.Assert.*
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,8 +48,12 @@ import org.robolectric.annotation.Config
 import timber.log.Timber
 import java.util.Locale
 import java.util.Random
+import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.fail
+import kotlin.test.junit5.JUnit5Asserter
 
 @RunWith(AndroidJUnit4::class)
 class CardBrowserTest : RobolectricTest() {
@@ -252,7 +255,7 @@ class CardBrowserTest : RobolectricTest() {
         assertEquals(deckOneId, browser.validDecksForChangeDeck.first().id)
         val deckTwoId = addDeck("two")
         assertEquals(2, browser.validDecksForChangeDeck.size)
-        assertArrayEquals(longArrayOf(deckOneId, deckTwoId), browser.validDecksForChangeDeck.map { it.id }.toLongArray())
+        assertEquals(longArrayOf(deckOneId, deckTwoId), browser.validDecksForChangeDeck.map { it.id }.toLongArray())
     }
 
     @Test
@@ -591,7 +594,7 @@ class CardBrowserTest : RobolectricTest() {
         col.save()
         val updatedMod = col.db.queryScalar("select mod from col")
         assertThat("Card Browser has the new sortType field", col.get_config_string("sortType"), equalTo("cardEase"))
-        assertNotEquals("Modification time must change", 0, updatedMod)
+        JUnit5Asserter.assertNotEquals("Modification time must change", 0, updatedMod)
     }
 
     @Test
