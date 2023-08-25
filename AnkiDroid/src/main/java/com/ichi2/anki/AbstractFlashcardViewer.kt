@@ -72,7 +72,6 @@ import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.ReviewerUi.ControlBlock
 import com.ichi2.anki.servicelayer.AnkiMethod
 import com.ichi2.anki.servicelayer.LanguageHintService.applyLanguageHint
-import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.SchedulerService.*
 import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.servicelayer.Undo
@@ -2150,10 +2149,6 @@ abstract class AbstractFlashcardViewer :
         if (mReplayOnTtsInit) {
             playSounds(true)
         }
-    }
-
-    protected open fun shouldDisplayMark(): Boolean {
-        return isMarked(currentCard!!.note())
     }
 
     protected fun <TResult : Computation<NextCard<*>>?> nextCardHandler(): TaskListenerBuilder<Unit, TResult> {

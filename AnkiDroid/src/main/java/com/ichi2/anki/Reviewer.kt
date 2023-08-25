@@ -204,8 +204,8 @@ open class Reviewer :
     @NeedsTest("is hidden if marked is on app bar")
     @NeedsTest("is not hidden if marked is not on app bar")
     @NeedsTest("is not hidden if marked is on app bar and fullscreen is enabled")
-    override fun shouldDisplayMark(): Boolean {
-        val markValue = super.shouldDisplayMark()
+    private fun shouldDisplayMark(): Boolean {
+        val markValue = isMarked(currentCard!!.note())
         if (!markValue) {
             return false
         }
