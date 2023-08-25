@@ -187,21 +187,13 @@ open class Reviewer :
         }
     }
 
-    @NeedsTest("is hidden if flag is on app bar")
-    @NeedsTest("is not hidden if flag is not on app bar")
-    @NeedsTest("is not hidden if flag is on app bar and fullscreen is enabled")
     protected val flagToDisplay: Int
         get() {
-            val actualValue = currentCard!!.userFlag()
-            if (actualValue == CardMarker.FLAG_NONE) {
-                return CardMarker.FLAG_NONE
-            }
-            val shownAsToolbarButton = mActionButtons.findMenuItem(ActionButtons.RES_FLAG)?.isActionButton == true
-            return if (shownAsToolbarButton && !mPrefFullscreenReview) {
-                CardMarker.FLAG_NONE
-            } else {
-                actualValue
-            }
+            return FlagToDisplay(
+                currentCard!!.userFlag(),
+                mActionButtons.findMenuItem(ActionButtons.RES_FLAG)?.isActionButton ?: true,
+                mPrefFullscreenReview
+            ).get()
         }
 
     override fun recreateWebView() {
