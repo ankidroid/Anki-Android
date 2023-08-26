@@ -315,7 +315,7 @@ dependencies {
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin:3.23.3' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin:3.24.1' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
@@ -361,7 +361,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     implementation 'com.github.ByteHamster:SearchPreference:v2.3.0'
-    implementation 'com.github.AppIntro:AppIntro:6.2.0'
+    implementation 'com.github.AppIntro:AppIntro:6.3.1'
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
