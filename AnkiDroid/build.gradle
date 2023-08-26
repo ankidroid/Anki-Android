@@ -33,6 +33,7 @@ android {
     buildFeatures {
         buildConfig = true
         aidl = true
+        viewBinding true
     }
 
     defaultConfig {
