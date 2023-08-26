@@ -416,7 +416,6 @@
     <string name="deck_download_progress_message">تستطيع استخدام التطبيقات الأخرى أثناء استمرار التنزيل</string>
     <string name="check_network">تحقق من اتصالك بالشبكة</string>
     <string name="search_using_deck_name">ابحث باستخدام اسم الرزمة</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">الصفحة الرئيسية</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

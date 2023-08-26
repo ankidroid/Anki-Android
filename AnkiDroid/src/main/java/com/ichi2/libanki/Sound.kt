@@ -176,6 +176,16 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
 
     fun hasAnswer(): Boolean = getSounds(ANSWER) != null
 
+    /** Handle a call to play audio which may be made while audio is already playing */
+    fun playAnotherSound(replacedUrl: String, errorListener: OnErrorListener) {
+        val suppliedAudioIsCurrentlyPlaying = replacedUrl == currentAudioUri && !isCurrentAudioFinished
+        if (suppliedAudioIsCurrentlyPlaying) {
+            playOrPauseSound()
+        } else {
+            playSound(replacedUrl, null, errorListener)
+        }
+    }
+
     fun interface OnErrorListener {
         fun onError(mp: MediaPlayer?, which: Int, extra: Int, path: String?): ErrorHandling
 

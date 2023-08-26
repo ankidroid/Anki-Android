@@ -73,7 +73,7 @@ android {
         // change robolectricDownloader.gradle
         // After #13695: change .tests_emulator.yml
         // noinspection OldTargetApi
-        targetSdkVersion 33
+        targetSdkVersion 32
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'

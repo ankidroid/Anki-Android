@@ -364,7 +364,6 @@
     <string name="deck_download_progress_message">Es poden usar altres aplicacions mentre es fa la baixada</string>
     <string name="check_network">Comproveu la vostra connexió de xarxa si us plau</string>
     <string name="search_using_deck_name">Cercar usant el nom del paquet</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Inici</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

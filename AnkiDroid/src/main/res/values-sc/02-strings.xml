@@ -370,7 +370,6 @@
     <string name="deck_download_progress_message">Podes impreare àteras aplicatziones in su mentres chi s\'iscarrigamentu est in cursu</string>
     <string name="check_network">Verìfica sa connessione de retze tua</string>
     <string name="search_using_deck_name">Chirca impreende su nùmene de su matzu</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Pàgina printzipale</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

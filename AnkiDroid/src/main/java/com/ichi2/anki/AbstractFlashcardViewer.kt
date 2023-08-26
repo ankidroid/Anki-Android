@@ -2500,7 +2500,6 @@ abstract class AbstractFlashcardViewer :
          * Also, Check if the user clicked on the running audio icon
          * @param url
          */
-        @NeedsTest("14221: 'playsound' should play the sound from the start")
         @BlocksSchemaUpgrade("handle TTS tags")
         private suspend fun controlSound(url: String) {
             val replacedUrl = if (BackendFactory.defaultLegacySchema) {
@@ -2516,7 +2515,7 @@ abstract class AbstractFlashcardViewer :
                     Sound.getSoundPath(mBaseUrl!!, it)
                 } ?: return
             }
-            mSoundPlayer.playSound(replacedUrl, null, soundErrorListener)
+            mSoundPlayer.playAnotherSound(replacedUrl, soundErrorListener)
         }
 
         private fun decodeUrl(url: String): String {

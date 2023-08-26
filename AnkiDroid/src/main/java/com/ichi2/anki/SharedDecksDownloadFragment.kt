@@ -35,8 +35,8 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.ichi2.anki.SharedDecksActivity.Companion.DOWNLOAD_FILE
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
+import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
 import java.io.File
@@ -84,17 +84,6 @@ class SharedDecksDownloadFragment : Fragment() {
 
         const val DOWNLOAD_STARTED_PROGRESS_PERCENTAGE = "0"
         const val DOWNLOAD_COMPLETED_PROGRESS_PERCENTAGE = "100"
-
-        const val EXTRA_IS_SHARED_DOWNLOAD = "extra_is_shared_download"
-
-        /**
-         * The folder on the app's external storage([Context.getExternalFilesDir]) where downloaded
-         * decks will be temporarily stored before importing.
-         *
-         * Note: when changing this constant make sure to also change the associated entry in filepaths.xml
-         * so our FileProvider can actually serve the file!
-         */
-        const val SHARED_DECKS_DOWNLOAD_FOLDER = "shared_decks"
     }
 
     override fun onCreateView(
@@ -146,17 +135,6 @@ class SharedDecksDownloadFragment : Fragment() {
      * the download progress checker.
      */
     private fun downloadFile(fileToBeDownloaded: DownloadFile) {
-        val externalFilesFolder = requireContext().getExternalFilesDir(null)
-        if (externalFilesFolder == null) {
-            showSnackbar(R.string.external_storage_unavailable)
-            parentFragmentManager.popBackStack()
-            return
-        }
-        // ensure the "shared_decks" folder exists
-        val decksDownloadFolder = File(externalFilesFolder, SHARED_DECKS_DOWNLOAD_FOLDER)
-        if (!decksDownloadFolder.exists()) {
-            decksDownloadFolder.mkdirs()
-        }
         // Register broadcast receiver for download completion.
         Timber.d("Registering broadcast receiver for download completion")
         activity?.registerReceiver(mOnComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
@@ -191,11 +169,7 @@ class SharedDecksDownloadFragment : Fragment() {
         request.setTitle(currentFileName)
 
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalFilesDir(
-            context,
-            null,
-            "$SHARED_DECKS_DOWNLOAD_FOLDER/$currentFileName"
-        )
+        request.setDestinationInExternalFilesDir(context, FileUtil.getDownloadDirectory(), currentFileName)
 
         return request
     }
@@ -415,17 +389,15 @@ class SharedDecksDownloadFragment : Fragment() {
         fileIntent.action = Intent.ACTION_VIEW
 
         val fileUri = context?.let {
-            val sharedDecksPath = File(it.getExternalFilesDir(null), SHARED_DECKS_DOWNLOAD_FOLDER)
             FileProvider.getUriForFile(
                 it,
                 it.applicationContext?.packageName + ".apkgfileprovider",
-                File(sharedDecksPath, mFileName.toString())
+                File(it.getExternalFilesDir(FileUtil.getDownloadDirectory()), mFileName.toString())
             )
         }
         Timber.d("File URI -> $fileUri")
         fileIntent.setDataAndType(fileUri, mimeType)
         fileIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        fileIntent.putExtra(EXTRA_IS_SHARED_DOWNLOAD, true)
         try {
             context?.startActivity(fileIntent)
         } catch (e: ActivityNotFoundException) {

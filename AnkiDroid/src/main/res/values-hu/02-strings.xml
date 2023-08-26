@@ -364,7 +364,6 @@
     <string name="deck_download_progress_message">Más alkalmazásokat használhatsz, amíg a letöltés folyik.</string>
     <string name="check_network">Ellenőrizd a hálózati kapcsolatodat!</string>
     <string name="search_using_deck_name">Keresés a paklik nevében</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Kezdőlap</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

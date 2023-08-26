@@ -364,7 +364,6 @@
     <string name="deck_download_progress_message">U kunt andere apps gebruiken terwijl de download bezig is</string>
     <string name="check_network">Controleer alsrublief uw internetconnectie</string>
     <string name="search_using_deck_name">Zoek met setnaam</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Startpagina</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

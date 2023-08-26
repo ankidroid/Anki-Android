@@ -392,7 +392,6 @@
     <string name="deck_download_progress_message">ניתן לעבור ליישומים אחרים בזמן ההורדה</string>
     <string name="check_network">נא בדוק את החיבור לרשת</string>
     <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">בית</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

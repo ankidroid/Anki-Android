@@ -351,7 +351,6 @@
     <string name="deck_download_progress_message">在下載同時你可以使用其他的APP</string>
     <string name="check_network">請檢查你的網絡連接</string>
     <string name="search_using_deck_name">按卡片名字搜索</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">首頁</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
