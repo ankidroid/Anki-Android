@@ -2288,13 +2288,16 @@ open class DeckPicker :
         }
     }
 
-    suspend fun rebuildFiltered(did: DeckId) {
-        withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
-            withCol {
-                Timber.d("rebuildFiltered: doInBackground - RebuildCram")
-                decks.select(did)
-                sched.rebuildDyn(decks.selected())
-                updateValuesFromDeck(this, true)
+    @NeedsTest("14285: regression test to ensure UI is updated after this call")
+    fun rebuildFiltered(did: DeckId) {
+        launchCatchingTask {
+            withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
+                withCol {
+                    Timber.d("rebuildFiltered: doInBackground - RebuildCram")
+                    decks.select(did)
+                    sched.rebuildDyn(decks.selected())
+                    updateValuesFromDeck(this, true)
+                }
             }
             updateDeckList()
             if (fragmented) loadStudyOptionsFragment(false)
