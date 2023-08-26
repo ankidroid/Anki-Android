@@ -39,7 +39,6 @@ import anki.notetypes.NotetypeNameIdUseCount
 import anki.notetypes.StockNotetype
 import com.google.protobuf.ByteString
 import com.ichi2.anki.CrashReportService
-import com.ichi2.anki.R
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.checksum
@@ -306,10 +305,13 @@ class Notetypes(val col: Collection) {
     ##################################################
      */
 
-    /** Copy, save and return. */
+    /** Copy, save and return.
+     * This code is currently only used by unit tests. If the  GUI starts to use it, the signature
+     * should be updated so that a translated name is passed in. */
     fun copy(m: NotetypeJson): NotetypeJson {
         val m2 = m.deepcopy()
-        m2.name = col.context.getString(R.string.copy_note_type_name, m2.name)
+        m2.name = "${m2.name} copy"
+        // m2.name = col.context.getString(R.string.copy_note_type_name, m2.name)
         m2.id = 0
         add(m2)
         return m2
