@@ -17,7 +17,8 @@
 ~
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
---><resources>
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Disabled</string>
     <string name="pref_summary_seconds">%s s</string>
@@ -271,6 +272,7 @@ this formatter is used if the bind only applies to both the question and the ans
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
 
     <!-- Advanced -->
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
 
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
