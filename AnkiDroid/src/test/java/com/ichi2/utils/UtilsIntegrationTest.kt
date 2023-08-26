@@ -13,11 +13,13 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki
+package com.ichi2.utils
 
 import androidx.annotation.CheckResult
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import com.ichi2.anki.utils.timeQuantityNextIvl
+import com.ichi2.anki.utils.timeQuantityTopDeckPicker
 import com.ichi2.testutils.EmptyApplication
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -64,11 +66,11 @@ class UtilsIntegrationTest : RobolectricTest() {
     }
 
     private fun timeQuantityNextInterval(time_s: Int): String {
-        return Utils.timeQuantityNextIvl(targetContext, time_s.toLong())
+        return timeQuantityNextIvl(targetContext, time_s.toLong())
     }
 
     @CheckResult
     private fun deckPickerTime(time: Long): String {
-        return Utils.timeQuantityTopDeckPicker(targetContext, time)
+        return timeQuantityTopDeckPicker(targetContext, time)
     }
 }

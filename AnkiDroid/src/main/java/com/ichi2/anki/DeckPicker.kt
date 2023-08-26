@@ -99,6 +99,7 @@ import com.ichi2.anki.services.getMediaMigrationState
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.utils.SECONDS_PER_DAY
+import com.ichi2.anki.utils.timeQuantityTopDeckPicker
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
@@ -1886,7 +1887,7 @@ open class DeckPicker :
             val res = resources
 
             val time: String = if (eta != -1 && eta != null) {
-                Utils.timeQuantityTopDeckPicker(this, (eta * 60).toLong())
+                timeQuantityTopDeckPicker(this, (eta * 60).toLong())
             } else {
                 "-"
             }
