@@ -432,35 +432,32 @@ open class Scheduler(val col: Collection) {
      * or if they could see more card today by extending review.
      */
     @RustCleanup("remove once new congrats screen is the default")
-    fun finishedMsg(context: Context): CharSequence {
+    fun finishedMsg(): CharSequence {
         val sb = SpannableStringBuilder()
-        sb.append(context.getString(R.string.studyoptions_congrats_finished))
+        sb.append(col.tr.schedulingCongratulationsFinished())
         val boldSpan = StyleSpan(Typeface.BOLD)
         sb.setSpan(boldSpan, 0, sb.length, 0)
-        sb.append(_nextDueMsg(context))
-        // sb.append("\n\n");
-        // sb.append(_tomorrowDueMsg(context));
+        sb.append(_nextDueMsg())
         return sb
     }
 
-    fun _nextDueMsg(context: Context): String {
+    fun _nextDueMsg(): String {
         val sb = StringBuilder()
         if (revDue()) {
             sb.append("\n\n")
-            sb.append(context.getString(R.string.studyoptions_congrats_more_rev))
+            sb.append(col.tr.schedulingTodayReviewLimitReached())
         }
         if (newDue()) {
             sb.append("\n\n")
-            sb.append(context.getString(R.string.studyoptions_congrats_more_new))
+            sb.append(col.tr.schedulingTodayNewLimitReached())
         }
         if (haveBuriedInCurrentDeck()) {
-            val now = " " + context.getString(R.string.sched_unbury_action)
             sb.append("\n\n")
-            sb.append("").append(context.getString(R.string.sched_has_buried)).append(now)
+            sb.append(col.tr.schedulingBuriedCardsFound(col.tr.schedulingUnburyThem()))
         }
         if (col.decks.current().isNormal) {
             sb.append("\n\n")
-            sb.append(context.getString(R.string.studyoptions_congrats_custom))
+            sb.append(col.tr.schedulingHowToCustomStudy(col.tr.schedulingCustomStudy()))
         }
         return sb.toString()
     }

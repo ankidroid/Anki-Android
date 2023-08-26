@@ -588,7 +588,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     buttonStart.visibility = View.GONE
                 }
                 textCongratsMessage.visibility = View.VISIBLE
-                textCongratsMessage.text = col.sched.finishedMsg(requireActivity())
+                textCongratsMessage.text = col.sched.finishedMsg()
             } else {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
                 deckInfoLayout.visibility = View.VISIBLE

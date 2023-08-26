@@ -621,11 +621,11 @@ open class SchedulerTest : RobolectricTest() {
         val col = col
         // nothing due
         MatcherAssert.assertThat(
-            col.sched.finishedMsg(targetContext).toString(),
+            col.sched.finishedMsg().toString(),
             Matchers.containsString("Congratulations")
         )
         MatcherAssert.assertThat(
-            col.sched.finishedMsg(targetContext).toString(),
+            col.sched.finishedMsg().toString(),
             Matchers.not(
                 Matchers.containsString("limit")
             )
@@ -636,7 +636,7 @@ open class SchedulerTest : RobolectricTest() {
         col.addNote(note)
         // have a new card
         MatcherAssert.assertThat(
-            col.sched.finishedMsg(targetContext).toString(),
+            col.sched.finishedMsg().toString(),
             Matchers.containsString("new cards available")
         )
         // turn it into a review
@@ -645,11 +645,11 @@ open class SchedulerTest : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_THREE)
         // nothing should be due tomorrow, as it's due in a week
         MatcherAssert.assertThat(
-            col.sched.finishedMsg(targetContext).toString(),
+            col.sched.finishedMsg().toString(),
             Matchers.containsString("Congratulations")
         )
         MatcherAssert.assertThat(
-            col.sched.finishedMsg(targetContext).toString(),
+            col.sched.finishedMsg().toString(),
             Matchers.not(
                 Matchers.containsString("limit")
             )
