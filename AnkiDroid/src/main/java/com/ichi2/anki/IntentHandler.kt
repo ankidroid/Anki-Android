@@ -136,22 +136,6 @@ class IntentHandler : Activity() {
     private fun handleFileImport(intent: Intent, reloadIntent: Intent, action: String?) {
         Timber.i("Handling file import")
         val importResult = handleFileImport(this, intent)
-        // attempt to delete the downloaded deck if it is a shared deck download import
-        if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
-            try {
-                val sharedDeckUri = intent.data
-                if (sharedDeckUri != null) {
-                    // TODO move the file deletion on a background thread
-                    contentResolver.delete(intent.data!!, null, null)
-                    Timber.i("onCreate: downloaded shared deck deleted")
-                } else {
-                    Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
-                }
-            } catch (e: Exception) {
-                Timber.w(e, "onCreate: failed to delete downloaded shared deck")
-            }
-        }
-
         // Start DeckPicker if we correctly processed ACTION_VIEW
         if (importResult.isSuccess) {
             try {

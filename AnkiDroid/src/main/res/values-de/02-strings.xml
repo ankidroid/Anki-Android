@@ -364,7 +364,6 @@
     <string name="deck_download_progress_message">Während des Herunterladens können Sie andere Apps verwenden</string>
     <string name="check_network">Bitte überprüfen Sie die Netzverbindung</string>
     <string name="search_using_deck_name">Über Stapelnamen suchen</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Start</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

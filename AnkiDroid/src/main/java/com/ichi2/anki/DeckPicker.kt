@@ -254,7 +254,7 @@ open class DeckPicker :
     // used for check media
     private val checkMediaStoragePermissionCheck = PermissionManager.register(
         this,
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) else emptyArray(),
+        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
         useCallbackIfActivityRecreated = true,
         callback = callbackHandlingStoragePermissionsCheckForCheckMedia(WeakReference(this))
     )

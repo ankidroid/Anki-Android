@@ -364,7 +364,6 @@
     <string name="deck_download_progress_message">Може да употребявате други приложения, теглейки от мрежата</string>
     <string name="check_network">Проверете връзката си с мрежата</string>
     <string name="search_using_deck_name">Търсене посредством име на тесте</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Начало</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
