@@ -886,11 +886,13 @@ open class Reviewer :
         // Show next review time
         if (shouldShowNextReviewTime()) {
             val state = queueState!!
-            fun nextIvlStr(button: Int) = state.nextIvlStr(this, button)
-            easeButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
-            easeButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
-            easeButton3!!.nextTime = nextIvlStr(Consts.BUTTON_THREE)
-            easeButton4!!.nextTime = nextIvlStr(Consts.BUTTON_FOUR)
+            launchCatchingTask {
+                val labels = withCol { sched.describeNextStates(state.states) }
+                easeButton1!!.nextTime = labels[0]
+                easeButton2!!.nextTime = labels[1]
+                easeButton3!!.nextTime = labels[2]
+                easeButton4!!.nextTime = labels[3]
+            }
         }
     }
 

@@ -545,24 +545,22 @@ open class SchedulerTest : RobolectricTest() {
         c.flush()
         // Upstream, there is no space in 2d
         Assert.assertEquals(
-            "2 d",
-            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_TWO))
+            "2d",
+            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, BUTTON_TWO))
         )
         Assert.assertEquals(
-            "3 d",
+            "3d",
             AnkiAssert.without_unicode_isolation(
                 col.sched.nextIvlStr(
-                    targetContext,
                     c,
                     BUTTON_THREE
                 )
             )
         )
         Assert.assertEquals(
-            "4 d",
+            "4d",
             AnkiAssert.without_unicode_isolation(
                 col.sched.nextIvlStr(
-                    targetContext,
                     c,
                     BUTTON_FOUR
                 )
@@ -574,8 +572,8 @@ open class SchedulerTest : RobolectricTest() {
         conf.getJSONObject("rev").put("hardFactor", 1)
         col.decks.save(conf)
         Assert.assertEquals(
-            "1 d",
-            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(targetContext, c, BUTTON_TWO))
+            "1d",
+            AnkiAssert.without_unicode_isolation(col.sched.nextIvlStr(c, BUTTON_TWO))
         )
     }
 
@@ -724,12 +722,11 @@ open class SchedulerTest : RobolectricTest() {
         MatcherAssert.assertThat(
             AnkiAssert.without_unicode_isolation(
                 col.sched.nextIvlStr(
-                    targetContext,
                     c,
                     BUTTON_FOUR
                 )
             ),
-            Matchers.equalTo("10.8 mo")
+            Matchers.equalTo("10.8mo")
         )
     }
 

@@ -324,7 +324,7 @@ class CardContentProvider : ContentProvider() {
                     val buttonTexts = JSONArray()
                     var i = 0
                     while (i < buttonCount) {
-                        buttonTexts.put(col.sched.nextIvlStr(context!!, currentCard, i + 1))
+                        buttonTexts.put(col.sched.nextIvlStr(currentCard, i + 1))
                         i++
                     }
                     addReviewInfoToCursor(currentCard, buttonTexts, buttonCount, rv, col, columns)

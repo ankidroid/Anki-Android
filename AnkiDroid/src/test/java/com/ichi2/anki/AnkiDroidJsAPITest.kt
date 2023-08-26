@@ -21,6 +21,7 @@ package com.ichi2.anki
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
+import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
@@ -74,10 +75,10 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        assertThat(javaScriptFunction.ankiGetNextTime1(), equalTo("< 1 min"))
-        assertThat(javaScriptFunction.ankiGetNextTime2(), equalTo("< 6 min"))
-        assertThat(javaScriptFunction.ankiGetNextTime3(), equalTo("< 10 min"))
-        assertThat(javaScriptFunction.ankiGetNextTime4(), equalTo("4 d"))
+        assertThat(javaScriptFunction.ankiGetNextTime1().withoutUnicodeIsolation(), equalTo("<1m"))
+        assertThat(javaScriptFunction.ankiGetNextTime2().withoutUnicodeIsolation(), equalTo("<6m"))
+        assertThat(javaScriptFunction.ankiGetNextTime3().withoutUnicodeIsolation(), equalTo("<10m"))
+        assertThat(javaScriptFunction.ankiGetNextTime4().withoutUnicodeIsolation(), equalTo("4d"))
     }
 
     @Test

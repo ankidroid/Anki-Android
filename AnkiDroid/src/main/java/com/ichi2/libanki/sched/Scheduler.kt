@@ -28,6 +28,7 @@ import anki.collection.OpChanges
 import anki.collection.OpChangesWithCount
 import anki.config.OptionalStringConfigKey
 import anki.frontend.SchedulingStatesWithContext
+import anki.i18n.FormatTimespanRequest
 import anki.scheduler.*
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.R
@@ -55,12 +56,6 @@ data class CurrentQueueState(
     val learnAheadSecs: Int,
     val customSchedulingJs: String
 ) {
-    fun nextIvlStr(context: Context, @Consts.BUTTON_TYPE ease: Int): String {
-        val state = stateFromEase(states, ease)
-        val secs = intervalForState(state)
-        return nextIvlStr(context, secs, learnAheadSecs)
-    }
-
     fun schedulingStatesWithContext(): SchedulingStatesWithContext {
         return anki.frontend.schedulingStatesWithContext {
             states = this@CurrentQueueState.states
@@ -96,6 +91,11 @@ open class Scheduler(val col: Collection) {
                 customSchedulingJs = col.config.get("cardStateCustomizer") ?: ""
             )
         }
+    }
+
+    /** The time labels for the four answer buttons. */
+    fun describeNextStates(states: SchedulingStates): List<String> {
+        return col.backend.describeNextStates(states)
     }
 
     private val queuedCards: QueuedCards
@@ -723,8 +723,9 @@ open class Scheduler(val col: Collection) {
      * @param ease The button number (easy, good etc.)
      * @return A string like “1 min” or “1.7 mo”
      */
-    open fun nextIvlStr(context: Context, card: Card, @Consts.BUTTON_TYPE ease: Int): String {
-        return nextIvlStr(context, nextIvl(card, ease), learnAheadSeconds())
+    open fun nextIvlStr(card: Card, @Consts.BUTTON_TYPE ease: Int): String {
+        val secs = nextIvl(card, ease)
+        return col.backend.formatTimespan(secs.toFloat(), FormatTimespanRequest.Context.ANSWER_BUTTONS)
     }
 
     fun learnAheadSeconds(): Int {
@@ -791,15 +792,4 @@ private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long {
         SchedulingState.Filtered.KindCase.RESCHEDULING -> intervalForNormalState(filtered.rescheduling.originalState)
         SchedulingState.Filtered.KindCase.KIND_NOT_SET, null -> TODO("invalid filtered state")
     }
-}
-
-fun nextIvlStr(context: Context, ivlSecs: Long, learnAheadSecs: Int): String {
-    if (ivlSecs == 0L) {
-        return context.getString(R.string.sched_end)
-    }
-    var s = Utils.timeQuantityNextIvl(context, ivlSecs)
-    if (ivlSecs < learnAheadSecs) {
-        s = context.getString(R.string.less_than_time, s)
-    }
-    return s
 }
