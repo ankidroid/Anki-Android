@@ -24,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.system.Os
@@ -147,6 +148,13 @@ open class AnkiDroidApp : Application() {
             preferences.getBoolean(getString(R.string.anki_card_external_context_menu_key), true)
         )
         CompatHelper.compat.setupNotificationChannel(applicationContext)
+
+        if (Build.FINGERPRINT != "robolectric") {
+            // Prevent sqlite throwing error 6410 due to the lack of /tmp on Android
+            Os.setenv("TMPDIR", cacheDir.path, false)
+            // Load backend library
+            System.loadLibrary("rsdroid")
+        }
 
         // Configure WebView to allow file scheme pages to access cookies.
         if (!acceptFileSchemeCookies()) {

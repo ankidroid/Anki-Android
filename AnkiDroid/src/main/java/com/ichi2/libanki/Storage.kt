@@ -58,13 +58,12 @@ object Storage {
      * path should be tested with File.exists() and File.canWrite() before this is called.
      * */
     fun collection(
-        context: Context,
         path: String,
         log: Boolean = false,
         backend: Backend? = null
     ): Collection {
-        val backend2 = backend ?: BackendFactory.getBackend(context)
-        return Collection(context, path, log, backend2)
+        val backend2 = backend ?: BackendFactory.getBackend()
+        return Collection(path, log, backend2)
     }
 
     /**

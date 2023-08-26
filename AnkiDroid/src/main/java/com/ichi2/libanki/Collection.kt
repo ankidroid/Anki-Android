@@ -20,7 +20,6 @@
 
 package com.ichi2.libanki
 
-import android.content.Context
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
@@ -58,10 +57,6 @@ import java.util.*
 @KotlinCleanup("ids.size != 0")
 @WorkerThread
 open class Collection(
-    /**
-     * @return The context that created this Collection.
-     */
-    val context: Context,
     /**
      *  @param Path The path to the collection.anki2 database. Must be unicode and openable with [File].
      */

@@ -33,7 +33,7 @@ abstract class InstrumentedTest {
 
     @get:Throws(IOException::class)
     protected val emptyCol: Collection
-        get() = Shared.getEmptyCol(testContext)
+        get() = Shared.getEmptyCol()
 
     @get:Rule
     val ensureAllFilesAccessRule = EnsureAllFilesAccessRule()

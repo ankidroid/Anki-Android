@@ -186,7 +186,7 @@ object CollectionManager {
     /** See [ensureBackend]. This must only be run inside the queue. */
     private fun ensureBackendInner() {
         if (backend == null) {
-            backend = BackendFactory.getBackend(AnkiDroidApp.instance)
+            backend = BackendFactory.getBackend()
         }
     }
 
@@ -233,7 +233,7 @@ object CollectionManager {
         if (collection == null || collection!!.dbClosed) {
             val path = collectionPathInValidFolder()
             collection =
-                collection(AnkiDroidApp.instance, path, log = true, backend)
+                collection(path, log = true, backend)
         }
     }
 
