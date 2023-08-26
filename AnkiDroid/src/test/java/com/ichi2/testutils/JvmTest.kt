@@ -45,7 +45,12 @@ open class JvmTest {
     }
 
     val col: Collection
-        get() = col_!!
+        get() {
+            if (col_ == null) {
+                col_ = CollectionManager.getColUnsafe()
+            }
+            return col_!!
+        }
 
     private var col_: Collection? = null
 
@@ -73,7 +78,6 @@ open class JvmTest {
         })
 
         Storage.setUseInMemory(true)
-        col_ = CollectionManager.getColUnsafe()
     }
 
     @After
@@ -81,7 +85,7 @@ open class JvmTest {
     open fun tearDown() {
         try {
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            col.close()
+            col_?.close()
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
