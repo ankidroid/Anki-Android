@@ -364,6 +364,7 @@
     <string name="deck_download_progress_message">Maari kang kumamit ng iba pang apps habang tumatakbo ang download</string>
     <string name="check_network">Mangyaring suriin ang iyong koneksyon sa network.</string>
     <string name="search_using_deck_name">Hanapin gamit ang pangalan ng deck</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

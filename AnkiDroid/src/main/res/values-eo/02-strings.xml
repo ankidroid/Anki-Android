@@ -364,6 +364,7 @@
     <string name="deck_download_progress_message">Vi povas uzi aliajn aplikaĵojn kiam la dosiero(j) estas elŝutata(j)</string>
     <string name="check_network">Kontrolu vian retkonekton</string>
     <string name="search_using_deck_name">Serĉi laŭ nomo de kartaro</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Hejmo</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

@@ -364,6 +364,7 @@
     <string name="deck_download_progress_message">İndirme devam ederken diğer uygulamaları kullanabilirsiniz</string>
     <string name="check_network">Lütfen ağ bağlantını kontrol et</string>
     <string name="search_using_deck_name">Deste ismini kullanarak ara</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Ana sayfa</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
