@@ -1993,6 +1993,7 @@ open class DeckPicker :
             // actually happens
             performBackupInBackground()
         }
+        Timber.d("updateDeckList: quick: %b", quick)
         if (quick) {
             launchCatchingTask {
                 withProgress {
@@ -2049,6 +2050,7 @@ open class DeckPicker :
         if (dueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
+            Timber.d("renderPage: recomputing dueTree")
             updateDeckList()
             return
         }
@@ -2091,6 +2093,7 @@ open class DeckPicker :
             if (mToolbarSearchView != null) {
                 mDeckListAdapter.filter.filter(currentFilter)
             }
+            Timber.d("Not rendering deck list as there are no cards")
             // We're done here
             return
         }
