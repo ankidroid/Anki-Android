@@ -13,11 +13,11 @@
  You should have received a copy of the GNU General Public License along with
  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.ichi2.libanki.sched
+package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
-import com.ichi2.libanki.*
+import com.ichi2.libanki.sched.Counts
+import com.ichi2.testutils.JvmTest
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
@@ -28,12 +28,12 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 // Note: These tests can't be run individually but can from the class-level
-// gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.sched.AbstractSchedTest.*"
+// gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.AbstractSchedTest.*"
 @KotlinCleanup("is -> equalTo")
 @KotlinCleanup("reduce newlines in asserts")
 @KotlinCleanup("improve increaseAndAssertNewCountsIs")
 @RunWith(AndroidJUnit4::class)
-class AbstractSchedTest : RobolectricTest() {
+class AbstractSchedTest : JvmTest() {
     @Test
     fun ensureUndoCorrectCounts() {
         val col = col
@@ -68,14 +68,12 @@ class AbstractSchedTest : RobolectricTest() {
         val sched = col.sched
 
         addNoteUsingBasicModel("foo", "bar")
-        advanceRobolectricLooper()
 
         var card = sched.card
         assertNotNull(card)
         assertEquals(Counts(1, 0, 0), sched.counts())
 
         sched.answerCard(card, 3)
-        advanceRobolectricLooper()
 
         card = sched.card
         assertNotNull(card)
@@ -85,7 +83,6 @@ class AbstractSchedTest : RobolectricTest() {
         )
 
         sched.answerCard(card, 3)
-        advanceRobolectricLooper()
 
         card = sched.card
         assertNotNull(card)
@@ -96,7 +93,6 @@ class AbstractSchedTest : RobolectricTest() {
 
         assertNotNull(card)
 
-        advanceRobolectricLooper()
         assertEquals(
             Counts(0, 1, 0),
             sched.counts()
@@ -104,7 +100,6 @@ class AbstractSchedTest : RobolectricTest() {
 
         card = sched.card!!
         sched.answerCard(card, 3)
-        advanceRobolectricLooper()
         card = sched.card
         assertNotNull(card)
         assertEquals(

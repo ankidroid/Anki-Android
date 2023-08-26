@@ -23,6 +23,7 @@ import com.ichi2.libanki.ChangeManager
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.Storage
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.TimeManager
@@ -31,7 +32,9 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import net.ankiweb.rsdroid.BackendException
 import net.ankiweb.rsdroid.testing.RustBackendLoader
+import org.hamcrest.Matcher
 import org.junit.After
+import org.junit.Assume
 import org.junit.Before
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
@@ -128,6 +131,19 @@ open class JvmTest {
         return n
     }
 
+    protected fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
+        val model = col.notetypes.newModel(name)
+        for (field in fields) {
+            col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
+        }
+        val t = Notetypes.newTemplate("Card 1")
+        t.put("qfmt", qfmt)
+        t.put("afmt", afmt)
+        col.notetypes.addTemplateInNewModel(model, t)
+        col.notetypes.add(model)
+        return name
+    }
+
     protected fun addDeck(deckName: String?): Long {
         return try {
             col.decks.id(deckName!!)
@@ -142,5 +158,9 @@ open class JvmTest {
         } catch (filteredAncestor: DeckRenameException) {
             throw RuntimeException(filteredAncestor)
         }
+    }
+
+    fun <T> assumeThat(actual: T, matcher: Matcher<T>?) {
+        Assume.assumeThat(actual, matcher)
     }
 }

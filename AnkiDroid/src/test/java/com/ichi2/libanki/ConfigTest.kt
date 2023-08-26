@@ -17,7 +17,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.JvmTest
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import org.hamcrest.CoreMatchers.equalTo
@@ -28,7 +28,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ConfigTest : RobolectricTest() {
+class ConfigTest : JvmTest() {
 
     @Test
     fun string_serialization() {

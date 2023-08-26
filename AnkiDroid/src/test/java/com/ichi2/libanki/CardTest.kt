@@ -17,9 +17,9 @@ package com.ichi2.libanki
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItemInArray
@@ -32,7 +32,7 @@ import java.util.*
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
-class CardTest : RobolectricTest() {
+class CardTest : JvmTest() {
 
     @Test
     fun `pureAnswer handled quoted html element`() {

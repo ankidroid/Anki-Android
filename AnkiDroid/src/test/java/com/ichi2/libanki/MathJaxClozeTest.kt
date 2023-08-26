@@ -3,8 +3,8 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.libanki.template.MathJax
+import com.ichi2.testutils.JvmTest
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -15,7 +15,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 @KotlinCleanup("removeFormattingFromMathjax was imported to stop bug in Kotlin: java.lang.NoSuchFieldError: INSTANCE")
 @KotlinCleanup("add testing function returning c.models.byName(\"Cloze\")")
-class MathJaxClozeTest : RobolectricTest() {
+class MathJaxClozeTest : JvmTest() {
 
     @Test
     fun verifyMathJaxClozeCards() {

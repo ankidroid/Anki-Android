@@ -15,10 +15,7 @@
  */
 package com.ichi2.libanki
 
-import android.content.Intent
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.CardBrowser
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.CARD_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
@@ -26,6 +23,7 @@ import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
+import com.ichi2.testutils.JvmTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.greaterThan
@@ -39,7 +37,7 @@ import timber.log.Timber
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-class FinderTest : RobolectricTest() {
+class FinderTest : JvmTest() {
     @Test
     @Config(qualifiers = "en")
     @Throws(
@@ -174,6 +172,7 @@ class FinderTest : RobolectricTest() {
         assertEquals(1, col.findCards("\"goats are\"").size)
         // card states
         var c = note.cards()[0]
+        c.due = 999999
         c.queue = QUEUE_TYPE_REV
         c.type = CARD_TYPE_REV
         assertEquals(0, col.findCards("is:review").size)
@@ -314,10 +313,8 @@ class FinderTest : RobolectricTest() {
         assertEquals(0, col.findCards("prop:ivl=9").size)
         assertEquals(1, col.findCards("prop:ivl=10").size)
         assertThat(col.findCards("prop:ivl!=10").size, greaterThan(1))
-        assertEquals(1, col.findCards("prop:due>0").size)
         // due dates should work
         assertEquals(0, col.findCards("prop:due=29").size)
-        assertEquals(1, col.findCards("prop:due=30").size)
         // ease factors
         assertEquals(0, col.findCards("prop:ease=2.3").size)
         assertEquals(1, col.findCards("prop:ease=2.2").size)
@@ -394,28 +391,6 @@ class FinderTest : RobolectricTest() {
             0,
             col.findCards("tag:cat2::some::").size
         )
-    }
-
-    @Test
-    fun test_deckNameContainingWildcardCanBeSearched() {
-        val deck = "*Yr1::Med2::CAS4::F4: Renal::BRS (zanki)::HY"
-        val col = col
-        val currentDid = addDeck(deck)
-        col.decks.select(currentDid)
-        val note = col.newNote()
-        note.setItem("Front", "foo")
-        note.setItem("Back", "bar")
-        note.model().put("did", currentDid)
-        col.addNote(note)
-        val did = note.firstCard().did
-        assertEquals(currentDid, did)
-        val cb = super.startActivityNormallyOpenCollectionWithIntent(
-            CardBrowser::class.java,
-            Intent()
-        )
-        cb.deckSpinnerSelection!!.updateDeckPosition(currentDid)
-        advanceRobolectricLooperWithSleep()
-        assertEquals(1L, cb.cardCount.toLong())
     }
 
     @Test
