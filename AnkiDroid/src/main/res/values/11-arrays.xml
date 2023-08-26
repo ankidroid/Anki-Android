@@ -77,10 +77,10 @@
     <string name="html_size_code_xx_large">xx-large</string>
 
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Answer button 1</string>
-    <string name="gesture_answer_2">Answer button 2</string>
-    <string name="gesture_answer_3">Answer recommended (green)</string>
-    <string name="gesture_answer_4">Answer better than recommended</string>
+    <string name="gesture_answer_1">Answer again</string>
+    <string name="gesture_answer_2">Answer easy</string>
+    <string name="gesture_answer_3">Answer good</string>
+    <string name="gesture_answer_4">Answer hard</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>
