@@ -16,7 +16,6 @@
 package com.ichi2.libanki.sched
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.*
@@ -40,6 +39,7 @@ import com.ichi2.libanki.Consts.SYNC_VER
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
+import com.ichi2.testutils.JvmTest
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
@@ -61,7 +61,7 @@ import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 // please wait for #11808 to be merged before starting cleanup
-open class SchedulerTest : RobolectricTest() {
+open class SchedulerTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun handlesSmallSteps() {
@@ -226,7 +226,7 @@ open class SchedulerTest : RobolectricTest() {
         if (Instant.now().atZone(ZoneId.systemDefault()).hour.let { it in 2..3 }) {
             // The backend shifts the current time around rollover, and expects the frontend to
             // do so as well. This could potentially be done with TimeManager in the future.
-            assumeThat(true, equalTo(false))
+            return
         }
         TimeManager.reset()
         val col = col
@@ -1011,26 +1011,22 @@ open class SchedulerTest : RobolectricTest() {
         // ordinals should arrive in order
         val sched = col.sched
         var c = sched.card
-        advanceRobolectricLooperWithSleep()
         sched.answerCard(
             c!!,
             3
         ) // not upstream. But we are not expecting multiple getCard without review
         Assert.assertEquals(0, c.ord)
         c = sched.card
-        advanceRobolectricLooperWithSleep()
         sched.answerCard(
             c!!,
             3
         ) // not upstream. But we are not expecting multiple getCard without review
         Assert.assertEquals(1, c.ord)
         c = sched.card
-        advanceRobolectricLooperWithSleep()
         sched.answerCard(
             c!!,
             3
         ) // not upstream. But we are not expecting multiple getCard without review
-        advanceRobolectricLooperWithSleep()
         Assert.assertEquals(2, c.ord)
     }
 
@@ -1374,10 +1370,8 @@ open class SchedulerTest : RobolectricTest() {
         conf.getJSONObject("lapse").put("mult", 0.5)
         col.decks.save(conf)
         c = col.sched.card!!
-        advanceRobolectricLooper()
         col.sched.answerCard(c, BUTTON_ONE)
         Assert.assertEquals(50, c.ivl)
-        advanceRobolectricLooperWithSleep()
         col.sched.answerCard(c, BUTTON_ONE)
         Assert.assertEquals(25, c.ivl)
     }
@@ -1449,16 +1443,13 @@ open class SchedulerTest : RobolectricTest() {
         sched.rebuildDyn(did)
         var card: Card?
         for (i in 0..2) {
-            advanceRobolectricLooperWithSleep()
             card = sched.card
             assertNotNull(card)
             sched.answerCard(card, BUTTON_ONE)
         }
-        advanceRobolectricLooperWithSleep()
         Assert.assertEquals(1, sched.lrnCount().toLong())
         card = sched.card
         Assert.assertEquals(1, sched.counts().lrn.toLong())
-        advanceRobolectricLooperWithSleep()
         sched.answerCard(card!!, BUTTON_ONE)
         AnkiAssert.assertDoesNotThrow { col.undo() }
     }
