@@ -17,11 +17,13 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.SeekBar
@@ -29,10 +31,18 @@ import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.PreviewLayout
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.themes.Themes
+import com.ichi2.utils.increaseHorizontalPaddingOfOverflowMenuIcons
+import com.ichi2.utils.tintOverflowMenuIcons
 import timber.log.Timber
 
 /**
@@ -52,6 +62,17 @@ class Previewer : AbstractFlashcardViewer() {
     private var mReloadRequired = false
     private var mNoteChanged = false
     private var previewLayout: PreviewLayout? = null
+
+    /**  Whiteboard */
+    private var mShowWhiteboard = true
+    var prefWhiteboard = false
+    private var toggleStylus = false
+    private var mHasDrawerSwipeConflicts = false
+
+    @get:CheckResult
+    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
+    var whiteboard: Whiteboard? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -119,10 +140,80 @@ class Previewer : AbstractFlashcardViewer() {
         super.onCollectionLoaded(col)
         currentCard = col.getCard(mCardList[mIndex])
         displayCardQuestion()
+        // Load the first card and start reviewing. Uses the answer card
+        // task to load a card, but since we send null
+        // as the card to answer, no card will be answered.
+        prefWhiteboard = MetaDB.getWhiteboardState(this, parentDid)
+        if (prefWhiteboard) {
+            // DEFECT: Slight inefficiency here, as we set the database using these methods
+            val whiteboardVisibility = MetaDB.getWhiteboardVisibility(this, parentDid)
+            setWhiteboardEnabledState(true)
+            setWhiteboardVisibility(whiteboardVisibility)
+            toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
+            whiteboard!!.toggleStylus = toggleStylus
+        }
+        disableDrawerSwipeOnConflicts()
+
         if (mShowingAnswer) {
             displayCardAnswer()
         }
         showBackIcon()
+    }
+
+    private fun setWhiteboardEnabledState(state: Boolean) {
+        prefWhiteboard = state
+        MetaDB.storeWhiteboardState(this, parentDid, state)
+        if (state && whiteboard == null) {
+            createWhiteboard()
+        }
+    }
+
+    // Show or hide the whiteboard
+    private fun setWhiteboardVisibility(state: Boolean) {
+        mShowWhiteboard = state
+        MetaDB.storeWhiteboardVisibility(this, parentDid, state)
+        if (state) {
+            whiteboard!!.visibility = View.VISIBLE
+            disableDrawerSwipe()
+        } else {
+            whiteboard!!.visibility = View.GONE
+            if (!mHasDrawerSwipeConflicts) {
+                enableDrawerSwipe()
+            }
+        }
+    }
+
+    private fun createWhiteboard() {
+        whiteboard = Whiteboard.createInstance(this, true, this)
+
+        // We use the pen color of the selected deck at the time the whiteboard is enabled.
+        // This is how all other whiteboard settings are
+        val whiteboardPenColor = MetaDB.getWhiteboardPenColor(this, parentDid).fromPreferences()
+        if (whiteboardPenColor != null) {
+            whiteboard!!.penColor = whiteboardPenColor
+        }
+        whiteboard!!.setOnPaintColorChangeListener(object : Whiteboard.OnPaintColorChangeListener {
+            override fun onPaintColorChange(color: Int?) {
+                MetaDB.storeWhiteboardPenColor(this@Previewer, parentDid, !Themes.currentTheme.isNightMode, color)
+            }
+        })
+        whiteboard!!.setOnTouchListener { v: View, event: MotionEvent? ->
+            if (event == null) return@setOnTouchListener false
+            // If the whiteboard is currently drawing, and triggers the system UI to show, we want to continue drawing.
+            if (!whiteboard!!.isCurrentlyDrawing && !mShowWhiteboard) {
+                // Bypass whiteboard listener when it's hidden
+                v.performClick()
+                return@setOnTouchListener gestureDetector!!.onTouchEvent(event)
+            }
+            whiteboard!!.handleTouchEvent(event)
+        }
+    }
+
+    private fun disableDrawerSwipeOnConflicts() {
+        if (mGestureProcessor.isBound(Gesture.SWIPE_UP, Gesture.SWIPE_DOWN, Gesture.SWIPE_RIGHT)) {
+            mHasDrawerSwipeConflicts = true
+            super.disableDrawerSwipe()
+        }
     }
 
     /** Given a new collection of card Ids, find the 'best' valid card given the current collection
@@ -155,10 +246,47 @@ class Previewer : AbstractFlashcardViewer() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_edit) {
+            if (prefWhiteboard && whiteboard != null) {
+                whiteboard!!.clear()
+            }
             editCard()
             return true
         }
+        if (item.itemId == R.id.action_toggle_whiteboard) {
+            toggleWhiteboard()
+            return true
+        }
+        if (item.itemId == R.id.action_clear_whiteboard) {
+            Timber.i("Reviewer:: Clear whiteboard button pressed")
+            clearWhiteboard()
+        }
+        if (item.itemId == R.id.action_save_whiteboard) {
+            Timber.i("Reviewer:: Save whiteboard button pressed")
+            if (whiteboard != null) {
+                try {
+                    val savedWhiteboardFileName = whiteboard!!.saveWhiteboard(TimeManager.time).path
+                    showSnackbar(getString(R.string.white_board_image_saved, savedWhiteboardFileName), Snackbar.LENGTH_SHORT)
+                } catch (e: Exception) {
+                    Timber.w(e)
+                    showSnackbar(getString(R.string.white_board_image_save_failed, e.localizedMessage), Snackbar.LENGTH_SHORT)
+                }
+            }
+        }
+        if (item.itemId == R.id.action_toggle_stylus) { // toggle stylus mode
+            Timber.i("Reviewer:: Stylus set to %b", !toggleStylus)
+            toggleStylus = !toggleStylus
+            whiteboard!!.toggleStylus = toggleStylus
+            MetaDB.storeWhiteboardStylusState(this, parentDid, toggleStylus)
+            invalidateOptionsMenu()
+        }
+
         return super.onOptionsItemSelected(item)
+    }
+
+    public override fun clearWhiteboard() {
+        if (whiteboard != null) {
+            whiteboard!!.clear()
+        }
     }
 
     override fun onBackPressed() {
@@ -173,7 +301,61 @@ class Previewer : AbstractFlashcardViewer() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.previewer, menu)
+
+        displayIcons(menu)
+        val toggleWhiteboardIcon = menu.findItem(R.id.action_toggle_whiteboard)
+        val toggleStylusIcon = menu.findItem(R.id.action_toggle_stylus)
+        if (prefWhiteboard) {
+            // Configure the whiteboard related items in the action bar
+            toggleWhiteboardIcon.setTitle(R.string.disable_whiteboard)
+            // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
+            toggleWhiteboardIcon.isVisible = true
+            val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
+            val stylusIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_stylus)!!.mutate()
+
+            toggleStylusIcon.isVisible = true
+            menu.findItem(R.id.action_clear_whiteboard).isVisible = true
+
+            whiteboardIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
+            if (toggleStylus) {
+                toggleStylusIcon.setTitle(R.string.disable_stylus)
+                stylusIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
+            } else {
+                toggleStylusIcon.setTitle(R.string.enable_stylus)
+                stylusIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+            }
+            toggleStylusIcon.icon = stylusIcon
+        } else {
+            toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
+        }
+
+        increaseHorizontalPaddingOfOverflowMenuIcons(menu)
+        tintOverflowMenuIcons(menu)
+
         return super.onCreateOptionsMenu(menu)
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun displayIcons(menu: Menu) {
+        try {
+            if (menu is MenuBuilder) {
+                menu.setOptionalIconsVisible(true)
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "Failed to display icons in Over flow menu")
+        } catch (e: Error) {
+            Timber.w(e, "Failed to display icons in Over flow menu")
+        }
+    }
+
+    public override fun toggleWhiteboard() {
+        prefWhiteboard = !prefWhiteboard
+        Timber.i("Previewer:: Whiteboard enabled state set to %b", prefWhiteboard)
+        // Even though the visibility is now stored in its own setting, we want it to be dependent
+        // on the enabled status
+        setWhiteboardEnabledState(prefWhiteboard)
+        setWhiteboardVisibility(prefWhiteboard)
+        invalidateOptionsMenu()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -234,6 +416,7 @@ class Previewer : AbstractFlashcardViewer() {
     internal fun changePreviewedCard(nextCard: Boolean) {
         mIndex = if (nextCard) mIndex + 1 else mIndex - 1
         currentCard = col.getCard(mCardList[mIndex])
+        clearWhiteboard()
         displayCardQuestion()
         updateProgress()
     }
