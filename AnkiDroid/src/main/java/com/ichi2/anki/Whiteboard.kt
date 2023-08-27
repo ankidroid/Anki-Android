@@ -113,7 +113,8 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         if (event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS && toggleStylus) {
             return false
         }
-        if (stylusErase(event)) {
+        if (event.getToolType(event.actionIndex) == MotionEvent.TOOL_TYPE_ERASER) {
+            stylusErase(event)
             return true
         }
         return when (event.actionMasked) {
@@ -147,6 +148,12 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 }
                 false
             }
+            211, 213 -> {
+                if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY) {
+                    stylusErase(event)
+                }
+                true
+            }
             else -> false
         }
     }
@@ -171,13 +178,8 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     /**
      * Erase with stylus pen.(By using the eraser button on the stylus pen or by using the digital eraser)
      */
-    private fun stylusErase(event: MotionEvent): Boolean {
-        if ((
-            (event.actionMasked in intArrayOf(211, 213) && event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY) ||
-                (event.getToolType(event.actionIndex) == MotionEvent.TOOL_TYPE_ERASER)
-            ) &&
-            !undoEmpty()
-        ) {
+    private fun stylusErase(event: MotionEvent) {
+        if (!undoEmpty()) {
             val didErase = mUndo.erase(event.x.toInt(), event.y.toInt())
             if (didErase) {
                 mUndo.apply()
@@ -185,9 +187,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                     mAnkiActivity.invalidateOptionsMenu()
                 }
             }
-            return true
         }
-        return false
     }
 
     /**
