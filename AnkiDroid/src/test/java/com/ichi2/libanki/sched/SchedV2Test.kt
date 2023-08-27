@@ -56,7 +56,7 @@ import org.junit.platform.commons.util.CollectionUtils
 import org.junit.runner.RunWith
 import java.lang.Exception
 import java.time.Instant
-import java.time.ZoneOffset
+import java.time.ZoneId
 import java.util.*
 import kotlin.Throws
 import kotlin.math.roundToInt
@@ -67,26 +67,12 @@ import kotlin.test.assertNull
 @RunWith(AndroidJUnit4::class)
 // please wait for #11808 to be merged before starting cleanup
 open class SchedV2Test : RobolectricTest() {
-    open val v3 = false
-
-    private fun ifV3(block: () -> Unit) {
-        if (v3) {
-            block()
-        }
-    }
-
-    private fun ifV2(block: () -> Unit) {
-        if (!v3) {
-            block()
-        }
-    }
-
     /**
      * Reported by /u/CarelessSecretary9 on reddit:
      */
     @Test
     fun filteredDeckSchedulingOptionsRegressionTest() {
-        val col = colV2
+        val col = col
         col.crt = 1587852900L
         // 30 minutes learn ahead. required as we have 20m delay
         col.config.set("collapseTime", 1800)
@@ -181,7 +167,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun emptyFilteredDeckSuspendHandling() {
-        val col = colV2
+        val col = col
         val cardId = addNoteUsingBasicModel("Hello", "World").firstCard().id
         val filteredDid = FilteredDeckUtil.createFilteredDeck(col, "Filtered", "(is:new or is:due)")
         MatcherAssert.assertThat(
@@ -214,7 +200,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun rebuildFilteredDeckSuspendHandling() {
-        val col = colV2
+        val col = col
         val cardId = addNoteUsingBasicModel("Hello", "World").firstCard().id
         val filteredDid = FilteredDeckUtil.createFilteredDeck(col, "Filtered", "(is:new or is:due)")
         MatcherAssert.assertThat(
@@ -247,7 +233,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun handlesSmallSteps() {
-        val col = colV2
+        val col = col
         // a delay of 0 crashed the app (step of 0.01).
         addNoteUsingBasicModel("Hello", "World")
         col.decks.allConf()[0].getJSONObject("new")
@@ -259,7 +245,7 @@ open class SchedV2Test : RobolectricTest() {
 
     @Test
     fun newTimezoneHandling() {
-        val col = colV2
+        val col = col
         // #5805
         MatcherAssert.assertThat(
             "Sync ver should be updated if we have a valid Rust collection",
@@ -295,21 +281,10 @@ open class SchedV2Test : RobolectricTest() {
         )
     }
 
-    @get:Throws(Exception::class)
-    val colV2: Collection
-        get() {
-            val col = col
-            col.changeSchedulerVer(2)
-            ifV3 {
-                col.v3Enabled = true
-            }
-            return col
-        }
-
     @Test
     @Throws(Exception::class)
     fun test_basics() {
-        val col = colV2
+        val col = col
         col.reset()
         assertNull(col.sched.card)
     }
@@ -317,7 +292,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_new_v2() {
-        val col = colV2
+        val col = col
         col.reset()
         Assert.assertEquals(0, col.sched.newCount().toLong())
         // add a note
@@ -366,7 +341,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_newLimits_V2() {
-        val col = colV2
+        val col = col
         // add some notes
         val deck2 = addDeck("Default::foo")
         for (i in 0..29) {
@@ -403,7 +378,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_newBoxes_v2() {
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -423,13 +398,13 @@ open class SchedV2Test : RobolectricTest() {
     @Throws(Exception::class)
     @KotlinCleanup("This is flaky just before 4AM")
     fun test_learnV2() {
-        if (v3 && Instant.now().atZone(ZoneOffset.UTC).hour.let { it in 2..3 }) {
+        if (Instant.now().atZone(ZoneId.systemDefault()).hour.let { it in 2..3 }) {
             // The backend shifts the current time around rollover, and expects the frontend to
             // do so as well. This could potentially be done with TimeManager in the future.
-            assumeThat(v3, equalTo(false))
+            assumeThat(true, equalTo(false))
         }
         TimeManager.reset()
-        val col = colV2
+        val col = col
         // add a note
         val note = col.newNote()
         note.setItem("Front", "one")
@@ -448,7 +423,6 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_ONE)
         // it should have three reps left to graduation
         Assert.assertEquals(3, (c.left % 1000).toLong())
-        ifV2 { Assert.assertEquals(3, (c.left / 1000).toLong()) }
         // it should be due in 30 seconds
         val t = (c.due - time.intTime())
         MatcherAssert.assertThat(t, Matchers.greaterThanOrEqualTo(25L))
@@ -463,7 +437,6 @@ open class SchedV2Test : RobolectricTest() {
             Matchers.lessThanOrEqualTo((180 * 1.25).toLong())
         )
         Assert.assertEquals(2, (c.left % 1000).toLong())
-        ifV2 { Assert.assertEquals(2, (c.left / 1000).toLong()) }
         // check log is accurate
         val log = col.db.database.query("select * from revlog order by id desc")
         Assert.assertTrue(log.moveToFirst())
@@ -480,7 +453,6 @@ open class SchedV2Test : RobolectricTest() {
             Matchers.lessThanOrEqualTo((600 * 1.25).toLong())
         )
         Assert.assertEquals(1, (c.left % 1000).toLong())
-        ifV2 { Assert.assertEquals(1, (c.left / 1000).toLong()) }
         // the next pass should graduate the card
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
         Assert.assertEquals(CARD_TYPE_LRN, c.type)
@@ -508,7 +480,8 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_relearn() {
-        val col = colV2
+        TimeManager.reset()
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -539,7 +512,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_relearn_no_steps() {
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -565,7 +538,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_learn_collapsedV2() {
-        val col = colV2
+        val col = col
         // add 2 notes
         var note = col.newNote()
         note.setItem("Front", "1")
@@ -594,7 +567,8 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_learn_dayV2() {
-        val col = colV2
+        TimeManager.reset()
+        val col = col
         // add a note
         val note = col.newNote()
         note.setItem("Front", "one")
@@ -608,7 +582,6 @@ open class SchedV2Test : RobolectricTest() {
         col.sched.answerCard(c, BUTTON_THREE)
         // two reps to graduate, 1 more today
         Assert.assertEquals(3, (c.left % 1000).toLong())
-        ifV2 { Assert.assertEquals(1, (c.left / 1000).toLong()) }
         Assert.assertEquals(Counts(0, 1, 0), col.sched.counts())
         c = col.sched.card!!
         Assert.assertEquals(SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_THREE))
@@ -628,11 +601,7 @@ open class SchedV2Test : RobolectricTest() {
         // if we fail it, it should be back in the correct queue
         col.sched.answerCard(c, BUTTON_ONE)
         Assert.assertEquals(QUEUE_TYPE_LRN, c.queue)
-        if (v3) {
-            col.undoNew()
-        } else {
-            col.legacyV2ReviewUndo()
-        }
+        col.undoNew()
         c = col.sched.card!!
         col.sched.answerCard(c, BUTTON_THREE)
         // simulate the passing of another two days
@@ -662,7 +631,8 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_reviewsV2() {
-        val col = colV2
+        TimeManager.reset()
+        val col = col
         // add a note
         val note = col.newNote()
         note.setItem("Front", "one")
@@ -745,7 +715,7 @@ open class SchedV2Test : RobolectricTest() {
     @Throws(Exception::class)
     fun test_review_limits() {
         TimeManager.reset()
-        val col = colV2
+        val col = col
         val parent = col.decks.get(addDeck("parent"))
         val child = col.decks.get(addDeck("parent::child"))
         val pconf = col.decks.getConf(col.decks.confId("parentConf"))
@@ -798,7 +768,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_button_spacingV2() {
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -889,7 +859,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_finishedV2() {
-        val col = colV2
+        val col = col
         // nothing due
         MatcherAssert.assertThat(
             col.sched.finishedMsg(targetContext).toString(),
@@ -931,7 +901,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_nextIvlV2() {
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         note.setItem("Back", "two")
@@ -957,8 +927,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertEquals(4 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
         col.sched.answerCard(c, BUTTON_THREE)
         Assert.assertEquals(30, col.sched.nextIvl(c, BUTTON_ONE))
-        ifV2 { Assert.assertEquals(((180 + 600) / 2).toLong(), col.sched.nextIvl(c, BUTTON_TWO)) }
-        ifV3 { Assert.assertEquals(180, col.sched.nextIvl(c, BUTTON_TWO)) }
+        Assert.assertEquals(180, col.sched.nextIvl(c, BUTTON_TWO))
         Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_THREE))
         Assert.assertEquals(4 * SECONDS_PER_DAY, col.sched.nextIvl(c, BUTTON_FOUR))
         col.sched.answerCard(c, BUTTON_THREE)
@@ -1008,7 +977,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_bury() {
-        val col = colV2
+        val col = col
         var note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -1043,7 +1012,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_suspendv2() {
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -1098,7 +1067,8 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_filt_reviewing_early_normal() {
-        val col = colV2
+        TimeManager.reset()
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -1134,11 +1104,7 @@ open class SchedV2Test : RobolectricTest() {
             (75 * 1.2).roundToInt() * SECONDS_PER_DAY,
             col.sched.nextIvl(c, BUTTON_TWO)
         )
-        val toLong = if (v3) {
-            fun (v: Double) = v.roundToLong() * SECONDS_PER_DAY
-        } else {
-            fun (v: Double) = v.toLong() * SECONDS_PER_DAY
-        }
+        val toLong = fun (v: Double) = v.roundToLong() * SECONDS_PER_DAY
         MatcherAssert.assertThat(
             col.sched.nextIvl(c, BUTTON_THREE),
             equalTo(toLong(75 * 2.5))
@@ -1176,7 +1142,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_filt_keep_lrn_state() {
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -1229,7 +1195,7 @@ open class SchedV2Test : RobolectricTest() {
     @Throws(Exception::class)
     fun test_preview() {
         // add cards
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -1248,14 +1214,8 @@ open class SchedV2Test : RobolectricTest() {
         // grab the first card
         c = col.sched.card!!
         Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_ONE))
-        ifV2 {
-            Assert.assertEquals(2, col.sched.answerButtons(c).toLong())
-            Assert.assertEquals(0, col.sched.nextIvl(c, BUTTON_TWO))
-        }
-        ifV3 {
-            Assert.assertEquals(4, col.sched.answerButtons(c).toLong())
-            Assert.assertEquals(900, col.sched.nextIvl(c, BUTTON_TWO))
-        }
+        Assert.assertEquals(4, col.sched.answerButtons(c).toLong())
+        Assert.assertEquals(900, col.sched.nextIvl(c, BUTTON_TWO))
         // failing it will push its due time back
         val due = c.due
         col.sched.answerCard(c, BUTTON_ONE)
@@ -1266,7 +1226,7 @@ open class SchedV2Test : RobolectricTest() {
         Assert.assertNotEquals(c2.id, c.id)
 
         // passing it will remove it
-        col.sched.answerCard(c2, if (v3) { BUTTON_FOUR } else { BUTTON_TWO })
+        col.sched.answerCard(c2, BUTTON_FOUR)
         Assert.assertEquals(QUEUE_TYPE_NEW, c2.queue)
         Assert.assertEquals(0, c2.reps)
         Assert.assertEquals(CARD_TYPE_NEW, c2.type)
@@ -1286,7 +1246,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_ordcycleV2() {
-        val col = colV2
+        val col = col
         // add two more templates and set second active
         val m = col.notetypes.current()
         val mm = col.notetypes
@@ -1334,40 +1294,8 @@ open class SchedV2Test : RobolectricTest() {
 
     @Test
     @Throws(Exception::class)
-    fun test_counts_idxV2() {
-        if (v3) {
-            return
-        }
-        val col = colV2
-        val note = col.newNote()
-        note.setItem("Front", "one")
-        note.setItem("Back", "two")
-        col.addNote(note)
-        col.reset()
-        Assert.assertEquals(Counts(1, 0, 0), col.sched.counts())
-        var c = col.sched.card
-        // counter's been decremented but idx indicates 1
-        Assert.assertEquals(Counts(0, 0, 0), col.sched.counts())
-        Assert.assertEquals(Counts.Queue.NEW, col.sched.countIdx(c!!))
-        // answer to move to learn queue
-        col.sched.answerCard(c, BUTTON_ONE)
-        Assert.assertEquals(Counts(0, 1, 0), col.sched.counts())
-        // fetching again will decrement the count
-        c = col.sched.card
-        Assert.assertEquals(Counts(0, 0, 0), col.sched.counts())
-        Assert.assertEquals(Counts.Queue.LRN, col.sched.countIdx(c!!))
-        // answering should add it back again
-        col.sched.answerCard(c, BUTTON_ONE)
-        Assert.assertEquals(Counts(0, 1, 0), col.sched.counts())
-    }
-
-    @Test
-    @Throws(Exception::class)
     fun test_counts_idxV3() {
-        if (!v3) {
-            return
-        }
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         note.setItem("Back", "two")
@@ -1393,7 +1321,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_repCountsV2() {
-        val col = colV2
+        val col = col
         var note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -1448,7 +1376,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_timingV2() {
-        val col = colV2
+        val col = col
         // add a few review cards, due today
         for (i in 0..4) {
             val note = col.newNote()
@@ -1478,7 +1406,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_collapseV2() {
-        val col = colV2
+        val col = col
         // add a note
         val note = col.newNote()
         note.setItem("Front", "one")
@@ -1495,7 +1423,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_deckDueV2() {
-        val col = colV2
+        val col = col
         // add a note with default deck
         var note = col.newNote()
         note.setItem("Front", "one")
@@ -1544,7 +1472,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_deckTree() {
-        val col = colV2
+        val col = col
         addDeck("new::b::c")
         addDeck("new2")
         // new should not appear twice in tree
@@ -1559,7 +1487,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_deckFlowV2() {
-        val col = colV2
+        val col = col
         // add a note with default deck
         var note = col.newNote()
         note.setItem("Front", "one")
@@ -1589,7 +1517,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_reorder() {
-        val col = colV2
+        val col = col
         // add a note with default deck
         val note = col.newNote()
         note.setItem("Front", "one")
@@ -1633,7 +1561,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_forgetV2() {
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -1653,7 +1581,8 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_reschedV2() {
-        val col = colV2
+        TimeManager.reset()
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         col.addNote(note)
@@ -1673,7 +1602,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_norelearnV2() {
-        val col = colV2
+        val col = col
         // add a note
         val note = col.newNote()
         note.setItem("Front", "one")
@@ -1697,7 +1626,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_failmultV2() {
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         note.setItem("Back", "two")
@@ -1729,7 +1658,7 @@ open class SchedV2Test : RobolectricTest() {
     @Test
     @Throws(Exception::class)
     fun test_negativeDueFilter() {
-        val col = colV2
+        val col = col
 
         // card due prior to collection date
         val note = col.newNote()
@@ -1759,7 +1688,7 @@ open class SchedV2Test : RobolectricTest() {
         Exception::class
     )
     fun test_initial_repeat() {
-        val col = colV2
+        val col = col
         val note = col.newNote()
         note.setItem("Front", "one")
         note.setItem("Back", "two")
@@ -1783,7 +1712,7 @@ open class SchedV2Test : RobolectricTest() {
     @Throws(Exception::class)
     fun regression_test_preview() {
         // "https://github.com/ankidroid/Anki-Android/issues/7285"
-        val col = colV2
+        val col = col
         val decks = col.decks
         val sched = col.sched
         addNoteUsingBasicModel("foo", "bar")

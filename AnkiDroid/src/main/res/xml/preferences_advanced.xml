@@ -125,11 +125,4 @@
                 android:title="@string/thirdparty_apps_title">
             </Preference>
         </PreferenceCategory>
-        <PreferenceCategory
-            android:title="@string/pref_cat_experimental">
-            <SwitchPreferenceCompat
-                android:key="@string/enable_v3_sched_key"
-                android:title="@string/enable_v3_sched_title"
-                android:defaultValue="false"/>
-        </PreferenceCategory>
 </PreferenceScreen>

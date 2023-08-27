@@ -37,26 +37,10 @@ class SchedUpgradeTest : RobolectricTest() {
             col.sched,
             not(
                 instanceOf(
-                    Sched::class.java
+                    DummySched::class.java
                 )
             )
         )
         assertThat(col.schedVer(), equalTo(2))
-    }
-
-    @Test
-    fun schedulerForV1CollectionIsV1() {
-        // A V1 collection does not have the schedVer variable. This is not the same as a downgrade.
-        col.config.remove("schedVer")
-        col.close()
-
-        assertThat(
-            "A collection with no schedVer should be v1",
-            col.sched,
-            instanceOf(
-                Sched::class.java
-            )
-        )
-        assertThat(col.schedVer(), equalTo(1))
     }
 }

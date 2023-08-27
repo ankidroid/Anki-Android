@@ -20,7 +20,6 @@
 
 package com.ichi2.libanki
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
@@ -35,9 +34,7 @@ import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
 import com.ichi2.libanki.exception.InvalidSearchException
-import com.ichi2.libanki.sched.AbstractSched
-import com.ichi2.libanki.sched.Sched
-import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.sched.DummySched
 import com.ichi2.libanki.sched.SchedV3
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
@@ -69,7 +66,6 @@ open class Collection(
      *  @param Path The path to the collection.anki2 database. Must be unicode and openable with [File].
      */
     val path: String,
-    var server: Boolean,
     private var debugLog: Boolean, // Not in libAnki.
     /**
      * Outside of libanki, you should not access the backend directly for collection operations.
@@ -120,7 +116,7 @@ open class Collection(
     lateinit var config: Config
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
-    lateinit var sched: AbstractSched
+    lateinit var sched: SchedV3
         protected set
 
     private var mStartTime: Long
@@ -141,14 +137,6 @@ open class Collection(
     fun usn(): Int {
         return -1
     }
-
-    /** True if the V3 scheduled is enabled when schedVer is 2. */
-    var v3Enabled: Boolean
-        get() = backend.getConfigBool(ConfigKey.Bool.SCHED_2021)
-        set(value) {
-            backend.setConfigBool(ConfigKey.Bool.SCHED_2021, value, undoable = false)
-            _loadScheduler()
-        }
 
     var ls: Long = 0
     // END: SQL table columns
@@ -204,50 +192,26 @@ open class Collection(
      * ***********************************************************
      */
     fun schedVer(): Int {
-        val ver = config.get("schedVer") ?: fDefaultSchedulerVersion
-        return if (fSupportedSchedulerVersions.contains(ver)) {
+        // schedVer was not set on legacy v1 collections
+        val ver = config.get("schedVer") ?: 1
+        return if (listOf(1, 2).contains(ver)) {
             ver
         } else {
             throw RuntimeException("Unsupported scheduler version")
         }
     }
 
-    // Note: Additional members in the class duplicate this
     fun _loadScheduler() {
         val ver = schedVer()
         if (ver == 1) {
-            sched = Sched(this)
-        } else if (ver == 2) {
-            sched = if (v3Enabled) {
-                SchedV3(this)
-            } else {
-                SchedV2(this)
-            }
-            if (!server) {
-                config.set("localOffset", sched._current_timezone_offset())
-            }
-        }
-    }
-
-    @Throws(ConfirmModSchemaException::class)
-    fun changeSchedulerVer(ver: Int) {
-        if (ver == schedVer()) {
-            return
-        }
-        if (!fSupportedSchedulerVersions.contains(ver)) {
-            throw RuntimeException("Unsupported scheduler version")
-        }
-        modSchema()
-        @SuppressLint("VisibleForTests")
-        val v2Sched = SchedV2(this)
-        clearLegacyV2ReviewUndo()
-        if (ver == 1) {
-            v2Sched.moveToV1()
+            sched = DummySched(this)
         } else {
-            v2Sched.moveToV2()
+            if (!backend.getConfigBool(ConfigKey.Bool.SCHED_2021)) {
+                backend.setConfigBool(ConfigKey.Bool.SCHED_2021, true, undoable = false)
+            }
+            sched = SchedV3(this)
+            config.set("localOffset", sched._current_timezone_offset())
         }
-        config.set("schedVer", ver)
-        _loadScheduler()
     }
 
     /**
@@ -810,15 +774,6 @@ open class Collection(
         get() = this
 
     companion object {
-        /**
-         * This is only used for collections which were created before
-         * the new collections default was v2
-         * In that case, 'schedVer' is not set, so this default is used.
-         * See: #8926
-         */
-        private const val fDefaultSchedulerVersion = 1
-        private val fSupportedSchedulerVersions = listOf(1, 2)
-
         private const val UNDO_SIZE_MAX = 20
     }
 }

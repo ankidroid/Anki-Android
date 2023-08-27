@@ -64,7 +64,6 @@ class PreferencesTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun testDayOffsetExhaustiveV2() {
-        col.changeSchedulerVer(2)
         runBlocking {
             for (i in 0..23) {
                 setDayOffset(preferences, i)
@@ -96,7 +95,6 @@ class PreferencesTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun setDayOffsetSetsConfig() {
-        col.changeSchedulerVer(2)
         val offset = runBlocking { getDayOffset() }
         assertThat("Default offset should be 4", offset, equalTo(4))
         runBlocking { setDayOffset(preferences, 2) }

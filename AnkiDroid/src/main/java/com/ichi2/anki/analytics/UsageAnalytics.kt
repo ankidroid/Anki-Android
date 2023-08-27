@@ -550,7 +550,6 @@ object UsageAnalytics {
         "autoFocusTypeInAnswer", // Focus ‘type in answer’
         "mediaImportAllowAllFiles", // Allow all files in media imports
         "providerEnabled", // Enable AnkiDroid API
-        "v3sched", // v3 Scheduler
         // App bar buttons
         "reset_custom_buttons",
         "customButtonUndo",

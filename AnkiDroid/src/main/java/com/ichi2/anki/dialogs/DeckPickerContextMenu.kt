@@ -84,7 +84,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.EXPORT_DECK)
-            if (collection.sched.haveBuried(did)) {
+            if (collection.sched.haveBuriedInCurrentDeck()) {
                 contextMenuOptions.add(DeckPickerContextMenuOption.UNBURY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.CREATE_SHORTCUT)

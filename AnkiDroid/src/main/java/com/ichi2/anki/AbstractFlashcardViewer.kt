@@ -88,7 +88,6 @@ import com.ichi2.libanki.Sound.SingleSoundSide
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.SoundPlayer
 import com.ichi2.libanki.sched.AbstractSched
-import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
@@ -614,11 +613,6 @@ abstract class AbstractFlashcardViewer :
 
     override fun onDestroy() {
         super.onDestroy()
-        // Tells the scheduler there is no more current cards. 0 is
-        // not a valid id.
-        if (sched != null && sched is SchedV2) {
-            (sched!! as SchedV2).discardCurrentCard()
-        }
         mTTS.releaseTts(this)
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
@@ -1165,24 +1159,24 @@ abstract class AbstractFlashcardViewer :
 
     protected open fun hideEaseButtons() {
         val after = Runnable { actualHideEaseButtons() }
-        val easeButtonsVisible = easeButtonsLayout!!.visibility == View.VISIBLE
-        flipCardLayout!!.isClickable = true
-        flipCardLayout!!.visibility = View.VISIBLE
+        val easeButtonsVisible = easeButtonsLayout?.visibility == View.VISIBLE
+        flipCardLayout?.isClickable = true
+        flipCardLayout?.visibility = View.VISIBLE
         if (animationDisabled() || !easeButtonsVisible) {
             after.run()
         } else {
-            flipCardLayout!!.alpha = 0f
-            flipCardLayout!!.animate().alpha(1f).setDuration(shortAnimDuration.toLong()).withEndAction(after)
+            flipCardLayout?.alpha = 0f
+            flipCardLayout?.animate()?.alpha(1f)?.setDuration(shortAnimDuration.toLong())?.withEndAction(after)
         }
         focusAnswerCompletionField()
     }
 
     private fun actualHideEaseButtons() {
-        easeButtonsLayout!!.visibility = View.GONE
-        easeButton1!!.hide()
-        easeButton2!!.hide()
-        easeButton3!!.hide()
-        easeButton4!!.hide()
+        easeButtonsLayout?.visibility = View.GONE
+        easeButton1?.hide()
+        easeButton2?.hide()
+        easeButton3?.hide()
+        easeButton4?.hide()
     }
 
     /**
@@ -1192,10 +1186,10 @@ abstract class AbstractFlashcardViewer :
     private fun focusAnswerCompletionField() {
         // This does not handle mUseInputTag (the WebView contains an input field with a typable answer).
         // In this case, the user can use touch to focus the field if necessary.
-        if (typeAnswer!!.autoFocusEditText()) {
-            answerField!!.focusWithKeyboard()
+        if (typeAnswer?.autoFocusEditText() == true) {
+            answerField?.focusWithKeyboard()
         } else {
-            flipCardLayout!!.requestFocus()
+            flipCardLayout?.requestFocus()
         }
     }
 
@@ -1344,14 +1338,14 @@ abstract class AbstractFlashcardViewer :
         displayAnswer = false
         mBackButtonPressedToReturn = false
         setInterface()
-        typeAnswer!!.input = ""
-        typeAnswer!!.updateInfo(currentCard!!, resources)
-        if (typeAnswer!!.validForEditText()) {
+        typeAnswer?.input = ""
+        typeAnswer?.updateInfo(currentCard!!, resources)
+        if (typeAnswer?.validForEditText() == true) {
             // Show text entry based on if the user wants to write the answer
-            answerField!!.visibility = View.VISIBLE
-            answerField!!.applyLanguageHint(typeAnswer!!.languageHint)
+            answerField?.visibility = View.VISIBLE
+            answerField?.applyLanguageHint(typeAnswer?.languageHint)
         } else {
-            answerField!!.visibility = View.GONE
+            answerField?.visibility = View.GONE
         }
         val content = mHtmlGenerator!!.generateHtml(currentCard!!, reload, Side.FRONT)
         updateCard(content)
@@ -1601,15 +1595,15 @@ abstract class AbstractFlashcardViewer :
     protected open fun unblockControls() {
         controlBlocked = ControlBlock.UNBLOCKED
         mCardFrame!!.isEnabled = true
-        flipCardLayout!!.isEnabled = true
-        easeButton1!!.unblockBasedOnEase(mCurrentEase)
-        easeButton2!!.unblockBasedOnEase(mCurrentEase)
-        easeButton3!!.unblockBasedOnEase(mCurrentEase)
-        easeButton4!!.unblockBasedOnEase(mCurrentEase)
-        if (typeAnswer!!.validForEditText()) {
-            answerField!!.isEnabled = true
+        flipCardLayout?.isEnabled = true
+        easeButton1?.unblockBasedOnEase(mCurrentEase)
+        easeButton2?.unblockBasedOnEase(mCurrentEase)
+        easeButton3?.unblockBasedOnEase(mCurrentEase)
+        easeButton4?.unblockBasedOnEase(mCurrentEase)
+        if (typeAnswer?.validForEditText() == true) {
+            answerField?.isEnabled = true
         }
-        mTouchLayer!!.visibility = View.VISIBLE
+        mTouchLayer?.visibility = View.VISIBLE
         mInAnswer = false
         invalidateOptionsMenu()
     }

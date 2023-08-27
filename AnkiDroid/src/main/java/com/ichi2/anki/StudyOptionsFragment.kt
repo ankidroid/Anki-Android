@@ -352,7 +352,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 menu.findItem(R.id.action_export).isVisible = false
             }
             // Switch on or off unbury depending on if there are cards to unbury
-            menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
+            menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuriedInCurrentDeck()
             // Set the proper click target for the undo button's ActionProvider
             val undoActionProvider: RtlCompliantActionProvider? = MenuItemCompat.getActionProvider(
                 menu.findItem(R.id.action_undo)

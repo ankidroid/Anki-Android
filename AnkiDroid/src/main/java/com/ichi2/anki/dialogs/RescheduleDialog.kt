@@ -19,7 +19,7 @@ import android.content.res.Resources
 import androidx.annotation.CheckResult
 import com.ichi2.anki.R
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.Consts
 import java.util.function.Consumer
 
 // a memory leak was caused when this was a singleton object.
@@ -84,7 +84,7 @@ class RescheduleDialog : IntegerDialog() {
             }
             val message = resources.getString(
                 R.string.reschedule_card_dialog_warning_ease_reset,
-                SchedV2.RESCHEDULE_FACTOR / 10
+                Consts.STARTING_FACTOR / 10
             )
             return if (currentCard.isInDynamicDeck) {
                 message

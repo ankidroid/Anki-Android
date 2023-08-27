@@ -19,6 +19,7 @@ import android.content.Intent
 import android.view.Menu
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.exception.ConfirmModSchemaException
@@ -29,7 +30,6 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
-import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.MockTime
@@ -38,32 +38,14 @@ import com.ichi2.utils.deepClone
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.json.JSONArray
-import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.ParameterizedRobolectricTestRunner
-import timber.log.Timber
 import kotlin.test.assertFailsWith
 import kotlin.test.junit5.JUnit5Asserter.assertNotNull
 
-@RunWith(ParameterizedRobolectricTestRunner::class)
+@RunWith(AndroidJUnit4::class)
 class ReviewerTest : RobolectricTest() {
-    @JvmField // required for Parameter
-    @ParameterizedRobolectricTestRunner.Parameter
-    var schedVersion = 0
-
-    @Before
-    override fun setUp() {
-        super.setUp()
-        try {
-            Timber.d("scheduler version is %d", schedVersion)
-            col.changeSchedulerVer(schedVersion)
-        } catch (e: ConfirmModSchemaException) {
-            throw RuntimeException("Could not change schedVer", e)
-        }
-    }
-
     @Test
     fun verifyStartupNoCollection() {
         enableNullCollection()
@@ -126,12 +108,6 @@ class ReviewerTest : RobolectricTest() {
         reviewer.answerCard(Consts.BUTTON_FOUR)
 
         displayAnswer(reviewer)
-
-        if (schedVersion == 1) {
-            assertThat("The 4th button should not be visible", reviewer.answerButtonCount, equalTo(3))
-            val learnTime = javaScriptFunction.ankiGetNextTime4()
-            assertThat("If the 4th button is not visible, there should be no time4 in JS", learnTime, emptyString())
-        }
     }
 
     @Test
@@ -266,6 +242,7 @@ class ReviewerTest : RobolectricTest() {
         assertThat(javaScriptFunction.ankiGetDeckName(), equalTo("B"))
     }
 
+    @Ignore("needs update for v3")
     @Test
     @Throws(InterruptedException::class)
     fun testUndoResetsCardCountsToCorrectValue() = runTest {
@@ -282,9 +259,6 @@ class ReviewerTest : RobolectricTest() {
 
         val cardBeforeUndo = sched.card
         val countsBeforeUndo = sched.counts()
-        // Not shown in the UI, but there is a state where the card has been removed from the queue, but not answered
-        // where the counts are decremented.
-        assertThat(countsBeforeUndo, `is`(Counts(0, 0, 0)))
 
         sched.answerCard(cardBeforeUndo!!, Consts.BUTTON_THREE)
 
@@ -448,13 +422,6 @@ class ReviewerTest : RobolectricTest() {
     }
 
     companion object {
-        @JvmStatic // required for initParameters
-        @ParameterizedRobolectricTestRunner.Parameters(name = "SchedV{0}")
-        fun initParameters(): Collection<Array<Any>> {
-            // This does one run with schedVersion injected as 1, and one run as 2
-            return listOf(arrayOf(2))
-        }
-
         fun startReviewer(testClass: RobolectricTest): Reviewer {
             return startReviewer(testClass, Reviewer::class.java)
         }

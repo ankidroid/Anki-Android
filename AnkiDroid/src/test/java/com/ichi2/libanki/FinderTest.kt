@@ -23,7 +23,7 @@ import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.CARD_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
-import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.sched.SchedV3
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert
 import org.hamcrest.CoreMatchers.equalTo
@@ -47,14 +47,13 @@ class FinderTest : RobolectricTest() {
     )
     fun searchForBuriedReturnsManuallyAndSiblingBuried() {
         val searchQuery = "is:buried"
-        val sched = upgradeToSchedV2() // needs to be first
         enableBurySiblings()
         super.addNoteUsingModelName("Basic (and reversed card)", "Front", "Back")
-        val toAnswer: Card = sched.card!!
+        val toAnswer: Card = col.sched.card!!
 
         // act
-        val siblingBuried = burySiblings(sched, toAnswer)
-        val manuallyBuriedCard = buryManually(sched, toAnswer.id)
+        val siblingBuried = burySiblings(col.sched, toAnswer)
+        val manuallyBuriedCard = buryManually(col.sched, toAnswer.id)
 
         // perform the search
         val buriedCards = col.findCards(searchQuery, SortOrder.NoOrdering())
@@ -83,14 +82,14 @@ class FinderTest : RobolectricTest() {
         col.decks.save(config)
     }
 
-    private fun burySiblings(sched: SchedV2, toManuallyBury: Card): Card {
+    private fun burySiblings(sched: SchedV3, toManuallyBury: Card): Card {
         sched.answerCard(toManuallyBury, Consts.BUTTON_ONE)
         val siblingBuried = Note(col, toManuallyBury.nid).cards()[1]
         assertThat(siblingBuried.queue, equalTo(Consts.QUEUE_TYPE_SIBLING_BURIED))
         return siblingBuried
     }
 
-    private fun buryManually(sched: SchedV2, id: Long): Card {
+    private fun buryManually(sched: SchedV3, id: Long): Card {
         sched.buryCards(listOf(id), true)
         val manuallyBuriedCard = Card(col, id)
         assertThat(

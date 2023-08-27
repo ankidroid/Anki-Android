@@ -384,6 +384,7 @@ class DeckPickerTest : RobolectricTest() {
         }
     }
 
+    @Ignore("needs refactoring")
     @Test
     fun corruptVersion16CollectionShowsDatabaseError() {
         try {

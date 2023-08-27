@@ -21,7 +21,6 @@ import anki.scheduler.*
 import com.ichi2.async.CancelListener
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.TimeManager.time
 import java.lang.ref.WeakReference
 
@@ -30,11 +29,11 @@ import java.lang.ref.WeakReference
  * future, it would be better for the reviewer to fetch queuedCards directly, so they only
  * need to be fetched once.
  */
-class SchedV3(col: Collection) : AbstractSched(col) {
+open class SchedV3(col: Collection) : AbstractSched(col) {
     private var activityForLeechNotification: WeakReference<Activity>? = null
 
-    override val today: Int
-        get() = col.backend.schedTimingToday().daysElapsed
+//    override val today: Int
+//        get() = col.backend.schedTimingToday().daysElapsed
 
     override fun reset() {
         // backend automatically resets queues as operations are performed
@@ -132,13 +131,6 @@ class SchedV3(col: Collection) : AbstractSched(col) {
     }
 
     override val goodNewButton: Int = 3
-
-    override fun haveBuried(did: DeckId): Boolean {
-        // Backend does not support checking bury status of an arbitrary deck. This is
-        // only used to decide whether to show an "unbury" option on a long press of a
-        // deck.
-        return false
-    }
 
     override val name = "std3"
 

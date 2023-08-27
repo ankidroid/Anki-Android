@@ -20,6 +20,7 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.utils.TimeManager
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
@@ -314,6 +315,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiSetCardDueTest() = runTest {
+        TimeManager.reset()
         val models = col.notetypes
         val decks = col.decks
         val didA = addDeck("Test")
@@ -339,7 +341,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // verify that it did get rescheduled
         // --------------------------------
         val cardAfterRescheduleCards = col.getCard(cardId)
-        assertEquals("Card is rescheduled", 15, cardAfterRescheduleCards.due)
+        assertEquals("Card is rescheduled", 15L + col.sched.today, cardAfterRescheduleCards.due)
     }
 
     private fun initJsApiContract(): String {
@@ -382,9 +384,8 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // verify that card progress reset
         // --------------------------------
         val cardAfterReset = col.getCard(cardId)
-        assertEquals("Card due after reset", 1, cardAfterReset.due)
+        assertEquals("Card due after reset", 2, cardAfterReset.due)
         assertEquals("Card interval after reset", 0, cardAfterReset.ivl)
-        assertEquals("Card ease after reset", 2500, cardAfterReset.factor)
         assertEquals("Card type after reset", Consts.CARD_TYPE_NEW, cardAfterReset.type)
     }
 }

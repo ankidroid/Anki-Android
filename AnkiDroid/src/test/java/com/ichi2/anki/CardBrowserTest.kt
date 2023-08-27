@@ -28,6 +28,7 @@ import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
@@ -482,12 +483,13 @@ class CardBrowserTest : RobolectricTest() {
 
         card.reload()
 
-        assertThat("Position of checked card after reset", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("1"))
+        assertThat("Position of checked card after reset", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("2"))
     }
 
     @Test
     @Config(qualifiers = "en")
     fun rescheduleDataTest() = runTest {
+        TimeManager.reset()
         val b = getBrowserWithNotes(1)
 
         b.checkCardsAtPositions(0)
@@ -500,7 +502,7 @@ class CardBrowserTest : RobolectricTest() {
 
         card.reload()
 
-        assertThat("Due of checked card after reschedule", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("8/12/20"))
+        assertThat(card.card.due, equalTo(5))
     }
 
     @Test

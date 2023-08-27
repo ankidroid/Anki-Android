@@ -60,12 +60,11 @@ object Storage {
     fun collection(
         context: Context,
         path: String,
-        server: Boolean = false,
         log: Boolean = false,
         backend: Backend? = null
     ): Collection {
         val backend2 = backend ?: BackendFactory.getBackend(context)
-        return Collection(context, path, server, log, backend2)
+        return Collection(context, path, log, backend2)
     }
 
     /**

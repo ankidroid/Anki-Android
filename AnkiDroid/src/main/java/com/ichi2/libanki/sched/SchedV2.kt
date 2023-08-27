@@ -2006,13 +2006,6 @@ end)  """
      * The methods below are not in LibAnki.
      * ***********************************************************
      */
-    // Overridden: In sched v1, a single type of burying exist
-    override fun haveBuried(did: Long): Boolean {
-        val all: MutableList<Long> = ArrayList(col.decks.children(did).values)
-        all.add(did)
-        return haveBuriedSiblings(all) || haveManuallyBuried(all)
-    }
-
     override val name: String
         get() = "std2"
     override var today: Int

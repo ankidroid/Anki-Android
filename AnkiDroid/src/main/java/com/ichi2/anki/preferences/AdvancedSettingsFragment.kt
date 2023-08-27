@@ -22,7 +22,6 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 import com.ichi2.anki.*
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider
@@ -102,22 +101,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED
             }
             requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
-        }
-
-        /*
-         * Experimental
-         */
-
-        // TODO move this to Reviewing > Scheduling once it is stable
-        val v3schedPref = requirePreference<SwitchPreferenceCompat>(R.string.enable_v3_sched_key)
-
-        // v3 scheduler
-        v3schedPref.apply {
-            launchCatchingTask { withCol { isChecked = v3Enabled } }
-            setOnPreferenceChangeListener { newValue: Any ->
-                Timber.d("v3 scheduler set to $newValue")
-                launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
-            }
         }
     }
 

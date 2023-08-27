@@ -150,14 +150,6 @@ abstract class AbstractSched(col: Collection) : BaseSched(col) {
     abstract fun answerButtons(card: Card): Int
 
     /**
-     * specific-deck case not supported by the backend; UI only uses this
-     * for long-press on deck
-     * @param did An id of a deck
-     * @return Whether there is any buried cards in the deck
-     */
-    abstract fun haveBuried(did: DeckId): Boolean
-
-    /**
      * @return Name of the scheduler. std or std2 currently.
      */
     abstract val name: String

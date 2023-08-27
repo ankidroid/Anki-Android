@@ -31,7 +31,6 @@ import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.*
-import com.ichi2.utils.BlocksSchemaUpgrade
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*
@@ -43,8 +42,6 @@ import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Assume.*
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
 import timber.log.Timber
 import java.util.*
 import kotlin.test.assertNotNull
@@ -57,13 +54,7 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
  * These tests should cover all supported operations for each URI.
  */
 @KotlinCleanup("is -> equalTo")
-@RunWith(Parameterized::class)
 class ContentProviderTest : InstrumentedTest() {
-    @JvmField // required for Parameter
-    @Parameterized.Parameter
-    @KotlinCleanup("lateinit")
-    var schedVersion = 0
-
     @get:Rule
     var runtimePermissionRule = grantPermissions(storagePermission, FlashCardsContract.READ_WRITE_PERMISSION)
 
@@ -85,7 +76,6 @@ class ContentProviderTest : InstrumentedTest() {
      * Initially create one note for each model.
      */
     @Before
-    @BlocksSchemaUpgrade("some of these tests are failing; need to investigate why")
     @Throws(
         Exception::class
     )
@@ -95,21 +85,7 @@ class ContentProviderTest : InstrumentedTest() {
         mCreatedNotes = ArrayList()
         val col = col
 
-        // We have parameterized the "schedVersion" variable, if we are on an emulator
-        // (so it is safe) we will try to run with multiple scheduler versions
-        mTearDown = false
-        if (isEmulator()) {
-            col.changeSchedulerVer(schedVersion)
-        } else {
-            if (schedVersion == 1) {
-                assumeThat(col.sched.name, equalTo("std"))
-            } else {
-                assumeThat(col.sched.name, equalTo("std2"))
-            }
-        }
         mTearDown = true
-        // Do not teardown if setup was aborted
-
         // Add a new basic model that we use for testing purposes (existing models could potentially be corrupted)
         val model = StdModels.BASIC_MODEL.add(col, BASIC_MODEL_NAME)
         mModelId = model.getLong("id")
@@ -129,10 +105,7 @@ class ContentProviderTest : InstrumentedTest() {
                 /* If parent already exists, don't add the deck, so
                  * that we are sure it won't get deleted at
                  * set-down, */
-                if (col.decks.byName(partialName!!) != null) {
-                    continue
-                }
-                val did = col.decks.id(partialName)
+                val did = col.decks.byName(partialName!!)?.id ?: col.decks.id(partialName)
                 mTestDeckIds.add(did)
                 mCreatedNotes.add(setupNewNote(col, mModelId, did, mDummyFields.requireNoNulls(), TEST_TAG))
                 partialName += "::"
@@ -1092,8 +1065,7 @@ class ContentProviderTest : InstrumentedTest() {
         val reviewInfoUri = FlashCardsContract.ReviewInfo.CONTENT_URI
         val noteId = card.note().id
         val cardOrd = card.ord
-        val earlyGraduatingEase =
-            if (schedVersion == 1) AbstractFlashcardViewer.EASE_3 else AbstractFlashcardViewer.EASE_4
+        val earlyGraduatingEase = AbstractFlashcardViewer.EASE_4
         val values = ContentValues().apply {
             val timeTaken: Long = 5000 // 5 seconds
             put(FlashCardsContract.ReviewInfo.NOTE_ID, noteId)
@@ -1161,7 +1133,7 @@ class ContentProviderTest : InstrumentedTest() {
         // QUEUE_TYPE_MANUALLY_BURIED was also used for SIBLING_BURIED in sched v1
         assertEquals(
             "Card is user-buried",
-            if (schedVersion == 1) Consts.QUEUE_TYPE_SIBLING_BURIED else Consts.QUEUE_TYPE_MANUALLY_BURIED,
+            Consts.QUEUE_TYPE_MANUALLY_BURIED,
             cardAfterUpdate.queue
         )
 
@@ -1283,13 +1255,6 @@ class ContentProviderTest : InstrumentedTest() {
         get() = testContext.contentResolver
 
     companion object {
-        @Parameterized.Parameters
-        @JvmStatic // required for initParameters
-        fun initParameters(): Collection<Array<Any>> {
-            // This does one run with schedVersion injected as 1, and one run as 2
-            return listOf(arrayOf(2))
-        }
-
         private const val BASIC_MODEL_NAME = "com.ichi2.anki.provider.test.basic.x94oa3F"
         private const val TEST_FIELD_NAME = "TestFieldName"
         private const val TEST_FIELD_VALUE = "test field value"

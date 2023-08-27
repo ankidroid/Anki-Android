@@ -233,7 +233,7 @@ object CollectionManager {
         if (collection == null || collection!!.dbClosed) {
             val path = collectionPathInValidFolder()
             collection =
-                collection(AnkiDroidApp.instance, path, server = false, log = true, backend)
+                collection(AnkiDroidApp.instance, path, log = true, backend)
         }
     }
 

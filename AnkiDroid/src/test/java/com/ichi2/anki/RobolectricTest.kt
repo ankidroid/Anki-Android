@@ -42,8 +42,6 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.libanki.sched.Sched
-import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
@@ -447,15 +445,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         // HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
         // is called.
         col
-    }
-
-    @Throws(ConfirmModSchemaException::class)
-    protected fun upgradeToSchedV2(): SchedV2 {
-        col.changeSchedulerVer(2)
-        val sched = col.sched
-        // Sched inherits from schedv2...
-        MatcherAssert.assertThat("sched should be v2", sched !is Sched)
-        return sched as SchedV2
     }
 
     /**

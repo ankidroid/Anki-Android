@@ -174,9 +174,9 @@ abstract class BaseSched(val col: Collection) {
     /**
      * @return Whether there are buried card is selected deck
      */
-    open fun haveBuried(): Boolean {
+    open fun haveBuriedInCurrentDeck(): Boolean {
         return col.backend.congratsInfo().run {
-            haveUserBuried && haveSchedBuried
+            haveUserBuried || haveSchedBuried
         }
     }
 
@@ -363,7 +363,7 @@ abstract class BaseSched(val col: Collection) {
             sb.append("\n\n")
             sb.append(context.getString(R.string.studyoptions_congrats_more_new))
         }
-        if (haveBuried()) {
+        if (haveBuriedInCurrentDeck()) {
             val now = " " + context.getString(R.string.sched_unbury_action)
             sb.append("\n\n")
             sb.append("").append(context.getString(R.string.sched_has_buried)).append(now)
