@@ -110,12 +110,12 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private fun handleDrawEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
-        if (event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS && toggleStylus) {
-            return false
-        }
         if (event.getToolType(event.actionIndex) == MotionEvent.TOOL_TYPE_ERASER) {
             stylusErase(event)
             return true
+        }
+        if (event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS && toggleStylus) {
+            return false
         }
         return when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
