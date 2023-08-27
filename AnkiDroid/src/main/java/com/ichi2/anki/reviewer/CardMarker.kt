@@ -29,13 +29,9 @@ class CardMarker(private val markView: ImageView, private val flagView: ImageVie
     annotation class FlagDef
 
     /** Sets the mark icon on a card (the star)  */
-    fun displayMark(markStatus: Boolean) {
-        if (markStatus) {
-            markView.visibility = View.VISIBLE
-            markView.setImageResource(R.drawable.ic_star_white_bordered_24dp)
-        } else {
-            markView.visibility = View.INVISIBLE
-        }
+    fun displayMark(markToDisplay: MarkToDisplay) {
+        if (markToDisplay.visibility == View.VISIBLE) markView.setImageResource(markToDisplay.icon!!)
+        markView.visibility = markToDisplay.visibility
     }
 
     /** Sets the flag icon on the card  */
