@@ -75,8 +75,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21603300
-        versionName="2.16.3"
+        versionCode=21604300
+        versionName="2.16.4"
         minSdkVersion 21
         // change api/build.gradle
         // change robolectricDownloader.gradle
