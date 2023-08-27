@@ -33,15 +33,8 @@ class CollectionV16(
     backend: Backend
 ) : Collection(context, path, server, log, backend) {
 
-    override fun initMedia(): BackendMedia {
-        return BackendMedia(this, server)
-    }
-
     override val newBackend: CollectionV16
         get() = this
-
-    override val newMedia: BackendMedia
-        get() = this.media as BackendMedia
 
     /** True if the V3 scheduled is enabled when schedVer is 2. */
     override var v3Enabled: Boolean

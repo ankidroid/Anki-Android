@@ -36,6 +36,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
+import timber.log.Timber
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
@@ -43,6 +44,8 @@ import java.io.IOException
 @KotlinCleanup("have Model constructor accent @Language('JSON')")
 @RunWith(AndroidJUnit4::class)
 class NoteServiceTest : RobolectricTest() {
+    override fun useInMemoryDatabase(): Boolean = false
+
     @KotlinCleanup("lateinit")
     var testCol: Collection? = null
 
@@ -103,7 +106,7 @@ class NoteServiceTest : RobolectricTest() {
 
         NoteService.importMediaToDirectory(testCol!!, audioField)
 
-        val outFile = File(testCol!!.media.dir(), fileAudio.name)
+        val outFile = File(testCol!!.media.dir, fileAudio.name)
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(audioField.audioPath)))
     }
@@ -122,7 +125,7 @@ class NoteServiceTest : RobolectricTest() {
 
         NoteService.importMediaToDirectory(testCol!!, imgField)
 
-        val outFile = File(testCol!!.media.dir(), fileImage.name)
+        val outFile = File(testCol!!.media.dir, fileImage.name)
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(imgField.extraImagePathRef)))
     }
@@ -157,11 +160,12 @@ class NoteServiceTest : RobolectricTest() {
         val fld3 = MediaClipField()
         fld3.audioPath = f1.absolutePath
 
+        Timber.e("media folder is %s %b", testCol!!.media.dir, File(testCol!!.media.dir).exists())
         NoteService.importMediaToDirectory(testCol!!, fld1)
-        val o1 = File(testCol!!.media.dir(), f1.name)
+        val o1 = File(testCol!!.media.dir, f1.name)
 
         NoteService.importMediaToDirectory(testCol!!, fld2)
-        val o2 = File(testCol!!.media.dir(), f2.name)
+        val o2 = File(testCol!!.media.dir, f2.name)
 
         NoteService.importMediaToDirectory(testCol!!, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
@@ -194,10 +198,10 @@ class NoteServiceTest : RobolectricTest() {
         fld3.extraImagePathRef = f1.absolutePath
 
         NoteService.importMediaToDirectory(testCol!!, fld1)
-        val o1 = File(testCol!!.media.dir(), f1.name)
+        val o1 = File(testCol!!.media.dir, f1.name)
 
         NoteService.importMediaToDirectory(testCol!!, fld2)
-        val o2 = File(testCol!!.media.dir(), f2.name)
+        val o2 = File(testCol!!.media.dir, f2.name)
 
         NoteService.importMediaToDirectory(testCol!!, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one

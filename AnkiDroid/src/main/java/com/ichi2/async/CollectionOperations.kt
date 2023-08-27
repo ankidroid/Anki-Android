@@ -104,15 +104,8 @@ fun deleteMedia(
     col: Collection,
     unused: List<String>
 ): Int {
-    val m = col.media
-    if (!BackendFactory.defaultLegacySchema) {
-        // FIXME: this provides progress info that is not currently used
-        col.newMedia.removeFiles(unused)
-    } else {
-        for (fname in unused) {
-            m.removeFile(fname)
-        }
-    }
+    // FIXME: this provides progress info that is not currently used
+    col.media.removeFiles(unused)
     return unused.size
 }
 

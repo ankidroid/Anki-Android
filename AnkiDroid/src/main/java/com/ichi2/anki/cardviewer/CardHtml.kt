@@ -158,7 +158,7 @@ class CardHtml(
          */
         private fun displayString(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
             var content: String = if (side == Side.FRONT) card.q(reload) else card.a()
-            content = Media.escapeImages(content)
+            content = card.col.media.escapeImages(content)
             content = context.filterTypeAnswer(content, side)
             Timber.v("question: '%s'", content)
             return enrichWithQADiv(content)

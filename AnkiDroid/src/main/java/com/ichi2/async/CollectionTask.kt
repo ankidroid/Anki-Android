@@ -235,7 +235,7 @@ open class CollectionTask<Progress, Result>(val task: TaskDelegateBase<Progress,
                             }
                         }
                     }
-                    val mediaDir = Media.getCollectionMediaPath(colPath)
+                    val mediaDir = getCollectionMediaPath(colPath)
                     val total = nameToNum.size
                     var i = 0
                     for ((file, c) in nameToNum) {

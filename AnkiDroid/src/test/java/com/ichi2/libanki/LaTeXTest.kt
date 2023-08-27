@@ -24,7 +24,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class LaTeXTest : RobolectricTest() {
-    class MockMedia(col: Collection) : Media(col, false) {
+    class MockMedia(col: Collection) : Media(col) {
         /**
          * @param fname A field name
          * @return Always true, given that we want to assume the field exists in test

@@ -569,7 +569,7 @@ abstract class AbstractFlashcardViewer :
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         sched = col.sched
-        val mediaDir = col.media.dir()
+        val mediaDir = col.media.dir
         mBaseUrl = Utils.getBaseUrl(mediaDir).also { baseUrl ->
             mSoundPlayer = Sound(baseUrl).also { sound ->
                 sound.setupVideoActivityCallback()

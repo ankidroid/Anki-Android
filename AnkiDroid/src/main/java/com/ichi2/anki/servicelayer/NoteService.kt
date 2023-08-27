@@ -129,7 +129,8 @@ object NoteService {
                 val inFile = File(tmpMediaPath)
                 if (inFile.exists() && inFile.length() > 0) {
                     val fname = col.media.addFile(inFile)
-                    val outFile = File(col.media.dir(), fname)
+                    val outFile = File(col.media.dir, fname)
+                    Timber.e("%s %s", fname, outFile)
                     if (field.hasTemporaryMedia && outFile.absolutePath != tmpMediaPath) {
                         // Delete original
                         inFile.delete()

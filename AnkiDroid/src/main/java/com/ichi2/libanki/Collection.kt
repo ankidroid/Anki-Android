@@ -103,9 +103,6 @@ open class Collection(
     open val newBackend: CollectionV16
         get() = throw Exception("invalid call to newBackend on old backend")
 
-    open val newMedia: BackendMedia
-        get() = throw Exception("invalid call to newMedia on old backend")
-
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun debugEnsureNoOpenPointers() {
         val result = backend.getActiveSequenceNumbers()
@@ -128,7 +125,6 @@ open class Collection(
      * Getters/Setters ********************************************************** *************************************
      */
 
-    // private double mLastSave;
     val media: Media
 
     lateinit var decks: Decks
@@ -194,7 +190,7 @@ open class Collection(
     }
 
     protected open fun initMedia(): Media {
-        return Media(this, server)
+        return Media(this)
     }
 
     protected open fun initDecks(): Decks {
@@ -403,7 +399,6 @@ open class Collection(
                 backend.closeCollection(downgrade)
             }
             dbInternal = null
-            media.close()
             _closeLog()
             Timber.i("Collection closed")
         }
@@ -416,7 +411,6 @@ open class Collection(
             val (db_, created) = Storage.openDB(path, backend, afterFullSync)
             dbInternal = db_
             load()
-            media.connect()
             _openLog()
             if (afterFullSync) {
                 _loadScheduler()
