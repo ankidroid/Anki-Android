@@ -1,4 +1,4 @@
-// TODO: header (suppress?)
+//noinspection MissingCopyrightHeader
 package com.ichi2.anki.reviewer
 
 import android.view.View
