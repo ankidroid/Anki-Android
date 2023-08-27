@@ -3,8 +3,8 @@ package com.ichi2.anki.reviewer
 
 import android.view.View
 import com.ichi2.anki.R
-import com.ichi2.anki.reviewer.MarkToDisplay.Companion.HIDDEN
-import com.ichi2.anki.reviewer.MarkToDisplay.Companion.VISIBLE
+import com.ichi2.anki.reviewer.MarkToDisplay.HIDDEN
+import com.ichi2.anki.reviewer.MarkToDisplay.VISIBLE
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
