@@ -25,6 +25,14 @@ idea {
 }
 
 def homePath = System.properties['user.home']
+/**
+ * @return the current git hash
+ * @example edf739d95bad7b370a6ed4398d46723f8219b3cd
+ */
+static def gitCommitHash() {
+    "git rev-parse HEAD".execute().text.trim()
+}
+
 android {
     namespace "com.ichi2.anki"
 
@@ -43,6 +51,7 @@ android {
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
+        buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash()}\""
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
