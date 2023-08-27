@@ -254,7 +254,7 @@ open class DeckPicker :
     // used for check media
     private val checkMediaStoragePermissionCheck = PermissionManager.register(
         this,
-        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE),
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) else emptyArray(),
         useCallbackIfActivityRecreated = true,
         callback = callbackHandlingStoragePermissionsCheckForCheckMedia(WeakReference(this))
     )
@@ -1993,6 +1993,7 @@ open class DeckPicker :
             // actually happens
             performBackupInBackground()
         }
+        Timber.d("updateDeckList: quick: %b", quick)
         if (quick) {
             launchCatchingTask {
                 withProgress {
@@ -2049,6 +2050,7 @@ open class DeckPicker :
         if (dueTree == null) {
             // mDueTree may be set back to null when the activity restart.
             // We may need to recompute it.
+            Timber.d("renderPage: recomputing dueTree")
             updateDeckList()
             return
         }
@@ -2091,6 +2093,7 @@ open class DeckPicker :
             if (mToolbarSearchView != null) {
                 mDeckListAdapter.filter.filter(currentFilter)
             }
+            Timber.d("Not rendering deck list as there are no cards")
             // We're done here
             return
         }
@@ -2285,13 +2288,16 @@ open class DeckPicker :
         }
     }
 
-    suspend fun rebuildFiltered(did: DeckId) {
-        withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
-            withCol {
-                Timber.d("rebuildFiltered: doInBackground - RebuildCram")
-                decks.select(did)
-                sched.rebuildDyn(decks.selected())
-                updateValuesFromDeck(this, true)
+    @NeedsTest("14285: regression test to ensure UI is updated after this call")
+    fun rebuildFiltered(did: DeckId) {
+        launchCatchingTask {
+            withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
+                withCol {
+                    Timber.d("rebuildFiltered: doInBackground - RebuildCram")
+                    decks.select(did)
+                    sched.rebuildDyn(decks.selected())
+                    updateValuesFromDeck(this, true)
+                }
             }
             updateDeckList()
             if (fragmented) loadStudyOptionsFragment(false)

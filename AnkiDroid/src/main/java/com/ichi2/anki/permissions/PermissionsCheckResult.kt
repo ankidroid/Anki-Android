@@ -21,16 +21,16 @@ package com.ichi2.anki.permissions
  * @param permissions A map, containing an entry for each required permission, associating to it whether it's already granted
  */
 open class PermissionsCheckResult(val permissions: Map<String, Boolean>) {
-    val allGranted = permissions.all { it.value }
     val requiresPermissionDialog: Boolean = permissions.any { !it.value }
 
     /**
+     * @param requestedPermissions Whether any permissions were requested
      * @return A [PermissionsRequestRawResults], or `null` if a permissions dialog is required.
      */
-    fun toPermissionsRequestRawResult(): PermissionsRequestRawResults? {
+    fun toPermissionsRequestRawResult(requestedPermissions: Boolean): PermissionsRequestRawResults? {
         if (requiresPermissionDialog) {
             return null
         }
-        return permissions
+        return PermissionsRequestRawResults(permissions, requestedPermissions)
     }
 }

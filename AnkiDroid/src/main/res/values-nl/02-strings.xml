@@ -364,6 +364,7 @@
     <string name="deck_download_progress_message">U kunt andere apps gebruiken terwijl de download bezig is</string>
     <string name="check_network">Controleer alsrublief uw internetconnectie</string>
     <string name="search_using_deck_name">Zoek met setnaam</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Startpagina</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -402,7 +403,7 @@
     <string name="intro_sync_from_ankiweb">Synchronizeren vanaf AnkiWeb</string>
     <string name="already_logged_in">Reeds ingelogd</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
+    <string name="validation_deck_already_exists">Set bestaat</string>
     <string name="deck_created">Leerset aanmaken</string>
     <string name="deck_renamed">Setnaam wijzigen</string>
     <!-- Deck Deletion -->

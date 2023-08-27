@@ -8,7 +8,7 @@ var resizeDone = false;
   handle image resizing on its own, but for older versions of WebView,
   we do it here.
 
-  If we are resizing with JavasSript, we also account for the CSS zoom
+  If we are resizing with JavaScript, we also account for the CSS zoom
   level applied to the image. If an image is scaled with CSS zoom, the
   dimensions given to us by the browser will not be scaled
   accordingly, giving us only the original dimensions. We have to
@@ -234,7 +234,7 @@ var onPageFinished = function () {
                    renders content.  We hide all the content until MathJax renders, because otherwise
                    the content loads, and has to reflow after MathJax renders, and it's unsightly.
                    However, if we hide all the content every time, folks don't like the repainting after
-                   every question or answer.  This is a middleground, where there is no repainting due to
+                   every question or answer.  This is a middle-ground, where there is no repainting due to
                    MathJax on non-MathJax cards, and on MathJax cards, there is a small flicker, but there's
                    no reflowing because the content only shows after MathJax has rendered. */
 

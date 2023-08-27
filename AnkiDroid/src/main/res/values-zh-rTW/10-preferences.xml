@@ -114,8 +114,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">輕觸正中間</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">輕觸左下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">輕觸右下方</string>
-    <string name="more_scrolling_buttons" maxLength="41">電子書閱讀器</string>
-    <string name="more_scrolling_buttons_summ">也使用漢字/片假名，emoji/kao-moji 按鈕來捲動</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ 選單</string>
     <string name="card_browser_enable_external_context_menu_summary">啟用全域性‘%s’內容選單</string>
     <string name="double_scrolling_gap" maxLength="41">加速捲動</string>
@@ -206,13 +204,13 @@
     <string name="pref_cat_reviewer" maxLength="41">複習介面</string>
     <string name="accessibility" maxLength="41">無障礙功能</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">粘貼PNG格式的圖像到剪贴板上</string>
-    <string name="paste_as_png_summary">為了節省磁盤空間，Anki自動會粘貼JPG格式到剪贴板上。你也可以在設置裡面設定PNG格式。</string>
+    <string name="paste_as_png" maxLength="41">複製PNG格式的圖像到剪貼簿上</string>
+    <string name="paste_as_png_summary">為了節省磁盤空間，Anki自動會複製JPG格式到剪貼簿上。你也可以在設置裡面設定PNG格式。</string>
     <string name="exit_via_double_tap_back" maxLength="41">按二次返回鍵返回或者退出</string>
     <string name="exit_via_double_tap_back_summ">避免不小心離開預覽器或者程式</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">允許所有置於媒體匯入中之檔案</string>
-    <string name="media_import_allow_all_files_summ">如果安卓無法辨識一份媒體檔案</string>
+    <string name="media_import_allow_all_files_summ">如果 Android 無法辨識媒體檔案</string>
     <!-- Statistics settings -->
     <string name="stats_default_deck_title" maxLength="41">打開統計資料時默認牌組</string>
     <string name="stats_default_deck_current">顯示最近牌組的統計資料</string>
@@ -302,7 +300,7 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">重新排程</string>
     <string name="deck_conf_cram_reschedule_summ">依據我在本牌組的回答狀況來重新排程卡片</string>
     <string name="deck_conf_cram_filter_2_check">開啟第二個過濾器</string>
-    <string name="deck_conf_cram_steps" maxLength="41">自訂步伐 (以分鐘計)</string>
+    <string name="deck_conf_cram_steps" maxLength="41">自訂步數 (以分鐘計)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">設定自訂步數</string>
     <string name="deck_conf_reminders_enabled" maxLength="41">為此牌組群組的牌組啟用提醒通知</string>
     <string name="deck_conf_reminders_time" maxLength="41">提醒時間</string>
@@ -313,11 +311,11 @@
     <string name="note_editor_replace_newlines" maxLength="41">以HTML取代新列</string>
     <string name="note_editor_replace_newlines_summ">在筆記編輯器中，編輯卡片時將&lt;br&gt;的任何實例轉換至新一列。</string>
     <string name="no_code_formatting" maxLength="41">簡單輸入的答案模式</string>
-    <string name="no_code_formatting_summ">修復在輸入的答按結果中出現的“􏿾”</string>
+    <string name="no_code_formatting_summ">修復在輸入的答案結果中出現的“􏿾”</string>
     <string name="type_in_answer_focus" maxLength="41">聚焦“輸入答案”</string>
     <string name="type_in_answer_focus_summ">自動聚焦在復習者的“輸入答案”字段</string>
     <!-- About -->
-    <string name="open_changelog">打開更新日志</string>
+    <string name="open_changelog">打開更新日誌</string>
     <string name="pref_cat_about_title" maxLength="41">關於</string>
     <string name="contributors_title">貢獻者</string>
     <string name="about_contributors_description"><![CDATA[這些是我們非常棒的<a href=\“%1$s\”>貢獻者</a>。 您也可以通過貢獻程式碼、翻譯、捐贈和<a href=\“%2$s\”>更多</a>來幫助AnkiDroid！]]></string>
@@ -334,7 +332,7 @@
     <string name="card_side_selection_title">選取卡面</string>
     <string name="card_side_question">問題</string>
     <string name="card_side_answer">答案</string>
-    <string name="card_side_both">问答</string>
+    <string name="card_side_both">問與答</string>
     <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">問：%s</string>
     <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">答：%s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
@@ -346,7 +344,7 @@
     <string name="experimental_pref_confirmation" maxLength="41">啟用\'%s\'</string>
     <string name="use_rust_backend_title" maxLength="41">使用新後端</string>
     <string name="use_rust_backend_summary">啟用較新的Anki功能，例如v3版調度程式\n不穩定。 不要用在你在意的牌組上。 應用關閉時不會還原。</string>
-    <string name="use_rust_backend_warning">此操作可能徹底損壞您的安裝。 要求應用卸載和删除AnkiDroid資料夾，並可能通過同步將損壞傳播到AnkiWeb。 \n\n我們歡迎測試，但請確保您有一個有效的非AnkiWeb備份。</string>
+    <string name="use_rust_backend_warning">此操作可能徹底損壞您的安裝。 要求應用卸載和刪除AnkiDroid資料夾，並可能通過同步將損壞傳播到AnkiWeb。 \n\n我們歡迎測試，但請確保您有一個有效的非AnkiWeb備份。</string>
     <string name="enable_v3_sched_title" maxLength="41">使用 v3 調度器</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開發人員選項</string>

@@ -88,6 +88,7 @@ object PreferenceUpgradeService {
                 yield(UpgradeDayAndNightThemes())
                 yield(UpgradeFetchMedia())
                 yield(UpgradeAppLocale())
+                yield(RemoveScrollingButtons())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -399,6 +400,12 @@ object PreferenceUpgradeService {
                 // 2. Set the locale with the new AndroidX API
                 val localeList = LocaleListCompat.forLanguageTags(languageTag)
                 AppCompatDelegate.setApplicationLocales(localeList)
+            }
+        }
+
+        internal class RemoveScrollingButtons : PreferenceUpgrade(11) {
+            override fun upgrade(preferences: SharedPreferences) {
+                preferences.edit { remove("scrolling_buttons") }
             }
         }
     }

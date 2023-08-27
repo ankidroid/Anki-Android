@@ -328,7 +328,7 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidのショートカットを追加するには、iManagerでの許可が必要な場合があります。</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面へのショートカットの追加が許可されませんでした</string>
     <string name="create_shortcut_error">ショートカット追加のエラー: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">文の頭でキーボード大文字</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">文頭でキーボード大文字</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ツールバーをスクロール表示</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
@@ -351,6 +351,7 @@
     <string name="deck_download_progress_message">ダウンロード中、他のアプリを使用できます</string>
     <string name="check_network">ネットワーク接続を確認してください</string>
     <string name="search_using_deck_name">デッキ名で検索</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">ホーム</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

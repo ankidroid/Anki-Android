@@ -114,8 +114,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Chạm vào chính giữa</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Chạm vào dưới cùng bên trái</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Chạm vào dưới cùng bên phải</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">Cũng sử dung nút kanji/katakana, emoji/kao-moji để di chuyển</string>
     <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Bật menu ngữ cảnh ‘%s’ trên toàn cầu</string>
     <string name="double_scrolling_gap" maxLength="41">Bấm phím scrolling (chuột giữa) hai lần</string>

@@ -42,7 +42,7 @@ object DebugInfoService {
         val webviewUserAgent = getWebviewUserAgent(info)
         val newSchema = !BackendFactory.defaultLegacySchema
         return """
-               AnkiDroid Version = $pkgVersionName
+               AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
                
                Android Version = ${Build.VERSION.RELEASE}
                

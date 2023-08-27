@@ -181,8 +181,8 @@
     <string name="integrity_check_insufficient_space">Verificar a Base de Dados usa uma grande quantidade de armazenamento temporário.\n\nÉ altamente recomendável que você tenha pelo menos %s espaço livre no seu dispositivo antes de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nVocê tem atualmente %s livre.</string>
     <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">Os cartões %d com baralho inicial incorreto foi recuperado. Por favor, consulte o manual para obter mais informações.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
+        <item quantity="one">%d card com baralho incorreto foi recuperado. Por favor, consulte o manual para obter mais informações.</item>
+        <item quantity="other">%d cards com baralhos incorretos foram recuperados. Por favor, consulte o manual para obter mais informações.</item>
     </plurals>
     <string name="video_creation_error">Não foi possível reproduzir o vídeo</string>
     <!-- Card Browser -->

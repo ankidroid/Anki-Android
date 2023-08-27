@@ -200,10 +200,6 @@ class Preferences :
         }
 
         /** From [AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs] */
-        if (!CompatHelper.hasKanaAndEmojiKeys()) {
-            searchConfig.ignorePreference(getString(R.string.more_scrolling_buttons_key))
-        }
-        /** From [AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs] */
         if (!CompatHelper.hasScrollKeys()) {
             searchConfig.ignorePreference(getString(R.string.double_scrolling_gap_key))
         }

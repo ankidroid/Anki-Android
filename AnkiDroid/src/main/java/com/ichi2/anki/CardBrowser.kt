@@ -90,11 +90,11 @@ import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
-import java.lang.Exception
 import java.lang.IllegalStateException
 import java.lang.StringBuilder
 import java.util.*
 import java.util.function.Consumer
+import kotlin.Exception
 import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -190,9 +190,10 @@ open class CardBrowser :
         if (data != null &&
             (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))
         ) {
+            Timber.d("Reloading Card Browser due to activity result")
             // if reloadRequired or noteChanged flag was sent from note editor then reload card list
-            searchCards()
             mShouldRestoreScroll = true
+            searchCards()
             // in use by reviewer?
             if (reviewerCardId == mCurrentCardId) {
                 mReloadRequired = true
@@ -1676,7 +1677,9 @@ open class CardBrowser :
         val query = searchText!!
         val order = if (mOrder == CARD_ORDER_NONE) NoOrdering() else UseCollectionOrdering()
         launchCatchingTask {
+            Timber.d("performing search")
             val cards = withProgress { searchForCards(query, order, inCardsMode) }
+            Timber.d("Search returned %d cards", cards.size)
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
                 cards[i].load(false, mColumn1Index, mColumn2Index)
@@ -1691,6 +1694,7 @@ open class CardBrowser :
         updateList()
         /*check whether mSearchView is initialized as it is lateinit property.*/
         if (mSearchView == null || mSearchView!!.isIconified) {
+            restoreScrollPositionIfRequested()
             return
         }
         if (hasSelectedAllDecks()) {
@@ -1706,14 +1710,25 @@ open class CardBrowser :
                 setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
             }
         }
-        if (mShouldRestoreScroll) {
-            mShouldRestoreScroll = false
-            val newPosition = newPositionOfSelectedCard
-            if (newPosition != CARD_NOT_AVAILABLE) {
-                autoScrollTo(newPosition)
-            }
-        }
+        restoreScrollPositionIfRequested()
         updatePreviewMenuItem()
+    }
+
+    /**
+     * Restores the scroll position of the browser when requested (for example after editing a card)
+     */
+    @NeedsTest("Issue 14220: Ensure this is called if mSearchView == null. Use Espresso to test")
+    private fun restoreScrollPositionIfRequested() {
+        if (!mShouldRestoreScroll) {
+            Timber.d("Not restoring search position")
+            return
+        }
+        mShouldRestoreScroll = false
+        val newPosition = newPositionOfSelectedCard
+        if (newPosition != CARD_NOT_AVAILABLE) {
+            Timber.d("Restoring scroll position after search")
+            autoScrollTo(newPosition)
+        }
     }
 
     @VisibleForTesting

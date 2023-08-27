@@ -114,8 +114,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Berør midten</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Berør nederst til venstre</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Berør nederst til høyre</string>
-    <string name="more_scrolling_buttons" maxLength="41">eLeser</string>
-    <string name="more_scrolling_buttons_summ">Bruk også kanji/katakana, emoji/kao-moji-knapper for å bla nedover</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Meny</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Dobbelskrolling</string>

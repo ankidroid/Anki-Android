@@ -25,6 +25,14 @@ idea {
 }
 
 def homePath = System.properties['user.home']
+/**
+ * @return the current git hash
+ * @example edf739d95bad7b370a6ed4398d46723f8219b3cd
+ */
+static def gitCommitHash() {
+    "git rev-parse HEAD".execute().text.trim()
+}
+
 android {
     namespace "com.ichi2.anki"
 
@@ -43,6 +51,7 @@ android {
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
+        buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash()}\""
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
@@ -66,14 +75,14 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21603300
-        versionName="2.16.3"
+        versionCode=21700101
+        versionName="2.17alpha1"
         minSdkVersion 21
         // change api/build.gradle
         // change robolectricDownloader.gradle
         // After #13695: change .tests_emulator.yml
         // noinspection OldTargetApi
-        targetSdkVersion 32
+        targetSdkVersion 33
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
@@ -315,7 +324,7 @@ dependencies {
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin:3.23.3' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin:3.24.1' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
@@ -361,7 +370,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     implementation 'com.github.ByteHamster:SearchPreference:v2.3.0'
-    implementation 'com.github.AppIntro:AppIntro:6.2.0'
+    implementation 'com.github.AppIntro:AppIntro:6.3.1'
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
