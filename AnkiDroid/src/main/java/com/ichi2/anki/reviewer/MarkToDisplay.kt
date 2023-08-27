@@ -24,13 +24,11 @@ enum class MarkToDisplay(val visibility: Int, val icon: Int?) {
 
     companion object {
         fun forState(isCardMarked: Boolean, isOnAppBar: Boolean, isFullscreen: Boolean): MarkToDisplay {
-            if (!isCardMarked) {
-                return HIDDEN
+            return when {
+                !isCardMarked -> HIDDEN
+                isOnAppBar && !isFullscreen -> HIDDEN
+                else -> VISIBLE
             }
-            if (!isOnAppBar || isFullscreen) {
-                return VISIBLE
-            }
-            return HIDDEN
         }
     }
 }
