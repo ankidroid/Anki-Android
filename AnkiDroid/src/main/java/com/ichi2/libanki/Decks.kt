@@ -592,7 +592,7 @@ class Decks(private val col: Collection) {
     /** The currently active dids. */
     @RustCleanup("Probably better as a queue")
     fun active(): LinkedList<DeckId> {
-        val activeDecks: JSONArray = col.get_config_array(ACTIVE_DECKS)
+        val activeDecks: JSONArray = col.config.getJSONArray(ACTIVE_DECKS)
         val result = LinkedList<Long>()
         result.addAll(activeDecks.longIterable())
         return result
@@ -614,7 +614,7 @@ class Decks(private val col: Collection) {
         col.backend.setCurrentDeck(did)
         val active = this.deck_and_child_ids(did)
         if (active != this.active()) {
-            this.col.set_config(ACTIVE_DECKS, active.toJsonArray())
+            this.col.config.set(ACTIVE_DECKS, active.toJsonArray())
         }
     }
 

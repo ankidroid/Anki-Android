@@ -12,12 +12,12 @@ import timber.log.Timber
  */
 fun Collection.upgradeJSONIfNecessary(name: String, defaultValue: Boolean) =
     try {
-        get_config_boolean(name)
+        config.getBoolean(name)
     } catch (e: JSONException) {
         Timber.w(e)
         // workaround to repair wrong values from older libanki versions
         try {
-            set_config(name, defaultValue)
+            config.set(name, defaultValue)
         } catch (e1: JSONException) {
             Timber.w(e1)
             // do nothing

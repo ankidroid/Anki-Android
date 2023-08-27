@@ -495,7 +495,7 @@ abstract class BaseSched(val col: Collection) {
             @Suppress("useless_cast")
             val request = schedTimingTodayLegacyRequest {
                 createdSecs = col.crt
-                col.get_config("creationOffset", null as Int?)?.let {
+                col.config.get("creationOffset", null as Int?)?.let {
                     createdMinsWest = it
                 }
                 nowSecs = time.intTime()
@@ -512,7 +512,7 @@ abstract class BaseSched(val col: Collection) {
 
     @Suppress("useless_cast")
     fun _rolloverHour(): Int {
-        return col.get_config("rollover", 4 as Int)!!
+        return col.config.get("rollover", 4 as Int)!!
     }
 
     @Suppress("useless_cast")
@@ -539,14 +539,14 @@ abstract class BaseSched(val col: Collection) {
      */
     fun set_creation_offset() {
         val minsWest = localMinutesWest(col.crt)
-        col.set_config("creationOffset", minsWest)
+        col.config.set("creationOffset", minsWest)
     }
 
     // New timezone handling
     // ////////////////////////////////////////////////////////////////////////
 
     fun _new_timezone_enabled(): Boolean {
-        return col.has_config_not_null("creationOffset")
+        return col.config.has_config_not_null("creationOffset")
     }
 
     fun useNewTimezoneCode() {
@@ -554,7 +554,7 @@ abstract class BaseSched(val col: Collection) {
     }
 
     fun clear_creation_offset() {
-        col.remove_config("creationOffset")
+        col.config.remove("creationOffset")
     }
 
     /** true if there are any rev cards due.  */
@@ -715,7 +715,7 @@ abstract class BaseSched(val col: Collection) {
             return context.getString(R.string.sched_end)
         }
         var s = Utils.timeQuantityNextIvl(context, ivl)
-        if (ivl < col.get_config_int("collapseTime")) {
+        if (ivl < col.config.getInt("collapseTime")) {
             s = context.getString(R.string.less_than_time, s)
         }
         return s

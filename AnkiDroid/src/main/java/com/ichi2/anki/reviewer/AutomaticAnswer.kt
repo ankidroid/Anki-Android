@@ -282,7 +282,7 @@ class AutomaticAnswerSettings(
 
         private fun getAction(col: Collection): AutomaticAnswerAction {
             return try {
-                val value: Int = col.get_config(AutomaticAnswerAction.CONFIG_KEY, null as Int?) ?: return AutomaticAnswerAction.BURY_CARD
+                val value: Int = col.config.get(AutomaticAnswerAction.CONFIG_KEY, null as Int?) ?: return AutomaticAnswerAction.BURY_CARD
                 AutomaticAnswerAction.fromPreferenceValue(value)
             } catch (e: Exception) {
                 AutomaticAnswerAction.BURY_CARD

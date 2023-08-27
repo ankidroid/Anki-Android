@@ -47,7 +47,7 @@ class SchedUpgradeTest : RobolectricTest() {
     @Test
     fun schedulerForV1CollectionIsV1() {
         // A V1 collection does not have the schedVer variable. This is not the same as a downgrade.
-        col.remove_config("schedVer")
+        col.config.remove("schedVer")
         col.close()
 
         assertThat(

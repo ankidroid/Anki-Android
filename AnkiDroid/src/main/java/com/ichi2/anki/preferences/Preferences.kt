@@ -343,7 +343,7 @@ class Preferences :
             withCol {
                 when (getSchedVer(this)) {
                     2 -> {
-                        set_config("rollover", hours)
+                        config.set("rollover", hours)
                     }
                     else -> { // typically "1"
                         val date: Calendar = crtGregorianCalendar()
@@ -358,7 +358,7 @@ class Preferences :
         suspend fun getDayOffset(): Int {
             return withCol {
                 when (schedVer()) {
-                    2 -> get_config("rollover", DEFAULT_ROLLOVER_VALUE)!!
+                    2 -> config.get("rollover", DEFAULT_ROLLOVER_VALUE)!!
                     // 1, or otherwise:
                     else -> crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
                 }

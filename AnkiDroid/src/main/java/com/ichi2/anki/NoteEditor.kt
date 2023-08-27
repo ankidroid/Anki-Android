@@ -1624,8 +1624,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         if (note == null || addNote || mCurrentEditedCard == null) {
             val model = col.models.current()
-            if (col.get_config("addToCur", true)!!) {
-                deckId = col.get_config_long(CURRENT_DECK)
+            if (col.config.get("addToCur", true)!!) {
+                deckId = col.config.getLong(CURRENT_DECK)
                 if (col.decks.isDyn(deckId)) {
                     /*
                      * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
@@ -1957,7 +1957,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 currentDeck.put("mid", newId)
                 col.decks.save(currentDeck)
                 // Update deck
-                if (!col.get_config("addToCur", true)!!) {
+                if (!col.config.get("addToCur", true)!!) {
                     deckId = model.optLong("did", Consts.DEFAULT_DECK_ID)
                 }
                 refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))

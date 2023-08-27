@@ -350,7 +350,7 @@ mw.col.sched.extendLimits(1, 0)
         val conf = col.decks.confForDid(1)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 3.0, 5.0, 10.0)))
         col.decks.save(conf)
-        col.set_config("collapseTime", 20 * 60)
+        col.config.set("collapseTime", 20 * 60)
         val sched = col.sched
 
         addNoteUsingBasicModel("foo", "bar")

@@ -41,17 +41,12 @@ import com.ichi2.libanki.sched.AbstractSched
 import com.ichi2.libanki.sched.Sched
 import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.sched.SchedV3
-import com.ichi2.libanki.utils.NotInLibAnki
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
-import org.jetbrains.annotations.Contract
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.*
 import java.util.*
@@ -176,9 +171,6 @@ open class Collection(
         mStartReps = 0
         mStartTime = 0
         _loadScheduler()
-        if (!get_config("newBury", false)!!) {
-            set_config("newBury", true)
-        }
         if (created) {
             Storage.addNoteTypes(col, backend)
             col.onCreate()
@@ -215,7 +207,7 @@ open class Collection(
      * ***********************************************************
      */
     fun schedVer(): Int {
-        val ver = get_config("schedVer", fDefaultSchedulerVersion)!!
+        val ver = config.get("schedVer", fDefaultSchedulerVersion)!!
         return if (fSupportedSchedulerVersions.contains(ver)) {
             ver
         } else {
@@ -235,7 +227,7 @@ open class Collection(
                 SchedV2(this)
             }
             if (!server) {
-                set_config("localOffset", sched._current_timezone_offset())
+                config.set("localOffset", sched._current_timezone_offset())
             }
         }
     }
@@ -257,7 +249,7 @@ open class Collection(
         } else {
             v2Sched.moveToV2()
         }
-        set_config("schedVer", ver)
+        config.set("schedVer", ver)
         _loadScheduler()
     }
 
@@ -442,8 +434,8 @@ open class Collection(
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
-                get_config("sortType", null as String?) ?: "noteFld",
-                get_config("sortBackwards", false) ?: false
+                config.get("sortType", null as String?) ?: "noteFld",
+                config.get("sortBackwards", false) ?: false
             )
         } else {
             order
@@ -463,8 +455,8 @@ open class Collection(
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
-                get_config("noteSortType", null as String?) ?: "noteFld",
-                get_config("browserNoteSortBackwards", false) ?: false
+                config.get("noteSortType", null as String?) ?: "noteFld",
+                config.get("browserNoteSortBackwards", false) ?: false
             )
         } else {
             order
@@ -512,14 +504,14 @@ open class Collection(
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
     fun timeboxReached(): Pair<Int, Int>? {
-        if (get_config_long("timeLim") == 0L) {
+        if (config.getLong("timeLim") == 0L) {
             // timeboxing disabled
             return null
         }
         val elapsed = TimeManager.time.intTime() - mStartTime
-        return if (elapsed > get_config_long("timeLim")) {
+        return if (elapsed > config.getLong("timeLim")) {
             Pair(
-                get_config_int("timeLim"),
+                config.getInt("timeLim"),
                 sched.reps - mStartReps
             )
         } else {
@@ -610,7 +602,7 @@ open class Collection(
 
     open fun onCreate() {
         sched.useNewTimezoneCode()
-        set_config("schedVer", 2)
+        config.set("schedVer", 2)
         // we need to reload the scheduler: this was previously loaded as V1
         _loadScheduler()
     }
@@ -778,172 +770,6 @@ open class Collection(
     lateinit var models: Models
         protected set
 
-    // region JSON-Related Config
-    // Anki Desktop has a get_config and set_config method handling an "Any"
-    // We're not dynamically typed, so add additional methods for each JSON type that
-    // we can handle
-    // methods with a default can be named `get_config` as the `defaultValue` argument defines the return type
-    // NOTE: get_config("key", 1) and get_config("key", 1L) will return different types
-    fun has_config(key: String): Boolean {
-        // not in libAnki
-        return config.has(key)
-    }
-
-    fun has_config_not_null(key: String): Boolean {
-        // not in libAnki
-        return has_config(key) && !config.isNull(key)
-    }
-
-    /** @throws JSONException object does not exist or can't be cast
-     */
-    fun get_config_boolean(key: String): Boolean {
-        return config.getBoolean(key)
-    }
-
-    /** @throws JSONException object does not exist or can't be cast
-     */
-    fun get_config_long(key: String): Long {
-        return config.getLong(key)
-    }
-
-    /** @throws JSONException object does not exist or can't be cast
-     */
-    fun get_config_int(key: String): Int {
-        return config.getInt(key)
-    }
-
-    /** @throws JSONException object does not exist or can't be cast
-     */
-    @Suppress("unused")
-    fun get_config_double(key: String): Double {
-        return config.getDouble(key)
-    }
-
-    /**
-     * Edits to this object are not persisted to preferences.
-     * @throws JSONException object does not exist or can't be cast
-     */
-    @Suppress("unused")
-    fun get_config_object(key: String): JSONObject {
-        return config.getJSONObject(key).deepClone()
-    }
-
-    /** Edits to the array are not persisted to the preferences
-     * @throws JSONException object does not exist or can't be cast
-     */
-    fun get_config_array(key: String): JSONArray {
-        return config.getJSONArray(key).deepClone()
-    }
-
-    /**
-     * If the value is null in the JSON, a string of "null" will be returned
-     * @throws JSONException object does not exist, or can't be cast
-     */
-    fun get_config_string(key: String): String {
-        return config.getString(key)
-    }
-
-    @Contract("_, !null -> !null")
-    fun get_config(key: String, defaultValue: Boolean?): Boolean? {
-        return if (config.isNull(key)) {
-            defaultValue
-        } else {
-            config.getBoolean(key)
-        }
-    }
-
-    @Contract("_, !null -> !null")
-    fun get_config(key: String, defaultValue: Long?): Long? {
-        return if (config.isNull(key)) {
-            defaultValue
-        } else {
-            config.getLong(key)
-        }
-    }
-
-    @Contract("_, !null -> !null")
-    fun get_config(key: String, defaultValue: Int?): Int? {
-        return if (config.isNull(key)) {
-            defaultValue
-        } else {
-            config.getInt(key)
-        }
-    }
-
-    @Contract("_, !null -> !null")
-    fun get_config(key: String, defaultValue: Double?): Double? {
-        return if (config.isNull(key)) {
-            defaultValue
-        } else {
-            config.getDouble(key)
-        }
-    }
-
-    @Contract("_, !null -> !null")
-    fun get_config(key: String, defaultValue: String?): String? {
-        return if (config.isNull(key)) {
-            defaultValue
-        } else {
-            config.getString(key)
-        }
-    }
-
-    /** Edits to the config are not persisted to the preferences  */
-    @Contract("_, !null -> !null")
-    fun get_config(key: String, defaultValue: JSONObject?): JSONObject? {
-        return if (config.isNull(key)) {
-            if (defaultValue == null) null else defaultValue.deepClone()
-        } else {
-            config.getJSONObject(key).deepClone()
-        }
-    }
-
-    /** Edits to the array are not persisted to the preferences  */
-    @Contract("_, !null -> !null")
-    fun get_config(key: String, defaultValue: JSONArray?): JSONArray? {
-        return if (config.isNull(key)) {
-            if (defaultValue == null) null else JSONArray(defaultValue)
-        } else {
-            JSONArray(config.getJSONArray(key))
-        }
-    }
-
-    fun set_config(key: String, value: Boolean) {
-        config.put(key, value)
-    }
-
-    fun set_config(key: String, value: Long) {
-        config.put(key, value)
-    }
-
-    fun set_config(key: String, value: Int) {
-        config.put(key, value)
-    }
-
-    fun set_config(key: String, value: Double) {
-        config.put(key, value)
-    }
-
-    fun set_config(key: String, value: String?) {
-        config.put(key, value!!)
-    }
-
-    fun set_config(key: String, value: JSONArray?) {
-        config.put(key, value!!)
-    }
-
-    fun set_config(key: String, value: JSONObject?) {
-        config.put(key, value!!)
-    }
-
-    fun set_config(key: String, value: Any?) {
-        config.put(key, value)
-    }
-
-    fun remove_config(key: String) {
-        config.remove(key)
-    }
-
     //endregion
 
     fun crtGregorianCalendar(): GregorianCalendar {
@@ -1056,15 +882,4 @@ open class Collection(
             ) // add new to currently selected deck?
         private const val UNDO_SIZE_MAX = 20
     }
-}
-
-/**
- * @throws JSONException object can't be cast
- */
-@NotInLibAnki
-fun Collection.get_config_int(key: String, defaultValue: Int): Int {
-    if (has_config_not_null(key)) {
-        return get_config_int(key)
-    }
-    return defaultValue
 }

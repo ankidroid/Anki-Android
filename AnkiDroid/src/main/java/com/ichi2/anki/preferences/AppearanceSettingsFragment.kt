@@ -135,18 +135,18 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // Represents the collection pref "estTime": i.e.
         // whether the buttons should indicate the duration of the interval if we click on them.
         requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
-            launchCatchingTask { isChecked = withCol { get_config_boolean("estTimes") } }
+            launchCatchingTask { isChecked = withCol { config.getBoolean("estTimes") } }
             setOnPreferenceChangeListener { newETA ->
-                launchCatchingTask { withCol { set_config("estTimes", newETA) } }
+                launchCatchingTask { withCol { config.set("estTimes", newETA) } }
             }
         }
         // Show progress
         // Represents the collection pref "dueCounts": i.e.
         // whether the remaining number of cards should be shown.
         requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
-            launchCatchingTask { isChecked = withCol { get_config_boolean("dueCounts") } }
+            launchCatchingTask { isChecked = withCol { config.getBoolean("dueCounts") } }
             setOnPreferenceChangeListener { newDueCountsValue ->
-                launchCatchingTask { withCol { set_config("dueCounts", newDueCountsValue) } }
+                launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValue) } }
             }
         }
     }

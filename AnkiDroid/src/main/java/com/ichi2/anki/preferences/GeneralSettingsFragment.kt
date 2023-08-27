@@ -44,20 +44,20 @@ class GeneralSettingsFragment : SettingsFragment() {
         // Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
         requirePreference<ListPreference>(R.string.deck_for_new_cards_key).apply {
             launchCatchingTask {
-                val valueIndex = if (withCol { get_config("addToCur", true)!! }) 0 else 1
+                val valueIndex = if (withCol { config.get("addToCur", true)!! }) 0 else 1
                 setValueIndex(valueIndex)
             }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { set_config("addToCur", "0" == newValue) } }
+                launchCatchingTask { withCol { config.set("addToCur", "0" == newValue) } }
             }
         }
         // Paste PNG
         // Represents in the collection's pref "pastePNG" , i.e.
         // whether to convert clipboard uri to png format or not.
         requirePreference<SwitchPreferenceCompat>(R.string.paste_png_key).apply {
-            launchCatchingTask { isChecked = withCol { get_config("pastePNG", false)!! } }
+            launchCatchingTask { isChecked = withCol { config.get("pastePNG", false)!! } }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { set_config("pastePNG", newValue) } }
+                launchCatchingTask { withCol { config.set("pastePNG", newValue) } }
             }
         }
         // Error reporting mode

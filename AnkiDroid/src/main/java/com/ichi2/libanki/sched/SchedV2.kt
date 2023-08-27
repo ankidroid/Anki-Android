@@ -426,7 +426,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             }
         }
         // Day learning first and card due?
-        val dayLearnFirst = col.get_config("dayLearnFirst", false)!!
+        val dayLearnFirst = col.config.get("dayLearnFirst", false)!!
         if (dayLearnFirst) {
             c = _getLrnDayCard()
             if (c != null) {
@@ -466,7 +466,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             }
         }
         // Day learning first and card due?
-        val dayLearnFirst = col.get_config("dayLearnFirst", false)!!
+        val dayLearnFirst = col.config.get("dayLearnFirst", false)!!
         if (dayLearnFirst) {
             if (_fillLrnDay()) {
                 return arrayOf(mLrnQueue, mLrnDayQueue)
@@ -641,7 +641,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
     }
 
     private fun _updateNewCardRatio() {
-        if (col.get_config_int("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
+        if (col.config.getInt("newSpread") == Consts.NEW_CARDS_DISTRIBUTE) {
             if (mNewCount != 0) {
                 mNewCardModulus = (mNewCount + mRevCount) / mNewCount
                 // if there are cards to review, ensure modulo >= 2
@@ -661,7 +661,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         if (mHaveCounts && mNewCount == 0) {
             return false
         }
-        @NEW_CARD_ORDER val spread = col.get_config_int("newSpread")
+        @NEW_CARD_ORDER val spread = col.config.getInt("newSpread")
         return if (spread == Consts.NEW_CARDS_LAST) {
             false
         } else if (spread == Consts.NEW_CARDS_FIRST) {
@@ -740,7 +740,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
      * Learning queues *********************************************************** ************************************
      */
     private fun _updateLrnCutoff(force: Boolean): Boolean {
-        val nextCutoff = time.intTime() + col.get_config_int("collapseTime")
+        val nextCutoff = time.intTime() + col.config.getInt("collapseTime")
         if (nextCutoff - mLrnCutoff > 60 || force) {
             mLrnCutoff = nextCutoff
             return true
@@ -804,7 +804,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         if (!mLrnQueue.isEmpty) {
             return true
         }
-        val cutoff = time.intTime() + col.get_config_long("collapseTime")
+        val cutoff = time.intTime() + col.config.getLong("collapseTime")
         mLrnQueue.clear()
         col
             .db
@@ -831,7 +831,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         if (_fillLrn()) {
             var cutoff = time.intTime()
             if (collapse) {
-                cutoff += col.get_config_int("collapseTime").toLong()
+                cutoff += col.config.getInt("collapseTime").toLong()
             }
             if (mLrnQueue.firstDue < cutoff) {
                 return mLrnQueue.removeFirstCard()
@@ -846,7 +846,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         if (_fillLrn()) {
             var cutoff = time.intTime()
             if (collapse) {
-                cutoff += col.get_config_int("collapseTime").toLong()
+                cutoff += col.config.getInt("collapseTime").toLong()
             }
             // mLrnCount -= 1; see decrementCounts()
             return mLrnQueue.firstDue < cutoff
@@ -994,7 +994,7 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
             val fuzz = Random().nextInt(Math.max(maxExtra, 1))
             card.due = Math.min(dayCutoff - 1, card.due + fuzz)
             card.queue = Consts.QUEUE_TYPE_LRN
-            if (card.due < time.intTime() + col.get_config_int("collapseTime")) {
+            if (card.due < time.intTime() + col.config.getInt("collapseTime")) {
                 mLrnCount += 1
                 // if the queue is not empty and there's nothing else to do, make
                 // sure we don't put it at the head of the queue and end up showing
@@ -1668,10 +1668,10 @@ open class SchedV2(col: Collection) : AbstractSched(col) {
         }
         // unbury if the day has rolled over
         val unburied: Int = @Suppress("USELESS_CAST")
-        col.get_config("lastUnburied", 0 as Int)!!
+        col.config.get("lastUnburied", 0 as Int)!!
         if (unburied < mToday!!) {
             SyncStatus.ignoreDatabaseModification { unburyCards() }
-            col.set_config("lastUnburied", mToday)
+            col.config.set("lastUnburied", mToday)
         }
     }
 

@@ -197,11 +197,11 @@ class NoteEditorTest : RobolectricTest() {
         // value returned if deck not found
         val DECK_ID_NOT_FOUND = -404
         val currentDid = addDeck("Basic::Test")
-        col.set_config(CURRENT_DECK, currentDid)
+        col.config.set(CURRENT_DECK, currentDid)
         val n = super.addNoteUsingBasicModel("Test", "Note")
         n.model().put("did", currentDid)
         val editor = getNoteEditorEditingExistingBasicNote("Test", "Note", DECK_LIST)
-        col.set_config(CURRENT_DECK, Consts.DEFAULT_DECK_ID) // Change DID if going through default path
+        col.config.set(CURRENT_DECK, Consts.DEFAULT_DECK_ID) // Change DID if going through default path
         val copyNoteIntent = getCopyNoteIntent(editor)
         val newNoteEditor = super.startActivityNormallyOpenCollectionWithIntent(NoteEditor::class.java, copyNoteIntent)
         assertThat("Selected deck ID should be the current deck id", editor.deckId, equalTo(currentDid))

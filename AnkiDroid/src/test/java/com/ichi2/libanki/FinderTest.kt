@@ -210,7 +210,7 @@ class FinderTest : RobolectricTest() {
         assertEquals(0, col.findCards("front:do").size)
         assertEquals(5, col.findCards("front:*").size)
         // ordering
-        col.set_config("sortType", "noteCrt")
+        col.config.set("sortType", "noteCrt")
 
         assertTrue(
             latestCardIds.contains(
@@ -228,7 +228,7 @@ class FinderTest : RobolectricTest() {
                 ).last()
             )
         )
-        col.set_config("sortType", "noteFld")
+        col.config.set("sortType", "noteFld")
 
         assertEquals(catCard.id, col.findCards("", SortOrder.UseCollectionOrdering())[0])
         assertTrue(
@@ -239,7 +239,7 @@ class FinderTest : RobolectricTest() {
                 ).last()
             )
         )
-        col.set_config("sortType", "cardMod")
+        col.config.set("sortType", "cardMod")
 
         assertTrue(
             latestCardIds.contains(
@@ -250,7 +250,7 @@ class FinderTest : RobolectricTest() {
             )
         )
         assertEquals(firstCardId, col.findCards("", SortOrder.UseCollectionOrdering())[0])
-        col.set_config("sortBackwards", true)
+        col.config.set("sortBackwards", true)
 
         assertTrue(latestCardIds.contains(col.findCards("", SortOrder.UseCollectionOrdering())[0]))
         /* TODO: Port BuiltinSortKind

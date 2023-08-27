@@ -53,7 +53,7 @@ class UndoTest : RobolectricTest() {
             assertNull(undoType())
             // let's adjust a study option
 
-            set_config("abc", 5)
+            config.set("abc", 5)
             // it should be listed as undoable
             assertEquals("studyopts", undoName(targetContext.resources))
             // with about 5 minutes until it's clobbered
@@ -63,7 +63,7 @@ class UndoTest : RobolectricTest() {
             // undoing should restore the old value
             undo()
             assertNull(undoType())
-            assertFalse(has_config("abc"))
+            assertFalse(config.has("abc"))
             // an (auto)save will clear the undo
 
             assertEquals("foo", undoName(targetContext.resources))
@@ -88,7 +88,7 @@ class UndoTest : RobolectricTest() {
     fun test_review() {
         val col = colV2
         with(col) {
-            set_config("counts", COUNT_REMAINING)
+            config.set("counts", COUNT_REMAINING)
             var note = col.newNote()
             note.setItem("Front", "one")
             addNote(note)

@@ -272,22 +272,22 @@ open class CardBrowser :
             mOrderAsc = false
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
-                col.set_config("sortType", fSortTypes[1])
+                col.config.set("sortType", fSortTypes[1])
                 baseContext.sharedPrefs().edit {
                     putBoolean("cardBrowserNoSorting", true)
                 }
             } else {
-                col.set_config("sortType", fSortTypes[mOrder])
+                col.config.set("sortType", fSortTypes[mOrder])
                 baseContext.sharedPrefs().edit {
                     putBoolean("cardBrowserNoSorting", false)
                 }
             }
-            col.set_config("sortBackwards", mOrderAsc)
+            col.config.set("sortBackwards", mOrderAsc)
             searchCards()
         } else if (which != CARD_ORDER_NONE) {
             // if the same element is selected again, reverse the order
             mOrderAsc = !mOrderAsc
-            col.set_config("sortBackwards", mOrderAsc)
+            col.config.set("sortBackwards", mOrderAsc)
             mCards.reverse()
             updateList()
         }
@@ -374,7 +374,7 @@ open class CardBrowser :
     private val mMySearchesDialogListener: MySearchesDialogListener = object : MySearchesDialogListener {
         override fun onSelection(searchName: String?) {
             Timber.d("OnSelection using search named: %s", searchName)
-            val savedFiltersObj = col.get_config("savedFilters", null as JSONObject?)
+            val savedFiltersObj = col.config.get("savedFilters", null as JSONObject?)
             Timber.d("SavedFilters are %s", savedFiltersObj?.toString())
             savedFiltersObj?.optString(searchName)?.apply {
                 Timber.d("OnSelection using search terms: %s", this)
@@ -387,10 +387,10 @@ open class CardBrowser :
 
         override fun onRemoveSearch(searchName: String?) {
             Timber.d("OnRemoveSelection using search named: %s", searchName)
-            val savedFiltersObj = col.get_config("savedFilters", null as JSONObject?)
+            val savedFiltersObj = col.config.get("savedFilters", null as JSONObject?)
             if (savedFiltersObj?.has(searchName) == true) {
                 savedFiltersObj.remove(searchName)
-                col.set_config("savedFilters", savedFiltersObj)
+                col.config.set("savedFilters", savedFiltersObj)
                 if (savedFiltersObj.length() == 0) {
                     mMySearchesItem!!.isVisible = false
                 }
@@ -405,10 +405,10 @@ open class CardBrowser :
                 )
                 return
             }
-            val savedFiltersObj = col.get_config("savedFilters", JSONObject())!!
+            val savedFiltersObj = col.config.get("savedFilters", JSONObject())!!
             if (!savedFiltersObj.has(searchName)) {
                 savedFiltersObj.put(searchName, searchTerms)
-                col.set_config("savedFilters", savedFiltersObj)
+                col.config.set("savedFilters", savedFiltersObj)
                 mSearchView!!.setQuery("", false)
                 mMySearchesItem!!.isVisible = true
             } else {
@@ -582,7 +582,7 @@ open class CardBrowser :
         registerExternalStorageListener()
         val preferences = baseContext.sharedPrefs()
 
-        val colOrder = col.get_config_string("sortType")
+        val colOrder = col.config.getString("sortType")
         mOrder = fSortTypes.indexOf(colOrder).let { i -> if (i == -1) CARD_ORDER_NONE else i }
         if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
             mOrder = 0
@@ -929,7 +929,7 @@ open class CardBrowser :
             mSaveSearchItem = menu.findItem(R.id.action_save_search)
             mSaveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mMySearchesItem = menu.findItem(R.id.action_list_my_searches)
-            val savedFiltersObj = col.get_config("savedFilters", null as JSONObject?)
+            val savedFiltersObj = col.config.get("savedFilters", null as JSONObject?)
             mMySearchesItem!!.isVisible = savedFiltersObj != null && savedFiltersObj.length() > 0
             mSearchItem = menu.findItem(R.id.action_search)
             mSearchItem!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
@@ -1140,7 +1140,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_list_my_searches -> {
-                val savedFiltersObj = col.get_config("savedFilters", JSONObject())!!
+                val savedFiltersObj = col.config.get("savedFilters", JSONObject())!!
                 val savedFilters: HashMap<String, String> = HashMap(
                     savedFiltersObj
                         .keys().asSequence().toList()

@@ -18,9 +18,12 @@ package com.ichi2.libanki
 
 import com.google.protobuf.ByteString
 import com.ichi2.libanki.backend.BackendUtils
+import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
+import org.jetbrains.annotations.Contract
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 
 class Config(val backend: Backend) {
@@ -33,10 +36,88 @@ class Config(val backend: Backend) {
         }
     }
 
+    fun has_config_not_null(key: String): Boolean {
+        // not in libAnki
+        return has(key) && !isNull(key)
+    }
+
+    @Contract("_, !null -> !null")
+    fun get(key: String, defaultValue: Boolean?): Boolean? {
+        return if (isNull(key)) {
+            defaultValue
+        } else {
+            getBoolean(key)
+        }
+    }
+
+    @Contract("_, !null -> !null")
+    fun get(key: String, defaultValue: Long?): Long? {
+        return if (isNull(key)) {
+            defaultValue
+        } else {
+            getLong(key)
+        }
+    }
+
+    @Contract("_, !null -> !null")
+    fun get(key: String, defaultValue: Int?): Int? {
+        return if (isNull(key)) {
+            defaultValue
+        } else {
+            getInt(key)
+        }
+    }
+
+    @Contract("_, !null -> !null")
+    fun get(key: String, defaultValue: Double?): Double? {
+        return if (isNull(key)) {
+            defaultValue
+        } else {
+            getDouble(key)
+        }
+    }
+
+    @Contract("_, !null -> !null")
+    fun get(key: String, defaultValue: String?): String? {
+        return if (isNull(key)) {
+            defaultValue
+        } else {
+            getString(key)
+        }
+    }
+
+    /** Edits to the config are not persisted to the preferences  */
+    @Contract("_, !null -> !null")
+    fun get(key: String, defaultValue: JSONObject?): JSONObject? {
+        return if (isNull(key)) {
+            if (defaultValue == null) null else defaultValue.deepClone()
+        } else {
+            getJSONObject(key).deepClone()
+        }
+    }
+
+    /** Edits to the array are not persisted to the preferences  */
+    @Contract("_, !null -> !null")
+    fun get(key: String, defaultValue: JSONArray?): JSONArray? {
+        return if (isNull(key)) {
+            if (defaultValue == null) null else JSONArray(defaultValue)
+        } else {
+            JSONArray(getJSONArray(key))
+        }
+    }
+
+    /**
+     * If the value is null in the JSON, a string of "null" will be returned
+     * @throws JSONException object does not exist, or can't be cast
+     */
     fun getString(key: String): String {
         val string = getJsonString(key)
-        // remove the quotes
-        return string.substring(1, string.length - 1)
+        if (string == "null") {
+            return string
+        } else {
+            // remove the quotes
+            return string.substring(1, string.length - 1)
+        }
     }
 
     fun getBoolean(key: String): Boolean {
@@ -63,36 +144,13 @@ class Config(val backend: Backend) {
         return BackendUtils.from_json_bytes(getJsonBytes(key))
     }
 
-    fun put(key: String, value: Boolean) {
-        set(key, value)
-    }
-
-    fun put(key: String, value: Long) {
-        set(key, value)
-    }
-
-    fun put(key: String, value: Int) {
-        set(key, value)
-    }
-
-    fun put(key: String, value: Double) {
-        set(key, value)
-    }
-
-    fun put(key: String, value: String) {
-        set(key, "\"" + value + "\"")
-    }
-
-    fun put(key: String, value: JSONArray) {
-        set(key, value)
-    }
-
-    fun put(key: String, value: JSONObject) {
-        set(key, value)
-    }
-
-    fun put(key: String, value: Any?) {
-        set(key, value)
+    fun set(key: str, value: Any?) {
+        val adjustedValue = if (value is String) {
+            "\"" + value + "\""
+        } else {
+            value
+        }
+        backend.setConfigJson(key, BackendUtils.to_json_bytes(adjustedValue), false)
     }
 
     // / True if key exists (even if null)
@@ -119,9 +177,5 @@ class Config(val backend: Backend) {
 
     private fun getJsonString(key: str): String {
         return BackendUtils.jsonToString(getJsonBytes(key))
-    }
-
-    private fun set(key: str, value: Any?) {
-        backend.setConfigJson(key, BackendUtils.to_json_bytes(value), false)
     }
 }

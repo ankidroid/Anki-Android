@@ -91,7 +91,7 @@ open class SchedV2Test : RobolectricTest() {
         val col = colV2
         col.crt = 1587852900L
         // 30 minutes learn ahead. required as we have 20m delay
-        col.set_config("collapseTime", 1800)
+        col.config.set("collapseTime", 1800)
         val homeDeckId = addDeck("Poorretention")
         val homeDeckConf = col.decks.confForDid(homeDeckId)
         val lapse = homeDeckConf.getJSONObject("lapse")
@@ -294,7 +294,7 @@ open class SchedV2Test : RobolectricTest() {
         )
         MatcherAssert.assertThat(
             "localOffset should be set if using V2 Scheduler",
-            col.has_config("localOffset"),
+            col.config.has("localOffset"),
             Matchers.equalTo(true)
         )
         val sched = col.sched

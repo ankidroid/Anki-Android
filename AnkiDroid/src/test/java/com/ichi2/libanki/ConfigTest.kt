@@ -29,34 +29,40 @@ class ConfigTest : RobolectricTest() {
 
     @Test
     fun string_serialization() {
-        assertThat(col.get_config_string("sortType"), equalTo("noteFld"))
+        assertThat(col.config.getString("sortType"), equalTo("noteFld"))
 
-        col.set_config("sortType", "noteFld2")
+        col.config.set("sortType", "noteFld2")
 
-        assertThat(col.get_config_string("sortType"), equalTo("noteFld2"))
+        assertThat(col.config.getString("sortType"), equalTo("noteFld2"))
     }
 
     @Test
     fun has_config_not_null() {
         // empty
-        assertThat("no key - false", col.has_config_not_null("aa"), equalTo(false))
+        assertThat("no key - false", col.config.has_config_not_null("aa"), equalTo(false))
 
-        col.set_config("aa", JSONObject.NULL)
-        assertThat("has key but null - false", col.has_config_not_null("aa"), equalTo(false))
+        col.config.set("aa", JSONObject.NULL)
+        assertThat("has key but null - false", col.config.has_config_not_null("aa"), equalTo(false))
 
-        col.set_config("aa", "bb")
-        assertThat("has key with value - true", col.has_config_not_null("aa"), equalTo(true))
-        col.remove_config("aa")
+        col.config.set("aa", "bb")
+        assertThat("has key with value - true", col.config.has_config_not_null("aa"), equalTo(true))
+        col.config.remove("aa")
 
-        assertThat("key removed", col.has_config_not_null("aa"), equalTo(false))
+        assertThat("key removed", col.config.has_config_not_null("aa"), equalTo(false))
     }
 
     @Test
     fun get_config_uses_default() {
-        assertThat(col.get_config("hello", 1L), equalTo(1L))
+        assertThat(col.config.get("hello", 1L), equalTo(1L))
 
-        col.set_config("hello", JSONObject.NULL)
+        col.config.set("hello", JSONObject.NULL)
 
-        assertThat(col.get_config("hello", 1L), equalTo(1L))
+        assertThat(col.config.get("hello", 1L), equalTo(1L))
+    }
+
+    @Test
+    fun string_handling() {
+        col.config.set("bb", JSONObject.NULL)
+        assertThat(col.config.getString("bb"), equalTo("null"))
     }
 }
