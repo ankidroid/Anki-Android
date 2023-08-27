@@ -33,6 +33,7 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuItemCompat
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.PreviewLayout
@@ -303,11 +304,23 @@ class Previewer : AbstractFlashcardViewer() {
         menuInflater.inflate(R.menu.previewer, menu)
 
         displayIcons(menu)
+        val whiteboardEditItem = menu.findItem(R.id.action_edit)
+        MenuItemCompat.setIconTintList(
+            whiteboardEditItem,
+            ContextCompat.getColorStateList(
+                this,
+                R.color.white
+            )
+        )
         val toggleWhiteboardIcon = menu.findItem(R.id.action_toggle_whiteboard)
+        val toggleWhiteboardAlphaIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
         val toggleStylusIcon = menu.findItem(R.id.action_toggle_stylus)
         if (prefWhiteboard) {
             // Configure the whiteboard related items in the action bar
             toggleWhiteboardIcon.setTitle(R.string.disable_whiteboard)
+            toggleWhiteboardAlphaIcon.alpha = Themes.ALPHA_ICON_ENABLED_LIGHT
+            toggleWhiteboardIcon.icon = toggleWhiteboardAlphaIcon
+
             // Always allow "Disable Whiteboard", even if "Enable Whiteboard" is disabled
             toggleWhiteboardIcon.isVisible = true
             val whiteboardIcon = ContextCompat.getDrawable(this, R.drawable.ic_gesture_white)!!.mutate()
@@ -327,6 +340,8 @@ class Previewer : AbstractFlashcardViewer() {
             toggleStylusIcon.icon = stylusIcon
         } else {
             toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
+            toggleWhiteboardAlphaIcon.alpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+            toggleWhiteboardIcon.icon = toggleWhiteboardAlphaIcon
         }
 
         increaseHorizontalPaddingOfOverflowMenuIcons(menu)
