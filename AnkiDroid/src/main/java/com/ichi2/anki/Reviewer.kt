@@ -230,8 +230,15 @@ open class Reviewer :
         if (currentCard == null) {
             return
         }
-        mCardMarker!!.displayMark(shouldDisplayMark())
+        mCardMarker!!.displayMark(markToDisplay())
     }
+
+    private fun markToDisplay() =
+        if (shouldDisplayMark()) {
+            MarkToDisplay(View.VISIBLE, R.drawable.ic_star_white_bordered_24dp)
+        } else {
+            MarkToDisplay(View.INVISIBLE, null)
+        }
 
     protected open fun onFlag(card: Card?, flag: Int) {
         if (card == null) {
