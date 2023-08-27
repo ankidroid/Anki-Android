@@ -201,20 +201,6 @@ open class Reviewer :
         setRenderWorkaround(this)
     }
 
-    @NeedsTest("is hidden if marked is on app bar")
-    @NeedsTest("is not hidden if marked is not on app bar")
-    @NeedsTest("is not hidden if marked is on app bar and fullscreen is enabled")
-    private fun shouldDisplayMark(): Boolean {
-        val markValue = isMarked(currentCard!!.note())
-        if (!markValue) {
-            return false
-        }
-
-        // If we don't know: assume it's not shown
-        val shownAsToolbarButton = mActionButtons.findMenuItem(ActionButtons.RES_MARK)?.isActionButton == true
-        return !shownAsToolbarButton || mPrefFullscreenReview
-    }
-
     protected open fun onMark(card: Card?) {
         if (card == null) {
             return
@@ -230,14 +216,16 @@ open class Reviewer :
         if (currentCard == null) {
             return
         }
-        mCardMarker!!.displayMark(markToDisplay())
+        mCardMarker!!.displayMark(markToDisplay)
     }
 
-    private fun markToDisplay() =
-        if (shouldDisplayMark()) {
-            MarkToDisplay(View.VISIBLE, R.drawable.ic_star_white_bordered_24dp)
-        } else {
-            MarkToDisplay(View.INVISIBLE, null)
+    private val markToDisplay: MarkToDisplay
+        get() {
+            return MarkToDisplay.forState(
+                isMarked(currentCard!!.note()),
+                mActionButtons.findMenuItem(ActionButtons.RES_MARK)?.isActionButton ?: true,
+                mPrefFullscreenReview
+            )
         }
 
     protected open fun onFlag(card: Card?, flag: Int) {
