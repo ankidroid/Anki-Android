@@ -119,7 +119,7 @@
     </plurals>
     <plurals name="sync_media_downloaded_count_new">
         <item quantity="one">Arquivo de mídia %d baixado</item>
-        <item quantity="other">%d media files downloaded</item>
+        <item quantity="other">%d arquivos de mídia baixados</item>
     </plurals>
     <string name="sync_sanity_failed">Depois de sincronizar, a coleção apresentou um estado inconsistente. Para corrigi isso, o AnkiDroid irá forçar uma sincronização completa. Por favor, escolha qual versão você gostaria de manter, ou cancele se preferir sincronizar depois.</string>
     <string name="sync_media_sanity_failed">Sincronização de mídia completada, mas a contagem de mídias não equivale com a do servidor. A próxima sincronização de mídia estará cheia para corrigir qualquer erro.</string>
