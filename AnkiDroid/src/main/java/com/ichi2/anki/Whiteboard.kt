@@ -110,8 +110,11 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private fun handleDrawEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
-        if (event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS && toggleStylus == true) {
+        if (event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS && toggleStylus) {
             return false
+        }
+        if (stylusErase(event)) {
+            return true
         }
         return when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
@@ -144,18 +147,6 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 }
                 false
             }
-            211, 213 -> {
-                if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY && !undoEmpty()) {
-                    val didErase = mUndo.erase(event.x.toInt(), event.y.toInt())
-                    if (didErase) {
-                        mUndo.apply()
-                        if (undoEmpty()) {
-                            mAnkiActivity.invalidateOptionsMenu()
-                        }
-                    }
-                }
-                true
-            }
             else -> false
         }
     }
@@ -175,6 +166,28 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
         } else {
             false
         }
+    }
+
+    /**
+     * Erase with stylus pen.(By using the eraser button on the stylus pen or by using the digital eraser)
+     */
+    private fun stylusErase(event: MotionEvent): Boolean {
+        if ((
+            (event.actionMasked in intArrayOf(211, 213) && event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY) ||
+                (event.getToolType(event.actionIndex) == MotionEvent.TOOL_TYPE_ERASER)
+            ) &&
+            !undoEmpty()
+        ) {
+            val didErase = mUndo.erase(event.x.toInt(), event.y.toInt())
+            if (didErase) {
+                mUndo.apply()
+                if (undoEmpty()) {
+                    mAnkiActivity.invalidateOptionsMenu()
+                }
+            }
+            return true
+        }
+        return false
     }
 
     /**
