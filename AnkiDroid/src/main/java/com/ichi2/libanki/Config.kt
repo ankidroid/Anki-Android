@@ -16,166 +16,45 @@
 
 package com.ichi2.libanki
 
-import com.google.protobuf.ByteString
-import com.ichi2.libanki.backend.BackendUtils
-import com.ichi2.utils.deepClone
+import anki.config.ConfigKey
+import com.google.protobuf.kotlin.toByteStringUtf8
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
-import org.jetbrains.annotations.Contract
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 
 class Config(val backend: Backend) {
-    fun isNull(key: String): Boolean {
+    inline fun<reified T> get(key: String): T? {
         return try {
-            val ret = this.getJsonString(key)
-            return ret == "null"
-        } catch (ex: IllegalStateException) {
-            true
+            Json.decodeFromString<T>(backend.getConfigJson(key).toStringUtf8())
+        } catch (ex: BackendNotFoundException) {
+            null
+        } catch (ex: SerializationException) {
+            null
         }
     }
 
-    fun has_config_not_null(key: String): Boolean {
-        // not in libAnki
-        return has(key) && !isNull(key)
-    }
-
-    @Contract("_, !null -> !null")
-    fun get(key: String, defaultValue: Boolean?): Boolean? {
-        return if (isNull(key)) {
-            defaultValue
-        } else {
-            getBoolean(key)
+    inline fun<reified T> set(key: str, value: T) {
+        val valueString = when (value) {
+            JSONObject.NULL -> "null"
+            is JSONObject, is JSONArray -> value.toString()
+            else -> Json.encodeToString(value)
         }
-    }
-
-    @Contract("_, !null -> !null")
-    fun get(key: String, defaultValue: Long?): Long? {
-        return if (isNull(key)) {
-            defaultValue
-        } else {
-            getLong(key)
-        }
-    }
-
-    @Contract("_, !null -> !null")
-    fun get(key: String, defaultValue: Int?): Int? {
-        return if (isNull(key)) {
-            defaultValue
-        } else {
-            getInt(key)
-        }
-    }
-
-    @Contract("_, !null -> !null")
-    fun get(key: String, defaultValue: Double?): Double? {
-        return if (isNull(key)) {
-            defaultValue
-        } else {
-            getDouble(key)
-        }
-    }
-
-    @Contract("_, !null -> !null")
-    fun get(key: String, defaultValue: String?): String? {
-        return if (isNull(key)) {
-            defaultValue
-        } else {
-            getString(key)
-        }
-    }
-
-    /** Edits to the config are not persisted to the preferences  */
-    @Contract("_, !null -> !null")
-    fun get(key: String, defaultValue: JSONObject?): JSONObject? {
-        return if (isNull(key)) {
-            if (defaultValue == null) null else defaultValue.deepClone()
-        } else {
-            getJSONObject(key).deepClone()
-        }
-    }
-
-    /** Edits to the array are not persisted to the preferences  */
-    @Contract("_, !null -> !null")
-    fun get(key: String, defaultValue: JSONArray?): JSONArray? {
-        return if (isNull(key)) {
-            if (defaultValue == null) null else JSONArray(defaultValue)
-        } else {
-            JSONArray(getJSONArray(key))
-        }
-    }
-
-    /**
-     * If the value is null in the JSON, a string of "null" will be returned
-     * @throws JSONException object does not exist, or can't be cast
-     */
-    fun getString(key: String): String {
-        val string = getJsonString(key)
-        if (string == "null") {
-            return string
-        } else {
-            // remove the quotes
-            return string.substring(1, string.length - 1)
-        }
-    }
-
-    fun getBoolean(key: String): Boolean {
-        return getJsonString(key).toBoolean()
-    }
-
-    fun getDouble(key: String): Double {
-        return getJsonString(key).toDouble()
-    }
-
-    fun getInt(key: String): Int {
-        return getJsonString(key).toInt()
-    }
-
-    fun getLong(key: String): Long {
-        return getJsonString(key).toLong()
-    }
-
-    fun getJSONArray(key: String): JSONArray {
-        return BackendUtils.jsonToArray(getJsonBytes(key))
-    }
-
-    fun getJSONObject(key: String): JSONObject {
-        return BackendUtils.from_json_bytes(getJsonBytes(key))
-    }
-
-    fun set(key: str, value: Any?) {
-        val adjustedValue = if (value is String) {
-            "\"" + value + "\""
-        } else {
-            value
-        }
-        backend.setConfigJson(key, BackendUtils.to_json_bytes(adjustedValue), false)
-    }
-
-    // / True if key exists (even if null)
-    fun has(key: String): Boolean {
-        return try {
-            getJsonBytes(key)
-            true
-        } catch (ex: java.lang.IllegalStateException) {
-            false
-        }
+        backend.setConfigJson(key, valueString.toByteStringUtf8(), false)
     }
 
     fun remove(key: str) {
         backend.removeConfig(key)
     }
 
-    private fun getJsonBytes(key: str): ByteString {
-        try {
-            return backend.getConfigJson(key)
-        } catch (ex: BackendNotFoundException) {
-            throw IllegalStateException("'$key' not found", ex)
-        }
+    fun getBool(key: ConfigKey.Bool): Boolean {
+        return backend.getConfigBool(key)
     }
 
-    private fun getJsonString(key: str): String {
-        return BackendUtils.jsonToString(getJsonBytes(key))
+    fun setBool(key: ConfigKey.Bool, value: Boolean) {
+        backend.setConfigBool(key, value, false)
     }
 }

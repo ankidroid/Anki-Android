@@ -207,7 +207,7 @@ open class Collection(
      * ***********************************************************
      */
     fun schedVer(): Int {
-        val ver = config.get("schedVer", fDefaultSchedulerVersion)!!
+        val ver = config.get("schedVer") ?: fDefaultSchedulerVersion
         return if (fSupportedSchedulerVersions.contains(ver)) {
             ver
         } else {
@@ -434,8 +434,8 @@ open class Collection(
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
-                config.get("sortType", null as String?) ?: "noteFld",
-                config.get("sortBackwards", false) ?: false
+                config.get("sortType") ?: "noteFld",
+                config.get("sortBackwards") ?: false
             )
         } else {
             order
@@ -455,8 +455,8 @@ open class Collection(
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             @Suppress("DEPRECATION")
             SortOrder.BuiltinSortKind(
-                config.get("noteSortType", null as String?) ?: "noteFld",
-                config.get("browserNoteSortBackwards", false) ?: false
+                config.get("noteSortType") ?: "noteFld",
+                config.get("browserNoteSortBackwards") ?: false
             )
         } else {
             order
@@ -504,14 +504,15 @@ open class Collection(
 
     /* Return (elapsedTime, reps) if timebox reached, or null. */
     fun timeboxReached(): Pair<Int, Int>? {
-        if (config.getLong("timeLim") == 0L) {
+        if (sched.timeboxSecs() == 0) {
             // timeboxing disabled
             return null
         }
         val elapsed = TimeManager.time.intTime() - mStartTime
-        return if (elapsed > config.getLong("timeLim")) {
+        val limit = sched.timeboxSecs()
+        return if (elapsed > limit) {
             Pair(
-                config.getInt("timeLim"),
+                limit,
                 sched.reps - mStartReps
             )
         } else {

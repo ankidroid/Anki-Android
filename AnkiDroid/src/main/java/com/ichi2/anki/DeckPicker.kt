@@ -1739,7 +1739,7 @@ open class DeckPicker :
         if (col.decks.selected() != did) {
             col.clearUndo()
         }
-        if (col.config.get("schedVer", 1L) == 1L) {
+        if ((col.config.get("schedVer") ?: 1L) == 1L) {
             promptUserToUpdateScheduler()
             return
         }

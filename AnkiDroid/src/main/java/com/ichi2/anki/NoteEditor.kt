@@ -45,6 +45,7 @@ import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
+import anki.config.ConfigKey
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -1624,8 +1625,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         if (note == null || addNote || mCurrentEditedCard == null) {
             val model = col.models.current()
-            if (col.config.get("addToCur", true)!!) {
-                deckId = col.config.getLong(CURRENT_DECK)
+            if (col.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
+                deckId = col.config.get(CURRENT_DECK) ?: 1
                 if (col.decks.isDyn(deckId)) {
                     /*
                      * If the deck in mCurrentDid is a filtered (dynamic) deck, then we can't create cards in it,
@@ -1957,7 +1958,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 currentDeck.put("mid", newId)
                 col.decks.save(currentDeck)
                 // Update deck
-                if (!col.config.get("addToCur", true)!!) {
+                if (!col.config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK)) {
                     deckId = model.optLong("did", Consts.DEFAULT_DECK_ID)
                 }
                 refreshNoteData(FieldChangeType.changeFieldCount(shouldReplaceNewlines()))

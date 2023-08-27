@@ -1299,7 +1299,7 @@ abstract class AbstractFlashcardViewer :
     protected open fun restoreCollectionPreferences(col: Collection) {
         // These are preferences we pull out of the collection instead of SharedPreferences
         try {
-            mShowNextReviewTime = col.config.getBoolean("estTimes")
+            mShowNextReviewTime = col.config.get("estTimes") ?: true
             val preferences = baseContext.sharedPrefs()
             automaticAnswer = AutomaticAnswer.createInstance(this, preferences, col)
         } catch (ex: Exception) {

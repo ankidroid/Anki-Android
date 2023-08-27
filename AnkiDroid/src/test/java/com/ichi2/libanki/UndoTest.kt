@@ -63,7 +63,7 @@ class UndoTest : RobolectricTest() {
             // undoing should restore the old value
             undo()
             assertNull(undoType())
-            assertFalse(config.has("abc"))
+            assertFalse(config.get<Int?>("abc") == 5)
             // an (auto)save will clear the undo
 
             assertEquals("foo", undoName(targetContext.resources))

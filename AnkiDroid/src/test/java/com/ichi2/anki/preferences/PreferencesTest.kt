@@ -100,6 +100,6 @@ class PreferencesTest : RobolectricTest() {
         val offset = runBlocking { getDayOffset() }
         assertThat("Default offset should be 4", offset, equalTo(4))
         runBlocking { setDayOffset(preferences, 2) }
-        assertThat("rollover config should be set to new value", col.config.get("rollover", 4.toInt()), equalTo(2))
+        assertThat("rollover config should be set to new value", col.config.get("rollover") ?: 4, equalTo(2))
     }
 }

@@ -50,7 +50,6 @@ import com.ichi2.utils.DeckNameComparator
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.deepClone
 import com.ichi2.utils.jsonObjectIterable
-import com.ichi2.utils.longIterable
 import java8.util.Optional
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException
@@ -592,9 +591,9 @@ class Decks(private val col: Collection) {
     /** The currently active dids. */
     @RustCleanup("Probably better as a queue")
     fun active(): LinkedList<DeckId> {
-        val activeDecks: JSONArray = col.config.getJSONArray(ACTIVE_DECKS)
+        val activeDecks = col.config.get<List<DeckId>>(ACTIVE_DECKS) ?: listOf()
         val result = LinkedList<Long>()
-        result.addAll(activeDecks.longIterable())
+        result.addAll(activeDecks.asIterable())
         return result
     }
 

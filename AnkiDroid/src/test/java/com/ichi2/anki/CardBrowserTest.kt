@@ -574,7 +574,7 @@ class CardBrowserTest : RobolectricTest() {
         saveControllerForCleanup(cardBrowserController)
 
         // Make sure card has default value in sortType field
-        assertThat("Initially Card Browser has order = noteFld", col.config.getString("sortType"), equalTo("noteFld"))
+        assertThat("Initially Card Browser has order = noteFld", col.config.get<String>("sortType"), equalTo("noteFld"))
 
         // Change the display order of the card browser
         cardBrowserController.get().changeCardOrder(7) // order no. 7 corresponds to "cardEase"
@@ -589,7 +589,7 @@ class CardBrowserTest : RobolectricTest() {
         // Find the current (after database has been changed) Mod time
 
         val updatedMod = col.mod
-        assertThat("Card Browser has the new sortType field", col.config.getString("sortType"), equalTo("cardEase"))
+        assertThat("Card Browser has the new sortType field", col.config.get<String>("sortType"), equalTo("cardEase"))
         assertNotEquals(0, updatedMod)
     }
 

@@ -492,10 +492,9 @@ abstract class BaseSched(val col: Collection) {
     /* internal */
     fun _timingToday(): SchedTimingTodayResponse {
         return if (true) { // (BackendFactory.defaultLegacySchema) {
-            @Suppress("useless_cast")
             val request = schedTimingTodayLegacyRequest {
                 createdSecs = col.crt
-                col.config.get("creationOffset", null as Int?)?.let {
+                col.config.get<Int?>("creationOffset")?.let {
                     createdMinsWest = it
                 }
                 nowSecs = time.intTime()
@@ -510,12 +509,10 @@ abstract class BaseSched(val col: Collection) {
         }
     }
 
-    @Suppress("useless_cast")
     fun _rolloverHour(): Int {
-        return col.config.get("rollover", 4 as Int)!!
+        return col.config.get("rollover") ?: 4
     }
 
-    @Suppress("useless_cast")
     open fun _current_timezone_offset(): Int {
         return localMinutesWest(time.intTime())
     }
@@ -546,7 +543,7 @@ abstract class BaseSched(val col: Collection) {
     // ////////////////////////////////////////////////////////////////////////
 
     fun _new_timezone_enabled(): Boolean {
-        return col.config.has_config_not_null("creationOffset")
+        return col.config.get<Int?>("creationOffset") != null
     }
 
     fun useNewTimezoneCode() {
@@ -715,10 +712,24 @@ abstract class BaseSched(val col: Collection) {
             return context.getString(R.string.sched_end)
         }
         var s = Utils.timeQuantityNextIvl(context, ivl)
-        if (ivl < col.config.getInt("collapseTime")) {
+        if (ivl < learnAheadSeconds()) {
             s = context.getString(R.string.less_than_time, s)
         }
         return s
+    }
+
+    fun learnAheadSeconds(): Int {
+        return col.config.get("collapseTime") ?: 1200
+    }
+
+    // Only v2
+    @Consts.NEW_CARD_ORDER
+    fun newSpread(): Int {
+        return col.config.get("newSpread") ?: 0
+    }
+
+    fun timeboxSecs(): Int {
+        return col.config.get("timeLim") ?: 0
     }
 
     /**

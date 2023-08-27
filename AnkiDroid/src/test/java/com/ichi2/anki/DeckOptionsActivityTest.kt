@@ -14,14 +14,14 @@ class DeckOptionsActivityTest : RobolectricTest() {
         val col = col
 
         // Verify that for newly created deck hardFactor is default.
-        var hardFactor = col.config.get("hardFactor", 1.2)!!
+        var hardFactor = col.config.get("hardFactor") ?: 1.2
         Assert.assertEquals(1.2, hardFactor, 0.01)
 
         // Modify hard factor.
         col.config.set("hardFactor", 1.0)
 
         // Verify that hardFactor value has changed.
-        hardFactor = col.config.get("hardFactor", 1.2)!!
+        hardFactor = col.config.get("hardFactor") ?: 1.2
         Assert.assertEquals(1.0, hardFactor, 0.01)
     }
 }

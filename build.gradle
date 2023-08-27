@@ -4,6 +4,7 @@ import org.gradle.internal.jvm.Jvm
 
 buildscript {
     // The version for the Kotlin plugin and dependencies
+    // If changing this, make sure to update org.jetbrains.kotlin.plugin.serialization version too
     ext.kotlin_version = '1.9.0'
     ext.lint_version = '31.1.0' // 31.0.1 stopped running lint checks in CI
     ext.acra_version = '5.11.1'

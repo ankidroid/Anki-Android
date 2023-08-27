@@ -79,7 +79,6 @@ import com.ichi2.libanki.stats.Stats
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
-import com.ichi2.upgrade.upgradeJSONIfNecessary
 import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
@@ -87,7 +86,6 @@ import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.update
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.RustCleanup
-import org.json.JSONObject
 import timber.log.Timber
 import java.lang.IllegalStateException
 import java.lang.StringBuilder
@@ -371,12 +369,20 @@ open class CardBrowser :
         }
     }
 
+    private fun savedFilters(col: com.ichi2.libanki.Collection): HashMap<String, String> {
+        return col.config.get("savedFilters") ?: hashMapOf()
+    }
+
     private val mMySearchesDialogListener: MySearchesDialogListener = object : MySearchesDialogListener {
+        fun updateFilters(func: HashMap<String, String>.() -> Unit) {
+            val filters = savedFilters(col)
+            func(filters)
+            col.config.set("savedFilters", filters)
+        }
+
         override fun onSelection(searchName: String?) {
             Timber.d("OnSelection using search named: %s", searchName)
-            val savedFiltersObj = col.config.get("savedFilters", null as JSONObject?)
-            Timber.d("SavedFilters are %s", savedFiltersObj?.toString())
-            savedFiltersObj?.optString(searchName)?.apply {
+            savedFilters(col).get(searchName)?.apply {
                 Timber.d("OnSelection using search terms: %s", this)
                 mSearchTerms = this
                 mSearchView!!.setQuery(this, false)
@@ -387,17 +393,18 @@ open class CardBrowser :
 
         override fun onRemoveSearch(searchName: String?) {
             Timber.d("OnRemoveSelection using search named: %s", searchName)
-            val savedFiltersObj = col.config.get("savedFilters", null as JSONObject?)
-            if (savedFiltersObj?.has(searchName) == true) {
-                savedFiltersObj.remove(searchName)
-                col.config.set("savedFilters", savedFiltersObj)
-                if (savedFiltersObj.length() == 0) {
+            updateFilters {
+                remove("searchName")
+                if (this.isEmpty()) {
                     mMySearchesItem!!.isVisible = false
                 }
             }
         }
 
         override fun onSaveSearch(searchName: String?, searchTerms: String?) {
+            if (searchTerms == null) {
+                return
+            }
             if (searchName.isNullOrEmpty()) {
                 showSnackbar(
                     R.string.card_browser_list_my_searches_new_search_error_empty_name,
@@ -405,17 +412,17 @@ open class CardBrowser :
                 )
                 return
             }
-            val savedFiltersObj = col.config.get("savedFilters", JSONObject())!!
-            if (!savedFiltersObj.has(searchName)) {
-                savedFiltersObj.put(searchName, searchTerms)
-                col.config.set("savedFilters", savedFiltersObj)
-                mSearchView!!.setQuery("", false)
-                mMySearchesItem!!.isVisible = true
-            } else {
-                showSnackbar(
-                    R.string.card_browser_list_my_searches_new_search_error_dup,
-                    Snackbar.LENGTH_SHORT
-                )
+            updateFilters {
+                if (get(searchName) != null) {
+                    showSnackbar(
+                        R.string.card_browser_list_my_searches_new_search_error_dup,
+                        Snackbar.LENGTH_SHORT
+                    )
+                } else {
+                    set(searchName, searchTerms)
+                    mSearchView!!.setQuery("", false)
+                    mMySearchesItem!!.isVisible = true
+                }
             }
         }
     }
@@ -582,16 +589,12 @@ open class CardBrowser :
         registerExternalStorageListener()
         val preferences = baseContext.sharedPrefs()
 
-        val colOrder = col.config.getString("sortType")
+        val colOrder = col.config.get<String>("sortType")
         mOrder = fSortTypes.indexOf(colOrder).let { i -> if (i == -1) CARD_ORDER_NONE else i }
         if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
             mOrder = 0
         }
-        // This upgrade should already have been done during
-        // setConf. However older version of AnkiDroid didn't call
-        // upgradeJSONIfNecessary during setConf, which means the
-        // conf saved may still have this bug.
-        mOrderAsc = col.upgradeJSONIfNecessary("sortBackwards", false)
+        mOrderAsc = col.config.get("sortBackwards") ?: false
         mCards.reset()
         // Create a spinner for column 1
         val cardsColumn1Spinner = findViewById<Spinner>(R.id.browser_column1_spinner)
@@ -929,8 +932,8 @@ open class CardBrowser :
             mSaveSearchItem = menu.findItem(R.id.action_save_search)
             mSaveSearchItem?.isVisible = false // the searchview's query always starts empty.
             mMySearchesItem = menu.findItem(R.id.action_list_my_searches)
-            val savedFiltersObj = col.config.get("savedFilters", null as JSONObject?)
-            mMySearchesItem!!.isVisible = savedFiltersObj != null && savedFiltersObj.length() > 0
+            val savedFiltersObj = savedFilters(col)
+            mMySearchesItem!!.isVisible = savedFiltersObj.size > 0
             mSearchItem = menu.findItem(R.id.action_search)
             mSearchItem!!.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                 override fun onMenuItemActionExpand(item: MenuItem): Boolean {
@@ -1140,12 +1143,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_list_my_searches -> {
-                val savedFiltersObj = col.config.get("savedFilters", JSONObject())!!
-                val savedFilters: HashMap<String, String> = HashMap(
-                    savedFiltersObj
-                        .keys().asSequence().toList()
-                        .associateWith { k -> savedFiltersObj[k] as String }
-                )
+                val savedFilters = savedFilters(col)
                 showDialogFragment(
                     newInstance(
                         savedFilters,

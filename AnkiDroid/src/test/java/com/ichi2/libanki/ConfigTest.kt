@@ -18,10 +18,13 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
 import org.junit.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
@@ -29,40 +32,46 @@ class ConfigTest : RobolectricTest() {
 
     @Test
     fun string_serialization() {
-        assertThat(col.config.getString("sortType"), equalTo("noteFld"))
-
+        assertThat(col.config.get<String>("sortType"), equalTo("noteFld"))
         col.config.set("sortType", "noteFld2")
-
-        assertThat(col.config.getString("sortType"), equalTo("noteFld2"))
-    }
-
-    @Test
-    fun has_config_not_null() {
-        // empty
-        assertThat("no key - false", col.config.has_config_not_null("aa"), equalTo(false))
-
-        col.config.set("aa", JSONObject.NULL)
-        assertThat("has key but null - false", col.config.has_config_not_null("aa"), equalTo(false))
-
-        col.config.set("aa", "bb")
-        assertThat("has key with value - true", col.config.has_config_not_null("aa"), equalTo(true))
-        col.config.remove("aa")
-
-        assertThat("key removed", col.config.has_config_not_null("aa"), equalTo(false))
-    }
-
-    @Test
-    fun get_config_uses_default() {
-        assertThat(col.config.get("hello", 1L), equalTo(1L))
-
-        col.config.set("hello", JSONObject.NULL)
-
-        assertThat(col.config.get("hello", 1L), equalTo(1L))
-    }
-
-    @Test
-    fun string_handling() {
+        assertThat(col.config.get<String>("sortType"), equalTo("noteFld2"))
         col.config.set("bb", JSONObject.NULL)
-        assertThat(col.config.getString("bb"), equalTo("null"))
+        assertThat(col.config.get<String>("bb"), equalTo(null))
+        col.config.set("cc", "null")
+        assertThat(col.config.get<String>("cc"), equalTo("null"))
+    }
+
+    @Test
+    fun getOpt() {
+        col.config.set("int", 5)
+        assertThat(col.config.get("int"), equalTo(5))
+        // explicitly nulled key should work
+        col.config.set("null", JSONObject.NULL)
+        var b: Int? = null
+        assertThat(col.config.get("null"), equalTo(b))
+        // missing key should be the same
+        assertThat(col.config.get("missing"), equalTo(b))
+        // type mismatch should also be null
+        col.config.set("float", 5.5)
+        assertThat(col.config.get("float"), equalTo(b))
+        // other types
+        col.config.set("str", "hello")
+        assertThat(col.config.get("str"), equalTo("hello"))
+        col.config.set("list", listOf(1, 2, 3))
+        assertThat(col.config.get("list"), equalTo(listOf(1, 2, 3)))
+        val obj = Example("foo", 5)
+        col.config.set("example", obj)
+        assertThat(col.config.get("example"), equalTo(obj))
+        val map = mapOf("one" to 1, "two" to 2)
+        col.config.set("map", map)
+        assertThat(col.config.get("map"), equalTo(map))
+        val map2 = mapOf("one" to 1, "two" to "two")
+        assertThrows<SerializationException> {
+            // heterogenerous maps are not supported
+            col.config.set("map2", map2)
+        }
     }
 }
+
+@Serializable
+data class Example(val hello: String, val world: Int)

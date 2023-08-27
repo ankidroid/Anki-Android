@@ -1152,7 +1152,7 @@ open class Reviewer :
 
     override fun restoreCollectionPreferences(col: Collection) {
         super.restoreCollectionPreferences(col)
-        mShowRemainingCardCount = col.config.getBoolean("dueCounts")
+        mShowRemainingCardCount = col.config.get("dueCounts") ?: true
     }
 
     override fun onSingleTap(): Boolean {

@@ -294,7 +294,7 @@ open class SchedV2Test : RobolectricTest() {
         )
         MatcherAssert.assertThat(
             "localOffset should be set if using V2 Scheduler",
-            col.config.has("localOffset"),
+            col.config.get<Int?>("localOffset") != null,
             Matchers.equalTo(true)
         )
         val sched = col.sched

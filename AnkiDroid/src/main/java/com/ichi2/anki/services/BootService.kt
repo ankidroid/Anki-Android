@@ -151,7 +151,7 @@ class BootService : BroadcastReceiver() {
                         val sp = context.sharedPrefs()
                         sp.getInt("dayOffset", defValue)
                     }
-                    2 -> col.config.get("rollover", defValue)!!
+                    2 -> col.config.get("rollover") ?: defValue
                     else -> {
                         val sp = context.sharedPrefs()
                         sp.getInt("dayOffset", defValue)

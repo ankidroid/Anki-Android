@@ -1,6 +1,7 @@
 plugins {
  // Gradle plugin portal
  id 'com.github.triplet.play' version '3.8.4'
+ id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
 }
 
 apply plugin: 'com.android.application'
@@ -320,6 +321,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.5'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
 
     // Backend libraries
 

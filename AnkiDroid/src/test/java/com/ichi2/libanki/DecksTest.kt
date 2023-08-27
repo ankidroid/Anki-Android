@@ -240,7 +240,7 @@ class DecksTest : RobolectricTest() {
         val id = addDeck("test")
         decks.select(id)
         assertDoesNotThrow("curDeck should be saved as a long. A deck id.") {
-            col.config.getLong(
+            col.config.get<DeckId>(
                 CURRENT_DECK
             )
         }

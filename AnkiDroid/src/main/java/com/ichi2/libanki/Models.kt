@@ -222,7 +222,7 @@ class Models(val col: Collection) {
     fun current(forDeck: bool = true): NoteType {
         var m = get(col.decks.current().getLongOrNull("mid"))
         if (!forDeck || m == null) {
-            m = get(col.config.get("curModel", -1L)!!)
+            m = get(col.config.get("curModel") ?: 1L)
         }
         if (m != null) {
             return m
