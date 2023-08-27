@@ -131,6 +131,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.WINDOWS, "Issue 14308")
     fun nothingAppearsInAppBarIfAllAppBarButtonsAreDisabled() {
         disableAllReviewerAppBarButtons()
 
