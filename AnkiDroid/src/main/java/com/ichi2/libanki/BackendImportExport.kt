@@ -34,7 +34,7 @@ import net.ankiweb.rsdroid.Backend
  * Backups are automatically expired according to the user's settings.
  *
  */
-fun CollectionV16.createBackup(
+fun Collection.createBackup(
     backupFolder: String,
     force: Boolean,
     waitForCompletion: Boolean
@@ -51,7 +51,7 @@ fun CollectionV16.createBackup(
  * failed, and the status has not yet been checked. On failure, an error is only returned
  * once; subsequent calls are a no-op until another backup is run.
  */
-fun CollectionV16.awaitBackupCompletion() {
+fun Collection.awaitBackupCompletion() {
     backend.awaitBackupCompletion()
 }
 

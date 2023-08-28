@@ -37,7 +37,6 @@ import com.ichi2.anki.*
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.*
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.servicelayer.ScopedStorageService
-import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
@@ -292,7 +291,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     contentNullable(message)
                     positiveButton(R.string.dialog_positive_overwrite) {
-                        (activity as DeckPicker).sync(Connection.ConflictResolution.FULL_DOWNLOAD)
+                        (activity as DeckPicker).sync(ConflictResolution.FULL_DOWNLOAD)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)

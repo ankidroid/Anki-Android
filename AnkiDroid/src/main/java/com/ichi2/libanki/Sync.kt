@@ -14,15 +14,13 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
-package com.ichi2.libanki.sync
+package com.ichi2.libanki
 
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
-import anki.sync.SyncStatusResponse
 import anki.sync.syncLoginRequest
-import com.ichi2.libanki.CollectionV16
 
-fun CollectionV16.syncLogin(username: String, password: String, endpoint: String?): SyncAuth {
+fun Collection.syncLogin(username: String, password: String, endpoint: String?): SyncAuth {
     val req = syncLoginRequest {
         this.username = username
         this.password = password
@@ -34,22 +32,14 @@ fun CollectionV16.syncLogin(username: String, password: String, endpoint: String
     return backend.syncLogin(req)
 }
 
-fun CollectionV16.syncCollection(auth: SyncAuth): SyncCollectionResponse {
+fun Collection.syncCollection(auth: SyncAuth): SyncCollectionResponse {
     return backend.syncCollection(input = auth)
 }
 
-fun CollectionV16.fullUpload(auth: SyncAuth) {
+fun Collection.fullUpload(auth: SyncAuth) {
     return backend.fullUpload(input = auth)
 }
 
-fun CollectionV16.fullDownload(auth: SyncAuth) {
+fun Collection.fullDownload(auth: SyncAuth) {
     return backend.fullDownload(input = auth)
-}
-
-fun CollectionV16.syncMedia(auth: SyncAuth) {
-    return backend.syncMedia(input = auth)
-}
-
-fun CollectionV16.syncStatus(auth: SyncAuth): SyncStatusResponse {
-    return backend.syncStatus(input = auth)
 }

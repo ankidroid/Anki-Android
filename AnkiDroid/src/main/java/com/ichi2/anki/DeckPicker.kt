@@ -102,12 +102,10 @@ import com.ichi2.anki.services.getMediaMigrationState
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.stats.AnkiStatsTaskHandler
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
-import com.ichi2.anki.web.HostNumFactory
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.async.CollectionTask.*
-import com.ichi2.async.Connection.ConflictResolution
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -1611,17 +1609,7 @@ open class DeckPicker :
         /** Nested function that makes the connection to
          * the sync server and starts syncing the data */
         fun doSync() {
-            if (!BackendFactory.defaultLegacySchema) {
-                handleNewSync(conflict, shouldFetchMedia(preferences))
-            } else {
-                val fetchMedia = shouldFetchMedia(preferences)
-                val data =
-                    arrayOf(hkey, fetchMedia, conflict, HostNumFactory.getInstance(baseContext))
-                Connection.sync(
-                    createSyncListener(isFetchingMedia = fetchMedia),
-                    Connection.Payload(data)
-                )
-            }
+            handleNewSync(conflict, shouldFetchMedia(preferences))
         }
         // Warn the user in case the connection is metered
         val meteredSyncIsAllowed =
