@@ -381,7 +381,7 @@ dependencies {
 
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
     testImplementation 'org.mockito:mockito-inline:5.2.0'
-    testImplementation "org.mockito.kotlin:mockito-kotlin:5.0.0"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:5.1.0"
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
