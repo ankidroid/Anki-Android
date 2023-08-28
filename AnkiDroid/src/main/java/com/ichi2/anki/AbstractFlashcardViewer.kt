@@ -839,7 +839,6 @@ abstract class AbstractFlashcardViewer :
         finishWithoutAnimation()
     }
 
-    @NeedsTest("Starting animation from swipe is inverse to the finishing one")
     protected open fun editCard(fromGesture: Gesture? = null) {
         if (currentCard == null) {
             // This should never occurs. It means the review button was pressed while there is no more card in the reviewer.
