@@ -35,6 +35,7 @@ import android.view.*
 import android.webkit.JavascriptInterface
 import android.widget.*
 import androidx.annotation.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
@@ -77,6 +78,7 @@ import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
+import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
@@ -88,13 +90,13 @@ import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import timber.log.Timber
 import java.io.File
-import java.lang.ref.WeakReference
 import java.util.function.Consumer
 
 @KotlinCleanup("too many to count")
 open class Reviewer :
     AbstractFlashcardViewer(),
     ReviewerUi {
+    private var queueState: CurrentQueueState? = null
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
@@ -290,10 +292,8 @@ open class Reviewer :
             toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
             whiteboard!!.toggleStylus = toggleStylus
         }
-        launchCatchingTask { getNextCardAndRedraw() }
+        launchCatchingTask { updateCardAndRedraw() }
         disableDrawerSwipeOnConflicts()
-        // Add a weak reference to current activity so that scheduler can talk to to Activity
-        sched!!.setContext(WeakReference(this))
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
@@ -859,20 +859,12 @@ open class Reviewer :
     }
 
     override fun performReload() {
-        launchCatchingTask { getNextCardAndRedraw() }
+        launchCatchingTask { updateCardAndRedraw() }
     }
 
     override fun displayAnswerBottomBar() {
         super.displayAnswerBottomBar()
         mOnboarding.onAnswerShown()
-        val buttonCount: Int = try {
-            this.buttonCount
-        } catch (e: RuntimeException) {
-            CrashReportService.sendExceptionReport(e, "AbstractReviewer-showEaseButtons")
-            closeReviewer(DeckPicker.RESULT_DB_ERROR)
-            return
-        }
-
         // Set correct label and background resource for each button
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
@@ -881,47 +873,24 @@ open class Reviewer :
         easeButton1!!.setVisibility(View.VISIBLE)
         easeButton1!!.setColor(background[0])
         easeButton4!!.setColor(background[3])
-        when (buttonCount) {
-            2 -> {
-                // Ease 2 is "good"
-                easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
-                easeButton2!!.requestFocus()
-            }
-            3 -> {
-                // Ease 2 is good
-                easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
-                // Ease 3 is easy
-                easeButton3!!.setup(background[3], textColor[3], R.string.ease_button_easy)
-                easeButton2!!.requestFocus()
-            }
-            else -> {
-                // Ease 2 is "hard"
-                easeButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
-                easeButton2!!.requestFocus()
-                // Ease 3 is good
-                easeButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
-                easeButton4!!.setVisibility(View.VISIBLE)
-                easeButton3!!.requestFocus()
-            }
-        }
+        // Ease 2 is "hard"
+        easeButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
+        easeButton2!!.requestFocus()
+        // Ease 3 is good
+        easeButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
+        easeButton4!!.setVisibility(View.VISIBLE)
+        easeButton3!!.requestFocus()
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, currentCard!!, button)
-
+            val state = queueState!!
+            fun nextIvlStr(button: Int) = state.nextIvlStr(this, button)
             easeButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
             easeButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
-            if (buttonCount > 2) {
-                easeButton3!!.nextTime = nextIvlStr(Consts.BUTTON_THREE)
-            }
-            if (buttonCount > 3) {
-                easeButton4!!.nextTime = nextIvlStr(Consts.BUTTON_FOUR)
-            }
+            easeButton3!!.nextTime = nextIvlStr(Consts.BUTTON_THREE)
+            easeButton4!!.nextTime = nextIvlStr(Consts.BUTTON_FOUR)
         }
     }
-
-    val buttonCount: Int
-        get() = sched!!.answerButtons(currentCard!!)
 
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
@@ -1008,6 +977,52 @@ open class Reviewer :
         super.onPageFinished()
         onFlagChanged()
         onMarkChanged()
+    }
+
+    override suspend fun updateCurrentCard() {
+        val state = withCol {
+            sched.currentQueueState()?.apply {
+                topCard.renderOutput(true)
+            }
+        }
+        state?.timeboxReached?.let { dealWithTimeBox(it) }
+        currentCard = state?.topCard
+        queueState = state
+    }
+
+    override suspend fun answerCardInner(ease: Int) {
+        val state = queueState!!
+        Timber.d("answerCardInner: ${currentCard!!.id} $ease")
+        undoableOp(this) {
+            col.sched.answerCard(state, ease)
+        }.also {
+            if (ease == Consts.BUTTON_ONE && col.sched.againIsLeech(state)) {
+                state.topCard.load()
+                val leechMessage: String = if (state.topCard.queue < 0) {
+                    resources.getString(R.string.leech_suspend_notification)
+                } else {
+                    resources.getString(R.string.leech_notification)
+                }
+                showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
+            }
+        }
+    }
+
+    private fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
+        val nCards = timebox.reps
+        val nMins = timebox.secs / 60
+        val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
+        val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
+        AlertDialog.Builder(this).show {
+            title(R.string.timebox_reached_title)
+            message(text = timeboxMessage)
+            positiveButton(R.string.dialog_continue) {}
+            negativeButton(text = CollectionManager.TR.studyingFinish()) {
+                finishWithAnimation(ActivityTransitionAnimation.Direction.END)
+            }
+            cancelable(true)
+            setOnCancelListener { }
+        }
     }
 
     override fun displayCardQuestion() {

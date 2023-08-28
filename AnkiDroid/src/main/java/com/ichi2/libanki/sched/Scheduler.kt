@@ -43,38 +43,65 @@ import com.ichi2.libanki.Utils
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.lang.ref.WeakReference
 
-/**
- * This code currently tries to fit within the constraints of the AbstractSched API. In the
- * future, it would be better for the reviewer to fetch queuedCards directly, so they only
- * need to be fetched once.
- */
+data class CurrentQueueState(
+    val topCard: Card,
+    val states: SchedulingStates,
+    val context: SchedulingContext,
+    val counts: Counts,
+    val timeboxReached: Collection.TimeboxReached?,
+    val learnAheadSecs: Int
+) {
+    fun nextIvlStr(context: Context, @Consts.BUTTON_TYPE ease: Int): String {
+        val state = stateFromEase(states, ease)
+        val secs = intervalForState(state)
+        return nextIvlStr(context, secs, learnAheadSecs)
+    }
+}
+
 @WorkerThread
 open class Scheduler(val col: Collection) {
-    private var activityForLeechNotification: WeakReference<Activity>? = null
-
-    // could be made more efficient by constructing a native Card object from
-    // the backend card object, instead of doing a separate fetch
+    /** Legacy API */
     open val card: Card?
-        get() = queuedCards.cardsList.firstOrNull()?.card?.id?.let {
-            col.getCard(it).apply { startTimer() }
+        get() = queuedCards.cardsList.firstOrNull()?.card?.let {
+            Card(col, it).apply { startTimer() }
         }
+
+    fun currentQueueState(): CurrentQueueState? {
+        val queue = queuedCards
+        return queue.cardsList.firstOrNull()?.let {
+            CurrentQueueState(
+                topCard = Card(col, it.card),
+                states = it.states,
+                context = it.context,
+                counts = Counts(queue.newCount, queue.learningCount, queue.reviewCount),
+                timeboxReached = col.timeboxReached(),
+                learnAheadSecs = learnAheadSeconds()
+            )
+        }
+    }
 
     private val queuedCards: QueuedCards
         get() = col.backend.getQueuedCards(fetchLimit = 1, intradayLearningOnly = false)
 
+    open fun answerCard(info: CurrentQueueState, ease: Int): OpChanges {
+        return col.backend.answerCard(buildAnswer(info.topCard, info.states, ease)).also {
+            reps += 1
+        }
+    }
+
+    /** Legacy path, used by tests. */
     open fun answerCard(card: Card, ease: Int) {
         val top = queuedCards.cardsList.first()
         val answer = buildAnswer(card, top.states, ease)
         col.backend.answerCard(answer)
         reps += 1
-        // if this were checked in the UI, there'd be no need to store an activity here
-        if (col.backend.stateIsLeech(answer.newState)) {
-            activityForLeechNotification?.get()?.let { leech(card, it) }
-        }
         // tests assume the card was mutated
         card.load()
+    }
+
+    fun againIsLeech(info: CurrentQueueState): Boolean {
+        return col.backend.stateIsLeech(info.states.again)
     }
 
     fun buildAnswer(card: Card, states: SchedulingStates, ease: Int): CardAnswer {
@@ -98,16 +125,6 @@ open class Scheduler(val col: Collection) {
         }
     }
 
-    private fun stateFromEase(states: SchedulingStates, ease: Int): SchedulingState {
-        return when (ease) {
-            1 -> states.again
-            2 -> states.hard
-            3 -> states.good
-            4 -> states.easy
-            else -> TODO("invalid ease: $ease")
-        }
-    }
-
     /**
      * @return Number of new, rev and lrn card to review in selected deck. Sum of elements of counts.
      */
@@ -123,8 +140,6 @@ open class Scheduler(val col: Collection) {
 
     // only used by tests
     fun newCount(): Int {
-        // We need to actually recompute the three elements, because we potentially need to deal with undid card
-        // in any deck where it may be
         return counts().new
     }
 
@@ -144,51 +159,16 @@ open class Scheduler(val col: Collection) {
         }
     }
 
-    @Suppress("unused_parameter")
-    fun answerButtons(card: Card): Int {
-        return 4
-    }
-
     /** @return Number of repetitions today. Note that a repetition is the fact that the scheduler sent a card, and not the fact that the card was answered.
      * So buried, suspended, ... cards are also counted as repetitions.
      */
     var reps: Int = 0
-
-    fun setContext(contextReference: WeakReference<Activity>) {
-        this.activityForLeechNotification = contextReference
-    }
 
     /** Only provided for legacy unit tests. */
     fun nextIvl(card: Card, ease: Int): Long {
         val states = col.backend.getSchedulingStates(card.id)
         val state = stateFromEase(states, ease)
         return intervalForState(state)
-    }
-
-    private fun intervalForState(state: SchedulingState): Long {
-        return when (state.kindCase) {
-            SchedulingState.KindCase.NORMAL -> intervalForNormalState(state.normal)
-            SchedulingState.KindCase.FILTERED -> intervalForFilteredState(state.filtered)
-            SchedulingState.KindCase.KIND_NOT_SET, null -> TODO("invalid scheduling state")
-        }
-    }
-
-    private fun intervalForNormalState(normal: SchedulingState.Normal): Long {
-        return when (normal.kindCase) {
-            SchedulingState.Normal.KindCase.NEW -> 0
-            SchedulingState.Normal.KindCase.LEARNING -> normal.learning.scheduledSecs.toLong()
-            SchedulingState.Normal.KindCase.REVIEW -> normal.review.scheduledDays.toLong() * 86400
-            SchedulingState.Normal.KindCase.RELEARNING -> normal.relearning.learning.scheduledSecs.toLong()
-            SchedulingState.Normal.KindCase.KIND_NOT_SET, null -> TODO("invalid normal state")
-        }
-    }
-
-    private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long {
-        return when (filtered.kindCase) {
-            SchedulingState.Filtered.KindCase.PREVIEW -> filtered.preview.scheduledSecs.toLong()
-            SchedulingState.Filtered.KindCase.RESCHEDULING -> intervalForNormalState(filtered.rescheduling.originalState)
-            SchedulingState.Filtered.KindCase.KIND_NOT_SET, null -> TODO("invalid filtered state")
-        }
     }
 
     /** Update a V1 scheduler collection to V2. Requires full sync. */
@@ -714,6 +694,7 @@ open class Scheduler(val col: Collection) {
       Next time reports ********************************************************
       ***************************************
      */
+
     /**
      * Return the next interval for a card and ease as a string.
      *
@@ -727,15 +708,7 @@ open class Scheduler(val col: Collection) {
      * @return A string like “1 min” or “1.7 mo”
      */
     open fun nextIvlStr(context: Context, card: Card, @Consts.BUTTON_TYPE ease: Int): String {
-        val ivl: Long = nextIvl(card, ease)
-        if (ivl == 0L) {
-            return context.getString(R.string.sched_end)
-        }
-        var s = Utils.timeQuantityNextIvl(context, ivl)
-        if (ivl < learnAheadSeconds()) {
-            s = context.getString(R.string.less_than_time, s)
-        }
-        return s
+        return nextIvlStr(context, nextIvl(card, ease), learnAheadSeconds())
     }
 
     fun learnAheadSeconds(): Int {
@@ -767,3 +740,50 @@ fun leech(card: Card, activity: Activity?) {
 }
 
 const val REPORT_LIMIT = 99999
+
+private fun stateFromEase(states: SchedulingStates, ease: Int): SchedulingState {
+    return when (ease) {
+        1 -> states.again
+        2 -> states.hard
+        3 -> states.good
+        4 -> states.easy
+        else -> TODO("invalid ease: $ease")
+    }
+}
+
+private fun intervalForState(state: SchedulingState): Long {
+    return when (state.kindCase) {
+        SchedulingState.KindCase.NORMAL -> intervalForNormalState(state.normal)
+        SchedulingState.KindCase.FILTERED -> intervalForFilteredState(state.filtered)
+        SchedulingState.KindCase.KIND_NOT_SET, null -> TODO("invalid scheduling state")
+    }
+}
+
+private fun intervalForNormalState(normal: SchedulingState.Normal): Long {
+    return when (normal.kindCase) {
+        SchedulingState.Normal.KindCase.NEW -> 0
+        SchedulingState.Normal.KindCase.LEARNING -> normal.learning.scheduledSecs.toLong()
+        SchedulingState.Normal.KindCase.REVIEW -> normal.review.scheduledDays.toLong() * 86400
+        SchedulingState.Normal.KindCase.RELEARNING -> normal.relearning.learning.scheduledSecs.toLong()
+        SchedulingState.Normal.KindCase.KIND_NOT_SET, null -> TODO("invalid normal state")
+    }
+}
+
+private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long {
+    return when (filtered.kindCase) {
+        SchedulingState.Filtered.KindCase.PREVIEW -> filtered.preview.scheduledSecs.toLong()
+        SchedulingState.Filtered.KindCase.RESCHEDULING -> intervalForNormalState(filtered.rescheduling.originalState)
+        SchedulingState.Filtered.KindCase.KIND_NOT_SET, null -> TODO("invalid filtered state")
+    }
+}
+
+fun nextIvlStr(context: Context, ivlSecs: Long, learnAheadSecs: Int): String {
+    if (ivlSecs == 0L) {
+        return context.getString(R.string.sched_end)
+    }
+    var s = Utils.timeQuantityNextIvl(context, ivlSecs)
+    if (ivlSecs < learnAheadSecs) {
+        s = context.getString(R.string.less_than_time, s)
+    }
+    return s
+}

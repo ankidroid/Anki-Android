@@ -123,6 +123,30 @@ open class Card : Cloneable {
         data = ""
     }
 
+    /** Construct an instance from a backend Card */
+    constructor(col: Collection, card: anki.cards.Card) {
+        this.col = col
+        timerStarted = 0L
+        renderOutput = null
+        note = null
+        id = card.id
+        nid = card.noteId
+        did = card.deckId
+        ord = card.templateIdx
+        due = card.due.toLong()
+        this.type = card.ctype
+        queue = card.queue
+        ivl = card.interval
+        factor = card.easeFactor
+        reps = card.reps
+        lapses = card.lapses
+        left = card.remainingSteps
+        oDue = card.originalDue.toLong()
+        oDid = card.originalDeckId
+        flags = card.flags
+        data = ""
+    }
+
     constructor(col: Collection, id: Long?) {
         this.col = col
         timerStarted = 0L

@@ -304,7 +304,7 @@ enum class AutomaticAnswerAction(private val preferenceValue: Int) {
     ANSWER_EASY(4);
 
     fun execute(reviewer: Reviewer) {
-        val numberOfButtons = reviewer.buttonCount
+        val numberOfButtons = 4
         val actualAction = handleInvalidButtons(numberOfButtons)
         val action = actualAction.toCommand(numberOfButtons)
         Timber.i("Executing %s", action)

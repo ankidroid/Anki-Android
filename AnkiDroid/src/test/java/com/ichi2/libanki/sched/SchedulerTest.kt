@@ -970,7 +970,6 @@ open class SchedulerTest : RobolectricTest() {
         Assert.assertEquals(Counts(0, 0, 1), col.sched.counts())
         // grab it and check estimates
         c = col.sched.card!!
-        Assert.assertEquals(4, col.sched.answerButtons(c).toLong())
         Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_ONE))
         Assert.assertEquals(
             (75 * 1.2).roundToInt() * SECONDS_PER_DAY,
@@ -1083,7 +1082,6 @@ open class SchedulerTest : RobolectricTest() {
         // grab the first card
         c = col.sched.card!!
         Assert.assertEquals(600, col.sched.nextIvl(c, BUTTON_ONE))
-        Assert.assertEquals(4, col.sched.answerButtons(c).toLong())
         Assert.assertEquals(900, col.sched.nextIvl(c, BUTTON_TWO))
         // failing it will push its due time back
         val due = c.due
@@ -1140,21 +1138,21 @@ open class SchedulerTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         sched.answerCard(
             c!!,
-            sched.answerButtons(c) - 1
+            3
         ) // not upstream. But we are not expecting multiple getCard without review
         Assert.assertEquals(0, c.ord)
         c = sched.card
         advanceRobolectricLooperWithSleep()
         sched.answerCard(
             c!!,
-            sched.answerButtons(c) - 1
+            3
         ) // not upstream. But we are not expecting multiple getCard without review
         Assert.assertEquals(1, c.ord)
         c = sched.card
         advanceRobolectricLooperWithSleep()
         sched.answerCard(
             c!!,
-            sched.answerButtons(c) - 1
+            3
         ) // not upstream. But we are not expecting multiple getCard without review
         advanceRobolectricLooperWithSleep()
         Assert.assertEquals(2, c.ord)

@@ -320,7 +320,7 @@ class CardContentProvider : ContentProvider() {
                 var k = 0
                 while (k < limit) {
                     val currentCard = col.sched.card ?: break
-                    val buttonCount = col.sched.answerButtons(currentCard)
+                    val buttonCount = 4
                     val buttonTexts = JSONArray()
                     var i = 0
                     while (i < buttonCount) {

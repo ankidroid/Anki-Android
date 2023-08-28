@@ -87,30 +87,6 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
-    fun jsTime4ShouldBeBlankIfButtonUnavailable() {
-        // #6623 - easy should be blank when displaying a card with 3 buttons (after displaying a review)
-        val firstNote = addNoteUsingBasicModel("Hello", "World")
-        moveToReviewQueue(firstNote.firstCard())
-
-        addNoteUsingBasicModel("Hello", "World2")
-
-        val reviewer = startReviewer()
-        val javaScriptFunction = reviewer.javaScriptFunction()
-
-        // The answer needs to be displayed to be able to get the time.
-        displayAnswer(reviewer)
-        assertThat("4 buttons should be displayed", reviewer.answerButtonCount, equalTo(4))
-
-        val nextTime = javaScriptFunction.ankiGetNextTime4()
-        assertThat(nextTime, not(emptyString()))
-
-        // Display the next answer
-        reviewer.answerCard(Consts.BUTTON_FOUR)
-
-        displayAnswer(reviewer)
-    }
-
-    @Test
     @Flaky(os = OS.WINDOWS, "Issue 14308")
     fun nothingAppearsInAppBarIfAllAppBarButtonsAreDisabled() {
         disableAllReviewerAppBarButtons()

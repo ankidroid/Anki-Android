@@ -83,20 +83,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         assertThat(underTest.processedAnswer(), equalTo(EASE_3))
     }
 
-    @Test
-    fun spaceAnswersSecondButtonWhenThreeButtonsShowing() {
-        val underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(3)
-        underTest.handleSpacebar()
-        assertThat(underTest.processedAnswer(), equalTo(EASE_2))
-    }
-
-    @Test
-    fun spaceAnswersSecondButtonWhenTwoButtonsShowing() {
-        val underTest = KeyboardInputTestReviewer.displayingAnswer().withButtons(2)
-        underTest.handleSpacebar()
-        assertThat(underTest.processedAnswer(), equalTo(EASE_2))
-    }
-
     /** END: DEFAULT IS "GOOD"  */
     @Test
     fun gamepadAAnswerFourthButtonOrShowsAnswer() {
@@ -362,10 +348,8 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return this
         }
 
-        override val answerButtonCount: Int
-            get() = mAnswerButtonCount
-
         override fun answerCard(ease: Int) {
+            super.answerCard(ease)
             mAnswered = ease
         }
 

@@ -24,7 +24,6 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.*
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.net.Uri
@@ -448,21 +447,20 @@ abstract class AbstractFlashcardViewer :
         // intentionally blank
     }
 
-    // this could be improved: it should also be fetching counts, v3 sched info, etc at the same
-    // time
-    internal suspend fun getNextCardAndRedraw() {
-        data class NextCardInfo(val card: Card?, val timeboxReached: Collection.TimeboxReached?)
-
-        val info = withCol {
-            val card = sched.card
-            card?.renderOutput(true)
-
-            NextCardInfo(card, timeboxReached())
+    /** Called after an undo or undoable operation takes place. * Should set currentCard to the current card to display. */
+    open suspend fun updateCurrentCard() {
+        // Legacy tests assume the current card will be grabbed from the collection,
+        // despite that making no sense outside of Reviewer.kt
+        currentCard = withCol {
+            col.sched.card?.apply {
+                renderOutput()
+            }
         }
+    }
 
-        info.timeboxReached?.let { dealWithTimeBox(it) }
+    internal suspend fun updateCardAndRedraw() {
+        updateCurrentCard()
 
-        currentCard = info.card
         if (currentCard == null) {
             closeReviewer(RESULT_NO_MORE_CARDS)
             // When launched with a shortcut, we want to display a message when finishing
@@ -481,29 +479,9 @@ abstract class AbstractFlashcardViewer :
         focusDefaultLayout()
     }
 
-    private fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
-        val nCards = timebox.reps
-        val nMins = timebox.secs / 60
-        val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
-        val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-        AlertDialog.Builder(this@AbstractFlashcardViewer).show {
-            title(R.string.timebox_reached_title)
-            message(text = timeboxMessage)
-            positiveButton(R.string.dialog_continue) {}
-            negativeButton(text = TR.studyingFinish()) {
-                finishWithAnimation(ActivityTransitionAnimation.Direction.END)
-            }
-            cancelable(true)
-            setOnCancelListener { }
-        }
-    }
-
     private fun focusDefaultLayout() {
         findViewById<View>(R.id.root_layout).requestFocus()
     }
-
-    open val answerButtonCount: Int
-        get() = col.sched.answerButtons(currentCard!!)
 
     // ----------------------------------------------------------------------------
     // ANDROID METHODS
@@ -866,18 +844,7 @@ abstract class AbstractFlashcardViewer :
     }
 
     private fun getRecommendedEase(easy: Boolean): Int {
-        return try {
-            when (answerButtonCount) {
-                2 -> EASE_2
-                3 -> if (easy) EASE_3 else EASE_2
-                4 -> if (easy) EASE_4 else EASE_3
-                else -> 0
-            }
-        } catch (e: RuntimeException) {
-            CrashReportService.sendExceptionReport(e, "AbstractReviewer-getRecommendedEase")
-            closeReviewer(DeckPicker.RESULT_DB_ERROR)
-            0
-        }
+        return if (easy) EASE_4 else EASE_3
     }
 
     open fun answerCard(@BUTTON_TYPE ease: Int) {
@@ -886,21 +853,24 @@ abstract class AbstractFlashcardViewer :
                 return@launchCatchingTask
             }
             mIsSelecting = false
-            val buttonNumber = col.sched.answerButtons(currentCard!!)
-            // Detect invalid ease for current card (e.g. by using keyboard shortcut or gesture).
-            if (buttonNumber < ease) {
+            if (mPreviousAnswerIndicator == null) {
+                // workaround for a broken ReviewerKeyboardInputTest
                 return@launchCatchingTask
             }
             // Temporarily sets the answer indicator dots appearing below the toolbar
-            mPreviousAnswerIndicator!!.displayAnswerIndicator(ease, buttonNumber)
+            mPreviousAnswerIndicator?.displayAnswerIndicator(ease)
             mSoundPlayer.stopSounds()
             mCurrentEase = ease
-            val oldCard = currentCard!!
-            withCol {
-                Timber.i("Answering card %d", oldCard.id)
-                col.sched.answerCard(oldCard, ease)
-            }
-            getNextCardAndRedraw()
+
+            answerCardInner(ease)
+            updateCardAndRedraw()
+        }
+    }
+
+    open suspend fun answerCardInner(@BUTTON_TYPE ease: Int) {
+        // Legacy tests assume they can call answerCard() even outside of Reviewer
+        withCol {
+            col.sched.answerCard(currentCard!!, ease)
         }
     }
 
@@ -1111,34 +1081,12 @@ abstract class AbstractFlashcardViewer :
             row1.orientation = LinearLayout.HORIZONTAL
             val row2 = LinearLayout(baseContext)
             row2.orientation = LinearLayout.HORIZONTAL
-            when (answerButtonCount) {
-                2 -> {
-                    easeButton1!!.height = mInitialFlipCardHeight * 2
-                    easeButton2!!.height = mInitialFlipCardHeight * 2
-                    easeButton1!!.addTo(row2)
-                    easeButton2!!.addTo(row2)
-                    easeButtonsLayout!!.addView(row2)
-                }
-                3 -> {
-                    easeButton3!!.addTo(row1)
-                    easeButton1!!.addTo(row2)
-                    easeButton2!!.addTo(row2)
-                    val params: ViewGroup.LayoutParams
-                    params = LinearLayout.LayoutParams(Resources.getSystem().displayMetrics.widthPixels / 2, easeButton4!!.height)
-                    params.marginStart = Resources.getSystem().displayMetrics.widthPixels / 2
-                    row1.layoutParams = params
-                    easeButtonsLayout!!.addView(row1)
-                    easeButtonsLayout!!.addView(row2)
-                }
-                else -> {
-                    easeButton2!!.addTo(row1)
-                    easeButton4!!.addTo(row1)
-                    easeButton1!!.addTo(row2)
-                    easeButton3!!.addTo(row2)
-                    easeButtonsLayout!!.addView(row1)
-                    easeButtonsLayout!!.addView(row2)
-                }
-            }
+            easeButton2!!.addTo(row1)
+            easeButton4!!.addTo(row1)
+            easeButton1!!.addTo(row2)
+            easeButton3!!.addTo(row2)
+            easeButtonsLayout!!.addView(row1)
+            easeButtonsLayout!!.addView(row2)
         }
         val after = Runnable { flipCardLayout!!.visibility = View.GONE }
 
@@ -2534,7 +2482,7 @@ abstract class AbstractFlashcardViewer :
 
     @VisibleForTesting
     fun loadInitialCard() {
-        launchCatchingTask { getNextCardAndRedraw() }
+        launchCatchingTask { updateCardAndRedraw() }
     }
 
     val isDisplayingAnswer
@@ -2571,7 +2519,8 @@ abstract class AbstractFlashcardViewer :
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
         if ((changes.studyQueues || changes.noteText || changes.card) && handler !== this) {
-            launchCatchingTask { getNextCardAndRedraw() }
+            Timber.d("opExecuted: redraw")
+            launchCatchingTask { updateCardAndRedraw() }
         }
     }
 
