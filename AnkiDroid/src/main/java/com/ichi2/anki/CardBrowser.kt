@@ -21,6 +21,8 @@ package com.ichi2.anki
 import android.content.*
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.text.TextUtils
 import android.util.TypedValue
@@ -174,6 +176,11 @@ open class CardBrowser :
     /** The next deck for the "Change Deck" operation  */
     private var mNewDid: DeckId = 0
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
+
+    private var undoSnackbarFlag = false
+    private var delayedSnackbarRunnable: Runnable? = null
+    private val snackbarHandler = Handler(Looper.getMainLooper())
+    private var deletedCardsResult = 0
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
     private var mTempSearchQuery: String? = null
@@ -778,6 +785,7 @@ open class CardBrowser :
             }
             KeyEvent.KEYCODE_FORWARD_DEL -> {
                 Timber.i("Delete pressed - Delete Selected Note")
+                undoSnackbarFlag = true
                 launchCatchingTask { deleteSelectedNote() }
                 return true
             }
@@ -1256,6 +1264,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_delete_card -> {
+                undoSnackbarFlag = true
                 launchCatchingTask { deleteSelectedNote() }
                 return true
             }
@@ -1427,9 +1436,7 @@ open class CardBrowser :
             cardsAdapter.notifyDataSetChanged()
             deletedCards
         }
-
-        val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, result.size, result.size)
-        showUndoSnackbar(deletedMessage)
+        deletedCardsResult = result.size
     }
 
     @VisibleForTesting
@@ -1692,13 +1699,25 @@ open class CardBrowser :
         mCards.replaceWith(cards)
         Timber.i("CardBrowser:: Completed searchCards() Successfully")
         updateList()
+        val deletedMessage =
+            resources.getQuantityString(R.plurals.card_browser_cards_deleted, deletedCardsResult, deletedCardsResult)
         /*check whether mSearchView is initialized as it is lateinit property.*/
         if (mSearchView == null || mSearchView!!.isIconified) {
             restoreScrollPositionIfRequested()
             return
         }
         if (hasSelectedAllDecks()) {
-            showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
+            if (undoSnackbarFlag) {
+                showUndoSnackbar(deletedMessage)
+                showDelayedSnackbar(
+                    { showSnackbar(subtitleText, Snackbar.LENGTH_SHORT) },
+                    2000
+                )
+                undoSnackbarFlag = false
+                deletedCardsResult = 0
+            } else {
+                showSnackbar(subtitleText, Snackbar.LENGTH_SHORT)
+            }
         } else {
             // If we haven't selected all decks, allow the user the option to search all decks.
             val message = if (cardCount == 0) {
@@ -1706,8 +1725,22 @@ open class CardBrowser :
             } else {
                 subtitleText
             }
-            showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
-                setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
+            if (undoSnackbarFlag) {
+                showUndoSnackbar(deletedMessage)
+                showDelayedSnackbar(
+                    {
+                        showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
+                            setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
+                        }
+                    },
+                    2000
+                )
+                undoSnackbarFlag = false
+                deletedCardsResult = 0
+            } else {
+                showSnackbar(message, Snackbar.LENGTH_INDEFINITE) {
+                    setAction(R.string.card_browser_search_all_decks) { searchAllDecks() }
+                }
             }
         }
         restoreScrollPositionIfRequested()
@@ -1729,6 +1762,17 @@ open class CardBrowser :
             Timber.d("Restoring scroll position after search")
             autoScrollTo(newPosition)
         }
+    }
+
+    /** Prevents search result snackbar to overlap the undoSnackbar by delaying the search result snackbar **/
+    private fun showDelayedSnackbar(function: () -> Unit, delay: Long) {
+        delayedSnackbarRunnable?.let { snackbarHandler.removeCallbacks(it) }
+        val runnable = Runnable {
+            function.invoke()
+            delayedSnackbarRunnable = null
+        }
+        delayedSnackbarRunnable = runnable
+        snackbarHandler.postDelayed(runnable, delay)
     }
 
     @VisibleForTesting
@@ -1935,7 +1979,13 @@ open class CardBrowser :
 
     private fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message, Snackbar.LENGTH_LONG) {
-            setAction(R.string.undo) { TaskManager.launchCollectionTask(Undo().toDelegate(), mUndoHandler) }
+            setAction(R.string.undo) {
+                delayedSnackbarRunnable?.let { runnable ->
+                    snackbarHandler.removeCallbacks(runnable)
+                    delayedSnackbarRunnable = null
+                }
+                TaskManager.launchCollectionTask(Undo().toDelegate(), mUndoHandler)
+            }
             mUndoSnackbar = this
         }
     }
