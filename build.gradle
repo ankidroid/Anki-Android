@@ -11,7 +11,7 @@ buildscript {
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.10.0'
     ext.coroutines_version = '1.7.3'
-    ext.fragments_version = "1.6.0"
+    ext.fragments_version = "1.6.1"
     ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
     ext.androidx_test_junit_version = '1.1.5'
