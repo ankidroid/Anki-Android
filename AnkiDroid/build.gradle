@@ -1,7 +1,7 @@
 plugins {
  // Gradle plugin portal
  id 'com.github.triplet.play' version '3.8.4'
- id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
+ id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.10'
 }
 
 apply plugin: 'com.android.application'
