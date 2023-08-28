@@ -6,7 +6,7 @@ buildscript {
     // The version for the Kotlin plugin and dependencies
     // If changing this, make sure to update org.jetbrains.kotlin.plugin.serialization version too
     ext.kotlin_version = '1.9.10'
-    ext.lint_version = '31.1.1' // 31.0.1 stopped running lint checks in CI
+    ext.lint_version = '31.1.1'
     ext.acra_version = '5.11.1'
     ext.ankidroid_backend_version = '0.1.25-anki2.1.66'
     ext.hamcrest_version = '2.2'
