@@ -4,7 +4,7 @@ import org.gradle.internal.jvm.Jvm
 
 buildscript {
     // The version for the Kotlin plugin and dependencies
-    ext.kotlin_version = '1.9.0'
+    ext.kotlin_version = '1.9.10'
     ext.lint_version = '31.1.0' // 31.0.1 stopped running lint checks in CI
     ext.acra_version = '5.11.1'
     ext.ankidroid_backend_version = '0.1.21-anki2.1.61'
