@@ -17,7 +17,6 @@
  ****************************************************************************************/
 package com.ichi2.anki
 
-import android.annotation.TargetApi
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -27,7 +26,6 @@ import android.view.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
-import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.core.view.MenuHost
@@ -322,9 +320,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             mEditorEditText = mainView.findViewById(R.id.editor_editText)
             cursorPosition = requireArguments().getInt(CURSOR_POSITION_KEY)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mEditorEditText.customInsertionActionModeCallback = ActionModeCallback()
-            }
+            mEditorEditText.customInsertionActionModeCallback = ActionModeCallback()
 
             val bottomNavigation: BottomNavigationView = mainView.findViewById(R.id.card_template_editor_bottom_navigation)
             bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
@@ -371,9 +367,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
          * Custom ActionMode.Callback implementation for adding new field action
          * button in the text selection menu.
          */
-        @TargetApi(23)
         private inner class ActionModeCallback : ActionMode.Callback {
-            @RequiresApi(Build.VERSION_CODES.N)
             private val mInsertFieldId = 1
 
             override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {

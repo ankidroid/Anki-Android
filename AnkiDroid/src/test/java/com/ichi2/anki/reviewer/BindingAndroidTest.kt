@@ -60,13 +60,6 @@ class BindingAndroidTest : RobolectricTest() {
         assertEquals("${BindingTest.gesturePrefix} Touch top", Binding.gesture(Gesture.TAP_TOP).toDisplayString())
     }
 
-    @Test
-    @Config(sdk = [21, 22], qualifiers = "en")
-    fun gesture_toDisplayString_legacy() {
-        // Use an emoji as a prefix as the newer unicode character doesn't display
-        assertEquals("\uD83D\uDC46 Touch top", Binding.gesture(Gesture.TAP_TOP).toDisplayString())
-    }
-
     private fun Binding.toDisplayString(): String {
         return this.toDisplayString(targetContext)
     }

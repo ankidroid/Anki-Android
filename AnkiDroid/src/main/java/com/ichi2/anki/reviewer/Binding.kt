@@ -28,7 +28,6 @@ class Binding private constructor(val modifierKeys: ModifierKeys?, val keycode: 
     constructor(gesture: Gesture?) : this(null, null, null, gesture)
 
     private fun getKeyCodePrefix(): String {
-        // KEY_PREFIX is not usable before API 23
         val keyPrefix = if (CompatHelper.sdkVersion >= Build.VERSION_CODES.M) KEY_PREFIX.toString() else ""
 
         if (keycode == null) {

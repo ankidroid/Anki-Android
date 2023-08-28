@@ -16,11 +16,9 @@
 
 package com.ichi2.compat
 
-import android.annotation.TargetApi
 import android.widget.TimePicker
 
 /** Implementation of {@link Compat} for SDK level 23 and higher. Check  {@link Compat}'s for more detail. */
-@TargetApi(23)
 open class CompatV23 : CompatV21(), Compat {
     override fun setTime(picker: TimePicker, hour: Int, minute: Int) {
         picker.hour = hour

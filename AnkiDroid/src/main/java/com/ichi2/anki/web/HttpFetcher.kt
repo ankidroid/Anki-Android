@@ -22,7 +22,6 @@ package com.ichi2.anki.web
 import android.content.Context
 import com.ichi2.async.Connection
 import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.sync.Tls12SocketFactory
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import okhttp3.Interceptor
@@ -52,7 +51,7 @@ object HttpFetcher {
      */
     fun getOkHttpBuilder(fakeUserAgent: Boolean): OkHttpClient.Builder {
         val clientBuilder = OkHttpClient.Builder()
-        Tls12SocketFactory.enableTls12OnPreLollipop(clientBuilder)
+        clientBuilder
             .connectTimeout(Connection.CONN_TIMEOUT.toLong(), TimeUnit.SECONDS)
             .writeTimeout(Connection.CONN_TIMEOUT.toLong(), TimeUnit.SECONDS)
             .readTimeout(Connection.CONN_TIMEOUT.toLong(), TimeUnit.SECONDS)

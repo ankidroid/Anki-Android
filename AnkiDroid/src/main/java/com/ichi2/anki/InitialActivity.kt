@@ -240,9 +240,9 @@ class StartupStoragePermissionManager private constructor(
             with(permissionDialogResult) {
                 when {
                     allGranted -> onRegularStartup()
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && hasPermanentlyDeniedPermissions -> onPermissionPermanentlyDenied()
+                    hasPermanentlyDeniedPermissions -> onPermissionPermanentlyDenied()
                     // try again (recurse), we need the permission
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && hasTemporarilyDeniedPermissions -> retryPermissionRequest(displayError = false)
+                    hasTemporarilyDeniedPermissions -> retryPermissionRequest(displayError = false)
                     hasRejectedPermissions -> retryPermissionRequest(displayError = false)
                     cancelled -> {
                         if (timesRequested == 1) {

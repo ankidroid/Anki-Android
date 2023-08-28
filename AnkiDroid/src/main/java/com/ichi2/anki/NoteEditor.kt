@@ -19,7 +19,6 @@
 package com.ichi2.anki
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -2043,7 +2042,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      * Custom ActionMode.Callback implementation for adding and handling cloze deletion action
      * button in the text selection menu.
      */
-    @TargetApi(23)
     private inner class ActionModeCallback(
         private val textBox: FieldEditText
     ) : ActionMode.Callback {

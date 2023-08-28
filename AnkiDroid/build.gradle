@@ -77,7 +77,7 @@ android {
         // needed for upgrades to be offered correctly.
         versionCode=21700101
         versionName="2.17alpha1"
-        minSdkVersion 21
+        minSdkVersion 23
         // change api/build.gradle
         // change robolectricDownloader.gradle
         // After #13695: change .tests_emulator.yml
@@ -237,7 +237,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
-    ndkVersion "22.0.7026061"
 }
 
 play {

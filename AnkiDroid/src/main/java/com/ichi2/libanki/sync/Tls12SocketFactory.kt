@@ -15,24 +15,11 @@
  ****************************************************************************************/
 package com.ichi2.libanki.sync
 
-import android.os.Build
-import com.ichi2.anki.AnkiDroidApp
-import com.ichi2.utils.KotlinCleanup
-import okhttp3.ConnectionSpec
-import okhttp3.OkHttpClient
-import okhttp3.TlsVersion
-import timber.log.Timber
 import java.io.IOException
 import java.net.InetAddress
 import java.net.Socket
-import java.security.KeyStore
-import java.security.cert.Certificate
-import java.security.cert.CertificateException
-import java.security.cert.CertificateFactory
-import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocket
 import javax.net.ssl.SSLSocketFactory
-import javax.net.ssl.TrustManager
 
 /**
  * Enables TLS v1.2 when creating SSLSockets.
@@ -110,48 +97,5 @@ class Tls12SocketFactory private constructor(
 
     companion object {
         private val TLS_V12_ONLY = arrayOf("TLSv1.2")
-
-        fun enableTls12OnPreLollipop(client: OkHttpClient.Builder): OkHttpClient.Builder {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1 && "Samsung" == Build.MANUFACTURER) {
-                try {
-                    Timber.d("Creating unified TrustManager")
-                    val cert = userTrustRootCertificate
-
-                    val keyStoreType = KeyStore.getDefaultType()
-                    val keyStore = KeyStore.getInstance(keyStoreType)
-                    keyStore.load(null, null)
-                    keyStore.setCertificateEntry("ca", cert)
-                    val trustManager = UnifiedTrustManager(keyStore)
-                    Timber.d("Finished: Creating unified TrustManager")
-
-                    val sc = SSLContext.getInstance("TLSv1.2")
-                    sc.init(null, arrayOf<TrustManager>(trustManager), null)
-                    val socketFactory = Tls12SocketFactory(sc.socketFactory)
-                    client.sslSocketFactory(socketFactory, trustManager)
-
-                    val cs: ConnectionSpec = ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-                        .tlsVersions(TlsVersion.TLS_1_2)
-                        .build()
-
-                    val specs: MutableList<ConnectionSpec> = ArrayList(3)
-                    specs.add(cs)
-                    specs.add(ConnectionSpec.COMPATIBLE_TLS)
-                    specs.add(ConnectionSpec.CLEARTEXT)
-                    client.connectionSpecs(specs)
-                } catch (exc: Exception) {
-                    Timber.e(exc, "Error while setting TLS 1.2")
-                }
-            }
-            return client
-        }
-
-        @get:Throws(CertificateException::class, IOException::class)
-        @KotlinCleanup("has one usage inside this class, try to inline this property")
-        private val userTrustRootCertificate: Certificate
-            get() {
-                val cf = CertificateFactory.getInstance("X.509")
-                AnkiDroidApp.getResourceAsStream("assets/USERTrust_RSA.crt")
-                    .use { crt -> return cf.generateCertificate(crt) }
-            }
     }
 }
