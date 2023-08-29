@@ -2,12 +2,15 @@
 
 package com.ichi2.anki
 
+import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.webkit.RenderProcessGoneDetail
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
 import androidx.core.content.IntentCompat
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1
@@ -39,6 +42,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.robolectric.Robolectric
+import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowToast
 import java.util.*
@@ -49,18 +53,10 @@ import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
 @RunWith(AndroidJUnit4::class)
 class AbstractFlashcardViewerTest : RobolectricTest() {
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
-        lateinit var editCardIntent: Intent
         var answered: Int? = null
         private var mLastTime = 0
         override fun performReload() {
             // intentionally blank
-        }
-
-        @Deprecated("")
-        @Suppress("DEPRECATION")
-        override fun startActivityForResult(intent: Intent, requestCode: Int) {
-            editCardIntent = intent
-            super.startActivityForResult(intent, requestCode)
         }
 
         val typedInput get() = super.typedInputText
@@ -177,9 +173,10 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
                 ActivityTransitionAnimation.getInverseTransition(expectedAnimation)
 
             viewer.executeCommand(ViewerCommand.EDIT, gesture)
+            val actual = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application).nextStartedActivity
 
             val actualInverseAnimation = IntentCompat.getParcelableExtra(
-                viewer.editCardIntent,
+                actual,
                 FINISH_ANIMATION_EXTRA,
                 Direction::class.java
             )
