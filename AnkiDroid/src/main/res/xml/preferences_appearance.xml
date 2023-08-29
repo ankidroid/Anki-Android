@@ -109,26 +109,6 @@
             android:summary="@string/show_eta_summ"
             android:title="@string/show_eta" />
     </PreferenceCategory>
-    <PreferenceCategory android:title="@string/pref_cat_fonts" >
-        <ListPreference
-            android:defaultValue="@string/empty_string"
-            android:key="@string/pref_default_font_key"
-            android:shouldDisableView="true"
-            android:title="@string/default_font"
-            app:useSimpleSummaryProvider="true"/>
-        <ListPreference
-            android:defaultValue="0"
-            android:key="@string/pref_font_applicability_key"
-            android:entries="@array/override_font_labels"
-            android:entryValues="@array/override_font_values"
-            android:title="@string/override_font"
-            app:useSimpleSummaryProvider="true"/>
-        <ListPreference
-            android:defaultValue="@string/empty_string"
-            android:key="@string/pref_browser_and_editor_font_key"
-            android:title="@string/pref_browser_editor_font"
-            app:useSimpleSummaryProvider="true"/>
-    </PreferenceCategory>
     <PreferenceCategory android:title="@string/card_browser">
         <SwitchPreferenceCompat
             android:checked="false"

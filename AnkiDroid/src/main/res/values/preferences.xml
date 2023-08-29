@@ -39,9 +39,6 @@
     <string name="fullscreen_mode_preference">fullscreenMode</string>
     <string name="center_vertically_preference">centerVertically</string>
     <string name="show_estimates_preference">showEstimates</string>
-    <string name="pref_default_font_key">defaultFont</string>
-    <string name="pref_font_applicability_key">overrideFontBehavior</string>
-    <string name="pref_browser_and_editor_font_key">browserEditorFont</string>
     <string name="pref_display_filenames_in_browser_key">card_browser_show_media_filenames</string>
     <string name="show_topbar_preference">showTopbar</string>
     <string name="show_progress_preference">showProgress</string>
