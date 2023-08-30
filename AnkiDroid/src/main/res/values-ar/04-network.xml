@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">أنت غير متصل بالإنترنت</string>
-    <string name="sync_even_if_offline">حاول على أي حال</string>
     <string name="sync_error">خطأ بالمزامنة</string>
     <string name="vague_error" comment="Network error dialog title">خطأ</string>
     <string name="retry">إعادة المحاولة</string>
@@ -63,91 +62,15 @@
     <string name="sign_up">التسجيل</string>
     <string name="logged_as">مسجل كـ</string>
     <string name="log_out">تسجيل الخروج</string>
-    <string name="alert_logging_message">تسجيل الدخول، الرجاء الانتظار...</string>
-    <string name="invalid_username_password">البريد الإلكتروني أو كلمة السر غير صحيحة</string>
     <string name="reset_password">إعادة تعيين كلمة السر</string>
     <string name="lost_mail_instructions">هل نسيت بريدك الإلكتروني؟</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">خيارات XXX</string>
-    <string name="sync_prepare_syncing">إعداد المزامنة...</string>
-    <string name="sync_preparing_full_sync_message">إعداد مزامنة كاملة...</string>
-    <string name="sync_uploading_message">رفع...</string>
-    <string name="sync_downloading_message">تنزيل...</string>
     <string name="sync_title">المزامنة</string>
     <string name="sync_log_uploading_message">مزامنة كاملة من القرص المحلي</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="zero">ساعتك خاطئة بمقدار %1$d ثانية%2$s. تأكد من أن التاريخ، والوقت، والمنطقة الزمنية في هاتفك معدة بشكل صحيح، ثم زامن مجددًا.</item>
-        <item quantity="one">ساعتك خاطئة بمقدار %1$d ثانية%2$s. تأكد من أن التاريخ، والوقت، والمنطقة الزمنية في هاتفك معدة بشكل صحيح، ثم زامن مجددًا.</item>
-        <item quantity="two">ساعتك خاطئة بمقدار %1$d ثانية%2$s. تأكد من أن التاريخ، والوقت، والمنطقة الزمنية في هاتفك معدة بشكل صحيح، ثم زامن مجددًا.</item>
-        <item quantity="few">ساعتك خاطئة بمقدار %1$d ثواني%2$s. تأكد من أن التاريخ، والوقت، والمنطقة الزمنية في هاتفك معدة بشكل صحيح، ثم زامن مجددًا.</item>
-        <item quantity="many">ساعتك خاطئة بمقدار %1$d ثانية%2$s. تأكد من أن التاريخ، والوقت، والمنطقة الزمنية في هاتفك معدة بشكل صحيح، ثم زامن مجددًا.</item>
-        <item quantity="other">ساعتك خاطئة بمقدار %1$d ثانية%2$s. تأكد من أن التاريخ، والوقت، والمنطقة الزمنية في هاتفك معدة بشكل صحيح، ثم زامن مجددًا.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">، من المحتمل أن المنطقة الزمنية للجهاز غير صحيحة</string>
-    <string name="sync_log_clocks_unsynchronized_date">، من المحتمل أن تاريخ الجهاز غير صحيح</string>
-    <string name="sync_no_changes_message">لا توجد تغييرات.</string>
     <string name="sync_database_acknowledge">تمت مزامنة المجموعة</string>
-    <string name="sync_log_error_specific">خطأ المزامنة، نوع: %1$s، رسالة: %2$s</string>
     <string name="sync_corrupt_database">قاعدة البيانات الخاصة بك معطوبة. يرجى إصلاحها قبل أن تحاول مزامنتها مرة أخرى.\n\nانظر في%s للحصول على معلومات حول إصلاح قاعدة البيانات الخاصة بك.</string>
-    <string name="sync_too_busy">الخادم مشغول جدا. حاول مرة آخرى لاحقا.</string>
-    <string name="sync_remote_db_error">قاعدة البيانات المحملة معطوبة. الرجاء المحاولة مرة أخرى.</string>
-    <string name="sync_overwrite_error">لا يمكن استبدال مجموعتك الحالية بالملف المنزّل.</string>
-    <string name="sync_connection_error">انتهت مهلة الاتصال. إما أن يكون هناك مشاكل في اتصالك بالإنترنت، أو أن يكون لديك ملف كبير جدًا في مجلد الوسائط.</string>
-    <string name="sync_write_access_error_on_storage">تعذر حفظ الملف المنزل إلى ذاكرة التخزين. قد تكون الذاكرة غير قابلة للكتابة أو لا يوجد مساحة كافية.</string>
-    <string name="sync_error_invalid_sync_server">خادم المزامنة المخصص في الإعدادات المتقدمة غير صالح (%s). الرجاء إدخال خادم صالح، أو تعطيل الإعداد.</string>
-    <string name="sync_deletions_message">مزامنة المحذوفات...</string>
-    <string name="sync_small_objects_message">مزامنة القطع الصغيرة...</string>
-    <string name="sync_finish_message">الانتهاء من المزامنة...</string>
-    <string name="sync_log_finish_error">حدث خطأ أثناء إرسال الاتجاه النهائي إلى الخادم</string>
-    <string name="sync_writing_db">كتابة التغييرات في قاعدة البيانات...</string>
-    <string name="sync_download_chunk">تنزيل التغييرات...</string>
-    <string name="sync_upload_chunk">رفع التغييرات...</string>
-    <string name="sync_up_down_size">رُفِع: %1$d كيلوبايت، نُزِّل: %2$d كيلوبايت</string>
-    <string name="sync_generic_error">حدث خطأ. حاول مجددًا.</string>
-    <string name="sync_check_upload_file">فحص الملف قبل رفعه...</string>
-    <string name="sync_check_download_file">التحقق من الملف المنزل...</string>
-    <string name="sync_media_find">إيجاد الوسائط المتغيرة...</string>
-    <string name="sync_media_no_changes">لا توجد تغييرات في ملفات الوسائط.</string>
-    <string name="sync_media_success">تمت مزامنة الوسائط بنجاح.</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="zero">اكتملت مزامنة الوسائط جزئيًا:\nتم تنزيل %d ملف.</item>
-        <item quantity="one">اكتملت مزامنة الوسائط جزئيًا:\nتم تنزيل %d ملف.</item>
-        <item quantity="two">اكتملت مزامنة الوسائط جزئيًا:\nتم تنزيل %d ملف.</item>
-        <item quantity="few">اكتملت مزامنة الوسائط جزئيًا:\nتم تنزيل %d ملفات.</item>
-        <item quantity="many">اكتملت مزامنة الوسائط جزئيًا:\nتم تنزيل %d ملف.</item>
-        <item quantity="other">اكتملت مزامنة الوسائط جزئيًا:\nتم تنزيل %d ملف.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="zero">تم رفع %d ملف وسائط.</item>
-        <item quantity="one">تم رفع %d ملف وسائط.</item>
-        <item quantity="two">تم رفع %d ملف وسائط.</item>
-        <item quantity="few">تم رفع %d ملفات وسائط.</item>
-        <item quantity="many">تم رفع %d ملف وسائط.</item>
-        <item quantity="other">تم رفع %d ملف وسائط.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="zero">%d تغيير في الوسائط يحتاج الرفع</item>
-        <item quantity="one">%d تغيير في الوسائط يحتاج الرفع</item>
-        <item quantity="two">%d تغيير في الوسائط يحتاج الرفع</item>
-        <item quantity="few">%d تغييرات في الوسائط يحتاج الرفع</item>
-        <item quantity="many">%d تغيير في الوسائط يحتاج الرفع</item>
-        <item quantity="other">%d تغيير في الوسائط يحتاج الرفع</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="zero">تم تنزيل %d ملف وسائط</item>
-        <item quantity="one">تم تنزيل %d ملف وسائط</item>
-        <item quantity="two">تم تنزيل %d ملف وسائط</item>
-        <item quantity="few">تم تنزيل %d ملفات وسائط</item>
-        <item quantity="many">تم تنزيل %d ملف وسائط</item>
-        <item quantity="other">تم تنزيل %d ملف وسائط</item>
-    </plurals>
-    <string name="sync_sanity_failed">بعد المزامنة، أصبحت المجموعة في حالة غير مستقرة. لإصلاح هذه المشكلة، سيفرض أنكي مزامنة كاملة. اختر الجانب الذي تريد إبقاءه.</string>
-    <string name="sync_media_sanity_failed">اكتملت مزامنة الوسائط، ولكن عدد الوسائط لا يتوافق مع الخادم. ستكون مزامنة الوسائط القادمة كاملة لتصحيح أي خطأ.</string>
-    <string name="sync_media_db_error">فشلت مزامنة الوسائط لأن قاعدة البيانات الحالية تالفة. يُنصح بفحص الوسائط.</string>
-    <string name="sync_media_error">فشلت مزامنة بيانات الوسائط</string>
-    <string name="sync_media_error_check">فشلت مزامنة الوسائط. يُنصح بفحص الوسائط.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">الرجاء تشغيل «%s» قبل المزامنة</string>
     <string name="sync_sanity_local">محلي</string>
     <string name="sync_sanity_remote">بعيد</string>
     <string name="force_full_sync_title">فرض مزامنة كاملة</string>
@@ -155,15 +78,7 @@
     <string name="force_full_sync_confirmation">مزامنة كاملة مفروضة</string>
     <string name="full_sync_confirmation">يتطلب التغيير المطلوب رفعًا كاملًا لقاعدة البيانات عند مزامنة مجموعتك مجددًا. إذا كانت لديك مراجعات وتغييرات أخرى في جهاز آخر غير مُزامَنة هنا ، ستفقدها. هل تريد الاستمرار؟</string>
     <string name="full_sync_confirmation_upgrade">بسبب عطل في إصدار أنكيدرويد المنصب سابقًا، يُنصح بفرض مزامنة كاملة.</string>
-    <string name="sync_error_407_proxy_required">تلزم مصادقة البروكسي.</string>
-    <string name="sync_error_409">يمكن لبرنامج واحد فقط الوصول إلى أنكي ويب في الوقت نفسه. إذا فشلت مزامنة سابقة، الرجاء المحاولة مجددًا بعد عدة دقائق.</string>
-    <string name="sync_error_413_collection_size">مجموعتك أو ملف وسائط كبير جدًا ليتم مزامنته.</string>
-    <string name="sync_error_500_unknown">صادف أنكي ويب مشكلة. الرجاء المحاولة مجددًا بعد بضع دقائق. إذا استمرت المشكلة، الرجاء تقديم تقرير خطأ.</string>
-    <string name="sync_error_501_upgrade_required">الرجاء التحديث إلى آخر إصدار من أنكيدرويد</string>
-    <string name="sync_error_502_maintenance">إن أنكي ويب تحت الصيانة. الرجاء المحاولة مجددًا بعد بضع دقائق.</string>
-    <string name="sync_error_504_gateway_timeout">تم استلام خطأ مهلة البوابة 504.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">مزامنة (كاملة)</string>
     <string name="sync_menu_title_no_account">مزامنة (تسجيل دخول)</string>
-    <string name="sync_error_unknown_host_readable">فشل الاتصال بأنكي ويب. هل يعمل اتصالك بالإنترنت؟\n\n%s</string>
 </resources>

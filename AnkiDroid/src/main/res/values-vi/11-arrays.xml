@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Hỏi tôi</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Chỉ có thẻ</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Các thẻ mới theo thứ tự ngẫu nhiên</string>
-    <string name="new_order_order_added">Thẻ mới theo thứ tự đã được thêm vào</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Cũ nhất nhìn thấy đầu tiên</string>
     <string name="cram_deck_conf_order_random">Ngẫu nhiên</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Sử dụng xấp thẻ hiện tại</string>
     <string name="add_to_deck_decide_by_note_type">Quyết định theo kiểu ghi chú</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Trộn thẻ mới và đánh giá</string>
-    <string name="new_spread_new_after_review">Thẻ mới sau khi đánh giá</string>
-    <string name="new_spread_new_before_review">Thẻ mới trước khi đánh giá</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Khi không có phông chữ nào được chỉ định trên thẻ flashcard</string>
     <string name="override_font_always" comment="Option to always override font">Luôn cho phép</string>

@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Nachfragen</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Nur Schlagwort</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Neue Karten in zufälliger Reihenfolge</string>
-    <string name="new_order_order_added">Neue Karten in Reihenfolge des Hinzufügens</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Älteste zuerst</string>
     <string name="cram_deck_conf_order_random">Zufällig</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Aktuellen Stapel verwenden</string>
     <string name="add_to_deck_decide_by_note_type">Nach Notiztyp entscheiden</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Neue Karten und Wiederholungen mischen</string>
-    <string name="new_spread_new_after_review">Neue Karten nach Wiederholungen</string>
-    <string name="new_spread_new_before_review">Neue Karten vor Wiederholungen</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Falls keine Schriftart auf Karten angegeben</string>
     <string name="override_font_always" comment="Option to always override font">Immer</string>

@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Database controleren?</string>
     <string name="check_db_warning">Dit kan een lange tijd duren</string>
-    <string name="check_db_acknowledge">Database gecontroleerd</string>
-    <string name="check_db_acknowledge_shrunk">Database gecontroleerd en geoptimaliseerd. \nVerkleind met %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Leerset verwijderen</string>
-    <string name="delete_deck_default_deck">De standaardset kan niet worden verwijderd</string>
     <string name="delete_deck_title">Verwijder set</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Verwijder alle kaarten in %1$s? Het bevat %2$d kaart.</item>
-        <item quantity="other">Verwijder alle kaarten in %1$s? Het bevat %2$d kaarten.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Weet u zeker dat u alle kaarten in %s terug wenst te zenden naar hun oorspronkelijke leersets?</string>
     <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
     <string name="initializing_tts">TTS initialiseren&#8230;</string>
     <string name="tts_no_tts">Niet spreken</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Kies willekeurig x kaarten uit de set:</string>
     <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
     <string name="custom_study_rebuild_deck_corrupt">De aangepaste studieset kon niet opnieuw worden opgebouwd</string>
-    <string name="importing_collection">Collectie aan het importeren.\nGelieve even te wachten&#8230;</string>
-    <string name="import_media_count">Mediabestanden aan het importeren %1$d%%\nGelieve even te wachten&#8230;</string>
-    <string name="import_progress">• Importeren memo\'s: %1$d%%\n• Importeren kaarten: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">%1$d van de %2$d bestaande memo\'s bijgewerkt.</string>
-    <string name="import_update_ignored">Sommige veranderingen zijn genegeerd omdat het memotype is veranderd</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Kaarten geïmporteerd: %2$d</item>
-        <item quantity="other">Geïmporteerde bestanden: %1$d\nTotaal kaarten: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Opslag vol</string>
     <string name="storage_almost_full_title">Opslag is bijna vol</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Geen ruimte</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Uitschakelen</string>
     <string name="dialog_positive_overwrite">Overschrijven</string>
-    <string name="dialog_positive_remove">Verwijderen</string>
     <string name="dialog_positive_repair">Repareer</string>
     <string name="dialog_positive_replace">Vervangen</string>
-    <string name="dialog_positive_restore">Herstellen</string>
-    <string name="dialog_positive_set">Instellen</string>
     <string name="dialog_collection_path_not_dir">Het opgegeven pad was geen geldige map</string>
     <!-- Media checking -->
     <string name="check_media_title">Media controleren?</string>
@@ -180,18 +160,11 @@
     <string name="integrity_check_continue_anyway">Toch doorgaan</string>
     <string name="integrity_check_insufficient_space">Controle van de database gebruikt een grote hoeveelheid tijdelijke geheugen.\n\nHet wordt sterk aanbevolen dat u ten minste %s vrije ruimte op uw toestel hebt voordat u verder gaat.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nU hebt momenteel %s vrij.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">Kon video niet afspelen</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Kon de set niet wijzigen</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fout bij decoderen van gegevens uit de kaart</string>
-    <string name="undo_succeeded">Onvoltooide \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Verwerken van de setopties mislukt: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database vergrendeld</string>
     <string name="database_locked_summary">De AnkiDroid-database is in gebruik door een andere applicatie. Sluit de andere applicatie en open vervolgens AnkiDroid opnieuw.</string>

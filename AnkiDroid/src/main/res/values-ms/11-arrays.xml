@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Tanya saya</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tag sahaja</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Kad baru secara rawak</string>
-    <string name="new_order_order_added">Kad baru ikut susunan tambahan</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Lihat tertua terdahulu</string>
     <string name="cram_deck_conf_order_random">Rawak</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Guna dek kini</string>
     <string name="add_to_deck_decide_by_note_type">Tentukan melalui jenis nota</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Campur kad baru dan semakan</string>
-    <string name="new_spread_new_after_review">Kad baru selepas semakan</string>
-    <string name="new_spread_new_before_review">Kad baru sebelum semakan</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Apabila tiada fon dinyatakan pada kad imbasan</string>
     <string name="override_font_always" comment="Option to always override font">Sentiasa</string>

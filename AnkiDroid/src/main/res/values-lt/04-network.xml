@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Esate neprisijungę</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Susinchronizuoti nepavyko</string>
     <string name="vague_error" comment="Network error dialog title">Klaida</string>
     <string name="retry">Bandyti dar kartą</string>
@@ -63,81 +62,15 @@
     <string name="sign_up">Užsiregistruoti</string>
     <string name="logged_as">Esate prisijungę kaip</string>
     <string name="log_out">Atsijungti</string>
-    <string name="alert_logging_message">Jungiamasi&#8230;</string>
-    <string name="invalid_username_password">Neteisingas el. pašto adresas arba slaptažodis</string>
     <string name="reset_password">Atkurti slaptažodį</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX parinktys</string>
-    <string name="sync_prepare_syncing">Ruošiamasi sinchronizuoti&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Ruošiamasi išsamiam sinchronizavimui&#8230;</string>
-    <string name="sync_uploading_message">Išsiunčiama&#8230;</string>
-    <string name="sync_downloading_message">Siunčiama&#8230;</string>
     <string name="sync_title">Sinchronizavimas</string>
     <string name="sync_log_uploading_message">Išsamus sinchronizavimas iš įrenginio</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, gali būti, kad blogai nustatyta laiko juosta</string>
-    <string name="sync_log_clocks_unsynchronized_date">, gali būti, kad blogai nustatyta data</string>
-    <string name="sync_no_changes_message">Pakeitimų nerasta</string>
     <string name="sync_database_acknowledge">Kolekcija susinchronizuota</string>
-    <string name="sync_log_error_specific">Sinchronizavimo klaida, tipas: %1$s, pranešimas: %2$s</string>
     <string name="sync_corrupt_database">Jūsų duomenų bazė yra sugadinta. Prašome ją pataisyti prieš bandydami ją dar kartą susinchronizuoti.\n\nDaugiau informacijos apie duomenų bazės taisymą rasite %s.</string>
-    <string name="sync_too_busy">Serveris užimtas. Pabandykite vėliau.</string>
-    <string name="sync_remote_db_error">Parsisiųsta duomenų bazė yra sugadinta. Prašome bandyti dar kartą.</string>
-    <string name="sync_overwrite_error">Jūsų turima kolekcija negali būti pakeista parsisiųstu failu</string>
-    <string name="sync_connection_error">Prisijungimui skirtas laikas baigėsi. Atsirado problemų su jūsų interneto ryšiu arba jūsų laikmenų aplanke yra pernelyg didelis failas.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Sinchronizuojami panaikinti įrašai&#8230;</string>
-    <string name="sync_small_objects_message">Sinchronizuojami maži objektai&#8230;</string>
-    <string name="sync_finish_message">Baigiama sinchronizuoti&#8230;</string>
-    <string name="sync_log_finish_error">Išsiųsti galutinę kryptį į serverį nepavyko</string>
-    <string name="sync_writing_db">Rašomi pakeitimai į duomenų bazę&#8230;</string>
-    <string name="sync_download_chunk">Parsiunčiami pakeitimai&#8230;</string>
-    <string name="sync_upload_chunk">Įkeliami pakeitimai&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
-    <string name="sync_generic_error">Įvyko klaida. Bandykite tai pakartoti vėliau.</string>
-    <string name="sync_check_upload_file">Failas tikrinamas prieš įkėlimą&#8230;</string>
-    <string name="sync_check_download_file">Tikrinamas parsiųstas failas&#8230;</string>
-    <string name="sync_media_find">Iškoma pasikeitusių laikmenų&#8230;</string>
-    <string name="sync_media_no_changes">Nerasta jokių pasikeitusių failų</string>
-    <string name="sync_media_success">Laikmenos susinchronizuotos</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="few">%d media files uploaded.</item>
-        <item quantity="many">%d media files uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="few">%d media changes to upload</item>
-        <item quantity="many">%d media changes to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="few">%d media files downloaded</item>
-        <item quantity="many">%d media files downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">Susinchronizavus paaiškėjo, kad kolekcija skiriasi. Norėdama šią problemą išspręsti, „AnkiDroid“ programa atliks išsamų sinchronizavimą. Prašome pasirinkti, kurią versiją norėtumėte pasilikti.</string>
-    <string name="sync_media_sanity_failed">Laikmenos buvo susinchronizuotos, tačiau jų skaičius serveryje neatitinka. Norint ištaisyti šią klaidą, sekantį kartą bus atliktas išsamus sinchronizavimas.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">Susinchronizuoti laikmenų nepavyko</string>
-    <string name="sync_media_error_check">Susinchronizuoti laikmenų nepavyko. Rekomenduojame laikmenas patikrinti.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Įrenginio</string>
     <string name="sync_sanity_remote">Nuotolinis</string>
     <string name="force_full_sync_title">Atlikti išsamų sinchronizavimą</string>
@@ -145,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Norint atlikti pageidaujamą pakeitimą, sekantį kartą sinchronizuojant jūsų kolekciją, reikės įkelti visą duomenų bazę. Jei kitame įrenginyje turite dar nesusinchronizuotų peržiūrų ar kitokių pakeitimų, jie bus panaikinti. Ar norite tęsti?</string>
     <string name="full_sync_confirmation_upgrade">Kadangi praeitą kartą įdiegtoje „AnkiDroid“ versijoje atsirado pranešimas apie klaidą, rekomenduojame atlikti išsamų sinchronizavimą.</string>
-    <string name="sync_error_407_proxy_required">Reikia nustatyti asmens tapatybę.</string>
-    <string name="sync_error_409">Vienu metu prie AnkiWeb gali prisijungti tik vienas vartotojas. Jei paskutinį kartą susinchronizuoti nepavyko, pabandykite dar kartą po kelių minučių.</string>
-    <string name="sync_error_413_collection_size">Jūsų kolekcija arba medijos failas yra per dideli, kad būtų susinchronizuoti.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
-    <string name="sync_error_501_upgrade_required">Prašome įdiegti naujausią „AnkiDroid“ versiją</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

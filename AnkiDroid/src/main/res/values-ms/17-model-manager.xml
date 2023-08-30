@@ -45,7 +45,6 @@
     <string name="model_browser_delete">Padam jenis nota</string>
     <string name="model_browser_rename" comment="Rename a note type">Nama semula</string>
     <string name="model_browser_template">Sunting kad</string>
-    <string name="model_browser_add">Tambah jenis nota</string>
     <!--Rename-->
     <string name="rename_model">Nama semula jenis nota</string>
     <!--Language Hint-->
@@ -61,7 +60,6 @@
     <string name="model_field_editor_toggle_sticky">Ingat input terakhir apabila menambah</string>
     <string name="model_field_editor_changing">Mengemas kini medan</string>
     <string name="model_field_editor_sort_field">Susun ikut medan ini</string>
-    <string name="model_clone_suffix">salin</string>
     <!--Warnings-->
     <string name="model_delete_warning">Anda pasti ingin memadam jenis nota ini?</string>
     <string name="field_delete_warning">Anda pasti ingin menghapuskan medan ini?</string>

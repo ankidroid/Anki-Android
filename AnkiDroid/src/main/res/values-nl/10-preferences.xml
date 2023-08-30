@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Uitgeschakeld</string>
-    <string name="enabled">Ingeschakeld</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -152,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">Time-out antwoord</string>
     <string name="timeout_answer_summ">Toon antwoord automatisch zonder invoer van de gebruiker. Tijd voor het automatisch spelen van audio files is in rekening gehouden.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tijd om het antwoord te tonen</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Tijd om de volgende vraag te tonen</string>
     <string name="select_locale_title">Taal selecteren</string>
     <string name="software_render" maxLength="41">Hardware render kaart uitschakelen</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">Toon ETA</string>
     <string name="show_eta_summ">Resterende tijd tonen</string>
     <string name="use_current" maxLength="41">Set voor nieuwe kaarten</string>
-    <string name="new_spread" maxLength="41">Positie nieuwe kaart</string>
     <string name="learn_cutoff" maxLength="41">Max vooruit leren</string>
     <string name="time_limit" maxLength="41">Stel een tijdslimiet in</string>
     <string name="new_timezone" maxLength="41">Nieuwe tijdzone afhandeling</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Alle bestanden bij media-import toestaan</string>
     <string name="media_import_allow_all_files_summ">Als Android een mediabestand niet herkent</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Standaardset bij het openen van statistieken</string>
-    <string name="stats_default_deck_current">Statistieken van meest recente set tonen</string>
-    <string name="stats_default_deck_all">Statistieken voor alle sets weergeven</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Geavanceerde statistieken</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Geavanceerde statistieken inschakelen</string>
-    <string name="enable_advanced_statistics_summ">Laat prognose statistieken zien op basis van een berekening of simulatie van toekomstige overhoringen (ingeschakeld) of op basis van de reeds ingeplande toekomstige overhoringen (uitgeschakeld).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Eerste n dagen berekenen, rest simuleren</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Nauwkeurigheid van de berekening</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Aantal iteraties van de simulatie</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Aangepaste synchronisatie-server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Niet gebruikt</string>
@@ -236,64 +222,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Veranderingen in de setgroepopties zullen een invloed hebben op meerdere sets. Als u alleen de huidige set wilt wijzigen, voeg dan eerst een nieuwe optiegroep toe</string>
     <string name="studyoptions_limit_select_tags">Selecteer Tags</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Setbeschrijving (beïnvloedt alleen de huidige set)</string>
-    <string name="deck_conf_group" maxLength="41">Optiesgroep</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d set gebruikt in deze groep</item>
-        <item quantity="other">%1$s\n%2$d sets gebruikt in deze groep</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Nieuwe kaarten</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Overhoringen</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Missers</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Algemeen</string>
     <string name="deck_conf_reminders" maxLength="41">Herinneringen</string>
-    <string name="deck_conf_steps" maxLength="41">Stappen (in minuten)</string>
-    <string name="deck_conf_order" maxLength="41">Volgorde</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Nieuwe kaarten/dag</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Afstuderen interval</string>
-    <string name="deck_conf_days">XXX dag(en)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Gemakkelijk interval</string>
-    <string name="deck_conf_start_ease" maxLength="41">Begin gemakkelijk</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maximale overhoringen/dag</string>
-    <string name="deck_conf_new_bury" maxLength="41">Blokkeer gerelateerde nieuwe kaarten</string>
-    <string name="deck_conf_new_bury_summ">Gerelateerde nieuwe kaarten worden geblokkeerd tot de volgende dag</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Verberg gerelateerde overhoringen</string>
-    <string name="deck_conf_rev_bury_summ">Gerelateerde overhoringen worden verborgen tot de volgende dag</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Algemene instellingen gebruiken</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Gebruik de algemene instellingen voor \'Automatisch antwoord weergeven\' in plaats van de instellingen voor deze groep.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bonus bij gemakkelijk</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Moeilijk interval</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Intervalsfactor</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Grootste interval</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Nieuw interval</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Kleinste interval</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Drempel voor moeilijke kaart</string>
-    <string name="deck_conf_fails">XXX mislukt</string>
-    <string name="deck_conf_leech_action" maxLength="41">Actie bij moeilijke kaart</string>
-    <string name="deck_conf_max_time" maxLength="41">Maximale antwoordtijd</string>
-    <string name="deck_conf_seconds">XXX seconden</string>
-    <string name="deck_conf_timer" maxLength="41">Toon stopwatch</string>
-    <string name="deck_conf_autoplay" maxLength="41">Geluid automatisch afspelen</string>
-    <string name="deck_conf_replayq" maxLength="41">Vraag opnieuw stellen</string>
-    <string name="deck_conf_replayq_summ">Bij het antwoord ook het geluid van de vraag en het antwoord afspelen</string>
-    <string name="deck_conf_manage" maxLength="41">Groepenbeheer</string>
-    <string name="deck_conf_manage_summ">Set aan instellingen toevoegen en wijzigen</string>
-    <string name="deck_conf_current_group" maxLength="41">Huidige groep</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Naam wijzigen</string>
-    <string name="deck_conf_reset" maxLength="41">Standaardinstellingen herstellen</string>
-    <string name="deck_conf_reset_message">Standaardwaarden instellen voor de huidige set aan instellingen?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Configuratie toevoegen</string>
-    <string name="deck_conf_add_summ">Maak een kopie van de huidige groep instellingen</string>
-    <string name="deck_conf_remove_message">Huidige set aan instellingen verwijderen?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Instellen voor alle subsets</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s subset zal gebruikmaken van deze groep</item>
-        <item quantity="other">%s subsets zullen gebruikmaken van deze groep</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Huidige set aan instellingen laten gelden voor alle subsets van deze set?</string>
     <string name="pref_browser_editor_font" maxLength="41">Lettertype browser/bewerker</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41">Zoeken</string>
@@ -304,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">Tweede filter inschakelen</string>
     <string name="deck_conf_cram_steps" maxLength="41">Aangepaste stappen (in minuten)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Aangepaste stapgroottes definiëren</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Herinnering meldingen voor sets in deze setgroep inschakelen</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Herinneren op</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help AnkiDroid te verbeteren!</string>
     <string name="analytics_title" maxLength="41">Gebruik van functies delen</string>
@@ -342,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Verwijder ‘%s’</string>
     <string name="bindings_already_bound">Reeds gekoppeld aan %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimenteel</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Schakel de ‘%s’ in</string>
-    <string name="use_rust_backend_title" maxLength="41">Gebruik de nieuwe backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Gebruik de v3 planner</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimenteel</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opties voor ontwikkelaars</string>
     <string name="dev_options_enabled_pref" maxLength="41">Opties voor ontwikkelaars inschakelen</string>
@@ -385,7 +310,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Ongebruikte mediabestanden verwijderen</string>
     <string name="pref__delete_unused_media_files__summary">Verwijder afbeeldingen en andere media die niet zijn voorafgegaan door _ en niet worden genoemd door notities</string>
-    <string name="dialog__media_check_required__message">Er is een mediacontrole nodig om ongebruikte mediabestanden te vinden</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Ongebruikte mediabestanden verwijderen</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Back-ups verwijderen</string>

@@ -125,7 +125,6 @@
     <string name="save">ذخیره</string>
     <string name="close">بستن</string>
     <string name="select">انتخاب</string>
-    <string name="reordering_cards">مرتب سازی مجدد کارتها...</string>
     <string name="field_remapping">%1$s (از \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">هرکارتی که با هیچ چیز پیوند نخورده باشد حذف خواهد شد. اگر یک یادداشت هیچ کارت باقی مانده ای نداشته باشد، از دست خواهد رفت. ادامه می دهید؟</string>
     <!-- Timebox -->
@@ -146,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">برنا مه ریزی مجدد</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">پیش نمایش</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">به علت عدم وجود حافظه کافی در دستگاه شما عملیات امکان پذیر نیست</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">تغییر نام</string>
-    <string name="default_conf_delete_error">امکان پاک کردن تنظیمات پیش فرض گروه نمی باشد</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d کارت اضافه شد</item>
-        <item quantity="other">%d کارت اضافه شد</item>
-    </plurals>
     <string name="check_db">بررسی پایگاه داده</string>
     <string name="check_media">بررسی رسانه ها</string>
     <string name="empty_cards">کارت های خالی</string>
-    <string name="check_db_message">بررسی پایگاه داده.\nلطفا صبر کنید...</string>
     <string name="empty_card_warning">این کارت خالی است. از گزینه \"کارت های خالی\" که در قسمت فهرست است استفاده کنید.</string>
     <string name="unknown_type_field_warning">پاسخ دهید:فیلد نامشخص %s</string>
     <string name="delete_deck">حذف دسته کارت...\nلطفا صبر کنید.</string>
@@ -170,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">این یک فایل معتبر آنکی نیست</string>
     <string name="import_title_error" comment="Title of error dialog">خطا</string>
-    <string name="import_log_failed_unzip">خطا در بازکردن فایل apkg: %s</string>
-    <string name="import_log_failed_copy_to">خطا در کپی کردن apkg به %s</string>
-    <string name="import_log_failed_validate">apkg معتبر نیست</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">خطا در ورود فایل، احتمالاً به دلیل پاکسازی کش در هنگام پردازش.\nلطفاً دوباره تلاش کنید</string>
-    <string name="import_succeeded_but_check_database">ورود داده موفقیت آمیز بود ولی پاکسازی بعد از ورود ناموفق بود. بعداً بررسی دیتابیس را اجرا کنید. دلیل اصلی: %s</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_handle_exception">خطا در ورود بسته\n\n%s</string>
     <string name="import_error_not_apkg_extension">فایل \"%s\" فاقد پسوند .apkg یا .colpkg است</string>
     <string name="import_error_load_imported_database">جایگزین دیتابیس آنکی (.anki2) هنوز پشتیبانی نشده است. لطفاً برای راهنمایی در مورد جایگزینی راهنما را بخوانید.</string>
@@ -184,8 +169,6 @@
     <string name="import_error_copy_to_cache">copyFileToCache() با مشکل مواجه شد (احتمالاً به دلیل کمبود حافظه)</string>
     <string name="import_error_multiple_colpkg">چندین فایل colpkg انتخاب شده.</string>
     <string name="import_error_colpkg_apkg">هر دو apkg و colpkg فایل ها هم‌زمان انتخاب شده اند</string>
-    <string name="import_stats_error">خطا ایجاد شد وقتی این فایل ها در حال وارد شدن بودند:\n%s</string>
-    <string name="import_replacing">در حال جایگزین کردن مجموعه&#8230;</string>
     <string name="import_interrupted">در فرایند ورود اختلال ایجاد شد</string>
     <string name="export_include_schedule">به همراه زمانبندی</string>
     <string name="export_include_media">به همراه رسانه</string>
@@ -222,47 +205,11 @@
     <string name="dyn_deck_desc">این یک دسته ویژه برای مطالعه در خارج از زمان بندی عادی می باشد.بعد از مرور کارتها آنها بطور خودکار به دسته های اصلی برگردانده خواهد شد.حذف کردن این دسته از لیست دسته ها سبب می شود که همه کارتهای باقیمانده نیز به دسته اصلی برگردانده شود.</string>
     <string name="steps_error">مراحل باید با اعداد بزرگتر از 0 شماره گذاری گردند</string>
     <string name="steps_min_error">حداقل یک مرحله لازم است</string>
-    <string name="sched_end">(پایان)</string>
-    <string name="sched_unbury_action">برای دیدن آنها در حال حاضر گزینه \"خروج از حالت مخفی\" در فهرست را لمس کنید</string>
-    <string name="sched_has_buried">تعدادی از کارت های مرتبط یا مخفی شده تا نشست بعدی نمایش داده نخواهند شد.</string>
     <string name="tag_editor_add_feedback">برای تایید اضافه شدن %1$s لطفا %2$s رالمس کنید</string>
     <string name="tag_editor_add_feedback_existing">برچسب موجود \"%1$s\" انتخاب شده است</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s ثانیه</item>
-        <item quantity="other">%s ثانیه</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s دقیقه</item>
-        <item quantity="other">%s دقیقه</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s ساعت</item>
-        <item quantity="other">%s ساعت</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s روز</item>
-        <item quantity="other">%s روز</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s ماه</item>
-        <item quantity="other">%s ماه</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s سال</item>
-        <item quantity="other">%s سال</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s ثانیه</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">این دسته از قبل وجود دارد</string>
     <string name="decks_rename_filtered_nosubdecks">دسته فیلتر شده نمی تواند زیر دسته داشته باشد</string>
-    <string name="filtered_deck_name">دسته فیلتر شده</string>
     <string name="reminder_title">فراموش نکنید که امروز مطالعه کنید!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d کارت برای مرور در %1$s</item>
@@ -271,14 +218,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">اشتراک گذاری فایل apkg با خطا مواجه شد</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">این فایل نیازمند نسخۀ جدیدتری از آنکی است.</string>
     <string name="activity_start_failed">دستگاه شما نرم افزار قادر به انجام این عمل را ندارد.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[تصاویر دوربین ممکن است بزرگ باشند. در صورت لزوم تغییر اندازۀ تصویر یا کاهش حجم آن از مسیر رسانه استفاده کنید]]></string>
     <string name="no_browser_notification">مرورگر یافت نشد، لطفاً صفحۀ مربوطه را در سیستم دیگری باز کنید: </string>
     <string name="web_page_error">خطای بارگذاری صفحه: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">لینک صفحۀ خارجی درون کارت پشتیبانی نمی‌شود.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">کارت‌های بازیابی شده</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">پس زمینه</string>
     <string name="choose_an_image">انتخاب تصویر</string>
@@ -400,7 +345,6 @@
     <string name="intro_sync_from_ankiweb">سینک از انکی‌وب</string>
     <string name="already_logged_in">قبلاً وارد شده‌اید</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">دسته‌های موجود</string>
     <string name="deck_created">دسته ایجاد شد</string>
     <string name="deck_renamed">نام دسته تغییر کرد</string>
     <!-- Deck Deletion -->

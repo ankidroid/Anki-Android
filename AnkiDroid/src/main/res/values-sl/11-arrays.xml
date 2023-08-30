@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Vprašaj me</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Samo oznako</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Nove kartice v naključnem vrstnem redu</string>
-    <string name="new_order_order_added">Nove kartice v vrstnem redu dodajanja</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Najprej videna najprej</string>
     <string name="cram_deck_conf_order_random">Nakjučno</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Uporabi trenutni komplet</string>
     <string name="add_to_deck_decide_by_note_type">Odloči se po vrsti zapiska</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Premešaj nove kartice in preglede</string>
-    <string name="new_spread_new_after_review">Nove kartice za pregledi</string>
-    <string name="new_spread_new_before_review">Nove kartice pred pregledi</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Ko na pomnilnih karticah ni določena pisava</string>
     <string name="override_font_always" comment="Option to always override font">Vedno</string>

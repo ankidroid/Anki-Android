@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରିବେ କି?</string>
     <string name="check_db_warning">ଏହା ବହୁତ ସମୟ ନେଇପାରେ</string>
-    <string name="check_db_acknowledge">ଡାଟାବେସ୍ ଯାଞ୍ଚ କରାଗଲା</string>
-    <string name="check_db_acknowledge_shrunk">ଡାଟାବେସ୍ ଯାଞ୍ଚ ଏଵଂ ଅପ୍ଟିମାଇଜ୍ କରାଗଲା।\n%d MB ଦ୍ୱାରା ସଙ୍କୁଚିତ ହୋଇଛି।</string>
     <string name="contextmenu_deckpicker_delete_deck">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବା</string>
-    <string name="delete_deck_default_deck">ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ କୁ ବିଲୋପ କରାଯାଇପାରିବ ନାହିଁ</string>
     <string name="delete_deck_title">ତାସଖଣ୍ଡ ଵିଲୋପ କରିବେ ତ?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">%1$sରେ ଥିବା ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବେ କି? ଏଥିରେ %2$dଟିଏ ପତ୍ର ଅଛି।</item>
-        <item quantity="other">%1$sରେ ଥିବା ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବେ କି? ଏଥିରେ %2$dଟି ପତ୍ର ଅଛି।</item>
-    </plurals>
-    <string name="delete_cram_deck_message">%s ରେ ଥିବା ସମସ୍ତ ପତ୍ରକୁ ସେଗୁଡ଼ିକର ମୂଳ ତାସଖଣ୍ଡ କୁ ପଠାଇବେ କି?</string>
     <string name="no_tts_available_message">କୌଣସି ପାଠ୍ୟ-ରୁ-କଥନ ଭାଷା ଉପଲବ୍ଧ ନାହିଁ</string>
     <string name="initializing_tts">TTS ଆରମ୍ଭ ହେଉଛି&#8230;</string>
     <string name="tts_no_tts">କଥା କୁହ ନାହିଁ</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">ତାସଖଣ୍ଡରୁ ଅନିୟମିତ ଭାବରେ x ଟି ପତ୍ର ଚୟନ କରନ୍ତୁ:</string>
     <string name="custom_study_preview">ଗତ x ଦିନରେ ଯୋଡ଼ାଯାଇଥିବା ନୂଆ ପତ୍ରଗୁଡ଼ିକର ପୂର୍ଵାଵଲୋକନ କରିବା:</string>
     <string name="custom_study_rebuild_deck_corrupt">କଷ୍ଟମ୍ ଅଧ୍ୟୟନ ତାସଖଣ୍ଡ ପୁନଃନିର୍ମାଣ କରିହେଲା ନାହିଁ </string>
-    <string name="importing_collection">ସଂଗ୍ରହ ଆମଦାନି ଚାଲିଛି&#8230;</string>
-    <string name="import_media_count">ମିଡ଼ିଆ ଫାଇଲ୍ ଆମଦାନୀ ଚାଲିଛି %1$d%%&#8230;</string>
-    <string name="import_progress">• ନୋଟ୍ ଆମଦାନି: %1$d%%\n• ପତ୍ର ଆମଦାନି: %2$d%%\n• ପରଵର୍ତ୍ତୀ ପ୍ରକ୍ରିୟାକରଣ: %3$d%%</string>
-    <string name="import_update_details">%2$dଟି ଵିଦ୍ୟମାନ ନୋଟ୍ ମଧ୍ୟରୁ %1$dଟି ଅଦ୍ୟତନ କରାଗଲା।</string>
-    <string name="import_update_ignored">ନୋଟ୍ ପ୍ରକାର ବଦଳିଥିବାରୁ କିଛିଟା ଅଦ୍ୟତନ ଅଣଦେଖା ହୋଇଛି</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">%2$dଟି ପତ୍ର ଆମଦାନୀ ହୋଇଛି</item>
-        <item quantity="other">%1$dଟି ଫାଇଲ୍ ଆମଦାନୀ ହୋଇଛି\nସର୍ବମୋଟ %2$dଟି ପତ୍ର ଆମଦାନୀ କରାଗଲା</item>
-    </plurals>
     <string name="storage_full_title">ଷ୍ଟୋରେଜ୍ ଭର୍ତ୍ତି ହେଲାଣି</string>
     <string name="storage_almost_full_title">ଷ୍ଟୋରେଜ୍ ପ୍ରାୟ ଭର୍ତ୍ତି ହେବାକୁ ବସିଲାଣି</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ଜାଗା ନାହିଁ</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="dialog_positive_overwrite">ନବଲିଖନ କରନ୍ତୁ</string>
-    <string name="dialog_positive_remove">ହଟାନ୍ତୁ</string>
     <string name="dialog_positive_repair">ସଜାଡନ୍ତୁ</string>
     <string name="dialog_positive_replace">ପ୍ରତିସ୍ଥାପନ</string>
-    <string name="dialog_positive_restore">ପୁନରୁଦ୍ଧାର</string>
-    <string name="dialog_positive_set">ସେଟ୍</string>
     <string name="dialog_collection_path_not_dir">ନିର୍ଦ୍ଦିଷ୍ଟ ପଥ ଏକ ବୈଧ ନିର୍ଦେଶିକା ନୁହେଁ </string>
     <!-- Media checking -->
     <string name="check_media_title">ମିଡ଼ିଆ ଯାଞ୍ଚ କରିବେ କି?</string>
@@ -180,18 +160,11 @@
     <string name="integrity_check_continue_anyway">ଯେକୌଣସି ପ୍ରକାରେ ଜାରି ରଖନ୍ତୁ</string>
     <string name="integrity_check_insufficient_space">ଡାଟାବେସ୍ ଯାଞ୍ଚ ବହୁ ପରିମାଣର ଅସ୍ଥାୟୀ ଷ୍ଟୋରେଜ୍ ବ୍ୟବହାର କରେ।\n\nଏହା ଜାରି ରଖିବା ପୂର୍ବରୁ ଆପଣଙ୍କ ଡିଵାଇସରେ ଅତି କମରେ %s ଖାଲି ସ୍ଥାନ ଥିବା ଦୃଢ଼ ଭାବରେ ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nଆପଣଙ୍କ ପାଖରେ ବର୍ତ୍ତମାନ %s ଖାଲି ଅଛି।</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">ଵିଡ଼ିଓ ଚାଳନ କରିହେଲା ନାହିଁ</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">ତାସଖଣ୍ଡ ପରିଵର୍ତ୍ତନ କରିହେଲା ନାହିଁ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ପତ୍ରରୁ ତଥ୍ୟ ଡିକୋଡିଂ କରିବାରେ ତ୍ରୁଟି</string>
-    <string name="undo_succeeded">\"%s\" ପୂର୍ଵଵତ୍ କରାଗଲା</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">ତାସଖଣ୍ଡ ଵିକଳ୍ପ ପ୍ରକ୍ରିୟାକରଣ କରିବାରେ ଵିଫଳ: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">ଡାଟାବେସ୍ ଲକ୍ ହୋଇଛି</string>
     <string name="database_locked_summary">AnkiDroid ଡାଟାବେସ୍ ଅନ୍ୟ ଏକ ଆପ୍ ଦ୍ୱାରା ଵ୍ୟଵହାର ହେଉଛି। ଦୟାକରି ଅନ୍ୟ ଆପ୍‌ଟିକୁ ବନ୍ଦ କରି AnkiDroid ଖୋଲନ୍ତୁ।</string>

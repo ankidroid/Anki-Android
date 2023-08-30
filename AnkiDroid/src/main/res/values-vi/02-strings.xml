@@ -125,7 +125,6 @@
     <string name="save">Lưu</string>
     <string name="close">Đóng</string>
     <string name="select">Chọn</string>
-    <string name="reordering_cards">Đang sắp sếp lại các thẻ...</string>
     <string name="field_remapping">%1$s (từ \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Bất kỳ thẻ nào không được gán sẽ bị xoá. Nếu một ghi chú không có thẻ nào kèm theo, nó sẽ bị mất. Có chắc là bạn muốn tiếp tục?</string>
     <!-- Timebox -->
@@ -144,16 +143,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Lên lịch lại</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Xem trước</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">Không thể tiến hành vì không đủ bộ nhớ trên thiết bị</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Đổi tên</string>
-    <string name="default_conf_delete_error">Không thể gỡ bỏ nhóm tuỳ chọn mặc định</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="other">Đã thêm %d thẻ</item>
-    </plurals>
     <string name="check_db">Kiểm tra CSDL</string>
     <string name="check_media">Kiểm tra các tệp đa phương tiện</string>
     <string name="empty_cards">Các thẻ rỗng</string>
-    <string name="check_db_message">Đang kiểm tra CSDL&#8230;</string>
     <string name="empty_card_warning">Thẻ này rỗng. Dùng tuỳ chọn \"Các thẻ rỗng\" từ trình đơn trên màn hình danh sách bộ thẻ.</string>
     <string name="unknown_type_field_warning">Gõ đáp án: trường lạ %s</string>
     <string name="delete_deck">Đang xoá bộ thẻ&#8230;</string>
@@ -166,13 +159,6 @@
     </plurals>
     <string name="import_log_no_apkg">Đây không phải là gói tệp tin Anki hợp lệ</string>
     <string name="import_title_error" comment="Title of error dialog">Lỗi</string>
-    <string name="import_log_failed_unzip">Không giải nén được apkg: %s</string>
-    <string name="import_log_failed_copy_to">Không sao chép được apkg sang %s</string>
-    <string name="import_log_failed_validate">không xác thực được apkg</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Lỗi khi nhập tệp, có thể là bộ nhớ cache bị xóa trong quá trình xử lý. \nVui lòng thử lại</string>
-    <string name="import_succeeded_but_check_database">Nhập dữ liệu thành công nhưng quá trình dọn dẹp sau nhập không thành công. Chạy kiểm tra cơ sở dữ liệu sau. Nguyên nhân chính: %s</string>
-    <string name="import_error_corrupt_zip">Tệp apkg bị hỏng. Vui lòng xóa và tải xuống lại. \n\n. Nguyên nhân chính: %s</string>
     <string name="import_error_handle_exception">Không thể nhập tệp\n\n%s</string>
     <string name="import_error_not_apkg_extension">Tên file \"%s\" không chứa định dạng .apkg hoặc .colpkg</string>
     <string name="import_error_load_imported_database">Cơ sở dữ liệu Anki (.anki2) thay thế chưa được hỗ trợ. Vui lòng xem sách hướng dẫn để biết hướng dẫn thay thế.</string>
@@ -180,8 +166,6 @@
     <string name="import_error_copy_to_cache">Không thể lưu tệp vào bộ nhớ đệm (có thể hết dùng lượng lưu trữ)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">1 số lỗi đã xảy ra khi nhập những file sau: \n%s</string>
-    <string name="import_replacing">Đang thay thế bộ sưu tập&#8230;</string>
     <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
     <string name="export_include_schedule">Gồm cả việc lên lịch</string>
     <string name="export_include_media">Gồm cả các tệp đa phương tiện</string>
@@ -218,41 +202,11 @@
     <string name="dyn_deck_desc">Đây là bộ thẻ đặc biệt phục vụ cho việc học ngoài lịch trình thông thường. Các thẻ sẽ tự động quay lại bộ thẻ ban đầu của chúng sau khi ôn tập. Xoá bộ thẻ này khỏi danh sách sẽ chuyển toàn bộ thẻ còn lại về bộ thẻ ban đầu của chúng.</string>
     <string name="steps_error">Các bước phải là số lớn hơn 0</string>
     <string name="steps_min_error">Yêu cầu phải có ít nhất một bước</string>
-    <string name="sched_end">(kết thúc)</string>
-    <string name="sched_unbury_action">Để xem chúng ngay, hãy bấm \"Bỏ tạm ẩn\" trong trình đơn</string>
-    <string name="sched_has_buried">Một số thẻ liên quan hoặc tạm ẩn đã được hoãn đến ngày mai</string>
     <string name="tag_editor_add_feedback">Bấm \"%2$s\" để xác nhận thêm \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Đã chọn đuôi hiện hữu \"%1$s\"</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="other">%s giây</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="other">%s phút</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="other">%s giờ</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="other">%s ngày</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="other">%s tháng</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="other">%s năm</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s giây</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Đã có bộ thẻ này rồi</string>
     <string name="decks_rename_filtered_nosubdecks">Một bộ thẻ đã lọc không thể có bộ thẻ phụ</string>
-    <string name="filtered_deck_name">Bộ thẻ đã lọc</string>
     <string name="reminder_title">Đừng quên học ngày hôm nay!</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d thẻ ôn tập trong %1$s</item>
@@ -260,14 +214,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Lỗi chia sẻ tệp tin apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Tệp tin này yêu cầu phiên bản Anki mới hơn.</string>
     <string name="activity_start_failed">Hệ thống chưa cài đặt ứng dụng có thể thực hiện tác vụ này.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Hình ảnh máy ảnh có thể lớn. Bạn có thể muốn nén và thay đổi kích thước hình ảnh trong thư mục media]]></string>
     <string name="no_browser_notification">Không tìm thấy trình duyệt, vui lòng truy cập trang web bằng máy tính hoặc điện thoại di động:</string>
     <string name="web_page_error">Lỗi khi tải trang: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Liên kết trang bên ngoài trong thẻ không được hỗ trợ.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Khôi phục Các thẻ</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hình nền</string>
     <string name="choose_an_image">Chọn một hình ảnh</string>
@@ -389,7 +341,6 @@
     <string name="intro_sync_from_ankiweb">Đồng bộ từ AnkiWeb</string>
     <string name="already_logged_in">Đã đăng nhập</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Bộ thẻ tồn tại</string>
     <string name="deck_created">Đã tạo bộ thẻ</string>
     <string name="deck_renamed">Đã đổi tên bộ thẻ</string>
     <!-- Deck Deletion -->

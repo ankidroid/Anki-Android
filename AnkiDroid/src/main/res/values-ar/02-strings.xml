@@ -125,7 +125,6 @@
     <string name="save">حفظ</string>
     <string name="close">إغلاق</string>
     <string name="select">حدد</string>
-    <string name="reordering_cards">إعادة ترتيب البطاقات&#8230;</string>
     <string name="field_remapping">%1$s (من “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
     <!-- Timebox -->
@@ -154,21 +153,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">إعادة الجدولة</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">معاينة</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d من %2$d</string>
-    <string name="error_insufficient_memory">العملية غير ممكنة نظرًا للذاكرة غير الكافية في جهازك</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">إعادة التسمية</string>
-    <string name="default_conf_delete_error">لا يمكن إزالة مجموعة الخيارات الافتراضية</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="zero">أضيفت %d بطاقة</item>
-        <item quantity="one">أضيفت %d بطاقة</item>
-        <item quantity="two">أضيفت %d بطاقة</item>
-        <item quantity="few">أضيفت %d بطاقات</item>
-        <item quantity="many">أضيفت %d بطاقة</item>
-        <item quantity="other">أضيفت %d بطاقة</item>
-    </plurals>
     <string name="check_db">فحص قاعدة البيانات</string>
     <string name="check_media">فحص الوسائط</string>
     <string name="empty_cards">بطاقات فارغة</string>
-    <string name="check_db_message">فحص قاعدة البيانات&#8230;</string>
     <string name="empty_card_warning">هذه البطاقة فارغة. استخدم خيار «بطاقات فارغة» من القائمة في شاشة قائمة الرزم.</string>
     <string name="unknown_type_field_warning">إدخال الجواب: حقل غير معروف %s</string>
     <string name="delete_deck">يجري حذف الرزمة...</string>
@@ -186,13 +174,6 @@
     </plurals>
     <string name="import_log_no_apkg">ملف حزمة أنكي غير صالح</string>
     <string name="import_title_error" comment="Title of error dialog">خطأ</string>
-    <string name="import_log_failed_unzip">فشل فك ضغط ملف apkg: %s</string>
-    <string name="import_log_failed_copy_to">فشل نسخ ملف apkg إلى %s</string>
-    <string name="import_log_failed_validate">فشل التحقق من صحة ملف apkg</string>
-    <string name="import_log_insufficient_space_error">لا توجد مساحة كافية لاستيراد الحزمة.\nالمتطلب - %1$s \nالمتوفر - %2$s.\n\nهل تواجه مشكلة؟ جرب تفريغ مساحة في هاتفك إن أمكن. كحل بديل، تستخدم المزامنة مساحة أقل من الاستيراد، لذلك يمكنك تجربة استيراد الحزمة في جهاز فيه مساحة أكثر (على نسخة أنكي للكمبيوتر مثلًا) ثم المزامنة لهذا الجهاز.</string>
-    <string name="import_log_file_cache_cleared">حدث خطأ عند استيراد الملف. يحتمل أن يكون بسبب مسح ذاكرة الكاش عند المعالجة.\nحاول مجددًا</string>
-    <string name="import_succeeded_but_check_database">نجح استيراد البيانات لكن فشل تنظيف ما بعد الاستيراد. استخدم ميزة فحص قاعدة البيانات لاحقًا. السبب: %s</string>
-    <string name="import_error_corrupt_zip">ملف apkg تالف. الرجاء حذفه وتحميله مجددًا.\n\nالسبب: %s</string>
     <string name="import_error_handle_exception">فشل استيراد الملف\n\n%s</string>
     <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف “%s” على لاحقة .apkg أو .colpkg</string>
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات أنكي (.anki2) غير مدعومة. الرجاء الاطلاع على الدليل لتعليمات الاستبدال.</string>
@@ -200,8 +181,6 @@
     <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاذ مساحة التخزين)</string>
     <string name="import_error_multiple_colpkg">تم تحديد العديد من ملفات colpkg.</string>
     <string name="import_error_colpkg_apkg">تم تحديد كل من ملفات apkg &amp; colpkg في وقت واحد.</string>
-    <string name="import_stats_error">حدثت بعض الأخطاء أثناء استيراد الملفات التالية:\n%s</string>
-    <string name="import_replacing">يجري استبدال المجموعة&#8230;</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
     <string name="export_include_schedule">تضمين معلومات الجدولة</string>
     <string name="export_include_media">تضمين الوسائط</string>
@@ -248,71 +227,11 @@
     <string name="dyn_deck_desc">هذه رزمة خاصة للدراسة خارج الجدول المعتاد. ستعود البطاقات إلى رزمها الأصلية تلقائيًا بعد مراجعتها. يؤدي حذف هذه الرزمة من قائمة الرزم إلى إعادة كل البطاقات المتبقية إلى رزمها الأصلية.</string>
     <string name="steps_error">يجب أن تكون الخطوات أعداد أكبر من 0</string>
     <string name="steps_min_error">يلزم خطوة واحدة على الأقل</string>
-    <string name="sched_end">(النهاية)</string>
-    <string name="sched_unbury_action">لرؤيتها اختر عنصر «إخراج» من القائمة</string>
-    <string name="sched_has_buried">تم تأجيل بعض البطاقات المدفونة أو ذات الصلة حتى الغد</string>
     <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="zero">%s ثانية</item>
-        <item quantity="one">%s ثانية</item>
-        <item quantity="two">%s ثانية</item>
-        <item quantity="few">%s ثواني</item>
-        <item quantity="many">%s ثانية</item>
-        <item quantity="other">%s ثانية</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="zero">%s دقيقة</item>
-        <item quantity="one">%s دقيقة</item>
-        <item quantity="two">%s دقيقة</item>
-        <item quantity="few">%s دقائق</item>
-        <item quantity="many">%s دقيقة</item>
-        <item quantity="other">%s دقيقة</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="zero">%s ساعة</item>
-        <item quantity="one">%s ساعة</item>
-        <item quantity="two">%s ساعة</item>
-        <item quantity="few">%s ساعات</item>
-        <item quantity="many">%s ساعة</item>
-        <item quantity="other">%s ساعة</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="zero">%s يوم</item>
-        <item quantity="one">%s يوم</item>
-        <item quantity="two">%s يوم</item>
-        <item quantity="few">%s أيام</item>
-        <item quantity="many">%s يوم</item>
-        <item quantity="other">%s يوم</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="zero">%s شهر</item>
-        <item quantity="one">%s شهر</item>
-        <item quantity="two">%s شهر</item>
-        <item quantity="few">%s أشهر</item>
-        <item quantity="many">%s شهرًا</item>
-        <item quantity="other">%s شهر</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="zero">%s عام</item>
-        <item quantity="one">%s عام</item>
-        <item quantity="two">%s عام</item>
-        <item quantity="few">%s أعوام</item>
-        <item quantity="many">%s عامًا</item>
-        <item quantity="other">%s عام</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s ثانية</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&gt; %s</string>
     <string name="decks_rename_exists">هذه الرزمة موجودة بالفعل</string>
     <string name="decks_rename_filtered_nosubdecks">لا يمكن أن يكون لرزمة مفلترة رزم فرعية</string>
-    <string name="filtered_deck_name">رزمة مفلترة</string>
     <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
     <plurals name="reminder_text">
         <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>
@@ -325,14 +244,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">يتطلب هذا الملف إصدارًا أحدث من أنكي.</string>
     <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
     <string name="no_browser_notification">تعذر العثور على متصفح، الرجاء زيارة صفحة الويب بواسطة حاسوب شخصي أو هاتف محمول: </string>
     <string name="web_page_error">خطأ في تحميل الصفحة: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">روابط الصفحات الخارجية في البطاقات غير مدعومة.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">تم استرجاع البطاقات</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">خلفية</string>
     <string name="choose_an_image">اختيار صورة</string>
@@ -458,7 +375,6 @@
     <string name="intro_sync_from_ankiweb">مزامنة من أنكي ويب</string>
     <string name="already_logged_in">تم تسجيل الدخول مسبقًا</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">سلام </string>
     <string name="deck_created">كيفية </string>
     <string name="deck_renamed">Minato </string>
     <!-- Deck Deletion -->

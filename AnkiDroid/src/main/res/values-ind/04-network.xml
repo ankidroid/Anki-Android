@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Kamu sedang offline</string>
-    <string name="sync_even_if_offline">Coba saja</string>
     <string name="sync_error">Gagal mensinkronisasi</string>
     <string name="vague_error" comment="Network error dialog title">Gagal</string>
     <string name="retry">Coba Lagi</string>
@@ -63,66 +62,15 @@
     <string name="sign_up">Daftar</string>
     <string name="logged_as">Login sebagai</string>
     <string name="log_out">Log keluar</string>
-    <string name="alert_logging_message">Sedang Login&#8230;</string>
-    <string name="invalid_username_password">Alamat surel atau kata sandi tidak valid.</string>
     <string name="reset_password">Reset kata sandi</string>
     <string name="lost_mail_instructions">Lupa tentang surel elektronik?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opsi untuk XXX</string>
-    <string name="sync_prepare_syncing">Menyiapkan sinkronisasi&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Menyiapkan sinkronisasi penuh&#8230;</string>
-    <string name="sync_uploading_message">Mengunggah&#8230;</string>
-    <string name="sync_downloading_message">Mengunduh&#8230;</string>
     <string name="sync_title">Sinkronisasi</string>
     <string name="sync_log_uploading_message">Sinkronisasi penuh dari lokal</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, zona waktunya mungkin salah</string>
-    <string name="sync_log_clocks_unsynchronized_date">, tanggalnya mungkin salah</string>
-    <string name="sync_no_changes_message">Tidak ada perubahan ditemukan</string>
     <string name="sync_database_acknowledge">Koleksi disinkronkan</string>
-    <string name="sync_log_error_specific">Galat sinkronisasi , tipe: %1$s, pesan: %2$s</string>
     <string name="sync_corrupt_database">Basisdatamu rusak. Perbaiki sebelum mencoba sinkronisasi lagi.\n\n Lihat %s untuk informasi tentang memperbaiki basisdatamu.</string>
-    <string name="sync_too_busy">Server sibuk. Coba lagi nanti.</string>
-    <string name="sync_remote_db_error">Basisdata yang diunduh rusak. Silakan coba lagi.</string>
-    <string name="sync_overwrite_error">Koleksimu saat ini tidak dapat ditimpa oleh berkas yang diunduh</string>
-    <string name="sync_connection_error">Koneksi gagal. Antara koneksi internetmu bermasalah, atau kamu memiliki berkas yang sangat besar di folder mediamu.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">Server Sinkronisasi Kostum di Pengaturan Lanjutan tidak valid (%s). Silakan masukkan server yang valid atau matikan pengaturan.</string>
-    <string name="sync_deletions_message">Sinkronisasi deletasi kloza(titik-titik)&#8230;</string>
-    <string name="sync_small_objects_message">Menyinkronkan objek kecil&#8230;</string>
-    <string name="sync_finish_message">Menyelesaikan sinkronisasi&#8230;</string>
-    <string name="sync_log_finish_error">Galat saat mengirim arahan akhir ke server</string>
-    <string name="sync_writing_db">Menyimpan perubahan ke basisdata&#8230;</string>
-    <string name="sync_download_chunk">Mengunduh perubahan&#8230;</string>
-    <string name="sync_upload_chunk">Mengunggah perubahan&#8230;</string>
-    <string name="sync_up_down_size">Unggah: %1$d KB, Unduh: %2$d KB</string>
-    <string name="sync_generic_error">Sebuah galat telah terjadi. Coba lagi nanti.</string>
-    <string name="sync_check_upload_file">Memeriksa berkas sebelum mengunggah&#8230;</string>
-    <string name="sync_check_download_file">Memeriksa berkas yang diunduh&#8230;</string>
-    <string name="sync_media_find">Mencari media yang berubah&#8230;</string>
-    <string name="sync_media_no_changes">Tidak ada perubahan ke berkas media</string>
-    <string name="sync_media_success">Media disinkronkan</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">Setelah sinkron, koleksi berada dalam keadaan tidak konsisten. Untuk memperbaiki masalah ini, AnkiDroid akan memaksa sinkronisasi penuh. Pilih bagian mana yang ingin kamu simpan.</string>
-    <string name="sync_media_sanity_failed">Sinkronisasi media selesai, namun jumlah media tidak sesuai dengan server. Sinkronisasi media berikutnya akan menyeluruh untuk memperbaiki kesalahan apapun.</string>
-    <string name="sync_media_db_error">Sinkronisasi media gagal karena basisdata sekarang korup. Disarankan memeriksa media.</string>
-    <string name="sync_media_error">Galat menyinkronkan data media</string>
-    <string name="sync_media_error_check">Galat saat menyinkronkan media. Pemeriksaan media disarankan.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Mohon untuk menjalankan \'%s\' sebelum melakukan sinkronisasi</string>
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Jarak jauh</string>
     <string name="force_full_sync_title">Paksa sinkronisasi penuh</string>
@@ -130,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Perubahan yang diminta mengharuskan basisdata diunggah seluruhnya saat kamu melakukan sinkronisasi koleksimu. Jika kamu memiliki ulasan atau perubahan lainnya yang menunggu di perangkat lain yang belum disinkronkan di sini, mereka akan hilang. Lanjutkan?</string>
     <string name="full_sync_confirmation_upgrade">Karena adanya bug pada versi AnkiDroid sebelumnya, disarankan untuk melakukan sinkronisasi penuh.</string>
-    <string name="sync_error_407_proxy_required">Otentikasi proxy diperlukan.</string>
-    <string name="sync_error_409">Hanya satu klien yang bisa mengakses AnkiWeb sekaligus. Jika sinkronisasi sebelumnya gagal, coba lagi dalam beberapa menit.</string>
-    <string name="sync_error_413_collection_size">Koleksimu atau berkas media terlalu besar untuk disinkronisasi.</string>
-    <string name="sync_error_500_unknown">AnkiWeb mengalami galat. Mohon tunggu beberapa menit, dan jika masalah tetap ada, harap buat laporan galat.</string>
-    <string name="sync_error_501_upgrade_required">Silakan perbarui AnkiDroid ke versi terbaru </string>
-    <string name="sync_error_502_maintenance">AnkiWeb sedang dalam pemeliharaan. Harap coba lagi dalam beberapa menit.</string>
-    <string name="sync_error_504_gateway_timeout">error 504 gateway timeout terjadi.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sinkronisasi (penuh)</string>
     <string name="sync_menu_title_no_account">Sinkronisasi (masuk)</string>
-    <string name="sync_error_unknown_host_readable">Tidak bisa terhubung ke AnkiWeb. Apakah internet anda berjalan dengan lancar?\n\n%s</string>
 </resources>

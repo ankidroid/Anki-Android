@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Tanungin mo ako</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tag lamang</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Bagong mga card sa random order</string>
-    <string name="new_order_order_added">Bagong mga card sa random na pagkakasunud-sunod</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Pinakalumang nakita muna</string>
     <string name="cram_deck_conf_order_random">Pinakalumang nakita muna</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Gumamit ng kasalukuyang deck</string>
     <string name="add_to_deck_decide_by_note_type">Magpasya ayon sa uri ng tala</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Paghaluin ang mga bagong card at mga review</string>
-    <string name="new_spread_new_after_review">Mga bagong card pagkatapos ng mga review</string>
-    <string name="new_spread_new_before_review">Bagong mga card bago ang mga review</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Kapag walang tinukoy na font sa flashcards</string>
     <string name="override_font_always" comment="Option to always override font">Palagi</string>

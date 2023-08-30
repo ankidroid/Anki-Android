@@ -47,7 +47,6 @@
     <string name="model_browser_delete">टीप प्रकार हटवा</string>
     <string name="model_browser_rename" comment="Rename a note type">नाव बदला</string>
     <string name="model_browser_template">कार्ड संपादित करा</string>
-    <string name="model_browser_add">नोट प्रकार जोडा</string>
     <!--Rename-->
     <string name="rename_model">टीप प्रकार पुनर्नामित करा</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">जोडताना शेवटचे इनपुट लक्षात ठेवा</string>
     <string name="model_field_editor_changing">फील्ड अद्यतनित करीत आहे</string>
     <string name="model_field_editor_sort_field">या फील्डनुसार क्रमवारी लावा</string>
-    <string name="model_clone_suffix">प्रत</string>
     <!--Warnings-->
     <string name="model_delete_warning">आपली खात्री आहे की आपण हा टीप प्रकार हटवू इच्छिता?</string>
     <string name="field_delete_warning">आपली खात्री आहे की आपण हे फील्ड हटवू इच्छिता?</string>

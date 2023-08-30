@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Ρωτήστε με</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Μόνο ετικέτα</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Νέες κάρτες σε τυχαία σειρά</string>
-    <string name="new_order_order_added">Νέες κάρτες σε σειρά προσθήκης</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Πρώτα οι παλαιότερα ειδωμένες</string>
     <string name="cram_deck_conf_order_random">Τυχαία</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Χρήση προσωρινής τράπουλας</string>
     <string name="add_to_deck_decide_by_note_type">Απόφαση κατά τύπο σημείωσης</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Ανάμειξη νέων καρτών και επαναλήψεων</string>
-    <string name="new_spread_new_after_review">Οι νέες κάρτες μετά τις επαναλήψεις</string>
-    <string name="new_spread_new_before_review">Οι νέες κάρτες πριν από τις επαναλήψεις</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Όταν δεν ορίζεται γραμματοσειρά στις κάρτες</string>
     <string name="override_font_always" comment="Option to always override font">Πάντα</string>

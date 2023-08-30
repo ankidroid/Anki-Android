@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Malaktiva</string>
-    <string name="enabled">Aktiva</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -152,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">Respondo post elĉerpi tempon</string>
     <string name="timeout_answer_summ">Aŭtomate montri respondon sen enigo de uzanto. Prokrasto enhavas tempon por aŭtomate ludi sonaĵon.</string>
     <string name="timeout_answer_seconds" maxLength="41">Montri respondon post</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Montri sekvan demandon post</string>
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="software_render" maxLength="41">Malaktivigi aparataran bildigilon de kartoj</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">Montri tempon</string>
     <string name="show_eta_summ">Montri plian tempon</string>
     <string name="use_current" maxLength="41">Kartaro por novaj kartoj</string>
-    <string name="new_spread" maxLength="41">Pozicio de nova karto</string>
     <string name="learn_cutoff" maxLength="41">Limigo de anticipa lernado</string>
     <string name="time_limit" maxLength="41">Limigo de lernada tempero (timebox)</string>
     <string name="new_timezone" maxLength="41">Pritraktado de nova horzono</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Ĉiuj dosieroj dum enporti aŭdvidaĵojn</string>
     <string name="media_import_allow_all_files_summ">Se Android ne povas rekoni dosierojn de aŭdvidaĵojn</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Implicite montri statistikojn por</string>
-    <string name="stats_default_deck_current">la antaŭe malfermita kartaro</string>
-    <string name="stats_default_deck_all">ĉiuj kartaroj</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Detala statistiko</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Vidigi detalan statistikon</string>
-    <string name="enable_advanced_statistics_summ">Montri prognozatan statistikon surbaze de komputado aŭ simulado de estontaj ripetoj (aktiva) aŭ surbaze de jam planitaj estontaj ripetoj (malaktiva).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Komputi por N unuaj tagoj, simili por pliaj</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precizo de komputado</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Nombro da ripetoj de simulado</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Propra servilo por samtempigado</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Ne uzata</string>
@@ -236,64 +222,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Asigni al ordonoj</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Ŝanĝoj al grupaj agordoj de kartaroj aplikos al pluraj kartaroj. Se vi volas ŝanĝi nur la nunan kartaron, bonvolu unue aldoni novan grupon de agordoj</string>
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Priskribo de kartaro (aplikas nur al nuna kartaro)</string>
-    <string name="deck_conf_group" maxLength="41">Grupo de agordoj</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d kartaro uzas tiun ĉi grupon</item>
-        <item quantity="other">%1$s\n%2$d kartaroj uzas tiun ĉi grupon</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Novaj kartoj</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Ripetoj</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Misrespondoj</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Ĝeneralaj</string>
     <string name="deck_conf_reminders" maxLength="41">Memorigaĵoj</string>
-    <string name="deck_conf_steps" maxLength="41">Paŝoj (en minutoj)</string>
-    <string name="deck_conf_order" maxLength="41">Ordo</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Novaj kartoj en tago</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Ripeti memoritan karton post</string>
-    <string name="deck_conf_days">XXX tago(j)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Ripeti facilan karton post</string>
-    <string name="deck_conf_start_ease" maxLength="41">Komenca facileco</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maksimumo da ripetoj en tago</string>
-    <string name="deck_conf_new_bury" maxLength="41">Kaŝi novajn rilatajn kartojn por tago</string>
-    <string name="deck_conf_new_bury_summ">Rilataj novaj kartoj estas prokrastataj ĝis la sekva tago</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Kaŝi rilatajn ripetitajn kartojn por tago</string>
-    <string name="deck_conf_rev_bury_summ">Rilataj ripetitaj kartoj estas kaŝitaj ĝis la sekva tago</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Uzi ĝeneralajn agordojn</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Uzi ĝeneralajn agordojn pri “aŭtomate montri respondon” anstataŭ uzi agordojn por tiu ĉi grupo.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Premio por facileco</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Ripeti malfacilan karton post</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Obligi intertempon je</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Maksimuma intertempo</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Nova intertempo</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Minimuma intertempo</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Marki karton kiel forgeseman post</string>
-    <string name="deck_conf_fails">XXX misrespondo(j)</string>
-    <string name="deck_conf_leech_action" maxLength="41">Ago pri forgesemaj kartoj</string>
-    <string name="deck_conf_max_time" maxLength="41">Maksimuma tempo de respondo</string>
-    <string name="deck_conf_seconds">XXX sekundoj</string>
-    <string name="deck_conf_timer" maxLength="41">Montri temp-mezurilon ĉe demando</string>
-    <string name="deck_conf_autoplay" maxLength="41">Aŭtomate ludi aŭdvidaĵojn</string>
-    <string name="deck_conf_replayq" maxLength="41">Reludi semandon</string>
-    <string name="deck_conf_replayq_summ">Kiam montri respondon, reludi kaj demandon kaj respondon</string>
-    <string name="deck_conf_manage" maxLength="41">Administri grupojn</string>
-    <string name="deck_conf_manage_summ">Aldoni/ŝanĝi grupojn de agordoj</string>
-    <string name="deck_conf_current_group" maxLength="41">Nuna grupo</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Alinomi</string>
-    <string name="deck_conf_reset" maxLength="41">Restarigi normojn</string>
-    <string name="deck_conf_reset_message">Ĉu restarigi la nunan grupon de agordoj al implicitaj valoroj?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Aldoni</string>
-    <string name="deck_conf_add_summ">Krei kopion de la nuna grupo de agordoj</string>
-    <string name="deck_conf_remove_message">Ĉu forigi la nunan grupon de agordoj?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Agordi por ĉiuj subkartaroj</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s subkartaro uzos tiun ĉi grupon</item>
-        <item quantity="other">%s subkartaroj uzos tiun ĉi grupon</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Ĉu agordi la nunan grupon de agordoj por ĉiuj subkartaroj de tiu ĉi kartaro?</string>
     <string name="pref_browser_editor_font" maxLength="41">Tiparo de foliumilo kaj redaktilo</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtri</string>
     <string name="deck_conf_cram_search" maxLength="41">Serĉi</string>
@@ -304,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">Aktivigi duan filtrilon</string>
     <string name="deck_conf_cram_steps" maxLength="41">Propraj paŝoj (en minutoj)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Difini proprajn paŝojn</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Aktivigi memorigajn sciigojn por kartaroj en tiu ĉi grupo de kartaroj</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Rememori je</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
     <string name="analytics_title" maxLength="41">Kunhavigi uzadon de eblaĵoj</string>
@@ -342,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Forigi: “%s”</string>
     <string name="bindings_already_bound">Jam asignita al %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Eksperimenta</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Ebligi \'%s\'</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimenta</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
@@ -385,7 +310,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Forigi neuzatajn aŭdvidaĵojn</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>

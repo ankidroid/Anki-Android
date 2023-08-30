@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Đã tắt</string>
-    <string name="enabled">Đã bật</string>
     <string name="pref_summary_seconds">%s giây</string>
     <string name="pref_summary_minutes">%s phút</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -152,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Hiển thị câu trả lời tự động mà không cần người dùng nhập. Độ trễ bao gồm thời gian cho các tệp âm thanh được phát tự động.</string>
     <string name="timeout_answer_seconds" maxLength="41">Thời gian để hiển thị câu trả lời</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Thời gian để hiển thị câu hỏi tiếp theo</string>
     <string name="select_locale_title">Chọn ngôn ngữ</string>
     <string name="software_render" maxLength="41">Tắt kết xuất phần cứng thẻ</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">Hiển thị ETA</string>
     <string name="show_eta_summ">Hiển thị thời gian còn lại</string>
     <string name="use_current" maxLength="41">Bộ thẻ cho thẻ mới</string>
-    <string name="new_spread" maxLength="41">Vị trí thẻ mới</string>
     <string name="learn_cutoff" maxLength="41">Tìm hiểu trước giới hạn</string>
     <string name="time_limit" maxLength="41">Giới hạn thời gian của hộp thời gian</string>
     <string name="new_timezone" maxLength="41">Xử lý múi giờ mới</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Bộ thẻ mặc định khi mở thống kê </string>
-    <string name="stats_default_deck_current">Hiện thống kê cho những bộ thẻ đã chọn </string>
-    <string name="stats_default_deck_all">Hiện thống kê cho tất cả các bộ thẻ</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Thống kê nâng cao</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Bật thống kê nâng cao</string>
-    <string name="enable_advanced_statistics_summ">Hiển thị thống kê dự báo dựa trên tính toán hoặc mô phỏng các bài đánh giá trong tương lai (được bật) hoặc trên các bài đánh giá trong tương lai đã được lên lịch (bị vô hiệu hóa).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Tính toán n ngày đầu tiên, mô phỏng phần còn lại</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Độ chính xác của tính toán</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Số lần lặp lại mô phỏng</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Máy chủ đồng bộ hóa tùy chỉnh</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Chưa được sử dụng</string>
@@ -236,62 +222,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Các thay đổi đối với tùy chọn nhóm bộ thẻ sẽ ảnh hưởng đến nhiều bộ thẻ. Nếu bạn chỉ muốn thay đổi bộ thẻ hiện tại, trước tiên hãy thêm một nhóm tùy chọn mới</string>
     <string name="studyoptions_limit_select_tags">Chọn thẻ</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Mô tả bộ thẻ(chỉ ảnh hưởng đến bộ thẻ hiện tại)</string>
-    <string name="deck_conf_group" maxLength="41">Nhóm tùy chọn</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="other">Bộ thẻ %1$s%1$s\n%2$d%2$d sử dụng nhóm này</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Thẻ mới</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Nhận xét</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Vòng lặp</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Chung</string>
     <string name="deck_conf_reminders" maxLength="41">Nhắc nhở</string>
-    <string name="deck_conf_steps" maxLength="41">Các bước (tính bằng phút)</string>
-    <string name="deck_conf_order" maxLength="41">Thứ tự</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Thẻ mới / ngày</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Khoảng thời gian hoàn thiện</string>
-    <string name="deck_conf_days">XXX ngày</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Khoảng thời gian dễ dàng</string>
-    <string name="deck_conf_start_ease" maxLength="41">Bắt đầu một cách dễ dàng</string>
-    <string name="deck_conf_max_rev" maxLength="41">Tối đa ôn tập/ngày</string>
-    <string name="deck_conf_new_bury" maxLength="41">Giấu đi các thẻ mới liên quan đến</string>
-    <string name="deck_conf_new_bury_summ">Các thẻ mới liên quan được giấu cho đến ngày hôm sau</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Giấu các liên hệ ôn tập</string>
-    <string name="deck_conf_rev_bury_summ">Các liên hệ ôn tập được giấu cho đến ngày hôm sau</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Sử dụng cài đặt chung</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Sử dụng cài đặt \'Câu trả lời hiển thị tự động\' chung thay vì sử dụng cài đặt cho nhóm này.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Điểm thưởng dễ dàng </string>
-    <string name="deck_conf_hard_factor" maxLength="41">Khoảng khó</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Khoảng thời gian chỉnh sửa</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Khoảng thời gian tối đa</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Khoảng thời gian mới</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Khoảng thời gian tối thiểu</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Leech ngưỡng</string>
-    <string name="deck_conf_fails">XXX lapse(s)</string>
-    <string name="deck_conf_leech_action" maxLength="41">Leech hành động</string>
-    <string name="deck_conf_max_time" maxLength="41">Thời gian tối đa trả lời</string>
-    <string name="deck_conf_seconds">XXX giây</string>
-    <string name="deck_conf_timer" maxLength="41">Hiển thị bộ đếm thời gian trả lời</string>
-    <string name="deck_conf_autoplay" maxLength="41">Tự động phát âm thanh</string>
-    <string name="deck_conf_replayq" maxLength="41">Phát lại câu hỏi</string>
-    <string name="deck_conf_replayq_summ">Khi trả lời được hiển thị, phát lại cả hai : câu hỏi và trả lời âm thanh</string>
-    <string name="deck_conf_manage" maxLength="41">Quản lý Nhóm</string>
-    <string name="deck_conf_manage_summ">Thêm và thay đổi các nhóm tùy chọn</string>
-    <string name="deck_conf_current_group" maxLength="41">Nhóm hiện tại</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Đổi Tên</string>
-    <string name="deck_conf_reset" maxLength="41">Phục hồi mặc định</string>
-    <string name="deck_conf_reset_message">Khôi phục tùy chọn nhóm hiện tại về mặc định?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Thêm</string>
-    <string name="deck_conf_add_summ">Tạo một bản sao của nhóm lựa chọn hiện tại</string>
-    <string name="deck_conf_remove_message">Loại bỏ hiện tại tùy chọn nhóm?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Thiết lập cho tất cả chủ đề phụ</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="other">Bộ thẻ phụ %s sẽ sử dụng nhóm này</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Thiết lập hiện tại tùy chọn nhóm cho tất cả chủ đề phụ này?</string>
     <string name="pref_browser_editor_font" maxLength="41">Trình duyệt và trình soạn thảo font</string>
     <string name="deck_conf_cram_filter" maxLength="41">Bộ lọc</string>
     <string name="deck_conf_cram_search" maxLength="41">Tìm</string>
@@ -302,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Các bước tùy chỉnh (tính bằng phút)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Xác định các bước tùy chỉnh</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Bật thông báo nhắc nhở cho các bộ thẻ trong nhóm bộ thẻ này</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Nhắc nhở lúc</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Giúp cải thiện AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Chia sẻ việc sử dụng tính năng</string>
@@ -340,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
     <string name="bindings_already_bound">Already bound to %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Tính năng thử nghiệm</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Bật ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">Có khả năng điều này có thể làm hỏng hoàn toàn cài đặt của bạn, yêu cầu gỡ cài đặt ứng dụng và xóa thư mục AnkiDroid, đồng thời có khả năng lây lan hỏng thông qua đồng bộ hóa với AnkiWeb.\n\nChúng tôi hoan nghênh việc thử nghiệm, nhưng vui lòng đảm bảo rằng bạn có bản sao lưu không phải AnkiWeb hợp lệ.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Tính năng thử nghiệm</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Tùy chọn nhà phát triển</string>
     <string name="dev_options_enabled_pref" maxLength="41">Bật tùy chọn nhà phát triển</string>
@@ -382,7 +309,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Xóa các tệp tin phương tiện không sử dụng</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Xóa các tệp tin phương tiện không sử dụng</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Xóa bỏ các bản sao lưu</string>

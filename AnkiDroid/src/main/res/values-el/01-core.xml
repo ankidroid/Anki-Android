@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Τράπουλες</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Περιηγητής καρτών</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">Η συλλογή είναι κενή</string>
     <string name="no_cards_placeholder_description">Αρχίστε να προσθέτετε κάρτες πατώντας το + εικονίδιο.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Μελέτη %1$d κάρτας σε %2$s σήμερα</item>
-        <item quantity="other">Μελέτη %1$d καρτών σε %2$s σήμερα</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Πληκτρολογήστε την απάντηση</string>
     <string name="show_answer">Εμφάνιση Απάντησης</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">Δύσκολη</string>
     <string name="ease_button_good">Καλή</string>
     <string name="ease_button_easy">Εύκολη</string>
-    <string name="studyoptions_congrats_undo">Αναίρεση %s</string>
     <string name="menu_import">Εισαγωγή</string>
     <string name="undo">Αναίρεση</string>
-    <string name="undo_action_review">τελευταίας αξιολόγησης</string>
-    <string name="undo_action_change_deck_multi">αλλαγή τραπουλών</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Αναίρεση γραμμής</string>
     <string name="move_all_to_deck">Μετακίνηση όλων στην τράπουλα</string>
     <string name="unbury">Ξεθάψιμο</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">Φτάσατε το ημερήσιο όριο μελέτης</string>
     <string name="studyoptions_empty_schedule">Δεν έχουν προγραμματιστεί κάρτες για μελέτη</string>
     <string name="studyoptions_congrats_finished">Συγχαρητήρια! Έχετε τελειώσει για τώρα.</string>
-    <string name="studyoptions_congrats_more_rev">Φτάσατε το σημερινό όριο επανάληψης, αλλά υπάρχουν ακόμη κάρτες που περιμένουν επανεξέταση. Για βέλτιστη απομνημόνευση, εξετάστε το ενδεχόμενο αύξησης του ημερήσιου ορίου στις επιλογές.</string>
-    <string name="studyoptions_congrats_more_new">Υπάρχουν διαθέσιμες νέες κάρτες, αλλά το ημερήσιο όριο έχει επιτευχθεί. Μπορείτε να αυξήσετε το όριο στις επιλογές, αλλά έχετε υπόψη ότι αυτό θα αυξήσει το βραχυπρόθεσμο φόρτο επανάληψης.</string>
-    <string name="studyoptions_congrats_custom">Για μελέτη εκτός του κανονικού χρονοδιαγράμματος, κάντε κλικ στο κουμπί Προσαρμοσμένη Μελέτη παρακάτω.</string>
     <string name="studyoptions_no_cards_due">Δεν υπάρχουν ακόμη κάρτες για επανάληψη</string>
     <string name="sd_card_not_mounted">O χώρος αποθήκευσης συσκευής δεν έχει προσαρτηθεί</string>
-    <string name="empty_cloze_warning">Επεξεργαστείτε αυτή τη σημείωση και προσθέστε μερικές κενές φράσεις. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Συγχρονισμός</string>
     <string name="button_upgrade" comment="Text of the sync button">Μετεγκατάσταση σε εμβέλεια αποθήκευσης</string>
-    <string name="cancel_sync_confirm">Θέλετε να ακυρώσετε τον συγχρονισμό;</string>
-    <string name="continue_sync">Συνέχεια συγχρονισμού</string>
-    <string name="sync_cancelled">Ο συγχρονισμός ακυρώθηκε</string>
-    <string name="sync_cancel_message">Ακύρωση&#8230;\nΑυτό μπορεί να διαρκέσει κάποιο χρόνο.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Θέλετε να ακυρώσετε τον συγχρονισμό;</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Συνέχεια συγχρονισμού</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Ο συγχρονισμός ακυρώθηκε</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Ακύρωση&#8230;\nΑυτό μπορεί να διαρκέσει κάποιο χρόνο.</string>
     <string name="export">Εξαγωγή</string>
     <string name="export_collection">Εξαγωγή συλλογής</string>
     <string name="export_deck">Εξαγωγή τράπουλας</string>
@@ -210,7 +199,6 @@
     <string name="template_for_current_card_deleted">Ο τύπος κάρτας για την τρέχουσα κάρτα έχει διαγραφεί.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Εμφάνιση περιηγητή</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Πληροφορίες κάρτας</string>
     <!-- Permissions -->
@@ -219,14 +207,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Ευρετήριο καρτών</string>
     <string name="context_menu_anki_card_label">Anki Κάρτα</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s έχει ένα πρόβλημα:<br/>%2$s</string>
-    <string name="more_information">Περισσότερες πληροφορίες</string>
-    <string name="no_field">Βρέθηκαν \'{{%1$s}}\', αλλά δεν υπάρχει πεδίο με όνομα \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Βρέθηκαν \'{{/%1$s}}\', αλλά λείπουν \'{{#%1$s}}\' ή \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Λείπει \'}}\' στο \'%s\'.</string>
-    <string name="open_tag_not_closed">Λείπει \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Βρέθηκαν \'{{/%1$s}}\', αλλά αναμενόταν \'{{/%2$s}}\'</string>
-    <string name="filter_error">Σφάλμα στο φίλτρο %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Οι συλλογές δεν μπορούν να συνδυαστούν.\nΠοια συλλογή θέλετε να κρατήσετε;</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -239,7 +219,6 @@
         <item quantity="one">%1$d κάρτα (0 για επανάληψη)</item>
         <item quantity="other">%1$d κάρτες (0 για επανάληψη)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s αντίγραφο</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Αδυναμία γραφής σε ή δημιουργίας αρχείου %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>

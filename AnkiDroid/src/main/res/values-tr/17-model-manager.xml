@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Not türünü sil</string>
     <string name="model_browser_rename" comment="Rename a note type">Yeniden adlandır</string>
     <string name="model_browser_template">Kartları düzenle</string>
-    <string name="model_browser_add">Not türü ekle</string>
     <!--Rename-->
     <string name="rename_model">Not tipini yeniden adlandır</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Eklerken son girişi hatırla</string>
     <string name="model_field_editor_changing">Alanlar güncelleniyor</string>
     <string name="model_field_editor_sort_field">Bu alana göre sırala</string>
-    <string name="model_clone_suffix">kopyası</string>
     <!--Warnings-->
     <string name="model_delete_warning">Bu mesajı silmek istediğinizden emin misiniz?</string>
     <string name="field_delete_warning">Bu alanı silmek istediğinize emin misiniz?</string>

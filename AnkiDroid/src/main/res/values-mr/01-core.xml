@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">डेक</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">कार्ड ब्राउझर</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">संग्रह रिक्त आहे</string>
     <string name="no_cards_placeholder_description">कार्ड जोडण्यास प्रारंभ करण्यासाठी + चिन्हाचा उपयोग करा.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">आज %2$s मध्ये %1$d कार्डचा अभ्यास केला</item>
-        <item quantity="other">आज %2$s मध्ये %1$d कार्डांचा अभ्यास केला</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उत्तर टाइप करा</string>
     <string name="show_answer">उत्तर दाखवा</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">कठीण</string>
     <string name="ease_button_good">चांगले</string>
     <string name="ease_button_easy">सोपे</string>
-    <string name="studyoptions_congrats_undo">%s पूर्ववत करा</string>
     <string name="menu_import">आयात करा</string>
     <string name="undo">पूर्ववत् करा</string>
-    <string name="undo_action_review">अंतिम पुनरावलोकन</string>
-    <string name="undo_action_change_deck_multi">डेक बदला</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">स्ट्रोक पूर्ववत करा</string>
     <string name="move_all_to_deck">सर्व डेकम्धे पाठवा</string>
     <string name="unbury">अनबरी</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">दररोज अभ्यासाची मर्यादा गाठली</string>
     <string name="studyoptions_empty_schedule">अभ्यासासाठी कोणतेही कार्ड शेड्यूल केलेले नाही</string>
     <string name="studyoptions_congrats_finished">अभिनंदन! आपण आत्ताच संपविले आहे.</string>
-    <string name="studyoptions_congrats_more_rev">आजची मर्यादा गाठली आहे, परंतु अद्याप पुनरावलोकने करण्यासाठी कार्डे आहेत. आपण पर्यायांमध्ये मर्यादा वाढवू शकता.</string>
-    <string name="studyoptions_congrats_more_new">Today’s limit has been reached. There are more new cards available; you can increase the limit in the options, but this will increase your short-term review workload.</string>
-    <string name="studyoptions_congrats_custom">सामान्य वेळापत्रक बाहेर अभ्यास करण्यासाठी, “सानुकूल अभ्यास” बटणावर स्पर्श करा</string>
     <string name="studyoptions_no_cards_due">अद्याप कोणतीही कार्ड शिल्लक नाही</string>
     <string name="sd_card_not_mounted">डिव्हाइस संचयन आरोहित नाही</string>
-    <string name="empty_cloze_warning">ही टीप संपादित करा आणि काही क्लोझ हटवणे जोडा. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">समक्रमित करा</string>
     <string name="button_upgrade" comment="Text of the sync button">स्कोप्ड स्टोरेजवर स्थलांतरित करा</string>
-    <string name="cancel_sync_confirm">आपण संकालन रद्द करू इच्छिता?</string>
-    <string name="continue_sync">संकालन सुरू ठेवा</string>
-    <string name="sync_cancelled">संकालन रद्द केले</string>
-    <string name="sync_cancel_message">रद्द करीत आहे... \n यास काही वेळ लागू शकेल.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">आपण संकालन रद्द करू इच्छिता?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">संकालन सुरू ठेवा</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">संकालन रद्द केले</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द करीत आहे... \n यास काही वेळ लागू शकेल.</string>
     <string name="export">निर्यात करा</string>
     <string name="export_collection">निर्यात संग्रह</string>
     <string name="export_deck">निर्यात डेक</string>
@@ -210,7 +199,6 @@
     <string name="template_for_current_card_deleted">वर्तमान कार्डासाठी कार्ड प्रकार हटविला गेला.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ब्राउझर देखावा</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">कार्ड माहिती</string>
     <!-- Permissions -->
@@ -219,14 +207,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">कार्ड ब्राउझर</string>
     <string name="context_menu_anki_card_label">अंकी कार्ड</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s मध्ये एक समस्या आहे:  <br/> %2$s</string>
-    <string name="more_information">अधिक माहिती</string>
-    <string name="no_field">\'{{%1$s}}\' आढळले, परंतु \'%1$s\' नावाचे कोणतेही फील्ड नाही.</string>
-    <string name="closed_tag_not_open">\'{{/%1$s}}\' सापडला, परंतु \'{{#%1$s}}\' किंवा \'{{^%1$s}}\' गहाळ आहे.</string>
-    <string name="missing_closing_bracket">\'%s\' मध्ये \'}}\' गहाळ आहे.</string>
-    <string name="open_tag_not_closed">\'{{%s}}\' गहाळ आहे.</string>
-    <string name="wrong_tag_closed">\'{{/%1$s}}\' सापडला, परंतु अपेक्षित \'{{/%2$s}}\'</string>
-    <string name="filter_error">%s फिल्टरमध्ये त्रुटी</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">संग्रह एकत्रित करू शकत नाही. कुठला संग्रह तुम्हाला ठेवायला आवडेल ?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">एन्कीड्रॉंड</string>
@@ -239,7 +219,6 @@
         <item quantity="one">%1$d कार्ड (0 देय)</item>
         <item quantity="other">%1$d कार्ड (0 देय)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s कॉपी</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">फाइलवर लिहू किंवा तयार करू शकत नाही %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"एकाधिक त्रुटी, सर्वात अलीकडील: %s"</string>

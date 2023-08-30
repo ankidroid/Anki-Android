@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">غیر فعال شده</string>
-    <string name="enabled">فعال شده</string>
     <string name="pref_summary_seconds">%s ثانیه</string>
     <string name="pref_summary_minutes">%s دقیقه</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -152,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">جواب اگر وقت تمام شد</string>
     <string name="timeout_answer_summ">نمایش خودکار پاسخ بدون درخواست کاربر. تأخیر شامل زمان پخش فایل صوتی نیز می‌شود.</string>
     <string name="timeout_answer_seconds" maxLength="41">زمان نمایش پاسخ</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ثانیه</string>
     <string name="timeout_question_seconds" maxLength="41">زمان نمایش پرسش بعدی</string>
     <string name="select_locale_title">زبان را انتخاب کنید</string>
     <string name="software_render" maxLength="41">غیر فعال کردن رندر سخت‌افزار کارت</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">نمایش زمان تخمینی</string>
     <string name="show_eta_summ">نمایش زمان باقیمانده</string>
     <string name="use_current" maxLength="41">دسته برای کارتهای جدید</string>
-    <string name="new_spread" maxLength="41">موقعیت کارت جدید</string>
     <string name="learn_cutoff" maxLength="41">محدودیت های پیش رو را یاد بگیرید</string>
     <string name="time_limit" maxLength="41">محدوده زمانی جعبه زمان</string>
     <string name="new_timezone" maxLength="41">مدیریت منطقه زمانی جدید</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">وجود همه فایل ها در ورودی مدیا را مجاز کن</string>
     <string name="media_import_allow_all_files_summ">اگر Android یک فایل مدیا ای را نمی شناسد</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">دسته پیش فرض وقتی که آمار را باز میکنید</string>
-    <string name="stats_default_deck_current">آمار آخرین دسته ها را نشان بده</string>
-    <string name="stats_default_deck_all">آمار همه دسته ها را نشان بده</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">آمار پیشرفته</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">فعال کردن آمار پیشرفته</string>
-    <string name="enable_advanced_statistics_summ">نمایش پیش بینی آمارها بر اساس محاسبه یا شبیه سازی مرور های آینده( فعال شده) یا بر اساس آینده مرور هایي که قبلا زمانبندی شده اند( غیر فعال شده).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">در ابتدا n روز را محاسبه کن، و باقی مانده ها را شبیه سازی</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">دقت محاسبه</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">تعداد تکرارهاى شبیه سازی</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">سرور همگام سازی سفارشی</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">استفاده نشده</string>
@@ -236,64 +222,10 @@
     <string name="bluetooth">بلوتوث</string>
     <string name="controls_main_category" maxLength="41">نقشه برداری Command</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">تغییر این گروه اختیارات این دسته چندین دسته را تحت تأثیر قرار خواهد داد. اگر قصد اعمال تغییرات فقط بر روی این دسته را دارید، لطفاً ابتدا یک گروه اختیارات جدید اضافه کنید</string>
     <string name="studyoptions_limit_select_tags">انتخاب برچسبها</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">توضیحات دسته (فقط دستۀ فعلی را تحت تأثیر قرار خواهد داد)</string>
-    <string name="deck_conf_group" maxLength="41">گزینه های گروه</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d دسته از این گروه استفاده می کند</item>
-        <item quantity="other">%1$s\n%2$d دسته از این گروه استفاده می کند</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">کارت های جدید</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">مرورها</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">خطاها</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">عمومی</string>
     <string name="deck_conf_reminders" maxLength="41">یادآورها</string>
-    <string name="deck_conf_steps" maxLength="41">مراحل (در دقیقه)</string>
-    <string name="deck_conf_order" maxLength="41">دیگر</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">کارتهای جدید/روز</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">درجه بندی کردن فاصله</string>
-    <string name="deck_conf_days">XXX روز (ها)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">فاصله آسان</string>
-    <string name="deck_conf_start_ease" maxLength="41">شروع آسان</string>
-    <string name="deck_conf_max_rev" maxLength="41">حداکثر مرورها/روز</string>
-    <string name="deck_conf_new_bury" maxLength="41">صرف نظر از کارتهای جدید مرتبط</string>
-    <string name="deck_conf_new_bury_summ">تا روز بعد از کارتهای جدید مرتبط صرف نظر شد</string>
-    <string name="deck_conf_rev_bury" maxLength="41">صرف نظر از نظرات مرتبط</string>
-    <string name="deck_conf_rev_bury_summ">تا روز بعد از نظرات مرتبط صرف نظر شد</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">استفاده از تنظیمات عمومی</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">استفاده از تنظیمات عمومی \'نمایش خودکار جواب\' به جای استفاده از تنظیمات این گروه</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">جایزه آسان</string>
-    <string name="deck_conf_hard_factor" maxLength="41">وقفه ی طولانی</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">اصلاح کننده فاصله</string>
-    <string name="deck_conf_max_ivl" maxLength="41">حداکثر فاصله</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">فاصله جدید</string>
-    <string name="deck_conf_min_ivl" maxLength="41">حداقل فاصله</string>
-    <string name="deck_conf_leech_thres" maxLength="41">آستانه لیچ (کارتهایی که سخت یا با خطا جواب داده شده اند)</string>
-    <string name="deck_conf_fails">XXX شکست ها</string>
-    <string name="deck_conf_leech_action" maxLength="41">انجام لیچ</string>
-    <string name="deck_conf_max_time" maxLength="41">حداقل زمان پاسخ</string>
-    <string name="deck_conf_seconds">XXX ثانیه</string>
-    <string name="deck_conf_timer" maxLength="41">زمان سنج پاسخ را نشان بده</string>
-    <string name="deck_conf_autoplay" maxLength="41">پخش خودکار صدا</string>
-    <string name="deck_conf_replayq" maxLength="41">پخش مجدد سوال</string>
-    <string name="deck_conf_replayq_summ">هنگام نمایش پاسخ, مجددا هر دو سوال و پاسخ صوتی را پخش کن</string>
-    <string name="deck_conf_manage" maxLength="41">گروه مدیریت</string>
-    <string name="deck_conf_manage_summ">اضافه یا تغییر گروه های گزینه ها</string>
-    <string name="deck_conf_current_group" maxLength="41">گروه فعلی</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">تغییر نام</string>
-    <string name="deck_conf_reset" maxLength="41">بازیابی پیش فرضها</string>
-    <string name="deck_conf_reset_message">تنظیمات فعلی گروه را به مقادیر پیش فرض بازمی گردانید؟</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">پیکربندی را اضافه کن</string>
-    <string name="deck_conf_add_summ">ایجاد یک کپی از تنظیمات گروه فعلی</string>
-    <string name="deck_conf_remove_message">تنظیمات فعلی گروه حذف شود؟</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">برای تمام دسته ها تنظیم شود</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s زیر دسته از این گروه استفاده خواهند کرد</item>
-        <item quantity="other">%s زیر دسته از این گروه استفاده خواهند کرد</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">تنظیمات گروه فعلی برای کل این دسته از دسته ها تنظیم شود؟</string>
     <string name="pref_browser_editor_font" maxLength="41">فونت مرورگر و ویرایشگر</string>
     <string name="deck_conf_cram_filter" maxLength="41">فیلتر</string>
     <string name="deck_conf_cram_search" maxLength="41">جستجو</string>
@@ -304,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">فیلتر دوم را فعال کن</string>
     <string name="deck_conf_cram_steps" maxLength="41">قدم‌های سفارشی (به دقیقه)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">تعریف مراحل سفارشی</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">فعال‌سازی اعلان‌های یادآوری برای دسته‌هایی که از این گروه اختیارات استفاده می‌کنند</string>
-    <string name="deck_conf_reminders_time" maxLength="41">یاد آوری در</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">کمک به بهتر شدن AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">به اشتراک گذاشتن ویژگی‌های مورد استفاده</string>
@@ -342,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\'%s\' را حذف کن</string>
     <string name="bindings_already_bound">قبلا به ‘%s’ وابسته بود</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">آزمایشی</string>
-    <string name="experimental_pref_confirmation" maxLength="41">فعال کردن%s</string>
-    <string name="use_rust_backend_title" maxLength="41">استفاده از بکند جدید</string>
-    <string name="use_rust_backend_summary">ویژگی‌های جدید انکی، مانند برنامه زمان‌بندی V3،\n باعث بی ثباتی می‌شود. بر روی مجموعه‌های حساس خود این کار را نکنید. هنگام بستن اپلیکیشن، به حالت قبل باز نحواهد گشت</string>
-    <string name="use_rust_backend_warning">احتمال آن وجود دارد که نصب اپلیکیشن شما را کاملاً خراب کند و مستلزم آن است که اپلیکیشن و فولدر انکی پاک شود. احتمال آن هست که خرابی توسط عملیات سینک، به انکی‌وب هم منتقل شود.\n\nما از آزمایش کردن استقبال می‌کنیم اما مطمئن شوید که پشتیبانی غیر از انکی‌وب از داده‌ها داشته باشید.</string>
-    <string name="enable_v3_sched_title" maxLength="41">از برنامه‌ زمان‌بندی V3 استفاده کنید</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">آزمایشی</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">گزینه های توسعه دهنده</string>
     <string name="dev_options_enabled_pref" maxLength="41">فعال‌سازی گزینه های توسعه دهنده</string>
@@ -384,7 +309,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">پاک‌کردن فایل‌های مدیا استفاده نشده</string>
     <string name="pref__delete_unused_media_files__summary">پاک‌کردن تصاویر و سایر مدیاهای با پیشوند _ و یا مواردی که در هیچ یادداشتی به آن‌ها ارجاع نشده است</string>
-    <string name="dialog__media_check_required__message">یک کنترل مدیاها مورد نیاز است که فایل‌های استفاده نشده شناسایی شوند</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">پاک کردن فایل‌های استفاده نشده</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">پاک کردن پشتیبان‌ها</string>

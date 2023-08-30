@@ -46,17 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Verificare sa base de datos?</string>
     <string name="check_db_warning">Bi diat pòdere chèrrere tempus meda</string>
-    <string name="check_db_acknowledge">Base de datos verificada</string>
-    <string name="check_db_acknowledge_shrunk">Base de datos verificada e otimizada.\n
-                                                  Minimada de %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Iscantzella su matzu</string>
-    <string name="delete_deck_default_deck">Su matzu predefinidu non si podet iscantzellare</string>
     <string name="delete_deck_title">Iscantzellare su matzu?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Iscantzellare totu sas cartas in %1$s? Cuntenet %2$d carta.</item>
-        <item quantity="other">Iscantzellare totu sas cartas in %1$s? Cuntenet %2$d cartas.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Torrare a imbiare totu sas cartas in %s a sos matzos originales issoro?</string>
     <string name="no_tts_available_message">Non b\'est a disponimentu peruna limba de sìntesi vocale</string>
     <string name="initializing_tts">Initzializende sa sìntesi vocale TTS&#8230;</string>
     <string name="tts_no_tts">Non chistiones</string>
@@ -113,17 +104,6 @@
     <string name="custom_study_random">Ischerta x cartas a casu dae su matzu:</string>
     <string name="custom_study_preview">Ammustra s\'antiprima de sas cartas noas annànghidas in sas ùrtimas x dies:</string>
     <string name="custom_study_rebuild_deck_corrupt">Ricostrutzione de su matzu de istùdiu personalizadu fallida</string>
-    <string name="importing_collection">Importende sa colletzione&#8230;</string>
-    <string name="import_media_count">Importende sos documentos multimediales %1$d%%&#8230;</string>
-    <string name="import_progress">• Importende notas: %1$d%%\n
-                              • Importende cartas: %2$d%%\n
-                              • Post-elaboratzione: %3$d%%</string>
-    <string name="import_update_details">%1$d de %2$d notas chi esistint atualizadas.</string>
-    <string name="import_update_ignored">Unas cantas atualizatziones sunt istadas ignoradas ca sa casta de nota est cambiada</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cartas importadas: %2$d</item>
-        <item quantity="other">Documentos importados: %1$d\nTotale de cartas importadas: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Memòria prena</string>
     <string name="storage_almost_full_title">Memòria belle prena</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Non b\'at ispàtziu</string>
@@ -143,11 +123,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disabìlita</string>
     <string name="dialog_positive_overwrite">Subraiscrie</string>
-    <string name="dialog_positive_remove">Boga</string>
     <string name="dialog_positive_repair">Acontza</string>
     <string name="dialog_positive_replace">Remplasa</string>
-    <string name="dialog_positive_restore">Riprìstina</string>
-    <string name="dialog_positive_set">Imposta</string>
     <string name="dialog_collection_path_not_dir">S\'àndala dislindada non fiat una cartella vàlida</string>
     <!-- Media checking -->
     <string name="check_media_title">Verificare sos mèdios?</string>
@@ -190,18 +167,11 @@
                               \n
                               Ti cunsigiamus de tènnere a su nessi %s de ispàtziu lìberu in su dispositivu tuo in antis de sighire.</string>
     <string name="integrity_check_insufficient_space_extra_content">Como tenes %s lìberos.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">Riprodutzione de su vìdeu fallida</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Cambiamentu de su matzu fallidu</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Errore decodifichende sos datos dae sa carta</string>
-    <string name="undo_succeeded">\"%s\" annulladu</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Elaboratzione de sas optziones de su matzu fallida: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Base de datos blocada</string>
     <string name="database_locked_summary">Sa base de datos de AnkiDroid l\'est giai impreende un\'àtera aplicatzione. Pro praghere serra s\'àtera aplicatzione e a pustis torra a abèrrere AnkiDroid.</string>

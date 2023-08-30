@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Brak dostępu do sieci</string>
-    <string name="sync_even_if_offline">Spróbuj mimo to</string>
     <string name="sync_error">Błąd synchronizacji</string>
     <string name="vague_error" comment="Network error dialog title">Błąd</string>
     <string name="retry">Próbuj ponownie</string>
@@ -63,81 +62,15 @@
     <string name="sign_up">Zarejestruj się</string>
     <string name="logged_as">Zalogowany jako</string>
     <string name="log_out">Wyloguj się</string>
-    <string name="alert_logging_message">Logowanie, proszę czekać...</string>
-    <string name="invalid_username_password">Nieprawidłowy adres e-mail lub hasło.</string>
     <string name="reset_password">Resetuj hasło</string>
     <string name="lost_mail_instructions">Zapomniałeś adres e-mail?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opcje dla XXX</string>
-    <string name="sync_prepare_syncing">Przygotowywanie synchronizacji...</string>
-    <string name="sync_preparing_full_sync_message">Przygotowanie pełnej synchronizacji...</string>
-    <string name="sync_uploading_message">Wysyłanie...</string>
-    <string name="sync_downloading_message">Pobieranie...</string>
     <string name="sync_title">Synchronizacja</string>
     <string name="sync_log_uploading_message">Pełna synchronizacja do serwera</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Twój zegar nie zgadza się o %1$d sekundę%2$s. Upewnij się, że data, czas i strefa czasowa na twoim telefonie są ustawione poprawnie i zsynchronizuj ponownie.</item>
-        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, być może źle ustawiono strefę czasową</string>
-    <string name="sync_log_clocks_unsynchronized_date">, być może źle ustawiono datę</string>
-    <string name="sync_no_changes_message">Nie znaleziono zmian.</string>
     <string name="sync_database_acknowledge">Kolekcja zsynchronizowana</string>
-    <string name="sync_log_error_specific">Błąd synchronizacji, typ: %1$s, wiadomość: %2$s</string>
     <string name="sync_corrupt_database">Twoja baza danych jest uszkodzona. Napraw ją, zanim ponownie spróbujesz synchronizacji.\n\nPod adresem %s znajdziesz informacje o naprawianiu bazy danych.</string>
-    <string name="sync_too_busy">Serwer jest zbyt zajęty. Spróbuj ponownie później.</string>
-    <string name="sync_remote_db_error">Pobrana baza danych jest uszkodzona. Spróbuj ponownie.</string>
-    <string name="sync_overwrite_error">Sciągany plik nie może nadpisać twojej obecnej kolekcji.</string>
-    <string name="sync_connection_error">Upłynął limit czasu połączenia. Albo połączenie z internetem napotyka problemy, albo masz bardzo duży plik w folderze media.</string>
-    <string name="sync_write_access_error_on_storage">Pobrany plik nie może być zapisany w pamięci masowej. Pamięć jest tylko do odczytu lub nie ma wystarczającej ilości miejsca.</string>
-    <string name="sync_error_invalid_sync_server">Ustawienia własnego serwera synchronizacji są nieprawidłowe (%s). Proszę poprawnie skonfigurować serwer lub wyłączyć tą opcję </string>
-    <string name="sync_deletions_message">Synchronizacja usunięć...</string>
-    <string name="sync_small_objects_message">Synchronizacja małych obiektów...</string>
-    <string name="sync_finish_message">Kończenie synchronizacji...</string>
-    <string name="sync_log_finish_error">Wystąpił błąd podczas wysyłania zakończenia w kierunku do serwera</string>
-    <string name="sync_writing_db">Zapisywanie zmian do bazy danych...</string>
-    <string name="sync_download_chunk">Pobieranie zmian...</string>
-    <string name="sync_upload_chunk">Wysyłanie zmian...</string>
-    <string name="sync_up_down_size">Wysłano: %1$d KB, pobrano: %2$d KB</string>
-    <string name="sync_generic_error">Wystąpił błąd. Spróbuj ponownie później.</string>
-    <string name="sync_check_upload_file">Sprawdzanie pliku przed wysłaniem...</string>
-    <string name="sync_check_download_file">Sprawdzanie pobranego pliku...</string>
-    <string name="sync_media_find">Wyszukiwanie zmienionych mediów...</string>
-    <string name="sync_media_no_changes">Brak zmian w plikach mediów.</string>
-    <string name="sync_media_success">Media zsynchronizowane.</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Synchronizacja multimediów częściowo zakończona:\n%d plik multimedialny został pobrany.</item>
-        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="few">%d media files uploaded.</item>
-        <item quantity="many">%d media files uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="few">%d media changes to upload</item>
-        <item quantity="many">%d media changes to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="few">%d media files downloaded</item>
-        <item quantity="many">%d media files downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">Po synchronizacji kolekcja była niespójna. Aby to naprawić AnkiDroid wymusi pełną synchronizację. Wybierz którą wersję chcesz zatrzymać (lokalną czy z serwera) lub anuluj, jeśli chcesz synchronizować później.</string>
-    <string name="sync_media_sanity_failed">Synchronizacja mediów zakończona ale licznik mediów nie zgadza się z serwerem. Następna synchronizacja mediów będzie pełną synchronizacją aby naprawić błędy.</string>
-    <string name="sync_media_db_error">Synchronizacja mediów nie powiodła się ponieważ baza danych jest uszkodzona. Zaleca się użycie opcji \"sprawdź media\"</string>
-    <string name="sync_media_error">Błąd w synchronizacji mediów.</string>
-    <string name="sync_media_error_check">Wystąpił błąd podczas synchronizowania multimediów. Zaleca się sprawdzenie spójności multimediów.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Proszę uruchomić „%s” przed synchronizacją</string>
     <string name="sync_sanity_local">Lokalne</string>
     <string name="sync_sanity_remote">Zdalne</string>
     <string name="force_full_sync_title">Wymuś pełną synchronizację</string>
@@ -145,15 +78,7 @@
     <string name="force_full_sync_confirmation">Wymuszono pełną synchronizację</string>
     <string name="full_sync_confirmation">Żądana zmiana wymagać będzie pełnego wysłania bazy danych przy następnej synchronizacji Twojej kolekcji. Jeżeli posiadasz powtórki lub inne oczekujące zmiany na innym urządzeniu, które nie zostały jeszcze zsynchronizowane, zostaną one utracone. Czy kontynuować?</string>
     <string name="full_sync_confirmation_upgrade">Z powodu błędu w poprzednio zainstalowanej wersji AnkiDroid zalecane jest wymuszenie pełnej synchronizacji.</string>
-    <string name="sync_error_407_proxy_required">Wymagane uwierzytelnienie serwera proxy.</string>
-    <string name="sync_error_409">Tylko jeden klient na raz może uzyskać dostęp do AnkiWeb. Jeśli poprzednia synchronizacja nie powiodła się, spróbuj ponownie za kilka minut.</string>
-    <string name="sync_error_413_collection_size">Twoja kolekcja, albo plik media jest za duży, żeby zsynchronizować.</string>
-    <string name="sync_error_500_unknown">Nastąpił błąd. Proszę spróbować ponownie za kilka minut, a jeśli problem nie ustąpi, proszę złożyć raport o błędach.</string>
-    <string name="sync_error_501_upgrade_required">Proszę zaktualizuj do najnowszej wersji AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb jest chwilowo niedostępny. Proszę spróbować ponownie za kilka minut.</string>
-    <string name="sync_error_504_gateway_timeout">504 otrzymano błąd gateway timeout.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Synchronizacja (pełna)</string>
     <string name="sync_menu_title_no_account">Synchronizacja (logowanie)</string>
-    <string name="sync_error_unknown_host_readable">Nie można połączyć się z AnkiWeb. Czy Twój internet działa?\n\n%s</string>
 </resources>

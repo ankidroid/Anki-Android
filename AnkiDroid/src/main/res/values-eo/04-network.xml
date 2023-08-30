@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Vi estas eksterrete</string>
-    <string name="sync_even_if_offline">Provi malgraŭ tio</string>
     <string name="sync_error">Eraro dum samtempigado</string>
     <string name="vague_error" comment="Network error dialog title">Eraro</string>
     <string name="retry">Reprovi</string>
@@ -63,71 +62,15 @@
     <string name="sign_up">Aliĝi</string>
     <string name="logged_as">Ensalutata kiel</string>
     <string name="log_out">Elsaluti</string>
-    <string name="alert_logging_message">Ensalutado&#8230;</string>
-    <string name="invalid_username_password">Nevalida retpoŝta adreso aŭ pasvorto</string>
     <string name="reset_password">Restarigi pasvorton</string>
     <string name="lost_mail_instructions">Ĉu vi forgesis la retpoŝtadreson?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Agordoj por XXX</string>
-    <string name="sync_prepare_syncing">Preparado de samtempigo&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Preparado de tuta samtempigo&#8230;</string>
-    <string name="sync_uploading_message">Alŝutado&#8230;</string>
-    <string name="sync_downloading_message">Elŝutado&#8230;</string>
     <string name="sync_title">Samtempigo</string>
     <string name="sync_log_uploading_message">Plena samtempigo al la servilo</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Via horloĝo estas deŝovita je %1$d sekundo%2$s. Certiĝu, ke la dato, tempo kaj horzono ĉe via telefono estas ĝuste agorditaj kaj reprovu.</item>
-        <item quantity="other">Via horloĝo estas deŝovita je %1$d sekundoj%2$s. Certiĝu, ke la dato, tempo kaj horzono ĉe via telefono estas ĝuste agorditaj kaj reprovu.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">la horzono probable estas misagordita</string>
-    <string name="sync_log_clocks_unsynchronized_date">la dato estas probable misagordita</string>
-    <string name="sync_no_changes_message">Ne trovis ŝanĝojn.</string>
     <string name="sync_database_acknowledge">Kolekto estas sinkronigita</string>
-    <string name="sync_log_error_specific">Sinkronigoeraro, tipo: %1$s, mesaĝo: %2$s</string>
     <string name="sync_corrupt_database">Via datumbazo estas difektita. Bonvolu ripari ĝin antaŭ reprovi samtempigi.\n\n Legu %s por informoj pri kiel ripari datumbazon.</string>
-    <string name="sync_too_busy">Servilo estas tro okupata. Bonvolu reprovi poste.</string>
-    <string name="sync_remote_db_error">La elŝutita datumbazo estas difektita. Bonvolu reprovi.</string>
-    <string name="sync_overwrite_error">Via loka kolekto ne povas esti superskribita de la elŝutita dosiero</string>
-    <string name="sync_connection_error">Tempolimo de konekto. Aŭ okazas problemo ĉe via interret-konekto aŭ vi havas tre grandan dosieron en via aŭdvidaĵa dosierujo.</string>
-    <string name="sync_write_access_error_on_storage">Ne povas konservi elŝutitan dosieron al via konservejo. Aŭ la konservejo estas nurlege aŭ libera spaco mankas.</string>
-    <string name="sync_error_invalid_sync_server">La propra samtempiga servilo difinita en altnivelaj agordoj estas malĝusta (%s). Enigu ĝustan servilon.</string>
-    <string name="sync_deletions_message">Samtempigado de forigoj&#8230;</string>
-    <string name="sync_small_objects_message">Samtempigado de etaj objektoj&#8230;</string>
-    <string name="sync_finish_message">Finado de samtempigo&#8230;</string>
-    <string name="sync_log_finish_error">Eraro okazis dum sendi finon direkte al servilo</string>
-    <string name="sync_writing_db">Konservado de ŝanĝoj en la datumbazon&#8230;</string>
-    <string name="sync_download_chunk">Elŝutado de ŝanĝoj&#8230;</string>
-    <string name="sync_upload_chunk">Alŝutado de ŝanĝoj&#8230;</string>
-    <string name="sync_up_down_size">alŝutita: %1$d KiB, elŝutita: %2$d KiB</string>
-    <string name="sync_generic_error">Eraro okazis. Bonvolu reprovi poste.</string>
-    <string name="sync_check_upload_file">Kontrolado de dosiero antaŭ alŝuto&#8230;</string>
-    <string name="sync_check_download_file">Kontrolado de elŝutita dosiero&#8230;</string>
-    <string name="sync_media_find">Trovado de ŝanĝitaj aŭdvidaĵoj&#8230;</string>
-    <string name="sync_media_no_changes">Neniuj ŝanĝoj al aŭdvidaĵaj dosieroj</string>
-    <string name="sync_media_success">Aŭdvidaĵoj estas samtempigitaj</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Samtempigo de aŭdvidaĵoj estas parte finita:\n%d aŭdvidaĵa dosiero.</item>
-        <item quantity="other">Samtempigo de aŭdvidaĵoj estas parte finita:\n%d aŭdvidaĵaj dosieroj.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d aŭdvidaĵa dosiero alŝutitaj.</item>
-        <item quantity="other">%d aŭdvidaĵaj dosieroj alŝutitaj.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d aŭdvidaĵa ŝanĝo por alŝuti</item>
-        <item quantity="other">%d aŭdvidaĵaj ŝanĝoj por alŝuti</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d aŭdvidaĵa dosiero elŝutita</item>
-        <item quantity="other">%d aŭdvidaĵaj dosieroj elŝutitaj</item>
-    </plurals>
-    <string name="sync_sanity_failed">Post samtempigado, la kolekto estis nekonsekvenca stato. Por ripari la problemon, AnkiDroid devigos plenan samtempigadon. Elektu, kiun version vi volas teni.</string>
-    <string name="sync_media_sanity_failed">Samtempigado de aŭdvdaĵoj estas finita, sed ĝia nombro ne kongruas kun la servilo. La sekva samtempigado de aŭdvidaĵoj estos kompleta por ripari erarojn.</string>
-    <string name="sync_media_db_error">Fiaskis samtempigi aŭdvidaĵojn, ĉar la nuna datumbazo estas koruptita. Estas konsilinde kontroli aŭdvidaĵojn.</string>
-    <string name="sync_media_error">Eraro dum samtempigado de aŭdvidaĵoj</string>
-    <string name="sync_media_error_check">Eraro dum samtempigado de aŭdvidaĵoj. Kontrolo de aŭdvidaĵoj estas konsilinda.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Ekigu “%s” antaŭ samtempigo</string>
     <string name="sync_sanity_local">Loka</string>
     <string name="sync_sanity_remote">Fora</string>
     <string name="force_full_sync_title">Devigi plenan samtempigadon</string>
@@ -135,15 +78,7 @@
     <string name="force_full_sync_confirmation">Devigita plena samtempigo</string>
     <string name="full_sync_confirmation">La petita ŝanĝo postulos plenan alŝuton de la datumbazo dum la sekva samtempigado de via kolekto. Se vi havas ripetojn aŭ aliajn ŝanĝojn atendantajn ĉe alia aparato, kiuj jam ne estas samtempigitajn tie ĉi, ili perdiĝos. Ĉu pluigi?</string>
     <string name="full_sync_confirmation_upgrade">Pro la eraro en antaŭe instalita versio de AnkiDroid, estas konsilinde devigi plenan samtempigadon.</string>
-    <string name="sync_error_407_proxy_required">Fiaskis aŭtentigi retperanton.</string>
-    <string name="sync_error_409">Nur unu kliento povas atingi AnkiWeb samtempe. Se antaŭa sinkronigo malsukcesis, bonvolu reprovi ĝin en kelkaj minutoj.</string>
-    <string name="sync_error_413_collection_size">Via kolekto de aŭdvidaĵoj estas tro ampleksa por samtempigi.</string>
-    <string name="sync_error_500_unknown">Eraro okazis ĉe AnkiWeb. Bonvolu provi ĝin denove post kelkaj minutoj, kaj se la problemo daŭros, bonvolu sendi eraro-raporton.</string>
-    <string name="sync_error_501_upgrade_required">Bonvolu instali la plej novan version de AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb estas vartata. Bonvolu reprovi ĝin en kelkaj minutoj.</string>
-    <string name="sync_error_504_gateway_timeout">Okazis eraro 504: templimo de konekto atingita.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Samtempigo (plena)</string>
     <string name="sync_menu_title_no_account">Samtempigo (ensaluto)</string>
-    <string name="sync_error_unknown_host_readable">Ne povis konekti al AnkiWeb. Eble via interreta konekte ne funkcias?\n\n%s</string>
 </resources>

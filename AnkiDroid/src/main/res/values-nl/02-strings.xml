@@ -125,7 +125,6 @@
     <string name="save">Opslaan</string>
     <string name="close">Sluiten</string>
     <string name="select">Selecteren</string>
-    <string name="reordering_cards">Kaarten herschikken...</string>
     <string name="field_remapping">%1$s (van “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">De kaarten toegewezen aan niets zullen worden verwijderd. Als een memo resterende kaarten heeft, zullen zij verloren gaan. Weet u zeker dat u wilt doorgaan?</string>
     <!-- Timebox -->
@@ -146,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Opnieuw inplannen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Voorbeeld</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d van %2$d</string>
-    <string name="error_insufficient_memory">Werking verhinderd vanwege onvoldoende beschikbaar geheugen op uw toestel</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Naam wijzigen</string>
-    <string name="default_conf_delete_error">De standaard \"optiesgroep\" kan niet verwijderd worden</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d kaart toegevoegd</item>
-        <item quantity="other">%d kaarten toegevoegd</item>
-    </plurals>
     <string name="check_db">Database controleren</string>
     <string name="check_media">Media controleren</string>
     <string name="empty_cards">Lege kaarten zoeken</string>
-    <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
     <string name="empty_card_warning">Deze kaart is leeg. Gebruik de optie \"Lege kaarten zoeken\" in het menu op het scherm van de lijst met leersets.</string>
     <string name="unknown_type_field_warning">Type antwoord: onbekend veld %s</string>
     <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
@@ -170,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Dit is geen geldig Anki-pakketbestand</string>
     <string name="import_title_error" comment="Title of error dialog">Fout</string>
-    <string name="import_log_failed_unzip">Fout bij het uitpakken van apkg: %s</string>
-    <string name="import_log_failed_copy_to">Fout bij het kopiëren van apkg naar %s</string>
-    <string name="import_log_failed_validate">apkg-validatie mislukt</string>
-    <string name="import_log_insufficient_space_error">Er is niet genoeg ruimte om het pakket te importeren.\nVereist - %1$s \nBeschikbaar - %2$s.\n\nOndervindt u problemen? Probeer indien mogelijk ruimte op uw telefoon vrij te maken. Of probeer het volgende: synchronisatie gebruikt minder ruimte dan importeren. U kan het pakket met een apparaat met meer ruimte (bijvoorbeeld Anki Desktop) importeren en het dan met dit apparaat synchroniseren.  </string>
-    <string name="import_log_file_cache_cleared">Fout bij het importeren van het bestand, waarschijnlijk een cache die tijdens de verwerking wordt gewist.\nGelieve opnieuw te proberen</string>
-    <string name="import_succeeded_but_check_database">Het importeren van gegevens is gelukt, maar de opruiming na de import is mislukt. Voer later de databasecontrole uit. Kernoorzaak: %s</string>
-    <string name="import_error_corrupt_zip">Het apkg-bestand is beschadigd. Verwijder en herdownload het.\n\nKernoorzaak: %s</string>
     <string name="import_error_handle_exception">Importeren van bestand\n\n%s mislukt</string>
     <string name="import_error_not_apkg_extension">Bestandsnaam “%s” heeft geen .apkg of .colpkg-extensie</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) vervangingen worden nog niet ondersteund. Zie alstublieft de handleiding voor vervangende instructies.</string>
@@ -184,8 +169,6 @@
     <string name="import_error_copy_to_cache">Het cachen van het bestand is mislukt (mogelijk gebrek aan opslagruimte)</string>
     <string name="import_error_multiple_colpkg">Er zijn meerdere colpkg bestanden geselecteerd.</string>
     <string name="import_error_colpkg_apkg">Zowel apkg als colpkg bestanden werden in een keer geselecteerd.</string>
-    <string name="import_stats_error">Er zijn enkele fouten opgetreden tijdens het importeren van de volgende bestanden:\n%s</string>
-    <string name="import_replacing">Collectie vervangen&#8230;</string>
     <string name="import_interrupted">Importeren onderbroken</string>
     <string name="export_include_schedule">Inclusief de planning</string>
     <string name="export_include_media">Inclusief media</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">Dit is een speciale set bedoeld om buiten het normale schema te studeren. Kaarten keren onmiddellijk terug naar hun oorspronkelijke set nadat u hen overhoord heeft. Als u deze set verwijdert, keren alle overgebleven kaarten onmiddellijk terug naar hun oorspronkelijke set.</string>
     <string name="steps_error">Aantal stappen moet hoger zijn dan 0</string>
     <string name="steps_min_error">Ten minste één stap is vereist</string>
-    <string name="sched_end">(einde)</string>
-    <string name="sched_unbury_action">Om ze nu te zien kies \"opgraven\" in het menu</string>
-    <string name="sched_has_buried">Sommige gerelateerde of geblokkeerde kaarten zijn vertraagd tot een latere sessie.</string>
     <string name="tag_editor_add_feedback">Druk op  “%2$s” om het toevoegen van “%1$s” te bevestigen</string>
     <string name="tag_editor_add_feedback_existing">Bestaand label “%1$s” geselecteerd</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s second</item>
-        <item quantity="other">%s seconden</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuut</item>
-        <item quantity="other">%s minuten</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s uur</item>
-        <item quantity="other">%s uren</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s dag</item>
-        <item quantity="other">%s dagen</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s maand</item>
-        <item quantity="other">%s maanden</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s jaar</item>
-        <item quantity="other">%s jaren</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconden</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Deze set bestaat al</string>
     <string name="decks_rename_filtered_nosubdecks">Een gefilterde set kan geen subsets hebben</string>
-    <string name="filtered_deck_name">Gefilterde Set</string>
     <string name="reminder_title">Vergeet niet om vandaag te studeren!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kaart in %1$s te overhoren</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fout met het delen van de apkg bestand</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Dit bestand vereist een nieuwere versie van Anki.</string>
     <string name="activity_start_failed">Het systeem heeft geen app geïnstalleerd die deze actie kan uitvoeren.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera-afbeeldingen kunnen groot zijn. Het kan zijn dat u afbeeldingen wilt comprimeren & het formaat wilt wijzigen in de mediamap.]]></string>
     <string name="no_browser_notification">Geen browser gevonden, bezoek de webpagina alstublieft via PC of mobiel:</string>
     <string name="web_page_error">Fout bij het laden van de pagina: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Externe paginalink in kaart wordt niet ondersteund.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Herstelde Kaarten</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Achtergrond</string>
     <string name="choose_an_image">Kies een afbeelding</string>
@@ -403,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizeren vanaf AnkiWeb</string>
     <string name="already_logged_in">Reeds ingelogd</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Set bestaat</string>
     <string name="deck_created">Leerset aanmaken</string>
     <string name="deck_renamed">Setnaam wijzigen</string>
     <!-- Deck Deletion -->

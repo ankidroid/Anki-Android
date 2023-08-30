@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">ᱠᱩᱞᱤᱧ ᱢᱮ</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">ᱴᱮᱜ ᱜᱮ</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">ᱨᱮᱱᱰᱚᱢ ᱛᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱛᱷᱟᱨ</string>
-    <string name="new_order_order_added">ᱛᱷᱟᱨ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">ᱢᱟᱨᱮ ᱧᱮᱞ ᱢᱟᱲᱟᱝ</string>
     <string name="cram_deck_conf_order_random">ᱨᱮᱱᱰᱚᱢ</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">ᱱᱤᱛᱚᱜᱟᱜ ᱰᱮᱠ ᱵᱮᱵᱷᱟᱨ ᱢᱮ</string>
     <string name="add_to_deck_decide_by_note_type">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱧᱮᱞᱠᱟᱛᱮ ᱪᱤᱱᱛᱟᱭ ᱢᱮ</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">ᱱᱟᱶᱟ ‌ᱠᱟᱰ ᱟᱨ ᱫᱩᱦᱲᱟ‌ ᱧᱮᱞ ᱠᱚ ᱢᱮᱥᱟᱭ ᱢᱮ</string>
-    <string name="new_spread_new_after_review">ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱛᱟᱭᱚᱢ ᱱᱟᱶᱟ ᱠᱟᱰᱟ</string>
-    <string name="new_spread_new_before_review">ᱫᱩᱦᱲᱟ ᱧᱮᱞ ᱢᱟᱲᱟᱝ ᱨᱮ ᱱᱟᱶᱟ ᱠᱟᱰ ᱧᱮᱞ</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">ᱪᱮᱫ ᱦᱚᱸ ᱪᱤᱠᱤ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱱᱚᱶᱟ ᱯᱷᱞᱟᱥᱠᱟᱰ ᱞᱟᱹᱜᱤᱫ</string>
     <string name="override_font_always" comment="Option to always override font">ᱡᱷᱚᱛᱚᱵᱮᱲᱟ</string>

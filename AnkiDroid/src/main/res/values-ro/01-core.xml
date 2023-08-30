@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Pachete</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Browser-ul de carduri</string>
@@ -84,11 +84,6 @@
     <string name="no_cards_placeholder_title">Colecția este goală</string>
     <string name="no_cards_placeholder_description">Puteți începe a adăuga\ncarduri folosind iconiţa +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Ați studiat %1$d cartonaș în %2$s astăzi</item>
-        <item quantity="few">Studied %1$d cards in %2$s today</item>
-        <item quantity="other">Ați studiat %1$d cartonașe în %2$s astăzi</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Scrie răspunsul</string>
     <string name="show_answer">Arată răspuns</string>
@@ -97,11 +92,8 @@
     <string name="ease_button_hard">Greu</string>
     <string name="ease_button_good">Bine</string>
     <string name="ease_button_easy">Ușor</string>
-    <string name="studyoptions_congrats_undo">Anulare %s</string>
     <string name="menu_import">Importă</string>
     <string name="undo">Anulare</string>
-    <string name="undo_action_review">Ultima recenzie</string>
-    <string name="undo_action_change_deck_multi">Schimba punțile</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">Mută totul pe punte</string>
     <string name="unbury">Dezgroapă</string>
@@ -175,18 +167,14 @@
     <string name="studyoptions_limit_reached">Limita zilnică a fost atinsă</string>
     <string name="studyoptions_empty_schedule">Niciun cartonaș programat de studiat</string>
     <string name="studyoptions_congrats_finished">Felicitări! Aţi terminat pentru moment.</string>
-    <string name="studyoptions_congrats_more_rev">Limita zilnică a fost atinsă, dar mai există cartonașe ce pot fi revizuite. Poți crește limita din setări.</string>
-    <string name="studyoptions_congrats_more_new">Sunt disponibile mai multe carduri noi, dar s-a atins limita zilnică. Puteţi mări limita în opţiuni, dar vă rugăm să ţineţi cont de faptul că aceasta va creşte volumul dumneavoastră de muncă de revizuire pe termen scurt.</string>
-    <string name="studyoptions_congrats_custom">Pentru a studia în afara programului normal, apăsați butonul „Studiu Personalizat” de mai jos.</string>
     <string name="studyoptions_no_cards_due">Niciun cartonaș scadent</string>
     <string name="sd_card_not_mounted">Cardul SD nu a fost găsit</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizare</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">Doriți să anulați sincronizarea?</string>
-    <string name="continue_sync">Continuați sincronizarea</string>
-    <string name="sync_cancelled">Sincronizare anulată</string>
-    <string name="sync_cancel_message">Anulare&#8230;\nAceasta poate dura ceva timp.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Doriți să anulați sincronizarea?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Continuați sincronizarea</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizare anulată</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Anulare&#8230;\nAceasta poate dura ceva timp.</string>
     <string name="export">Exportați</string>
     <string name="export_collection">Exportați colecția</string>
     <string name="export_deck">Exportați pachetul</string>
@@ -217,7 +205,6 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Informații despre cartonaș</string>
     <!-- Permissions -->
@@ -226,14 +213,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Cartonaș Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s are o problemă:<br/>%2$s</string>
-    <string name="more_information">Mai multe informații</string>
-    <string name="no_field">Găsit \'{{%1$s}}\', dar nu există nici un câmp numit \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Am găsit \'{{/%1$s}}\', dar lipsește \'{{#%1$s}}\' sau \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Lipsește \'}}\' în \'%s\'.</string>
-    <string name="open_tag_not_closed">Lipsește \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">S-a găsit \'{{/%1$s}}\', dar era așteptat \'{{/%2$s}}\'</string>
-    <string name="filter_error">Eroare în filtrul %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Colecțiile nu pot fi combinate.\nCe colecție doriți să păstrați?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -247,7 +226,6 @@
         <item quantity="few">%1$d cards (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">Copie %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nu se poate crea or scrie în fișierul %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>

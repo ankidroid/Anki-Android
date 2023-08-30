@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Iscantzella una casta de nota</string>
     <string name="model_browser_rename" comment="Rename a note type">Muda de nùmene</string>
     <string name="model_browser_template">Modìfica sas cartas</string>
-    <string name="model_browser_add">Annanghe una casta de nota</string>
     <!--Rename-->
     <string name="rename_model">Càmbia nùmene a sa casta de nota</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Ammenta s\'ùrtima intrada cando annanghes</string>
     <string name="model_field_editor_changing">Atualizatzione de sos campos</string>
     <string name="model_field_editor_sort_field">Òrdina sighende custu campu</string>
-    <string name="model_clone_suffix">còpia</string>
     <!--Warnings-->
     <string name="model_delete_warning">Ses seguru de chèrrere iscantzellare custa casta de nota?</string>
     <string name="field_delete_warning">Ses seguru de chèrrere iscantzellare custu campu?</string>

@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Borrar tipo de nota</string>
     <string name="model_browser_rename" comment="Rename a note type">Renombrar</string>
     <string name="model_browser_template">Editar tarjetas</string>
-    <string name="model_browser_add">Añadir tipo de nota</string>
     <!--Rename-->
     <string name="rename_model">Renombrar tipo de nota</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Recordar la última entrada al agregar</string>
     <string name="model_field_editor_changing">Actualizando campos</string>
     <string name="model_field_editor_sort_field">Ordenar por este campo</string>
-    <string name="model_clone_suffix">copiar</string>
     <!--Warnings-->
     <string name="model_delete_warning">¿Está seguro que desea eliminar este tipo de nota?</string>
     <string name="field_delete_warning">¿Seguro que deseas eliminar este campo?</string>

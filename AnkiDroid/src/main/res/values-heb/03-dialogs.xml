@@ -46,18 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">לבדוק את מסד הנתונים?</string>
     <string name="check_db_warning">פעולה זאת עלולה לארוך זמן רב</string>
-    <string name="check_db_acknowledge">מסד הנתונים נבדק.‏</string>
-    <string name="check_db_acknowledge_shrunk">מסד הנתונים בדוק ושופר.\nהוקטן ב־ %dmb.‏</string>
     <string name="contextmenu_deckpicker_delete_deck">מחיקת חפיסה</string>
-    <string name="delete_deck_default_deck">לא ניתן למחוק את חפיסת בררת המחדל</string>
     <string name="delete_deck_title">למחוק את החפיסה?‏</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה קלף אחד.</item>
-        <item quantity="two">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה שני קלפים.</item>
-        <item quantity="many">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה %2$d קלפים.</item>
-        <item quantity="other">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה %2$d קלפים.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">שלח כל הכרטיסים ב־ %s חזרה לחפיסות המקוריות?‏</string>
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
     <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
@@ -120,17 +110,6 @@
     <string name="custom_study_random">נא לבחור כמות מסוימת של קלפים מהחפיסה באקראי:</string>
     <string name="custom_study_preview">צפייה ראשונית בכרטיסים חדשים שנוספו בx ימים האחרונים:</string>
     <string name="custom_study_rebuild_deck_corrupt">לא ניתן היה לבנות מחדש חפיסות לימוד מותאם אישית</string>
-    <string name="importing_collection">אוסף מיובא&#8230;</string>
-    <string name="import_media_count">מייבא קבצי מדיה %1$d%%...</string>
-    <string name="import_progress">• ייבוא הערות: %1$d%%\n• ייבוא כרטיסים: %2$d%%\n• עיבוד לאחר: %3$d%%</string>
-    <string name="import_update_details">עודכנו %1$d מתוך %2$d הערות קיימות.</string>
-    <string name="import_update_ignored">התעלמו מחלק מהעדכונים מכיוון שסוג הרשומה השתנה</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">כרטיסים מיובאים: %2$d</item>
-        <item quantity="two">קבצים שיובאו: %1$d\nסה\"כ כרטיסים שיובאו: %2$d</item>
-        <item quantity="many">קבצים שיובאו: %1$d\nסה\"כ כרטיסים שיובאו: %2$d</item>
-        <item quantity="other">קבצים שיובאו: %1$d\nסה\"כ כרטיסים שיובאו: %2$d</item>
-    </plurals>
     <string name="storage_full_title">האיחסון מלא</string>
     <string name="storage_almost_full_title">שטח האחסון כמעט מלא</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">אין מקום</string>
@@ -150,11 +129,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">השבתה</string>
     <string name="dialog_positive_overwrite">שכתוב</string>
-    <string name="dialog_positive_remove">הסרה</string>
     <string name="dialog_positive_repair">תיקון</string>
     <string name="dialog_positive_replace">החלפה</string>
-    <string name="dialog_positive_restore">שחזור</string>
-    <string name="dialog_positive_set">הגדרה</string>
     <string name="dialog_collection_path_not_dir">הנתיב שצוין אינו תיקייה תקנית</string>
     <!-- Media checking -->
     <string name="check_media_title">לבדוק את המדיה?</string>
@@ -197,20 +173,11 @@
     <string name="integrity_check_continue_anyway">המשך בכל זאת</string>
     <string name="integrity_check_insufficient_space">״בדוק מסד נתונים״ משתמש בכמות גדולה של אחסון זמני.\n\nמומלץ מאוד שיהיה לך לפחות %s שטח פנוי במכשיר שלך לפני שתמשיך.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n כרגע יש לך %s פנוי.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">קלף %d עם חפיסות ביתיות שגויות שוחזרו.  אנא עיין במדריך למידע נוסף.</item>
-        <item quantity="two">%d קלפים עם חפיסות ביתיות שגויות שוחזרו.  אנא עיין במדריך למידע נוסף.</item>
-        <item quantity="many">%d קלפים עם חפיסות ביתיות שגויות שוחזרו.  אנא עיין במדריך למידע נוסף.</item>
-        <item quantity="other">%d קלפים עם חפיסות ביתיות שגויות שוחזרו.  אנא עיין במדריך למידע נוסף.</item>
-    </plurals>
     <string name="video_creation_error">לא ניתן להפעיל וידאו</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">לא ניתן להחליף חפיסה</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">תקלה בפענוח מידע מקלף</string>
-    <string name="undo_succeeded">\"%s\" בוטל</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">נכשל בעיבוד אפשרויות החפיסות: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">מסד הנתונים ננעל</string>
     <string name="database_locked_summary">מסד הנתונים של AnkiDroid נמצא בשימוש על ידי יישום אחר. אנא סגור את היישום השני ואז פתח מחדש את AnkiDroid.</string>

@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Disabilitadu</string>
-    <string name="enabled">Abilitadu</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -152,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">Risposta a tempus acabadu</string>
     <string name="timeout_answer_summ">Ammustra sa risposta in manera automàtica chene atziones de s\'impreadore. Su ritardu incluet su tempus pro sos documentos sonoros riproduidos in automàticu.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tempus in antis de ammustrare sa risposta</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Tempus in antis de ammustrare sa pregunta imbeniente</string>
     <string name="select_locale_title">Seletziona sa limba</string>
     <string name="software_render" maxLength="41">Disabìlita su renderizadore fìsicu (hardware) de sas cartas</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">Ammustra su tempus chi mancat</string>
     <string name="show_eta_summ">Ammustra su tempus chi mancat</string>
     <string name="use_current" maxLength="41">Matzu pro sas cartas noas</string>
-    <string name="new_spread" maxLength="41">Positzione de sas cartas noas</string>
     <string name="learn_cutoff" maxLength="41">Lìmite pro s\'antitzipatzione de s\'imparu</string>
     <string name="time_limit" maxLength="41">Lìmite de tempus pro sessione</string>
     <string name="new_timezone" maxLength="41">Gestione noa de su fusu oràriu</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Importende permite totu sos archìvios</string>
     <string name="media_import_allow_all_files_summ">Si Android non reconnoschet un\'archìviu multimediale</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Matzu predef. aberende sas istatìsticas</string>
-    <string name="stats_default_deck_current">Ammustra sas istatìsticas pro su matzu prus reghente</string>
-    <string name="stats_default_deck_all">Ammustra sas istatìsticas pro totu sos matzos</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Istatìsticas avantzadas</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Abìlita sas istatìsticas avantzadas</string>
-    <string name="enable_advanced_statistics_summ">Ammustra istatìsticas de previsione basadas in subra de unu càrculu o simulatzione de reviones futuras (abilitadu) o in subra de sas revisiones imbenientes giai pranificadas (disabilitadu).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Càrcula sas primas n dies, sìmula su restu</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Pretzisione de càrculu</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Nùmeru de iteratziones de sa simulatzione</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Serbidore de sincronizatzione personalizadu</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">No impreadu</string>
@@ -236,66 +222,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Mapadura de sos cumandos</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Sas modìficas a sas optziones de su grupu de matzos ant a influentzare prus de unu matzu. Si cheres mudare petzi su matzu de como pro praghere in antis annanghe unu grupu de optziones nou</string>
     <string name="studyoptions_limit_select_tags">Seletziona sas etichetas</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Descritzione de su matzu (matzu de como ebbia)</string>
-    <string name="deck_conf_group" maxLength="41">Grupu de optziones</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n
-                                     %2$d matzu impreat custu grupu</item>
-        <item quantity="other">%1$s\n
-                                     %2$d matzos impreant custu grupu</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Cartas noas</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisiones</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Faddinas</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Generale</string>
     <string name="deck_conf_reminders" maxLength="41">Avisos</string>
-    <string name="deck_conf_steps" maxLength="41">Passos (in minutos)</string>
-    <string name="deck_conf_order" maxLength="41">Òrdine</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Cartas noas/die</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Intervallu de promotzione</string>
-    <string name="deck_conf_days">XXX die(s)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Intervallu fàtzile</string>
-    <string name="deck_conf_start_ease" maxLength="41">Fatzilidade de incumintzu</string>
-    <string name="deck_conf_max_rev" maxLength="41">Nùmeru màssimu de revisiones/die</string>
-    <string name="deck_conf_new_bury" maxLength="41">Interra sas cartas noas ligadas</string>
-    <string name="deck_conf_new_bury_summ">Sas cartas noas ligadas abarrant interradas finas a sa die a pustis</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Interra sas revisiones ligadas</string>
-    <string name="deck_conf_rev_bury_summ">Sas revisiones ligadas abarrant interradas finas a sa die a pustis</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Imprea sas impostatziones generales</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Imprea sas impostatziones generales de \'Risposta automàtica de visualizatzione\' in logu de cussas pro custu grupu.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bonus de fatzilidade</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Intervallu difìtzile</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Modificadore de intervallu</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Intervallu màssimu</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Intervallu nou</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Intervallu mìnimu</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Lìmite de sas sambisuas</string>
-    <string name="deck_conf_fails">XXX faddina(s)</string>
-    <string name="deck_conf_leech_action" maxLength="41">Atzione sambisua</string>
-    <string name="deck_conf_max_time" maxLength="41">Tempus màssimu de risposta</string>
-    <string name="deck_conf_seconds">XXX segundos</string>
-    <string name="deck_conf_timer" maxLength="41">Ammustra su cronòmetru de risposta</string>
-    <string name="deck_conf_autoplay" maxLength="41">Riprodui s\'àudio automaticamente</string>
-    <string name="deck_conf_replayq" maxLength="41">Torra a riproduire sa pregunta</string>
-    <string name="deck_conf_replayq_summ">Cando sa risposta benit ammustrada torra a riproduire s\'àudio siat de sa pregunta e siat de sa risposta</string>
-    <string name="deck_conf_manage" maxLength="41">Amministratzione de sos grupos</string>
-    <string name="deck_conf_manage_summ">Annanghe e càmbia grupos de optziones</string>
-    <string name="deck_conf_current_group" maxLength="41">Grupu atuale</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Muda de nùmene</string>
-    <string name="deck_conf_reset" maxLength="41">Riprìstina sos valores predefinidos</string>
-    <string name="deck_conf_reset_message">Boles fàghere torrare su grupu de optziones atuale a sos valores predefinidos?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Annanghe</string>
-    <string name="deck_conf_add_summ">Crea una còpia de su grupu de optziones atuale</string>
-    <string name="deck_conf_remove_message">Bogare su grupu de atziones atuale?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Imposta pro totu sos suta-matzos</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s suta-matzu at a impreare custu grupu</item>
-        <item quantity="other">%s suta-matzos ant a impreare custu grupu</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Impostare su grupu de optziones atuales a totu sos suta-matzos de custu matzu?</string>
     <string name="pref_browser_editor_font" maxLength="41">Caràtere de su navigadore e de s\'editore</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtru</string>
     <string name="deck_conf_cram_search" maxLength="41">Chirca</string>
@@ -306,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">Abìlita su de duos filtru</string>
     <string name="deck_conf_cram_steps" maxLength="41">Passos personalizados (in minutos)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Dislinda sos passos personalizados</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Abìlita sas notìficas pro custu grupu de matzos</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Ammentami·lu a sas</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Agiuda·nos a megiorare AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Cumpartzi s\'impreu de sas funtzionalidades</string>
@@ -344,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Boga ‘%s’</string>
     <string name="bindings_already_bound">Giai assotziadu a %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Isperimentale</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Abìlita ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Imprea su backend nou</string>
-    <string name="use_rust_backend_summary">Abìlitat funtzionalidades noas de Anki, che a su pranificadore v3\nINSTÀBILE. Non l\'imprees cun una colletzione a sa cale tenes. NON benit annulladu serrende s\'aplicatzione</string>
-    <string name="use_rust_backend_warning">B\'at una possibilidade chi custu potzat corrumpere s\'installatzione tua de su totu, faghende in manera chi siat netzessària una disinstallatzione de s\'aplicatzione e un\'iscantzelladura de sa cartella de AnkiDroid, e tenet sa possibilidade de ispàrghere sa corrutzione finas a AnkiWeb pro mèdiu de sa sincronizatzione.\n\nAgradessimus sas proas, ma assegura·ti de tènnere una còpia de seguresa non de AnkiWeb vàlida.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Imprea su pranificadore v3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Isperimentale</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Optziones de isvilupu</string>
     <string name="dev_options_enabled_pref" maxLength="41">Abìlita sas optziones de isvilupu</string>
@@ -387,7 +310,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>

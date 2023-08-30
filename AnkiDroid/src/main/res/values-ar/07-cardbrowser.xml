@@ -69,7 +69,6 @@
     <string name="card_browser_mark_card">تعليم الملحوظات</string>
     <string name="card_browser_unmark_card">إلغاء تعليم الملحوظات</string>
     <string name="delete_card_title">هل تريد حذف الملحوظة؟</string>
-    <string name="changed_deck_message">نُقِل إلى %s</string>
     <string name="card_browser_show_marked">فلترة البطاقات المعلمة</string>
     <string name="card_browser_show_suspended">فلترة البطاقات المعلقة</string>
     <string name="card_browser_search_by_tag">فلترة حسب الوسم</string>
@@ -83,7 +82,6 @@
     <string name="card_browser_list_my_searches_remove_content">هل تريد حذف “%1$s”؟</string>
     <string name="card_browser_change_display_order">تغيير ترتيب العرض</string>
     <string name="card_browser_change_display_order_title">اختر ترتيب العرض</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">ينتظر المراجعة</string>
     <string name="card_details_tags">وسوم</string>
     <string-array name="card_browser_order_labels">
         <item>بلا فرز (أسرع)</item>
@@ -131,27 +129,4 @@
         <item quantity="other">حُذِفت %d بطاقة</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">تاريخ الإضافة</string>
-    <string name="card_info_first_review">المراجعة الأولى</string>
-    <string name="card_info_latest_review">المراجعة الأخيرة</string>
-    <string name="card_info_interval">الفاصل الزمني</string>
-    <string name="card_info_ease">السهولة</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">المراجعات</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">السقطات</string>
-    <string name="card_info_average_time">معدل الوقت</string>
-    <string name="card_info_total_time">إجمالي الوقت</string>
-    <string name="card_info_card_type">نوع البطاقة</string>
-    <string name="card_info_note_type">نوع الملحوظة</string>
-    <string name="card_info_deck_name">اسم الرزمة</string>
-    <string name="card_info_card_id">معرف البطاقة</string>
-    <string name="card_info_note_id">معرف الملحوظة</string>
-    <string name="card_info_revlog_time">الوقت</string>
-    <string name="card_info_revlog_date">التاريخ</string>
-    <string name="card_info_revlog_rating">التقييم</string>
-    <string name="card_info_revlog_type">النوع</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">تعلم</string>
-    <string name="card_info_revlog_review">مراجعة</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">تعلم مجددًا</string>
-    <string name="card_info_revlog_filtered">مفلترة</string>
-    <string name="card_info_ease_not_applicable">غير متوفر</string>
 </resources>

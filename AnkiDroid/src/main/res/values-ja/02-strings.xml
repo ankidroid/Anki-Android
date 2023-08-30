@@ -125,7 +125,6 @@
     <string name="save">保存</string>
     <string name="close">閉じる</string>
     <string name="select">選択</string>
-    <string name="reordering_cards">カードを並べ替えています...</string>
     <string name="field_remapping">%1$s (\'%2$s\'から)</string>
     <string name="confirm_map_cards_to_nothing">割り当て先のないカードは削除されます。カードがすべて削除されたノートは、そのノート自体が削除されます。続行してもよろしいですか？</string>
     <!-- Timebox -->
@@ -144,16 +143,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">スケジュールを変更</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
-    <string name="error_insufficient_memory">メモリ不足のため操作できませんでした。</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">名前を変更</string>
-    <string name="default_conf_delete_error">デフォルトのオプショングループは削除できません</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="other">%d枚のカードを追加しました</item>
-    </plurals>
     <string name="check_db">データベースをチェック</string>
     <string name="check_media">メディアをチェック</string>
     <string name="empty_cards">白紙カードをチェック</string>
-    <string name="check_db_message">データベースをチェックしています...</string>
     <string name="empty_card_warning">このカードは白紙カード（表側に表示する内容がないカード）です。このような白紙カードを一括削除するには、デッキリスト画面のメニューから「白紙カードをチェック」を選択してください。</string>
     <string name="unknown_type_field_warning">タイピングして答えを入力: 不明なフィールド %s</string>
     <string name="delete_deck">デッキを削除しています...</string>
@@ -166,13 +159,6 @@
     </plurals>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
     <string name="import_title_error" comment="Title of error dialog">エラー</string>
-    <string name="import_log_failed_unzip">apkgファイルの解凍に失敗しました: %s</string>
-    <string name="import_log_failed_copy_to">apkgファイルを %s にコピーできませんでした</string>
-    <string name="import_log_failed_validate">apkgファイルの検証に失敗しました</string>
-    <string name="import_log_insufficient_space_error">パッケージをインポートするために十分な空き容量がありません。\n必要な容量 - %1$s \n空き容量 - %2$s.\n\nお困りですか？　可能であれば、端末の空き容量を確保してみてください。あるいは、容量に余裕のある端末（Anki Desktopをインストール済みのPCなど）でパッケージをインポートし、そのデータをAnkiWeb経由でこの端末と同期するという方法で解決できる可能性もあります。</string>
-    <string name="import_log_file_cache_cleared">ファイルのインポート中にエラーが発生しました。処理中にキャッシュがクリアされた可能性があります。\nもう一度やり直してください</string>
-    <string name="import_succeeded_but_check_database">データのインポートに成功しましたが、インポート後のクリーンアップに失敗しました。後で「データベースをチェック」を実行してください。\n\n原因: %s</string>
-    <string name="import_error_corrupt_zip">apkgファイルが壊れています。削除して再ダウンロードしてください。\n\n原因: %s</string>
     <string name="import_error_handle_exception">ファイル\n\n%s\n\nのインポートに失敗しました</string>
     <string name="import_error_not_apkg_extension">ファイル名 \"%s\" は拡張子が .apkg か .colpkg ではありません。</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) の置換はまだサポートされていません。マニュアルを参照してください。</string>
@@ -180,8 +166,6 @@
     <string name="import_error_copy_to_cache">一時ファイルの作成に失敗しました（ストレージ容量が不足している可能性があります）</string>
     <string name="import_error_multiple_colpkg">複数の colpkgファイルが選択されました。</string>
     <string name="import_error_colpkg_apkg">apkgファイルとcolpkgファイルが選択されました。それらを一度にインポートすることはできません。</string>
-    <string name="import_stats_error">下記のファイルをインポートする際にエラーが発生しました:\n%s</string>
-    <string name="import_replacing">コレクションを上書きしています...</string>
     <string name="import_interrupted">インポートが中断されました: AnkiDroidが閉じられました</string>
     <string name="export_include_schedule">スケジュール情報を含める</string>
     <string name="export_include_media">メディアファイルを含める</string>
@@ -218,41 +202,11 @@
     <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは自動的に元のデッキに戻ります。 このデッキを削除すると、残りのカードもすべて元のデッキに戻ります。</string>
     <string name="steps_error">習得ステップには1以上の数字を入力してください</string>
     <string name="steps_min_error">少なくとも 1 つの習得ステップが必要です</string>
-    <string name="sched_end">（終了）</string>
-    <string name="sched_unbury_action">今からそれらを学習したい場合は、メニューの「延期を取り消す」をタップしてください</string>
-    <string name="sched_has_buried">兄弟関係のカード、延期カードの学習は明日まで延期されます</string>
     <string name="tag_editor_add_feedback">「%1$s」の追加を確定するには「%2$s」をタップしてください</string>
     <string name="tag_editor_add_feedback_existing">既存のタグ「%1$s」が選択されました</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="other">%s秒</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="other">%s分</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="other">%s時間</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="other">%s日間</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="other">%sか月</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="other">%s年</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s秒</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">そのデッキ名はすでに使用されています</string>
     <string name="decks_rename_filtered_nosubdecks">フィルターデッキ内にはサブデッキを作成できません</string>
-    <string name="filtered_deck_name">フィルターデッキ</string>
     <string name="reminder_title">今日も学習しましょう！</string>
     <plurals name="reminder_text">
         <item quantity="other">課題: %2$d枚 （%1$s）</item>
@@ -260,14 +214,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Ankiファイル（*.apkg）の共有中にエラーが発生しました</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">このファイルを使用するには新しいバージョンのAnkiが必要です。</string>
     <string name="activity_start_failed">この操作を実行できるアプリがインストールされていません。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[撮影画像のデータ量が多い可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
     <string name="no_browser_notification">ブラウザが見つかりません。PCまたはスマートフォンのブラウザで次のウェブページをご覧ください： </string>
     <string name="web_page_error">ページの読み込みエラー: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">カード内の外部ページリンクはサポートされていません。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">回収したカード</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">デッキリスト画面の背景</string>
     <string name="choose_an_image">画像を選択</string>
@@ -389,7 +341,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWebから同期</string>
     <string name="already_logged_in">既にログイン済みです</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">同じ名前のデッキが既に存在します</string>
     <string name="deck_created">デッキを作成しました</string>
     <string name="deck_renamed">デッキ名を変更しました</string>
     <!-- Deck Deletion -->

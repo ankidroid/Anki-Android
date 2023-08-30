@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Çevrimdışısınız</string>
-    <string name="sync_even_if_offline">Yine de dene. </string>
     <string name="sync_error">Senkronizasyon hatası</string>
     <string name="vague_error" comment="Network error dialog title">Hata</string>
     <string name="retry">Yeniden Dene</string>
@@ -63,71 +62,15 @@
     <string name="sign_up">Kaydol</string>
     <string name="logged_as">Şu adla giriş yapıldı:</string>
     <string name="log_out">Çıkış yap</string>
-    <string name="alert_logging_message">Giriş yapılıyor, lütfen bekleyin...</string>
-    <string name="invalid_username_password">Geçersiz eposta adresi veya parolası</string>
     <string name="reset_password">Parolayı Sıfırla</string>
     <string name="lost_mail_instructions">E-postanızı mı unuttunuz?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX Seçenekleri</string>
-    <string name="sync_prepare_syncing">Senkronizasyon hazırlanıyor&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Tam senkronizasyon hazırlanıyor&#8230;</string>
-    <string name="sync_uploading_message">Karşıya yükleniyor...</string>
-    <string name="sync_downloading_message">İndiriliyor...</string>
     <string name="sync_title">Senkronizasyon</string>
     <string name="sync_log_uploading_message">Yerelden tam senkronizasyon</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Saatiniz %1$d saniye%2$s hatalı. Telefonunuzdaki tarih, saat ve zaman diliminin doğru ayarlı olduğundan emin olun, sonra tekrar senkronize edin.</item>
-        <item quantity="other">Saatiniz %1$d saniye%2$s hatalı. Telefonunuzdaki tarih, saat ve zaman diliminin doğru ayarlı olduğundan emin olun, sonra tekrar senkronize edin.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, muhtemelen cihazınızın saat dilimi yanlış</string>
-    <string name="sync_log_clocks_unsynchronized_date">, muhtemelen cihazınızın tarihi yanlış</string>
-    <string name="sync_no_changes_message">Değişiklik bulunmuyor.</string>
     <string name="sync_database_acknowledge">Koleksiyon senkronize edildi</string>
-    <string name="sync_log_error_specific">Eşitleme hatası, türü: %1$s, ileti: %2$s</string>
     <string name="sync_corrupt_database">Veritabanınız bozuk. Lütfen eşitlemeyi yeniden denemeden önce onu düzeltin.\n\nVeritabanınızı onarmak hakkında bilgi için %s bakın.</string>
-    <string name="sync_too_busy">Sunucu çok meşgul. Daha sonra tekrar deneyin.</string>
-    <string name="sync_remote_db_error">İndirilen veritabanı bozuktu. Lütfen tekrar deneyin.</string>
-    <string name="sync_overwrite_error">Geçerli koleksiyonunuz indirilen dosya tarafından üzerine yazılamadı.</string>
-    <string name="sync_connection_error">Bağlantı zaman aşımına uğradı. Internet bağlantı sorunları yaşıyorsunuz ya da medya klasörünüzde çok büyük bir dosya var .</string>
-    <string name="sync_write_access_error_on_storage">İndirilen dosya depolama alanınıza kaydedilemedi. Ya depolama salt-okunur ya da yeterli alan yok.</string>
-    <string name="sync_error_invalid_sync_server">Gelişmiş Ayarlar\'daki Özel Senkronizasyon Sunucusu geçersiz (%s). Lütfen geçerli bir sunucu girin veya ayarı devre dışı bırakın.</string>
-    <string name="sync_deletions_message">Silinenler eşitleniyor...</string>
-    <string name="sync_small_objects_message">Küçük nesneler eşitleniyor...</string>
-    <string name="sync_finish_message">Eşitleme bitiriliyor...</string>
-    <string name="sync_log_finish_error">Bitiş yönü sunucuya gönderilirken hata</string>
-    <string name="sync_writing_db">Değişiklikler veritabanına yazılıyor...</string>
-    <string name="sync_download_chunk">Değişiklikler indiriliyor...</string>
-    <string name="sync_upload_chunk">Değişiklikler yükleniyor...</string>
-    <string name="sync_up_down_size">Aktarılan: %1$d KB, indirilen: %2$d KB</string>
-    <string name="sync_generic_error">Bir hata oluştu. Lütfen sonra tekrar deneyin.</string>
-    <string name="sync_check_upload_file">Yüklemeden önce dosya kontrol ediliyor...</string>
-    <string name="sync_check_download_file">İndirilen dosya kontrol ediliyor...</string>
-    <string name="sync_media_find">Değiştirilmiş medya bulunuyor...</string>
-    <string name="sync_media_no_changes">Medya dosyalarında değişiklik yok.</string>
-    <string name="sync_media_success">Medya başarıyla eşitlendi.</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Medya senkronizasyonu kısmen tamamlandı:\n%d medya dosyası indirildi.</item>
-        <item quantity="other">Medya senkronizasyonu kısmen tamamlandı:\n%d medya dosyası indirildi.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d medya dosyası yüklendi.</item>
-        <item quantity="other">%d medya dosyası yüklendi.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">Yüklenecek %d medya değişikliği</item>
-        <item quantity="other">Yüklenecek %d medya değişikliği</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d medya dosyası indirildi</item>
-        <item quantity="other">%d medya dosyası indirildi</item>
-    </plurals>
-    <string name="sync_sanity_failed">Senkronizasyondan sonra, koleksiyon tutarsız bir durumdaydı. Bu sorunu düzeltmek için, AnkiDroid bir tam senkronizasyon zorlayacak. Hangi tarafı tutmak istediğinizi seçin.</string>
-    <string name="sync_media_sanity_failed">Medya eşitlemesi tamamlandı, ama medya sayısı sunucuyla uyuşmuyor. Bir sonraki medya eşitlemesi hataları düzeltmek için tam yapılacak.</string>
-    <string name="sync_media_db_error">Mevcut veritabanı bozuk olduğundan medya senkronizasyonu başarısız oldu. Medya kontrolü yapılması önerilir. </string>
-    <string name="sync_media_error">Medya veri senkronizasyonu hatası.</string>
-    <string name="sync_media_error_check">Ortam eşitleme sırasında hata oluştu. Medyayı kontrol etmeniz tavsiye edilir.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">\'%s\' senkronizasyondan önce çalıştırılmalı. </string>
     <string name="sync_sanity_local">Yerel</string>
     <string name="sync_sanity_remote">Sunucu</string>
     <string name="force_full_sync_title">Tam senkronizasyon zorla</string>
@@ -135,15 +78,7 @@
     <string name="force_full_sync_confirmation">Tam senkronizasyon zorlama</string>
     <string name="full_sync_confirmation">İstenen değişiklik koleksiyonunuzu bir sonraki senkronize edişinizde veritabanının toptan karşıya yüklenmesini gerektirecek. Başka bir cihazda bekleyen, burada henüz senkronize edilmemiş çalışmalarınız veya başka değişiklikleriniz varsa kaybolacaklar. Devam edilsin mi?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid\'in daha önce yüklü sürümündeki bir hata nedeniyle, bir tam senkronizasyon zorlamanız tavsiye edilir.</string>
-    <string name="sync_error_407_proxy_required">Vekil kimlik doğrulaması gerekiyor.</string>
-    <string name="sync_error_409">AnkiWeb\'e aynı anda sadece tek bir istemci erişebilir. Önceki senkronizasyon başarısız olursa, lütfen bir kaç dakika sonra tekrar deneyin.</string>
-    <string name="sync_error_413_collection_size">Koleksiyonunuz veya bir medya dosyası senkronizasyon için fazla büyük.</string>
-    <string name="sync_error_500_unknown">AnkiWeb bir hatayla karşılaştı. Lütfen birkaç dakika sonra yeniden deneyin, olmazsa lütfen bug bildiriminde bulunun.</string>
-    <string name="sync_error_501_upgrade_required">Lütfen en son AnkiDroid sürümüne yükseltin</string>
-    <string name="sync_error_502_maintenance">AnkiWeb şu an bakımda. Lütfen birkaç dakika sonra tekrar deneyin.</string>
-    <string name="sync_error_504_gateway_timeout">504 ağ geçidi zamanaşımı hatası alındı.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Senkronizasyon (tam)</string>
     <string name="sync_menu_title_no_account">Senkronizasyon (giriş yap)</string>
-    <string name="sync_error_unknown_host_readable">AnkiWeb\'e bağlanılamadı. İnternetinizin çalıştığına emin misiniz?\n\n%s</string>
 </resources>

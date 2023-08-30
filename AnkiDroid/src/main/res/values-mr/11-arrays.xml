@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">मला विचार</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">केवळ टॅग करा</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">यादृच्छिक क्रमाने नवीन कार्डे</string>
-    <string name="new_order_order_added">क्रमाने नवीन कार्डे जोडली</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">सर्वात पहिले पाहिलेले</string>
     <string name="cram_deck_conf_order_random">यादृच्छिक</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">वर्तमान डेक वापरा</string>
     <string name="add_to_deck_decide_by_note_type">नोट प्रकाराद्वारे निर्णय घ्या</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">नवीन कार्डे आणि पुनरावलोकने मिक्स करा</string>
-    <string name="new_spread_new_after_review">पुनरावलोकने नंतर नवीन कार्डे</string>
-    <string name="new_spread_new_before_review">पुनरावलोकनापूर्वी नवीन कार्डे</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">जेव्हा फ्लॅशकार्डवर कोणताही फॉन्ट निर्दिष्ट केलेला नाही</string>
     <string name="override_font_always" comment="Option to always override font">नेहमी</string>

@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Попитай ме</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Само етикети</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Нови карти в случаен ред</string>
-    <string name="new_order_order_added">Нови карти по ред на добавяне</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Първо - по-старите</string>
     <string name="cram_deck_conf_order_random">Случайно</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Използвайте текущото тесте</string>
     <string name="add_to_deck_decide_by_note_type">Избор по тип на бележката</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Смесване на нови карти и преговор</string>
-    <string name="new_spread_new_after_review">Новите карти след повторените</string>
-    <string name="new_spread_new_before_review">Новите карти преди повторените</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Когато не е определен шрифт на флашкартите</string>
     <string name="override_font_always" comment="Option to always override font">Винаги</string>

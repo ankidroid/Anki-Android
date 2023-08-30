@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Dəstələr</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kart səyyahı</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">Dəstə boşdur</string>
     <string name="no_cards_placeholder_description">+ işarəsindən istifadə edərək kart əlavə etməyə başlayın</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Cavabı yazın</string>
     <string name="show_answer">Cavabı göstər</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">Çətin</string>
     <string name="ease_button_good">Yaxşı</string>
     <string name="ease_button_easy">Asan</string>
-    <string name="studyoptions_congrats_undo">%s geri qaytar</string>
     <string name="menu_import">İdxal et</string>
     <string name="undo">Geri qaytar</string>
-    <string name="undo_action_review">son nəzərdən keçirmə</string>
-    <string name="undo_action_change_deck_multi">dəstələri dəyişdir</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">Hamısın dəstəyə köçürün</string>
     <string name="unbury">Görünən et</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">Gündəlik öyrənmə limitinə çatıldı</string>
     <string name="studyoptions_empty_schedule">Öyrənmək üçün planlaşdırılmış kart yoxdur</string>
     <string name="studyoptions_congrats_finished">Təbriklər! Hələlik bitirdiniz.</string>
-    <string name="studyoptions_congrats_more_rev">Bugünkü limitə çatıldı, lakin hələ də nəzərdən keçirilməli kartlar var.  Seçimlərdən limiti artıra bilərsiniz.</string>
-    <string name="studyoptions_congrats_more_new">Bugünkü limitə çatıldı.  Daha çox yeni kartlar mövcuddur;  seçimlərdə limiti artıra bilərsiniz, lakin bu, qısamüddətli baxış  yükünüzü artıracaq.</string>
-    <string name="studyoptions_congrats_custom">To study outside of the normal schedule, touch the “Custom study” button</string>
     <string name="studyoptions_no_cards_due">No cards are due yet</string>
     <string name="sd_card_not_mounted">Cihaz yaddaşı bağlı deyil</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinxronlaşdır</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Continue sync</string>
-    <string name="sync_cancelled">Sync cancelled</string>
-    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Do you want to cancel the sync?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Cancelling&#8230;\nThis may take some time.</string>
     <string name="export">İxrac et</string>
     <string name="export_collection">Kolleksiyanı ixrac et</string>
     <string name="export_deck">Export deck</string>
@@ -210,7 +199,6 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Card info</string>
     <!-- Permissions -->
@@ -219,14 +207,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
     <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -239,7 +219,6 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>

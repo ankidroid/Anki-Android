@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Zapytaj mnie</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tylko znaczniki</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Nowe karty w kolejności losowej</string>
-    <string name="new_order_order_added">Nowe karty w kolejności dodania</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Najstarszy jako pierwszy</string>
     <string name="cram_deck_conf_order_random">Losowo</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Użyj obecnej talii</string>
     <string name="add_to_deck_decide_by_note_type">Wybór na podstawie typu notatki</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mieszaj nowe karty i powtórki</string>
-    <string name="new_spread_new_after_review">Nowe karty po powtórkach</string>
-    <string name="new_spread_new_before_review">Nowe karty przed powtórkami</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Kiedy żadna czcionka nie jest wybrana dla danych kart</string>
     <string name="override_font_always" comment="Option to always override font">Zawsze</string>

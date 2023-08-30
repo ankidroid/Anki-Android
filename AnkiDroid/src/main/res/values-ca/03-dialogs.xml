@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Base de dades de verificació</string>
     <string name="check_db_warning">Això pot trigar molt de temps</string>
-    <string name="check_db_acknowledge">Base de dades comprovada</string>
-    <string name="check_db_acknowledge_shrunk">Base de dades comprovada i optimitzada.\nEncongida %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
-    <string name="delete_deck_default_deck">No es pot suprimir el paquet per defecte.</string>
     <string name="delete_deck_title">Suprimeix el paquet</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Eliminar totes les cartes en %1$s? Conté %2$d carta.</item>
-        <item quantity="other">Eliminar totes les cartes en %1$s? Conté %2$d cartes.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Esteu segur que voleu enviar totes les fitxes de %s als seus paquets inicials?</string>
     <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
     <string name="initializing_tts">S\'està inicialitzant el TTS&#8230;</string>
     <string name="tts_no_tts">No parlis</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Tria aleatòriament x fitxes del paquet:</string>
     <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
     <string name="custom_study_rebuild_deck_corrupt">No s\'ha pogut reconstruir el paquet d\'estudi personalitzat</string>
-    <string name="importing_collection">S\'està important la col·lecció. \nUn moment si us plau ...</string>
-    <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
-    <string name="import_progress">• Important notes: %1$d%%\n• Important targetes: %2$d%%\n• Post-processant: %3$d%%</string>
-    <string name="import_update_details">S\'ha actualitzat %1$d de %2$d notes existents.</string>
-    <string name="import_update_ignored">Algunes actualitzacions han estat ignorades perquè el tipus de nota ha canviat</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">S\'han importat: %2$d targetes</item>
-        <item quantity="other">S\'han importat: %1$d fitxers\nEn total s\'han importat: %2$d targetes</item>
-    </plurals>
     <string name="storage_full_title">No queda espai al disc</string>
     <string name="storage_almost_full_title">El disc està gairebé ple</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sense espai</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Desactiva</string>
     <string name="dialog_positive_overwrite">Sobreescriure</string>
-    <string name="dialog_positive_remove">Eliminar</string>
     <string name="dialog_positive_repair">Repara</string>
     <string name="dialog_positive_replace">Reemplaça</string>
-    <string name="dialog_positive_restore">Restaura</string>
-    <string name="dialog_positive_set">Aplicar</string>
     <string name="dialog_collection_path_not_dir">El camí especificat no era un directori vàlid</string>
     <!-- Media checking -->
     <string name="check_media_title">Comprovar la multimèdia?</string>
@@ -180,18 +160,11 @@
     <string name="integrity_check_continue_anyway">Continua igualment</string>
     <string name="integrity_check_insufficient_space">La comprovació de la base de dades utilitza una gran quantitat d\'emmagatzematge temporal.\n\nEs recomana tenir almenys %s d\'espai lliure al dispositiu abans de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualment teniu %s lliures.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">No s\'ha pogut reproduir el vídeo</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">No s\'ha pogut canviar el paquet</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decodificant dades de la carta</string>
-    <string name="undo_succeeded">Desfes \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Error al processar les opcions del paquet: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Base de dades  bloquejada</string>
     <string name="database_locked_summary">Una altra aplicació fa servir la base de dades AnkiDroid. Tanqueu l’altra aplicació i torneu a obrir AnkiDroid.</string>

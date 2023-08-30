@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">오류 보고전 묻기</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">태그 전용</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">무작위 순서대로 새 카드</string>
-    <string name="new_order_order_added">추가한 순서대로 새 카드</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">오래된 카드 먼저</string>
     <string name="cram_deck_conf_order_random">무작위</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">현재 카드 묶음을 사용</string>
     <string name="add_to_deck_decide_by_note_type">노트 형식에 따라 결정</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">새 카드와 복습 섞기</string>
-    <string name="new_spread_new_after_review">복습을 새 카드보다 먼저</string>
-    <string name="new_spread_new_before_review">새 카드를 복습보다 먼저</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">플래시카드에 특정 글꼴이 지정되지 않은 경우</string>
     <string name="override_font_always" comment="Option to always override font">항상</string>

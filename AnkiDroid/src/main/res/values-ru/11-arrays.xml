@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Спрашивать</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Добавить метку</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Новые в случайном порядке</string>
-    <string name="new_order_order_added">Новые карточки в порядке добавления</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Давно не повторяемые</string>
     <string name="cram_deck_conf_order_random">Случайные</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Использовать текущую</string>
     <string name="add_to_deck_decide_by_note_type">Выбрать по типу записи</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Перемешивать новые и повторяемые</string>
-    <string name="new_spread_new_after_review">Повторяемые до новых</string>
-    <string name="new_spread_new_before_review">Новые до повторяемых</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Если в карточке не указан шрифт</string>
     <string name="override_font_always" comment="Option to always override font">Всегда</string>

@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">شَدّة أوراق</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">متصفح البطاقات</string>
@@ -96,14 +96,6 @@
     <string name="no_cards_placeholder_title">المجموعة فارغة</string>
     <string name="no_cards_placeholder_description">ابدأ بإضافة بطاقات\nباستخدام أيقونة +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="zero">درست %1$d بطاقة خلال %2$s اليوم</item>
-        <item quantity="one">درست %1$d بطاقة خلال %2$s اليوم</item>
-        <item quantity="two">درست %1$d بطاقة خلال %2$s اليوم</item>
-        <item quantity="few">درست %1$d بطاقات خلال %2$s اليوم</item>
-        <item quantity="many">درست %1$d بطاقة خلال %2$s اليوم</item>
-        <item quantity="other">درست %1$d بطاقة خلال %2$s اليوم</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">أدخل الإجابة</string>
     <string name="show_answer">أظهر الإجابة</string>
@@ -112,11 +104,8 @@
     <string name="ease_button_hard">صعب</string>
     <string name="ease_button_good">جيد</string>
     <string name="ease_button_easy">سهل</string>
-    <string name="studyoptions_congrats_undo">تراجع عن %s</string>
     <string name="menu_import">استيراد</string>
     <string name="undo">تراجع</string>
-    <string name="undo_action_review">آخر مراجعة</string>
-    <string name="undo_action_change_deck_multi">تغيير الرزم</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">أمحي الخط</string>
     <string name="move_all_to_deck">نقل الكل إلى الرزمة</string>
     <string name="unbury">نكش</string>
@@ -190,18 +179,14 @@
     <string name="studyoptions_limit_reached">بلغت حد الدراسة اليومي</string>
     <string name="studyoptions_empty_schedule">لا توجد بطاقات مُجَدْوَلة للدراسة</string>
     <string name="studyoptions_congrats_finished">تهانينا! لقد انتهيت لهذا الوقت.</string>
-    <string name="studyoptions_congrats_more_rev">لقد بلغت حد المراجعة اليومي، لكن ما زالت هناك بطاقات تنتظر المراجعة. تستطيع رفع الحد في الخيارات.</string>
-    <string name="studyoptions_congrats_more_new">لقد بلغت الحد اليومي. هناك مزيد من البطاقات الجديدة؛ تستطيع رفع الحد في الخيارات، لكن هذا سيزيد من عبء المراجعة على المدى القصير.</string>
-    <string name="studyoptions_congrats_custom">للدراسة خارج الجدول المعتاد، اضغط زر «دراسة مخصصة»</string>
     <string name="studyoptions_no_cards_due">لا توجد بطاقات مستحقة بعد</string>
     <string name="sd_card_not_mounted">لا توجد وحدة تخزين خارجية</string>
-    <string name="empty_cloze_warning">عدّل هذه الملحوظة وأضف بعض عبارات ملء الفراغات. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">مزامنة</string>
     <string name="button_upgrade" comment="Text of the sync button">انقل لمساحة التخزين السحابية</string>
-    <string name="cancel_sync_confirm">هل تود إلغاء المزامنة؟</string>
-    <string name="continue_sync">واصِل المزامنة</string>
-    <string name="sync_cancelled">أُلغِيت المزامنة</string>
-    <string name="sync_cancel_message">جار الإلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">هل تود إلغاء المزامنة؟</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">واصِل المزامنة</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">أُلغِيت المزامنة</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">جار الإلغاء&#8230;\nقد يستغرق الأمر بعض الوقت.</string>
     <string name="export">تصدير</string>
     <string name="export_collection">تصدير المجموعة</string>
     <string name="export_deck">تصدير الرزمة</string>
@@ -238,7 +223,6 @@
     <string name="template_for_current_card_deleted">تم حذف نوع البطاقة للبطاقة الحالية.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">مظهر المتصفح</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">معلومات البطاقة</string>
     <!-- Permissions -->
@@ -247,14 +231,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">متصفح البطاقات</string>
     <string name="context_menu_anki_card_label">بطاقة أنكي</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s فيها مشكلة: <br/>%2$s</string>
-    <string name="more_information">مزيد من المعلومات</string>
-    <string name="no_field">وجد \'{{%1$s}}\'، لكن ليس هناك أي حقل باسم \'%1$s\'.</string>
-    <string name="closed_tag_not_open">وجد \'{{/%1$s}}\'، لكن يفتقد  \'{{#%1$s}}\' أو \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">يفتقد \'{{\' في \'%s\'.</string>
-    <string name="open_tag_not_closed">يفتقد \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">وجد  \'{{/%1$s}}\'، لكن توقع  \'{{/%2$s}}\'</string>
-    <string name="filter_error">خطأ في الفلتر %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">لا يمكن الجمع بين المجموعات.\nما هي المجموعة التي تريد الاحتفاظ بها؟</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">أنكيدرويد</string>
@@ -271,7 +247,6 @@
         <item quantity="many">%1$d بطاقة (ولا واحدة مستحقة)</item>
         <item quantity="other">%1$d بطاقة (ولا واحدة مستحقة)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s نسخة</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">يتعذر تعديل أو إنشاء ملف %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"أخطاء متعددة، آخر خطأ: %s"</string>

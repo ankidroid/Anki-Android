@@ -46,18 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Праверыць базу даных?</string>
     <string name="check_db_warning">Гэта можа заняць шмат часу</string>
-    <string name="check_db_acknowledge">База даных праверана</string>
-    <string name="check_db_acknowledge_shrunk">База даных праверана і аптымізавана.\nПамер зменшаны на %d МБ.</string>
     <string name="contextmenu_deckpicker_delete_deck">Выдаліць калоду</string>
-    <string name="delete_deck_default_deck">Нельга выдаліць стандартную калоду</string>
     <string name="delete_deck_title">Выдаліць калоду?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Выдаліць усе карткі ў %1$s? Яна змяшчае %2$d картку.</item>
-        <item quantity="few">Выдаліць усе карткі ў %1$s? Яна змяшчае %2$d карткі.</item>
-        <item quantity="many">Выдаліць усе карткі ў %1$s? Яна змяшчае %2$d картак.</item>
-        <item quantity="other">Выдаліць усе карткі ў %1$s? Яна змяшчае %2$d карткі.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Адправіць усе карткі з %s у іх арыгінальныя калоды?</string>
     <string name="no_tts_available_message">Сінтэз маўлення недаступны</string>
     <string name="initializing_tts">Ініцыялізацыя сінтэзу маўлення...</string>
     <string name="tts_no_tts">Не прамаўляць</string>
@@ -119,17 +109,6 @@
     <string name="custom_study_random">Выбраць некалькі выпадковых картак з калоды:</string>
     <string name="custom_study_preview">Прагледзець новыя карткі, якія дадзеныя за апошнія некалькі дзён:</string>
     <string name="custom_study_rebuild_deck_corrupt">Не атрымалася перабудаваць калоду дадатковага навучання</string>
-    <string name="importing_collection">Адбываецца імпартаванне калекцыі...</string>
-    <string name="import_media_count">Імпартаванне медыяфайлаў %1$d%%&#8230;</string>
-    <string name="import_progress">• Імпартаванне запісаў: %1$d%%\n• Імпартаванне картак: %2$d%%\n• Апрацоўка: %3$d%%</string>
-    <string name="import_update_details">Абноўлена %1$d з %2$d існуючых нататак.</string>
-    <string name="import_update_ignored">Некаторыя абнаўленні былі праігнараваныя з той прычыны, што змяніўся тып запісаў</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Картак імпартавана: %2$d</item>
-        <item quantity="few">Файлаў імпартавана: %1$d\nУсяго картак імпартавана: %2$d</item>
-        <item quantity="many">Файлаў імпартавана: %1$d\nУсяго картак імпартавана: %2$d</item>
-        <item quantity="other">Файлаў імпартавана: %1$d\nУсяго картак імпартавана: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Сховішча запоўнена</string>
     <string name="storage_almost_full_title">Сховішча амаль запоўнена</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Памяць запоўненая</string>
@@ -149,11 +128,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Адключыць</string>
     <string name="dialog_positive_overwrite">Перазапісаць</string>
-    <string name="dialog_positive_remove">Выдаліць</string>
     <string name="dialog_positive_repair">Выправіць</string>
     <string name="dialog_positive_replace">Замяніць</string>
-    <string name="dialog_positive_restore">Аднавіць</string>
-    <string name="dialog_positive_set">Задаць</string>
     <string name="dialog_collection_path_not_dir">Азначаны шлях не з\'яўляецца дапушчальным каталогам</string>
     <!-- Media checking -->
     <string name="check_media_title">Праверыць медыяфайлы?</string>
@@ -196,20 +172,11 @@
     <string name="integrity_check_continue_anyway">Усё роўна працягнуць</string>
     <string name="integrity_check_insufficient_space">Праверка базы даных патрабуе вялікай колькасці часовага сховішча.\n\nВельмі пажадана мець прынамсі %s свабоднага месца на прыладзе для таго, каб паспяхова выканаць гэту аперацыю.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nЗараз у вас %s свабоднага месца.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">Адноўлена %d картка з няправільнай пачатковай калодай. Калі ласка, звярніцеся да даведніка за дадатковай інфармацыяй.</item>
-        <item quantity="few">Адноўлена %d карткі з няправільнай пачатковай калодай. Калі ласка, звярніцеся да даведніка за дадатковай інфармацыяй.</item>
-        <item quantity="many">Адноўлена %d картак з няправільнай пачатковай калодай. Калі ласка, звярніцеся да даведніка за дадатковай інфармацыяй.</item>
-        <item quantity="other">Адноўлена %d картак з няправільнай пачатковай калодай. Калі ласка, звярніцеся да даведніка за дадатковай інфармацыяй.</item>
-    </plurals>
     <string name="video_creation_error">Не атрымалася ўзнавіць відэа</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Не атрымалася змяніць калоду</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Памылка дэкадавання даных карткі</string>
-    <string name="undo_succeeded">Адрабіць \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Не атрымалася апрацаваць параметры калоды: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">База даных заблакаваная</string>
     <string name="database_locked_summary">База даных AnkiDroid выкарыстоўваецца іншай праграмай. Закрыйце ўсе праграмы ўсе пабочныя праграмы і перазапусціце AnkiDroid.</string>

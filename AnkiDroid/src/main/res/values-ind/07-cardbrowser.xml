@@ -59,7 +59,6 @@
     <string name="card_browser_mark_card">Tandai catatan</string>
     <string name="card_browser_unmark_card">Batal tandai catatan</string>
     <string name="delete_card_title">Hapus catatan?</string>
-    <string name="changed_deck_message">Dipindah ke %s</string>
     <string name="card_browser_show_marked">Filter ditandai</string>
     <string name="card_browser_show_suspended">Filter ditangguhkan</string>
     <string name="card_browser_search_by_tag">Filter menurut tag</string>
@@ -73,7 +72,6 @@
     <string name="card_browser_list_my_searches_remove_content">Hapus \" %1$s \"?</string>
     <string name="card_browser_change_display_order">Ubah urutan tampilan</string>
     <string name="card_browser_change_display_order_title">Pilih urutan tampilan</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Jatuh tempo</string>
     <string name="card_details_tags">Tag</string>
     <string-array name="card_browser_order_labels">
         <item>Tidak ada pengurutan (lebih cepat)</item>
@@ -106,27 +104,4 @@
         <item quantity="other">%d kartu telah dihapus</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Ditambahkan</string>
-    <string name="card_info_first_review">Review Pertama</string>
-    <string name="card_info_latest_review">Review Terakhir</string>
-    <string name="card_info_interval">Selang Waktu</string>
-    <string name="card_info_ease">Kerenggangan</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Review</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Pengulangan</string>
-    <string name="card_info_average_time">Waktu rata-rata</string>
-    <string name="card_info_total_time">Total Waktu</string>
-    <string name="card_info_card_type">Tipe Kartu</string>
-    <string name="card_info_note_type">Tipe Catatan</string>
-    <string name="card_info_deck_name">Nama Dek</string>
-    <string name="card_info_card_id">Id Kartu</string>
-    <string name="card_info_note_id">Id Catatan</string>
-    <string name="card_info_revlog_time">Waktu</string>
-    <string name="card_info_revlog_date">Tanggal</string>
-    <string name="card_info_revlog_rating">Penilaian</string>
-    <string name="card_info_revlog_type">Tipe</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Sedang dipelajari</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Mengulang</string>
-    <string name="card_info_revlog_filtered">Telah difilter</string>
-    <string name="card_info_ease_not_applicable">Tidak Ada</string>
 </resources>

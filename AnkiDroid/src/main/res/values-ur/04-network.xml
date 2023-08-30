@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">آپ آف لائن ہیں۔</string>
-    <string name="sync_even_if_offline">بہرحال کوشش کریں۔</string>
     <string name="sync_error">نقص ہم وقت سازی</string>
     <string name="vague_error" comment="Network error dialog title">غلطی</string>
     <string name="retry">دوبارہ کوشش کریں</string>
@@ -63,71 +62,15 @@
     <string name="sign_up">سائن اپ</string>
     <string name="logged_as">بطور لاگ ان</string>
     <string name="log_out">لاگ آؤٹ</string>
-    <string name="alert_logging_message">لاگنگ ان...</string>
-    <string name="invalid_username_password">غلط ای میل ایڈریس یا پاس ورڈ</string>
     <string name="reset_password">پاس ورڈ ری سیٹ</string>
     <string name="lost_mail_instructions">ای میل بھول گئے؟</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX کے لیے اختیارات</string>
-    <string name="sync_prepare_syncing">مطابقت پذیری کی تیاری کر رہا ہے&#8230;</string>
-    <string name="sync_preparing_full_sync_message">مکمل مطابقت پذیری کی تیاری کر رہا ہے&#8230;</string>
-    <string name="sync_uploading_message">اپ لوڈ ہو رہا ہے&#8230;</string>
-    <string name="sync_downloading_message">ڈاؤن لوڈ ہو رہا ہے&#8230;</string>
     <string name="sync_title">ہم وقت سازی</string>
     <string name="sync_log_uploading_message">مقامی سے مکمل مطابقت پذیری۔</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">، ٹائم زون ممکنہ طور پر غلط ہے۔</string>
-    <string name="sync_log_clocks_unsynchronized_date">، تاریخ ممکنہ طور پر غلط ہے۔</string>
-    <string name="sync_no_changes_message">کوئی تبدیلی نہیں ملی</string>
     <string name="sync_database_acknowledge">مجموعہ مطابقت پذیر</string>
-    <string name="sync_log_error_specific">مطابقت پذیری کی خرابی، ٹائپ کریں: %1$s، پیغام: %2$s</string>
     <string name="sync_corrupt_database">آپ کا ڈیٹا بیس کرپٹ ہے۔ براہ کرم مطابقت پذیری کی دوبارہ کوشش کرنے سے پہلے اسے ٹھیک کریں۔\n\nاپنے ڈیٹا بیس کی مرمت کے بارے میں معلومات کے لیے %s دیکھیں۔</string>
-    <string name="sync_too_busy">سرور مصروف ہے. بعد میں دوبارہ کوشش کریں۔</string>
-    <string name="sync_remote_db_error">ڈاؤن لوڈ کردہ ڈیٹا بیس کرپٹ تھا۔ دوبارہ کوشش کریں.</string>
-    <string name="sync_overwrite_error">آپ کے موجودہ مجموعہ کو ڈاؤن لوڈ کردہ فائل کے ذریعے اوور رائٹ نہیں کیا جا سکا</string>
-    <string name="sync_connection_error">کنکشن کا وقت ختم ہوگیا. یا تو آپ کے انٹرنیٹ کنکشن میں مسائل کا سامنا ہے، یا آپ کے میڈیا فولڈر میں ایک بہت بڑی فائل ہے۔</string>
-    <string name="sync_write_access_error_on_storage">ڈاؤن لوڈ کی گئی فائل آپ کے اسٹوریج میں محفوظ نہیں ہو سکی۔ یا تو اسٹوریج صرف پڑھنے کے لیے ہے یا کافی جگہ نہیں ہے۔</string>
-    <string name="sync_error_invalid_sync_server">ایڈوانسڈ سیٹنگز میں کسٹم سنک سرور غلط ہے (%s)۔ براہ کرم ایک درست سرور درج کریں، یا ترتیب کو غیر فعال کریں۔</string>
-    <string name="sync_deletions_message">حذف کرنے کی مطابقت پذیری ہو رہی ہے&#8230;</string>
-    <string name="sync_small_objects_message">چھوٹی اشیاء کی مطابقت پذیری ہو رہی ہے&#8230;</string>
-    <string name="sync_finish_message">مطابقت پذیری مکمل ہو رہی ہے&#8230;</string>
-    <string name="sync_log_finish_error">سرور کو مکمل سمت بھیجنے میں خرابی۔</string>
-    <string name="sync_writing_db">ڈیٹا بیس میں تبدیلیاں لکھی جا رہی ہیں&#8230;</string>
-    <string name="sync_download_chunk">تبدیلیاں ڈاؤن لوڈ ہو رہی ہیں&#8230;</string>
-    <string name="sync_upload_chunk">تبدیلیاں اپ لوڈ ہو رہی ہیں&#8230;</string>
-    <string name="sync_up_down_size">اوپر: %1$d KB، نیچے: %2$d KB</string>
-    <string name="sync_generic_error">ایک خرابی آگئی ہے. بعد میں دوبارہ کوشش کریں۔</string>
-    <string name="sync_check_upload_file">فائل کو اپ لوڈ کرنے سے پہلے چیک کیا جا رہا ہے&#8230;</string>
-    <string name="sync_check_download_file">Checking downloaded file&#8230;</string>
-    <string name="sync_media_find">تبدیل شدہ میڈیا تلاش کیا جا رہا ہے&#8230;</string>
-    <string name="sync_media_no_changes">میڈیا فائلوں میں کوئی تبدیلی نہیں۔</string>
-    <string name="sync_media_success">میڈیا مطابقت پذیر</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">مطابقت پذیری کے بعد، مجموعہ متضاد حالت میں تھا۔ اس مسئلے کو حل کرنے کے لیے، AnkiDroid مکمل مطابقت پذیری پر مجبور کرے گا۔ منتخب کریں کہ آپ کس طرف رکھنا چاہتے ہیں۔</string>
-    <string name="sync_media_sanity_failed">میڈیا کی مطابقت پذیری مکمل ہوگئی، لیکن میڈیا کا شمار سرور سے متفق نہیں ہے۔ کسی بھی خرابی کو درست کرنے کے لیے اگلی میڈیا سنک مکمل ہو جائے گی۔</string>
-    <string name="sync_media_db_error">میڈیا کی مطابقت پذیری ناکام ہو گئی کیونکہ موجودہ ڈیٹا بیس کرپٹ ہے۔ میڈیا چیک کرنے کی سفارش کی جاتی ہے۔</string>
-    <string name="sync_media_error">میڈیا ڈیٹا کی مطابقت پذیری میں خرابی۔</string>
-    <string name="sync_media_error_check">میڈیا کی مطابقت پذیری کے دوران خرابی میڈیا چیک کرنے کی سفارش کی جاتی ہے۔</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">براہ کرم مطابقت پذیری سے پہلے \'%s\' چلائیں۔</string>
     <string name="sync_sanity_local">مقامی</string>
     <string name="sync_sanity_remote">ریموٹ</string>
     <string name="force_full_sync_title">مکمل مطابقت پذیری کو مجبور کریں۔</string>
@@ -135,15 +78,7 @@
     <string name="force_full_sync_confirmation">زبردستی مکمل مطابقت پذیری۔</string>
     <string name="full_sync_confirmation">درخواست کردہ تبدیلی کے لیے ڈیٹابیس کے مکمل اپ لوڈ کی ضرورت ہوگی جب آپ اگلی بار اپنے مجموعہ کو ہم آہنگ کریں گے۔ اگر آپ کے پاس کسی دوسرے آلے پر جائزے یا دیگر تبدیلیاں ہیں جو ابھی تک یہاں مطابقت پذیر نہیں ہوئی ہیں، تو وہ ضائع ہو جائیں گی۔ جاری رہے؟</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid کے پہلے سے انسٹال کردہ ورژن میں ایک بگ کی وجہ سے، مکمل مطابقت پذیری پر مجبور کرنے کی سفارش کی جاتی ہے۔</string>
-    <string name="sync_error_407_proxy_required">پراکسی توثیق درکار ہے۔</string>
-    <string name="sync_error_409">ایک وقت میں صرف ایک کلائنٹ AnkiWeb تک رسائی حاصل کر سکتا ہے۔ اگر پچھلی مطابقت پذیری ناکام ہو گئی، تو براہ کرم چند منٹوں میں دوبارہ کوشش کریں۔</string>
-    <string name="sync_error_413_collection_size">آپ کا مجموعہ یا میڈیا فائل مطابقت پذیری کے لیے بہت بڑی ہے۔</string>
-    <string name="sync_error_500_unknown">AnkiWeb کو ایک خرابی کا سامنا کرنا پڑا۔ براہ کرم چند منٹوں میں دوبارہ کوشش کریں، اور اگر مسئلہ برقرار رہتا ہے، تو براہ کرم بگ رپورٹ درج کریں۔</string>
-    <string name="sync_error_501_upgrade_required">براہ کرم AnkiDroid کے تازہ ترین ورژن میں اپ گریڈ کریں۔</string>
-    <string name="sync_error_502_maintenance">انکی ویب کی دیکھ بھال جاری ہے۔ براہ کرم چند منٹوں میں دوبارہ کوشش کریں۔</string>
-    <string name="sync_error_504_gateway_timeout">504 گیٹ وے ٹائم آؤٹ ایرر موصول ہوا۔</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">مطابقت پذیری (مکمل)</string>
     <string name="sync_menu_title_no_account">مطابقت پذیری (لاگ ان)</string>
-    <string name="sync_error_unknown_host_readable">AnkiWeb سے منسلک نہیں ہو سکا۔ کیا آپ کا انٹرنیٹ کام کر رہا ہے؟\n\n%s</string>
 </resources>
