@@ -34,6 +34,6 @@ suspend fun AnkiActivity.checkMedia(): MediaCheckResult? {
     }
 
     return withProgress(R.string.check_media_message) {
-        CollectionManager.withCol { media.performFullCheck() }
+        CollectionManager.withCol { media.check() }
     }
 }

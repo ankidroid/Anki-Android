@@ -24,16 +24,6 @@ import java.io.PrintWriter
 import java.io.StringWriter
 
 object ExceptionUtil {
-    fun containsMessage(e: Throwable?, needle: String?): Boolean {
-        if (e == null) {
-            return false
-        }
-        if (containsMessage(e.cause, needle)) {
-            return true
-        }
-        val message = e.message
-        return message != null && message.contains(needle!!)
-    }
 
     @CheckResult
     fun getExceptionMessage(e: Throwable?): String {

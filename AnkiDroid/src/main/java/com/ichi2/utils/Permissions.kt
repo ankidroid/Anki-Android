@@ -97,10 +97,6 @@ object Permissions {
         return hasStorageReadAccessPermission(context) && hasStorageWriteAccessPermission(context)
     }
 
-    fun canUseWakeLock(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.WAKE_LOCK)
-    }
-
     /**
      * Detects if permissions are defined via <uses-permission> in the Manifest.
      * This does **not** mean the permission has been granted.

@@ -52,13 +52,6 @@ abstract class ExtendedFragmentFactory : FragmentFactory {
     }
 
     /**
-     * Sets a base factory to be used as a fallback
-     */
-    fun setBaseFactory(baseFactory: FragmentFactory?) {
-        mBaseFactory = baseFactory
-    }
-
-    /**
      * Attaches the factory to an activity by setting the current activity fragment factory as the base factory
      * and updating the activity with the extended factory
      */

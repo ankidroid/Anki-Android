@@ -19,19 +19,20 @@ package com.ichi2.anki.cardviewer
 import android.content.SharedPreferences
 import android.content.res.Resources
 import androidx.annotation.VisibleForTesting
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
 import com.ichi2.anki.servicelayer.LanguageHint
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.Sound
-import com.ichi2.libanki.Utils
-import com.ichi2.utils.DiffEngine
 import com.ichi2.utils.jsonObjectIterable
 import org.intellij.lang.annotations.Language
 import org.json.JSONArray
 import timber.log.Timber
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+
+// TODO: investigate whether it's feasible to drop the useInputTag option introduced back
+// in 2015. https://github.com/ankidroid/Anki-Android/pull/3921
 
 class TypeAnswer(
     @get:JvmName("useInputTag") val useInputTag: Boolean,
@@ -176,11 +177,11 @@ class TypeAnswer(
      * @return The formatted answer text with `[[type:(.+?)]]` replaced with HTML
      */
     fun filterAnswer(answer: String): String {
-        val userAnswer = cleanTypedAnswer(input)
-        val correctAnswer = cleanCorrectAnswer(correct)
+        val userAnswer = input
+        val correctAnswer = correct
         Timber.d("correct answer = %s", correctAnswer)
         Timber.d("user answer = %s", userAnswer)
-        return filterAnswer(answer, userAnswer, correctAnswer)
+        return filterAnswer(answer, userAnswer, correctAnswer ?: "")
     }
 
     /**
@@ -193,36 +194,14 @@ class TypeAnswer(
      */
     fun filterAnswer(answer: String, userAnswer: String, correctAnswer: String): String {
         val m: Matcher = PATTERN.matcher(answer)
-        val diffEngine = DiffEngine()
         val sb = StringBuilder()
         fun append(@Language("HTML") html: String) = sb.append(html)
-        append(if (doNotUseCodeFormatting) "<div><span id=\"typeans\">" else "<div><code id=\"typeans\">")
 
-        // We have to use Matcher.quoteReplacement because the inputs here might have $ or \.
-        if (userAnswer.isNotEmpty()) {
-            // The user did type something.
-            if (userAnswer == correctAnswer) {
-                // and it was right.
-                append(Matcher.quoteReplacement(DiffEngine.wrapGood(correctAnswer)))
-                append("<span id=\"typecheckmark\">\u2714</span>") // Heavy check mark
-            } else {
-                // Answer not correct.
-                // Only use the complex diff code when needed, that is when we have some typed text that is not
-                // exactly the same as the correct text.
-                val diffedStrings = diffEngine.diffedHtmlStrings(correctAnswer, userAnswer)
-                // We know we get back two strings.
-                append(Matcher.quoteReplacement(diffedStrings[0]))
-                append("<br><span id=\"typearrow\">&darr;</span><br>")
-                append(Matcher.quoteReplacement(diffedStrings[1]))
-            }
-        } else {
-            if (!useInputTag) {
-                append(Matcher.quoteReplacement(DiffEngine.wrapMissing(correctAnswer)))
-            } else {
-                append(Matcher.quoteReplacement(correctAnswer))
-            }
+        var comparisonText = CollectionManager.compareAnswer(correctAnswer, userAnswer)
+        if (doNotUseCodeFormatting) {
+            comparisonText = "$comparisonText<style>code.typeans { font-family: sans-serif; }</style>"
         }
-        append(if (doNotUseCodeFormatting) "</span></div>" else "</code></div>")
+        append(Matcher.quoteReplacement(comparisonText))
         return m.replaceAll(sb.toString())
     }
 
@@ -236,39 +215,6 @@ class TypeAnswer(
                 doNotUseCodeFormatting = preferences.getBoolean("noCodeFormatting", false),
                 autoFocus = preferences.getBoolean("autoFocusTypeInAnswer", false)
             )
-        }
-
-        /** Regex pattern used in removing tags from text before diff  */
-        private val spanPattern = Pattern.compile("</?span[^>]*>")
-        private val brPattern = Pattern.compile("<br\\s?/?>")
-
-        /**
-         * Clean up the correct answer text, so it can be used for the comparison with the typed text
-         *
-         * @param answer The content of the field the text typed by the user is compared to.
-         * @return The correct answer text, with actual HTML and media references removed, and HTML entities unescaped.
-         */
-        fun cleanCorrectAnswer(answer: String?): String {
-            if (answer.isNullOrEmpty()) return ""
-
-            var matcher = spanPattern.matcher(Utils.stripHTML(answer.trim { it <= ' ' }))
-            var answerText = matcher.replaceAll("")
-            matcher = brPattern.matcher(answerText)
-            answerText = matcher.replaceAll("\n")
-            matcher = Sound.SOUND_PATTERN.matcher(answerText)
-            answerText = matcher.replaceAll("")
-            return Utils.nfcNormalized(answerText)
-        }
-
-        /**
-         * Clean up the typed answer text, so it can be used for the comparison with the correct answer
-         *
-         * @param answer The answer text typed by the user.
-         * @return The typed answer text, cleaned up.
-         */
-        fun cleanTypedAnswer(answer: String): String {
-            if (answer.isBlank()) return ""
-            return Utils.nfcNormalized(answer.trim())
         }
 
         /**

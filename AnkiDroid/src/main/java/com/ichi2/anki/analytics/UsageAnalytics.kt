@@ -454,7 +454,6 @@ object UsageAnalytics {
         "anki_card_enable_external_context_menu", // ‘Anki Card’ Menu
         "card_browser_enable_external_context_menu", // ‘Card Browser’ Menu
         // Reviewing
-        "newSpread", // New card position
         "dayOffset", // Start of next day
         "learnCutoff", // Learn ahead limit
         "timeLimit", // Timebox time limit
@@ -550,7 +549,6 @@ object UsageAnalytics {
         "autoFocusTypeInAnswer", // Focus ‘type in answer’
         "mediaImportAllowAllFiles", // Allow all files in media imports
         "providerEnabled", // Enable AnkiDroid API
-        "v3sched", // v3 Scheduler
         // App bar buttons
         "reset_custom_buttons",
         "customButtonUndo",

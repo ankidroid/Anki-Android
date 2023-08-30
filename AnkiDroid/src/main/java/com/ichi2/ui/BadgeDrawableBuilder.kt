@@ -18,7 +18,6 @@ package com.ichi2.ui
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
@@ -38,9 +37,6 @@ class BadgeDrawableBuilder(private val context: Context) {
     }
 
     fun replaceBadge(menuItem: MenuItem) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return
-        }
         Timber.d("Adding badge")
         var originalIcon = menuItem.icon
         if (originalIcon is BadgeDrawable) {
@@ -65,9 +61,6 @@ class BadgeDrawableBuilder(private val context: Context) {
 
     companion object {
         fun removeBadge(menuItem: MenuItem) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                return
-            }
             val icon = menuItem.icon
             if (icon is BadgeDrawable) {
                 menuItem.icon = icon.drawable

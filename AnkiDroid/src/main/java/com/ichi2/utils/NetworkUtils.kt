@@ -47,20 +47,15 @@ object NetworkUtils {
             val cm = connectivityManager ?: return false
 
             // ConnectivityManager.activeNetwork is for SDK ≥ 23
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                val networkCapabilities = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
-                val isOnline = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
-                    networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+            val networkCapabilities = cm.getNetworkCapabilities(cm.activeNetwork) ?: return false
+            val isOnline = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
 
-                // on SDK ≥ 29, it can be checked if internet is temporarily disabled as well
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    isOnline && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
-                } else {
-                    isOnline
-                }
+            // on SDK ≥ 29, it can be checked if internet is temporarily disabled as well
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                isOnline && networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_SUSPENDED)
             } else {
-                cm.activeNetworkInfo?.isConnected
-                    ?: false
+                isOnline
             }
         }
 }

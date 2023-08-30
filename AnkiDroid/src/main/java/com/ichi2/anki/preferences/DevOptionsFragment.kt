@@ -72,9 +72,8 @@ class DevOptionsFragment : SettingsFragment() {
         }
         // Lock database
         requirePreference<Preference>(R.string.pref_lock_database_key).setOnPreferenceClickListener {
-            val c = CollectionHelper.instance.getCol(requireContext())!!
             Timber.w("Toggling database lock")
-            c.db.database.beginTransaction()
+            launchCatchingTask { CollectionManager.withCol { Thread.sleep(1000 * 86400) } }
             false
         }
         // Reset onboarding

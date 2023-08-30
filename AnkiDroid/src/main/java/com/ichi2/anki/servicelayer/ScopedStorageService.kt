@@ -39,9 +39,6 @@ import com.ichi2.utils.Permissions
 import timber.log.Timber
 import java.io.File
 
-fun Directory.getCollectionAnki2Path(): String =
-    File(this.directory, CollectionHelper.COLLECTION_FILENAME).canonicalPath
-
 /** Validated source and destination folders.
  *
  * - [unscopedSourceDirectory] is the existing AnkiDroid directory, named AnkiDroid by default.

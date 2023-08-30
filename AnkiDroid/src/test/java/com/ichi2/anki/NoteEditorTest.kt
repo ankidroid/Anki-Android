@@ -30,13 +30,11 @@ import com.ichi2.compat.Compat.Companion.ACTION_PROCESS_TEXT
 import com.ichi2.compat.Compat.Companion.EXTRA_PROCESS_TEXT
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
-import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
@@ -71,7 +69,7 @@ class NoteEditorTest : RobolectricTest() {
         assertThat("Bundle has fields edited value", fieldsBundle!!.getString("0"), equalTo("Preview Test"))
         assertThat("Bundle has empty tag list", noteEditorBundle.getStringArrayList("tags"), equalTo(ArrayList<Any>()))
         assertThat("Bundle has no ordinal for ephemeral preview", intent.intent.hasExtra("ordinal"), equalTo(false))
-        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(TemporaryModel.INTENT_MODEL_FILENAME), equalTo(true))
+        assertThat("Bundle has a temporary model saved", intent.intent.hasExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME), equalTo(true))
     }
 
     @Test
@@ -99,34 +97,28 @@ class NoteEditorTest : RobolectricTest() {
         assertThat(actualResourceId, equalTo(R.string.note_editor_no_first_field))
     }
 
-    @Test
-    @RustCleanup("needs update for new backend")
-    fun errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() {
-        if (!BackendFactory.defaultLegacySchema) {
-            return
-        }
-        val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
-            .withFirstField("A")
-            .withSecondField("B")
-            .withThirdField("C")
-            .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created_all_fields))
-    }
-
-    @Test
-    @RustCleanup("needs update for new backend")
-    fun errorSavingInvalidNoteWitSomeFieldsDisplaysEnterMore() {
-        if (!BackendFactory.defaultLegacySchema) {
-            return
-        }
-        val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
-            .withFirstField("A")
-            .withThirdField("C")
-            .build()
-        val actualResourceId = noteEditor.addNoteErrorResource
-        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
-    }
+//    @Test
+//    @RustCleanup("needs update for new backend")
+//    fun errorSavingInvalidNoteWithAllFieldsDisplaysInvalidTemplate() {
+//        val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
+//            .withFirstField("A")
+//            .withSecondField("B")
+//            .withThirdField("C")
+//            .build()
+//        val actualResourceId = noteEditor.addNoteErrorResource
+//        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created_all_fields))
+//    }
+//
+//    @Test
+//    @RustCleanup("needs update for new backend")
+//    fun errorSavingInvalidNoteWitSomeFieldsDisplaysEnterMore() {
+//        val noteEditor = getNoteEditorAdding(NoteType.THREE_FIELD_INVALID_TEMPLATE)
+//            .withFirstField("A")
+//            .withThirdField("C")
+//            .build()
+//        val actualResourceId = noteEditor.addNoteErrorResource
+//        assertThat(actualResourceId, equalTo(R.string.note_editor_no_cards_created))
+//    }
 
     @Test
     fun errorSavingClozeNoteWithNoFirstFieldDisplaysClozeError() {
@@ -205,11 +197,11 @@ class NoteEditorTest : RobolectricTest() {
         // value returned if deck not found
         val DECK_ID_NOT_FOUND = -404
         val currentDid = addDeck("Basic::Test")
-        col.set_config(CURRENT_DECK, currentDid)
+        col.config.set(CURRENT_DECK, currentDid)
         val n = super.addNoteUsingBasicModel("Test", "Note")
         n.model().put("did", currentDid)
         val editor = getNoteEditorEditingExistingBasicNote("Test", "Note", DECK_LIST)
-        col.set_config(CURRENT_DECK, Consts.DEFAULT_DECK_ID) // Change DID if going through default path
+        col.config.set(CURRENT_DECK, Consts.DEFAULT_DECK_ID) // Change DID if going through default path
         val copyNoteIntent = getCopyNoteIntent(editor)
         val newNoteEditor = super.startActivityNormallyOpenCollectionWithIntent(NoteEditor::class.java, copyNoteIntent)
         assertThat("Selected deck ID should be the current deck id", editor.deckId, equalTo(currentDid))
@@ -310,22 +302,9 @@ class NoteEditorTest : RobolectricTest() {
     }
 
     @Test
-    @Config(qualifiers = "en")
-    fun addToCurrentWithNoDeckSelectsDefault_issue_9616() {
-        assumeThat(col.backend.legacySchema, not(false))
-        col.conf.put("addToCur", false)
-        val cloze = assertNotNull(col.models.byName("Cloze"))
-        cloze.remove("did")
-        col.models.save(cloze)
-        val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
-        editor.setCurrentlySelectedModel(cloze.getLong("id"))
-        assertThat(editor.deckId, equalTo(Consts.DEFAULT_DECK_ID))
-    }
-
-    @Test
     fun pasteHtmlAsPlainTextTest() {
         val editor = getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java)
-        editor.setCurrentlySelectedModel(col.models.byName("Basic")!!.getLong("id"))
+        editor.setCurrentlySelectedModel(col.notetypes.byName("Basic")!!.getLong("id"))
         val field = editor.getFieldForTest(0)
         field.clipboard!!.setPrimaryClip(ClipData.newHtmlText("text", "text", """<span style="color: red">text</span>"""))
         assertTrue(field.clipboard!!.hasPrimaryClip())
@@ -386,17 +365,17 @@ class NoteEditorTest : RobolectricTest() {
         return NoteEditorTestBuilder(n)
     }
 
-    private fun makeNoteForType(noteType: NoteType): Model? {
+    private fun makeNoteForType(noteType: NoteType): NotetypeJson? {
         return when (noteType) {
-            NoteType.BASIC -> col.models.byName("Basic")
-            NoteType.CLOZE -> col.models.byName("Cloze")
+            NoteType.BASIC -> col.notetypes.byName("Basic")
+            NoteType.CLOZE -> col.notetypes.byName("Cloze")
             NoteType.BACK_TO_FRONT -> {
                 val name = super.addNonClozeModel("Reversed", arrayOf("Front", "Back"), "{{Back}}", "{{Front}}")
-                col.models.byName(name)
+                col.notetypes.byName(name)
             }
             NoteType.THREE_FIELD_INVALID_TEMPLATE -> {
                 val name = super.addNonClozeModel("Invalid", arrayOf("Front", "Back", "Side"), "", "")
-                col.models.byName(name)
+                col.notetypes.byName(name)
             }
         }
     }
@@ -448,8 +427,8 @@ class NoteEditorTest : RobolectricTest() {
         BACK_TO_FRONT, THREE_FIELD_INVALID_TEMPLATE
     }
 
-    inner class NoteEditorTestBuilder(model: Model?) {
-        private val mModel: Model
+    inner class NoteEditorTestBuilder(notetype: NotetypeJson?) {
+        private val mNotetype: NotetypeJson
         private var mFirstField: String? = null
         private var mSecondField: String? = null
         private var mThirdField: String? = null
@@ -466,7 +445,7 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         fun <T : NoteEditor?> build(clazz: Class<T>): T {
-            col.models.setCurrent(mModel)
+            col.notetypes.setCurrent(mNotetype)
             val noteEditor = getNoteEditorAddingNote(REVIEWER, clazz)
             advanceRobolectricLooper()
             noteEditor!!.setFieldValueFromUi(0, mFirstField)
@@ -499,8 +478,8 @@ class NoteEditorTest : RobolectricTest() {
         }
 
         init {
-            assertNotNull(model) { "model was null" }
-            mModel = model
+            assertNotNull(notetype) { "model was null" }
+            mNotetype = notetype
         }
     }
 }

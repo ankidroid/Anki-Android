@@ -149,7 +149,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         assertThat(viewer.correctTypedAnswer, equalTo("David"))
         assertThat(viewer.cardContent, not(containsString("World")))
-        assertThat(viewer.cardContent, containsString("David"))
+        // the saving will have caused the screen to switch back to question side
+        assertThat(viewer.cardContent, containsString("Hello"))
     }
 
     @Test
@@ -180,7 +181,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
         val typedField = 1 // BACK
 
-        LanguageHintService.setLanguageHintForField(col.models, withLanguage, typedField, Locale("ja"))
+        LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
 
         addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni")
         addNoteUsingModelName(normal.getString("name"), "one", "two")

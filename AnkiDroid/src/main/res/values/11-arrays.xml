@@ -25,12 +25,9 @@
 
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tag only</string>
 
 
     <!-- new_order_labels -->
-    <string name="new_order_random">New cards in random order</string>
-    <string name="new_order_order_added">New cards in order added</string>
 
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
@@ -46,11 +43,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Use current deck</string>
     <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
-
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mix new cards and reviews</string>
-    <string name="new_spread_new_after_review">New cards after reviews</string>
-    <string name="new_spread_new_before_review">New cards before reviews</string>
 
     <!-- override_font_labels -->
     <string name="override_font_if_missing">When no font specified on flashcards</string>

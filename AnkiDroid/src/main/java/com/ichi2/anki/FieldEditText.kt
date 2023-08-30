@@ -174,10 +174,6 @@ class FieldEditText : FixedEditText, NoteService.NoteField {
         background = mOrigBackground
     }
 
-    fun setSelectionChangeListener(listener: TextSelectionListener?) {
-        mSelectionChangeListener = listener
-    }
-
     fun setContent(content: String?, replaceNewLine: Boolean) {
         val text = if (content == null) {
             ""

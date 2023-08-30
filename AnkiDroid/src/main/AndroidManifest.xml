@@ -244,12 +244,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ModelBrowser"
-            android:label="@string/model_browser_label"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            />
-        <activity
             android:name=".notetype.ManageNotetypes"
             android:label="@string/model_browser_label"
             android:exported="false"
@@ -295,13 +289,6 @@
                 <category android:name="android.intent.category.MONKEY" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.ichi2.anki.DeckOptionsActivity"
-            android:label="@string/deckpreferences_title"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Theme_Light"
-            />
         <activity
             android:name=".FilteredDeckOptions"
             android:label="@string/deckpreferences_title"
@@ -358,13 +345,6 @@
             android:finishOnTaskLaunch="true"
             />
         <activity
-            android:name="com.ichi2.anki.Statistics"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".DeckPicker"
-            >
-        </activity>
-        <activity
             android:name="com.ichi2.anki.Previewer"
             android:label="@string/preview_title"
             android:exported="false"
@@ -392,12 +372,6 @@
         <activity
             android:name=".CardTemplateBrowserAppearanceEditor"
             android:label="@string/card_template_browser_appearance_title"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            />
-        <activity
-            android:name=".CardInfo"
-            android:label="@string/card_info_title"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />

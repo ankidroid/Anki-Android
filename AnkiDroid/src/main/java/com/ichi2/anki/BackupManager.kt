@@ -99,7 +99,7 @@ open class BackupManager {
         }
 
         // TODO: Probably not a good idea to do the backup while the collection is open
-        if (CollectionHelper.instance.colIsOpen()) {
+        if (CollectionHelper.instance.colIsOpenUnsafe()) {
             Timber.w("Collection is already open during backup... we probably shouldn't be doing this")
         }
 
@@ -205,8 +205,6 @@ open class BackupManager {
         private const val BACKUP_INTERVAL = 5
         private val legacyDateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm")
         private val newDateFormat = SimpleDateFormat("yyyy-MM-dd-HH.mm")
-        val isActivated: Boolean
-            get() = true
 
         fun getBackupDirectory(ankidroidDir: File): File {
             val directory = File(ankidroidDir, BACKUP_SUFFIX)
@@ -226,10 +224,6 @@ open class BackupManager {
                 Timber.w("getBrokenDirectory() mkdirs on %s failed", ankidroidDir)
             }
             return directory
-        }
-
-        fun performBackupInBackground(path: String, time: Time): Boolean {
-            return BackupManager().performBackupInBackground(path, BACKUP_INTERVAL, time)
         }
 
         /**

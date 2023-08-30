@@ -20,52 +20,31 @@ import com.ichi2.utils.deepClonedInto
 import org.json.JSONObject
 import timber.log.Timber
 
-class DeckConfig : JSONObject {
-    val source: Source
+class DeckConfig
+/**
+ * Creates a copy from [JSONObject] and use it as a string
+ *
+ * This function will perform deepCopy on the passed object
+ *
+ */(json: JSONObject) : JSONObject() {
 
-    /**
-     * Creates a new empty deck config object
-     */
-    private constructor(source: Source) : super() {
-        this.source = source
-    }
+    var conf: Long
+        get() = getLong("conf")
+        set(value) {
+            put("conf", value)
+        }
 
-    /**
-     * Creates a copy from [JSONObject] and use it as a string
-     *
-     * This function will perform deepCopy on the passed object
-     *
-     */
-    constructor(json: JSONObject, source: Source) {
-        this.source = source
-        json.deepClonedInto(this)
-    }
+    var id: DeckConfigId
+        get() = getLong("id")
+        set(value) {
+            put("id", value)
+        }
 
-    /**
-     * Creates a deck config object form a json string
-     */
-    constructor(json: String, source: Source) : super(json) {
-        this.source = source
-    }
-
-    val isDyn: Boolean
-        get() = getInt("dyn") == Consts.DECK_DYN
-    val isStd: Boolean
-        get() = getInt("dyn") == Consts.DECK_STD
-
-    fun deepClone(): DeckConfig {
-        val dc = DeckConfig(source)
-        return deepClonedInto(dc)
-    }
-
-    /** Specifies how to save the config  */
-    enum class Source {
-        /** From an entry in dconf  */
-        DECK_CONFIG,
-
-        /** filtered decks have their config embedded in the deck  */
-        DECK_EMBEDDED
-    }
+    var name: String
+        get() = getString("name")
+        set(value) {
+            put("name", value)
+        }
 
     companion object {
         fun parseTimer(config: JSONObject): Boolean? {
@@ -89,5 +68,9 @@ class DeckConfig : JSONObject {
          */
         fun parseTimerOpt(config: JSONObject, defaultValue: Boolean): Boolean =
             parseTimer(config) ?: defaultValue
+    }
+
+    init {
+        json.deepClonedInto(this)
     }
 }

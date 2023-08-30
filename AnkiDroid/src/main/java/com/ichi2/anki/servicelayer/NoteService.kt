@@ -22,7 +22,6 @@ package com.ichi2.anki.servicelayer
 import android.os.Bundle
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.FieldEditText
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
@@ -33,8 +32,8 @@ import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
 import com.ichi2.libanki.NoteTypeId
 import com.ichi2.libanki.exception.EmptyMediaException
+import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.CollectionUtils.average
-import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
@@ -129,7 +128,8 @@ object NoteService {
                 val inFile = File(tmpMediaPath)
                 if (inFile.exists() && inFile.length() > 0) {
                     val fname = col.media.addFile(inFile)
-                    val outFile = File(col.media.dir(), fname)
+                    val outFile = File(col.media.dir, fname)
+                    Timber.e("%s %s", fname, outFile)
                     if (field.hasTemporaryMedia && outFile.absolutePath != tmpMediaPath) {
                         // Delete original
                         inFile.delete()
@@ -188,12 +188,8 @@ object NoteService {
             note.addTag("marked")
         }
 
-        withCol {
-            if (BackendFactory.defaultLegacySchema) {
-                note.flush()
-            } else {
-                newBackend.updateNote(note)
-            }
+        undoableOp {
+            updateNote(note)
         }
     }
 

@@ -1,7 +1,6 @@
 //noinspection MissingCopyrightHeader #8659
 package com.ichi2.anki
 
-import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Note
 import com.ichi2.utils.HashUtil.HashSetInit
@@ -20,40 +19,6 @@ object CardUtils {
             notes.add(card.note())
         }
         return notes
-    }
-
-    /**
-     * @return All cards of all notes
-     */
-    fun getAllCards(notes: Set<Note>): List<Card> {
-        val allCards: MutableList<Card> = ArrayList(notes.size)
-        for (note in notes) {
-            allCards.addAll(note.cards())
-        }
-        return allCards
-    }
-
-    fun markAll(notes: List<Note>, mark: Boolean) {
-        for (note in notes) {
-            if (mark) {
-                if (!isMarked(note)) {
-                    note.addTag("marked")
-                    note.flush()
-                }
-            } else {
-                note.delTag("marked")
-                note.flush()
-            }
-        }
-    }
-
-    fun isIn(array: LongArray, value: Long): Boolean {
-        for (v in array) {
-            if (v == value) {
-                return true
-            }
-        }
-        return false
     }
 
     /**

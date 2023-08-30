@@ -15,7 +15,7 @@ class AnkiFont private constructor(val name: String, private val family: String,
     private var mIsDefault = false
     private var mIsOverride = false
     val declaration: String
-        get() = "@font-face {" + getCSS(false) + " src: url(\"file://" + path + "\");}"
+        get() = "@font-face {" + getCSS(false) + " src: url(\"" + path + "\");}"
 
     fun getCSS(override: Boolean): String {
         val sb = StringBuilder("font-family: \"").append(family)
@@ -49,7 +49,7 @@ class AnkiFont private constructor(val name: String, private val family: String,
     }
 
     companion object {
-        private const val fAssetPathPrefix = "/android_asset/fonts/"
+        private const val fAssetPathPrefix = "/assets/fonts/"
         private val corruptFonts: MutableSet<String> = HashSet()
 
         /**
@@ -118,7 +118,7 @@ class AnkiFont private constructor(val name: String, private val family: String,
         fun getTypeface(ctx: Context, path: String): Typeface? {
             return try {
                 if (path.startsWith(fAssetPathPrefix)) {
-                    Typeface.createFromAsset(ctx.assets, path.replaceFirst("/android_asset/".toRegex(), ""))
+                    Typeface.createFromAsset(ctx.assets, path.replaceFirst("/assets/".toRegex(), ""))
                 } else {
                     Typeface.createFromFile(path)
                 }

@@ -37,13 +37,11 @@ import com.ichi2.anki.*
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.*
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.servicelayer.ScopedStorageService
-import com.ichi2.async.Connection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import com.ichi2.utils.UiUtil.makeBold
 import kotlinx.parcelize.Parcelize
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -114,7 +112,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // to the previous dialog
                 val options = ArrayList<String>(6)
                 val values = ArrayList<Int>(6)
-                if (!(activity as AnkiActivity).colIsOpen()) {
+                if (!(activity as AnkiActivity).colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(0)
@@ -254,7 +252,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.dialog_positive_create) {
                         val ch = CollectionHelper.instance
                         val time = TimeManager.time
-                        ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
+                        ch.closeCollection("DatabaseErrorDialog: Before Create New Collection")
                         val path1 = CollectionHelper.getCollectionPath(requireActivity())
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
                             ActivityCompat.recreate(activity as DeckPicker)
@@ -292,7 +290,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     contentNullable(message)
                     positiveButton(R.string.dialog_positive_overwrite) {
-                        (activity as DeckPicker).sync(Connection.ConflictResolution.FULL_DOWNLOAD)
+                        (activity as DeckPicker).sync(ConflictResolution.FULL_DOWNLOAD)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -436,7 +434,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.dialog_positive_create) {
                         Timber.w("Creating new collection")
                         val ch = CollectionHelper.instance
-                        ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
+                        ch.closeCollection("DatabaseErrorDialog: Before Create New Collection")
                         CollectionHelper.resetAnkiDroidDirectory(context)
                         context.exit()
                     }
@@ -486,11 +484,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 } catch (e: Exception) {
                     Timber.w(e, "Failed to get database version, using -1")
                 }
-                val schemaVersion = if (BackendFactory.defaultLegacySchema) {
-                    Consts.LEGACY_SCHEMA_VERSION
-                } else {
-                    Consts.BACKEND_SCHEMA_VERSION
-                }
+                val schemaVersion = Consts.BACKEND_SCHEMA_VERSION
                 res().getString(
                     R.string.incompatible_database_version_summary,
                     schemaVersion,

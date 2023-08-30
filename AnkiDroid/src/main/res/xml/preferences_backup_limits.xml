@@ -9,17 +9,6 @@
         android:title="@string/pref__backup_options__title"
         >
 
-        <!-- ############################## Old backend settings ############################### -->
-
-        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
-            android:defaultValue="8"
-            android:key="@string/pref_backup_max_key"
-            android:title="@string/pref_backup_max"
-            app1:useSimpleSummaryProvider="true"
-            app:min="0"
-            app:max="99"
-            />
-
         <!-- ############################## New backend settings ############################### -->
 
         <!-- Includes modified text from `TR.preferencesBackupExplanation()`
