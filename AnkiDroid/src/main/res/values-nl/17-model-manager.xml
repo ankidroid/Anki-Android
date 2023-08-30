@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Notitietype verwijderen</string>
     <string name="model_browser_rename" comment="Rename a note type">Naam wijzigen</string>
     <string name="model_browser_template">Bewerk kaarten</string>
-    <string name="model_browser_add">Notitietype toevoegen</string>
     <!--Rename-->
     <string name="rename_model">Memotype hernoemen</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Laatste invoer onthouden bij het toevoegen</string>
     <string name="model_field_editor_changing">Velden bijwerken</string>
     <string name="model_field_editor_sort_field">Sorteren op dit veld</string>
-    <string name="model_clone_suffix">kopieer</string>
     <!--Warnings-->
     <string name="model_delete_warning">Weet u zeker dat u dit memotype wilt verwijderen?</string>
     <string name="field_delete_warning">Weet u zeker dat u dit veld wilt verwijderen?</string>

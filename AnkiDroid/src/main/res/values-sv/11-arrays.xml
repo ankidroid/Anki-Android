@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Fråga mig</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Endast etikett</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Nya kort i slumpmässig ordning</string>
-    <string name="new_order_order_added">Nya kort i ordningen de lades till</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Äldst först</string>
     <string name="cram_deck_conf_order_random">Slumpmässigt</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Använd nuvarande kortlek</string>
     <string name="add_to_deck_decide_by_note_type">Välj efter nottyp</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Blanda nya kort och repetitionskort</string>
-    <string name="new_spread_new_after_review">Nya kort efter repetitioner</string>
-    <string name="new_spread_new_before_review">Nya kort före repetitioner</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">När inget typsnitt angetts på flashkort</string>
     <string name="override_font_always" comment="Option to always override font">Alltid</string>

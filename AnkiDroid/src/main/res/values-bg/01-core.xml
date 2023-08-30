@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Тестета</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Разглеждане на картите</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">Колекцията е празна</string>
     <string name="no_cards_placeholder_description">Започнете да добавяте карти\nкато използвате иконата +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Научена %1$d карта в %2$s днес</item>
-        <item quantity="other">Научени %1$d карти в %2$s днес</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Напиши отговор</string>
     <string name="show_answer">Покажи отговора</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">Трудно</string>
     <string name="ease_button_good">Добре</string>
     <string name="ease_button_easy">Лесно</string>
-    <string name="studyoptions_congrats_undo">Отмени %s</string>
     <string name="menu_import">Импортиране</string>
     <string name="undo">Отмяна</string>
-    <string name="undo_action_review">последен преглед</string>
-    <string name="undo_action_change_deck_multi">сменете тестетата</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">Премести всички към тесте</string>
     <string name="unbury">Откопай</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">Дневен лимит на учене достигнат</string>
     <string name="studyoptions_empty_schedule">Няма насрочени карти за учене</string>
     <string name="studyoptions_congrats_finished">Поздравления! Вие сте приключили за сега.</string>
-    <string name="studyoptions_congrats_more_rev">Днешната граница е достигната, но все още има карти за преглед. Можете да увеличите границата в опциите.</string>
-    <string name="studyoptions_congrats_more_new">Днешната граница е достигната. Има още нови карти на разположение; Можете да увеличите границата в опциите, но това ще увеличи натоваране на Вашия краткосрочен преглед.</string>
-    <string name="studyoptions_congrats_custom">За да учите извън нормалният график, докоснете бутона \"Допълнително учене\"</string>
     <string name="studyoptions_no_cards_due">Няма оставащи карти</string>
     <string name="sd_card_not_mounted">Не е поставена SD-карта памет</string>
-    <string name="empty_cloze_warning">Редактирай тази бележка и добави празни полета. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхрон</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">Искате ли да прекратите синхронизирането?</string>
-    <string name="continue_sync">Продължи синхронизацията</string>
-    <string name="sync_cancelled">Синхронизирането отменено</string>
-    <string name="sync_cancel_message">Отменяне&#8230;\nТова може да отнеме известно време.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Искате ли да прекратите синхронизирането?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Продължи синхронизацията</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронизирането отменено</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Отменяне&#8230;\nТова може да отнеме известно време.</string>
     <string name="export">Изнасяне</string>
     <string name="export_collection">Изнасяне на колекцията</string>
     <string name="export_deck">Експортиране на тесте</string>
@@ -210,7 +199,6 @@
     <string name="template_for_current_card_deleted">Видът карта за текущата карта беше изтрит.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Външен вид на браузъра</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Инфо за картата</string>
     <!-- Permissions -->
@@ -219,14 +207,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Браузър за карти</string>
     <string name="context_menu_anki_card_label">карта Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s има проблем:<br/>%2$s</string>
-    <string name="more_information">Още информация</string>
-    <string name="no_field">Намерено „{{%1$s}}“, но няма поле, наречено „%1$s“.</string>
-    <string name="closed_tag_not_open">Намерено „{{/%1$s}}“, но липсва „{{#%1$s}}“ или „{{^%1$s}}“.</string>
-    <string name="missing_closing_bracket">Липсва \'}}\' в \'%s\'.</string>
-    <string name="open_tag_not_closed">Липсва „{{%s}}“.</string>
-    <string name="wrong_tag_closed">Намерено „{{/%1$s}}“, но очаквано „{{/%2$s}}“</string>
-    <string name="filter_error">Грешка във филтъра %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Колекциите не могат да бъдат обединени.\nКоя от тях искате да запазите?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -239,7 +219,6 @@
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="other">%1$d карти (0 за преглеждане)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s копирай</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Не може да се пише в или да се създава файл %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>

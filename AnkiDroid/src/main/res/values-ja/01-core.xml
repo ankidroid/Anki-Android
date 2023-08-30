@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">デッキリスト</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">カードブラウザ</string>
@@ -76,9 +76,6 @@
     <string name="no_cards_placeholder_title">まだカードがありません</string>
     <string name="no_cards_placeholder_description">画面右下の「＋」ボタンから\nカードを追加してください</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="other">今日は%1$d枚のカードを%2$sで学習しています</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">答えを入力してください</string>
     <string name="show_answer">解答を表示</string>
@@ -87,11 +84,8 @@
     <string name="ease_button_hard">難しい</string>
     <string name="ease_button_good">正解</string>
     <string name="ease_button_easy">簡単</string>
-    <string name="studyoptions_congrats_undo">%s を元に戻す</string>
     <string name="menu_import">インポート</string>
     <string name="undo">元に戻す</string>
-    <string name="undo_action_review">最後の学習</string>
-    <string name="undo_action_change_deck_multi">デッキを変更</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">描線を一つ取り消す</string>
     <string name="move_all_to_deck">移動先デッキを選択</string>
     <string name="unbury">延期を取り消す</string>
@@ -165,18 +159,14 @@
     <string name="studyoptions_limit_reached">既に一日あたりの学習枚数の上限に達しています</string>
     <string name="studyoptions_empty_schedule">このデッキでは、今日このあと予定されている課題はありません</string>
     <string name="studyoptions_congrats_finished">おめでとうございます！ このデッキの現在の課題をすべて達成しました！</string>
-    <string name="studyoptions_congrats_more_rev">予定日に達した復習カードがまだ他にも残っていますが、今日復習したカードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。</string>
-    <string name="studyoptions_congrats_more_new">新規カードがまだ他にも残っていますが、今日学習した新規カードの枚数が既に一日あたりの上限に達しています。この上限は「デッキ オプション」内の設定で変更することができます。（上限を上げると短期的に学習の負担が増えますのでご注意ください。）</string>
-    <string name="studyoptions_congrats_custom">通常のスケジュール以外で学習するには、「カスタム学習」ボタンをタップしてください。</string>
     <string name="studyoptions_no_cards_due">このデッキの今日の課題はまだ残っていますが、どれもまだ学習予定時刻に達していません</string>
     <string name="sd_card_not_mounted">デバイスのストレージがマウントされていません</string>
-    <string name="empty_cloze_warning">ノートを編集して、穴埋め箇所を追加してください。(%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">同期</string>
     <string name="button_upgrade" comment="Text of the sync button">データをアプリ専用ストレージへ移動</string>
-    <string name="cancel_sync_confirm">同期をキャンセルしますか？</string>
-    <string name="continue_sync">同期を続行</string>
-    <string name="sync_cancelled">同期がキャンセルされました</string>
-    <string name="sync_cancel_message">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">同期をキャンセルしますか？</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">同期を続行</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">同期がキャンセルされました</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">キャンセルしています&#8230;\nやや時間がかかることがあります</string>
     <string name="export">エクスポート</string>
     <string name="export_collection">エクスポート（コレクション）</string>
     <string name="export_deck">デッキをエクスポート</string>
@@ -203,7 +193,6 @@
     <string name="template_for_current_card_deleted">現在のカードのカードタイプが削除されました。</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ブラウザ表示設定</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">カード情報</string>
     <!-- Permissions -->
@@ -212,14 +201,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">AnkiDroid検索</string>
     <string name="context_menu_anki_card_label">Ankiカード</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$sに問題があります:<br/>%2$s</string>
-    <string name="more_information">詳細</string>
-    <string name="no_field">「{{%1$s}}」と記入されていますが、このノートタイプには「%1$s」というフィールドが存在しません。</string>
-    <string name="closed_tag_not_open">終了タグ「{{/%1$s}}」が記入されていますが、対となる開始タグ（「{{#%1$s}}」または「{{^%1$s }}」）が記入されていません。</string>
-    <string name="missing_closing_bracket">\'%s\' の \'}}\' がありません。</string>
-    <string name="open_tag_not_closed">\'{{%s }}\' がありません。</string>
-    <string name="wrong_tag_closed">「{{/%1$s}}」と記入されていますが、記入されている開始タグの対となる終了タグは「{{/%2$s}}」です</string>
-    <string name="filter_error">フィルター %s にエラーがあります</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">コレクションを統合できません。\nどちらのコレクションを保持しますか？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -231,7 +212,6 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d枚 (現在の課題なし)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s コピー</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">ファイル %s への書き込みまたは同ファイルの作成ができません</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"複数のエラーが発生しました。直近のエラー: %s"</string>

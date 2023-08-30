@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">询问我</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">仅打标签</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">按随机顺序学习新卡片</string>
-    <string name="new_order_order_added">按添加顺序学习新卡片</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">优先显示老卡片</string>
     <string name="cram_deck_conf_order_random">随机</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">使用当前牌组</string>
     <string name="add_to_deck_decide_by_note_type">由笔记模板决定</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">混合新卡片和复习</string>
-    <string name="new_spread_new_after_review">复习后再学习新卡片</string>
-    <string name="new_spread_new_before_review">学习新卡片后再复习</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">当卡片中没有指定字体时</string>
     <string name="override_font_always" comment="Option to always override font">总是</string>

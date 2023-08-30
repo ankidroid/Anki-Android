@@ -125,7 +125,6 @@
     <string name="save">Uložit</string>
     <string name="close">Zavřít</string>
     <string name="select">Vybrat</string>
-    <string name="reordering_cards">Mění se pořadí karet&#8230;</string>
     <string name="field_remapping">%1$s (z \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Karty mapované na prázdný cíl budou odstraněny. Nezbývají-li už v poznámce žádné karty, bude poznámka ztracena. Opravdu chcete pokračovat?</string>
     <!-- Timebox -->
@@ -150,19 +149,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Přeplánovat</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Náhled</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d z %2$d</string>
-    <string name="error_insufficient_memory">Operace není možná z důvodu nedostatku paměti na zařízení</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Přejmenovat</string>
-    <string name="default_conf_delete_error">Nelze odstranit výchozí skupinu</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">přidána %d karta</item>
-        <item quantity="few">přidány %d karty</item>
-        <item quantity="many">přidáno %d karty</item>
-        <item quantity="other">přidáno %d karet</item>
-    </plurals>
     <string name="check_db">Zkontrolovat databázi</string>
     <string name="check_media">Zkontrolovat multimédia</string>
     <string name="empty_cards">Prázdné karty</string>
-    <string name="check_db_message">Kontroluje se databáze&#8230;</string>
     <string name="empty_card_warning">Tato karta je prázdná. Použijte možnost \"Prázdné karty\" z menu na obrazovce seznamu balíčků.</string>
     <string name="unknown_type_field_warning">Zápis odpovědi: neznámé pole %s</string>
     <string name="delete_deck">Odstraňuje se balíček&#8230;</string>
@@ -178,13 +168,6 @@
     </plurals>
     <string name="import_log_no_apkg">Toto není platný Anki balíček</string>
     <string name="import_title_error" comment="Title of error dialog">Chyba</string>
-    <string name="import_log_failed_unzip">Nepodařilo se rozbalit apkg: %s</string>
-    <string name="import_log_failed_copy_to">Nepodařilo se zkopírovat apkg do %s</string>
-    <string name="import_log_failed_validate">Selhalo ověření apkg </string>
-    <string name="import_log_insufficient_space_error">Nedostatek místa pro import balíčku.\nPotřeba - %1$s \nK dispozici - %2$s.\n\nMáte potíže? Zkuste uvolnit místo v telefonu, pokud je to možné. Nebo, synchronizace využívá méně místa než import. Můžete zkusit importovat balíček v zařízení, které má více místa (například Anki Desktop), a poté jej synchronizovat s tímto zařízením.</string>
-    <string name="import_log_file_cache_cleared">Chyba při importu souboru, pravděpodobně se během zpracování vyčistila mezipaměť.\nZkuste to prosím znovu</string>
-    <string name="import_succeeded_but_check_database">Import dat se zdařil, ale čištění po importu selhalo. Spusťte kontrolu databáze. Příčina: %s</string>
-    <string name="import_error_corrupt_zip">Soubor apkg je poškozen. Prosím odstraňte ho a stáhněte ho znovu.\n\nPříčina: %s</string>
     <string name="import_error_handle_exception">Nepodařilo se importovat soubor\n\n%s</string>
     <string name="import_error_not_apkg_extension">Název souboru „%s“ nemá příponu .apkg nebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
@@ -192,8 +175,6 @@
     <string name="import_error_copy_to_cache">Nepodařilo se uložit soubor do mezipaměti (možná nedostatek místa v úložišti)</string>
     <string name="import_error_multiple_colpkg">Bylo vybráno více colpkg souborů.</string>
     <string name="import_error_colpkg_apkg">Soubory apkg &amp; colpkg byly vybrány najednou.</string>
-    <string name="import_stats_error">Došlo k chybám při importu následujících souborů:\n%s</string>
-    <string name="import_replacing">Nahrazuje se kolekce&#8230;</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_include_schedule">Zahrnout plánování</string>
     <string name="export_include_media">Zahrnout multimédia</string>
@@ -236,59 +217,11 @@
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
     <string name="steps_error">Kroky musí být čísla větší než 0</string>
     <string name="steps_min_error">Je požadován alespoň jeden krok</string>
-    <string name="sched_end">(konec)</string>
-    <string name="sched_unbury_action">Pro jejich zobrazení stiskněte v menu položku „Zrušit přeskočení“.</string>
-    <string name="sched_has_buried">Některé související nebo přeskočené karty byly přesunuty na zítra.</string>
     <string name="tag_editor_add_feedback">Klepněte na „%2$s“, abyste potvrdili přidání „%1$s“</string>
     <string name="tag_editor_add_feedback_existing">Vybrán stávající štítek „%1$s“</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekunda</item>
-        <item quantity="few">%s sekundy</item>
-        <item quantity="many">%s sekundy</item>
-        <item quantity="other">%s sekund</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuta</item>
-        <item quantity="few">%s minuty</item>
-        <item quantity="many">%s minuty</item>
-        <item quantity="other">%s minut</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s hodina</item>
-        <item quantity="few">%s hodiny</item>
-        <item quantity="many">%s hodiny</item>
-        <item quantity="other">%s hodin</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s den</item>
-        <item quantity="few">%s dny</item>
-        <item quantity="many">%s dne</item>
-        <item quantity="other">%s dnů</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s měsíc</item>
-        <item quantity="few">%s měsíce</item>
-        <item quantity="many">%s měsíce</item>
-        <item quantity="other">%s měsíců</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s rok</item>
-        <item quantity="few">%s roky</item>
-        <item quantity="many">%s roku</item>
-        <item quantity="other">%s let</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s sekundy</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Balíček již existuje</string>
     <string name="decks_rename_filtered_nosubdecks">Filtrovaný balíček nemůže obsahovat podřízené balíčky</string>
-    <string name="filtered_deck_name">Filtrovaný balíček</string>
     <string name="reminder_title">Nezapomeňte dnes studovat!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d karta k zopakování v %1$s</item>
@@ -299,14 +232,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Tento soubor vyžaduje novější verzi Anki.</string>
     <string name="activity_start_failed">V systému není nainstalována aplikace, která může provést tuto akci.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky kamery mohou být velké. Můžete komprimovat a změnit velikost obrázků v adresáři media]]></string>
     <string name="no_browser_notification">Nebyl nalezen žádný prohlížeč, prosím navštivte webovou stránku pomocí pc nebo mobilu: </string>
     <string name="web_page_error">Chyba při načítání stránky: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Odkaz na externí stránku v kartě není podporován.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Obnovené karty</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Pozadí</string>
     <string name="choose_an_image">Vybrat obrázek</string>
@@ -431,7 +362,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizovat z AnkiWebu</string>
     <string name="already_logged_in">Již jste přihlášeni</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Balíček existuje</string>
     <string name="deck_created">Balíček vytvořen</string>
     <string name="deck_renamed">Balíček přejmenován</string>
     <!-- Deck Deletion -->

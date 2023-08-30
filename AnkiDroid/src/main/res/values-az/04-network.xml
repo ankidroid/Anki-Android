@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Aktiv deyilsiniz</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Sinxronizasiya xətası</string>
     <string name="vague_error" comment="Network error dialog title">Xəta</string>
     <string name="retry">yeniden</string>
@@ -63,71 +62,15 @@
     <string name="sign_up">Qeydiyyatdan keç</string>
     <string name="logged_as">Daxil olundu:</string>
     <string name="log_out">Çıxış</string>
-    <string name="alert_logging_message">Giriş edilir...</string>
-    <string name="invalid_username_password">Yanlış e-poçt ünvanı və ya şifrə</string>
     <string name="reset_password">Şifrəni dəyiş</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX seçimləri</string>
-    <string name="sync_prepare_syncing">Sinxronlaşdırma hazırlanılır...</string>
-    <string name="sync_preparing_full_sync_message">Tam sinxronizasiya hazırlanır...</string>
-    <string name="sync_uploading_message">Yüklənilir...</string>
-    <string name="sync_downloading_message">Endirilir....</string>
     <string name="sync_title">Sinxronizasiya</string>
     <string name="sync_log_uploading_message">Yerli tam sync</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, saat diliminin ehtimal yanlışdır.</string>
-    <string name="sync_log_clocks_unsynchronized_date">, saat diliminin ehtimal yanlışdır</string>
-    <string name="sync_no_changes_message">Heç bir dəyişiklik yoxdur</string>
     <string name="sync_database_acknowledge">Kolleksiya sinxronizasiya olunmuşdur</string>
-    <string name="sync_log_error_specific">Sinxronizasiya səhvi növü: %1$s, mesaj: %2$s</string>
     <string name="sync_corrupt_database">Verilənlər bazası xarabdır.Yenidən sinxronlaşdırmağı sınamadan əvvəl düzəldin.Verilənlər bazasını təmiri haqqında məlumat üçün gözləyin: %s.</string>
-    <string name="sync_too_busy">Server məşğuldur.Biraz sonra yenidən cəhd edin.</string>
-    <string name="sync_remote_db_error">Endirilen verilənlər bazası xarab olubdur.Zəhmət olmasa bir daha cəhd edin.</string>
-    <string name="sync_overwrite_error">Mövcud kolleksiyanız yüklənmiş fayl tərəfindən yazıla bilmədi</string>
-    <string name="sync_connection_error">Əlaqəyə vaxt verildi.Ya internet bağlantınızda problem yaşanır və ya media qovluğunuzda çox böyük bir fayl var.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Sinxrozasiya silinməsi...</string>
-    <string name="sync_small_objects_message">Kiçik obyektləri sinxronizasiya etmək...</string>
-    <string name="sync_finish_message">Sinxronlaşdırma bitir...</string>
-    <string name="sync_log_finish_error">Serverə bitiş istiqamətini göndərərkən səhv baş verdi</string>
-    <string name="sync_writing_db">Verilənlər bazasında dəyişiklik yazma...</string>
-    <string name="sync_download_chunk">Dəyişiklikləri endirmək...</string>
-    <string name="sync_upload_chunk">Dəyişiklikləri endirmək...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
-    <string name="sync_generic_error">Bir səhv baş verdi.Biraz sonra yenidən cəhd edin.</string>
-    <string name="sync_check_upload_file">Yüklənmədən əvvəl faylı yoxlanyın...</string>
-    <string name="sync_check_download_file">Yüklənilən fayl yoxlanılır...</string>
-    <string name="sync_media_find">Dəyişən medyanı tapmaq...</string>
-    <string name="sync_media_no_changes">Medya fayllarında dəyişiklik yoxdur</string>
-    <string name="sync_media_success">Sinxronlaşdırılmış medya</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">Sinxronlaşdırıldıqdan sonra,kolleksiya qeyri-sabit vəziyyətdə idi.Bu problemi həll etmək üçün AnkiDroid tam bir senkronizasiya edəcək. Saxlamaq istəyən tərəfi seçin.</string>
-    <string name="sync_media_sanity_failed">Medya sinxronlaşdırma başa çatdı,lakin medya saytı server ilə razı deyil.Növbəti medya senkronizasiyası səhvləri düzəltmək üçün tam olacaq.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">Mediya məlumatlarını sinxronlaşdıran səhv</string>
-    <string name="sync_media_error_check">Kütləvi sinxronlaşdırma zamanı səhv.Media yoxlaması tövsiyə olunur.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Yerli</string>
     <string name="sync_sanity_remote">Uzaqdan</string>
     <string name="force_full_sync_title">Tam sinxronlaşdırmanı zorla</string>
@@ -135,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">İstənilən dəyişiklik sonradan kolleksiyanı sinxronlaşdırdığınız zaman bazanın tam yüklənməsini tələb edəcək.Hal hazirda buradakı sinxronizasiya edilməmiş başqa bir cihazda gözdən keçirmə və ya digər dəyişiklikləriniz varsa, onlar itirilmiş olacaq.Davam?</string>
     <string name="full_sync_confirmation_upgrade">Daha əvvəl quraşdırılmış AnkiDroid versiyasında bir səhv səbəbiylə,tam bir sinxronlaşdırma məcburiyyətindədir.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
-    <string name="sync_error_409">Yalnız bir müştəri bir anda AnkiWeb-ə daxil ola bilər.Əvvəlki sinxronlaşdırma uğursuz olarsa,bir neçə dəqiqə ərzində yenidən cəhd edə bilərsiniz.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
-    <string name="sync_error_501_upgrade_required">Xahiş edirik, AnkiDroid-in ən son versiyasına yüksəltin</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

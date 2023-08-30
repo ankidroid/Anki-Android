@@ -125,7 +125,6 @@
     <string name="save">Lagre</string>
     <string name="close">Lukk</string>
     <string name="select">Velg</string>
-    <string name="reordering_cards">Stokker om kortene&#8230;</string>
     <string name="field_remapping">%1$s (fra “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Alle kort som ikke er tilordnet noe vil slettes. Hvis et notat ikke har kort igjen, vil det gå tapt. Er du sikker du vil fortsette?</string>
     <!-- Timebox -->
@@ -146,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Endre plan</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Forhåndsvisning</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">Operasjonen ikke mulig på grunn av for lite minne på enheten</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Byt namn</string>
-    <string name="default_conf_delete_error">The default options group can’t be removed</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d kort lagt til</item>
-        <item quantity="other">%d kort lagt til</item>
-    </plurals>
     <string name="check_db">Sjekk databasen</string>
     <string name="check_media">Sjekk media</string>
     <string name="empty_cards">Tomme kort</string>
-    <string name="check_db_message">Undersøker database.\nVennligst vent...</string>
     <string name="empty_card_warning">This card is empty. Use the “Empty cards” option from the menu on the deck list screen.</string>
     <string name="unknown_type_field_warning">Angi svar: ukjent felt %s</string>
     <string name="delete_deck">Slettar kortleiken &#8230;</string>
@@ -170,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Dette er ikke en gyldig Anki pakke fil</string>
     <string name="import_title_error" comment="Title of error dialog">Feil</string>
-    <string name="import_log_failed_unzip">Kan ikke pakke ut apkg: %s</string>
-    <string name="import_log_failed_copy_to">Kunne ikke kopiere apkg til %s</string>
-    <string name="import_log_failed_validate">Akg feilet validering</string>
-    <string name="import_log_insufficient_space_error">Det er ikke nok plass til å importere pakken. Det trengs \n - %1$s \nTilgjengelig - %2$s.\n\n Problemer? Prøv å frigjøre plass på telefonen din hvis mulig. Alternativt kan synkronisering bruke mindre plass enn importering. Du kan prøve å importere pakken med en enhet med mer plass (for eksempel Anki Desktop) og deretter synkronisere den til denne enheten.</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_handle_exception">Klarte ikkje å importere fil\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
@@ -184,8 +169,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Erstattar samlinga&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Include scheduling</string>
     <string name="export_include_media">Inkluder media</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">Det finnes en spesiell kortstokk for å studere utenfor den vanlige tidsrammen. Kort vil automatisk bli satt tilbake i de opprinnelige kortstokkene sine etter at du har gått gjennom dem. Ved å slette denne kortstokken fra kortstokklisten, vil alle gjenværende kort bli satt tilbake i de opprinnelige kortstokkene sine.</string>
     <string name="steps_error">Stegantallet må være av tall høyere enn 0</string>
     <string name="steps_min_error">Minst ett steg kreves</string>
-    <string name="sched_end">(slutt)</string>
-    <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
-    <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekund</item>
-        <item quantity="other">%s sekunder</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minutt</item>
-        <item quantity="other">%s minutter</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s time</item>
-        <item quantity="other">%s timer</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s dag</item>
-        <item quantity="other">%s dager</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s måned</item>
-        <item quantity="other">%s måneder</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s år</item>
-        <item quantity="other">%s år</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt;%s</string>
     <string name="decks_rename_exists">Denne kortstokken eksisterer allerede</string>
     <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-    <string name="filtered_deck_name">Filtrert kortstokk</string>
     <string name="reminder_title">Ikke glem å studere i dag!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Denne filen krever en nyere versjon av Anki.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Bakgrunn</string>
     <string name="choose_an_image">Velg bilde</string>
@@ -403,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">Synkroniser fra AnkiWeb</string>
     <string name="already_logged_in">Allerede pålogget</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Kortleiken finst</string>
     <string name="deck_created">Laga ein kortleik</string>
     <string name="deck_renamed">Døypte om kortleiken</string>
     <!-- Deck Deletion -->

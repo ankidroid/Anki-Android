@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Питај ме</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Додај само таг</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Нове картице у случајном редоследу</string>
-    <string name="new_order_order_added">Нове картице у редоследу додавања</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Најстарије виђене прво</string>
     <string name="cram_deck_conf_order_random">Насумице</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Користи текући шпил</string>
     <string name="add_to_deck_decide_by_note_type">Одлучи по типу белешке</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Помешај нове и поновљене картице</string>
-    <string name="new_spread_new_after_review">Нове картице после поновљених</string>
-    <string name="new_spread_new_before_review">Нове картице пре поновљених</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Када нема фонт одређен за картице</string>
     <string name="override_font_always" comment="Option to always override font">Увек</string>

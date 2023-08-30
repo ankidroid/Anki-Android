@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Dek</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Pencari kad</string>
@@ -76,9 +76,6 @@
     <string name="no_cards_placeholder_title">Koleksi kosong</string>
     <string name="no_cards_placeholder_description">Mula tambah kad\nmenggunakan ikon +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="other">%1$d kad dipelajari dalam %2$s hari ini</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Taip jawapan</string>
     <string name="show_answer">Tunjuk jawapan</string>
@@ -87,11 +84,8 @@
     <string name="ease_button_hard">Susah</string>
     <string name="ease_button_good">Baik</string>
     <string name="ease_button_easy">Senang</string>
-    <string name="studyoptions_congrats_undo">Buat asal %s</string>
     <string name="menu_import">Import</string>
     <string name="undo">Buat asal</string>
-    <string name="undo_action_review">semakan terakhir</string>
-    <string name="undo_action_change_deck_multi">pertukaran dek</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Buat asal garisan</string>
     <string name="move_all_to_deck">Pindah semua ke dek</string>
     <string name="unbury">Tampil</string>
@@ -165,18 +159,14 @@
     <string name="studyoptions_limit_reached">Had ulang kaji harian tercapai</string>
     <string name="studyoptions_empty_schedule">Tiada kad untuk ulang kaji</string>
     <string name="studyoptions_congrats_finished">Tahniah! Kini anda telah selesai.</string>
-    <string name="studyoptions_congrats_more_rev">Had hari ini tercapai, namun masih terdapat kad untuk semak. Anda boleh tingkatkan had dalam tetapan dek.</string>
-    <string name="studyoptions_congrats_more_new">Had hari ini tercapai. Terdapat lebih kad baru; anda boleh tingkatkan had dalam tetapan dek, namun ia akan tambah beban kerja semakan anda dalam jangka pendek.</string>
-    <string name="studyoptions_congrats_custom">Untuk belajar di luar jadual biasa, sentuh butang “ulang kaji tersuai”</string>
     <string name="studyoptions_no_cards_due">Tiada kad tertunggak lagi</string>
     <string name="sd_card_not_mounted">Peranti storan tidak dipasang</string>
-    <string name="empty_cloze_warning">Sunting nota ini dan tambah penghapusan kloz. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Segerak</string>
     <string name="button_upgrade" comment="Text of the sync button">Hijrah ke storan berskop</string>
-    <string name="cancel_sync_confirm">Adakah anda mahu batalkan penyegerakan?</string>
-    <string name="continue_sync">Teruskan penyegerakan</string>
-    <string name="sync_cancelled">Penyegerakan terbatal</string>
-    <string name="sync_cancel_message">Membatal&#8230;\nMungkin mengambil masa.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Adakah anda mahu batalkan penyegerakan?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Teruskan penyegerakan</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Penyegerakan terbatal</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Membatal&#8230;\nMungkin mengambil masa.</string>
     <string name="export">Eksport</string>
     <string name="export_collection">Eksport koleksi</string>
     <string name="export_deck">Eksport dek</string>
@@ -203,7 +193,6 @@
     <string name="template_for_current_card_deleted">Jenis kad bagi kad ini telah dipadam.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Penampilan pencari</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Info kad</string>
     <!-- Permissions -->
@@ -212,14 +201,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Pencari Kad</string>
     <string name="context_menu_anki_card_label">Kad Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s ada kesulitan:<br/>%2$s</string>
-    <string name="more_information">Maklumat lanjut</string>
-    <string name="no_field">Jumpa \'{{%1$s}}\', namun tiada medan bernama \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Jumpa \'{{/%1$s}}\', namun tiada \'{{#%1$s}}\' atau \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Tiada \'}}\' dalam \'%s\'.</string>
-    <string name="open_tag_not_closed">Tiada \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Jumpa \'{{/%1$s}}\', namun menjangka \'{{/%2$s}}\'</string>
-    <string name="filter_error">Ralat dalam tapis %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Koleksi tidak boleh digabungkan .\nKoleksi mana yang anda ingin simpan?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -231,7 +212,6 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d kad (0 tunggakan)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">salinan %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Gagal menulis atau mencipta fail %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Pelbagai ralat, terkini: %s"</string>

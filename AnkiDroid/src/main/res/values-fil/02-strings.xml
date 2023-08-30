@@ -125,7 +125,6 @@
     <string name="save">Save</string>
     <string name="close">Isara</string>
     <string name="select">Piliin</string>
-    <string name="reordering_cards">Pagsasaayos muli ng mga kard&#8230;</string>
     <string name="field_remapping">%1$s (mula sa \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Ang anumang mga kard na nakabalangkas sa wala ay matatanggal. Kung ang isang tala ay walang natitirang mga kard, ito ay mawawala. Sigurado ka bang gusto mong magpatuloy?</string>
     <!-- Timebox -->
@@ -146,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Muling iskedyul</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">I-preview</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sa %2$d</string>
-    <string name="error_insufficient_memory">Ang operasyon ay hindi posible dahil sa hindi sapat na memorya ng iyong aparato</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Baguhin ang pangalan</string>
-    <string name="default_conf_delete_error">Ang grupo ng default na opsiyon ay hindi maaaring alisin</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">Naidagdag ang %d na kard</item>
-        <item quantity="other">Naidagdag ang %d na kard</item>
-    </plurals>
     <string name="check_db">I-tsek ang database</string>
     <string name="check_media">I-tsek ang media</string>
     <string name="empty_cards">Mga walang lamang card</string>
-    <string name="check_db_message">Sinusuri ang database&#8230;</string>
     <string name="empty_card_warning">Walang laman ang card na ito. Gamitin ang opsiyon na \"Mga walang lamang card\" mula sa menu sa screen ng listahan ng deck.</string>
     <string name="unknown_type_field_warning">I-type ang sagot: hindi kilalang patlang %s</string>
     <string name="delete_deck">Tinatanggal ang deck&#8230;</string>
@@ -170,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Hindi ito isang wastong Anki package file</string>
     <string name="import_title_error" comment="Title of error dialog">Kamalian</string>
-    <string name="import_log_failed_unzip">Bigo sa pag-unzip sa apkg: %s</string>
-    <string name="import_log_failed_copy_to">Bigo sa pagkopya ng apkg sa %s</string>
-    <string name="import_log_failed_validate">Bigo sa pagpatunay sa apkg</string>
-    <string name="import_log_insufficient_space_error">Hindi sapat ang espasyo para maiangkat ang package.\nKailangan - %1$s \nMeron - %2$s.\n\nNahihirapan? Subukang magbakante ng espasyo sa iyong phone kung maaari. Pwede ring iangkat muna ang package sa isang device na mayroon pang espasyo (tulad ng Anki Desktop) at saka i-sync sa device na ito. Mas kaunti ang espasyong ginagamit ng pag-sync kumpara sa pag-angkat.</string>
-    <string name="import_log_file_cache_cleared">May kamalian sa pag-import sa file, marahil dahil sa pagbura ng cache sa kalagitnaan ng pagpoproseso.\nMangyaring subukan muli</string>
-    <string name="import_succeeded_but_check_database">Tagumpay ang pag-angkat ng data, subalit nabigo ang paglilinis matapos ang pag-angkat. Patakbuhin mamaya ang pagsusuri sa database. Ugat na dahilan: %s</string>
-    <string name="import_error_corrupt_zip">Na-corrupt ang apkg na file. Mangyaring burahin ito and muling i-download.\n\nUgat na dahilan: %s</string>
     <string name="import_error_handle_exception">Bigo sa pag-import sa file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Ang filename na \"%s\" ay walang extension na .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Hindi pa suportado ang mga pamalit na Anki Database (.anki2). Mangyaring tingnan ang manual para sa tagubilin sa pagpapalit.</string>
@@ -184,8 +169,6 @@
     <string name="import_error_copy_to_cache">Bigo sa pag-cache sa file (posibleng naubusan na ng storage)</string>
     <string name="import_error_multiple_colpkg">Maraming colpkg na file ang pinili.</string>
     <string name="import_error_colpkg_apkg">Sabay na pinili ang parehong apkg &amp; colpkg na mga file.</string>
-    <string name="import_stats_error">May mga kamaliang nangyarai habang inaangkat ang mga sumusunod na file:\n%s</string>
-    <string name="import_replacing">Pinapalitan ang koleksyon&#8230;</string>
     <string name="import_interrupted">Naudlot ang pag-angkat: Nasara ang AnkiDroid</string>
     <string name="export_include_schedule">Isama ang pag-iiskedyul</string>
     <string name="export_include_media">Isama ang media</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">Ito ay isang espesyal na deck para sa pag-aaral sa labas ng normal na iskedyul. Ang mga kard ay awtomatikong ibabalik sa kanilang orihinal na mga deck matapos mong suriin ang mga ito. Ang pagtanggal sa kubyerta mula sa listahan ng deck ay babalik ang lahat ng natitirang mga card sa kanilang orihinal na deck.</string>
     <string name="steps_error">Ang mga hakbang ay dapat na mga numerong mas higit sa 0</string>
     <string name="steps_min_error">Hindi bababa sa isang hakbang ang kailangan</string>
-    <string name="sched_end">(katapusan)</string>
-    <string name="sched_unbury_action">Upang makita ang mga ito ngayon pindutin ang \"Unbury\" item sa menu</string>
-    <string name="sched_has_buried">Ang ilang mga kaugnay o nakabaong kard ay naantala hanggang bukas</string>
     <string name="tag_editor_add_feedback">Pindutin ang \"%2$s\" para kumpirmahin ang pagdaragdag ng \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Napili ang umiiral na tag na \"%1$s\"</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s na segundo</item>
-        <item quantity="other">%s na mga segundo</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s na minuto</item>
-        <item quantity="other">%s na mga minuto</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s oras</item>
-        <item quantity="other">%s na mga oras</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s na araw</item>
-        <item quantity="other">%s na mga araw</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s na buwan</item>
-        <item quantity="other">%s na mga buwan</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s na taon</item>
-        <item quantity="other">%s na mga taon</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s segundo</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Ang deck na iyan ay umiiral</string>
     <string name="decks_rename_filtered_nosubdecks">Ang isang naka-filter na deck ay hindi maaaring magkaroon ng mga subdecks</string>
-    <string name="filtered_deck_name">Naka-filter na deck</string>
     <string name="reminder_title">Huwag kaligtaang mag-aral ngayon!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card ang dapat repasuhin sa %1$s</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Mali sa pagbabahagi ng apkg file</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Kailangan ng file na ito ang mas bagong bersyon ng Anki.</string>
     <string name="activity_start_failed">Walang aplikasyong naka-install sa sistema na maaaring gumawa sa aksyong ito.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Maaring malaki ang litrato ng kamera. Pwede mong i-compress o paliitin ang litrato sa media directory.]]></string>
     <string name="no_browser_notification">Walang makitang browser, mangyaring bisitahin ang pahina sa web gamit ang PC o mobile: </string>
     <string name="web_page_error">Kamalian sa pag-lo-load ng pahina: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Hindi suportado ang link mula sa labas sa loob ng card.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Nasagip na mga Card</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Likuran</string>
     <string name="choose_an_image">Pumili ng Litrato</string>
@@ -403,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">Mag-sync mula sa AnkiWeb</string>
     <string name="already_logged_in">Naka-login na</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Mayroon na ang deck</string>
     <string name="deck_created">Nailikha ang deck</string>
     <string name="deck_renamed">Napangalanan muli ang deck</string>
     <!-- Deck Deletion -->

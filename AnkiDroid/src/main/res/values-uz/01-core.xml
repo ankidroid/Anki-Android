@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">To\'plamlar</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Karta qidiruvchi</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">To\'plam bo\'sh</string>
     <string name="no_cards_placeholder_description">Kartalar qo\'shishni\n+ belgisi orqali boshlang</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Bugun %2$s da %1$d karta o\'rganildi</item>
-        <item quantity="other">Bugun %2$s da %1$d kartalar o\'rganildi</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Javobingizni yozish</string>
     <string name="show_answer">Javobni ko\'rsatish</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">Qiyin</string>
     <string name="ease_button_good">Yaxshi</string>
     <string name="ease_button_easy">Oson</string>
-    <string name="studyoptions_congrats_undo">Bekor qilish %s</string>
     <string name="menu_import">Import qilish</string>
     <string name="undo">Bekor qilish</string>
-    <string name="undo_action_review">oxirgi takrorlash</string>
-    <string name="undo_action_change_deck_multi">change decks</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Qatlamni bekor qilish</string>
     <string name="move_all_to_deck">Hammasini to\'plamga ko\'chirish</string>
     <string name="unbury">Tiklash</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">Kunlik o\'rganish limitiga yetdingiz</string>
     <string name="studyoptions_empty_schedule">O\'rganilishi rejalashtirilgan karta yo\'q</string>
     <string name="studyoptions_congrats_finished">Tabriklaymiz! Siz hozircha tugatdingiz</string>
-    <string name="studyoptions_congrats_more_rev">Bugungi limitga yetdingiz, lekin hali ham takrorlash uchun kartalar bor. Limitni sozlamalar qismidan oshirishingiz mumkin.</string>
-    <string name="studyoptions_congrats_more_new">Bugungi chegaraga yetdingiz, lekin hali ham takrorlash uchun kartalar bor. Chegarani sozlamalar qismidan oshirishingiz mumkin, lekin bu sizning qisqa vaqtdagi ko\'rib chiqish yukingizni oshiradi.</string>
-    <string name="studyoptions_congrats_custom">Odatiy jadvaldan tashqari ko\'proq o\'qish uchun, \'Qo\'shimcha shug\'ullanish\' tugmasini bosing</string>
     <string name="studyoptions_no_cards_due">Tugashi lozim kartalar halicha yo\'q</string>
     <string name="sd_card_not_mounted">Qurilma xotirasi o\'rnatilmagan</string>
-    <string name="empty_cloze_warning">Bu kartani o\'zgartirish va bir nechta yopilma o\'chirishlar qo\'shish (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinxronlash</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">Sinxronlashni bekor qilishni istaysizmi?</string>
-    <string name="continue_sync">Sinxronlashni davom ettirish</string>
-    <string name="sync_cancelled">Sinxronlash bekor qilindi</string>
-    <string name="sync_cancel_message">Bekor qilinyapti...\n Bu biroz vaqt olishi mumkin</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Sinxronlashni bekor qilishni istaysizmi?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Sinxronlashni davom ettirish</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Sinxronlash bekor qilindi</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Bekor qilinyapti...\n Bu biroz vaqt olishi mumkin</string>
     <string name="export">Eksport qilish</string>
     <string name="export_collection">Jamlanmani eksport qilish</string>
     <string name="export_deck">To\'plamni eksport qilish</string>
@@ -210,7 +199,6 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Card info</string>
     <!-- Permissions -->
@@ -219,14 +207,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Karat qidiruvchi</string>
     <string name="context_menu_anki_card_label">Anki Karta</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s ning muammosi bor:<br/>%2$s</string>
-    <string name="more_information">Qo\'shimcha ma\'lumot</string>
-    <string name="no_field">Topildi \'{{%1$s}}\', ammo \'%1$s\' nomli maydon yo\'q</string>
-    <string name="closed_tag_not_open">Topildi \'{{/%1$s}}\', ammo \'{{#%1$s}}\' yoki \'{{^%1$s}}\' yo\'qolgan</string>
-    <string name="missing_closing_bracket">\'%s\' da \'}}\' yo\'qolgan</string>
-    <string name="open_tag_not_closed">\'{{%s}}\' yo\'qolgan.</string>
-    <string name="wrong_tag_closed">\'{{/%1$s}}\' topildi, ammo \'{{/%2$s}}\' kutilgan edi</string>
-    <string name="filter_error">%s filtrda xatolik</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Jamlanmalarni birlashtirib bo\'lmaydi.\n Qaysi jamlanmani saqlab qolmoqchisiz?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -240,7 +220,6 @@
 %1$d kartalar (0 lozim)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s nusxa</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>

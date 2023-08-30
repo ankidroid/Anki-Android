@@ -125,7 +125,6 @@
     <string name="save">সংরক্ষন কর</string>
     <string name="close">বন্ধ কর</string>
     <string name="select">বেছে নাও</string>
-    <string name="reordering_cards">কার্ডগুলো পুনঃবিন্যাস করছি&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” থেকে)</string>
     <string name="confirm_map_cards_to_nothing">ম্যাপিং বিহীন কার্ডগুলি মুছে ফেলা হবে। কোনও নোটে যদি আর কার্ড বাকি না থাকে তবে সেটাও মুছে যাবে। আপনি কি চালিয়ে যেতে চান?</string>
     <!-- Timebox -->
@@ -146,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">সময় পুনঃনির্ধারণ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">একটু দেখাও</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d -র মধ্যে %1$d</string>
-    <string name="error_insufficient_memory">আপনার ডিভাইসে পর্যাপ্ত মেমোরি না থাকায় কাজটি সম্ভব হয়নি</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">পুনঃনামকরণ</string>
-    <string name="default_conf_delete_error">ডিফল্ট অপশন গ্রুপ সরিয়ে ফেলা যাবে না</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%dটি কার্ড যোগ করা হয়েছে</item>
-        <item quantity="other">%dটি কার্ড যোগ করা হয়েছে</item>
-    </plurals>
     <string name="check_db">ডেটাবেজ চেক</string>
     <string name="check_media">মিডিয়া চেক</string>
     <string name="empty_cards">খালি কার্ডসমূহ</string>
-    <string name="check_db_message">ডেটাবেজ চেক করছি...</string>
     <string name="empty_card_warning">এই কার্ডটি খালি। \"ডেক তালিকা\" স্ক্রিন থেকে \"খালি কার্ডসমূহ\" অপশনটি ব্যবহার করুন।</string>
     <string name="unknown_type_field_warning">উত্তর টাইপ করুন: অজানা ফিল্ড %s</string>
     <string name="delete_deck">ডেক মুছছি...</string>
@@ -170,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">এটি কোন বৈধ আনকি প্যাকেজ ফাইল নয়</string>
     <string name="import_title_error" comment="Title of error dialog">ত্রুটি</string>
-    <string name="import_log_failed_unzip">আনজিপ করতে ব্যর্থ - apkg: %s</string>
-    <string name="import_log_failed_copy_to">apkg %sতে কপি করতে ব্যর্থ</string>
-    <string name="import_log_failed_validate">apkg ভ্যালিডেশন ব্যর্থ</string>
-    <string name="import_log_insufficient_space_error">প্যাকেজ আমদানি করার মত যথেষ্ট জায়গা নেই।\n প্রয়োজন - %1$s \nআছে - %2$s।\n\nসমস্যা হচ্ছে? আপনার ফোনের জায়গা খালি করার চেষ্টা করুন। বিকল্প হিসেবে, সিনক্রোনাইজেশন আমদানি করার তুলনায় কম জায়গা নেয়। আপনি বেশি জায়গা সমৃদ্ধ কোন ডিভাইসে এটি আমদানি করার চেষ্টা করতে পারেন। (যেমন: আনকি ডেস্কটপ) অতঃপর সেটি এই ডিভাইসের সাথে সিনক্রোনাইজ করতে পারেন।</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
@@ -184,8 +169,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Replacing collection&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Include scheduling</string>
     <string name="export_include_media">Include media</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">স্বাভাবিক সময়সূচীর বাইরে অধ্যয়ন করার জন্য এটি একটি বিশেষ ডেক। রিভিউয়ের পর কার্ডসমূহকে স্বয়ংক্রিয়ভাবে তাদের আসল ডেকসমূহে ফিরিয়ে দেয়া হবে। এই ডেকটি মুছে ফেলা হলে বাকি থাকা কার্ডগুলিকে তাদের আসল ডেকে ফিরিয়ে দেয়া হবে।</string>
     <string name="steps_error">Steps must be numbers greater than 0</string>
     <string name="steps_min_error">At least one step is required</string>
-    <string name="sched_end">(end)</string>
-    <string name="sched_unbury_action">সেগুলো দেখতে চাইলে মেনুতে আইটেম \"অদাফন\" এ চাপুন</string>
-    <string name="sched_has_buried">Some related or buried cards were delayed until tomorrow</string>
     <string name="tag_editor_add_feedback">Touch “%2$s” to confirm adding “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existing tag “%1$s” selected</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s second</item>
-        <item quantity="other">%s seconds</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minute</item>
-        <item quantity="other">%s minutes</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s hour</item>
-        <item quantity="other">%s hours</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s day</item>
-        <item quantity="other">%s days</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s month</item>
-        <item quantity="other">%s months</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s year</item>
-        <item quantity="other">%s years</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">That deck already exists</string>
     <string name="decks_rename_filtered_nosubdecks">A filtered deck cannot have subdecks</string>
-    <string name="filtered_deck_name">Filtered Deck</string>
     <string name="reminder_title">Do not forget to study today!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error sharing apkg file</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Select image</string>
@@ -403,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

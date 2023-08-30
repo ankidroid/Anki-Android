@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">비활성화됨</string>
-    <string name="enabled">활성화됨</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -152,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">사용자 입력 없이 자동으로 답변을 표시합니다. 지연에는 자동으로 재생되는 오디오 파일의 시간이 포함됩니다.</string>
     <string name="timeout_answer_seconds" maxLength="41">정답을 표시할 시간</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 초</string>
     <string name="timeout_question_seconds" maxLength="41">다음 문제를 표시할 시간</string>
     <string name="select_locale_title">언어 선택</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">예상 완료일 표시</string>
     <string name="show_eta_summ">남은 시간 표시</string>
     <string name="use_current" maxLength="41">새 카드의 카드 묶음</string>
-    <string name="new_spread" maxLength="41">새 카드 위치</string>
     <string name="learn_cutoff" maxLength="41">미리 학습하기 시간 설정</string>
     <string name="time_limit" maxLength="41">타임박스 시간 설정</string>
     <string name="new_timezone" maxLength="41">새 시간대 다루기</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">고급 통계</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">고급 통계 사용</string>
-    <string name="enable_advanced_statistics_summ">향후 복습의 시뮬레이션이나 계산에 기반한(옵션 사용할 경우), 또는 이미 예정된 향후 복습에 기반한(옵션 사용하지 않을 경우) 예측 통계를 표시</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">처음 n일을 계산, 나머지는 시뮬레이트</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">계산의 정확도</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">시뮬레이션 반복 횟수</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">자체 동기화 서버</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
@@ -236,62 +222,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">태그 선택</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">카드 묶음 설명 (이 카드 묶음에만 적용됩니다)</string>
-    <string name="deck_conf_group" maxLength="41">옵션 그룹</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="other">%1$s\n%2$d 덱이 이 그룹을 사용합니다</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">새 카드</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">복습 횟수</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">학습경과 시간</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">일반</string>
     <string name="deck_conf_reminders" maxLength="41">알림</string>
-    <string name="deck_conf_steps" maxLength="41">학습단계(분)</string>
-    <string name="deck_conf_order" maxLength="41">순서</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">1일 새카드 수</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">졸업 간격</string>
-    <string name="deck_conf_days">XXX일</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">쉬운 간격</string>
-    <string name="deck_conf_start_ease" maxLength="41">쉽게 시작</string>
-    <string name="deck_conf_max_rev" maxLength="41">최대의 리뷰 / 일</string>
-    <string name="deck_conf_new_bury" maxLength="41">연관된 새 카드를 나중에 보기</string>
-    <string name="deck_conf_new_bury_summ">관련된 새 카드가 다음 날이 될 때까지 나타나지 않습니다.</string>
-    <string name="deck_conf_rev_bury" maxLength="41">관련된 복습 카드 나중에 보기</string>
-    <string name="deck_conf_rev_bury_summ">관련된 복습 카드는 다음 날이 될 때까지 나타나지 않습니다.</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">쉬운 버튼 보너스값</string>
-    <string name="deck_conf_hard_factor" maxLength="41">어려움 간격</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">간격 수정자</string>
-    <string name="deck_conf_max_ivl" maxLength="41">최대 간격</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">새 간격</string>
-    <string name="deck_conf_min_ivl" maxLength="41">최소 간격</string>
-    <string name="deck_conf_leech_thres" maxLength="41">달라붙기 임계점</string>
-    <string name="deck_conf_fails">XXX 실패</string>
-    <string name="deck_conf_leech_action" maxLength="41">달라붙기 작업</string>
-    <string name="deck_conf_max_time" maxLength="41">최대 응답 시간</string>
-    <string name="deck_conf_seconds">XXX 초</string>
-    <string name="deck_conf_timer" maxLength="41">답변 타이머 보이기</string>
-    <string name="deck_conf_autoplay" maxLength="41">오디오 자동 재생</string>
-    <string name="deck_conf_replayq" maxLength="41">질문 반복</string>
-    <string name="deck_conf_replayq_summ">정답이 보여졌을 때, 질문과 정답 오디오 둘 다 다시 재생합니다.</string>
-    <string name="deck_conf_manage" maxLength="41">그룹 관리</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group" maxLength="41">현재 그룹</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">이름 바꾸기</string>
-    <string name="deck_conf_reset" maxLength="41">기본값 복원</string>
-    <string name="deck_conf_reset_message">현재 옵션 그룹을 기본값으로 복원할까요?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">새로 환경설정 지정</string>
-    <string name="deck_conf_add_summ">현재 옵션 그룹의 복사본을 만들기</string>
-    <string name="deck_conf_remove_message">현재 옵션 그룹을 제거할까요?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">모든 하위 묶음에 설정하기</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="other">%s 하위 카드 묶음이 이 그룹을 사용 합니다</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">이 카드 묶음의 모든 하위 묶음에 현재의 옵션 그룹을 설정할까요?</string>
     <string name="pref_browser_editor_font" maxLength="41">탐색기 및 편집기 글꼴</string>
     <string name="deck_conf_cram_filter" maxLength="41">필터</string>
     <string name="deck_conf_cram_search" maxLength="41">검색</string>
@@ -302,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">사용자 지정 단계(분)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">사용자 정의 단계 정의</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
-    <string name="deck_conf_reminders_time" maxLength="41">알림 시간</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid를 개선하는데 도움을 주세요!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>
@@ -340,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
@@ -382,7 +309,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>

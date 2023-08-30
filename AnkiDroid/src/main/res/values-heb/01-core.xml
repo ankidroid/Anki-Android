@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">חפיסות</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">דפדפן הכרטיסים</string>
@@ -89,12 +89,6 @@
     <string name="no_cards_placeholder_description">אפשר להוסיף כרטיסים\n
 באמצעות הסמל +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">למדת היום כרטיס אחד במשך %2$s</item>
-        <item quantity="two">היום נלמדו %1$d קלפים מתוך %2$s</item>
-        <item quantity="many">היום נלמדו %1$d קלפים מתוך %2$s</item>
-        <item quantity="other">למדת היום %1$d קלפים במשך %2$s</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">הקלדת תשובה</string>
     <string name="show_answer">הצגת תשובה</string>
@@ -103,11 +97,8 @@
     <string name="ease_button_hard">קשה</string>
     <string name="ease_button_good">טוב</string>
     <string name="ease_button_easy">קל</string>
-    <string name="studyoptions_congrats_undo">ביטול %s</string>
     <string name="menu_import">ייבוא</string>
     <string name="undo">ביטול</string>
-    <string name="undo_action_review">שינון אחרון</string>
-    <string name="undo_action_change_deck_multi">החלפת חפיסות</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">בטל שרבוט</string>
     <string name="move_all_to_deck">העברת הכול לחפיסה</string>
     <string name="unbury">ביטול דילוג</string>
@@ -181,18 +172,14 @@
     <string name="studyoptions_limit_reached">יעד הלמידה היומי הושלם</string>
     <string name="studyoptions_empty_schedule">אין קלפים מתוכננים ללמידה</string>
     <string name="studyoptions_congrats_finished">מזל טוב! סיימת לרגע.‏</string>
-    <string name="studyoptions_congrats_more_rev">יעד הלמידה היומי הושלם, אך עדיין יש קלפים לשינון. ניתן להגדיל את היעד באפשרויות.</string>
-    <string name="studyoptions_congrats_more_new">יעד הלמידה היומי הושלם. ישנם קלפים חדשים זמינים; ניתן להגדיל את היעד באפשרויות, אך זה יגדיל את עומס הסקירה לטווח קצר.</string>
-    <string name="studyoptions_congrats_custom">על מנת ללמוד מחוץ ללוח הזמנים הרגיל, לחץ על \"למידה מותאמת אישית\"</string>
     <string name="studyoptions_no_cards_due">אין כרטיסים נוספים</string>
     <string name="sd_card_not_mounted">התקן אחסון לא מחובר</string>
-    <string name="empty_cloze_warning">ערוך את הרשומה והוסף השלם את החסר. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">סנכרון</string>
     <string name="button_upgrade" comment="Text of the sync button">העבר לאחסון הקפי</string>
-    <string name="cancel_sync_confirm">לבטל את הסנכרון?</string>
-    <string name="continue_sync">המשך סנכרון</string>
-    <string name="sync_cancelled">סנכרון בוטל</string>
-    <string name="sync_cancel_message">מבטל&#8230;\n אנא המתן.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">לבטל את הסנכרון?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">המשך סנכרון</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">סנכרון בוטל</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">מבטל&#8230;\n אנא המתן.</string>
     <string name="export">ייצוא</string>
     <string name="export_collection">ייצוא אוסף</string>
     <string name="export_deck">ייצוא חפיסה</string>
@@ -225,7 +212,6 @@
     <string name="template_for_current_card_deleted">סוג הקלף של הקלף הנוכחי נמחק.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">מראה הדפדפן</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">מידע על הקלף</string>
     <!-- Permissions -->
@@ -234,14 +220,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">דפדפן הקלפים</string>
     <string name="context_menu_anki_card_label">קלף Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s נתקל בבעיה:<br/>%2$s</string>
-    <string name="more_information">מידע נוסף</string>
-    <string name="no_field">מצא \'{{%1$s}}\', אבל אין שטח שנקרא \'%1$s\'.</string>
-    <string name="closed_tag_not_open">נמצא \'{{/%1$s}}\', אבל חסר  \'{{#%1$s}}\' או \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">חסרים  \'}}\' ב \'%s\'.</string>
-    <string name="open_tag_not_closed">חסר \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">נמצא \'{{/%1$s}}\', אבל מחפש \'{{/%2$s}}\'</string>
-    <string name="filter_error">שגיאה במסנן %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">לא ניתן לחבר את האוספים. איזה אחד לשמור?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">אנקידרויד</string>
@@ -256,7 +234,6 @@
         <item quantity="many">%1$d קלפים (0 נותרו)</item>
         <item quantity="other">%1$d קלפים (0 נותרו)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">עותק של %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">לא ניתן לכתוב או ליצור קובץ %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"שגיאות מרובות, האחרונה: %s"</string>

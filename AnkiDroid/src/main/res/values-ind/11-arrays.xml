@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Tanya aku</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Hanya tag</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Kartu baru dalam urutan acak</string>
-    <string name="new_order_order_added">Kartu baru dalam urutan ditambahkan</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Lihat yang paling lama dahulu</string>
     <string name="cram_deck_conf_order_random">Acak</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Gunakan dek saat ini</string>
     <string name="add_to_deck_decide_by_note_type">Tentukan menurut tipe catatan</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Campur kartu dan ulasan baru</string>
-    <string name="new_spread_new_after_review">Kartu baru setelah ulasan</string>
-    <string name="new_spread_new_before_review">kartu baru sebelum ulasan</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Bila tidak ada fon yang ditentukan dalam kartu flash</string>
     <string name="override_font_always" comment="Option to always override font">Selalu</string>

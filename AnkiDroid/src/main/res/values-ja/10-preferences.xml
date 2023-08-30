@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">無効</string>
-    <string name="enabled">有効</string>
     <string name="pref_summary_seconds">%s秒</string>
     <string name="pref_summary_minutes">%s分</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -152,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">表示時間経過後の自動回答</string>
     <string name="timeout_answer_summ">操作しなくても、一定時間経過後に自動的に解答を表示します。音声ファイルを自動的に再生する場合は、その再生時間と下記の「解答を表示するまでの時間」が経過した後に解答を表示します</string>
     <string name="timeout_answer_seconds" maxLength="41">解答を表示するまでの時間</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX秒</string>
     <string name="timeout_question_seconds" maxLength="41">解答を表示し続ける時間</string>
     <string name="select_locale_title">言語を選択</string>
     <string name="software_render" maxLength="41">カードのハードウェアレンダリングを無効にする</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">推定学習時間を表示</string>
     <string name="show_eta_summ">学習画面のデッキ名の下に、そのデッキの学習終了までの推定所要時間を表示します</string>
     <string name="use_current" maxLength="41">新規カードの既定の追加先デッキ</string>
-    <string name="new_spread" maxLength="41">新規カードの位置</string>
     <string name="learn_cutoff" maxLength="41">習得学習の前倒し許容時間</string>
     <string name="time_limit" maxLength="41">タイムボックス（学習時間の目標・区切り）</string>
     <string name="new_timezone" maxLength="41">新しいタイムゾーン処理</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">すべてのファイルをメディアインポートの対象として許可</string>
     <string name="media_import_allow_all_files_summ">Androidがメディアファイルを認識しない場合に試してみてください</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">統計情報を開く際の既定デッキ</string>
-    <string name="stats_default_deck_current">直近で使用したデッキ</string>
-    <string name="stats_default_deck_all">すべてのデッキ</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">高度な統計</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">高度な統計を有効にする</string>
-    <string name="enable_advanced_statistics_summ">今後の復習枚数の予測を、スケジュール済みの枚数だけでなく、シミュレーションされた枚数にも基づき表示します （無効の場合は、スケジュール済みの枚数にのみ基づき表示します）</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">スケジュール済みの復習枚数を計算する日数（最初の x 日間）</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">スケジュール済みの復習枚数の計算の精度</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">シミュレーションの反復回数</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">同期サーバーのカスタマイズ</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">指定なし</string>
@@ -236,62 +222,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">操作の割り当て</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">オプショングループの設定内容を変更すると、同じオプショングループを使用している他のデッキにも影響が及びます。現在のデッキについてのみオプショングループの設定内容を変更したい場合は、まず [オプショングループの管理]→[追加] により新規のオプショングループを追加してください</string>
     <string name="studyoptions_limit_select_tags">タグを選択</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">デッキの説明文（このデッキにのみ反映されます）</string>
-    <string name="deck_conf_group" maxLength="41">オプショングループ</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="other">%1$s\n%2$d個のデッキがこのグループを使用しています</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">新規カードと習得</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">復習</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">忘却と再習得</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">一般</string>
     <string name="deck_conf_reminders" maxLength="41">リマインダー</string>
-    <string name="deck_conf_steps" maxLength="41">習得ステップ（分）</string>
-    <string name="deck_conf_order" maxLength="41">新規カードの導入順序</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">一日の新規カード出題上限枚数</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">最終ステップから復習開始までの間隔</string>
-    <string name="deck_conf_days">XXX 日</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">簡単と回答してから復習までの間隔</string>
-    <string name="deck_conf_start_ease" maxLength="41">「易しさ」(間隔の伸び率) の初期値</string>
-    <string name="deck_conf_max_rev" maxLength="41">一日の復習カード出題上限枚数</string>
-    <string name="deck_conf_new_bury" maxLength="41">兄弟関係の新規カードを明日に延期</string>
-    <string name="deck_conf_new_bury_summ">兄弟関係の (＝同じノートから作成された) 新規カードの学習を同じ日に行わず、翌日に延期します</string>
-    <string name="deck_conf_rev_bury" maxLength="41">兄弟関係の復習カードを明日に延期</string>
-    <string name="deck_conf_rev_bury_summ">兄弟関係の (＝同じノートから作成された) カードの復習を同じ日に行わず、翌日に延期します</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">一般設定を使用する</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">このグループ独自の設定は行わず、ドロワーメニューの [設定]→[カードの学習]→[解答の自動表示] での一般的な設定をそのまま使用します</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">回答「簡単」での間隔伸び率ボーナス</string>
-    <string name="deck_conf_hard_factor" maxLength="41">回答「難しい」での間隔伸び率</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">復習間隔の調整</string>
-    <string name="deck_conf_max_ivl" maxLength="41">復習間隔の上限</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">復習再開後の間隔（回復率）</string>
-    <string name="deck_conf_min_ivl" maxLength="41">復習再開後の間隔の下限</string>
-    <string name="deck_conf_leech_thres" maxLength="41">無駄（定着困難）と判定する基準</string>
-    <string name="deck_conf_fails">XXX 回 忘却 (＝復習カードに「やり直し」と回答) した時</string>
-    <string name="deck_conf_leech_action" maxLength="41">無駄（習得困難）カードへの対処</string>
-    <string name="deck_conf_max_time" maxLength="41">統計に利用する解答時間の最大値</string>
-    <string name="deck_conf_seconds">XXX秒</string>
-    <string name="deck_conf_timer" maxLength="41">タイマーを表示</string>
-    <string name="deck_conf_autoplay" maxLength="41">音声・動画を自動再生</string>
-    <string name="deck_conf_replayq" maxLength="41">質問の音声・動画も再生</string>
-    <string name="deck_conf_replayq_summ">解答が表示されている時に「音声・動画を再生」を選択すると、解答の音声・動画の前に質問の音声・動画も再生します</string>
-    <string name="deck_conf_manage" maxLength="41">オプショングループの管理</string>
-    <string name="deck_conf_manage_summ">このオプショングループを元にした新規オプショングループの追加や、オプショングループ名の変更などが行えます</string>
-    <string name="deck_conf_current_group" maxLength="41">現在のオプショングループ</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">名前を変更</string>
-    <string name="deck_conf_reset" maxLength="41">既定の設定に戻す</string>
-    <string name="deck_conf_reset_message">このオプショングループの設定をリセットして既定の設定に戻しますか？</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">追加</string>
-    <string name="deck_conf_add_summ">このオプショングループのコピーを作成します</string>
-    <string name="deck_conf_remove_message">このオプショングループを削除しますか？</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">すべてのサブデッキに適用</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="other">この設定を行うと、このデッキの中にある%s個のサブデッキにもこのオプショングループを適用します</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">このオプショングループをこのデッキ内のすべてのサブデッキにも適用しますか？</string>
     <string name="pref_browser_editor_font" maxLength="41">ブラウザとエディタのフォント</string>
     <string name="deck_conf_cram_filter" maxLength="41">フィルター</string>
     <string name="deck_conf_cram_search" maxLength="41">抽出条件</string>
@@ -302,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">２番目のフィルターを有効にする</string>
     <string name="deck_conf_cram_steps" maxLength="41">カスタム学習ステップ（分）</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">独自の習得ステップを設定</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">このオプショングループのデッキをリマインダー通知</string>
-    <string name="deck_conf_reminders_time" maxLength="41">リマインダー通知時刻</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title" maxLength="41">設定の情報提供を許可する</string>
@@ -340,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">%s を削除</string>
     <string name="bindings_already_bound">既に「%s」の操作に割り当て済みです</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">試験運用機能</string>
-    <string name="experimental_pref_confirmation" maxLength="41">「%s」を有効にする</string>
-    <string name="use_rust_backend_title" maxLength="41">新しいバックエンドを使用する</string>
-    <string name="use_rust_backend_summary">V3スケジューラーなど、Ankiの新しい機能を有効にします。\n注意：試験運用中です。バックアップを確保していないコレクションでは使用しないでください。アプリを終了しても元に戻りません</string>
-    <string name="use_rust_backend_warning">この機能はまだ十分な検証を終えていないため、これを有効にすることによって、あなたのAnkiDroidのデータに深刻な損害を与えてしまう可能性も否定できません。 AnkiDroidアプリのアンインストールとAnkiDroidフォルダの削除が必要となる可能性や、AnkiWebとの同期によってAnkiWebや他の端末のデータにも損害を波及させてしまう可能性もあります。\n\nこの機能を試していただくことは歓迎いたしますが、万一に備え、AnkiWeb以外にもコレクションのバックアップを確保しておくことを強くおすすめします。</string>
-    <string name="enable_v3_sched_title" maxLength="41">V3スケジューラーを使用する</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">試験運用機能</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">開発者向けオプション</string>
     <string name="dev_options_enabled_pref" maxLength="41">開発者向けオプションを有効にする</string>
@@ -382,7 +309,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">使用されていないメディアファイルを削除</string>
     <string name="pref__delete_unused_media_files__summary">ファイル名の最初の文字が「 _ 」（アンダーバー）ではなく、どのノートにも使用されていないメディア（画像・音声・動画）ファイルを削除します</string>
-    <string name="dialog__media_check_required__message">使用していないメディアファイルを検索するにはメディアチェックが必要です</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">使用していないメディアファイルを削除</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">バックアップを削除</string>

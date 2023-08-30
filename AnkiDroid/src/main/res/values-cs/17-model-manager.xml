@@ -51,7 +51,6 @@
     <string name="model_browser_delete">Odstranit typ poznámky</string>
     <string name="model_browser_rename" comment="Rename a note type">Přejmenovat</string>
     <string name="model_browser_template">Upravit karty</string>
-    <string name="model_browser_add">Přidat typ poznámky</string>
     <!--Rename-->
     <string name="rename_model">Přejmenovat typ poznámky</string>
     <!--Language Hint-->
@@ -67,7 +66,6 @@
     <string name="model_field_editor_toggle_sticky">Zapamatovat si poslední vstup při přidání</string>
     <string name="model_field_editor_changing">Aktualizace polí</string>
     <string name="model_field_editor_sort_field">Seřadit podle tohoto pole</string>
-    <string name="model_clone_suffix">kopírovat</string>
     <!--Warnings-->
     <string name="model_delete_warning">Opravdu si přejete odstranit tento typ poznámky?</string>
     <string name="field_delete_warning">Opravdu si přejete odstranit toto pole?</string>

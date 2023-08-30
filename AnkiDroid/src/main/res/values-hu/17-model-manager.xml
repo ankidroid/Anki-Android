@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Megjegyzéstípus törlése</string>
     <string name="model_browser_rename" comment="Rename a note type">Átnevezés</string>
     <string name="model_browser_template">Kártya szerkesztése</string>
-    <string name="model_browser_add">Jegyzettípus hozzáadása</string>
     <!--Rename-->
     <string name="rename_model">Jegyzettípus átnevezése</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">A beviteli érték megjegyzése hozzáadáskor</string>
     <string name="model_field_editor_changing">A mezők frissítése</string>
     <string name="model_field_editor_sort_field">Rendezd ezt a mezőt</string>
-    <string name="model_clone_suffix">másolás</string>
     <!--Warnings-->
     <string name="model_delete_warning">Tényleg törölni akarod ezt a jegyzettípust?</string>
     <string name="field_delete_warning">Tényleg törölni szeretnéd ezt a mezőt?</string>

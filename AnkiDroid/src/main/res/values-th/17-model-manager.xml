@@ -45,7 +45,6 @@
     <string name="model_browser_delete">Delete note type</string>
     <string name="model_browser_rename" comment="Rename a note type">เปลี่ยนชื่อ</string>
     <string name="model_browser_template">เเก้ไขการ์ด</string>
-    <string name="model_browser_add">เพิ่มรูปแบบโน๊ต</string>
     <!--Rename-->
     <string name="rename_model">เปลี่ยนชื่อรูปแบบโน๊ต</string>
     <!--Language Hint-->
@@ -61,7 +60,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Updating fields</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
-    <string name="model_clone_suffix">คัดลอก</string>
     <!--Warnings-->
     <string name="model_delete_warning">คุณแน่ใจหรือไม่ว่าต้องการลบรูปแบบโน๊ตนี้?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>

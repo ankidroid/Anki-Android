@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Adatbázis ellenőrzése</string>
     <string name="check_db_warning">Ez sokáig tarthat</string>
-    <string name="check_db_acknowledge">Adatbázis ellenőrizve</string>
-    <string name="check_db_acknowledge_shrunk">Adatbázis ellenőrizve és optimalizálva.\n%d MB-t csökkent.</string>
     <string name="contextmenu_deckpicker_delete_deck">Pakli törlése</string>
-    <string name="delete_deck_default_deck">Az alapértelmezett pakli nem törölhető</string>
     <string name="delete_deck_title">Pakli törlése</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Minden kártya törlése %1$s? -ból %2$d kártyát tartalmaz.</item>
-        <item quantity="other">Minden kártya törlése %1$s-ból? %2$d kártyát tartalmaz.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Biztosan szeretnéd, hogy a %s kártyái visszakerüljenek az eredeti paklijukba?</string>
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
     <string name="initializing_tts">TTS indítása&#8230;</string>
     <string name="tts_no_tts">Ne beszélj</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>
     <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nem lehetett újraépíteni a jelenlegi egyéni tanulókártyákat</string>
-    <string name="importing_collection">Gyűjtemény importálása.\nKérlek, várj&#8230;</string>
-    <string name="import_media_count">Média fájlok importálása %1$d%%\nKérlek, várj&#8230;</string>
-    <string name="import_progress">• Importált megjegyzések: %1$d%%\n• importált kártyák: %2$d%%\n• utómunka: %3$d%%</string>
-    <string name="import_update_details">Frissített %1$d %2$d meglévő jegyzetek.</string>
-    <string name="import_update_ignored">Néhány frissítést figyelmen kívül hagytak, mert a jegyzet típusa megváltozott</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Importált kártyák: %2$d</item>
-        <item quantity="other">Importált kártyák: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Tárhely megtelt</string>
     <string name="storage_almost_full_title">Tárhely majdnem megtelt</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nincs hely</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Letilt</string>
     <string name="dialog_positive_overwrite">Felülír</string>
-    <string name="dialog_positive_remove">Eltávolít</string>
     <string name="dialog_positive_repair">Javít</string>
     <string name="dialog_positive_replace">Kicserél</string>
-    <string name="dialog_positive_restore">Visszaállít</string>
-    <string name="dialog_positive_set">Beállít</string>
     <string name="dialog_collection_path_not_dir">A megadott elérési út nem érvényes mappa</string>
     <!-- Media checking -->
     <string name="check_media_title">Média ellenőrzése?</string>
@@ -180,18 +160,11 @@
     <string name="integrity_check_continue_anyway">Folytatás Mindenképpen</string>
     <string name="integrity_check_insufficient_space">Az Adatbázis ellenőrzés sok ideiglenes helyet használ.\n\n.Erősen ajánlott, hogy legalább %s szabad tárhelyed legyen a készüléken mielőtt folytatnád.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nJelenleg %s szabad hely van.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">Nem sikerült lejátszani a videót</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Nem sikerült paklit változtatni</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Hiba a kártya adatainak dekódolása közben</string>
-    <string name="undo_succeeded">%s visszavonva</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Sikertelen a pakli beállításainak feldolgozása: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Adatbázis zárolva</string>
     <string name="database_locked_summary">Az AnkiDroid adatbázist egy másik alkalmazás használja. Kérjük zárja be ezt az alkalmazást, majd nyissa meg újra az AnkiDroidot.</string>

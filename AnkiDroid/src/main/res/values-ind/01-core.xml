@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Dek</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Peramban kartu</string>
@@ -76,9 +76,6 @@
     <string name="no_cards_placeholder_title">Koleksi kosong</string>
     <string name="no_cards_placeholder_description">Mulai tambahkan kartu\nmenggunakan ikon +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="other">Mempelajari %1$d kartu dalam %2$s hari ini</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Ketik jawaban</string>
     <string name="show_answer">Tampilkan jawaban</string>
@@ -87,11 +84,8 @@
     <string name="ease_button_hard">Sulit</string>
     <string name="ease_button_good">Baik</string>
     <string name="ease_button_easy">Mudah</string>
-    <string name="studyoptions_congrats_undo">Urungkan %s</string>
     <string name="menu_import">Impor</string>
     <string name="undo">Urungkan</string>
-    <string name="undo_action_review">ulasan terakhir</string>
-    <string name="undo_action_change_deck_multi">ganti dek</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Batalkan Coretan</string>
     <string name="move_all_to_deck">Pindahkan semua ke dek</string>
     <string name="unbury">Angkat</string>
@@ -165,18 +159,14 @@
     <string name="studyoptions_limit_reached">Batas belajar harian tercapai</string>
     <string name="studyoptions_empty_schedule">Tidak ada kartu yang dijadwalkan untuk dipelajari</string>
     <string name="studyoptions_congrats_finished">Selamat! Kamu telah selesai untuk sekarang.</string>
-    <string name="studyoptions_congrats_more_rev">Batas hari ini telah dicapai, tetapi masih ada kartu-kartu untuk diulas. Kamu dapat menaikkan batasan di pengaturan.</string>
-    <string name="studyoptions_congrats_more_new">Batas hari ini telah dicapai. Ada banyak kartu baru yang tersedia; Kamu dapat menaikkan batas di pengaturan, tetapi ini akan menambah beban kerja ulasan jangka pendekmu.</string>
-    <string name="studyoptions_congrats_custom">Untuk belajar di luar jadwal normal, sentuh tombol \"Belajar kustom\"</string>
     <string name="studyoptions_no_cards_due">Belum ada kartu jatuh tempo.</string>
     <string name="sd_card_not_mounted">Penyimpanan perangkat tidak terpasang</string>
-    <string name="empty_cloze_warning">Edit catatan ini dan menambahkan beberapa kloza deletasi (titik-titik). (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sinkronisasi</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrasi ke scoped storage</string>
-    <string name="cancel_sync_confirm">Batalkan sinkronisasi?</string>
-    <string name="continue_sync">Lanjutkan sinkronisasi</string>
-    <string name="sync_cancelled">Sinkronisasi dibatalkan</string>
-    <string name="sync_cancel_message">Membatalkan&#8230;\nIni dapat memakan waktu lama.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Batalkan sinkronisasi?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Lanjutkan sinkronisasi</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Sinkronisasi dibatalkan</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Membatalkan&#8230;\nIni dapat memakan waktu lama.</string>
     <string name="export">Ekspor</string>
     <string name="export_collection">Ekspor koleksi</string>
     <string name="export_deck">Ekspor dek</string>
@@ -203,7 +193,6 @@
     <string name="template_for_current_card_deleted">Templat untuk kartu ini sudah dihapus.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Tampilan Peramban </string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Info kartu</string>
     <!-- Permissions -->
@@ -212,14 +201,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Peramban Kartu</string>
     <string name="context_menu_anki_card_label">Kartu Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s memiliki masalah:<br/>%2$s</string>
-    <string name="more_information">Info lebih lanjut</string>
-    <string name="no_field">Ditemukan \'{{%1$s}}\', tapi tidak ada bagian yang disebut \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Ditemukan \'{{/%1$s}}\', tapi tidak ada \'{{#%1$s}}\' atau \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Tidak ada \'}}\' di \'%s\'.</string>
-    <string name="open_tag_not_closed">Tidak ada  \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Ditemukan \'{{/%1$s}}\', tapi yang dicari \'{{/%2$s}}\' </string>
-    <string name="filter_error">Terjadi kesalahan di filter %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Koleksi tidak dapat digabungkan. \nBagian mana yang ingin anda pertahankan?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -232,7 +213,6 @@
         <item quantity="other">%1$d kartu (0 jatuh tempo)
 %1$d kartu (0 jatuh tempo)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Tidak dapat menulis atau membuat file %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Beberapa error, paling terkini: %s"</string>

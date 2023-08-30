@@ -46,18 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Проверить базу данных?</string>
     <string name="check_db_warning">Это может занять много времени</string>
-    <string name="check_db_acknowledge">База данных проверена</string>
-    <string name="check_db_acknowledge_shrunk">База данных проверена, оптимизирована\nи сжата на %d МБ.</string>
     <string name="contextmenu_deckpicker_delete_deck">Удалить колоду</string>
-    <string name="delete_deck_default_deck">Нельзя удалить колоду по умолчанию</string>
     <string name="delete_deck_title">Удалить колоду?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Удалить все карточки в %1$s? В ней %2$d карточка.</item>
-        <item quantity="few">Удалить все карточки в %1$s? В ней %2$d карточки.</item>
-        <item quantity="many">Удалить все карточки в %1$s? В ней %2$d карточек.</item>
-        <item quantity="other">Удалить все карточки в %1$s? В ней %2$d карточек.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Вернуть все карточки из %s в их колоды?</string>
     <string name="no_tts_available_message">Синтез речи недоступен</string>
     <string name="initializing_tts">Запускается синтез речи&#8230;</string>
     <string name="tts_no_tts">Не произносить</string>
@@ -119,17 +109,6 @@
     <string name="custom_study_random">Сколько случайных карточек отобрать:</string>
     <string name="custom_study_preview">Посмотреть новые за сколько дней:</string>
     <string name="custom_study_rebuild_deck_corrupt">Не удалось перестроить колоду допзанятия</string>
-    <string name="importing_collection">Коллекция импортируется&#8230;</string>
-    <string name="import_media_count">Импортируются медиафайлы %1$d%%&#8230;</string>
-    <string name="import_progress">• Записей: %1$d%%\n• Карточек: %2$d%%\n• Обработка: %3$d%%</string>
-    <string name="import_update_details">Обновлено %1$d из %2$d существующих записей.</string>
-    <string name="import_update_ignored">Некоторые обновления проигнорированы, потому что изменился тип записи</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Импортировано карточек: %2$d</item>
-        <item quantity="few">Импортировано файлов: %1$d\nВсего импортировано карточек: %2$d</item>
-        <item quantity="many">Импортировано файлов: %1$d\nВсего импортировано карточек: %2$d</item>
-        <item quantity="other">Импортировано файлов: %1$d\nВсего импортировано карточек: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Хранилище заполнено</string>
     <string name="storage_almost_full_title">Хранилище почти заполнено</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Нет места</string>
@@ -149,11 +128,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Отключить</string>
     <string name="dialog_positive_overwrite">Перезаписать</string>
-    <string name="dialog_positive_remove">Удалить</string>
     <string name="dialog_positive_repair">Исправить</string>
     <string name="dialog_positive_replace">Заменить</string>
-    <string name="dialog_positive_restore">Восстановить</string>
-    <string name="dialog_positive_set">Установить</string>
     <string name="dialog_collection_path_not_dir">Указанный путь не является допустимой папкой</string>
     <!-- Media checking -->
     <string name="check_media_title">Проверить медиафайлы?</string>
@@ -197,20 +173,11 @@
     <string name="integrity_check_continue_anyway">Всё равно продолжить</string>
     <string name="integrity_check_insufficient_space">Проверка базы данных использует большое количество временного хранилища.\n\nЖелательно иметь по крайней мере %s свободного места на вашем устройстве, прежде чем продолжить.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nСейчас свободно %s.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">Восстановлена %d карточка с неправильной колодой. Подробнее см. в руководстве.</item>
-        <item quantity="few">Восстановлены %d карточки с неправильной колодой. Подробнее см. в руководстве.</item>
-        <item quantity="many">Восстановлены %d карточек с неправильной колодой. Подробнее см. в руководстве.</item>
-        <item quantity="other">Восстановлено %d карточек с неправильной колодой. Подробнее см. в руководстве.</item>
-    </plurals>
     <string name="video_creation_error">Не удалось воспроизвести видео</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Не удалось сменить колоду</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Ошибка при декодировании данных карточки</string>
-    <string name="undo_succeeded">Отменено «%s»</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Не удалось обработать параметры колоды: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">База данных заблокирована</string>
     <string name="database_locked_summary">База данных AnkiDroid используется другим приложением. Закройте другое приложение, а затем снова откройте AnkiDroid.</string>

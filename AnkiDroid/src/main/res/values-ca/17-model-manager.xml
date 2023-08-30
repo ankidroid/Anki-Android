@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Esborra el tipus de nota</string>
     <string name="model_browser_rename" comment="Rename a note type">Canvia el nom</string>
     <string name="model_browser_template">Edita les targetes</string>
-    <string name="model_browser_add">Afegeix el tipus de nota</string>
     <!--Rename-->
     <string name="rename_model">Canvieu el nom del tipus de nota</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Recordeu la darrera entrada al afegir</string>
     <string name="model_field_editor_changing">Actualitzant els camps</string>
     <string name="model_field_editor_sort_field">Ordena per aquest camp</string>
-    <string name="model_clone_suffix">còpia</string>
     <!--Warnings-->
     <string name="model_delete_warning">Esteu segur de que voleu suprimir aquest tipus de nota?</string>
     <string name="field_delete_warning">Esteu segur que voleu suprimir aquest camp?</string>

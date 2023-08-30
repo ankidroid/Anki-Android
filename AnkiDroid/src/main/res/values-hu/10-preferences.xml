@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Kikapcsolva</string>
-    <string name="enabled">Engedélyezve</string>
     <string name="pref_summary_seconds">%s mp</string>
     <string name="pref_summary_minutes">%s perc</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -153,7 +152,6 @@
     <string name="timeout_answer" maxLength="41">Időtúllépésnél a válasz</string>
     <string name="timeout_answer_summ">Válasz automatikus megjelenítése, felhasználói beavatkozása nélkül. A késleltetés magában foglalja az automatikusan lejátszott audió fájlok idejét.</string>
     <string name="timeout_answer_seconds" maxLength="41">Válasz mutatása ennyi idő elteltével</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX másodperc</string>
     <string name="timeout_question_seconds" maxLength="41">A következő kérdés megjelenítése ennyi idő után</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>
     <string name="software_render" maxLength="41">Kártya hw megjelenítő (render) tiltása</string>
@@ -179,7 +177,6 @@
     <string name="show_eta" maxLength="41">ETA megjelenítése</string>
     <string name="show_eta_summ">Hátralévő idő mutatása</string>
     <string name="use_current" maxLength="41">Új kártyák paklija</string>
-    <string name="new_spread" maxLength="41">Új kártyák beszúrása</string>
     <string name="learn_cutoff" maxLength="41">Korai tanulás korlátai</string>
     <string name="time_limit" maxLength="41">Időkorlát érték</string>
     <string name="new_timezone" maxLength="41">Új időzóna kezelés</string>
@@ -212,17 +209,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">A tárolón lévő összes fájl importálása</string>
     <string name="media_import_allow_all_files_summ">Ha az Android nem ismeri fel egy média fájl</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Alapértelmezett pakli a stat nyitáskor</string>
-    <string name="stats_default_deck_current">Legfrissebb pakli statisztika megjelenítése</string>
-    <string name="stats_default_deck_all">Statisztika minden paklira</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Bővített statisztikák</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Bővített statisztikák bekapcsolása</string>
-    <string name="enable_advanced_statistics_summ">A statisztikai nézetben lévő előrejelzéshez szimulálja a jövőbeni ismétléseket (aktiválva), vagy csak a már ütemezett ismétléseket használja (deaktiválva).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Számítsd ki az első n napot, szimuláld a többit</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">A számítás pontossága</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">A szimuláció ismétléseinek száma</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Egyéni szinkronizáló kiszolgáló</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
@@ -237,64 +223,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Parancs összerendelés</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">A pakli csoport változtatása több más csoportot is érint. Ha csak a jelenlegi paklit kívánja megváltoztatni, akkor kérjük adjon hozzá egy új csoportot.</string>
     <string name="studyoptions_limit_select_tags">Válassz címkét</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Pakli leírás (csak a jelenlegi paklit érinti)</string>
-    <string name="deck_conf_group" maxLength="41">Beállítás csoport</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d pakli ezt a csoportot használja</item>
-        <item quantity="other">%1$s\n%2$d pakli használata ebben a csoportban</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Új kártyák</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Ismétlések</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Körök</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Általános</string>
     <string name="deck_conf_reminders" maxLength="41">Emlékeztetők</string>
-    <string name="deck_conf_steps" maxLength="41">Lépések (percben)</string>
-    <string name="deck_conf_order" maxLength="41">Rendezés</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Új kártyák/nap</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Befejező időtartam</string>
-    <string name="deck_conf_days">XXX nap</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Egyszerű időtartam</string>
-    <string name="deck_conf_start_ease" maxLength="41">Kezdeti könnyített bónusz</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maximális ismétlések/nap</string>
-    <string name="deck_conf_new_bury" maxLength="41">Kapcsolódó új kártyák elrejtése</string>
-    <string name="deck_conf_new_bury_summ">A kapcsolódó új kártyákat félretenni a következő napra</string>
-    <string name="deck_conf_rev_bury" maxLength="41">A kapcsolódó kártyák visszaállítása</string>
-    <string name="deck_conf_rev_bury_summ">A kapcsolódó kártyákat a következő napra halasztani</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Általános beállítások használata</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Az általános \'Automatikus válaszmegjelenítő\' beállítás használata, a jelenlegi csoporthoz használt beállítások helyett.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bónusz az \"egyszerű\"</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Nehéz kártyák ismétlési ideje</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Időtartam változtatása</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Maximális időtartam</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Új időtartam</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Minimális időtartam</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Ragadós kártya küszöbértéke</string>
-    <string name="deck_conf_fails">XXX sikertelen</string>
-    <string name="deck_conf_leech_action" maxLength="41">Művelet a ragadós kártyákhoz</string>
-    <string name="deck_conf_max_time" maxLength="41">Maximális idő válaszadásra</string>
-    <string name="deck_conf_seconds">XXX másodperc</string>
-    <string name="deck_conf_timer" maxLength="41">Válasz időmérő mutatása</string>
-    <string name="deck_conf_autoplay" maxLength="41">Hang lejátszása automatikusan</string>
-    <string name="deck_conf_replayq" maxLength="41">Ismételje meg a kérdést</string>
-    <string name="deck_conf_replayq_summ">Ismételje meg a kérdést és a választ hanggal együtt, amikor a válasz megjelenik</string>
-    <string name="deck_conf_manage" maxLength="41">Konfigurációkezelés</string>
-    <string name="deck_conf_manage_summ">Opciócsoportok hozzáadása és változtatása</string>
-    <string name="deck_conf_current_group" maxLength="41">Aktuális csoport</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Átnevezés</string>
-    <string name="deck_conf_reset" maxLength="41">Alapértelmezések visszaállítása</string>
-    <string name="deck_conf_reset_message">Alaphelyzetbe állítod az aktuális opciócsoportot?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Új beállítás</string>
-    <string name="deck_conf_add_summ">Készítsen egy másolatot az aktuális opciócsoportról</string>
-    <string name="deck_conf_remove_message">Törlöd az aktuális opciócsoportot?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Alkalmazás minden alcsoportra</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s pakli használata ebben a csoportban</item>
-        <item quantity="other">%s alpakli használata ebben a csoportban</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Állítsa be az aktuális opciócsoportot a pakli minden alcsoportjában?</string>
     <string name="pref_browser_editor_font" maxLength="41">Böngésző és szerkesztő betűtípus</string>
     <string name="deck_conf_cram_filter" maxLength="41">Szűrő</string>
     <string name="deck_conf_cram_search" maxLength="41">Keresés</string>
@@ -305,8 +237,6 @@
     <string name="deck_conf_cram_filter_2_check">Második szűrő engedélyezése</string>
     <string name="deck_conf_cram_steps" maxLength="41">Egyéni lépések (percben)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Add meg az egyéni lépéseket</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Emlékeztetők engedélyezése ebben a paklicsoportban található paklikhoz</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Ne feledd</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Segítsen az AnkiDroidot jobbá tenni!</string>
     <string name="analytics_title" maxLength="41">Funkiók megosztása</string>
@@ -343,12 +273,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ törlése</string>
     <string name="bindings_already_bound">Már össze van kötve: %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Kísérleti</string>
-    <string name="experimental_pref_confirmation" maxLength="41">‘%s’ engedélyezése</string>
-    <string name="use_rust_backend_title" maxLength="41">Használd az új backendet</string>
-    <string name="use_rust_backend_summary">Engedélyezi az újabb Anki funkciókat, mint a scheduler v3\nINSTABIL. Ne használd olyan gyűjteményen, ami komolyabban érdelel. NEM áll vissza az alkalmazás bezárásakor.</string>
-    <string name="use_rust_backend_warning">Van esély rá, hogy ez teljesen korruptá teszi a telepítést, ami az alkalmazás törlését és az AnkiDroid mappa törlését igényli és van rá esély, hogy az AnkiWeb szinkronizálásával továbbterjed a korrupció.\n\nSzívesen fogadjuk a tesztelést, de kérjük, győződjön meg róla, hogy van egy érvényes, nem AnkiWeb biztonsági mentése.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Kísérleti</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Fejlesztői beállítások</string>
     <string name="dev_options_enabled_pref" maxLength="41">Fejlesztői beállítások engedélyezése</string>
@@ -385,7 +310,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>

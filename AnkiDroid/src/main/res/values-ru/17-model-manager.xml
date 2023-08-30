@@ -51,7 +51,6 @@
     <string name="model_browser_delete">Удалить тип записи</string>
     <string name="model_browser_rename" comment="Rename a note type">Переименовать</string>
     <string name="model_browser_template">Править карточки</string>
-    <string name="model_browser_add">Добавить тип записи</string>
     <!--Rename-->
     <string name="rename_model">Переименовать тип записи</string>
     <!--Language Hint-->
@@ -67,7 +66,6 @@
     <string name="model_field_editor_toggle_sticky">При добавлении запоминать последний ввод</string>
     <string name="model_field_editor_changing">Поля обновляются</string>
     <string name="model_field_editor_sort_field">Сортировать по этому полю</string>
-    <string name="model_clone_suffix">копировать</string>
     <!--Warnings-->
     <string name="model_delete_warning">Вы уверены, что хотите удалить этот тип записи?</string>
     <string name="field_delete_warning">Удалить это поле?</string>

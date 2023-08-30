@@ -51,7 +51,6 @@
     <string name="model_browser_delete">Usuń typ notatki</string>
     <string name="model_browser_rename" comment="Rename a note type">Zmień nazwę</string>
     <string name="model_browser_template">Edytuj karty</string>
-    <string name="model_browser_add">Dodaj typ notatki</string>
     <!--Rename-->
     <string name="rename_model">Zmień nazwę typu notatki</string>
     <!--Language Hint-->
@@ -67,7 +66,6 @@
     <string name="model_field_editor_toggle_sticky">Zapamiętaj ostatni wpis podczas dodawania</string>
     <string name="model_field_editor_changing">Aktualizowanie pól</string>
     <string name="model_field_editor_sort_field">Sortuj według tego pola</string>
-    <string name="model_clone_suffix">kopia</string>
     <!--Warnings-->
     <string name="model_delete_warning">Czy na pewno chcesz usunąć ten typ notatki?</string>
     <string name="field_delete_warning">Czy na pewno chcesz usunąć to pole?</string>

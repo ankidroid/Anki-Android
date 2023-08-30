@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Tanggalin ang uri ng tala</string>
     <string name="model_browser_rename" comment="Rename a note type">Palitan ang pangalan</string>
     <string name="model_browser_template">I-edit ang mga card</string>
-    <string name="model_browser_add">Magdagdag ng uri ng tala</string>
     <!--Rename-->
     <string name="rename_model">Palitan ang pangalan ng uri ng tala.</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Ina-update ang mga patlang</string>
     <string name="model_field_editor_sort_field">Ayusin ayon sa patlang na ito</string>
-    <string name="model_clone_suffix">kopya</string>
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Sigurado ka bang nais mong tanggalin ang field na ito?</string>

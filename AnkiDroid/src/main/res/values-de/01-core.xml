@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Stapel</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kartenübersicht</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">Sammlung ist leer</string>
     <string name="no_cards_placeholder_description">Fügen Sie Karten \nmit dem + -Symbol hinzu.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Sie haben heute %1$d Karte in %2$s gelernt</item>
-        <item quantity="other">Sie haben heute %1$d Karten in %2$s gelernt</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Antwort eingeben</string>
     <string name="show_answer">Antwort anzeigen</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">Schwer</string>
     <string name="ease_button_good">Gut</string>
     <string name="ease_button_easy">Einfach</string>
-    <string name="studyoptions_congrats_undo">%s rückgängig machen</string>
     <string name="menu_import">Importieren</string>
     <string name="undo">Rückgängig</string>
-    <string name="undo_action_review">Letzte Wiederholung</string>
-    <string name="undo_action_change_deck_multi">Stapel wechseln</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Strich rückgängig machen</string>
     <string name="move_all_to_deck">Alle diesem Stapel hinzufügen</string>
     <string name="unbury">Nicht mehr aufschieben</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">Tageslimit erreicht</string>
     <string name="studyoptions_empty_schedule">Keine Karten zum Lernen eingeplant</string>
     <string name="studyoptions_congrats_finished">Herzlichen Glückwunsch! Sie sind für heute fertig.</string>
-    <string name="studyoptions_congrats_more_rev">Ihr heutiges Limit ist erreicht, aber es sind noch Karten fällig. Sie können das Limit in den Stapeloptionen erhöhen.</string>
-    <string name="studyoptions_congrats_more_new">Es sind noch neue Karten verfügbar, aber das tägliche Lernlimit wurde erreicht. Sie können das Limit in den Optionen erhöhen, bedenken Sie aber, dass dies Ihr kurzfristiges Arbeitspensum erhöht.</string>
-    <string name="studyoptions_congrats_custom">Tippen Sie auf \"Benutzerdefiniertes Lernen\", um außerhalb des regulären Zeitplans zu lernen</string>
     <string name="studyoptions_no_cards_due">Es sind noch keine Karten fällig</string>
     <string name="sd_card_not_mounted">Gerätespeicher nicht eingebunden</string>
-    <string name="empty_cloze_warning">Bearbeiten Sie diese Notiz und fügen Sie einige Auslassungen hinzu. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronisieren</string>
     <string name="button_upgrade" comment="Text of the sync button">Zum eingegrenzten Speicher migrieren</string>
-    <string name="cancel_sync_confirm">Wollen Sie die Synchronisation abbrechen?</string>
-    <string name="continue_sync">Synchronisierung fortsetzen</string>
-    <string name="sync_cancelled">Synchronisation abgebrochen</string>
-    <string name="sync_cancel_message">Breche ab&#8230;\nDies kann einige Zeit dauern.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Wollen Sie die Synchronisation abbrechen?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Synchronisierung fortsetzen</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisation abgebrochen</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Breche ab&#8230;\nDies kann einige Zeit dauern.</string>
     <string name="export">Exportieren</string>
     <string name="export_collection">Sammlung exportieren</string>
     <string name="export_deck">Stapel exportieren</string>
@@ -210,7 +199,6 @@
     <string name="template_for_current_card_deleted">Der Kartentyp der aktuellen Karte wurde gelöscht.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aussehen der Kartenübersicht</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Karteninfos</string>
     <!-- Permissions -->
@@ -219,14 +207,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kartenübersicht</string>
     <string name="context_menu_anki_card_label">Anki-Karte</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s hat ein Problem:<br/>%2$s</string>
-    <string name="more_information">Weitere Informationen</string>
-    <string name="no_field">»{{%1$s}}« gefunden, aber es existiert kein Feld namens »%1$s«.</string>
-    <string name="closed_tag_not_open">»{{/%1$s}}« gefunden, aber es fehlt »{{#%1$s}}« oder »{{^%1$s}}«.</string>
-    <string name="missing_closing_bracket">Fehlendes »}}« in »%s«.</string>
-    <string name="open_tag_not_closed">Fehlendes »{{%s}}«.</string>
-    <string name="wrong_tag_closed">»{{/%1$s}}« gefunden, aber »{{/%2$s}}« erwartet.</string>
-    <string name="filter_error">Fehler in Filter %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Die Sammlungen können nicht zusammengeführt werden.\nWelche Sammlung möchten Sie behalten?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -239,7 +219,6 @@
         <item quantity="one">%1$d Karte (0 fällig)</item>
         <item quantity="other">%1$d Karten (0 fällig)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s Kopie</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Die Datei %s kann nicht erstellt oder überschrieben werden</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Mehrere Fehler, letzte Fehler: %s"</string>

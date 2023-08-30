@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">I-tsek ang database?</string>
     <string name="check_db_warning">It ay maaaring tumagal ng mahabang oras</string>
-    <string name="check_db_acknowledge">Sinuri ang database</string>
-    <string name="check_db_acknowledge_shrunk">Nasuri at na-optimize na ang database.\nLumiit ito ng %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Burahin ang deck</string>
-    <string name="delete_deck_default_deck">Ang default na deck ay hindi maaaring matanggal</string>
     <string name="delete_deck_title">Burahin ang deck?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Tanggalin ang lahat ng mga kard sa %1$s? Naglalaman ito ng %2$d kard.</item>
-        <item quantity="other">Tanggalin ang lahat ng mga kard sa %1$s? Naglalaman ito ng %2$d kard.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Ipadala lahat ng mga kard sa %s pabalik sa kanilang mga orihinal na deck?</string>
     <string name="no_tts_available_message">Walang available na wika sa text-to-speech</string>
     <string name="initializing_tts">Initializing TTS&#8230;</string>
     <string name="tts_no_tts">Huwag magsalita</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Pumili ng x kard sa pamamagitan ng random mula sa deck:</string>
     <string name="custom_study_preview">I-preview ang mga bagong kjard na naidagdag sa mga huling x araw:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">Pag-import ng koleksyon&#8230;</string>
-    <string name="import_media_count">Ang pag-import ng mga file ng media %1$d%%&#8230;</string>
-    <string name="import_progress">• Pag-import ng mga tala:%1$d%%\n • Pag-import ng mga card:%2$d%%\n • Post-processing:%3$d%%</string>
-    <string name="import_update_details">Nai-update na %1$d ng %2$d umiiral na mga tala.</string>
-    <string name="import_update_ignored">Ang mga ilang update ay hindi pinansin dahil ang uri ng tala ay nabago</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Puno na ang storage</string>
     <string name="storage_almost_full_title">Malapit nang mapuno ang storage</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Walang espasyo</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Huwag paganahin</string>
     <string name="dialog_positive_overwrite">I-overwrite</string>
-    <string name="dialog_positive_remove">Tanggalin</string>
     <string name="dialog_positive_repair">Isaayos</string>
     <string name="dialog_positive_replace">Palitan</string>
-    <string name="dialog_positive_restore">Ibalik</string>
-    <string name="dialog_positive_set">Itakda</string>
     <string name="dialog_collection_path_not_dir">Ang path na tinukoy ay hindi isang wastong direktoryo</string>
     <!-- Media checking -->
     <string name="check_media_title">I - tsek ang media?</string>
@@ -181,18 +161,11 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>

@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Ste offline</string>
-    <string name="sync_even_if_offline">Napriek tomu skúsiť</string>
     <string name="sync_error">Chyba synchronizácie</string>
     <string name="vague_error" comment="Network error dialog title">Chyba</string>
     <string name="retry">Skúsiť znova</string>
@@ -63,81 +62,15 @@
     <string name="sign_up">Zaregistrovať sa</string>
     <string name="logged_as">Prihlásený ako</string>
     <string name="log_out">Odhlásiť</string>
-    <string name="alert_logging_message">Prebieha prihlasovanie&#8230;</string>
-    <string name="invalid_username_password">Neplatná e-mailová adresa alebo heslo</string>
     <string name="reset_password">Obnoviť heslo</string>
     <string name="lost_mail_instructions">Zabudli ste e-mail?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Možnosti pre XXX</string>
-    <string name="sync_prepare_syncing">Pripravuje sa synchronizácia...</string>
-    <string name="sync_preparing_full_sync_message">Pripravuje sa úplná synchronizácia...</string>
-    <string name="sync_uploading_message">Nahrávanie...</string>
-    <string name="sync_downloading_message">Sťahovanie...</string>
     <string name="sync_title">Synchronizácia</string>
     <string name="sync_log_uploading_message">Úplná synchronizácia z AnkiDroid na server Ankiweb</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, časové pásmo zariadenia pravdepodobne nie je správne</string>
-    <string name="sync_log_clocks_unsynchronized_date">, dátum zariadenia pravdepodobne nie je správny</string>
-    <string name="sync_no_changes_message">Nenašli sa žiadne zmeny.</string>
     <string name="sync_database_acknowledge">Kolekcia synchronizovaná</string>
-    <string name="sync_log_error_specific">Chyba synchronizácie, typ: %1$s, správa: %2$s</string>
     <string name="sync_corrupt_database">Vaša databáza je poškodená. Prosím opravte ju pred opätovným pokusom o synchronizáciu.\n\nPozrite si %s pre informácie o oprave databázy.</string>
-    <string name="sync_too_busy">Server je zaneprázdnený. Skúste to znova neskôr.</string>
-    <string name="sync_remote_db_error">Stiahnutá databáza bola poškodená. Prosím skúste to znova.</string>
-    <string name="sync_overwrite_error">Vašu aktuálnu zbierku sa nepodarilo prepísať stiahnutým súborom</string>
-    <string name="sync_connection_error">Vypršal časový limit pripojenia. Buď máte problém s internetovým pripojením alebo máte veľký multimediálny súbor v priečinku.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">Zvolený synchronizačný server v rozšírených nastaveniach je neplatný (%s). Zadajte, prosím, platný server, alebo vypnite toto nastavenie.</string>
-    <string name="sync_deletions_message">Synchronizujú sa odstránené položky...</string>
-    <string name="sync_small_objects_message">Synchronizujú sa malé objekty...</string>
-    <string name="sync_finish_message">Dokončuje sa synchronizácia...</string>
-    <string name="sync_log_finish_error">Chyba pri odosielaní koncovej adresy na server</string>
-    <string name="sync_writing_db">Zapisujem zmeny do databázy...</string>
-    <string name="sync_download_chunk">Sťahovanie zmien...</string>
-    <string name="sync_upload_chunk">Nahrávanie zmien...</string>
-    <string name="sync_up_down_size">Odoslaných: %1$d KB, stiahnutých: %2$d KB</string>
-    <string name="sync_generic_error">Vyskytla sa chyba. Skúste to znova neskôr.</string>
-    <string name="sync_check_upload_file">Kontrola súboru pred nahrávaním...</string>
-    <string name="sync_check_download_file">Kontrola stiahnutého súboru&#8230;</string>
-    <string name="sync_media_find">Hľadajú sa zmenené multimédiá&#8230;</string>
-    <string name="sync_media_no_changes">Žiadne zmeny multimediálnych súborov</string>
-    <string name="sync_media_success">Multimédia synchronizované</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="many">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="few">%d media files uploaded.</item>
-        <item quantity="many">%d media files uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="few">%d media changes to upload</item>
-        <item quantity="many">%d media changes to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="few">%d media files downloaded</item>
-        <item quantity="many">%d media files downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">Po synchronizácii bola zbierka v nekonzistentnom stave. Pre vyriešenie tohto problému, AnkiDroid vykoná úplnú synchronizáciu. Zvoľte prosím, ktorú stranu by ste chceli zachovať.</string>
-    <string name="sync_media_sanity_failed">Synchronizácia multimédií bola dokončená, ale počet médií nesúhlasí so serverom. Nasledujúca synchronizácia multimédií bude úplná, aby sa napravili akékoľvek chyby.</string>
-    <string name="sync_media_db_error">Synchronizácia médií zlyhala, pretože aktuálna databáza je poškodená. Odporúča sa kontrola médií.</string>
-    <string name="sync_media_error">Pri synchronizácií mediálnych súborov sa vyskytla chyba</string>
-    <string name="sync_media_error_check">Vyskytla sa chyba pri synchronizácii médií. Odporúča sa kontrola médií.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Spustite, prosím, ‘%s’ pred synchronizáciou</string>
     <string name="sync_sanity_local">Miestnu</string>
     <string name="sync_sanity_remote">Vzdialenú</string>
     <string name="force_full_sync_title">Vynútiť úplnú synchronizáciu</string>
@@ -145,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Požadované zmeny si vyžadujú úplné nahratie databázy na server pri ďalšej synchronizácii vašej zbierky. Ak máte naplánované skúšanie alebo zmeny na iných zariadeniach, ktoré ešte neboli synchronizované, budú stratené. Chcete pokračovať?</string>
     <string name="full_sync_confirmation_upgrade">Kvôli chybe v predchádzajúcej nainštalovanej verzii AnkiDroid, odporúča sa úplná synchronizácia.</string>
-    <string name="sync_error_407_proxy_required">Vyžaduje sa autentifikácia serverom proxy.</string>
-    <string name="sync_error_409">V rovnakom momente môže mať prístup k AnkiWeb iba jeden klient. Ak predchádzajúca synchronizácia zlyhala, prosím, pokúste sa o synchronizáciu o pár minút neskôr.</string>
-    <string name="sync_error_413_collection_size">Vaša zbierka alebo mediálny súbor je príliš veľký pre synchronizáciu.</string>
-    <string name="sync_error_500_unknown">AnkiWeb narazil na problém. Prosím skúste znova za pár minút. Ak problém pretrváva, prosím, oznámte túto chybu.</string>
-    <string name="sync_error_501_upgrade_required">Prosím aktualizujte na najnovšiu verziu AnkiDroid</string>
-    <string name="sync_error_502_maintenance">Na serveri AnkiWeb prebieha údržba. Prosím, skúste opäť za niekoľko minút.</string>
-    <string name="sync_error_504_gateway_timeout">Vyskytla sa chyba 504 gateway timeout error.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Úplná synchronizácia</string>
     <string name="sync_menu_title_no_account">Synchronizácia (prihlásiť)</string>
-    <string name="sync_error_unknown_host_readable">Nepodarilo sa pripojiť k AnkiWeb. Funguje vaše internetové pripojenie?\n\n%s</string>
 </resources>

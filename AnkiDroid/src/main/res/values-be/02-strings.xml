@@ -125,7 +125,6 @@
     <string name="save">Захаваць</string>
     <string name="close">Закрыць</string>
     <string name="select">Выбраць</string>
-    <string name="reordering_cards">Перамешванне картак&#8230;</string>
     <string name="field_remapping">%1$s (з “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Не супастаўленыя карткі будуць выдаленыя. Калі запіс не мае ніводнай карткі, то ён будзе згублены. Працягнуць?</string>
     <!-- Timebox -->
@@ -150,19 +149,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перапланаваць</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Папярэдні прагляд</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d з %2$d</string>
-    <string name="error_insufficient_memory">Дзеянне немагчыма з-за недахопу памяці на прыладзе</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Перайменаваць</string>
-    <string name="default_conf_delete_error">Немагчыма выдаліць стандартныя групавыя параметры</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d картка дададзеная</item>
-        <item quantity="few">%d карткі дададзеныя</item>
-        <item quantity="many">%d картак дададзеныя</item>
-        <item quantity="other">%d карткі дададзеныя</item>
-    </plurals>
     <string name="check_db">Праверыць базу даных</string>
     <string name="check_media">Праверыць медыяфайлы</string>
     <string name="empty_cards">Пустыя карткі</string>
-    <string name="check_db_message">Праверка базы даных&#8230;</string>
     <string name="empty_card_warning">Гэта картка пустая. Скарыстайцеся параметрам \"Пустыя карткі\" ў меню на экране спіса калод.</string>
     <string name="unknown_type_field_warning">Тып адказу: невядомае поле %s</string>
     <string name="delete_deck">Выдаленне калоды&#8230;</string>
@@ -178,13 +168,6 @@
     </plurals>
     <string name="import_log_no_apkg">Пашкоджаны файл праграмы Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Памылка</string>
-    <string name="import_log_failed_unzip">Не атрымалася распакаваць apkg: %s</string>
-    <string name="import_log_failed_copy_to">Не атрымалася скапіяваць apkg у %s</string>
-    <string name="import_log_failed_validate">Не атрымалася праверыць apkg</string>
-    <string name="import_log_insufficient_space_error">Недастаткова месца для імпартавання пакета.\nНеабходна - %1$s \nДаступна - %2$s.\n\nНешта працуе не так? Паспрабуйце вызваліць месца на вашай прыладзе. Ці паспрабуйце сінхранізацыю, для якой неабходна менш месца, чым для імпартавання. Вы можаце імпартаваць пакет на прыладзе з большым аб\'ёмам памяці (напрыклад, Anki Desktop), а потым сінхранізаваць яго з гэтай прыладай.</string>
-    <string name="import_log_file_cache_cleared">Памылка імпартавання файла. Верагодна, што кэш-памяць была ачышчаная падчас апрацоўкі.\nПаспрабуйце яшчэ раз.</string>
-    <string name="import_succeeded_but_check_database">Імпартаванне даных паспяхова выканана, але пасля гэтага працэсу адбылася памылка ачысткі. Запусціць праверку базы даных пазней. Галоўная прычына: %s</string>
-    <string name="import_error_corrupt_zip">Пашкоджаны файл apkg. Спачатку выдаліце яго, а потым спампуйце дадзены файл паўторна. \n\nГалоўная прычына: %s</string>
     <string name="import_error_handle_exception">Не атрымалася імпартаваць файл\n\n%s</string>
     <string name="import_error_not_apkg_extension">Назва файла \"%s\" не мае пашырэння .apkg або .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы даных Anki (.anki2) пакуль не падтрымліваецца. Звярніцеся да даведніка для інструкцыі па замене.</string>
@@ -192,8 +175,6 @@
     <string name="import_error_copy_to_cache">Не атрымалася кэшыраваць файл (магчыма, што скончылася месца ў сховішчы)</string>
     <string name="import_error_multiple_colpkg">Было выбрана некалькі файлаў colpkg.</string>
     <string name="import_error_colpkg_apkg">Абодва файлы apkg і colpkg былі выбраны разам.</string>
-    <string name="import_stats_error">Адбыліся некаторыя памылкі падчас імпартавання наступных файлаў:\n%s</string>
-    <string name="import_replacing">Замена калекцыі&#8230;</string>
     <string name="import_interrupted">Імпарт перарваны</string>
     <string name="export_include_schedule">Разам з раскладам</string>
     <string name="export_include_media">Разам з медыяфайламі</string>
@@ -236,59 +217,11 @@
     <string name="dyn_deck_desc">Гэта спецыяльная калода для навучання па-за межамі звыклага графіка. Пасля паўтору, карткі будуць аўтаматычна вяртацца ў сваю першапачатковую калоду. Выдаленне гэтай калоды верне ўсе карткі ў іх першапачатковую калоду.</string>
     <string name="steps_error">Крокі павінны быць лікамі, якія больш за 0</string>
     <string name="steps_min_error">Патрабуецца прынамсі адзін крок</string>
-    <string name="sched_end">(канец)</string>
-    <string name="sched_unbury_action">Для таго, каб убачыць іх зараз, неабходна выбраць \"Вярнуць\" у меню</string>
-    <string name="sched_has_buried">Некаторыя звязаныя або адкладзеныя карткі былі перанесеныя на заўтра</string>
     <string name="tag_editor_add_feedback">Націсніце “%2$s”, каб пацвердзіць даданне “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана існуючая метка \"%1$s\"</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s секунда</item>
-        <item quantity="few">%s секунды</item>
-        <item quantity="many">%s секунд</item>
-        <item quantity="other">%s секунды</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s хвіліна</item>
-        <item quantity="few">%s хвіліны</item>
-        <item quantity="many">%s хвілін</item>
-        <item quantity="other">%s хвіліны</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s гадзіна</item>
-        <item quantity="few">%s гадзіны</item>
-        <item quantity="many">%s гадзін</item>
-        <item quantity="other">%s гадзіны</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s дзень</item>
-        <item quantity="few">%s дні</item>
-        <item quantity="many">%s дзён</item>
-        <item quantity="other">%s дні</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s месяц</item>
-        <item quantity="few">%s месяцы</item>
-        <item quantity="many">%s месяцаў</item>
-        <item quantity="other">%s месяцы</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s год</item>
-        <item quantity="few">%s гады</item>
-        <item quantity="many">%s гадоў</item>
-        <item quantity="other">%s гады</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s секунд</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Гэта калода ўжо існуе</string>
     <string name="decks_rename_filtered_nosubdecks">Фільтраваная калода не можа мець падкалод</string>
-    <string name="filtered_deck_name">Фільтраваная калода</string>
     <string name="reminder_title">Не забудзьцеся пра сённяшняе навучанне!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d картка для паўтарэння ў %1$s</item>
@@ -299,14 +232,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Памылка агульнага доступу да файла apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Дадзены файл патрабуе больш новую версію праграмы.</string>
     <string name="activity_start_failed">У сістэме адсутнічае ўсталяваная праграма, якая можа выканаць гэта дзеянне.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Відарысы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
     <string name="no_browser_notification">Браўзер не знойдзены. Вы можаце наведаць вэб-старонку з камп\'ютара або мабільнай прылады: </string>
     <string name="web_page_error">Памылка загрузкі старонкі: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Знешнія спасылкі ў картках не падтрымліваюцца.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Адноўленыя карткі</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>
     <string name="choose_an_image">Выберыце відарыс</string>
@@ -431,7 +362,6 @@
     <string name="intro_sync_from_ankiweb">Сінхранізаваць з AnkiWeb</string>
     <string name="already_logged_in">Вы ўжо ўвайшлі</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Калода ўжо існуе</string>
     <string name="deck_created">Створаная калода</string>
     <string name="deck_renamed">Перайменаваная калода</string>
     <!-- Deck Deletion -->

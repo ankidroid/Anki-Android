@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Poista malli</string>
     <string name="model_browser_rename" comment="Rename a note type">Uudelleennimeä</string>
     <string name="model_browser_template">Muokkaa kortteja</string>
-    <string name="model_browser_add">Lisää malli</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Päivitetään kenttiä</string>
     <string name="model_field_editor_sort_field">Järjestä tämän kentän mukaan</string>
-    <string name="model_clone_suffix">kopioi</string>
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Oletko varma, että haluat poistaa tämän kentän?</string>

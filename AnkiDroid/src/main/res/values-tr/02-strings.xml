@@ -125,7 +125,6 @@
     <string name="save">Kaydet</string>
     <string name="close">Kapat</string>
     <string name="select">Seç</string>
-    <string name="reordering_cards">Kartların sırası değiştiriliyor...</string>
     <string name="field_remapping">%1$s (\'%2$s\' içinden)</string>
     <string name="confirm_map_cards_to_nothing">Hiçbir şeyle eşlemeyen tüm kartlar silinecektir. Eğer bir notun kalan kartları yoksa, kaybolacaktır. Devam etmek istediğinizden emin misiniz?</string>
     <!-- Timebox -->
@@ -146,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Yeniden planla</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Önizle</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d içinden %1$d tanesi</string>
-    <string name="error_insufficient_memory">Cihazda yetersiz bellek olması nedeniyle işlem gerçekleştirilemiyor</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Yeniden adlandır</string>
-    <string name="default_conf_delete_error">Varsayılan seçenekler grubu kaldırılamaz</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d kart eklendi</item>
-        <item quantity="other">%d kart eklendi</item>
-    </plurals>
     <string name="check_db">Veritabanını denetle</string>
     <string name="check_media">Medyayı kontrol et</string>
     <string name="empty_cards">Boş kartlar</string>
-    <string name="check_db_message">Veritabanı denetleniyor&#8230;</string>
     <string name="empty_card_warning">Bu kart boş. Deste listesi ekranındaki menüden \"Boş kartlar\" seçeneğini kullanın.</string>
     <string name="unknown_type_field_warning">Cevabı yaz: bilinmeyen alan %s</string>
     <string name="delete_deck">Deste siliniyor&#8230;</string>
@@ -170,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Bu geçerli bir Anki paketi dosyası değil</string>
     <string name="import_title_error" comment="Title of error dialog">Hata</string>
-    <string name="import_log_failed_unzip">Apkg zipten çıkarılamadı: %s</string>
-    <string name="import_log_failed_copy_to">Apkg\'yi %s içine kopyalama başarısız</string>
-    <string name="import_log_failed_validate">apkg doğrulama başarısız</string>
-    <string name="import_log_insufficient_space_error">Paketi içe aktarmak için yeterli alan yok.\nGereken - %1$s \nMevcut - %2$s.\n\nSorun mu yaşıyorsunuz? Mümkünse telefonunuzda yer açmaya çalışın. Alternatif olarak; senkronizasyon, içe aktarmadan daha az yer kullanır. Paketi daha fazla alana sahip bir cihazla (örneğin Anki Desktop) içe aktarmayı deneyebilir ve ardından bu cihazla senkronize etmeyi deneyebilirsiniz.</string>
-    <string name="import_log_file_cache_cleared">Dosya aktarımında hata, muhtemelen işlem esnasında önbellek temizliği.\nLütfen yeniden deneyin.</string>
-    <string name="import_succeeded_but_check_database">Veri aktarımı başarılı ama aktarım sonrası temizlik başarısız oldu. Daha sonra veritabanı kontrolünü çalıştırın. Temel sebep: %s</string>
-    <string name="import_error_corrupt_zip">Apkg dosyası bozuk. Lütfen silip yeniden indirin.\n\nTemel sebep: %s</string>
     <string name="import_error_handle_exception">Dosya içeri aktarılamadı\n\n%s</string>
     <string name="import_error_not_apkg_extension">\"%s\" adlı dosyanın uzantısı .apkg veya .colpkg değil</string>
     <string name="import_error_load_imported_database">Anki Veritabanı (.anki2) değiştirmeleri henüz desteklenmiyor. Lütfen değiştirme yönergeleri için kılavuza bakın.</string>
@@ -184,8 +169,6 @@
     <string name="import_error_copy_to_cache">Dosya belleğe alınamadı (depolama alanı bitmiş olabilir)</string>
     <string name="import_error_multiple_colpkg">Birden fazla colpkg dosyası seçilmiş.</string>
     <string name="import_error_colpkg_apkg">Aynı zamanda hem apkg hem colpkg dosyaları seçilmiş.</string>
-    <string name="import_stats_error">Aşağıdaki dosyalar içeri aktarılırken bazı hatalar oluştu:\n%s</string>
-    <string name="import_replacing">Koleksiyon değiştiriliyor&#8230;</string>
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
     <string name="export_include_schedule">Zamanlamayı dahil et</string>
     <string name="export_include_media">Medyayı dahil et</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">Bu normal programın dışında çalışmak için özel bir deste. Kartlar çalışıldıktan sonra otomatik olarak kendi destelerine geri dönecekler. Bu desteyi deste listesinden silmek kalan bütün kartları kendi destelerine geri döndürecek.</string>
     <string name="steps_error">Adım 0\'dan büyük bir sayı olmalıdır</string>
     <string name="steps_min_error">En az bir adım gerekiyor</string>
-    <string name="sched_end">(bitiş)</string>
-    <string name="sched_unbury_action">Onları şimdi görmek için menüden \"Gizlemeyi geri al\"a dokunun.</string>
-    <string name="sched_has_buried">Bazı ilgili veya gizli kartlar sonraki bir seansa kadar geciktirildi.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" eklemek için buna dokunun: \"%2$s\"</string>
     <string name="tag_editor_add_feedback_existing">Varolan bir etiketi seçtiniz: \"%1$s\"</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s saniye</item>
-        <item quantity="other">%s saniye</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s dakika</item>
-        <item quantity="other">%s dakika</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s saat</item>
-        <item quantity="other">%s saat</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s gün</item>
-        <item quantity="other">%s gün</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s ay</item>
-        <item quantity="other">%s ay</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s yıl</item>
-        <item quantity="other">%s yıl</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s saniye</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Bu deste zaten mevcut</string>
     <string name="decks_rename_filtered_nosubdecks">Filtreli destenin altdestesi olamaz</string>
-    <string name="filtered_deck_name">Filtreli Deste</string>
     <string name="reminder_title">Bugün çalışmayı unutmayın!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s içinde çalışmak için %2$d kart</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg dosyasını paylaşırken hata</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Bu dosya için Anki\'nin daha yeni bir sürümü gerekli.</string>
     <string name="activity_start_failed">Sistemde bu eylemi gerçekleştirebilecek bir uygulama yüklü değil.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Fotoğraf dosyaları büyük olabilir. Resimleri medya dizininde sıkıştırmak ve boyutlarını değiştirmek isteyebilirsiniz.]]></string>
     <string name="no_browser_notification">Tarayıcı bulunmadı, lütfen web sayfasına bilgisayardan veya telefondan girin: </string>
     <string name="web_page_error">Sayfa yüklenirken hata: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Karttaki harici sayfa linki desteklenmiyor.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Düzeltilmiş Kartlar</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Arkaplan</string>
     <string name="choose_an_image">Bir resim seç</string>
@@ -403,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb\'den senkronize et</string>
     <string name="already_logged_in">Zaten giriş yapılmış</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deste var</string>
     <string name="deck_created">Deste oluşturuldu</string>
     <string name="deck_renamed">Deste yeniden adlandırıldı</string>
     <!-- Deck Deletion -->

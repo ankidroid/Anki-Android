@@ -49,7 +49,6 @@
     <string name="model_browser_delete">Delete note type</string>
     <string name="model_browser_rename" comment="Rename a note type">Rename</string>
     <string name="model_browser_template">Edit cards</string>
-    <string name="model_browser_add">Add note type</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
@@ -65,7 +64,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Actualizare câmpuri</string>
     <string name="model_field_editor_sort_field">Sortează după acest câmp</string>
-    <string name="model_clone_suffix">copie</string>
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>

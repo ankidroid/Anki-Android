@@ -51,7 +51,6 @@
     <string name="model_browser_delete">Видалити тип запису</string>
     <string name="model_browser_rename" comment="Rename a note type">Перейменувати</string>
     <string name="model_browser_template">Редагувати картки</string>
-    <string name="model_browser_add">Додати тип запису</string>
     <!--Rename-->
     <string name="rename_model">Перейменувати тип запису</string>
     <!--Language Hint-->
@@ -67,7 +66,6 @@
     <string name="model_field_editor_toggle_sticky">Запам\'ятовувати останні вхідні дані під час додавання</string>
     <string name="model_field_editor_changing">Оновлення полів</string>
     <string name="model_field_editor_sort_field">Сортувати за цим полем</string>
-    <string name="model_clone_suffix">Копіювати</string>
     <!--Warnings-->
     <string name="model_delete_warning">Ви впевнені, що хочете видалити цей тип запису?</string>
     <string name="field_delete_warning">Ви впевнені, що хочете видалити це поле?</string>

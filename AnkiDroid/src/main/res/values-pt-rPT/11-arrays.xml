@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Perguntar-me</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Etiquetar somente</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Novas fichas em ordem aleatória</string>
-    <string name="new_order_order_added">Novas fichas na ordem de adição</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Mais antigas primeiro</string>
     <string name="cram_deck_conf_order_random">Aleatória</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Usar o baralho atual</string>
     <string name="add_to_deck_decide_by_note_type">Decidir por tipo de nota</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Misturar fichas novas e revisões</string>
-    <string name="new_spread_new_after_review">Fichas novas depois das revisões</string>
-    <string name="new_spread_new_before_review">Fichas novas antes das revisões</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Quando nenhum tipo de letra especificado nas fichas</string>
     <string name="override_font_always" comment="Option to always override font">Sempre</string>

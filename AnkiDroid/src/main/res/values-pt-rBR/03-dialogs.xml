@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Verificar banco de dados?</string>
     <string name="check_db_warning">Isto pode levar bastante tempo</string>
-    <string name="check_db_acknowledge">Banco de dados verificado</string>
-    <string name="check_db_acknowledge_shrunk">Banco de dados verificado e otimizado.\nReduzido em %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Excluir baralho</string>
-    <string name="delete_deck_default_deck">O baralho padrão não pode ser excluído.</string>
     <string name="delete_deck_title">Excluir baralho?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Excluir todas as cartas em %1$s? Ele contém %2$d cartão.</item>
-        <item quantity="other">Excluir todas as cartas em %1$s? Ele contém %2$d cartões.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Enviar todos os cards em %s para seus baralhos originais?</string>
     <string name="no_tts_available_message">Nenhum idioma de texto para fala disponível</string>
     <string name="initializing_tts">Inicializando TTS&#8230;</string>
     <string name="tts_no_tts">Não fale</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Selecione aleatoriamente x cards do baralho:</string>
     <string name="custom_study_preview">Visualizar novos cards adicionados nos últimos x dias:</string>
     <string name="custom_study_rebuild_deck_corrupt">Não foi possível reconstruir o baralho de estudo personalizado</string>
-    <string name="importing_collection">Importando coleção.\nPor favor aguarde...</string>
-    <string name="import_media_count">Importando arquivos de mídia %1$d%%\nPor favor aguarde...</string>
-    <string name="import_progress">• Importando notas: %1$d%%\n• Importando cards: %2$d%%\n• Processando: %3$d%%</string>
-    <string name="import_update_details">Atualizando %1$d de %2$d notas existentes.</string>
-    <string name="import_update_ignored">Algumas atualizações foram ignoradas porque o tipo de nota mudou</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards importados: %2$d</item>
-        <item quantity="other">Arquivos importados: %1$d\nTotal de cards importados: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Armazenamento cheio</string>
     <string name="storage_almost_full_title">Armazenamento quase cheio</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sem espaço</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Desativar</string>
     <string name="dialog_positive_overwrite">Sobrescrever</string>
-    <string name="dialog_positive_remove">Remover</string>
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Substituir</string>
-    <string name="dialog_positive_restore">Restaurar</string>
-    <string name="dialog_positive_set">Definir</string>
     <string name="dialog_collection_path_not_dir">O caminho especificado não era um diretório válido</string>
     <!-- Media checking -->
     <string name="check_media_title">Verificar mídia?</string>
@@ -180,18 +160,11 @@
     <string name="integrity_check_continue_anyway">Continuar assim mesmo</string>
     <string name="integrity_check_insufficient_space">Verificar a Base de Dados usa uma grande quantidade de armazenamento temporário.\n\nÉ altamente recomendável que você tenha pelo menos %s espaço livre no seu dispositivo antes de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nVocê tem atualmente %s livre.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card com baralho incorreto foi recuperado. Por favor, consulte o manual para obter mais informações.</item>
-        <item quantity="other">%d cards com baralhos incorretos foram recuperados. Por favor, consulte o manual para obter mais informações.</item>
-    </plurals>
     <string name="video_creation_error">Não foi possível reproduzir o vídeo</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Não foi possível mudar o baralho</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Erro ao decodificar dados do card</string>
-    <string name="undo_succeeded">Desfeito \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Falha ao processar as opções do baralho: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Banco de dados bloqueado</string>
     <string name="database_locked_summary">O banco de dados do AnkiDroid está em uso por outro aplicativo. Por favor, feche o outro aplicativo e reabra o AnkiDroid.</string>

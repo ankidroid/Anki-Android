@@ -46,15 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Kiểm tra CSDL?</string>
     <string name="check_db_warning">Có thể hơi lâu</string>
-    <string name="check_db_acknowledge">Đã kiểm tra CSDL</string>
-    <string name="check_db_acknowledge_shrunk">Cơ sở dữ liệu đã được kiểm tra và tối ưu hóa. \nGiảm %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Xoá bộ thẻ</string>
-    <string name="delete_deck_default_deck">Không thể xoá bộ thẻ mặc định</string>
     <string name="delete_deck_title">Xoá bộ thẻ?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="other">Xoá toàn bộ thẻ trong %1$s? Nó có chứa %2$d thẻ.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Chuyển toàn bộ thẻ trong %s về bộ thẻ ban đầu?</string>
     <string name="no_tts_available_message">Không có ngôn ngữ chuyển-văn-bản-thành-lời</string>
     <string name="initializing_tts">Đang khởi chạy TTS&#8230;</string>
     <string name="tts_no_tts">Đừng phát âm</string>
@@ -101,14 +94,6 @@
     <string name="custom_study_random">Chọn ngẫu nhiên x thẻ từ bộ:</string>
     <string name="custom_study_preview">Xem trước thẻ mới được thêm vào x ngày trước:</string>
     <string name="custom_study_rebuild_deck_corrupt">Không thể tạo lại bộ thẻ học tùy chỉnh</string>
-    <string name="importing_collection">Đang nhập bộ sưu tập&#8230;</string>
-    <string name="import_media_count">Đang nhập các tệp đa phương tiện %1$d%%&#8230;</string>
-    <string name="import_progress">• Đang nhập các ghi chú: %1$d%%\n• Đang nhập các thẻ: %2$d%%\n• Đang hậu xử lý: %3$d%%</string>
-    <string name="import_update_details">Đã cập nhật %1$d trên %2$d ghi chú hiện hữu.</string>
-    <string name="import_update_ignored">Đã bỏ qua một số cập nhật vì loại ghi chú đã thay đổi</string>
-    <plurals name="import_complete_message">
-        <item quantity="other">Thẻ đã được nhập: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Bộ nhớ đầy</string>
     <string name="storage_almost_full_title">Bộ nhớ gần đầy</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Không có không gian</string>
@@ -128,11 +113,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Tắt</string>
     <string name="dialog_positive_overwrite">Ghi đè</string>
-    <string name="dialog_positive_remove">Xoá</string>
     <string name="dialog_positive_repair">Sửa chữa</string>
     <string name="dialog_positive_replace">Thay thế</string>
-    <string name="dialog_positive_restore">Khôi phục</string>
-    <string name="dialog_positive_set">Thiết lập</string>
     <string name="dialog_collection_path_not_dir">Đường dẫn đã chỉ định không phải thư mục hợp lệ</string>
     <!-- Media checking -->
     <string name="check_media_title">Kiểm tra tệp đa phương tiện?</string>
@@ -172,17 +154,11 @@
     <string name="integrity_check_continue_anyway">Vẫn tiếp tục</string>
     <string name="integrity_check_insufficient_space">Kiểm tra Cơ sở dữ liệu sử dụng một lượng lớn dung lượng lưu trữ tạm thời.\n\nBạn nên có ít nhất %s dung lượng trống trên thiết bị của mình trước khi tiếp tục.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nBạn hiện có %s trống.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">Không thể phát video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Không thể thay đổi bộ thẻ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Lỗi giải mã dữ liệu từ thẻ</string>
-    <string name="undo_succeeded">Hoàn tác \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Không xử lý được các tùy chọn bộ thẻ: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Cơ sở dữ liệu đã khóa</string>
     <string name="database_locked_summary">Cơ sở dữ liệu AnkiDroid đang được một ứng dụng khác sử dụng. Vui lòng đóng ứng dụng khác sau đó mở lại AnkiDroid.</string>

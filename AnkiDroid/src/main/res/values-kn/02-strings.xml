@@ -125,7 +125,6 @@
     <string name="save">ಉಳಿಸಿ</string>
     <string name="close">ಹತ್ತಿರ</string>
     <string name="select">ಆರಿಸಿ</string>
-    <string name="reordering_cards">ಕಾರ್ಡ್‌ಗಳನ್ನು ಮರುಕ್ರಮಗೊಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ನಿಂದ)</string>
     <string name="confirm_map_cards_to_nothing">ಯಾವುದಕ್ಕೂ ಮ್ಯಾಪ್ ಮಾಡದ ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ. ಟಿಪ್ಪಣಿಯಲ್ಲಿ ಉಳಿದ ಕಾರ್ಡ್‌ಗಳಿಲ್ಲದಿದ್ದರೆ, ಅದು ಕಳೆದುಹೋಗುತ್ತದೆ. ನೀವು ಮುಂದುವರಿಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
     <!-- Timebox -->
@@ -146,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ಮರುಹೊಂದಿಸಿ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ಮುನ್ನೋಟ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿ ಸಾಕಷ್ಟು ಮೆಮೊರಿ ಇಲ್ಲದಿರುವುದರಿಂದ ಕಾರ್ಯಾಚರಣೆ ಸಾಧ್ಯವಿಲ್ಲ</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ಮರುಹೆಸರಿಸಿ</string>
-    <string name="default_conf_delete_error">ಡೀಫಾಲ್ಟ್ ಆಯ್ಕೆಗಳ ಗುಂಪನ್ನು ತೆಗೆದುಹಾಕಲಾಗುವುದಿಲ್ಲ</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d ಕಾರ್ಡ್ ಸೇರಿಸಲಾಗಿದೆ</item>
-        <item quantity="other">%d ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ</item>
-    </plurals>
     <string name="check_db">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಿ</string>
     <string name="check_media">ಮಾಧ್ಯಮವನ್ನು ಪರಿಶೀಲಿಸಿ</string>
     <string name="empty_cards">ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು</string>
-    <string name="check_db_message">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="empty_card_warning">ಈ ಕಾರ್ಡ್ ಖಾಲಿಯಾಗಿದೆ. ಡೆಕ್ ಪಟ್ಟಿ ಪರದೆಯಲ್ಲಿರುವ ಮೆನುವಿನಿಂದ “ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು” ಆಯ್ಕೆಯನ್ನು ಬಳಸಿ.</string>
     <string name="unknown_type_field_warning">ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ: ಅಜ್ಞಾತ ಕ್ಷೇತ್ರ %s</string>
     <string name="delete_deck">ಡೆಕ್ ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
@@ -170,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">ಇದು ಮಾನ್ಯ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಫೈಲ್ ಅಲ್ಲ</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Apkg ಅನ್ನು ಅನ್ಜಿಪ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ:%s</string>
-    <string name="import_log_failed_copy_to">%s ಗೆ apkg ಅನ್ನು ನಕಲಿಸಲು ವಿಫಲವಾಗಿದೆ</string>
-    <string name="import_log_failed_validate">apkg ಮೌಲ್ಯಮಾಪನ ವಿಫಲವಾಗಿದೆ</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">ಫೈಲ್ ಆಮದು ಮಾಡುವಲ್ಲಿ ದೋಷ, ಪ್ರಕ್ರಿಯೆಗೊಳಿಸುವಾಗ ಸಂಗ್ರಹ ಸ್ಪಷ್ಟವಾಗಿದೆ. \n ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
-    <string name="import_succeeded_but_check_database">ಡೇಟಾ ಆಮದು ಯಶಸ್ವಿಯಾಗಿದೆ ಆದರೆ ಆಮದು ನಂತರದ ಸ್ವಚ್ clean ಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ. ನಂತರ ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಿ. ಮೂಲ ಕಾರಣ: %s</string>
-    <string name="import_error_corrupt_zip">ಎಪಿಕೆಜಿ ಫೈಲ್ ಭ್ರಷ್ಟವಾಗಿದೆ. ದಯವಿಟ್ಟು ಅದನ್ನು ಅಳಿಸಿ ಮತ್ತು ಮರು-ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ. \n\n ಮೂಲ ಕಾರಣ:%s</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">“%s” ಫೈಲ್ ಹೆಸರು .apkg ಅಥವಾ .colpkg ವಿಸ್ತರಣೆಯನ್ನು ಹೊಂದಿಲ್ಲ</string>
     <string name="import_error_load_imported_database">ಅಂಕಿ ಡೇಟಾಬೇಸ್ (.anki2) ಬದಲಿಗಳನ್ನು ಇನ್ನೂ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ. ಬದಲಿ ಸೂಚನೆಗಳಿಗಾಗಿ ದಯವಿಟ್ಟು ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ.</string>
@@ -184,8 +169,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">ಸಂಗ್ರಹವನ್ನು ಬದಲಾಯಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="import_interrupted">ಆಮದು ಅಡ್ಡಿಪಡಿಸಲಾಗಿದೆ: ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ಮುಚ್ಚಲಾಗಿದೆ</string>
     <string name="export_include_schedule">ವೇಳಾಪಟ್ಟಿ ಸೇರಿಸಿ</string>
     <string name="export_include_media">ಮಾಧ್ಯಮವನ್ನು ಸೇರಿಸಿ</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">ಸಾಮಾನ್ಯ ವೇಳಾಪಟ್ಟಿಯ ಹೊರಗೆ ಅಧ್ಯಯನ ಮಾಡಲು ಇದು ವಿಶೇಷ ಡೆಕ್ ಆಗಿದೆ. ನೀವು ಅವುಗಳನ್ನು ಪರಿಶೀಲಿಸಿದ ನಂತರ ಕಾರ್ಡ್‌ಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗಳಿಗೆ ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ. ಡೆಕ್ ಪಟ್ಟಿಯಿಂದ ಈ ಡೆಕ್ ಅನ್ನು ಅಳಿಸುವುದರಿಂದ ಉಳಿದ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗೆ ಹಿಂತಿರುಗಿಸುತ್ತದೆ.</string>
     <string name="steps_error">ಹಂತಗಳು 0 ಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಸಂಖ್ಯೆಯಾಗಿರಬೇಕು</string>
     <string name="steps_min_error">ಕನಿಷ್ಠ ಒಂದು ಹೆಜ್ಜೆ ಅಗತ್ಯವಿದೆ</string>
-    <string name="sched_end">(ಅಂತ್ಯ)</string>
-    <string name="sched_unbury_action">ಅವುಗಳನ್ನು ನೋಡಲು ಈಗ ಮೆನುವಿನಲ್ಲಿರುವ “ಅನ್ಬರಿ” ಐಟಂ ಅನ್ನು ಸ್ಪರ್ಶಿಸಿ</string>
-    <string name="sched_has_buried">ಕೆಲವು ಸಂಬಂಧಿತ ಅಥವಾ ಸಮಾಧಿ ಮಾಡಿದ ಕಾರ್ಡ್‌ಗಳು ನಾಳೆಯವರೆಗೆ ವಿಳಂಬವಾಗಿದ್ದವು</string>
     <string name="tag_editor_add_feedback">“%1$s” ಸೇರಿಸುವುದನ್ನು ಖಚಿತಪಡಿಸಲು “%2$s” ಸ್ಪರ್ಶಿಸಿ</string>
     <string name="tag_editor_add_feedback_existing">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟ್ಯಾಗ್ “%1$s” ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s ಸೆಕೆಂಡು</item>
-        <item quantity="other">%s ಸೆಕೆಂಡುಗಳು</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s ನಿಮಿಷ</item>
-        <item quantity="other">%s ನಿಮಿಷಗಳು</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s ಗಂಟೆ</item>
-        <item quantity="other">%s ಗಂಟೆಗಳು</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s ದಿನ</item>
-        <item quantity="other">%s ದಿನಗಳು</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s ತಿಂಗಳು</item>
-        <item quantity="other">%s ತಿಂಗಳುಗಳು</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s ವರ್ಷ</item>
-        <item quantity="other">%s ವರ್ಷಗಳು</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s ಸೆಕೆಂಡುಗಳು</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">ಆ ಡೆಕ್ ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ</string>
     <string name="decks_rename_filtered_nosubdecks">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಡೆಕ್‌ನಲ್ಲಿ ಸಬ್‌ಡೆಕ್‌ಗಳು ಇರಬಾರದು</string>
-    <string name="filtered_deck_name">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಡೆಕ್</string>
     <string name="reminder_title">ಇಂದು ಅಧ್ಯಯನ ಮಾಡಲು ಮರೆಯಬೇಡಿ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s ನಲ್ಲಿ ಪರಿಶೀಲಿಸಲು%2$d ಕಾರ್ಡ್</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">ಎಪಿಕೆಜಿ ಫೈಲ್ ಹಂಚುವಲ್ಲಿ ದೋಷ</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">ಈ ಫೈಲ್‌ಗೆ ಅಂಕಿಯ ಹೊಸ ಆವೃತ್ತಿಯ ಅಗತ್ಯವಿದೆ.</string>
     <string name="activity_start_failed">ಈ ಕ್ರಿಯೆಯನ್ನು ನಿರ್ವಹಿಸಬಲ್ಲ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಸಿಸ್ಟಮ್ ಸ್ಥಾಪಿಸಿಲ್ಲ.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ಕ್ಯಾಮೆರಾ ಚಿತ್ರಗಳು ದೊಡ್ಡದಾಗಿರಬಹುದು. ಮಾಧ್ಯಮ ಡೈರೆಕ್ಟರಿಯಲ್ಲಿ ಚಿತ್ರಗಳನ್ನು ಕುಗ್ಗಿಸಲು ಮತ್ತು ಮರುಗಾತ್ರಗೊಳಿಸಲು ನೀವು ಬಯಸಬಹುದು]]></string>
     <string name="no_browser_notification">ಯಾವುದೇ ಬ್ರೌಸರ್ ಕಂಡುಬಂದಿಲ್ಲ ， ದಯವಿಟ್ಟು ಪಿಸಿ ಅಥವಾ ಮೊಬೈಲ್ ಮೂಲಕ ವೆಬ್ ಪುಟಕ್ಕೆ ಭೇಟಿ ನೀಡಿ: </string>
     <string name="web_page_error">ಪುಟವನ್ನು ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ:%s</string>
     <string name="no_outgoing_link_in_cardbrowser">ಕಾರ್ಡ್‌ನಲ್ಲಿನ ಬಾಹ್ಯ ಪುಟ ಲಿಂಕ್ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">ಮರುಪಡೆಯಲಾದ ಕಾರ್ಡ್‌ಗಳು</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">ಹಿನ್ನೆಲೆ</string>
     <string name="choose_an_image">ಚಿತ್ರವನ್ನು ಆರಿಸಿ</string>
@@ -403,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

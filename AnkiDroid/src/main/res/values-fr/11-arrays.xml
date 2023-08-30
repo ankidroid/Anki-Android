@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Me demander</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Étiqueter uniquement</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Nouvelles cartes dans un ordre aléatoire</string>
-    <string name="new_order_order_added">Nouvelles cartes dans l’ordre d’ajout</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Les plus anciennes en premier</string>
     <string name="cram_deck_conf_order_random">Au hasard</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilisez le paquet courant</string>
     <string name="add_to_deck_decide_by_note_type">Décider par type de note</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mélangez nouvelles cartes et révisions</string>
-    <string name="new_spread_new_after_review">Nouvelles cartes après les révisions</string>
-    <string name="new_spread_new_before_review">Nouvelles cartes avant les révisions</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Lorsque aucune police n’est spécifié sur la carte</string>
     <string name="override_font_always" comment="Option to always override font">Toujours</string>

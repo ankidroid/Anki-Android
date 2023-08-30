@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Изтриване тип на бележка</string>
     <string name="model_browser_rename" comment="Rename a note type">Преименуване</string>
     <string name="model_browser_template">Редактиране на карти</string>
-    <string name="model_browser_add">Нов тип на бележка</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Актуализиране на полетата</string>
     <string name="model_field_editor_sort_field">Сортиране по това поле</string>
-    <string name="model_clone_suffix">копиране</string>
     <!--Warnings-->
     <string name="model_delete_warning">Наистина ли искате да изтриете този тип бележка?</string>
     <string name="field_delete_warning">Сигурни ли сте, че желаете изтриване на модела?</string>

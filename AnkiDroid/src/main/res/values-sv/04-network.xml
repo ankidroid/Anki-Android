@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Du är offline</string>
-    <string name="sync_even_if_offline">Försök ändå</string>
     <string name="sync_error">Synkroniseringsfel</string>
     <string name="vague_error" comment="Network error dialog title">Fel</string>
     <string name="retry">Försök igen</string>
@@ -63,71 +62,15 @@
     <string name="sign_up">Registrera dig</string>
     <string name="logged_as">Inloggad som</string>
     <string name="log_out">Logga ut</string>
-    <string name="alert_logging_message">Loggar in, var god vänta...</string>
-    <string name="invalid_username_password">Ogiltig e-postadress eller lösenord.</string>
     <string name="reset_password">Återställ lösenord</string>
     <string name="lost_mail_instructions">Glömt e-post?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Alternativ för XXX</string>
-    <string name="sync_prepare_syncing">Förbereder synkronisering...</string>
-    <string name="sync_preparing_full_sync_message">Förbereder fullständig synkronisering...</string>
-    <string name="sync_uploading_message">Laddar upp...</string>
-    <string name="sync_downloading_message">Hämtar...</string>
     <string name="sync_title">Synkronisering</string>
     <string name="sync_log_uploading_message">Fullständig synkronisering från lokal sida</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, enhetens tidszon kan vara felaktig</string>
-    <string name="sync_log_clocks_unsynchronized_date">, enhetens datum kan vara felaktigt</string>
-    <string name="sync_no_changes_message">Inga ändringar hittades.</string>
     <string name="sync_database_acknowledge">Samling synkroniserad</string>
-    <string name="sync_log_error_specific">Synkroniseringsfel, typ: %1$s, meddelande: %2$s</string>
     <string name="sync_corrupt_database">Din databas är korrupt. Var vänlig och åtgärda detta innan du försöker synkronisera igen.\n\nSe %s för mer information om att reparera din databas.</string>
-    <string name="sync_too_busy">Servern upptagen. Försök igen senare.</string>
-    <string name="sync_remote_db_error">Den nedladdade databasen var korrupt. Var vänlig och försök igen.</string>
-    <string name="sync_overwrite_error">Din nuvarande samling kunde inte skrivas över av den hämtade filen.</string>
-    <string name="sync_connection_error">Anslutningen nådde en maxtidsgräns. Det kan antingen vara ett problem med din internetanslutning, eller att du har en väldigt stor fil i din mediamapp.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">Anpassad synkroniseringsserver i avancerade inställningar är ogiltig (%s). Ange en giltig server eller inaktivera inställningen.</string>
-    <string name="sync_deletions_message">Synkroniserar borttagningar...</string>
-    <string name="sync_small_objects_message">Synkroniserar små objekt...</string>
-    <string name="sync_finish_message">Avslutar synkronisering...</string>
-    <string name="sync_log_finish_error">Fel vid sändning av slutförandedirektiv till server</string>
-    <string name="sync_writing_db">Skriver ändringar till databas...</string>
-    <string name="sync_download_chunk">Hämtar ändringar...</string>
-    <string name="sync_upload_chunk">Överför ändringar...</string>
-    <string name="sync_up_down_size">Upp: %1$d KB, ner: %2$d KB</string>
-    <string name="sync_generic_error">Ett fel har uppstått. Försök igen senare.</string>
-    <string name="sync_check_upload_file">Kontrollerar filen innan överföring...</string>
-    <string name="sync_check_download_file">Kontrollerar hämtad fil...</string>
-    <string name="sync_media_find">Söker efter ändrade media...</string>
-    <string name="sync_media_no_changes">Inga ändringar i mediafiler</string>
-    <string name="sync_media_success">Media har synkroniserats</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">Vid synkronisering var den lokala samlingen och den på AnkiWeb i ett oförenligt läge. För att fixa det här kommer AnkiDroid tvinga en full synkronisering. Vänligen välj vilken sida du vill behålla, eller avbryt om du vill synkronisera senare.</string>
-    <string name="sync_media_sanity_failed">Mediasynkroniseringen slutfördes, men antalet mediafiler stämmer inte överens med antalet på servern. Nästa mediasynkronisering kommer bli en fullständig synkronisering för att rätta till det som är fel.</string>
-    <string name="sync_media_db_error">Mediasynkronisering misslyckades då den aktuella databasen är korrumperad. En mediakontroll rekommenderas.</string>
-    <string name="sync_media_error">Fel vid synkronisering av medieinformation.</string>
-    <string name="sync_media_error_check">Fel när media skulle synkas. En mediakontroll rekommenderas.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Vänligen kör ‘%s’ innan synkronisering</string>
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Server</string>
     <string name="force_full_sync_title">Framtvinga fullständig synkronisering</string>
@@ -135,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Den önskade förändringen kommer att kräva en full uppladdning av databasen vid nästa synkronisering av din samling. Om du har recensioner eller andra förändringar som väntar på en annan enhet som inte har synkroniserats här ännu, så kommer de att förloras. Vill du fortsätta?</string>
     <string name="full_sync_confirmation_upgrade">På grund av en bugg i den tidigare installerade versionen av AnkiDroid är det rekommenderat att tvinga en fullständig synkronisering.</string>
-    <string name="sync_error_407_proxy_required">Proxy-autentisering krävs.</string>
-    <string name="sync_error_409">Endast en klient åt gången kan använda AnkiWeb. Om en tidigare synkronisering misslyckades, vänligen försök igen.</string>
-    <string name="sync_error_413_collection_size">Din samling eller en lokal mediafil är för stor för att synkronisera.</string>
-    <string name="sync_error_500_unknown">AnkiWeb anträffade ett fel. Försök igen om ett par minuter och om problemet kvarstår skicka en felrapport.</string>
-    <string name="sync_error_501_upgrade_required">Vänligen uppgradera till senaste versionen av AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb är i underhållsläge. Försök igen om ett par minuter.</string>
-    <string name="sync_error_504_gateway_timeout">504 tidsgränsfel för gateway erhållet.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Synkronisera (full)</string>
     <string name="sync_menu_title_no_account">Synkronisera (logga in)</string>
-    <string name="sync_error_unknown_host_readable">Kunde inte ansluta till AnkiWeb. Fungerar ditt internet?\n\n%s</string>
 </resources>

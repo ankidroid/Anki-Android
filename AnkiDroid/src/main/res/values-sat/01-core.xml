@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">ᱰᱮᱠ ᱠᱚ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">ᱴᱩᱢᱟᱹᱞ ᱠᱷᱟᱹᱞᱤ ᱜᱮᱭᱟ</string>
     <string name="no_cards_placeholder_description">+ᱟᱭᱠᱚᱱ ᱵᱮᱵᱷᱟᱵᱨ ᱠᱟᱛᱮ\nᱠᱟᱰ ᱠᱚ ᱥᱮᱞᱮᱫ ᱮᱦᱚᱵ ᱢᱮ ᱾</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">%1$d ᱠᱟᱰ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
-        <item quantity="other">%1$d ᱠᱟᱰᱠᱚ ᱫᱚ %2$s ᱫᱤᱱ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱠᱮᱟᱹᱧ</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">ᱛᱮᱞᱟ ᱴᱟᱭᱯ ᱢᱮ</string>
     <string name="show_answer">ᱛᱮᱞᱟ ᱫᱮᱠᱷᱟᱣᱢᱮ</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">ᱠᱚᱰᱟ</string>
     <string name="ease_button_good">ᱵᱮᱥ</string>
     <string name="ease_button_easy">ᱥᱚᱦᱚᱡ</string>
-    <string name="studyoptions_congrats_undo">ᱢᱟᱲᱟᱝᱟᱜ %s</string>
     <string name="menu_import">ᱟᱭᱟᱛ</string>
     <string name="undo">ᱢᱟᱲᱟᱝᱟᱜ</string>
-    <string name="undo_action_review">ᱢᱟᱲᱟᱝᱟᱜ ᱧᱮᱧᱮᱞᱠᱚᱜ</string>
-    <string name="undo_action_change_deck_multi">ᱰᱮᱠ ᱠᱚ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">ᱜᱟᱨ ᱛᱮᱭᱟᱨ ᱛᱟᱭᱚᱢ ᱢᱮ</string>
     <string name="move_all_to_deck">ᱡᱷᱚᱛᱚ ᱰᱮᱠ ᱛᱮ ᱩᱪᱟ.ᱰ ᱡᱮ</string>
     <string name="unbury">ᱛᱚᱯᱟ ᱚᱰᱚᱠ ᱢᱮ</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">ᱫᱤᱱ ᱨᱮᱭᱟᱜ ᱯᱟᱲᱦᱟᱣ ᱚᱠᱛᱚ ᱥᱮᱴᱮᱨ ᱮᱱᱟ</string>
     <string name="studyoptions_empty_schedule">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱛᱮ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ </string>
     <string name="studyoptions_congrats_finished">ᱥᱟᱨᱦᱟᱣ! ᱱᱤᱛᱚᱜ ᱞᱟᱹᱜᱤᱫ ᱪᱟᱵᱟ ᱠᱮᱟᱢ</string>
-    <string name="studyoptions_congrats_more_rev">ᱛᱮᱦᱮᱸᱧ ᱞᱟᱹᱜᱤᱫ ᱤᱱᱟᱝᱜᱮ, ᱦᱮᱞᱮ ᱟᱨᱦᱚᱸ ᱠᱟᱰ ᱠᱚ ᱮᱢᱟᱱ ᱧᱮᱞ ᱨᱮᱭᱟᱜ ᱢᱮᱱᱟᱜᱟ ᱾ ᱟᱨᱦᱚᱸ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱣ ᱫᱟᱲᱮᱭᱟᱼᱜᱟᱢ ᱾ </string>
-    <string name="studyoptions_congrats_more_new">ᱛᱮᱦᱮᱸᱧᱼᱟᱜ ᱞᱤᱢᱤᱴ ᱥᱮᱴᱮᱨ ᱮᱱᱟ ᱾ ᱟᱨᱦᱚᱸ ᱱᱟᱶᱟ ᱠᱟᱰ ᱢᱮᱱᱟᱜᱼᱟ; ᱟᱢ ᱚᱯᱥᱚᱱ ᱨᱮ ᱞᱤᱢᱤᱴ ᱵᱚᱰᱷᱟᱚ ᱫᱟᱲᱮᱟᱜᱼᱟᱢ, ᱦᱮᱞᱮ ᱵᱚᱰᱦᱟᱣ ᱞᱮᱠᱷᱟᱱ ᱢᱚᱱᱮ ᱫᱚᱦᱚ ᱞᱚᱰ ᱡᱟᱥᱛᱤ ᱛᱟᱢᱟ ᱾ </string>
-    <string name="studyoptions_congrats_custom">ᱱᱚᱨᱢᱟᱞ ᱥᱮᱰᱭᱩᱞ ᱠᱷᱚᱱ ᱵᱟᱦᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱥᱮᱱᱟᱢ ᱠᱷᱟᱱ ᱫᱚ, \&quot;Custom study\&quot; ᱵᱚᱴᱚᱱ ᱨᱮ ᱚᱛᱟᱭ ᱛᱮᱵᱚᱱ ᱢᱮ</string>
     <string name="studyoptions_no_cards_due">ᱱᱤᱛᱚᱜ ᱫᱚ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <string name="sd_card_not_mounted">ᱥᱟᱫᱷᱚᱱ ᱜᱚᱫᱟᱢ ᱫᱚ ᱵᱟᱭ ᱢᱟᱩᱱᱴ ᱟᱠᱟᱱᱟ</string>
-    <string name="empty_cloze_warning">ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱥᱟᱯᱲᱟᱣ ᱢᱮ ᱟᱨ cloze deletions ᱥᱮᱞᱮᱫ ᱢᱮ ᱾ (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">ᱟᱭᱩᱨ ᱢᱤᱫ</string>
     <string name="button_upgrade" comment="Text of the sync button">ᱥᱠᱚᱯᱰ ᱫᱚᱦᱚ ᱛᱮ ᱩᱪᱟᱹᱲ ᱢᱮ</string>
-    <string name="cancel_sync_confirm">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤᱭᱟᱢ ᱥᱮ ?</string>
-    <string name="continue_sync">ᱟᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱹᱞᱩ ᱫᱚᱦᱚᱭ</string>
-    <string name="sync_cancelled">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤ</string>
-    <string name="sync_cancel_message">ᱵᱟᱫ ᱜᱤᱰᱤᱼᱜ ᱠᱟᱱᱟ &#8230;\n ᱠᱤᱪᱷᱤ ᱥᱚᱢᱟᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ ᱾ </string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤᱭᱟᱢ ᱥᱮ ?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱹᱞᱩ ᱫᱚᱦᱚᱭ</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">ᱟᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱫᱽ ᱜᱤᱰᱤ</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">ᱵᱟᱫ ᱜᱤᱰᱤᱼᱜ ᱠᱟᱱᱟ &#8230;\n ᱠᱤᱪᱷᱤ ᱥᱚᱢᱟᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ ᱾ </string>
     <string name="export">ᱵᱷᱮᱡᱟ</string>
     <string name="export_collection">ᱴᱩᱢᱟᱹᱞ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
     <string name="export_deck">ᱰᱮᱠ ᱵᱷᱮᱡᱟᱭ ᱢᱮ</string>
@@ -210,7 +199,6 @@
     <string name="template_for_current_card_deleted">ᱱᱚᱶᱟ ᱠᱟᱰ ᱨᱮᱭᱟᱼᱜ ᱠᱟᱲ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟ ᱾ </string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ᱵᱨᱟᱩᱡᱚᱨ ᱧᱮᱞᱚᱜ ᱠᱚ</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">ᱠᱟᱰ ᱵᱟᱵᱚᱛ</string>
     <!-- Permissions -->
@@ -219,14 +207,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">ᱠᱟᱰ ᱵᱨᱟᱩᱡᱚᱨ</string>
     <string name="context_menu_anki_card_label">Anki ᱠᱟᱰ</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s ᱴᱷᱮᱱ ᱦᱩᱲᱟᱹᱜ ᱢᱮᱱᱟᱜᱼᱟ:<br/>%2$s</string>
-    <string name="more_information">ᱟᱨᱦᱚᱸ ᱵᱤᱵᱨᱚᱬ</string>
-    <string name="no_field">\'{{%1$s}}\' ᱧᱟᱢᱮᱱᱟ, ᱦᱮᱞᱮ \'%1$s\'  ᱞᱮᱠᱷᱟ ᱱᱚᱠᱟ ᱪᱮᱫ ᱦᱚᱸ ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
-    <string name="closed_tag_not_open">\'{{/%1$s}}\' ᱧᱟᱢᱮᱱᱟ, ᱦᱮᱞᱮ \'{{#%1$s}}\' ᱟᱨ ᱵᱟᱝ \'{{^%1$s}}\' ᱟᱫ ᱜᱮᱭᱟ ᱾</string>
-    <string name="missing_closing_bracket">\'%s\' ᱨᱮ \'}}\' ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
-    <string name="open_tag_not_closed">\'{{%s}}\' ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
-    <string name="wrong_tag_closed">\'{{/%1$s}}\' ᱧᱟᱢᱮᱱᱟ, ᱦᱮᱞᱮ \'{{/%2$s}}\' ᱦᱮᱡ ᱨᱮᱭᱟᱜ ᱛᱦᱮᱸᱠᱟᱱᱟ</string>
-    <string name="filter_error">ᱯᱷᱤᱞᱴᱚᱨ %s ᱨᱮ ᱵᱷᱩᱞ</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">ᱦᱟᱞᱟᱝᱟᱜ ᱠᱚ ᱢᱮᱥᱟ ᱵᱟᱝ ᱜᱟᱱᱚᱜ-ᱟ ।\nᱟᱢ ᱚᱠᱟ ᱦᱟᱞᱟᱝ ᱫᱚᱦᱚ ᱥᱟᱱᱟ ᱮᱫ ᱢᱤᱭᱟ?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -239,7 +219,6 @@
         <item quantity="one">%1$d ᱠᱟᱰ (᱐ ᱰᱭᱩ)</item>
         <item quantity="other">%1$d ᱠᱟᱰᱥ (᱐ ᱰᱭᱩ)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s ᱱᱚᱠᱚᱞ</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>

@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">डेकस</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">कार्ड ब्राउज़र</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">यह संग्रह खाली है</string>
     <string name="no_cards_placeholder_description">नये कार्ड जोडने के लिए + आइकन का उपयोग करें।</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">आज आपने %2$s में %1$d कार्ड का अध्ययन किया</item>
-        <item quantity="other">आज आपने %2$s में %1$d कार्डों का अध्ययन किया</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">उतर टाइप करें</string>
     <string name="show_answer">उत्तर देखें</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">कठिन</string>
     <string name="ease_button_good">अच्छा</string>
     <string name="ease_button_easy">आसान</string>
-    <string name="studyoptions_congrats_undo">पूर्ववत् करें %s</string>
     <string name="menu_import">आयात करें</string>
     <string name="undo">पूर्ववत् करें</string>
-    <string name="undo_action_review">पिछली समीक्षा</string>
-    <string name="undo_action_change_deck_multi">डेक बदलें</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">आघात पूर्ववत करें</string>
     <string name="move_all_to_deck">सभी को डेक में ले जाएं</string>
     <string name="unbury">वापस लौंटे</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">दैनिक अध्ययन सीमा तक पहुंच गई</string>
     <string name="studyoptions_empty_schedule">कोई कार्ड अध्ययन के लिए अनुसूचित</string>
     <string name="studyoptions_congrats_finished">बधाइयाँ! आप अभी के लिए समाप्त कर दिया है।</string>
-    <string name="studyoptions_congrats_more_rev">आज की समीक्षा की सीमा तक पहुँच गया है, लेकिन वहाँ अभी भी कार्ड की समीक्षा की जा करने के लिए इंतज़ार कर रहे हैं। इष्टतम स्मृति के लिए, विकल्प में दैनिक सीमा बढ़ाने पर विचार करें।</string>
-    <string name="studyoptions_congrats_more_new">वहाँ और अधिक नए कार्ड उपलब्ध हैं, लेकिन दैनिक सीमा तक पहुँच गया है। आप विकल्पों में सीमा में वृद्धि कर सकते हैं, लेकिन कि यह अपने अल्पकालिक समीक्षा काम का बोझ बढ़ जाएगा मन में भालू कृपया।</string>
-    <string name="studyoptions_congrats_custom">सामान्य समय के बाहर का अध्ययन करने के लिए, कस्टम अध्ययन बटन नीचे क्लिक करें।</string>
     <string name="studyoptions_no_cards_due">कोई कार्ड अभी तक देय नहीं है</string>
     <string name="sd_card_not_mounted">डिवाइस संग्रह माउंट नहीं</string>
-    <string name="empty_cloze_warning">इस नोट को संपादित करें और कुछ cloze विलोपन जोड़ें। (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">सिंक</string>
     <string name="button_upgrade" comment="Text of the sync button">स्कोप्ड स्टोरेज में माइग्रेट करें</string>
-    <string name="cancel_sync_confirm">क्या आप सिंक्रनाइज़ेशन रद्द करना चाहते हैं?</string>
-    <string name="continue_sync">सिंक जारी रखें</string>
-    <string name="sync_cancelled">सिंक्रनाइज़ेशन रद्द किया गया</string>
-    <string name="sync_cancel_message">रद्द कर रहा है...\n कुछ समय लग सकता है ।</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">क्या आप सिंक्रनाइज़ेशन रद्द करना चाहते हैं?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">सिंक जारी रखें</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">सिंक्रनाइज़ेशन रद्द किया गया</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">रद्द कर रहा है...\n कुछ समय लग सकता है ।</string>
     <string name="export">निर्यात</string>
     <string name="export_collection">निर्यात संग्रह</string>
     <string name="export_deck">निर्यात डेक</string>
@@ -212,7 +201,6 @@ Back - बैक</string>
     <string name="template_for_current_card_deleted">वर्तमान कार्ड का कार्ड प्रकार हटा दिया गया</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">ब्राउज़र का दिखाव</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">कार्ड की जानकारी</string>
     <!-- Permissions -->
@@ -221,14 +209,6 @@ Back - बैक</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">कार्ड ब्राउज़र</string>
     <string name="context_menu_anki_card_label">Anki कार्ड</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s में एक समस्या है:<br/>%2$s</string>
-    <string name="more_information">अधिक जानकारी</string>
-    <string name="no_field">\'{{%1$s}}\' मिला, लेकिन \'%1$s\' नामक कोई फ़ील्ड नहीं है।</string>
-    <string name="closed_tag_not_open"> \'{{/%1$s}}\' मिला, लेकिन \'{{#%1$s}}\' या \'{{^%1$s}}\' गायब है।</string>
-    <string name="missing_closing_bracket">\'%s\' में \'}}\' लापता है।</string>
-    <string name="open_tag_not_closed">\'{{%s}}\' लापता है।</string>
-    <string name="wrong_tag_closed">\'{{/%1$s}}\' मिला, लेकिन \'{{/%2$s}}\' अपेक्षित था</string>
-    <string name="filter_error">फ़िल्टर %s में त्रुटि</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">संग्रहों को जोड़ा नहीं जा सकता.\nआप कौन सा संग्रह रखना चाहते हैं?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -241,7 +221,6 @@ Back - बैक</string>
         <item quantity="one">%1$d कार्ड (0 शेष)</item>
         <item quantity="other">%1$d कार्ड (0 शेष)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s कॉपी</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">फ़ाइल को लिख या बना नहीं सकता %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"एकाधिक त्रुटियां, सबसे हाल की: %s"</string>

@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Niste povezani</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Napaka sinhronizacije</string>
     <string name="vague_error" comment="Network error dialog title">Napaka</string>
     <string name="retry">Poizkusi znova</string>
@@ -63,81 +62,15 @@
     <string name="sign_up">Registracija</string>
     <string name="logged_as">Prijavljeni kot</string>
     <string name="log_out">Odjava</string>
-    <string name="alert_logging_message">Prijavljanje &#8230;</string>
-    <string name="invalid_username_password">Neveljaven e-poštni naslov ali geslo</string>
     <string name="reset_password">Ponastavi geslo</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Možnosti za XXX</string>
-    <string name="sync_prepare_syncing">Pripravljanje sinhronizacije &#8230;</string>
-    <string name="sync_preparing_full_sync_message">Pripravljanje polne sinhronizacije &#8230;</string>
-    <string name="sync_uploading_message">Pošiljanje &#8230;</string>
-    <string name="sync_downloading_message">Prejemanje &#8230;</string>
     <string name="sync_title">Sinhronizacija</string>
     <string name="sync_log_uploading_message">Polna sin. iz lokalne pom. naprave</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="two">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, časovni pas je verjetno napačen</string>
-    <string name="sync_log_clocks_unsynchronized_date">, datum je verjetno napačen</string>
-    <string name="sync_no_changes_message">Sprememb ni bilo mogoče najti</string>
     <string name="sync_database_acknowledge">Zbirka sinhronizirana</string>
-    <string name="sync_log_error_specific">Napaka sinhronizacije: %1$s, sporočilo: %2$s</string>
     <string name="sync_corrupt_database">Vaša podatkovna zbirka je pokvarjena. Pred ponovnim poizkusom sinhronizacije jo popravite.\n\nZa informacije o popravljanju podatkovne zbirke glejte %s.</string>
-    <string name="sync_too_busy">Strežnik je zaseden. Poizkusite znova pozneje.</string>
-    <string name="sync_remote_db_error">Prejeta podatkovna zbirka je pokvarjena. Poizkusite znova.</string>
-    <string name="sync_overwrite_error">Vaše trenutne podatkovne zbirke ni bilo mogoče prepisati s prejeto datoteko</string>
-    <string name="sync_connection_error">Povezava je potekla. Ali so težave v vaši internetni povezavi ali pa imate zelo veliko datoteko v mapi predstavnosti.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Sinhroniziranje izbrisov &#8230;</string>
-    <string name="sync_small_objects_message">Sinhroniziranje majhnih predmetov &#8230;</string>
-    <string name="sync_finish_message">Končevanje sinhronizacije &#8230;</string>
-    <string name="sync_log_finish_error">Napaka med pošiljanjem smeri končanja na strežnik</string>
-    <string name="sync_writing_db">Pisanje sprememb v podatkovno zbirko &#8230;</string>
-    <string name="sync_download_chunk">Prejemanje sprememb &#8230;</string>
-    <string name="sync_upload_chunk">Pošiljanje sprememb &#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
-    <string name="sync_generic_error">Pojavila se je napaka. Poizkusite znova pozneje.</string>
-    <string name="sync_check_upload_file">Preverjanje datoteke pred pošiljanjem &#8230;</string>
-    <string name="sync_check_download_file">Preverjanje prejete datoteke &#8230;</string>
-    <string name="sync_media_find">Iskanje spremenjene predstavnosti &#8230;</string>
-    <string name="sync_media_no_changes">Ni sprememb v datotekah predstavnosti</string>
-    <string name="sync_media_success">Predstavnost sinhronizirana</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="two">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="few">Media sync partially completed:\n%d media files downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="two">%d media files uploaded.</item>
-        <item quantity="few">%d media files uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="two">%d media changes to upload</item>
-        <item quantity="few">%d media changes to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="two">%d media files downloaded</item>
-        <item quantity="few">%d media files downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">Po sinhronizaciji je zbirka v nedoslednem stanju. Za popravilo te težave bo AnkiDroid vsilil polno sinhronizacijo. Izberite stran, ki jo želite ohraniti.</string>
-    <string name="sync_media_sanity_failed">Sinhronizacija predstavnosti končana, vendar se števec predstavnosti ne ujema s strežnikom. Naslednja sinhronizacija predstavnosti bo polna, da se popravijo morebitne napake.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">Napaka pri sinhronizaciji podatkov predstavnosti</string>
-    <string name="sync_media_error_check">Napaka med sinhronizacijo predstavnosti. Priporočljivo je preverjanje predstavnosti.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Lokalno</string>
     <string name="sync_sanity_remote">Oddaljeno</string>
     <string name="force_full_sync_title">Vsili polno sinhronizacijo</string>
@@ -145,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Zahtevana sprememba bo potrebovala poln prejem podatkovne zbirke ob naslednji sinhronizaciji zbirke. Če imate čakajoče preglede ali druge spremembe na drugi napravi, ki še niso bile sinhronizirane, bodo izgubljene. Nadaljuj?</string>
     <string name="full_sync_confirmation_upgrade">Zaradi hrošča v prej nameščeni različici AnkiDroida je priporočljivo, da vsilite polno sinhronizacijo.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
-    <string name="sync_error_409">Samo en odjemalec ima lahko istočasno dostop do AnkiWeba. Če prejšnja sinhronizacija spodleti, poizkusite znova čez nekaj minut.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
-    <string name="sync_error_501_upgrade_required">Nadgradite na najnovejšo različico AnkiDroida</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

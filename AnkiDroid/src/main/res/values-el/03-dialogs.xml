@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Έλεγχος βάσης δεδομένων</string>
     <string name="check_db_warning">This may take a long time</string>
-    <string name="check_db_acknowledge">Database checked</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Διαγραφή τράπουλας</string>
-    <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
     <string name="delete_deck_title">Διαγραφή τράπουλας;</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Είστε βέβαιοι ότι θέλετε να στείλετε όλες τις κάρτες της %s πίσω στο αρχικές τους τράπουλες;</string>
     <string name="no_tts_available_message">Δεν είναι διαθέσιμη η μετατροπής κειμένου σε ομιλία</string>
     <string name="initializing_tts">Προετοιμασία TTS&#8230;</string>
     <string name="tts_no_tts">Σίγαση</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Τυχαία επιλογή x καρτών από την τράπουλα:</string>
     <string name="custom_study_preview">Προεπισκόπηση νέων καρτών του προστέθηκαν στις τελευταίες x μέρες:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">Εισαγωγή συλλογής. \nΠαρακαλώ περιμένετε&#8230;</string>
-    <string name="import_media_count">Εισαγωγή αρχείων πολυμέσων %1$d%%\nΠαρακαλώ περιμένετε&#8230;</string>
-    <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-    <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Απενεργοποίηση</string>
     <string name="dialog_positive_overwrite">Αντικατάσταση</string>
-    <string name="dialog_positive_remove">Αφαίρεση</string>
     <string name="dialog_positive_repair">Επισκευή</string>
     <string name="dialog_positive_replace">Αντικατάσταση</string>
-    <string name="dialog_positive_restore">Επαναφορά</string>
-    <string name="dialog_positive_set">Ορισμός</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
     <string name="check_media_title">Έλεγχος πολυμέσων;</string>
@@ -180,18 +160,11 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>

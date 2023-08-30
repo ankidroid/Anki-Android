@@ -59,7 +59,6 @@
     <string name="card_browser_mark_card">标记笔记</string>
     <string name="card_browser_unmark_card">未标记的笔记</string>
     <string name="delete_card_title">确认删除笔记？</string>
-    <string name="changed_deck_message">移动至 %s</string>
     <string name="card_browser_show_marked">筛选已标记卡牌</string>
     <string name="card_browser_show_suspended">筛选已暂停卡牌</string>
     <string name="card_browser_search_by_tag">按标签筛选</string>
@@ -73,7 +72,6 @@
     <string name="card_browser_list_my_searches_remove_content">确认删除「%1$s」？</string>
     <string name="card_browser_change_display_order">改变排序方式</string>
     <string name="card_browser_change_display_order_title">排序方式</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">到期时间</string>
     <string name="card_details_tags">标签</string>
     <string-array name="card_browser_order_labels">
         <item>不排序（更快）</item>
@@ -106,27 +104,4 @@
         <item quantity="other">%d 张卡片已删除</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">已添加</string>
-    <string name="card_info_first_review">首次复习</string>
-    <string name="card_info_latest_review">最近复习</string>
-    <string name="card_info_interval">间隔</string>
-    <string name="card_info_ease">简易度</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">复习</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">遗忘</string>
-    <string name="card_info_average_time">平均时间</string>
-    <string name="card_info_total_time">总时间</string>
-    <string name="card_info_card_type">卡片模板</string>
-    <string name="card_info_note_type">笔记模板</string>
-    <string name="card_info_deck_name">牌组名称</string>
-    <string name="card_info_card_id">卡片 ID</string>
-    <string name="card_info_note_id">笔记 ID</string>
-    <string name="card_info_revlog_time">时间</string>
-    <string name="card_info_revlog_date">日期</string>
-    <string name="card_info_revlog_rating">评分</string>
-    <string name="card_info_revlog_type">类型</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">学习</string>
-    <string name="card_info_revlog_review">复习</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">重新学习</string>
-    <string name="card_info_revlog_filtered">已筛选</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

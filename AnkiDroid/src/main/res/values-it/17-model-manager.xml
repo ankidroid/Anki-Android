@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Elimina tipo di nota</string>
     <string name="model_browser_rename" comment="Rename a note type">Rinomina</string>
     <string name="model_browser_template">Modifica le carte</string>
-    <string name="model_browser_add">Aggiungi tipo di nota</string>
     <!--Rename-->
     <string name="rename_model">Rinoma il tipo di nota</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Ricorda l\'ultimo input quando si aggiunge</string>
     <string name="model_field_editor_changing">Aggiornamento dei campi</string>
     <string name="model_field_editor_sort_field">Ordina per questo campo</string>
-    <string name="model_clone_suffix">copia</string>
     <!--Warnings-->
     <string name="model_delete_warning">Sei sicuro/a di voler eliminare questo tipo di nota?</string>
     <string name="field_delete_warning">Sei sicuro di voler eliminare questo campo?</string>
