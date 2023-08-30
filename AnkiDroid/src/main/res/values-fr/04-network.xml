@@ -76,7 +76,7 @@
     <string name="sync_title">Synchronisation</string>
     <string name="sync_log_uploading_message">Synchronisation complète depuis la version locale</string>
     <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
+        <item quantity="one">Votre horloge est déréglée de %1$d seconde%2$s.  Vérifiez que la date, l\'heure et le fuseau horaire de votre téléphone sont correctement définis, puis synchronisez à nouveau.</item>
         <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
     </plurals>
     <string name="sync_log_clocks_unsynchronized_tz">, le fuseau horaire de l\'appareil est peut-être erroné</string>
