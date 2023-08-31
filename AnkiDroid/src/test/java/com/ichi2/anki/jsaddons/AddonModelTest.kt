@@ -19,6 +19,8 @@ package com.ichi2.anki.jsaddons
 import android.content.SharedPreferences
 import android.os.Looper.getMainLooper
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.ichi2.anki.AnkiSerialization
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.jsaddons.AddonsConst.REVIEWER_ADDON
 import com.ichi2.anki.preferences.sharedPrefs
@@ -39,6 +41,7 @@ class AddonModelTest : RobolectricTest() {
     private lateinit var validNpmPackageJson: String
     private lateinit var notValidNpmPackageJson: String
     private lateinit var addonsPackageListTestJson: String
+    private lateinit var mapper: ObjectMapper
     private lateinit var mPrefs: SharedPreferences
 
     @Before
@@ -49,6 +52,9 @@ class AddonModelTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
+
+        // for mapping json from assets folder
+        mapper = AnkiSerialization.objectMapper
 
         validNpmPackageJson = FileOperation.getFileResource("valid-ankidroid-js-addon-test.json")
         notValidNpmPackageJson = FileOperation.getFileResource("not-valid-ankidroid-js-addon-test.json")
@@ -123,11 +129,11 @@ class AddonModelTest : RobolectricTest() {
         // first addon name and tgz download url
         val addon1 = result.first[0]
         assertEquals(addon1.name, "ankidroid-js-addon-progress-bar")
-        assertThat(addon1.dist.tarball, endsWith(".tgz"))
+        assertThat(addon1.dist["tarball"], endsWith(".tgz"))
 
         // second addon name and tgz download url
         val addon2 = result.first[1]
         assertEquals(addon2.name, "valid-ankidroid-js-addon-test")
-        assertThat(addon2.dist.tarball, endsWith(".tgz"))
+        assertThat(addon2.dist["tarball"], endsWith(".tgz"))
     }
 }

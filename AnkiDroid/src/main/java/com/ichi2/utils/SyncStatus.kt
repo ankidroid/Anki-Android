@@ -24,7 +24,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
-import net.ankiweb.rsdroid.exceptions.BackendNetworkException
+import net.ankiweb.rsdroid.BackendFactory
 
 // TODO Remove BADGE_DISABLED from this enum, it doesn't belong here
 enum class SyncStatus {
@@ -41,15 +41,21 @@ enum class SyncStatus {
             if (auth == null) {
                 return NO_ACCOUNT
             }
-            return try {
-                val output = col.syncStatus(auth)
+            if (!BackendFactory.defaultLegacySchema) {
+                val output = col.newBackend.backend.syncStatus(auth)
                 if (output.hasNewEndpoint()) {
                     context.sharedPrefs().edit {
                         putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
                     }
                 }
-                syncStatusFromRequired(output.required)
-            } catch (_: BackendNetworkException) {
+                return syncStatusFromRequired(output.required)
+            }
+            if (col.schemaChanged()) {
+                return FULL_SYNC
+            }
+            return if (hasDatabaseChanges()) {
+                HAS_CHANGES
+            } else {
                 NO_CHANGES
             }
         }
@@ -69,6 +75,11 @@ enum class SyncStatus {
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
 
+        /** Whether data has been changed - to be converted to Rust  */
+        fun hasDatabaseChanges(): Boolean {
+            return AnkiDroidApp.instance.sharedPrefs().getBoolean("changesSinceLastSync", false)
+        }
+
         /** To be converted to Rust  */
         fun markDataAsChanged() {
             if (sPauseCheckingDatabase) {
@@ -76,6 +87,22 @@ enum class SyncStatus {
             }
             sMarkedInMemory = true
             AnkiDroidApp.instance.sharedPrefs().edit { putBoolean("changesSinceLastSync", true) }
+        }
+
+        /** To be converted to Rust  */
+        @KotlinCleanup("Convert these to @RustCleanup")
+        fun markSyncCompleted() {
+            sMarkedInMemory = false
+            AnkiDroidApp.instance.sharedPrefs().edit { putBoolean("changesSinceLastSync", false) }
+        }
+
+        fun ignoreDatabaseModification(runnable: Runnable) {
+            sPauseCheckingDatabase = true
+            try {
+                runnable.run()
+            } finally {
+                sPauseCheckingDatabase = false
+            }
         }
 
         /** Whether a change in data has been detected - used as a heuristic to stop slow operations  */

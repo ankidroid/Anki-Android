@@ -21,6 +21,7 @@ package com.ichi2.anki.multimediacard.fields
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ClipData
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -59,6 +60,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
 import timber.log.Timber
@@ -245,6 +247,14 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             val imageUri = getUriForFile(image)
             toReturn = ImageViewModel(image.path, imageUri)
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+
+            // Until Android API22 you must manually handle permissions for image capture w/FileProvider
+            // This can be removed once minSDK is >= 22
+            // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
+            if (CompatHelper.sdkVersion < Build.VERSION_CODES.LOLLIPOP_MR1) {
+                cameraIntent.clipData = ClipData.newRawUri("", imageUri)
+                cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
 
             if (cameraIntent.resolveActivity(context.packageManager) == null) {
                 Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent")

@@ -34,7 +34,7 @@ import org.json.JSONObject
 import timber.log.Timber
 
 private typealias Union<A, B> = Pair<A, B>
-private typealias TemplateReplacementList = MutableList<Union<String?, TemplateManager.TemplateReplacement?>>
+private typealias TemplateReplacementList = MutableList<Union<str?, TemplateManager.TemplateReplacement?>>
 
 /**
  * Template.py in python. Called TemplateManager for technical reasons (conflict with Kotlin typealias)
@@ -50,7 +50,7 @@ private typealias TemplateReplacementList = MutableList<Union<String?, TemplateM
  * the filter is skipped.
  */
 class TemplateManager {
-    data class TemplateReplacement(val field_name: String, var current_text: String, val filters: List<String>)
+    data class TemplateReplacement(val field_name: str, var current_text: str, val filters: List<str>)
     data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
         companion object {
             fun from_proto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
@@ -112,10 +112,10 @@ class TemplateManager {
         col: Collection,
         card: Card,
         note: Note,
-        browser: Boolean = false,
-        notetype: NotetypeJson? = null,
+        browser: bool = false,
+        notetype: NoteType? = null,
         template: JSONObject? = null,
-        fill_empty: Boolean = false
+        fill_empty: bool = false
     ) {
 
         @RustCleanup("internal variables should be private, revert them once we're on V16")
@@ -123,23 +123,29 @@ class TemplateManager {
         internal val _col: Collection = col
         internal var _card: Card = card
         internal var _note: Note = note
-        internal var _browser: Boolean = browser
+        internal var _browser: bool = browser
         internal var _template: JSONObject? = template
-        internal var _fill_empty: Boolean = fill_empty
-        private var _fields: HashMap<String, String>? = null
-        internal var _note_type: NotetypeJson = notetype ?: note.model()
+        internal var _fill_empty: bool = fill_empty
+        private var _fields: Dict<str, str>? = null
+        internal var _note_type: NoteType = notetype ?: note.model()
+
+        /**
+         * if you need to store extra state to share amongst rendering
+         * hooks, you can insert it into this dictionary
+         */
+        private var extra_state: HashMap<str, Any> = Dict()
 
         companion object {
-            fun fromExistingCard(card: Card, browser: Boolean): TemplateRenderContext {
+            fun from_existing_card(card: Card, browser: bool): TemplateRenderContext {
                 return TemplateRenderContext(card.col, card, card.note(), browser)
             }
 
-            fun fromCardLayout(
+            fun from_card_layout(
                 note: Note,
                 card: Card,
-                notetype: NotetypeJson,
+                notetype: NoteType,
                 template: JSONObject,
-                fillEmpty: Boolean
+                fill_empty: bool
             ): TemplateRenderContext {
                 return TemplateRenderContext(
                     note.col,
@@ -147,14 +153,14 @@ class TemplateManager {
                     note,
                     notetype = notetype,
                     template = template,
-                    fill_empty = fillEmpty
+                    fill_empty = fill_empty
                 )
             }
         }
 
         fun col() = _col
 
-        fun fields(): HashMap<String, String> {
+        fun fields(): Dict<str, str> {
             Timber.w(".fields() is obsolete, use .note() or .card()")
             if (_fields == null) {
                 // fields from note
@@ -189,12 +195,12 @@ class TemplateManager {
         fun note_type() = _note_type
 
         @RustCleanup("legacy")
-        fun qfmt(): String {
+        fun qfmt(): str {
             return templates_for_card(card(), _browser).first
         }
 
         @RustCleanup("legacy")
-        fun afmt(): String {
+        fun afmt(): str {
             return templates_for_card(card(), _browser).second
         }
 
@@ -212,11 +218,11 @@ class TemplateManager {
             }
 
             val qtext = apply_custom_filters(partial.qnodes, this, front_side = null)
-            val qout = col().backend.extractAvTags(text = qtext, questionSide = true)
+            val qout = col().backend.extractAVTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
             val atext = apply_custom_filters(partial.anodes, this, front_side = qout.text)
-            val aout = col().backend.extractAvTags(text = atext, questionSide = false)
+            val aout = col().backend.extractAVTags(text = atext, questionSide = false)
             var aoutText = aout.text
 
             if (!_browser) {
@@ -238,19 +244,18 @@ class TemplateManager {
 
         @RustCleanup("Remove when DroidBackend supports named arguments")
         fun _partially_render(): PartiallyRenderedCard {
-            val proto = col().run {
+            val proto = col().newBackend.run {
                 if (_template != null) {
                     // card layout screen
                     backend.renderUncommittedCardLegacy(
                         _note.toBackendNote(),
                         _card.ord,
                         BackendUtils.to_json_bytes(_template!!.deepClone()),
-                        _fill_empty,
-                        true
+                        _fill_empty
                     )
                 } else {
                     // existing card (eg study mode)
-                    backend.renderExistingCard(_card.id, _browser, true)
+                    backend.renderExistingCard(_card.id, _browser)
                 }
             }
             return PartiallyRenderedCard.from_proto(proto)
@@ -260,13 +265,13 @@ class TemplateManager {
         data class TemplateRenderOutput(
             @get:JvmName("getQuestionText")
             @set:JvmName("setQuestionText")
-            var question_text: String,
+            var question_text: str,
             @get:JvmName("getAnswerText")
             @set:JvmName("setAnswerText")
-            var answer_text: String,
+            var answer_text: str,
             val question_av_tags: List<AvTag>,
             val answer_av_tags: List<AvTag>,
-            val css: String = ""
+            val css: str = ""
         ) {
 
             fun question_and_style() = "<style>$css</style>$question_text"
@@ -274,7 +279,7 @@ class TemplateManager {
         }
 
         @RustCleanup("legacy")
-        fun templates_for_card(card: Card, browser: Boolean): Pair<String, String> {
+        fun templates_for_card(card: Card, browser: bool): Pair<str, str> {
             val template = card.template()
             var a: String? = null
             var q: String? = null
@@ -294,8 +299,8 @@ class TemplateManager {
         fun apply_custom_filters(
             rendered: TemplateReplacementList,
             @Suppress("unused_parameter") ctx: TemplateRenderContext,
-            front_side: String?
-        ): String {
+            front_side: str?
+        ): str {
             // template already fully rendered?
             if (len(rendered) == 1 && rendered[0].first != null) {
                 return rendered[0].first!!

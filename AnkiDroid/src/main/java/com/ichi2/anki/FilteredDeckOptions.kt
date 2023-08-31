@@ -196,10 +196,10 @@ class FilteredDeckOptions :
         deck = if (extras != null && extras.containsKey("did")) {
             col.decks.get(extras.getLong("did"))
         } else {
-            null
-        } ?: col.decks.current()
+            col.decks.current()
+        }
         registerExternalStorageListener()
-        if (deck.isNormal) {
+        if (deck.isStd) {
             Timber.w("Deck is not a dyn deck")
             finish()
             return

@@ -35,6 +35,7 @@ class BootService : BroadcastReceiver() {
             return
         }
         Timber.i("Executing Boot Service")
+        catchAlarmManagerErrors(context) { scheduleDeckReminder(context) }
         catchAlarmManagerErrors(context) { scheduleNotification(TimeManager.time, context) }
         mFailedToShowNotifications = false
         sWasRun = true
@@ -65,10 +66,38 @@ class BootService : BroadcastReceiver() {
         // #6239 - previously would crash if ejecting, we don't want a report if this happens so don't use
         // getInstance().getColSafe
         return try {
-            CollectionHelper.instance.getColUnsafe(context)
+            CollectionHelper.instance.getCol(context)
         } catch (e: Exception) {
             Timber.e(e, "Failed to get collection for boot service - possibly media ejecting")
             null
+        }
+    }
+
+    private fun scheduleDeckReminder(context: Context) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        for (deckConfiguration in CollectionHelper.instance.getCol(context)!!.decks.allConf()) {
+            if (deckConfiguration.has("reminder")) {
+                val reminder = deckConfiguration.getJSONObject("reminder")
+                if (reminder.getBoolean("enabled")) {
+                    val reminderIntent = PendingIntentCompat.getBroadcast(
+                        context,
+                        deckConfiguration.getLong("id").toInt(),
+                        Intent(context, ReminderService::class.java).putExtra(
+                            ReminderService.EXTRA_DECK_OPTION_ID,
+                            deckConfiguration.getLong("id")
+                        ),
+                        0,
+                        false
+                    )
+                    val calendar = DeckOptionsActivity.reminderToCalendar(TimeManager.time, reminder)
+                    alarmManager.setRepeating(
+                        AlarmManager.RTC_WAKEUP,
+                        calendar.timeInMillis,
+                        AlarmManager.INTERVAL_DAY,
+                        reminderIntent
+                    )
+                }
+            }
         }
     }
 
@@ -116,13 +145,13 @@ class BootService : BroadcastReceiver() {
             // TODO; We might want to use the BootService retry code here when called from preferences.
             val defValue = 4
             return try {
-                val col = CollectionHelper.instance.getColUnsafe(context)!!
+                val col = CollectionHelper.instance.getCol(context)!!
                 when (col.schedVer()) {
                     1 -> {
                         val sp = context.sharedPrefs()
                         sp.getInt("dayOffset", defValue)
                     }
-                    2 -> col.config.get("rollover") ?: defValue
+                    2 -> col.get_config("rollover", defValue)!!
                     else -> {
                         val sp = context.sharedPrefs()
                         sp.getInt("dayOffset", defValue)

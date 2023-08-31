@@ -36,16 +36,22 @@ object CollectionLoader {
     fun load(lifecycleOwner: LifecycleOwner, callback: Callback) {
         lifecycleOwner.lifecycleScope.launch {
             val col = withContext(Dispatchers.IO) {
-                // load collection
-                try {
-                    Timber.d("CollectionLoader accessing collection")
-                    val col = CollectionHelper.instance.getColUnsafe(AnkiDroidApp.instance.applicationContext)
-                    Timber.i("CollectionLoader obtained collection")
-                    col
-                } catch (e: RuntimeException) {
-                    Timber.e(e, "loadInBackground - RuntimeException on opening collection")
-                    CrashReportService.sendExceptionReport(e, "CollectionLoader.load")
+                // Don't touch collection if lockCollection flag is set
+                if (CollectionHelper.instance.isCollectionLocked) {
+                    Timber.w("onStartLoading() :: Another thread has requested to keep the collection closed.")
                     null
+                } else {
+                    // load collection
+                    try {
+                        Timber.d("CollectionLoader accessing collection")
+                        val col = CollectionHelper.instance.getCol(AnkiDroidApp.instance.applicationContext)
+                        Timber.i("CollectionLoader obtained collection")
+                        col
+                    } catch (e: RuntimeException) {
+                        Timber.e(e, "loadInBackground - RuntimeException on opening collection")
+                        CrashReportService.sendExceptionReport(e, "CollectionLoader.load")
+                        null
+                    }
                 }
             }
             if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED)) {

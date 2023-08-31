@@ -23,6 +23,7 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
@@ -115,7 +116,7 @@ object Themes {
     fun getColorFromAttr(context: Context, attrs: IntArray): IntArray {
         val ta = context.obtainStyledAttributes(attrs)
         for (i in attrs.indices) {
-            attrs[i] = ta.getColor(i, context.getColor(R.color.white))
+            attrs[i] = ta.getColor(i, ContextCompat.getColor(context, R.color.white))
         }
         ta.recycle()
         return attrs

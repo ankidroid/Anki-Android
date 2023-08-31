@@ -33,22 +33,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DecksArrayAdapter.DecksFilter
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
-import com.ichi2.anki.launchCatchingTask
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.libanki.stats.Stats
 import com.ichi2.utils.DeckNameComparator
+import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.TypedFilter
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -149,19 +151,17 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     private fun showSubDeckDialog(parentDeckPath: String) {
-        launchCatchingTask {
-            val parentId = withCol { decks.id(parentDeckPath) }
+        try {
+            // create subdeck
+            val parentId = decks.id(parentDeckPath)
             val createDeckDialog = CreateDeckDialog(requireActivity(), R.string.create_subdeck, CreateDeckDialog.DeckDialogType.SUB_DECK, parentId)
             createDeckDialog.setOnNewDeckCreated { id: Long? ->
                 // a sub deck was created
-                launchCatchingTask {
-                    val name = withCol {
-                        decks.name(id!!)
-                    }
-                    selectDeckWithDeckName(name)
-                }
+                selectDeckWithDeckName(decks.name(id!!))
             }
             createDeckDialog.showDialog()
+        } catch (ex: DeckRenameException) {
+            Timber.w(ex)
         }
     }
 
@@ -171,23 +171,29 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
         // setOnNewDeckCreated parameter to be made non null
         createDeckDialog.setOnNewDeckCreated { id: Long? ->
             // a deck was created
-            launchCatchingTask {
-                val name = withCol { decks.name(id!!) }
-                selectDeckWithDeckName(name)
-            }
+            selectDeckWithDeckName(decks.name(id!!))
         }
         createDeckDialog.showDialog()
     }
+
+    private fun requireCollectionGetter(): CollectionGetter {
+        return requireContext() as CollectionGetter
+    }
+
+    protected val decks: DeckManager
+        get() = requireCollectionGetter().col.decks
 
     /**
      * Create the deck if it does not exists.
      * If name is valid, send the deck with this name to listener and close the dialog.
      */
     private fun selectDeckWithDeckName(deckName: String) {
-        launchCatchingTask {
-            val id = withCol { decks.id(deckName) }
+        try {
+            val id = decks.id(deckName)
             val dec = SelectableDeck(id, deckName)
             selectDeckAndClose(dec)
+        } catch (ex: DeckRenameException) {
+            showThemedToast(requireActivity(), ex.getLocalizedMessage(resources), false)
         }
     }
 
@@ -331,18 +337,18 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
             "\t\t".repeat(nameArr.size - 1) + nameArr[nameArr.size - 1]
         }
 
-        constructor(d: DeckNameId) : this(d.id, d.name)
+        constructor(d: Deck) : this(d.getLong("id"), d.getString("name"))
 
         /** "All decks" comes first. Then usual deck name order.  */
         override fun compareTo(other: SelectableDeck): Int {
-            if (deckId == ALL_DECKS_ID) {
-                return if (other.deckId == ALL_DECKS_ID) {
+            if (deckId == Stats.ALL_DECKS_ID) {
+                return if (other.deckId == Stats.ALL_DECKS_ID) {
                     0
                 } else {
                     -1
                 }
             }
-            return if (other.deckId == ALL_DECKS_ID) {
+            return if (other.deckId == Stats.ALL_DECKS_ID) {
                 1
             } else {
                 DeckNameComparator.INSTANCE.compare(name, other.name)
@@ -354,10 +360,13 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
              * @param filter A method deciding which deck to add
              * @return the list of all SelectableDecks from the collection satisfying filter
              */
-            fun fromCollection(c: Collection, includeFiltered: Boolean): List<SelectableDeck> {
-                val all = c.decks.allNamesAndIds(includeFiltered = includeFiltered)
+            fun fromCollection(c: Collection, filter: FunctionalInterfaces.Filter<Deck> = FunctionalInterfaces.Filters.allowAll()): List<SelectableDeck> {
+                val all = c.decks.all()
                 val ret: MutableList<SelectableDeck> = ArrayList(all.size)
                 for (d in all) {
+                    if (!filter.shouldInclude(d)) {
+                        continue
+                    }
                     ret.add(SelectableDeck(d))
                 }
                 return ret
@@ -370,7 +379,6 @@ open class DeckSelectionDialog : AnalyticsDialogFragment() {
     }
 
     companion object {
-        const val ALL_DECKS_ID = 0L
         private const val SUMMARY_MESSAGE = "summaryMessage"
         private const val TITLE = "title"
         private const val KEEP_RESTORE_DEFAULT_BUTTON = "keepRestoreDefaultButton"

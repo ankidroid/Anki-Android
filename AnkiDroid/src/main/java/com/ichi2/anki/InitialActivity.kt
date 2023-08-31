@@ -45,7 +45,7 @@ object InitialActivity {
         }
 
         // If we're OK, return null
-        if (CollectionHelper.instance.tryGetColUnsafe(context, reportException = false) != null) {
+        if (CollectionHelper.instance.getColSafe(context, reportException = false) != null) {
             return null
         }
         if (!AnkiDroidApp.isSdCardMounted) {
@@ -240,9 +240,9 @@ class StartupStoragePermissionManager private constructor(
             with(permissionDialogResult) {
                 when {
                     allGranted -> onRegularStartup()
-                    hasPermanentlyDeniedPermissions -> onPermissionPermanentlyDenied()
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && hasPermanentlyDeniedPermissions -> onPermissionPermanentlyDenied()
                     // try again (recurse), we need the permission
-                    hasTemporarilyDeniedPermissions -> retryPermissionRequest(displayError = false)
+                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && hasTemporarilyDeniedPermissions -> retryPermissionRequest(displayError = false)
                     hasRejectedPermissions -> retryPermissionRequest(displayError = false)
                     cancelled -> {
                         if (timesRequested == 1) {

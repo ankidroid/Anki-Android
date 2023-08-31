@@ -304,7 +304,7 @@
     <string name="search_decks">デッキ名を検索</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">移行の進行状況を表示</string>
     <string name="ankidroid_init_failed_webview_title">重大なエラー</string>
-    <string name="ankidroid_init_failed_webview">AnkiDroidはAndroidシステムのWebViewに依存していますが、このWebViewが現在使用できません。この状況は、システムがアップデートプログラムをインストールしている場合に発生する可能性があります。数分後に再試行してください。\n\n%s</string>
+    <string name="ankidroid_init_failed_webview">AnkiDroidはシステムのWebViewに依存していますが、このWebViewが現在使用できません。この状況は、システムがアップデートプログラムをインストールしている場合に発生する可能性があります。数分後に再試行してください。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
     <string name="menu_font_size">フォントサイズ</string>
     <string name="menu_show_toolbar" comment="Checkable item stating whether the note editor toolbar should be shown">ツールバーを表示</string>
@@ -351,7 +351,7 @@
     <string name="deck_download_progress_message">ダウンロード中、他のアプリを使用できます</string>
     <string name="check_network">ネットワーク接続を確認してください</string>
     <string name="search_using_deck_name">デッキ名で検索</string>
-    <string name="external_storage_unavailable">ダウンロードが中止されました。この外部ストレージは利用できません。</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">ホーム</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

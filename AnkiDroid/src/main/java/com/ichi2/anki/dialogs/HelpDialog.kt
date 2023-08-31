@@ -134,7 +134,6 @@ object HelpDialog {
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
-            @Suppress("unused")
             val CREATOR: Parcelable.Creator<RateAppItem?> = object : Parcelable.Creator<RateAppItem?> {
                 override fun createFromParcel(source: Parcel): RateAppItem {
                     return RateAppItem(source)
@@ -179,7 +178,6 @@ object HelpDialog {
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
-            @Suppress("unused")
             val CREATOR: Parcelable.Creator<LinkItem?> = object : Parcelable.Creator<LinkItem?> {
                 override fun createFromParcel(source: Parcel): LinkItem {
                     return LinkItem(source)
@@ -228,7 +226,6 @@ object HelpDialog {
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
-            @Suppress("unused")
             val CREATOR: Parcelable.Creator<FunctionItem?> = object : Parcelable.Creator<FunctionItem?> {
                 override fun createFromParcel(source: Parcel): FunctionItem {
                     return FunctionItem(source)
@@ -265,7 +262,6 @@ object HelpDialog {
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
-            @Suppress("unused")
             val CREATOR: Parcelable.Creator<ExceptionReportItem?> = object : Parcelable.Creator<ExceptionReportItem?> {
                 override fun createFromParcel(source: Parcel): ExceptionReportItem {
                     return ExceptionReportItem(source)

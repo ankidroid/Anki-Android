@@ -22,6 +22,8 @@ import android.webkit.WebView
 import androidx.fragment.app.commit
 import com.ichi2.anki.*
 import com.ichi2.utils.getInstanceFromClassName
+import timber.log.Timber
+import java.net.ServerSocket
 import kotlin.reflect.KClass
 import kotlin.reflect.jvm.jvmName
 
@@ -35,9 +37,8 @@ import kotlin.reflect.jvm.jvmName
 class PagesActivity : AnkiActivity() {
     private lateinit var ankiServer: AnkiServer
 
-    fun baseUrl(): String {
-        return ankiServer.baseUrl()
-    }
+    /** Port used by [ankiServer]. Normally the first available port at the moment this is instantiated */
+    val port = ServerSocket(0).use { socket -> socket.localPort }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -51,7 +52,8 @@ class PagesActivity : AnkiActivity() {
         WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
 
         // Load server
-        ankiServer = AnkiServer(this)
+        ankiServer = AnkiServer(HOST_NAME, port, this)
+        Timber.i("Starting server on $HOST_NAME:$port")
         ankiServer.start()
 
         // Launch page
@@ -88,6 +90,8 @@ class PagesActivity : AnkiActivity() {
          * hold the name of an [Anki HTML page](https://github.com/ankitects/anki/tree/main/ts)
          */
         const val EXTRA_PAGE_CLASS = "pageClass"
+
+        const val HOST_NAME = "localhost"
 
         /**
          * @param fragmentClass class of the [PageFragment] to be created

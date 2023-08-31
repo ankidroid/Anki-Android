@@ -16,7 +16,8 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.JvmTest
+import com.ichi2.anki.CollectionHelper
+import com.ichi2.anki.RobolectricTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
@@ -27,7 +28,7 @@ import org.junit.runner.RunWith
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
-class CollectionTest : JvmTest() {
+class CollectionTest : RobolectricTest() {
     @Test
     fun editClozeGenerateCardsInSameDeck() {
         // #7781
@@ -45,6 +46,14 @@ class CollectionTest : JvmTest() {
         n.flush()
         assertThat("A new card should be generated", n.numberOfCards(), equalTo(3))
         assertThat("The new card should have the same did as the previous cards", n.cards()[2].did, equalTo(did))
+    }
+
+    @Test
+    fun beforeUploadClosesCollection() {
+        val col = col
+        assertThat("db should be open", CollectionHelper.instance.colIsOpen(), equalTo(true))
+        col.beforeUpload()
+        assertThat("db should be closed", CollectionHelper.instance.colIsOpen(), equalTo(false))
     }
 
     /*******************
@@ -93,12 +102,12 @@ class CollectionTest : JvmTest() {
         var n = col.addNote(note)
         assertEquals(1, n)
         // test multiple cards - add another template
-        val m = col.notetypes.current()
-        val mm = col.notetypes
-        val t = Notetypes.newTemplate("Reverse")
+        val m = col.models.current()
+        val mm = col.models
+        val t = Models.newTemplate("Reverse")
         t.put("qfmt", "{{Back}}")
         t.put("afmt", "{{Front}}")
-        mm.addTemplateModChanged(m, t)
+        mm.addTemplateModChanged(m!!, t)
         mm.save(m, true) // todo: remove true which is not upstream
         assertEquals(2, col.cardCount())
         // creating new notes should use both cards
@@ -164,21 +173,21 @@ class CollectionTest : JvmTest() {
     fun test_timestamps() {
         val col = col
         val stdModelSize = StdModels.STD_MODELS.size
-        assertEquals(col.notetypes.all().size, stdModelSize)
+        assertEquals(col.models.all().size, stdModelSize)
         for (i in 0..99) {
             StdModels.BASIC_MODEL.add(col)
         }
-        assertEquals(col.notetypes.all().size, (100 + stdModelSize))
+        assertEquals(col.models.all().size, (100 + stdModelSize))
     }
 
     @Test
     @Ignore("Pending port of media search from Rust code")
     fun test_furigana() {
         val col = col
-        val mm = col.notetypes
+        val mm = col.models
         val m = mm.current()
         // filter should work
-        m.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}")
+        m!!.getJSONArray("tmpls").getJSONObject(0).put("qfmt", "{{kana:Front}}")
         mm.save(m)
         val n = col.newNote()
         n.setItem("Front", "foo[abc]")

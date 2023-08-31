@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.preference.ListPreference
 import androidx.preference.SwitchPreferenceCompat
-import anki.config.ConfigKey
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -45,20 +44,20 @@ class GeneralSettingsFragment : SettingsFragment() {
         // Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
         requirePreference<ListPreference>(R.string.deck_for_new_cards_key).apply {
             launchCatchingTask {
-                val valueIndex = if (withCol { config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK) }) 0 else 1
+                val valueIndex = if (withCol { get_config("addToCur", true)!! }) 0 else 1
                 setValueIndex(valueIndex)
             }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK, "0" == newValue) } }
+                launchCatchingTask { withCol { set_config("addToCur", "0" == newValue) } }
             }
         }
         // Paste PNG
         // Represents in the collection's pref "pastePNG" , i.e.
         // whether to convert clipboard uri to png format or not.
         requirePreference<SwitchPreferenceCompat>(R.string.paste_png_key).apply {
-            launchCatchingTask { isChecked = withCol { config.getBool(ConfigKey.Bool.PASTE_IMAGES_AS_PNG) } }
+            launchCatchingTask { isChecked = withCol { get_config("pastePNG", false)!! } }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.PASTE_IMAGES_AS_PNG, newValue as Boolean) } }
+                launchCatchingTask { withCol { set_config("pastePNG", newValue) } }
             }
         }
         // Error reporting mode

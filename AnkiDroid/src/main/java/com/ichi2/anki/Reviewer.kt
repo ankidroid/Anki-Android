@@ -35,7 +35,6 @@ import android.view.*
 import android.webkit.JavascriptInterface
 import android.widget.*
 import androidx.annotation.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.widget.TooltipCompat
@@ -70,16 +69,14 @@ import com.ichi2.anki.reviewer.FullScreenMode.Companion.fromPreference
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.isFullScreenReview
 import com.ichi2.anki.servicelayer.NoteService.isMarked
 import com.ichi2.anki.servicelayer.NoteService.toggleMark
-import com.ichi2.anki.servicelayer.rescheduleCards
-import com.ichi2.anki.servicelayer.resetCards
+import com.ichi2.anki.servicelayer.SchedulerService.*
+import com.ichi2.anki.servicelayer.TaskListenerBuilder
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.utils.remainingTime
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
-import com.ichi2.libanki.sched.CurrentQueueState
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.currentTheme
@@ -88,17 +85,17 @@ import com.ichi2.utils.*
 import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
-import com.ichi2.widget.WidgetStatus.updateInBackground
+import com.ichi2.widget.WidgetStatus.update
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
+import java.lang.ref.WeakReference
 import java.util.function.Consumer
 
 @KotlinCleanup("too many to count")
 open class Reviewer :
     AbstractFlashcardViewer(),
     ReviewerUi {
-    var queueState: CurrentQueueState? = null
-    val customSchedulingKey = TimeManager.time.intTimeMS().toString()
     private var mHasDrawerSwipeConflicts = false
     private var mShowWhiteboard = true
     private var mPrefFullscreenReview = false
@@ -146,6 +143,17 @@ open class Reviewer :
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
+    protected fun <T : Computation<NextCard<Array<Card>>>?> scheduleCollectionTaskHandler(@PluralsRes toastResourceId: Int): TaskListenerBuilder<Unit, T> {
+        return nextCardHandler<Computation<NextCard<*>>?>().alsoExecuteAfter { result: T ->
+            // BUG: If the method crashes, this will crash
+            invalidateOptionsMenu()
+            val cardCount: Int = result!!.value.result.size
+            showSnackbar(
+                resources.getQuantityString(toastResourceId, cardCount, cardCount),
+                Snackbar.LENGTH_SHORT
+            )
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -163,7 +171,6 @@ open class Reviewer :
         mTextBarLearn = findViewById(R.id.learn_number)
         mTextBarReview = findViewById(R.id.review_number)
         mToolbar = findViewById(R.id.toolbar)
-
         startLoadingCollection()
     }
 
@@ -232,8 +239,24 @@ open class Reviewer :
         }
         launchCatchingTask {
             card.setUserFlag(flag)
-            withCol {
-                setUserFlagForCards(listOf(card.id), flag)
+            if (BackendFactory.defaultLegacySchema) {
+                card.flush()
+                /* Following code would allow to update value of {{cardFlag}}.
+               Anki does not update this value when a flag is changed, so
+               currently this code would do something that anki itself
+               does not do. I hope in the future Anki will correct that
+               and this code may becomes useful.
+
+            card._getQA(true); //force reload. Useful iff {{cardFlag}} occurs in the template
+            if (sDisplayAnswer) {
+                displayCardAnswer();
+            } else {
+                displayCardQuestion();
+                } */
+            } else {
+                withCol {
+                    newBackend.setUserFlagForCards(listOf(card.id), flag)
+                }
             }
             refreshActionBar()
             onFlagChanged()
@@ -257,12 +280,19 @@ open class Reviewer :
         Timber.d("selectDeckFromExtra() with deckId = %d", did)
 
         // deckId does not exist, load default
-        if (getColUnsafe.decks.get(did) == null) {
+        if (col.decks.get(did, _default = false) == null) {
             Timber.w("selectDeckFromExtra() deckId '%d' doesn't exist", did)
             return
         }
+
+        // Clear the undo history when selecting a new deck
+        if (col.decks.selected() != did) {
+            col.clearUndo()
+        }
         // Select the deck
-        getColUnsafe.decks.select(did)
+        col.decks.select(did)
+        // Reset the schedule so that we get the counts for the currently selected deck
+        col.sched.deferReset()
     }
 
     override fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
@@ -295,8 +325,12 @@ open class Reviewer :
             toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
             whiteboard!!.toggleStylus = toggleStylus
         }
-        launchCatchingTask { updateCardAndRedraw() }
+        col.sched.deferReset() // Reset schedule in case card was previously loaded
+        col.startTimebox()
+        GetCard().runWithHandler(answerCardHandler(false))
         disableDrawerSwipeOnConflicts()
+        // Add a weak reference to current activity so that scheduler can talk to to Activity
+        sched!!.setContext(WeakReference(this))
 
         // Set full screen/immersive mode if needed
         if (mPrefFullscreenReview) {
@@ -314,7 +348,7 @@ open class Reviewer :
         when (item.itemId) {
             android.R.id.home -> {
                 Timber.i("Reviewer:: Home button pressed")
-                closeReviewer(RESULT_OK)
+                closeReviewer(RESULT_OK, true)
             }
             R.id.action_undo -> {
                 Timber.i("Reviewer:: Undo button pressed")
@@ -407,7 +441,11 @@ open class Reviewer :
                 toggleWhiteboard()
             }
             R.id.action_open_deck_options -> {
-                val i = com.ichi2.anki.pages.DeckOptions.getIntent(this, getColUnsafe.decks.current().id)
+                val i = if (BackendFactory.defaultLegacySchema) {
+                    Intent(this, DeckOptionsActivity::class.java)
+                } else {
+                    com.ichi2.anki.pages.DeckOptions.getIntent(this, col.decks.current().id)
+                }
                 deckOptionsLauncher.launch(i)
             }
             R.id.action_select_tts -> {
@@ -526,7 +564,7 @@ open class Reviewer :
         super.blockControls(quick)
     }
 
-    override fun closeReviewer(result: Int) {
+    override fun closeReviewer(result: Int, saveDeck: Boolean) {
         // Stop the mic recording if still pending
         audioView?.notifyStopRecord()
 
@@ -537,7 +575,7 @@ open class Reviewer :
                 tempAudioPathToDelete.delete()
             }
         }
-        super.closeReviewer(result)
+        super.closeReviewer(result, saveDeck)
     }
 
     /**
@@ -609,9 +647,7 @@ open class Reviewer :
     private fun showRescheduleCardDialog() {
         val runnable = Consumer { days: Int ->
             val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                rescheduleCards(cardIds, days)
-            }
+            RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
         }
         val dialog = rescheduleSingleCard(resources, currentCard!!, runnable)
         showDialogFragment(dialog)
@@ -628,9 +664,7 @@ open class Reviewer :
         val confirm = Runnable {
             Timber.i("NoteEditor:: ResetProgress button pressed")
             val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                resetCards(cardIds)
-            }
+            ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
         }
         dialog.setConfirm(confirm)
         showDialogFragment(dialog)
@@ -651,7 +685,13 @@ open class Reviewer :
             showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
-        val intent = com.ichi2.anki.pages.CardInfo.getIntent(this, currentCard!!.id)
+        val intent = if (BackendFactory.defaultLegacySchema) {
+            Intent(this, CardInfo::class.java).apply {
+                putExtra("cardId", currentCard!!.id)
+            }
+        } else {
+            com.ichi2.anki.pages.CardInfo.getIntent(this, currentCard!!.id)
+        }
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         startActivityWithAnimation(intent, animation)
@@ -700,18 +740,18 @@ open class Reviewer :
             undoEnabled = true
         } else {
             undoIconId = R.drawable.ic_undo_white
-            undoEnabled = colIsOpenUnsafe() && getColUnsafe.undoAvailable()
+            undoEnabled = colIsOpen() && col.undoAvailable()
         }
         val alphaUndo = if (undoEnabled && super.controlBlocked !== ReviewerUi.ControlBlock.SLOW) Themes.ALPHA_ICON_ENABLED_LIGHT else Themes.ALPHA_ICON_DISABLED_LIGHT
         val undoIcon = menu.findItem(R.id.action_undo)
         undoIcon.setIcon(undoIconId)
         undoIcon.setEnabled(undoEnabled).iconAlpha = alphaUndo
         undoIcon.actionView!!.isEnabled = undoEnabled
-        if (colIsOpenUnsafe()) { // Required mostly because there are tests where `col` is null
+        if (colIsOpen()) { // Required mostly because there are tests where `col` is null
             if (whiteboardIsShownAndHasStrokes) {
                 undoIcon.title = resources.getString(R.string.undo_action_whiteboard_last_stroke)
-            } else if (getColUnsafe.undoAvailable()) {
-                undoIcon.title = getColUnsafe.undoLabel()
+            } else if (col.undoAvailable()) {
+                undoIcon.title = resources.getString(R.string.studyoptions_congrats_undo, col.undoName(resources))
                 //  e.g. Undo Bury, Undo Change Deck, Undo Update Note
             } else {
                 // In this case, there is no object word for the verb, "Undo",
@@ -780,7 +820,7 @@ open class Reviewer :
         } else {
             toggleWhiteboardIcon.setTitle(R.string.enable_whiteboard)
         }
-        if (colIsOpenUnsafe() && getColUnsafe.decks.isDyn(parentDid)) {
+        if (colIsOpen() && col.decks.isDyn(parentDid)) {
             menu.findItem(R.id.action_open_deck_options).isVisible = false
         }
         if (mTTS.enabled && !mActionButtons.status.selectTtsIsDisabled()) {
@@ -862,12 +902,21 @@ open class Reviewer :
     }
 
     override fun performReload() {
-        launchCatchingTask { updateCardAndRedraw() }
+        col.sched.deferReset()
+        GetCard().runWithHandler(answerCardHandler(false))
     }
 
     override fun displayAnswerBottomBar() {
         super.displayAnswerBottomBar()
         mOnboarding.onAnswerShown()
+        val buttonCount: Int = try {
+            this.buttonCount
+        } catch (e: RuntimeException) {
+            CrashReportService.sendExceptionReport(e, "AbstractReviewer-showEaseButtons")
+            closeReviewer(DeckPicker.RESULT_DB_ERROR, true)
+            return
+        }
+
         // Set correct label and background resource for each button
         // Note that it's necessary to set the resource dynamically as the ease2 / ease3 buttons
         // (which libanki expects ease to be 2 and 3) can either be hard, good, or easy - depending on num buttons shown
@@ -876,26 +925,47 @@ open class Reviewer :
         easeButton1!!.setVisibility(View.VISIBLE)
         easeButton1!!.setColor(background[0])
         easeButton4!!.setColor(background[3])
-        // Ease 2 is "hard"
-        easeButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
-        easeButton2!!.requestFocus()
-        // Ease 3 is good
-        easeButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
-        easeButton4!!.setVisibility(View.VISIBLE)
-        easeButton3!!.requestFocus()
+        when (buttonCount) {
+            2 -> {
+                // Ease 2 is "good"
+                easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                easeButton2!!.requestFocus()
+            }
+            3 -> {
+                // Ease 2 is good
+                easeButton2!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                // Ease 3 is easy
+                easeButton3!!.setup(background[3], textColor[3], R.string.ease_button_easy)
+                easeButton2!!.requestFocus()
+            }
+            else -> {
+                // Ease 2 is "hard"
+                easeButton2!!.setup(background[1], textColor[1], R.string.ease_button_hard)
+                easeButton2!!.requestFocus()
+                // Ease 3 is good
+                easeButton3!!.setup(background[2], textColor[2], R.string.ease_button_good)
+                easeButton4!!.setVisibility(View.VISIBLE)
+                easeButton3!!.requestFocus()
+            }
+        }
 
         // Show next review time
         if (shouldShowNextReviewTime()) {
-            val state = queueState!!
-            launchCatchingTask {
-                val labels = withCol { sched.describeNextStates(state.states) }
-                easeButton1!!.nextTime = labels[0]
-                easeButton2!!.nextTime = labels[1]
-                easeButton3!!.nextTime = labels[2]
-                easeButton4!!.nextTime = labels[3]
+            fun nextIvlStr(button: Int) = sched!!.nextIvlStr(this, currentCard!!, button)
+
+            easeButton1!!.nextTime = nextIvlStr(Consts.BUTTON_ONE)
+            easeButton2!!.nextTime = nextIvlStr(Consts.BUTTON_TWO)
+            if (buttonCount > 2) {
+                easeButton3!!.nextTime = nextIvlStr(Consts.BUTTON_THREE)
+            }
+            if (buttonCount > 3) {
+                easeButton4!!.nextTime = nextIvlStr(Consts.BUTTON_FOUR)
             }
         }
     }
+
+    val buttonCount: Int
+        get() = sched!!.answerButtons(currentCard!!)
 
     override fun automaticShowQuestion(action: AutomaticAnswerAction) {
         // explicitly do not call super
@@ -941,16 +1011,14 @@ open class Reviewer :
     }
 
     private fun updateScreenCounts() {
-        val queue = queueState ?: return
+        if (currentCard == null) return
         super.updateActionBar()
         val actionBar = supportActionBar
-        val counts = queue.counts
+        val counts = sched!!.counts(currentCard!!)
         if (actionBar != null) {
             if (mPrefShowETA) {
-                launchCatchingTask {
-                    mEta = withCol { sched.eta(counts, false) }
-                    actionBar.subtitle = remainingTime(this@Reviewer, (mEta * 60).toLong())
-                }
+                mEta = sched!!.eta(counts, false)
+                actionBar.subtitle = Utils.remainingTime(this, (mEta * 60).toLong())
             }
         }
         mNewCount = SpannableString(counts.new.toString())
@@ -962,7 +1030,7 @@ open class Reviewer :
         // if this code is run as a card is being answered, currentCard may be non-null but
         // the queues may be empty - we can't call countIdx() in such a case
         if (counts.count() != 0) {
-            when (queue.countsIndex) {
+            when (sched!!.countIdx(currentCard!!)) {
                 Counts.Queue.NEW -> mNewCount!!.setSpan(UnderlineSpan(), 0, mNewCount!!.length, 0)
                 Counts.Queue.LRN -> mLrnCount!!.setSpan(UnderlineSpan(), 0, mLrnCount!!.length, 0)
                 Counts.Queue.REV -> mRevCount!!.setSpan(UnderlineSpan(), 0, mRevCount!!.length, 0)
@@ -984,58 +1052,6 @@ open class Reviewer :
         super.onPageFinished()
         onFlagChanged()
         onMarkChanged()
-        if (!displayAnswer) {
-            runStateMutationHook()
-        }
-    }
-
-    override suspend fun updateCurrentCard() {
-        val state = withCol {
-            sched.currentQueueState()?.apply {
-                topCard.renderOutput(true)
-            }
-        }
-        state?.timeboxReached?.let { dealWithTimeBox(it) }
-        currentCard = state?.topCard
-        queueState = state
-    }
-
-    override suspend fun answerCardInner(ease: Int) {
-        val state = queueState!!
-        Timber.d("answerCardInner: ${currentCard!!.id} $ease")
-        var wasLeech = false
-        undoableOp(this) {
-            sched.answerCard(state, ease).also {
-                wasLeech = sched.againIsLeech(state)
-            }
-        }.also {
-            if (ease == Consts.BUTTON_ONE && wasLeech) {
-                state.topCard.load()
-                val leechMessage: String = if (state.topCard.queue < 0) {
-                    resources.getString(R.string.leech_suspend_notification)
-                } else {
-                    resources.getString(R.string.leech_notification)
-                }
-                showSnackbar(leechMessage, Snackbar.LENGTH_SHORT)
-            }
-        }
-    }
-
-    private fun dealWithTimeBox(timebox: Collection.TimeboxReached) {
-        val nCards = timebox.reps
-        val nMins = timebox.secs / 60
-        val mins = resources.getQuantityString(R.plurals.in_minutes, nMins, nMins)
-        val timeboxMessage = resources.getQuantityString(R.plurals.timebox_reached, nCards, nCards, mins)
-        AlertDialog.Builder(this).show {
-            title(R.string.timebox_reached_title)
-            message(text = timeboxMessage)
-            positiveButton(R.string.dialog_continue) {}
-            negativeButton(text = CollectionManager.TR.studyingFinish()) {
-                finishWithAnimation(ActivityTransitionAnimation.Direction.END)
-            }
-            cancelable(true)
-            setOnCancelListener { }
-        }
     }
 
     override fun displayCardQuestion() {
@@ -1049,21 +1065,6 @@ open class Reviewer :
     override fun displayCardAnswer() {
         delayedHide(100)
         super.displayCardAnswer()
-    }
-
-    private fun runStateMutationHook() {
-        val state = queueState ?: return
-        if (state.customSchedulingJs.isEmpty()) {
-            return
-        }
-        val key = customSchedulingKey
-        val js = state.customSchedulingJs
-        webView?.evaluateJavascript(
-            """
-        anki.mutateNextCardStates('$key', async (states, customData, ctx) => {{ $js }})
-            .catch(err => console.log(err));
-"""
-        ) {}
     }
 
     override fun initLayout() {
@@ -1092,9 +1093,10 @@ open class Reviewer :
 
     override fun onStop() {
         super.onStop()
-        if (!isFinishing && colIsOpenUnsafe()) {
-            updateInBackground(this)
+        if (!isFinishing && colIsOpen() && sched != null) {
+            update(this)
         }
+        saveCollectionInBackground()
     }
 
     override fun initControls() {
@@ -1178,7 +1180,7 @@ open class Reviewer :
 
     override fun restoreCollectionPreferences(col: Collection) {
         super.restoreCollectionPreferences(col)
-        mShowRemainingCardCount = col.config.get("dueCounts") ?: true
+        mShowRemainingCardCount = col.get_config_boolean("dueCounts")
     }
 
     override fun onSingleTap(): Boolean {
@@ -1371,7 +1373,7 @@ open class Reviewer :
         return if (currentCard == null || isControlBlocked) {
             false
         } else {
-            getColUnsafe.db.queryScalar(
+            col.db.queryScalar(
                 "select 1 from cards where nid = ? and id != ? and queue != " + Consts.QUEUE_TYPE_SUSPENDED + " limit 1",
                 currentCard!!.nid,
                 currentCard!!.id
@@ -1385,7 +1387,7 @@ open class Reviewer :
         return if (currentCard == null || isControlBlocked) {
             false
         } else {
-            getColUnsafe.db.queryScalar(
+            col.db.queryScalar(
                 "select 1 from cards where nid = ? and id != ? and queue >=  " + Consts.QUEUE_TYPE_NEW + " limit 1",
                 currentCard!!.nid,
                 currentCard!!.id
@@ -1602,9 +1604,7 @@ open class Reviewer :
             }
 
             val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                rescheduleCards(cardIds, days)
-            }
+            RescheduleCards(cardIds, days).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reschedule_cards_dialog_acknowledge))
             return true
         }
 
@@ -1616,9 +1616,7 @@ open class Reviewer :
                 return false
             }
             val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                resetCards(cardIds)
-            }
+            ResetCards(cardIds).runWithHandler(scheduleCollectionTaskHandler(R.plurals.reset_cards_dialog_acknowledge))
             return true
         }
     }

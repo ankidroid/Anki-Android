@@ -45,7 +45,8 @@ class CompatHelper private constructor() {
         sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
         sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
         sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
-        else -> CompatV23()
+        sdkVersion >= Build.VERSION_CODES.M -> CompatV23()
+        else -> CompatV21()
     }
 
     companion object {

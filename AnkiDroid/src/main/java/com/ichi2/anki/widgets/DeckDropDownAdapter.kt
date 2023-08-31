@@ -23,9 +23,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.ichi2.anki.R
-import com.ichi2.libanki.DeckNameId
+import com.ichi2.libanki.Deck
 
-class DeckDropDownAdapter(private val context: Context, private val decks: List<DeckNameId>) : BaseAdapter() {
+class DeckDropDownAdapter(private val context: Context, private val decks: List<Deck>) : BaseAdapter() {
     interface SubtitleListener {
         val subtitleText: String?
     }
@@ -73,7 +73,7 @@ class DeckDropDownAdapter(private val context: Context, private val decks: List<
             deckNameView!!.text = context.resources.getString(R.string.card_browser_all_decks)
         } else {
             val deck = decks[position - 1]
-            val deckName = deck.name
+            val deckName = deck.getString("name")
             deckNameView!!.text = deckName
         }
         deckCountsView!!.text = (context as SubtitleListener).subtitleText
@@ -94,7 +94,7 @@ class DeckDropDownAdapter(private val context: Context, private val decks: List<
             deckNameView.text = context.resources.getString(R.string.card_browser_all_decks)
         } else {
             val deck = decks[position - 1]
-            val deckName = deck.name
+            val deckName = deck.getString("name")
             deckNameView.text = deckName
         }
         return convertView

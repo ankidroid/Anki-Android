@@ -29,11 +29,11 @@ import java.io.IOException
 
 abstract class InstrumentedTest {
     protected val col: Collection
-        get() = CollectionHelper.instance.getColUnsafe(testContext)!!
+        get() = CollectionHelper.instance.getCol(testContext)!!
 
     @get:Throws(IOException::class)
     protected val emptyCol: Collection
-        get() = Shared.getEmptyCol()
+        get() = Shared.getEmptyCol(testContext)
 
     @get:Rule
     val ensureAllFilesAccessRule = EnsureAllFilesAccessRule()

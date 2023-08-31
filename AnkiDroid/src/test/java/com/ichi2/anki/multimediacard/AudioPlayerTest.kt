@@ -60,6 +60,7 @@ class AudioPlayerTest : RobolectricTest() {
         audioPlayer.onStoppingListener = stoppingListener
         audioPlayer.onStoppedListener = stoppedListener
 
+        runTasksInBackground()
         audioPlayer.play(file.absolutePath)
         advanceRobolectricLooper()
         // audio should play and finish, with each listener only running once
@@ -76,6 +77,7 @@ class AudioPlayerTest : RobolectricTest() {
         audioPlayer.onStoppingListener = stoppingListener
         audioPlayer.onStoppedListener = stoppedListener
 
+        runTasksInBackground()
         audioPlayer.play(file.absolutePath)
         advanceRobolectricLooper()
         audioPlayer.play(file.absolutePath)
@@ -96,6 +98,7 @@ class AudioPlayerTest : RobolectricTest() {
         audioPlayer.onStoppingListener = stoppingListener
         audioPlayer.onStoppedListener = stoppedListener
 
+        runTasksInBackground()
         audioPlayer.play(file.absolutePath)
         audioPlayer.pause()
         advanceRobolectricLooper()
@@ -119,6 +122,7 @@ class AudioPlayerTest : RobolectricTest() {
         audioPlayer.onStoppingListener = stoppingListener
         audioPlayer.onStoppedListener = stoppedListener
 
+        runTasksInBackground()
         audioPlayer.play(file.absolutePath)
         audioPlayer.stop()
         advanceRobolectricLooper()
@@ -135,6 +139,7 @@ class AudioPlayerTest : RobolectricTest() {
         audioPlayer.onStoppedListener = null
         assertDoesNotThrow {
             try {
+                runTasksInBackground()
                 audioPlayer.play(file.absolutePath)
                 advanceRobolectricLooper()
             } catch (e: IOException) {

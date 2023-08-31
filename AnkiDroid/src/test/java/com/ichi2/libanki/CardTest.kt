@@ -17,9 +17,9 @@ package com.ichi2.libanki
 
 import android.annotation.SuppressLint
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.hasItemInArray
@@ -32,13 +32,13 @@ import java.util.*
 import kotlin.test.assertNotNull
 
 @RunWith(AndroidJUnit4::class)
-class CardTest : JvmTest() {
+class CardTest : RobolectricTest() {
 
     @Test
     fun `pureAnswer handled quoted html element`() {
         // <hr id="answer"> is also used
         val modelName = addNonClozeModel("Test", arrayOf("One", "Two"), "{{One}}", "{{One}}<hr id=\"answer\">{{Two}}")
-        val note = col.newNote(col.notetypes.byName(modelName)!!)
+        val note = col.newNote(col.models.byName(modelName)!!)
         note.setItem("One", "1")
         note.setItem("Two", "2")
         col.addNote(note)
@@ -57,6 +57,7 @@ class CardTest : JvmTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val cid = note.cards()[0].id
+        col.reset()
         col.sched.answerCard(col.sched.card!!, Consts.BUTTON_TWO)
         col.removeCardsAndOrphanedNotes(listOf(cid))
         assertEquals(0, col.cardCount())
@@ -74,7 +75,7 @@ class CardTest : JvmTest() {
         note.setItem("Back", "2")
         col.addNote(note)
         val c = note.cards()[0]
-        col.notetypes.current().getLong("id")
+        col.models.current()!!.getLong("id")
         assertEquals(0, c.template().getInt("ord"))
     }
 
@@ -85,13 +86,13 @@ class CardTest : JvmTest() {
         note.setItem("Back", "")
         col.addNote(note)
         assertEquals(1, note.numberOfCards())
-        val m = col.notetypes.current()
-        val mm = col.notetypes
+        val m = col.models.current()
+        val mm = col.models
         // adding a new template should automatically create cards
-        var t = Notetypes.newTemplate("rev")
+        var t = Models.newTemplate("rev")
         t.put("qfmt", "{{Front}}1")
         t.put("afmt", "")
-        mm.addTemplateModChanged(m, t)
+        mm.addTemplateModChanged(m!!, t)
         mm.save(m, true)
         assertEquals(2, note.numberOfCards())
         // if the template is changed to remove cards, they'll be removed
@@ -110,8 +111,8 @@ class CardTest : JvmTest() {
 
     @Test
     fun test_gendeck() {
-        val cloze = col.notetypes.byName("Cloze")
-        col.notetypes.setCurrent(cloze!!)
+        val cloze = col.models.byName("Cloze")
+        col.models.setCurrent(cloze!!)
         val note = col.newNote()
         note.setItem("Text", "{{c1::one}}")
         col.addNote(note)
@@ -120,7 +121,7 @@ class CardTest : JvmTest() {
         // set the model to a new default col
         val newId = addDeck("new")
         cloze.put("did", newId)
-        col.notetypes.save(cloze, false)
+        col.models.save(cloze, false)
         // a newly generated card should share the first card's col
         note.setItem("Text", "{{c2::two}}")
         note.flush()
@@ -129,12 +130,20 @@ class CardTest : JvmTest() {
         note.setItem("Text", "{{c3::three}}")
         note.flush()
         assertEquals(1, note.cards()[2].did)
+        // if one of the cards is in a different col, it should revert to the
+        // model default
+        val c = note.cards()[1]
+        c.did = newId
+        c.flush()
+        note.setItem("Text", "{{c4::four}}")
+        note.flush()
+        assertEquals(newId, note.cards()[3].did)
     }
 
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_or() {
-        val models = col.notetypes
+        val models = col.models
         val model = models.byName("Basic")
         assertNotNull(model)
         models.renameField(model, model.getJSONArray("flds").getJSONObject(0), "A")
@@ -146,7 +155,7 @@ class CardTest : JvmTest() {
         tmpls.getJSONObject(0).put("qfmt", "{{A}}{{B}}{{C}}")
         // ensure first card is always generated,
         // because at last one card is generated
-        val tmpl = Notetypes.newTemplate("AND_OR")
+        val tmpl = Models.newTemplate("AND_OR")
         tmpl.put("qfmt", "        {{A}}    {{#B}}        {{#C}}            {{B}}        {{/C}}    {{/B}}")
         models.addTemplate(model, tmpl)
         models.save(model)
@@ -183,7 +192,7 @@ class CardTest : JvmTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun test_gen_not() {
-        val models = col.notetypes
+        val models = col.models
         val model = models.byName("Basic")
         assertNotNull(model)
         val tmpls = model.getJSONArray("tmpls")
@@ -196,7 +205,7 @@ class CardTest : JvmTest() {
         // ensure first card is always generated,
         // because at last one card is generated
         tmpls.getJSONObject(0).put("qfmt", "{{AddIfEmpty}}{{Front}}{{First}}")
-        val tmpl = Notetypes.newTemplate("NOT")
+        val tmpl = Models.newTemplate("NOT")
         tmpl.put("qfmt", "    {{^AddIfEmpty}}        {{Front}}    {{/AddIfEmpty}}    ")
         models.addTemplate(model, tmpl)
         models.save(model)

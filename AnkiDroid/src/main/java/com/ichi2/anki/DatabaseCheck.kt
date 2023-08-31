@@ -37,7 +37,7 @@ fun DeckPicker.handleDatabaseCheck() {
             onCancel = null
         ) {
             withCol {
-                fixIntegrity()
+                newBackend.fixIntegrity()
             }
         }
         val message = if (problems.isNotEmpty()) {

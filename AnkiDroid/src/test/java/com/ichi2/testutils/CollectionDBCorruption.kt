@@ -48,7 +48,7 @@ object CollectionDBCorruption {
      */
     @NeedsTest("test with a new collection")
     fun closeAndCorrupt(context: Context): String {
-        val col = CollectionHelper.instance.getColUnsafe(context)!!
+        val col = CollectionHelper.instance.getCol(context)!!
         val path = col.path
         col.close()
         corrupt(path)

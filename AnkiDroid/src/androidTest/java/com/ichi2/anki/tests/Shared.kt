@@ -31,13 +31,13 @@ import java.io.IOException
 @KotlinCleanup("maybe delete Shared object and make inner functions as top level")
 object Shared {
     @Throws(IOException::class)
-    fun getEmptyCol(): Collection {
+    fun getEmptyCol(context: Context): Collection {
         val f = File.createTempFile("test", ".anki2")
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
         val path = f.absolutePath
         assertTrue(f.delete())
-        return Storage.collection(path)
+        return Storage.collection(context, path)
     }
 
     /**

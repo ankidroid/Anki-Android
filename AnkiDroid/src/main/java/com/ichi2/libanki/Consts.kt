@@ -19,6 +19,23 @@ import androidx.annotation.IntDef
 import kotlin.annotation.Retention
 
 object Consts {
+    // whether new cards should be mixed with reviews, or shown first or last
+    const val NEW_CARDS_DISTRIBUTE = 0
+    const val NEW_CARDS_LAST = 1
+    const val NEW_CARDS_FIRST = 2
+
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(NEW_CARDS_DISTRIBUTE, NEW_CARDS_LAST, NEW_CARDS_FIRST)
+    annotation class NEW_CARD_ORDER
+
+    // new card insertion order
+    const val NEW_CARDS_RANDOM = 0
+    const val NEW_CARDS_DUE = 1
+
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(NEW_CARDS_RANDOM, NEW_CARDS_DUE)
+    annotation class NEW_CARDS_INSERTION
+
     // Queue types
     const val QUEUE_TYPE_MANUALLY_BURIED = -3
     const val QUEUE_TYPE_SIBLING_BURIED = -2
@@ -42,6 +59,23 @@ object Consts {
     @Retention(AnnotationRetention.SOURCE)
     @IntDef(CARD_TYPE_NEW, CARD_TYPE_LRN, CARD_TYPE_REV, CARD_TYPE_RELEARNING)
     annotation class CARD_TYPE
+
+    // removal types
+    const val REM_CARD = 0
+    const val REM_NOTE = 1
+    const val REM_DECK = 2
+
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(REM_CARD, REM_NOTE, REM_DECK)
+    annotation class REM_TYPE
+
+    // count display
+    const val COUNT_ANSWERED = 0
+    const val COUNT_REMAINING = 1
+
+    // media log
+    const val MEDIA_ADD = 0
+    const val MEDIA_REM = 1
 
     // dynamic deck order
     const val DYN_OLDEST = 0
@@ -68,17 +102,32 @@ object Consts {
     annotation class MODEL_TYPE
 
     // deck types
+    const val DECK_STD = 0
     const val DECK_DYN = 1
+
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(DECK_STD, DECK_DYN)
+    annotation class DECK_TYPE
 
     const val STARTING_FACTOR = 2500
 
+    // deck schema & syncing vars
+    const val LEGACY_SCHEMA_VERSION = 11
+
     /** Only used by the dialog shown to user */
     const val BACKEND_SCHEMA_VERSION = 18
+
+    /** The database schema version that we can downgrade from  */
+    const val SYNC_MAX_BYTES = (2.5 * 1024 * 1024).toInt()
+    const val SYNC_MAX_FILES = 25
+
+    val DEFAULT_HOST_NUM: Int? = null
 
     const val SYNC_VER = 10
 
     // Leech actions
     const val LEECH_SUSPEND = 0
+    const val LEECH_TAGONLY = 1
 
     // Buttons
     const val BUTTON_ONE = 1
@@ -90,8 +139,23 @@ object Consts {
     @IntDef(BUTTON_ONE, BUTTON_TWO, BUTTON_THREE, BUTTON_FOUR)
     annotation class BUTTON_TYPE
 
+    // Revlog types
+    // They are the same as Card Type except for CRAM. So one type may switch from one to other type
+    const val REVLOG_LRN = 0
+    const val REVLOG_REV = 1
+    const val REVLOG_RELRN = 2
+    const val REVLOG_CRAM = 3
+    const val REVLOG_MANUAL = 4
+
+    @Retention(AnnotationRetention.SOURCE)
+    @IntDef(REVLOG_LRN, REVLOG_REV, REVLOG_RELRN, REVLOG_CRAM, REVLOG_MANUAL)
+    annotation class REVLOG_TYPE
+
     // The labels defined in consts.py are in AnkiDroid's resources files.
     const val DEFAULT_DECK_ID: Long = 1
+
+    /** Default dconf - can't be removed  */
+    const val DEFAULT_DECK_CONFIG_ID: Long = 1
 
     val FIELD_SEPARATOR = Character.toString('\u001f')
 

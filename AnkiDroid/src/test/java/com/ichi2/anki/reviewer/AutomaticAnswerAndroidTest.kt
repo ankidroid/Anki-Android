@@ -51,11 +51,11 @@ class AutomaticAnswerAndroidTest : RobolectricTest() {
     }
 
     private fun resetPrefs() {
-        col.config.remove("automaticAnswerAction")
+        col.remove_config("automaticAnswerAction")
     }
 
     private fun setPreference(value: Int) {
-        col.config.set("automaticAnswerAction", value)
+        col.set_config("automaticAnswerAction", value)
     }
 
     private fun createInstance() =

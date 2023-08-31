@@ -42,10 +42,12 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.libanki.sched.Sched
+import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
+import com.ichi2.utils.Computation
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
 import net.ankiweb.rsdroid.BackendException
@@ -63,11 +65,13 @@ import org.robolectric.shadows.ShadowLog
 import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
+import java.util.concurrent.locks.ReentrantLock
+import kotlin.concurrent.withLock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration.Companion.milliseconds
 
-open class RobolectricTest : AndroidTest {
+open class RobolectricTest : CollectionGetter, AndroidTest {
 
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
@@ -98,6 +102,12 @@ open class RobolectricTest : AndroidTest {
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionHelper.instance.setColForTests(null)
+
+        if (mTaskScheduler.shouldRunInForeground()) {
+            runTasksInForeground()
+        } else {
+            runTasksInBackground()
+        }
 
         maybeSetupBackend()
 
@@ -144,11 +154,11 @@ open class RobolectricTest : AndroidTest {
         mControllersForCleanup.clear()
 
         try {
-            if (CollectionHelper.instance.colIsOpenUnsafe()) {
-                CollectionHelper.instance.getColUnsafe(targetContext)!!.debugEnsureNoOpenPointers()
+            if (CollectionHelper.instance.colIsOpen()) {
+                CollectionHelper.instance.getCol(targetContext)!!.debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.instance.closeCollection("RobolectricTest: End")
+            CollectionHelper.instance.closeCollection(false, "RobolectricTest: End")
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
@@ -165,8 +175,25 @@ open class RobolectricTest : AndroidTest {
 
             TimeManager.reset()
         }
-        Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
+    }
+
+    /**
+     * Ensure that each task in backgrounds are executed immediately instead of being queued.
+     * This may help debugging test without requiring to guess where `advanceRobolectricLooper` are needed.
+     */
+    @Suppress("MemberVisibilityCanBePrivate")
+    fun runTasksInForeground() {
+        TaskManager.setTaskManager(ForegroundTaskManager(this))
+        mBackground = false
+    }
+
+    /**
+     * Set back the standard background process
+     */
+    fun runTasksInBackground() {
+        TaskManager.setTaskManager(SingleTaskManager())
+        mBackground = true
     }
 
     protected fun clickMaterialDialogButton(button: WhichButton, @Suppress("SameParameterValue") checkDismissed: Boolean) {
@@ -325,9 +352,9 @@ open class RobolectricTest : AndroidTest {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    val col: Collection
+    override val col: Collection
         get() = try {
-            CollectionHelper.instance.getColUnsafe(targetContext)!!
+            CollectionHelper.instance.getCol(targetContext)!!
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }
@@ -340,7 +367,7 @@ open class RobolectricTest : AndroidTest {
         CollectionManager.closeCollectionBlocking()
         CollectionHelper.setInstanceForTesting(object : CollectionHelper() {
             @Synchronized
-            override fun getColUnsafe(context: Context?): Collection? = null
+            override fun getCol(context: Context?): Collection? = null
         })
         CollectionManager.emulateOpenFailure = true
     }
@@ -352,9 +379,9 @@ open class RobolectricTest : AndroidTest {
     }
 
     @Throws(JSONException::class)
-    protected fun getCurrentDatabaseModelCopy(modelName: String): NotetypeJson {
-        val collectionModels = col.notetypes
-        return NotetypeJson(collectionModels.byName(modelName).toString().trim { it <= ' ' })
+    protected fun getCurrentDatabaseModelCopy(modelName: String): Model {
+        val collectionModels = col.models
+        return Model(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
     protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
@@ -391,7 +418,7 @@ open class RobolectricTest : AndroidTest {
     }
 
     protected fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
-        val model = col.notetypes.byName((name)!!)
+        val model = col.models.byName((name)!!)
             ?: throw IllegalArgumentException("Could not find model '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
@@ -404,22 +431,23 @@ open class RobolectricTest : AndroidTest {
     }
 
     protected fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
-        val model = col.notetypes.newModel(name)
+        val model = col.models.newModel(name)
         for (field in fields) {
-            col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
+            col.models.addFieldInNewModel(model, col.models.newField(field))
         }
-        val t = Notetypes.newTemplate("Card 1")
+        val t = Models.newTemplate("Card 1")
         t.put("qfmt", qfmt)
         t.put("afmt", afmt)
-        col.notetypes.addTemplateInNewModel(model, t)
-        col.notetypes.add(model)
+        col.models.addTemplateInNewModel(model, t)
+        col.models.add(model)
+        col.models.flush()
         return name
     }
 
-    private fun addField(notetype: NotetypeJson, name: String) {
-        val models = col.notetypes
+    private fun addField(model: Model, name: String) {
+        val models = col.models
         try {
-            models.addField(notetype, models.newField(name))
+            models.addField(model, models.newField(name))
         } catch (e: ConfirmModSchemaException) {
             throw RuntimeException(e)
         }
@@ -445,6 +473,37 @@ open class RobolectricTest : AndroidTest {
         // HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
         // is called.
         col
+    }
+
+    @Throws(ConfirmModSchemaException::class)
+    protected fun upgradeToSchedV2(): SchedV2 {
+        col.changeSchedulerVer(2)
+        val sched = col.sched
+        // Sched inherits from schedv2...
+        MatcherAssert.assertThat("sched should be v2", sched !is Sched)
+        return sched as SchedV2
+    }
+
+    @Synchronized
+    @Throws(InterruptedException::class)
+    protected fun <Progress, Result : Computation<*>?> waitForTask(task: TaskDelegateBase<Progress, Result>, timeoutMs: Int) {
+        val completed = booleanArrayOf(false)
+        val listener: TaskListener<Progress, Result?> = object : TaskListener<Progress, Result?>() {
+            override fun onPreExecute() {}
+            override fun onPostExecute(result: Result?) {
+                require(!(result == null || !result.succeeded())) { "Task failed" }
+                completed[0] = true
+                val robolectricTest = ReentrantLock()
+                val condition = robolectricTest.newCondition()
+                robolectricTest.withLock { condition.signal() }
+                // synchronized(this@RobolectricTest) { this@RobolectricTest.notify() }
+            }
+        }
+        TaskManager.launchCollectionTask(task, listener)
+        advanceRobolectricLooper()
+        wait(timeoutMs.toLong())
+        advanceRobolectricLooper()
+        if (!completed[0]) { throw IllegalStateException("Task ${task.javaClass} didn't finish in $timeoutMs ms") }
     }
 
     /**
@@ -515,6 +574,13 @@ open class RobolectricTest : AndroidTest {
         return activity
     }
 
+    protected val card: Card?
+        get() {
+            val card = col.sched.card
+            advanceRobolectricLooperWithSleep()
+            return card
+        }
+
     /**
      * Allows editing of preferences, followed by a call to [apply][SharedPreferences.Editor.apply]:
      *
@@ -577,7 +643,6 @@ open class RobolectricTest : AndroidTest {
         dispatchTimeoutMs: Long = 60_000L,
         testBody: suspend TestScope.() -> Unit
     ) {
-        Dispatchers.setMain(UnconfinedTestDispatcher())
         runTest(context, dispatchTimeoutMs.milliseconds) {
             CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
             testBody()

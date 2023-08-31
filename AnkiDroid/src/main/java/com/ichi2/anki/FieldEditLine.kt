@@ -116,7 +116,9 @@ class FieldEditLine : FrameLayout {
 
     fun setActionModeCallbacks(callback: ActionMode.Callback?) {
         editText.customSelectionActionModeCallback = callback
-        editText.customInsertionActionModeCallback = callback
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            editText.customInsertionActionModeCallback = callback
+        }
     }
 
     fun setTypeface(typeface: Typeface?) {
@@ -246,7 +248,6 @@ class FieldEditLine : FrameLayout {
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
-            @Suppress("unused")
             val CREATOR: Parcelable.Creator<SavedState> = object : ClassLoaderCreator<SavedState> {
                 override fun createFromParcel(source: Parcel, loader: ClassLoader): SavedState {
                     return SavedState(source, loader)

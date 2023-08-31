@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~  Copyright (c) 2020 David Allison <davidallisongithub@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<RelativeLayout android:id="@+id/linearLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+         >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/card_info_constraint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <!-- We use right instead of start. Fix this when we enable RTL support -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/card_info_vertical_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="right"
+            app:constraint_referenced_ids="card_info_added_label, card_info_first_review_label,
+        card_info_latest_review_label, card_info_due_label, card_info_ease_label,
+        card_info_review_count_label, card_info_lapse_count_label,
+        card_info_average_time_label, card_info_total_time_label,
+        card_info_card_type_label, card_info_note_type_label, card_info_deck_name_label,
+        card_info_card_id_label, card_info_note_id_label" />
+
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_added_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_added"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_added"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_added_label"
+            tools:text="1 April 2020" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_first_review_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_first_review"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_added_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_added" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_first_review"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_first_review_label"
+            tools:text="First Rev: 1 April 2020" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_latest_review_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_latest_review"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_first_review_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_first_review" />
+
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_latest_review"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_latest_review_label"
+            tools:text="1 April 2020" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_due_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_due"
+            android:text="@string/card_details_due"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_latest_review_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_latest_review" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_due"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_due_label"
+            tools:text="Due: 1 April 2020" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_interval_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_interval"
+            android:text="@string/card_info_interval"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_due_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_due" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_interval"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_interval_label"
+            tools:text="Interval: 5 days" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_ease_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_ease"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_interval_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_interval" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_ease"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_ease_label"
+            tools:text="250%" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_review_count_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_reviews"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_ease" />
+
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_review_count"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_review_count_label"
+            tools:text="Rev Count" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_lapse_count_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_lapses"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_review_count_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_review_count" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_lapse_count"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_lapse_count_label"
+            tools:text="0 lapses" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_average_time_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_average_time"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_lapse_count_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_lapse_count" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_average_time"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_average_time_label"
+            tools:text="Average Time" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_total_time_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_total_time"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_average_time_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_average_time" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_total_time"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_total_time_label"
+            tools:text="Total time" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_card_type_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_card_type"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_total_time_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_total_time" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_card_type"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_card_type_label"
+            tools:text="English" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_note_type_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_note_type"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_card_type_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_card_type" />
+
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_note_type"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@id/card_info_note_type_label"
+            tools:text="English to French" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_deck_name_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_deck_name"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_note_type_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_note_type" />
+
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_deck_name"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_deck_name_label"
+            tools:text="This::Is::A::Really::Really::Long::Deck::Name::Probably::a Very Important::Medical ::Deck" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_card_id_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_card_id"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_deck_name_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_deck_name" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_card_id"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_card_id_label"
+            tools:text="cid:1111111" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_note_id_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/card_info_added"
+            android:text="@string/card_info_note_id"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/card_info_card_id_label"
+            app:layout_constraintTop_toBottomOf="@+id/card_info_card_id" />
+
+        <com.ichi2.ui.FixedTextView
+            android:id="@+id/card_info_note_id"
+            style="@style/card_info_data"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/card_info_vertical_barrier"
+            app:layout_constraintTop_toTopOf="@+id/card_info_note_id_label"
+            tools:text="nid:1111111" />
+
+        <TableLayout
+            android:id="@+id/card_info_revlog_entries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:shrinkColumns="*"
+            android:stretchColumns="*"
+            android:paddingVertical="15dp"
+            app:layout_constraintTop_toBottomOf="@id/card_info_note_id"
+            >
+            <!-- UselessParent ignored as TableRow is required for displaying the row elements -->
+            <TableRow
+                tools:ignore="UselessParent">
+                <com.ichi2.ui.FixedTextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/card_info_revlog_date"
+                    />
+                <com.ichi2.ui.FixedTextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/card_info_revlog_type"
+                    />
+                <com.ichi2.ui.FixedTextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/card_info_revlog_rating"
+                    />
+                <com.ichi2.ui.FixedTextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/card_info_interval"
+                    />
+                <com.ichi2.ui.FixedTextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/card_info_ease"
+                    />
+                <com.ichi2.ui.FixedTextView
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text="@string/card_info_revlog_time"
+                    />
+            </TableRow>
+        </TableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+</RelativeLayout>

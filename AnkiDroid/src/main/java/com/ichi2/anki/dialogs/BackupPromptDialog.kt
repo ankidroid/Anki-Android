@@ -266,7 +266,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
 
         // if for some reason the user has no cards after 7 days, don't bother
         return withCol {
-            cardCount() == 0
+            this.cardCount() == 0
         }
     }
 

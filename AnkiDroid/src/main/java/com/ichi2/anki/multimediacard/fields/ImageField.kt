@@ -87,7 +87,7 @@ class ImageField : FieldBase(), IField {
             val path = parseImageSrcFromHtml(value)
 
             return if (path.isNotEmpty()) {
-                "${col.media.dir}/$path"
+                "${col.media.dir()}/$path"
             } else {
                 ""
             }

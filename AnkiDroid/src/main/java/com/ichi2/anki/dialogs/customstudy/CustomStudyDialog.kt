@@ -52,6 +52,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.KotlinCleanup
+import net.ankiweb.rsdroid.BackendFactory
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -110,7 +111,13 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
                         val deckId = requireArguments().getLong("did")
-                        val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
+                        val i = if (BackendFactory.defaultLegacySchema) {
+                            Intent(requireContext(), DeckOptionsActivity::class.java).apply {
+                                putExtra("did", deckId)
+                            }
+                        } else {
+                            com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
+                        }
                         requireActivity().startActivity(i)
                     }
                     MORE_OPTIONS -> {
@@ -134,7 +141,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         val dialogFragment = TagsDialog().withArguments(
                             TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
                             ArrayList(),
-                            ArrayList(collection.tags.byDeck(currentDeck))
+                            ArrayList(collection.tags.byDeck(currentDeck, true))
                         )
                         customStudyListener?.showDialogFragment(dialogFragment)
                     }
@@ -206,7 +213,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 when (contextMenuOption) {
                     STUDY_NEW -> {
                         requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
-                        val deck = collection.decks.get(did)!!
+                        val deck = collection.decks.get(did)
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(n, 0)
@@ -214,7 +221,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     }
                     STUDY_REV -> {
                         requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
-                        val deck = collection.decks.get(did)!!
+                        val deck = collection.decks.get(did)
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(0, n)
@@ -432,12 +439,12 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val did = requireArguments().getLong("did")
 
         val decks = collection.decks
-        val deckToStudyName = decks.name(did)
+        val deckToStudyName = decks.get(did).getString("name")
         val customStudyDeck = resources.getString(R.string.custom_study_deck_name)
         val cur = decks.byName(customStudyDeck)
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck)
-            if (cur.isNormal) {
+            if (cur.isStd) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck)
                 showThemedToast(requireContext(), getString(R.string.custom_study_deck_exists), true)
                 return
@@ -452,7 +459,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
             dyn = try {
-                decks.get(decks.newDyn(customStudyDeck))!!
+                decks.get(decks.newDyn(customStudyDeck))
             } catch (ex: DeckRenameException) {
                 showThemedToast(requireActivity(), ex.getLocalizedMessage(this.resources), true)
                 return

@@ -17,39 +17,29 @@
 
 package com.ichi2.anki.pages
 
-import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.importCsvRaw
 import com.ichi2.anki.runBlockingCatching
 import com.ichi2.libanki.*
+import com.ichi2.libanki.importer.getCsvMetadataRaw
 import com.ichi2.libanki.stats.*
 import fi.iki.elonen.NanoHTTPD
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
-private const val PORT = 0
-// const val PORT = 40001
-
-// local debugging:
-// ~/Local/Android/Sdk/platform-tools/adb forward tcp:40001 tcp:40001
-
-open class AnkiServer(
-    val activity: FragmentActivity
-) : NanoHTTPD("127.0.0.1", PORT) {
-
-    fun baseUrl(): String {
-        return "http://127.0.0.1:$listeningPort/"
-    }
+class AnkiServer(
+    hostname: String?,
+    port: Int,
+    val activity: PagesActivity
+) : NanoHTTPD(hostname, port) {
 
     override fun serve(session: IHTTPSession): Response {
         val uri = session.uri
         val mime = getMimeFromUri(uri)
 
         if (session.method == Method.GET) {
-            val resourcePath = "web$uri"
-            val stream = this.javaClass.classLoader!!.getResourceAsStream(resourcePath)
-            Timber.d("GET: Requested %s (%s), found? %b", uri, resourcePath, stream != null)
-            return newChunkedResponse(Response.Status.OK, mime, stream)
+            Timber.d("GET: Requested %s", uri)
+            return newChunkedResponse(Response.Status.OK, mime, this.javaClass.classLoader!!.getResourceAsStream("web$uri"))
         }
 
         if (session.method == Method.POST) {
@@ -67,24 +57,24 @@ open class AnkiServer(
 
     private suspend fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray? {
         return when (methodName) {
-            "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
-            "getGraphPreferences" -> withCol { getGraphPreferencesRaw() }
-            "setGraphPreferences" -> withCol { setGraphPreferencesRaw(bytes) }
-            "graphs" -> withCol { graphsRaw(bytes) }
-            "getNotetypeNames" -> withCol { getNotetypeNamesRaw(bytes) }
-            "getDeckNames" -> withCol { getDeckNamesRaw(bytes) }
-            "getCsvMetadata" -> withCol { getCsvMetadataRaw(bytes) }
+            "i18nResources" -> withCol { newBackend.i18nResourcesRaw(bytes) }
+            "getGraphPreferences" -> withCol { newBackend.getGraphPreferencesRaw() }
+            "setGraphPreferences" -> withCol { newBackend.setGraphPreferencesRaw(bytes) }
+            "graphs" -> withCol { newBackend.graphsRaw(bytes) }
+            "getNotetypeNames" -> withCol { newBackend.getNotetypeNamesRaw(bytes) }
+            "getDeckNames" -> withCol { newBackend.getDeckNamesRaw(bytes) }
+            "getCsvMetadata" -> withCol { newBackend.getCsvMetadataRaw(bytes) }
             "importCsv" -> activity.importCsvRaw(bytes)
-            "getFieldNames" -> withCol { getFieldNamesRaw(bytes) }
-            "cardStats" -> withCol { cardStatsRaw(bytes) }
-            "getDeckConfig" -> withCol { getDeckConfigRaw(bytes) }
-            "getDeckConfigsForUpdate" -> withCol { getDeckConfigsForUpdateRaw(bytes) }
+            "getFieldNames" -> withCol { newBackend.getFieldNamesRaw(bytes) }
+            "cardStats" -> withCol { newBackend.cardStatsRaw(bytes) }
+            "getDeckConfig" -> withCol { newBackend.getDeckConfigRaw(bytes) }
+            "getDeckConfigsForUpdate" -> withCol { newBackend.getDeckConfigsForUpdateRaw(bytes) }
             "updateDeckConfigs" -> activity.updateDeckConfigsRaw(bytes)
             else -> { Timber.w("Unhandled Anki request: %s", methodName); null }
         }
     }
 
-    fun getSessionBytes(session: IHTTPSession): ByteArray {
+    private fun getSessionBytes(session: IHTTPSession): ByteArray {
         val contentLength = session.headers["content-length"]!!.toInt()
         val bytes = ByteArray(contentLength)
         session.inputStream.read(bytes, 0, contentLength)

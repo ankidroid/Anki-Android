@@ -17,9 +17,11 @@
 package com.ichi2.anki.reviewer
 
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.R
 import com.ichi2.anki.reviewer.PreviousAnswerIndicator.Companion.CHOSEN_ANSWER_DURATION_MS
+import com.ichi2.libanki.Consts
 import com.ichi2.utils.HandlerUtils.newHandler
 import timber.log.Timber
 
@@ -50,7 +52,7 @@ class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
      * @param ease The ordinal of the button answered
      * @param buttonCount The number of buttons
      */
-    fun displayAnswerIndicator(ease: Int) {
+    fun displayAnswerIndicator(ease: Int, buttonCount: Int) {
         when (ease) {
             AbstractFlashcardViewer.EASE_1 -> {
                 chosenAnswerText.text = "\u2022"
@@ -58,11 +60,11 @@ class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
             }
             AbstractFlashcardViewer.EASE_2 -> {
                 chosenAnswerText.text = "\u2022\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_blue_grey_600))
+                chosenAnswerText.setTextColor(getColor(if (buttonCount == Consts.BUTTON_FOUR) R.color.material_blue_grey_600 else R.color.material_green_500))
             }
             AbstractFlashcardViewer.EASE_3 -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022"
-                chosenAnswerText.setTextColor(getColor(R.color.material_green_500))
+                chosenAnswerText.setTextColor(getColor(if (buttonCount == Consts.BUTTON_FOUR) R.color.material_green_500 else R.color.material_light_blue_500))
             }
             AbstractFlashcardViewer.EASE_4 -> {
                 chosenAnswerText.text = "\u2022\u2022\u2022\u2022"
@@ -89,7 +91,7 @@ class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
         timerHandler.removeCallbacks(removeChosenAnswerText)
     }
 
-    private fun getColor(color: Int) = chosenAnswerText.context.getColor(color)
+    private fun getColor(color: Int) = ContextCompat.getColor(chosenAnswerText.context, color)
 
     companion object {
         /** The amount of time to display the answer indicator (2 seconds) */

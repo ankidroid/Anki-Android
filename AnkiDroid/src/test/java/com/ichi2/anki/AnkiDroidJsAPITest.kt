@@ -20,8 +20,6 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.libanki.Consts
-import com.ichi2.libanki.utils.TimeManager
-import net.ankiweb.rsdroid.withoutUnicodeIsolation
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
@@ -35,7 +33,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun initTest() {
-        val models = col.notetypes
+        val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -60,7 +58,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiGetNextTimeTest() {
-        val models = col.notetypes
+        val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -75,15 +73,15 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
         waitForAsyncTasksToComplete()
 
-        assertThat(javaScriptFunction.ankiGetNextTime1().withoutUnicodeIsolation(), equalTo("<1m"))
-        assertThat(javaScriptFunction.ankiGetNextTime2().withoutUnicodeIsolation(), equalTo("<6m"))
-        assertThat(javaScriptFunction.ankiGetNextTime3().withoutUnicodeIsolation(), equalTo("<10m"))
-        assertThat(javaScriptFunction.ankiGetNextTime4().withoutUnicodeIsolation(), equalTo("4d"))
+        assertThat(javaScriptFunction.ankiGetNextTime1(), equalTo("< 1 min"))
+        assertThat(javaScriptFunction.ankiGetNextTime2(), equalTo("< 6 min"))
+        assertThat(javaScriptFunction.ankiGetNextTime3(), equalTo("< 10 min"))
+        assertThat(javaScriptFunction.ankiGetNextTime4(), equalTo("4 d"))
     }
 
     @Test
     fun ankiTestCurrentCard() {
-        val models = col.notetypes
+        val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -141,7 +139,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
     fun ankiJsUiTest() {
-        val models = col.notetypes
+        val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -170,7 +168,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     @Test
     fun ankiMarkAndFlagCardTest() {
         // js api test for marking and flagging card
-        val models = col.notetypes
+        val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -237,7 +235,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // add five notes, four will be buried and suspended
         // count number of notes, if buried or suspended then
         // in scheduling the count will be less than previous scheduling
-        val models = col.notetypes
+        val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -261,8 +259,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
 
         // count number of notes
-        val sched = reviewer.getColUnsafe
-        assertThat(sched.cardCount(), equalTo(4))
+        assertThat(reviewer.sched!!.cardCount(), equalTo(4))
 
         // ----------
         // Bury Note
@@ -272,7 +269,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
 
         // count number of notes
-        assertThat(sched.cardCount(), equalTo(3))
+        assertThat(reviewer.sched!!.cardCount(), equalTo(3))
 
         // -------------
         // Suspend Card
@@ -282,7 +279,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
 
         // count number of notes
-        assertThat(sched.cardCount(), equalTo(2))
+        assertThat(reviewer.sched!!.cardCount(), equalTo(2))
 
         // -------------
         // Suspend Note
@@ -292,7 +289,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         reviewer.webView!!.evaluateJavascript(jsScript) { s -> assertThat(s, equalTo(true)) }
 
         // count number of notes
-        assertThat(sched.cardCount(), equalTo(1))
+        assertThat(reviewer.sched!!.cardCount(), equalTo(1))
     }
 
     private fun createTestScript(apiName: String): String {
@@ -316,9 +313,8 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     }
 
     @Test
-    fun ankiSetCardDueTest() = runTest {
-        TimeManager.reset()
-        val models = col.notetypes
+    fun ankiSetCardDueTest() {
+        val models = col.models
         val decks = col.decks
         val didA = addDeck("Test")
         val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
@@ -343,7 +339,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // verify that it did get rescheduled
         // --------------------------------
         val cardAfterRescheduleCards = col.getCard(cardId)
-        assertEquals("Card is rescheduled", 15L + col.sched.today, cardAfterRescheduleCards.due)
+        assertEquals("Card is rescheduled", 15, cardAfterRescheduleCards.due)
     }
 
     private fun initJsApiContract(): String {
@@ -354,7 +350,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
     }
 
     @Test
-    fun ankiResetProgressTest() = runTest {
+    fun ankiResetProgressTest() {
         val n = addNoteUsingBasicModel("Front", "Back")
         val c = n.firstCard()
 
@@ -386,8 +382,9 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // verify that card progress reset
         // --------------------------------
         val cardAfterReset = col.getCard(cardId)
-        assertEquals("Card due after reset", 2, cardAfterReset.due)
+        assertEquals("Card due after reset", 1, cardAfterReset.due)
         assertEquals("Card interval after reset", 0, cardAfterReset.ivl)
+        assertEquals("Card ease after reset", 2500, cardAfterReset.factor)
         assertEquals("Card type after reset", Consts.CARD_TYPE_NEW, cardAfterReset.type)
     }
 }

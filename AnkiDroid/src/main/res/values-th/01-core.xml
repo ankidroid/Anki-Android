@@ -50,7 +50,7 @@
     <string name="statistics">สถิติ</string>
     <string name="settings">การตั้งค่า</string>
     <string name="help">วิธีใช้</string>
-    <string name="drawing">วาด</string>
+    <string name="drawing">Drawing</string>
     <string name="send_feedback">ส่งคำติชม</string>
     <string name="studyoptions_due_today">ภายในวันนี้:</string>
     <string name="studyoptions_new_total">การ์ดใหม่ทั้งหมด:</string>
@@ -69,12 +69,12 @@
         <item quantity="other">เหลืออีก %d นาที</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="other">เหลืออีก %1$d ชั่วโมง %2$d นาที</item>
+        <item quantity="other">%1$d hours %2$d left</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="other">เหลืออีก %1$d วัน %2$d ชั่วโมง</item>
+        <item quantity="other">%1$d days %2$d left</item>
     </plurals>
-    <string name="no_cards_placeholder_title">ไม่มีคอเล็คชั่น</string>
+    <string name="no_cards_placeholder_title">Collection is empty</string>
     <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">

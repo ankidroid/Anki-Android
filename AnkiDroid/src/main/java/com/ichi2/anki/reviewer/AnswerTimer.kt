@@ -133,4 +133,6 @@ class AnswerTimer(private val cardTimer: Chronometer) {
     /** Milliseconds since boot */
     private val elapsedRealTime
         get() = SystemClock.elapsedRealtime()
+
+    private fun getTheme() = context.theme
 }

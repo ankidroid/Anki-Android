@@ -32,6 +32,7 @@ import com.ichi2.anki.servicelayer.scopedstorage.MigrateEssentialFiles.UserActio
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.NumberOfBytes
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
+import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 
@@ -290,8 +291,12 @@ internal constructor(
          */
         val PRIORITY_FILES = listOf(
             SQLiteDBFiles("collection.anki2"), // Anki collection
-            // this is created on demand in the new backend
-            OptionalFile("collection.media.db"),
+            if (BackendFactory.defaultLegacySchema) {
+                SQLiteDBFiles("collection.media.ad.db2")
+            } else {
+                // this is created on demand in the new backend
+                OptionalFile("collection.media.db")
+            },
             OptionalFile("collection.anki2-wal"),
             OptionalFile("collection.media.db-wal"),
             OptionalFile(".nomedia"),

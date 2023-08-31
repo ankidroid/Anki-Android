@@ -53,6 +53,7 @@ class ActivityStartupUnderBackupTest : RobolectricTest() {
         notYetHandled(IntentHandler::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(VideoPlayer::class.java.simpleName, "Not working (or implemented) - inherits from Activity")
         notYetHandled(Preferences::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
+        notYetHandled(DeckOptionsActivity::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
         notYetHandled(FilteredDeckOptions::class.java.simpleName, "Not working (or implemented) - inherits from AppCompatPreferenceActivity")
     }
 

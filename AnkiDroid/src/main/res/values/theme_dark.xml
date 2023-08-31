@@ -140,7 +140,7 @@
         <item name="iconColor">?android:attr/textColor</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">@color/theme_dark_primary</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <!-- Navbar -->
         <item name="android:navigationBarColor">@color/material_theme_grey</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>

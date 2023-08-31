@@ -26,6 +26,20 @@ class Counts constructor(var new: Int = 0, var lrn: Int = 0, var rev: Int = 0) {
         NEW, LRN, REV
     }
 
+    /**
+     * @param index Queue in which it elements are added
+     * @param number How much to add.
+     */
+    fun changeCount(index: Queue, number: Int) {
+        when (index) {
+            @Suppress("Redundant")
+            Queue.NEW -> new += number
+            Queue.LRN -> lrn += number
+            Queue.REV -> rev += number
+            else -> throw RuntimeException("Index $index does not exist.")
+        }
+    }
+
     fun addNew(new_: Int) {
         new += new_
     }

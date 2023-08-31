@@ -17,6 +17,8 @@
 package com.ichi2.anki.permissions
 
 import android.app.Activity
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.ichi2.anki.permissions.PermissionsRequestResults.PermissionRequestResult.*
 import com.ichi2.anki.permissions.PermissionsRequestResults.PermissionRequestResult.Companion.toPermissionRequestResult
@@ -41,8 +43,10 @@ class PermissionsRequestResults(permissions: Map<String, PermissionRequestResult
 
     val hasRejectedPermissions = permissions.any { it.value.isDenied() }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     val hasPermanentlyDeniedPermissions = permissions.any { it.value == PERMANENTLY_DENIED }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     val hasTemporarilyDeniedPermissions = permissions.any { it.value == TEMPORARILY_DENIED }
 
     companion object {
@@ -55,8 +59,13 @@ class PermissionsRequestResults(permissions: Map<String, PermissionRequestResult
     enum class PermissionRequestResult {
         GRANTED,
 
+        // Pre 'M', we do not know if a permission is temporarily or permanently denied.
+        DENIED,
+
+        @RequiresApi(Build.VERSION_CODES.M)
         TEMPORARILY_DENIED,
 
+        @RequiresApi(Build.VERSION_CODES.M)
         PERMANENTLY_DENIED;
 
         fun isDenied(): Boolean = this != GRANTED
@@ -65,6 +74,10 @@ class PermissionsRequestResults(permissions: Map<String, PermissionRequestResult
             fun toPermissionRequestResult(activity: Activity, permission: String, granted: Boolean): PermissionRequestResult {
                 if (granted) {
                     return GRANTED
+                }
+
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    return DENIED
                 }
 
                 // Android doesn't let us easily determine if a permission was denied permanently or temporarily

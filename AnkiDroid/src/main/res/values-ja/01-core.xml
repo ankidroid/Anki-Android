@@ -83,7 +83,7 @@
     <string name="type_answer_hint">答えを入力してください</string>
     <string name="show_answer">解答を表示</string>
     <string name="hide_answer">解答を非表示</string>
-    <string name="ease_button_again">もう一度</string>
+    <string name="ease_button_again">やり直し</string>
     <string name="ease_button_hard">難しい</string>
     <string name="ease_button_good">正解</string>
     <string name="ease_button_easy">簡単</string>

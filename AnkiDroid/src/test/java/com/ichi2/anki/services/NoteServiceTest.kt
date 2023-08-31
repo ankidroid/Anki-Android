@@ -23,8 +23,8 @@ import com.ichi2.anki.multimediacard.fields.MediaClipField
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Model
 import com.ichi2.libanki.Note
-import com.ichi2.libanki.NotetypeJson
 import com.ichi2.testutils.createTransientFile
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.*
@@ -36,7 +36,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
-import timber.log.Timber
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
@@ -44,8 +43,6 @@ import java.io.IOException
 @KotlinCleanup("have Model constructor accent @Language('JSON')")
 @RunWith(AndroidJUnit4::class)
 class NoteServiceTest : RobolectricTest() {
-    override fun useInMemoryDatabase(): Boolean = false
-
     @KotlinCleanup("lateinit")
     var testCol: Collection? = null
 
@@ -64,7 +61,7 @@ class NoteServiceTest : RobolectricTest() {
     // tests if the text fields of the notes are the same after calling updateJsonNoteFromMultimediaNote
     @Test
     fun updateJsonNoteTest() {
-        val testModel = testCol!!.notetypes.byName("Basic")
+        val testModel = testCol!!.models.byName("Basic")
         val multiMediaNote: IMultimediaEditableNote? = NoteService.createEmptyNote(testModel!!)
         multiMediaNote!!.getField(0)!!.text = "foo"
         multiMediaNote.getField(1)!!.text = "bar"
@@ -83,12 +80,12 @@ class NoteServiceTest : RobolectricTest() {
     @Test
     fun updateJsonNoteRuntimeErrorTest() {
         // model with ID 42
-        var testNotetype = NotetypeJson("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"42\"}")
-        val multiMediaNoteWithID42: IMultimediaEditableNote? = NoteService.createEmptyNote(testNotetype)
+        var testModel = Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"42\"}")
+        val multiMediaNoteWithID42: IMultimediaEditableNote? = NoteService.createEmptyNote(testModel)
 
         // model with ID 45
-        testNotetype = NotetypeJson("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}")
-        val noteWithID45 = Note(testCol!!, testNotetype)
+        testModel = Model("{\"flds\": [{\"name\": \"foo bar\", \"ord\": \"1\"}], \"id\": \"45\"}")
+        val noteWithID45 = Note(testCol!!, testModel)
         val expectedException: Throwable = assertThrows(RuntimeException::class.java) { NoteService.updateJsonNoteFromMultimediaNote(multiMediaNoteWithID42, noteWithID45) }
         assertEquals(expectedException.message, "Source and Destination Note ID do not match.")
     }
@@ -106,7 +103,7 @@ class NoteServiceTest : RobolectricTest() {
 
         NoteService.importMediaToDirectory(testCol!!, audioField)
 
-        val outFile = File(testCol!!.media.dir, fileAudio.name)
+        val outFile = File(testCol!!.media.dir(), fileAudio.name)
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(audioField.audioPath)))
     }
@@ -125,7 +122,7 @@ class NoteServiceTest : RobolectricTest() {
 
         NoteService.importMediaToDirectory(testCol!!, imgField)
 
-        val outFile = File(testCol!!.media.dir, fileImage.name)
+        val outFile = File(testCol!!.media.dir(), fileImage.name)
 
         assertThat("path should be equal to new file made in NoteService.importMediaToDirectory", outFile, aFileWithAbsolutePath(equalTo(imgField.extraImagePathRef)))
     }
@@ -160,12 +157,11 @@ class NoteServiceTest : RobolectricTest() {
         val fld3 = MediaClipField()
         fld3.audioPath = f1.absolutePath
 
-        Timber.e("media folder is %s %b", testCol!!.media.dir, File(testCol!!.media.dir).exists())
         NoteService.importMediaToDirectory(testCol!!, fld1)
-        val o1 = File(testCol!!.media.dir, f1.name)
+        val o1 = File(testCol!!.media.dir(), f1.name)
 
         NoteService.importMediaToDirectory(testCol!!, fld2)
-        val o2 = File(testCol!!.media.dir, f2.name)
+        val o2 = File(testCol!!.media.dir(), f2.name)
 
         NoteService.importMediaToDirectory(testCol!!, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one
@@ -198,10 +194,10 @@ class NoteServiceTest : RobolectricTest() {
         fld3.extraImagePathRef = f1.absolutePath
 
         NoteService.importMediaToDirectory(testCol!!, fld1)
-        val o1 = File(testCol!!.media.dir, f1.name)
+        val o1 = File(testCol!!.media.dir(), f1.name)
 
         NoteService.importMediaToDirectory(testCol!!, fld2)
-        val o2 = File(testCol!!.media.dir, f2.name)
+        val o2 = File(testCol!!.media.dir(), f2.name)
 
         NoteService.importMediaToDirectory(testCol!!, fld3)
         // creating a third outfile isn't necessary because it should be equal to the first one

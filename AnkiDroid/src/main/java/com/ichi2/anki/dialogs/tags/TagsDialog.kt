@@ -194,7 +194,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_add_white)
-        drawable?.setTint(requireContext().getColor(R.color.white))
+        drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.white))
         toolbarAddItem.icon = drawable
 
         toolbarAddItem.setOnMenuItemClickListener {

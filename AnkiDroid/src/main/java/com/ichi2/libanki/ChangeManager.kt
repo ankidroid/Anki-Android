@@ -25,6 +25,8 @@
  * displayed flag, without redrawing the entire review screen).
  */
 
+// BackendFactory.defaultLegacySchema must be false to use this code.
+
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
@@ -89,9 +91,14 @@ object ChangeManager {
 
 /** Wrap a routine that returns OpChanges* or similar undo info with this
  * to notify change subscribers of the changes. */
-suspend fun <T> undoableOp(handler: Any? = null, block: Collection.() -> T): T {
+suspend fun <T> undoableOp(handler: Any? = null, block: CollectionV16.() -> T): T {
     return withCol {
-        block()
+        val result = newBackend.block()
+        // any backend operation clears legacy undo and resets study queues if it
+        // succeeds
+        clearUndo()
+        reset()
+        result
     }.also {
         withContext(Dispatchers.Main) {
             ChangeManager.notifySubscribers(it, handler)

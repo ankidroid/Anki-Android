@@ -14,18 +14,20 @@
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
 
+// BackendFactory.defaultLegacySchema must be false to use this code.
+
 package com.ichi2.anki
 
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.FragmentActivity
 import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.pages.PagesActivity
+import com.ichi2.libanki.CollectionV16
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
-import com.ichi2.libanki.importCsvRaw
+import com.ichi2.libanki.importer.importCsvRaw
 import com.ichi2.libanki.undoableOp
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
@@ -48,13 +50,13 @@ fun AnkiActivity.importApkgs(apkgPaths: List<String>) {
                     importAnkiPackage(apkgPath)
                 }
             }
-            showSimpleMessageDialog(summarizeReport(getColUnsafe.tr, report))
+            showSimpleMessageDialog(summarizeReport(col.tr, report))
         }
     }
 }
 
 @Suppress("BlockingMethodInNonBlockingContext") // ImportResponse.parseFrom
-suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
+suspend fun PagesActivity.importCsvRaw(input: ByteArray): ByteArray {
     return withContext(Dispatchers.Main) {
         val output = withProgress(
             extractProgress = {
@@ -62,12 +64,12 @@ suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
                     text = progress.importing
                 }
             },
-            op = { withCol { importCsvRaw(input) } }
+            op = { withCol { (this as CollectionV16).importCsvRaw(input) } }
         )
         val importResponse = ImportResponse.parseFrom(output)
         undoableOp { importResponse }
         AlertDialog.Builder(this@importCsvRaw).show {
-            message(text = summarizeReport(TR, importResponse))
+            message(text = summarizeReport(col.tr, importResponse))
             positiveButton(R.string.dialog_ok) {
                 this@importCsvRaw.finish()
             }
@@ -109,7 +111,7 @@ suspend fun AnkiActivity.exportApkg(
         }
     ) {
         withCol {
-            exportAnkiPackage(apkgPath, withScheduling, withMedia, limit)
+            newBackend.exportAnkiPackage(apkgPath, withScheduling, withMedia, limit)
         }
     }
 }
@@ -126,7 +128,7 @@ suspend fun AnkiActivity.exportColpkg(
         }
     ) {
         withCol {
-            exportCollectionPackage(colpkgPath, withMedia, true)
+            newBackend.exportCollectionPackage(colpkgPath, withMedia, true)
         }
     }
 }

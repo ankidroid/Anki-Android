@@ -90,6 +90,11 @@ abstract class Time {
     }
 
     companion object {
+        fun calendar(timeInMS: Long): Calendar {
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = timeInMS
+            return calendar
+        }
 
         fun gregorianCalendar(timeInMS: Long): GregorianCalendar {
             val calendar = GregorianCalendar()

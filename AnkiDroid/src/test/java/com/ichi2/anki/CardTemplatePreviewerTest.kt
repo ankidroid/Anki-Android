@@ -21,20 +21,18 @@ import android.view.View
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.getFieldsAsBundleForPreview
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.NotetypeJson
+import com.ichi2.libanki.Model
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@Ignore("needs updating to new backend")
 @RunWith(RobolectricTestRunner::class)
 class CardTemplatePreviewerTest : RobolectricTest() {
 
@@ -44,9 +42,9 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         val collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
         val template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0)
         template.put("qfmt", template.getString("qfmt") + "PREVIEWER_TEST")
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, collectionBasicModelOriginal)
+        val tempModelPath = TemporaryModel.saveTempModel(targetContext, collectionBasicModelOriginal)
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath)
         intent.putExtra("index", 0)
 
         var previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
@@ -86,9 +84,9 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         val fields = collectionBasicModelOriginal.fieldsNames
         val template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0)
         template.put("qfmt", template.getString("qfmt") + "PREVIEWER_TEST")
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, collectionBasicModelOriginal)
+        val tempModelPath = TemporaryModel.saveTempModel(targetContext, collectionBasicModelOriginal)
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath)
         intent.putExtra("index", 0)
 
         val previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
@@ -107,9 +105,9 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         val fields = collectionBasicModelOriginal.fieldsNames
         val template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0)
         template.put("qfmt", template.getString("qfmt") + "PREVIEWER_TEST")
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, collectionBasicModelOriginal)
+        val tempModelPath = TemporaryModel.saveTempModel(targetContext, collectionBasicModelOriginal)
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath)
         intent.putExtra("index", 0)
 
         val previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
@@ -128,9 +126,9 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         val fields = collectionBasicModelOriginal.fieldsNames
         val template = collectionBasicModelOriginal.getJSONArray("tmpls").getJSONObject(0)
         template.put("qfmt", template.getString("qfmt") + "PREVIEWER_TEST")
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, collectionBasicModelOriginal)
+        val tempModelPath = TemporaryModel.saveTempModel(targetContext, collectionBasicModelOriginal)
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath)
         intent.putExtra("index", 0)
 
         val previewerController = Robolectric.buildActivity(TestCardTemplatePreviewer::class.java, intent).create().start().resume().visible()
@@ -199,10 +197,10 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         fields.add(Field(1, "World"))
 
         val basicModel = getCurrentDatabaseModelCopy("Basic")
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
+        val tempModelPath = TemporaryModel.saveTempModel(targetContext, basicModel)
 
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath)
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
@@ -223,10 +221,10 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         fields.add(Field(1, "World"))
 
         val basicModel = getCurrentDatabaseModelCopy("Basic (and reversed card)")
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
+        val tempModelPath = TemporaryModel.saveTempModel(targetContext, basicModel)
 
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath)
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
@@ -246,10 +244,10 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         fields.add(Field(1, "World"))
 
         val basicModel = getCurrentDatabaseModelCopy("Cloze")
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
+        val tempModelPath = TemporaryModel.saveTempModel(targetContext, basicModel)
 
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath)
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
@@ -267,10 +265,10 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         val cid = addNoteUsingBasicAndReversedModel("hello", "world").cards()[1].id
 
         val model = getCurrentDatabaseModelCopy("Basic (and reversed card)")
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, model)
+        val tempModelPath = TemporaryModel.saveTempModel(targetContext, model)
 
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath)
         intent.putExtra("ordinal", 1)
         intent.putExtra("cardListIndex", 0)
         intent.putExtra("cardList", longArrayOf(cid))
@@ -289,10 +287,10 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         fields.add(Field(1, ""))
 
         val basicModel = getCurrentDatabaseModelCopy("Basic")
-        val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
+        val tempModelPath = TemporaryModel.saveTempModel(targetContext, basicModel)
 
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+        intent.putExtra(TemporaryModel.INTENT_MODEL_FILENAME, tempModelPath)
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
@@ -334,16 +332,14 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
     }
 
-    private fun getSavedCard(notetype: NotetypeJson, ordinal: Int): Card {
-        val n = col.newNote(notetype)
-        val fieldNames = notetype.fieldsNames
+    private fun getSavedCard(model: Model, ordinal: Int): Card {
+        val n = col.newNote(model)
+        val fieldNames = model.fieldsNames
         for (i in fieldNames.indices) {
             n.setField(i, fieldNames[i])
         }
         n.flush()
-        print(ordinal)
-        throw Exception("not implemented")
-//        return col.getNewLinkedCard(Card(col), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true)
+        return col.getNewLinkedCard(Card(col), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true)
     }
 
     @KotlinCleanup("Override fieldText in constructor and remove text")

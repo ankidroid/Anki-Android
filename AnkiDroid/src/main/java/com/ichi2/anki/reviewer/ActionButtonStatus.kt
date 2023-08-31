@@ -23,6 +23,7 @@ import androidx.annotation.IdRes
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
 import com.ichi2.utils.HashUtil.HashMapInit
+import timber.log.Timber
 
 // loads of unboxing issues, which are safe
 class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
@@ -30,6 +31,13 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
      * Custom button allocation
      */
     protected val mCustomButtons: MutableMap<Int, Int> = HashMapInit(25) // setup's size
+    fun getByMenuResourceId(resourceId: Int): Int? {
+        if (!mCustomButtons.containsKey(resourceId)) {
+            Timber.w("Invalid resource lookup: %d", resourceId)
+            return SHOW_AS_ACTION_NEVER
+        }
+        return mCustomButtons[resourceId]
+    }
 
     fun setup(preferences: SharedPreferences) {
         // NOTE: the default values below should be in sync with preferences_custom_buttons.xml and reviewer.xml

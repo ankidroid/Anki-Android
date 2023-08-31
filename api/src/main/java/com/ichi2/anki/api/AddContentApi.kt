@@ -44,7 +44,6 @@ import java.util.*
  * On earlier SDK levels, the #READ_WRITE_PERMISSION is currently only required for update/delete operations but
  * this may be extended to all operations at a later date.
  */
-@Suppress("unused")
 public class AddContentApi(context: Context) {
     private val mContext: Context = context.applicationContext
     private val mResolver: ContentResolver = mContext.contentResolver

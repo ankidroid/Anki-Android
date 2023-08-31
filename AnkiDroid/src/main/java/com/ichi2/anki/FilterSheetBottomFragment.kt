@@ -34,8 +34,9 @@ import anki.search.SearchNodeKt.group
 import anki.search.searchNode
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.Collection
+import com.ichi2.libanki.CollectionGetter
 import com.ichi2.themes.Themes.getColorFromAttr
 
 /**
@@ -43,7 +44,8 @@ import com.ichi2.themes.Themes.getColorFromAttr
  * This class is used to apply filters for search queries
  */
 class FilterSheetBottomFragment :
-    BottomSheetDialogFragment() {
+    BottomSheetDialogFragment(),
+    CollectionGetter {
     private lateinit var behavior: BottomSheetBehavior<View>
 
     private var flagSearchItems = mutableSetOf<SearchNode.Flag>()
@@ -83,11 +85,9 @@ class FilterSheetBottomFragment :
         // Create a query with currently selected filters, and close the filter sheet
         val applyButton = this.findViewById<Button>(R.id.apply_filter_button)
         applyButton.setOnClickListener {
-            launchCatchingTask {
-                val filterQuery = createQuery(flagSearchItems)
-                (activity as CardBrowser).searchWithFilterQuery(filterQuery)
-                dismiss()
-            }
+            val filterQuery = createQuery(flagSearchItems)
+            (activity as CardBrowser).searchWithFilterQuery(filterQuery)
+            dismiss()
         }
 
         // Close the filter sheet
@@ -161,7 +161,7 @@ class FilterSheetBottomFragment :
         }
     }
 
-    private suspend fun createQuery(
+    private fun createQuery(
         flagList: Set<SearchNode.Flag>
     ): String {
         if (flagList.isEmpty()) {
@@ -178,7 +178,7 @@ class FilterSheetBottomFragment :
             }
         }
 
-        return withCol { buildSearchString(node) }
+        return col.buildSearchString(node)
     }
 
     private fun clearQuery() {
@@ -189,6 +189,9 @@ class FilterSheetBottomFragment :
         const val TAG = "ModalBottomSheet"
         private const val DELAY_TIME = 500
     }
+
+    override val col: Collection
+        get() = CollectionHelper.instance.getCol(activity)!!
 
     /**
      * Add/remove items from list of selected filters

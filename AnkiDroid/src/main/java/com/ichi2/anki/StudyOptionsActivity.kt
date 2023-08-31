@@ -31,7 +31,7 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        val customStudyDialogFactory = CustomStudyDialogFactory({ this.getColUnsafe }, this)
+        val customStudyDialogFactory = CustomStudyDialogFactory({ this.col }, this)
         customStudyDialogFactory.attachToActivity<ExtendedFragmentFactory>(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.studyoptions)
@@ -84,8 +84,9 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
 
     public override fun onStop() {
         super.onStop()
-        if (colIsOpenUnsafe()) {
-            WidgetStatus.updateInBackground(this)
+        if (colIsOpen()) {
+            WidgetStatus.update(this)
+            saveCollectionInBackground()
         }
     }
 
@@ -108,6 +109,6 @@ class StudyOptionsActivity : NavigationDrawerActivity(), StudyOptionsListener, C
 
     override fun onExtendStudyLimits() {
         // Sched needs to be reset so provide true argument
-        currentFragment!!.refreshInterface()
+        currentFragment!!.refreshInterface(true)
     }
 }

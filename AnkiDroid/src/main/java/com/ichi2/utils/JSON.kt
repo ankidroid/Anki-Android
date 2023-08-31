@@ -17,7 +17,20 @@
 
 package com.ichi2.utils
 
+import org.json.JSONException
+
 object JSON {
+    /**
+     * Returns the input if it is a JSON-permissible value; throws otherwise.
+     */
+    @Throws(JSONException::class)
+    fun checkDouble(d: Double): Double {
+        if (java.lang.Double.isInfinite(d) || java.lang.Double.isNaN(d)) {
+            throw JSONException("Forbidden numeric value: $d")
+        }
+        return d
+    }
+
     fun toString(value: Any?): String? {
         if (value is String) {
             return value

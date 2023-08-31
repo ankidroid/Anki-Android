@@ -17,7 +17,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.testutils.JvmTest
+import com.ichi2.anki.RobolectricTest
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -25,7 +25,7 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-class NoteWithColTest : JvmTest() {
+class NoteWithColTest : RobolectricTest() {
 
     @Test
     @Config(qualifiers = "en")

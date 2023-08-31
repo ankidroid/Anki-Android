@@ -33,14 +33,24 @@ class ReviewingSettingsFragment : SettingsFragment() {
         get() = "prefs.reviewing"
 
     override fun initSubscreen() {
+        // New cards position
+        // Represents the collections pref "newSpread": i.e.
+        // whether the new cards are added at the end of the queue or randomly in it.
+        requirePreference<ListPreference>(R.string.new_spread_preference).apply {
+            launchCatchingTask { setValueIndex(withCol { get_config_int("newSpread") }) }
+            setOnPreferenceChangeListener { newValue ->
+                launchCatchingTask { withCol { set_config("newSpread", (newValue as String).toInt()) } }
+            }
+        }
+
         // Learn ahead limit
         // Represents the collections pref "collapseTime": i.e.
         // if there are no card to review now, but there are learning cards remaining for today, we show those learning cards if they are due before LEARN_CUTOFF minutes
         // Note that "collapseTime" is in second while LEARN_CUTOFF is in minute.
         requirePreference<NumberRangePreferenceCompat>(R.string.learn_cutoff_preference).apply {
-            launchCatchingTask { setValue(withCol { sched.learnAheadSeconds() / 60 }) }
+            launchCatchingTask { setValue(withCol { get_config_int("collapseTime") / 60 }) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.set("collapseTime", (newValue as Int * 60)) } }
+                launchCatchingTask { withCol { set_config("collapseTime", (newValue as Int * 60)) } }
             }
         }
         // Timebox time limit
@@ -48,9 +58,9 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // the duration of a review timebox in minute. Each TIME_LIMIT minutes, a message appear suggesting to halt and giving the number of card reviewed
         // Note that "timeLim" is in seconds while TIME_LIMIT is in minutes.
         requirePreference<NumberRangePreferenceCompat>(R.string.time_limit_preference).apply {
-            launchCatchingTask { setValue(withCol { sched.timeboxSecs() / 60 }) }
+            launchCatchingTask { setValue(withCol { get_config_int("timeLim") / 60 }) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.set("timeLim", (newValue as Int * 60)) } }
+                launchCatchingTask { withCol { set_config("timeLim", (newValue as Int * 60)) } }
             }
         }
         // Start of next day
@@ -72,9 +82,9 @@ class ReviewingSettingsFragment : SettingsFragment() {
          * @see com.ichi2.anki.reviewer.AutomaticAnswerAction.CONFIG_KEY
          * */
         requirePreference<ListPreference>(R.string.automatic_answer_action_preference).apply {
-            launchCatchingTask { setValueIndex(withCol { config.get(AutomaticAnswerAction.CONFIG_KEY) ?: 0 }) }
+            launchCatchingTask { setValueIndex(withCol { get_config(AutomaticAnswerAction.CONFIG_KEY, 0.toInt())!! }) }
             setOnPreferenceChangeListener { newValue ->
-                launchCatchingTask { withCol { config.set(AutomaticAnswerAction.CONFIG_KEY, (newValue as String).toInt()) } }
+                launchCatchingTask { withCol { set_config(AutomaticAnswerAction.CONFIG_KEY, (newValue as String).toInt()) } }
             }
         }
         // New timezone handling

@@ -39,7 +39,7 @@ internal fun addUntrackedMediaFile(media: Media, content: String, path: List<Str
 
 private fun convertPathToMediaFile(media: Media, path: List<String>): File {
     val mutablePath = ArrayDeque(path)
-    var file = File(media.dir)
+    var file = File(media.dir())
     while (mutablePath.any()) {
         file = File(file, mutablePath.removeFirst())
     }

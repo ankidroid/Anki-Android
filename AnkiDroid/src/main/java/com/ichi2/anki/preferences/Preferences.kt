@@ -187,6 +187,10 @@ class Preferences :
         /** From [HeaderFragment.onCreatePreferences] */
         if (!AdaptionUtil.isXiaomiRestrictedLearningDevice) {
             searchConfig.index(R.xml.preferences_advanced)
+            // Advanced statistics is a subscreen of Advanced, so it should be indexed along with it
+            searchConfig.index(R.xml.preferences_advanced_statistics)
+                .addBreadcrumb(R.string.pref_cat_advanced)
+                .addBreadcrumb(R.string.statistics)
         }
 
         /** From [NotificationsSettingsFragment.initSubscreen] */
@@ -282,6 +286,8 @@ class Preferences :
     }
 
     companion object {
+        /** Key of the language preference  */
+        const val LANGUAGE = "language"
 
         /* Only enable AnkiDroid notifications unrelated to due reminders */
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
@@ -319,6 +325,7 @@ class Preferences :
                 R.xml.preferences_appearance -> AppearanceSettingsFragment()
                 R.xml.preferences_controls -> ControlsSettingsFragment()
                 R.xml.preferences_advanced -> AdvancedSettingsFragment()
+                R.xml.preferences_advanced_statistics -> AdvancedStatisticsSettingsFragment()
                 R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
                 R.xml.preferences_dev_options -> DevOptionsFragment()
                 R.xml.preferences_custom_buttons -> CustomButtonsSettingsFragment()
@@ -336,12 +343,14 @@ class Preferences :
             withCol {
                 when (getSchedVer(this)) {
                     2 -> {
-                        config.set("rollover", hours)
+                        set_config("rollover", hours)
+                        flush()
                     }
                     else -> { // typically "1"
                         val date: Calendar = crtGregorianCalendar()
                         date[Calendar.HOUR_OF_DAY] = hours
                         crt = date.timeInMillis / 1000
+                        setMod()
                     }
                 }
             }
@@ -351,7 +360,7 @@ class Preferences :
         suspend fun getDayOffset(): Int {
             return withCol {
                 when (schedVer()) {
-                    2 -> config.get("rollover") ?: DEFAULT_ROLLOVER_VALUE
+                    2 -> get_config("rollover", DEFAULT_ROLLOVER_VALUE)!!
                     // 1, or otherwise:
                     else -> crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
                 }

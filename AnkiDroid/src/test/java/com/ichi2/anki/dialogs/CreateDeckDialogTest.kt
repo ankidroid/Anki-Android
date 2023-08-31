@@ -191,6 +191,37 @@ class CreateDeckDialogTest : RobolectricTest() {
         assertEquals(deckPicker.optionsMenuState!!.searchIcon, true)
     }
 
+    @Test
+    fun `Duplicate decks can't be created`() {
+        createDeck("deck")
+        createDeck("parent::child")
+        testDialog(DeckDialogType.DECK) {
+            input = "deck"
+            assertThat("Cannot create duplicate deck: 'deck'", positiveButton.isEnabled, equalTo(false))
+            input = "Deck"
+            assertThat("Cannot create duplicate deck: (case insensitive: 'Deck')", positiveButton.isEnabled, equalTo(false))
+            input = "Deck2"
+            assertThat("Can create deck with new name: 'Deck2'", positiveButton.isEnabled, equalTo(true))
+            input = "parent::child"
+            assertThat("Can't create fully qualified duplicate deck: 'parent::child'", positiveButton.isEnabled, equalTo(false))
+        }
+    }
+
+    @Test
+    fun `Duplicate subdecks can't be created`() {
+        // Subdecks have a 'context' of the parent deck: selecting 'A' and entering 'B' creates 'A::B'
+        createDeck("parent::child")
+        val parentDeckId = col.decks.byName("parent")!!.getLong("id")
+        testDialog(DeckDialogType.SUB_DECK, parentDeckId) {
+            input = "parent"
+            assertThat("'parent::parent' should be valid", positiveButton.isEnabled, equalTo(true))
+            input = "child"
+            assertThat("'parent::child' already exists so should be invalid", positiveButton.isEnabled, equalTo(false))
+            input = "Child"
+            assertThat("'parent::child' already exists so should be invalid (case insensitive)", positiveButton.isEnabled, equalTo(false))
+        }
+    }
+
     private fun createDeck(deckName: String) {
         col.decks.id(deckName)
     }

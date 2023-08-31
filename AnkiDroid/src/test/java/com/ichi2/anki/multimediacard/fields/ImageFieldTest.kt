@@ -103,7 +103,7 @@ class ImageFieldTest {
     @CheckResult
     private fun collectionWithMediaDirectory(dir: String): Collection {
         val media = mock(Media::class.java)
-        whenever(media.dir).thenReturn(dir)
+        whenever(media.dir()).thenReturn(dir)
 
         val collectionMock = mock(Collection::class.java)
         whenever(collectionMock.media).thenReturn(media)

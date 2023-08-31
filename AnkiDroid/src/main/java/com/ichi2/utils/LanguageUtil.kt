@@ -136,7 +136,6 @@ object LanguageUtil {
 
     /** Backend languages; may not include recently added ones.
      * Found at https://i18n.ankiweb.net/teams/ */
-    @Suppress("unused")
     val BACKEND_LANGS = listOf(
         "af", // Afrikaans
         "ar", // العربية

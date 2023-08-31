@@ -31,7 +31,8 @@ class HtmlGenerator(
     private val typeAnswer: TypeAnswer,
     val cardAppearance: CardAppearance,
     val cardTemplate: CardTemplate,
-    val resources: Resources
+    val resources: Resources,
+    private val baseUrl: String
 ) {
 
     @CheckResult
@@ -47,13 +48,14 @@ class HtmlGenerator(
     }
 
     fun expandSounds(content: String): String {
-        return Sound.expandSounds(content)
+        return Sound.expandSounds(baseUrl, content)
     }
 
     companion object {
         fun createInstance(
             context: Context,
-            typeAnswer: TypeAnswer
+            typeAnswer: TypeAnswer,
+            baseUrl: String
         ): HtmlGenerator {
             val preferences = context.sharedPrefs()
             val cardAppearance = CardAppearance.create(ReviewerCustomFonts(context), preferences)
@@ -63,7 +65,8 @@ class HtmlGenerator(
                 typeAnswer,
                 cardAppearance,
                 cardHtmlTemplate,
-                context.resources
+                context.resources,
+                baseUrl
             )
         }
 

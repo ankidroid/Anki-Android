@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<!-- Advanced Statistics Preferences -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
+    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    android:title="@string/advanced_statistics_title"
+    android:key="@string/pref_advanced_statistics_screen_key">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="@string/pref_advanced_statistics_enabled_key"
+        android:summary="@string/enable_advanced_statistics_summ"
+        android:title="@string/enable_advanced_statistics_title"/>
+    <com.ichi2.preferences.SliderPreference
+        android:key="@string/pref_compute_n_days_key"
+        android:dependency="@string/pref_advanced_statistics_enabled_key"
+        android:defaultValue="0"
+        android:title="@string/advanced_forecast_stats_compute_n_days_title"
+        android:valueFrom="0"
+        android:valueTo="30"
+        app1:displayValue="true"/>
+    <com.ichi2.preferences.SliderPreference
+        android:key="@string/pref_computation_precision_key"
+        android:dependency="@string/pref_advanced_statistics_enabled_key"
+        android:title="@string/advanced_forecast_stats_compute_precision_title"
+        android:defaultValue="90"
+        android:valueFrom="0"
+        android:valueTo="99"
+        app1:displayFormat="@string/pref_summary_percentage"/>
+    <com.ichi2.preferences.SliderPreference
+        android:key="@string/pref_n_iterations_key"
+        android:dependency="@string/pref_advanced_statistics_enabled_key"
+        android:title="@string/advanced_forecast_stats_mc_n_iterations_title"
+        android:defaultValue="1"
+        android:valueFrom="1"
+        android:valueTo="20"
+        app1:displayValue="true"/>
+</PreferenceScreen>

@@ -1,7 +1,6 @@
 plugins {
  // Gradle plugin portal
  id 'com.github.triplet.play' version '3.8.4'
- id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
 }
 
 apply plugin: 'com.android.application'
@@ -47,6 +46,7 @@ android {
     defaultConfig {
         applicationId "com.ichi2.anki"
         buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()
+        buildConfigField "Boolean", "LEGACY_SCHEMA", "true"
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
@@ -77,7 +77,7 @@ android {
         // needed for upgrades to be offered correctly.
         versionCode=21700101
         versionName="2.17alpha1"
-        minSdkVersion 23
+        minSdkVersion 21
         // change api/build.gradle
         // change robolectricDownloader.gradle
         // After #13695: change .tests_emulator.yml
@@ -112,6 +112,10 @@ android {
                 // not profiled: optimization for build times
                 if (localProperties['enable_languages'] == "false") {
                     android.defaultConfig.resConfigs "en"
+                }
+                // allow overriding default schema version
+                if (localProperties["legacy_schema"] != null) {
+                    buildConfigField "Boolean", "LEGACY_SCHEMA", localProperties["legacy_schema"]
                 }
                 // allows the scoped storage migration when the user is not logged in
                 if (localProperties["allow_unsafe_migration"] != null) {
@@ -233,6 +237,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11
     }
+    ndkVersion "22.0.7026061"
 }
 
 play {
@@ -312,13 +317,14 @@ dependencies {
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     // Changing the version from 1.8.0 to 1.7.0 because the item in navigation drawer is getting bold unnecessarily
     implementation 'com.google.android.material:material:1.7.0'
+    // noinspection GradleDependency jackson-databind 2.13 requires SDK 24+: https://github.com/FasterXML/jackson-databind#compatibility
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.5'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin-lite:3.24.1' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin:3.24.1' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
@@ -326,7 +332,9 @@ dependencies {
     }
     if (localProperties['local_backend'] == "true") {
         implementation files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")
-        testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")
+        testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing-${ankidroid_backend_version}.jar")
+        // On Windows, you can use something like
+        // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
     } else {
         implementation "io.github.david-allison-1:anki-android-backend:$ankidroid_backend_version"
         testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"
@@ -344,8 +352,10 @@ dependencies {
 
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
+    // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
+    implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     // noinspection GradleDependency - commons-compress 1.12 - later versions use `File.toPath`; API26 can remove?
-    implementation 'org.apache.commons:commons-compress:1.12'
+    implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
     implementation 'commons-io:commons-io:2.13.0' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
