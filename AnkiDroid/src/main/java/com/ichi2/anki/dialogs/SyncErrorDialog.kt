@@ -23,14 +23,13 @@ import android.os.Message
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import com.ichi2.anki.AnkiActivity
+import com.ichi2.anki.ConflictResolution
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.joinSyncMessages
-import com.ichi2.async.Connection.ConflictResolution
-import com.ichi2.libanki.CollectionGetter
 
 class SyncErrorDialog : AsyncDialogFragment() {
-    interface SyncErrorDialogListener : CollectionGetter {
+    interface SyncErrorDialogListener {
         fun showSyncErrorDialog(dialogType: Int)
         fun showSyncErrorDialog(dialogType: Int, message: String?)
         fun loginToSyncServer()

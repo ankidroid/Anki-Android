@@ -22,7 +22,6 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
-import androidx.core.content.ContextCompat
 import com.ichi2.anki.Channel
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -63,7 +62,7 @@ class NotificationService : BroadcastReceiver() {
                 )
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setSmallIcon(R.drawable.ic_star_notify)
-                    .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
+                    .setColor(context.getColor(R.color.material_light_blue_700))
                     .setContentTitle(cardsDueText)
                     .setTicker(cardsDueText)
                 // Enable vibrate and blink if set in preferences

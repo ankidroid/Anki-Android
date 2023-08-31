@@ -65,13 +65,6 @@ object ClipboardUtil {
     fun getPlainText(clipboard: ClipboardManager?, context: Context): CharSequence? {
         return getFirstItem(clipboard)?.coerceToText(context)
     }
-
-    @CheckResult
-    fun getDescriptionLabel(clipboard: ClipData?): CharSequence? {
-        return clipboard
-            ?.description
-            ?.label
-    }
 }
 
 /**

@@ -52,15 +52,15 @@ class CardTemplateTest {
     <head>
         <title>AnkiDroid Flashcard</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="file:///android_asset/flashcard.css">
-        <link rel="stylesheet" type="text/css" href="file:///android_asset/mathjax/mathjax.css">
+        <link rel="stylesheet" type="text/css" href="/assets/flashcard.css">
+        <link rel="stylesheet" type="text/css" href="/assets/mathjax/mathjax.css">
         <style>
         ::style::
         </style>
         ::script::
-        <script src="file:///android_asset/mathjax/conf.js"> </script>
-        <script src="file:///android_asset/mathjax/MathJax.js"> </script>
-        <script src="file:///android_asset/scripts/card.js" type="text/javascript"> </script>
+        <script src="/assets/mathjax/conf.js"> </script>
+        <script src="/assets/mathjax/MathJax.js"> </script>
+        <script src="/assets/scripts/card.js" type="text/javascript"> </script>
     </head>
     <body class="::class::">
         <div id="content">

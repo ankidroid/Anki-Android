@@ -101,7 +101,7 @@ class AboutFragment : Fragment() {
      * Copies debug info (from [DebugInfoService.getDebugInfo]) to the clipboard
      */
     private fun copyDebugInfo() {
-        val debugInfo = DebugInfoService.getDebugInfo(requireContext()) { (requireActivity() as Preferences).col }
+        val debugInfo = DebugInfoService.getDebugInfo(requireContext())
         if (requireContext().copyToClipboard(debugInfo)) {
             showSnackbar(
                 R.string.about_ankidroid_successfully_copied_debug_info,

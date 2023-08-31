@@ -37,14 +37,6 @@ import java.util.concurrent.CountDownLatch
 
 typealias NumberOfBytes = Long
 
-fun NumberOfBytes.toKB(): Int {
-    return ((this / 1024).toInt())
-}
-
-fun NumberOfBytes.toMB(): Int {
-    return this.toKB() / 1024
-}
-
 /**
  * Function that is executed when one file is migrated, with the number of bytes moved.
  * Called with 0 when the file is already present in destination (i.e. successful move with no byte copied)

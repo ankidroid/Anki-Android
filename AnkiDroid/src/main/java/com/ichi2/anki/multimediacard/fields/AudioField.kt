@@ -55,7 +55,7 @@ abstract class AudioField : FieldBase(), IField {
         if (m.find()) {
             res = m.group(1)!!
         }
-        val mediaDir = col.media.dir() + "/"
+        val mediaDir = col.media.dir + "/"
         audioPath = mediaDir + res
     }
 

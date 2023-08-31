@@ -49,8 +49,6 @@ import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.libanki.utils.set
 import com.ichi2.utils.*
 
-// TODO when the new backend becomes the default delete the old implementation ModelBrowser and its
-//  related classes
 class ManageNotetypes : AnkiActivity() {
     private lateinit var actionBar: ActionBar
     private lateinit var noteTypesList: RecyclerView
@@ -100,7 +98,7 @@ class ManageNotetypes : AnkiActivity() {
             val allNotetypes = mutableListOf<NotetypeBasicUiModel>()
             allNotetypes.addAll(
                 withProgress {
-                    withCol { newBackend.getNotetypeNames().map { it.toUiModel() } }
+                    withCol { getNotetypeNames().map { it.toUiModel() } }
                 }
             )
             val dialog = MaterialDialog(this@ManageNotetypes).show {
@@ -117,11 +115,11 @@ class ManageNotetypes : AnkiActivity() {
                 positiveButton(R.string.rename) {
                     launchCatchingTask {
                         runAndRefreshAfter {
-                            val initialNotetype = newBackend.getNotetype(noteTypeUiModel.id)
+                            val initialNotetype = getNotetype(noteTypeUiModel.id)
                             val renamedNotetype = initialNotetype.copy {
                                 this.name = it.getInputField().text.toString()
                             }
-                            newBackend.updateNotetype(renamedNotetype)
+                            updateNotetype(renamedNotetype)
                         }
                     }
                 }
@@ -137,7 +135,7 @@ class ManageNotetypes : AnkiActivity() {
             val messageResourceId: Int? = if (userAcceptsSchemaChange()) {
                 withProgress {
                     withCol {
-                        if (newBackend.getNotetypeNames().size <= 1) {
+                        if (getNotetypeNames().size <= 1) {
                             return@withCol null
                         }
                         R.string.model_delete_warning
@@ -155,7 +153,7 @@ class ManageNotetypes : AnkiActivity() {
                 message(messageResourceId)
                 positiveButton(R.string.dialog_ok) {
                     launchCatchingTask {
-                        runAndRefreshAfter { newBackend.removeNotetype(noteTypeUiModel.id) }
+                        runAndRefreshAfter { removeNotetype(noteTypeUiModel.id) }
                     }
                 }
                 negativeButton(R.string.dialog_cancel)
@@ -169,7 +167,7 @@ class ManageNotetypes : AnkiActivity() {
                 val standardNotetypesModels = StockNotetype.Kind.values()
                     .filter { it != StockNotetype.Kind.UNRECOGNIZED }
                     .map {
-                        val stockNotetype = from_json_bytes(newBackend.getStockNotetypeLegacy(it))
+                        val stockNotetype = from_json_bytes(getStockNotetypeLegacy(it))
                         NotetypeBasicUiModel(
                             id = it.number.toLong(),
                             name = stockNotetype.get("name") as String,
@@ -178,7 +176,7 @@ class ManageNotetypes : AnkiActivity() {
                     }
                 mutableListOf<NotetypeBasicUiModel>().apply {
                     addAll(standardNotetypesModels)
-                    addAll(newBackend.getNotetypeNames().map { it.toUiModel() })
+                    addAll(getNotetypeNames().map { it.toUiModel() })
                 }
             }
         }
@@ -243,10 +241,10 @@ class ManageNotetypes : AnkiActivity() {
             runAndRefreshAfter {
                 val kind = StockNotetype.Kind.forNumber(selectedOption.id.toInt())
                 val updatedStandardNotetype =
-                    from_json_bytes(newBackend.getStockNotetypeLegacy(kind)).apply {
+                    from_json_bytes(getStockNotetypeLegacy(kind)).apply {
                         set("name", newName)
                     }
-                newBackend.addNotetypeLegacy(to_json_bytes(updatedStandardNotetype))
+                addNotetypeLegacy(to_json_bytes(updatedStandardNotetype))
             }
         }
     }
@@ -254,12 +252,12 @@ class ManageNotetypes : AnkiActivity() {
     private fun cloneStandardNotetype(newName: String, model: NotetypeBasicUiModel) {
         launchCatchingTask {
             runAndRefreshAfter {
-                val targetNotetype = newBackend.getNotetype(model.id)
+                val targetNotetype = getNotetype(model.id)
                 val newNotetype = targetNotetype.copy {
                     id = 0
                     name = newName
                 }
-                newBackend.addNotetype(newNotetype)
+                addNotetype(newNotetype)
             }
         }
     }
@@ -274,7 +272,7 @@ class ManageNotetypes : AnkiActivity() {
         val updatedNotetypes = withProgress {
             withCol {
                 action()
-                newBackend.getNotetypeNameIdUseCount().map { it.toUiModel() }
+                getNotetypeNameIdUseCount().map { it.toUiModel() }
             }
         }
         notetypesAdapter.submitList(updatedNotetypes)

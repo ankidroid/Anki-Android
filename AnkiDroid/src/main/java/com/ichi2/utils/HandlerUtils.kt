@@ -84,11 +84,3 @@ object HandlerUtils {
         )
     }
 }
-
-fun runOnUiThread(runnable: () -> Unit) {
-    Handler(Looper.getMainLooper()).apply {
-        post {
-            runnable()
-        }
-    }
-}

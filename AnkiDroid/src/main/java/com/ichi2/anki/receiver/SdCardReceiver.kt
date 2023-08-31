@@ -35,7 +35,7 @@ class SdCardReceiver : BroadcastReceiver() {
             i.action = MEDIA_EJECT
             context.sendBroadcast(i)
             try {
-                val col = CollectionHelper.instance.getCol(context)
+                val col = CollectionHelper.instance.getColUnsafe(context)
                 col?.close()
             } catch (e: Exception) {
                 Timber.w(e, "Exception while trying to close collection likely because it was already unmounted")

@@ -22,7 +22,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.libanki.Model
+import com.ichi2.libanki.NotetypeJson
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -127,7 +127,7 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
      */
     @Suppress("SameParameterValue")
     private fun findModelIdByName(modelName: String): Long {
-        return col.models.getModels().filter { idModels: Map.Entry<Long?, Model> -> idModels.value.getString("name") == modelName }.keys.first()
+        return col.notetypes.getModels().filter { idModels: Map.Entry<Long?, NotetypeJson> -> idModels.value.getString("name") == modelName }.keys.first()
     }
 
     companion object {

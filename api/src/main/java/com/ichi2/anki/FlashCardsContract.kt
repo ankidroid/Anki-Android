@@ -232,6 +232,8 @@ public object FlashCardsContract {
         @Suppress("MemberVisibilityCanBePrivate")
         public const val GUID: String = "guid"
         public const val MID: String = "mid"
+
+        @Suppress("unused")
         public const val ALLOW_EMPTY: String = "allow_empty"
         public const val MOD: String = "mod"
 
