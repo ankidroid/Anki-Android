@@ -5,14 +5,14 @@ import org.gradle.internal.jvm.Jvm
 buildscript {
     // The version for the Kotlin plugin and dependencies
     // If changing this, make sure to update org.jetbrains.kotlin.plugin.serialization version too
-    ext.kotlin_version = '1.9.0'
-    ext.lint_version = '31.1.0' // 31.0.1 stopped running lint checks in CI
+    ext.kotlin_version = '1.9.10'
+    ext.lint_version = '31.1.1'
     ext.acra_version = '5.11.1'
     ext.ankidroid_backend_version = '0.1.25-anki2.1.66'
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.10.0'
     ext.coroutines_version = '1.7.3'
-    ext.fragments_version = "1.6.0"
+    ext.fragments_version = "1.6.1"
     ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
     ext.androidx_test_junit_version = '1.1.5'
