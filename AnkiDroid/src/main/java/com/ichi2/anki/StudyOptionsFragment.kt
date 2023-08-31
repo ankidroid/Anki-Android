@@ -234,7 +234,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.id.action_undo -> {
                 Timber.i("StudyOptionsFragment:: Undo button pressed")
                 launchCatchingTask {
-                    requireActivity().undoAndShowPopup()
+                    requireActivity().undoAndShowSnackbar()
                     openReviewer()
                 }
                 return true

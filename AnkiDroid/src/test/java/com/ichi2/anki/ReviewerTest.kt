@@ -237,7 +237,7 @@ class ReviewerTest : RobolectricTest() {
 
         sched.answerCard(cardBeforeUndo!!, Consts.BUTTON_THREE)
 
-        reviewer.undoAndShowPopup()
+        reviewer.undoAndShowSnackbar()
 
         val countsAfterUndo = sched.counts()
 

@@ -1263,7 +1263,7 @@ open class CardBrowser :
     @VisibleForTesting
     fun onUndo() {
         launchCatchingTask {
-            undoAndShowPopup()
+            undoAndShowSnackbar()
         }
     }
 
@@ -1743,7 +1743,7 @@ open class CardBrowser :
 
     private fun showUndoSnackbar(message: CharSequence) {
         showSnackbar(message, Snackbar.LENGTH_LONG) {
-            setAction(R.string.undo) { launchCatchingTask { undoAndShowPopup() } }
+            setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
             mUndoSnackbar = this
         }
     }
