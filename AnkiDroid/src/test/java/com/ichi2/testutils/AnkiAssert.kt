@@ -16,7 +16,6 @@
 package com.ichi2.testutils
 
 import com.ichi2.libanki.Card
-import com.ichi2.libanki.sched.SchedV2
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import kotlin.test.junit5.JUnit5Asserter
 
@@ -59,8 +58,7 @@ object AnkiAssert {
     }
 
     fun checkRevIvl(c: Card, targetIvl: Int): Boolean {
-        val minMax = SchedV2._fuzzIvlRange(targetIvl)
-        return c.ivl in minMax.first..minMax.second
+        return c.ivl == targetIvl
     }
 }
 

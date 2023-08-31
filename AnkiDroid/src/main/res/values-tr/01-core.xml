@@ -81,7 +81,7 @@
     <string name="no_cards_placeholder_description">+ ikonunu kullanarak\nkart eklemeye başlayın.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <plurals name="studied_cards_today">
-        <item quantity="one">Bugün %2$s karttan %1$d tanesi çalışıldı</item>
+        <item quantity="one">Bugün %2$s süre içinde %1$d tane kart çalışıldı</item>
         <item quantity="other">Bugün %2$s içinde %1$d kart çalışıldı</item>
     </plurals>
     <!-- flashcard_portrait.xml -->

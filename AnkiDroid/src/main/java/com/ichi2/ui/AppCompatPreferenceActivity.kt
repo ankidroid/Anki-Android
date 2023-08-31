@@ -182,7 +182,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         delegate.installViewFactory()
         delegate.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
-        val col = CollectionHelper.instance.getCol(this)
+        val col = CollectionHelper.instance.getColUnsafe(this)
         if (col != null) {
             this.col = col
         } else {

@@ -9,7 +9,6 @@
     <string name="error_reporting_mode_key">reportErrorMode</string>
     <!-- Reviewing -->
     <string name="pref_reviewing_screen_key">reviewingScreen</string>
-    <string name="new_spread_preference">newSpread</string>
     <string name="day_offset_preference">dayOffset</string>
     <string name="learn_cutoff_preference">learnCutoff</string>
     <string name="time_limit_preference">timeLimit</string>
@@ -105,19 +104,10 @@
     <string name="thirdparty_apps_key">thirdpartyapps_link</string>
     <string name="tts_key">tts</string>
     <string name="double_scrolling_gap_key">double_scrolling</string>
-    <string name="stats_default_deck_key">stats_default_deck</string>
-    <string name="pref_advanced_statistics_key">advanced_statistics_link</string>
     <string name="html_javascript_debugging_key">html_javascript_debugging</string>
     <string name="card_browser_external_context_menu_key">card_browser_enable_external_context_menu</string>
     <string name="anki_card_external_context_menu_key">anki_card_enable_external_context_menu</string>
     <string name="pref_reset_languages_key">resetLanguages</string>
-    <string name="enable_v3_sched_key">v3sched</string>
-    <!-- Advanced statistics -->
-    <string name="pref_advanced_statistics_screen_key">advancedStatisticsScreen</string>
-    <string name="pref_computation_precision_key">advanced_forecast_stats_compute_precision</string>
-    <string name="pref_compute_n_days_key">advanced_forecast_stats_compute_n_days</string>
-    <string name="pref_advanced_statistics_enabled_key">advanced_statistics_enabled</string>
-    <string name="pref_n_iterations_key">advanced_forecast_stats_mc_n_iterations</string>
     <!-- Notification preferences -->
     <string name="pref_notifications_screen_key">notificationsScreen</string>
     <string name="pref_notifications_minimum_cards_due_key">minimumCardsDueForNotification</string>
@@ -130,7 +120,6 @@
     <string name="pref_lock_database_key">debug_lock_database</string>
     <string name="pref_show_onboarding_key">showOnboarding</string>
     <string name="pref_reset_onboarding_key">resetOnboarding</string>
-    <string name="pref_rust_backend_key">useRustBackend</string>
     <string name="dev_options_enabled_by_user_key">devOptionsEnabledByUser</string>
     <!-- Developer options > Create fake media -->
     <string name="pref_fill_collection_key">fillCollection</string>

@@ -27,7 +27,6 @@ import com.ichi2.libanki.Sound.SingleSoundSide.QUESTION
 import com.ichi2.libanki.template.MathJax
 import com.ichi2.themes.HtmlColors
 import com.ichi2.themes.Themes.currentTheme
-import net.ankiweb.rsdroid.BackendFactory
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
@@ -125,8 +124,8 @@ class CardHtml(
         return when (requiresMathjax) {
             false -> ""
             true ->
-                """        <script src="file:///android_asset/mathjax/conf.js"> </script>
-        <script src="file:///android_asset/mathjax/tex-chtml.js"> </script>"""
+                """        <script src="/assets/mathjax/conf.js"> </script>
+        <script src="/assets/mathjax/tex-chtml.js"> </script>"""
         }
     }
 
@@ -136,13 +135,12 @@ class CardHtml(
 
             val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
 
-            val renderOutput = card.render_output()
+            val renderOutput = card.renderOutput()
             val questionAv = renderOutput.question_av_tags
             val answerAv = renderOutput.answer_av_tags
-            val questionSound: List<SoundOrVideoTag>? =
-                if (!BackendFactory.defaultLegacySchema) questionAv.filterIsInstance(SoundOrVideoTag::class.java) else null
-            val answerSound: List<SoundOrVideoTag>? =
-                if (!BackendFactory.defaultLegacySchema) answerAv.filterIsInstance(SoundOrVideoTag::class.java) else null
+            val questionSound: List<SoundOrVideoTag> =
+                questionAv.filterIsInstance(SoundOrVideoTag::class.java)
+            val answerSound: List<SoundOrVideoTag> = answerAv.filterIsInstance(SoundOrVideoTag::class.java)
 
             // legacy (slow) function to return the answer without the front side
             fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.a())
@@ -157,12 +155,8 @@ class CardHtml(
          * TODO: This is no longer entirely true as more post-processing occurs
          */
         private fun displayString(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
-            if (side == Side.FRONT && card.isEmpty) {
-                return context.resources.getString(R.string.empty_card_warning)
-            }
-
             var content: String = if (side == Side.FRONT) card.q(reload) else card.a()
-            content = Media.escapeImages(content)
+            content = card.col.media.escapeImages(content)
             content = context.filterTypeAnswer(content, side)
             Timber.v("question: '%s'", content)
             return enrichWithQADiv(content)
@@ -206,7 +200,7 @@ class CardHtml(
             val answerFormat = getAnswerFormat(card)
             var newAnswerContent = answerContent
             if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
-                val frontSideFormat = card.render_output(false).question_text
+                val frontSideFormat = card.renderOutput(false).question_text
                 val audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat)
                 // remove the first instance of audio contained in "{{FrontSide}}"
                 while (audioReferences.find()) {

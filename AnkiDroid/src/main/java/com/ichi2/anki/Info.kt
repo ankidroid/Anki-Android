@@ -106,7 +106,7 @@ class Info : AnkiActivity() {
                     setOnClickListener { close() }
                 }
                 val background = backgroundColor.toRGBHex()
-                mWebView!!.loadUrl("file:///android_asset/changelog.html")
+                mWebView!!.loadUrl("/assets/changelog.html")
                 mWebView!!.settings.javaScriptEnabled = true
                 mWebView!!.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView, url: String) {

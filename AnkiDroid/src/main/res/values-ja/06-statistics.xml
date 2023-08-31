@@ -75,7 +75,7 @@
     <string formatted="false" name="stats_percentage_correct">正解率 (%)　</string>
     <string name="stats_reviews" comment="Label of a graph, indicating cumulative number of review of all cards">学習回数</string>
     <string name="stats_answer_type">回答の種類</string>
-    <string name="stats_today_again_count">忘却回数: &lt;b&gt;%d&lt;/b&gt;</string>
+    <string name="stats_today_again_count">「もう一度」を選択した回数: &lt;b&gt;%d&lt;/b&gt;</string>
     <string name="stats_today_correct_count">(正解率: &lt;b&gt;%.1f%%&lt;/b&gt;)</string>
     <string name="stats_today_type_breakdown">習得中: &lt;b&gt;%1$d&lt;/b&gt;枚、復習: &lt;b&gt;%2$d&lt;/b&gt;枚、再習得中: &lt;b&gt;%3$d&lt;/b&gt;枚、\nフィルター学習: &lt;b&gt;%4$d&lt;/b&gt;枚</string>
     <string name="stats_today_mature_cards">復習 (習熟期) の正解率: %3$.1f%% (%1$d/%2$d)</string>

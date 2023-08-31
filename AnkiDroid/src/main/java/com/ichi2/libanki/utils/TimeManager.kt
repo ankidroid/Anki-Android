@@ -28,18 +28,6 @@ import java.util.*
  */
 @SuppressLint("DirectSystemTimeInstantiation")
 object TimeManager {
-    /**
-     * Executes the provided functionality, returning [timeOverride] while in the code block
-     */
-    @VisibleForTesting
-    fun <T : Time> withMockInstance(timeOverride: T, f: ((T) -> Unit)) {
-        try {
-            mockInstances.push(timeOverride)
-            f(timeOverride)
-        } finally {
-            mockInstances.remove(timeOverride)
-        }
-    }
 
     @VisibleForTesting
     fun reset() {

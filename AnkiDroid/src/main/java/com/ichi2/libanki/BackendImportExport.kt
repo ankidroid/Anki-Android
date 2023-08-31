@@ -34,7 +34,7 @@ import net.ankiweb.rsdroid.Backend
  * Backups are automatically expired according to the user's settings.
  *
  */
-fun CollectionV16.createBackup(
+fun Collection.createBackup(
     backupFolder: String,
     force: Boolean,
     waitForCompletion: Boolean
@@ -51,7 +51,7 @@ fun CollectionV16.createBackup(
  * failed, and the status has not yet been checked. On failure, an error is only returned
  * once; subsequent calls are a no-op until another backup is run.
  */
-fun CollectionV16.awaitBackupCompletion() {
+fun Collection.awaitBackupCompletion() {
     backend.awaitBackupCompletion()
 }
 
@@ -77,12 +77,12 @@ fun importCollectionPackage(
  * If legacy=false, a file targeting Anki 2.1.50+ is created. It compresses better and is faster to
  * create, but older clients can not read it.
  */
-fun CollectionV16.exportCollectionPackage(
+fun Collection.exportCollectionPackage(
     outPath: String,
     includeMedia: Boolean,
     legacy: Boolean = true
 ) {
-    close(save = true, downgrade = false, forFullSync = true)
+    close(downgrade = false, forFullSync = true)
     backend.exportCollectionPackage(
         outPath = outPath,
         includeMedia = includeMedia,
@@ -94,7 +94,7 @@ fun CollectionV16.exportCollectionPackage(
 /**
  * Import an .apkg file into the current collection.
  */
-fun CollectionV16.importAnkiPackage(path: String): ImportResponse {
+fun Collection.importAnkiPackage(path: String): ImportResponse {
     return backend.importAnkiPackage(packagePath = path)
 }
 
@@ -103,7 +103,7 @@ fun CollectionV16.importAnkiPackage(path: String): ImportResponse {
  * * If legacy is false, an apkg will be created that can only
  * be opened with recent Anki versions.
  */
-fun CollectionV16.exportAnkiPackage(
+fun Collection.exportAnkiPackage(
     outPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
@@ -111,4 +111,12 @@ fun CollectionV16.exportAnkiPackage(
     legacy: Boolean = true
 ) {
     backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
+}
+
+fun Collection.getCsvMetadataRaw(input: ByteArray): ByteArray {
+    return backend.getCsvMetadataRaw(input)
+}
+
+fun Collection.importCsvRaw(input: ByteArray): ByteArray {
+    return backend.importCsvRaw(input)
 }

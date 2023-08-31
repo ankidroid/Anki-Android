@@ -33,7 +33,6 @@ import kotlin.collections.ArrayList
  */
 class MappableBinding(val binding: Binding, private val screen: Screen) {
     val isKey: Boolean get() = binding.isKey
-    val isKeyCode: Boolean get() = binding.isKeyCode
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -159,9 +158,6 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
 
         @CheckResult
         fun fromGesture(gesture: Gesture): MappableBinding = MappableBinding(Binding(gesture), Screen.Reviewer(CardSide.BOTH))
-
-        @CheckResult
-        fun fromGestureBinding(b: Binding): MappableBinding = MappableBinding(b, Screen.Reviewer(CardSide.BOTH))
 
         @CheckResult
         fun List<MappableBinding>.toPreferenceString(): String = this.mapNotNull { it.toPreferenceString() }

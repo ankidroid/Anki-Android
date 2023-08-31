@@ -55,10 +55,6 @@ fun <T> List<T>?.isNullOrEmpty(): Boolean {
     return this == null || this.isEmpty()
 }
 
-fun <T> List<T>?.isNotNullOrEmpty(): Boolean {
-    return !this.isNullOrEmpty()
-}
-
 fun <T> list(vararg elements: T) = mutableListOf(elements)
 
 fun <T> list(values: Collection<T>): List<T> = ArrayList(values)
@@ -75,13 +71,6 @@ fun <E> MutableList<E>.toJsonArray(): JSONArray {
         array.put(i)
     }
     return array
-}
-
-fun <K, V : Any> Map<K, V>.getOptional(k: K): Optional<V> {
-    if (!this.containsKey(k)) {
-        return Optional.empty()
-    }
-    return Optional.of(this[k]!!)
 }
 
 fun JSONArray.remove(jsonObject: JSONObject) {

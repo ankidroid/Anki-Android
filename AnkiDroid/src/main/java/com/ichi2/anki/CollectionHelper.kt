@@ -47,39 +47,17 @@ import kotlin.Throws
 @KotlinCleanup("convert to object")
 open class CollectionHelper {
     /**
-     * Prevents [com.ichi2.async.CollectionLoader] from spuriously re-opening the [Collection].
-     *
-     *
-     * Accessed only from synchronized methods.
-     */
-    @get:Synchronized
-    var isCollectionLocked = false
-        private set
-
-    @Synchronized
-    fun lockCollection() {
-        Timber.i("Locked Collection - Collection Loading should fail")
-        isCollectionLocked = true
-    }
-
-    @Synchronized
-    fun unlockCollection() {
-        Timber.i("Unlocked Collection")
-        isCollectionLocked = false
-    }
-
-    /**
      * Get the single instance of the [Collection], creating it if necessary  (lazy initialization).
      * @param context is no longer used, as the global AnkidroidApp instance is used instead
      * @return instance of the Collection
      */
     @Synchronized
-    open fun getCol(context: Context?): Collection? {
+    open fun getColUnsafe(context: Context?): Collection? {
         return CollectionManager.getColUnsafe()
     }
 
     /**
-     * Calls [getCol] inside a try / catch statement.
+     * Calls [getColUnsafe] inside a try / catch statement.
      * Send exception report if [reportException] is set and return null if there was an exception.
      * @param context
      * @param reportException Whether to send a crash report if an [Exception] was thrown when opening the collection (excluding
@@ -87,10 +65,10 @@ open class CollectionHelper {
      * @return the [Collection] if it could be obtained, `null` otherwise.
      */
     @Synchronized
-    fun getColSafe(context: Context?, reportException: Boolean = true): Collection? {
+    fun tryGetColUnsafe(context: Context?, reportException: Boolean = true): Collection? {
         lastOpenFailure = null
         return try {
-            getCol(context)
+            getColUnsafe(context)
         } catch (e: BackendDbLockedException) {
             lastOpenFailure = CollectionOpenFailure.LOCKED
             Timber.w(e)
@@ -118,15 +96,15 @@ open class CollectionHelper {
      * @param save whether or not save before closing
      */
     @Synchronized
-    fun closeCollection(save: Boolean, reason: String?) {
+    fun closeCollection(reason: String?) {
         Timber.i("closeCollection: %s", reason)
-        CollectionManager.closeCollectionBlocking(save)
+        CollectionManager.closeCollectionBlocking()
     }
 
     /**
      * @return Whether or not [Collection] and its child database are open.
      */
-    fun colIsOpen(): Boolean {
+    fun colIsOpenUnsafe(): Boolean {
         return CollectionManager.isOpenUnsafe()
     }
 
@@ -530,16 +508,6 @@ open class CollectionHelper {
             val directory = getDefaultAnkiDroidDirectory(context)
             Timber.d("resetting AnkiDroid directory to %s", directory)
             preferences.edit { putString(PREF_COLLECTION_PATH, directory) }
-        }
-
-        /** Fetches additional collection data not required for
-         * application startup
-         *
-         * Allows mandatory startup procedures to return early, speeding up startup. Less important tasks are offloaded here
-         * No-op if data is already fetched
-         */
-        fun loadCollectionComplete(col: Collection) {
-            col.models
         }
 
         @Throws(UnknownDatabaseVersionException::class)

@@ -81,7 +81,7 @@ class SharedDecksActivity : AnkiActivity() {
         setTitle(R.string.download_deck)
 
         val webviewToolbar: Toolbar = findViewById(R.id.webview_toolbar)
-        webviewToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
+        webviewToolbar.setTitleTextColor(getColor(R.color.white))
 
         setSupportActionBar(webviewToolbar)
 

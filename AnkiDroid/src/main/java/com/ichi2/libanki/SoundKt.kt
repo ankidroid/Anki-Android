@@ -32,15 +32,15 @@ import com.ichi2.utils.KotlinCleanup
  * Records information about a text to speech tag.
  */
 data class TTSTag(
-    val fieldText: str,
+    val fieldText: String,
     /**
      * Language may be empty if coming from AnkiDroid reading the whole card
      */
-    val lang: str,
-    val voices: List<str>,
+    val lang: String,
+    val voices: List<String>,
     val speed: Float,
     /** each arg should be in the form 'foo=bar' */
-    val otherArgs: List<str>
+    val otherArgs: List<String>
 ) : AvTag()
 
 /**
@@ -48,7 +48,7 @@ data class TTSTag(
  *
  * Video files also use [sound:...].
  */
-data class SoundOrVideoTag(val filename: str) : AvTag()
+data class SoundOrVideoTag(val filename: String) : AvTag()
 
 /** In python, this is a union of [TTSTag] and [SoundOrVideoTag] */
 open class AvTag
@@ -58,7 +58,7 @@ open class AvTag
 val AV_REF_RE = Regex("\\[anki:(play:(.):(\\d+))]")
 val AV_PLAYLINK_RE = Regex("playsound:(.):(\\d+)")
 
-fun strip_av_refs(text: str) = AV_REF_RE.replace("", text)
+fun strip_av_refs(text: String) = AV_REF_RE.replace("", text)
 
 fun addPlayIcons(content: String): String {
     return AV_REF_RE.replace(content) { match ->

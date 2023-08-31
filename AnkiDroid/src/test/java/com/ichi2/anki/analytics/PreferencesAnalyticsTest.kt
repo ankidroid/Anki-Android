@@ -29,10 +29,11 @@ import kotlin.test.assertNull
 
 @RunWith(AndroidJUnit4::class)
 class PreferencesAnalyticsTest : RobolectricTest() {
+    private val allKeys = PreferenceTestUtils.getAllPreferenceKeys(targetContext)
+
     /** Keys of preferences that shouldn't be reported */
     private val excludedPrefs = setOf(
         "analyticsOptIn", // Share feature usage: analytics are only reported if this is enabled :)
-        "useRustBackend", // Rust backend: is going to be the default in the future
         // Screens: don't have a value
         "generalScreen",
         "reviewingScreen",
@@ -42,7 +43,6 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         "accessibilityScreen",
         "customSyncServerScreen",
         "appBarButtonsScreen",
-        "advancedStatisticsScreen",
         "pref_screen_advanced",
         // Dev options: only aimed at devs
         "devOptionsKey",
@@ -74,14 +74,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         // potential personal data
         "syncAccount",
         "syncBaseUrl",
-        "language",
-        // Advanced statistics: will be removed when the new backend is the default
-        "stats_default_deck",
-        "advanced_statistics_link",
-        "advanced_statistics_enabled",
-        "advanced_forecast_stats_compute_n_days",
-        "advanced_forecast_stats_compute_precision",
-        "advanced_forecast_stats_mc_n_iterations"
+        "language"
     )
 
     @Test
@@ -95,7 +88,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
 
     @Test
     fun `All preferences are either included or excluded in the report list`() {
-        val keysNotInAList = PreferenceTestUtils.getAllPreferenceKeys(targetContext)
+        val keysNotInAList = allKeys
             .subtract(excludedPrefs)
             .subtract(preferencesWhoseChangesShouldBeReported)
 
@@ -104,6 +97,27 @@ class PreferencesAnalyticsTest : RobolectricTest() {
                 " `preferencesWhoseChangesShouldBeReported` or the `excludedPrefs` list" +
                 ": $keysNotInAList",
             keysNotInAList.isEmpty()
+        )
+    }
+
+    @Test
+    fun `preferencesWhoseChangesShouldBeReported list does not have extra keys`() {
+        val extraKeys = preferencesWhoseChangesShouldBeReported.subtract(allKeys)
+        assertThat(
+            "preferencesWhoseChangesShouldBeReported should not have" +
+                " elements that aren't in the preference keys" +
+                ": $extraKeys",
+            extraKeys.isEmpty()
+        )
+    }
+
+    @Test
+    fun `Excluded prefs list does not have extra keys`() {
+        val extraKeys = excludedPrefs.subtract(allKeys)
+        assertThat(
+            "excludedPrefs should not have elements that aren't in the preference keys" +
+                ": $extraKeys",
+            extraKeys.isEmpty()
         )
     }
 

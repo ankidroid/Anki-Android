@@ -16,8 +16,6 @@
 
 package com.ichi2.libanki
 
-import net.ankiweb.rsdroid.RustCleanup
-
 /** Helper class, libAnki uses a union
  *
  * https://github.com/david-allison-1/anki/blob/2296461136ada51437da076fda41cf735743c0e0/pylib/anki/collection.py#L417-L438
@@ -32,7 +30,5 @@ abstract class SortOrder {
     /** A custom SQL string placed after "order by" */
     class AfterSqlOrderBy(val customOrdering: String) : SortOrder()
 
-    @Deprecated("Not yet usable - unhandled in Java backend")
-    @RustCleanup("remove @Deprecated once Java backend is gone")
     class BuiltinSortKind(val value: String, val reverse: Boolean) : SortOrder()
 }

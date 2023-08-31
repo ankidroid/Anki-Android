@@ -40,6 +40,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 
+@Suppress("unused")
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val currentCard: Card
         get() = activity.currentCard!!
@@ -337,7 +338,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiGetDeckName(): String {
-        return Decks.basename(activity.col.decks.get(currentCard.did).getString("name"))
+        return Decks.basename(activity.getColUnsafe.decks.name(currentCard.did))
     }
 
     @JavascriptInterface
