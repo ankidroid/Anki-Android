@@ -88,6 +88,7 @@ class DeckSpinnerSelection(
         for (d in dropDownDecks) {
             val currentName = d.name
             deckNames.add(currentName)
+            mAllDeckIds.add(d.id)
         }
         val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
