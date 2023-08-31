@@ -110,10 +110,10 @@ class DeckSpinnerSelection(
     }
 
     /**
-     * @return All decks, except maybe default if it should be hidden.
+     * @return All decks.
      */
     fun computeDropDownDecks(includeFiltered: Boolean): List<DeckNameId> {
-        return collection.decks.allNamesAndIds(skipEmptyDefault = true, includeFiltered = includeFiltered)
+        return collection.decks.allNamesAndIds(includeFiltered = includeFiltered)
     }
 
     fun setSpinnerListener() {
