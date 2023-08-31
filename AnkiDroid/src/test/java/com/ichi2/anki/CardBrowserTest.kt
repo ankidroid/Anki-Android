@@ -39,7 +39,6 @@ import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.Assert.assertArrayEquals
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -251,11 +250,12 @@ class CardBrowserTest : RobolectricTest() {
     fun newlyCreatedDeckIsShownAsOptionInBrowser() = runTest {
         val deckOneId = addDeck("one")
         val browser = browserWithNoNewCards
-        assertEquals(1, browser.validDecksForChangeDeck.size)
-        assertEquals(deckOneId, browser.validDecksForChangeDeck.first().id)
+        assertEquals(2, browser.validDecksForChangeDeck.size) // 1 added + default deck
+        assertEquals(1, browser.validDecksForChangeDeck.count { it.id == deckOneId })
         val deckTwoId = addDeck("two")
-        assertEquals(2, browser.validDecksForChangeDeck.size)
-        assertArrayEquals(longArrayOf(deckOneId, deckTwoId), browser.validDecksForChangeDeck.map { it.id }.toLongArray())
+        assertEquals(3, browser.validDecksForChangeDeck.size) // 2 added + default deck
+        assertEquals(1, browser.validDecksForChangeDeck.count { it.id == deckOneId })
+        assertEquals(1, browser.validDecksForChangeDeck.count { it.id == deckTwoId })
     }
 
     @Test
