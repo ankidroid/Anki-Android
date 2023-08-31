@@ -760,7 +760,7 @@ abstract class AbstractFlashcardViewer :
 
     open fun undo(): Job {
         return launchCatchingTask {
-            undoAndShowPopup()
+            undoAndShowSnackbar(duration = Reviewer.ACTION_SNACKBAR_TIME)
         }
     }
 

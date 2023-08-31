@@ -24,8 +24,8 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.undo
 import com.ichi2.libanki.undoableOp
 
-/** If there's an action pending in the review queue, undo it and show a pop-up. */
-suspend fun FragmentActivity.undoAndShowPopup() {
+/** If there's an action pending in the review queue, undo it and show a snackbar */
+suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) {
     withProgress {
         val changes = undoableOp {
             if (!undoAvailable()) {
@@ -34,6 +34,6 @@ suspend fun FragmentActivity.undoAndShowPopup() {
                 undo()
             }
         }
-        showSnackbar(TR.undoActionUndone(changes.operation), Snackbar.LENGTH_SHORT)
+        showSnackbar(TR.undoActionUndone(changes.operation), duration)
     }
 }

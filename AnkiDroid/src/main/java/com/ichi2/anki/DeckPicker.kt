@@ -1349,7 +1349,7 @@ open class DeckPicker :
 
     private fun undo() {
         launchCatchingTask {
-            undoAndShowPopup()
+            undoAndShowSnackbar()
         }
     }
 
