@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Demandi</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Nur etikedi</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Novaj kartoj en hazarda ordo</string>
-    <string name="new_order_order_added">Novaj kartoj laŭ tempo de aldono</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Plej malnovaj unue</string>
     <string name="cram_deck_conf_order_random">Hazarde</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Uzi nunan kartaron</string>
     <string name="add_to_deck_decide_by_note_type">Elekti laŭ tipo de noto</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Miksi kartojn novajn kaj ripetatajn</string>
-    <string name="new_spread_new_after_review">Novaj kartoj post ripetataj</string>
-    <string name="new_spread_new_before_review">Novaj kartoj antaŭ ripetataj</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Kiam neniu tiparo difinita por kartoj</string>
     <string name="override_font_always" comment="Option to always override font">Ĉiam</string>

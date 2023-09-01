@@ -16,15 +16,15 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class LaTeXTest : RobolectricTest() {
-    class MockMedia(col: Collection) : Media(col, false) {
+class LaTeXTest : JvmTest() {
+    class MockMedia(col: Collection) : Media(col) {
         /**
          * @param fname A field name
          * @return Always true, given that we want to assume the field exists in test

@@ -194,7 +194,7 @@ class TagsDialog : AnalyticsDialogFragment {
 
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
         val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_add_white)
-        drawable?.setTint(ContextCompat.getColor(requireContext(), R.color.white))
+        drawable?.setTint(requireContext().getColor(R.color.white))
         toolbarAddItem.icon = drawable
 
         toolbarAddItem.setOnMenuItemClickListener {
@@ -210,7 +210,7 @@ class TagsDialog : AnalyticsDialogFragment {
         mToolbarSearchItem = toolbar.menu.findItem(R.id.tags_dialog_action_filter)
         val toolbarSearchItem: MenuItem? = mToolbarSearchItem
         mToolbarSearchView = toolbarSearchItem?.actionView as SearchView
-        val queryET = mToolbarSearchView!!.findViewById<EditText>(R.id.search_src_text)
+        val queryET = mToolbarSearchView!!.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
         mToolbarSearchView!!.queryHint = getString(R.string.filter_tags)
         mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

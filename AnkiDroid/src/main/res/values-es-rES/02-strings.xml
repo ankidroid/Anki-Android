@@ -125,9 +125,9 @@
     <string name="save">Guardar</string>
     <string name="close">Cerrar</string>
     <string name="select">Seleccionar</string>
-    <string name="reordering_cards">Reorganizando tarjetas&#8230;</string>
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Las tarjetas asignadas a nada se eliminarán. Si una nota no tiene cartas restantes, se perderán. ¿Seguro que deseas continuar?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Límite de tiempo alcanzado</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d tarjeta estudiada en %2$s</item>
@@ -145,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reprogramar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Vista Previa</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
-    <string name="error_insufficient_memory">La operación no pudo completarse debido a una memoria insuficiente en tu dispositivo</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renombrar</string>
-    <string name="default_conf_delete_error">El grupo de opciones por defecto no se puede eliminar</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">Se ha añadido %d tarjeta</item>
-        <item quantity="other">Se han añadido %d tarjetas</item>
-    </plurals>
     <string name="check_db">Comprobar base de datos</string>
     <string name="check_media">Comprobar archivos multimedia</string>
     <string name="empty_cards">Tarjetas vacías</string>
-    <string name="check_db_message">Comprobando base de datos&#8230;</string>
     <string name="empty_card_warning">Esta tarjeta está vacía. Utiliza la opción \"Tarjetas vacías\" del menú en la pantalla de la lista de mazos.</string>
     <string name="unknown_type_field_warning">Escribir respuesta: campo %s desconocido</string>
     <string name="delete_deck">Eliminando mazo&#8230;</string>
@@ -169,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Este no es un archivo de paquete Anki válido</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
-    <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
-    <string name="import_log_failed_validate">Falló la validación apkg</string>
-    <string name="import_log_insufficient_space_error">No hay espacio suficiente para importar el paquete.\nNecesitado - %1$s\nDisponible - %2$s\n\n¿Tienes problemas? Intenta liberar espacio en tu teléfono si es posible. Alternativamente, la sincronización requiere menos espacio que la importación. Puedes tratar de importar el paquete con un dispositivo con más espacio (por ejemplo Anki Desktop) y luego sincronizarlo a este dispositivo.</string>
-    <string name="import_log_file_cache_cleared">Error al importar el archivo, probablemente se haya borrado la cache durante el procesamiento.\nPor favor, inténtalo de nuevo</string>
-    <string name="import_succeeded_but_check_database">Importación de datos exitosa pero la limpieza posterior a la importación falló. Ejecuta la base de datos de verificación más tarde. Causa raíz: %s</string>
-    <string name="import_error_corrupt_zip">El archivo apkg está dañado. Por favor, borre y vuelva a descargarlo.\n\nCausa original: %s</string>
     <string name="import_error_handle_exception">Error al importar el archivo\n\n%s</string>
     <string name="import_error_not_apkg_extension">El nombre de archivo “%s” no tiene extensión .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Los reemplazos de la base de datos de Anki (.anki2) aún no están soportados. Consulta el manual para obtener instrucciones de reemplazo.</string>
@@ -183,8 +169,6 @@
     <string name="import_error_copy_to_cache">Error al almacenar el archivo en caché (posiblemente fuera de espacio de almacenamiento)</string>
     <string name="import_error_multiple_colpkg">Se seleccionaron varios archivos colpkg.</string>
     <string name="import_error_colpkg_apkg">Los archivos apkg y colpkg fueron seleccionados a la vez.</string>
-    <string name="import_stats_error">Se han producido algunos errores al importar los siguientes archivos:\n%s</string>
-    <string name="import_replacing">Reemplazando colección&#8230;</string>
     <string name="import_interrupted">Importación interrumpida</string>
     <string name="export_include_schedule">Incluir programación</string>
     <string name="export_include_media">Incluir multimedia</string>
@@ -198,12 +182,11 @@
         <item quantity="one">¿Exportar la nota seleccionada como archivo apkg?</item>
         <item quantity="other">¿Exportar %d notas seleccionadas como archivo apkg?</item>
     </plurals>
-    <string name="export_in_progress">Exportando archivo de paquete Anki&#8230;</string>
-    <string name="export_success_title">Colección exportada exitosamente</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No hay aplicaciones disponibles para manejar apkg. Guardando...</string>
     <string name="export_save_apkg_successful">Paquete Anki guardado correctamente</string>
     <string name="export_save_apkg_unsuccessful">Error al guardar el paquete Anki</string>
-    <string name="export_success_message">Puedes elegir un lugar donde guardar tu documento o compartirlo con otra aplicación.</string>
     <string name="export_share_title">Enviar paquete Anki usando</string>
     <string name="export_email_subject">Tarjetas AnkiDroid exportadas: %s</string>
     <string name="export_email_text"><![CDATA[        ¡Hola!
@@ -213,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Elige donde guardar el documento</string>
-    <string name="export_select_share_app">Selecciona una aplicación para compartir</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opciones</string>
     <string name="menu__deck_options">Opciones de mazo</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opciones de estudio</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">Esta es un mazo especial para estudiar aparte del programa habitual. Las cartas se devolverán automáticamente a sus mazos originales después de que las revises. Borrar este mazo de la lista de mazos devolverá todas las cartas restantes a su mazo original.</string>
     <string name="steps_error">Los pasos deben ser un número mayor que 0</string>
     <string name="steps_min_error">Se requiere al menos un paso</string>
-    <string name="sched_end">(fin)</string>
-    <string name="sched_unbury_action">Para verlas ahora, pulsa \"Desenterrar\" en el menú</string>
-    <string name="sched_has_buried">Algunas tarjetas asociadas o enterradas se pospusieron hasta mañana</string>
     <string name="tag_editor_add_feedback">Tocar \"%2$s\" para confirmar la adición de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existente \"%1$s\" seleccionada</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s segundo</item>
-        <item quantity="other">%s segundos</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuto</item>
-        <item quantity="other">%s minutos</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s hora</item>
-        <item quantity="other">%s horas</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s día</item>
-        <item quantity="other">%s días</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mes</item>
-        <item quantity="other">%s meses</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s año</item>
-        <item quantity="other">%s años</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s segundos</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Ese mazo ya existe.</string>
     <string name="decks_rename_filtered_nosubdecks">Un mazo filtrado no puede tener submazos.</string>
-    <string name="filtered_deck_name">Mazo filtrado</string>
     <string name="reminder_title">¡No te olvides de estudiar hoy!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d tarjeta para revisar en %1$s</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error al compartir el archivo apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Este archivo requiere una versión más reciente de Anki.</string>
     <string name="activity_start_failed">El sistema no tiene una aplicación instalada que pueda realizar esta acción.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Las imágenes de la cámara pueden ser grandes. Puede que desee comprimir y cambiar el tamaño de las imágenes en el directorio de medios]]></string>
     <string name="no_browser_notification">No hay ningún browser, por favor visite la página web por PC o móvil: </string>
     <string name="web_page_error">Error al cargar la página: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Enlaces de páginas externas no son soportados en la tarjeta.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Tarjetas recuperadas</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Fondo</string>
     <string name="choose_an_image">Elige una imagen</string>
@@ -315,7 +260,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Error al cargar el mazo ‘%s’</string>
     <string name="search_decks">Buscar mazos</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostrar el progreso de la migración</string>
     <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid confía en la WebView del sistema, que no está disponible. Esto puede suceder si el sistema está instalando actualizaciones. Por favor, inténtalo de nuevo en unos minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -364,6 +309,7 @@
     <string name="deck_download_progress_message">Puedes usar otras aplicaciones mientras se ejecuta la descarga</string>
     <string name="check_network">Por favor revisa tu conexión de red</string>
     <string name="search_using_deck_name">Buscar usando nombre de mazo</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Inicio</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -402,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">Sincronizar desde AnkiWeb</string>
     <string name="already_logged_in">Ya has iniciado sesión</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">El mazo ya existe</string>
     <string name="deck_created">Mazo creado</string>
     <string name="deck_renamed">Mazo renombrado</string>
     <!-- Deck Deletion -->
@@ -419,5 +364,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toca para iniciar la migración de almacenamiento</string>
     <string name="media_sync_required_title">Sincronización multimedia requerida</string>
     <string name="media_sync_unavailable_message">La sincronización multimedia está desactivada en la configuración. Por favor, antes de continuar, sincroniza y elabora una copia de seguridad de cualquier contenido que no haya sido sincronizado todavía</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

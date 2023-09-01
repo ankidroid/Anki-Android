@@ -65,7 +65,6 @@
     <string name="card_browser_mark_card">Пазначыць запісы</string>
     <string name="card_browser_unmark_card">Зняць пазнакі з запісаў</string>
     <string name="delete_card_title">Выдаліць запіс?</string>
-    <string name="changed_deck_message">Перамешчана ў %s</string>
     <string name="card_browser_show_marked">Фільтраваць пазначаныя</string>
     <string name="card_browser_show_suspended">Фільтраваць прыпыненыя</string>
     <string name="card_browser_search_by_tag">Фільтраваць па метках</string>
@@ -79,8 +78,6 @@
     <string name="card_browser_list_my_searches_remove_content">Выдаліць \"%1$s\"?</string>
     <string name="card_browser_change_display_order">Змяніць парадак адлюстравання</string>
     <string name="card_browser_change_display_order_title">Змяніць парадак адлюстравання</string>
-    <string name="card_browser_change_display_order_reverse">Выберыце поле двойчы, каб сартаваць у адваротным парадку</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Будзе паўторана</string>
     <string name="card_details_tags">Меткі</string>
     <string-array name="card_browser_order_labels">
         <item>Без сартавання (хутка)</item>
@@ -122,27 +119,4 @@
         <item quantity="other">Выдалена %d карткі</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Дадана</string>
-    <string name="card_info_first_review">Першае паўтарэнне</string>
-    <string name="card_info_latest_review">Апошняе паўтарэнне</string>
-    <string name="card_info_interval">Інтэрвал</string>
-    <string name="card_info_ease">Лёгкасць</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Паўтарэнняў</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Памылак</string>
-    <string name="card_info_average_time">Сярэдні час</string>
-    <string name="card_info_total_time">Агульны час</string>
-    <string name="card_info_card_type">Тып карткі</string>
-    <string name="card_info_note_type">Тып запісу</string>
-    <string name="card_info_deck_name">Назва калоды</string>
-    <string name="card_info_card_id">Ідэнт. карткі</string>
-    <string name="card_info_note_id">Ідэнт. запісу</string>
-    <string name="card_info_revlog_time">Час</string>
-    <string name="card_info_revlog_date">Дата</string>
-    <string name="card_info_revlog_rating">Рэйтынг</string>
-    <string name="card_info_revlog_type">Тып</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Вучыцца</string>
-    <string name="card_info_revlog_review">Паўтараецца</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Паўторна завучаныя</string>
-    <string name="card_info_revlog_filtered">Фільтраваныя</string>
-    <string name="card_info_ease_not_applicable">Н/Д</string>
 </resources>

@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Kontrollera databas</string>
     <string name="check_db_warning">Det här kan ta lång tid</string>
-    <string name="check_db_acknowledge">Databas kontrollerad</string>
-    <string name="check_db_acknowledge_shrunk">Databas kontrollerad och optimerad.\nKrympt med %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Radera kortlek</string>
-    <string name="delete_deck_default_deck">Standard kortleken kan inte bli borttagen.</string>
     <string name="delete_deck_title">Radera kortlek</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Ta bort alla kort i %1$s? Den innehåller %2$d kort.</item>
-        <item quantity="other">Ta bort alla kort i %1$s? Den innehåller %2$d kort.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Är du säker du vill skicka alla kort i %s tillbaka till deras ursprungliga kortlekar?</string>
     <string name="no_tts_available_message">Det finns inget språk för text-till-tal</string>
     <string name="initializing_tts">Initierar TTS&#8230;</string>
     <string name="tts_no_tts">Tala inte</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Välj x kort slumpmässigt från kortleken:</string>
     <string name="custom_study_preview">Förhandsgranska nya kort som lagts till de senaste x dagarna:</string>
     <string name="custom_study_rebuild_deck_corrupt">Kunde inte bygga om anpassad studiekortlek</string>
-    <string name="importing_collection">Importerar samling.\nVar god dröj&#8230;</string>
-    <string name="import_media_count">Importerar mediafiler %1$d%%\nVar god dröj&#8230;</string>
-    <string name="import_progress">• Importerar noter: %1$d%%\n• Importerar kort: %2$d%%\n• Efterbearbetning: %3$d%%</string>
-    <string name="import_update_details">Uppdaterade %1$d av %2$d existerande noter.</string>
-    <string name="import_update_ignored">Vissa uppdateringar ignorerades eftersom not-typen har ändrats</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Inget utrymme</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Inaktivera</string>
     <string name="dialog_positive_overwrite">Skriv över</string>
-    <string name="dialog_positive_remove">Ta bort</string>
     <string name="dialog_positive_repair">Reparera</string>
     <string name="dialog_positive_replace">Ersätt</string>
-    <string name="dialog_positive_restore">Återställ</string>
-    <string name="dialog_positive_set">Ange</string>
     <string name="dialog_collection_path_not_dir">Den valda sökvägen är ogiltig</string>
     <!-- Media checking -->
     <string name="check_media_title">Kontrollera media?</string>
@@ -165,8 +145,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Kö</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Hittar tomma kort&#8230;</string>
-    <string name="confirm_cancel">Vill du avbryta?</string>
-    <string name="empty_cards_none">Inga tomma kort</string>
     <string name="empty_cards_count">Kort att ta bort: %d</string>
     <string name="empty_cards_deleted">Kort borttagna: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +160,11 @@
     <string name="integrity_check_continue_anyway">Fortsätt ändå</string>
     <string name="integrity_check_insufficient_space">Databaskontrollen använder en stor mängd tillfällig lagring.\n\nDet rekommenderas starkt att du har minst %s ledigt utrymme på din enhet innan du fortsätter.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nDu har för närvarande %s gratis.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d kort med felaktiga hemkortlekar återställdes. Se manualen för vidare information.</string>
     <string name="video_creation_error">Kunde inte spela upp video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Kunde inte ändra kortlek</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fel vid avkodning av data från kortet</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Misslyckades med att bearbeta kortleksalternativ: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Databas låst</string>
     <string name="database_locked_summary">AnkiDroid-databasen används av en annan applikation. Stäng den andra applikationen och öppna sedan AnkiDroid igen.</string>

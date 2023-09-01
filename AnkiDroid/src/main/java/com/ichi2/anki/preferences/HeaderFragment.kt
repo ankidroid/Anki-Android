@@ -19,7 +19,6 @@ import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.ichi2.anki.R
-import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 
 class HeaderFragment : PreferenceFragmentCompat() {
@@ -34,12 +33,6 @@ class HeaderFragment : PreferenceFragmentCompat() {
 
         if (DevOptionsFragment.isEnabled(requireContext())) {
             setDevOptionsVisibility(true)
-        }
-
-        // Set icons colors
-        for (index in 0 until preferenceScreen.preferenceCount) {
-            val preference = preferenceScreen.getPreference(index)
-            preference.icon?.setTint(Themes.getColorFromAttr(requireContext(), R.attr.iconColor))
         }
     }
 

@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Balíčky</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Prohlížeč karet</string>
@@ -88,12 +88,6 @@
     <string name="no_cards_placeholder_title">Kolekce je prázdná</string>
     <string name="no_cards_placeholder_description">Začněte přidávat karty\npoužitím ikony +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Dnes studována %1$d karta za %2$s</item>
-        <item quantity="few">Dnes studovány %1$d karty za %2$s</item>
-        <item quantity="many">Dnes studováno %1$d karty za %2$s</item>
-        <item quantity="other">Dnes studováno %1$d karet za %2$s</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Napište odpověď</string>
     <string name="show_answer">Zobrazit odpověď</string>
@@ -102,11 +96,8 @@
     <string name="ease_button_hard">Těžké</string>
     <string name="ease_button_good">Dobré</string>
     <string name="ease_button_easy">Snadné</string>
-    <string name="studyoptions_congrats_undo">Zpět %s</string>
     <string name="menu_import">Import</string>
     <string name="undo">Vrátit zpět</string>
-    <string name="undo_action_review">poslední opakování</string>
-    <string name="undo_action_change_deck_multi">změnit balíčky</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Zrušit čáru</string>
     <string name="move_all_to_deck">Přesunout vše do balíčku</string>
     <string name="unbury">Zrušit přeskočení</string>
@@ -180,18 +171,14 @@
     <string name="studyoptions_limit_reached">Denní limit studia dosažen</string>
     <string name="studyoptions_empty_schedule">Žádné další karty ke studiu</string>
     <string name="studyoptions_congrats_finished">Blahopřejeme! Prozatím máte hotovo</string>
-    <string name="studyoptions_congrats_more_rev">Bylo dosaženo limitu dnešního opakování, ale stále existují karty pro přezkoušení. Pro optimální zapamatování zvažte zvýšení denního limitu v možnostech.</string>
-    <string name="studyoptions_congrats_more_new">Dnešní limit byl dosažen. K dispozici je více nových karet, v možnostech můžete zvýšit limit, ale to zvýší vaše krátkodobé vytížení.</string>
-    <string name="studyoptions_congrats_custom">Jestliže chcete studovat mimo normální plán, klepněte na tlačítko „Vlastní studium“.</string>
     <string name="studyoptions_no_cards_due">Žádné karty ještě nejsou ke zkoušení</string>
     <string name="sd_card_not_mounted">Zařízení úložiště není připojeno</string>
-    <string name="empty_cloze_warning">Upravte tuto poznámku a přidejte nějaké doplňovačky. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizovat</string>
     <string name="button_upgrade" comment="Text of the sync button">Přesunout do vyhrazeného úložiště</string>
-    <string name="cancel_sync_confirm">Přejete si přerušit synchronizaci?</string>
-    <string name="continue_sync">Pokračovat v synchronizaci</string>
-    <string name="sync_cancelled">Synchronizace přrušena</string>
-    <string name="sync_cancel_message">Přerušuje se&#8230;\nMůže to chvíli trvat.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Přejete si přerušit synchronizaci?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Pokračovat v synchronizaci</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronizace přrušena</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Přerušuje se&#8230;\nMůže to chvíli trvat.</string>
     <string name="export">Export</string>
     <string name="export_collection">Export kolekce</string>
     <string name="export_deck">Export balíčku</string>
@@ -224,7 +211,6 @@
     <string name="template_for_current_card_deleted">Typ karty současné karty byl odstraněn.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Vzhled prohlížeče</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Informace o kartě</string>
     <!-- Permissions -->
@@ -233,14 +219,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Prohlížeč karet</string>
     <string name="context_menu_anki_card_label">Anki karta</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s má problém:<br/>%2$s</string>
-    <string name="more_information">Více informací</string>
-    <string name="no_field">Nalezeno „{{%1$s}}“, ale neexistuje žádné pole nazvané „%1$s“.</string>
-    <string name="closed_tag_not_open">Nalezeno „{{/%1$s}}“, ale chybí „{{#%1$s}}“ nebo “{{^%1$s}}“.</string>
-    <string name="missing_closing_bracket">Chybí „}}“ v „%s“.</string>
-    <string name="open_tag_not_closed">Chybí „{{%s}}“.</string>
-    <string name="wrong_tag_closed">Nalezeno „{{/%1$s}}“, ale očekává se „{{/%2$s}}“</string>
-    <string name="filter_error">Chyba filtru %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Kolekce nelze zkombinovat.\nKterou kolekci chcete ponechat?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -255,15 +233,16 @@
         <item quantity="many">%1$d karty (0 ke zkoušení)</item>
         <item quantity="other">%1$d karet (0 ke zkoušení)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopie</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nelze zapisovat do souboru %s nebo jej vytvořit</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Více chyb, poslední: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Více po sobě jdoucích chyb bez postupu, poslední: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_data">Data se přesouvají</string>
-    <string name="migration__calculating_transfer_size">Vypočítává se velikost přesunu&#8230;</string>
-    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Přesunuto %1$s z %2$s</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Přesouvá se databáze</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Kopíruje se&#8230;</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Presouvají se multimédia</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Vypočítává se velikost přesunu&#8230;</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Přesunuto %1$s z %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Přesun dat byl úspěšný</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Vaše data byla úspěšně přesunuta.
         AnkiDroid je opět plně funkční a můžete synchronizovat.
@@ -272,18 +251,33 @@
         Ujistěte se prosím, že jsou vaše data v bezpečí, a to pravidelným zálohováním nebo exportováním záloh.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Přesun dat se nezdařil</string>
-    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Přesun úložiště je pozastaven po selhání s chybou: %1$s
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Přesun databázových souborů selhal s chybou: %1$s.
+        <br><br>
+        Změny byly vráceny.
         <br><br>
         Prosím zkuste spustit přesun dat znovu.
-        Abyste vyřešili tento problém, může být třeba uvolnit nějaké misto na disku nebo znovu připojit chybějící média.
+        Abyste vyřešili tento problém, může být třeba uvolnit nějaké misto na disku 
+        nebo znovu připojit odnímatelné úložiště, na kterém je vaše kolekce.
         <br><br>
         <a href="%2$s">Dozvědět se více a získat pomoc</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Přesun multimediálních souborů je pozastaven po selhání s chybou: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        Změny <i>nebyly</i> vráceny.
+        Ačkoliv by žadná data neměla být ztracena,
+        multimediální soubory mohou být rozděleny mezi starou a novou složku.
+        <br><br>
+        Prosím zkuste spustit přesun dat znovu.
+        Abyste vyřešili tento problém, může být třeba uvolnit nějaké misto na disku 
+        nebo znovu připojit odnímatelné úložiště, na kterém je vaše kolekce.
+        <br><br>
+        <a href="%2$s">Dozvědět se více a získat pomoc</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Přesun úložiště je pozastaven po selhání s chybou: %1$s.
+        <br><br>
+        <a href="%2$s">Zjistit více a získat pomoc</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Pokračovat v přesunu dat</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Nepřístupná kolekce</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Po odinstalování AnkiDroidu nelze otevřít vaši sbírku z důvodu změny zásad obchodu Play\n\nVaše data jsou v bezpečí a mohou být obnovena. Jsou umístěna v\n%s\n\nVyberte možnost níže, pokus je chcete obnovit:</string>
     <string name="restore_data_from_ankiweb">Obnovit z AnkiWeb (doporučeno)</string>

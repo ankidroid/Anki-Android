@@ -47,7 +47,6 @@
     <string name="model_browser_delete">نوٹ کی قسم کو حذف کریں۔</string>
     <string name="model_browser_rename" comment="Rename a note type">نام بدلیں</string>
     <string name="model_browser_template">کارڈز میں ترمیم کریں</string>
-    <string name="model_browser_add">نوٹ کی قسم شامل کریں۔</string>
     <!--Rename-->
     <string name="rename_model">نوٹ کی قسم کا نام تبدیل کریں۔</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">شامل کرتے وقت آخری ان پٹ یاد رکھیں</string>
     <string name="model_field_editor_changing">فیلڈز کو اپ ڈیٹ کرنا</string>
     <string name="model_field_editor_sort_field">اس فیلڈ کے مطابق ترتیب دیں۔</string>
-    <string name="model_clone_suffix">کاپی</string>
     <!--Warnings-->
     <string name="model_delete_warning">کیا آپ واقعی اس نوٹ کی قسم کو حذف کرنا چاہتے ہیں؟</string>
     <string name="field_delete_warning">کیا آپ واقعی اس فیلڈ کو حذف کرنا چاہتے ہیں؟</string>

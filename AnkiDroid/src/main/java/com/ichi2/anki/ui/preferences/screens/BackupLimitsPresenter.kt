@@ -34,7 +34,6 @@ import com.ichi2.preferences.NumberRangePreferenceCompat.ShouldShowDialog
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import net.ankiweb.rsdroid.BackendFactory
 
 sealed interface State {
     object Fetching : State
@@ -45,6 +44,7 @@ sealed interface State {
     }
 }
 
+@Suppress("unused")
 class NewBackendBackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider {
     override val collectionDirectory = CollectionManager.getCollectionDirectory()
 
@@ -95,8 +95,6 @@ class NewBackendBackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider
 class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : DefaultLifecycleObserver {
     private val viewModel: NewBackendBackupLimitsViewModel by fragment.viewModels()
 
-    private lateinit var maxNumberOfBackupsPreference: IncrementerNumberRangePreferenceCompat
-
     private lateinit var backupsHelpPreference: HtmlHelpPreference
     private lateinit var minutesBetweenAutomaticBackupsPreference: IncrementerNumberRangePreferenceCompat
     private lateinit var dailyBackupsToKeepPreference: IncrementerNumberRangePreferenceCompat
@@ -105,8 +103,6 @@ class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : De
 
     override fun onCreate(owner: LifecycleOwner) {
         fragment.addPreferencesFromResource(R.xml.preferences_backup_limits) // Hierarchies get merged
-
-        maxNumberOfBackupsPreference = fragment.requirePreference(R.string.pref_backup_max_key)
 
         backupsHelpPreference = fragment.requirePreference(R.string.pref_backups_help_key)
         minutesBetweenAutomaticBackupsPreference = fragment.requirePreference(R.string.pref_minutes_between_automatic_backups_key)
@@ -169,19 +165,7 @@ class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : De
     override fun onResume(owner: LifecycleOwner) { refresh() }
 
     fun refresh() {
-        val usingNewBackend = !BackendFactory.defaultLegacySchema
-
-        maxNumberOfBackupsPreference.isVisible = !usingNewBackend
-
-        backupsHelpPreference.isVisible = usingNewBackend
-        minutesBetweenAutomaticBackupsPreference.isVisible = usingNewBackend
-        dailyBackupsToKeepPreference.isVisible = usingNewBackend
-        weeklyBackupsToKeepPreference.isVisible = usingNewBackend
-        monthlyBackupsToKeepPreference.isVisible = usingNewBackend
-
-        if (usingNewBackend) {
-            viewModel.launchFetchingOfBackupLimits()
-        }
+        viewModel.launchFetchingOfBackupLimits()
     }
 
     fun observeLifecycle() {

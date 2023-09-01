@@ -18,6 +18,7 @@ import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NO
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.AutomaticAnswer
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.anki.reviewer.AutomaticAnswerSettings
@@ -45,7 +46,6 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
     class NonAbstractFlashcardViewer : AbstractFlashcardViewer() {
         var answered: Int? = null
         private var mLastTime = 0
-        override fun setTitle() {}
         override fun performReload() {
             // intentionally blank
         }
@@ -59,7 +59,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         override val elapsedRealTime: Long
             get() {
-                mLastTime += AnkiDroidApp.getSharedPrefs(baseContext).getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
+                mLastTime += baseContext.sharedPrefs()
+                    .getInt(DOUBLE_TAP_TIME_INTERVAL, DEFAULT_DOUBLE_TAP_TIME_INTERVAL)
                 return mLastTime.toLong()
             }
         val hintLocale: String?
@@ -148,7 +149,8 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
         assertThat(viewer.correctTypedAnswer, equalTo("David"))
         assertThat(viewer.cardContent, not(containsString("World")))
-        assertThat(viewer.cardContent, containsString("David"))
+        // the saving will have caused the screen to switch back to question side
+        assertThat(viewer.cardContent, containsString("Hello"))
     }
 
     @Test
@@ -179,7 +181,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         val normal = StdModels.BASIC_TYPING_MODEL.add(col, "b")
         val typedField = 1 // BACK
 
-        LanguageHintService.setLanguageHintForField(col.models, withLanguage, typedField, Locale("ja"))
+        LanguageHintService.setLanguageHintForField(col.notetypes, withLanguage, typedField, Locale("ja"))
 
         addNoteUsingModelName(withLanguage.getString("name"), "ichi", "ni")
         addNoteUsingModelName(normal.getString("name"), "one", "two")

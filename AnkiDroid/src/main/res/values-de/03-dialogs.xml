@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Datenbank überprüfen?</string>
     <string name="check_db_warning">Dies kann lange dauern</string>
-    <string name="check_db_acknowledge">Datenbank überprüft</string>
-    <string name="check_db_acknowledge_shrunk">Datenbank überprüft und optimiert.\nGröße um %d MB reduziert.</string>
     <string name="contextmenu_deckpicker_delete_deck">Stapel löschen</string>
-    <string name="delete_deck_default_deck">Der Standardstapel kann nicht gelöscht werden</string>
     <string name="delete_deck_title">Stapel löschen?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Alle Karten in %1$s löschen? Er enthält %2$d Karte.</item>
-        <item quantity="other">Alle Karten in %1$s löschen? Er enthält %2$d Karten.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Alle Karten aus %s wieder in ihren ursprünglichen Stapel einsortieren?</string>
     <string name="no_tts_available_message">Keine Vorlesesprache verfügbar</string>
     <string name="initializing_tts">Initialisiere Vorlesen&#8230;</string>
     <string name="tts_no_tts">Nicht vorlesen</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">x Karten zufällig aus dem Stapel wählen:</string>
     <string name="custom_study_preview">Vorschau auf neue Karten, die in den letzten x Tagen hinzugefügt wurden:</string>
     <string name="custom_study_rebuild_deck_corrupt">Personalisierter Stapel konnte nicht neu aufgebaut werden</string>
-    <string name="importing_collection">Sammlung wird importiert &#8230;</string>
-    <string name="import_media_count">Mediendateien %1$d%% werden importiert &#8230;</string>
-    <string name="import_progress">• Importiere Notizen: %1$d%%\n• Importiere Karten: %2$d%%\n• Nachbearbeitung: %3$d%%</string>
-    <string name="import_update_details">%1$d von %2$d bestehenden Notizen aktualisiert.</string>
-    <string name="import_update_ignored">Manche Aktualisierungen wurden ignoriert, da der Notiztyp verändert wurde</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Karten importiert: %2$d</item>
-        <item quantity="other">Dateien importiert: %1$d\nKarten insgesamt importiert: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Speicher voll</string>
     <string name="storage_almost_full_title">Speicher fast voll</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Kein Speicherplatz</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Deaktivieren</string>
     <string name="dialog_positive_overwrite">Überschreiben</string>
-    <string name="dialog_positive_remove">Entfernen</string>
     <string name="dialog_positive_repair">Reparieren</string>
     <string name="dialog_positive_replace">Ersetzen</string>
-    <string name="dialog_positive_restore">Wiederherstellen</string>
-    <string name="dialog_positive_set">Anwenden</string>
     <string name="dialog_collection_path_not_dir">Der angegebene Pfad ist kein gültiges Verzeichnis</string>
     <!-- Media checking -->
     <string name="check_media_title">Medien überprüfen?</string>
@@ -165,8 +145,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Fällige</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Leere Karten werden gesucht &#8230;</string>
-    <string name="confirm_cancel">Möchten Sie abbrechen?</string>
-    <string name="empty_cards_none">Keine leere Karten</string>
     <string name="empty_cards_count">%d zu löschende Karten</string>
     <string name="empty_cards_deleted">%d Karten gelöscht</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +160,11 @@
     <string name="integrity_check_continue_anyway">Trotzdem fortfahren</string>
     <string name="integrity_check_insufficient_space">»Datenbank überprüfen« verwendet eine große Menge an temporärem Speicher.\n\nMindestens %s freien Speicherplatzes auf Ihrem Gerät werden daher dringend empfohlen, bevor Sie fortfahren.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAktuell sind %s frei.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d Karten mir falschen Herkunftsstapeln wurden wiederhergestellt. Bitte schauen Sie ins Handbuch für weitere Informationen.</string>
     <string name="video_creation_error">Video konnte nicht abgespielt werden</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Stapel konnte nicht geändert werden</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fehler beim Decodieren der Daten von Karte</string>
-    <string name="undo_succeeded">\"%s\" rückgängig gemacht</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Stapeloptionen konnten nicht verarbeitet werden: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Datenbank gesperrt</string>
     <string name="database_locked_summary">Die AnkiDroid-Datenbank wird von einer anderen Anwendung verwendet. Bitte schließen Sie die andere Anwendung und öffnen Sie AnkiDroid erneut.</string>

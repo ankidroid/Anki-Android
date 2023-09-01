@@ -46,18 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Zkontrolovat databázi?</string>
     <string name="check_db_warning">Toto může trvat dlouhou dobu</string>
-    <string name="check_db_acknowledge">Databáze zkontrolována</string>
-    <string name="check_db_acknowledge_shrunk">Databáze zkontrolována a optimalizována.\nZmenšena o %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Odstranit balíček</string>
-    <string name="delete_deck_default_deck">Nelze odstranit výchozí balíček</string>
     <string name="delete_deck_title">Odstranit balíček?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Odstranit všechny karty v %1$s? Obsahuje %2$d kartu.</item>
-        <item quantity="few">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
-        <item quantity="many">Odstranit všechny karty v %1$s? Obsahuje %2$d karty.</item>
-        <item quantity="other">Odstranit všechny karty v %1$s? Obsahuje %2$d karet.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Poslat všechny karty z %s zpět do svých původních balíčků?</string>
     <string name="no_tts_available_message">Není dostupný žádný jazyk převodu textu na řeč</string>
     <string name="initializing_tts">Spouští se TTS&#8230;</string>
     <string name="tts_no_tts">Nemluv</string>
@@ -119,17 +109,6 @@
     <string name="custom_study_random">Vybrat náhodně x karet z balíčku:</string>
     <string name="custom_study_preview">Zkoušení nových karet přidaných v posledních x dnech:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nelze znovu sestavit balíček vlastního studia</string>
-    <string name="importing_collection">Importuje se kolekce&#8230;</string>
-    <string name="import_media_count">Importují se multimediální soubory %1$d%%&#8230;</string>
-    <string name="import_progress">• Importování poznámek: %1$d%%\n• Importování karet: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">Aktualizováno %1$d z %2$d existujících poznámek.</string>
-    <string name="import_update_ignored">Některé aktualizace byly ignorovány, protože se změnil typ poznámky</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Importováno karet: %2$d</item>
-        <item quantity="few">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
-        <item quantity="many">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
-        <item quantity="other">Importováno souborů: %1$d\nImportováno karet celkem: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Úložiště je plné</string>
     <string name="storage_almost_full_title">Úložiště téměř plné</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Není místo</string>
@@ -149,11 +128,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Zakázat</string>
     <string name="dialog_positive_overwrite">Přepsat</string>
-    <string name="dialog_positive_remove">Odstranit</string>
     <string name="dialog_positive_repair">Opravit</string>
     <string name="dialog_positive_replace">Nahradit</string>
-    <string name="dialog_positive_restore">Obnovit</string>
-    <string name="dialog_positive_set">Nastavit</string>
     <string name="dialog_collection_path_not_dir">Zadaná cesta není platný adresář</string>
     <!-- Media checking -->
     <string name="check_media_title">Zkontrolovat multimédia?</string>
@@ -181,8 +157,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Ke zkoušení</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Hledají se prázdné karty&#8230;</string>
-    <string name="confirm_cancel">Chcete to zrušit?</string>
-    <string name="empty_cards_none">Žádné prázdné karty</string>
     <string name="empty_cards_count">Karet k odstranění: %d</string>
     <string name="empty_cards_deleted">Odstraněno karet: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -198,15 +172,11 @@
     <string name="integrity_check_continue_anyway">Přesto pokračovat</string>
     <string name="integrity_check_insufficient_space">Kontrola databáze používá velké množství dočasného úložiště.\n\nDůrazně se doporučuje, abyste předtím, než budete pokračovat, měli v zařízení alespoň %s volného místa.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálně máte %s volného místa.</string>
-    <string name="integrity_check_fixed_no_home_deck">Bylo obnoveno %d karet s nesprávnými domovskými balíčky. Více informací naleznete v příručce.</string>
     <string name="video_creation_error">Nelze přehrát video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Nelze změnit balíček</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Chyba při dekódování dat z karty</string>
-    <string name="undo_succeeded">Vráceno zpět „%s“</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Nepodařilo se zpracovat možnosti balíčku: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Databáze uzamčena</string>
     <string name="database_locked_summary">Databázi AnkiDroid používá jiná aplikace. Zavřete prosím druhou aplikaci a znovu otevřete AnkiDroid.</string>

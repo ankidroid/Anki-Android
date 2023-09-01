@@ -38,7 +38,7 @@ import com.ichi2.anki.dialogs.LocaleSelectionDialog.LocaleListAdapter.TextViewHo
 import com.ichi2.ui.RecyclerSingleTouchAdapter
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TypedFilter
-import java.util.*
+import java.util.Locale
 
 /** Locale selection dialog. Note: this must be dismissed onDestroy if not called from an activity implementing LocaleSelectionDialogHandler  */
 class LocaleSelectionDialog : AnalyticsDialogFragment() {
@@ -74,6 +74,7 @@ class LocaleSelectionDialog : AnalyticsDialogFragment() {
         inflateMenu(tagsDialogView, adapter)
 
         // Only show a negative button, use the RecyclerView for positive actions
+        // when changing to AlertDialog make sure the keyboard is being shown when clicking search in the dialog toolbar
         val dialog = MaterialDialog(activity).show {
             customView(view = tagsDialogView, noVerticalPadding = true)
             negativeButton(text = getString(R.string.dialog_cancel)) {

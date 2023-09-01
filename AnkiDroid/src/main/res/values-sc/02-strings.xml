@@ -61,8 +61,8 @@
     <string name="updated_version">Atualizadu a sa versione %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Sarva sa lavagna</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Abìlita sa lavagna</string>
     <string name="disable_whiteboard">Disabìlita sa lavagna</string>
     <string name="show_whiteboard">Ammustra sa lavagna</string>
@@ -127,9 +127,9 @@
     <string name="save">Sarva</string>
     <string name="close">Serra</string>
     <string name="select">Seletziona</string>
-    <string name="reordering_cards">Torrende a ordinare sas cartas&#8230;</string>
     <string name="field_remapping">%1$s (dae “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Sas cartas chene connessiones s\'ant a iscantzellare. Si una nota non tenet prus cartas s\'at a pèrdere. Ses seguru de chèrrere sighire?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Lìmite de tempus barigadu</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d carta istudiada in %2$s</item>
@@ -147,17 +147,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Torra a pranificare</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Antiprima</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
-    <string name="error_insufficient_memory">S\'operatzione no est possìbile pro neghe de sa memòria chi non bastat in su dispositivu tuo</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Muda de nùmene</string>
-    <string name="default_conf_delete_error">Su grupu de optziones predefinidu non si podet bogare</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d carta annanta</item>
-        <item quantity="other">%d cartas annantas</item>
-    </plurals>
     <string name="check_db">Verìfica sa base de datos</string>
     <string name="check_media">Verìfica sos documentos multimediales</string>
     <string name="empty_cards">Cartas bòidas</string>
-    <string name="check_db_message">Verifichende sa base de datos&#8230;</string>
     <string name="empty_card_warning">Custa carta est bòida. Imprea s\'optzione “Cartas bòidas” dae su menù  in s\'ischermada de sa lista de matzos.</string>
     <string name="unknown_type_field_warning">Iscrie sa risposta: campu disconnotu %s</string>
     <string name="delete_deck">Iscantzellende su matzu&#8230;</string>
@@ -171,16 +164,6 @@
     </plurals>
     <string name="import_log_no_apkg">Custu no est unu documentu de pachete de Anki vàlidu</string>
     <string name="import_title_error" comment="Title of error dialog">Faddina</string>
-    <string name="import_log_failed_unzip">Ispachetamentu de s\'apkg fallidu: %s</string>
-    <string name="import_log_failed_copy_to">Còpia de s\'apkg in %s fallida</string>
-    <string name="import_log_failed_validate">validatzione de s\'apkg fallida</string>
-    <string name="import_log_insufficient_space_error">Non b\'est memòria lìbera bastante pro importare su pachete.\nNetzessàrios - %1$s \nA disponimentu - %2$s.\n\nTenes problemas? Pro a liberare memòria in su telèfonu tuo, si podes. In alternativa, sa sincronizatzione impreat prus pagu memòria de s\'importatzione. Dias pòdere proare a importare su pachete cun unu dispositivu cun prus memòria lìbera (a esèmpiu Anki Desktop) e a pustis a lu sincronizare cun custu dispositivu.</string>
-    <string name="import_log_file_cache_cleared">Faddina in s\'importatzione de su documentu, probabilmente un\'isboidamentu de sa memòria temporànea durante s\'elaboratzione.\n
-                              Torra a proare</string>
-    <string name="import_succeeded_but_check_database">S\'importatzione de sos datos est andada bene ma s\'innetadura a pustis de s\'elaboratzione est fallida. Prus a tardu faghe una verìfica de sa base de datos. Càusa de raighina: %s</string>
-    <string name="import_error_corrupt_zip">Su documentu apkg est corrùmpidu. Pro praghere iscantzella·lu e torra·lu a iscarrigare.\n
-                              \n
-                              Càusa de raighina: %s</string>
     <string name="import_error_handle_exception">Fallimentu de s\'mportatzione de s\'archìviu\n\n%s</string>
     <string name="import_error_not_apkg_extension">Su nùmene de su documentu “%s” non tenet un\'estensione .apkg o. colpkg</string>
     <string name="import_error_load_imported_database">Sas sostitutziones de sa base de datos de Anki (.anki2) non sunt galu suportadas. Pòmpia·ti su manuale pro sas istrutziones de sostitutzione.</string>
@@ -189,8 +172,6 @@
     <string name="import_error_copy_to_cache">Sarvamentu de s\'archìviu in sa memòria temporànea fallidu (probabilmente ca non b\'at logu in sa memòria)</string>
     <string name="import_error_multiple_colpkg">Sunt istados seletzionados documentos colpkg mùltiplos.</string>
     <string name="import_error_colpkg_apkg">Siat sos archìvios apkg siat cussos colpkg sunt istados seletzionados paris.</string>
-    <string name="import_stats_error">B\'at àpidu carchi errore in s\'importatzione de sos archìvios sighentes:\n%s</string>
-    <string name="import_replacing">Remplasende sa colletzione&#8230;</string>
     <string name="import_interrupted">Importatzione firmada: AnkiDroid est istadu serradu</string>
     <string name="export_include_schedule">Include sa pranificatzione</string>
     <string name="export_include_media">Include sos mèdios</string>
@@ -204,12 +185,11 @@
         <item quantity="one">Esportare sa nota seletzionada comente archìviu apkg?</item>
         <item quantity="other">Esportare sas %d notas seletzionadas comente archìviu apkg?</item>
     </plurals>
-    <string name="export_in_progress">Esportende su documentu de pachete de Anki&#8230;</string>
-    <string name="export_success_title">Colletzione esportada chene problemas</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Peruna aplicatzione a disponimentu pro gestire apkg. Sarvende…</string>
     <string name="export_save_apkg_successful">Pachete de Anki sarvadu in manera curreta</string>
     <string name="export_save_apkg_unsuccessful">Sarvamentu de su pachete de Anki fallidu</string>
-    <string name="export_success_message">Podes isseberare una positzione in ue sarvare su documentu o lu podes cumpartzire cun un\'àtera aplicatzione.</string>
     <string name="export_share_title">Imbia su pachete de Anki impreende</string>
     <string name="export_email_subject">Cartas mnemònicas esportadas dae AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Salude!
@@ -219,8 +199,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Seletziona in ue sarvare su documentu</string>
-    <string name="export_select_share_app">Seletziona s\'aplicatzione pro cumpartzire</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optziones</string>
     <string name="menu__deck_options">Optziones de sos matzos</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Optziones de istùdiu</string>
@@ -230,47 +210,11 @@
     <string name="dyn_deck_desc">Custu est unu matzu ispetziale pro istudiare in foras de sa pranificatzione normale. Sas cartas ant a torrare in manera automàtica a sos matzos originales issoro a pustis chi las as a revisionare. Iscantzellende custu matzu dae sa lista de matzos at a fàghere torrare totu sas cartas chi abarrant a sos matzos originales issoro.</string>
     <string name="steps_error">Sos passos depent èssere in unu nùmeru prus mannu de 0</string>
     <string name="steps_min_error">B\'at bisòngiu de a su nessi unu passu</string>
-    <string name="sched_end">(fine)</string>
-    <string name="sched_unbury_action">Pro las bìdere como toca s\'elementu “Disinterra” in su menù</string>
-    <string name="sched_has_buried">Unas cantas cartas curreladas o interradas sunt istadas rimbiadas a cras</string>
     <string name="tag_editor_add_feedback">Toca “%2$s” pro cunfirmare s\'annanta de “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Eticheta chi esistit “%1$s” seletzionada</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s segundu</item>
-        <item quantity="other">%s segundos</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minutu</item>
-        <item quantity="other">%s minutos</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s ora</item>
-        <item quantity="other">%s oras</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s die</item>
-        <item quantity="other">%s dies</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mese</item>
-        <item quantity="other">%s meses</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s annu</item>
-        <item quantity="other">%s annos</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s segundos</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Custu matzu esistit giai</string>
     <string name="decks_rename_filtered_nosubdecks">Unu matzu filtradu non podet cuntènnere suta-matzos</string>
-    <string name="filtered_deck_name">Matzu filtradu</string>
     <string name="reminder_title">Non t\'ismèntighes de istudiare oe!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d carta de revisionare in %1$s</item>
@@ -279,14 +223,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Faddina cumpartzende su documentu apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Custu documentu tenet bisòngiu de una versione prus noa de Anki.</string>
     <string name="activity_start_failed">Su sistema non tenet un\'aplicatzione installada chi potzat fàghere custa atzione.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Sas immàgines de sa fotocàmera diant pòdere resurtare mannas. Dias pòdere chèrrere a las cumprimire e mudare de mannària in sa cartella de sos documentos multimediales]]></string>
     <string name="no_browser_notification">Perunu navigadore agatadu，bìsita sa pàgina dae unu pc o dae unu dispositivu mòbile:</string>
     <string name="web_page_error">Faddina de carrigamentu de sa pàgina: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Sos ligàmenes esternos in sas cartas non sunt suportados.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Cartas recuperadas</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Isfundu</string>
     <string name="choose_an_image">Issèbera un\'immàgine</string>
@@ -370,6 +312,7 @@
     <string name="deck_download_progress_message">Podes impreare àteras aplicatziones in su mentres chi s\'iscarrigamentu est in cursu</string>
     <string name="check_network">Verìfica sa connessione de retze tua</string>
     <string name="search_using_deck_name">Chirca impreende su nùmene de su matzu</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Pàgina printzipale</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -408,7 +351,6 @@
     <string name="intro_sync_from_ankiweb">Sincroniza dae AnkiWeb</string>
     <string name="already_logged_in">Giai intradu</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Su matzu esistit</string>
     <string name="deck_created">Matzu creadu</string>
     <string name="deck_renamed">Matzu mudadu de nùmene</string>
     <!-- Deck Deletion -->
@@ -425,5 +367,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

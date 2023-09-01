@@ -61,8 +61,8 @@
     <string name="updated_version">Geüpdatet naar versie %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Schrijfbord opslaan</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Whiteboard inschakelen</string>
     <string name="disable_whiteboard">Whiteboard uitschakelen</string>
     <string name="show_whiteboard">Toon het schrijfbord</string>
@@ -125,9 +125,9 @@
     <string name="save">Opslaan</string>
     <string name="close">Sluiten</string>
     <string name="select">Selecteren</string>
-    <string name="reordering_cards">Kaarten herschikken...</string>
     <string name="field_remapping">%1$s (van “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">De kaarten toegewezen aan niets zullen worden verwijderd. Als een memo resterende kaarten heeft, zullen zij verloren gaan. Weet u zeker dat u wilt doorgaan?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Timebox bereikt</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d kaart geoefend in %2$s</item>
@@ -145,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Opnieuw inplannen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Voorbeeld</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d van %2$d</string>
-    <string name="error_insufficient_memory">Werking verhinderd vanwege onvoldoende beschikbaar geheugen op uw toestel</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Naam wijzigen</string>
-    <string name="default_conf_delete_error">De standaard \"optiesgroep\" kan niet verwijderd worden</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d kaart toegevoegd</item>
-        <item quantity="other">%d kaarten toegevoegd</item>
-    </plurals>
     <string name="check_db">Database controleren</string>
     <string name="check_media">Media controleren</string>
     <string name="empty_cards">Lege kaarten zoeken</string>
-    <string name="check_db_message">De databank wordt gecontroleerd.\nEven geduld alstublieft...</string>
     <string name="empty_card_warning">Deze kaart is leeg. Gebruik de optie \"Lege kaarten zoeken\" in het menu op het scherm van de lijst met leersets.</string>
     <string name="unknown_type_field_warning">Type antwoord: onbekend veld %s</string>
     <string name="delete_deck">Leerset verwijderen...\nEven wachten.</string>
@@ -169,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Dit is geen geldig Anki-pakketbestand</string>
     <string name="import_title_error" comment="Title of error dialog">Fout</string>
-    <string name="import_log_failed_unzip">Fout bij het uitpakken van apkg: %s</string>
-    <string name="import_log_failed_copy_to">Fout bij het kopiëren van apkg naar %s</string>
-    <string name="import_log_failed_validate">apkg-validatie mislukt</string>
-    <string name="import_log_insufficient_space_error">Er is niet genoeg ruimte om het pakket te importeren.\nVereist - %1$s \nBeschikbaar - %2$s.\n\nOndervindt u problemen? Probeer indien mogelijk ruimte op uw telefoon vrij te maken. Of probeer het volgende: synchronisatie gebruikt minder ruimte dan importeren. U kan het pakket met een apparaat met meer ruimte (bijvoorbeeld Anki Desktop) importeren en het dan met dit apparaat synchroniseren.  </string>
-    <string name="import_log_file_cache_cleared">Fout bij het importeren van het bestand, waarschijnlijk een cache die tijdens de verwerking wordt gewist.\nGelieve opnieuw te proberen</string>
-    <string name="import_succeeded_but_check_database">Het importeren van gegevens is gelukt, maar de opruiming na de import is mislukt. Voer later de databasecontrole uit. Kernoorzaak: %s</string>
-    <string name="import_error_corrupt_zip">Het apkg-bestand is beschadigd. Verwijder en herdownload het.\n\nKernoorzaak: %s</string>
     <string name="import_error_handle_exception">Importeren van bestand\n\n%s mislukt</string>
     <string name="import_error_not_apkg_extension">Bestandsnaam “%s” heeft geen .apkg of .colpkg-extensie</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) vervangingen worden nog niet ondersteund. Zie alstublieft de handleiding voor vervangende instructies.</string>
@@ -183,8 +169,6 @@
     <string name="import_error_copy_to_cache">Het cachen van het bestand is mislukt (mogelijk gebrek aan opslagruimte)</string>
     <string name="import_error_multiple_colpkg">Er zijn meerdere colpkg bestanden geselecteerd.</string>
     <string name="import_error_colpkg_apkg">Zowel apkg als colpkg bestanden werden in een keer geselecteerd.</string>
-    <string name="import_stats_error">Er zijn enkele fouten opgetreden tijdens het importeren van de volgende bestanden:\n%s</string>
-    <string name="import_replacing">Collectie vervangen&#8230;</string>
     <string name="import_interrupted">Importeren onderbroken</string>
     <string name="export_include_schedule">Inclusief de planning</string>
     <string name="export_include_media">Inclusief media</string>
@@ -198,12 +182,11 @@
         <item quantity="one">Geselecteerde notitie als apkg-bestand exporteren?</item>
         <item quantity="other">Exporteer %d geselecteerde notities als apkg-bestand?</item>
     </plurals>
-    <string name="export_in_progress">Anki-pakketbestand exporteren&#8230;</string>
-    <string name="export_success_title">Collectie succesvol geëxporteerd</string>
+    <string name="export_preparation_in_progress">Export voorbereiden&#8230;</string>
+    <string name="export_ready_title">Export klaar</string>
     <string name="export_send_no_handlers">Geen applicaties beschikbaar om apkg te verwerken. Opslaan...</string>
     <string name="export_save_apkg_successful">Anki-pakket succesvol opgeslagen</string>
     <string name="export_save_apkg_unsuccessful">Opslaan Anki-pakket mislukt</string>
-    <string name="export_success_message">U kunt een bestandslocatie kiezen om op te slaan of u kunt het delen met een andere toepassing.</string>
     <string name="export_share_title">Stuur Anki-pakket met</string>
     <string name="export_email_subject">AnkiDroid geëxporteerde flashcards: %s</string>
     <string name="export_email_text"><![CDATA[        Hallo!
@@ -213,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Kies waar het bestand wordt opgeslagen</string>
-    <string name="export_select_share_app">Selecteer applicatie voor delen</string>
+    <string name="export_choice_share">Delen</string>
+    <string name="export_choice_save_to">Opslaan in</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opties</string>
     <string name="menu__deck_options">Setopties</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studieopties</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">Dit is een speciale set bedoeld om buiten het normale schema te studeren. Kaarten keren onmiddellijk terug naar hun oorspronkelijke set nadat u hen overhoord heeft. Als u deze set verwijdert, keren alle overgebleven kaarten onmiddellijk terug naar hun oorspronkelijke set.</string>
     <string name="steps_error">Aantal stappen moet hoger zijn dan 0</string>
     <string name="steps_min_error">Ten minste één stap is vereist</string>
-    <string name="sched_end">(einde)</string>
-    <string name="sched_unbury_action">Om ze nu te zien kies \"opgraven\" in het menu</string>
-    <string name="sched_has_buried">Sommige gerelateerde of geblokkeerde kaarten zijn vertraagd tot een latere sessie.</string>
     <string name="tag_editor_add_feedback">Druk op  “%2$s” om het toevoegen van “%1$s” te bevestigen</string>
     <string name="tag_editor_add_feedback_existing">Bestaand label “%1$s” geselecteerd</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s second</item>
-        <item quantity="other">%s seconden</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuut</item>
-        <item quantity="other">%s minuten</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s uur</item>
-        <item quantity="other">%s uren</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s dag</item>
-        <item quantity="other">%s dagen</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s maand</item>
-        <item quantity="other">%s maanden</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s jaar</item>
-        <item quantity="other">%s jaren</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconden</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Deze set bestaat al</string>
     <string name="decks_rename_filtered_nosubdecks">Een gefilterde set kan geen subsets hebben</string>
-    <string name="filtered_deck_name">Gefilterde Set</string>
     <string name="reminder_title">Vergeet niet om vandaag te studeren!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kaart in %1$s te overhoren</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fout met het delen van de apkg bestand</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Dit bestand vereist een nieuwere versie van Anki.</string>
     <string name="activity_start_failed">Het systeem heeft geen app geïnstalleerd die deze actie kan uitvoeren.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera-afbeeldingen kunnen groot zijn. Het kan zijn dat u afbeeldingen wilt comprimeren & het formaat wilt wijzigen in de mediamap.]]></string>
     <string name="no_browser_notification">Geen browser gevonden, bezoek de webpagina alstublieft via PC of mobiel:</string>
     <string name="web_page_error">Fout bij het laden van de pagina: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Externe paginalink in kaart wordt niet ondersteund.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Herstelde Kaarten</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Achtergrond</string>
     <string name="choose_an_image">Kies een afbeelding</string>
@@ -307,7 +252,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Weergave</string>
     <string name="anki_js_error_code">(Foutcode: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Naar klembord gekopieerd</string>
     <string name="about_ankidroid_error_copy_debug_info">Fout bij kopiëren van debuginformatie naar het klembord</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Fout met de kaartinhoud: Laden van ‘%s ’ is mislukt</string>
@@ -315,7 +260,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Laden van set ‘%s ’ mislukt</string>
     <string name="search_decks">Sets doorzoeken</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Toon migratie voortgang</string>
     <string name="ankidroid_init_failed_webview_title">Onherstelbare fout</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid berust op de System WebView die niet beschikbaar is. Dit kan gebeuren als het systeem bezig is met het installeren van updates. Probeer opnieuw na enkele minuten.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -364,10 +309,11 @@
     <string name="deck_download_progress_message">U kunt andere apps gebruiken terwijl de download bezig is</string>
     <string name="check_network">Controleer alsrublief uw internetconnectie</string>
     <string name="search_using_deck_name">Zoek met setnaam</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Startpagina</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Kaart begraven.</string>
     <plurals name="note_suspended">
         <item quantity="one">%d card suspended.</item>
         <item quantity="other">%d cards suspended.</item>
@@ -402,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizeren vanaf AnkiWeb</string>
     <string name="already_logged_in">Reeds ingelogd</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Leerset aanmaken</string>
     <string name="deck_renamed">Setnaam wijzigen</string>
     <!-- Deck Deletion -->
@@ -417,7 +362,6 @@
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
+    <string name="media_sync_required_title">Media-synchronisatie vereist</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">¿Comprobar base de datos?</string>
     <string name="check_db_warning">Esto podría tomar mucho tiempo</string>
-    <string name="check_db_acknowledge">Base de datos comprobada</string>
-    <string name="check_db_acknowledge_shrunk">Base de datos comprobada y optimizada.\nReducido %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Eliminar mazo</string>
-    <string name="delete_deck_default_deck">El mazo por defecto no se puede eliminar.</string>
     <string name="delete_deck_title">¿Eliminar mazo?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">¿Borrar todas las tarjetas en %1$s? Contiene %2$d tarjeta.</item>
-        <item quantity="other">¿Borrar todas las tarjetas en %1$s? Contiene %2$d tarjetas.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">¿Estás seguro de que deseas mandar todas las tarjetas de %s de vuelta a sus mazos originales?</string>
     <string name="no_tts_available_message">No hay idiomas de texto-a-voz disponibles</string>
     <string name="initializing_tts">Inicializando TTS&#8230;</string>
     <string name="tts_no_tts">No hablar</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Selecciona x tarjetas al azar del mazo:</string>
     <string name="custom_study_preview">Previsualizar nuevas tarjetas añadidas en los últimos x días:</string>
     <string name="custom_study_rebuild_deck_corrupt">No se pudo reconstruir el mazo de estudio personalizado</string>
-    <string name="importing_collection">Importando colección&#8230;</string>
-    <string name="import_media_count">Importando archivos multimedia %1$d%%&#8230;</string>
-    <string name="import_progress">• Importando notas: %1$d%%\n• Importando tarjetas: %2$d%%\n• Postprocesando: %3$d%%</string>
-    <string name="import_update_details">Se ha(n) actualizado %1$d de %2$d notas existentes.</string>
-    <string name="import_update_ignored">Se han ignorado algunas actualizaciones porque el tipo de nota ha cambiado</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Tarjetas importadas: %2$d</item>
-        <item quantity="other">Archivos importados: %1$d\nTotal de tarjetas importadas: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Almacenamiento lleno</string>
     <string name="storage_almost_full_title">Almacenamiento casi lleno</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sin spacio</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Deshabilitar</string>
     <string name="dialog_positive_overwrite">Sobreescribir</string>
-    <string name="dialog_positive_remove">Quitar</string>
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Reemplazar</string>
-    <string name="dialog_positive_restore">Restaurar</string>
-    <string name="dialog_positive_set">Establecer</string>
     <string name="dialog_collection_path_not_dir">La ruta especificada no era un directorio válido</string>
     <!-- Media checking -->
     <string name="check_media_title">¿Comprobar archivos multimedia?</string>
@@ -165,8 +145,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Pendientes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Buscando tarjetas vacías&#8230;</string>
-    <string name="confirm_cancel">¿Desea cancelar?</string>
-    <string name="empty_cards_none">No hay tarjetas vacías</string>
     <string name="empty_cards_count">Tarjetas a eliminar: %d</string>
     <string name="empty_cards_deleted">Tarjetas eliminadas: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +160,11 @@
     <string name="integrity_check_continue_anyway">Continuar igualmente</string>
     <string name="integrity_check_insufficient_space">Compruebar de la base de datos utiliza una gran cantidad de almacenamiento temporal.\n\nEs altamente recomendable que tenga al menos %s espacio libre en su dispositivo antes de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualmente tienes %s libre.</string>
-    <string name="integrity_check_fixed_no_home_deck">Se recuperaron %d tarjetas con mazos de inicio incorrectos. Consulte el manual para obtener más información.</string>
     <string name="video_creation_error">Reproducción de vídeo fallida</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">No se pudo cambiar el mazo</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error al decodificar datos de la tarjeta</string>
-    <string name="undo_succeeded">Desecho \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Error al procesar las opciones del mazo: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Base de datos bloqueada</string>
     <string name="database_locked_summary">La base de datos de AnkiDroid está en uso por otra aplicación. Por favor, cierre la otra aplicación y vuelva a abrir AnkiDroid.</string>

@@ -65,7 +65,6 @@
     <string name="card_browser_mark_card">סימון רשומות</string>
     <string name="card_browser_unmark_card">ביטול סימון רשומות</string>
     <string name="delete_card_title">למחוק את הרשומה?</string>
-    <string name="changed_deck_message">התבצעה העברה אל החפיסה %s</string>
     <string name="card_browser_show_marked">סינון לפי סימון</string>
     <string name="card_browser_show_suspended">סינון לפי השהייה</string>
     <string name="card_browser_search_by_tag">סינון לפי תג</string>
@@ -79,8 +78,6 @@
     <string name="card_browser_list_my_searches_remove_content">למחוק את ”%1$s”?</string>
     <string name="card_browser_change_display_order">שינוי סדר ההצגה</string>
     <string name="card_browser_change_display_order_title">בחירת סדר ההצגה</string>
-    <string name="card_browser_change_display_order_reverse">יש לבחור את השדה פעמיים כדי להפוך את הסדר</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">תאריך יעד</string>
     <string name="card_details_tags">תגיות</string>
     <string-array name="card_browser_order_labels">
         <item>ללא מיון (מהיר יותר)</item>
@@ -122,27 +119,4 @@
         <item quantity="other">%d כרטיסים נמחקו.</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">התווסף</string>
-    <string name="card_info_first_review">לימוד ראשון</string>
-    <string name="card_info_latest_review">לימוד אחרון</string>
-    <string name="card_info_interval">מרווח</string>
-    <string name="card_info_ease">קלות</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">נלמד</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">מעידות</string>
-    <string name="card_info_average_time">זמן ממוצע</string>
-    <string name="card_info_total_time">סה\"כ זמן</string>
-    <string name="card_info_card_type">סוג קלף</string>
-    <string name="card_info_note_type">סוג הפתק</string>
-    <string name="card_info_deck_name">שם חפיסה</string>
-    <string name="card_info_card_id">מזהה קלף</string>
-    <string name="card_info_note_id">מזהה פתק</string>
-    <string name="card_info_revlog_time">זמן</string>
-    <string name="card_info_revlog_date">תאריך</string>
-    <string name="card_info_revlog_rating">דירוג</string>
-    <string name="card_info_revlog_type">סוג</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">נלמד</string>
-    <string name="card_info_revlog_review">נסקר</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">נלמד מחדש</string>
-    <string name="card_info_revlog_filtered">מסונן</string>
-    <string name="card_info_ease_not_applicable">לא זמין</string>
 </resources>

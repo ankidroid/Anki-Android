@@ -81,7 +81,7 @@ class SharedDecksActivity : AnkiActivity() {
         setTitle(R.string.download_deck)
 
         val webviewToolbar: Toolbar = findViewById(R.id.webview_toolbar)
-        webviewToolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
+        webviewToolbar.setTitleTextColor(getColor(R.color.white))
 
         setSupportActionBar(webviewToolbar)
 
@@ -102,7 +102,7 @@ class SharedDecksActivity : AnkiActivity() {
             sharedDecksDownloadFragment.arguments = bundleOf(DOWNLOAD_FILE to DownloadFile(url, userAgent, contentDisposition, mimetype))
 
             supportFragmentManager.commit {
-                add(R.id.shared_decks_fragment_container, sharedDecksDownloadFragment, SHARED_DECKS_DOWNLOAD_FRAGMENT)
+                add(R.id.shared_decks_fragment_container, sharedDecksDownloadFragment, SHARED_DECKS_DOWNLOAD_FRAGMENT).addToBackStack(null)
             }
         }
 

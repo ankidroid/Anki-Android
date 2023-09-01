@@ -61,7 +61,6 @@
     <string name="card_browser_mark_card">নোট চিহ্নিত কর</string>
     <string name="card_browser_unmark_card">নোট না-চিহ্নিত কর</string>
     <string name="delete_card_title">নোট মুছব?</string>
-    <string name="changed_deck_message">%s তে সরিয়েছি</string>
     <string name="card_browser_show_marked">চিহ্নিতগুলো বাছো</string>
     <string name="card_browser_show_suspended">চিহ্নিতগুলো স্থগিত কর</string>
     <string name="card_browser_search_by_tag">ট্যাগ অনুযায়ী বাছো</string>
@@ -75,8 +74,6 @@
     <string name="card_browser_list_my_searches_remove_content">“%1$s” মুছব?</string>
     <string name="card_browser_change_display_order">প্রদর্শন-ক্রম বদলাও</string>
     <string name="card_browser_change_display_order_title">প্রদর্শন-ক্রম বাছুন</string>
-    <string name="card_browser_change_display_order_reverse">অধঃক্রমে সাজাতে একটি ফিল্ড ২বার বাছুন</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">বেঁধেদেয়া সময়</string>
     <string name="card_details_tags">ট্যাগসমূহ</string>
     <string-array name="card_browser_order_labels">
         <item>বিন্যাস ছাড়াই (দ্রততর)</item>
@@ -112,27 +109,4 @@
         <item quantity="other">%d টি কার্ড মুছেছি</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">সংযুক্তি</string>
-    <string name="card_info_first_review">প্রথম পরিদর্শন</string>
-    <string name="card_info_latest_review">সর্বশেষ পরিদর্শন</string>
-    <string name="card_info_interval">বিরামকাল</string>
-    <string name="card_info_ease">সহজতা</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">পরিদর্শন</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">ভুলে যাওয়া</string>
-    <string name="card_info_average_time">গড় সময়</string>
-    <string name="card_info_total_time">মোট সময়</string>
-    <string name="card_info_card_type">কার্ডের ধরন</string>
-    <string name="card_info_note_type">নোটের ধরণ</string>
-    <string name="card_info_deck_name">ডেকের নাম</string>
-    <string name="card_info_card_id">কার্ড আইডি</string>
-    <string name="card_info_note_id">নোট আইডি</string>
-    <string name="card_info_revlog_time">সময়</string>
-    <string name="card_info_revlog_date">তারিখ</string>
-    <string name="card_info_revlog_rating">রেটিং</string>
-    <string name="card_info_revlog_type">ধরণ</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">শিখছি</string>
-    <string name="card_info_revlog_review">পরিদর্শন</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">আবার শিখছি</string>
-    <string name="card_info_revlog_filtered">শর্তাধীন বাছাইকৃত</string>
-    <string name="card_info_ease_not_applicable">অপ্রযোজ্য</string>
 </resources>

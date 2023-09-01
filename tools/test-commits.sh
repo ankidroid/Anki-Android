@@ -13,7 +13,8 @@ first_commit="$1"
 
 while :; do
     echo "testing $(git log --pretty=oneline -1)"
-    ./gradlew -q clean uninstallPlayDebug jacocoTestReport :api:lintRelease :AnkiDroid:lintPlayRelease ktlintCheck
+    ./gradlew -q clean uninstallPlayDebug jacocoTestReport
+    ./gradlew -q :api:lintRelease :AnkiDroid:lintPlayRelease ktlintCheck
     ./gradlew --stop
     [ $(git rev-parse HEAD) = $first_commit ] && break
     git checkout HEAD^

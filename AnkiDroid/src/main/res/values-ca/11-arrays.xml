@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Pregunta-ho</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Només l\'etiqueta</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Mostra les fitxes noves desendreçades</string>
-    <string name="new_order_order_added">Mostra les fitxes noves pel ordre en que s\'han afegit</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Primer les que fa més temps que no heu vist</string>
     <string name="cram_deck_conf_order_random">A l\'atzar</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilitza aquest paquet</string>
     <string name="add_to_deck_decide_by_note_type">Dedueix pel tipus de nota</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Barreja cartes noves i revisions</string>
-    <string name="new_spread_new_after_review">Cartes noves després de revisions</string>
-    <string name="new_spread_new_before_review">Cartes noves abans de revisions</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Quan cap font està especificada en les flashcards</string>
     <string name="override_font_always" comment="Option to always override font">Sempre</string>

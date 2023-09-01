@@ -67,9 +67,12 @@ enum class ViewerCommand(val resourceId: Int) {
     RECORD_VOICE(R.string.record_voice),
     REPLAY_VOICE(R.string.replay_voice),
     TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard),
+    CLEAR_WHITEBOARD(R.string.clear_whiteboard),
+    CHANGE_WHITEBOARD_PEN_COLOR(R.string.title_whiteboard_editor),
     SHOW_HINT(R.string.gesture_show_hint),
     SHOW_ALL_HINTS(R.string.gesture_show_all_hints),
-    ADD_NOTE(R.string.menu_add_note);
+    ADD_NOTE(R.string.menu_add_note),
+    RESCHEDULE_NOTE(R.string.card_editor_reschedule_card);
 
     companion object {
         val allDefaultBindings: List<MappableBinding>

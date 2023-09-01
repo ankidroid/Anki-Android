@@ -24,6 +24,8 @@ import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.core.os.BundleCompat
+import androidx.core.os.ParcelCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.RecyclerView
@@ -33,14 +35,12 @@ import com.afollestad.materialdialogs.list.getRecyclerView
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
-import com.ichi2.compat.CompatHelper.Companion.getParcelableArrayListCompat
-import com.ichi2.compat.CompatHelper.Companion.readListCompat
 import java.util.*
 
 /** A Dialog displaying The various options for "Help" in a nested structure  */
 class RecursivePictureMenu : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val items: List<Item> = requireArguments().getParcelableArrayListCompat("bundle", Item::class.java)!!
+        val items: List<Item> = BundleCompat.getParcelableArrayList(requireArguments(), "bundle", Item::class.java)!!
         val title = requireContext().getString(requireArguments().getInt("titleRes"))
         val adapter: RecyclerView.Adapter<*> = object : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -143,7 +143,7 @@ class RecursivePictureMenu : DialogFragment() {
         protected constructor(parcel: Parcel) : super(parcel) {
             if (parcel.readByte().toInt() == 0x01) {
                 mChildren = ArrayList()
-                parcel.readListCompat<Item>(mChildren)
+                ParcelCompat.readList(parcel, mChildren, Item::class.java.classLoader, Item::class.java)
             } else {
                 mChildren = ArrayList(0)
             }
@@ -161,6 +161,7 @@ class RecursivePictureMenu : DialogFragment() {
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
+            @Suppress("unused")
             val CREATOR: Parcelable.Creator<ItemHeader?> = object : Parcelable.Creator<ItemHeader?> {
                 override fun createFromParcel(parcel: Parcel): ItemHeader {
                     return ItemHeader(parcel)

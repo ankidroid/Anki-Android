@@ -27,14 +27,12 @@ import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.servicelayer.DeckService.deckExists
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.getOrCreateFilteredDeck
 import com.ichi2.utils.displayKeyboard
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.util.function.Consumer
 
@@ -51,22 +49,12 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
     }
 
     private val col
-        get() = CollectionHelper.instance.getCol(context)!!
+        get() = CollectionHelper.instance.getColUnsafe(context)!!
 
     suspend fun showFilteredDeckDialog() {
         Timber.i("CreateDeckDialog::showFilteredDeckDialog")
         mInitialDeckName = withCol {
-            if (!BackendFactory.defaultLegacySchema) {
-                newBackend.getOrCreateFilteredDeck(did = 0).name
-            } else {
-                val names = decks.allNames()
-                var n = 1
-                val namePrefix = context.resources.getString(R.string.filtered_deck_name) + " "
-                while (names.contains(namePrefix + n)) {
-                    n++
-                }
-                namePrefix + n
-            }
+            getOrCreateFilteredDeck(did = 0).name
         }
         showDialog()
     }
@@ -95,13 +83,6 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
                     return@input
                 }
-
-                if (deckExists(col, fullyQualifiedDeckName!!)) {
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
-                    dialog.getInputField().error = context.getString(R.string.validation_deck_already_exists)
-                    return@input
-                }
-
                 dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
             }
             displayKeyboard(getInputField())
@@ -199,7 +180,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             try {
                 val decks = col.decks
                 val deckId = decks.id(mPreviousDeckName!!)
-                decks.rename(decks.get(deckId), newName)
+                decks.rename(decks.get(deckId)!!, newName)
                 mOnNewDeckCreated!!.accept(deckId)
                 // 11668: Display feedback if a deck is renamed
                 showThemedToast(context, R.string.deck_renamed, true)

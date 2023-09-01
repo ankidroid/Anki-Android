@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Ĉu kontroli datumbazon?</string>
     <string name="check_db_warning">Tio ĉi povas okupi multan tempon</string>
-    <string name="check_db_acknowledge">Kontrolis datumbazon</string>
-    <string name="check_db_acknowledge_shrunk">Datumbazo kontrolita kaj plejbonigita.\nEtigita je %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Forigi kartaron</string>
-    <string name="delete_deck_default_deck">La ĉefa kartaro ne povas esti forigita</string>
     <string name="delete_deck_title">Ĉu forigi kartaron?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Ĉu forigi ĉiujn kartojn el %1$s? Ĝi enhavas %2$d karton.</item>
-        <item quantity="other">Ĉu forigi ĉiujn kartojn el %1$s? Ĝi enhavas %2$d kartojn.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Ĉu sendi ĉiujn kartojn el %s reen al iliaj originalaj kartaroj?</string>
     <string name="no_tts_available_message">Neniu parol-sintezilo disponebla</string>
     <string name="initializing_tts">Lanĉado de parol-sintezilo&#8230;</string>
     <string name="tts_no_tts">ne paroli</string>
@@ -94,7 +86,7 @@
     <string name="answering_error_title">Eraro pri datumbazo</string>
     <string name="answering_error_message">Fiaskis skribi al la kolekto. La datumbazo povas esti difektita aŭ eble mankas spaco en la konservejo.\n\nSe tio ĉi okazos pli ofte, provu kontroli la datumbazon, ripari la kolekton aŭ restarigi ĝin el sekurkopio. Frapetu “agordojn” por fari tion.\nAŭ tio ĉi povas esti eraro en AnkiDroid, do bonvolu raporti ĝin por ke ni povu ĝin ripari.</string>
     <string name="answering_error_report">Raporti eraron</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Ne estas sufiĉe da libera konserva spaco por  malfermi AnkiDroid. Liberigi iom da spaco por pluigi.</string>
     <string name="repair_deck_dialog">Ĉu vi certe volas ripari la datumbazon?\n\nAntaŭ komenci, kopio estos kreita en subdosierujo “%s”.</string>
     <string name="intent_aedict_empty">La ĉefa kategorio estas malplena</string>
     <string name="intent_aedict_category">Por aldoni kartojn al AnkiDroid, forigu ĉiujn kategoriojn de kajero kaj aldonu unu nomitan «default»</string>
@@ -107,17 +99,8 @@
     <string name="custom_study_random">Elekti tiom da hazardaj kartoj el la kartaro:</string>
     <string name="custom_study_preview">Antaŭrigardi novajn kartojn aldonitajn dum tiom da antaŭaj tagoj:</string>
     <string name="custom_study_rebuild_deck_corrupt">Ne povis rekrei kartaron por propra lernado</string>
-    <string name="importing_collection">Enportado de kolekto&#8230;</string>
-    <string name="import_media_count">Enportado de aŭdvidaĵoj %1$d%%&#8230;</string>
-    <string name="import_progress">• Enportado de notoj: %1$d%%\n• Enportado de kartoj: %2$d%%\n• Prilaborado: %3$d%%</string>
-    <string name="import_update_details">Aktualigis %1$d el %2$d ekzistajn notojn.</string>
-    <string name="import_update_ignored">Ignoris kelkajn aktualigojn pro ŝanĝo de tipo de noto</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">Konservejo plena</string>
+    <string name="storage_almost_full_title">Konservejo preskaŭ plena</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Mankas spaco</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid postulas %s da libera spaco por pluigi. Liberigu iom da spaco.</string>
     <string name="restore_backup_title">Ĉu restarigi sekurkopion?</string>
@@ -125,7 +108,7 @@
     <string name="restore_backup_choose_another">Elekti alian</string>
     <string name="dialog_cancel">Nuligi</string>
     <string name="dialog_ok">Bone</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Konfirmi</string>
     <string name="dialog_no">Ne</string>
     <string name="dialog_yes">Jes</string>
     <string name="dialog_continue">Pluigi</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Malaktivigi</string>
     <string name="dialog_positive_overwrite">Anstataŭigi</string>
-    <string name="dialog_positive_remove">Forigi</string>
     <string name="dialog_positive_repair">Ripari</string>
     <string name="dialog_positive_replace">Anstataŭigi</string>
-    <string name="dialog_positive_restore">Restarigi</string>
-    <string name="dialog_positive_set">Agordi</string>
     <string name="dialog_collection_path_not_dir">La difinita dosier-indiko estas malĝusta</string>
     <!-- Media checking -->
     <string name="check_media_title">Ĉu kontroli aŭdvidaĵojn?</string>
@@ -165,8 +145,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Lernendaj</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Serĉado de malplenaj kartoj&#8230;</string>
-    <string name="confirm_cancel">Ĉu vi volas rezigni?</string>
-    <string name="empty_cards_none">Neniu malplena karto</string>
     <string name="empty_cards_count">Kartoj por forigi: %d</string>
     <string name="empty_cards_deleted">Forigis kartojn: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +160,11 @@
     <string name="integrity_check_continue_anyway">Pluigi malgraŭ tio</string>
     <string name="integrity_check_insufficient_space">Kontrolado de datumbazo uzos multon da provizora memoro.\n\nEstas tre konsilinde por ke vi havu almenaŭ %s da libera spaco en via aparato antaŭ pluigi.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nLibera spaco: %s.</string>
-    <string name="integrity_check_fixed_no_home_deck">Restarigis %d kartojn kun eraraj kartaroj. Legu la manlibron por pli da informoj.</string>
     <string name="video_creation_error">Ne povis ludi filmeton</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Ne povis ŝanĝi kartaron</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Eraro dum malkodi datumojn el la karto</string>
-    <string name="undo_succeeded">Malfaris “%s”</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Fiaskis pritrakti agordojn de kartaro: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Datumbazo ŝlosita</string>
     <string name="database_locked_summary">La datumbazo de AnkiDroid estas uzata de alia aplikaĵo. Bonvolu fermi la alian aplikaĵon kaj remalfermi AnkiDroid.</string>
@@ -230,7 +204,7 @@
     <string name="help_item_support_develop_ankidroid">Programi</string>
     <string name="help_item_support_rate_ankidroid">Taksi</string>
     <string name="help_item_support_other_ankidroid">Aliaj</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Traduki</string>
     <string name="help_title_community">Komunumo</string>
     <string name="help_item_anki_forums">Forumo Anki</string>
     <string name="help_item_discord">Discord</string>
@@ -257,15 +231,15 @@
     <string name="deck_picker_counts">Malfermu la kartaran sumigon enhavantan nombron de kartoj por montri hodiaŭ.</string>
     <string name="import_deck_package">Kartaro (.apkg)</string>
     <string name="import_collection_package">Kolekto (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Teksta dosiero (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">Vi ne povas krei subkartaron por ĉiuj kartaroj</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
+    <string name="backup_your_collection">Sekurkopiu vian kolekton</string>
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_backup">Sekurkopio</string>
+    <string name="button_disable_reminder">Malaktivi memorigaĵon</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Poste</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
     <string name="dismiss_backup_warning_title">Data loss warning</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled

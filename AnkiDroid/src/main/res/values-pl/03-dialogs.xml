@@ -46,18 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Sprawdź bazę danych</string>
     <string name="check_db_warning">To może zająć dużo czasu.</string>
-    <string name="check_db_acknowledge">Baza danych sprawdzona</string>
-    <string name="check_db_acknowledge_shrunk">Baza danych sprawdzona i zoptymalizowana.\nZmniejszono rozmiar o %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
-    <string name="delete_deck_default_deck">Domyślna talia nie może zostać usunięta</string>
     <string name="delete_deck_title">Skasuj talię</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Usunąć wszystkie karty z %1$s? Jest tam %2$d karta.</item>
-        <item quantity="few">Usunąć wszystkie karty z %1$s? Jest ich tam %2$d.</item>
-        <item quantity="many">Usunąć wszystkie karty z %1$s? Jest ich tam %2$d.</item>
-        <item quantity="other">Usunąć wszystkie karty z %1$s? Jest ich tam %2$d.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Czy na pewno chcesz wysłać wszystkie karty w %s z powrotem do ich pierwotnych talii?</string>
     <string name="no_tts_available_message">Brak dostępnego języka zamiany tekstu na mowę</string>
     <string name="initializing_tts">Inicjowanie TTS&#8230;</string>
     <string name="tts_no_tts">Nie mów</string>
@@ -119,17 +109,6 @@
     <string name="custom_study_random">Wybierz losowo x kart z talii:</string>
     <string name="custom_study_preview">Podgląd nowych kart dodanych w ostatnich x dniach:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nie udało się przebudować talii nauki niestandardowej</string>
-    <string name="importing_collection">Importowanie kolekcji.\nProszę czekaj&#8230;</string>
-    <string name="import_media_count">Importowanie mediów %1$d%%\nProszę czekaj&#8230;</string>
-    <string name="import_progress">• Importowanie notatek: %1$d%%\n• Importowanie kart: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">Zaktualizowano %1$d z %2$d istniejących notatek.</string>
-    <string name="import_update_ignored">Niektóre aktualizacje zostały zignorowane, ponieważ zmienił się typ notatki</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Zaimportowanych kart: %2$d</item>
-        <item quantity="few">Zaimportowanych kart: %2$d</item>
-        <item quantity="many">Zaimportowanych kart: %2$d</item>
-        <item quantity="other">Zaimportowanych kart: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Pamięć jest pełna</string>
     <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Brak miejsca</string>
@@ -149,11 +128,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Wyłacz</string>
     <string name="dialog_positive_overwrite">Nadpisz</string>
-    <string name="dialog_positive_remove">Usuń</string>
     <string name="dialog_positive_repair">Napraw</string>
     <string name="dialog_positive_replace">Zastąp</string>
-    <string name="dialog_positive_restore">Przywróć</string>
-    <string name="dialog_positive_set">Ustaw</string>
     <string name="dialog_collection_path_not_dir">Wybrana ścieżka nie wskazuje prawidłowo katalogu</string>
     <!-- Media checking -->
     <string name="check_media_title">Sprawdzić media?</string>
@@ -181,8 +157,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Do przejrzenia</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Wyszukiwanie pustych kart&#8230;</string>
-    <string name="confirm_cancel">Czy chcesz przerwać?</string>
-    <string name="empty_cards_none">Brak pustych kart</string>
     <string name="empty_cards_count">Kart do usunięcia: %d</string>
     <string name="empty_cards_deleted">Usuniętych kart: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -198,15 +172,11 @@
     <string name="integrity_check_continue_anyway">Kontynuuj mimo to</string>
     <string name="integrity_check_insufficient_space">Funkcja \"sprawdź bazę danych\" używa dużej ilości pamięci tymczasowej.\n\nZalecane jest, aby przed kontynuowaniem na urządzeniu było dostępne przynajmniej  %s wolnego miejsca.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nObecnie jest dostępne %s</string>
-    <string name="integrity_check_fixed_no_home_deck">Odzyskano %d kart z nieprawidłowymi taliami głównymi. Więcej informacji znajdziesz w podręczniku.</string>
     <string name="video_creation_error">Nie udało się odtworzyć nagrania</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Nie udało się zmienić talii</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Błąd dekodowania danych z karty</string>
-    <string name="undo_succeeded">Nie wykonano \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Nie udało się przetworzyć opcji talii: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Baza danych zablokowana</string>
     <string name="database_locked_summary">Baza danych AnkiDroid jest teraz używana przez inną aplikację. Zamknij drugą aplikację, a następnie ponownie otwórz AnkiDroid.</string>

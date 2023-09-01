@@ -24,23 +24,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
     xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:title="@string/pref_cat_reviewing"
-    android:key="@string/pref_reviewing_screen_key">
+    android:key="@string/pref_reviewing_screen_key"
+    tools:context=".preferences.ReviewingSettingsFragment">
     <PreferenceCategory android:title="@string/pref_cat_scheduling" >
-        <ListPreference
-            android:entries="@array/new_spread_labels"
-            android:entryValues="@array/new_spread_values"
-            android:key="@string/new_spread_preference"
-            android:title="@string/new_spread"
-            app1:useSimpleSummaryProvider="true"/>
-        <com.ichi2.preferences.SeekBarPreferenceCompat
+        <com.ichi2.preferences.SliderPreference
             android:key="@string/day_offset_preference"
-            android:max="23"
+            android:valueFrom="0"
+            android:valueTo="23"
             android:title="@string/day_offset_with_description"
-            app:interval="1"
-            app:min="0"
-            app:xlabel="@string/xlabel_dayoffset_seekbar"
-            app:ylabel="@string/ylabel_dayoffset_seekbar"
+            app1:persistent="false"
             app1:summaryFormat="@string/day_offset_summary"/>
         <com.ichi2.preferences.NumberRangePreferenceCompat
             android:key="@string/learn_cutoff_preference"
@@ -56,7 +50,7 @@
             app1:summaryFormat="@string/pref_summary_minutes"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/timeout_answer_text" >
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:disableDependentsState="false"
             android:key="@string/timeout_answer_preference"
@@ -70,28 +64,30 @@
             android:key="@string/automatic_answer_action_preference"
             android:title="@string/timeout_answer"
             app1:useSimpleSummaryProvider="true"/>
-        <com.ichi2.preferences.SeekBarPreferenceCompat
-            android:defaultValue="20"
-            android:dependency="@string/timeout_answer_preference"
+        <com.ichi2.preferences.SliderPreference
             android:key="@string/timeout_answer_seconds_preference"
-            android:max="30"
-            android:title="@string/timeout_answer_seconds"
-            app1:summaryFormat="@string/pref_summary_seconds"/>
-        <com.ichi2.preferences.SeekBarPreferenceCompat
-            android:defaultValue="60"
             android:dependency="@string/timeout_answer_preference"
+            android:title="@string/timeout_answer_seconds"
+            android:defaultValue="20"
+            android:valueFrom="0"
+            android:valueTo="30"
+            app1:displayFormat="@string/pref_summary_seconds"/>
+        <com.ichi2.preferences.SliderPreference
             android:key="@string/timeout_question_seconds_preference"
-            android:max="60"
+            android:dependency="@string/timeout_answer_preference"
+            android:defaultValue="60"
+            android:valueFrom="0"
+            android:valueTo="60"
             android:title="@string/timeout_question_seconds"
-            app1:summaryFormat="@string/pref_summary_seconds"/>
+            app1:displayFormat="@string/pref_summary_seconds"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_cat_advanced">
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/keep_screen_on_preference"
             android:summary="@string/pref_keep_screen_on_summ"
             android:title="@string/pref_keep_screen_on" />
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:key="@string/new_timezone_handling_preference"
             android:title="@string/new_timezone"
             android:defaultValue="false" />

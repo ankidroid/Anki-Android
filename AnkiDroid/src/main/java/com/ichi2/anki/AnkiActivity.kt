@@ -20,6 +20,7 @@ import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.annotation.UiThread
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -28,13 +29,12 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.*
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
+import androidx.core.app.PendingIntentCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -43,23 +43,21 @@ import com.ichi2.anki.dialogs.SimpleMessageDialog
 import com.ichi2.anki.dialogs.SimpleMessageDialog.SimpleMessageDialogListener
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.Preferences.Companion.MINIMUM_CARDS_DUE_FOR_NOTIFICATION
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.async.CollectionLoader
-import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.CollectionGetter
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
-import com.ichi2.utils.AndroidUiUtils
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.SyncStatus
 import timber.log.Timber
 
-open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
+@UiThread
+open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     /** The name of the parent class (example: 'Reviewer')  */
     private val mActivityName: String
@@ -77,7 +75,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
 
     @Suppress("deprecation") // #9332: UI Visibility -> Insets
     override fun onCreate(savedInstanceState: Bundle?) {
-        Timber.i("AnkiActivity::onCreate - %s", mActivityName)
         // The hardware buttons should control the music volume
         volumeControlStream = AudioManager.STREAM_MUSIC
         // Set the theme
@@ -92,29 +89,21 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             )
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.transparent)
+            window.navigationBarColor = getColor(R.color.transparent)
         }
     }
 
     override fun onStart() {
-        Timber.i("AnkiActivity::onStart - %s", mActivityName)
         super.onStart()
         customTabActivityHelper.bindCustomTabsService(this)
     }
 
     override fun onStop() {
-        Timber.i("AnkiActivity::onStop - %s", mActivityName)
         super.onStop()
         customTabActivityHelper.unbindCustomTabsService(this)
     }
 
-    override fun onPause() {
-        Timber.i("AnkiActivity::onPause - %s", mActivityName)
-        super.onPause()
-    }
-
     override fun onResume() {
-        Timber.i("AnkiActivity::onResume - %s", mActivityName)
         super.onResume()
         UsageAnalytics.sendAnalyticsScreenView(this)
         (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).cancel(
@@ -122,11 +111,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         )
         // Show any pending dialogs which were stored persistently
         dialogHandler.executeMessage()
-    }
-
-    override fun onDestroy() {
-        Timber.i("AnkiActivity::onDestroy - %s", mActivityName)
-        super.onDestroy()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -147,11 +131,13 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         hideProgressBar()
     }
 
-    override val col: Collection
-        get() = CollectionHelper.instance.getCol(this)!!
+    /** Legacy code should migrate away from this, and use withCol {} instead.
+     * */
+    val getColUnsafe: Collection
+        get() = CollectionManager.getColUnsafe()
 
-    fun colIsOpen(): Boolean {
-        return CollectionHelper.instance.colIsOpen()
+    fun colIsOpenUnsafe(): Boolean {
+        return CollectionManager.isOpenUnsafe()
     }
 
     /**
@@ -162,7 +148,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
      * @see .animationEnabled
      */
     fun animationDisabled(): Boolean {
-        val preferences = AnkiDroidApp.getSharedPrefs(this)
+        val preferences = this.sharedPrefs()
         return preferences.getBoolean("safeDisplay", false)
     }
 
@@ -182,16 +168,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             view.clearAnimation()
         }
         super.setContentView(view)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // We can't access the icons yet on a TV, so show them all in the menu
-        if (AndroidUiUtils.isRunningOnTv(this)) {
-            for (i in 0 until menu.size()) {
-                menu.getItem(i).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER)
-            }
-        }
-        return super.onCreateOptionsMenu(menu)
     }
 
     override fun setContentView(view: View, params: ViewGroup.LayoutParams) {
@@ -344,9 +320,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     /** Method for loading the collection which is inherited by every [AnkiActivity]  */
     fun startLoadingCollection() {
         Timber.d("AnkiActivity.startLoadingCollection()")
-        if (colIsOpen()) {
+        if (colIsOpenUnsafe()) {
             Timber.d("Synchronously calling onCollectionLoaded")
-            onCollectionLoaded(col)
+            onCollectionLoaded(getColUnsafe)
             return
         }
         // Open collection asynchronously if it hasn't already been opened
@@ -405,7 +381,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             )
             return
         }
-        val toolbarColor = Themes.getColorFromAttr(this, R.attr.colorPrimary)
+        val toolbarColor = Themes.getColorFromAttr(this, android.R.attr.colorPrimary)
         val navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor)
         val colorSchemeParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(toolbarColor)
@@ -516,7 +492,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         message: String?,
         channel: Channel
     ) {
-        val prefs = AnkiDroidApp.getSharedPrefs(this)
+        val prefs = this.sharedPrefs()
         // Show a notification unless all notifications have been totally disabled
         if (prefs.getString(MINIMUM_CARDS_DUE_FOR_NOTIFICATION, "0")!!
             .toInt() <= Preferences.PENDING_NOTIFICATIONS_ONLY
@@ -535,7 +511,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                 .setSmallIcon(R.drawable.ic_star_notify)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
+                .setColor(this.getColor(R.color.material_light_blue_500))
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setTicker(ticker)
@@ -549,11 +525,12 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             // Creates an explicit intent for an Activity in your app
             val resultIntent = Intent(this, DeckPicker::class.java)
             resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            val resultPendingIntent = compat.getImmutableActivityIntent(
+            val resultPendingIntent = PendingIntentCompat.getActivity(
                 this,
                 0,
                 resultIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT,
+                false
             )
             builder.setContentIntent(resultPendingIntent)
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
@@ -612,28 +589,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             savedInstanceState = savedInstanceState,
             activitySuperOnCreate = { state -> super.onCreate(state) }
         )
-
-    fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
-        if (CollectionHelper.instance.colIsOpen()) {
-            launchCatchingTask {
-                Timber.d("saveCollectionInBackground: start")
-                withCol {
-                    Timber.d("doInBackgroundSaveCollection")
-                    try {
-                        if (syncIgnoresDatabaseModification) {
-                            SyncStatus.ignoreDatabaseModification { col.save() }
-                        } else {
-                            col.save()
-                        }
-                    } catch (e: Exception) {
-                        Timber.e(e, "Error on saving deck in background")
-                        // TODO should this error be reported through our error reporting service?
-                    }
-                }
-                Timber.d("saveCollectionInBackground: finished")
-            }
-        }
-    }
 
     companion object {
         const val REQUEST_REVIEW = 901

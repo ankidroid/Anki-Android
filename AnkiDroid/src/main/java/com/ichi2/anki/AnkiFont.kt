@@ -3,6 +3,7 @@ package com.ichi2.anki
 
 import android.content.Context
 import android.graphics.Typeface
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Utils
 import timber.log.Timber
 import java.io.File
@@ -14,7 +15,7 @@ class AnkiFont private constructor(val name: String, private val family: String,
     private var mIsDefault = false
     private var mIsOverride = false
     val declaration: String
-        get() = "@font-face {" + getCSS(false) + " src: url(\"file://" + path + "\");}"
+        get() = "@font-face {" + getCSS(false) + " src: url(\"" + path + "\");}"
 
     fun getCSS(override: Boolean): String {
         val sb = StringBuilder("font-family: \"").append(family)
@@ -48,7 +49,7 @@ class AnkiFont private constructor(val name: String, private val family: String,
     }
 
     companion object {
-        private const val fAssetPathPrefix = "/android_asset/fonts/"
+        private const val fAssetPathPrefix = "/assets/fonts/"
         private val corruptFonts: MutableSet<String> = HashSet()
 
         /**
@@ -101,7 +102,7 @@ class AnkiFont private constructor(val name: String, private val family: String,
             val createdFont = AnkiFont(name, family, attributes, path)
 
             // determine if override font or default font
-            val preferences = AnkiDroidApp.getSharedPrefs(ctx)
+            val preferences = ctx.sharedPrefs()
             val defaultFont = preferences.getString("defaultFont", "")
             val overrideFont = "1" == preferences.getString("overrideFontBehavior", "0")
             if (defaultFont.equals(name, ignoreCase = true)) {
@@ -117,7 +118,7 @@ class AnkiFont private constructor(val name: String, private val family: String,
         fun getTypeface(ctx: Context, path: String): Typeface? {
             return try {
                 if (path.startsWith(fAssetPathPrefix)) {
-                    Typeface.createFromAsset(ctx.assets, path.replaceFirst("/android_asset/".toRegex(), ""))
+                    Typeface.createFromAsset(ctx.assets, path.replaceFirst("/assets/".toRegex(), ""))
                 } else {
                     Typeface.createFromFile(path)
                 }

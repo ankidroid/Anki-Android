@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Колоди</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Переглядач карток</string>
@@ -88,12 +88,6 @@
     <string name="no_cards_placeholder_title">Колекція порожня</string>
     <string name="no_cards_placeholder_description">Почніть додавати картки\nвикористовуючи значок +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Сьогодні вивчено %1$d карток за %2$s</item>
-        <item quantity="few">Сьогодні вивчено %1$d картки за %2$s</item>
-        <item quantity="many">Сьогодні вивчено %1$d карток за %2$s</item>
-        <item quantity="other">Сьогодні вивчено %1$d картки за %2$s</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Введіть відповідь</string>
     <string name="show_answer">Показати відповідь</string>
@@ -102,11 +96,8 @@
     <string name="ease_button_hard">Важко</string>
     <string name="ease_button_good">Добре</string>
     <string name="ease_button_easy">Легко</string>
-    <string name="studyoptions_congrats_undo">Скасувати %s</string>
     <string name="menu_import">Імпортувати</string>
     <string name="undo">Скасувати</string>
-    <string name="undo_action_review">останнє повторення</string>
-    <string name="undo_action_change_deck_multi">Змінити колоди</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Скасувати штрих</string>
     <string name="move_all_to_deck">Перемістити все до колоди</string>
     <string name="unbury">Повернути</string>
@@ -180,18 +171,14 @@
     <string name="studyoptions_limit_reached">Досягнуто денної межі навчання</string>
     <string name="studyoptions_empty_schedule">Немає запланованих карток</string>
     <string name="studyoptions_congrats_finished">Вітаємо! На разі це все.</string>
-    <string name="studyoptions_congrats_more_rev">Досягнуто добового ліміту, але ще залишилися картки для повторення. Ви можете збільшити щоденний ліміт у налаштуваннях.</string>
-    <string name="studyoptions_congrats_more_new">Досягнуто добового ліміту карток, але ще залишилися нові карточки. Ви можете збільшити ліміт в налаштуваннях, але тоді збільшиться кількість повторень в майбутньому.</string>
-    <string name="studyoptions_congrats_custom">Для навчання за межами звичайного графіку натисніть кнопку «Індивідуальне навчання»</string>
     <string name="studyoptions_no_cards_due">Не залишилось карток на перегляд</string>
     <string name="sd_card_not_mounted">Пристрій зберігання не підключено</string>
-    <string name="empty_cloze_warning">Будь ласка, відредагуйте цей запис та додайте пропуски. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Синхронізувати</string>
     <string name="button_upgrade" comment="Text of the sync button">Перенесення до зашифрованого сховища (scoped storage)</string>
-    <string name="cancel_sync_confirm">Ви хочете скасувати синхронізацію?</string>
-    <string name="continue_sync">Продовжити синхронізацію</string>
-    <string name="sync_cancelled">Синхронізацію скасовано</string>
-    <string name="sync_cancel_message">Скасування&#8230;\nЦе триватиме деякий час.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Ви хочете скасувати синхронізацію?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Продовжити синхронізацію</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Синхронізацію скасовано</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Скасування&#8230;\nЦе триватиме деякий час.</string>
     <string name="export">Експортувати</string>
     <string name="export_collection">Експортувати колекцію</string>
     <string name="export_deck">Експортувати колоду</string>
@@ -224,7 +211,6 @@
     <string name="template_for_current_card_deleted">Тип картки для поточної картки було видалено.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Зовнішній вигляд переглядача</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Інформація про картку</string>
     <!-- Permissions -->
@@ -233,14 +219,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Переглядач карток</string>
     <string name="context_menu_anki_card_label">Anki картка</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">У %1$s проблема:<br/>%2$s</string>
-    <string name="more_information">Докладніше</string>
-    <string name="no_field">Знайдено «{{%1$s}}», але без поля «%1$s».</string>
-    <string name="closed_tag_not_open">Знайдено «{{/%1$s}}», але невистачає «{{#%1$s}}» чи «{{^%1$s}».</string>
-    <string name="missing_closing_bracket">Не вистачає «}}» в «%s».</string>
-    <string name="open_tag_not_closed">Відсутнє «{{%s}».</string>
-    <string name="wrong_tag_closed">Знайдено «{{/%1$s}}», але очікувалось «{{/%2$s}}»</string>
-    <string name="filter_error">Помилка в фільтрі %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Колекції не можна поєднати.\nЯку колекцію Ви хочете зберегти?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -255,35 +233,51 @@
         <item quantity="many">%1$d карток (0 для перегляду)</item>
         <item quantity="other">%1$d карток (0 для перегляду)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">Копія %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Неможливо записати чи створити файл %s</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Декілька помилок, остання: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”."> Декілька послідовних помилок без виконання, остання: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_data">Міграція даних</string>
-    <string name="migration__calculating_transfer_size">Розрахунок розміру передавання&#8230;</string>
-    <string name="migration__transferred_x_of_y" comment="The placeholders will be replaced with short localized byte amounts,         e.g. Transferred 10 kB of 5.2 MB">Передано %1$s з %2$s</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Міграція файлів бази даних</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Копіювання&#8230;</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Міграція медіа</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Розрахунок розміру файлів, що переносяться&#8230;</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Переміщено %1$s з %2$s</string>
     <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Дані успішно перенесено</string>
     <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Ваші дані успішно перенесено.
-        AnkiDroid знову повністю працює, і ви можете синхронізувати.
+        AnkiDroid знову повністю працює, і ви можете синхронізуватися.
         \n
-        \nЗауважте, що ваша колекція тепер знаходиться у папці, яка видаляється при видаленні додатку.
-        Будь ласка, переконайтеся, що ваші дані в безпеці, регулярно синхронізуючись або експортуючи резервні копії.
+        \nЗауважте, що ваша колекція тепер знаходиться у папці, яка видалиться при видаленні додатку.
+        Будь ласка, дбайте, щоб ваші дані були в безпеці, регулярно синхронізуючись або експортуючи резервні копії.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Не вдалось перенести дані</string>
-    <string name="migration__failed__message" comment="A more detailed message shown when storage migration fails"><![CDATA[        Перенесення сховища призупинено після помилки: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
         <br><br>
-        Будь ласка, спробуйте повторно запустити перенесення.
-        Щоб вирішити проблему, вам може знадобитися звільнити місце на диску або повторно підключити відсутній носій.
+        The changes were reverted.
         <br><br>
-        <a href="%2$s">Дізнайтеся більше та отримайте допомогу</a>
-    ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        Please try re-running the migration.
+        To resolve the problem, you may need to free up some disk space,
+        or reconnect the removable storage that holds your collection.
         <br><br>
         <a href="%2$s">Learn more and get help</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+        <br><br>
+        The changes were <i>not</i> reverted.
+        While no data should’ve been lost,
+        the media files might be split between the old and the new folder.
+        <br><br>
+        Please try re-running the migration.
+        To resolve the problem, you may need to free up some disk space,
+        or reconnect the removable storage that holds your collection.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Перенесення сховища призупинено після збою з помилкою: %1$s.
+        <br><br>
+        <a href="%2$s">Дізнатися більше та отримати допомогу</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Продовжити перенесення файлів</string>
     <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Недоступна колекція</string>
     <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Ми не можемо отримати доступ до вашої колекції після видалення AnkiDroid через зміну політики Play Store\n\nВаші дані в безпечному і можуть бути відновлені. Місцезнаходження даних \n%s\n\nВиберіть опцію нижче для відновлення:</string>
     <string name="restore_data_from_ankiweb">Відновити з AnkiWeb (рекомендовано)</string>

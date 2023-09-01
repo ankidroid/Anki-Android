@@ -51,7 +51,6 @@
     <string name="model_browser_delete">Выдаліць тып запісу</string>
     <string name="model_browser_rename" comment="Rename a note type">Перайменаваць</string>
     <string name="model_browser_template">Змяніць карткі</string>
-    <string name="model_browser_add">Дадаць тып запісу</string>
     <!--Rename-->
     <string name="rename_model">Перайменаваць тып запісу</string>
     <!--Language Hint-->
@@ -67,7 +66,6 @@
     <string name="model_field_editor_toggle_sticky">Пры дабаўленні памятаць апошні ўвод</string>
     <string name="model_field_editor_changing">Адбываецца абнаўленне палёў</string>
     <string name="model_field_editor_sort_field">Сартаваць па гэтым полі</string>
-    <string name="model_clone_suffix">капіяваць</string>
     <!--Warnings-->
     <string name="model_delete_warning">Вы ўпэўненыя, што хочаце выдаліць гэты тып запісу?</string>
     <string name="field_delete_warning">Вы ўпэўненыя, што хочаце выдаліць гэта поле?</string>

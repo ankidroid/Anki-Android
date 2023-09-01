@@ -19,12 +19,12 @@ package com.ichi2.anki.noteeditor
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.BundleCompat
 import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
-import com.ichi2.compat.CompatHelper.Companion.getSparseParcelableArrayCompat
-import com.ichi2.libanki.Model
-import com.ichi2.libanki.Models
+import com.ichi2.libanki.NotetypeJson
+import com.ichi2.libanki.Notetypes
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
 import org.json.JSONObject
@@ -94,7 +94,7 @@ class FieldState private constructor(private val editor: NoteEditor) {
     private fun getFields(type: FieldChangeType): Array<Array<String>> {
         if (type.type == Type.REFRESH_WITH_MAP) {
             val items = editor.fieldsFromSelectedNote
-            val fMapNew = Models.fieldMap(type.newModel!!)
+            val fMapNew = Notetypes.fieldMap(type.mNewNotetype!!)
             return fromFieldMap(editor, items, fMapNew, type.modelChangeFieldMap)
         }
         return editor.fieldsFromSelectedNote
@@ -112,7 +112,11 @@ class FieldState private constructor(private val editor: NoteEditor) {
         if (customViewIds == null || viewHierarchyState == null) {
             return
         }
-        val views = viewHierarchyState.getSparseParcelableArrayCompat<View.BaseSavedState>("android:views") ?: return
+        val views = BundleCompat.getSparseParcelableArray(
+            viewHierarchyState,
+            "android:views",
+            View.BaseSavedState::class.java
+        ) ?: return
         val important: MutableList<View.BaseSavedState> = ArrayList(customViewIds.size)
         for (i in customViewIds) {
             important.add(views[i!!] as View.BaseSavedState)
@@ -123,12 +127,12 @@ class FieldState private constructor(private val editor: NoteEditor) {
     /** How fields should be changed when the UI is rebuilt  */
     class FieldChangeType(val type: Type, val replaceNewlines: Boolean) {
         var modelChangeFieldMap: Map<Int, Int>? = null
-        var newModel: Model? = null
+        var mNewNotetype: NotetypeJson? = null
 
         companion object {
-            fun refreshWithMap(newModel: Model?, modelChangeFieldMap: Map<Int, Int>?, replaceNewlines: Boolean): FieldChangeType {
+            fun refreshWithMap(newNotetype: NotetypeJson?, modelChangeFieldMap: Map<Int, Int>?, replaceNewlines: Boolean): FieldChangeType {
                 val typeClass = FieldChangeType(Type.REFRESH_WITH_MAP, replaceNewlines)
-                typeClass.newModel = newModel
+                typeClass.mNewNotetype = newNotetype
                 typeClass.modelChangeFieldMap = modelChangeFieldMap
                 return typeClass
             }

@@ -18,7 +18,8 @@ package com.ichi2.anki.preferences
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 import androidx.preference.ListPreference
-import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
+import anki.config.ConfigKey
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
@@ -44,20 +45,20 @@ class GeneralSettingsFragment : SettingsFragment() {
         // Note that "addToCur" is a boolean while USE_CURRENT is "0" or "1"
         requirePreference<ListPreference>(R.string.deck_for_new_cards_key).apply {
             launchCatchingTask {
-                val valueIndex = if (withCol { get_config("addToCur", true)!! }) 0 else 1
+                val valueIndex = if (withCol { config.getBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK) }) 0 else 1
                 setValueIndex(valueIndex)
             }
             setOnPreferenceChangeListener { newValue ->
-                launchWithCol { set_config("addToCur", "0" == newValue) }
+                launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.ADDING_DEFAULTS_TO_CURRENT_DECK, "0" == newValue) } }
             }
         }
         // Paste PNG
         // Represents in the collection's pref "pastePNG" , i.e.
         // whether to convert clipboard uri to png format or not.
-        requirePreference<SwitchPreference>(R.string.paste_png_key).apply {
-            launchCatchingTask { isChecked = withCol { get_config("pastePNG", false)!! } }
+        requirePreference<SwitchPreferenceCompat>(R.string.paste_png_key).apply {
+            launchCatchingTask { isChecked = withCol { config.getBool(ConfigKey.Bool.PASTE_IMAGES_AS_PNG) } }
             setOnPreferenceChangeListener { newValue ->
-                launchWithCol { set_config("pastePNG", newValue) }
+                launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.PASTE_IMAGES_AS_PNG, newValue as Boolean) } }
             }
         }
         // Error reporting mode
@@ -65,7 +66,7 @@ class GeneralSettingsFragment : SettingsFragment() {
             CrashReportService.onPreferenceChanged(requireContext(), newValue as String)
         }
         // Anki card context menu
-        requirePreference<SwitchPreference>(R.string.anki_card_external_context_menu_key).apply {
+        requirePreference<SwitchPreferenceCompat>(R.string.anki_card_external_context_menu_key).apply {
             title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.context_menu_anki_card_label))
             summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.context_menu_anki_card_label))
             setOnPreferenceChangeListener { newValue ->
@@ -73,7 +74,7 @@ class GeneralSettingsFragment : SettingsFragment() {
             }
         }
         // Card browser context menu
-        requirePreference<SwitchPreference>(R.string.card_browser_external_context_menu_key).apply {
+        requirePreference<SwitchPreferenceCompat>(R.string.card_browser_external_context_menu_key).apply {
             title = getString(R.string.card_browser_enable_external_context_menu, getString(R.string.card_browser_context_menu))
             summary = getString(R.string.card_browser_enable_external_context_menu_summary, getString(R.string.card_browser_context_menu))
             setOnPreferenceChangeListener { newValue ->
@@ -87,12 +88,12 @@ class GeneralSettingsFragment : SettingsFragment() {
         val systemLocale = getSystemLocale()
         requirePreference<ListPreference>(R.string.pref_language_key).apply {
             entries = arrayOf(getStringByLocale(R.string.language_system, systemLocale), *sortedLanguages.keys.toTypedArray())
-            entryValues = arrayOf(LanguageUtil.DEFAULT_LANGUAGE_TAG, *sortedLanguages.values.toTypedArray())
+            entryValues = arrayOf(LanguageUtil.SYSTEM_LANGUAGE_TAG, *sortedLanguages.values.toTypedArray())
             setOnPreferenceChangeListener { selectedLanguage ->
                 LanguageUtil.setDefaultBackendLanguages(selectedLanguage as String)
                 runBlocking { CollectionManager.discardBackend() }
 
-                val localeCode = if (selectedLanguage != LanguageUtil.DEFAULT_LANGUAGE_TAG) {
+                val localeCode = if (selectedLanguage != LanguageUtil.SYSTEM_LANGUAGE_TAG) {
                     selectedLanguage
                 } else {
                     null

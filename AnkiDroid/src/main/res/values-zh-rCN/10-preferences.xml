@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">禁用</string>
-    <string name="enabled">启用</string>
     <string name="pref_summary_seconds">%s 秒</string>
     <string name="pref_summary_minutes">%s 分钟</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">触摸正中处</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">触摸左下方</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">触摸右下方</string>
-    <string name="more_scrolling_buttons" maxLength="41">电子书阅读器</string>
-    <string name="more_scrolling_buttons_summ">也使用 kanji/katakana， emoji/kao-moji 按钮来滚动</string>
     <string name="card_browser_enable_external_context_menu">“%s” 菜单</string>
     <string name="card_browser_enable_external_context_menu_summary">全局启用 “%s” 上下文菜单</string>
     <string name="double_scrolling_gap" maxLength="41">双滚动</string>
@@ -154,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">超时答案</string>
     <string name="timeout_answer_summ">无需用户输入自动显示答案。延迟时间包括自动播放音频文件的时间。</string>
     <string name="timeout_answer_seconds" maxLength="41">显示答案时间</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX 秒</string>
     <string name="timeout_question_seconds" maxLength="41">显示下一个问题时间</string>
     <string name="select_locale_title">选择语言</string>
     <string name="software_render" maxLength="41">禁用卡牌硬件渲染</string>
@@ -180,18 +176,13 @@
     <string name="show_eta" maxLength="41">显示预计完成时间</string>
     <string name="show_eta_summ">显示剩余时间</string>
     <string name="use_current" maxLength="41">新牌组</string>
-    <string name="new_spread" maxLength="41">新卡片位置</string>
     <string name="learn_cutoff" maxLength="41">提前学习的限制</string>
     <string name="time_limit" maxLength="41">指定时间内的学习卡片数</string>
     <string name="new_timezone" maxLength="41">新时区处理</string>
     <string name="day_offset_with_description" maxLength="41">次日开始时间（0 为午夜，23 为晚上 11 点)</string>
     <string name="day_offset_summary">午夜过后 %s 小时</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">午夜</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">晚上 11 点</string>
     <string name="pref_keep_screen_on" maxLength="41">保持屏幕常亮</string>
     <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>
-    <string name="convert_fen_text" maxLength="41">国际象棋标注支持</string>
-    <string name="convert_fen_text_summ">使用福斯夫－爱德华兹记号法来画棋盘。记号必须用 [fen][/fen] 标签括起来。</string>
     <string name="enable_api_title" maxLength="41">启用 AnkiDroid API</string>
     <string name="enable_api_summary">让其他的应用程序连接到 AnkiDroid 读写数据</string>
     <string name="custom_buttons" maxLength="41">顶栏按钮</string>
@@ -217,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">导入所有媒体文件</string>
     <string name="media_import_allow_all_files_summ">假如系统不识别媒体文件</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">打开统计数据时默认牌组</string>
-    <string name="stats_default_deck_current">显示最近牌组的统计数据</string>
-    <string name="stats_default_deck_all">显示所有牌组的统计数据</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">高级统计</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">启用高级统计</string>
-    <string name="enable_advanced_statistics_summ">显示预测统计：基于对未来复习进行的计算或模拟（启用）和已安排好的未来复习（禁用）。</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">计算前n天，从而模拟出接下来的</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">计算精度</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">模拟的迭代次数</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">自定义同步服务器</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">未使用</string>
@@ -242,62 +222,10 @@
     <string name="bluetooth">蓝牙</string>
     <string name="controls_main_category" maxLength="41">命令映射</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">更改牌组集选项会影响多个牌组。如果您想仅更改当前牌组，请先添加一个新的选项组</string>
     <string name="studyoptions_limit_select_tags">选择标签</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">牌组描述（仅影响当前牌组）</string>
-    <string name="deck_conf_group" maxLength="41">选项组</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="other">%1$s\n%2$d 牌组使用此选项组</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">新卡片</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">复习</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">失误</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">常规</string>
     <string name="deck_conf_reminders" maxLength="41">提醒</string>
-    <string name="deck_conf_steps" maxLength="41">学习间隔(以分钟计)</string>
-    <string name="deck_conf_order" maxLength="41">顺序</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">新卡片/天</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">毕业时间间隔</string>
-    <string name="deck_conf_days">XXX 天</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">简单按钮对应的时间间隔</string>
-    <string name="deck_conf_start_ease" maxLength="41">初始简易度</string>
-    <string name="deck_conf_max_rev" maxLength="41">最大复习数量/天</string>
-    <string name="deck_conf_new_bury" maxLength="41">搁置相关新卡片</string>
-    <string name="deck_conf_new_bury_summ">相关新卡片搁置到第二天显示</string>
-    <string name="deck_conf_rev_bury" maxLength="41">隐藏相关复习</string>
-    <string name="deck_conf_rev_bury_summ">相关复习搁置到第二天显示</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">使用常规设置</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">使用一般的 “自动显示答案” 设置，而不是使用此组的设置。</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">回答简单的时间间隔增加比例</string>
-    <string name="deck_conf_hard_factor" maxLength="41">困难按钮对应的时间间隔</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">时间间隔因子</string>
-    <string name="deck_conf_max_ivl" maxLength="41">最大时间间隔</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">新的时间间隔</string>
-    <string name="deck_conf_min_ivl" maxLength="41">最小时间间隔</string>
-    <string name="deck_conf_leech_thres" maxLength="41">「记忆难点」阈值</string>
-    <string name="deck_conf_fails">XXX 遗忘</string>
-    <string name="deck_conf_leech_action" maxLength="41">对「记忆难点」的处理</string>
-    <string name="deck_conf_max_time" maxLength="41">最大的回答时间</string>
-    <string name="deck_conf_seconds">XXX 秒</string>
-    <string name="deck_conf_timer" maxLength="41">显示计时器</string>
-    <string name="deck_conf_autoplay" maxLength="41">自动播放音频</string>
-    <string name="deck_conf_replayq" maxLength="41">重播问题</string>
-    <string name="deck_conf_replayq_summ">显示答案时，同时播放问题和答案的音频。</string>
-    <string name="deck_conf_manage" maxLength="41">组管理</string>
-    <string name="deck_conf_manage_summ">添加和更改选项组</string>
-    <string name="deck_conf_current_group" maxLength="41">当前组</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">重命名</string>
-    <string name="deck_conf_reset" maxLength="41">恢复默认</string>
-    <string name="deck_conf_reset_message">是否将当前选项组还原到默认值？</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">添加选项组</string>
-    <string name="deck_conf_add_summ">创建当前选项组的副本</string>
-    <string name="deck_conf_remove_message">是否确认删除当前选项组？</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">所有子牌组使用此选项组</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="other">%s 子牌组将使用此选项组</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">为当前牌组的所有子牌组应用此选项组?</string>
     <string name="pref_browser_editor_font" maxLength="41">浏览器和编辑器字体</string>
     <string name="deck_conf_cram_filter" maxLength="41">筛选器</string>
     <string name="deck_conf_cram_search" maxLength="41">搜索</string>
@@ -308,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">启用第二筛选器</string>
     <string name="deck_conf_cram_steps" maxLength="41">自定义学习间隔（以分钟计）</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">自定义学习间隔</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">为此牌组集中的牌组启用提醒通知</string>
-    <string name="deck_conf_reminders_time" maxLength="41">提醒时间</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">让 AnkiDroid 更好！</string>
     <string name="analytics_title" maxLength="41">分享功能使用</string>
@@ -346,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">移除「%s」</string>
     <string name="bindings_already_bound">已绑定到「%s」</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">实验性功能</string>
-    <string name="experimental_pref_confirmation" maxLength="41">启用「%s」</string>
-    <string name="use_rust_backend_title" maxLength="41">使用新后端</string>
-    <string name="use_rust_backend_summary">启用较新的 Anki 功能，例如 v3 版调度程序\n不稳定。不要用在你在意的牌组上。应用关闭时不会还原。</string>
-    <string name="use_rust_backend_warning">此操作可能彻底损坏您的安装。 要求应用卸载和删除 AnkiDroid 文件夹，并可能通过同步将损坏传播到 AnkiWeb。\n\n 我们欢迎测试，但请确保您有一个有效的非 AnkiWeb 备份。</string>
-    <string name="enable_v3_sched_title" maxLength="41">使用 v3 调度器</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">实验性功能</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">开发者选项</string>
     <string name="dev_options_enabled_pref" maxLength="41">启用开发者选项</string>
@@ -388,7 +309,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">删除未使用的媒体文件</string>
     <string name="pref__delete_unused_media_files__summary">删除不是以 _ 开头且没有被任何笔记引用的图像和其它媒体</string>
-    <string name="dialog__media_check_required__message">需要进行检查来需寻找未使用的媒体文件</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">删除未使用的媒体文件</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">删除备份</string>

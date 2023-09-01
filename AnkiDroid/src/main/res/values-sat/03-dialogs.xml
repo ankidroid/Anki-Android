@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ?</string>
     <string name="check_db_warning">ᱱᱚᱶᱟ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟ</string>
-    <string name="check_db_acknowledge">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱦᱩᱭ ᱮᱱᱟ</string>
-    <string name="check_db_acknowledge_shrunk">ᱰᱟᱴᱟᱮᱥ ᱪᱮᱠ ᱦᱩᱭᱮᱱᱟ ᱥᱨ ᱚᱯᱴᱤᱢᱟᱭᱡ ᱦᱩᱭᱮᱱᱟ ᱾ \n ᱫᱚ%d MB ᱛᱮ ᱢᱚᱢ ᱮᱱᱟ</string>
     <string name="contextmenu_deckpicker_delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ</string>
-    <string name="delete_deck_default_deck">ᱢᱩᱞ ᱰᱮᱠ ᱫᱚ ᱵᱟᱭ ᱜᱮᱫ ᱜᱤᱰᱤ ᱫᱟᱲᱮᱟᱜᱼᱟᱢ</string>
     <string name="delete_deck_title">ᱰᱮᱠ ᱴᱚᱭᱴᱚᱞ ᱢᱮᱴᱟᱣᱟ  ᱥᱮ?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
-        <item quantity="other">%1$s ᱨᱮ ᱢᱮᱱᱟᱜ ᱡᱷᱚᱛ ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤᱭᱟ? ᱱᱚᱶᱟ ᱨᱮ %2$d ᱠᱟᱰ ᱢᱮᱱᱟᱼᱜᱟ ᱾</item>
-    </plurals>
-    <string name="delete_cram_deck_message">ᱡᱷᱚᱛᱟ %s ᱠᱟᱰ ᱟᱡᱟᱜ ᱢᱩᱞ ᱰᱮᱠ ᱠᱚ ᱛᱮ ᱵᱷᱮᱡᱟᱭᱟ ᱥᱮ?</string>
     <string name="no_tts_available_message">text-to-speech ᱯᱟᱹᱨᱥᱤ ᱵᱟᱱᱩᱜᱼᱟ ᱾</string>
     <string name="initializing_tts">TTS ᱮᱛᱚᱷᱚᱵᱽᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="tts_no_tts">ᱟᱞᱚᱢ ᱨᱚᱲᱟ</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">ᱴᱟᱴᱠᱟ ᱡᱟᱱᱟᱢ(ᱟᱛᱷᱟᱹᱲᱤ) x ᱠᱟᱰ ᱨᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ ᱠᱚᱨᱟᱣ ᱢᱮ ᱰᱮᱠ ᱠᱷᱚᱱᱺ</string>
     <string name="custom_study_preview">ᱢᱟᱲᱟᱝ xᱫᱤᱱ ᱨᱮ ᱥᱮᱞᱮᱫ ᱠᱟᱱ ᱠᱟᱰ ᱠᱚ preview ᱢᱮ</string>
     <string name="custom_study_rebuild_deck_corrupt">ᱱᱤᱡᱮᱛᱮ ᱯᱟᱲᱷᱟᱣᱜ ᱰᱮᱠ ᱫᱟᱭ ᱛᱮᱭᱟᱨ ᱞᱮᱱᱟ</string>
-    <string name="importing_collection">ᱴᱩᱢᱟᱹᱞ ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ...</string>
-    <string name="import_media_count">ᱢᱤᱰᱤᱭᱟ ᱨᱮᱫ %1$d%%&#8230; ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱᱟ </string>
-    <string name="import_progress">• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱱᱚᱥ: %1$d%%\n• ᱟᱭᱟᱛᱚᱜ ᱠᱟᱱ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ: %2$d%%\n• ᱠᱩᱞ-ᱠᱟᱹᱢᱤᱠᱟᱱᱟ: %3$d%%</string>
-    <string name="import_update_details">%1$d of %2$d ᱟᱜᱩᱭᱮᱛ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨᱥ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ ᱾</string>
-    <string name="import_update_ignored">ᱠᱤᱪᱷᱤ ᱟᱹᱯᱰᱮᱴ ᱫᱚ ᱟᱰᱟᱜ ᱜᱤᱰᱤ ᱮᱱᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱠᱷᱟᱹᱛᱤᱨ</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">ᱡᱟᱭᱜᱟ ᱵᱟᱹᱱᱩᱜ-ᱟ</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">ᱵᱟᱝ ᱩᱥᱨᱟᱹᱣ</string>
     <string name="dialog_positive_overwrite">ᱚᱞ ᱪᱮᱛᱟᱱ ᱚᱞ</string>
-    <string name="dialog_positive_remove">ᱚᱪᱚᱜᱽ</string>
     <string name="dialog_positive_repair">ᱡᱩᱛᱨᱟᱹᱣ</string>
     <string name="dialog_positive_replace">ᱥᱟᱦᱟ</string>
-    <string name="dialog_positive_restore">ᱫᱚᱦᱰᱟ ᱡᱚᱜᱟᱣ</string>
-    <string name="dialog_positive_set">ᱥᱟᱡᱟᱣ ᱢᱮ</string>
     <string name="dialog_collection_path_not_dir">ᱦᱚᱨ ᱨᱮ ᱢᱮᱱᱟᱜ ᱩᱫᱩᱫᱩᱜ ᱵᱟᱭ ᱴᱷᱤᱠ ᱟᱟ</string>
     <!-- Media checking -->
     <string name="check_media_title">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ ?</string>
@@ -165,8 +145,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">ᱮᱢᱚᱜ ᱥᱚᱢᱚᱭ</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱯᱟᱱᱛᱮ ᱪᱟᱹᱞᱩ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="confirm_cancel">ᱵᱚᱸᱫ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱥᱮ?</string>
-    <string name="empty_cards_none">ᱠᱷᱟᱹᱞᱤ ᱠᱟᱰ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <string name="empty_cards_count">ᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱟᱹᱜᱤᱫ ᱠᱟᱰ: %d</string>
     <string name="empty_cards_deleted">ᱠᱟᱰ ᱜᱮᱫ ᱜᱤᱰᱤ ᱮᱱᱟᱺ %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +160,11 @@
     <string name="integrity_check_continue_anyway">ᱡᱟᱦᱟᱸ ᱞᱮᱠᱟᱛᱮ ᱞᱮᱛᱟᱲ ᱢᱮ</string>
     <string name="integrity_check_insufficient_space">ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱟᱰᱤᱜᱟᱱ ᱥᱩᱭᱫᱚᱢᱟᱠ ᱡᱟᱭᱜᱟ ᱤᱫᱤᱟᱭ ᱾\n\n ᱞᱮᱛᱟᱲ ᱢᱟᱲᱟᱝ ᱨᱮ ᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ ᱛᱟᱦᱮᱱ ᱠᱟᱛᱷᱟ ᱾</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱞᱤ ᱡᱟᱭᱜᱟ ᱢᱮᱱᱟᱜᱼᱟ.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d ᱵᱷᱩᱞᱟᱠᱟᱱ ᱚᱲᱟᱜ ᱰᱮᱠ ᱠᱚ ᱫᱚᱦᱲᱟ ᱧᱟᱢᱨᱩᱟᱸᱲ ᱮᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱟᱢ ᱢᱮᱱᱩᱟᱹᱞ ᱧᱮᱞ ᱵᱤᱰᱟᱣ ᱢᱮ ᱾</string>
     <string name="video_creation_error">ᱧᱮᱱᱮᱞᱚᱢ ᱵᱟᱭ ᱮᱱᱮᱡ ᱪᱷᱚᱭᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">ᱰᱮᱠ ᱵᱟᱭ ᱵᱚᱫᱚᱞᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ᱠᱟᱰ ᱠᱷᱚᱱ ᱰᱟᱴᱟ ᱰᱤᱠᱚᱰᱤᱝ ᱦᱩᱰᱟᱜ</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">ᱰᱮᱠ ᱚᱯᱥᱚᱱ ᱰᱤᱜᱟᱹᱣ: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱞᱚᱠ ᱮᱱᱟ</string>
     <string name="database_locked_summary">AnkiDroid ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱚᱞᱜᱟ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱠᱟᱢᱤ ᱨᱮ ᱟᱜᱩᱭᱮᱫᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ AnkiDroid ᱵᱚᱸᱫ ᱠᱟᱛᱮ ᱯᱦᱮᱨ ᱥᱮ ᱠᱷᱩᱞᱟᱹᱭ ᱢᱮ ᱾</string>

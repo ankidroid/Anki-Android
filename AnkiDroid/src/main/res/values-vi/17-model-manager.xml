@@ -45,7 +45,6 @@
     <string name="model_browser_delete">Xóa loại ghi chú</string>
     <string name="model_browser_rename" comment="Rename a note type">Đổi tên</string>
     <string name="model_browser_template">Chỉnh sửa thẻ</string>
-    <string name="model_browser_add">Thêm loại ghi chú</string>
     <!--Rename-->
     <string name="rename_model">Đổi tên loại ghi chú</string>
     <!--Language Hint-->
@@ -61,7 +60,6 @@
     <string name="model_field_editor_toggle_sticky">Nhớ quá trình nhập liệu cùng khi thêm</string>
     <string name="model_field_editor_changing">Cập nhật các trường</string>
     <string name="model_field_editor_sort_field">Sắp xếp theo trường này</string>
-    <string name="model_clone_suffix">sao chép</string>
     <!--Warnings-->
     <string name="model_delete_warning">Bạn có chắc chắn muốn xóa loại ghi chú này không?</string>
     <string name="field_delete_warning">Bạn có chắc chắn muốn xóa trường này không?</string>

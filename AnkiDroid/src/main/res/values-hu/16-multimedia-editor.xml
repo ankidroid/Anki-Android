@@ -46,15 +46,6 @@
     <string name="multimedia_editor_popup_audio">Hang rögzítése</string>
     <string name="multimedia_editor_popup_text">Speciális szerkesztő</string>
     <string name="multimedia_editor_popup_cloze">Kitöltés</string>
-    <string name="multimedia_editor_popup_clear_field">Mező törlése</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Betöltés</string>
-    <string name="multimedia_editor_pron_looking_up">Keresés a kiejtésre</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">Fordítás sikertelen</string>
-    <string name="multimedia_editor_only_one_word">Egyszerre csak egy szó támogatott</string>
-    <string name="multimedia_editor_word_search_try_lower_case">Próbálj csak kisbetűs karaktereket használni</string>
-    <string name="multimedia_editor_poweredbeolingus">A Beolingus által</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Szöveg</string>
@@ -64,11 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Kész</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">Kiejtés</string>
     <string name="multimedia_editor_text_field_editing_clear">Törlés</string>
     <string name="multimedia_editor_text_field_editing_clone">Másolás innen</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">Először írj be néhány szöveget</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Kivesz</string>
     <!-- Multimedia card editor activity -->
@@ -81,16 +69,6 @@
     <string name="multimedia_editor_import_audio">Hang</string>
     <string name="multimedia_editor_import_video">Videó</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">Letöltés</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Kész</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">A szó nem található</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">Szó keresése</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Várakozás</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Valami hiba történt</string>
     <string name="multimedia_editor_svg_preview">SVG képek előnézete nem lehetséges</string>
@@ -104,8 +82,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Nem sikerült hangfelvevő eszköztárat létrehozni</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Szerkesztési mező</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">Nincs kapcsolat</string>
     <!-- Crop function-->
     <string name="crop_image">Meg akarod vágni ezt a képet?</string>
     <string name="crop_button">Kép megvágása</string>

@@ -30,8 +30,8 @@ class HeaderPreference
 constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.preferenceStyle,
-    defStyleRes: Int = R.style.Preference
+    defStyleAttr: Int = androidx.preference.R.attr.preferenceStyle,
+    defStyleRes: Int = androidx.preference.R.style.Preference
 ) : Preference(context, attrs, defStyleAttr, defStyleRes) {
 
     init {

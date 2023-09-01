@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">معطل</string>
-    <string name="enabled">مفعل</string>
     <string name="pref_summary_seconds">%s ث</string>
     <string name="pref_summary_minutes">%s د</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">النقر في الوسط</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">النقر في أسفل اليسار</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">النقر في أسفل اليمين</string>
-    <string name="more_scrolling_buttons" maxLength="41">القارئ الإلكتروني</string>
-    <string name="more_scrolling_buttons_summ">استخدم أيضًا أزرار كانجي/كاتاكانا، الرموز التعبيرية/كاو - موجي للتمرير</string>
     <string name="card_browser_enable_external_context_menu">قائمة \'%s\'</string>
     <string name="card_browser_enable_external_context_menu_summary">يفعل قائمة سياق \'%s\' عمومًا</string>
     <string name="double_scrolling_gap" maxLength="41">مضاعفة فجوة التمرير</string>
@@ -154,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">الإجابة بعد انتهاء المهلة</string>
     <string name="timeout_answer_summ">إظهار الجواب تلقائيًا بدون تدخل المستخدم. تتضمن المهلة وقت تشغيل الملفات الصوتية تلقائيًا.</string>
     <string name="timeout_answer_seconds" maxLength="41">مهلة إظهار الجواب</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX ثانية</string>
     <string name="timeout_question_seconds" maxLength="41">مهلة إظهار السؤال التالي</string>
     <string name="select_locale_title">حدد اللغة</string>
     <string name="software_render" maxLength="41">تعطيل عارض العتاد للبطاقات</string>
@@ -180,18 +176,13 @@
     <string name="show_eta" maxLength="41">إظهار الوقت التقديري المتبقي للدراسة</string>
     <string name="show_eta_summ">إظهار الوقت المتبقي</string>
     <string name="use_current" maxLength="41">رزمة البطاقات الجديدة</string>
-    <string name="new_spread" maxLength="41">موضع البطاقات الجديدة</string>
     <string name="learn_cutoff" maxLength="41">حد التعلم المبكر</string>
     <string name="time_limit" maxLength="41">مهلة مربع الوقت</string>
     <string name="new_timezone" maxLength="41">طريقة المعالجة الجديدة للمناطق الزمنية</string>
     <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي (0 يعني منتصف الليل، 23 يعني الساعة 11 مساءً)</string>
     <string name="day_offset_summary">%s ساعة بعد منتصف الليل</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">منتصف الليل</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11م</string>
     <string name="pref_keep_screen_on" maxLength="41">إبقاء الشاشة مضيئة</string>
     <string name="pref_keep_screen_on_summ">تعطيل مهلة الشاشة</string>
-    <string name="convert_fen_text" maxLength="41">دعم رموز الشطرنج</string>
-    <string name="convert_fen_text_summ">رسم لوحة الشطرنج باستخدام ترميز Forsyth–Edwards. يجب إحاطة هذه الرموز بعبارات [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">تفعيل واجهة برمجة أنكيدرويد</string>
     <string name="enable_api_summary">السماح للتطبيقات الأخرى بالاتصال بأنكيدرويد وقراءة/كتابة البيانات بدون تدخلك</string>
     <string name="custom_buttons" maxLength="41">أزرار شريط التطبيق</string>
@@ -217,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">السماح بجميع الملفات في استيرادات الوسائط</string>
     <string name="media_import_allow_all_files_summ">إذا لم يتعرف أندرويد على ملف وسائط</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">الرزمة الافتراضية عند فتح الإحصائيات</string>
-    <string name="stats_default_deck_current">إظهار الإحصائيات للرزمة الأخيرة</string>
-    <string name="stats_default_deck_all">إظهار الإحصائيات لكل الرزم</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">إحصائيات متقدمة</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">تفعيل الإحصائيات المتقدمة</string>
-    <string name="enable_advanced_statistics_summ">عرض تنبؤات الإحصائيات بناءً على حساب أو محاكاة للمراجعات المستقبلية (مفعل) أو المراجعات المستقبلية المجدولة بالفعل (غير مفعل).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">حساب أول س يوم، ومحاكاة الباقي</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">دقة الحساب</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">عدد مرات تكرار المحاكاة</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">خادم مزامنة مخصص</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">غير مستخدم</string>
@@ -242,72 +222,10 @@
     <string name="bluetooth">بلوتوث</string>
     <string name="controls_main_category" maxLength="41">تعيين الأوامر</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">ستؤثر التغييرات في خيارات مجموعة الرزم على عدة رزم. إذا كنت ترغب في تغيير الرزمة الحالية فقط، أضف مجموعة خيارات جديدة أولًا.</string>
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">وصف الرزمة (ينطبق على الرزمة الحالية فقط)</string>
-    <string name="deck_conf_group" maxLength="41">مجموعة الخيارات</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="zero">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
-        <item quantity="one">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
-        <item quantity="two">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
-        <item quantity="few">تستخدم %1$s\n%2$d رزمات هذه المجموعة</item>
-        <item quantity="many">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
-        <item quantity="other">تستخدم %1$s\n%2$d رزمة هذه المجموعة</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">بطاقات جديدة</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">مراجعات</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">سقطات</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">عام</string>
     <string name="deck_conf_reminders" maxLength="41">تذكيرات</string>
-    <string name="deck_conf_steps" maxLength="41">الخطوات (بالدقيقة)</string>
-    <string name="deck_conf_order" maxLength="41">الترتيب</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">عدد البطاقات الجديدة في اليوم</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">الفاصل الزمني بين آخر خطوة وأول مراجعة</string>
-    <string name="deck_conf_days">XXX يوم (أيام)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">الفاصل الزمني للبطاقات السهلة</string>
-    <string name="deck_conf_start_ease" maxLength="41">سهولة أولية</string>
-    <string name="deck_conf_max_rev" maxLength="41">عدد المراجعات الأقصى في اليوم</string>
-    <string name="deck_conf_new_bury" maxLength="41">ادفن البطاقات الجديدة ذات الصلة</string>
-    <string name="deck_conf_new_bury_summ">تُدفَن البطاقات الجديدة ذات الصلة حتى اليوم التالي</string>
-    <string name="deck_conf_rev_bury" maxLength="41">ادفن بطاقات المراجعة ذات الصلة حتى اليوم التالي</string>
-    <string name="deck_conf_rev_bury_summ">تُدفَن بطاقات المراجعة ذات الصلة حتى اليوم التالي</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">استخدم الإعدادات العامة</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">استخدم إعدادات «عرض الجواب التلقائي» العامة بدلًا من إعدادات هذه المجموعة.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">مكافأة البطاقات السهلة</string>
-    <string name="deck_conf_hard_factor" maxLength="41">الفاصل الزمني للبطاقات الصعبة</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">مضاعف الفاصل</string>
-    <string name="deck_conf_max_ivl" maxLength="41">الفاصل الزمني الأقصى</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">التباعد الجديد</string>
-    <string name="deck_conf_min_ivl" maxLength="41">الفاصل الزمني الأصغر</string>
-    <string name="deck_conf_leech_thres" maxLength="41">عتبة البطاقات المستعصية</string>
-    <string name="deck_conf_fails">XXX سقطة/سقطات</string>
-    <string name="deck_conf_leech_action" maxLength="41">تدبير البطاقات المستعصية</string>
-    <string name="deck_conf_max_time" maxLength="41">أقصى زمن للإجابة</string>
-    <string name="deck_conf_seconds">XXX ثانية</string>
-    <string name="deck_conf_timer" maxLength="41">أظهر مؤقت الإجابة</string>
-    <string name="deck_conf_autoplay" maxLength="41">تشغيل الصوت تلقائيًا</string>
-    <string name="deck_conf_replayq" maxLength="41">إعادة تشغيل أصوات السؤال</string>
-    <string name="deck_conf_replayq_summ">أعد تشغيل أصوات كل من السؤال والجواب عند إظهار الجواب</string>
-    <string name="deck_conf_manage" maxLength="41">إدارة المجموعة</string>
-    <string name="deck_conf_manage_summ">إضافة مجموعات الخيارات وتغييرها</string>
-    <string name="deck_conf_current_group" maxLength="41">المجموعة الحالية</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">تغيير الاسم</string>
-    <string name="deck_conf_reset" maxLength="41">استعادة الافتراضي</string>
-    <string name="deck_conf_reset_message">هل تريد إرجاع مجموعة الخيارات الحالية إلى القيم الافتراضية؟</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">إضافة</string>
-    <string name="deck_conf_add_summ">إنشاء نسخة من مجموعة الخيارات الحالية</string>
-    <string name="deck_conf_remove_message">هل تريد حذف مجموعة الخيارات الحالية؟</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">ضبط لكل الرزم الفرعية</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="zero">تستخدم %s رزمة فرعية هذه المجموعة</item>
-        <item quantity="one">تستخدم %s رزمة فرعية هذه المجموعة</item>
-        <item quantity="two">تستخدم %s رزمة فرعية هذه المجموعة</item>
-        <item quantity="few">تستخدم %s رزمات فرعية هذه المجموعة</item>
-        <item quantity="many">تستخدم %s رزمة فرعية هذه المجموعة</item>
-        <item quantity="other">تستخدم %s رزمة فرعية هذه المجموعة</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">هل تريد ضبط مجموعة الخيارات الحالية لكل الرزم الفرعية لهذه الرزمة؟</string>
     <string name="pref_browser_editor_font" maxLength="41">خط المتصفح والمحرر</string>
     <string name="deck_conf_cram_filter" maxLength="41">فلتر</string>
     <string name="deck_conf_cram_search" maxLength="41">البحث</string>
@@ -318,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">تفعيل الفلتر الثاني</string>
     <string name="deck_conf_cram_steps" maxLength="41">خطوات مخصصة (بالدقيقة)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">ضبط خطوات مخصصة</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">تفعيل تنبيهات التذكير لكل الرزم في مجموعة الرزم هذه</string>
-    <string name="deck_conf_reminders_time" maxLength="41">نبّه في</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">ساعد في تحسين أنكيدرويد!</string>
     <string name="analytics_title" maxLength="41">مشاركة بيانات استخدام الميزات</string>
@@ -356,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">إزالة \'%s\'</string>
     <string name="bindings_already_bound">مربوط بالفعل بـ %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">تجريبي</string>
-    <string name="experimental_pref_confirmation" maxLength="41">تفعيل \"%s\"</string>
-    <string name="use_rust_backend_title" maxLength="41">استخدام المكتبة الخلفية الجديدة</string>
-    <string name="use_rust_backend_summary">دعم إصدارات أنكي الجديدة، مثل مجدول V3\nغير مستقر. لا تستخدم هذا على مجموعة يهمك أمرها. لا يلغى تفعيل هذا الخيار عند إغلاق التطبيق</string>
-    <string name="use_rust_backend_warning">هناك احتمال أن يسبب هذا بتخريب نسختك تمامًا، ما يتطلب حذف التطبيق وحذف مجلد أنكيدرويد، وهناك أيضًا احتمال أن ينتشر العطل إلى أنكي ويب من خلال المزامنة.\n\nنقدر فحص هذه الميزة، لكن يرجى التأكد من أن لديك نسخة احتياطية صالحة غير مزامنة لأنكي ويب.</string>
-    <string name="enable_v3_sched_title" maxLength="41">استخدم مجدول V3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">تجريبي</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">خيارات المطور</string>
     <string name="dev_options_enabled_pref" maxLength="41">تفعيل خيارات المطور</string>
@@ -394,7 +305,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">حذف الوسائط غير المستخدمة</string>
     <string name="pref__delete_unused_media_files__summary">حذف الصور والوسائط الأخرى غير البدائة بـ _ وغير المستخدمة في أي ملحوظة</string>
-    <string name="dialog__media_check_required__message">يجب فحص الوسائط لإيجاد الوسائط غير المستخدمة</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">حذف الوسائط غير المستخدمة</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">حذف النسخ الاحتياطية</string>

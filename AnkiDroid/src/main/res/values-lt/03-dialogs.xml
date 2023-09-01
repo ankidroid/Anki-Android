@@ -46,18 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Patikrinti duomenų bazę?</string>
     <string name="check_db_warning">Tai gali ilgai užtrukti</string>
-    <string name="check_db_acknowledge">Duomenų bazė patikrinta</string>
-    <string name="check_db_acknowledge_shrunk">Duomenų bazė patikrinta ir optimizuota.\nSumažinta %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Trinti rinkinį</string>
-    <string name="delete_deck_default_deck">Numatytojo rinkinio ištrinti negalima</string>
     <string name="delete_deck_title">Ištrinti rinkinį?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Ar tikrai norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kortelė.</item>
-        <item quantity="few">Ar tikrai norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kortelės.</item>
-        <item quantity="many">Ar tikrai norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kortelių.</item>
-        <item quantity="other">Ar tikrai norite ištrinti visas %1$s korteles? Rinkinį sudaro %2$d kort.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Ar norite grąžinti visas %s korteles į jų pradinius rinkinius?</string>
     <string name="no_tts_available_message">Teksto perskaityti nurodyta kalba negalime</string>
     <string name="initializing_tts">Pradedamas teksto skaitymas balsu&#8230;</string>
     <string name="tts_no_tts">Nekalbėkite</string>
@@ -119,17 +109,6 @@
     <string name="custom_study_random">Atsitiktine tvarka iš rinkinio atrinkti x kortelių:</string>
     <string name="custom_study_preview">Peržiūrėti naujas korteles, pridėtas per paskutines x dienų:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">Importuojama kolekcija&#8230;</string>
-    <string name="import_media_count">Įkeliami laikmenų failai %1$d%%&#8230;</string>
-    <string name="import_progress">• Įkeliami užrašai: %1$d%%\n• Įkeliamos kortelės: %2$d%%\n• Apdorojama: %3$d%%</string>
-    <string name="import_update_details">Atnaujinta %1$d iš %2$d esamų užrašų.</string>
-    <string name="import_update_ignored">Kai kurių atnaujinimų buvo nepaisoma, nes pasikeitė užrašų tipas</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="many">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
@@ -149,11 +128,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Išjungti</string>
     <string name="dialog_positive_overwrite">Perrašyti</string>
-    <string name="dialog_positive_remove">Pašalinti</string>
     <string name="dialog_positive_repair">Taisyti</string>
     <string name="dialog_positive_replace">Pakeisti</string>
-    <string name="dialog_positive_restore">Atkurti</string>
-    <string name="dialog_positive_set">Nustatyti</string>
     <string name="dialog_collection_path_not_dir">Nurodytas adresas negalioja</string>
     <!-- Media checking -->
     <string name="check_media_title">Tikrinti laikmenas?</string>
@@ -181,8 +157,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Numatytos</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Ieškomos tuščios kortelės&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">Tuščių kortelių nėra</string>
     <string name="empty_cards_count">Trinti paruoštos kortelės: %d</string>
     <string name="empty_cards_deleted">Ištrintos kortelės: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -198,15 +172,11 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
     <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>

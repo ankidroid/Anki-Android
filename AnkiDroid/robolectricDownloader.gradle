@@ -24,8 +24,8 @@ def robolectricAndroidSdkVersions = [
 //        [androidVersion: "9", frameworkSdkBuildVersion: "4913185-2"],
         [androidVersion: "10", frameworkSdkBuildVersion:  "5803371"],
 //        [androidVersion: "11", frameworkSdkBuildVersion:  "6757853"],
-        [androidVersion: "12", frameworkSdkBuildVersion:  "7732740"],
-//        [androidVersion: "12.1", frameworkSdkBuildVersion:  "8229987"],
+//        [androidVersion: "12", frameworkSdkBuildVersion:  "7732740"],
+        [androidVersion: "12.1", frameworkSdkBuildVersion:  "8229987"],
 //        [androidVersion: "13", frameworkSdkBuildVersion:  "9030017"],
 ]
 

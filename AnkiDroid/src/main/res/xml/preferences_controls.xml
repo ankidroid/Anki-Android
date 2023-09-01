@@ -22,35 +22,33 @@
     android:title="@string/pref_cat_controls"
     android:key="@string/pref_controls_screen_key">
 
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:disableDependentsState="false"
         android:key="@string/gestures_preference"
         android:summary="@string/gestures_summ"
         android:title="@string/gestures" />
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:dependency="@string/gestures_preference"
         android:key="@string/gestures_corner_touch_preference"
         android:summary="@string/gestures_corner_touch_summary"
         android:title="@string/gestures_corner_touch" />
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:dependency="@string/gestures_preference"
         android:disableDependentsState="false"
         android:key="@string/nav_drawer_gesture_key"
         android:summary="@string/gestures_fullscreen_nav_drawer_summary"
         android:title="@string/gestures_full_screen_nav_drawer" />
-    <com.ichi2.preferences.SeekBarPreferenceCompat
-        android:defaultValue="100"
-        android:dependency="@string/gestures_preference"
+    <com.ichi2.preferences.SliderPreference
         android:key="@string/pref_swipe_sensitivity_key"
-        android:max="180"
-        android:text=""
+        android:dependency="@string/gestures_preference"
         android:title="@string/swipe_sensitivity"
-        app:interval="1"
-        app:min="20"
-        app1:useSimpleSummaryProvider="true"/>
+        android:defaultValue="100"
+        android:valueFrom="20"
+        android:valueTo="180"
+        app1:displayValue="true"/>
     <!-- This category is expanded in BindingPreference.setup -->
     <PreferenceCategory android:title="@string/controls_main_category" android:key="@string/controls_command_mapping_cat_key" />
 </PreferenceScreen>

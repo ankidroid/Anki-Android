@@ -21,8 +21,6 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.preference.Preference
-import androidx.preference.PreferenceCategory
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.utils.*
 
@@ -40,7 +38,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
                 title(R.string.reset_settings_to_default)
                 positiveButton(R.string.reset) {
                     // Reset the settings to default
-                    AnkiDroidApp.getSharedPrefs(requireContext()).edit {
+                    requireContext().sharedPrefs().edit {
                         remove("customButtonUndo")
                         remove("customButtonScheduleCard")
                         remove("customButtonEditCard")
@@ -73,18 +71,7 @@ class CustomButtonsSettingsFragment : SettingsFragment() {
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun allKeys(): HashSet<String> {
-        val allKeys = HashSet<String>()
-        for (i in 0 until preferenceScreen.preferenceCount) {
-            val pref = preferenceScreen.getPreference(i)
-            if (pref is PreferenceCategory) {
-                for (j in 0 until pref.preferenceCount) {
-                    allKeys.add(pref.getPreference(j).key)
-                }
-            } else {
-                allKeys.add(pref.key)
-            }
-        }
-        return allKeys
+        return allPreferences().mapTo(hashSetOf()) { it.key }
     }
 
     companion object {

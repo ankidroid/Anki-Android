@@ -13,7 +13,9 @@
         <item name="colorAccent">@color/theme_plain_accent</item>
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
-        <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
+        <!-- Widget colors -->
+        <item name="widgetColorActivated">?attr/colorAccent</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">#607D8B</item>
         <item name="largeButtonBackgroundColorFocused">#587180</item>
@@ -45,7 +47,7 @@
         <item name="buttonForegroundColor">#D6D7D7</item>
         <!-- FAB -->
         <item name="fab_normal">@color/theme_plain_accent</item>
-        <item name="fab_pressed">#c8607d8b</item> <!-- 55 less opacity than fab_normal -->
+        <item name="fab_pressed">@color/theme_plain_accent</item> <!-- No change in opacity on FAB pressed to avoid Android's material shadow artifact on translucent backgrounds -->
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_grey_500</item>
         <item name="overflowAndPopupMenuIconColor">?attr/colorPrimary</item>

@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Bạn đang ngoại tuyến</string>
-    <string name="sync_even_if_offline">Vẫn thử</string>
     <string name="sync_error">Lỗi đồng bộ</string>
     <string name="vague_error" comment="Network error dialog title">Lỗi</string>
     <string name="retry">Thử lại</string>
@@ -63,71 +62,23 @@
     <string name="sign_up">Đăng ký</string>
     <string name="logged_as">Đăng nhập với</string>
     <string name="log_out">Đăng xuất</string>
-    <string name="alert_logging_message">Đang đăng nhập&#8230;</string>
-    <string name="invalid_username_password">Địa chỉ email hoặc mật khẩu không hợp lệ</string>
     <string name="reset_password">Đặt lại mật khẩu</string>
     <string name="lost_mail_instructions">Quên Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Tùy chọn cho XXX</string>
-    <string name="sync_prepare_syncing">Đang chuẩn bị đồng bộ...</string>
-    <string name="sync_preparing_full_sync_message">Đang chuẩn bị đồng bộ hoàn toàn&#8230;</string>
-    <string name="sync_uploading_message">Đang tải lên&#8230;</string>
-    <string name="sync_downloading_message">Đang tải xuống&#8230;</string>
     <string name="sync_title">Đồng bộ</string>
     <string name="sync_log_uploading_message">Đồng bộ hoàn toàn từ thiết bị</string>
-    <string name="sync_log_clocks_unsynchronized">Đồng hồ của bạn lệch %1$d giây%2$s. Hãy chắc chắn rằng ngày tháng, thời gian và múi giờ trên điện thoại được thiết lập chính xác rồi đồng bộ lại.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, có thể múi giờ bị sai</string>
-    <string name="sync_log_clocks_unsynchronized_date">, có thể ngày tháng bị sai</string>
-    <string name="sync_no_changes_message">Không thấy thay đổi nào</string>
     <string name="sync_database_acknowledge">Bộ sưu tập đã được đồng bộ</string>
-    <string name="sync_log_error_specific">Lỗi đồng bộ, hãy gõ: %1$s, tin nhắn: %2$s</string>
     <string name="sync_corrupt_database">CSDL của bạn đã hỏng. Xin sửa nó trước khi thử đồng bộ lại.\n\nXem %s để biết thông tin về sửa chữa CSDL.</string>
-    <string name="sync_too_busy">Máy chủ đang bận. Hãy thử lại sau.</string>
-    <string name="sync_remote_db_error">CSDL tải về đã bị hỏng. Xin thử lại.</string>
-    <string name="sync_overwrite_error">Không thể ghi đè bộ sưu tập hiện tại bằng tập tin đã tải xuống</string>
-    <string name="sync_connection_error">Đã hết thời gian kết nối. Hoặc là kết nối mạng của bạn đang gặp vấn đề hoặc bạn có một tệp rất lớn trong thư mục đa phương tiện.</string>
-    <string name="sync_write_access_error_on_storage">Tệp đã tải xuống không thể được lưu vào bộ nhớ của bạn. Hoặc bộ nhớ chỉ đọc hoặc không đủ dung lượng.</string>
-    <string name="sync_error_invalid_sync_server">Máy chủ Đồng bộ hóa Tùy chỉnh trong Cài đặt Nâng cao không hợp lệ (%s). Vui lòng nhập một máy chủ hợp lệ hoặc tắt cài đặt.</string>
-    <string name="sync_deletions_message">Đồng bộ phần đã xoá&#8230;</string>
-    <string name="sync_small_objects_message">Đồng bộ các phần nhỏ&#8230;</string>
-    <string name="sync_finish_message">Đang hoàn tất đồng bộ&#8230;</string>
-    <string name="sync_log_finish_error">Lỗi khi gửi hướng hoàn tất đến máy chủ</string>
-    <string name="sync_writing_db">Đang lưu các thay đổi vào cơ sở dữ liệu&#8230;</string>
-    <string name="sync_download_chunk">Đang tải xuống các thay đổi&#8230;</string>
-    <string name="sync_upload_chunk">Đang tải lên các thay đổi&#8230;</string>
-    <string name="sync_up_down_size">Tải lên: %1$d KB, Tải xuống : %2$d KB</string>
-    <string name="sync_generic_error">Đã xảy ra lỗi. Hãy thử lại sau.</string>
-    <string name="sync_check_upload_file">Đang kiểm tra tệp trước khi tải lên&#8230;</string>
-    <string name="sync_check_download_file">Đang kiểm tra tệp đã tải về&#8230;</string>
-    <string name="sync_media_find">Đang tìm tệp đa phương tiện đã đổi&#8230;</string>
-    <string name="sync_media_no_changes">Tệp đa phương tiện không có thay đổi</string>
-    <string name="sync_media_success">Đã đồng bộ tệp đa phương tiện</string>
-    <string name="sync_media_partial_updated">Đồng bộ hóa phương tiện xong một phần:\n%1$d Tệp phương tiện tải xong.\n%2$d  Tệp phương tiện đã được tải lên</string>
-    <string name="sync_media_changes_count">có %d thay đổi đa phương tiện phải tải lên</string>
-    <string name="sync_media_downloaded_count">có %d tệp đa phương tiện phải tải về</string>
-    <string name="sync_sanity_failed">Sau khi đồng bộ, bộ sưu tập ở trong tình trạng bất ổn. Để khắc phục vấn đề này, AnkiDroid sẽ thực hiện đồng bộ đầy đủ. Lựa chọn phía mà bạn muốn giữ.</string>
-    <string name="sync_media_sanity_failed">Đã hoàn thành đồng bộ đa phương tiện, nhưng số lượng không đúng so với máy chủ. Kế tiếp sẽ là đồng bộ đầy đủ để sửa lỗi.</string>
-    <string name="sync_media_db_error">Đồng bộ hóa phương tiện không thành công vì cơ sở dữ liệu hiện tại bị hỏng. Hãy kiểm tra file đa phương tiện.</string>
-    <string name="sync_media_error">Lỗi đồng bộ dữ liệu đa phương tiện</string>
-    <string name="sync_media_error_check">Lỗi đồng bộ các tệp đa phương tiện. Đề nghị kiểm tra lại chúng.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Vui lòng chạy ‘%s’ trước khi đồng bộ hóa</string>
     <string name="sync_sanity_local">Trên thiết bị</string>
     <string name="sync_sanity_remote">Từ xa</string>
     <string name="force_full_sync_title">Thực hiện đồng bộ đầy đủ</string>
     <string name="force_full_sync_summary">Trong lần đồng bộ kế tiếp, buộc các thay đổi theo một hướng</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Buộc đồng bộ hóa hoàn toàn</string>
     <string name="full_sync_confirmation">Thay đổi theo yêu cầu đòi hỏi tải lên đầy đủ CSDL trong lần đồng bộ bộ sưu tập tiếp theo. Nếu có thẻ ôn tập hoặc các thay đổi đang chờ trên thiết bị khác mà chưa được đồng bộ ở đây, chúng sẽ bị mất. Vẫn tiếp tục chứ?</string>
     <string name="full_sync_confirmation_upgrade">Do lỗi của phiên bản AnkiDroid đã cài đặt trước đó, đề nghị thực hiện đồng bộ hoàn toàn.</string>
-    <string name="sync_error_407_proxy_required">Máy chủ proxy yêu cầu xác thực.</string>
-    <string name="sync_error_409">Chỉ một máy trạm được phép truy cập AnkiWeb tại một thời điểm. Nếu đồng bộ trước thất bại, hãy thử lại trong vài phút.</string>
-    <string name="sync_error_413_collection_size">Bộ sưu tập của bạn hoặc một tệp phương tiện quá lớn để đồng bộ hóa.</string>
-    <string name="sync_error_500_unknown">AnkiWeb đã gặp lỗi. Vui lòng thử lại sau vài phút và nếu sự cố vẫn tiếp diễn, vui lòng gửi báo cáo lỗi.</string>
-    <string name="sync_error_501_upgrade_required">Xin nâng cấp lên phiên bản AnkiDroid mới nhất</string>
-    <string name="sync_error_502_maintenance">AnkiWeb đang được bảo trì. Vui lòng thử lại trong vài phút.</string>
-    <string name="sync_error_504_gateway_timeout">Đã nhận được lỗi hết thời gian chờ cổng 504.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Đồng bộ (đầy đủ)</string>
     <string name="sync_menu_title_no_account">Đồng bộ (đăng nhập)</string>
-    <string name="sync_error_unknown_host_readable">Không thể kết nối với AnkiWeb. Internet của bạn có hoạt động không? \n\n%s</string>
 </resources>

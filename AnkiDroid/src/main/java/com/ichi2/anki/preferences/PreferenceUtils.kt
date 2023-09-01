@@ -15,9 +15,16 @@
  */
 package com.ichi2.anki.preferences
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.annotation.StringRes
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+
+fun SharedPreferences.get(key: String): Any? {
+    return all[key]
+}
 
 /**
  * Sets the callback to be invoked when this preference is changed by the user
@@ -49,4 +56,9 @@ inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(k
 inline fun <reified T : Preference> PreferenceFragmentCompat.requirePreference(@StringRes resId: Int): T {
     val key = getString(resId)
     return requirePreference(key)
+}
+
+/** shorthand method to get the default [SharedPreferences] instance */
+fun Context.sharedPrefs(): SharedPreferences {
+    return PreferenceManager.getDefaultSharedPreferences(this)
 }

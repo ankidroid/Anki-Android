@@ -125,9 +125,9 @@
     <string name="save">შენახვა</string>
     <string name="close">დახურვა</string>
     <string name="select">არჩევა</string>
-    <string name="reordering_cards">ბარათები ლაგდება&#8230;</string>
     <string name="field_remapping">%1$s (\"%2$s\"-დან)</string>
     <string name="confirm_map_cards_to_nothing">ყველა ბარათი რომელიც არაფერთანაა დაკავშირებული წაიშლება. თუ შენიშვნას არ აქვს შერჩენილი ბარათები ის დაიკარგება. დარწმუნებული ხართ, რომ გსურთ გაგრძელება?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">დროის ლიმიტი ამოიწურა</string>
     <plurals name="timebox_reached">
         <item quantity="one">ნასწავლია %1$d ბარათი %2$sში</item>
@@ -145,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">გადადება</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">წინასწარ ნახვა</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ბარათი %2$d-დან</string>
-    <string name="error_insufficient_memory">ოპერაცია ვერ შესრულდება მოწყობილობაზე მეხსიერების არქონის გამო</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">გადარქმევა</string>
-    <string name="default_conf_delete_error">ნაგულისხმევი პარამეტრების ჯგუფის წაშლა შეუძლებელია</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d ბარათი დაემატა</item>
-        <item quantity="other">%d ბარათი დაემატა</item>
-    </plurals>
     <string name="check_db">მონაცემთა ბაზის შემოწმება</string>
     <string name="check_media">მედიაფაილების შემოწმება</string>
     <string name="empty_cards">ცარიელი ბარათები</string>
-    <string name="check_db_message">მოწმდება მონაცემთა ბაზა&#8230;</string>
     <string name="empty_card_warning">ბარათი ცარიელია. გამოიყენეთ \"ცარიელი ბარათების\" ღილაკი დასტების სიის ეკრანზე არსებული მენიუდან</string>
     <string name="unknown_type_field_warning">პასუხის აკრეფა: უცნობი ველი %s</string>
     <string name="delete_deck">იშლება დასტა&#8230;</string>
@@ -169,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">ეს არ არის მოქმედი Anki-პაკეტის ფაილი</string>
     <string name="import_title_error" comment="Title of error dialog">შეცდომა</string>
-    <string name="import_log_failed_unzip">APKG ფაილი ვერ გაიხსნა: %s</string>
-    <string name="import_log_failed_copy_to">%s-ში APKG ფაილის კოპირება ვერ მოხერხდა</string>
-    <string name="import_log_failed_validate">APKG ფაილი ვერ გადამოწმდა</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">შეცდომა ფაილის იმპორტირებისას, სავარაუდოდ ქეშ-მეხსიერების გასუფთავების შედეგად.\nგთხოვთ ხელახლა სცადოთ</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_corrupt_zip">APKG ფაილი დაზიანებულია. გთხოვთ წაშალოთ და ხელახლა ჩამოტვირთოთ. \n\nგამომწვევი მიზეზი: %s</string>
     <string name="import_error_handle_exception">ფაილის იმპორტირება ვერ მოხერხდა\n\n%s</string>
     <string name="import_error_not_apkg_extension">ფაილის სახელს „%s“ არ აქვს .apkg ან .colpkg დაბოლოება</string>
     <string name="import_error_load_imported_database">Anki მონაცემთა ბაზის შემცვლელი ფაილები (.anki2)  ჯერ არ არის მხარდაჭერილი. იხილეთ ინსტრუქცია შესაბამისი მითითებებისთვის</string>
@@ -183,8 +169,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">მრავალი COLPKG ფაილი მოინიშნა.</string>
     <string name="import_error_colpkg_apkg">apkg და colpkg ფაილები ერთბაშად მოინიშნა</string>
-    <string name="import_stats_error">ჩამოთვლილი ფაილების იმპორტირებისას რამდენიმე შეცდომა მოხდა:\n%s</string>
-    <string name="import_replacing">კოლექციის ჩანაცვლება...</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_include_schedule">სწავლის განრიგის თან გათვალისწინება</string>
     <string name="export_include_media">მედიაფაილების მოცვა</string>
@@ -198,12 +182,11 @@
         <item quantity="one">მონიშნული შენიშვნის APKG ფაილად შენახვა?</item>
         <item quantity="other">მონიშნული %d შენიშვნის APKG ფაილად შენახვა?</item>
     </plurals>
-    <string name="export_in_progress">მიმდინარეობს Аnki-პაკეტის ფაილის ექსპორტი&#8230;</string>
-    <string name="export_success_title">კოლექციის ექსპორტი წარმატებით დასრულდა</string>
+    <string name="export_preparation_in_progress">ექსპორტის გამზადება&#8230;</string>
+    <string name="export_ready_title">ექსპორტი მზადაა</string>
     <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება…</string>
     <string name="export_save_apkg_successful">Anki-პაკეტი წარმატებით შეინახა</string>
     <string name="export_save_apkg_unsuccessful">Anki-პაკეტი ვერ შეინახა</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Anki-პაკეტის გაგზავნა:</string>
     <string name="export_email_subject">AnkiDroid-მა წარმატებით განახორციელა ბარათების ექსპორტი: %s</string>
     <string name="export_email_text"><![CDATA[        გამარჯობა!
@@ -213,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">ფაილის შენახვის ადგილი აირჩიეთ</string>
-    <string name="export_select_share_app">აირჩიეთ აპლიკაცია გასაზიარებლად</string>
+    <string name="export_choice_share">გაზიარება</string>
+    <string name="export_choice_save_to">შენახვა</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">პარამეტრები</string>
     <string name="menu__deck_options">დასტის პარამეტრები</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">სწავლის პარამეტრები</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">ეს მიზნობრივი დასტაა, რომელიც საშუალებას გაძლევთ, ჩვეულებრივი განრიგი უგულებელყოფოთ და სურვილისამებრ ისწავლოთ. მეცადინეობის შემდეგ ბარათები საწყის დასტას ავტომატურად დაუბრუნდება. დასტის დასტების სიიდან ამოშლის შემთხვევაში ყველა დარჩენილი ბარათი შესაბამის საწყის დასტას დაუბრუნდება.</string>
     <string name="steps_error">ნაბიჯების რაოდენობა უნდა აღემატებოდეს 0-ს</string>
     <string name="steps_min_error">საჭიროა სულ მცირე ერთი ნაბიჯი მაინც</string>
-    <string name="sched_end">(დასასრული)</string>
-    <string name="sched_unbury_action">To see them now touch the “Unbury” item in the menu</string>
-    <string name="sched_has_buried">ზოგი ასოცირებული ან დამალული ბარათი ხვალისთვის გადაიდო</string>
     <string name="tag_editor_add_feedback">„%1$s-ის“ დამატების დასადასტურებლად შეეხეთ „%2$s-ს“</string>
     <string name="tag_editor_add_feedback_existing">მოინიშნა არსებული იარლიყი „%1$s“</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s წამი</item>
-        <item quantity="other">%s წამი</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s წუთი</item>
-        <item quantity="other">%s წუთი</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s საათი</item>
-        <item quantity="other">%s საათი</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s დღე</item>
-        <item quantity="other">%s დღე</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s თვე</item>
-        <item quantity="other">%s თვე</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s წელი</item>
-        <item quantity="other">%s წელი</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s წამი</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">ეგ დასტა უკვე არსებობს</string>
     <string name="decks_rename_filtered_nosubdecks">გაფილტრულ დასტას ვერ ექნება ქვედასტა</string>
-    <string name="filtered_deck_name">გაფილტრული დასტა</string>
     <string name="reminder_title">დღესაც ვიმეცადინოთ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d ბარათია გადასახედი %1$s-ში</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">შეცდომა APKG ფაილის გაზიარებისას</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">ეს ფაილი მოითხოვს Anki-ს უფრო ახალ ვერსიას.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[კამერის სურათები შეიძლება დიდი იყოს.  სურათების შეკუმშვას და ზომის შეცვლას ფაილების დირექტორიაში შეძლებთ]]></string>
     <string name="no_browser_notification">ბრაუზერი ვერ მოიძებნა, გთხოვთ ვებგვერდი კომპიუტერზე ან მობილურ მოწყობილობაზე იხილოთ: </string>
     <string name="web_page_error">შეცდომა გვერდის ჩატვირთვისას: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">ბარათში არსებული გარე გვერდის ბმული არ არის გათვალისწინებული.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">აღდგენილი ბარათები</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">ფონი</string>
     <string name="choose_an_image">სურათის არჩევა</string>
@@ -315,7 +260,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">შეცდომა დასტის „%s“ ჩატვირთვისას</string>
     <string name="search_decks">დასტების მოძიება</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">მიგრაციის პროგრესის ჩვენება</string>
     <string name="ankidroid_init_failed_webview_title">ფატალური შეცდომა</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -364,6 +309,7 @@
     <string name="deck_download_progress_message">ჩამოტვირთვისას შეგიძლიათ სხვა აპლიკაციებიც გამოიყენოთ</string>
     <string name="check_network">გთხოვთ შეამოწმოთ ქსელთან კავშირი</string>
     <string name="search_using_deck_name">დასტის სახელით ძებნა</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">მთავარი</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -402,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">სინქრონიზაცია AnkiWeb-თან</string>
     <string name="already_logged_in">უკვე შესული ხართ</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">დასტა უკვე არსებობს</string>
     <string name="deck_created">დასტა შეიქმნა</string>
     <string name="deck_renamed">დასტის სახელი შეიცვალა</string>
     <!-- Deck Deletion -->
@@ -414,10 +359,9 @@
     <string name="toggle_browser_mode_help">ბარათების ან შენიშვნების საძიებოში ჩვენების გადართვა</string>
     <string name="truncate_content_help">ბრაუზერის თითო მწკრივის სიმაღლის ისე დამოკლება, რომ მხოლოდ შიგთავსის პირველი 3 სტრიქონი აჩვენოს</string>
     <string name="browser_options_dialog_heading">ბარათების საძიებოს პარამეტრები</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        ეს ფუნქცია მიუწვდომელია საცავის მიგრაციისას
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">შეეხეთ საცავის მიგრაციისათვის</string>
     <string name="media_sync_required_title">საჭიროა მედიაფაილების სინქრონიზაცია</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
+    <string name="media_sync_unavailable_message">მედიაფაილების სინქრონიზაცია გამორთულია პარამეტრებში. გთხოვთ დაასინქრონოთ და სარეზერვო ფაილად შეინახოთ ყველა მედიაფაილი, რომელიც ჯერ არაა სინქრონიზებული</string>
 </resources>

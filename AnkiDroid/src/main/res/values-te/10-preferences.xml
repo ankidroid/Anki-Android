@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">నిలిపివేయబడింది</string>
-    <string name="enabled">ప్రారంభించబడింది</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">కూడా స్క్రోలింగ్ కోసం కంజి / కటన, ఎమోజి / కావో మోజి బటన్లను ఉపయోగించండి</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">డబుల్ స్క్రోలింగ్</string>
@@ -155,7 +152,6 @@
     <string name="timeout_answer_summ">వినియోగదారు ఇన్పుట్ లేకుండా స్వయంచాలకంగా సమాధానం చూపు. 
 ఆలస్యం స్వయంచాలకంగా ప్లే చేయబడిన ఆడియో ఫైల్లకు సమయాన్ని కలిగి ఉంటుంది.</string>
     <string name="timeout_answer_seconds" maxLength="41">సమాధానం చూపించడానికి సమయం</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">తదుపరి ప్రశ్న చూపించడానికి సమయం</string>
     <string name="select_locale_title">భాషను ఎంచుకోండి</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
@@ -181,18 +177,13 @@
     <string name="show_eta" maxLength="41">ETA ను చూపించు</string>
     <string name="show_eta_summ">మిగిలివున్న సమయాన్ని చుపించు</string>
     <string name="use_current" maxLength="41">కొత్త కార్డుల కోసం డెక్</string>
-    <string name="new_spread" maxLength="41">కొత్త కార్డ్ స్థానం</string>
     <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
     <string name="time_limit" maxLength="41">టైమ్బాక్స్ సమయం పరిమితి</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="pref_keep_screen_on" maxLength="41">స్క్రీన్పై ఉంచండి</string>
     <string name="pref_keep_screen_on_summ">స్క్రీన్ గడువు ముగియడాన్ని నిలిపివేయి</string>
-    <string name="convert_fen_text" maxLength="41">చదరంగం సంకేత మద్దతు</string>
-    <string name="convert_fen_text_summ">Forsyth–Edwards సంజ్ఞామానం నుండి ఒక చదరంగం బండి గీయండి. ఈ కోడ్ [fen] [/fen] ట్యాగ్ల్లో ఉండాలి.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API ని ప్రారంభించండి</string>
     <string name="enable_api_summary">ఇతర అనువర్తనాలు AnkiDroid కు కనెక్ట్ చేయండి మరియు మీ ప్రమేయం లేకుండా డేటాను చదవడం / వ్రాయడం అనుమతించండి</string>
     <string name="custom_buttons" maxLength="41">అనువర్తన పట్టీ బటన్లు</string>
@@ -218,17 +209,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">అధునాతన గణాంకాలు</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">అధునాతన గణాంకాలు ప్రారంభించు</string>
-    <string name="enable_advanced_statistics_summ">భవిష్యత్ సమీక్షలు (ఎనేబుల్) లేదా భవిష్య సూచించిన సమీక్షలు (డిసేబుల్) యొక్క లెక్కింపు లేదా అనుకరణ ఆధారంగా విశ్లేషణ గణాంకాలను ప్రదర్శించండి.</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">మొదటి n రోజుల గణన, మిగిలిన అనుకరించండి</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">గణన యొక్క ప్రెసిషన్</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">అనుకరణ యొక్క పునరావృత సంఖ్య</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">అనుకూల సమకాలీకరణ సర్వర్</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
@@ -243,64 +223,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">ట్యాగ్లను ఎంచుకోండి</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
-    <string name="deck_conf_group" maxLength="41">ఐచ్ఛికాలు సమూహం</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d డెక్ ఈ సమూహాన్ని ఉపయోగిస్తుంది</item>
-        <item quantity="other">%1$s\n%2$d డెక్స్ ఈ గుంపును ఉపయోగిస్తాయి</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">కొత్త కార్డులు</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">సమీక్షలు</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">లాప్సెస్</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">సాధారణం</string>
     <string name="deck_conf_reminders" maxLength="41">జ్ఞాపికలు</string>
-    <string name="deck_conf_steps" maxLength="41">దశలు (నిమిషాల్లో)</string>
-    <string name="deck_conf_order" maxLength="41">ఆర్డర్</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">కొత్త కార్డులు / రోజు</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">గ్రాడ్యుయేటింగ్ విరామం</string>
-    <string name="deck_conf_days">XXX రోజు(లు)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">సులువు విరామం</string>
-    <string name="deck_conf_start_ease" maxLength="41">సులభంగా ప్రారంభిస్తోంది</string>
-    <string name="deck_conf_max_rev" maxLength="41">గరిష్ఠ సమీక్షలు / రోజు</string>
-    <string name="deck_conf_new_bury" maxLength="41">కొత్త కార్డులతో సంబంధమున్న బరీ చేయండి</string>
-    <string name="deck_conf_new_bury_summ">సంబంధిత కార్డులు తదుపరి రోజు వరకు ఖననం చేయబడతాయి</string>
-    <string name="deck_conf_rev_bury" maxLength="41">సంబంధిత సమీక్షలను మంజూరు చేయండి</string>
-    <string name="deck_conf_rev_bury_summ">సంబంధిత సమీక్షలు తదుపరి రోజు వరకు ఖననం చేయబడతాయి</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">సులువు బోనస్</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">ఇంటర్వల్ మాడిఫైయర్</string>
-    <string name="deck_conf_max_ivl" maxLength="41">గరిష్ఠ విరామం</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">క్రొత్త విరామం</string>
-    <string name="deck_conf_min_ivl" maxLength="41">కనీస విరామం</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
-    <string name="deck_conf_fails">XXX లాప్స్ (లు)</string>
-    <string name="deck_conf_leech_action" maxLength="41">జలగ చర్య</string>
-    <string name="deck_conf_max_time" maxLength="41">గరిష్ట సమాధానం సమయం</string>
-    <string name="deck_conf_seconds">XXX సెకన్లు</string>
-    <string name="deck_conf_timer" maxLength="41">సమాధానం టైమర్ను చూపు</string>
-    <string name="deck_conf_autoplay" maxLength="41">స్వయంచాలకంగా ఆడియో ప్లే చేయండి</string>
-    <string name="deck_conf_replayq" maxLength="41">ప్రశ్నని రీప్లే చేయండి</string>
-    <string name="deck_conf_replayq_summ">జవాబుకు సమాధానమివ్వగానే ప్రశ్న మరియు సమాధానం ఆడియో రెండింటిని రీప్లే చేయండి</string>
-    <string name="deck_conf_manage" maxLength="41">గ్రూప్ మేనేజ్మెంట్</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group" maxLength="41">ప్రస్తుత సమూహం</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">పేరుమార్చు</string>
-    <string name="deck_conf_reset" maxLength="41">నిర్ణీత విలువలకు మార్చు</string>
-    <string name="deck_conf_reset_message">డిఫాల్ట్ విలువల కోసం ప్రస్తుత ఎంపికల సమూహాన్ని పునరుద్ధరించాలా?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">చేర్చు</string>
-    <string name="deck_conf_add_summ">ప్రస్తుత ఎంపికల సమూహపు నకలును సృష్టించండి</string>
-    <string name="deck_conf_remove_message">ప్రస్తుత ఎంపికల సమూహాన్ని తీసివేయాలా?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">అన్ని subdecks కోసం సెట్</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s subdeck ఈ గుంపును ఉపయోగిస్తుంది</item>
-        <item quantity="other">%s subdecks ఈ గుంపును ఉపయోగిస్తుంది</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">ఈ డెక్ యొక్క subdecks అన్ని ప్రస్తుత ఎంపికలు సమూహం సెట్?</string>
     <string name="pref_browser_editor_font" maxLength="41">బ్రౌజర్ మరియు ఎడిటర్ ఫాంట్</string>
     <string name="deck_conf_cram_filter" maxLength="41">వడపోత</string>
     <string name="deck_conf_cram_search" maxLength="41">శోధన</string>
@@ -311,8 +237,6 @@
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">అనుకూల దశలు (నిమిషాల్లో)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">అనుకూల దశలను నిర్వచించండి</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
-    <string name="deck_conf_reminders_time" maxLength="41">వద్ద రిమైండర్ చేయండి</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>
@@ -349,12 +273,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
@@ -392,7 +311,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>

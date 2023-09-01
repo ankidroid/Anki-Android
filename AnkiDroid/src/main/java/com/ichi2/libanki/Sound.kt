@@ -33,8 +33,6 @@ import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling.CONTINUE_AUDIO
 import com.ichi2.libanki.Sound.SoundSide.*
 import com.ichi2.utils.DisplayUtils
-import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
-import org.intellij.lang.annotations.Language
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
@@ -176,16 +174,6 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
 
     fun hasAnswer(): Boolean = getSounds(ANSWER) != null
 
-    /** Handle a call to play audio which may be made while audio is already playing */
-    fun playAnotherSound(replacedUrl: String, errorListener: OnErrorListener) {
-        val suppliedAudioIsCurrentlyPlaying = replacedUrl == currentAudioUri && !isCurrentAudioFinished
-        if (suppliedAudioIsCurrentlyPlaying) {
-            playOrPauseSound()
-        } else {
-            playSound(replacedUrl, null, errorListener)
-        }
-    }
-
     fun interface OnErrorListener {
         fun onError(mp: MediaPlayer?, which: Int, extra: Int, path: String?): ErrorHandling
 
@@ -235,46 +223,8 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
          * @param content -- card content to be rendered that may contain embedded audio
          * @return -- the same content but in a format that will render working play buttons when audio was embedded
          */
-        fun expandSounds(soundDir: String, content: String): String {
-            if (!defaultLegacySchema) {
-                return addPlayIcons(content)
-            }
-            val stringBuilder = StringBuilder()
-            var contentLeft = content
-            Timber.d("expandSounds")
-            val matcher = SOUND_PATTERN.matcher(content)
-            // While there is matches of the pattern for sound markers
-            while (matcher.find()) {
-                // Get the sound file name
-                val sound = matcher.group(1)!!
-
-                // Construct the sound path
-                val soundPath = getSoundPath(soundDir, sound)
-
-                // Construct the new content, appending the substring from the beginning of the content left until the
-                // beginning of the sound marker
-                // and then appending the html code to add the play button
-                @Language("HTML")
-                val button =
-                    "<svg viewBox=\"0 0 64 64\"><circle cx=\"32\" cy=\"32\" r=\"29\" fill = \"lightgrey\"/>" +
-                        "<path d=\"M56.502,32.301l-37.502,20.101l0.329,-40.804l37.173,20.703Z\" fill = \"" +
-                        "black\"/>Replay</svg>"
-                val soundMarker = matcher.group()
-                val markerStart = contentLeft.indexOf(soundMarker)
-                stringBuilder.append(contentLeft.substring(0, markerStart))
-                // The <span> around the button (SVG or PNG image) is needed to make the vertical alignment work.
-                stringBuilder.append("<a class='replay-button replaybutton' href=\"playsound:")
-                    .append(soundPath).append("\">")
-                    .append("<span>").append(button)
-                    .append("</span></a>")
-                contentLeft = contentLeft.substring(markerStart + soundMarker.length)
-                Timber.v("Content left = %s", contentLeft)
-            }
-
-            // unused code related to tts support taken out after v2.2alpha55
-            // if/when tts support is considered complete, these comment lines serve no purpose
-            stringBuilder.append(contentLeft)
-            return stringBuilder.toString()
+        fun expandSounds(content: String): String {
+            return addPlayIcons(content)
         }
 
         /**

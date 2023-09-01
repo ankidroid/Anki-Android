@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Non ses in lìnia</string>
-    <string name="sync_even_if_offline">Proa su matessi</string>
     <string name="sync_error">Faddina de sincronizatzione</string>
     <string name="vague_error" comment="Network error dialog title">Faddina</string>
     <string name="retry">Torra a proare</string>
@@ -63,57 +62,17 @@
     <string name="sign_up">Registra·ti</string>
     <string name="logged_as">Intradu comente</string>
     <string name="log_out">Essi</string>
-    <string name="alert_logging_message">Intrende&#8230;</string>
-    <string name="invalid_username_password">Indiritzu de posta eletrònica o crae non vàlidos</string>
     <string name="reset_password">Reseta sa crae</string>
     <string name="lost_mail_instructions">Indiritzu de posta ismentigadu?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Optziones pro XXX</string>
-    <string name="sync_prepare_syncing">Ammaniende sa sincronizatzione&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Ammaniende sa sincronizatzione totale&#8230;</string>
-    <string name="sync_uploading_message">Carrighende&#8230;</string>
-    <string name="sync_downloading_message">Iscarrighende&#8230;</string>
     <string name="sync_title">Sincronizatzione</string>
     <string name="sync_log_uploading_message">Sincronizatzione totale dae locale</string>
-    <string name="sync_log_clocks_unsynchronized">Su rellògiu tuo est isballiadu de %1$d segundos%2$s. Assegura·ti chi sa data, s\'ora e su fusu oràriu in su telèfonu tuo siant impostados in manera curreta e torra a proare.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, podet dare chi su fusu oràriu siat isballiadu</string>
-    <string name="sync_log_clocks_unsynchronized_date">, podet dare chi sa data siat isballiada</string>
-    <string name="sync_no_changes_message">Peruna modìfica agatada</string>
     <string name="sync_database_acknowledge">Colletzione sincronizada</string>
-    <string name="sync_log_error_specific">Errore de sincronizatzione, casta: %1$s, messàgiu: %2$s</string>
     <string name="sync_corrupt_database">Sa base de datos tua est corrùmpida. Acontza·la in antis de torrare a proare a sincronizare.\n
     \n
     Pòmpia·ti %s pro informatziones in subra de comente acontzare sa base de datos tua.</string>
-    <string name="sync_too_busy">Serbidore afainadu. Torra a proare prus a tardu.</string>
-    <string name="sync_remote_db_error">Sa base de datos iscarrigada fiat corrùmpida. Torra a proare.</string>
-    <string name="sync_overwrite_error">Sa colletzione atuale tua no est istadu possìbile a la subraiscrìere cun su documentu iscarrigadu</string>
-    <string name="sync_connection_error">Connessione iscadida. O tenes problemas de connessione a ìnternet o tenes unu documentu mannu meda in sa cartella multimediale tua.</string>
-    <string name="sync_write_access_error_on_storage">No est istadu possìbile sarvare su documentu iscarrigadu in sa mamòria tua. O sa memòria est montada in modalidade de leghidura ebbia o non b\'at tretu bastante a intro.</string>
-    <string name="sync_error_invalid_sync_server">Su serbidore de sincronizatzione personalizadu in sas impostatziones avantzadas no est vàlidu (%s). Inserta·nde unu vàlidu o disabìlita s\'impostatzione.</string>
-    <string name="sync_deletions_message">Sincronizende sos iscantzellamentos&#8230;</string>
-    <string name="sync_small_objects_message">Sincronizende ogetos minores&#8230;</string>
-    <string name="sync_finish_message">Acabende de sincronizare&#8230;</string>
-    <string name="sync_log_finish_error">B\'at apidu un\'errore cun s\'imbiu de sa diretzione de agabbu a su serbidore</string>
-    <string name="sync_writing_db">Iscriende sas modìficas in sa base de datos&#8230;</string>
-    <string name="sync_download_chunk">Iscarrighende sas modìficas&#8230;</string>
-    <string name="sync_upload_chunk">Carrighende sas modìficas&#8230;</string>
-    <string name="sync_up_down_size">Carrigamentu: %1$d KB, iscarrigamentu: %2$d KB</string>
-    <string name="sync_generic_error">B\'at àpidu una faddina. Torra a proare prus a tardu.</string>
-    <string name="sync_check_upload_file">Verifichende su documentu in antis de lu carrigare&#8230;</string>
-    <string name="sync_check_download_file">Verifichende su documentu iscarrigadu&#8230;</string>
-    <string name="sync_media_find">Chirchende mèdios modificados&#8230;</string>
-    <string name="sync_media_no_changes">Peruna modìfica a sos documentos multimediales</string>
-    <string name="sync_media_success">Mèdios sincronizados</string>
-    <string name="sync_media_partial_updated">Sincronizatione multimediale fata in parte:\n%1$d documentu multimediale iscarrigados.\n%2$d documentos multimediales carrigados.</string>
-    <string name="sync_media_changes_count">%d modìficas multimediales de carrigare</string>
-    <string name="sync_media_downloaded_count">%d documentos multimediales iscarrigados</string>
-    <string name="sync_sanity_failed">A pustis de sa sincronizatzione sa colletzione fiat in un\'istadu inconsistente. Pro acontzare custu problema AnkiDroid at a fortzare una sincronizatzione totale. Issèbera sos datos de mantènnere.</string>
-    <string name="sync_media_sanity_failed">Sa sincronizatzione multimediale est agabbada, ma su nùmeru de sos mèdios non currispondet cun su serbidore. Sa sincronizatzione multimediale imbeniente at a èssere totale pro currègere cale si siat faddina.</string>
-    <string name="sync_media_db_error">Sa sincronizatzione multimediale est fallida ca sa base de datos atuale est corrùmpida. Ti racumandamus una verìfica de sos mèdios.</string>
-    <string name="sync_media_error">Faddina de sincronizatzione de sos datos multimediales</string>
-    <string name="sync_media_error_check">B\'at àpidu una faddina cun sa sincronizatzione multimediale. Ti racumandamus una verìfica de sos mèdios.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Esecuta ‘%s’ in antis de sincronizare</string>
     <string name="sync_sanity_local">Locales</string>
     <string name="sync_sanity_remote">Remotos</string>
     <string name="force_full_sync_title">Fortza una sincronizatzione intrea</string>
@@ -121,17 +80,7 @@
     <string name="force_full_sync_confirmation">Sincronizatzione intrea fortzada</string>
     <string name="full_sync_confirmation">Sa modìfica pedida at a bisongiare de unu carrigamentu intreu de sa base de datos cando as a sincronizare sa colletzione tua. Si tenes revisiones o àteras modìficas isetende in un\'àteru dispositivu chi non sunt istadas galu sincronizadas inoghe s\'ant a pèrdere. Cheres sighire?</string>
     <string name="full_sync_confirmation_upgrade">Pro neghe de una faddina in su còdighe de sa versione installada anteposta de AnkiDroid est mègius a fortzare una sincronizatzione totale.</string>
-    <string name="sync_error_407_proxy_required">Autenticatzione de su serbidore intermediàriu (proxy) netzessària.</string>
-    <string name="sync_error_409">Petzi unu cliente a sa borta podet atzèdere a AnkiWeb. Si una sincronizatzione anteposta est fallida torra a proare a pustis de una paja de minutos.</string>
-    <string name="sync_error_413_collection_size">Sa colletzione tua o unu documentu multimediale sunt tropu mannos pro los sincronizare.</string>
-    <string name="sync_error_500_unknown">AnkiWeb at tentu una faddina. Torra a proare a pustis de una paja de minutos e, si su problema sighit a b\'èssere, imbia·nos una sinnalatzione de errore.</string>
-    <string name="sync_error_501_upgrade_required">Agiorna a sa versione prus noa de AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb est in manutentzione. Torra a proare a pustis de una paja de minutos.</string>
-    <string name="sync_error_504_gateway_timeout">Errore 504 de lìmite de tempus barigadu  pro s\'intrada retzidu.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sincronizatzione (totale)</string>
     <string name="sync_menu_title_no_account">Sincronizatzione (intra)</string>
-    <string name="sync_error_unknown_host_readable">Collegamentu a AnkiWeb fallidu. Sa connessione a ìnternet est funtzionende?\n
-   \n
-   %s</string>
 </resources>

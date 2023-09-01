@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Treballeu fora de línia</string>
-    <string name="sync_even_if_offline">Probar igualment</string>
     <string name="sync_error">Error de sincronització</string>
     <string name="vague_error" comment="Network error dialog title">Error</string>
     <string name="retry">Intenta-ho de nou</string>
@@ -63,55 +62,15 @@
     <string name="sign_up">Registra\'t</string>
     <string name="logged_as">Has iniciat sessió com</string>
     <string name="log_out">Desconnecta</string>
-    <string name="alert_logging_message">S\'està iniciant la sessió, un moment...</string>
-    <string name="invalid_username_password">L\'adreça de correu electrònic o la contrasenya no són vàlides.</string>
     <string name="reset_password">Restableix la contrasenya</string>
     <string name="lost_mail_instructions">Heu oblidat el correu electrònic?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opcions per XXX</string>
-    <string name="sync_prepare_syncing">S\'està preparant la sincronització...</string>
-    <string name="sync_preparing_full_sync_message">S\'està preparant una sincronització completa...</string>
-    <string name="sync_uploading_message">S\'està pujant...</string>
-    <string name="sync_downloading_message">S\'està baixant...</string>
     <string name="sync_title">Sincronització</string>
     <string name="sync_log_uploading_message">Sincronització completa dels paquets locals</string>
-    <string name="sync_log_clocks_unsynchronized">El rellotge del vostre dispositiu mostra un error de %1$d segons%2$s; Per sincronitzar cal que el vostre rellotge i la vostra zona horària siguin correctes per tal d\'evitar errors. Si us plau assegureu-vos que la data, hora i zona horària del vostre telèfon són correctes, i torneu a sincronitzar.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">Sembla que la zona horària del dispositiu és incorrecta</string>
-    <string name="sync_log_clocks_unsynchronized_date">Sembla que la data del dispositiu podria ser incorrecta</string>
-    <string name="sync_no_changes_message">No s\'ha trobat cap canvi.</string>
     <string name="sync_database_acknowledge">Col·lecció sincronitzada</string>
-    <string name="sync_log_error_specific">Error de sincronització, tipus: %1$s, missatge: %2$s</string>
     <string name="sync_corrupt_database">La base de dades està feta malbé. Corregiu-ho abans d\'intentar una nova sincronització.\n\nVeieu %s per a obtenir informació sobre com reparar la base de dades.</string>
-    <string name="sync_too_busy">El servidor està ocupat. Torna-ho a provar més endavant.</string>
-    <string name="sync_remote_db_error">La base de dades descarregada era corrupta. Si us plau proveu-ho de nou.</string>
-    <string name="sync_overwrite_error">No ha estat possible sobreescriure la vostra col·lecció actual amb l\'arxiu descarregat.</string>
-    <string name="sync_connection_error">S\'ha esgotat el emps d\'espera de la connexió. O la connexió a internet està experimentant problemes o teniu un fitxer molt gran a la vostra carpeta de multimèdia.</string>
-    <string name="sync_write_access_error_on_storage">El fitxer baixat no s\'ha pogut desar. O bé no es permet l\'escriptura, o bé no hi ha prou espai.</string>
-    <string name="sync_error_invalid_sync_server">El valor del servidor de sincronització personalitzat establert a la configuració avançada és incorrecte (%s).Si us plau entreu un servidor vàlid o canvieu aquest valor a la configuració.</string>
-    <string name="sync_deletions_message">S\'estan sincronitzant les supressions...</string>
-    <string name="sync_small_objects_message">S\'estan sincronitzant els petits objectes...</string>
-    <string name="sync_finish_message">S\'està acabant la sincronització...</string>
-    <string name="sync_log_finish_error">Hi hagut un error en enviar l\'adreça d\'acabada al servidor</string>
-    <string name="sync_writing_db">S\'estan escrivint els canvis en la base de dades&#8230;</string>
-    <string name="sync_download_chunk">S\'estan baixant el canvis...</string>
-    <string name="sync_upload_chunk">S\'estan carregant els canvis...</string>
-    <string name="sync_up_down_size">Amunt: %1$d KB, avall: %2$d KB</string>
-    <string name="sync_generic_error">S\'ha produït un error. Si us plau proveu de nou més tard.</string>
-    <string name="sync_check_upload_file">S\'esta comprovant l\'arxiu abans de carregar-ho...</string>
-    <string name="sync_check_download_file">S\'estan comprovaant els arxius descarregats...</string>
-    <string name="sync_media_find">S\'esta cercant els media que han canviat...</string>
-    <string name="sync_media_no_changes">No hi ha canvis als arxius dels media.</string>
-    <string name="sync_media_success">S\'han sincronitzat correctament els media.</string>
-    <string name="sync_media_partial_updated">No ha estat possible acabar la sincronització multimèdia:\nS\'han baixat %1$d fitxers multimèdia.\nS\'han pujat %2$d fitxers multimèdia.</string>
-    <string name="sync_media_changes_count">%d canvis de multimèdia per carregar</string>
-    <string name="sync_media_downloaded_count">%d fitxers descarregats</string>
-    <string name="sync_sanity_failed">Després de sincronitzar, la col·lecció ha quedat en un estat inconsistent. Per resoldre-ho, Ankidroid forçarà una sincronització total. Si us plau trieu el costat que preferiu conservar, o anul·leu-ho si ho preferiu sincronitzar més endavant.</string>
-    <string name="sync_media_sanity_failed">S\'ha completat la sincronització dels media, però el nombre dels media no concorda amb el del servidor. La propera sincronització serà completa per tal de corregir qualsevol error.</string>
-    <string name="sync_media_db_error">La sincronització de suports ha fallat perquè la base de dades actual està malmesa. Es recomana fer una comprovació del medi.</string>
-    <string name="sync_media_error">S\'ha produït un error en sincronitzar les dades dels media.</string>
-    <string name="sync_media_error_check">Error en la sincronització de multimèdia. És recomanable comprovar la base de dades.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Executeu \'%s\' abans de sincronitzar si us plau</string>
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remot</string>
     <string name="force_full_sync_title">Forçar sincronització completa</string>
@@ -119,15 +78,7 @@
     <string name="force_full_sync_confirmation">Sincronització completa forçada</string>
     <string name="full_sync_confirmation">El canvi sol·licitat requerirà una càrrega completa de la base de dades quan sincronitzeu la col·lecció. Si teniu revisions o altres canvis esperant a un altre dispositiu que encara no s\'han sincronitzat aquí encara, estaran perduts. Voleu continuar?</string>
     <string name="full_sync_confirmation_upgrade">Per un error en la versió anteriorment instal·lada de AnkiDroid, es recomana forçar una sincronització completa.</string>
-    <string name="sync_error_407_proxy_required">Cal autenticació de servidor intermediari.</string>
-    <string name="sync_error_409">Només un client pot accedir a AnkiWeb en un moment. Si una sincronització ha fracassat, si us plau intenti una altra vegada en pocs minuts.</string>
-    <string name="sync_error_413_collection_size">La vostra col·lecció o un fitxer multimèdia és massa gran per sincronitzar-la.</string>
-    <string name="sync_error_500_unknown">AnkiWeb ha trobat un error. Si us plau proveu una altra vegada en uns minuts i si el problema persisteix, envieu un informe d\'error.</string>
-    <string name="sync_error_501_upgrade_required">Si us plau actualitzeu a la versió de AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb està en manteniment. Torneu-ho a provar d\'aquí a uns quants minuts.</string>
-    <string name="sync_error_504_gateway_timeout">S\'ha rebut un error d\'espera de passarel·la 504.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sincronització (plena)</string>
     <string name="sync_menu_title_no_account">Sincronització (entrada)</string>
-    <string name="sync_error_unknown_host_readable">No s\'ha pogut connectar a AnkiWeb. Funciona el vostre Internet?\n\n%s</string>
 </resources>

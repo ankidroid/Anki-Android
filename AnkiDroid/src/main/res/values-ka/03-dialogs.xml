@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">შემოწმდეს მონაცემთა ბაზა?</string>
     <string name="check_db_warning">ამას შეიძლება დიდი ხანი დასჭირდეს</string>
-    <string name="check_db_acknowledge">მონაცემთა ბაზა შემოწმდა</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">დასტის წაშლა</string>
-    <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
     <string name="delete_deck_title">წაიშალოს დასტა?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Send all cards in %s back to their original decks?</string>
     <string name="no_tts_available_message">მიუწვდომელია ხმოვანი წამკითხველის ენა</string>
     <string name="initializing_tts">ხმოვანი წამკითხველის ინიციალიზაცია&#8230;</string>
     <string name="tts_no_tts">არ წაიკითხოს</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">დასტიდან x ბარათის შემთხვევით ამორჩევა:</string>
     <string name="custom_study_preview">ბოლო x დღეში დამატებული ბარათების წინასწარ ნახვა:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">კოლექციის იმპორტირება&#8230;</string>
-    <string name="import_media_count">მედიაფაილების %1$d%% იმპორტირება&#8230;</string>
-    <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">განახლდა %1$d შენივნა %2$d არსებული შენიშვნიდან.</string>
-    <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">მეხსიერება სავსეა</string>
     <string name="storage_almost_full_title">მეხსიერება თითქმის გავსებულია</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">მეხსიერების სივრცე არ არის</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">გამორთვა</string>
     <string name="dialog_positive_overwrite">ჩანაცვლება</string>
-    <string name="dialog_positive_remove">ამოშლა</string>
     <string name="dialog_positive_repair">შეკეთება</string>
     <string name="dialog_positive_replace">ჩანაცვლება</string>
-    <string name="dialog_positive_restore">აღდგენა</string>
-    <string name="dialog_positive_set">დაყენება</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
     <string name="check_media_title">შემოწმდეს მედიაფაილები?</string>
@@ -165,8 +145,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">სასწავლო</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">იძებნება ცარიელი ბარათები&#8230;</string>
-    <string name="confirm_cancel">პროცესი გაუქმდეს?</string>
-    <string name="empty_cards_none">არ არის ცარიელი ბარათები</string>
     <string name="empty_cards_count">წასაშლელი ბარათი: %d</string>
     <string name="empty_cards_deleted">წაიშალა %d ბარათი</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +160,11 @@
     <string name="integrity_check_continue_anyway">მაინც გაგრძელება</string>
     <string name="integrity_check_insufficient_space">„მონაცემთა ბაზის შემოწმება“ დიდი რაოდენობის დროებით მეხსიერებას მოითხოვს.\n\nდაბეჯითებით გირჩევთ %s-ის ადგილი მაინც გქონდეთ განთავისუფლებული მანამ, სანამ გააგრძელებთ.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nამჟამად თავისუფალია %s.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
     <string name="video_creation_error">ვიდეოს გაშვება ვერ მოხერხდა</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">დასტა ვერ შეიცვალა</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">შეცდომა ბარათის მონაცემების გაშიფვრისას</string>
-    <string name="undo_succeeded">\"%s\" გაუქმდა</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">ვერ დამუშავდა დასტის პარამეტრები: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">მონაცემთა ბაზა ჩაკეტილია</string>
     <string name="database_locked_summary">სხვა აპლიკაცია იყენებს AnkiDroid-ის მონაცემთა ბაზას. გთხოვთ დახუროთ ეგ აპლიკაცია და ხელახლა გახსნათ AnkiDroid.</string>

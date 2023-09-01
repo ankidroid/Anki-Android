@@ -61,8 +61,8 @@
     <string name="updated_version">버전 %s로 업데이트됨</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">칠판 저장</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">화이트보드 활성화</string>
     <string name="disable_whiteboard">화이트보드 비활성화</string>
     <string name="show_whiteboard">화이트보드 보이기</string>
@@ -126,9 +126,9 @@
     <string name="save">저장</string>
     <string name="close">닫기</string>
     <string name="select">선택</string>
-    <string name="reordering_cards">카드 순서 다시 정리중...</string>
     <string name="field_remapping">%1$s (\'%2$s\'에서)</string>
     <string name="confirm_map_cards_to_nothing">연결되지 않은 모든 카드는 삭제됩니다. 만약 노트에 남아있는 카드가 없다면 버려질 것입니다. 계속 진행할까요?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">시간 상자에 도달했습니다</string>
     <plurals name="timebox_reached">
         <item quantity="other">%1$d 카드가 %2$s에 학습됨</item>
@@ -144,16 +144,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">일정 변경</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">미리보기</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d 중 %1$d</string>
-    <string name="error_insufficient_memory">장치 메모리가 부족하여 작업을 더 이상 진행할 수 없습니다</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">이름 바꾸기</string>
-    <string name="default_conf_delete_error">기본 옵션 그룹은 제거할 수 없습니다.</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="other">%d 카드 추가됨</item>
-    </plurals>
     <string name="check_db">데이터베이스 점검하기</string>
     <string name="check_media">미디어 확인</string>
     <string name="empty_cards">빈 카드</string>
-    <string name="check_db_message">데이터베이스 점검 중.\n잠시만 기다려 주세요...</string>
     <string name="empty_card_warning">이 카드는 비어 있습니다. 카드 묶음 목록 화면의 메뉴에서 \"빈 카드\" 옵션을 사용하세요.</string>
     <string name="unknown_type_field_warning">정답 입력: 알 수 없는 필드 %s</string>
     <string name="delete_deck">카드 묶음 삭제 중...\n 잠시만 기다리세요.</string>
@@ -166,13 +160,6 @@
     </plurals>
     <string name="import_log_no_apkg">이것은 유효한 Anki package 파일이 아닙니다。</string>
     <string name="import_title_error" comment="Title of error dialog">오류</string>
-    <string name="import_log_failed_unzip">apkg 압축 해제 실패: %s</string>
-    <string name="import_log_failed_copy_to">%s에서 apkg 복사 실패</string>
-    <string name="import_log_failed_validate">apkg 검사 실패</string>
-    <string name="import_log_insufficient_space_error">패키지를 추가할 공간이 부족합니다.\n필요 - %1$s\n여유 - %2$s.\n\n도움이 필요한가요? 필요 없는 파일들을 지워보세요. 또한, 동기화 기능은 공간을 적게 사용하기에, 다른 기기(예: Anki 컴퓨터)랑 동기화를 해 보세요.</string>
-    <string name="import_log_file_cache_cleared">파일을 불러오는데 문제가 발생했습니다. 처리 중 캐시가 삭제됐을 수 있습니다.\n다시 시도하십시오.</string>
-    <string name="import_succeeded_but_check_database">데이타를 가져오는 데는 성공했지만, 정리에 실패했습니다. 나중에 데이터베이스 점검하기를 실행해주십시오. 원인: %s</string>
-    <string name="import_error_corrupt_zip">apkg파일이 손상되었습니다. 삭제 후 다시 다운로드해주십시오. \n\n원인: %s</string>
     <string name="import_error_handle_exception">패키지를 가져오는데 실패했습니다.\n\n%s</string>
     <string name="import_error_not_apkg_extension">apkg, colpkg 확장자를 가진 \"%s\" 파일이 없습니다.</string>
     <string name="import_error_load_imported_database">Anki 데이터베이스 (.anki2)의 덮어쓰기는 아직 지원되지 않습니다. 덮어쓰려면 설명서를 참조해주십시오.</string>
@@ -180,8 +167,6 @@
     <string name="import_error_copy_to_cache">파일 캐시 실패 (저장 공간이 부족하기 때문일 수 있습니다)</string>
     <string name="import_error_multiple_colpkg">여러 colpkg 파일이 선택되었습니다.</string>
     <string name="import_error_colpkg_apkg">apkg 랑 colpkg 파일이 동시에 선택되었습니다.</string>
-    <string name="import_stats_error">다음 파일을 추가하는데 오류가 있었습니다:\n%s</string>
-    <string name="import_replacing">컬렉션을 대체하는 중...</string>
     <string name="import_interrupted">불러오기 중단됨: AnkiDroid가 닫힘</string>
     <string name="export_include_schedule">일정 포함</string>
     <string name="export_include_media">미디어 포함</string>
@@ -193,12 +178,11 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_in_progress">Anki 패키지 파일 내보내는 중...</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">apkg. 파일을 처리할 수 있는 응용 프로그램이 없습니다. 저장 중...</string>
     <string name="export_save_apkg_successful">Anki 패키지 저장 성공</string>
     <string name="export_save_apkg_unsuccessful">Anki 패키지 저장 실패</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid로 보내진 플래시 카드: %s</string>
     <string name="export_email_text"><![CDATA[        안녕하세요!
@@ -210,8 +194,8 @@
         ]]>    
  
 Context | Request Context    [1]</string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">설정</string>
     <string name="menu__deck_options">덱 옵션</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">학습 옵션</string>
@@ -221,41 +205,11 @@ Context | Request Context    [1]</string>
     <string name="dyn_deck_desc">이것은 평상시 일정 이상으로 학습하기 위한 특별한 카드 묶음입니다. 카드들은 복습 후 자동으로 원래의 카드 묶음으로 돌아가게 됩니다. 카드 묶음 목록에서 이 카드 묶음을 지운다면 남아 있는 모든 카드는 원래의 카드 묶음으로 돌아가게 됩니다.</string>
     <string name="steps_error">단계는 0보다 커야 합니다.</string>
     <string name="steps_min_error">적어도 하나 이상의 단계가 필요합니다.</string>
-    <string name="sched_end">(끝)</string>
-    <string name="sched_unbury_action">지금 이것들을 보려면 메뉴에서 \"지금 보기\" 버튼을 누르세요.</string>
-    <string name="sched_has_buried">연관되거나 나중에 볼 카드가 내일까지 연기되었습니다.</string>
     <string name="tag_editor_add_feedback">\"%1$s\" 추가를 확인하려면 \"%2$s\" 누르세요</string>
     <string name="tag_editor_add_feedback_existing">기존 태그 \"%1$s\" 선택됨</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="other">%s초</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="other">%s분</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="other">%s시간</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="other">%s일</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="other">%s개월</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="other">%s년</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s초</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">카드 묶음이 이미 존재합니다</string>
     <string name="decks_rename_filtered_nosubdecks">필터링된 카드 묶음은 하위 카드 묶음을 가질 수 없습니다</string>
-    <string name="filtered_deck_name">필터링된 카드 묶음</string>
     <string name="reminder_title">오늘의 학습 잊지 마세요!</string>
     <plurals name="reminder_text">
         <item quantity="other">%1$s에서 복습할 카드 %2$d장</item>
@@ -263,14 +217,12 @@ Context | Request Context    [1]</string>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg 파일 공유 오류</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">이 파일을 열기 위해서는 앱을 업데이트 해야 합니다.</string>
     <string name="activity_start_failed">시스템에 설치된 이 액션을 실행할 수 있는 앱이 없습니다.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[카메라 사진은 클 수 있습니다. 미디어 디렉토리에 있는 이미지를 압축하거나 크기를 조장할 수 있습니다.]]></string>
     <string name="no_browser_notification">브라우저를 찾을 수 없습니다. 컴퓨터 또는 모바일로 웹 페이지를 방문하세요:</string>
     <string name="web_page_error">페이지 로드 오류: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">카드의 외부 페이지 링크는 지원되지 않습니다.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">복원된 카드</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">배경</string>
     <string name="choose_an_image">이미지 선택</string>
@@ -354,6 +306,7 @@ Context | Request Context    [1]</string>
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -391,7 +344,6 @@ Context | Request Context    [1]</string>
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
@@ -408,5 +360,4 @@ Context | Request Context    [1]</string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

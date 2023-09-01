@@ -17,14 +17,15 @@
 package com.ichi2.anki.servicelayer.scopedstorage
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.model.Directory
+import com.ichi2.anki.servicelayer.DestFolderOverride
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.*
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrationProgressListener
 import com.ichi2.anki.utils.AggregateException
 import com.ichi2.testutils.*
-import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.hamcrest.io.FileMatchers.anExistingDirectory
@@ -59,7 +60,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     }
 
     @Test
-    fun `Valid migration`() {
+    fun `Valid migration`() = runTest {
         setLegacyStorage()
 
         underTest = MigrateUserDataTester.create()
@@ -72,12 +73,15 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         ShadowStatFs.markAsNonEmpty(inputDirectory)
 
         // migrate the essential files
-        MigrateEssentialFiles.migrateEssentialFiles(targetContext, validDestination)
+        migrateEssentialFilesForTest(targetContext, inputDirectory.path, DestFolderOverride.Subfolder(validDestination))
 
         underTest = MigrateUserDataTester.create(inputDirectory, validDestination)
         val result = underTest.execTask()
 
         assertThat("execution of user data should succeed", result, equalTo(true))
+
+        // close collection again so -wal doesn't end up in the list
+        CollectionManager.ensureClosed()
 
         // 5 files remain: [collection.log, collection.media.ad.db2, collection.anki2-journal, collection.anki2, .nomedia]
         underTest.integrationAssertOnlyIntendedFilesRemain()
@@ -91,7 +95,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
     }
 
     @Test
-    fun `Migration without space fails`() {
+    fun `Migration without space fails`() = runTest {
         setLegacyStorage()
         // use all the real components on a real collection.
         val inputDirectory = File(col.path).parentFile!!
@@ -102,7 +106,7 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
         ShadowStatFs.markAsNonEmpty(inputDirectory)
 
         // migrate the essential files
-        MigrateEssentialFiles.migrateEssentialFiles(targetContext, validDestination)
+        migrateEssentialFilesForTest(targetContext, inputDirectory.path, DestFolderOverride.Root(validDestination))
 
         underTest = MigrateUserDataTester.create(inputDirectory, validDestination)
         underTest.executor = object : Executor(ArrayDeque()) {
@@ -269,7 +273,7 @@ private constructor(source: Directory, destination: Directory, val filesToMigrat
 
     companion object {
         // media DB created on demand, and no -journal file in new backend
-        val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = if (BackendFactory.defaultLegacySchema) 5 else 3
+        val INTEGRATION_INTENDED_REMAINING_FILE_COUNT: Int = 3
 
         /**
          * A MigrateUserDataTest from inputSource to inputDestination (or transient directories if not provided)

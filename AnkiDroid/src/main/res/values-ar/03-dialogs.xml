@@ -46,20 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">هل تريد فحص قاعدة البيانات؟</string>
     <string name="check_db_warning">قد يستغرق هذا وقتًا طويلًا</string>
-    <string name="check_db_acknowledge">تم فحص قاعدة البيانات</string>
-    <string name="check_db_acknowledge_shrunk">تم فحص قاعدة البيانات وتحسينها.\nقُلِّصت بـ %d ميجابايت.</string>
     <string name="contextmenu_deckpicker_delete_deck">حذف الرزمة</string>
-    <string name="delete_deck_default_deck">لا يمكن حذف الرزمة الافتراضية</string>
     <string name="delete_deck_title">هل تريد حذف الرزمة؟</string>
-    <plurals name="delete_deck_message">
-        <item quantity="zero">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقة.</item>
-        <item quantity="one">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقة.</item>
-        <item quantity="two">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقة.</item>
-        <item quantity="few">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقات.</item>
-        <item quantity="many">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقة.</item>
-        <item quantity="other">هل تريد حذف كل البطاقات في %1$s؟ إنها تحتوي على %2$d بطاقة.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">هل تريد إعادة كل البطاقات في %s إلى رزمها الأصلية؟</string>
     <string name="no_tts_available_message">لا يتوفر دعم تحويل النص إلى كلام لأي لغة</string>
     <string name="initializing_tts">تهيئة نظام تحويل النص إلى كلام&#8230;</string>
     <string name="tts_no_tts">لا تنطق</string>
@@ -131,19 +119,6 @@
     <string name="custom_study_random">اختر س بطاقة من الرزمة عشوائيًا:</string>
     <string name="custom_study_preview">عاين البطاقات الجديدة المضافة في آخر س يوم:</string>
     <string name="custom_study_rebuild_deck_corrupt">تعذرت إعادة إنشاء شَدّة الدراسة المخصصة</string>
-    <string name="importing_collection">يجري استيراد المجموعة&#8230;</string>
-    <string name="import_media_count">يجري استيراد ملفات الوسائط %1$d&#8230;</string>
-    <string name="import_progress">• استيراد الملحوظات: %1$d%%\n• استيراد البطاقات: %2$d%%\n• بعد المعالجة: %3$d%%</string>
-    <string name="import_update_details">تم تحديث %1$d من أصل %2$d ملحوظة موجودة.</string>
-    <string name="import_update_ignored">تم تجاهل بعض التحديثات لأن نوع الملحوظة قد تغير</string>
-    <plurals name="import_complete_message">
-        <item quantity="zero">البطاقات المستوردة: %2$d</item>
-        <item quantity="one">البطاقات المستوردة: %2$d</item>
-        <item quantity="two">الملفات المستوردة: %1$d\nمجمل البطاقات المستوردة: %2$d</item>
-        <item quantity="few">الملفات المستوردة: %1$d\nمجمل البطاقات المستوردة: %2$d</item>
-        <item quantity="many">الملفات المستوردة: %1$d\nمجمل البطاقات المستوردة: %2$d</item>
-        <item quantity="other">الملفات المستوردة: %1$d\nمجمل البطاقات المستوردة: %2$d</item>
-    </plurals>
     <string name="storage_full_title">ذاكرة التخزين ممتلئة</string>
     <string name="storage_almost_full_title">بطاقة الـSD ممتلئة تقريبًا</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">لا توجد مساحة</string>
@@ -163,11 +138,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">تعطيل</string>
     <string name="dialog_positive_overwrite">استبدال</string>
-    <string name="dialog_positive_remove">إزالة</string>
     <string name="dialog_positive_repair">إصلاح</string>
     <string name="dialog_positive_replace">استبدال</string>
-    <string name="dialog_positive_restore">استعادة</string>
-    <string name="dialog_positive_set">ضبط</string>
     <string name="dialog_collection_path_not_dir">المسار المحدد ليس مجلدًا صالحًا</string>
     <!-- Media checking -->
     <string name="check_media_title">هل تريد فحص الوسائط؟</string>
@@ -197,8 +169,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">مستحق</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">يجري البحث عن بطاقات فارغة&#8230;</string>
-    <string name="confirm_cancel">هل تريد الإلغاء؟</string>
-    <string name="empty_cards_none">لا بطاقات فارغة</string>
     <string name="empty_cards_count">بطاقات ستُحذَف: %d</string>
     <string name="empty_cards_deleted">بطاقات حُذِفت: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -214,15 +184,11 @@
     <string name="integrity_check_continue_anyway">استمر على أي حال</string>
     <string name="integrity_check_insufficient_space">تستخدم ميزة فحص قاعدة البيانات مساحة كبيرة من التخزين المؤقت.\n\nينصح بشدة أن يكون لديك مساحة %s خالية على الأقل في جهازك قبل الاستمرار.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nلديك حاليًا مساحة %s خالية.</string>
-    <string name="integrity_check_fixed_no_home_deck">تم استرجاع %d بطاقة برزم أصل غير صالحة. الرجاء الاطلاع على دليل الاستخدام لمزيد من المعلومات.</string>
     <string name="video_creation_error">تعذر تشغيل الفيديو</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">تعذر تغيير الرزمة</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">تعذر فك ترميز البيانات من البطاقة</string>
-    <string name="undo_succeeded">تراجع عن \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">تعذرت معالجة خيارات الرزمة: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">تم قفل قاعدة البيانات</string>
     <string name="database_locked_summary">قاعدة بيانات أنكيدرويد قيد الاستخدام من قبل تطبيق آخر. الرجاء إغلاق ذلك التطبيق وفتح أنكيدرويد مجددًا.</string>

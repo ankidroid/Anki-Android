@@ -46,15 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">데이터베이스를 점검할까요?</string>
     <string name="check_db_warning">시간이 오래 걸릴 수 있습니다</string>
-    <string name="check_db_acknowledge">데이터베이스 점검됨</string>
-    <string name="check_db_acknowledge_shrunk">데이터베이스를 점검하고 최적화했습니다.\n%d MB만큼 공간을 확보했습니다.</string>
     <string name="contextmenu_deckpicker_delete_deck">카드 묶음 삭제</string>
-    <string name="delete_deck_default_deck">기본 카드 묶음은 삭제할 수 없습니다</string>
     <string name="delete_deck_title">카드 묶음을 삭제할까요?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="other">%1$s의 모든 카드를 삭제할까요? 이는 %2$d 카드를 포함하고 있습니다.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">정말로 %s에 있는 모든 카드들을 원래의 카드 묶음으로 되돌려 보내시겠습니까?</string>
     <string name="no_tts_available_message">문장 읽어주기 기능(TTS)을 사용할 수 없음</string>
     <string name="initializing_tts">TTS 초기화 중...</string>
     <string name="tts_no_tts">말하지 마십시오</string>
@@ -101,14 +94,6 @@
     <string name="custom_study_random">카드 묶음으로부터 x개의 카드를 무작위로 고르기:</string>
     <string name="custom_study_preview">최근 x일 내에 추가된 카드를 미리 학습하기:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">컬렉션 가져오는 중.\n잠시만 기다려 주세요...</string>
-    <string name="import_media_count">미디어 파일 불러오는 중 %1$d%%\n잠시만 기다려 주세요...</string>
-    <string name="import_progress">• 노트 가져오기: %1$d%%\n• 카드 가져오기: %2$d%%\n• 후처리: %3$d%%</string>
-    <string name="import_update_details">기존 노트 %2$d 중 %1$d 업데이트 했습니다.</string>
-    <string name="import_update_ignored">노트 유형이 변경되었으므로 일부 업데이트는 무시되었습니다.</string>
-    <plurals name="import_complete_message">
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">빈 공간 없음</string>
@@ -128,11 +113,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">사용 안 함</string>
     <string name="dialog_positive_overwrite">덮어쓰기</string>
-    <string name="dialog_positive_remove">제거</string>
     <string name="dialog_positive_repair">복구</string>
     <string name="dialog_positive_replace">대체</string>
-    <string name="dialog_positive_restore">복원</string>
-    <string name="dialog_positive_set">설정</string>
     <string name="dialog_collection_path_not_dir">지정된 경로가 올바르지 않습니다.</string>
     <!-- Media checking -->
     <string name="check_media_title">미디어를 점검할까요?</string>
@@ -157,8 +139,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">예정</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">빈 카드를 찾는 중...</string>
-    <string name="confirm_cancel">취소하시겠습니까?</string>
-    <string name="empty_cards_none">빈 카드 없음</string>
     <string name="empty_cards_count">삭제할 카드: %d</string>
     <string name="empty_cards_deleted">삭제된 카드: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -174,15 +154,11 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
     <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>

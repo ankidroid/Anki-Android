@@ -25,6 +25,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
@@ -63,7 +64,7 @@ class PermissionManager private constructor(
                     return@registerForActivityResult
                 }
             }
-            callback.invoke(results)
+            callback.invoke(PermissionsRequestRawResults(results, requestedPermissions = true))
         }
     private val activityRef = WeakReference(activity)
 
@@ -115,7 +116,7 @@ class PermissionManager private constructor(
         if (permissions.requiresPermissionDialog) {
             this.launchPermissionDialog()
         } else {
-            callback.invoke(permissions.toPermissionsRequestRawResult()!!)
+            callback.invoke(permissions.toPermissionsRequestRawResult(requestedPermissions = permissions.permissions.any())!!)
         }
     }
 
@@ -167,7 +168,7 @@ fun AnkiActivity.showManageAllFilesScreen() {
     // In 'ManageAllFiles': a user selects the app which has permission
     val accessAllFilesLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (Permissions.isExternalStorageManager()) {
-            recreate()
+            ActivityCompat.recreate(this)
         } else {
             finish()
         }

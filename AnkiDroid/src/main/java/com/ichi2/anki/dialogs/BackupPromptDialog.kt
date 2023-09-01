@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.checkbox.checkBoxPrompt
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService.collectionWillBeMadeInaccessibleAfterUninstall
 import com.ichi2.anki.servicelayer.ScopedStorageService.userIsPromptedToDeleteCollectionOnUninstall
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
@@ -60,13 +61,14 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
     private var userCheckedDoNotShowAgain = false
 
     private var timesDialogDismissed: Int
-        get() = AnkiDroidApp.getSharedPrefs(windowContext).getInt("backupPromptDismissedCount", 0)
-        set(value) = AnkiDroidApp.getSharedPrefs(windowContext).edit { putInt("backupPromptDismissedCount", value) }
+        get() = windowContext.sharedPrefs().getInt("backupPromptDismissedCount", 0)
+        set(value) = windowContext.sharedPrefs()
+            .edit { putInt("backupPromptDismissedCount", value) }
 
     private var dialogPermanentlyDismissed: Boolean
-        get() = AnkiDroidApp.getSharedPrefs(windowContext).getBoolean("backupPromptDisabled", false)
+        get() = windowContext.sharedPrefs().getBoolean("backupPromptDisabled", false)
         set(disablePermanently) {
-            AnkiDroidApp.getSharedPrefs(windowContext).edit {
+            windowContext.sharedPrefs().edit {
                 putBoolean("backupPromptDisabled", disablePermanently)
                 if (disablePermanently) {
                     remove("backupPromptDismissedCount")
@@ -76,8 +78,11 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         }
 
     private var nextTimeToShowDialog: Long
-        get() = AnkiDroidApp.getSharedPrefs(windowContext).getLong("timeToShowBackupDialog", 0)
-        set(value) { AnkiDroidApp.getSharedPrefs(windowContext).edit { putLong("timeToShowBackupDialog", value) } }
+        get() = windowContext.sharedPrefs().getLong("timeToShowBackupDialog", 0)
+        set(value) {
+            windowContext.sharedPrefs()
+                .edit { putLong("timeToShowBackupDialog", value) }
+        }
 
     private fun onDismiss() {
         Timber.i("BackupPromptDialog dismissed")
@@ -233,7 +238,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
                 return false
             }
             // Show dialog to sync if user hasn't synced in a while
-            val preferences = AnkiDroidApp.getSharedPrefs(windowContext)
+            val preferences = windowContext.sharedPrefs()
             return millisecondsSinceLastSync(preferences) >= ONE_DAY_IN_MS * 7
         }
 
@@ -261,7 +266,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
 
         // if for some reason the user has no cards after 7 days, don't bother
         return withCol {
-            this.cardCount() == 0
+            cardCount() == 0
         }
     }
 

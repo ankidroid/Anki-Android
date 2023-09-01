@@ -32,7 +32,12 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@android:color/white</item>
-        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="preferenceCategoryTitleTextColor">@color/material_light_blue_800</item>
+        <item name="colorOnSurface">@color/black</item>
+        <!-- Widget colors -->
+        <item name="widgetColorActivated">?attr/colorPrimary</item>
+        <item name="trackTint">@color/switch_track_tint</item>
+        <item name="thumbTint">@color/switch_thumb_tint</item>
         <!-- Navigation drawer theme -->
         <item name="navDrawerItemColor">@color/drawer_item_text_light</item>
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_light</item>
@@ -177,6 +182,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/white</item>
+
+        <item name="sliderLabelTextColor">@color/white</item>
     </style>
 
     <!-- Filter Sheet Style -->

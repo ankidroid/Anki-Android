@@ -21,13 +21,12 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
-import com.ichi2.anki.AnkiDroidApp
+import androidx.core.app.PendingIntentCompat
 import com.ichi2.anki.Channel
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.preferences.Preferences
-import com.ichi2.compat.CompatHelper
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.widget.WidgetStatus
 import timber.log.Timber
 
@@ -39,14 +38,22 @@ class NotificationService : BroadcastReceiver() {
 
         fun triggerNotificationFor(context: Context) {
             Timber.i("NotificationService: OnStartCommand")
-            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val preferences = AnkiDroidApp.getSharedPrefs(context)
-            val minCardsDue = preferences.getString(Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION, Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY))!!.toInt()
+            val manager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val preferences = context.sharedPrefs()
+            val minCardsDue = preferences.getString(
+                Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION,
+                Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)
+            )!!.toInt()
             val dueCardsCount = WidgetStatus.fetchDue(context)
             if (dueCardsCount >= minCardsDue) {
                 // Build basic notification
                 val cardsDueText = context.resources
-                    .getQuantityString(R.plurals.widget_minimum_cards_due_notification_ticker_text, dueCardsCount, dueCardsCount)
+                    .getQuantityString(
+                        R.plurals.widget_minimum_cards_due_notification_ticker_text,
+                        dueCardsCount,
+                        dueCardsCount
+                    )
                 // This generates a log warning "Use of stream types is deprecated..."
                 // The NotificationCompat code uses setSound() no matter what we do and triggers it.
                 val builder = NotificationCompat.Builder(
@@ -55,7 +62,7 @@ class NotificationService : BroadcastReceiver() {
                 )
                     .setCategory(NotificationCompat.CATEGORY_REMINDER)
                     .setSmallIcon(R.drawable.ic_star_notify)
-                    .setColor(ContextCompat.getColor(context, R.color.material_light_blue_700))
+                    .setColor(context.getColor(R.color.material_light_blue_700))
                     .setContentTitle(cardsDueText)
                     .setTicker(cardsDueText)
                 // Enable vibrate and blink if set in preferences
@@ -67,12 +74,14 @@ class NotificationService : BroadcastReceiver() {
                 }
                 // Creates an explicit intent for an Activity in your app
                 val resultIntent = Intent(context, DeckPicker::class.java)
-                resultIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                val resultPendingIntent = CompatHelper.compat.getImmutableActivityIntent(
+                resultIntent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                val resultPendingIntent = PendingIntentCompat.getActivity(
                     context,
                     0,
                     resultIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_UPDATE_CURRENT,
+                    false
                 )
                 builder.setContentIntent(resultPendingIntent)
                 // mId allows you to update the notification later on.

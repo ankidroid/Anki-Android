@@ -47,7 +47,6 @@
     <string name="model_browser_delete">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱜᱮᱫ ᱜᱤᱰᱤ ᱢᱮ</string>
     <string name="model_browser_rename" comment="Rename a note type">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
     <string name="model_browser_template">ᱠᱟᱰ ᱠᱚ ᱥᱟᱯᱰᱟᱣ</string>
-    <string name="model_browser_add">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱥᱮᱞᱮᱫ ᱢᱮ</string>
     <!--Rename-->
     <string name="rename_model">ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ ᱫᱩᱦᱰᱟ ᱧᱩᱛᱩᱢ</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">ᱥᱮᱞᱮᱫ ‌ᱡᱷᱚᱜ ᱢᱟᱲᱟᱝᱼᱟᱜ ᱤᱱᱯᱩᱴ ᱩᱭᱦᱟᱹᱨᱢᱮ</string>
     <string name="model_field_editor_changing">ᱡᱟᱭᱜᱟ ᱟᱹᱯᱰᱟᱴᱼᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="model_field_editor_sort_field">ᱡᱟᱭᱜᱟ ᱛᱮ ᱥᱚᱴᱼᱚᱜ ᱠᱟᱱᱟ </string>
-    <string name="model_clone_suffix">ᱱᱚᱠᱚᱞ</string>
     <!--Warnings-->
     <string name="model_delete_warning">ᱥᱭᱚᱨ ᱱᱚᱶᱟ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱯᱨᱚᱠᱟᱨ‌ ᱜᱮᱫ ᱜᱤᱲᱤ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ?</string>
     <string name="field_delete_warning">ᱥᱭᱚᱨ ᱱᱚᱶᱟ ᱡᱟᱭᱜᱟ ᱜᱮᱫ ᱜᱤᱲᱤ ᱥᱟᱱᱟᱢ ᱠᱟᱱᱟ?</string>

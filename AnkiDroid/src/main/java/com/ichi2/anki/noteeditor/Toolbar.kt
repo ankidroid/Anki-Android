@@ -41,6 +41,7 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.convertDpToPixel
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Utils
 import com.ichi2.utils.ViewGroupUtils
@@ -99,7 +100,7 @@ class Toolbar : FrameLayout {
             findViewById<View>(id).setOnClickListener { onFormat(TextWrapper(prefix, suffix)) }
 
         setupButtonWrappingText(R.id.note_editor_toolbar_button_bold, "<b>", "</b>")
-        setupButtonWrappingText(R.id.note_editor_toolbar_button_italic, "<em>", "</em>")
+        setupButtonWrappingText(R.id.note_editor_toolbar_button_italic, "<i>", "</i>")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_underline, "<u>", "</u>")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_insert_mathjax, "\\(", "\\)")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_horizontal_rule, "<hr>", "")
@@ -179,7 +180,7 @@ class Toolbar : FrameLayout {
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
         button.setPadding(twoDp, twoDp, twoDp, twoDp)
         // end apply style
-        val shouldScroll = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+        val shouldScroll = AnkiDroidApp.instance.sharedPrefs()
             .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
         if (shouldScroll) {
             mToolbar.addView(button, mToolbar.childCount)
@@ -194,7 +195,8 @@ class Toolbar : FrameLayout {
         val expectedWidth = getVisibleItemCount(mToolbar) * convertDpToPixel(48F, context)
         val width = screenWidth
         val p = LayoutParams(v.layoutParams)
-        p.gravity = Gravity.CENTER_VERTICAL or if (expectedWidth > width) Gravity.START else Gravity.CENTER_HORIZONTAL
+        p.gravity =
+            Gravity.CENTER_VERTICAL or if (expectedWidth > width) Gravity.START else Gravity.CENTER_HORIZONTAL
         v.layoutParams = p
         return button
     }

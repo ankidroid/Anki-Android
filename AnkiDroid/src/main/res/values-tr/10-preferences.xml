@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Devredışı</string>
-    <string name="enabled">Etkin</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s dk</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Orta merkeze dokun</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Sol alta dokun</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Sağ alta dokun</string>
-    <string name="more_scrolling_buttons" maxLength="41">eOkuyucu</string>
-    <string name="more_scrolling_buttons_summ">Kaydırma için Kanji/Katakana, Emoji/Kao-moji düğmelerini de kullan</string>
     <string name="card_browser_enable_external_context_menu">\"%s\" Menüsü</string>
     <string name="card_browser_enable_external_context_menu_summary">\"%s\" durum menüsünü uygulama çapında etkinleştirir</string>
     <string name="double_scrolling_gap" maxLength="41">Hızlı kaydırma</string>
@@ -154,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">Zaman aşımı yanıtı</string>
     <string name="timeout_answer_summ">Cevabı kullanıcı girişi yapılmadan otomatik olarak göster. Ses dosyasını otomatik oynatmak için gecikme zamanı içerir.</string>
     <string name="timeout_answer_seconds" maxLength="41">Cevabı gösterme zamanı</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Sonraki soruyu gösterme zamanı</string>
     <string name="select_locale_title">Dil Seç</string>
     <string name="software_render" maxLength="41">Kart donanım renderını devredışı bırak</string>
@@ -180,18 +176,13 @@
     <string name="show_eta" maxLength="41">ETA göster</string>
     <string name="show_eta_summ">Kalan zamanı göster</string>
     <string name="use_current" maxLength="41">Yeni kartlar için deste</string>
-    <string name="new_spread" maxLength="41">Yeni kart pozisyonu</string>
     <string name="learn_cutoff" maxLength="41">Önceden öğrenme sınırı</string>
     <string name="time_limit" maxLength="41">Zaman sınırı</string>
     <string name="new_timezone" maxLength="41">Yeni zaman dilimi idaresi</string>
     <string name="day_offset_with_description" maxLength="41">Sonraki günün başlangıcı (0 geceyarısı, 23 akşam 11)</string>
     <string name="day_offset_summary">Gece yarısından %s saat sonra</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Gece Yarısı</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Ekranı açık tut</string>
     <string name="pref_keep_screen_on_summ">Ekran zaman aşımını devredışı bırak</string>
-    <string name="convert_fen_text" maxLength="41">Satranç gösterimi desteği</string>
-    <string name="convert_fen_text_summ">Forsyth Edwards Notasyonundan satranç tahtası çiz. Notasyon [fen][/fen] etiketi içine alınmış olmalıdır.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API etkinleştir</string>
     <string name="enable_api_summary">Diğer uygulamaların AnkiDroid\'e bağlanmasına ve müdahaleniz olmadan veriyi okuyup / yazmasına izin verir</string>
     <string name="custom_buttons" maxLength="41">Uygulama çubuğundaki düğmeler</string>
@@ -217,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Yüklenmiş medyaların tümüne izin verin</string>
     <string name="media_import_allow_all_files_summ">Bir medya dosyasını Android tanımazsa</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">İstatistikleri açarken varsayılan deste</string>
-    <string name="stats_default_deck_current">En son açılan deste için istatistikleri göster</string>
-    <string name="stats_default_deck_all">Bütün desteler için istatistikleri göster</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">İleri düzey istatistikler</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">İleri düzey istatistikleri etkinleştir</string>
-    <string name="enable_advanced_statistics_summ">Öngörü istatistiklerini, gelecekteki çalışmaların bir hesabı veya simülasyonuna göre (etkinken) veya zaten planlanmış gelecek çalışmalara göre (devredışıyken) göster.</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">İlk n günü hesapla, gerisini simüle et</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Hesap duyarlılığı</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Simülasyonun iterasyon sayısı</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Özel senkronizasyon sunucusu</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Kullanılmıyor</string>
@@ -242,64 +222,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Her bir elemana erişim komutu</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Deste grubu seçeneklerinde yapılan değişiklikler birden fazla desteyi etkiler. Eğer sadece şu anki desteyi değiştirmek istiyorsanız, lütfen önce yeni bir seçenek grubu ekleyin.</string>
     <string name="studyoptions_limit_select_tags">Etiketleri Seçin</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Deste tarifi (sadece şu anki deste için)</string>
-    <string name="deck_conf_group" maxLength="41">Seçenek grubu</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d deste bu grubu kullanıyor</item>
-        <item quantity="other">%1$s\n%2$d deste bu grubu kullanıyor</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Yeni kartlar</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Tekrarlar</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Hatâlar</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Genel</string>
     <string name="deck_conf_reminders" maxLength="41">Hatırlatmalar</string>
-    <string name="deck_conf_steps" maxLength="41">Adımlar (dakika)</string>
-    <string name="deck_conf_order" maxLength="41">Sıralama</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Gün başına yeni kart sayısı</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Mezuniyet aralığı</string>
-    <string name="deck_conf_days">XXX gün</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Kolay aralığı</string>
-    <string name="deck_conf_start_ease" maxLength="41">Başlama kolaylığı</string>
-    <string name="deck_conf_max_rev" maxLength="41">Gün başına en fazla çalışma sayısı</string>
-    <string name="deck_conf_new_bury" maxLength="41">İlgili yeni kartları gizle</string>
-    <string name="deck_conf_new_bury_summ">İlgili yeni kartlar sonraki güne kadar gizlenir</string>
-    <string name="deck_conf_rev_bury" maxLength="41">İlgili çalışmaları gizle</string>
-    <string name="deck_conf_rev_bury_summ">İlgili çalışmalar sonraki güne kadar gizlenir</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Genel ayarları kullan</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Bu grubun ayarlarını kullanmak yerine genel \"Cevabı otomatik göster\" ayarlarını kullan.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Kolay bonusu</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Sert zaman aralığı</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Aralık düzenleyicisi</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Maksimum aralık</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Yeni aralık</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Minimum Aralık</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Asalak Eşiği</string>
-    <string name="deck_conf_fails">XXX hatâ</string>
-    <string name="deck_conf_leech_action" maxLength="41">Asalak Eylemi</string>
-    <string name="deck_conf_max_time" maxLength="41">Maksimum cevap süresi</string>
-    <string name="deck_conf_seconds">XXX saniye</string>
-    <string name="deck_conf_timer" maxLength="41">Cevap verme zamanlayıcısını göster</string>
-    <string name="deck_conf_autoplay" maxLength="41">Sesi otomatik oynat</string>
-    <string name="deck_conf_replayq" maxLength="41">Tekrar Sor</string>
-    <string name="deck_conf_replayq_summ">Cevap gösterildiği zaman, hem sesi hem de soru ve cevabı tekrarla</string>
-    <string name="deck_conf_manage" maxLength="41">Grup yönetimi</string>
-    <string name="deck_conf_manage_summ">Ayar grupları ekle ve değiştir</string>
-    <string name="deck_conf_current_group" maxLength="41">Şu anki grup</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Yeniden adlandır</string>
-    <string name="deck_conf_reset" maxLength="41">Varsayılanlara geri dön</string>
-    <string name="deck_conf_reset_message">Şu anki seçenek grubu varsayılan değerlerine döndürülsün mü?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Yapılandırma ekle</string>
-    <string name="deck_conf_add_summ">Şu anki seçenek grubunun kopyasını oluştur</string>
-    <string name="deck_conf_remove_message">Şu anki seçenek grubu kaldırılsın mı?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Bütün altdesteler için ayarla</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s altdeste bu grubu kullanacak</item>
-        <item quantity="other">%s altdeste bu grubu kullanacak</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Şu anki seçenek grubu bu destenin bütün altdesteleri için ayarlansın mı?</string>
     <string name="pref_browser_editor_font" maxLength="41">Tarayıcı ve düzenleyici fontu</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41">Arama</string>
@@ -310,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">İkinci filtreyi etkinleştir</string>
     <string name="deck_conf_cram_steps" maxLength="41">Özel adımlar (dakika cinsinden)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Kendi adımlarınızı tanımlayın</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Bu deste grubundaki desteler için hatırlatma bildirimlerini etkinleştir</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Hatırlat</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid\'in iyileştirilmesine yardım et!</string>
     <string name="analytics_title" maxLength="41">Özellik kullanımını paylaş</string>
@@ -348,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ kaldır</string>
     <string name="bindings_already_bound">%s bileşenine bağlı zaten</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Deneysel</string>
-    <string name="experimental_pref_confirmation" maxLength="41">\"%s\" aç</string>
-    <string name="use_rust_backend_title" maxLength="41">Yeni backendi kullan</string>
-    <string name="use_rust_backend_summary">v3 zamanlayıcı gibi yeni Anki özelliklerini etkinleştirir\nSTABİL DEĞİL. Umursadığınız bir koleksiyonda kullanmayın. Uygulamayı kapatınca geri ALINMAZ</string>
-    <string name="use_rust_backend_warning">Bu, bir ihtimâlle yüklemenizi tamamen bozup uygulamayı kaldırmanızı ve AnkiDroid klasörünü silmenizi gerektirebilir, ve belki bozulmayı senkronizasyonla AnkiWeb\'e yayabilir.\n\nTest etmenizden memnuniyet duyarız, ama lütfen AnkiWeb-dışı geçerli bir yedeğiniz olduğundan emin olun.</string>
-    <string name="enable_v3_sched_title" maxLength="41">v3 zamanlayıcıyı kullan</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Deneysel</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Geliştirici seçenekleri</string>
     <string name="dev_options_enabled_pref" maxLength="41">Geliştirici seçeneklerini aç</string>
@@ -390,7 +309,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Kullanılmayan medya dosyalarını sil</string>
     <string name="pref__delete_unused_media_files__summary">_ ile başlamayan ve herhangi bir notta atıf yapılmayan resimleri ve diğer medyayı sil</string>
-    <string name="dialog__media_check_required__message">Kullanılmayan medya dosyalarını bulmak için bir medya kontrolü gerekiyor</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Kullanılmayan medya dosyalarını sil</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Yedekleri sil</string>

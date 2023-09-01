@@ -27,6 +27,7 @@ import androidx.core.content.FileProvider
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
@@ -56,7 +57,6 @@ import kotlin.math.min
 class IntentHandler : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
-        Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         Themes.setTheme(this)
         disableXiaomiForceDarkMode(this)
@@ -119,7 +119,7 @@ class IntentHandler : Activity() {
         val deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0)
         Timber.i("Handling intent to review deck '%d'", deckId)
         val reviewIntent = Intent(this, Reviewer::class.java)
-        CollectionHelper.instance.getCol(this)!!.decks.select(deckId)
+        CollectionHelper.instance.getColUnsafe(this)!!.decks.select(deckId)
         startActivity(reviewIntent)
         AnkiActivity.finishActivityWithFade(this)
     }
@@ -136,6 +136,22 @@ class IntentHandler : Activity() {
     private fun handleFileImport(intent: Intent, reloadIntent: Intent, action: String?) {
         Timber.i("Handling file import")
         val importResult = handleFileImport(this, intent)
+        // attempt to delete the downloaded deck if it is a shared deck download import
+        if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
+            try {
+                val sharedDeckUri = intent.data
+                if (sharedDeckUri != null) {
+                    // TODO move the file deletion on a background thread
+                    contentResolver.delete(intent.data!!, null, null)
+                    Timber.i("onCreate: downloaded shared deck deleted")
+                } else {
+                    Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
+                }
+            } catch (e: Exception) {
+                Timber.w(e, "onCreate: failed to delete downloaded shared deck")
+            }
+        }
+
         // Start DeckPicker if we correctly processed ACTION_VIEW
         if (importResult.isSuccess) {
             try {
@@ -230,7 +246,7 @@ class IntentHandler : Activity() {
             analyticName = "DoSyncDialog"
         ) {
             override fun handleAsyncMessage(deckPicker: DeckPicker) {
-                val preferences = AnkiDroidApp.getSharedPrefs(deckPicker)
+                val preferences = deckPicker.sharedPrefs()
                 val res = deckPicker.resources
                 val hkey = preferences.getString("hkey", "")
                 val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
@@ -240,13 +256,22 @@ class IntentHandler : Activity() {
                 } else {
                     val err = res.getString(R.string.sync_error)
                     if (limited) {
-                        val remainingTimeInSeconds = max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
+                        val remainingTimeInSeconds =
+                            max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
                         // getQuantityString needs an int
                         val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
-                        val message = res.getQuantityString(R.plurals.sync_automatic_sync_needs_more_time, remaining, remaining)
+                        val message = res.getQuantityString(
+                            R.plurals.sync_automatic_sync_needs_more_time,
+                            remaining,
+                            remaining
+                        )
                         deckPicker.showSimpleNotification(err, message, Channel.SYNC)
                     } else {
-                        deckPicker.showSimpleNotification(err, res.getString(R.string.youre_offline), Channel.SYNC)
+                        deckPicker.showSimpleNotification(
+                            err,
+                            res.getString(R.string.youre_offline),
+                            Channel.SYNC
+                        )
                     }
                 }
                 deckPicker.finishWithoutAnimation()

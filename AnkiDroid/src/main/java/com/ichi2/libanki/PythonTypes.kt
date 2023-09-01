@@ -16,20 +16,13 @@
 
 package com.ichi2.libanki
 
-import java.util.*
-
 /*
  * We can't use private typealiases until
  * https://youtrack.jetbrains.com/issue/KT-24700 is fixed
  */
 
-internal typealias Dict<K, V> = HashMap<K, V>
-internal typealias ImmutableList<T> = List<T>
-internal typealias str = String
 internal typealias DeckId = Long
 internal typealias CardId = Long
-internal typealias dcid = Long
+internal typealias DeckConfigId = Long
 internal typealias NoteId = Long
 internal typealias NoteTypeId = Long
-internal typealias bool = Boolean
-internal typealias Tuple<T1, T2> = Pair<T1, T2>

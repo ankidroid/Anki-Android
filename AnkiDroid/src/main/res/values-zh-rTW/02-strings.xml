@@ -125,9 +125,9 @@
     <string name="save">存儲</string>
     <string name="close">關閉</string>
     <string name="select">選擇</string>
-    <string name="reordering_cards">正在重新排列卡片...</string>
     <string name="field_remapping">%1$s (來自「%2$s」)</string>
     <string name="confirm_map_cards_to_nothing">空白卡片會被刪除，而筆記如果沒有在卡片上也會遺失。你確定要繼續嗎？</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">達到計時器限制！</string>
     <plurals name="timebox_reached">
         <item quantity="other">使用 %2$s 學習共 %1$d 張卡片</item>
@@ -143,16 +143,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">重新排程</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">預覽</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
-    <string name="error_insufficient_memory">因為裝置上沒有足夠的記憶體所以不能執行你要求的操作</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">重新命名</string>
-    <string name="default_conf_delete_error">無法移除預設的設定群組</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="other">新增 %d 張卡片</item>
-    </plurals>
     <string name="check_db">檢查資料庫</string>
     <string name="check_media">檢查媒體</string>
     <string name="empty_cards">空白卡片</string>
-    <string name="check_db_message">檢查資料庫。\n請稍後...</string>
     <string name="empty_card_warning">這張卡片是空的。請使用牌組列表界面右上角菜單中的“空白卡片”選項來查找空白卡片。</string>
     <string name="unknown_type_field_warning">輸入答案：未知的欄位 %s</string>
     <string name="delete_deck">刪除牌組中...\n請稍候</string>
@@ -165,13 +159,6 @@
     </plurals>
     <string name="import_log_no_apkg">這不是有效的 Anki 套件檔案</string>
     <string name="import_title_error" comment="Title of error dialog">錯誤</string>
-    <string name="import_log_failed_unzip">解壓縮 Apkg 失敗：%s</string>
-    <string name="import_log_failed_copy_to">複製 Apkg 至 %s 失敗</string>
-    <string name="import_log_failed_validate">Apkg 驗證失敗</string>
-    <string name="import_log_insufficient_space_error">無足夠空間用於匯入套件包。\n需求 - %1$s\n可用 - %2$s\n\n存在問題？請嘗試清除手機儲存空間。備選方案是利用同步功能，其使用空間量小於匯入。你也許可以在擁有更多空間的裝置上匯入套件包 (比如說 Anki 桌面版) 然後同步至此裝置。</string>
-    <string name="import_log_file_cache_cleared">匯出檔案錯誤，似乎在處理時發生了清除快取操作。\n請重試</string>
-    <string name="import_succeeded_but_check_database">資料匯出成功，但預匯出清理操作失敗。稍後檢查資料庫。根本原因：%s</string>
-    <string name="import_error_corrupt_zip">此 apkg 檔案已損毀。請刪除它再重新下載\n\n根本原因：%s</string>
     <string name="import_error_handle_exception">無法匯入檔案\n\n%s</string>
     <string name="import_error_not_apkg_extension">檔案名“%s”不包含 .apkg 或 .colpkg 副檔名</string>
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
@@ -179,8 +166,6 @@
     <string name="import_error_copy_to_cache">無法快取檔案 (可能是儲存空間不夠)</string>
     <string name="import_error_multiple_colpkg">已選擇多個 colpkg 檔案。</string>
     <string name="import_error_colpkg_apkg">無法同時選擇 apkg &amp; 和 colpkg 檔。</string>
-    <string name="import_stats_error">匯入檔案時發生錯誤：\n「%s」</string>
-    <string name="import_replacing">正在匯入牌組集合&#8230;&#8230;</string>
     <string name="import_interrupted">匯入中斷</string>
     <string name="export_include_schedule">包含進度</string>
     <string name="export_include_media">包含媒體</string>
@@ -192,12 +177,11 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">匯出 %d 個選定筆記為 apkg 文件？</item>
     </plurals>
-    <string name="export_in_progress">匯出 Anki 套件檔案中&#8230;</string>
-    <string name="export_success_title">成功匯出牌組集</string>
+    <string name="export_preparation_in_progress">準備匯出&#8230;</string>
+    <string name="export_ready_title">已準備好要匯出</string>
     <string name="export_send_no_handlers">無應用程式可用於處理 apkg。儲存中…</string>
     <string name="export_save_apkg_successful">成功儲存 Anki 套件</string>
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
-    <string name="export_success_message">您可以選擇一個文件位置來保存它，或者與其他應用共亯。</string>
     <string name="export_share_title">以...傳送Anki牌組包</string>
     <string name="export_email_subject">AnkiDroid 已匯出單字卡：%s</string>
     <string name="export_email_text"><![CDATA[        你好！
@@ -207,8 +191,8 @@
         [1]%1$s<br/>
         [2]%2$s
         ]]></string>
-    <string name="export_select_save_app">選擇文件保存位置</string>
-    <string name="export_select_share_app">選擇要共亯的應用程序</string>
+    <string name="export_choice_share">分享</string>
+    <string name="export_choice_save_to">儲存到…</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
     <string name="menu__deck_options">牌組選項</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>
@@ -218,41 +202,11 @@
     <string name="dyn_deck_desc">這是專門用來進行額外學習進度的牌組。卡片在你複習完以後會自動回歸原本的牌組。如果在牌組列表中刪除這個牌組，其他剩下的卡片也會回歸它們原本的牌組。</string>
     <string name="steps_error">步數必須是大於 0 的數字</string>
     <string name="steps_min_error">至少需要一步</string>
-    <string name="sched_end">(結束)</string>
-    <string name="sched_unbury_action">輕觸選單內的 \"取消暫時隱藏\" 選項來檢視他們。</string>
-    <string name="sched_has_buried">相關或是被暫時隱藏的卡片會被延遲到明天。</string>
     <string name="tag_editor_add_feedback">輕觸 \"%2$s\" 確認新增 \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">現有標籤 \"%1$s\" 已選擇</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="other">%s 秒</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="other">%s 分鐘</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="other">%s 小時</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="other">%s 天</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="other">%s 月</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="other">%s 年</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s秒</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt;%s</string>
     <string name="decks_rename_exists">該牌組已存在</string>
     <string name="decks_rename_filtered_nosubdecks">篩選牌組不能有子牌組</string>
-    <string name="filtered_deck_name">篩選牌組</string>
     <string name="reminder_title">不要忘記今天去學習 ！</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d 卡片在 %1$s 內待複習</item>
@@ -260,14 +214,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">分享 Apkg 檔案時出錯</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">此檔案需要更新版本的 Anki。</string>
     <string name="activity_start_failed">此系統不包含能執行此操作的應用程式。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相機圖像可能很龐大。你可能希望壓縮和重設媒體資料夾中的圖像大小]]></string>
     <string name="no_browser_notification">無瀏覽器已找到，請使用PC或行動裝置訪問網頁： </string>
     <string name="web_page_error">載入頁面時發生錯誤：%s</string>
     <string name="no_outgoing_link_in_cardbrowser">卡片中的外部頁面連結不受支援。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">已恢復卡片</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">背景</string>
     <string name="choose_an_image">選擇圖像</string>
@@ -302,7 +254,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">載入牌組 ‘%s’ 失敗</string>
     <string name="search_decks">搜尋牌組</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">顯示遷移進度</string>
     <string name="ankidroid_init_failed_webview_title">嚴重錯誤</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid 依賴於系統 WebView，但其不可用。這可能在系統安裝更新時發生。請等待幾分鐘後再試。\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -341,7 +293,7 @@
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">下載牌組</string>
-    <string name="try_again">再试一次</string>
+    <string name="try_again">再試一次</string>
     <string name="cancel_download">取消下載</string>
     <string name="cancel_download_question_title">取消下載？</string>
     <string name="downloading_file">下載 %s 中</string>
@@ -351,7 +303,8 @@
     <string name="deck_download_progress_message">在下載同時你可以使用其他的APP</string>
     <string name="check_network">請檢查你的網絡連接</string>
     <string name="search_using_deck_name">按卡片名字搜索</string>
-    <string name="home">首页</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="home">首頁</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">卡片暫時隱藏。</string>
@@ -383,12 +336,11 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">少學習一點</string>
     <string name="intro_ankidroid_tagline_two">多記一點</string>
-    <string name="intro_short_ankidroid_explanation">Anki的卡片調度器通過增强你最薄弱的記憶和保存你最强大的記憶來節省時間</string>
+    <string name="intro_short_ankidroid_explanation">Anki的卡片調度器通過增強你最薄弱的記憶和保存你最強大的記憶來節省時間</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">快速入門</string>
     <string name="intro_sync_from_ankiweb">從AnkiWeb同步</string>
     <string name="already_logged_in">已登入</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">該牌組已存在</string>
     <string name="deck_created">已創建牌組</string>
     <string name="deck_renamed">重命名的牌組</string>
     <!-- Deck Deletion -->
@@ -405,5 +357,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">須執行媒體同步</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

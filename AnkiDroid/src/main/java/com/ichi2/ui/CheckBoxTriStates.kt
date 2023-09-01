@@ -203,6 +203,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
 
         companion object {
             @JvmField // required field that makes Parcelables from a Parcel
+            @Suppress("unused")
             val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
                 override fun createFromParcel(source: Parcel): SavedState {
                     return SavedState(source)

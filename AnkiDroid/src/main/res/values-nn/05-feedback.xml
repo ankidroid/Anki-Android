@@ -55,5 +55,5 @@
     <string name="feedback_copy_debug">Kopier feilsøkingsinformasjon</string>
     <string name="feedback_report">Rapporter</string>
     <string name="feedback_report_automatically">Send feilmeldingsrapporter automatisk</string>
-    <string name="feedback_no_suitable_app_found">Ingen egnet app er funnet</string>
+    <string name="feedback_no_suitable_app_found">Ingen eigna app funnen</string>
 </resources>

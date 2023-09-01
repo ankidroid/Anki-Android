@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">डेटाबेस की जाँच करें?</string>
     <string name="check_db_warning">इसमें बहुत समय लग सकता है</string>
-    <string name="check_db_acknowledge">डेटाबेस की जाँच की गई</string>
-    <string name="check_db_acknowledge_shrunk">डेटाबेस जाँची और अनुकूलित की गई।\n%d MB से घटाया गया।</string>
     <string name="contextmenu_deckpicker_delete_deck">डेक मिटाएँ</string>
-    <string name="delete_deck_default_deck">डिफ़ॉल्ट डेक को मिटाया नहीं जा सकता।</string>
     <string name="delete_deck_title">डेक मिटाएँ?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">%1$s के सारे पत्ते मिटाएँ? इसमें %2$d पत्ता है।</item>
-        <item quantity="other">%1$s के सारे पत्ते मिटाएँ? इसमें %2$d पत्ते है।</item>
-    </plurals>
-    <string name="delete_cram_deck_message">%s के सारे पत्ते उनके मूल डेक में भेज दें?</string>
     <string name="no_tts_available_message">कोई लेख-से-बोली भाषा उपलब्ध नहीं</string>
     <string name="initializing_tts">लेख-से-बोली सेवा शुरू की जा रही है...</string>
     <string name="tts_no_tts">बात न करें</string>
@@ -76,8 +68,8 @@
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
-        <item quantity="one">Reschedule %d card</item>
-        <item quantity="other">Reschedule %d cards</item>
+        <item quantity="one">%d कार्ड फिर से शेड्यूल करें</item>
+        <item quantity="other">%d कार्डों को फिर से शेड्यूल करें</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
         <item quantity="one">वर्तमान अंतराल: %d दिन</item>
@@ -94,7 +86,7 @@
     <string name="answering_error_title">डेटाबेस त्रुटि</string>
     <string name="answering_error_message">संग्रह में लेखन विफल रहा। डेटाबेस दूषित हो सकता है या डिस्क पर पर्याप्त खाली स्थान नहीं हो सकता है। \n\n यदि यह अधिक बार होता है, तो डेटाबेस की जाँच करने, संग्रह की मरम्मत करने या इसे बैकअप से पुनर्स्थापित करने का प्रयास करें। इसके लिए \"विकल्प\" स्पर्श करें। \n या यह एक एंकॉइड बग भी हो सकता है; कृपया त्रुटि रिपोर्ट करें ताकि हम इसकी जांच कर सकें।</string>
     <string name="answering_error_report">त्रुटि की सूचना दें</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">AnkiDroid को खोलने के लिए पर्याप्त फ्री स्टोरेज स्पेस नहीं है। जारी रखने के लिए कुछ जगह खाली करें। </string>
     <string name="repair_deck_dialog">क्या आप वास्तव में डेटाबेस को सुधारने का प्रयास करना चाहते हैं? \n\nBefore प्रयास प्रारंभ कर रहा है, एक प्रतिलिपि सबफ़ोल्डर \"%s\" में बनाया जाएगा ।</string>
     <string name="intent_aedict_empty">श्रेणी \"डिफ़ॉल्ट\" रिक्त है</string>
     <string name="intent_aedict_category">AnkiDroid में कार्ड जोड़ने के लिए सभी नोटपैड श्रेणियों को हटाएँ या एक \"डिफ़ॉल्ट\" नामक पत्ता जोड़ें</string>
@@ -107,39 +99,27 @@
     <string name="custom_study_random">डेक से यादृच्छिक रूप से एक्स कार्ड का चयन करें:</string>
     <string name="custom_study_preview">पिछले x दिनों में जोड़े गए नए कार्ड का पूर्वावलोकन करें:</string>
     <string name="custom_study_rebuild_deck_corrupt">कस्टम अध्ययन डेक का पुनर्निर्माण नहीं किया जा सका</string>
-    <string name="importing_collection">संग्रह आयात कर रहा है.. ।</string>
-    <string name="import_media_count">मीडिया फ़ाइलें आयात कर रहा है %1$d%%.. ।</string>
-    <string name="import_progress">• आयात नोट्स: %1$d%% \ n • कार्ड आयात: %2$d%% \ n • पोस्ट-प्रोसेसिंग: %3$d%%</string>
-    <string name="import_update_details">%2$d मौजूदा नोट्स का अद्यतन %1$d ।</string>
-    <string name="import_update_ignored">नोट प्रकार बदल गया है, क्योंकि कुछ अद्यतनों पर ध्यान नहीं दिया गया</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">स्टोरेज भर गया</string>
+    <string name="storage_almost_full_title">स्टोरेज लगभग पूर्ण</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">कोई जगह नहीं</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid को जारी रखने के लिए %s मुफ्त संग्रहण स्थान की आवश्यकता है। कृपया कुछ जगह खाली करें</string>
     <string name="restore_backup_title">बैकअप रिस्टोर करें</string>
     <string name="restore_backup">आपका संग्रह किसी पुरानी प्रतिलिपि से बदल दिया जाएगा । कोई भी न सहेजा गया प्रगति खो जाएगी ।</string>
-    <string name="restore_backup_choose_another">Choose another</string>
+    <string name="restore_backup_choose_another">दुसरे का चयन करें</string>
     <string name="dialog_cancel">रद्द करें</string>
     <string name="dialog_ok">ठीक है</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">पुष्टि करें</string>
     <string name="dialog_no">नहीं</string>
     <string name="dialog_yes">हाँ</string>
     <string name="dialog_continue">जारी रखें</string>
-    <string name="dialog_processing">Processing...</string>
+    <string name="dialog_processing">प्रोसेसिंग...</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">बनाएँ</string>
     <string name="dialog_positive_delete">हटाएँ</string>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">डिसेबल</string>
     <string name="dialog_positive_overwrite">उपरिलेखित करें</string>
-    <string name="dialog_positive_remove">हटाएं</string>
     <string name="dialog_positive_repair">सुधारें</string>
     <string name="dialog_positive_replace">की जगह</string>
-    <string name="dialog_positive_restore">पुनर्स्थापित करें</string>
-    <string name="dialog_positive_set">सेट करें</string>
     <string name="dialog_collection_path_not_dir">निर्दिष्ट पथ कोई मांय निर्देशिका नहीं है</string>
     <!-- Media checking -->
     <string name="check_media_title">मीडिया की जांच करें?</string>
@@ -165,8 +145,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">बाकी</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">रिक्त कार्ड ढूंढ रहा है.. ।</string>
-    <string name="confirm_cancel">क्या आप रद्द करना चाहते हैं?</string>
-    <string name="empty_cards_none">कोई खाली कार्ड नहीं</string>
     <string name="empty_cards_count">कार्ड हटाने के लिए: %d</string>
     <string name="empty_cards_deleted">हटाई गई फ़ाइलें: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +160,11 @@
     <string name="integrity_check_continue_anyway">किसी तरह से जारी रखें</string>
     <string name="integrity_check_insufficient_space">चेक डेटाबेस बड़ी मात्रा में अस्थायी storage का उपयोग करता है। \n \n यह दृढ़ता से अनुशंसा की जाती है कि आपके डिवाइस पर कम से कम %s खाली स्थान हो।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n आपके पास वर्तमान में %s खाली स्थान है।</string>
-    <string name="integrity_check_fixed_no_home_deck">गलत होम डेक वाले %d कार्ड वापिस किए गए। कृपया अधिक जानकारी के लिए मैनुअल देखें।</string>
     <string name="video_creation_error">वीडियो नहीं चला सका</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">डेक नहीं बदल सका</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">कार्ड से डेटा डिकोड करने में त्रुटि</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">डेक विकल्पों को संसाधित करने में विफल: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">डेटाबेस लॉक है</string>
     <string name="database_locked_summary">AnkiDroid डेटाबेस किसी अन्य एप्लिकेशन द्वारा उपयोग में है। कृपया अन्य एप्लिकेशन को बंद करें और फिर AnkiDroid को फिर से खोलें।</string>
@@ -224,15 +198,15 @@
     <string name="help_title_get_help">मदद लें</string>
     <string name="help_item_mailing_list">मेलिंग सूची</string>
     <string name="help_item_reddit">Reddit</string>
-    <string name="help_item_report_bug">Report a Bug</string>
+    <string name="help_item_report_bug">बग रिपोर्ट करें</string>
     <string name="help_title_support_ankidroid">AnkiDroid का समर्थन करें</string>
     <string name="help_item_support_opencollective_donate">दान करें</string>
     <string name="help_item_support_develop_ankidroid">विकास करें</string>
     <string name="help_item_support_rate_ankidroid">मूल्यांकन करें</string>
     <string name="help_item_support_other_ankidroid">अन्य</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">अनुवाद करें</string>
     <string name="help_title_community">समुदाय</string>
-    <string name="help_item_anki_forums">Anki Forums</string>
+    <string name="help_item_anki_forums">अंकी फ़ोरम</string>
     <string name="help_item_discord">Discord</string>
     <string name="help_item_facebook">Facebook</string>
     <string name="help_item_twitter">Twitter</string>
@@ -247,29 +221,29 @@
         <item quantity="one">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
         <item quantity="other">%d सेकंड में एक स्वचालित सिंक को ट्रिगर किया जा सकता है</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">आपका कनेक्शन मीटर्ड है। डेटा ट्रांसफर में पैसे खर्च हो सकते हैं</string>
     <string name="deck_picker_new">इस डेक में आज देखने के लिए नई पत्तियों की संख्या।</string>
     <string name="deck_picker_rev">इस डेक में आज के लिए पत्तियों की संख्या।</string>
-    <string name="deck_picker_lrn">Number of cards in learning in this deck.</string>
+    <string name="deck_picker_lrn">इस डेक में सीखने में कार्डों की संख्या।</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
     <string name="deck_picker_counts">डेक अवलोकन पृष्ठ खोलें जिसमें आज देखने के लिए पत्तियों की संख्या है।</string>
-    <string name="import_deck_package">Deck package (.apkg)</string>
-    <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_deck_package">डेक पैकेज (.apkg)</string>
+    <string name="import_collection_package">संग्रह पैकेज (.colpkg)</string>
+    <string name="import_csv">टेक्स्ट फ़ाइल (.txt, .csv)</string>
     <!-- Deck selection dialog -->
-    <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
+    <string name="cannot_create_subdeck_for_all_decks">आप सभी डेक के लिए एक सबडेक नहीं बना सकते</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="backup_your_collection">अपने संग्रह का बैकअप लें</string>
+    <string name="backup_collection_message">आपने कुछ समय से अपने संग्रह का बैकअप नहीं लिया है। डेटा हानि को रोकने के लिए आपको इसे अभी करना चाहिए</string>
+    <string name="button_backup">बैकअप</string>
+    <string name="button_disable_reminder">अनुस्मारक अक्षम करें</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">बाद में</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">दोबारा न दिखाएं</string>
+    <string name="dismiss_backup_warning_title">डेटा हानि चेतावनी</string>
+    <string name="dismiss_backup_warning_new_user">        एंड्रॉइड गोपनीयता परिवर्तनों के कारण, ऐप अनइंस्टॉल होने पर आपका डेटा और स्वचालित बैकअप आपके फोन से हटा दिए जाएंगे
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        एंड्रॉइड गोपनीयता परिवर्तनों के कारण, ऐप अनइंस्टॉल होने पर आपका डेटा और स्वचालित बैकअप पहुंच योग्य नहीं होगा
     </string>
 </resources>

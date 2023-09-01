@@ -46,15 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">データベースをチェックしますか？</string>
     <string name="check_db_warning">これには長い時間がかかることがあります。</string>
-    <string name="check_db_acknowledge">データベースのチェックが完了しました</string>
-    <string name="check_db_acknowledge_shrunk">データベースをチェックし最適化しました。\nデータを%dMB削減しました。</string>
     <string name="contextmenu_deckpicker_delete_deck">デッキを削除</string>
-    <string name="delete_deck_default_deck">デフォルトデッキは削除できません</string>
     <string name="delete_deck_title">デッキを削除しますか？</string>
-    <plurals name="delete_deck_message">
-        <item quantity="other">%1$s内のすべてのカードを削除しますか？　%2$d枚のカードが含まれています</item>
-    </plurals>
-    <string name="delete_cram_deck_message">%s のすべてのカードを元のデッキに戻してもよろしいですか？</string>
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
     <string name="initializing_tts">テキスト読み上げ（TTS）機能を初期化しています...</string>
     <string name="tts_no_tts">発声なし</string>
@@ -89,7 +82,7 @@
     <string name="answering_error_message">コレクションへの書き込み中にエラーが発生しました。データベースの破損しているか、ストレージの空き容量が不足している可能性があります。\n\n繰り返しエラーが発生する場合には、「データベースをチェック」、コレクションの修復、「バックアップから復元」を試してみてください。\nまた、AnkiDroidのバグである可能性が考えられる場合は、開発者にご報告ください。</string>
     <string name="answering_error_report">エラーを報告</string>
     <string name="storage_full_message">AnkiDroidアプリを開くための十分な空き容量がストレージにありません。続行するには空き容量を確保してください。 </string>
-    <string name="repair_deck_dialog">データベースの修復を試みて本当によろしいですか？　\n\n試行の開始前に、サブフォルダー \"%s\" にコピーを作成します。</string>
+    <string name="repair_deck_dialog">データベースの修復を試みて本当によろしいですか？\n\n試行の開始前に、サブフォルダ \"%s\" にコピーを作成します。</string>
     <string name="intent_aedict_empty">カテゴリー \"default\" が空です</string>
     <string name="intent_aedict_category">AnkiDroidにカードを登録するため、すべてのNotepadカテゴリを削除するか、\"default\" という名前のカテゴリを追加してください</string>
     <string name="custom_study_new_total_new">デッキ内の新規カード: %d枚</string>
@@ -101,14 +94,6 @@
     <string name="custom_study_random">デッキからランダムに x 枚のカードを選んで学習</string>
     <string name="custom_study_preview">直近 x 日間で追加した習得未開始の新規カードを予習</string>
     <string name="custom_study_rebuild_deck_corrupt">カスタムデッキを再構築できませんでした</string>
-    <string name="importing_collection">コレクションをインポートしています&#8230;</string>
-    <string name="import_media_count">メディアファイルをインポートしています。 %1$d%%\nお待ちください&#8230;</string>
-    <string name="import_progress">• ノートのインポート: %1$d%%\n• カードのインポート: %2$d%%\n• 後処理: %3$d%%</string>
-    <string name="import_update_details">既存のノート%2$d枚のうち%1$d枚を更新しました。</string>
-    <string name="import_update_ignored">ノートタイプが変更されたため、いくつかの更新は無視されました</string>
-    <plurals name="import_complete_message">
-        <item quantity="other">インポートされたファイル: %1$d\nインポートされたカードの合計: %2$d</item>
-    </plurals>
     <string name="storage_full_title">ストレージの空き容量がありません</string>
     <string name="storage_almost_full_title">ストレージの空き容量が少なくなっています</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">空き容量不足</string>
@@ -128,11 +113,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">無効化</string>
     <string name="dialog_positive_overwrite">上書きする</string>
-    <string name="dialog_positive_remove">削除</string>
     <string name="dialog_positive_repair">修復</string>
     <string name="dialog_positive_replace">上書き</string>
-    <string name="dialog_positive_restore">戻す</string>
-    <string name="dialog_positive_set">適用</string>
     <string name="dialog_collection_path_not_dir">指定されたパスは有効なディレクトリではありませんでした</string>
     <!-- Media checking -->
     <string name="check_media_title">メディアをチェックしますか？</string>
@@ -157,8 +139,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">期日到来済</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">白紙カード（表側に何も表示されないカード）がないか確認しています&#8230;</string>
-    <string name="confirm_cancel">キャンセルしますか？</string>
-    <string name="empty_cards_none">白紙カードはありません</string>
     <string name="empty_cards_count">白紙カードが%d枚見つかりました。削除しますか？</string>
     <string name="empty_cards_deleted">%d枚のカードを削除しました</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -174,15 +154,11 @@
     <string name="integrity_check_continue_anyway">続ける</string>
     <string name="integrity_check_insufficient_space">データベースのチェックには一時ファイル用のデータ領域が必要です。\n\n続行する前に、お使いのデバイスに少なくとも %s の空き領域を確保してください。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n現在の空き容量は %s です。</string>
-    <string name="integrity_check_fixed_no_home_deck">%d 枚のカードが復元されました。詳細はマニュアルをご覧ください。</string>
     <string name="video_creation_error">動画を再生できませんでした</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">デッキを変更できませんでした</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">カードからのデータのデコードエラー</string>
-    <string name="undo_succeeded">%s を元に戻しました</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">デッキオプションの処理に失敗しました: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">データベースがロックされています</string>
     <string name="database_locked_summary">AnkiDroidデータベースを別のアプリが使用中です。該当するアプリを終了してAnkiDroidを再起動してください。</string>

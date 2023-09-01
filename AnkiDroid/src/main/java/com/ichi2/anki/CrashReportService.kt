@@ -28,6 +28,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.analytics.UsageAnalytics.sendAnalyticsException
 import com.ichi2.anki.exception.ManuallyReportedException
 import com.ichi2.anki.exception.UserSubmittedException
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.WebViewDebugging.setDataDirectorySuffix
 import org.acra.ACRA
@@ -49,7 +50,7 @@ object CrashReportService {
     @JvmStatic
     private var logcatArgs = arrayOf(
         "-t",
-        "100",
+        "500",
         "-v",
         "time",
         "ActivityManager:I",
@@ -168,9 +169,9 @@ object CrashReportService {
 
         // Setup logging and crash reporting
         if (BuildConfig.DEBUG) {
-            setDebugACRAConfig(AnkiDroidApp.getSharedPrefs(mApplication))
+            setDebugACRAConfig(mApplication.sharedPrefs())
         } else {
-            setProductionACRAConfig(AnkiDroidApp.getSharedPrefs(mApplication))
+            setProductionACRAConfig(mApplication.sharedPrefs())
         }
         if (ACRA.isACRASenderServiceProcess() && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
             try {
@@ -186,7 +187,7 @@ object CrashReportService {
      * @param value value of FEEDBACK_REPORT_KEY preference
      */
     fun setAcraReportingMode(value: String) {
-        AnkiDroidApp.getSharedPrefs(mApplication).edit {
+        mApplication.sharedPrefs().edit {
             // Set the ACRA disable value
             if (value == FEEDBACK_REPORT_NEVER) {
                 putBoolean(ACRA.PREF_DISABLE_ACRA, true)
@@ -218,7 +219,7 @@ object CrashReportService {
         setAcraReportingMode(FEEDBACK_REPORT_NEVER)
         prefs.edit { putString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_NEVER) }
         // Use a wider logcat filter in case crash reporting manually re-enabled
-        logcatArgs = arrayOf("-t", "300", "-v", "long", "ACRA:S")
+        logcatArgs = arrayOf("-t", "1500", "-v", "long", "ACRA:S")
         createAcraCoreConfigBuilder()
     }
 
@@ -267,7 +268,8 @@ object CrashReportService {
     fun sendExceptionReport(e: Throwable, origin: String?, additionalInfo: String?, onlyIfSilent: Boolean) {
         sendAnalyticsException(e, false)
         AnkiDroidApp.sentExceptionReportHack = true
-        val reportMode = AnkiDroidApp.getSharedPrefs(mApplication.applicationContext).getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
+        val reportMode = mApplication.applicationContext.sharedPrefs()
+            .getString(FEEDBACK_REPORT_KEY, FEEDBACK_REPORT_ASK)
         if (onlyIfSilent) {
             if (FEEDBACK_REPORT_ALWAYS != reportMode) {
                 Timber.i("sendExceptionReport - onlyIfSilent true, but ACRA is not 'always accept'. Skipping report send.")
@@ -286,12 +288,12 @@ object CrashReportService {
     }
 
     fun isAcraEnabled(context: Context, defaultValue: Boolean): Boolean {
-        if (!AnkiDroidApp.getSharedPrefs(context).contains(ACRA.PREF_DISABLE_ACRA)) {
+        if (!context.sharedPrefs().contains(ACRA.PREF_DISABLE_ACRA)) {
             // we shouldn't use defaultValue below, as it would be inverted which complicated understanding.
             Timber.w("No default value for '%s'", ACRA.PREF_DISABLE_ACRA)
             return defaultValue
         }
-        return !AnkiDroidApp.getSharedPrefs(context).getBoolean(ACRA.PREF_DISABLE_ACRA, true)
+        return !context.sharedPrefs().getBoolean(ACRA.PREF_DISABLE_ACRA, true)
     }
 
     /**
@@ -320,7 +322,7 @@ object CrashReportService {
      *  submitted
      */
     fun sendReport(ankiActivity: AnkiActivity): Boolean {
-        val preferences = AnkiDroidApp.getSharedPrefs(ankiActivity)
+        val preferences = ankiActivity.sharedPrefs()
         val reportMode = preferences.getString(FEEDBACK_REPORT_KEY, "")
         return if (FEEDBACK_REPORT_NEVER == reportMode) {
             preferences.edit { putBoolean(ACRA.PREF_DISABLE_ACRA, false) }

@@ -18,9 +18,10 @@ package com.ichi2.anki.preferences
 import android.os.Build
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
@@ -35,7 +36,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class AppearanceSettingsFragment : SettingsFragment() {
-    private var mBackgroundImage: SwitchPreference? = null
+    private var mBackgroundImage: SwitchPreferenceCompat? = null
     override val preferenceResource: Int
         get() = R.xml.preferences_appearance
     override val analyticsScreenNameConstant: String
@@ -43,7 +44,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         // Configure background
-        mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
+        mBackgroundImage = requirePreference<SwitchPreferenceCompat>("deckPickerBackground")
         mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             if (mBackgroundImage!!.isChecked) {
                 try {
@@ -102,20 +103,20 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 updateCurrentTheme(requireContext())
 
                 if (previousThemeId != Themes.currentTheme.id) {
-                    requireActivity().recreate()
+                    ActivityCompat.recreate(requireActivity())
                 }
             }
         }
 
         dayThemePref.setOnPreferenceChangeListener { newValue ->
             if (newValue != dayThemePref.value && !systemIsInNightMode(requireContext()) && newValue != Themes.currentTheme.id) {
-                requireActivity().recreate()
+                ActivityCompat.recreate(requireActivity())
             }
         }
 
         nightThemePref.setOnPreferenceChangeListener { newValue ->
             if (newValue != nightThemePref.value && systemIsInNightMode(requireContext()) && newValue != Themes.currentTheme.id) {
-                requireActivity().recreate()
+                ActivityCompat.recreate(requireActivity())
             }
         }
 
@@ -133,19 +134,19 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // Show estimate time
         // Represents the collection pref "estTime": i.e.
         // whether the buttons should indicate the duration of the interval if we click on them.
-        requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
-            launchCatchingTask { isChecked = withCol { get_config_boolean("estTimes") } }
+        requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
+            launchCatchingTask { isChecked = withCol { config.get("estTimes") ?: true } }
             setOnPreferenceChangeListener { newETA ->
-                launchWithCol { set_config("estTimes", newETA) }
+                launchCatchingTask { withCol { config.set("estTimes", newETA) } }
             }
         }
         // Show progress
         // Represents the collection pref "dueCounts": i.e.
         // whether the remaining number of cards should be shown.
-        requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
-            launchCatchingTask { isChecked = withCol { get_config_boolean("dueCounts") } }
+        requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
+            launchCatchingTask { isChecked = withCol { config.get("dueCounts") ?: true } }
             setOnPreferenceChangeListener { newDueCountsValue ->
-                launchWithCol { set_config("dueCounts", newDueCountsValue) }
+                launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValue) } }
             }
         }
     }

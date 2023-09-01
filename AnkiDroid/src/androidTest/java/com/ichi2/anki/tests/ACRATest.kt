@@ -27,6 +27,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ALWAYS
 import com.ichi2.anki.CrashReportService.FEEDBACK_REPORT_ASK
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.testutil.GrantStoragePermission
 import org.acra.ACRA
 import org.acra.builder.ReportBuilder
@@ -49,7 +50,7 @@ class ACRATest : InstrumentedTest() {
     @get:Rule
     var runtimePermissionRule = GrantStoragePermission.instance
     private var mApp: AnkiDroidApp? = null
-    private val mDebugLogcatArguments = arrayOf("-t", "300", "-v", "long", "ACRA:S")
+    private val mDebugLogcatArguments = arrayOf("-t", "1500", "-v", "long", "ACRA:S")
 
     // private String[] prodLogcatArguments = { "-t", "100", "-v", "time", "ActivityManager:I", "SQLiteLog:W", AnkiDroidApp.TAG + ":D", "*:S" };
     @Before
@@ -276,5 +277,5 @@ class ACRATest : InstrumentedTest() {
     }
 
     private val sharedPrefs: SharedPreferences
-        get() = AnkiDroidApp.getSharedPrefs(testContext)
+        get() = testContext.sharedPrefs()
 }

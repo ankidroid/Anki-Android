@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Deshabilitat</string>
-    <string name="enabled">Habilitat</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -98,7 +97,7 @@
     <string name="gestures_corner_touch_summary">Permet gestos tàctils a les cantonades de la pantalla</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Carpeta de navegació a pantalla completa</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Obriu la carpeta de navegació quan llisqueu a la dreta des de qualsevol lloc de la pantalla</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Cap</string>
     <string name="gestures_swipe_up" maxLength="41">Passeu el dit cap amunt</string>
     <string name="gestures_swipe_down" maxLength="41">Passeu el dit cap a sota</string>
     <string name="gestures_swipe_left" maxLength="41">Passseu el dit cap a l\'esquerra</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Tocar al centre</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Tocar a baix a l\'esquerra</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Tocar a baix a la dreta</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">També utilitzar els botons kanji/katakana, emoji/kao-moji per moure\'s</string>
     <string name="card_browser_enable_external_context_menu">Menú ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Permet a tot arreu el menú contextual \'%s\'</string>
     <string name="double_scrolling_gap" maxLength="41">Desplaçament doble</string>
@@ -129,9 +126,9 @@
     <string name="sync_account_summ_logged_out">No heu iniciat sessió</string>
     <string name="automatic_sync_choice" maxLength="41">Sincronització automàtica</string>
     <string name="automatic_sync_choice_summ">Sincronitza automàticament en l\'app al Inici/sortir si el sync anterior va ser fa més de 10 minuts.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Sempre</string>
     <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_never">Mai</string>
     <string name="sync_status_badge" maxLength="41">Mostra l\'estat de sincronització</string>
     <string name="sync_status_badge_summ">Canvia la icona de sincronització quan es puguin pujar canvis</string>
     <string name="metered_sync_title" maxLength="41">Permet la sincronització a les connexions mesurades</string>
@@ -154,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">Resposta fora de temps</string>
     <string name="timeout_answer_summ">Mostra la resposta automàticament sense aportació d\'usuari. El retard inclou el temps de les reproduccions automàtiques d\'arxius d\'àudio.</string>
     <string name="timeout_answer_seconds" maxLength="41">Temps per mostrar la resposta</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Temps per mostrar la següent pregunta</string>
     <string name="select_locale_title">Seleccioneu l\'idioma</string>
     <string name="software_render" maxLength="41">Desactiva hardware de mostrar carta</string>
@@ -180,18 +176,13 @@
     <string name="show_eta" maxLength="41">Mostra el temps restant</string>
     <string name="show_eta_summ">Mostra el temps restant</string>
     <string name="use_current" maxLength="41">Paquet per a cartes noves</string>
-    <string name="new_spread" maxLength="41">Nova posició de la carta</string>
     <string name="learn_cutoff" maxLength="41">Informeu-vos de límit per davant</string>
     <string name="time_limit" maxLength="41">Límit de temps de Timebox</string>
     <string name="new_timezone" maxLength="41">Gestió de nova zona horària</string>
     <string name="day_offset_with_description" maxLength="41">Principi del proper dia</string>
     <string name="day_offset_summary">%s hores passada la mitjanit</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Mitjanit</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11 PM</string>
     <string name="pref_keep_screen_on" maxLength="41">Mantenir la pantalla encesa</string>
     <string name="pref_keep_screen_on_summ">Desactiva la pantalla de bloqueig</string>
-    <string name="convert_fen_text" maxLength="41">Suport de notació d\'escacs</string>
-    <string name="convert_fen_text_summ">Dibuixar el tauler d\'escacs de notació Forsyth-Edwards. S\'ha de justificar la notació en etiquetes [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Activa l\'API de l\'AnkiDroid</string>
     <string name="enable_api_summary">Deixar altres apps connectar-se a AnkiDroid i llegir / escriure dades sense la seva intervenció</string>
     <string name="custom_buttons" maxLength="41">Butons de la barra lateral</string>
@@ -200,8 +191,8 @@
     <string name="custom_buttons_setting_if_room">Mostrar si hi ha espai</string>
     <string name="custom_buttons_setting_menu_only">Només el menú</string>
     <string name="reset_custom_buttons" maxLength="41">Restableix als valors per defecte</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Restableix la configuració per omissió</string>
+    <string name="reset">Reinicia</string>
     <string name="thirdparty_apps_title" maxLength="41">Aplicacions de terceres parts</string>
     <string name="thirdparty_apps_summary">Consulteu una llista d\'aplicacions que fan ús de l\'API AnkiDroid, com ara diccionaris i utilitats.</string>
     <string name="html_javascript_debugging" maxLength="41">Depuració HTML / Javascript</string>
@@ -217,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Permet tots els fitxers en la importació de multimèdia</string>
     <string name="media_import_allow_all_files_summ">Si Android no reconeix un fitxer multimèdia</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Paquet per omissió en obrir les estadístiques</string>
-    <string name="stats_default_deck_current">Mostra les estadístiques del paquet més recent</string>
-    <string name="stats_default_deck_all">Mostra les estadístiques de tots els paquets</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Estadístiques avançades</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Permetre estadístiques avançades</string>
-    <string name="enable_advanced_statistics_summ">Mostra la previsió d\'estadístiques basades en un càlcul o simulació de futurs repassos (activat) o sobre els futurs repassos ja planificats (desactivat).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Computa els n primers dies, simula els restants</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precisió de la computació</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Nombre d\'iteracions de la simulació</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Servidor de sincronització personalitzat</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Sense utilitzar</string>
@@ -242,64 +222,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Assignació d\'ordres</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Els canvis a les opcions de grup de paquets afectaran varis paquets. Si voleu canviar només el paquet actual, afegiu primer un grup d\'opcions nou</string>
     <string name="studyoptions_limit_select_tags">Trieu les etiquetes</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Descripció de paquet (sols paquet actual)</string>
-    <string name="deck_conf_group" maxLength="41">Grup d\'opcions</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d paquet utilitza aquest grup</item>
-        <item quantity="other">%1$s\n%2$d paquets utilitzen aquest grup</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Noves fitxes</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisions</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Intervals</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Recordatoris</string>
-    <string name="deck_conf_steps" maxLength="41">Passos (en minuts)</string>
-    <string name="deck_conf_order" maxLength="41">Ordre</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Noves fitxes per dia</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Interval gradual</string>
-    <string name="deck_conf_days">XXX dia(es)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Interval amb facilitat</string>
-    <string name="deck_conf_start_ease" maxLength="41">Interval de partida</string>
-    <string name="deck_conf_max_rev" maxLength="41">Nombre màxim de revisions/dia</string>
-    <string name="deck_conf_new_bury" maxLength="41">Enterra noves cartes relacionades</string>
-    <string name="deck_conf_new_bury_summ">Les noves targetes relacionades seran enterrades fins al dia següent</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Enterra revisions relacionades</string>
-    <string name="deck_conf_rev_bury_summ">Les revisions relacionades estan enterrades fins al dia següent</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Usar la configuració general</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Usar ajustos generals per \'mostrar resposta automàtica\'  en contes d\'usar els ajustos per aquest grup.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bonus de facilitat</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Interval difícil</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Modificador de l\'interval</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Interval màxim</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Interval nou</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Interval mínim</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Llindar de lapa</string>
-    <string name="deck_conf_fails">XXX errors</string>
-    <string name="deck_conf_leech_action" maxLength="41">Acció de lapa</string>
-    <string name="deck_conf_max_time" maxLength="41">Temps màxim de la resposta</string>
-    <string name="deck_conf_seconds">XXX segons</string>
-    <string name="deck_conf_timer" maxLength="41">Temporitzador de mostra la resposta</string>
-    <string name="deck_conf_autoplay" maxLength="41">Reprodueix l\'àudio automàticament</string>
-    <string name="deck_conf_replayq" maxLength="41">Torna a mostra la pregunta</string>
-    <string name="deck_conf_replayq_summ">Al mostra la resposta, torna a reproduir l\'àudio de la pregunta i de la resposta</string>
-    <string name="deck_conf_manage" maxLength="41">Administració dels grups</string>
-    <string name="deck_conf_manage_summ">Afegeix i canvia grups d\'opcions</string>
-    <string name="deck_conf_current_group" maxLength="41">Grup actual</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Canvia el nom</string>
-    <string name="deck_conf_reset" maxLength="41">Restaurar valors predeterminats</string>
-    <string name="deck_conf_reset_message">Restaurar l\'actual grup d\'opcions als valors per defecte?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Afegeix una configuració</string>
-    <string name="deck_conf_add_summ">Crear una còpia de l\'actual grup d\'opcions</string>
-    <string name="deck_conf_remove_message">Eliminar l\'actual grup d\'opcions?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Aplica per a totes les sub-coleccions</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">La sub-colecció %s utilitzarà aquest grup</item>
-        <item quantity="other">Les sub-coleccions %s utilitzaran aquest grup</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Vols aplicar l\'actual grup d\'opcions per a totes les sub-coleccions de aquesta targeta?</string>
     <string name="pref_browser_editor_font" maxLength="41">Tipus de lletra del navegador i de l\'editor</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41">Cerca</string>
@@ -310,8 +236,6 @@
     <string name="deck_conf_cram_filter_2_check">Activar segon filtre</string>
     <string name="deck_conf_cram_steps" maxLength="41">Passos personalitzats (en minuts)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Defines els passos personalitzats</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Activar notificacions pel grup de paquets</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Recordar a</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Ajuda a que AnkiDroid sigui millor!</string>
     <string name="analytics_title" maxLength="41">Compartir ús de característica</string>
@@ -348,12 +272,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Suprimeix ‘%s’</string>
     <string name="bindings_already_bound">Ja està lligat a \'%s\'</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Activa ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Utilitzeu el nou fons</string>
-    <string name="use_rust_backend_summary">Activa les noves funcions d\'Anki, com ara el planificador v3\nINESTABLE. No l\'utilitzeu en una col·lecció que us interessa. NO s\'ha revertit en tancar l\'aplicació</string>
-    <string name="use_rust_backend_warning">És possible que això malmeti completament la vostra instal·lació, que requereixi la desinstal·lació de l\'aplicació i l\'eliminació de la carpeta AnkiDroid, i la possibilitat de propagar la corrupció mitjançant la sincronització amb AnkiWeb.\n\nEns alegra que ho proveu, però assegureu-vos que teniu una còpia de seguretat vàlida que no sigui d\'AnkiWeb.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Utilitza el planificador versió v3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opcions per a desenvolupadors</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activa les opcions per a desenvolupadors</string>
@@ -363,7 +282,7 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
+    <string name="pref__backup_options__title" maxLength="41">Opcions de còpia de seguretat</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.
@@ -373,53 +292,52 @@
         <br><br>
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minuts entre còpies de seguretat automàtiques</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Còpies de seguretat diàries per conservar</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Còpies de seguretat setmanals per conservar</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Còpies de seguretat mensuals per conservar</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Gestiona l\'espai</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">S\'ha produït un error</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlant&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="other">%1$d fitxers\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Suprimeix els mitjans no utilitzats</string>
+    <string name="pref__delete_unused_media_files__summary">Suprimeix imatges i altres mitjans que no tinguin el prefix _ i que no hi facin referència cap nota</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Suprimeix els mitjans no utilitzats</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Suprimeix les còpies de seguretat</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Suprimeix les còpies de seguretat</string>
+    <string name="progress__deleting_backups">S\'estan suprimint les còpies de seguretat</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Suprimeix la col·lecció</string>
+    <string name="pref__delete_collection__summary">Suprimeix la col·lecció, els suports i la còpia de seguretat. La configuració de l\'aplicació no s\'elimina</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Suprimeix la col·lecció</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="progress__deleting_collection">S\'està suprimint la col·lecció&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Esborra-ho tot</string>
+    <string name="pref__delete_everything__summary">Suprimeix la còpia, col·lecció, els mitjans, i els paràmetres</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Esborra-ho tot</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Esteu segur que voleu suprimir totes les dades? Això inclou la vostra col·lecció, els mitjans, les còpies de seguretat i les preferències.\n\nNota: aquesta acció tancarà la finestra.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Elimina les dades de l\'aplicació</string>
+    <string name="pref__delete_app_data__summary">Suprimeix les dades de l\'aplicació</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Elimina les dades de l\'aplicació</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Esteu segur que voleu suprimir les dades de l\'aplicació? Això inclou les preferències i altres dades de l\'aplicació.\n\nNota: aquesta acció tancarà la finestra.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Cap col·lecció</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">S\'ha produït un error</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">S\'està obtenint dades...</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">S\'està calculant&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">La col·lecció no existeix</string>
 </resources>

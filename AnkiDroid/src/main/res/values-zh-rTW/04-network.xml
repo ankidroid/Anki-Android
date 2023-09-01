@@ -46,14 +46,13 @@
 -->
 <resources>
     <string name="youre_offline">目前是離線狀態</string>
-    <string name="sync_even_if_offline">強制嘗試</string>
     <string name="sync_error">同步錯誤</string>
     <string name="vague_error" comment="Network error dialog title">錯誤</string>
     <string name="retry">重試</string>
     <string name="menu_get_shared_decks">取得共享的牌組</string>
     <string name="connection_error_message">網路出了點問題。</string>
     <string name="not_logged_in_title">登入 AnkiWeb</string>
-    <string name="login_create_account_message">您必須登入到第三方帳號以使用云端同步服務。您可以在下一步建立一個帳號。</string>
+    <string name="login_create_account_message">您必須登入到第三方帳號以使用雲端同步服務。您可以在下一步建立一個帳號。</string>
     <!-- MyAccount.kt -->
     <string name="username">電子郵件地址</string>
     <string name="password">密碼</string>
@@ -63,55 +62,15 @@
     <string name="sign_up">註冊</string>
     <string name="logged_as">登入為</string>
     <string name="log_out">登出</string>
-    <string name="alert_logging_message">正在登入，請稍候...</string>
-    <string name="invalid_username_password">無效的電子郵件地址或密碼。</string>
     <string name="reset_password">忘記密碼</string>
     <string name="lost_mail_instructions">忘記了電郵地址？</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX 的選項</string>
-    <string name="sync_prepare_syncing">正在準備同步...</string>
-    <string name="sync_preparing_full_sync_message">正在準備完整同步...</string>
-    <string name="sync_uploading_message">上傳中...</string>
-    <string name="sync_downloading_message">下載中...</string>
     <string name="sync_title">同步</string>
     <string name="sync_log_uploading_message">由本地端完整同步</string>
-    <string name="sync_log_clocks_unsynchronized">你裝置上的時鐘是不正確的，誤差%2$s %1$d 秒；要同步的話，需要兩邊的時鐘和時區都是正確的，不然可能會有問題。請確定手機上的日期、時間、時區都是正確的，然後再同步一次。</string>
-    <string name="sync_log_clocks_unsynchronized_tz">，裝置的時區可能是錯誤的</string>
-    <string name="sync_log_clocks_unsynchronized_date">，裝置的日期可能是錯誤的</string>
-    <string name="sync_no_changes_message">未發現資料變動</string>
     <string name="sync_database_acknowledge">集合同步完成</string>
-    <string name="sync_log_error_specific">同步錯誤，類型：%1$s，訊息：%2$s</string>
     <string name="sync_corrupt_database">你的資料庫已損壞。請先嘗試修復然後再試一次。\n\n關於如何修復資料庫，請參考 %s 。</string>
-    <string name="sync_too_busy">伺服器忙碌中。請稍後再試。</string>
-    <string name="sync_remote_db_error">已下載的資料庫已損壞。請再試一次。</string>
-    <string name="sync_overwrite_error">所下載的檔案無法覆蓋你當前的集合</string>
-    <string name="sync_connection_error">連線逾時。可能是你的網路連線有問題，或是你的媒體資料夾內有很大的檔案。</string>
-    <string name="sync_write_access_error_on_storage">無法將下載的檔案保存到您的存儲。 存儲是只讀的，或者沒有足够的空間。</string>
-    <string name="sync_error_invalid_sync_server">“進階設定”中的“自訂同步伺服器”無效 (%s)。請輸入有效的伺服器，或禁用設定。</string>
-    <string name="sync_deletions_message">同步刪除...</string>
-    <string name="sync_small_objects_message">同步小物件...</string>
-    <string name="sync_finish_message">完成同步...</string>
-    <string name="sync_log_finish_error">發送結束訊息到伺服器時出現錯誤</string>
-    <string name="sync_writing_db">將變更的資料寫入到資料庫中...</string>
-    <string name="sync_download_chunk">下載變更中...</string>
-    <string name="sync_upload_chunk">上傳變更中...</string>
-    <string name="sync_up_down_size">上載: %1$d KB, 下載: %2$d KB</string>
-    <string name="sync_generic_error">出現錯誤，請稍後再試</string>
-    <string name="sync_check_upload_file">正在檢查需要上傳的檔案...</string>
-    <string name="sync_check_download_file">檢查下載的檔案...</string>
-    <string name="sync_media_find">尋找變更的媒體檔&#8230;</string>
-    <string name="sync_media_no_changes">媒體檔無變更</string>
-    <string name="sync_media_success">成功同步媒體檔</string>
-    <string name="sync_media_partial_updated">媒體同步已部分完成:\n%1$d 媒體檔案已下載。\n%2$d 媒體檔案已上傳。</string>
-    <string name="sync_media_changes_count">將上傳 %d 個媒體檔變更</string>
-    <string name="sync_media_downloaded_count">已下載 %d 個媒體檔案</string>
-    <string name="sync_sanity_failed">你的集合狀態在同步以後不一致，AnkiDroid 會強制進行完整同步來修復這問題。請選擇你想要保留哪一邊的檔案。如果你想要稍後進行同步，請選擇取消。</string>
-    <string name="sync_media_sanity_failed">媒體檔案同步完成，不過媒體檔數量與伺服器上的不相等。下次將進行完整同步來更正這問題。</string>
-    <string name="sync_media_db_error">媒體同步失敗，當前資料庫已損毀。建議執行媒體檢查。</string>
-    <string name="sync_media_error">同步媒體資料時出錯</string>
-    <string name="sync_media_error_check">同步媒體檔時發生錯誤。建議進行一次媒體檢查。</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">同步前請先執行 ‘%s’</string>
     <string name="sync_sanity_local">本機</string>
     <string name="sync_sanity_remote">遠端</string>
     <string name="force_full_sync_title">強制完整同步</string>
@@ -119,15 +78,7 @@
     <string name="force_full_sync_confirmation">強制完全同步</string>
     <string name="full_sync_confirmation">此變動會使你下一次同步你的集合時，需要完整上傳你的資料庫。如果同步的話，你其他的裝置上尚未同步的複習卡片或其他變動的部分將會遺失，你是否要繼續？</string>
     <string name="full_sync_confirmation_upgrade">由於先前安裝的 AnkiDroid 版本的程式錯誤，我們建議你強制完整同步一次。</string>
-    <string name="sync_error_407_proxy_required">Proxy 要求認證。</string>
-    <string name="sync_error_409">一次只能有一個用戶連線到 AnkiWeb，如果上次同步失敗了，請幾分鐘後再嘗試。</string>
-    <string name="sync_error_413_collection_size">您的集合或媒體檔案過大而不能同步。</string>
-    <string name="sync_error_500_unknown">AnkiWeb 出現錯誤。請在數分鐘後重試，如果問題復現，請提交問題回報。</string>
-    <string name="sync_error_501_upgrade_required">請更新到最新版的 AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb 正在維護中。請在數分鐘後重試。</string>
-    <string name="sync_error_504_gateway_timeout">接收到 504 網關逾時錯誤。</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">同步 (完整)</string>
     <string name="sync_menu_title_no_account">同步 (登入)</string>
-    <string name="sync_error_unknown_host_readable">無法連結到 AnkiWeb。您的網路是否正常嗎？\n\n%s</string>
 </resources>

@@ -19,10 +19,8 @@
  ****************************************************************************************/
 package com.ichi2.anki.multimediacard.fields
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ClipData
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -52,6 +50,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContentResolverCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
+import androidx.core.os.BundleCompat
 import com.canhub.cropper.*
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
@@ -60,11 +59,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper
-import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
-import com.ichi2.utils.Permissions.arePermissionsDefinedInAnkiDroidManifest
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -108,7 +104,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         Timber.i("loadInstanceState loading saved state...")
         mViewModel = ImageViewModel.fromBundle(savedInstanceState)
         mPreviousImagePath = savedInstanceState.getString("mPreviousImagePath")
-        mPreviousImageUri = savedInstanceState.getParcelableCompat<Uri>("mPreviousImageUri")
+        mPreviousImageUri = BundleCompat.getParcelable(savedInstanceState, "mPreviousImageUri", Uri::class.java)
     }
 
     override fun saveInstanceState(): Bundle {
@@ -186,7 +182,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             layout.addView(btnDraw, ViewGroup.LayoutParams.MATCH_PARENT)
         }
-        if (context.arePermissionsDefinedInAnkiDroidManifest(Manifest.permission.CAMERA)) {
+        if (canUseCamera(context)) {
             layout.addView(btnCamera, ViewGroup.LayoutParams.MATCH_PARENT)
         }
         layout.addView(mCropButton, ViewGroup.LayoutParams.MATCH_PARENT)
@@ -222,12 +218,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
     @SuppressLint("UnsupportedChromeOsCameraSystemFeature")
     private fun canUseCamera(context: Context): Boolean {
-        if (!Permissions.canUseCamera(context)) {
-            return false
-        }
-
         val pm = context.packageManager
-
         if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA) && !pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT)) {
             return false
         }
@@ -254,14 +245,6 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             val imageUri = getUriForFile(image)
             toReturn = ImageViewModel(image.path, imageUri)
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-
-            // Until Android API22 you must manually handle permissions for image capture w/FileProvider
-            // This can be removed once minSDK is >= 22
-            // https://medium.com/@quiro91/sharing-files-through-intents-part-2-fixing-the-permissions-before-lollipop-ceb9bb0eec3a
-            if (CompatHelper.sdkVersion < Build.VERSION_CODES.LOLLIPOP_MR1) {
-                cameraIntent.clipData = ClipData.newRawUri("", imageUri)
-                cameraIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
 
             if (cameraIntent.resolveActivity(context.packageManager) == null) {
                 Timber.w("Device has a camera, but no app to handle ACTION_IMAGE_CAPTURE Intent")
@@ -392,7 +375,11 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
             ACTIVITY_TAKE_PICTURE -> handleTakePictureResult()
             ACTIVITY_DRAWING -> {
                 // receive image from drawing activity
-                val savedImagePath = data!!.extras!!.getParcelableCompat<Uri>(DrawingActivity.EXTRA_RESULT_WHITEBOARD)
+                val savedImagePath = BundleCompat.getParcelable(
+                    data!!.extras!!,
+                    DrawingActivity.EXTRA_RESULT_WHITEBOARD,
+                    Uri::class.java
+                )
                 handleDrawingResult(savedImagePath)
             }
             else -> {
@@ -599,8 +586,8 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
     // ensure the previous preview is not visible
     private fun hideImagePreview() {
         BitmapUtil.freeImageView(mImagePreview)
-        mCropButton.visibility = View.INVISIBLE
-        mImageFileSize.visibility = View.INVISIBLE
+        if (::mCropButton.isInitialized) mCropButton.visibility = View.INVISIBLE
+        if (::mImageFileSize.isInitialized) mImageFileSize.visibility = View.INVISIBLE
     }
 
     override fun onDestroy() {
@@ -825,7 +812,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
         companion object {
             fun fromBundle(savedInstanceState: Bundle): ImageViewModel {
                 val imagePath = savedInstanceState.getString("mImagePath")
-                val imageUri = savedInstanceState.getParcelableCompat<Uri>("mImageUri")
+                val imageUri = BundleCompat.getParcelable(savedInstanceState, "mImageUri", Uri::class.java)
                 return ImageViewModel(imagePath, imageUri)
             }
         }

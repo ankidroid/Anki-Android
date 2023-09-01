@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Veritabanı kontrol edilsin mi?</string>
     <string name="check_db_warning">Bu uzun sürebilir</string>
-    <string name="check_db_acknowledge">Veritabanı kontrol edildi</string>
-    <string name="check_db_acknowledge_shrunk">Veritabanı kontrol ve optimize edildi.\n%d MB küçültüldü.</string>
     <string name="contextmenu_deckpicker_delete_deck">Desteyi sil</string>
-    <string name="delete_deck_default_deck">Varsayılan deste silinemez</string>
     <string name="delete_deck_title">Deste silinsin mi?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
-        <item quantity="other">%1$s destesindeki bütün kartlar silinsin mi? İçinde %2$d kart var.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Tüm kartları orijinal destelerine %s geri göndermek istediğinizden emin misiniz?</string>
     <string name="no_tts_available_message">Mevcut metin okuma dili yok</string>
     <string name="initializing_tts">Metin okuma başlatılıyor&#8230;</string>
     <string name="tts_no_tts">Konuşma</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">X kartları rastgele desteden seç:</string>
     <string name="custom_study_preview">Son x günlerdeki eklenen yeni kartları önizle:</string>
     <string name="custom_study_rebuild_deck_corrupt">Özel çalışma destesi yeniden oluşturulamadı</string>
-    <string name="importing_collection">Koleksiyon içeri aktarılıyor...</string>
-    <string name="import_media_count">Medya dosyaları %1$d%% içeri aktarılıyor...</string>
-    <string name="import_progress">• Notlar içeri aktarılıyor: %1$d%%\n• Kartlar içeri aktarılıyor: %2$d%%\n• Sonişleme: %3$d%%</string>
-    <string name="import_update_details">Mevcut %2$d notun %1$d tanesi güncellendi.</string>
-    <string name="import_update_ignored">Bazı güncellemeler not türü değiştiği için yoksayıldı</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">İçeri aktarılan kart: %2$d</item>
-        <item quantity="other">Aktarılan dosya: %1$d\nAktarılan toplam kart: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Depolama alanı dolu</string>
     <string name="storage_almost_full_title">Depolama alanı nerdeyse dolu</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Hiç alan yok</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Devredışı Bırak</string>
     <string name="dialog_positive_overwrite">Üzerine Yaz</string>
-    <string name="dialog_positive_remove">Kaldır</string>
     <string name="dialog_positive_repair">Onar</string>
     <string name="dialog_positive_replace">Değiştir</string>
-    <string name="dialog_positive_restore">Geri Yükle</string>
-    <string name="dialog_positive_set">Ayarla</string>
     <string name="dialog_collection_path_not_dir">Belirtilen konum geçerli bir dizin değildi.</string>
     <!-- Media checking -->
     <string name="check_media_title">Medya kontrol edilsin mi?</string>
@@ -165,8 +145,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Sırası gelmiş</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Boş kartlar aranıyor&#8230;</string>
-    <string name="confirm_cancel">İptal etmek istiyor musunuz?</string>
-    <string name="empty_cards_none">Boş kart yok</string>
     <string name="empty_cards_count">Silinecek kartlar %d</string>
     <string name="empty_cards_deleted">Silinen kartlar: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +160,11 @@
     <string name="integrity_check_continue_anyway">Yine de devam et</string>
     <string name="integrity_check_insufficient_space">Veritabanı Kontrolü büyük miktarda geçici depolama alanı kullanıyor.\n\nDevam etmeden önce cihazınızda en az %s boş alanın olması şiddetle önerilir.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nŞu anda %s boş alanınız var. </string>
-    <string name="integrity_check_fixed_no_home_deck">Hatalı ev destesine sahip %d adet kart kurtarıldı. Daha fazla bilgi için lütfen kılavuza bakın.</string>
     <string name="video_creation_error">Video oynatılamadı</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Deste değiştirilemedi</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Karttaki verinin kod çözme hatası</string>
-    <string name="undo_succeeded">\"%s\" geri alındı</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Deste seçenekleri işlenemedi: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Veritabanı kilitli</string>
     <string name="database_locked_summary">AnkiDroid veritabanı başka bir uygulama tarafından kullanılıyor. Lütfen diğer uygulamayı kapatın ve ardından AnkiDroid\'i yeniden açın.</string>

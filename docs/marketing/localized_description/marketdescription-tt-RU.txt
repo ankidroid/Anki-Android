@@ -11,26 +11,26 @@ Add material through the desktop application Anki or directly through AnkiDroid.
 ★ Key features:
 • supported flashcard contents: text, images, sounds, LaTeX
 • spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
+• сөйләм синтезаторы белән интеграция
+• 6000-дән артык әзер колода
+• үтәлеш дәрәҗәсе виджеты
+• җентекле статистика
+• AnkiWeb белән синхронлау
 • ачык код 
 
 ★ Additional features:
-• write answers (optional)
-• whiteboard
+• җаваплар язу (өстәмә)
+• рәсем тактасы
 • card editor/adder
-• card browser
-• tablet layout
+• кәртләр исемлеге
+• планшет зурлыгы өчен көйләнгән
 • import existing collection files (via Anki Desktop)
 • add cards by intent from other applications like dictionaries
-• custom font support
-• full backup system
-• navigation by swipe, tap
-• customisable
-• dynamic deck handling
-• night mode
-• 27 localisations
+• кулланучы шрифты тәкъдим ителә
+• тулы резерв копия системасы
+•  сөйрәү һәм басу белән навигация
+• көйләнә торган
+• динамик колодалар кулланылырга мөмкин
+• төнге режим
+• 27 телгә тәрҗемә ителде
 • All previous AnkiDroid versions can be downloaded from the website

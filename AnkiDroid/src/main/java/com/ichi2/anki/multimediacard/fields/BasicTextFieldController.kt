@@ -19,7 +19,6 @@
 
 package com.ichi2.anki.multimediacard.fields
 
-import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -28,11 +27,8 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.multimediacard.activity.LoadPronunciationActivity
 import com.ichi2.anki.multimediacard.activity.PickStringDialogFragment
 import com.ichi2.ui.FixedEditText
-import timber.log.Timber
-import java.io.File
 
 /**
  * One of the most powerful controllers - creates UI and works with the field of textual type.
@@ -55,11 +51,6 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         val p = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1F)
         createCloneButton(layoutTools, p)
         createClearButton(layoutTools, p)
-        // search buttons
-        val layoutTools2 = LinearLayout(mActivity)
-        layoutTools2.orientation = LinearLayout.HORIZONTAL
-        layout.addView(layoutTools2)
-        createPronounceButton(layoutTools2, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT))
     }
 
     private fun gtxt(id: Int): String {
@@ -71,26 +62,6 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
         clearButton.text = gtxt(R.string.multimedia_editor_text_field_editing_clear)
         layoutTools.addView(clearButton, p)
         clearButton.setOnClickListener { mEditText.setText("") }
-    }
-
-    /**
-     * @param layoutTools to create the button
-     * @param p Button to load pronunciation from Beolingus
-     */
-    private fun createPronounceButton(layoutTools: LinearLayout, p: LinearLayout.LayoutParams) {
-        val btnPronounce = Button(mActivity)
-        btnPronounce.text = gtxt(R.string.multimedia_editor_text_field_editing_say)
-        btnPronounce.setOnClickListener {
-            val source = mEditText.text.toString()
-            if (source.isEmpty()) {
-                showToast(gtxt(R.string.multimedia_editor_text_field_editing_no_text))
-                return@setOnClickListener
-            }
-            val intent = Intent(mActivity, LoadPronunciationActivity::class.java)
-            intent.putExtra(LoadPronunciationActivity.EXTRA_SOURCE, source)
-            mActivity.startActivityForResultWithoutAnimation(intent, REQUEST_CODE_PRONUNCIATION)
-        }
-        layoutTools.addView(btnPronounce, p)
     }
 
     /**
@@ -145,23 +116,6 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
      * activity are received.
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_PRONUNCIATION && resultCode == Activity.RESULT_OK) {
-            try {
-                val pronouncePath = data!!.extras!!.getString(LoadPronunciationActivity.EXTRA_PRONUNCIATION_FILE_PATH)!!
-                val f = File(pronouncePath)
-                if (!f.exists()) {
-                    showToast(gtxt(R.string.multimedia_editor_pron_pronunciation_failed))
-                }
-                val af: AudioField = AudioRecordingField()
-                af.audioPath = pronouncePath
-                // This is done to delete the file later.
-                af.hasTemporaryMedia = true
-                mActivity.handleFieldChanged(af)
-            } catch (e: Exception) {
-                Timber.w(e)
-                showToast(gtxt(R.string.multimedia_editor_pron_pronunciation_failed))
-            }
-        }
     }
 
     override fun onFocusLost() {
@@ -187,10 +141,5 @@ class BasicTextFieldController : FieldControllerBase(), IFieldController, Dialog
 
     override fun onDestroy() {
         // TODO Auto-generated method stub
-    }
-
-    companion object {
-        // code to identify the request to fetch pronunciations
-        private const val REQUEST_CODE_PRONUNCIATION = 102
     }
 }

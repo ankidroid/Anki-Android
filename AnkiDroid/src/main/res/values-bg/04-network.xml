@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Вие сте офлайн</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Грешка при синхронизацията</string>
     <string name="vague_error" comment="Network error dialog title">Грешка</string>
     <string name="retry">Повторен опит</string>
@@ -63,55 +62,15 @@
     <string name="sign_up">Регистрирайте се</string>
     <string name="logged_as">Влизане като</string>
     <string name="log_out">Изход</string>
-    <string name="alert_logging_message">Регистриране, моля, изчакайте...</string>
-    <string name="invalid_username_password">Невалиден имейл или парола</string>
     <string name="reset_password">Нулиране на паролата</string>
     <string name="lost_mail_instructions">Забравен имейл?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Опции за ХХХ</string>
-    <string name="sync_prepare_syncing">Подготовка за синхронизиране...</string>
-    <string name="sync_preparing_full_sync_message">Подготовка на пълно синхронизиране...</string>
-    <string name="sync_uploading_message">Качване&#8230;</string>
-    <string name="sync_downloading_message">Изтегляне...</string>
     <string name="sync_title">Синхронизиране</string>
     <string name="sync_log_uploading_message">Пълно синхронизиране от местни</string>
-    <string name="sync_log_clocks_unsynchronized">Вашият часовник е неправилен с %1$d секунди%2$s. Уверете се, че датата, часа и часовата зона на телефона са зададени правилно и тогава синхронизирайте отново.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, часовата зона на устройството е вероятно грешна</string>
-    <string name="sync_log_clocks_unsynchronized_date">, датата на устройството е вероятно грешна</string>
-    <string name="sync_no_changes_message">Не са намерени промени.</string>
     <string name="sync_database_acknowledge">Колекцията синхронизирана</string>
-    <string name="sync_log_error_specific">Синхронизиране на грешка, въведете: %1$s, съобщение: %2$s</string>
     <string name="sync_corrupt_database">Вашата база данни е повредена. Моля, поправете я преди да опитате отново да синхронизирате.\n\nВижте %s за информация относно поправравянето на Вашата база данни.</string>
-    <string name="sync_too_busy">Претоварен сървър. Опитайте пак по-късно.</string>
-    <string name="sync_remote_db_error">Свалената база данни е повредена. Опитайте пак.</string>
-    <string name="sync_overwrite_error">Вашата текущата колекция не може да бъде презаписана от изтегления файл</string>
-    <string name="sync_connection_error">Изтече времето за изчакване на връзка. Интернет връзката Ви е с проблеми или имате много голям файл в папката на медиите.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Синхронизиране на изтриванията&#8230;</string>
-    <string name="sync_small_objects_message">Синхронизиране на малки обекти&#8230;</string>
-    <string name="sync_finish_message">Завършване на синхронизирането...</string>
-    <string name="sync_log_finish_error">Грешка при изпращане  към сървъра</string>
-    <string name="sync_writing_db">Записване на промените в базата данни&#8230;</string>
-    <string name="sync_download_chunk">Изтегляне на промените&#8230;</string>
-    <string name="sync_upload_chunk">Качване на промените&#8230;</string>
-    <string name="sync_up_down_size">Качване: %1$d KB, теглене: %2$d KB</string>
-    <string name="sync_generic_error">Възникна грешка. Опитайте отново по-късно.</string>
-    <string name="sync_check_upload_file">Проверка на файла преди качване&#8230;</string>
-    <string name="sync_check_download_file">Проверка на изтеглен файл...</string>
-    <string name="sync_media_find">Търсене на променени медийни файлове&#8230;</string>
-    <string name="sync_media_no_changes">Без промени в медийните файлове</string>
-    <string name="sync_media_success">Медите са синхронизирани</string>
-    <string name="sync_media_partial_updated">Синхронизирането на медийните файлове е частично завършено:\n%1$d медийни файла изтеглени.\n%2$d медийни файла са качени.</string>
-    <string name="sync_media_changes_count">%d промени в медийните файлове за качване</string>
-    <string name="sync_media_downloaded_count">%d промени в медийните файлове за изтегляне</string>
-    <string name="sync_sanity_failed">След синхронизирането възникна проблем във Вашите колекции. За да го разреши, AnkiDroid ще извърши пълно синхронизиране. Изберете коя страна искате да запазите.</string>
-    <string name="sync_media_sanity_failed">Синхронизирането на медии приключи, но броят на файлове на мобилното устройство не съвпада с броя им на сървъра. При следващото им синхронизиране грешката ще бъде отстранена.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">Грешка при синхронизиране мултимедийни данни</string>
-    <string name="sync_media_error_check">Грешка при синхронизиране на медиите. Препоръчва се проверка на медиите.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Пуснете ‘%s’ преди синхронизирането</string>
     <string name="sync_sanity_local">Локално</string>
     <string name="sync_sanity_remote">Отдалечено</string>
     <string name="force_full_sync_title">Пълна синхронизация</string>
@@ -119,15 +78,7 @@
     <string name="force_full_sync_confirmation">Принудително пълно синхронизиране</string>
     <string name="full_sync_confirmation">При следващото синхронизиране ще се извърши пълно синхронизиране на колекцията Ви от това устройство на сървъра. Ако имате коментари или други промени на друго устройство, които все още не са синхронизирани тук, ще бъдат загубени. Ще продължите ли?</string>
     <string name="full_sync_confirmation_upgrade">Поради грешка във вече инсталирана версия на AnkiDroid е препоръчително да се направи пълно синхронизиране.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
-    <string name="sync_error_409">Само един клиентски достъп е възможен до AnkiWeb в даден момент. Ако предишната синхронизация не успя, моля опитайте отново след няколко минути.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
-    <string name="sync_error_501_upgrade_required">Надстройте до последната версия на AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Синхро. (пълно)</string>
     <string name="sync_menu_title_no_account">Синхро. (влизане)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

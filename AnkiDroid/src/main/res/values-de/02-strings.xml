@@ -125,9 +125,9 @@
     <string name="save">Speichern</string>
     <string name="close">Schließen</string>
     <string name="select">Auswählen</string>
-    <string name="reordering_cards">Sortiere Karten&#8230;</string>
     <string name="field_remapping">%1$s (von »%2$s«)</string>
     <string name="confirm_map_cards_to_nothing">Alle leeren Karten werden gelöscht. Sind sämtliche Karten einer Notiz gelöscht, wird diese ebenfalls entfernt. Fortfahren?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Zeitlimit erreicht</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d Karte gelernt in %2$s</item>
@@ -145,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Umplanen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Vorschau</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d von %2$d</string>
-    <string name="error_insufficient_memory">Vorgang wegen unzureichenden Gerätespeichers nicht möglich</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Umbenennen</string>
-    <string name="default_conf_delete_error">Die Standard-Optionengruppe kann nicht gelöscht werden</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d Karte hinzugefügt</item>
-        <item quantity="other">%d Karten hinzugefügt</item>
-    </plurals>
     <string name="check_db">Datenbank überprüfen</string>
     <string name="check_media">Medien überprüfen</string>
     <string name="empty_cards">Leere Karten</string>
-    <string name="check_db_message">Prüfe Datenbank&#8230;</string>
     <string name="empty_card_warning">Diese Karte ist leer. Verwenden Sie die Option »Leere Karten« aus dem Menü der Stapelübersicht.</string>
     <string name="unknown_type_field_warning">Antworteingabe: Unbekanntes Feld %s</string>
     <string name="delete_deck">Lösche Stapel&#8230;</string>
@@ -169,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paketdatei</string>
     <string name="import_title_error" comment="Title of error dialog">Fehler</string>
-    <string name="import_log_failed_unzip">APKG-Datei konnte nicht entpackt werden: %s</string>
-    <string name="import_log_failed_copy_to">APKG-Datei konnte nicht nach %s kopiert werden</string>
-    <string name="import_log_failed_validate">Validierung der APKG-Datei nicht erfolgreich</string>
-    <string name="import_log_insufficient_space_error">Es gibt nicht genügend Speicherplatz, um das Paket zu importieren.\nBenötigt - %1$s \nVerfügbar - %2$s.\n\nHaben Sie Probleme? Versuchen Sie, wenn möglich, Platz auf Ihrem Telefon freizugeben. Alternativ verbraucht die Synchronisation weniger Speicherplatz als der Import. Sie können versuchen, das Paket auf einem Gerät mit mehr Speicherplatz zu importieren (z.B. Anki Desktop) und es dann mit diesem Gerät synchronisieren.</string>
-    <string name="import_log_file_cache_cleared">Fehler beim Importieren der Datei. Wahrscheinlich wird der Cache während der Verarbeitung gelöscht.\nBitte versuchen Sie es erneut</string>
-    <string name="import_succeeded_but_check_database">Der Datenimport war erfolgreich, jedoch ist bei der anschließenden Bereinigung ein Fehler aufgetreten. Hauptursache: %s</string>
-    <string name="import_error_corrupt_zip">Die APKG-Datei ist beschädigt. Bitte löschen und erneut herunterladen.\n\nUrsache: %s</string>
     <string name="import_error_handle_exception">Fehler beim Importieren der Datei\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dateiname »%s« muss auf .apkg oder .colpkg enden</string>
     <string name="import_error_load_imported_database">Anki-Datenbank-Platzhalter (.anki2) werden noch nicht unterstützt. Bitte lesen Sie das Handbuch für entsprechende Anweisungen.</string>
@@ -183,8 +169,6 @@
     <string name="import_error_copy_to_cache">Fehler beim Zwischenspeichern (evtl. mangelnder Speicherplatz)</string>
     <string name="import_error_multiple_colpkg">Mehrere KOLPKG-Dateien wurden ausgewählt.</string>
     <string name="import_error_colpkg_apkg">Beide apkg &amp; colpkg Dateien wurden auf einmal ausgewählt.</string>
-    <string name="import_stats_error">Beim Importieren der folgenden Dateien sind einige Fehler aufgetreten:\n%s</string>
-    <string name="import_replacing">Sammlung wird ersetzt &#8230;</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>
     <string name="export_include_media">Medien einbeziehen</string>
@@ -198,12 +182,11 @@
         <item quantity="one">Ausgewählte Notiz als APKG-Datei exportieren?</item>
         <item quantity="other">%d ausgewählte Notizen als APKG-Datei exportieren?</item>
     </plurals>
-    <string name="export_in_progress">Anki-Paketdatei wird exportiert &#8230;</string>
-    <string name="export_success_title">Sammlung erfolgreich exportiert</string>
+    <string name="export_preparation_in_progress">Export wird vorbereitet&#8230;</string>
+    <string name="export_ready_title">Export bereit</string>
     <string name="export_send_no_handlers">Keine Anwendungen zum Öffnen von APKG-Dateien verfügbar. Wird gespeichert …</string>
     <string name="export_save_apkg_successful">Anki-Paket erfolgreich gespeichert</string>
     <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
-    <string name="export_success_message">Du kannst entweder einen Ort zum Speichern der Datei auswählen oder diese mit einer anderen App teilen.</string>
     <string name="export_share_title">Anki-Paket senden mit</string>
     <string name="export_email_subject">Von AnkiDroid exportierte Karteikarten: %s</string>
     <string name="export_email_text"><![CDATA[        Hallo!
@@ -213,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Wähle den Speicherort deiner Datei</string>
-    <string name="export_select_share_app">Anwendung zum Teilen auswählen</string>
+    <string name="export_choice_share">Teilen</string>
+    <string name="export_choice_save_to">Speichern unter</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optionen</string>
     <string name="menu__deck_options">Stapeloptionen</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Lernoptionen</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">Dies ist ein besonderer Stapel, um außerhalb des regulären Zeitplans zu lernen. Karten werden nach dem Wiederholen automatisch in ihren ursprünglichen Stapel zurückgelegt. Beim Löschen dieses Stapels aus der Stapelliste werden alle verbleibenden Karten in ihren ursprünglichen Stapel zurückgelegt.</string>
     <string name="steps_error">Die Schrittanzahl muss größer als 0 sein</string>
     <string name="steps_min_error">Mindestens ein Schritt ist erforderlich</string>
-    <string name="sched_end">(Ende)</string>
-    <string name="sched_unbury_action">Tippen Sie im Menü »Nicht mehr aufschieben« an, um sie jetzt zu sehen</string>
-    <string name="sched_has_buried">Einige verwandte oder aufgeschobene Karten wurden bis morgen verzögert</string>
     <string name="tag_editor_add_feedback">Tippen Sie auf »%2$s«, um das Hinzufügen von »%1$s« zu bestätigen</string>
     <string name="tag_editor_add_feedback_existing">Existierendes Schlagwort »%1$s« ausgewählt</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s Sekunde</item>
-        <item quantity="other">%s Sekunden</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s Minute</item>
-        <item quantity="other">%s Minuten</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s Stunde</item>
-        <item quantity="other">%s Stunden</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s Tag</item>
-        <item quantity="other">%s Tage</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s Monat</item>
-        <item quantity="other">%s Monate</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s Jahr</item>
-        <item quantity="other">%s Jahre</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s Sekunden</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Dieser Stapel ist bereits vorhanden</string>
     <string name="decks_rename_filtered_nosubdecks">Ein gefilterter Stapel kann keine Unterstapel enthalten.</string>
-    <string name="filtered_deck_name">Gefilterter Stapel</string>
     <string name="reminder_title">Vergessen Sie heute nicht zu lernen!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d zu wiederholende Karte in %1$s</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Fehler beim Teilen der APKG-Datei</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Diese Datei benötigt eine neuere Version von Anki.</string>
     <string name="activity_start_failed">Auf dem System ist keine App installiert, die diese Aktion ausführen kann.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerabilder können groß sein. Im Medienverzeichnis können Sie Bilder komprimieren und deren Größe anpassen]]></string>
     <string name="no_browser_notification">Kein Browser gefunden. Bitte besuchen Sie die Webseite via PC oder Mobilgerät: </string>
     <string name="web_page_error">Fehler beim Laden der Seite: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">Externer Seitenlink in der Karte wird nicht unterstützt.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Wiederhergestellte Karten</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hintergrund</string>
     <string name="choose_an_image">Bild auswählen</string>
@@ -364,6 +309,7 @@
     <string name="deck_download_progress_message">Während des Herunterladens können Sie andere Apps verwenden</string>
     <string name="check_network">Bitte überprüfen Sie die Netzverbindung</string>
     <string name="search_using_deck_name">Über Stapelnamen suchen</string>
+    <string name="external_storage_unavailable">Download abgebrochen, externer Speicher nicht verfügbar</string>
     <string name="home">Start</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -402,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">Mit AnkiWeb synchronisieren</string>
     <string name="already_logged_in">Bereits angemeldet</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Stapel existiert bereits</string>
     <string name="deck_created">Stapel wurde erstellt</string>
     <string name="deck_renamed">Stapel wurde umbenannt</string>
     <!-- Deck Deletion -->
@@ -418,5 +363,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tippen, um die Speichermigration zu starten</string>
     <string name="media_sync_required_title">Medien-Synchronisation erforderlich</string>
     <string name="media_sync_unavailable_message">Die Medien-Synchronisation ist in den Einstellungen deaktiviert. Bitte synchronisieren und sichern Sie alle Medien, die nicht synchronisiert wurden, bevor Sie fortfahren</string>
-    <string name="remember_sync_metered_checkbox_msg">Nicht erneut fragen (diese Warnung kann in den Sync-Einstellungen wieder aktiviert werden)</string>
 </resources>

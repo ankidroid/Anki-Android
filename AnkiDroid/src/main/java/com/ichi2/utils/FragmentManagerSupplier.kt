@@ -30,6 +30,4 @@ fun interface FragmentManagerSupplier {
     fun getFragmentManager(): FragmentManager
 }
 
-fun Fragment.asFragmentManagerSupplier() = FragmentManagerSupplier { this.childFragmentManager }
-
 fun AnkiActivity.asFragmentManagerSupplier() = FragmentManagerSupplier { this.supportFragmentManager }

@@ -29,9 +29,16 @@ import com.ichi2.anki.R
 
 /** Marker class to be used in preferences */
 class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, DialogFragmentProvider {
+    @Suppress("unused")
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
+
+    @Suppress("unused")
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+
+    @Suppress("unused")
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+
+    @Suppress("unused")
     constructor(context: Context) : super(context)
 
     class IncrementerNumberRangeDialogFragmentCompat : NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat() {
@@ -113,6 +120,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
             // Make sure value is within range
             mLastValidEntry = numberRangePreference.getValidatedRangeFromInt(value)
             editText.setText(mLastValidEntry.toString())
+            editText.setSelection(editText.text.length)
         }
     }
 

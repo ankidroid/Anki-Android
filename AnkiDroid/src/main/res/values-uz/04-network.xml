@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">You are offline</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Sync error</string>
     <string name="vague_error" comment="Network error dialog title">Error</string>
     <string name="retry">Retry</string>
@@ -63,55 +62,15 @@
     <string name="sign_up">Sign up</string>
     <string name="logged_as">Logged in as</string>
     <string name="log_out">Log out</string>
-    <string name="alert_logging_message">Logging in&#8230;</string>
-    <string name="invalid_username_password">Invalid email address or password</string>
     <string name="reset_password">Reset password</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Options for XXX</string>
-    <string name="sync_prepare_syncing">Preparing syncing&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Preparing full sync&#8230;</string>
-    <string name="sync_uploading_message">Uploading&#8230;</string>
-    <string name="sync_downloading_message">Downloading&#8230;</string>
     <string name="sync_title">Synchronization</string>
     <string name="sync_log_uploading_message">Full sync from local</string>
-    <string name="sync_log_clocks_unsynchronized">Your clock’s off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, the time zone’s possibly wrong</string>
-    <string name="sync_log_clocks_unsynchronized_date">, the date’s possibly wrong</string>
-    <string name="sync_no_changes_message">No changes found</string>
     <string name="sync_database_acknowledge">Collection synchronized</string>
-    <string name="sync_log_error_specific">Syncing error, type: %1$s, message: %2$s</string>
     <string name="sync_corrupt_database">Your database is corrupt. Please fix it before trying again to sync.\n\nSee %s for information about repairing your database.</string>
-    <string name="sync_too_busy">Server busy. Try again later.</string>
-    <string name="sync_remote_db_error">The downloaded database was corrupt. Please try again.</string>
-    <string name="sync_overwrite_error">Your current collection couldn’t be overwritten by the downloaded file</string>
-    <string name="sync_connection_error">Connection timed out. Either your internet connection is experiencing problems, or you have a very large file in your media folder.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Syncing deletions&#8230;</string>
-    <string name="sync_small_objects_message">Syncing small objects&#8230;</string>
-    <string name="sync_finish_message">Finishing syncing&#8230;</string>
-    <string name="sync_log_finish_error">Error while sending finish direction to server</string>
-    <string name="sync_writing_db">Writing changes into database&#8230;</string>
-    <string name="sync_download_chunk">Downloading changes&#8230;</string>
-    <string name="sync_upload_chunk">Uploading changes&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
-    <string name="sync_generic_error">An error has occurred. Try again later.</string>
-    <string name="sync_check_upload_file">Checking file before upload&#8230;</string>
-    <string name="sync_check_download_file">Checking downloaded file&#8230;</string>
-    <string name="sync_media_find">Finding changed media&#8230;</string>
-    <string name="sync_media_no_changes">No changes to media files</string>
-    <string name="sync_media_success">Media synced</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d media changes to upload</string>
-    <string name="sync_media_downloaded_count">%d media files downloaded</string>
-    <string name="sync_sanity_failed">After syncing, the collection was in an inconsistent state. To fix this problem, AnkiDroid will force a full sync. Choose which side you would like to keep.</string>
-    <string name="sync_media_sanity_failed">Media sync completed, but the media count doesn’t agree with the server. The next media sync will be full to correct any error.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">Error syncing media data</string>
-    <string name="sync_media_error_check">Error while syncing media. A media check is recommended.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Local</string>
     <string name="sync_sanity_remote">Remote</string>
     <string name="force_full_sync_title">Force full sync</string>
@@ -119,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">The requested change will require a full upload of the database when you next synchronize your collection. If you have reviews or other changes waiting on another device that haven’t been synchronized here yet, they will be lost. Continue?</string>
     <string name="full_sync_confirmation_upgrade">Due to a bug in the previously installed version of AnkiDroid, it’s recommended to force a full sync.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
-    <string name="sync_error_409">Only one client can access AnkiWeb at a time. If a previous sync failed, please try again in a few minutes.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
-    <string name="sync_error_501_upgrade_required">Please upgrade to the latest version of AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

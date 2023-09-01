@@ -46,15 +46,6 @@
     <string name="multimedia_editor_popup_audio">Звукозапис</string>
     <string name="multimedia_editor_popup_text">Разширен редактор</string>
     <string name="multimedia_editor_popup_cloze">Cloze deletion</string>
-    <string name="multimedia_editor_popup_clear_field">Изчистване на полето</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Зареди</string>
-    <string name="multimedia_editor_pron_looking_up">Търси произношение</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">Произношение е неуспешно</string>
-    <string name="multimedia_editor_only_one_word">Only one word at a time is supported</string>
-    <string name="multimedia_editor_word_search_try_lower_case">Опитайте се да използвате само малки букви</string>
-    <string name="multimedia_editor_poweredbeolingus">Осъществено чрез Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Текст</string>
@@ -64,11 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Готово</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">Произношение</string>
     <string name="multimedia_editor_text_field_editing_clear">Изчистване</string>
     <string name="multimedia_editor_text_field_editing_clone">Клониране от</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">Първо въведете текст</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Вземете от</string>
     <!-- Multimedia card editor activity -->
@@ -81,16 +69,6 @@
     <string name="multimedia_editor_import_audio">Звук</string>
     <string name="multimedia_editor_import_video">Видео</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">Изтегляне</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Готово</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">Думата не е намерена</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">Търсене на думата</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Чакане</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Нещо се обърка</string>
     <string name="multimedia_editor_svg_preview">Предварителен преглед на SVG-тата не е наличен</string>
@@ -104,8 +82,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Редактиране на поле</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">Няма връзка</string>
     <!-- Crop function-->
     <string name="crop_image">Искате ли да изрежете изображението?</string>
     <string name="crop_button">Подрязване на образа</string>

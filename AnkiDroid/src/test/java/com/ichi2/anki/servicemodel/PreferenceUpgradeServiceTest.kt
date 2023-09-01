@@ -19,9 +19,9 @@ package com.ichi2.anki.servicemodel
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.noteeditor.CustomToolbarButton
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.servicelayer.RemovedPreferences
@@ -46,7 +46,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        mPrefs = AnkiDroidApp.getSharedPrefs(targetContext)
+        mPrefs = targetContext.sharedPrefs()
     }
 
     @Test

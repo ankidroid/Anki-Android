@@ -1,8 +1,5 @@
-apply plugin: 'kotlin'
-
-repositories {
-    google()
-    mavenCentral()
+plugins {
+    id 'kotlin'
 }
 
 tasks.withType(JavaCompile).configureEach {

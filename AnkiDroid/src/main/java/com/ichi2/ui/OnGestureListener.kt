@@ -18,8 +18,8 @@ package com.ichi2.ui
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.GestureMapper
 import java.util.function.Consumer
 
@@ -73,7 +73,7 @@ class OnGestureListener(
     companion object {
         fun createInstance(view: View, consumer: Consumer<Gesture>): OnGestureListener {
             val gestureMapper = GestureMapper()
-            gestureMapper.init(AnkiDroidApp.getSharedPrefs(view.context))
+            gestureMapper.init(view.context.sharedPrefs())
             return OnGestureListener(view, gestureMapper, consumer)
         }
     }

@@ -61,7 +61,6 @@
     <string name="card_browser_mark_card">Mark notes</string>
     <string name="card_browser_unmark_card">Unmark notes</string>
     <string name="delete_card_title">Burahin ang paalala?</string>
-    <string name="changed_deck_message">Moved to %s</string>
     <string name="card_browser_show_marked">Salain ang mga namarkahan</string>
     <string name="card_browser_show_suspended">Salain ang mga suspendido</string>
     <string name="card_browser_search_by_tag">Salain ayon sa tag</string>
@@ -75,8 +74,6 @@
     <string name="card_browser_list_my_searches_remove_content">Burahin “%1$s”?</string>
     <string name="card_browser_change_display_order">Palitan ang pagkakasunod-sunod ng pagpapakita</string>
     <string name="card_browser_change_display_order_title">Pumili ng pagkakasunod-sunod ng pagpapakita</string>
-    <string name="card_browser_change_display_order_reverse">Pumili ng isang patlang ng dalawang beses upang baligtarin</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Kailangan na</string>
     <string name="card_details_tags">Mga tag</string>
     <string-array name="card_browser_order_labels">
         <item>Walang pagsasaayos ayon sa uri (mas mabilis)</item>
@@ -112,27 +109,4 @@
         <item quantity="other">%d cards deleted</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
-    <string name="card_info_first_review">First Review</string>
-    <string name="card_info_latest_review">Latest Review</string>
-    <string name="card_info_interval">Interval</string>
-    <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
-    <string name="card_info_average_time">Average Time</string>
-    <string name="card_info_total_time">Total Time</string>
-    <string name="card_info_card_type">Card Type</string>
-    <string name="card_info_note_type">Note Type</string>
-    <string name="card_info_deck_name">Deck Name</string>
-    <string name="card_info_card_id">Card Id</string>
-    <string name="card_info_note_id">Note Id</string>
-    <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_date">Date</string>
-    <string name="card_info_revlog_rating">Rating</string>
-    <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

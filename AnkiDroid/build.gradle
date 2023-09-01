@@ -1,14 +1,13 @@
 plugins {
- // Gradle plugin portal
- id 'com.github.triplet.play' version '3.8.3'
+    // Gradle plugin portal
+    id 'com.github.triplet.play' version '3.8.4'
+    id 'com.android.application'
+    id 'app.brant.amazonappstorepublisher'
+    id 'idea'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
-
-apply plugin: 'com.android.application'
-apply plugin: 'app.brant.amazonappstorepublisher'
-apply plugin: 'idea'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-parcelize'
-
 
 repositories {
     google()
@@ -25,19 +24,32 @@ idea {
 }
 
 def homePath = System.properties['user.home']
+/**
+ * @return the current git hash
+ * @example edf739d95bad7b370a6ed4398d46723f8219b3cd
+ */
+static def gitCommitHash() {
+    "git rev-parse HEAD".execute().text.trim()
+}
+
 android {
     namespace "com.ichi2.anki"
 
     compileSdkVersion 33 // change api compileSdkVersion at the same time
 
+    buildFeatures {
+        buildConfig = true
+        aidl = true
+    }
+
     defaultConfig {
         applicationId "com.ichi2.anki"
         buildConfigField "Boolean", "CI", (System.getenv("CI") == "true").toString()
-        buildConfigField "Boolean", "LEGACY_SCHEMA", "true"
         buildConfigField "String", "ACRA_URL", '"https://ankidroid.org/acra/report"'
         buildConfigField "String", "BACKEND_VERSION", "\"$ankidroid_backend_version\""
         buildConfigField "Boolean", "ENABLE_LEAK_CANARY", "false"
         buildConfigField "Boolean", "ALLOW_UNSAFE_MIGRATION", "false"
+        buildConfigField "String", "GIT_COMMIT_HASH", "\"${gitCommitHash()}\""
         resValue "string", "app_name", "AnkiDroid"
 
         // The version number is of the form:
@@ -61,11 +73,14 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21600202
-        versionName="2.16.0beta2"
-        minSdkVersion 21
-        //noinspection OldTargetApi - also performed in api/build.fradle
-        targetSdkVersion 31 // change .tests_emulator.yml
+        versionCode=21700101
+        versionName="2.17alpha1"
+        minSdkVersion 23
+        // change api/build.gradle
+        // change robolectricDownloader.gradle
+        // After #13695: change .tests_emulator.yml
+        // noinspection OldTargetApi
+        targetSdkVersion 33
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'
@@ -95,10 +110,6 @@ android {
                 // not profiled: optimization for build times
                 if (localProperties['enable_languages'] == "false") {
                     android.defaultConfig.resConfigs "en"
-                }
-                // allow overriding default schema version
-                if (localProperties["legacy_schema"] != null) {
-                    buildConfigField "Boolean", "LEGACY_SCHEMA", localProperties["legacy_schema"]
                 }
                 // allows the scoped storage migration when the user is not logged in
                 if (localProperties["allow_unsafe_migration"] != null) {
@@ -182,7 +193,6 @@ android {
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
-
         // We want the same version stream for all ABIs in debug but for release we can split them
         if (variant.buildType.name == 'release') {
             variant.outputs.all { output ->
@@ -210,23 +220,34 @@ android {
 
     testOptions {
         animationsDisabled true
+        kotlinOptions {
+            freeCompilerArgs += [
+                    '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
+            ]
+        }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
         coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
+        jvmTarget = JavaVersion.VERSION_11
     }
-    ndkVersion "22.0.7026061"
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
 }
 
 play {
     serviceAccountCredentials.set(file("${homePath}/src/AnkiDroid-GCP-Publish-Credentials.json"))
     track.set('alpha')
 }
+
 amazon {
     securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")
     applicationId = "amzn1.devportal.mobileapp.524a424d314931494c55383833305539"
@@ -274,39 +295,39 @@ dependencies {
             force 'org.jetbrains:annotations:24.0.1'
         }
     }
-
+    api project(":api")
     lintChecks project(":lint-rules")
-
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
-    compileOnly 'org.jetbrains:annotations:24.0.1'
-    compileOnly "com.google.auto.service:auto-service-annotations:1.0.1"
-    annotationProcessor "com.google.auto.service:auto-service:1.0.1"
 
-    implementation 'androidx.activity:activity-ktx:1.7.1'
+    compileOnly 'org.jetbrains:annotations:24.0.1'
+    compileOnly "com.google.auto.service:auto-service-annotations:1.1.1"
+    annotationProcessor "com.google.auto.service:auto-service:1.1.1"
+
+    implementation 'androidx.activity:activity-ktx:1.7.2'
     implementation 'androidx.annotation:annotation:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.7.0-alpha02'
     implementation 'androidx.browser:browser:1.5.0'
     implementation "androidx.core:core-ktx:1.10.1"
     implementation 'androidx.exifinterface:exifinterface:1.3.6'
     implementation "androidx.fragment:fragment-ktx:$fragments_version"
-    implementation "androidx.preference:preference-ktx:1.2.0"
-    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    debugImplementation("androidx.fragment:fragment-testing-manifest:$fragments_version")
+    implementation "androidx.preference:preference-ktx:1.2.1"
+    implementation 'androidx.recyclerview:recyclerview:1.3.1'
     implementation 'androidx.sqlite:sqlite-framework:2.3.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.webkit:webkit:1.6.1'
+    implementation 'androidx.webkit:webkit:1.7.0'
     // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
     // Changing the version from 1.8.0 to 1.7.0 because the item in navigation drawer is getting bold unnecessarily
     implementation 'com.google.android.material:material:1.7.0'
-    // noinspection GradleDependency jackson-databind 2.13 requires SDK 24+: https://github.com/FasterXML/jackson-databind#compatibility
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0"
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin:3.23.0' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin-lite:3.24.2' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
@@ -314,17 +335,11 @@ dependencies {
     }
     if (localProperties['local_backend'] == "true") {
         implementation files("../../Anki-Android-Backend/rsdroid/build/outputs/aar/rsdroid-release.aar")
-        testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing-${ankidroid_backend_version}.jar")
-        // On Windows, you can use something like
-        // implementation files("C:\\GitHub\\Rust-Test\\rsdroid\\build\\outputs\\aar\\rsdroid-release.aar")
+        testImplementation files("../../Anki-Android-Backend/rsdroid-testing/build/libs/rsdroid-testing.jar")
     } else {
         implementation "io.github.david-allison-1:anki-android-backend:$ankidroid_backend_version"
         testImplementation "io.github.david-allison-1:anki-android-backend-testing:$ankidroid_backend_version"
     }
-
-    // A path for a testing library which provide Parameterized Test
-    testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
 
     // May need a resolution strategy for support libs to our versions
     implementation "ch.acra:acra-http:$acra_version"
@@ -334,12 +349,10 @@ dependencies {
 
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
-    // io.github.java-diff-utils:java-diff-utils is the natural successor here, but requires API24, #7091
-    implementation 'org.bitbucket.cowwoc:diff-match-patch:1.2'
     // noinspection GradleDependency - commons-compress 1.12 - later versions use `File.toPath`; API26 can remove?
-    implementation 'org.apache.commons:commons-compress:1.12' // #6419 - handle >2GB apkg files
+    implementation 'org.apache.commons:commons-compress:1.12'
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
-    implementation 'commons-io:commons-io:2.11.0' // FileUtils.contentEquals
+    implementation 'commons-io:commons-io:2.13.0' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     implementation 'com.squareup.okhttp3:okhttp:4.11.0'
     implementation 'com.arcao:slf4j-timber:3.1'
@@ -351,19 +364,20 @@ dependencies {
     implementation 'com.github.mrudultora:Colorpicker:1.2.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-    implementation 'com.github.ByteHamster:SearchPreference:v2.3.0'
-    implementation 'com.github.AppIntro:AppIntro:6.2.0'
+    implementation 'com.github.ByteHamster:SearchPreference:2.4.0'
+    implementation 'com.github.AppIntro:AppIntro:6.3.1'
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release
     // build via AnkiDroidApp.
-    implementation 'com.squareup.leakcanary:leakcanary-android:2.10'
+    implementation 'com.squareup.leakcanary:leakcanary-android:2.12'
 
-    api project(":api")
-
+    // A path for a testing library which provide Parameterized Test
+    testImplementation "org.junit.jupiter:junit-jupiter:$junit_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$junit_version"
     testImplementation "org.junit.vintage:junit-vintage-engine:$junit_version"
     testImplementation 'org.mockito:mockito-inline:5.2.0'
-    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:5.1.0"
     testImplementation "org.hamcrest:hamcrest:$hamcrest_version"
     testImplementation 'net.lachlanmckee:timber-junit-rule:1.0.1'
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
@@ -374,14 +388,9 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit5:$kotlin_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
-    testImplementation "io.mockk:mockk:1.13.5"
+    testImplementation "io.mockk:mockk:1.13.7"
     testImplementation 'org.apache.commons:commons-exec:1.3' // obtaining the OS
-
-    // debugImplementation required vs testImplementation: https://issuetracker.google.com/issues/128612536
-    debugImplementation("androidx.fragment:fragment-testing:$fragments_version") {
-        // exclude transitive androidx.test:core dep: https://github.com/android/android-test/issues/1587
-        exclude group: 'androidx.test', module: 'core'
-    }
+    testImplementation("androidx.fragment:fragment-testing:$fragments_version")
 
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
@@ -393,22 +402,5 @@ dependencies {
     androidTestImplementation "androidx.test:rules:$androidx_test_version"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-}
-
-android {
-
-
-    packagingOptions {
-        resources {
-            excludes += ['META-INF/DEPENDENCIES']
-        }
-    }
-    namespace 'com.ichi2.anki'
-    testOptions {
-        kotlinOptions {
-            freeCompilerArgs += [
-                    '-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi',
-            ]
-        }
-    }
+    androidTestImplementation("androidx.fragment:fragment-testing:$fragments_version")
 }

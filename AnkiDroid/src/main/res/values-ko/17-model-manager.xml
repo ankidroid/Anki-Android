@@ -45,7 +45,6 @@
     <string name="model_browser_delete">노트 유형 삭제</string>
     <string name="model_browser_rename" comment="Rename a note type">이름 변경</string>
     <string name="model_browser_template">카드 편집</string>
-    <string name="model_browser_add">노트 유형 추가</string>
     <!--Rename-->
     <string name="rename_model">노트 유형 이름 바꾸기 </string>
     <!--Language Hint-->
@@ -61,7 +60,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">필드 업데이트 중</string>
     <string name="model_field_editor_sort_field">이 필드로 정렬</string>
-    <string name="model_clone_suffix">복사</string>
     <!--Warnings-->
     <string name="model_delete_warning">이 노트 유형을 삭제하시겠습니까?</string>
     <string name="field_delete_warning">이 필드를 삭제하시겠습니까?</string>

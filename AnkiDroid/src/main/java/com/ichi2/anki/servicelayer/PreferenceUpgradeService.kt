@@ -22,10 +22,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.LocaleListCompat
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.noteeditor.CustomToolbarButton
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
@@ -41,8 +41,8 @@ private typealias VersionIdentifier = Int
 private typealias LegacyVersionIdentifier = Long
 
 object PreferenceUpgradeService {
-    fun upgradePreferences(context: Context?, previousVersionCode: LegacyVersionIdentifier): Boolean =
-        upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode)
+    fun upgradePreferences(context: Context, previousVersionCode: LegacyVersionIdentifier): Boolean =
+        upgradePreferences(context.sharedPrefs(), previousVersionCode)
 
     /** @return Whether any preferences were upgraded */
     internal fun upgradePreferences(preferences: SharedPreferences, previousVersionCode: LegacyVersionIdentifier): Boolean {
@@ -88,6 +88,7 @@ object PreferenceUpgradeService {
                 yield(UpgradeDayAndNightThemes())
                 yield(UpgradeFetchMedia())
                 yield(UpgradeAppLocale())
+                yield(RemoveScrollingButtons())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -267,6 +268,8 @@ object PreferenceUpgradeService {
                 Pair(35, ViewerCommand.RECORD_VOICE),
                 Pair(36, ViewerCommand.REPLAY_VOICE),
                 Pair(37, ViewerCommand.TOGGLE_WHITEBOARD),
+                Pair(44, ViewerCommand.CLEAR_WHITEBOARD),
+                Pair(45, ViewerCommand.CHANGE_WHITEBOARD_PEN_COLOR),
                 Pair(41, ViewerCommand.SHOW_HINT),
                 Pair(42, ViewerCommand.SHOW_ALL_HINTS),
                 Pair(43, ViewerCommand.ADD_NOTE)
@@ -397,6 +400,12 @@ object PreferenceUpgradeService {
                 // 2. Set the locale with the new AndroidX API
                 val localeList = LocaleListCompat.forLanguageTags(languageTag)
                 AppCompatDelegate.setApplicationLocales(localeList)
+            }
+        }
+
+        internal class RemoveScrollingButtons : PreferenceUpgrade(11) {
+            override fun upgrade(preferences: SharedPreferences) {
+                preferences.edit { remove("scrolling_buttons") }
             }
         }
     }

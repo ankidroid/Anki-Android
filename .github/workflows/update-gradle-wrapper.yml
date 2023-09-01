@@ -1,6 +1,7 @@
 name: Update Gradle Wrapper
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "0 0 * * *"
 
@@ -11,8 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Configure JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17" # newer libraries require 17 now, force it everywhere
+
       - name: Update Gradle Wrapper
         uses: gradle-update/update-gradle-wrapper-action@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           set-distribution-checksum: false
+          base-branch: dependency-updates
+          target-branch: dependency-updates

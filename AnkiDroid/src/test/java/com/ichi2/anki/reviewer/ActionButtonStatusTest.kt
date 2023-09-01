@@ -18,7 +18,7 @@ package com.ichi2.anki.reviewer
 import android.content.SharedPreferences
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.preferences.PreferenceUtils
+import com.ichi2.anki.preferences.PreferenceTestUtils
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.junit.Test
@@ -33,7 +33,7 @@ class ActionButtonStatusTest : RobolectricTest() {
     @Test
     fun allCustomButtonsCanBeDisabled() {
         val reviewerExpectedKeys = customButtonsExpectedKeys
-        val actualPreferenceKeys = PreferenceUtils.getAllCustomButtonKeys(targetContext)
+        val actualPreferenceKeys = PreferenceTestUtils.getAllCustomButtonKeys(targetContext)
         assertThat(
             "Each button in the Action Bar must be modifiable in Preferences - Reviewer - App Bar Buttons",
             reviewerExpectedKeys,

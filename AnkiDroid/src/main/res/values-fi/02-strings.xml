@@ -61,8 +61,8 @@
     <string name="updated_version">Päivitetty versioon %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Tallenna tussitaulu</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Ota kirjoitustaulu käyttöön</string>
     <string name="disable_whiteboard">Poista kirjoitustaulu käytöstä</string>
     <string name="show_whiteboard">Näytä kirjoitustaulu</string>
@@ -102,7 +102,7 @@
         <item>Muistilappua muokattu</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
+    <string name="apply_filter">Käytä</string>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Muuta tämän päivän uusien korttien määrän ylärajaa</string>
@@ -125,9 +125,9 @@
     <string name="save">Tallenna</string>
     <string name="close">Sulje</string>
     <string name="select">Valitse</string>
-    <string name="reordering_cards">Uudelleenjärjestetään kortteja...</string>
     <string name="field_remapping">%1$s (”%2$s”:sta)</string>
     <string name="confirm_map_cards_to_nothing">Kortit, joita ei ole liitetty mihinkään, poistetaan. Jos muistiinpanoon ei liity jäljelle jääviä kortteja, se katoaa. Oletko varma, että haluat jatkaa?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Aikaikkuna saavutettu</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d korttia opiskeltu ajassa %2$s</item>
@@ -145,17 +145,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Ajasta uudelleen</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Esikatselu</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
-    <string name="error_insufficient_memory">Operaatio ei ole mahdollista laitteesi vähäisen muistimäärän vuoksi</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Nimeä uudelleen</string>
-    <string name="default_conf_delete_error">Oletusasetusryhmää ei voi poistaa</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d kortti lisätty</item>
-        <item quantity="other">%d korttia lisätty</item>
-    </plurals>
     <string name="check_db">Tarkasta tietokanta</string>
     <string name="check_media">Tarkista media</string>
     <string name="empty_cards">Tyhjät kortit</string>
-    <string name="check_db_message">Tarkistetaan tietokantaa&#8230;</string>
     <string name="empty_card_warning">Tämä kortti on tyhjä. Käytä ”Tyhjät kortit” vaihtoehtoa pakka-luettelon -valikosta.</string>
     <string name="unknown_type_field_warning">Kirjoita vastaus: tuntematon kenttä %s</string>
     <string name="delete_deck">Poistetaan pakkaa&#8230;</string>
@@ -168,14 +161,7 @@
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
     <string name="import_log_no_apkg">Tämä ei ole salittu Anki-tiedosto</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Ei voitu purkaa apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
+    <string name="import_title_error" comment="Title of error dialog">Virhe</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Tiedostolla ”%s” ei ole .apkg tai .colpkg päätettä</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
@@ -183,8 +169,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Korvataan kokoelmaa&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Myös ajoitukset</string>
     <string name="export_include_media">Myös media</string>
@@ -198,12 +182,11 @@
         <item quantity="one">Export selected note as apkg file?</item>
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_in_progress">Tuodaan Anki-tiedostoa...</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Sovellusta apkg:n käsittelyyn ei ole olemassa. Tallennetaan...</string>
     <string name="export_save_apkg_successful">Anki-tiedosto tallennettu.</string>
     <string name="export_save_apkg_unsuccessful">Anki-tiedoston tallennus epäonnistui.</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid toi kortit: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -213,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Valinnat</string>
     <string name="menu__deck_options">Pakan asetukset</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -224,47 +207,11 @@
     <string name="dyn_deck_desc">Tämä on erityispakka normaalin aikataulun ulkopuolella tapahtuvaan opiskeluun. Kortit palautetaan automaattisesti alkuperäisiin pakkoihinsa läpikäynnin jälkeen. Tämän pakan poistaminen palauttaa kaikki sen sisältämät kortit alkuperäisiin pakkoihin.</string>
     <string name="steps_error">Vaiheiden on oltava numeroita, jotka ovat suurempia kuin 0</string>
     <string name="steps_min_error">Vähintään yksi vaihe on pakollinen</string>
-    <string name="sched_end">(loppu)</string>
-    <string name="sched_unbury_action">Nähdäksesi ne nyt, klikkaa alla olevaa Poista piilotus -painetta</string>
-    <string name="sched_has_buried">Liittyviä tai piilotettuja kortteja on viivästetty myöhempään istuntoon.</string>
     <string name="tag_editor_add_feedback">Paina ”%2$s” vahvistaaksesi ”%1$s”:n lisääminen</string>
     <string name="tag_editor_add_feedback_existing">Olemassa oleva tunniste ”%1$s” valittu</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekunti</item>
-        <item quantity="other">%s sekuntia</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuutti</item>
-        <item quantity="other">%s minuuttia</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s tunti</item>
-        <item quantity="other">%s tuntia</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s päivä</item>
-        <item quantity="other">%s päivää</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s kuukausi</item>
-        <item quantity="other">%s kuukautta</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s vuosi</item>
-        <item quantity="other">%s vuotta</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s sekuntia</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Pakka on jo olemassa</string>
     <string name="decks_rename_filtered_nosubdecks">Suodatetulla pakalla ei voi olla alapakkoja</string>
-    <string name="filtered_deck_name">Suodatettu Pakka</string>
     <string name="reminder_title">Älä unohda opiskella tänään!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kortti kerrattavana %1$s :ssa</item>
@@ -273,14 +220,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Virhe jaettaessa apkg-tiedostoa</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Tiedosto vaatii uudemman Anki version.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="web_page_error">Error loading page: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Palautetut Kortit</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Tausta</string>
     <string name="choose_an_image">Valitse kuva</string>
@@ -297,7 +242,7 @@
     <string name="white_board_image_save_failed">Failed to save whiteboard image. %s</string>
     <string name="white_board_image_saved">Whiteboard image saved to %s</string>
     <string name="title_whiteboard_pen_color">Whiteboard pen color</string>
-    <string name="title_whiteboard_editor">Whiteboard editor</string>
+    <string name="title_whiteboard_editor">Valkotaulu editori</string>
     <string name="user_is_a_robot">Detected automated test. If you are a human, contact AnkiDroid support</string>
     <!-- JS api -->
     <string name="api_version_developer_contact">This card uses unsupported AnkiDroid features. Contact developer %1$s, or view the wiki. %2$s</string>
@@ -364,6 +309,7 @@
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -402,7 +348,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
@@ -419,5 +364,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

@@ -6,7 +6,7 @@
     <color name="theme_black_primary_text">#fff</color> <!-- Alternative: #808080 -->
     <color name="theme_black_row_current">#1a1a1a</color>
 
-    <style name="Theme_Dark.Black">
+    <style name="Theme_Dark.Black" parent="Theme_Dark">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_black_primary_dark</item>
         <item name="colorPrimaryDark">@color/black</item>
@@ -15,7 +15,7 @@
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/theme_black_primary</item>
         <item name="android:windowBackground">@color/theme_black_primary</item>
-        <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">#303030</item>
         <item name="largeButtonBackgroundColorFocused">#444444</item>

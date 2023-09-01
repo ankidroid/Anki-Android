@@ -23,7 +23,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.HelpDialog.FunctionItem
 import com.ichi2.annotations.NeedsTest
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 @NeedsTest("Selecting APKG allows multiple files")
@@ -69,7 +68,7 @@ class ImportFileSelectionFragment {
                 } else {
                     null
                 },
-                if (options.importTextFile && !BackendFactory.defaultLegacySchema) {
+                if (options.importTextFile) {
                     FunctionItem(
                         R.string.import_csv,
                         R.drawable.ic_baseline_description_24,

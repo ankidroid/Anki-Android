@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Спытаць мяне</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Толькі метка</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Новыя карткі ў выпадковым парадку</string>
-    <string name="new_order_order_added">Новыя карткі ў парадку дадання</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Першымі старыя</string>
     <string name="cram_deck_conf_order_random">Выпадкова</string>
@@ -65,10 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Выкарыстоўваць бягучую калоду</string>
     <string name="add_to_deck_decide_by_note_type">Вырашаць па тыпе запісу</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Перамяшаць новыя і паўтораныя карткі</string>
-    <string name="new_spread_new_after_review">Новыя карткі пасля паўтарэння</string>
-    <string name="new_spread_new_before_review">Новыя карткі перад паўтарэннем</string>
     <!-- override_font_labels -->
     <string name="override_font_if_missing">Калі не пазначаны шрыфт у картках</string>
     <string name="override_font_always" comment="Option to always override font">Заўсёды</string>

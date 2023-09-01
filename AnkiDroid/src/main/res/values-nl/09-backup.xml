@@ -45,7 +45,7 @@
 -->
 <resources>
     <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="storage_warning">Minder dan %d MB ruimte op je opslagruimte resterend.\nMaak ruimte vrij om gegevensverlies te voorkomen.</string>
     <string name="backup_restore">Back-up terugzetten</string>
     <string name="backup_new_collection">Nieuwe collectie</string>
     <string name="backup_del_collection">Verwijder collectie en maak een nieuwe aan</string>

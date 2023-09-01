@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Offline vagy</string>
-    <string name="sync_even_if_offline">Megpróbálás Mindenképpen</string>
     <string name="sync_error">Szinkronizálási hiba</string>
     <string name="vague_error" comment="Network error dialog title">Hiba</string>
     <string name="retry">Újra</string>
@@ -63,55 +62,15 @@
     <string name="sign_up">Regisztráció</string>
     <string name="logged_as">Bejelentkezve mint</string>
     <string name="log_out">Kijelentkezés</string>
-    <string name="alert_logging_message">Bejelentkezés, kérem várjon...</string>
-    <string name="invalid_username_password">Érvénytelen e-mail cím vagy jelszót.</string>
     <string name="reset_password">Jelszó visszaállítása</string>
     <string name="lost_mail_instructions">Elfelejtette az emailt?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX lehetőségei</string>
-    <string name="sync_prepare_syncing">Felkészülés a szinkronizálásra...</string>
-    <string name="sync_preparing_full_sync_message">Teljes szinkronizálásra való felkészülés...</string>
-    <string name="sync_uploading_message">Feltöltés...</string>
-    <string name="sync_downloading_message">Letöltés...</string>
     <string name="sync_title">Szinkronizálás</string>
     <string name="sync_log_uploading_message">Teljes szinkronizáció helyből</string>
-    <string name="sync_log_clocks_unsynchronized">Az órád pontatlan %1$d másodperccel %2$s. Győződj meg arról, hogy a dátum, idő és időzóna a telefonon helyes, majd szinkronizálj újra.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, lehetséges, hogy az eszköz időzóna beállítása rossz</string>
-    <string name="sync_log_clocks_unsynchronized_date">, lehetséges, hogy az eszköz dátumbeállítása rossz</string>
-    <string name="sync_no_changes_message">Nem találtam változtatást.</string>
     <string name="sync_database_acknowledge">Gyűjtemény szinkronizálva</string>
-    <string name="sync_log_error_specific">Szinkronizációs hiba, típus: %1$s, üzenet: %2$s</string>
     <string name="sync_corrupt_database">Az adatbázis sérült. Próbáld meg javítani szinkronizálás előtt!\n\nLásd a %s több információért.</string>
-    <string name="sync_too_busy">A kiszolgáló elfoglalt. Próbáld meg később.</string>
-    <string name="sync_remote_db_error">A letöltött adatbázis sérült volt. Kérlek, próbáld újra.</string>
-    <string name="sync_overwrite_error">A jelenlegi gyűjteményt nem lehetett felülírni a letöltött fájllal.</string>
-    <string name="sync_connection_error">A kapcsolat túllépte az időkeretet. Vagy az internet-kapcsolattal van probléma, vagy nagy fájl van a média mappában.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">A Haladó beállításokban megadott egyéni szinkronizáló szerver elérhetetlen (%s). Kérem adj meg egy érvényes szervert, vagy tiltsd a beállítást.</string>
-    <string name="sync_deletions_message">Törlések szinkronizálása...</string>
-    <string name="sync_small_objects_message">Kis méretű objektumok szinkronizálása...</string>
-    <string name="sync_finish_message">Szinkronizálás befejezése...</string>
-    <string name="sync_log_finish_error">Hiba történt a befejezés utasítás kiszolgáló felé küldése közben</string>
-    <string name="sync_writing_db">Változások adatbázisba írása...</string>
-    <string name="sync_download_chunk">Változások letöltése...</string>
-    <string name="sync_upload_chunk">Változások feltöltése...</string>
-    <string name="sync_up_down_size">Felfele: %1$d KB, lefele: %2$d KB</string>
-    <string name="sync_generic_error">Hiba történt. Próbálkozz újra később.</string>
-    <string name="sync_check_upload_file">Fájl ellenőrzése feltöltés előtt...</string>
-    <string name="sync_check_download_file">A letöltött fájl ellenőrzése...</string>
-    <string name="sync_media_find">Médiaváltozás keresése&#8230;</string>
-    <string name="sync_media_no_changes">Nincs változás a média fájlokban.</string>
-    <string name="sync_media_success">Média szinkronizál sikeresen.</string>
-    <string name="sync_media_partial_updated">Média szinkronozás részben elkészült:\n%1$d média fájl letöltve.\n%2$d média fájl feltöltve.</string>
-    <string name="sync_media_changes_count">%d médiaváltozás feltöltése</string>
-    <string name="sync_media_downloaded_count">%d médiafájl letöltve</string>
-    <string name="sync_sanity_failed">Szinkronizálás után a gyűjtemény hibába ütközött. A probléma megoldásához az AnkiDroid teljes szinkronizálást hajt végre. Kérjük, válaszd ki azt a lapot, amelyet meg szeretnél tartani.</string>
-    <string name="sync_media_sanity_failed">A multimédiás szinkronizálás befejeződött, de a médiaszám nem egyezik meg a kiszolgálón. A következő média szinkronizálása teljesen szinkronizálja a médiát a hiba kijavításához.</string>
-    <string name="sync_media_db_error">A média szinkronizálása nem sikerült, mert a jelenlegi adatbázis korrupt. A média ellenőrzése ajánlott.</string>
-    <string name="sync_media_error">Hiba a szinkronizálásnál média adatok.</string>
-    <string name="sync_media_error_check">Hiba történt a multimédia fájlok szinkronizálásakor. Javasoljuk a média felülvizsgálatát.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Futtasd az \'%s\' opciót szinkronizálás előtt</string>
     <string name="sync_sanity_local">Helyi</string>
     <string name="sync_sanity_remote">Távoli</string>
     <string name="force_full_sync_title">Teljes szinkronizáció erőltetése</string>
@@ -119,15 +78,7 @@
     <string name="force_full_sync_confirmation">Kényszerített teljes szinkronizálás</string>
     <string name="full_sync_confirmation">A módosítás után fel kell tölteni a teljes adatbázis gyűjteményt. Ezzel az eszközzel nem szinkronizált más eszközökkel kapcsolatos tanulási eredmények és módosítások elveszhetnek. Folytatod?</string>
     <string name="full_sync_confirmation_upgrade">Az AnkiDroid korábban telepített verziójának hibája miatt ajánlott teljes szinkronizálást elvégezni.</string>
-    <string name="sync_error_407_proxy_required">Proxy hitelesítés szükséges.</string>
-    <string name="sync_error_409">Egyszerre csak egy kliens férhet hozzá az AnkiWebhez. Ha a korábbi szinkron nem sikerült, kérlek próbáld újra pár perc múlva.</string>
-    <string name="sync_error_413_collection_size">A gyűjteményes vagy a média fájl túl nagy a szinkronizáláshoz.</string>
-    <string name="sync_error_500_unknown">Az AnkiWeb problémába ütközött. Kérjük próbálja újra egy pár perc múlva, és ha a probléma utána is fennáll, jelentse azt.</string>
-    <string name="sync_error_501_upgrade_required">Telepítsd az AnkiDroid legújabb verzióját</string>
-    <string name="sync_error_502_maintenance">Az AnkiWeb karbantartás alatt van. Kérjük próbálkozzon újra egy pár perc múlva.</string>
-    <string name="sync_error_504_gateway_timeout">504 Gateway Timeout hiba észlelve.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Szinkronizálás (teljes)</string>
     <string name="sync_menu_title_no_account">Szinkronizálás (bejelentkezés)</string>
-    <string name="sync_error_unknown_host_readable">Nem tudok csatlakozni az AnkiWebhez. Működik az internetje?\n\n%s</string>
 </resources>

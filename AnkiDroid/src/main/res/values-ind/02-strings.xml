@@ -61,8 +61,8 @@
     <string name="updated_version">Diperbarui ke versi %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Simpan whiteboard</string>
-    <string name="enable_stylus">Enable stylus mode</string>
-    <string name="disable_stylus">Disable stylus mode</string>
+    <string name="enable_stylus">Aktifkan mode stylus</string>
+    <string name="disable_stylus">Nonaktifkan mode stylus</string>
     <string name="enable_whiteboard">Nyalakan whiteboard</string>
     <string name="disable_whiteboard">Nonaktifkan whiteboard</string>
     <string name="show_whiteboard">Tampilkan whiteboard</string>
@@ -102,8 +102,8 @@
         <item>Catatan diubah</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Terapkan</string>
+    <string name="filter_by_flags">Bendera</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ubah batas kartu baru hari ini</string>
     <string name="custom_study_increase_review_limit">Ubah batas ulasan kartu hari ini</string>
@@ -125,9 +125,9 @@
     <string name="save">Simpan</string>
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
-    <string name="reordering_cards">Mengurutkan ulang kartu&#8230;</string>
     <string name="field_remapping">%1$s (dari “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Semua kartu yang yang dibuat kosong akan dihapus. Jika catatan tidak memiliki sisa kartu, kartu tersebut akan hilang. Apa kamu yakin?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Batas waktu telah tercapai</string>
     <plurals name="timebox_reached">
         <item quantity="other">%1$d kartu dipelajari dalam %2$s</item>
@@ -142,17 +142,11 @@
     <string name="card_editor_reset_card">Reset kemajuan</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Jadwalkan ulang</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pratinjau</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">Operasi gagal karena memori tidak cukup pada perangkat</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d dari %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Ubah nama</string>
-    <string name="default_conf_delete_error">Grup opsi bawaan tidak dapat dihapus</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="other">%d kartu ditambahkan</item>
-    </plurals>
     <string name="check_db">Periksa basisdata</string>
     <string name="check_media">Periksa media</string>
     <string name="empty_cards">Kartu kosong</string>
-    <string name="check_db_message">Memeriksa basisdata&#8230;</string>
     <string name="empty_card_warning">Kartu ini kosong. Gunakan opsi \"Kosongkan kartu\" dari menu di halaman daftar dek.</string>
     <string name="unknown_type_field_warning">Ketik jawaban: bidang %s tidak diketahui</string>
     <string name="delete_deck">Menghapus dek&#8230;</string>
@@ -161,54 +155,44 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksimu yang ada dan menggantinya dengan data dari berkas %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
+        <item quantity="other">Apakah anda ingin mengimpor file berikut:\n%s\nIni dapat memakan banyak waktu</item>
     </plurals>
     <string name="import_log_no_apkg">Ini bukan paket Anki yang valid</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Gagal mengekstrak apkg: %s</string>
-    <string name="import_log_failed_copy_to">Gagal menyalin apkg ke %s</string>
-    <string name="import_log_failed_validate">validasi apkg gagal</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Galat mengimpor berkas. Harap coba lagi</string>
-    <string name="import_succeeded_but_check_database">Impor data berhasil namun pembersihan pasca impor gagal.Periksa basisdata nanti. Sebab: %s</string>
-    <string name="import_error_corrupt_zip">Terjadi kesalahan dengan file apkg. Tolong hapus dan unduh kembali.\n\nAkar penyebab: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
+    <string name="import_error_handle_exception">Gagal mengimpor file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Berkas bernama “%s” tidak memiliki ekstensi .apkg atau .colpkg</string>
     <string name="import_error_load_imported_database">Pengganti basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
-    <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Mengganti koleksi&#8230;</string>
+    <string name="import_error_copy_to_cache">Gagal cache file (mungkin kehabisan ruang penyimpanan)</string>
+    <string name="import_error_multiple_colpkg">Beberapa file colpkg dipilih.</string>
+    <string name="import_error_colpkg_apkg">Kedua file apkg &amp; colpkg dipilih bersamaan.</string>
     <string name="import_interrupted">Impor terganggu</string>
     <string name="export_include_schedule">Sertakan penjadwalan</string>
     <string name="export_include_media">Sertakan media</string>
     <string name="confirm_apkg_export">Ekspor koleksi sebagai paket Anki?</string>
     <string name="confirm_apkg_export_deck">Ekspor \"%s\" sebagai berkas apkg?</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="other">Ekspor %d kartu terpilih sebagai file apkg?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_in_progress">Mengekspor berkas paket Anki&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>
     <string name="export_save_apkg_successful">Berhasil menyimpan paket Anki</string>
     <string name="export_save_apkg_unsuccessful">Paket Anki gagal disimpan</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Kirim paket Anki menggunakan</string>
     <string name="export_email_subject">Flashcard AnkiDroid terekspor: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
-        This is an Anki flashcards deck sent from AnkiDroid[1].
-        Try to open it using one of the available Anki distributions[2] and enjoy easy and efficient learning!<br/><br/>
+        Ini adalah dek flashcard Anki yang dikirim dari AnkiDroid[1].
+        Coba buka menggunakan salah satu distribusi Anki[2] dan nikmati pembelajaran yang cepat dan efisien!<br/><br/>
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
     <string name="menu__deck_options">Opsi dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>
@@ -218,41 +202,11 @@
     <string name="dyn_deck_desc">Ini adalah dek khusus untuk belajar di luar jadwal normal. Kartu akan otomatis dikembalikan ke dek aslinya setelah kamu mengulasnya. Menghapus dek ini dari daftar dek akan mengembalikan semua kartu yang tersisa ke dek aslinya.</string>
     <string name="steps_error">Langkah-langkah harus lebih besar dari 0</string>
     <string name="steps_min_error">Setidaknya satu langkah diperlukan</string>
-    <string name="sched_end">(selesai)</string>
-    <string name="sched_unbury_action">Untuk melihatnya sentuh item \"Angkat\" di menu</string>
-    <string name="sched_has_buried">Beberapa kartu yang terkait atau dipendam ditunda sampai besok</string>
     <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk konfirmasi menambah “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Tag “%1$s” dipilih</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="other">%s detik</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="other">%s menit</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="other">%s jam</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="other">%s hari</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="other">%s bulan</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="other">%s tahun</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s detik</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Dek sudah ada</string>
     <string name="decks_rename_filtered_nosubdecks">Dek yang difilter tidak dapat memiliki subdek</string>
-    <string name="filtered_deck_name">Dek difilter</string>
     <string name="reminder_title">Jangan lupa belajar hari ini!</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d kartu perlu diulas di %1$s</item>
@@ -260,14 +214,12 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Galat membagikan berkas apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Berkas ini memerlukan versi terbaru dari Anki.</string>
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi terinstal yang dapat melakukan aksi ini.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Diharap untuk memampatkan & merubah ukuran gambar di direktori media]]></string>
     <string name="no_browser_notification">Tidak ada peramban yang ditemukan, harap kunjungi halaman web lewat PC atau HP</string>
     <string name="web_page_error">Gagal memuat halaman: %s</string>
     <string name="no_outgoing_link_in_cardbrowser">tautan halaman eksternal dalam kartu tidak didukung.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Kartu dipulihkan</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Latar belakang</string>
     <string name="choose_an_image">Pilih gambar</string>
@@ -351,6 +303,7 @@
     <string name="deck_download_progress_message">Anda dapat menggunakan aplikasi lain selagi unduhan berjalan</string>
     <string name="check_network">Harap periksa koneksi jaringan Anda.</string>
     <string name="search_using_deck_name">Cari berdasarkan nama dek</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Beranda</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -388,7 +341,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->
@@ -405,5 +357,4 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
     <string name="media_sync_required_title">Media Sync Required</string>
     <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
-    <string name="remember_sync_metered_checkbox_msg">Don\'t ask again (this warning can be re-enabled from Sync Settings)</string>
 </resources>

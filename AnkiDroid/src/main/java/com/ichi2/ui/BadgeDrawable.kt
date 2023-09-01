@@ -21,10 +21,7 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.DrawableWrapper
-import android.os.Build
-import androidx.annotation.RequiresApi
 
-@RequiresApi(api = Build.VERSION_CODES.M)
 class BadgeDrawable(dr: Drawable?) : DrawableWrapper(dr) {
     private val mPaint: Paint = Paint()
     private var mBadge: Drawable? = null

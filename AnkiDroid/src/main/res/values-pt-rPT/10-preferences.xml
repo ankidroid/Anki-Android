@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Desativado</string>
-    <string name="enabled">Ativado</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Toque no centro</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Toque no canto inferior esquerdo</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Toque no canto inferior direito</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">Também usar os botões kanji/katakana, emoji/kao-moji para fazer scroll</string>
     <string name="card_browser_enable_external_context_menu">Menu ‘%s’</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Scroll duplo</string>
@@ -155,7 +152,6 @@
     <string name="timeout_answer" maxLength="41">Resposta de tempo limite</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tempo para mostrar a resposta</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Tempo para mostrar a pergunta seguinte</string>
     <string name="select_locale_title">Selecionar Idioma</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
@@ -181,18 +177,13 @@
     <string name="show_eta" maxLength="41">Mostrar o tempo restante</string>
     <string name="show_eta_summ">Mostrar o tempo restante</string>
     <string name="use_current" maxLength="41">Baralho para as fichas novas</string>
-    <string name="new_spread" maxLength="41">Posição da ficha nova</string>
     <string name="learn_cutoff" maxLength="41">Limite para antecipação de aprendizagem</string>
     <string name="time_limit" maxLength="41">Limite de tempo para Timebox</string>
     <string name="new_timezone" maxLength="41">Novo manuseio de fuso horário</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Meia-noite</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="pref_keep_screen_on" maxLength="41">Manter o ecrã aceso</string>
     <string name="pref_keep_screen_on_summ">Desativar o tempo limite de ecrã</string>
-    <string name="convert_fen_text" maxLength="41">Suporte para notação de xadrez</string>
-    <string name="convert_fen_text_summ">Desenhar tabuleiro de xadrez a partir da Notação Forsyth–Edwards. A notação tem que estar entre os delimitadores [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Ativar API da AnkiDroid</string>
     <string name="enable_api_summary">Deixe as outras aplicações ligar à AnkiDroid e ler/gravar dados sem a sua intervenção</string>
     <string name="custom_buttons" maxLength="41">Botões da barra de aplicação</string>
@@ -218,17 +209,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Estatísticas avançadas</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Ativar estatísticas avançadas</string>
-    <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Compute first n days, simulate remainder</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precisão de computação</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Number of iterations of the simulation</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
@@ -243,64 +223,10 @@
     <string name="bluetooth">Bluetooth</string>
     <string name="controls_main_category" maxLength="41">Command mapping</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">Selecione as etiquetas</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Descrição do baralho (apenas o baralho atual)</string>
-    <string name="deck_conf_group" maxLength="41">Grupo de opções</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">O baralho %1$s\n%2$d usa este grupo</item>
-        <item quantity="other">Os baralhos %1$s\n%2$d usam este grupo</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Novas fichas</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisões</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Lapsos</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Geral</string>
     <string name="deck_conf_reminders" maxLength="41">Lembretes</string>
-    <string name="deck_conf_steps" maxLength="41">Passos (em minutos)</string>
-    <string name="deck_conf_order" maxLength="41">Ordem</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Novas fichas/dia</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Intervalo de graduação</string>
-    <string name="deck_conf_days">XXX dia(s)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Intervalo fácil</string>
-    <string name="deck_conf_start_ease" maxLength="41">Facilidade inicial</string>
-    <string name="deck_conf_max_rev" maxLength="41">Máximo de revisões/dia</string>
-    <string name="deck_conf_new_bury" maxLength="41">Ocultar fichas novas relacionadas</string>
-    <string name="deck_conf_new_bury_summ">As fichas novas relacionadas são ocultadas até ao dia seguinte</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Ocultar revisões relacionadas</string>
-    <string name="deck_conf_rev_bury_summ">As revisões relacionadas são ocultadas até ao dia seguinte</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Usar predefinições</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bónus de facilidade</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Modificador de intervalo</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Intervalo máximo</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Novo intervalo</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Intervalo mínimo</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Limite de sanguessuga</string>
-    <string name="deck_conf_fails">XXX lapso(s)</string>
-    <string name="deck_conf_leech_action" maxLength="41">Ação de sanguessuga</string>
-    <string name="deck_conf_max_time" maxLength="41">Tempo de resposta máximo</string>
-    <string name="deck_conf_seconds">XXX segundos</string>
-    <string name="deck_conf_timer" maxLength="41">Mostrar temporizador de resposta</string>
-    <string name="deck_conf_autoplay" maxLength="41">Reproduzir áudio automaticamente</string>
-    <string name="deck_conf_replayq" maxLength="41">Repetir pergunta</string>
-    <string name="deck_conf_replayq_summ">Quando a resposta for mostrada, voltar a reproduzir o áudio da pergunta e da resposta</string>
-    <string name="deck_conf_manage" maxLength="41">Gestão de grupos</string>
-    <string name="deck_conf_manage_summ">Adicionar e alterar grupos de opções</string>
-    <string name="deck_conf_current_group" maxLength="41">Grupo atual</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Renomear</string>
-    <string name="deck_conf_reset" maxLength="41">Restaurar predefinições</string>
-    <string name="deck_conf_reset_message">Restaurar o grupo de opções atual para os valores predefinidos?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Adicionar</string>
-    <string name="deck_conf_add_summ">Criar uma cópia do grupo de opções atual</string>
-    <string name="deck_conf_remove_message">Remover o grupo de opções atual?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Definir para todos os sub-baralhos</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s sub-baralho usará este grupo</item>
-        <item quantity="other">%s sub-baralhos usarão este grupo</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Definir o grupo de opções atual para todos os sub-baralhos deste baralho?</string>
     <string name="pref_browser_editor_font" maxLength="41">Tipo de letra do navegador e editor</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtro</string>
     <string name="deck_conf_cram_search" maxLength="41">Procurar</string>
@@ -311,8 +237,6 @@
     <string name="deck_conf_cram_filter_2_check">Ativar segundo filtro</string>
     <string name="deck_conf_cram_steps" maxLength="41">Etapas personalizadas (em minutos)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir passos personalizados</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Habilitar notificações para este grupo de baralhos</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Lembrar-me às</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Ajude a tornar o AnkiDroid melhor!</string>
     <string name="analytics_title" maxLength="41">Partilhar dados de utilização da funcionalidade</string>
@@ -349,12 +273,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remover ‘%s\'</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Ativar ‘%s\'</string>
-    <string name="use_rust_backend_title" maxLength="41">Usar o novo backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use o agendador v3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opções de programador</string>
     <string name="dev_options_enabled_pref" maxLength="41">Ativar as opções de programador</string>
@@ -392,7 +311,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Excluir arquivos de média não utilizados</string>
     <string name="pref__delete_unused_media_files__summary">Excluir imagens e outras multimédias que não são prefixas com _ e não são referenciadas por quaisquer notas</string>
-    <string name="dialog__media_check_required__message">Uma verificação de multimédia é necessária para encontrar arquivos de multimédia não utilizados</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Eliminar arquivos de multimédia não utilizados</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Eliminar cópias de segurança</string>

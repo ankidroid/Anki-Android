@@ -31,21 +31,19 @@ import anki.import_export.ExportLimit
 import anki.import_export.exportLimit
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
-import com.ichi2.anki.dialogs.ExportCompleteDialog.ExportCompleteDialogListener
 import com.ichi2.anki.dialogs.ExportDialog.ExportDialogListener
 import com.ichi2.anki.dialogs.ExportDialogParams
+import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.AnkiPackageExporter
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeUtils
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -57,16 +55,16 @@ import java.util.function.Supplier
  * Must be constructed before calling {@link AnkiActivity#onCreate(Bundle, PersistableBundle)}, this is to fragment
  * factory {@link #mDialogsFactory} is set correctly.
  *
- * @param activity the calling activity (must implement {@link ExportCompleteDialogListener})
+ * @param activity the calling activity (must implement {@link ExportReadyDialogListener})
  * @param collectionSupplier a predicate that supplies a collection instance
 */
-class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportDialogListener, ExportCompleteDialogListener {
+class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportDialogListener, ExportReadyDialogListener {
     private val mDialogsFactory: ExportDialogsFactory
     private val mSaveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var mExportFileName: String
 
     fun showExportDialog(params: ExportDialogParams) {
-        if (ScopedStorageService.userMigrationIsInProgress(activity)) {
+        if (ScopedStorageService.mediaMigrationIsInProgress(activity)) {
             activity.showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
         }
@@ -103,32 +101,25 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     override fun exportColAsApkgOrColpkg(path: String?, includeSched: Boolean, includeMedia: Boolean) {
         val exportPath = getExportFileName(path, "All Decks", includeSched)
 
-        if (BackendFactory.defaultLegacySchema) {
-            exportApkgOrColpkgLegacy(exportPath, null, includeSched, includeMedia)
-        } else {
-            if (includeSched) {
-                activity.launchCatchingTask {
-                    activity.exportColpkg(exportPath.path, includeMedia)
-                    val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
-                    activity.showAsyncDialogFragment(dialog)
-                }
-            } else {
-                val limit = exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
-                exportNewBackendApkg(exportPath, false, includeMedia, limit)
+        if (includeSched) {
+            activity.launchCatchingTask {
+                activity.exportColpkg(exportPath.path, includeMedia)
+                val dialog = mDialogsFactory.newExportReadyDialog().withArguments(exportPath.path)
+                activity.showAsyncDialogFragment(dialog)
             }
+        } else {
+            val limit = exportLimit { this.wholeCollection = Empty.getDefaultInstance() }
+            exportNewBackendApkg(exportPath, false, includeMedia, limit)
         }
     }
 
     override fun exportDeckAsApkg(path: String?, did: DeckId, includeSched: Boolean, includeMedia: Boolean) {
-        val deckName = collectionSupplier.get().decks.name(did)
+        // files can't have `/` in their names
+        val deckName = collectionSupplier.get().decks.name(did).replace("/", "_")
         val exportPath = getExportFileName(path, deckName, includeSched)
 
-        if (BackendFactory.defaultLegacySchema) {
-            exportApkgOrColpkgLegacy(exportPath, did, includeSched, includeMedia)
-        } else {
-            val limit = exportLimit { this.deckId = did }
-            exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
-        }
+        val limit = exportLimit { this.deckId = did }
+        exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
     }
 
     /**
@@ -141,29 +132,11 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
         exportNewBackendApkg(exportPath, includeSched, includeMedia, limit)
     }
 
-    private fun exportApkgOrColpkgLegacy(exportPath: File, did: DeckId?, includeSched: Boolean, includeMedia: Boolean) {
-        activity.launchCatchingTask {
-            val exportPkgPath = exportPath.path
-            activity.withProgress(activity.resources.getString(R.string.export_in_progress)) {
-                withCol {
-                    val exporter = if (did == null) {
-                        AnkiPackageExporter(this, includeSched, includeMedia)
-                    } else {
-                        AnkiPackageExporter(this, did, includeSched, includeMedia)
-                    }
-                    exporter.exportInto(exportPkgPath, context)
-                }
-            }
-            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPkgPath)
-            activity.showAsyncDialogFragment(dialog)
-        }
-    }
-
     // Only for new backend schema
     private fun exportNewBackendApkg(exportPath: File, includeSched: Boolean, includeMedia: Boolean, limit: ExportLimit) {
         activity.launchCatchingTask {
             activity.exportApkg(exportPath.path, includeSched, includeMedia, limit)
-            val dialog = mDialogsFactory.newExportCompleteDialog().withArguments(exportPath.path)
+            val dialog = mDialogsFactory.newExportReadyDialog().withArguments(exportPath.path)
             activity.showAsyncDialogFragment(dialog)
         }
     }
@@ -180,9 +153,11 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
             showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
             return
         }
+        val authority = "${activity.packageName}.apkgfileprovider"
+
         // Get a URI for the file to be shared via the FileProvider API
         val uri: Uri = try {
-            FileProvider.getUriForFile(activity, "com.ichi2.anki.apkgfileprovider", attachment)
+            FileProvider.getUriForFile(activity, authority, attachment)
         } catch (e: IllegalArgumentException) {
             Timber.e("Could not generate a valid URI for the apkg file")
             showThemedToast(activity, activity.resources.getString(R.string.apk_share_error), false)
@@ -303,14 +278,14 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
      */
     private fun saveSuccessfulCollectionExportIfRelevant() {
         if (::mExportFileName.isInitialized && !mExportFileName.endsWith(".colpkg")) return
-        AnkiDroidApp.getSharedPrefs(activity).edit {
+        activity.sharedPrefs().edit {
             putLong(
                 LAST_SUCCESSFUL_EXPORT_AT_SECOND_KEY,
                 TimeManager.time.intTime()
             )
         }
         val col = collectionSupplier.get()
-        AnkiDroidApp.getSharedPrefs(activity).edit {
+        activity.sharedPrefs().edit {
             putLong(
                 LAST_SUCCESSFUL_EXPORT_AT_MOD_KEY,
                 col.mod

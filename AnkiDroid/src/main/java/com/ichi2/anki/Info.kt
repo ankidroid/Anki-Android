@@ -30,6 +30,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import androidx.appcompat.widget.ThemeUtils
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
@@ -40,8 +41,6 @@ import com.ichi2.utils.toRGBHex
 import timber.log.Timber
 
 private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
-
-private const val GITHUB_COMMITS = "https://github.com/ankidroid/Anki-Android/commits/main"
 
 /**
  * Shows an about box, which is a small HTML page.
@@ -54,13 +53,12 @@ class Info : AnkiActivity() {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         val res = resources
         val type = intent.getIntExtra(TYPE_EXTRA, TYPE_NEW_VERSION)
         // If the page crashes, we do not want to display it again (#7135 maybe)
         if (type == TYPE_NEW_VERSION) {
-            val prefs = AnkiDroidApp.getSharedPrefs(this.baseContext)
+            val prefs = this.baseContext.sharedPrefs()
             InitialActivity.setUpgradedToLatestVersion(prefs)
         }
         setContentView(R.layout.info)
@@ -96,7 +94,7 @@ class Info : AnkiActivity() {
         val backgroundColor = typedArray.getColor(0, -1)
         val textColor = typedArray.getColor(1, -1).toRGBHex()
 
-        val anchorTextThemeColor = ThemeUtils.getThemeAttrColor(this, R.attr.colorAccent)
+        val anchorTextThemeColor = ThemeUtils.getThemeAttrColor(this, android.R.attr.colorAccent)
         val anchorTextColor = anchorTextThemeColor.toRGBHex()
 
         mWebView!!.setBackgroundColor(backgroundColor)
@@ -108,7 +106,7 @@ class Info : AnkiActivity() {
                     setOnClickListener { close() }
                 }
                 val background = backgroundColor.toRGBHex()
-                mWebView!!.loadUrl("file:///android_asset/changelog.html")
+                mWebView!!.loadUrl("/assets/changelog.html")
                 mWebView!!.settings.javaScriptEnabled = true
                 mWebView!!.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView, url: String) {
@@ -130,20 +128,19 @@ class Info : AnkiActivity() {
                     ): Boolean {
                         // Excludes the url that are opened inside the changelog.html
                         // and redirect the user to the browser
-                        if (request?.url.toString() in arrayListOf(CHANGE_LOG_URL, GITHUB_COMMITS)) {
+                        val url = request?.url?.toString() ?: return false
+                        if (url == CHANGE_LOG_URL) {
                             return false
                         }
                         if (!AdaptionUtil.hasWebBrowser(this@Info)) {
                             // snackbar can't be used here as it's a webview and lack coordinator layout
                             UIUtils.showThemedToast(
                                 this@Info,
-                                resources.getString(R.string.no_browser_notification) + request?.url.toString(),
+                                resources.getString(R.string.no_browser_notification) + url,
                                 false
                             )
                         } else {
-                            Intent(Intent.ACTION_VIEW, Uri.parse(request?.url.toString())).apply {
-                                startActivity(this)
-                            }
+                            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                         }
                         return true
                     }
