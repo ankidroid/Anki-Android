@@ -119,7 +119,7 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         val collectionModel = collection.notetypes.get(noteTypeID)
         if (collectionModel == null) {
             showThemedToast(this, R.string.field_editor_model_not_available, true)
-            finishWithoutAnimation()
+            finish()
             return
         }
         mNotetype = collectionModel

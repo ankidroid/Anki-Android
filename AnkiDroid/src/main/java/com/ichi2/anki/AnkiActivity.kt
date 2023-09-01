@@ -122,7 +122,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
     }
 
     protected open fun onActionBarBackPressed(): Boolean {
-        finishWithoutAnimation()
+        finish()
         return true
     }
 
@@ -267,12 +267,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     override fun finish() {
         finishWithAnimation(DEFAULT)
-    }
-
-    fun finishWithoutAnimation() {
-        Timber.i("finishWithoutAnimation")
-        super.finish()
-        disableActivityAnimation()
     }
 
     fun finishWithAnimation(animation: Direction) {

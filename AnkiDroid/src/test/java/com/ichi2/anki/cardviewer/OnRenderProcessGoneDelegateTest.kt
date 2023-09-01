@@ -63,7 +63,7 @@ class OnRenderProcessGoneDelegateTest {
         )
             .displayCardQuestion()
         assertThat(delegate.displayedDialog, equalTo(true))
-        verify(mock, times(1).description("After the dialog, the screen should be closed")).finishWithoutAnimation()
+        verify(mock, times(1).description("After the dialog, the screen should be closed")).finish()
     }
 
     @Test
@@ -108,7 +108,7 @@ class OnRenderProcessGoneDelegateTest {
         verify(mock, never()).recreateWebViewFrame()
 
         assertThat("A toast should be displayed", delegate.displayedToast, equalTo(true))
-        verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation()
+        verify(mock, times(1).description("screen should be closed")).finish()
     }
 
     @Test
@@ -123,7 +123,7 @@ class OnRenderProcessGoneDelegateTest {
         verify(mock, never()).recreateWebViewFrame()
 
         assertThat("A toast should not be displayed as the screen is minimised", delegate.displayedToast, equalTo(false))
-        verify(mock, times(1).description("screen should be closed")).finishWithoutAnimation()
+        verify(mock, times(1).description("screen should be closed")).finish()
     }
 
     private fun callOnRenderProcessGone(delegate: OnRenderProcessGoneDelegateImpl) {
@@ -151,7 +151,7 @@ class OnRenderProcessGoneDelegateTest {
         doNothing().whenever(mock).destroyWebViewFrame()
         doNothing().whenever(mock).recreateWebViewFrame()
         doNothing().whenever(mock).displayCardQuestion()
-        doNothing().whenever(mock).finishWithoutAnimation()
+        doNothing().whenever(mock).finish()
         return mock
     }
 

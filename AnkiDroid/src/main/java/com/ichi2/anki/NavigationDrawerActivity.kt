@@ -249,7 +249,7 @@ abstract class NavigationDrawerActivity :
             if (this is Reviewer && preferences.getBoolean("tts", false)) {
                 // Workaround to kick user back to StudyOptions after opening settings from Reviewer
                 // because onDestroy() of old Activity interferes with TTS in new Activity
-                finishWithoutAnimation()
+                finish()
             } else {
                 ActivityCompat.recreate(this)
             }
@@ -376,7 +376,7 @@ abstract class NavigationDrawerActivity :
         val stackBuilder = TaskStackBuilder.create(activity)
         stackBuilder.addNextIntentWithParentStack(intent)
         stackBuilder.startActivities(Bundle())
-        activity.finishWithoutAnimation()
+        activity.finish()
     }
 
     fun toggleDrawer() {

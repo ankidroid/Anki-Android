@@ -2321,7 +2321,7 @@ open class CardBrowser :
             mUnmountReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
                     if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        finishWithoutAnimation()
+                        finish()
                     }
                 }
             }

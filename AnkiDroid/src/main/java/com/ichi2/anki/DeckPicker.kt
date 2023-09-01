@@ -940,7 +940,7 @@ open class DeckPicker :
             }
         } else if (requestCode == REQUEST_PATH_UPDATE) {
             // The collection path was inaccessible on startup so just close the activity and let user restart
-            finishWithoutAnimation()
+            finish()
         } else if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
             onSelectedPackageToImport(data!!)
         } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
@@ -1395,7 +1395,7 @@ open class DeckPicker :
 
     fun onSdCardNotMounted() {
         showThemedToast(this, resources.getString(R.string.sd_card_not_mounted), false)
-        finishWithoutAnimation()
+        finish()
     }
 
     // Callback method to submit error report
@@ -1481,7 +1481,7 @@ open class DeckPicker :
     fun exit() {
         Timber.i("exit()")
         CollectionHelper.instance.closeCollection("DeckPicker:exit()")
-        finishWithoutAnimation()
+        finish()
     }
 
     open fun handleDbError() {

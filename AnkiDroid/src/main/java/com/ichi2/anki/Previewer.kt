@@ -67,7 +67,7 @@ class Previewer : AbstractFlashcardViewer() {
         }
         if (mCardList.isEmpty() || mIndex < 0 || mIndex > mCardList.size - 1) {
             Timber.e("Previewer started with empty card list or invalid index")
-            finishWithoutAnimation()
+            finish()
             return
         }
         showBackIcon()
@@ -216,7 +216,7 @@ class Previewer : AbstractFlashcardViewer() {
         mReloadRequired = true
         val newCardList = getColUnsafe.filterToValidCards(mCardList)
         if (newCardList.isEmpty()) {
-            finishWithoutAnimation()
+            finish()
             return
         }
         mIndex = getNextIndex(newCardList)

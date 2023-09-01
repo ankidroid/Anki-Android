@@ -274,7 +274,7 @@ class IntentHandler : Activity() {
                         )
                     }
                 }
-                deckPicker.finishWithoutAnimation()
+                deckPicker.finish()
             }
 
             override fun toMessage(): Message = emptyMessage(this.what)

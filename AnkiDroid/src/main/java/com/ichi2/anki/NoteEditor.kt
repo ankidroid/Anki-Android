@@ -309,13 +309,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         when (caller) {
             CALLER_NO_CALLER -> {
                 Timber.e("no caller could be identified, closing")
-                finishWithoutAnimation()
+                finish()
                 return
             }
             CALLER_REVIEWER_EDIT -> {
                 mCurrentEditedCard = AbstractFlashcardViewer.editorCard
                 if (mCurrentEditedCard == null) {
-                    finishWithoutAnimation()
+                    finish()
                     return
                 }
                 mEditorNote = mCurrentEditedCard!!.note()
@@ -327,7 +327,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             CALLER_CARDBROWSER_EDIT -> {
                 mCurrentEditedCard = CardBrowser.cardBrowserCard
                 if (mCurrentEditedCard == null) {
-                    finishWithoutAnimation()
+                    finish()
                     return
                 }
                 mEditorNote = mCurrentEditedCard!!.note()
@@ -336,11 +336,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             CALLER_NOTEEDITOR_INTENT_ADD -> {
                 fetchIntentInformation(intent)
                 if (sourceText == null) {
-                    finishWithoutAnimation()
+                    finish()
                     return
                 }
                 if ("Aedict Notepad" == sourceText!![0] && addFromAedict(sourceText!![1])) {
-                    finishWithoutAnimation()
+                    finish()
                     return
                 }
                 addNote = true
@@ -998,7 +998,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             mUnmountReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
                     if (intent.action != null && intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        finishWithoutAnimation()
+                        finish()
                     }
                 }
             }

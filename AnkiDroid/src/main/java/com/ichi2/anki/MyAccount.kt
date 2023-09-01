@@ -76,7 +76,7 @@ open class MyAccount : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         if (isUserATestClient) {
-            finishWithoutAnimation()
+            finish()
             return
         }
         mayOpenUrl(Uri.parse(resources.getString(R.string.register_url)))

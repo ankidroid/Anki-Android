@@ -146,7 +146,7 @@ class Info : AnkiActivity() {
                     }
                 }
             }
-            else -> finishWithoutAnimation()
+            else -> finish()
         }
     }
 
