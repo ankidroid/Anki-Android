@@ -749,7 +749,7 @@ abstract class AbstractFlashcardViewer :
             mUnmountReceiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context, intent: Intent) {
                     if (intent.action == SdCardReceiver.MEDIA_EJECT) {
-                        finishWithoutAnimation()
+                        finish()
                     }
                 }
             }
@@ -767,7 +767,7 @@ abstract class AbstractFlashcardViewer :
 
     private fun finishNoStorageAvailable() {
         this@AbstractFlashcardViewer.setResult(DeckPicker.RESULT_MEDIA_EJECTED)
-        finishWithoutAnimation()
+        finish()
     }
 
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")

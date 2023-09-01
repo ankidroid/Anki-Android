@@ -33,10 +33,10 @@ class DeckPickerBackupNoSpaceLeftDialog : AnalyticsDialogFragment() {
             title(R.string.storage_almost_full_title)
             message(text = res.getString(R.string.storage_warning, space / 1024 / 1024))
             positiveButton(R.string.dialog_ok) {
-                (activity as DeckPicker).finishWithoutAnimation()
+                (activity as DeckPicker).finish()
             }
             cancelable(true)
-            setOnCancelListener { (activity as DeckPicker).finishWithoutAnimation() }
+            setOnCancelListener { (activity as DeckPicker).finish() }
         }
     }
 

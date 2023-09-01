@@ -106,7 +106,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
             mModelId = intent.getLongExtra(EDITOR_MODEL_ID, NOT_FOUND_NOTE_TYPE)
             if (mModelId == NOT_FOUND_NOTE_TYPE) {
                 Timber.e("CardTemplateEditor :: no model ID was provided")
-                finishWithoutAnimation()
+                finish()
                 return
             }
             // get id for currently edited note (optional)
