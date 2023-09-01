@@ -248,14 +248,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
         }
     }
 
-    fun launchActivityForResultWithoutAnimation(
-        intent: Intent,
-        launcher: ActivityResultLauncher<Intent?>
-    ) {
-        disableIntentAnimation(intent)
-        launchActivityForResult(intent, launcher, NONE)
-    }
-
     fun launchActivityForResultWithAnimation(
         intent: Intent,
         launcher: ActivityResultLauncher<Intent?>,

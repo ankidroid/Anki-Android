@@ -1309,7 +1309,7 @@ open class CardBrowser :
     }
 
     protected fun onPreview() {
-        launchActivityForResultWithoutAnimation(previewIntent, onPreviewCardsActivityResult)
+        onPreviewCardsActivityResult.launch(previewIntent)
     } // Preview all cards, starting from the one that is currently selected
 
     // Multiple cards have been explicitly selected, so preview only those cards
