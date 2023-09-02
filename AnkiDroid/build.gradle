@@ -35,7 +35,7 @@ static def gitCommitHash() {
 android {
     namespace "com.ichi2.anki"
 
-    compileSdkVersion 33 // change api compileSdkVersion at the same time
+    compileSdk 33 // change api compileSdkVersion at the same time
 
     buildFeatures {
         buildConfig = true
@@ -75,12 +75,12 @@ android {
         // needed for upgrades to be offered correctly.
         versionCode=21700101
         versionName="2.17alpha1"
-        minSdkVersion 23
+        minSdk 23
         // change api/build.gradle
         // change robolectricDownloader.gradle
         // After #13695: change .tests_emulator.yml
         // noinspection OldTargetApi
-        targetSdkVersion 33
+        targetSdk 33
         testApplicationId "com.ichi2.anki.tests"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner 'com.ichi2.testutils.NewCollectionPathTestRunner'

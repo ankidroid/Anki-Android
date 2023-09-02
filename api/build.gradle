@@ -10,16 +10,16 @@ version = "2.0.0"
 android {
 
     namespace 'com.ichi2.anki.api'
-    compileSdkVersion 33
+    compileSdk 33
 
     buildFeatures {
         buildConfig = true
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdk 16
         //noinspection OldTargetApi
-        targetSdkVersion 32
+        targetSdk 32
         buildConfigField "String", "READ_WRITE_PERMISSION", '"com.ichi2.anki.permission.READ_WRITE_DATABASE"'
         buildConfigField "String", "AUTHORITY", '"com.ichi2.anki.flashcards"'
     }
