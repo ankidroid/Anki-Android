@@ -14,19 +14,19 @@ import java.nio.file.Files
 // This list will need to be updated for new Android SDK versions that come out.
 // Only the versions currently used in AnkiDroid Robolectric tests are active, the rest are commented out
 def robolectricAndroidSdkVersions = [
-        [androidVersion: "5.0.2_r3", frameworkSdkBuildVersion: "r0"],
-        [androidVersion: "5.1.1_r9", frameworkSdkBuildVersion: "r2"],
+//        [androidVersion: "5.0.2_r3", frameworkSdkBuildVersion: "r0"],
+//        [androidVersion: "5.1.1_r9", frameworkSdkBuildVersion: "r2"],
 //        [androidVersion: "6.0.1_r3", frameworkSdkBuildVersion: "r1"],
 //        [androidVersion: "7.0.0_r1", frameworkSdkBuildVersion: "r1"],
 //        [androidVersion: "7.1.0_r7", frameworkSdkBuildVersion: "r1"],
 //        [androidVersion: "8.0.0_r4", frameworkSdkBuildVersion: "r1"],
 //        [androidVersion: "8.1.0", frameworkSdkBuildVersion: "4611349"],
-//        [androidVersion: "9", frameworkSdkBuildVersion: "4913185-2"],
+        [androidVersion: "9", frameworkSdkBuildVersion: "4913185-2"],
         [androidVersion: "10", frameworkSdkBuildVersion:  "5803371"],
-//        [androidVersion: "11", frameworkSdkBuildVersion:  "6757853"],
+        [androidVersion: "11", frameworkSdkBuildVersion:  "6757853"],
 //        [androidVersion: "12", frameworkSdkBuildVersion:  "7732740"],
         [androidVersion: "12.1", frameworkSdkBuildVersion:  "8229987"],
-//        [androidVersion: "13", frameworkSdkBuildVersion:  "9030017"],
+        [androidVersion: "13", frameworkSdkBuildVersion:  "9030017"],
 ]
 
 // Base, public task - will be displayed in ./gradlew robolectricDownloader:tasks
