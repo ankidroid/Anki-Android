@@ -1,5 +1,5 @@
 /**
- * Downloads all android-all dependencies and copies them to the mavenLocal() repository
+ * Downloads all android-all-instrumented dependencies and copies them to the mavenLocal() repository
  *
  * Once applied to your gradle project, can be executed with ./gradlew robolectricSdkDownload
  */
@@ -41,15 +41,15 @@ task robolectricSdkDownload {
 
 // Generate the configuration and actual copy tasks.
 robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
-    def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}"
+    def version = "${robolectricSdkVersion['androidVersion']}-robolectric-${robolectricSdkVersion['frameworkSdkBuildVersion']}-i4"
 
     // Creating a configuration with a dependency allows Gradle to manage the actual resolution of
     // the jar file
     def sdkConfig = configurations.create(version)
-    dependencies.add(version, "org.robolectric:android-all:${version}")
+    dependencies.add(version, "org.robolectric:android-all-instrumented:${version}")
 
     def mavenLocalFile = new File(this.repositories.mavenLocal().url)
-    def mavenRobolectric = new File(mavenLocalFile, "org/robolectric/android-all/${version}")
+    def mavenRobolectric = new File(mavenLocalFile, "org/robolectric/android-all-instrumented/${version}")
     // Copying all files downloaded for the created configuration into maven local.
     task "robolectricSdkDownload-${version}"(type: Copy) {
         from sdkConfig
@@ -57,7 +57,7 @@ robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
 
         doLast {
             ArtifactResolutionResult result = dependencies.createArtifactResolutionQuery()
-                .forModule("org.robolectric", "android-all", version)
+                .forModule("org.robolectric", "android-all-instrumented", version)
                 .withArtifacts(MavenModule, MavenPomArtifact)
                 .execute()
 
