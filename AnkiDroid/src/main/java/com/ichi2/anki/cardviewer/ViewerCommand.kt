@@ -35,10 +35,10 @@ import java.util.stream.Collectors
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
 enum class ViewerCommand(val resourceId: Int) {
     SHOW_ANSWER(R.string.show_answer),
-    FLIP_OR_ANSWER_EASE1(R.string.gesture_answer_1),
-    FLIP_OR_ANSWER_EASE2(R.string.gesture_answer_2),
-    FLIP_OR_ANSWER_EASE3(R.string.gesture_answer_3),
-    FLIP_OR_ANSWER_EASE4(R.string.gesture_answer_4),
+    FLIP_OR_ANSWER_EASE1(R.string.answer_again),
+    FLIP_OR_ANSWER_EASE2(R.string.answer_hard),
+    FLIP_OR_ANSWER_EASE3(R.string.answer_good),
+    FLIP_OR_ANSWER_EASE4(R.string.answer_easy),
     UNDO(R.string.undo),
     EDIT(R.string.cardeditor_title_edit_card),
     MARK(R.string.menu_mark_note),
