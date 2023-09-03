@@ -40,7 +40,7 @@
             android:title="@string/error_reporting_choice"
             app:useSimpleSummaryProvider="true"/>
         <SwitchPreferenceCompat
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="@string/analytics_opt_in_key"
             android:summary="@string/analytics_summ"
             android:title="@string/analytics_title" />
