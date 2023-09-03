@@ -15,7 +15,6 @@
  */
 package com.ichi2.anki.preferences
 
-import androidx.preference.PreferenceCategory
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
@@ -28,19 +27,16 @@ class ControlsSettingsFragment : SettingsFragment() {
         get() = "prefs.controls"
 
     override fun initSubscreen() {
-        val commandMappingCategory = requirePreference<PreferenceCategory>(R.string.controls_command_mapping_cat_key)
-        addAllControlPreferencesToCategory(commandMappingCategory)
-    }
-
-    /** Attaches all possible [ControlPreference] elements to a given [PreferenceCategory] */
-    fun addAllControlPreferencesToCategory(category: PreferenceCategory) {
-        for (command in ViewerCommand.values()) {
-            val preference = ControlPreference(category.context).apply {
-                setTitle(command.resourceId)
-                key = command.preferenceKey
-                setDefaultValue(command.defaultValue.toPreferenceString())
+        val commands = HashMap<String, ViewerCommand>()
+        ViewerCommand.values().forEach { commands[it.preferenceKey] = it }
+        // set defaultValue in the prefs creation.
+        // if a preference is empty, it has a value like "1/"
+        allPreferences()
+            .filterIsInstance<ControlPreference>()
+            .forEach { pref ->
+                if (pref.value == null) {
+                    pref.value = commands[pref.key]?.defaultValue?.toPreferenceString()
+                }
             }
-            category.addPreference(preference)
-        }
     }
 }

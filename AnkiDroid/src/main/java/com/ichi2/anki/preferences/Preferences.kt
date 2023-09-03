@@ -40,7 +40,6 @@ import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
@@ -156,20 +155,6 @@ class Preferences :
                 .addBreadcrumb(R.string.pref_cat_appearance)
             index(R.xml.preferences_controls)
             index(R.xml.preferences_accessibility)
-        }
-
-        /**
-         * The command bindings preferences are created programmatically
-         * on [ControlsSettingsFragment.addAllControlPreferencesToCategory],
-         * so they should be added programmatically to the search index as well.
-         */
-        for (command in ViewerCommand.values()) {
-            searchConfig.indexItem()
-                .withTitle(getString(command.resourceId))
-                .withKey(command.preferenceKey)
-                .withResId(R.xml.preferences_controls)
-                .addBreadcrumb(getString(R.string.pref_cat_controls))
-                .addBreadcrumb(getString(R.string.controls_main_category))
         }
 
         // Some preferences and categories are only shown conditionally,

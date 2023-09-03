@@ -59,7 +59,6 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         // Categories: don't have a value
         "appearance_preference_group",
         "category_plugins",
-        "key_map_category",
         "category_workarounds",
         // Preferences that only click: don't have a value
         "tts",

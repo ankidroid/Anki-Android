@@ -63,7 +63,7 @@ class ControlPreference : ListPreference {
     @Suppress("unused")
     constructor(context: Context) : super(context)
 
-    fun refreshEntries() {
+    private fun refreshEntries() {
         val entryTitles: MutableList<CharSequence> = ArrayList()
         val entryIndices: MutableList<Int> = ArrayList()
         // negative indices are "add"
