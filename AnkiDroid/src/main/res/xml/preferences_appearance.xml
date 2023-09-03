@@ -101,6 +101,7 @@
             android:title="@string/show_top_bar" />
         <SwitchPreferenceCompat
             android:key="@string/show_progress_preference"
+            android:dependency="@string/show_topbar_preference"
             android:summary="@string/show_progress_summ"
             android:title="@string/show_progress" />
         <SwitchPreferenceCompat
