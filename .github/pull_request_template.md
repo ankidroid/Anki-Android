@@ -1,5 +1,4 @@
-## Pull Request template
-
+<!--- Please fill the necessary details below -->
 ## Purpose / Description
 _Describe the problem or feature and motivation_
 
