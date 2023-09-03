@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">उत्तर बटण 2</string>
     <string name="gesture_answer_3">उत्तर बटण 3</string>
     <string name="gesture_answer_4">उत्तर बटण 4</string>
-    <string name="gesture_answer_green">उत्तर शिफारस केलेले (हिरवे)</string>
-    <string name="gesture_answer_better_recommended">शिफारस केल्यापेक्षा उत्तर चांगले</string>
     <string name="gesture_play">मीडिया प्ले करा</string>
     <string name="gesture_abort_learning">शिक्षण रद्द करा</string>
     <string name="gesture_flag_red">लाल ध्वज टॉगल करा</string>

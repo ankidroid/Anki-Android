@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">כפתור תשובה 2</string>
     <string name="gesture_answer_3">כפתור תשובה 3</string>
     <string name="gesture_answer_4">כפתור תשובה 4</string>
-    <string name="gesture_answer_green">תשובה מומלצת (ירוק)</string>
-    <string name="gesture_answer_better_recommended">ענה יותר טוב מהמומלץ</string>
     <string name="gesture_play">נגן מדיה</string>
     <string name="gesture_abort_learning">אודות הלימוד</string>
     <string name="gesture_flag_red">החלף את הדגל האדום</string>

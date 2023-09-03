@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Кнопка ответа 2</string>
     <string name="gesture_answer_3">Кнопка ответа 3</string>
     <string name="gesture_answer_4">Кнопка ответа 4</string>
-    <string name="gesture_answer_green">Рекомендованный ответ (зелёный)</string>
-    <string name="gesture_answer_better_recommended">Лучше рекомендованного ответа</string>
     <string name="gesture_play">Воспроизвести медиафайл</string>
     <string name="gesture_abort_learning">Прервать учёбу</string>
     <string name="gesture_flag_red">Красный флажок</string>

@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">回答ボタン２</string>
     <string name="gesture_answer_3">回答ボタン３</string>
     <string name="gesture_answer_4">回答ボタン４</string>
-    <string name="gesture_answer_green">推奨される回答（緑色）</string>
-    <string name="gesture_answer_better_recommended">推奨される回答よりも良い回答</string>
     <string name="gesture_play">音声・動画を再生</string>
     <string name="gesture_abort_learning">学習を中断</string>
     <string name="gesture_flag_red">赤フラグを付ける/取り外す</string>

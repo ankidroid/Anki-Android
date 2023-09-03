@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Bişkoka bersivê 2</string>
     <string name="gesture_answer_3">Bişkoka tevgerê 3</string>
     <string name="gesture_answer_4">Bişkoka tevgerê 4</string>
-    <string name="gesture_answer_green">(Pêşniyariya tevgerê (kesik</string>
-    <string name="gesture_answer_better_recommended">Ji pêşniyarkirî bêtir bersîv bide</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

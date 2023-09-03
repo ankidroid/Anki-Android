@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">ଉତ୍ତର ବଟନ୍ ୨</string>
     <string name="gesture_answer_3">ଉତ୍ତର ବଟନ୍ ୩</string>
     <string name="gesture_answer_4">ଉତ୍ତର ବଟନ୍ ୪</string>
-    <string name="gesture_answer_green">ସୁପାରିଶିତ ଉତ୍ତର (ସବୁଜ)</string>
-    <string name="gesture_answer_better_recommended">ଉତ୍ତର ସୁପାରିଶିତ ଅପେକ୍ଷା ଭଲ</string>
     <string name="gesture_play">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
     <string name="gesture_abort_learning">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରିବା</string>

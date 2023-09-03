@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">პასუხის ღილაკი 2</string>
     <string name="gesture_answer_3">პასუხის ღილაკი 3</string>
     <string name="gesture_answer_4">პასუხის ღილაკი 4</string>
-    <string name="gesture_answer_green">რეკომენდებული პასუხი (მწვანე)</string>
-    <string name="gesture_answer_better_recommended">პასუხი რეკომენდებულს სჯობს</string>
     <string name="gesture_play">მედიაფაილების დაკვრა</string>
     <string name="gesture_abort_learning">სწავლის შეწყვეტა</string>
     <string name="gesture_flag_red">წითელი დროშის მიმაგრება/მოძრობა</string>

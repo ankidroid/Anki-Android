@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Tlačítko odpovědi 2</string>
     <string name="gesture_answer_3">Tlačítko odpovědi 3</string>
     <string name="gesture_answer_4">Tlačítko odpovědi 4</string>
-    <string name="gesture_answer_green">Doporučená odpověď (zelená)</string>
-    <string name="gesture_answer_better_recommended">Odpovědět lépe, než bylo doporučeno</string>
     <string name="gesture_play">Přehrát multimédia</string>
     <string name="gesture_abort_learning">Přerušit učení</string>
     <string name="gesture_flag_red">Přepnout červený příznak</string>

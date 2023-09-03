@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Tombol jawaban 2</string>
     <string name="gesture_answer_3">Tombol jawaban 3</string>
     <string name="gesture_answer_4">Tombol jawaban 4</string>
-    <string name="gesture_answer_green">Jawaban yang disarankan (hijau)</string>
-    <string name="gesture_answer_better_recommended">Jawaban yang lebih baik dari yang disarankan</string>
     <string name="gesture_play">Putar media</string>
     <string name="gesture_abort_learning">Batalkan belajar</string>
     <string name="gesture_flag_red">Setel Panji Merah</string>

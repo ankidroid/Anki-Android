@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Butang jawapan 2</string>
     <string name="gesture_answer_3">Butang jawapan 3</string>
     <string name="gesture_answer_4">Butang jawapan 4</string>
-    <string name="gesture_answer_green">Jawapan saranan (hijau)</string>
-    <string name="gesture_answer_better_recommended">Jawapan lebih baik dari saranan</string>
     <string name="gesture_play">Main media</string>
     <string name="gesture_abort_learning">Batal pembelajaran</string>
     <string name="gesture_flag_red">Togel Tanda Merah</string>

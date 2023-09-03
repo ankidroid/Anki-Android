@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Answer button 2</string>
     <string name="gesture_answer_3">Answer button 3</string>
     <string name="gesture_answer_4">Answer button 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

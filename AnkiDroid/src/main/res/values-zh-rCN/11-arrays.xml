@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">回答按钮 2</string>
     <string name="gesture_answer_3">回答按钮 3</string>
     <string name="gesture_answer_4">回答按钮 4</string>
-    <string name="gesture_answer_green">建议的回答（绿色）</string>
-    <string name="gesture_answer_better_recommended">好于建议的回答</string>
     <string name="gesture_play">播放媒体</string>
     <string name="gesture_abort_learning">终止学习</string>
     <string name="gesture_flag_red">切换红色旗标</string>

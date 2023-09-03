@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Responda butono 2</string>
     <string name="gesture_answer_3">Responda butono 3</string>
     <string name="gesture_answer_4">Responda butono 4</string>
-    <string name="gesture_answer_green">Konsilinda respondo (verde)</string>
-    <string name="gesture_answer_better_recommended">Respondo pli bona ol konsilinda</string>
     <string name="gesture_play">Ludi aŭdvidaĵon</string>
     <string name="gesture_abort_learning">Ĉesi lernadon</string>
     <string name="gesture_flag_red">Baskuli ruĝan flagon</string>

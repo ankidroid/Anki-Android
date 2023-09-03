@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">பதில் பொத்தானை 2</string>
     <string name="gesture_answer_3">பதில் பொத்தானை 3</string>
     <string name="gesture_answer_4">பதில் பொத்தானை 4</string>
-    <string name="gesture_answer_green">பதில் (பச்சை) பரிந்துரை</string>
-    <string name="gesture_answer_better_recommended">பரிந்துரைக்கப்பட்ட விட பதில்</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

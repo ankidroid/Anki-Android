@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Кнопка відповіді 2</string>
     <string name="gesture_answer_3">Кнопка відповіді 3</string>
     <string name="gesture_answer_4">Кнопка відповіді 4</string>
-    <string name="gesture_answer_green">Рекомендована відповідь (зелена)</string>
-    <string name="gesture_answer_better_recommended">Краще, ніж рекомендована відповідь</string>
     <string name="gesture_play">Програти медіа</string>
     <string name="gesture_abort_learning">Перервати навчання</string>
     <string name="gesture_flag_red">Переключити червоний прапорець</string>

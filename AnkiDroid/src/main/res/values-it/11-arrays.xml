@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Pulsante risposta 2</string>
     <string name="gesture_answer_3">Pulsante risposta 3</string>
     <string name="gesture_answer_4">Pulsante risposta 4</string>
-    <string name="gesture_answer_green">Risposta raccomandata (verde)</string>
-    <string name="gesture_answer_better_recommended">Risposta migliore di quanto raccomandato</string>
     <string name="gesture_play">Riproduci media</string>
     <string name="gesture_abort_learning">Interrompi l\'apprendimento</string>
     <string name="gesture_flag_red">Attiva/disattiva contrassegno rosso</string>

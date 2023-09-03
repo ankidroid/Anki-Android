@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Tlačidlo odpovede 2</string>
     <string name="gesture_answer_3">Tlačidlo odpovede 3</string>
     <string name="gesture_answer_4">Tlačidlo odpovede 4</string>
-    <string name="gesture_answer_green">Odporúčaná odpoveď (zelená)</string>
-    <string name="gesture_answer_better_recommended">Odpoveď lepšia ako odporúčaná</string>
     <string name="gesture_play">Prehrať médium</string>
     <string name="gesture_abort_learning">Prerušiť učenie</string>
     <string name="gesture_flag_red">Označiť červenou vlajkou</string>
