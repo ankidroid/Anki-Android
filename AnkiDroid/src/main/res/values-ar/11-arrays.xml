@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">زر الإجابة 2</string>
     <string name="gesture_answer_3">زر الإجابة 3</string>
     <string name="gesture_answer_4">زر الإجابة 4</string>
-    <string name="gesture_answer_green">الإجابة الموصى بها (أخضر)</string>
-    <string name="gesture_answer_better_recommended">الإجابة بأفضل مما أوصي به</string>
     <string name="gesture_play">تشغيل الوسائط</string>
     <string name="gesture_abort_learning">توقف عن التعلم</string>
     <string name="gesture_flag_red">تفعيل المؤشر الأحمر</string>

@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Válasz gomb 2</string>
     <string name="gesture_answer_3">Válasz gomb 3</string>
     <string name="gesture_answer_4">Válasz gomb 4</string>
-    <string name="gesture_answer_green">Javasolt válasz (zöld)</string>
-    <string name="gesture_answer_better_recommended">Jobb válasz, mint a javasolt</string>
     <string name="gesture_play">Média lejátszása</string>
     <string name="gesture_abort_learning">Tanulás befejezése</string>
     <string name="gesture_flag_red">Piros jelölő bekapcsolása</string>

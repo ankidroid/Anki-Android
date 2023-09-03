@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">دكمه پاسخ 2</string>
     <string name="gesture_answer_3">دكمه پاسخ 3</string>
     <string name="gesture_answer_4">دكمه پاسخ 4</string>
-    <string name="gesture_answer_green">پاسخ توصيه شده-سبز</string>
-    <string name="gesture_answer_better_recommended">پاسخ بهتر از توصيه شده</string>
     <string name="gesture_play">پخش رسانه</string>
     <string name="gesture_abort_learning">لغو یادگیری</string>
     <string name="gesture_flag_red">پرچم قرمز</string>

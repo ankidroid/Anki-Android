@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Atsakymo mygtukas 2</string>
     <string name="gesture_answer_3">Atsakymo mygtukas 3</string>
     <string name="gesture_answer_4">Atsakymo mygtukas 4</string>
-    <string name="gesture_answer_green">Atsakymas rekomenduojamas (žalias)</string>
-    <string name="gesture_answer_better_recommended">Atsakyti geriau nei rekomenduojama</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Nút trả lời 2</string>
     <string name="gesture_answer_3">Nút trả lời 3</string>
     <string name="gesture_answer_4">Nút trả lời 4</string>
-    <string name="gesture_answer_green">Câu trả lời được đề xuất (màu xanh lá cây)</string>
-    <string name="gesture_answer_better_recommended">Trả lời tốt hơn đề xuất</string>
     <string name="gesture_play">Phát file đa phương tiện</string>
     <string name="gesture_abort_learning">Bỏ học</string>
     <string name="gesture_flag_red">Chuyển đổi cờ đỏ</string>

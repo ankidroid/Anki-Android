@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Sagot na pindutan 2</string>
     <string name="gesture_answer_3">Sagot na pindutan 3</string>
     <string name="gesture_answer_4">Sagot na pindutan 4</string>
-    <string name="gesture_answer_green">Sagot inirerekomenda (berde)</string>
-    <string name="gesture_answer_better_recommended">Sagutin nang mas mabuti kaysa sa inirekomenda</string>
     <string name="gesture_play">I-play ang media</string>
     <string name="gesture_abort_learning">Abort sa pag-aaral</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

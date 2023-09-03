@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">جواب بٹن دو</string>
     <string name="gesture_answer_3">جواب بٹن تین</string>
     <string name="gesture_answer_4">جواب بٹن چار</string>
-    <string name="gesture_answer_green">جواب تجویز کیا گیا (سبز)</string>
-    <string name="gesture_answer_better_recommended">تجویز کردہ سے بہتر جواب دیں۔</string>
     <string name="gesture_play">میڈیا چلائیں۔</string>
     <string name="gesture_abort_learning">سیکھنے کو روکنا</string>
     <string name="gesture_flag_red">سرخ پرچم ٹوگل کریں۔</string>

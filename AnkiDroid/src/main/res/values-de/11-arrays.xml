@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Antwortschaltfläche 2</string>
     <string name="gesture_answer_3">Antwortschaltfläche 3</string>
     <string name="gesture_answer_4">Antwortschaltfläche 4</string>
-    <string name="gesture_answer_green">Empfohlene Antwort (grün)</string>
-    <string name="gesture_answer_better_recommended">Antwort besser als empfohlen</string>
     <string name="gesture_play">Medien abspielen</string>
     <string name="gesture_abort_learning">Lernen abbrechen</string>
     <string name="gesture_flag_red">Rote Flagge umschalten</string>

@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">答案按鈕 2</string>
     <string name="gesture_answer_3">答案按鈕 3</string>
     <string name="gesture_answer_4">答案按鈕 4</string>
-    <string name="gesture_answer_green">建議的答案 (綠色)</string>
-    <string name="gesture_answer_better_recommended">優於建議的答案</string>
     <string name="gesture_play">播放媒體檔</string>
     <string name="gesture_abort_learning">中止學習</string>
     <string name="gesture_flag_red">套用紅色標記</string>

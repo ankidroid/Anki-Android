@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Cevap butonu 2</string>
     <string name="gesture_answer_3">Cevap butonu 3</string>
     <string name="gesture_answer_4">Cevap butonu 4</string>
-    <string name="gesture_answer_green">Önerilen cevabı (yeşil) ver</string>
-    <string name="gesture_answer_better_recommended">Önerilenden daha iyi cevap ver</string>
     <string name="gesture_play">Medyayı oynat</string>
     <string name="gesture_abort_learning">Öğrenmeyi durdur</string>
     <string name="gesture_flag_red">Kırmızı bayrağı etkinleştir</string>

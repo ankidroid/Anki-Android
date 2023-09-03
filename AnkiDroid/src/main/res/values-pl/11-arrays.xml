@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Przycisk odpowiedzi 2</string>
     <string name="gesture_answer_3">Przycisk odpowiedzi 3</string>
     <string name="gesture_answer_4">Przycisk odpowiedzi 4</string>
-    <string name="gesture_answer_green">Zalecana odpowiedź (zielony)</string>
-    <string name="gesture_answer_better_recommended">Odpowiedź lepsza niż zalecana</string>
     <string name="gesture_play">Odtwarzaj</string>
     <string name="gesture_abort_learning">Przerwij naukę</string>
     <string name="gesture_flag_red">Włącz/wyłącz czerwoną flagę</string>

@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Svarsknapp 2</string>
     <string name="gesture_answer_3">Svarsknapp 3</string>
     <string name="gesture_answer_4">Svarsknapp 4</string>
-    <string name="gesture_answer_green">Rekommenderat svar (grön)</string>
-    <string name="gesture_answer_better_recommended">Svar bättre än rekommenderat</string>
     <string name="gesture_play">Spela upp media</string>
     <string name="gesture_abort_learning">Avbryt inlärning</string>
     <string name="gesture_flag_red">Växla Röd Flagga</string>

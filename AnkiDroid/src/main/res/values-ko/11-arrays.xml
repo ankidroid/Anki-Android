@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">답변 버튼 2</string>
     <string name="gesture_answer_3">답변 버튼 3</string>
     <string name="gesture_answer_4">답변 버튼 4</string>
-    <string name="gesture_answer_green">답변 추천 (녹색)</string>
-    <string name="gesture_answer_better_recommended">권장된 것 보다 더 나은 답변</string>
     <string name="gesture_play">미디어 재생</string>
     <string name="gesture_abort_learning">학습 중단</string>
     <string name="gesture_flag_red">빨간색 플래그 넣기 / 빼기</string>

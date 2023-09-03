@@ -86,8 +86,6 @@
     <string name="gesture_answer_2">Botón de resposta 2</string>
     <string name="gesture_answer_3">Botón de resposta 3</string>
     <string name="gesture_answer_4">Botón de resposta 4</string>
-    <string name="gesture_answer_green">Resposta recomendada (verde)</string>
-    <string name="gesture_answer_better_recommended">Resposta mellor ca recomendada</string>
     <string name="gesture_play">Reproducir medio</string>
     <string name="gesture_abort_learning">Abortar aprendizaxe</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>
