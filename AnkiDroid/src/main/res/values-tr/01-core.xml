@@ -92,7 +92,7 @@
     <string name="undo">Geri al</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Konturu geri al</string>
     <string name="move_all_to_deck">Hepsini desteye taşı</string>
-    <string name="unbury">Gizlemeyi geri al</string>
+    <string name="unbury">Gömmeyi geri al</string>
     <string name="rename_deck">Desteyi yeniden adlandır</string>
     <string name="create_shortcut">Kısayol oluştur</string>
     <string name="browse_cards">Kartları gözden geçir</string>
@@ -100,7 +100,7 @@
     <string name="menu_add_note">Not ekle</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Hesabı senkronize et</string>
     <string name="menu_dismiss_note">Gizle / Sil</string>
-    <string name="menu_bury_card">Kartı gizle</string>
+    <string name="menu_bury_card">Kartı göm</string>
     <string name="menu_bury_note">Notu gizle</string>
     <string name="menu_suspend_card">Kartı askıya al</string>
     <string name="menu_suspend_note">Notu Askıya Al</string>
@@ -191,7 +191,7 @@
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
-        <item quantity="other">\"%2$s\" kart türü ve %1$d kartı silinsin mi?</item>
+        <item quantity="other">\"%2$s\" kart türü ve içindeki %1$d kart silinsin mi?</item>
     </plurals>
     <string name="invalid_template">Bir kart oluşturulamadı</string>
     <string name="card_template_editor_would_delete_note">Bu kart türünü kaldırmak bir veya daha fazla notun silinmesine neden olacaktır. Lütfen önce yeni bir kart türü oluşturup kaydediniz.</string>

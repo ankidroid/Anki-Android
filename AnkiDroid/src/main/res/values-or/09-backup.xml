@@ -54,7 +54,7 @@
     <string name="backup_full_sync_from_server_question">AnkiWeb ରୁ ସଂଗ୍ରହ ସହିତ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଅପଲେଖିତ କରିବେ କି? ଏହା ତୁମର ଶେଷ ସିଙ୍କ୍ ଠାରୁ ତୁମର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତି ଏବଂ ଯୋଡ଼ାହୋଇଥିବା ସୂଚନାକୁ ଅଧିଲିଖିତ କରିବ।</string>
     <string name="error_handling_title">ତ୍ରୁଟି ପରିଚାଳନା</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ଵିକଳ୍ପ</string>
-    <string name="backup_retry_opening">ଖୋଲିବାକୁ ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ</string>
+    <string name="backup_retry_opening">ଖୋଲିବାକୁ ପୁନଃ ଚେଷ୍ଟା କରିବା</string>
     <string name="backup_error_menu_repair">ଡାଟାବେସ୍ ମରାମତି କରନ୍ତୁ</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
     <string name="backup_repair_deck_progress">ଡାଟାବେସ୍ ମରାମତି ଚାଲିଛି&#8230;</string>
