@@ -14,7 +14,7 @@ import java.nio.file.Files
 // This list will need to be updated for new Android SDK versions that come out.
 
 // Only the versions currently used in AnkiDroid Robolectric tests are active, the rest are commented out
-// To update these versions:
+// To update these versions, open a terminal in the Anki-Android directory and perform the following steps:
 //   1. Run `rm -r ~/.m2` to delete the .m2 directory in your home directory.
 //   2. Run `./gradlew jacocoUnitTestReport` to run all unit tests.
 //   3. Run `find ~/.m2 -type d -name '*-robolectric-*'`.
