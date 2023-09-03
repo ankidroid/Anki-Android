@@ -48,7 +48,7 @@
     <string name="youre_offline">ଆପଣ ଅଫଲାଇନ ଅଛନ୍ତି</string>
     <string name="sync_error">ସୀଙ୍କ୍ ତ୍ରୁଟି</string>
     <string name="vague_error" comment="Network error dialog title">ତ୍ରୁଟି</string>
-    <string name="retry">ପୁନଃ ଚେଷ୍ଟା କରନ୍ତୁ</string>
+    <string name="retry">ପୁନଃ ଚେଷ୍ଟା କରିବା</string>
     <string name="menu_get_shared_decks">ଅଂଶିଦାରୀ ତାସଖଣ୍ଡ ପାଆନ୍ତୁ</string>
     <string name="connection_error_message">ଏକ ନେଟୱର୍କ ତ୍ରୁଟି ଘଟିଛି</string>
     <string name="not_logged_in_title">AnkiWeb ରେ ଲଗ୍ ଇନ୍ କରନ୍ତୁ</string>
