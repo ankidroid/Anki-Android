@@ -17,39 +17,16 @@
 
 package com.ichi2.libanki
 
-import android.content.Context
 import com.ichi2.anki.UIUtils.getDayStart
-import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager.time
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendFactory
-import timber.log.Timber
 import java.io.File
-import java.io.FileNotFoundException
 
 object Storage {
     var isInMemory = false
         private set
-
-    /**
-     * Helper method for when the collection can't be opened
-     */
-    @Throws(UnknownDatabaseVersionException::class)
-    fun getDatabaseVersion(context: Context, path: String): Int {
-        return try {
-            if (!File(path).exists()) {
-                throw UnknownDatabaseVersionException(FileNotFoundException(path))
-            }
-            val db = DB.withAndroidFramework(context, path)
-            val result = db.queryScalar("SELECT ver FROM col")
-            db.close()
-            result
-        } catch (e: Exception) {
-            Timber.w(e, "Can't open database")
-            throw UnknownDatabaseVersionException(e)
-        }
-    }
 
     /**
      *  Open a new or existing collection.
