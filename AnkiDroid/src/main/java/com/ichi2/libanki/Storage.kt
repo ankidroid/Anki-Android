@@ -13,8 +13,6 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  */
-@file:Suppress("FunctionName") // _createDb and other names defined by libAnki
-
 package com.ichi2.libanki
 
 import com.ichi2.anki.UIUtils.getDayStart
@@ -31,8 +29,8 @@ object Storage {
     /**
      *  Open a new or existing collection.
      *
-     * @param Path The path to the collection.anki2 database. Should be unicode.
-     * path should be tested with File.exists() and File.canWrite() before this is called.
+     * @param path The path to the collection.anki2 database. Should be unicode.
+     * path should be tested with [File.exists] and [File.canWrite] before this is called.
      * */
     fun collection(
         path: String,
@@ -44,7 +42,7 @@ object Storage {
     }
 
     /**
-     * Called as part of Collection initialization. Don't call directly.
+     * Called as part of [Collection] initialization. Don't call directly.
      */
     internal fun openDB(path: String, backend: Backend, afterFullSync: Boolean): Pair<DB, Boolean> {
         val dbFile = File(path)
@@ -58,12 +56,12 @@ object Storage {
 
         // initialize
         if (create) {
-            _createDB(db, time)
+            createDB(db, time)
         }
         return Pair(db, create)
     }
 
-    private fun _createDB(db: DB, time: Time) {
+    private fun createDB(db: DB, time: Time) {
         // This line is required for testing - otherwise Rust will override a mocked time.
         db.execute("update col set crt = ?", getDayStart(time) / 1000)
     }
