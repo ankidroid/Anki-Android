@@ -8,10 +8,10 @@ import android.view.Menu
 import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
+import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
-import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.testutils.*
 import com.ichi2.utils.ResourceLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi

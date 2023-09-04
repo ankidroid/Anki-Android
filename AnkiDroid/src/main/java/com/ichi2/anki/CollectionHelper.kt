@@ -25,11 +25,11 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Storage
-import com.ichi2.libanki.exception.UnknownDatabaseVersionException
+import com.ichi2.libanki.DB
 import com.ichi2.preferences.getOrSetString
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.KotlinCleanup
@@ -37,6 +37,7 @@ import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbFileTooN
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import timber.log.Timber
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.lang.Exception
 import kotlin.Throws
@@ -513,7 +514,20 @@ open class CollectionHelper {
         @Throws(UnknownDatabaseVersionException::class)
         fun getDatabaseVersion(context: Context): Int {
             // backend can't open a schema version outside range, so fall back to a pure DB implementation
-            return Storage.getDatabaseVersion(context, getCollectionPath(context))
+            val colPath = getCollectionPath(context)
+            if (!File(colPath).exists()) {
+                throw UnknownDatabaseVersionException(FileNotFoundException(colPath))
+            }
+            var db: DB? = null
+            return try {
+                db = DB.withAndroidFramework(context, colPath)
+                db.queryScalar("SELECT ver FROM col")
+            } catch (e: Exception) {
+                Timber.w(e, "Couldn't open the database to obtain collection version!")
+                throw UnknownDatabaseVersionException(e)
+            } finally {
+                db?.close()
+            }
         }
     }
 }
