@@ -40,7 +40,6 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
-import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
@@ -823,24 +822,6 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private fun showSnackbarWithUndoButton(
-        @StringRes textResource: Int,
-        duration: Int = Snackbar.LENGTH_SHORT
-    ) {
-        showSnackbar(textResource, duration) {
-            setAction(R.string.undo) { undo() }
-        }
-    }
-
-    private fun showSnackbarWithUndoButtonText(
-        text: String,
-        duration: Int = Snackbar.LENGTH_SHORT
-    ) {
-        showSnackbar(text, duration) {
-            setAction(R.string.undo) { undo() }
-        }
-    }
-
     open fun answerCard(@BUTTON_TYPE ease: Int) {
         launchCatchingTask {
             if (mInAnswer) {
@@ -1580,7 +1561,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryCards(listOf(currentCard!!.id))
                 }
             }
-            showSnackbarWithUndoButton(R.string.card_buried)
+            showSnackbar(R.string.card_buried, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
     }
@@ -1593,7 +1574,7 @@ abstract class AbstractFlashcardViewer :
                     sched.suspendCards(listOf(currentCard!!.id))
                 }
             }
-            showSnackbarWithUndoButtonText(TR.studyingCardSuspended())
+            showSnackbar(TR.studyingCardSuspended(), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
     }
@@ -1608,7 +1589,7 @@ abstract class AbstractFlashcardViewer :
             }
             val count = changed.count
             val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, count, count)
-            showSnackbarWithUndoButtonText(noteSuspended)
+            showSnackbar(noteSuspended, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
     }
@@ -1621,7 +1602,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryNotes(listOf(currentCard!!.id))
                 }
             }
-            showSnackbarWithUndoButtonText(TR.studyingCardsBuried(changed.count))
+            showSnackbar(TR.studyingCardsBuried(changed.count), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
     }
