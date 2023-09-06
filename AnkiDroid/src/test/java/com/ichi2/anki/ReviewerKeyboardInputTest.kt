@@ -231,7 +231,6 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
         var replayAudioCalled = false
             private set
         override var controlBlocked = ControlBlock.UNBLOCKED
-        private var mUndoAvailable = false
 
         private val cardFlips = mutableListOf<String>()
         override val isDrawerOpen: Boolean
@@ -410,11 +409,10 @@ class ReviewerKeyboardInputTest : RobolectricTest() {
             return true
         }
 
-        override val isUndoAvailable: Boolean
-            get() = mUndoAvailable
+        private var isUndoAvailable: Boolean = false
 
         fun withUndoAvailable(value: Boolean): KeyboardInputTestReviewer {
-            mUndoAvailable = value
+            isUndoAvailable = value
             return this
         }
 

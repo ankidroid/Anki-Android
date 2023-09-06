@@ -1640,9 +1640,6 @@ abstract class AbstractFlashcardViewer :
                     true
                 }
                 ViewerCommand.UNDO -> {
-                    if (!isUndoAvailable) {
-                        return false
-                    }
                     undo()
                     true
                 }
@@ -1776,9 +1773,6 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    @get:VisibleForTesting
-    protected open val isUndoAvailable: Boolean
-        get() = getColUnsafe.undoAvailable()
     // ----------------------------------------------------------------------------
     // INNER CLASSES
     // ----------------------------------------------------------------------------
