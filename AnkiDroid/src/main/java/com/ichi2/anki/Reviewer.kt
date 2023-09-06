@@ -1628,5 +1628,8 @@ open class Reviewer :
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200
         private const val TRANSPARENCY = 0.90f
+
+        /** Default (500ms) time for action snackbars, such as undo, bury and suspend */
+        const val ACTION_SNACKBAR_TIME = 500
     }
 }
