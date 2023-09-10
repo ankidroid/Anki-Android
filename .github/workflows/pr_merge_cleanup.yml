@@ -1,26 +1,71 @@
-name: Remove Assignees
+name: Cleanup after PR merge
 
 on:
   pull_request_target:
     types: [ closed ]
 
 jobs:
-  merge_job:
+  milestone:
     if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       issues: write
       pull-requests: write
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - name: Assign PR to latest milestone
+        continue-on-error: true
+        uses: actions/github-script@v6
         with:
           script: |
-
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.pull_request.number }},
+              milestone: 51
+            });
+  
+            // graphql query to get referenced issues to merged pull request
+            const query = `query($_url:URI!) {
+              resource(url:$_url) {
+                ... on PullRequest {
+                  closingIssuesReferences(first:10) {
+                    nodes {
+                      number
+                    }
+                  }              
+                }
+              }
+            }`;
+  
             const variables = {
               _url: "https://github.com/ankidroid/${{ github.event.repository.name }}/pull/${{ github.event.pull_request.number }}"
             };
+  
+            const result = await github.graphql(query, variables);
+            const refIssues = result.resource.closingIssuesReferences.nodes;
+  
+            for (issue of refIssues) {
+              console.log("Adding milestone to linked issue: ", issue.number);
+  
+              // if issues have milestone, then it will be removed and updated with following
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                milestone: 51
+              });
+            }
 
+      - name: Remove assigned people from PR
+        continue-on-error: true
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const variables = {
+              _url: "https://github.com/ankidroid/${{ github.event.repository.name }}/pull/${{ github.event.pull_request.number }}"
+            };
+  
             const query = `query($_url:URI!) {
               resource(url:$_url) {
                 ... on PullRequest {
@@ -32,15 +77,15 @@ jobs:
                 }
               }
             }`;
-
+  
             const result = await github.graphql(query, variables);
             const refIssues = result.resource.closingIssuesReferences.nodes;
-
+  
             let listAssignees_result = await github.rest.issues.listAssignees({
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-
+  
             // remove all the assignees of the issue
             if (listAssignees_result.data !== null && listAssignees_result.data.length > 0) {
               let assignees_info_list = listAssignees_result.data;
@@ -48,7 +93,7 @@ jobs:
               for (let assignee_info of assignees_info_list) {
                   assignees_list.push(assignee_info["login"]);
               }
-
+  
               await github.rest.issues.removeAssignees({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
@@ -56,7 +101,7 @@ jobs:
                     assignees: assignees_list,
               });
               console.log("Removed Assignees in this pr#",context.issue.number);
-
+  
               for (issue of refIssues) {
                 await github.rest.issues.removeAssignees({
                     owner: context.repo.owner,
@@ -67,4 +112,3 @@ jobs:
                   console.log("Removed Assignees in issue#",issue.number);
               }
             }
-
