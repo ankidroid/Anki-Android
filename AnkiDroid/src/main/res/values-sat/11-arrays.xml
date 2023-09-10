@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">x-ᱢᱟᱨᱟᱝ</string>
     <string name="html_size_code_xx_large">xx-ᱢᱟᱨᱟᱝ</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱑</string>
-    <string name="gesture_answer_2">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱒</string>
-    <string name="gesture_answer_3">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱓</string>
-    <string name="gesture_answer_4">ᱛᱮᱞᱟ ᱵᱚᱴᱚᱱ ᱔</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">ᱢᱮᱰᱤᱭᱟ ᱪᱟᱹᱞᱩᱭ ᱢᱮ</string>
     <string name="gesture_abort_learning">ᱪᱮᱫᱚᱜ ᱵᱚᱸᱫ ᱛᱷᱟᱲ</string>
     <string name="gesture_flag_red">ᱟᱨᱟᱜ ᱯᱚᱛᱠᱟ ᱴᱚᱜᱟ.ᱞ</string>

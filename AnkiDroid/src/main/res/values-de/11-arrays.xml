@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">größer</string>
     <string name="html_size_code_xx_large">am größten</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Antwortschaltfläche 1</string>
-    <string name="gesture_answer_2">Antwortschaltfläche 2</string>
-    <string name="gesture_answer_3">Antwortschaltfläche 3</string>
-    <string name="gesture_answer_4">Antwortschaltfläche 4</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Medien abspielen</string>
     <string name="gesture_abort_learning">Lernen abbrechen</string>
     <string name="gesture_flag_red">Rote Flagge umschalten</string>

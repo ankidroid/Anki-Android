@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">XL</string>
     <string name="html_size_code_xx_large">XXL</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">回答ボタン１</string>
-    <string name="gesture_answer_2">回答ボタン２</string>
-    <string name="gesture_answer_3">回答ボタン３</string>
-    <string name="gesture_answer_4">回答ボタン４</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">音声・動画を再生</string>
     <string name="gesture_abort_learning">学習を中断</string>
     <string name="gesture_flag_red">赤フラグを付ける/取り外す</string>

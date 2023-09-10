@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Svarsknapp 1</string>
-    <string name="gesture_answer_2">Svarsknapp 2</string>
-    <string name="gesture_answer_3">Svarsknapp 3</string>
-    <string name="gesture_answer_4">Svarsknapp 4</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Spela upp media</string>
     <string name="gesture_abort_learning">Avbryt inlärning</string>
     <string name="gesture_flag_red">Växla Röd Flagga</string>

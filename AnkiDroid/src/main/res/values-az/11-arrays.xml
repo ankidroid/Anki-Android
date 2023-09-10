@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">1. cavab düyməsi</string>
-    <string name="gesture_answer_2">2. cavab düyməsi</string>
-    <string name="gesture_answer_3">3. cavab düyməsi</string>
-    <string name="gesture_answer_4">4. cavab düyməsi</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Medianı oynat</string>
     <string name="gesture_abort_learning">Öyrənməni dayandır</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

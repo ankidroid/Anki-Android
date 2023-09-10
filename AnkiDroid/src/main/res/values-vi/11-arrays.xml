@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">lớn hon</string>
     <string name="html_size_code_xx_large">cực kỳ lớn</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Nút trả lời 1</string>
-    <string name="gesture_answer_2">Nút trả lời 2</string>
-    <string name="gesture_answer_3">Nút trả lời 3</string>
-    <string name="gesture_answer_4">Nút trả lời 4</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Phát file đa phương tiện</string>
     <string name="gesture_abort_learning">Bỏ học</string>
     <string name="gesture_flag_red">Chuyển đổi cờ đỏ</string>

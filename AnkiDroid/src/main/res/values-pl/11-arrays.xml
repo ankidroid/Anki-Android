@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">Bardzo duży</string>
     <string name="html_size_code_xx_large">Największy</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Przycisk odpowiedzi 1</string>
-    <string name="gesture_answer_2">Przycisk odpowiedzi 2</string>
-    <string name="gesture_answer_3">Przycisk odpowiedzi 3</string>
-    <string name="gesture_answer_4">Przycisk odpowiedzi 4</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Odtwarzaj</string>
     <string name="gesture_abort_learning">Przerwij naukę</string>
     <string name="gesture_flag_red">Włącz/wyłącz czerwoną flagę</string>
