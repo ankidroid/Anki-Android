@@ -196,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Dela</string>
+    <string name="export_choice_save_to">Spara till</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Alternativ</string>
     <string name="menu__deck_options">Kortleksalternativ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Studeringsalternativ</string>
@@ -252,7 +252,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Visa</string>
     <string name="anki_js_error_code">(Felkod: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Kopierat till urklipp</string>
     <string name="about_ankidroid_error_copy_debug_info">Fel vid kopiering av felsökningsinformation till urklipp</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Kortet innehållsfel: Det gick inte att läsa in ‘%s’</string>

@@ -50,7 +50,7 @@
     <string name="statistics">Estatistikak</string>
     <string name="settings">Ezarpenak</string>
     <string name="help">Laguntza</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Marraztu</string>
     <string name="send_feedback">Bidali iruzkinak</string>
     <string name="studyoptions_due_today">Epemuga gaur:</string>
     <string name="studyoptions_new_total">Txartel berriak guztira:</string>
@@ -62,8 +62,8 @@
     <string name="collapse">Tolestu</string>
     <string name="study_more">Ikasi gehiago</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="one">%1$d  txartela geratzen da (%2$s)</item>
+        <item quantity="other">%1$d txartelak geratzen dira (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Minutu %d geratzen da</item>
