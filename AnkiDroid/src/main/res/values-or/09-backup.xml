@@ -51,7 +51,7 @@
     <string name="backup_del_collection">ସଂଗ୍ରହଟିକୁ ବିଲୋପ କରି ଏକ ନୂଆ ସଂଗ୍ରହ ତିଆରି କରନ୍ତୁ</string>
     <string name="backup_del_collection_question">ସଂଗ୍ରହ ବିଲୋପ କରନ୍ତୁ ଏବଂ ଏକ ନୂତନ ସୃଷ୍ଟି କରନ୍ତୁ? ଏହା ଆପଣଙ୍କର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତିକୁ ଛାଡ଼ି ଦେବ ଏବଂ ସମସ୍ତ ପତ୍ର ବିଲୋପ କରିବ।</string>
     <string name="backup_full_sync_from_server">ସର୍ଵର୍ ରୁ ପୂର୍ଣ୍ଣ ସୀଙ୍କ୍ କରିବା</string>
-    <string name="backup_full_sync_from_server_question">AnkiWeb ରୁ ସଂଗ୍ରହ ସହିତ ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଅପଲେଖିତ କରିବେ କି? ଏହା ତୁମର ଶେଷ ସିଙ୍କ୍ ଠାରୁ ତୁମର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତି ଏବଂ ଯୋଡ଼ାହୋଇଥିବା ସୂଚନାକୁ ଅଧିଲିଖିତ କରିବ।</string>
+    <string name="backup_full_sync_from_server_question">AnkiWebରୁ ଆସୁଥିବା ସଂଗ୍ରହ ସହିତ ଆପଣଙ୍କର ଗଚ୍ଛିତ ସଂଗ୍ରହକୁ ଅପଲେଖିତ କରିବେ ତ? ଏହା ଆପଣଙ୍କ ଗତ ସୀଙ୍କ୍ ପରଠାରୁ ଆପଣଙ୍କର ସମସ୍ତ ଶିକ୍ଷଣ ପ୍ରଗତି ଓ ଯୋଡ଼ାଯାଇଥିବା ସୂଚନାକୁ ଅଧିଲିଖିତ କରିବ।</string>
     <string name="error_handling_title">ତ୍ରୁଟି ପରିଚାଳନା</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">ଵିକଳ୍ପ</string>
     <string name="backup_retry_opening">ଖୋଲିବାକୁ ପୁନଃ ଚେଷ୍ଟା କରିବା</string>

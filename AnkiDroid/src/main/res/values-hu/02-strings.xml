@@ -61,7 +61,7 @@
     <string name="updated_version">%s verzióra frissítve</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Rajztábla mentése</string>
-    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="enable_stylus">E-tollal írás bekapcsolása</string>
     <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Rajztábla be</string>
     <string name="disable_whiteboard">Rajztábla ki</string>

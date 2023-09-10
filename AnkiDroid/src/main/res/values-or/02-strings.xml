@@ -363,5 +363,5 @@
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">ଷ୍ଟୋରେଜ୍ ସ୍ଥାନାନ୍ତରଣ ଆରମ୍ଭ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
     <string name="media_sync_required_title">ମିଡ଼ିଆ ସୀଙ୍କ୍ ଆଵଶ୍ୟକ</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="media_sync_unavailable_message">ସେଟିଂରେ ମିଡ଼ିଆ ସିଙ୍କ୍ ଅକ୍ଷମ ହୋଇଅଛି। ଜାରି ରଖିବା ପୂର୍ବରୁ ଦୟାକରି ସମସ୍ତ ସୀଙ୍କ୍ ହୋଇନଥିବା ମିଡ଼ିଆ ସୀଙ୍କ୍ କରି ବ୍ୟାକ୍‌ଅପ୍ ନିଅନ୍ତୁ</string>
 </resources>
