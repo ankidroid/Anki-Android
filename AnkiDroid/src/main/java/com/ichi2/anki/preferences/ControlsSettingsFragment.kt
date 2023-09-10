@@ -18,6 +18,7 @@ package com.ichi2.anki.preferences
 import com.ichi2.anki.R
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.preferences.ControlPreference
 
 class ControlsSettingsFragment : SettingsFragment() {
@@ -26,6 +27,7 @@ class ControlsSettingsFragment : SettingsFragment() {
     override val analyticsScreenNameConstant: String
         get() = "prefs.controls"
 
+    @NeedsTest("Keys and titles in the XML layout are the same of the ViewerCommands")
     override fun initSubscreen() {
         val commands = HashMap<String, ViewerCommand>()
         ViewerCommand.values().forEach { commands[it.preferenceKey] = it }
