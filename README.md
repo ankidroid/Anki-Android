@@ -1,3 +1,4 @@
+Extra text that shouldn't be here 
 <p align="center">
 <img src="docs/graphics/logos/banner_readme.png"/>
 </p>
