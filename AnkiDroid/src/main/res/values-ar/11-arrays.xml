@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">x-كبير</string>
     <string name="html_size_code_xx_large">xx-كبير</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">زر الإجابة 1</string>
-    <string name="gesture_answer_2">زر الإجابة 2</string>
-    <string name="gesture_answer_3">زر الإجابة 3</string>
-    <string name="gesture_answer_4">زر الإجابة 4</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">تشغيل الوسائط</string>
     <string name="gesture_abort_learning">توقف عن التعلم</string>
     <string name="gesture_flag_red">تفعيل المؤشر الأحمر</string>

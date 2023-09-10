@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">x- मोठा</string>
     <string name="html_size_code_xx_large">xx- मोठे</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">उत्तर बटण 1</string>
-    <string name="gesture_answer_2">उत्तर बटण 2</string>
-    <string name="gesture_answer_3">उत्तर बटण 3</string>
-    <string name="gesture_answer_4">उत्तर बटण 4</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">मीडिया प्ले करा</string>
     <string name="gesture_abort_learning">शिक्षण रद्द करा</string>
     <string name="gesture_flag_red">लाल ध्वज टॉगल करा</string>

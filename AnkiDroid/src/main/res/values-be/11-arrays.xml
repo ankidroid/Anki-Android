@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">вельмі вялікі</string>
     <string name="html_size_code_xx_large">самы вялікі</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Кнопка адказу 1</string>
-    <string name="gesture_answer_2">Кнопка адказу 2</string>
-    <string name="gesture_answer_3">Кнопка адказу 3</string>
-    <string name="gesture_answer_4">Кнопка адказу 4</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Прайграць медыяфайлы</string>
     <string name="gesture_abort_learning">Скасаваць навучанне</string>
     <string name="gesture_flag_red">Пераключыць чырвоны сцяжок</string>

@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">很大</string>
     <string name="html_size_code_xx_large">極大</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">答案按鈕 1</string>
-    <string name="gesture_answer_2">答案按鈕 2</string>
-    <string name="gesture_answer_3">答案按鈕 3</string>
-    <string name="gesture_answer_4">答案按鈕 4</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">播放媒體檔</string>
     <string name="gesture_abort_learning">中止學習</string>
     <string name="gesture_flag_red">套用紅色標記</string>

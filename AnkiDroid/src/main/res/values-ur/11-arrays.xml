@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">x-بڑا</string>
     <string name="html_size_code_xx_large">xx-بڑا</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">جواب بٹن ایک</string>
-    <string name="gesture_answer_2">جواب بٹن دو</string>
-    <string name="gesture_answer_3">جواب بٹن تین</string>
-    <string name="gesture_answer_4">جواب بٹن چار</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">میڈیا چلائیں۔</string>
     <string name="gesture_abort_learning">سیکھنے کو روکنا</string>
     <string name="gesture_flag_red">سرخ پرچم ٹوگل کریں۔</string>
