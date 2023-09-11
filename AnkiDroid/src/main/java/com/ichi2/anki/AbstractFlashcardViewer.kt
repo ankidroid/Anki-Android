@@ -43,6 +43,7 @@ import androidx.annotation.IdRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
@@ -953,6 +954,14 @@ abstract class AbstractFlashcardViewer :
             else -> Timber.w("Unknown answerButtonsPosition: %s", answerButtonsPosition)
         }
         answerArea.visibility = if (answerButtonsPosition == "none") View.GONE else View.VISIBLE
+        // workaround for #14419, iterate over the bottom area children and manually enable the
+        // answer field while still hiding the other children
+        if (answerButtonsPosition == "none") {
+            answerArea.visibility = View.VISIBLE
+            answerArea.children.forEach {
+                it.visibility = if (it.id == R.id.answer_field) View.VISIBLE else View.GONE
+            }
+        }
         answerArea.layoutParams = answerAreaParams
         whiteboardContainer.layoutParams = whiteboardContainerParams
         mCardFrame!!.layoutParams = flashcardContainerParams
