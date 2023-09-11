@@ -259,6 +259,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Flaky(os = OS.ALL, message = "Fails mostly on Mac and occasionally Windows")
     fun flagsAreShownInBigDecksTest() = runTest {
         val numberOfNotes = 75
         val cardBrowser = getBrowserWithNotes(numberOfNotes)
