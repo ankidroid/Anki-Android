@@ -19,7 +19,6 @@
 package com.ichi2.libanki
 
 import android.content.Context
-import android.os.StatFs
 import androidx.core.text.HtmlCompat
 import com.ichi2.anki.AnkiFont
 import com.ichi2.anki.AnkiFont.Companion.createAnkiFont
@@ -292,16 +291,6 @@ object Utils {
      */
     fun fieldChecksumWithoutHtmlMedia(data: String?): Long {
         return java.lang.Long.valueOf(checksum(data).substring(0, 8), 16)
-    }
-
-    /**
-     * Determine available storage space
-     *
-     * @param path the filesystem path you need free space information on
-     * @return long indicating the bytes available for that path
-     */
-    fun determineBytesAvailable(path: String?): Long {
-        return StatFs(path).availableBytes
     }
 
     /**
