@@ -23,9 +23,11 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Sound
-import com.ichi2.libanki.Utils
 import timber.log.Timber
+import java.io.BufferedReader
 import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
 
 class HtmlGenerator(
     private val typeAnswer: TypeAnswer,
@@ -70,14 +72,37 @@ class HtmlGenerator(
         /**
          * Load the template for the card
          */
-        fun loadCardTemplate(viewer: Context): CardTemplate {
+        private fun loadCardTemplate(viewer: Context): CardTemplate {
             try {
-                val data = Utils.convertStreamToString(viewer.assets.open("card_template.html"))
+                val data = convertStreamToString(viewer.assets.open("card_template.html"))
                 return CardTemplate(data)
             } catch (e: IOException) {
                 Timber.w(e)
                 throw RuntimeException(e)
             }
+        }
+
+        /**
+         * Converts an InputStream to a String.
+         *
+         * @param input InputStream to convert
+         * @return String version of the InputStream
+         */
+        private fun convertStreamToString(input: InputStream?): String {
+            var contentOfMyInputStream = ""
+            try {
+                val rd = BufferedReader(InputStreamReader(input), 4096)
+                var line: String?
+                val sb = StringBuilder()
+                while (rd.readLine().also { line = it } != null) {
+                    sb.append(line)
+                }
+                rd.close()
+                contentOfMyInputStream = sb.toString()
+            } catch (e: Exception) {
+                Timber.w(e)
+            }
+            return contentOfMyInputStream
         }
     }
 }

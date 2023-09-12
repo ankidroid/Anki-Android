@@ -295,32 +295,6 @@ object Utils {
         return java.lang.Long.valueOf(checksum(data).substring(0, 8), 16)
     }
 
-    /*
-     *  Tempo files
-     * ***********************************************************************************************
-     */
-    /**
-     * Converts an InputStream to a String.
-     * @param is InputStream to convert
-     * @return String version of the InputStream
-     */
-    fun convertStreamToString(`is`: InputStream?): String {
-        var contentOfMyInputStream = ""
-        try {
-            val rd = BufferedReader(InputStreamReader(`is`), 4096)
-            var line: String?
-            val sb = StringBuilder()
-            while (rd.readLine().also { line = it } != null) {
-                sb.append(line)
-            }
-            rd.close()
-            contentOfMyInputStream = sb.toString()
-        } catch (e: Exception) {
-            Timber.w(e)
-        }
-        return contentOfMyInputStream
-    }
-
     /**
      * Determine available storage space
      *
