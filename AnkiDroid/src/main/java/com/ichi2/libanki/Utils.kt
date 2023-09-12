@@ -30,7 +30,6 @@ import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
-import com.ichi2.utils.HashUtil.HashSetInit
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.*
@@ -538,22 +537,5 @@ object Utils {
     @KotlinCleanup("remove")
     fun <T> equals(left: T?, right: T?): Boolean {
         return left === right || left != null && left == right
-    }
-
-    /**
-     * @param fields A map from field name to field value
-     * @return The set of non empty field values.
-     */
-    @KotlinCleanup("remove TextUtils at least. Maybe .filter { }")
-    fun nonEmptyFields(fields: Map<String, String>): Set<String> {
-        val nonempty_fields: MutableSet<String> = HashSetInit(fields.size)
-        for (kv in fields.entries) {
-            var value = kv.value
-            value = stripHTMLMedia(value).trim { it <= ' ' }
-            if (value.isNotEmpty()) {
-                nonempty_fields.add(kv.key)
-            }
-        }
-        return nonempty_fields
     }
 }
