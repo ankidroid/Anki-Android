@@ -30,7 +30,7 @@
                 <ImageView
                     android:id="@+id/ankidroid_logo"
                     android:layout_width="200dp"
-                    app:srcCompat="@drawable/ankidroid_logo"
+                    app:srcCompat="@drawable/logo_star_144dp"
                     android:layout_marginBottom="0dp"
                     android:layout_gravity="center"
                     android:layout_height="200dp"
