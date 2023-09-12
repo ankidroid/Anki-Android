@@ -1,0 +1,26 @@
+name: GitFlow PR Title Validation for Main Branches
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    branches:
+      - develop
+      - main
+      - master
+
+jobs:
+  check-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title
+        run: |
+          PR_TITLE="${{ github.event.pull_request.title }}"
+          
+          if [[ ! "$PR_TITLE" =~ ^(feature/|fix/|release/|hotfix/|support/) ]]; then
+            echo "error: O título do PR não segue a nomeclatura do GitFlow."
+            echo "Por favor, use uma das seguintes nomeclaturas: feature/, fix/, release/, hotfix/, support/."
+            exit 1
+          fi
