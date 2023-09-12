@@ -18,7 +18,6 @@
  ****************************************************************************************/
 package com.ichi2.libanki
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.StatFs
@@ -26,7 +25,6 @@ import androidx.core.text.HtmlCompat
 import com.ichi2.anki.AnkiFont
 import com.ichi2.anki.AnkiFont.Companion.createAnkiFont
 import com.ichi2.anki.CollectionHelper
-import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -331,73 +329,6 @@ object Utils {
      */
     fun determineBytesAvailable(path: String?): Long {
         return StatFs(path).availableBytes
-    }
-
-    /**
-     * Calls [.writeToFileImpl] and handles IOExceptions
-     * Does not close the provided stream
-     * @throws IOException Rethrows exception after a set number of retries
-     */
-    @Throws(IOException::class)
-    fun writeToFile(source: InputStream, destination: String) {
-        // sometimes this fails and works on retries (hardware issue?)
-        val retries = 5
-        var retryCnt = 0
-        var success = false
-        while (!success && retryCnt++ < retries) {
-            try {
-                writeToFileImpl(source, destination)
-                success = true
-            } catch (e: IOException) {
-                if (retryCnt == retries) {
-                    Timber.e("IOException while writing to file, out of retries.")
-                    throw e
-                } else {
-                    Timber.e("IOException while writing to file, retrying...")
-                    try {
-                        Thread.sleep(200)
-                    } catch (e1: InterruptedException) {
-                        Timber.w(e1)
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Utility method to write to a file.
-     * Throws the exception, so we can report it in syncing log
-     */
-    @Throws(IOException::class)
-    private fun writeToFileImpl(source: InputStream, destination: String) {
-        val f = File(destination)
-        try {
-            Timber.d("Creating new file... = %s", destination)
-            f.createNewFile()
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
-            val startTimeMillis =
-                System.currentTimeMillis()
-            val sizeBytes = compat.copyFile(source, destination)
-
-            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
-            val endTimeMillis =
-                System.currentTimeMillis()
-            Timber.d("Finished writeToFile!")
-            val durationSeconds = (endTimeMillis - startTimeMillis) / 1000
-            val sizeKb = sizeBytes / 1024
-            var speedKbSec: Long = 0
-            if (endTimeMillis != startTimeMillis) {
-                speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis)
-            }
-            Timber.d(
-                "Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s",
-                sizeKb,
-                durationSeconds,
-                speedKbSec
-            )
-        } catch (e: IOException) {
-            throw IOException(f.name + ": " + e.localizedMessage, e)
-        }
     }
 
     /**
