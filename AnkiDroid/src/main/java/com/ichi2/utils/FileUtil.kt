@@ -30,6 +30,17 @@ import java.io.InputStream
 import java.util.*
 
 object FileUtil {
+
+    /**
+     * Determine available storage space
+     *
+     * @param path the filesystem path you need free space information on
+     * @return long indicating the bytes available for that path
+     */
+    fun determineBytesAvailable(path: String?): Long {
+        return StatFs(path).availableBytes
+    }
+
     /** Gets the free disk space given a file  */
     fun getFreeDiskSpace(file: File, defaultValue: Long): Long {
         return try {
