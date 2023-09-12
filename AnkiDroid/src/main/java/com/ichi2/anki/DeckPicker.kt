@@ -59,6 +59,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -96,6 +97,7 @@ import com.ichi2.anki.servicelayer.ScopedStorageService.mediaMigrationIsInProgre
 import com.ichi2.anki.services.MediaMigrationState
 import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.getMediaMigrationState
+import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.utils.SECONDS_PER_DAY
@@ -129,6 +131,7 @@ import kotlin.time.measureTimedValue
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
 const val TIMES_STORAGE_MIGRATION_POSTPONED_KEY = "timesStorageMigrationPostponed"
+typealias SnackbarBuilder = Snackbar.() -> Unit
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -169,11 +172,13 @@ open class DeckPicker :
     CustomStudyListener,
     ChangeManager.Subscriber,
     SyncCompletionListener,
-    ImportColpkgListener {
+    ImportColpkgListener,
+    BaseSnackbarBuilderProvider {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
     private lateinit var mDeckPickerContent: RelativeLayout
+    private lateinit var mFab: FloatingActionButton
 
     @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
     var mProgressDialog: android.app.ProgressDialog? = null
@@ -196,6 +201,12 @@ open class DeckPicker :
 
     // flag asking user to do a full sync which is used in upgrade path
     private var mRecommendFullSync = false
+
+    override val baseSnackbarBuilder: SnackbarBuilder
+        get() = {
+            mFab = findViewById(R.id.fab_main)
+            this.anchorView = mFab
+        }
 
     // flag keeping track of when the app has been paused
     var mActivityPaused = false

@@ -22,7 +22,6 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.onAttachedToWindow2
 import com.ichi2.anki.BuildConfig
@@ -68,8 +67,6 @@ interface BaseSnackbarBuilderProvider {
  *     or exact duration in milliseconds.
  * @param snackbarBuilder Optional. A configuration block with the [Snackbar] as `this`.
  */
-
-var mFab: FloatingActionButton? = null
 fun Activity.showSnackbar(
     @StringRes textResource: Int,
     duration: Int = Snackbar.LENGTH_LONG,
@@ -114,8 +111,6 @@ fun Activity.showSnackbar(
     if (view != null) {
         val baseSnackbarBuilder = (this as? BaseSnackbarBuilderProvider)?.baseSnackbarBuilder
         view.showSnackbar(text, duration) {
-            mFab = findViewById(R.id.fab_main)
-            this.anchorView = mFab
             baseSnackbarBuilder?.invoke(this)
             snackbarBuilder?.invoke(this)
         }
