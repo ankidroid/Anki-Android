@@ -47,20 +47,6 @@ class UtilsTest {
     }
 
     @Test
-    fun nonEmptyFieldsTest() {
-        val m: MutableMap<String, String> = HashMap()
-        val s: MutableSet<String> = HashSet()
-        assertEquals(s, Utils.nonEmptyFields(m))
-        m["baz"] = ""
-        assertEquals(s, Utils.nonEmptyFields(m))
-        m["foo"] = "   "
-        assertEquals(s, Utils.nonEmptyFields(m))
-        m["bar"] = " plop  "
-        s.add("bar")
-        assertEquals(s, Utils.nonEmptyFields(m))
-    }
-
-    @Test
     fun test_stripHTML_will_remove_tags() {
         val strings = listOf(
             "<>",
