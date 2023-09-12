@@ -98,6 +98,7 @@ import com.ichi2.anki.services.MediaMigrationState
 import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.getMediaMigrationState
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
+import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.utils.SECONDS_PER_DAY
@@ -131,7 +132,6 @@ import kotlin.time.measureTimedValue
 
 const val MIGRATION_WAS_LAST_POSTPONED_AT_SECONDS = "secondWhenMigrationWasPostponedLast"
 const val TIMES_STORAGE_MIGRATION_POSTPONED_KEY = "timesStorageMigrationPostponed"
-typealias SnackbarBuilder = Snackbar.() -> Unit
 
 /**
  * The current entry point for AnkiDroid. Displays decks, allowing users to study. Many other functions.
@@ -178,7 +178,6 @@ open class DeckPicker :
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
     private lateinit var mDeckPickerContent: RelativeLayout
-    private lateinit var mFab: FloatingActionButton
 
     @Suppress("Deprecation") // TODO: Encapsulate ProgressDialog within a class to limit the use of deprecated functionality
     var mProgressDialog: android.app.ProgressDialog? = null
@@ -204,8 +203,7 @@ open class DeckPicker :
 
     override val baseSnackbarBuilder: SnackbarBuilder
         get() = {
-            mFab = findViewById(R.id.fab_main)
-            this.anchorView = mFab
+            this.anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
         }
 
     // flag keeping track of when the app has been paused
