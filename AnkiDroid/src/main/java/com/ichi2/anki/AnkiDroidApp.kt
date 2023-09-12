@@ -48,10 +48,10 @@ import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.Utils
 import com.ichi2.utils.*
 import timber.log.Timber
 import timber.log.Timber.DebugTree
+import java.util.Locale
 import java.util.regex.Pattern
 
 /**
@@ -72,7 +72,7 @@ open class AnkiDroidApp : Application() {
      */
     override fun onCreate() {
         try {
-            Os.setenv("PLATFORM", Utils.syncPlatform(), false)
+            Os.setenv("PLATFORM", syncPlatform(), false)
             // enable debug logging of sync actions
             if (BuildConfig.DEBUG) {
                 Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false)
@@ -222,6 +222,21 @@ open class AnkiDroidApp : Application() {
         })
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
+    }
+
+    /**
+     * @return the app version, OS version and device model, provided when syncing.
+     */
+    private fun syncPlatform(): String {
+        // AnkiWeb reads this string and uses , and : as delimiters, so we remove them.
+        val model = Build.MODEL.replace(',', ' ').replace(':', ' ')
+        return String.format(
+            Locale.US,
+            "android:%s:%s:%s",
+            BuildConfig.VERSION_NAME,
+            Build.VERSION.RELEASE,
+            model
+        )
     }
 
     fun scheduleNotification() {

@@ -21,12 +21,10 @@ package com.ichi2.libanki
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
-import android.os.Build
 import android.os.StatFs
 import androidx.core.text.HtmlCompat
 import com.ichi2.anki.AnkiFont
 import com.ichi2.anki.AnkiFont.Companion.createAnkiFont
-import com.ichi2.anki.BuildConfig
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
@@ -510,20 +508,5 @@ object Utils {
     @Throws(IOException::class)
     fun copyFile(sourceFile: File?, destFile: File) {
         FileInputStream(sourceFile).use { source -> writeToFile(source, destFile.absolutePath) }
-    }
-
-    /**
-     * @return The app version, OS version and device model, provided when syncing.
-     */
-    fun syncPlatform(): String {
-        // AnkiWeb reads this string and uses , and : as delimiters, so we remove them.
-        val model = Build.MODEL.replace(',', ' ').replace(':', ' ')
-        return String.format(
-            Locale.US,
-            "android:%s:%s:%s",
-            BuildConfig.VERSION_NAME,
-            Build.VERSION.RELEASE,
-            model
-        )
     }
 }
