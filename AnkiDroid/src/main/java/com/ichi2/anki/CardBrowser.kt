@@ -1317,7 +1317,7 @@ open class CardBrowser :
     val previewIntent: Intent
         get() = if (isInMultiSelectMode && checkedCardCount() > 1) {
             // Multiple cards have been explicitly selected, so preview only those cards
-            getPreviewIntent(0, Utils.toPrimitive(selectedCardIds)!!)
+            getPreviewIntent(0, selectedCardIds.toLongArray())
         } else {
             // Preview all cards, starting from the one that is currently selected
             val startIndex = if (mCheckedCards.isEmpty()) 0 else mCheckedCards.iterator().next().position

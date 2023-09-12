@@ -37,7 +37,6 @@ import java.security.NoSuchAlgorithmException
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.collections.Collection
 import kotlin.math.*
 
 @KotlinCleanup("IDE Lint")
@@ -414,26 +413,6 @@ object Utils {
             return "$mediaDirUri/"
         }
         return ""
-    }
-
-    /**
-     * Take an array of Long and return an array of long
-     *
-     * @param array The input with type Long[]
-     * @return The output with type long[]
-     */
-    @KotlinCleanup("make param non-null")
-    @KotlinCleanup("maybe .toLongArray()")
-    fun toPrimitive(array: Collection<Long>?): LongArray? {
-        if (array == null) {
-            return null
-        }
-        val results = LongArray(array.size)
-        var i = 0
-        for (item in array) {
-            results[i++] = item
-        }
-        return results
     }
 
     /**
