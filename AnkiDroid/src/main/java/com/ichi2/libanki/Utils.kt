@@ -499,14 +499,4 @@ object Utils {
         }
         return fonts
     }
-
-    /**
-     * Simply copy a file to another location
-     * @param sourceFile The source file
-     * @param destFile The destination file, doesn't need to exist yet.
-     */
-    @Throws(IOException::class)
-    fun copyFile(sourceFile: File?, destFile: File) {
-        FileInputStream(sourceFile).use { source -> writeToFile(source, destFile.absolutePath) }
-    }
 }

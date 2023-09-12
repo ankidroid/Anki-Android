@@ -17,28 +17,14 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.TestUtils
-import com.ichi2.utils.FileOperation.Companion.getFileResource
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.File
-import java.lang.Exception
 import java.util.*
-import kotlin.Throws
 
 @RunWith(AndroidJUnit4::class)
 class UtilsTest {
-    @Test
-    @Throws(Exception::class)
-    fun testCopyFile() {
-        val resourcePath = getFileResource("path-traversal.zip")
-        val copy = File.createTempFile("testCopyFileToStream", ".zip")
-        copy.deleteOnExit()
-        Utils.copyFile(File(resourcePath), copy)
-        assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
-    }
 
     @Test
     fun testSplit() {
