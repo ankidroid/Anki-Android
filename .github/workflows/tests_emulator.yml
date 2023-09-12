@@ -38,6 +38,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  check-title:
+    if: github.ref != 'refs/heads/branch-name-you-want-to-ignore'
   emulator_test:
     name: Android Emulator Test
     runs-on: macos-latest
