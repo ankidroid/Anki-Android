@@ -19,7 +19,6 @@
 package com.ichi2.libanki
 
 import android.content.Context
-import android.net.Uri
 import android.os.StatFs
 import androidx.core.text.HtmlCompat
 import com.ichi2.anki.AnkiFont
@@ -303,21 +302,6 @@ object Utils {
      */
     fun determineBytesAvailable(path: String?): Long {
         return StatFs(path).availableBytes
-    }
-
-    /**
-     * @param mediaDir media directory path on SD card
-     * @return path converted to file URL, properly UTF-8 URL encoded
-     */
-    fun getBaseUrl(mediaDir: String): String {
-        // Use android.net.Uri class to ensure whole path is properly encoded
-        // File.toURL() does not work here, and URLEncoder class is not directly usable
-        // with existing slashes
-        if (mediaDir.isNotEmpty() && !"null".equals(mediaDir, ignoreCase = true)) {
-            val mediaDirUri = Uri.fromFile(File(mediaDir))
-            return "$mediaDirUri/"
-        }
-        return ""
     }
 
     /**

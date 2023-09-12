@@ -523,7 +523,7 @@ abstract class AbstractFlashcardViewer :
     public override fun onCollectionLoaded(col: Collection) {
         super.onCollectionLoaded(col)
         val mediaDir = col.media.dir
-        mBaseUrl = Utils.getBaseUrl(mediaDir).also { baseUrl ->
+        mBaseUrl = getBaseUrl(mediaDir).also { baseUrl ->
             mSoundPlayer = Sound(baseUrl).also { sound ->
                 sound.setupVideoActivityCallback()
             }
@@ -555,6 +555,21 @@ abstract class AbstractFlashcardViewer :
         mTTS.initialize(this, ReadTextListener())
         updateActionBar()
         invalidateOptionsMenu()
+    }
+
+    /**
+     * @param mediaDir media directory path on SD card
+     * @return path converted to file URL, properly UTF-8 URL encoded
+     */
+    private fun getBaseUrl(mediaDir: String): String {
+        // Use android.net.Uri class to ensure whole path is properly encoded
+        // File.toURL() does not work here, and URLEncoder class is not directly usable
+        // with existing slashes
+        if (mediaDir.isNotEmpty() && !"null".equals(mediaDir, ignoreCase = true)) {
+            val mediaDirUri = Uri.fromFile(File(mediaDir))
+            return "$mediaDirUri/"
+        }
+        return ""
     }
 
     // Saves deck each time Reviewer activity loses focus
