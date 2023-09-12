@@ -59,7 +59,7 @@ android {
 apply(from = "../lint.gradle")
 
 dependencies {
-    implementation("androidx.annotation:annotation:1.6.0")
+    implementation("androidx.annotation:annotation:1.7.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
 
     testImplementation("org.junit.jupiter:junit-jupiter:${rootProject.extra["junit_version"]}")
