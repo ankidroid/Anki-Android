@@ -16,11 +16,14 @@
  */
 package com.ichi2.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
-import com.ichi2.libanki.Utils
+import com.ichi2.compat.CompatHelper
 import org.junit.Assert.assertTrue
+import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
+import java.io.IOException
 import java.io.InputStream
 
 object ResourceLoader {
@@ -37,11 +40,78 @@ object ResourceLoader {
                 ?: throw FileNotFoundException("Could not find test file: $name")
             val file = File(getTestDir(context, name), newName!!)
             val dst = file.absolutePath
-            Utils.writeToFile(inputStream, dst)
+            writeToFile(inputStream, dst)
             file.deleteOnExit()
             return dst
         } catch (e: Exception) {
             throw RuntimeException(e)
+        }
+    }
+
+    /**
+     * Calls [.writeToFileImpl] and handles IOExceptions
+     * Does not close the provided stream
+     * @throws IOException Rethrows exception after a set number of retries
+     */
+    @Throws(IOException::class)
+    private fun writeToFile(source: InputStream, destination: String) {
+        // sometimes this fails and works on retries (hardware issue?)
+        val retries = 5
+        var retryCnt = 0
+        var success = false
+        while (!success && retryCnt++ < retries) {
+            try {
+                writeToFileImpl(source, destination)
+                success = true
+            } catch (e: IOException) {
+                if (retryCnt == retries) {
+                    Timber.e("IOException while writing to file, out of retries.")
+                    throw e
+                } else {
+                    Timber.e("IOException while writing to file, retrying...")
+                    try {
+                        Thread.sleep(200)
+                    } catch (e1: InterruptedException) {
+                        Timber.w(e1)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Utility method to write to a file.
+     * Throws the exception, so we can report it in syncing log
+     */
+    @Throws(IOException::class)
+    private fun writeToFileImpl(source: InputStream, destination: String) {
+        val f = File(destination)
+        try {
+            Timber.d("Creating new file... = %s", destination)
+            f.createNewFile()
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
+            val startTimeMillis =
+                System.currentTimeMillis()
+            val sizeBytes = CompatHelper.compat.copyFile(source, destination)
+
+            @SuppressLint("DirectSystemCurrentTimeMillisUsage")
+            val endTimeMillis =
+                System.currentTimeMillis()
+            Timber.d("Finished writeToFile!")
+            val durationSeconds = (endTimeMillis - startTimeMillis) / 1000
+            val sizeKb = sizeBytes / 1024
+            var speedKbSec: Long = 0
+            if (endTimeMillis != startTimeMillis) {
+                speedKbSec = sizeKb * 1000 / (endTimeMillis - startTimeMillis)
+            }
+            Timber.d(
+                "Utils.writeToFile: Size: %d Kb, Duration: %d s, Speed: %d Kb/s",
+                sizeKb,
+                durationSeconds,
+                speedKbSec
+            )
+        } catch (e: IOException) {
+            throw IOException(f.name + ": " + e.localizedMessage, e)
         }
     }
 
