@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check PR title
+        id: check-title
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
           
@@ -24,3 +25,18 @@ jobs:
             echo "Por favor, use uma das seguintes nomeclaturas: feature/, fix/, release/, hotfix/, support/."
             exit 1
           fi
+
+      - name: Add comment to PR
+        if: steps.check-title.outcome == 'failure'
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issue_number = context.issue.number;
+            const message = "O título do PR não segue a nomeclatura do GitFlow. Por favor, use uma das seguintes nomeclaturas: feature/, fix/, release/, hotfix/, support/.";
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: message
+            });
