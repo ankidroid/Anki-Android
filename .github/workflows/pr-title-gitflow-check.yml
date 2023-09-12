@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check PR title
-        id: check-title
+        id: title_check
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
           
@@ -27,7 +27,7 @@ jobs:
           fi
 
       - name: Add comment to PR
-        if: steps.check-title.outcome == 'failure'
+        if: failure()
         uses: actions/github-script@v5
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
