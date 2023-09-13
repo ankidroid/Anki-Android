@@ -24,7 +24,6 @@ import com.ichi2.anki.AnkiFont
 import com.ichi2.anki.AnkiFont.Companion.createAnkiFont
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.*
 import java.math.BigInteger
@@ -35,9 +34,7 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.*
 
-@KotlinCleanup("IDE Lint")
-@KotlinCleanup("timeQuantity methods: single source line per return")
-@KotlinCleanup("see if we can switch to standalone functions and properties and remove Utils container")
+// TODO switch to standalone functions and properties and remove Utils container
 object Utils {
     // Used to format doubles with English's decimal separator system
     val ENGLISH_LOCALE = Locale("en_US")
@@ -70,13 +67,10 @@ object Utils {
      * @param inputParam The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      </_any_tag_> */
-    @KotlinCleanup("see if function body could be improved")
     fun stripHTML(inputParam: String): String {
-        var s = inputParam
-        s = commentPattern.matcher(s).replaceAll("")
+        var s = commentPattern.matcher(inputParam).replaceAll("")
         s = stripHTMLScriptAndStyleTags(s)
-        val htmlMatcher = tagPattern.matcher(s)
-        s = htmlMatcher.replaceAll("")
+        s = tagPattern.matcher(s).replaceAll("")
         return entsToTxt(s)
     }
 
@@ -85,11 +79,9 @@ object Utils {
      * @param inputParam The HTML text to be cleaned.
      * @return The text without the aforementioned tags.
      */
-    @KotlinCleanup("see if function body could be improved")
     fun stripHTMLScriptAndStyleTags(inputParam: String): String {
-        var s = inputParam
-        var htmlMatcher = stylePattern.matcher(s)
-        s = htmlMatcher.replaceAll("")
+        var htmlMatcher = stylePattern.matcher(inputParam)
+        val s = htmlMatcher.replaceAll("")
         htmlMatcher = scriptPattern.matcher(s)
         return htmlMatcher.replaceAll("")
     }
@@ -118,12 +110,11 @@ object Utils {
      * @param htmlInput The HTML escaped text
      * @return The text with its HTML entities unescaped.
      */
-    @KotlinCleanup("see if we can improve var html")
+    // TODO see if method can be refactored to remove the reference to HtmlCompat
     private fun entsToTxt(htmlInput: String): String {
         // entitydefs defines nbsp as \xa0 instead of a standard space, so we
         // replace it first
-        var html = htmlInput
-        html = html.replace("&nbsp;", " ")
+        val html = htmlInput.replace("&nbsp;", " ")
         val htmlEntities = htmlEntitiesPattern.matcher(html)
         val sb = StringBuffer()
         while (htmlEntities.find()) {
@@ -141,51 +132,39 @@ object Utils {
      * ***********************************************************************************************
      */
     /** Given a list of integers, return a string '(int1,int2,...)'.  */
-    @KotlinCleanup("Use scope function on StringBuilder")
-    fun ids2str(ids: IntArray?): String {
-        val sb = StringBuilder()
-        sb.append("(")
+    fun ids2str(ids: IntArray?): String = StringBuilder().apply {
+        append("(")
         if (ids != null) {
             val s = Arrays.toString(ids)
-            sb.append(s.substring(1, s.length - 1))
+            append(s.substring(1, s.length - 1))
         }
-        sb.append(")")
-        return sb.toString()
-    }
+        append(")")
+    }.toString()
 
     /** Given a list of integers, return a string '(int1,int2,...)'.  */
-    @KotlinCleanup("Use scope function on StringBuilder")
-    fun ids2str(ids: LongArray?): String {
-        val sb = StringBuilder()
-        sb.append("(")
+    fun ids2str(ids: LongArray?): String = StringBuilder().apply {
+        append("(")
         if (ids != null) {
             val s = Arrays.toString(ids)
-            sb.append(s.substring(1, s.length - 1))
+            append(s.substring(1, s.length - 1))
         }
-        sb.append(")")
-        return sb.toString()
-    }
+        append(")")
+    }.toString()
 
     /** Given a list of integers, return a string '(int1,int2,...)', in order given by the iterator.  */
-    @KotlinCleanup("Use scope function on StringBuilder, simplify inner for loop")
-    fun <T> ids2str(ids: Iterable<T>): String {
-        val sb = StringBuilder(512)
-        sb.append("(")
-        var isNotFirst = false
-        for (id in ids) {
-            if (isNotFirst) {
-                sb.append(", ")
-            } else {
-                isNotFirst = true
+    fun <T> ids2str(ids: Iterable<T>): String = StringBuilder(512).apply {
+        append("(")
+        for ((index, id) in ids.withIndex()) {
+            if (index != 0) {
+                append(", ")
             }
-            sb.append(id)
+            append(id)
         }
-        sb.append(")")
-        return sb.toString()
-    }
+        append(")")
+    }.toString()
 
     // used in ankiweb
-    private fun base62(numParam: Int, extra: String): String {
+    private fun base62(numParam: Int, @Suppress("SameParameterValue") extra: String): String {
         var num = numParam
         val table = ALL_CHARACTERS + extra
         val len = table.length
@@ -226,7 +205,7 @@ object Utils {
         return result.toString()
     }
 
-    @KotlinCleanup("ensure manual conversion is correct")
+    // TODO ensure manual conversion is correct
     fun splitFields(fields: String): Array<String> {
         // -1 ensures that we don't drop empty fields at the ends
         return fields.split(FIELD_SEPARATOR).toTypedArray()
@@ -243,32 +222,31 @@ object Utils {
      * @param data the string to generate hash from
      * @return A string of length 40 containing the hexadecimal representation of the MD5 checksum of data.
      */
-    @KotlinCleanup("remove if check return empty string directly if data is null")
     fun checksum(data: String?): String {
-        var result = ""
-        if (data != null) {
-            val md: MessageDigest
-            var digest: ByteArray? = null
-            try {
-                md = MessageDigest.getInstance("SHA1")
-                digest = md.digest(data.toByteArray(charset("UTF-8")))
-            } catch (e: NoSuchAlgorithmException) {
-                Timber.e(e, "Utils.checksum: No such algorithm.")
-                throw RuntimeException(e)
-            } catch (e: UnsupportedEncodingException) {
-                Timber.e(e, "Utils.checksum :: UnsupportedEncodingException")
-            }
-            val biginteger = BigInteger(1, digest)
-            result = biginteger.toString(16)
+        if (data == null) {
+            return ""
+        }
+        val md: MessageDigest
+        var digest: ByteArray? = null
+        try {
+            md = MessageDigest.getInstance("SHA1")
+            digest = md.digest(data.toByteArray(charset("UTF-8")))
+        } catch (e: NoSuchAlgorithmException) {
+            Timber.e(e, "Utils.checksum: No such algorithm.")
+            throw RuntimeException(e)
+        } catch (e: UnsupportedEncodingException) {
+            Timber.e(e, "Utils.checksum :: UnsupportedEncodingException")
+        }
+        val biginteger = BigInteger(1, digest)
+        var result = biginteger.toString(16)
 
-            // pad with zeros to length of 40 This method used to pad
-            // to the length of 32. As it turns out, sha1 has a digest
-            // size of 160 bits, leading to a hex digest size of 40,
-            // not 32.
-            if (result.length < 40) {
-                val zeroes = "0000000000000000000000000000000000000000"
-                result = zeroes.substring(0, zeroes.length - result.length) + result
-            }
+        // pad with zeros to length of 40 This method used to pad
+        // to the length of 32. As it turns out, sha1 has a digest
+        // size of 160 bits, leading to a hex digest size of 40,
+        // not 32.
+        if (result.length < 40) {
+            val zeroes = "0000000000000000000000000000000000000000"
+            result = zeroes.substring(0, zeroes.length - result.length) + result
         }
         return result
     }
@@ -289,7 +267,7 @@ object Utils {
      * @param data the string to generate hash from. Html media should be removed
      * @return 32 bit unsigned number from first 8 digits of sha1 hash
      */
-    fun fieldChecksumWithoutHtmlMedia(data: String?): Long {
+    private fun fieldChecksumWithoutHtmlMedia(data: String?): Long {
         return java.lang.Long.valueOf(checksum(data).substring(0, 8), 16)
     }
 
@@ -317,7 +295,6 @@ object Utils {
         var fontsCount = 0
         var fontsList: Array<File>? = null
         if (fontsDir.exists() && fontsDir.isDirectory) {
-            @KotlinCleanup("scope function for performance")
             fontsCount = fontsDir.listFiles()!!.size
             fontsList = fontsDir.listFiles()
         }
@@ -327,7 +304,6 @@ object Utils {
         } catch (e: IOException) {
             Timber.e(e, "Error on retrieving ankidroid fonts")
         }
-        @KotlinCleanup("See if code in for loop an be improved")
         val fonts: MutableList<AnkiFont> = ArrayList(fontsCount)
         for (i in 0 until fontsCount) {
             val filePath = fontsList!![i].absolutePath
@@ -344,7 +320,6 @@ object Utils {
                 }
             }
         }
-        @KotlinCleanup("simplify with ?.forEach and mapNotNull")
         if (ankiDroidFonts != null) {
             for (ankiDroidFont in ankiDroidFonts) {
                 // Assume all files in the assets directory are actually fonts.
