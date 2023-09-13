@@ -33,6 +33,8 @@
       <w>dids</w>
       <w>dyns</w>
       <w>edue</w>
+      <w>entitydefs</w>
+      <w>ents</w>
       <w>escapechar</w>
       <w>exomple</w>
       <w>filt</w>
@@ -45,6 +47,7 @@
       <w>fullsync</w>
       <w>gendeck</w>
       <w>genrem</w>
+      <w>hexdigest</w>
       <w>hkey</w>
       <w>hostkey</w>
       <w>hostnum</w>
@@ -109,6 +112,7 @@
       <w>schedv3</w>
       <w>scmhash</w>
       <w>sdids</w>
+      <w>sfield</w>
       <w>sfld</w>
       <w>sflds</w>
       <w>sidx</w>
@@ -123,6 +127,7 @@
       <w>tmpls</w>
       <w>unsynced</w>
       <w>usn</w>
+      <w>zabcdefghijklmnopqrstuvwxyz</w>
     </words>
   </dictionary>
 </component>
