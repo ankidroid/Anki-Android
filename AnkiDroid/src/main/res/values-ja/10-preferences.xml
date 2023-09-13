@@ -220,12 +220,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">キーボード</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">解答表示ボタン・回答ボタン</string>
+    <string name="card" maxLength="41">カード</string>
+    <string name="note" maxLength="41">ノート</string>
+    <string name="navigation" maxLength="41">画面移動</string>
+    <string name="media" maxLength="41">音声・動画</string>
+    <string name="misc" maxLength="41">その他</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">タグを選択</string>
     <!-- Deck configurations -->

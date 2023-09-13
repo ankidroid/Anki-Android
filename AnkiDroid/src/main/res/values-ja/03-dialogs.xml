@@ -129,7 +129,7 @@
     <string name="check_media_db_updated">メディアのデータベースを再構築しました</string>
     <string name="check_media_delete_unused">(1) のファイルを削除</string>
     <string name="delete_media_message">メディアを削除中&#8230;</string>
-    <string name="delete_media_result_title">結果を削除</string>
+    <string name="delete_media_result_title">削除結果</string>
     <plurals name="delete_media_result_message">
         <item quantity="other">%d個のファイルを削除しました</item>
     </plurals>

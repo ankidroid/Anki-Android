@@ -237,16 +237,14 @@
         Por favor, mantenga sus datos seguros sincronizando o exportando copias de seguridad de forma regular.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migración fallida</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
-        <br><br>
-        The changes were reverted.
-        <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
-        <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[La copia de los datos falló debido al error: %1$s.
+<br><br>
+. Los cambios fueron revertidos.
+<br><br>
+. Por favor, intente de nuevo la migración.
+. Para resolver el problema, puede que necesites liberar espacio en el disco o re-inserte la memoria extraíble.
+<br><br>
+<a href="%2$s">Obtenga más información y ayuda</a>]]></string>
     <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
         <br><br>
         The changes were <i>not</i> reverted.

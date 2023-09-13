@@ -185,7 +185,7 @@
         <item quantity="other">%1$d枚のカードを作成します。続行しますか？</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
-        <item quantity="other">カードタイプ \'%2$s\' とそのカード %1$d枚を削除しますか？</item>
+        <item quantity="other">カードタイプ \'%2$s\' とそのカード%1$d枚を削除しますか？</item>
     </plurals>
     <string name="invalid_template">カードを作成できませんでした</string>
     <string name="card_template_editor_would_delete_note">このカードタイプを削除すると、１枚または複数枚のノートが削除されます。先に新しいカードタイプを追加し保存してください。</string>
