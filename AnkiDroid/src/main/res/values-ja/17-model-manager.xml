@@ -78,6 +78,6 @@
     <string name="card_template_editor_deck_override_off">デッキ選択を上書き (未指定)</string>
     <string name="model_manager_deck_override_added_message">「%2$s」を「%1$s」のデフォルトデッキに指定しました</string>
     <string name="model_manager_deck_override_removed_message">「%s」のデフォルトデッキの指定を解除しました</string>
-    <string name="deck_override_explanation">「%s」のカードの追加先デッキを選択（追加画面でのデッキ選択を無視）</string>
+    <string name="deck_override_explanation">「%s」のカードを追加した際に追加先とするデッキを選択してください（ノート追加画面でのデッキ選択を上書きします）</string>
     <string name="deck_picker_dialog_filter_decks">デッキ名検索</string>
 </resources>

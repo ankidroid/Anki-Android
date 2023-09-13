@@ -155,7 +155,7 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションはすべて削除され、ファイル \"%s\" のデータによって上書きされます。よろしいですか？</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="other">%s\nの内容をコレクションに追加しますか？　時間がかかる場合があります</item>
+        <item quantity="other">\"%s\n\" の内容をコレクションに追加しますか？　時間がかかる場合があります</item>
     </plurals>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
     <string name="import_title_error" comment="Title of error dialog">エラー</string>

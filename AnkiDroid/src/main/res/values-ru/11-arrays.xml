@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">очень большой</string>
     <string name="html_size_code_xx_large">самый большой</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Ответить снова</string>
+    <string name="answer_hard">Сложный ответ</string>
+    <string name="answer_good">Хороший ответ</string>
+    <string name="answer_easy">Простой ответ</string>
     <string name="gesture_play">Воспроизвести медиафайл</string>
     <string name="gesture_abort_learning">Прервать учёбу</string>
     <string name="gesture_flag_red">Красный флажок</string>
