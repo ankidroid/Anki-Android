@@ -166,6 +166,8 @@
     <string name="pref_backup_max" maxLength="41">Maximálny počet záloh</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Čas pre dvojklepnutie (milisekundy)</string>
     <string name="pref_double_tap_time_interval_summary">Druhé klepnutie na tlačidlo odpovede bude ignorované, ak tento čas neuplynul. Zabraňuje to nechceným dvojklepnutiam</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Zobraziť tlačidlo času</string>
     <string name="show_estimates_summ">Zobraziť čas ďalšieho opakovania nad tlačidlami odpovedí</string>
     <string name="show_large_answer_buttons" maxLength="41">Ukázať veľké tlačidla pre odpovede</string>

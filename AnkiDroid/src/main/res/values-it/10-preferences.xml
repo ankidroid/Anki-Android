@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">Numero massimo di backup</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervallo di tempo doppio tocco (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un secondo tocco dei pulsanti di risposta verrà ignorato se questo tempo non è trascorso. Questo impedisce doppi tocchi accidentali</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Mostra scadenza pulsanti</string>
     <string name="show_estimates_summ">Mostra la prossima scadenza sopra i pulsanti di risposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostra pulsanti risposta grandi</string>
