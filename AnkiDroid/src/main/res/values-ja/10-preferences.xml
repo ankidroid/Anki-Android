@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">保管するバックアップの世代数</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔 (ミリ秒)</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、回答ボタンの誤タップを防ぎます</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">回答ボタンに学習間隔を表示</string>
     <string name="show_estimates_summ">次の学習までの時間の間隔を回答ボタンの中に表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">回答ボタンを幅広に表示</string>

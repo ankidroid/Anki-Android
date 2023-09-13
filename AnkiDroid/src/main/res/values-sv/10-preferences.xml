@@ -165,6 +165,8 @@
     <string name="pref_backup_max" maxLength="41">Max antal säkerhetskopior</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Dubbeltryck tidsintervall (millisekunder)</string>
     <string name="pref_double_tap_time_interval_summary">En andra knapptryckning av svarsknappar kommer att ignoreras om den här tiden inte har förflutit. Detta förhindrar oavsiktliga dubbeltryck</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Visa tid på knappar</string>
     <string name="show_estimates_summ">Visa nästa repetitionstid ovan svarsknapparna</string>
     <string name="show_large_answer_buttons" maxLength="41">Visa stora svarsknappar</string>
