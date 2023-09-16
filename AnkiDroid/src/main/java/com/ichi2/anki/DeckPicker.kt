@@ -59,6 +59,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import anki.collection.OpChanges
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -96,6 +97,8 @@ import com.ichi2.anki.servicelayer.ScopedStorageService.mediaMigrationIsInProgre
 import com.ichi2.anki.services.MediaMigrationState
 import com.ichi2.anki.services.MigrationService
 import com.ichi2.anki.services.getMediaMigrationState
+import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
+import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.utils.SECONDS_PER_DAY
@@ -169,7 +172,8 @@ open class DeckPicker :
     CustomStudyListener,
     ChangeManager.Subscriber,
     SyncCompletionListener,
-    ImportColpkgListener {
+    ImportColpkgListener,
+    BaseSnackbarBuilderProvider {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
@@ -196,6 +200,10 @@ open class DeckPicker :
 
     // flag asking user to do a full sync which is used in upgrade path
     private var mRecommendFullSync = false
+
+    override val baseSnackbarBuilder: SnackbarBuilder = {
+        anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
+    }
 
     // flag keeping track of when the app has been paused
     var mActivityPaused = false
