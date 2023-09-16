@@ -859,19 +859,6 @@ open class DeckPicker :
                 showImportDialog()
                 return true
             }
-            R.id.action_new_filtered_deck -> {
-                val createFilteredDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
-                createFilteredDeckDialog.setOnNewDeckCreated {
-                    // a filtered deck was created
-                    openFilteredDeckOptions()
-                }
-                launchCatchingTask {
-                    withProgress {
-                        createFilteredDeckDialog.showFilteredDeckDialog()
-                    }
-                }
-                return true
-            }
             R.id.action_check_database -> {
                 Timber.i("DeckPicker:: Check database button pressed")
                 showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK)
@@ -906,6 +893,19 @@ open class DeckPicker :
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun createFilteredDialog() {
+        val createFilteredDeckDialog = CreateDeckDialog(this@DeckPicker, R.string.new_deck, CreateDeckDialog.DeckDialogType.FILTERED_DECK, null)
+        createFilteredDeckDialog.setOnNewDeckCreated {
+            // a filtered deck was created
+            openFilteredDeckOptions()
+        }
+        launchCatchingTask {
+            withProgress {
+                createFilteredDeckDialog.showFilteredDeckDialog()
+            }
         }
     }
 
