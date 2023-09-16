@@ -37,6 +37,7 @@ class DeckPickerFloatingActionMenu(
     private val mFabMain: FloatingActionButton = view.findViewById(R.id.fab_main)
     private val mAddSharedLayout: LinearLayout = view.findViewById(R.id.add_shared_layout)
     private val mAddDeckLayout: LinearLayout = view.findViewById(R.id.add_deck_layout)
+    private val mAddFilteredDeckLayout: LinearLayout = view.findViewById(R.id.add_filtered_deck_layout)
     private val mFabBGLayout: View = view.findViewById(R.id.fabBGLayout)
     private val mLinearLayout: LinearLayout =
         view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
@@ -67,6 +68,7 @@ class DeckPickerFloatingActionMenu(
             // Show with animation
             mAddSharedLayout.visibility = View.VISIBLE
             mAddDeckLayout.visibility = View.VISIBLE
+            mAddFilteredDeckLayout.visibility = View.VISIBLE
             mFabBGLayout.visibility = View.VISIBLE
             addNoteLabel.visibility = View.VISIBLE
             mFabMain.animate().apply {
@@ -92,22 +94,27 @@ class DeckPickerFloatingActionMenu(
             }
 
             addNoteLabel.animate().translationX(0f).duration = 70
-            mAddSharedLayout.animate().translationY(0f).duration = 70
-            mAddDeckLayout.animate().translationY(0f).duration = 100
+            mAddSharedLayout.animate().translationY(0f).duration = 100
+            mAddDeckLayout.animate().translationY(0f).duration = 70
+            mAddFilteredDeckLayout.animate().translationY(0f).duration = 100
             addNoteLabel.animate().alpha(1f).duration = 70
-            mAddSharedLayout.animate().alpha(1f).duration = 70
-            mAddDeckLayout.animate().alpha(1f).duration = 100
+            mAddSharedLayout.animate().alpha(1f).duration = 100
+            mAddDeckLayout.animate().alpha(1f).duration = 70
+            mAddFilteredDeckLayout.animate().alpha(1f).duration = 100
         } else {
             // Show without animation
             mAddSharedLayout.visibility = View.VISIBLE
             mAddDeckLayout.visibility = View.VISIBLE
+            mAddFilteredDeckLayout.visibility = View.VISIBLE
             mFabBGLayout.visibility = View.VISIBLE
             addNoteLabel.visibility = View.VISIBLE
             mAddSharedLayout.alpha = 1f
             mAddDeckLayout.alpha = 1f
+            mAddFilteredDeckLayout.alpha = 1f
             addNoteLabel.alpha = 1f
             mAddSharedLayout.translationY = 0f
             mAddDeckLayout.translationY = 0f
+            mAddFilteredDeckLayout.translationY = 0f
             addNoteLabel.translationX = 0f
 
             // During without animation maintain the original color of FAB
@@ -156,15 +163,32 @@ class DeckPickerFloatingActionMenu(
                 mAddSharedLayout.animate().alpha(0f).duration = 50
                 addNoteLabel.animate().alpha(0f).duration = 70
                 mAddDeckLayout.animate().alpha(0f).duration = 100
-                mAddSharedLayout.animate().translationY(300f).duration = 50
+                mAddFilteredDeckLayout.animate().alpha(0f).duration = 100
+                mAddSharedLayout.animate().translationY(400f).duration = 100
                 addNoteLabel.animate().translationX(180f).duration = 70
-                mAddDeckLayout.animate().translationY(400f).setDuration(100)
+                mAddDeckLayout.animate().translationY(300f).setDuration(50)
                     .setListener(object : Animator.AnimatorListener {
                         override fun onAnimationStart(animator: Animator) {}
                         override fun onAnimationEnd(animator: Animator) {
                             if (!isFABOpen) {
                                 mAddSharedLayout.visibility = View.GONE
                                 mAddDeckLayout.visibility = View.GONE
+                                mAddFilteredDeckLayout.visibility = View.GONE
+                                addNoteLabel.visibility = View.GONE
+                            }
+                        }
+
+                        override fun onAnimationCancel(animator: Animator) {}
+                        override fun onAnimationRepeat(animator: Animator) {}
+                    })
+                mAddFilteredDeckLayout.animate().translationY(400f).setDuration(100)
+                    .setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(animator: Animator) {}
+                        override fun onAnimationEnd(animator: Animator) {
+                            if (!isFABOpen) {
+                                mAddSharedLayout.visibility = View.GONE
+                                mAddDeckLayout.visibility = View.GONE
+                                mAddFilteredDeckLayout.visibility = View.GONE
                                 addNoteLabel.visibility = View.GONE
                             }
                         }
@@ -176,6 +200,7 @@ class DeckPickerFloatingActionMenu(
                 // Close without animation
                 mAddSharedLayout.visibility = View.GONE
                 mAddDeckLayout.visibility = View.GONE
+                mAddFilteredDeckLayout.visibility = View.GONE
                 addNoteLabel.visibility = View.GONE
 
                 mFabMain.setImageResource(addWhiteIcon)
@@ -200,16 +225,33 @@ class DeckPickerFloatingActionMenu(
 
                 mAddSharedLayout.animate().alpha(0f).duration = 70
                 mAddDeckLayout.animate().alpha(0f).duration = 50
+                mAddFilteredDeckLayout.animate().alpha(0f).duration = 50
                 addNoteLabel.animate().alpha(0f).duration = 50
                 addNoteLabel.animate().translationX(180f).duration = 70
-                mAddSharedLayout.animate().translationY(400f).duration = 50
-                mAddDeckLayout.animate().translationY(600f).setDuration(100)
+                mAddSharedLayout.animate().translationY(600f).duration = 100
+                mAddDeckLayout.animate().translationY(400f).setDuration(50)
                     .setListener(object : Animator.AnimatorListener {
                         override fun onAnimationStart(animator: Animator) {}
                         override fun onAnimationEnd(animator: Animator) {
                             if (!isFABOpen) {
                                 mAddSharedLayout.visibility = View.GONE
                                 mAddDeckLayout.visibility = View.GONE
+                                mAddFilteredDeckLayout.visibility = View.GONE
+                                addNoteLabel.visibility = View.GONE
+                            }
+                        }
+
+                        override fun onAnimationCancel(animator: Animator) {}
+                        override fun onAnimationRepeat(animator: Animator) {}
+                    })
+                mAddFilteredDeckLayout.animate().translationY(600f).setDuration(100)
+                    .setListener(object : Animator.AnimatorListener {
+                        override fun onAnimationStart(animator: Animator) {}
+                        override fun onAnimationEnd(animator: Animator) {
+                            if (!isFABOpen) {
+                                mAddSharedLayout.visibility = View.GONE
+                                mAddDeckLayout.visibility = View.GONE
+                                mAddFilteredDeckLayout.visibility = View.GONE
                                 addNoteLabel.visibility = View.GONE
                             }
                         }
@@ -221,6 +263,7 @@ class DeckPickerFloatingActionMenu(
                 // Close without animation
                 mAddSharedLayout.visibility = View.GONE
                 mAddDeckLayout.visibility = View.GONE
+                mAddFilteredDeckLayout.visibility = View.GONE
                 addNoteLabel.visibility = View.GONE
 
                 mFabMain.setImageResource(addWhiteIcon)
@@ -271,8 +314,10 @@ class DeckPickerFloatingActionMenu(
     init {
         val addSharedButton: FloatingActionButton = view.findViewById(R.id.add_shared_action)
         val addDeckButton: FloatingActionButton = view.findViewById(R.id.add_deck_action)
+        val addFilteredDeckButton: FloatingActionButton = view.findViewById(R.id.add_filtered_deck_action)
         val addSharedLabel: TextView = view.findViewById(R.id.add_shared_label)
         val addDeckLabel: TextView = view.findViewById(R.id.add_deck_label)
+        val addFilteredDeckLabel: TextView = view.findViewById(R.id.add_filtered_deck_label)
         val addNote: TextView = view.findViewById(R.id.add_note_label)
         mFabMain.setOnTouchListener(object : DoubleTapListener(context) {
             override fun onDoubleTap(e: MotionEvent?) {
@@ -305,15 +350,29 @@ class DeckPickerFloatingActionMenu(
         }
         addDeckButton.setOnClickListener(addDeckListener)
         addDeckLabel.setOnClickListener(addDeckListener)
+        val addFilteredDeckListener = View.OnClickListener {
+            if (isFABOpen) {
+                closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+                deckPicker.createFilteredDialog()
+            }
+        }
+        addFilteredDeckButton.setOnClickListener(addFilteredDeckListener)
+        addFilteredDeckLabel.setOnClickListener(addFilteredDeckListener)
         val addSharedListener = View.OnClickListener {
-            Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck")
-            deckPicker.openAnkiWebSharedDecks()
+            if (isFABOpen) {
+                closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+                Timber.d("configureFloatingActionsMenu::addSharedButton::onClickListener - Adding Shared Deck")
+                deckPicker.openAnkiWebSharedDecks()
+            }
         }
         addSharedButton.setOnClickListener(addSharedListener)
         addSharedLabel.setOnClickListener(addSharedListener)
         val addNoteLabelListener = View.OnClickListener {
-            Timber.d("configureFloatingActionsMenu::addNoteLabel::onClickListener - Adding Note")
-            addNote()
+            if (isFABOpen) {
+                closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
+                Timber.d("configureFloatingActionsMenu::addNoteLabel::onClickListener - Adding Note")
+                addNote()
+            }
         }
         addNote.setOnClickListener(addNoteLabelListener)
     }
