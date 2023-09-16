@@ -201,10 +201,9 @@ open class DeckPicker :
     // flag asking user to do a full sync which is used in upgrade path
     private var mRecommendFullSync = false
 
-    override val baseSnackbarBuilder: SnackbarBuilder
-        get() = {
-            this.anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
-        }
+    override val baseSnackbarBuilder: SnackbarBuilder = {
+        anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
+    }
 
     // flag keeping track of when the app has been paused
     var mActivityPaused = false
