@@ -78,13 +78,20 @@ jobs:
               ("0" + now.getUTCDate()).slice(-2) + " " + 
               ("0" + now.getUTCHours()).slice(-2) + ":" +
               ("0" + now.getUTCMinutes()).slice(-2);
-              
-            github.rest.pulls.create({              
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: "Updated strings from Crowdin " + formattedDate,
-              head: "i18n_sync",
-              base: "main",
-              body: "Contains the newest strings changes from Crowdin.",
-              maintainer_can_modify: true
-            });
+            try {  
+              github.rest.pulls.create({              
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: "Updated strings from Crowdin " + formattedDate,
+                head: "i18n_sync",
+                base: "main",
+                body: "Contains the newest strings changes from Crowdin.",
+                maintainer_can_modify: true
+              });
+            } catch(err) {
+              if (err.status === 422) {
+                console.log("A PR containing translations sync already exists!");
+              } else {
+                throw err;
+              }
+            }
