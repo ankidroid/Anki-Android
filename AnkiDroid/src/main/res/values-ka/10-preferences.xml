@@ -92,11 +92,11 @@
         <item>არცერთი</item>
     </string-array>
     <string name="gestures" maxLength="41">ჟესტების ჩართვა</string>
-    <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
+    <string name="gestures_summ">ჟესტების მიბმა მოქმედებებთან, როგორებიცაა მაგალითად პასუხის გაცემა ან ბარათის რედაქტირება.</string>
     <string name="gestures_corner_touch" maxLength="41">9-წერტილიანი შეხება</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
+    <string name="gestures_corner_touch_summary">ეკრანის კუთხეებში შეხების ჟესტების დაშვება</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">სრულეკრანიანი რეჟიმის ნავიგაციის პანელი</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">ეკრანის ნებისმიერი წერტილიდან მარჯვნივ გასმისას ნავიგაციის პანელის გახსნა</string>
     <string name="gestures_none" maxLength="41">არცერთი</string>
     <string name="gestures_swipe_up" maxLength="41">ამოსმა</string>
     <string name="gestures_swipe_down" maxLength="41">ჩამოსმა</string>

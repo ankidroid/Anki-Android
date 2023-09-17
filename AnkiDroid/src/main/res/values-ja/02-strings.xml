@@ -269,8 +269,8 @@
     <string name="insert_mathjax">MathJax式を挿入</string>
     <string name="insert_cloze">穴埋め箇所</string>
     <string name="note_editor_toolbar_icon">ボタンに表示する文字</string>
-    <string name="before_text">選択部分の前のHTML</string>
-    <string name="after_text">選択部分の後のHTML</string>
+    <string name="before_text">選択文字列の前のHTML</string>
+    <string name="after_text">選択文字列の後のHTML</string>
     <string name="add_toolbar_item">ツールバーアイテムを作成</string>
     <string name="edit_toolbar_item">ツールバーアイテムを編集</string>
     <string name="toolbar_item_explain_edit_or_remove">選択した文字列の前後に挿入するHTMLをそれぞれ入力してください\n\n作成したツールバーアイテムを編集または削除したい場合は、そのアイテムのボタンを長押ししてください</string>
@@ -280,7 +280,7 @@
     <string name="create_shortcut_error_vivo" comment="iManager is an app on Vivo phones">AnkiDroidのショートカットを追加するには、iManagerでの許可が必要な場合があります。</string>
     <string name="create_shortcut_failed" comment="home screen == launcher">ホーム画面へのショートカットの追加が許可されませんでした</string>
     <string name="create_shortcut_error">ショートカット追加のエラー: %s</string>
-    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">文頭でキーボード大文字</string>
+    <string name="note_editor_capitalize" comment="This is for a switch with a checkbox - on: enabled">英語入力の際に文頭を大文字</string>
     <string name="menu_scroll_toolbar" comment="Checkbox stating whether note editor toolbar is scrollable or stacked. Checked: Scroll">ツールバーをスクロール表示</string>
     <!-- Symbols used as Button text in IncrementNumberRangePreference -->
     <string name="plus_sign" comment="Label for increment button in IncrementerNumberRangePreference">+</string>
