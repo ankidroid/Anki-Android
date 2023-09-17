@@ -123,7 +123,7 @@
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
     <string name="check_media_title">შემოწმდეს მედიაფაილები?</string>
-    <string name="check_media_warning">This may take a long time with large media collections</string>
+    <string name="check_media_warning">ამას დიდი ზომის მედია-კოლექციების შემთხვევაში შეიძლება დიდი ხანი დასჭირდეს</string>
     <string name="check_media_message">მედიაფაილების შემოწმება&#8230;</string>
     <string name="check_media_acknowledge">მედიაფაილები შემოწმდა</string>
     <string name="check_media_failed">მედიაფაილები ვერ შემოწმდა</string>

@@ -50,7 +50,7 @@
     <string name="statistics">Վիճակագրություն</string>
     <string name="settings">Կարգավորումներ</string>
     <string name="help">Օգնություն</string>
-    <string name="drawing">Drawing</string>
+    <string name="drawing">Նկարչություն</string>
     <string name="send_feedback">Կարծիք թողնել</string>
     <string name="studyoptions_due_today">Այսօրվա կրկնելիք՝</string>
     <string name="studyoptions_new_total">Նոր քարտերի քանակը՝</string>
@@ -70,15 +70,15 @@
         <item quantity="other">%d րոպե է մնացել</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
-        <item quantity="one">%1$d hour %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="one">Մնաց %1$d ժամ %2$d</item>
+        <item quantity="other">Մնաց %1$d ժամ %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
-        <item quantity="one">%1$d day %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="one">Մնաց %1$d օր %2$d</item>
+        <item quantity="other">Մնաց %1$d օր %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Collection is empty</string>
-    <string name="no_cards_placeholder_description">Start adding cards\nusing the + icon.</string>
+    <string name="no_cards_placeholder_description">Ավելացրեք քարտեր\n+ կոճակի միջոցով։</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Գրեք պատասխանը</string>
@@ -95,7 +95,7 @@
     <string name="unbury">Վերադարձնել առանձնացվածները</string>
     <string name="rename_deck">Վերանվանել կապուկը</string>
     <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="browse_cards">Քարտերի ցանկ</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Ավելացնել</string>
     <string name="menu_add_note">Ավելացնել գրառում</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Համաժամեցնել հաշիվը</string>
@@ -107,22 +107,22 @@
     <string name="menu_bury">Առանձնացնել</string>
     <string name="menu_suspend">Հեռացնել</string>
     <string name="menu_delete_note">Ջնջել գրառումը</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag">Դրոշ</string>
+    <string name="menu_flag_card">Ավելացնել դրոշ</string>
+    <string name="menu_flag_card_zero">Առանց դրոշ</string>
+    <string name="menu_flag_card_one">Կարմիր</string>
+    <string name="menu_flag_card_two">Նարնջագույն</string>
+    <string name="menu_flag_card_three">Կանաչ</string>
+    <string name="menu_flag_card_four">Կապույտ</string>
+    <string name="menu_flag_card_five">Վարդագույն </string>
+    <string name="menu_flag_card_six">Փիրուզագույն</string>
+    <string name="menu_flag_card_seven">Մանուշակագույն</string>
     <string name="menu_edit_tags">Edit tags</string>
     <string name="delete_note_message">Ջնջե՞լ այս գրառումը և նրա բոլոր քարտերը:\n%s</string>
     <string name="menu_search">Որոնում %1$s-ում</string>
     <string name="menu_mark_note">Նշել գրառումը</string>
     <string name="menu_unmark_note">Ապանշել գրառումը</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">Արտասանության ստուգում</string>
     <string name="new_deck">Ստեղծել կապուկ</string>
     <string name="new_dynamic_deck">Ստեղծել զտված կապուկ</string>
     <string name="directory_inaccessible">AnkiDroid-ի պանակը անհասանելի է</string>

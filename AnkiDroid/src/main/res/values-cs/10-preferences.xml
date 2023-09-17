@@ -165,8 +165,8 @@
     <string name="pref_backup_max" maxLength="41">Maximální počet záloh</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Čas dvojklepnutí (milisekundy)</string>
     <string name="pref_double_tap_time_interval_summary">Druhé klepnutí na tlačítka odpovědí bude ignorováno, pokud tento čas neuplynul. Zabraňuje to náhodným dvojím klepnutím</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Čas dlouhého stisknutí pro zobrazení odpovědi (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimální čas dlouhého stisknutí před tím, než tlačítko Zobrazit odpověď registruje dotyk. Může snížit pravděpodobnost nechtěného stisknutí tlačítka. Výchozí hodnota je 0ms</string>
     <string name="show_estimates" maxLength="41">Zobrazit čas tlačítek</string>
     <string name="show_estimates_summ">Zobrazit čas příštího opakování na tlačítkách odpovědí</string>
     <string name="show_large_answer_buttons" maxLength="41">Zobrazit velká tlačítka odpovědí</string>
@@ -222,12 +222,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">Klávesnice</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">Tlačítka odpovědí</string>
+    <string name="card" maxLength="41">Karta</string>
+    <string name="note" maxLength="41">Poznámka</string>
+    <string name="navigation" maxLength="41">Navigace</string>
+    <string name="media" maxLength="41">Multimédia</string>
+    <string name="misc" maxLength="41">Různé</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Výběr štítků</string>
     <!-- Deck configurations -->

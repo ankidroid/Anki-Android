@@ -82,10 +82,10 @@
     <string name="html_size_code_x_large">çok büyük</string>
     <string name="html_size_code_xx_large">çok çok büyük</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Tekrar cevapla</string>
+    <string name="answer_hard">Zor cevapla</string>
+    <string name="answer_good">İyi cevapla</string>
+    <string name="answer_easy">Kolay cevapla</string>
     <string name="gesture_play">Medyayı oynat</string>
     <string name="gesture_abort_learning">Öğrenmeyi durdur</string>
     <string name="gesture_flag_red">Kırmızı bayrağı etkinleştir</string>

@@ -165,8 +165,8 @@
     <string name="pref_backup_max" maxLength="41">最大备份数量</string>
     <string name="pref_double_tap_time_interval" maxLength="41">双击时间间隔（毫秒）</string>
     <string name="pref_double_tap_time_interval_summary">如果指定的时间没有过去，那么应用将忽略回答按钮的第二次点击。这可以防止意外的双击</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">“显示回答”长按时间 (ms)</string>
+    <string name="pref_show_answer_long_press_summary">“显示回答”按钮注册按钮触摸动作前的最短长按时间。可以降低不经意间按下按钮的几率。默认值为 0 毫秒</string>
     <string name="show_estimates" maxLength="41">显示回答按钮的时间</string>
     <string name="show_estimates_summ">在答案按钮上方显示下次复习的时间</string>
     <string name="show_large_answer_buttons" maxLength="41">显示大的回答按钮</string>
