@@ -2,12 +2,17 @@
 
 package com.ichi2.anki
 
+import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.webkit.RenderProcessGoneDetail
 import androidx.annotation.CheckResult
 import androidx.annotation.RequiresApi
+import androidx.core.content.IntentCompat
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_2
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_3
@@ -17,6 +22,8 @@ import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SHOW_ANSW
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.SIGNAL_NOOP
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.TYPE_FOCUS
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.getSignalFromUrl
+import com.ichi2.anki.AnkiActivity.Companion.FINISH_ANIMATION_EXTRA
+import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.AutomaticAnswer
@@ -35,10 +42,12 @@ import org.junit.jupiter.params.provider.MethodSource
 import org.junit.runner.RunWith
 import org.mockito.Mockito.*
 import org.robolectric.Robolectric
+import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowToast
 import java.util.*
 import java.util.stream.Stream
+import com.ichi2.anim.ActivityTransitionAnimation.Direction as Direction
 
 @RequiresApi(api = Build.VERSION_CODES.O) // getImeHintLocales, toLanguageTags, onRenderProcessGone, RenderProcessGoneDetail
 @RunWith(AndroidJUnit4::class)
@@ -151,6 +160,29 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         assertThat(viewer.cardContent, not(containsString("World")))
         // the saving will have caused the screen to switch back to question side
         assertThat(viewer.cardContent, containsString("Hello"))
+    }
+
+    @Test
+    fun testEditCardProvidesInverseTransition() {
+        val viewer: NonAbstractFlashcardViewer = getViewer(true)
+        val gestures = listOf(Gesture.SWIPE_LEFT, Gesture.SWIPE_UP, Gesture.LONG_TAP)
+
+        gestures.forEach { gesture ->
+            val expectedAnimation =
+                AbstractFlashcardViewer.getAnimationTransitionFromGesture(gesture)
+            val expectedInverseAnimation =
+                ActivityTransitionAnimation.getInverseTransition(expectedAnimation)
+
+            viewer.executeCommand(ViewerCommand.EDIT, gesture)
+            val actual = Shadows.shadowOf(ApplicationProvider.getApplicationContext<Context>() as Application).nextStartedActivity
+
+            val actualInverseAnimation = IntentCompat.getParcelableExtra(
+                actual,
+                FINISH_ANIMATION_EXTRA,
+                Direction::class.java
+            )
+            assertEquals(expectedInverseAnimation, actualInverseAnimation)
+        }
     }
 
     @Test
