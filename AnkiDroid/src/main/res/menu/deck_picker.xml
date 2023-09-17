@@ -30,22 +30,29 @@
             android:title="@string/button_sync"
             ankidroid:showAsAction="always"/>
         <item
-            android:id="@+id/action_undo"
-            ankidroid:showAsAction="never"
-            android:visible="false"
-            tools:title="Undo X"/>
-        <item
-            android:id="@+id/action_check_database"
-            android:menuCategory="secondary"
-            android:title="@string/check_db"/>
-        <item
-            android:id="@+id/action_check_media"
-            android:menuCategory="secondary"
-            android:title="@string/check_media"/>
-        <item
-            android:id="@+id/action_empty_cards"
-            android:menuCategory="secondary"
-            android:title="@string/empty_cards"/>
+            android:id="@+id/checks"
+            android:title="@string/checks_action"
+            ankidroid:showAsAction="never">
+            <menu>
+                <item
+                    android:id="@+id/action_undo"
+                    ankidroid:showAsAction="never"
+                    android:visible="false"
+                    tools:title="Undo X"/>
+                <item
+                    android:id="@+id/action_check_database"
+                    android:menuCategory="secondary"
+                    android:title="@string/check_db"/>
+                <item
+                    android:id="@+id/action_check_media"
+                    android:menuCategory="secondary"
+                    android:title="@string/check_media"/>
+                <item
+                    android:id="@+id/action_empty_cards"
+                    android:menuCategory="secondary"
+                    android:title="@string/empty_cards"/>
+            </menu>
+        </item>
         <item
             android:id="@+id/action_restore_backup"
             android:menuCategory="secondary"
