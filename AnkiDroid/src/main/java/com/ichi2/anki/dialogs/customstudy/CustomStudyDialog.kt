@@ -52,6 +52,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.HashMapInit
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.asLocalizedMessage
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -454,7 +455,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             dyn = try {
                 decks.get(decks.newDyn(customStudyDeck))!!
             } catch (ex: DeckRenameException) {
-                showThemedToast(requireActivity(), ex.getLocalizedMessage(this.resources), true)
+                showThemedToast(requireActivity(), ex.asLocalizedMessage(requireContext()), true)
                 return
             }
         }

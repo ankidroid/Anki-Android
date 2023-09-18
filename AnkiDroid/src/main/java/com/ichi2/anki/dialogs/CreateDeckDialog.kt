@@ -32,6 +32,7 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.getOrCreateFilteredDeck
+import com.ichi2.utils.asLocalizedMessage
 import com.ichi2.utils.displayKeyboard
 import timber.log.Timber
 import java.util.function.Consumer
@@ -130,7 +131,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             val newDeckId = col.decks.newDyn(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
         } catch (ex: DeckRenameException) {
-            showThemedToast(context, ex.getLocalizedMessage(context.resources), false)
+            showThemedToast(context, ex.asLocalizedMessage(context), false)
             return false
         }
         return true
@@ -187,7 +188,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             } catch (e: DeckRenameException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error
-                showThemedToast(context, e.getLocalizedMessage(context.resources), false)
+                showThemedToast(context, e.asLocalizedMessage(context), false)
             }
         }
     }
