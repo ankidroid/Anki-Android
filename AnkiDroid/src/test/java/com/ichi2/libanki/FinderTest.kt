@@ -16,10 +16,10 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Consts.CARD_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_REV
 import com.ichi2.libanki.Consts.QUEUE_TYPE_SUSPENDED
+import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiAssert

@@ -30,10 +30,10 @@ import anki.config.ConfigKey
 import anki.search.SearchNode
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.Utils.ids2str
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.backend.model.toProtoBuf
+import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.sched.DummyScheduler
 import com.ichi2.libanki.sched.Scheduler

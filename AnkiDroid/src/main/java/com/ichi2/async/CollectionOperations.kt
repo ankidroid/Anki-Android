@@ -20,6 +20,7 @@ import com.ichi2.anki.*
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.exception.WrongId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
