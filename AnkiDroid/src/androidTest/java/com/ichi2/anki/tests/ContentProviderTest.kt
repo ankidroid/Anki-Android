@@ -26,11 +26,11 @@ import android.net.Uri
 import com.ichi2.anki.AbstractFlashcardViewer
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.FlashCardsContract
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.testutil.DatabaseUtils.cursorFillWindow
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.libanki.*
+import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert.*
 import org.hamcrest.Matchers.*

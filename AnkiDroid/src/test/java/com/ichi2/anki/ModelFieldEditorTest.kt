@@ -21,8 +21,8 @@ import android.widget.EditText
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.NotetypeJson
+import com.ichi2.libanki.exception.ConfirmModSchemaException
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test

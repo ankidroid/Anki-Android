@@ -35,13 +35,13 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.async.*
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
+import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.*
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
