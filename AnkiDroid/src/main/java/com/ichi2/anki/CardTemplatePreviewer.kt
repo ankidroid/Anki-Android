@@ -29,7 +29,6 @@ import com.ichi2.libanki.Note
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.utils.NoteUtils
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.IOException
@@ -280,8 +279,24 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         currentCard!!.did = newDid
         val currentNote = currentCard!!.note()
         val tagsList = mNoteEditorBundle!!.getStringArrayList("tags")
-        NoteUtils.setTags(currentNote, tagsList)
+        setTags(currentNote, tagsList)
         return currentCard
+    }
+
+    /**
+     * Set the set tags of currentNote to tagsList.  We make no
+     * assumption on the content of tagsList, except that its strings
+     * are valid tags (i.e. no spaces in it).
+     */
+    private fun setTags(currentNote: Note, tagsList: List<String>?) {
+        val currentTags = currentNote.tags.toTypedArray()
+        for (tag in currentTags) {
+            currentNote.delTag(tag)
+        }
+        if (tagsList != null) {
+            val tagsSet = currentNote.col.tags.canonify(tagsList)
+            currentNote.addTags(tagsSet)
+        }
     }
 
     private fun getLabels(fieldValues: MutableList<String>) {
