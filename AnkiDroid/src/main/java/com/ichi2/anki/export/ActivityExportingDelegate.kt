@@ -38,12 +38,12 @@ import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.libanki.utils.TimeUtils
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -74,7 +74,7 @@ class ActivityExportingDelegate(private val activity: AnkiActivity, private val 
     private fun getTimeStampSuffix() =
         "-" + run {
             collectionSupplier.get()
-            TimeUtils.getTimestamp(TimeManager.time)
+            getTimestamp(TimeManager.time)
         }
 
     private fun getColpkgExportName(exportDir: File): File {

@@ -17,6 +17,9 @@ package com.ichi2.anki.utils
 
 import android.content.Context
 import com.ichi2.anki.R
+import com.ichi2.libanki.utils.Time
+import java.text.SimpleDateFormat
+import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.max
@@ -208,4 +211,8 @@ fun roundedTimeSpan(context: Context, time_s: Long): String {
             time_s / TIME_YEAR
         )
     }
+}
+
+fun getTimestamp(time: Time): String {
+    return SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(time.currentDate)
 }
