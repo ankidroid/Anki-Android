@@ -273,7 +273,7 @@ public class AddContentApi(context: Context) {
      * @throws SecurityException if READ_WRITE_PERMISSION not granted (e.g. due to install order bug)
      */
     public fun previewNewNote(mid: Long, flds: Array<String>): Map<String, Map<String, String>>? {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M && !hasReadWritePermission()) {
+        if (!hasReadWritePermission()) {
             // avoid situation where addNote will pass, but deleteNote will fail
             throw SecurityException("previewNewNote requires full read-write-permission")
         }
