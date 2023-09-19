@@ -27,7 +27,6 @@ import android.net.Uri
 import android.webkit.MimeTypeMap
 import com.ichi2.anki.*
 import com.ichi2.anki.exception.ConfirmModSchemaException
-import com.ichi2.compat.CompatHelper.Companion.isMarshmallow
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -175,13 +174,13 @@ class CardContentProvider : ContentProvider() {
 
     /** Only enforce permissions for queries and inserts on Android M and above, or if its a 'rogue client'  */
     private fun shouldEnforceQueryOrInsertSecurity(): Boolean {
-        return isMarshmallow || knownRogueClient()
+        return knownRogueClient()
     }
 
     /** Enforce permissions for all updates on Android M and above. Otherwise block depending on URI and client app  */
     private fun shouldEnforceUpdateSecurity(uri: Uri): Boolean {
         val whitelist = listOf(NOTES_ID_CARDS_ORD, MODELS_ID, MODELS_ID_TEMPLATES_ID, SCHEDULE, DECK_SELECTED)
-        return isMarshmallow || !whitelist.contains(sUriMatcher.match(uri)) || knownRogueClient()
+        return !whitelist.contains(sUriMatcher.match(uri)) || knownRogueClient()
     }
 
     override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, order: String?): Cursor? {
