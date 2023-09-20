@@ -20,7 +20,6 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.utils.message
 import com.ichi2.utils.negativeButton
 import com.ichi2.utils.positiveButton
@@ -33,7 +32,10 @@ open class PageChromeClient : WebChromeClient() {
         message: String?,
         result: JsResult?
     ): Boolean {
-        UIUtils.showThemedToast(view.context, message ?: "", shortLength = true)
+        AlertDialog.Builder(view.context).show {
+            message?.let { message(text = message) }
+            positiveButton(R.string.dialog_ok) { result?.confirm() }
+        }
         return true
     }
 
