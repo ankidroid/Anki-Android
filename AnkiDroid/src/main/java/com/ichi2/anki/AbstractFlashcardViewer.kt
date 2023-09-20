@@ -1644,7 +1644,7 @@ abstract class AbstractFlashcardViewer :
         launchCatchingTask {
             val changed = withProgress {
                 undoableOp {
-                    sched.buryNotes(listOf(currentCard!!.id))
+                    sched.buryNotes(listOf(currentCard!!.nid))
                 }
             }
             showSnackbar(TR.studyingCardsBuried(changed.count), Reviewer.ACTION_SNACKBAR_TIME)
