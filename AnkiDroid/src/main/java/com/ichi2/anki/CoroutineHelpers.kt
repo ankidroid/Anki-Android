@@ -101,21 +101,6 @@ fun getCoroutineExceptionHandler(activity: Activity, errorMessage: String? = nul
     }
 
 /**
- * Calls [runBlocking] while catching errors with [runCatchingTask].
- * This routine has a niche use case - it allows us to integrate coroutines into NanoHTTPD, which runs
- * request handlers in a synchronous context on a background thread. In most cases, you will want
- * to use [FragmentActivity.launchCatchingTask] instead.
- */
-fun <T> FragmentActivity.runBlockingCatching(
-    errorMessage: String? = null,
-    block: suspend CoroutineScope.() -> T?
-): T? {
-    return runBlocking {
-        runCatchingTask(errorMessage) { block() }
-    }
-}
-
-/**
  * Launch a job that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.

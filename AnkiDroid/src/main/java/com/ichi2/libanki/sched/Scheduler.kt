@@ -790,3 +790,13 @@ private fun intervalForFilteredState(filtered: SchedulingState.Filtered): Long {
         SchedulingState.Filtered.KindCase.KIND_NOT_SET, null -> TODO("invalid filtered state")
     }
 }
+
+fun Collection.computeFsrsWeightsRaw(input: ByteArray): ByteArray {
+    return backend.computeFsrsWeightsRaw(input = input)
+}
+fun Collection.computeOptimalRetentionRaw(input: ByteArray): ByteArray {
+    return backend.computeOptimalRetentionRaw(input = input)
+}
+fun Collection.evaluateWeightsRaw(input: ByteArray): ByteArray {
+    return backend.evaluateWeightsRaw(input = input)
+}
