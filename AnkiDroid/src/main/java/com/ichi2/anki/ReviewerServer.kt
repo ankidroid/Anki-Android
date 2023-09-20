@@ -63,10 +63,9 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
         } else if (session.method == Method.POST) {
             val inputBytes = getSessionBytes(session)
             if (uri.startsWith(ANKI_PREFIX)) {
-                val data: ByteArray? = activity.runBlockingCatching {
+                return buildResponse {
                     handlePostRequest(uri.substring(ANKI_PREFIX.length), inputBytes)
                 }
-                return newChunkedResponse(data)
             }
         }
 
@@ -74,12 +73,12 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
         return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "")
     }
 
-    private fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray? {
+    private fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray {
         return when (methodName) {
             "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
             "setSchedulingStates" -> setSchedulingStates(bytes)
             else -> {
-                Timber.w("Unhandled Anki request: %s", methodName); null
+                throw Exception("unhandled request: $methodName")
             }
         }
     }

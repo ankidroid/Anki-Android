@@ -18,12 +18,17 @@
 package com.ichi2.anki.pages
 
 import androidx.fragment.app.FragmentActivity
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.importCsvRaw
-import com.ichi2.anki.runBlockingCatching
 import com.ichi2.libanki.*
+import com.ichi2.libanki.sched.computeFsrsWeightsRaw
+import com.ichi2.libanki.sched.computeOptimalRetentionRaw
+import com.ichi2.libanki.sched.evaluateWeightsRaw
 import com.ichi2.libanki.stats.*
 import fi.iki.elonen.NanoHTTPD
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.io.ByteArrayInputStream
 
@@ -56,16 +61,13 @@ open class AnkiServer(
             Timber.d("POST: Requested %s", uri)
             val inputBytes = getSessionBytes(session)
             if (uri.startsWith(ANKI_PREFIX)) {
-                val data: ByteArray? = activity.runBlockingCatching {
-                    handlePostRequest(uri.substring(ANKI_PREFIX.length), inputBytes)
-                }
-                return newChunkedResponse(data)
+                return buildResponse { handlePostRequest(uri.substring(ANKI_PREFIX.length), inputBytes) }
             }
         }
         return newFixedLengthResponse(null)
     }
 
-    private suspend fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray? {
+    private suspend fun handlePostRequest(methodName: String, bytes: ByteArray): ByteArray {
         return when (methodName) {
             "i18nResources" -> withCol { i18nResourcesRaw(bytes) }
             "getGraphPreferences" -> withCol { getGraphPreferencesRaw() }
@@ -80,7 +82,12 @@ open class AnkiServer(
             "getDeckConfig" -> withCol { getDeckConfigRaw(bytes) }
             "getDeckConfigsForUpdate" -> withCol { getDeckConfigsForUpdateRaw(bytes) }
             "updateDeckConfigs" -> activity.updateDeckConfigsRaw(bytes)
-            else -> { Timber.w("Unhandled Anki request: %s", methodName); null }
+            "computeFsrsWeights" -> withCol { computeFsrsWeightsRaw(bytes) }
+            "computeOptimalRetention" -> withCol { computeOptimalRetentionRaw(bytes) }
+            "setWantsAbort" -> CollectionManager.getBackend().setWantsAbortRaw(bytes)
+            "evaluateWeights" -> withCol { evaluateWeightsRaw(bytes) }
+            "latestProgress" -> CollectionManager.getBackend().latestProgressRaw(bytes)
+            else -> { throw Exception("unhandled request: $methodName") }
         }
     }
 
@@ -89,6 +96,19 @@ open class AnkiServer(
         val bytes = ByteArray(contentLength)
         session.inputStream.read(bytes, 0, contentLength)
         return bytes
+    }
+
+    fun buildResponse(
+        block: suspend CoroutineScope.() -> ByteArray
+    ): Response {
+        return try {
+            val data = runBlocking {
+                block()
+            }
+            newChunkedResponse(data)
+        } catch (exc: Exception) {
+            newChunkedResponse(exc.localizedMessage?.encodeToByteArray(), status = Response.Status.INTERNAL_ERROR)
+        }
     }
 
     companion object {
