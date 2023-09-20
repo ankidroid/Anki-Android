@@ -18,6 +18,7 @@ package com.ichi2.libanki
 
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
+import anki.sync.fullUploadOrDownloadRequest
 import anki.sync.syncLoginRequest
 
 fun Collection.syncLogin(username: String, password: String, endpoint: String?): SyncAuth {
@@ -32,14 +33,18 @@ fun Collection.syncLogin(username: String, password: String, endpoint: String?):
     return backend.syncLogin(req)
 }
 
-fun Collection.syncCollection(auth: SyncAuth): SyncCollectionResponse {
-    return backend.syncCollection(input = auth)
+fun Collection.syncCollection(auth: SyncAuth, media: Boolean): SyncCollectionResponse {
+    return backend.syncCollection(auth = auth, syncMedia = media)
 }
 
-fun Collection.fullUpload(auth: SyncAuth) {
-    return backend.fullUpload(input = auth)
-}
-
-fun Collection.fullDownload(auth: SyncAuth) {
-    return backend.fullDownload(input = auth)
+fun Collection.fullUploadOrDownload(auth: SyncAuth, upload: Boolean, serverUsn: Int?) {
+    return backend.fullUploadOrDownload(
+        fullUploadOrDownloadRequest {
+            this.auth = auth
+            if (serverUsn != null) {
+                this.serverUsn = serverUsn
+            }
+            this.upload = upload
+        }
+    )
 }

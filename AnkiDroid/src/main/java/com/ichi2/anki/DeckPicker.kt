@@ -1516,6 +1516,10 @@ open class DeckPicker :
         return false
     }
 
+    /** In the conflict case, we need to store the USN received from the initial sync, and reuse
+     it after the user has decided. */
+    var mediaUsnOnConflict: Int? = null
+
     /**
      * The mother of all syncing attempts. This might be called from sync() as first attempt to sync a collection OR
      * from the mSyncConflictResolutionListener if the first attempt determines that a full-sync is required.

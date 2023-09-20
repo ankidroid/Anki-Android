@@ -35,15 +35,12 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.async.AsyncOperation
 import com.ichi2.libanki.createBackup
-import com.ichi2.libanki.fullDownload
-import com.ichi2.libanki.fullUpload
+import com.ichi2.libanki.fullUploadOrDownload
 import com.ichi2.libanki.syncCollection
 import com.ichi2.libanki.syncLogin
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
@@ -141,8 +138,8 @@ fun DeckPicker.handleNewSync(
     launchCatchingTask {
         try {
             when (conflict) {
-                ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, syncMedia)
-                ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, syncMedia)
+                ConflictResolution.FULL_DOWNLOAD -> handleDownload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
+                ConflictResolution.FULL_UPLOAD -> handleUpload(deckPicker, auth, deckPicker.mediaUsnOnConflict)
                 null -> {
                     handleNormalSync(deckPicker, auth, syncMedia)
                 }
@@ -201,7 +198,7 @@ private suspend fun handleNormalSync(
         },
         onCancel = ::cancelSync
     ) {
-        withCol { syncCollection(auth) }
+        withCol { syncCollection(auth, media = syncMedia) }
     }
 
     if (output.hasNewEndpoint()) {
@@ -209,6 +206,7 @@ private suspend fun handleNormalSync(
             putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
         }
     }
+    val mediaUsn = if (syncMedia) { output.serverMediaUsn } else { null }
 
     when (output.required) {
         // a successful sync returns this value
@@ -217,20 +215,21 @@ private suspend fun handleNormalSync(
             withCol { _loadScheduler() }
             deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
             deckPicker.refreshState()
-            // kick off media sync - future implementations may want to run this in the
-            // background instead
-            if (syncMedia) handleMediaSync(deckPicker, auth)
+            if (syncMedia) {
+                monitorMediaSync(deckPicker)
+            }
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_DOWNLOAD -> {
-            handleDownload(deckPicker, auth, syncMedia)
+            handleDownload(deckPicker, auth, mediaUsn)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_UPLOAD -> {
-            handleUpload(deckPicker, auth, syncMedia)
+            handleUpload(deckPicker, auth, mediaUsn)
         }
 
         SyncCollectionResponse.ChangesRequired.FULL_SYNC -> {
+            deckPicker.mediaUsnOnConflict = mediaUsn
             deckPicker.showSyncErrorDialog(SyncErrorDialog.DIALOG_SYNC_CONFLICT_RESOLUTION)
         }
 
@@ -254,7 +253,7 @@ private fun fullDownloadProgress(title: String): ProgressContext.() -> Unit {
 private suspend fun handleDownload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    syncMedia: Boolean
+    mediaUsn: Int?
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncDownloadingFromAnkiweb()),
@@ -268,13 +267,15 @@ private suspend fun handleDownload(
                     waitForCompletion = true
                 )
                 close(downgrade = false, forFullSync = true)
-                fullDownload(auth)
+                fullUploadOrDownload(auth, upload = false, serverUsn = mediaUsn)
             } finally {
                 reopen(afterFullSync = true)
             }
         }
         deckPicker.refreshState()
-        if (syncMedia) handleMediaSync(deckPicker, auth)
+        if (mediaUsn != null) {
+            monitorMediaSync(deckPicker)
+        }
     }
 
     Timber.i("Full Download Completed")
@@ -284,7 +285,7 @@ private suspend fun handleDownload(
 private suspend fun handleUpload(
     deckPicker: DeckPicker,
     auth: SyncAuth,
-    syncMedia: Boolean
+    mediaUsn: Int?
 ) {
     deckPicker.withProgress(
         extractProgress = fullDownloadProgress(TR.syncUploadingToAnkiweb()),
@@ -293,13 +294,15 @@ private suspend fun handleUpload(
         withCol {
             close(downgrade = false, forFullSync = true)
             try {
-                fullUpload(auth)
+                fullUploadOrDownload(auth, upload = true, serverUsn = mediaUsn)
             } finally {
                 reopen(afterFullSync = true)
             }
         }
         deckPicker.refreshState()
-        if (syncMedia) handleMediaSync(deckPicker, auth)
+        if (mediaUsn != null) {
+            monitorMediaSync(deckPicker)
+        }
     }
     Timber.i("Full Upload Completed")
     deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")
@@ -327,9 +330,8 @@ fun DeckPicker.shouldFetchMedia(preferences: SharedPreferences): Boolean {
         (shouldFetchMedia == onlyIfUnmetered && !NetworkUtils.isActiveNetworkMetered())
 }
 
-private suspend fun handleMediaSync(
-    deckPicker: DeckPicker,
-    auth: SyncAuth
+private suspend fun monitorMediaSync(
+    deckPicker: DeckPicker
 ) {
     val backend = CollectionManager.getBackend()
     // TODO: show this in a way that is clear it can be continued in background,
@@ -341,26 +343,25 @@ private suspend fun handleMediaSync(
         .setPositiveButton("Background") { _, _ -> }
         .setOnCancelListener { cancelMediaSync(backend) }
         .show()
-    try {
-        backend.withProgress(
-            extractProgress = {
-                if (progress.hasMediaSync()) {
-                    text =
-                        progress.mediaSync.run { "\n$added\n$removed\n$checked" }
+
+    deckPicker.launchCatchingTask {
+        try {
+            while (true) {
+                // this will throw if the sync exited with an error
+                val resp = CollectionManager.getBackend().mediaSyncStatus()
+                if (!resp.active) {
+                    deckPicker.onMediaSyncCompleted(SyncCompletion(isSuccess = true))
+                    return@launchCatchingTask
                 }
-            },
-            updateUi = {
+                val text = resp.progress.run { "\n$added\n$removed\n$checked" }
                 dialog.setMessage(text)
             }
-        ) {
-            withContext(Dispatchers.IO) {
-                backend.syncMedia(auth)
-            }
+        } catch (exc: Exception) {
+            deckPicker.onMediaSyncCompleted(SyncCompletion(isSuccess = false))
+        } finally {
+            dialog.dismiss()
         }
-    } finally {
-        dialog.dismiss()
     }
-    deckPicker.onMediaSyncCompleted(SyncCompletion(isSuccess = true))
 }
 
 /**
