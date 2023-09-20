@@ -75,7 +75,7 @@ open class AnkiDroidApp : Application() {
             Os.setenv("PLATFORM", syncPlatform(), false)
             // enable debug logging of sync actions
             if (BuildConfig.DEBUG) {
-                Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug", false)
+                Os.setenv("RUST_LOG", "info,anki::sync=debug,anki::media=debug,fsrs=error", false)
             }
         } catch (_: Exception) {
         }

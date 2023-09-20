@@ -127,11 +127,11 @@ object CollectionManager {
      * thread safe and can be accessed concurrently, if another thread closes the collection
      * and you call a routine that expects an open collection, it will result in an error.
      */
-    suspend fun getBackend(): Backend {
-        return withQueue {
-            ensureBackendInner()
-            backend!!
+    fun getBackend(): Backend {
+        if (backend == null) {
+            runBlocking { withQueue { ensureBackendInner() } }
         }
+        return backend!!
     }
 
     /**
@@ -139,20 +139,14 @@ object CollectionManager {
      */
     val TR: Translations
         get() {
-            if (backend == null) {
-                runBlocking { ensureBackend() }
-            }
             // we bypass the lock here so that translations are fast - conflicts are unlikely,
             // as the backend is only ever changed on language preference change or schema switch
-            return backend!!.tr
+            return getBackend().tr
         }
 
     fun compareAnswer(expected: String, given: String): String {
-        if (backend == null) {
-            runBlocking { ensureBackend() }
-        }
         // bypass the lock, as the type answer code is heavily nested in non-suspend funs
-        return backend!!.compareAnswer(expected, given)
+        return getBackend().compareAnswer(expected, given)
     }
 
     /**
