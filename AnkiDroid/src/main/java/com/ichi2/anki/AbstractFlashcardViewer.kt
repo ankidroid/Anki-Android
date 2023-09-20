@@ -1629,7 +1629,7 @@ abstract class AbstractFlashcardViewer :
         launchCatchingTask {
             val changed = withProgress {
                 undoableOp {
-                    sched.suspendNotes(listOf(currentCard!!.id))
+                    sched.suspendNotes(listOf(currentCard!!.nid))
                 }
             }
             val count = changed.count
