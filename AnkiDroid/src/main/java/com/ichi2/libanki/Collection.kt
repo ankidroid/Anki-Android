@@ -119,7 +119,7 @@ open class Collection(
 
     val mod: Long = db.queryLongScalar("select mod from col")
 
-    val crt: Long = db.queryLongScalar("select crt from col")
+    var crt: Long = db.queryLongScalar("select crt from col")
 
     val scm: Long = db.queryLongScalar("select scm from col")
 
