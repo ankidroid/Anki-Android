@@ -36,10 +36,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 sealed interface State {
-    object Fetching : State
+    data object Fetching : State
     class Fetched(val backupLimits: BackupLimits) : State
     sealed interface Error : State {
-        object NoCollection : Error
+        data object NoCollection : Error
         class Exception(val exception: kotlin.Exception) : Error
     }
 }

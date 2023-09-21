@@ -145,7 +145,7 @@ sealed interface AnkiDroidFolder {
      * No permission dialog is required.
      * Google will not allow [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE], so this is default on the Play Store.
      */
-    object AppPrivateFolder : AnkiDroidFolder
+    data object AppPrivateFolder : AnkiDroidFolder
 }
 
 /**

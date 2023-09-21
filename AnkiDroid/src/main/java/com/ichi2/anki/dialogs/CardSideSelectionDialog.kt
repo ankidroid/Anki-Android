@@ -23,7 +23,7 @@ import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 
-/** Allows selecting between [CardSide.QUESTION], [CardSide.ANSWER] or [CardSide.BOTH0] */
+/** Allows selecting between [CardSide.QUESTION], [CardSide.ANSWER] or [CardSide.BOTH] */
 class CardSideSelectionDialog {
 
     companion object {

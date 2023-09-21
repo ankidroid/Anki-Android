@@ -47,8 +47,8 @@ open class AsyncDialogBuilder(private val alertDialogBuilder: AlertDialog.Builde
     }
 
     sealed interface CheckedItems {
-        object None : CheckedItems
-        object All : CheckedItems
+        data object None : CheckedItems
+        data object All : CheckedItems
         class Some(val checkedItems: BooleanArray) : CheckedItems
     }
 
@@ -104,7 +104,7 @@ class CompoundDialogBuilder(private val alertDialogBuilder: AlertDialog.Builder)
 }
 
 sealed interface DialogResult {
-    object Cancel : DialogResult
+    data object Cancel : DialogResult
 
     interface Ok : DialogResult {
         object Simple : Ok

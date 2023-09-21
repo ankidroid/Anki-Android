@@ -57,7 +57,7 @@ data class ValidatedMigrationSourceAndDestination(val unscopedSourceDirectory: D
 /** Overrides for testing. If root is provided, a subfolder is automatically created in it.
  * If subfolder is provided, the exact folder provided is used. */
 sealed class DestFolderOverride {
-    object None : DestFolderOverride()
+    data object None : DestFolderOverride()
     class Root(val folder: File) : DestFolderOverride()
     class Subfolder(val folder: File) : DestFolderOverride()
 }

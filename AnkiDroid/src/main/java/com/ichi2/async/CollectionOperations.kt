@@ -30,7 +30,7 @@ import java.util.*
 /**
  * This file contains functions that have been migrated from [CollectionTask]
  * Remove this comment when migration has been completed
- * TODO: All functions associated to Collection can be converted to extension function to avoid redundant parameter [col] in each.
+ * TODO: All functions associated to Collection can be converted to extension function to avoid redundant parameter  [col] in each.
  */
 
 /**

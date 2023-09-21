@@ -117,17 +117,13 @@ open class Collection(
     private var mStartTime: Long
     private var mStartReps: Int
 
-    var mod: Long = 0
-        get() = db.queryLongScalar("select mod from col")
+    val mod: Long = db.queryLongScalar("select mod from col")
 
-    var crt: Long = 0
-        get() = db.queryLongScalar("select crt from col")
+    val crt: Long = db.queryLongScalar("select crt from col")
 
-    var scm: Long = 0
-        get() = db.queryLongScalar("select scm from col")
+    val scm: Long = db.queryLongScalar("select scm from col")
 
-    var lastSync: Long = 0
-        get() = db.queryLongScalar("select ls from col")
+    val lastSync: Long = db.queryLongScalar("select ls from col")
 
     fun usn(): Int {
         return -1
