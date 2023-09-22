@@ -647,7 +647,7 @@ class Notetypes(val col: Collection) {
         fun fieldMap(m: com.ichi2.libanki.NotetypeJson): Map<String, Pair<Int, JSONObject>> {
             val flds = m.getJSONArray("flds")
             // TreeMap<Integer, String> map = new TreeMap<Integer, String>();
-            val result: MutableMap<String, Pair<Int, JSONObject>> = HashUtil.HashMapInit(flds.length())
+            val result: MutableMap<String, Pair<Int, JSONObject>> = HashUtil.hashMapInit(flds.length())
             for (f in flds.jsonObjectIterable()) {
                 result[f.getString("name")] = Pair(f.getInt("ord"), f)
             }

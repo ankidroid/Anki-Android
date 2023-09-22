@@ -22,7 +22,7 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.av_tags_to_native
+import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
@@ -53,14 +53,14 @@ class TemplateManager {
     data class TemplateReplacement(val field_name: String, var current_text: String, val filters: List<String>)
     data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
         companion object {
-            fun from_proto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
-                val qnodes = nodes_from_proto(out.questionNodesList)
-                val anodes = nodes_from_proto(out.answerNodesList)
+            fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
+                val qnodes = nodesFromProto(out.questionNodesList)
+                val anodes = nodesFromProto(out.answerNodesList)
 
                 return PartiallyRenderedCard(qnodes, anodes)
             }
 
-            fun nodes_from_proto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
+            fun nodesFromProto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
                 val results: TemplateReplacementList = mutableListOf()
                 for (node in nodes) {
                     if (node.valueCase == anki.card_rendering.RenderedTemplateNode.ValueCase.TEXT) {
@@ -82,7 +82,7 @@ class TemplateManager {
                 return results
             }
 
-            fun av_tag_to_native(tag: anki.card_rendering.AVTag): AvTag {
+            fun avTagToNative(tag: anki.card_rendering.AVTag): AvTag {
                 val value = tag.valueCase
                 return if (value == anki.card_rendering.AVTag.ValueCase.SOUND_OR_VIDEO) {
                     SoundOrVideoTag(filename = tag.soundOrVideo)
@@ -97,8 +97,8 @@ class TemplateManager {
                 }
             }
 
-            fun av_tags_to_native(tags: List<anki.card_rendering.AVTag>): List<AvTag> {
-                return tags.map { av_tag_to_native(it) }.toList()
+            fun avTagsToNative(tags: List<anki.card_rendering.AVTag>): List<AvTag> {
+                return tags.map { avTagToNative(it) }.toList()
             }
         }
     }
@@ -186,22 +186,22 @@ class TemplateManager {
         fun card() = _card
 
         fun note() = _note
-        fun note_type() = _note_type
+        fun noteType() = _note_type
 
         @RustCleanup("legacy")
         fun qfmt(): String {
-            return templates_for_card(card(), _browser).first
+            return templatesForCard(card(), _browser).first
         }
 
         @RustCleanup("legacy")
         fun afmt(): String {
-            return templates_for_card(card(), _browser).second
+            return templatesForCard(card(), _browser).second
         }
 
         fun render(): TemplateRenderOutput {
             val partial: PartiallyRenderedCard
             try {
-                partial = _partially_render()
+                partial = partiallyRender()
             } catch (e: BackendTemplateException) {
                 return TemplateRenderOutput(
                     question_text = e.localizedMessage ?: e.toString(),
@@ -211,11 +211,11 @@ class TemplateManager {
                 )
             }
 
-            val qtext = apply_custom_filters(partial.qnodes, this, front_side = null)
+            val qtext = applyCustomFilters(partial.qnodes, this, front_side = null)
             val qout = col().backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
-            val atext = apply_custom_filters(partial.anodes, this, front_side = qout.text)
+            val atext = applyCustomFilters(partial.anodes, this, front_side = qout.text)
             val aout = col().backend.extractAvTags(text = atext, questionSide = false)
             var aoutText = aout.text
 
@@ -228,16 +228,16 @@ class TemplateManager {
             val output = TemplateRenderOutput(
                 question_text = qoutText,
                 answer_text = aoutText,
-                question_av_tags = av_tags_to_native(qout.avTagsList),
-                answer_av_tags = av_tags_to_native(aout.avTagsList),
-                css = note_type().getString("css")
+                question_av_tags = avTagsToNative(qout.avTagsList),
+                answer_av_tags = avTagsToNative(aout.avTagsList),
+                css = noteType().getString("css")
             )
 
             return output
         }
 
         @RustCleanup("Remove when DroidBackend supports named arguments")
-        fun _partially_render(): PartiallyRenderedCard {
+        fun partiallyRender(): PartiallyRenderedCard {
             val proto = col().run {
                 if (_template != null) {
                     // card layout screen
@@ -253,7 +253,7 @@ class TemplateManager {
                     backend.renderExistingCard(_card.id, _browser, true)
                 }
             }
-            return PartiallyRenderedCard.from_proto(proto)
+            return PartiallyRenderedCard.fromProto(proto)
         }
 
         /** Stores the rendered templates and extracted AV tags. */
@@ -269,12 +269,12 @@ class TemplateManager {
             val css: String = ""
         ) {
 
-            fun question_and_style() = "<style>$css</style>$question_text"
-            fun answer_and_style() = "<style>$css</style>$answer_text"
+            fun questionAndStyle() = "<style>$css</style>$question_text"
+            fun answerAndStyle() = "<style>$css</style>$answer_text"
         }
 
         @RustCleanup("legacy")
-        fun templates_for_card(card: Card, browser: Boolean): Pair<String, String> {
+        fun templatesForCard(card: Card, browser: Boolean): Pair<String, String> {
             val template = card.template()
             var a: String? = null
             var q: String? = null
@@ -291,7 +291,7 @@ class TemplateManager {
         }
 
         /** Complete rendering by applying any pending custom filters. */
-        fun apply_custom_filters(
+        fun applyCustomFilters(
             rendered: TemplateReplacementList,
             @Suppress("unused_parameter") ctx: TemplateRenderContext,
             front_side: String?

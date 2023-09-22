@@ -87,7 +87,7 @@ class NotetypeJson : JSONObject {
     @KotlinCleanup("filter")
     fun nonEmptyFields(sfld: Array<String>): Set<String> {
         val fieldNames = fieldsNames
-        val nonemptyFields: MutableSet<String> = HashUtil.HashSetInit(sfld.size)
+        val nonemptyFields: MutableSet<String> = HashUtil.hashSetInit(sfld.size)
         for (i in sfld.indices) {
             if (sfld[i].trim { it <= ' ' }.isNotEmpty()) {
                 nonemptyFields.add(fieldNames[i])

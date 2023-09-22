@@ -27,12 +27,12 @@ object HashUtil {
         return Math.max((size / .75f).toInt() + 1, 16)
     }
 
-    fun <T> HashSetInit(size: Int): HashSet<T> {
+    fun <T> hashSetInit(size: Int): HashSet<T> {
         return HashSet(capacity(size))
     }
 
     @KotlinCleanup("return mutableMap")
-    fun <T, U> HashMapInit(size: Int): HashMap<T, U> {
+    fun <T, U> hashMapInit(size: Int): HashMap<T, U> {
         return HashMap(capacity(size))
     }
 }

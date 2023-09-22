@@ -3,8 +3,7 @@ package com.ichi2.anki
 
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.Note
-import com.ichi2.utils.HashUtil.HashSetInit
-import java.util.*
+import com.ichi2.utils.HashUtil.hashSetInit
 
 /**
  * Utilities for working on multiple cards
@@ -14,7 +13,7 @@ object CardUtils {
      * @return List of corresponding notes without duplicates, even if the input list has multiple cards of the same note.
      */
     fun getNotes(cards: Collection<Card>): Set<Note> {
-        val notes: MutableSet<Note> = HashSetInit(cards.size)
+        val notes: MutableSet<Note> = hashSetInit(cards.size)
         for (card in cards) {
             notes.add(card.note())
         }

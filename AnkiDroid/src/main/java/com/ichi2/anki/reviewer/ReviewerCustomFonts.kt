@@ -20,7 +20,7 @@ import android.content.Context
 import com.ichi2.anki.AnkiFont
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Utils
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashUtil.hashMapInit
 
 class ReviewerCustomFonts(context: Context) {
     private val mCustomStyle: String
@@ -119,7 +119,7 @@ class ReviewerCustomFonts(context: Context) {
          */
         private fun getCustomFontsMap(context: Context): Map<String?, AnkiFont> {
             val fonts = Utils.getCustomFonts(context)
-            val customFontsMap: MutableMap<String?, AnkiFont> = HashMapInit(fonts.size)
+            val customFontsMap: MutableMap<String?, AnkiFont> = hashMapInit(fonts.size)
             for (f in fonts) {
                 customFontsMap[f.name] = f
             }

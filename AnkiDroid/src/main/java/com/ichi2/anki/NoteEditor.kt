@@ -1724,7 +1724,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private val toolbarButtons: ArrayList<CustomToolbarButton>
         get() {
             val set = this.sharedPrefs()
-                .getStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, HashUtil.HashSetInit(0))
+                .getStringSet(PREF_NOTE_EDITOR_CUSTOM_BUTTONS, HashUtil.hashSetInit(0))
             return CustomToolbarButton.fromStringSet(set!!)
         }
 
@@ -1976,13 +1976,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 }
                 // Initialize mapping between fields of old model -> new model
                 val itemsLength = mEditorNote!!.items().size
-                mModelChangeFieldMap = HashUtil.HashMapInit(itemsLength)
+                mModelChangeFieldMap = HashUtil.hashMapInit(itemsLength)
                 for (i in 0 until itemsLength) {
                     mModelChangeFieldMap!![i] = i
                 }
                 // Initialize mapping between cards new model -> old model
                 val templatesLength = tmpls.length()
-                mModelChangeCardMap = HashUtil.HashMapInit(templatesLength)
+                mModelChangeCardMap = HashUtil.hashMapInit(templatesLength)
                 for (i in 0 until templatesLength) {
                     if (i < mEditorNote!!.numberOfCards()) {
                         mModelChangeCardMap!![i] = i

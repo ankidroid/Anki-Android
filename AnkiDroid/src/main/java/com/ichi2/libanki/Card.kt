@@ -222,11 +222,11 @@ open class Card : Cloneable {
     }
 
     fun q(reload: Boolean = false, browser: Boolean = false): String {
-        return renderOutput(reload, browser).question_and_style()
+        return renderOutput(reload, browser).questionAndStyle()
     }
 
     fun a(): String {
-        return renderOutput().answer_and_style()
+        return renderOutput().answerAndStyle()
     }
 
     @RustCleanup("legacy")

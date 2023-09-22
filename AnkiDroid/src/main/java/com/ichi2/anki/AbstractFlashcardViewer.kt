@@ -96,7 +96,7 @@ import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.ClipboardUtil.getText
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
 import com.ichi2.utils.HandlerUtils.newHandler
-import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.HashUtil.hashSetInit
 import com.ichi2.utils.WebViewDebugging.initializeDebugging
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.RustCleanup
@@ -1990,10 +1990,10 @@ abstract class AbstractFlashcardViewer :
      * COULD_BE_BETTER: Make base class static and move this out of the CardViewer  */
     internal inner class LinkDetectingGestureDetector : MyGestureDetector() {
         /** A list of events to process when listening to WebView touches   */
-        private val mDesiredTouchEvents = HashSetInit<MotionEvent>(2)
+        private val mDesiredTouchEvents = hashSetInit<MotionEvent>(2)
 
         /** A list of events we sent to the WebView (to block double-processing)  */
-        private val mDispatchedTouchEvents = HashSetInit<MotionEvent>(2)
+        private val mDispatchedTouchEvents = hashSetInit<MotionEvent>(2)
         override fun onFillFlashcard() {
             Timber.d("Removing pending touch events for gestures")
             mDesiredTouchEvents.clear()
