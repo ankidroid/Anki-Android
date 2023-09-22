@@ -127,6 +127,7 @@ abstract class AbstractFlashcardViewer :
     private var mReplayOnTtsInit = false
     private var mAnkiDroidJsAPI: AnkiDroidJsAPI? = null
     var server: ReviewerServer? = null
+    private var mUndoSnackbar: Snackbar? = null
 
     /** Can be used to wait until async calls in onCreate() have finished. */
     var asyncCreateJob: Job? = null
@@ -830,10 +831,15 @@ abstract class AbstractFlashcardViewer :
     private fun deleteNoteWithoutConfirmation() {
         val cardId = currentCard!!.id
         launchCatchingTask {
-            withProgress() {
+            val noteCount = withProgress("Deleting the note") {
                 undoableOp {
                     removeNotes(cids = listOf(cardId))
-                }
+                }.count
+            }
+            val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
+            showSnackbar(deletedMessage, Snackbar.LENGTH_LONG) {
+                setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
+                mUndoSnackbar = this
             }
         }
     }
