@@ -50,7 +50,7 @@ import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashUtil.hashMapInit
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.asLocalizedMessage
 import org.json.JSONArray
@@ -298,7 +298,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     private val keyValueMap: HashMap<Int, String>
         get() {
             val res = resources
-            val keyValueMap = HashMapInit<Int, String>(10)
+            val keyValueMap = hashMapInit<Int, String>(10)
             keyValueMap[STANDARD.value] = res.getString(R.string.custom_study)
             keyValueMap[STUDY_NEW.value] = res.getString(R.string.custom_study_increase_new_limit)
             keyValueMap[STUDY_REV.value] = res.getString(R.string.custom_study_increase_review_limit)

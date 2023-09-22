@@ -33,7 +33,7 @@ import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
 import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.libanki.Consts
-import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.HashUtil.hashSetInit
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
@@ -206,7 +206,7 @@ object PreferenceUpgradeService {
 
             private fun getNewToolbarButtons(preferences: SharedPreferences): ArrayList<CustomToolbarButton> {
                 // get old toolbar prefs
-                val set = preferences.getStringSet("note_editor_custom_buttons", HashSetInit<String>(0)) as Set<String?>
+                val set = preferences.getStringSet("note_editor_custom_buttons", hashSetInit<String>(0)) as Set<String?>
                 // new list with buttons size
                 val buttons = ArrayList<CustomToolbarButton>(set.size)
 

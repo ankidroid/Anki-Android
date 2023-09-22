@@ -16,7 +16,7 @@
 
 package com.ichi2.themes
 
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashUtil.hashMapInit
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
@@ -37,7 +37,7 @@ object HtmlColors {
     private val fClozeStylePattern = Pattern.compile("(.cloze\\s*\\{[^}]*color:\\s*#)[0-9a-f]{6}(;[^}]*\\})", Pattern.CASE_INSENSITIVE)
     private fun nameToHex(name: String): String? {
         if (sColorsMap == null) {
-            sColorsMap = HashMapInit(fColorsRawList.size)
+            sColorsMap = hashMapInit(fColorsRawList.size)
             var i = 0
             while (i < fColorsRawList.size) {
                 (sColorsMap as HashMap<String, String>)[fColorsRawList[i].lowercase(Locale.US)] = fColorsRawList[i + 1].lowercase(Locale.US)

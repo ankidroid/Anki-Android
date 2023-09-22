@@ -22,14 +22,14 @@ import android.view.MenuItem
 import androidx.annotation.IdRes
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashUtil.hashMapInit
 
 // loads of unboxing issues, which are safe
 class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
     /**
      * Custom button allocation
      */
-    protected val mCustomButtons: MutableMap<Int, Int> = HashMapInit(25) // setup's size
+    protected val mCustomButtons: MutableMap<Int, Int> = hashMapInit(25) // setup's size
 
     fun setup(preferences: SharedPreferences) {
         // NOTE: the default values below should be in sync with preferences_custom_buttons.xml and reviewer.xml
