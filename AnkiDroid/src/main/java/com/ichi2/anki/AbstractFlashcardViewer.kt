@@ -91,7 +91,6 @@ import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.getResFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*
-import com.ichi2.utils.AdaptionUtil.hasWebBrowser
 import com.ichi2.utils.AssetHelper.guessMimeType
 import com.ichi2.utils.ClipboardUtil.getText
 import com.ichi2.utils.HandlerUtils.executeFunctionWithDelay
@@ -2186,13 +2185,6 @@ abstract class AbstractFlashcardViewer :
             val result = loader!!.shouldInterceptRequest(url)
             if (result != null) {
                 return result
-            }
-            if (!hasWebBrowser(baseContext)) {
-                val scheme = url.scheme!!.trim { it <= ' ' }
-                if ("http".equals(scheme, ignoreCase = true) || "https".equals(scheme, ignoreCase = true)) {
-                    val response = resources.getString(R.string.no_outgoing_link_in_cardbrowser)
-                    return WebResourceResponse("text/html", "utf-8", ByteArrayInputStream(response.toByteArray()))
-                }
             }
             if (url.toString().startsWith("file://")) {
                 if (isLoadedFromProtocolRelativeUrl(request.url.toString())) {
