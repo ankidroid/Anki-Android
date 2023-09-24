@@ -98,6 +98,11 @@ abstract class NavigationDrawerActivity :
         setContentView(closableDrawerLayout)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        backPressed()
+    }
+
     @get:LayoutRes
     private val navigationDrawerLayout: Int
         get() = if (fitsSystemWindows()) R.layout.navigation_drawer_layout else R.layout.navigation_drawer_layout_fullscreen
@@ -255,13 +260,12 @@ abstract class NavigationDrawerActivity :
             }
         }
 
-    @Suppress("deprecation") // onBackPressed
-    override fun onBackPressed() {
+    private fun backPressed() {
         if (isDrawerOpen) {
             Timber.i("Back key pressed")
             closeDrawer()
         } else {
-            super.onBackPressed()
+            finishAfterTransition()
         }
     }
 
