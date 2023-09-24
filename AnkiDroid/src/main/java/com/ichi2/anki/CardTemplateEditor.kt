@@ -129,6 +129,7 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         // Disable the home icon
         enableToolbar()
         startLoadingCollection()
+        backPressed()
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -143,18 +144,17 @@ open class CardTemplateEditor : AnkiActivity(), DeckSelectionListener {
         }
     }
 
-    @Suppress("deprecation") // onBackPressed
-    override fun onBackPressed() {
+    private fun backPressed() {
         if (modelHasChanged()) {
             showDiscardChangesDialog()
         } else {
-            super.onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
             return true
         }
         return super.onOptionsItemSelected(item)
