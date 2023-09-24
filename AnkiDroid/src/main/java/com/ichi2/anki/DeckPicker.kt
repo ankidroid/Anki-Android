@@ -37,6 +37,7 @@ import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
 import android.widget.*
+import androidx.activity.addCallback
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -418,6 +419,8 @@ open class DeckPicker :
         Onboarding.DeckPicker(this, mRecyclerViewLayoutManager).onCreate()
 
         launchShowingHidingEssentialFileMigrationProgressDialog()
+
+        backPressed()
     }
 
     private fun hasShownAppIntro(): Boolean {
@@ -1052,30 +1055,30 @@ open class DeckPicker :
         }
     }
 
-    @Suppress("DEPRECATION") // onBackPressed
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        val preferences = baseContext.sharedPrefs()
-        if (isDrawerOpen) {
-            super.onBackPressed()
-        } else {
-            Timber.i("Back key pressed")
-            if (mFloatingActionMenu.isFABOpen) {
-                mFloatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
+    private fun backPressed() {
+        onBackPressedDispatcher.addCallback(this) {
+            val preferences = baseContext.sharedPrefs()
+            if (isDrawerOpen) {
+                finishAfterTransition()
             } else {
-                if (!preferences.getBoolean(
-                        "exitViaDoubleTapBack",
-                        false
-                    ) || mBackButtonPressedToExit
-                ) {
-                    automaticSync()
-                    finishWithAnimation()
+                Timber.i("Back key pressed")
+                if (mFloatingActionMenu.isFABOpen) {
+                    mFloatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = true)
                 } else {
-                    showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
-                }
-                mBackButtonPressedToExit = true
-                HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) {
-                    mBackButtonPressedToExit = false
+                    if (!preferences.getBoolean(
+                            "exitViaDoubleTapBack",
+                            false
+                        ) || mBackButtonPressedToExit
+                    ) {
+                        automaticSync()
+                        finishWithAnimation()
+                    } else {
+                        showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
+                    }
+                    mBackButtonPressedToExit = true
+                    HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) {
+                        mBackButtonPressedToExit = false
+                    }
                 }
             }
         }
