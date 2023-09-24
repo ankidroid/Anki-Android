@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.webkit.*
+import androidx.activity.addCallback
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -107,6 +108,7 @@ class SharedDecksActivity : AnkiActivity() {
         }
 
         mWebView.webViewClient = mWebViewClient
+        backPressed()
     }
 
     /**
@@ -116,32 +118,35 @@ class SharedDecksActivity : AnkiActivity() {
      * If user can go back in WebView, navigate to previous webpage.
      * Otherwise, close the WebView.
      */
-    @Suppress("deprecation") // onBackPressed
-    override fun onBackPressed() {
-        when {
-            sharedDecksDownloadFragmentExists() -> {
-                supportFragmentManager.findFragmentByTag(SHARED_DECKS_DOWNLOAD_FRAGMENT)?.let {
-                    if ((it as SharedDecksDownloadFragment).isDownloadInProgress) {
-                        Timber.i("Back pressed when download is in progress, show cancellation confirmation dialog")
-                        // Show cancel confirmation dialog if download is in progress
-                        it.showCancelConfirmationDialog()
-                    } else {
-                        Timber.i("Back pressed when download is not in progress but download screen is open, close fragment")
-                        // Remove fragment
-                        supportFragmentManager.commit {
-                            remove(it)
+    private fun backPressed() {
+        onBackPressedDispatcher.addCallback(this) {
+            when {
+                sharedDecksDownloadFragmentExists() -> {
+                    supportFragmentManager.findFragmentByTag(SHARED_DECKS_DOWNLOAD_FRAGMENT)?.let {
+                        if ((it as SharedDecksDownloadFragment).isDownloadInProgress) {
+                            Timber.i("Back pressed when download is in progress, show cancellation confirmation dialog")
+                            // Show cancel confirmation dialog if download is in progress
+                            it.showCancelConfirmationDialog()
+                        } else {
+                            Timber.i("Back pressed when download is not in progress but download screen is open, close fragment")
+                            // Remove fragment
+                            supportFragmentManager.commit {
+                                remove(it)
+                            }
                         }
                     }
+                    supportFragmentManager.popBackStackImmediate()
                 }
-                supportFragmentManager.popBackStackImmediate()
-            }
-            mWebView.canGoBack() -> {
-                Timber.i("Back pressed when user can navigate back to other webpages inside WebView")
-                mWebView.goBack()
-            }
-            else -> {
-                Timber.i("Back pressed which would lead to closing of the WebView")
-                super.onBackPressed()
+
+                mWebView.canGoBack() -> {
+                    Timber.i("Back pressed when user can navigate back to other webpages inside WebView")
+                    mWebView.goBack()
+                }
+
+                else -> {
+                    Timber.i("Back pressed which would lead to closing of the WebView")
+                    finishAfterTransition()
+                }
             }
         }
     }
