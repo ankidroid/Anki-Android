@@ -44,10 +44,6 @@
     <string name="add_to_deck_use_current_deck">Use current deck</string>
     <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
 
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">When no font specified on flashcards</string>
-    <string name="override_font_always" comment="Option to always override font">Always</string>
-
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
 

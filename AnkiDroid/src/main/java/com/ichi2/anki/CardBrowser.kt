@@ -19,7 +19,6 @@
 package com.ichi2.anki
 
 import android.content.*
-import android.graphics.Typeface
 import android.os.Bundle
 import android.os.SystemClock
 import android.text.TextUtils
@@ -36,7 +35,6 @@ import androidx.core.content.edit
 import anki.collection.OpChanges
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.AnkiFont.Companion.getTypeface
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
@@ -428,7 +426,6 @@ open class CardBrowser :
         // get the font and font size from the preferences
         val sflRelativeFontSize =
             preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
-        val sflCustomFont = preferences.getString("browserEditorFont", "")
         val columnsContent = arrayOf(COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index])
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         cardsAdapter = MultiColumnListAdapter(
@@ -436,8 +433,7 @@ open class CardBrowser :
             R.layout.card_item_browser,
             columnsContent,
             intArrayOf(R.id.card_sfld, R.id.card_column2),
-            sflRelativeFontSize,
-            sflCustomFont
+            sflRelativeFontSize
         )
         // link the adapter to the main mCardsListView
         cardsListView.adapter = cardsAdapter
@@ -1924,11 +1920,9 @@ open class CardBrowser :
         private val resource: Int,
         private var fromKeys: Array<Column>,
         private val toIds: IntArray,
-        private val fontSizeScalePcent: Int,
-        customFont: String?
+        private val fontSizeScalePcent: Int
     ) : BaseAdapter() {
         private var mOriginalTextSize = -1.0f
-        private var mCustomTypeface: Typeface? = null
         private val mInflater: LayoutInflater
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             // Get the main container view if it doesn't already exist, and call bindView
@@ -2001,9 +1995,6 @@ open class CardBrowser :
                 // getTextSize returns value in absolute PX so use that in the setter
                 v.setTextSize(TypedValue.COMPLEX_UNIT_PX, mOriginalTextSize * (fontSizeScalePcent / 100.0f))
             }
-            if (mCustomTypeface != null) {
-                v.typeface = mCustomTypeface
-            }
         }
 
         var fromMapping: Array<Column>
@@ -2026,9 +2017,6 @@ open class CardBrowser :
         }
 
         init {
-            if (customFont!!.isNotEmpty()) {
-                mCustomTypeface = getTypeface(context!!, customFont)
-            }
             mInflater = LayoutInflater.from(context)
         }
     }

@@ -58,7 +58,7 @@ class HtmlGenerator(
             typeAnswer: TypeAnswer
         ): HtmlGenerator {
             val preferences = context.sharedPrefs()
-            val cardAppearance = CardAppearance.create(ReviewerCustomFonts(context), preferences)
+            val cardAppearance = CardAppearance.create(ReviewerCustomFonts(), preferences)
             val cardHtmlTemplate = loadCardTemplate(context)
 
             return HtmlGenerator(
