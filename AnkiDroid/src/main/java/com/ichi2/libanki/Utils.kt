@@ -18,11 +18,7 @@
  ****************************************************************************************/
 package com.ichi2.libanki
 
-import android.content.Context
 import androidx.core.text.HtmlCompat
-import com.ichi2.anki.AnkiFont
-import com.ichi2.anki.AnkiFont.Companion.createAnkiFont
-import com.ichi2.anki.CollectionHelper
 import com.ichi2.libanki.Consts.FIELD_SEPARATOR
 import timber.log.Timber
 import java.io.*
@@ -38,9 +34,6 @@ import kotlin.math.*
 object Utils {
     // Used to format doubles with English's decimal separator system
     val ENGLISH_LOCALE = Locale("en_US")
-
-    // List of all extensions we accept as font files.
-    private val FONT_FILE_EXTENSIONS = arrayOf(".ttf", ".ttc", ".otf")
 
     // Regex pattern used in removing tags from text before diff
     private val commentPattern = Pattern.compile("(?s)<!--.*?-->")
@@ -269,66 +262,5 @@ object Utils {
      */
     private fun fieldChecksumWithoutHtmlMedia(data: String?): Long {
         return java.lang.Long.valueOf(checksum(data).substring(0, 8), 16)
-    }
-
-    /**
-     * Returns a String array with two elements:
-     * 0 - file name
-     * 1 - extension
-     */
-    fun splitFilename(filename: String): Array<String> {
-        var name = filename
-        var ext = ""
-        val dotPosition = filename.lastIndexOf('.')
-        if (dotPosition != -1) {
-            name = filename.substring(0, dotPosition)
-            ext = filename.substring(dotPosition)
-        }
-        return arrayOf(name, ext)
-    }
-
-    /** Returns a list of files for the installed custom fonts.  */
-    fun getCustomFonts(context: Context): List<AnkiFont> {
-        val deckPath = CollectionHelper.getCurrentAnkiDroidDirectory(context)
-        val fontsPath = "$deckPath/fonts/"
-        val fontsDir = File(fontsPath)
-        var fontsCount = 0
-        var fontsList: Array<File>? = null
-        if (fontsDir.exists() && fontsDir.isDirectory) {
-            fontsCount = fontsDir.listFiles()!!.size
-            fontsList = fontsDir.listFiles()
-        }
-        var ankiDroidFonts: Array<String?>? = null
-        try {
-            ankiDroidFonts = context.assets.list("fonts")
-        } catch (e: IOException) {
-            Timber.e(e, "Error on retrieving ankidroid fonts")
-        }
-        val fonts: MutableList<AnkiFont> = ArrayList(fontsCount)
-        for (i in 0 until fontsCount) {
-            val filePath = fontsList!![i].absolutePath
-            val filePathExtension = splitFilename(filePath)[1]
-            for (fontExtension in FONT_FILE_EXTENSIONS) {
-                // Go through the list of allowed extensions.
-                if (filePathExtension.equals(fontExtension, ignoreCase = true)) {
-                    // This looks like a font file.
-                    val font = createAnkiFont(context, filePath, false)
-                    if (font != null) {
-                        fonts.add(font)
-                    }
-                    break // No need to look for other file extensions.
-                }
-            }
-        }
-        if (ankiDroidFonts != null) {
-            for (ankiDroidFont in ankiDroidFonts) {
-                // Assume all files in the assets directory are actually fonts.
-                val font = createAnkiFont(context, ankiDroidFont!!, true)
-                if (font != null) {
-                    fonts.add(font)
-                }
-            }
-        }
-        return fonts
     }
 }

@@ -482,9 +482,6 @@ object UsageAnalytics {
         "showTopbar", // Show top bar
         "showProgress", // Show remaining
         "showETA", // Show ETA
-        "defaultFont", // Default font
-        "overrideFontBehavior", // Default font applicability
-        "browserEditorFont", // Browser and editor font
         "card_browser_show_media_filenames", // Display filenames in card browser
         // Controls
         "gestures", // Enable gestures

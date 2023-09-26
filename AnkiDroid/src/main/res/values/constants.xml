@@ -85,10 +85,6 @@
         <item>@string/add_to_deck_use_current_deck</item>
         <item>@string/add_to_deck_decide_by_note_type</item>
     </string-array>
-    <string-array name="override_font_labels">
-        <item>@string/override_font_if_missing</item>
-        <item>@string/override_font_always</item>
-    </string-array>
     <string-array name="day_theme_labels">
         <item>@string/day_theme_light</item>
         <item>@string/day_theme_plain</item>
@@ -182,10 +178,6 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
-    </string-array>
-    <string-array name="override_font_values">
-        <item>0</item>
-        <item>1</item>
     </string-array>
     <string-array name="full_screen_mode_values">
         <item>0</item>

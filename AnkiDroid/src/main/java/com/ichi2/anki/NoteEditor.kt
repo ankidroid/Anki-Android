@@ -24,7 +24,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -1237,13 +1236,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mCustomViewIds.clear()
         mEditFields = LinkedList()
 
-        // Use custom font if selected from preferences
-        var customTypeface: Typeface? = null
-        val preferences = baseContext.sharedPrefs()
-        val customFont = preferences.getString("browserEditorFont", "")
-        if ("" != customFont) {
-            customTypeface = AnkiFont.getTypeface(this, customFont!!)
-        }
         var previous: FieldEditLine? = null
         mCustomViewIds.ensureCapacity(editLines.size)
         for (i in editLines.indices) {
@@ -1269,7 +1261,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
             // Use custom implementation of ActionMode.Callback customize selection and insert menus
             editLineView.setActionModeCallbacks(ActionModeCallback(newEditText))
-            editLineView.setTypeface(customTypeface)
             editLineView.setHintLocale(getHintLocaleForField(editLineView.name))
             initFieldEditText(newEditText, i, !editModelMode)
             mEditFields!!.add(newEditText)
