@@ -830,10 +830,14 @@ abstract class AbstractFlashcardViewer :
     private fun deleteNoteWithoutConfirmation() {
         val cardId = currentCard!!.id
         launchCatchingTask {
-            withProgress() {
+            val noteCount = withProgress() {
                 undoableOp {
                     removeNotes(cids = listOf(cardId))
-                }
+                }.count
+            }
+            val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
+            showSnackbar(deletedMessage, Snackbar.LENGTH_LONG) {
+                setAction(R.string.undo) { launchCatchingTask { undoAndShowSnackbar() } }
             }
         }
     }
