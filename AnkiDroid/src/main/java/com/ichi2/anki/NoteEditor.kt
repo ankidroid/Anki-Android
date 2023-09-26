@@ -2125,7 +2125,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private inner class EditFieldTextWatcher(private val index: Int) : TextWatcher {
         override fun afterTextChanged(arg0: Editable) {
-            isFieldEdited = true
+            isFieldEdited = mEditFields?.get(index)?.text.toString() != ""
             if (index == 0) {
                 setDuplicateFieldStyles()
             }
