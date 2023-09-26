@@ -247,6 +247,11 @@
         <item>@string/automatic_sync_choice</item>
     </string-array>
 
+    <string-array name="backup_limits_summary_entries">
+        <item>@string/backup_limits_frequency</item>
+        <item>@string/backup_limits_lifetime</item>
+    </string-array>
+
     <string-array name="notifications_summary_entries">
         <item>@string/notification_pref_title</item>
         <item>@string/notification_minimum_cards_due_vibrate</item>

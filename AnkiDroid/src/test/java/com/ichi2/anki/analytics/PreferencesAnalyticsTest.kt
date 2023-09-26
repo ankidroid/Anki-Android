@@ -44,6 +44,7 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         "customSyncServerScreen",
         "appBarButtonsScreen",
         "pref_screen_advanced",
+        "backups_help",
         // Dev options: only aimed at devs
         "devOptionsKey",
         "devOptionsEnabledByUser",
