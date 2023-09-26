@@ -470,6 +470,11 @@ object UsageAnalytics {
         "showSyncStatusBadge", // Display synchronization status
         "allowMetered", // Allow sync on metered connections
         "force_full_sync", // Force full sync
+        // Backup
+        "minutes_between_automatic_backups",
+        "daily_backups_to_keep",
+        "weekly_backups_to_keep",
+        "monthly_backups_to_keep",
         // Appearance
         "appTheme", // Theme
         "dayTheme", // Day theme

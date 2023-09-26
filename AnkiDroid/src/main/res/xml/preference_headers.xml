@@ -83,6 +83,15 @@
         app:summaryEntries="@array/accessibility_summary_entries">
     </com.ichi2.preferences.HeaderPreference>
 
+    <!-- Backup Limits Preferences -->
+    <com.ichi2.preferences.HeaderPreference
+        android:fragment="com.ichi2.anki.preferences.BackupLimitsSettingsFragment"
+        android:key="@string/pref_backup_limits_screen_key"
+        android:title="@string/button_backup"
+        android:icon="@drawable/ic_backup_restore"
+        app:summaryEntries="@array/backup_limits_summary_entries">
+    </com.ichi2.preferences.HeaderPreference>
+
     <!-- Advanced Preferences -->
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.AdvancedSettingsFragment"

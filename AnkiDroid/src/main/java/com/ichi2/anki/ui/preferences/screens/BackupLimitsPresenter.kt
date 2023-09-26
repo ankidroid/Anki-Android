@@ -36,16 +36,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 sealed interface State {
-    object Fetching : State
+    data object Fetching : State
     class Fetched(val backupLimits: BackupLimits) : State
     sealed interface Error : State {
-        object NoCollection : Error
+        data object NoCollection : Error
         class Exception(val exception: kotlin.Exception) : Error
     }
 }
 
-@Suppress("unused")
-class NewBackendBackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider {
+class BackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider {
     override val collectionDirectory = CollectionManager.getCollectionDirectory()
 
     val flowOfState = MutableStateFlow<State>(State.Fetching)
@@ -93,7 +92,7 @@ class NewBackendBackupLimitsViewModel : ViewModel(), CollectionDirectoryProvider
  *     backupLimitsPresenter.refresh()
  */
 class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : DefaultLifecycleObserver {
-    private val viewModel: NewBackendBackupLimitsViewModel by fragment.viewModels()
+    private val viewModel: BackupLimitsViewModel by fragment.viewModels()
 
     private lateinit var backupsHelpPreference: HtmlHelpPreference
     private lateinit var minutesBetweenAutomaticBackupsPreference: IncrementerNumberRangePreferenceCompat
@@ -102,8 +101,6 @@ class BackupLimitsPresenter(private val fragment: PreferenceFragmentCompat) : De
     private lateinit var monthlyBackupsToKeepPreference: IncrementerNumberRangePreferenceCompat
 
     override fun onCreate(owner: LifecycleOwner) {
-        fragment.addPreferencesFromResource(R.xml.preferences_backup_limits) // Hierarchies get merged
-
         backupsHelpPreference = fragment.requirePreference(R.string.pref_backups_help_key)
         minutesBetweenAutomaticBackupsPreference = fragment.requirePreference(R.string.pref_minutes_between_automatic_backups_key)
         dailyBackupsToKeepPreference = fragment.requirePreference(R.string.pref_daily_backups_to_keep_key)

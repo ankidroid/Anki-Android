@@ -28,6 +28,8 @@
     <string name="sync_status_badge_key">showSyncStatusBadge</string>
     <string name="metered_sync_key">allowMetered</string>
     <string name="custom_sync_server_key">custom_sync_server_link</string>
+    <!-- Backup -->
+    <string name="pref_backup_limits_screen_key">backupLimitsScreen</string>
     <!-- Appearance -->
     <string name="pref_appearance_screen_key">appearance_preference_group</string>
     <string name="app_theme_key">appTheme</string>
