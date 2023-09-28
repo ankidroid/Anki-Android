@@ -71,7 +71,6 @@
     <string name="replay_audio">Паўтарыць аўдыя</string>
     <string name="leech_suspend_notification">Картка пазначана як надакучлівая і была прыпынена</string>
     <string name="leech_notification">Картка пазначаная як надакучлівая</string>
-    <string name="corrupt_font">Файл шрыфту %s пашкоджаны</string>
     <string name="webview_crash_unknown">Невядомая памылка</string>
     <string name="webview_crash_unknwon_detailed">Выклікана ўнутранай памылкай у WebView</string>
     <string name="webview_crash_oom">Недастаткова памяці</string>

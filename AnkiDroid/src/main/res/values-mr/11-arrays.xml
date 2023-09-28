@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">वर्तमान डेक वापरा</string>
     <string name="add_to_deck_decide_by_note_type">नोट प्रकाराद्वारे निर्णय घ्या</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">जेव्हा फ्लॅशकार्डवर कोणताही फॉन्ट निर्दिष्ट केलेला नाही</string>
-    <string name="override_font_always" comment="Option to always override font">नेहमी</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->

@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Jelenlegi pakli használata</string>
     <string name="add_to_deck_decide_by_note_type">Jegyzettípustól függ</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Ha a kártyára nincs megadva betűtípus</string>
-    <string name="override_font_always" comment="Option to always override font">Mindig</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Rendszertéma követése</string>
     <!-- day_theme_labels -->
@@ -82,10 +79,10 @@
     <string name="html_size_code_x_large">XL nagy</string>
     <string name="html_size_code_xx_large">XXL nagy</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Válasz: ismét</string>
+    <string name="answer_hard">Válasz: nehéz</string>
+    <string name="answer_good">Válasz: jó</string>
+    <string name="answer_easy">Válasz: könnyű</string>
     <string name="gesture_play">Média lejátszása</string>
     <string name="gesture_abort_learning">Tanulás befejezése</string>
     <string name="gesture_flag_red">Piros jelölő bekapcsolása</string>

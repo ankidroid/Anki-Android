@@ -71,7 +71,6 @@
     <string name="replay_audio">Репродуцирај аудио</string>
     <string name="leech_suspend_notification">Картичка означена како пијавица и суспендиран</string>
     <string name="leech_notification">Картичка означена како пијавица</string>
-    <string name="corrupt_font">Коруптиран фонт додаток %s</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>

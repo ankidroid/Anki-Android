@@ -71,7 +71,6 @@
     <string name="replay_audio">重新播放</string>
     <string name="leech_suspend_notification">卡片被标记为「记忆难点」并暂停复习</string>
     <string name="leech_notification">卡片被标记为「记忆难点」</string>
-    <string name="corrupt_font">字体文件 %s 已损坏</string>
     <string name="webview_crash_unknown">未知错误</string>
     <string name="webview_crash_unknwon_detailed">这是由 WebView 内部错误导致的</string>
     <string name="webview_crash_oom">内存不足</string>

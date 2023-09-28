@@ -71,7 +71,6 @@
     <string name="replay_audio">ध्वनि फिर चलाएँ</string>
     <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
     <string name="leech_notification">जोंक के रूप में के रूप में चिह्नित कार्ड</string>
-    <string name="corrupt_font">दूषित फ़ॉन्ट फ़ाइल %s</string>
     <string name="webview_crash_unknown">अज्ञात त्रुटि</string>
     <string name="webview_crash_unknwon_detailed">यह WebView में आंतरिक त्रुटि के कारण हुआ</string>
     <string name="webview_crash_oom">मेमोरी कम हो गया</string>

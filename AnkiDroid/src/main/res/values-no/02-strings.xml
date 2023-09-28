@@ -71,7 +71,6 @@
     <string name="replay_audio">Spill lydklipp på nytt</string>
     <string name="leech_suspend_notification">Kort merket som igle og suspendert</string>
     <string name="leech_notification">Kort merket som igle</string>
-    <string name="corrupt_font">Ugyldig font-fil %s</string>
     <string name="webview_crash_unknown">Ukjent feil</string>
     <string name="webview_crash_unknwon_detailed">Dette skyldes en intern feil i WebView.</string>
     <string name="webview_crash_oom">For lite minne</string>

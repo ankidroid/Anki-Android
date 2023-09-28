@@ -71,7 +71,6 @@
     <string name="replay_audio">Toista ääni</string>
     <string name="leech_suspend_notification">Kortti on merkitty vaikeaksi ja jäädytetty</string>
     <string name="leech_notification">Kortti on merkitty vaikeaksi</string>
-    <string name="corrupt_font">Vioittunut kirjasintiedosto %s</string>
     <string name="webview_crash_unknown">Tuntematon virhe</string>
     <string name="webview_crash_unknwon_detailed">Tämän aiheutti sisäinen virhe WebViewissä.</string>
     <string name="webview_crash_oom">Muisti ei riitä</string>

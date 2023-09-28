@@ -71,7 +71,6 @@
     <string name="replay_audio">Znovu prehrať zvuk</string>
     <string name="leech_suspend_notification">Kartička označená ako pijavica a pozastavená</string>
     <string name="leech_notification">Kartička označená ako pijavica</string>
-    <string name="corrupt_font">Poškodený súbor písma %s</string>
     <string name="webview_crash_unknown">Neznáma chyba</string>
     <string name="webview_crash_unknwon_detailed">Toto bolo spôsobené internou chybou vo WebView</string>
     <string name="webview_crash_oom">Nedostatok pamäte</string>

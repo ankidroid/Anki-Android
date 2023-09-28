@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Imprea su matzu atuale</string>
     <string name="add_to_deck_decide_by_note_type">Detzide pro casta de nota</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Semper</string>
-    <string name="override_font_always" comment="Option to always override font">Cando su caràtere no est dislindadu in sas cartas mnemònicas</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Sighi su sistema</string>
     <!-- day_theme_labels -->

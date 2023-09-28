@@ -136,8 +136,6 @@
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Дневная тема</string>
     <string name="night_theme" maxLength="41">Ночная тема</string>
-    <string name="default_font" maxLength="41">Шрифт по умолчанию</string>
-    <string name="override_font" maxLength="41">Когда применять шрифт по умолчанию</string>
     <string name="language" maxLength="41">Язык</string>
     <string name="language_system">Как в системе</string>
     <string name="notification_pref" maxLength="41">Уведомления</string>
@@ -232,7 +230,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Общие</string>
     <string name="deck_conf_reminders" maxLength="41">Напоминания</string>
-    <string name="pref_browser_editor_font" maxLength="41">Шрифт в списке и редакторе</string>
     <string name="deck_conf_cram_filter" maxLength="41">Фильтр</string>
     <string name="deck_conf_cram_search" maxLength="41">Запрос</string>
     <string name="deck_conf_cram_limit" maxLength="41">Количество</string>

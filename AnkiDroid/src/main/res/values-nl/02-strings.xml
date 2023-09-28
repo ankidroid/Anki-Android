@@ -71,7 +71,6 @@
     <string name="replay_audio">Audio herhalen</string>
     <string name="leech_suspend_notification">Kaart gemarkeerd als moeilijk en uitgesteld</string>
     <string name="leech_notification">Kaart gemarkeerd als moeilijk</string>
-    <string name="corrupt_font">Beschadigd lettertypebestand %s</string>
     <string name="webview_crash_unknown">Onbekende fout</string>
     <string name="webview_crash_unknwon_detailed">Dit was veroorzaakt door een interne fout in de WebView</string>
     <string name="webview_crash_oom">Onvoldoende Geheugen</string>

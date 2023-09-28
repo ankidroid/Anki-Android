@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilizza il mazzo attuale</string>
     <string name="add_to_deck_decide_by_note_type">Decidi per tipo di nota</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Quando nessun tipo di carattere specificato nelle carte</string>
-    <string name="override_font_always" comment="Option to always override font">Sempre</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Come da sistema</string>
     <!-- day_theme_labels -->

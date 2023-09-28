@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Użyj obecnej talii</string>
     <string name="add_to_deck_decide_by_note_type">Wybór na podstawie typu notatki</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Kiedy żadna czcionka nie jest wybrana dla danych kart</string>
-    <string name="override_font_always" comment="Option to always override font">Zawsze</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Według ustawień systemowych</string>
     <!-- day_theme_labels -->

@@ -71,7 +71,6 @@
     <string name="replay_audio">بازپخش صوت</string>
     <string name="leech_suspend_notification">کارت به عنوان مزاحم مشخص و تعلیق شده است</string>
     <string name="leech_notification">کارت به عنوان مزاحم مشخص شده است</string>
-    <string name="corrupt_font">فونت فایل خراب %s</string>
     <string name="webview_crash_unknown">خطای ناشناخته</string>
     <string name="webview_crash_unknwon_detailed">خطای داخلی در نمایش وب باعث این خطا شده است</string>
     <string name="webview_crash_oom">حافظه کافی نیست</string>

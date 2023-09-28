@@ -136,8 +136,6 @@
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Päiväteema</string>
     <string name="night_theme" maxLength="41">Yöteema</string>
-    <string name="default_font" maxLength="41">Oletusfontti</string>
-    <string name="override_font" maxLength="41">Oletuskirjasimen käyttöalue</string>
     <string name="language" maxLength="41">Kieli</string>
     <string name="language_system">Järjestelmän kieli</string>
     <string name="notification_pref" maxLength="41">Ilmoitukset</string>
@@ -233,7 +231,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Yleistä</string>
     <string name="deck_conf_reminders" maxLength="41">Muistutukset</string>
-    <string name="pref_browser_editor_font" maxLength="41">Selaimen ja editorin kirjasintyyppi</string>
     <string name="deck_conf_cram_filter" maxLength="41">Suodatin</string>
     <string name="deck_conf_cram_search" maxLength="41">Haku</string>
     <string name="deck_conf_cram_limit" maxLength="41">Rajoita</string>

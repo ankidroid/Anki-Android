@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">استفاده از دسته فعلی</string>
     <string name="add_to_deck_decide_by_note_type">تصمیم گیری براساس نوع یادداشت</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">هنگامیکه هیچ فونتی برای فلش کارت تعیین نشده</string>
-    <string name="override_font_always" comment="Option to always override font">همیشه</string>
     <!-- theme labels -->
     <string name="theme_follow_system">پیروی از سیستم</string>
     <!-- day_theme_labels -->

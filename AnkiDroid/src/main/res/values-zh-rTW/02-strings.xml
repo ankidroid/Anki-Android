@@ -71,7 +71,6 @@
     <string name="replay_audio">重播聲音</string>
     <string name="leech_suspend_notification">卡片已擱置，同時標為榨時卡</string>
     <string name="leech_notification">卡片標為榨時卡</string>
-    <string name="corrupt_font">損壞的字型檔案 %s</string>
     <string name="webview_crash_unknown">未知錯誤</string>
     <string name="webview_crash_unknwon_detailed">此錯誤由 WebView 內部錯誤導致</string>
     <string name="webview_crash_oom">記憶體不足</string>

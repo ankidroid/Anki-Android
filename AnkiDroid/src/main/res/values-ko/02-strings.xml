@@ -71,7 +71,6 @@
     <string name="replay_audio">오디오 다시 재생</string>
     <string name="leech_suspend_notification">해당 카드에 leech 태그를 붙이고 비활성 시킴</string>
     <string name="leech_notification">해당 카드에 leech 태그를 붙임</string>
-    <string name="corrupt_font">손상된 글꼴 파일 %s</string>
     <string name="webview_crash_unknown">알수없는 오류</string>
     <string name="webview_crash_unknwon_detailed">WebView의 내부적인 오류입니다.</string>
     <string name="webview_crash_oom">메모리 부족</string>

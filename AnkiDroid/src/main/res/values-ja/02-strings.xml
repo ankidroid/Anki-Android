@@ -68,10 +68,9 @@
     <string name="show_whiteboard">ホワイトボードを表示</string>
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
     <string name="clear_whiteboard">ホワイトボードの内容を消去</string>
-    <string name="replay_audio">音声・動画を再生</string>
+    <string name="replay_audio">音声を再生</string>
     <string name="leech_suspend_notification">このカードに \"leech\"  (無駄、習得困難) というタグを付け、学習を休止しました</string>
     <string name="leech_notification">このカードに \"leech\" (無駄、習得困難) というタグを付けました</string>
-    <string name="corrupt_font">使用できないフォントファイル %s</string>
     <string name="webview_crash_unknown">原因不明のエラー</string>
     <string name="webview_crash_unknwon_detailed">これはWebViewの内部エラーによって引き起こされました。</string>
     <string name="webview_crash_oom">メモリ不足</string>
@@ -196,7 +195,7 @@
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">オプション</string>
     <string name="menu__deck_options">デッキオプション</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">学習オプション</string>
-    <string name="select_tts">テキスト読み上げ機能の言語設定</string>
+    <string name="select_tts">読み上げ用の言語を選択</string>
     <string name="custom_study">カスタム学習</string>
     <string name="more_options">その他</string>
     <string name="dyn_deck_desc">これは標準のスケジュールから外れて学習する特別なデッキです。 復習が終わったカードは自動的に元のデッキに戻ります。 このデッキを削除すると、残りのカードもすべて元のデッキに戻ります。</string>
@@ -307,7 +306,7 @@
     <string name="home">ホーム</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">カードを明日に延期しました。</string>
+    <string name="card_buried">カードを今日は非表示にしました。</string>
     <plurals name="note_suspended">
         <item quantity="other">%d枚のカードを休止しました。</item>
     </plurals>
@@ -349,7 +348,7 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">カード</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">ノート</string>
     <string name="toggle_cards_notes">カード /ノート の切り替え</string>
-    <string name="toggle_browser_mode_help">ブラウザで、カードとノート、どちらのリストを表示するかを切り替えます</string>
+    <string name="toggle_browser_mode_help">カードブラウザのリスト画面で、カードとノート、どちらのリストを表示するかを切り替えます</string>
     <string name="truncate_content_help">リスト画面において、カードまたはノートの内容の表示を１件につき３行までに制限します</string>
     <string name="browser_options_dialog_heading">ブラウザ オプション</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        ストレージ移行中はこの機能は利用できません

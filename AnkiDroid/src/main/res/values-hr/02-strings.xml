@@ -71,7 +71,6 @@
     <string name="replay_audio">Ponovno odslušaj</string>
     <string name="leech_suspend_notification">Karte označene kao preteške i suspendirane</string>
     <string name="leech_notification">Karta označena kao preteška</string>
-    <string name="corrupt_font">Oštećena datoteka sa fontovima %s</string>
     <string name="webview_crash_unknown">Nepoznata greška</string>
     <string name="webview_crash_unknwon_detailed">Ovo je uzrokovano internom greškom u WebView</string>
     <string name="webview_crash_oom">Nema dovoljno memorije</string>

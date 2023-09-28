@@ -44,24 +44,24 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Check database?</string>
-    <string name="check_db_warning">This may take a long time</string>
-    <string name="contextmenu_deckpicker_delete_deck">Delete deck</string>
-    <string name="delete_deck_title">Delete deck?</string>
+    <string name="check_db_title">Ստուգե՞լ շտեմարանը:</string>
+    <string name="check_db_warning">Սա կարող է երկար ժամանակ տևել</string>
+    <string name="contextmenu_deckpicker_delete_deck">Ջնջել</string>
+    <string name="delete_deck_title">Ջնջե՞լ։</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="initializing_tts">Initializing TTS&#8230;</string>
-    <string name="tts_no_tts">Don’t speak</string>
-    <string name="unused_strings">\n\nUnused files:\n</string>
+    <string name="tts_no_tts">Չխոսել</string>
+    <string name="unused_strings">\n\nՉօգտագործվող ֆայլեր`\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">Նախադիտում</string>
-    <string name="reposition_card_dialog_title">Reposition new card</string>
-    <string name="reposition_card_dialog_message">Start position:</string>
-    <string name="reposition_card_not_new_error">Only new cards can be repositioned</string>
+    <string name="reposition_card_dialog_title">Տեղափոխել նոր քարտը</string>
+    <string name="reposition_card_dialog_message">Սկսման դիրքը</string>
+    <string name="reposition_card_not_new_error">Կարելի է տեղափոխել միայն նոր քարտերը</string>
     <plurals name="reposition_card_dialog_acknowledge">
-        <item quantity="one">%d card repositioned</item>
+        <item quantity="one">Տեղափոխվել է %d քարտ</item>
         <item quantity="other">%d cards repositioned</item>
     </plurals>
-    <string name="reset_card_dialog_title">Reset card progress</string>
-    <string name="reset_card_dialog_message">This card will be placed at the end of the new card queue</string>
+    <string name="reset_card_dialog_title">Վերակայել առաջընթացը</string>
+    <string name="reset_card_dialog_message">Քարտը կտեղադրվի նոր քարտերի ցանկի վերջում։</string>
     <plurals name="reset_cards_dialog_acknowledge">
         <item quantity="one">%d card reset</item>
         <item quantity="other">%d cards reset</item>
@@ -107,9 +107,9 @@
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="restore_backup_choose_another">Choose another</string>
     <string name="dialog_cancel">Cancel</string>
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
-    <string name="dialog_no">No</string>
+    <string name="dialog_ok">Լավ</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Հաստատել</string>
+    <string name="dialog_no">Ոչ</string>
     <string name="dialog_yes">այո</string>
     <string name="dialog_continue">Continue</string>
     <string name="dialog_processing">Processing...</string>

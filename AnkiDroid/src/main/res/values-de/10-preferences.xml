@@ -136,8 +136,6 @@
     <string name="app_theme" maxLength="41">Design</string>
     <string name="day_theme" maxLength="41">Design Tag</string>
     <string name="night_theme" maxLength="41">Design Nacht</string>
-    <string name="default_font" maxLength="41">Standardschrift</string>
-    <string name="override_font" maxLength="41">Anwendungsbereich der Standardschrift</string>
     <string name="language" maxLength="41">Sprache</string>
     <string name="language_system">Systemsprache</string>
     <string name="notification_pref" maxLength="41">Benachrichtigungen</string>
@@ -165,8 +163,8 @@
     <string name="pref_backup_max" maxLength="41">Maximale Anzahl an Sicherungen</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Zeitintervall für Doppeltippen (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Ein zweites Antippen der Antworttasten wird ignoriert, wenn diese Zeit nicht verstrichen ist. Dies verhindert versehentliches doppeltes Antippen</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Dauer des Gedrückthaltens zum Antwort zeigen (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimale Dauer, die man die Antworttaste gedrückt halten muss, bevor sie eine Berührung registriert. Könnte die Chance von zusätzlichen unabsichtlichen Tastendrücken reduzieren. Standardwert is 0 ms</string>
     <string name="show_estimates" maxLength="41">Wiederholungszeiten anzeigen</string>
     <string name="show_estimates_summ">Zeigt Zeiten bis zur nächsten Wiederholung auf den Antwortschaltflächen</string>
     <string name="show_large_answer_buttons" maxLength="41">Große Antwortschaltflächen anzeigen</string>
@@ -222,18 +220,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Tastatur</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
+    <string name="answer_buttons" maxLength="41">Antwortknöpfe</string>
+    <string name="card" maxLength="41">Karte</string>
+    <string name="note" maxLength="41">Notiz</string>
     <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="media" maxLength="41">Medien</string>
+    <string name="misc" maxLength="41">Sonstiges</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Schlagwörter auswählen</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Allgemein</string>
     <string name="deck_conf_reminders" maxLength="41">Erinnerungen</string>
-    <string name="pref_browser_editor_font" maxLength="41">Schriftart für Übersicht und Editor</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41">Suchen</string>
     <string name="deck_conf_cram_limit" maxLength="41">Beschränken auf</string>

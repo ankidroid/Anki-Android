@@ -71,7 +71,6 @@
     <string name="replay_audio">Կրկին նվագարկել ձայնանյութը</string>
     <string name="leech_suspend_notification">Քարտը նշվեց որպես «կպչուն» և հեռացվեց</string>
     <string name="leech_notification">Քարտը նշվեց որպես «կպչուն»</string>
-    <string name="corrupt_font">Տառատեսակի վնասված նիշք %s</string>
     <string name="webview_crash_unknown">Անհայտ սխալ</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Հիշողության պակաս</string>

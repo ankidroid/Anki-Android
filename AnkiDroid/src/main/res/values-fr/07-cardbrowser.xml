@@ -70,7 +70,7 @@
     <string name="card_browser_list_my_searches_title">Choisissez une recherche enregistrée</string>
     <string name="card_browser_list_my_searches_new_name">Nom de la recherche en cours</string>
     <string name="card_browser_list_my_searches_new_search_error_empty_name">Vous ne pouvez pas enregistrer une recherche sans nom.</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Ce nom existe déjà!</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Ce nom existe déjà !</string>
     <string name="card_browser_list_my_searches_remove_content">Supprimer « %1$s » ?</string>
     <string name="card_browser_change_display_order">Changer l\'ordre d\'affichage</string>
     <string name="card_browser_change_display_order_title">Choisir l\'ordre d\'affichage</string>

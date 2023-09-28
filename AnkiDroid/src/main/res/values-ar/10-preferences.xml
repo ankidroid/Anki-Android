@@ -136,8 +136,6 @@
     <string name="app_theme" maxLength="41">السمة</string>
     <string name="day_theme" maxLength="41">سمة النهار</string>
     <string name="night_theme" maxLength="41">سمة الليل</string>
-    <string name="default_font" maxLength="41">الخط الافتراضي</string>
-    <string name="override_font" maxLength="41">قابلية تطبيق الخط الافتراضي</string>
     <string name="language" maxLength="41">اللغة</string>
     <string name="language_system">لغة النظام</string>
     <string name="notification_pref" maxLength="41">التنبيهات</string>
@@ -233,7 +231,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">عام</string>
     <string name="deck_conf_reminders" maxLength="41">تذكيرات</string>
-    <string name="pref_browser_editor_font" maxLength="41">خط المتصفح والمحرر</string>
     <string name="deck_conf_cram_filter" maxLength="41">فلتر</string>
     <string name="deck_conf_cram_search" maxLength="41">البحث</string>
     <string name="deck_conf_cram_limit" maxLength="41">الحد إلى</string>

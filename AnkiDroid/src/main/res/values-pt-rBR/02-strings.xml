@@ -71,7 +71,6 @@
     <string name="replay_audio">Repetir áudio</string>
     <string name="leech_suspend_notification">Cartão marcado como sanguessuga e suspenso</string>
     <string name="leech_notification">Cartão marcado como sanguessuga</string>
-    <string name="corrupt_font">Arquivo de fonte %s danificado</string>
     <string name="webview_crash_unknown">Erro desconhecido</string>
     <string name="webview_crash_unknwon_detailed">Isso foi causado por um erro interno no WebView</string>
     <string name="webview_crash_oom">Memória Insuficiente</string>

@@ -71,7 +71,6 @@
     <string name="replay_audio">Rejouer le son</string>
     <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
     <string name="leech_notification">Carte marquée « encombrante »</string>
-    <string name="corrupt_font">Fichier de police corrompu %s</string>
     <string name="webview_crash_unknown">Erreur inconnue</string>
     <string name="webview_crash_unknwon_detailed">Erreur interne dans le système WebView</string>
     <string name="webview_crash_oom">Mémoire insuffisante</string>
@@ -173,7 +172,7 @@
     <string name="export_include_schedule">Inclure la planification</string>
     <string name="export_include_media">Inclure les médias</string>
     <string name="confirm_apkg_export">Exporter la collection sous forme de paquet Anki ?</string>
-    <string name="confirm_apkg_export_deck">Exporter \"%s\" au format apkg ?</string>
+    <string name="confirm_apkg_export_deck">Exporter « %s » au format apkg ?</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">Exporter les cartes sélectionnées au format .apkg ?</item>
         <item quantity="other">Exporter les %d cartes sélectionnées au format .apkg ?</item>
@@ -337,7 +336,7 @@
     <string name="malicious_archive_exceeds_limit">Archive malveillante. La taille dépasse %1$s ou contient plus de %2$d fichiers</string>
     <string name="file_extract_exceeds_storage_space">L\'extraction de fichiers dépasse la capacité de stockage</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Développer le tag \'%s\'</string>
+    <string name="expand_tag">Développer l\'étiquette « %s »</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Impossible d\'accéder à la collection. Veuillez réessayer !</string>
     <!-- App Intro -->

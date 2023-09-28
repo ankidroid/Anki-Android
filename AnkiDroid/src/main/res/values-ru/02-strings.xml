@@ -71,7 +71,6 @@
     <string name="replay_audio">Проиграть звук</string>
     <string name="leech_suspend_notification">Карточка помечена как приставучая и исключена</string>
     <string name="leech_notification">Карточка помечена как приставучая</string>
-    <string name="corrupt_font">Файл шрифта %s повреждён</string>
     <string name="webview_crash_unknown">Неизвестная ошибка</string>
     <string name="webview_crash_unknwon_detailed">Вызвано внутренней ошибкой в WebView</string>
     <string name="webview_crash_oom">Нехватка памяти</string>

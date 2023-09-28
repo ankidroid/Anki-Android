@@ -246,17 +246,17 @@ Pour résoudre le problème, vous devrez peut-être libérer de l\'espace disque
 ou reconnecter le support amovible qui contient votre collection.
 <br><br>
 <a href="%2$s">En savoir plus et obtenir de l\'aide</a>]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Déplacer les fichiers média est mis en pause après l\'erreur : %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        Les changements n\'ont <i>pas</i> été annulés.
+        Même si aucune donnée ne devrait avoir été perdue,
+        les fichiers média sont peut-être divisés entre le nouveau et l\'ancien dossier.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Veuillez réessayer d\'exécuter la migration.
+        Pour résoudre le probème, vous aurez peut-être besoin de libérer de l\'espace disque
+        ou de reconnecter le stockage amovible qui contient votre collection.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">En savoir plus et obtenir de l\'aide</a>
     ]]></string>
     <string name="migration__resume_after_failed_dialog__message"><![CDATA[        La migration du stockage est suspendue après échec avec l\'erreur : %1$s.
         <br><br>

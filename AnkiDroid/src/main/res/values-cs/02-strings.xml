@@ -71,7 +71,6 @@
     <string name="replay_audio">Přehrát zvuk</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
-    <string name="corrupt_font">Poškozený soubor písma %s</string>
     <string name="webview_crash_unknown">Neznámá chyba</string>
     <string name="webview_crash_unknwon_detailed">To bylo způsobeno vnitřní chybou WebView</string>
     <string name="webview_crash_oom">Nedostatek paměti</string>

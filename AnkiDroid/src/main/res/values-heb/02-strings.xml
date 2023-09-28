@@ -71,7 +71,6 @@
     <string name="replay_audio">החזר שמע</string>
     <string name="leech_suspend_notification">קלף מסומן כעלוקה ומושעה</string>
     <string name="leech_notification">קלף מסומן כעלוקה</string>
-    <string name="corrupt_font">קובץ גופן %s פגום</string>
     <string name="webview_crash_unknown">שגיאה לא מוכרת</string>
     <string name="webview_crash_unknwon_detailed">זה נגרם בגלל שגיאה פנימית בWebView</string>
     <string name="webview_crash_oom">אין זיכרון פנוי</string>
