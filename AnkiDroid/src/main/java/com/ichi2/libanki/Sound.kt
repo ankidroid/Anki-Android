@@ -23,8 +23,6 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaPlayer.OnCompletionListener
 import android.net.Uri
 import android.os.Build
-import android.webkit.MimeTypeMap
-import android.widget.VideoView
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.AnkiDroidApp
@@ -32,7 +30,6 @@ import com.ichi2.anki.ReadText
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling.CONTINUE_AUDIO
 import com.ichi2.libanki.Sound.SoundSide.*
-import com.ichi2.utils.DisplayUtils
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
@@ -43,11 +40,11 @@ private typealias SoundPath = String
  * Parses, loads and plays sound & video files
  * Called `Sound` Anki uses `[sound:]` for both audio and video
  */
-class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) : SoundPlayer by soundPlayer {
+class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) : SoundPlayer() {
     /**
      * @param soundDir base path to the media files
      */
-    constructor(soundDir: String) : this(SoundPlayerImpl(), soundDir)
+    constructor(soundDir: String) : this(SoundPlayer(), soundDir)
 
     /**
      * The subset of sounds to involve
@@ -251,54 +248,17 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
     }
 }
 
-interface SoundPlayer {
-    /**
-     * Plays the given sound or video.
-     * Video requires a surface: [hasVideoSurface]
-     * [playVideoExternallyCallback] will be called if this is unavailable
-     */
-    fun playSound(
-        soundPath: String,
-        onCompletionListener: OnCompletionListener?,
-        errorListener: Sound.OnErrorListener?
-    )
-
-    val hasVideoSurface: Boolean
-
-    // When an audio finishes and I'm trying to replay it again, this method should check if the mMediaPlayer is null which means
-    // the audio finished to return true, so that I would be able to play the same sound again.
-    val isCurrentAudioFinished: Boolean
-
-    /**
-     * The Uri of the currently playing audio (or `null` if no audio playing)
-     */
+open class SoundPlayer {
     val currentAudioUri: String?
-
-    /**
-     * Stops the playing sounds.
-     */
-    fun stopSounds()
-
-    /**
-     * Play or Pause the running sound. Called on pressing the content inside span tag.
-     */
-    fun playOrPauseSound()
-
-    /** @return Whether the video was handled externally. Only used if [hasVideoSurface] is false */
-    var playVideoExternallyCallback: ((soundPath: String, onCompletion: OnCompletionListener) -> Boolean)?
-}
-
-open class SoundPlayerImpl : SoundPlayer {
-    override val currentAudioUri: String?
         get() = mCurrentAudioUri?.toString()
 
-    override val isCurrentAudioFinished: Boolean
+    val isCurrentAudioFinished: Boolean
         get() = mMediaPlayer == null
 
     /**
      * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
      */
-    protected var mMediaPlayer: MediaPlayer? = null
+    private var mMediaPlayer: MediaPlayer? = null
 
     private var mCurrentAudioUri: Uri? = null
 
@@ -309,13 +269,11 @@ open class SoundPlayerImpl : SoundPlayer {
 
     private var mAudioFocusRequest: AudioFocusRequest? = null
 
-    override val hasVideoSurface: Boolean = false
-
     /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
      * If videoView is null and the media is a video, then a request is sent to start the VideoPlayer Activity
      */
-    override fun playSound(
+    fun playSound(
         soundPath: String,
         onCompletionListener: OnCompletionListener?,
         errorListener: Sound.OnErrorListener?
@@ -340,15 +298,10 @@ open class SoundPlayerImpl : SoundPlayer {
     ) {
         Timber.d("Playing %s", soundPath)
         val soundUri = Uri.parse(soundPath)
-        val soundUriPath = soundUri.path.toString()
         mCurrentAudioUri = soundUri
 
         val context = AnkiDroidApp.instance.applicationContext
 
-        val isVideo = isVideo(soundUriPath)
-        if (isVideo && !hasVideoSurface && playVideoExternallyCallback?.invoke(soundPath, completionListener) == true) {
-            return
-        }
         // Play media
         fun playMedia() {
             try {
@@ -363,10 +316,6 @@ open class SoundPlayerImpl : SoundPlayer {
                 val mediaPlayer = mMediaPlayer!!
                 mAudioManager =
                     mAudioManager ?: context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
-                if (isVideo) {
-                    prepareVideo(mediaPlayer)
-                }
 
                 mediaPlayer.setOnErrorListener { mp: MediaPlayer?, which: Int, extra: Int ->
                     val errorHandling = errorHandler.onError(
@@ -438,28 +387,6 @@ open class SoundPlayerImpl : SoundPlayer {
         playMedia()
     }
 
-    open fun prepareVideo(mediaPlayer: MediaPlayer) {
-        // in the base class: playVideoExternallyCallback should have been called
-    }
-
-    override var playVideoExternallyCallback: ((soundPath: String, onCompletion: OnCompletionListener) -> Boolean)? = null
-
-    private fun isVideo(soundPath: String): Boolean {
-        // Check if the file extension is that of a known video format
-        val extension = soundPath.getFileExtension()
-        val isVideoExtension = listOf(*VIDEO_WHITELIST).contains(extension) || extension.isVideoMimeTypeExtension()
-        // Also check that there is a video thumbnail, as some formats like mp4 can be audio only
-        // No thumbnail: no video after all. (Or maybe not a video we can handle on the specific device.)
-        return isVideoExtension && CompatHelper.compat.hasVideoThumbnail(soundPath)
-    }
-
-    // TODO: This seems wrong
-    private fun String.getFileExtension() = substring(this.lastIndexOf(".") + 1).lowercase(Locale.getDefault())
-    private fun String.isVideoMimeTypeExtension(): Boolean {
-        val guessedType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(this) ?: return false
-        return guessedType.startsWith("video/")
-    }
-
     /**
      * Releases the sound.
      */
@@ -479,7 +406,7 @@ open class SoundPlayerImpl : SoundPlayer {
         }
     }
 
-    override fun stopSounds() {
+    open fun stopSounds() {
         mMediaPlayer?.let {
             it.stop()
             // TODO: Inefficient. Determine whether we want to release or stop, don't do both
@@ -488,7 +415,7 @@ open class SoundPlayerImpl : SoundPlayer {
         }
     }
 
-    override fun playOrPauseSound() {
+    fun playOrPauseSound() {
         mMediaPlayer?.let {
             if (it.isPlaying) {
                 it.pause()
@@ -508,59 +435,9 @@ open class SoundPlayerImpl : SoundPlayer {
 
     companion object {
         /**
-         * Whitelist for video extensions
-         */
-        private val VIDEO_WHITELIST = arrayOf("3gp", "mp4", "webm", "mkv", "flv")
-
-        /**
          * Listener to handle audio focus. Currently blank because we're not respecting losing focus from other apps.
          */
         private val audioFocusChangeListener = OnAudioFocusChangeListener { }
-    }
-}
-
-class VideoPlayer(private val videoView: VideoView) : SoundPlayerImpl() {
-
-    // don't call out to external video players
-    override val hasVideoSurface = true
-
-    /** Plays the given video */
-    fun play(
-        path: String,
-        onCompletionListener: OnCompletionListener?,
-        onErrorListener: Sound.OnErrorListener?
-    ) = playSound(path, onCompletionListener, onErrorListener)
-    fun notifyConfigurationChanged() {
-        mMediaPlayer?.let {
-            configureVideo(videoView, it.videoWidth, it.videoHeight)
-        }
-    }
-
-    override fun prepareVideo(mediaPlayer: MediaPlayer) {
-        mediaPlayer.setDisplay(videoView.holder)
-        mediaPlayer.setOnVideoSizeChangedListener { _, width: Int, height: Int ->
-            configureVideo(videoView, width, height)
-        }
-    }
-
-    private fun configureVideo(videoView: VideoView, videoWidth: Int, videoHeight: Int) {
-        // get the display
-        val context = AnkiDroidApp.instance.applicationContext
-        // adjust the size of the video so it fits on the screen
-        val videoProportion = videoWidth.toFloat() / videoHeight.toFloat()
-        val point = DisplayUtils.getDisplayDimensions(context)
-        val screenWidth = point.x
-        val screenHeight = point.y
-        val screenProportion = screenWidth.toFloat() / screenHeight.toFloat()
-        val lp = videoView.layoutParams
-        if (videoProportion > screenProportion) {
-            lp.width = screenWidth
-            lp.height = (screenWidth.toFloat() / videoProportion).toInt()
-        } else {
-            lp.width = (videoProportion * screenHeight.toFloat()).toInt()
-            lp.height = screenHeight
-        }
-        videoView.layoutParams = lp
     }
 }
 

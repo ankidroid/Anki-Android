@@ -267,12 +267,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ichi2.anki.VideoPlayer"
-            android:exported="false"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            />
-        <activity
             android:name="com.ichi2.anki.MyAccount"
             android:label="@string/menu_my_account"
             android:exported="false"
