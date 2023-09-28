@@ -71,7 +71,6 @@
     <string name="replay_audio">ଅଡ଼ିଓ ପୁଣି ଚଲାନ୍ତୁ</string>
     <string name="leech_suspend_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହୋଇ ନିଲମ୍ବିତ ହେଇଛି</string>
     <string name="leech_notification">ପତ୍ର ଜୋକ (leech) ବୋଲି ଚିନ୍ହିତ ହେଇଛି</string>
-    <string name="corrupt_font">ଖରାପ ଫଣ୍ଟ ଫାଇଲ୍ %s</string>
     <string name="webview_crash_unknown">ଅଜଣା ତ୍ରୁଟି</string>
     <string name="webview_crash_unknwon_detailed">ଏହା WebViewରେ ଏକ ଅନ୍ତଃ ତ୍ରୁଟି ଯୋଗୁ ଏହା ଘଟିଛି</string>
     <string name="webview_crash_oom">ମେମୋରୀ ସରିଗଲା</string>

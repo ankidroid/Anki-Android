@@ -81,7 +81,7 @@
     <string name="multimedia_editor_audio_view_playing_failed">Échec de la lecture</string>
     <string name="multimedia_editor_audio_view_create_failed">Impossible de créer la barre d\'outils de l\'enregistreur</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Champs d’édition</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Champ d\'édition</string>
     <!-- Crop function-->
     <string name="crop_image">Voulez-vous rogner cette image ?</string>
     <string name="crop_button">Rogner l\'image</string>

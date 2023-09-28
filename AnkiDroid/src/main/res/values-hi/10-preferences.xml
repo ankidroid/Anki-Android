@@ -136,8 +136,6 @@
     <string name="app_theme" maxLength="41">थीम </string>
     <string name="day_theme" maxLength="41">दिवस थीम</string>
     <string name="night_theme" maxLength="41">रात विषय</string>
-    <string name="default_font" maxLength="41">डिफ़ॉल्ट फ़ॉंट</string>
-    <string name="override_font" maxLength="41">डिफ़ॉल्ट फ़ॉंट लागू</string>
     <string name="language" maxLength="41">भाषा</string>
     <string name="language_system">सिस्टम भाषा</string>
     <string name="notification_pref" maxLength="41">सूचनाएँ</string>
@@ -233,7 +231,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">सामान्य</string>
     <string name="deck_conf_reminders" maxLength="41">रिमाइंडर्स</string>
-    <string name="pref_browser_editor_font" maxLength="41">ब्राउज़र और संपादक फ़ॉन्ट</string>
     <string name="deck_conf_cram_filter" maxLength="41">फ़िल्टर</string>
     <string name="deck_conf_cram_search" maxLength="41">खोज</string>
     <string name="deck_conf_cram_limit" maxLength="41">करने के लिए सीमा</string>

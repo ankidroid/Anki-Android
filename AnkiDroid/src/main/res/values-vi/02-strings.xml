@@ -71,7 +71,6 @@
     <string name="replay_audio">Phát lại âm thanh</string>
     <string name="leech_suspend_notification">Thẻ được đánh dấu là thẻ khó và đã tạm dừng</string>
     <string name="leech_notification">Thẻ được đánh dấu là thẻ khó</string>
-    <string name="corrupt_font">Lỗi tệp phông chữ %s</string>
     <string name="webview_crash_unknown">Lỗi không xác định</string>
     <string name="webview_crash_unknwon_detailed">Lỗi nội bộ trong webview</string>
     <string name="webview_crash_oom">Không đủ bộ nhớ</string>
@@ -164,8 +163,8 @@
     <string name="import_error_load_imported_database">Cơ sở dữ liệu Anki (.anki2) thay thế chưa được hỗ trợ. Vui lòng xem sách hướng dẫn để biết hướng dẫn thay thế.</string>
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
     <string name="import_error_copy_to_cache">Không thể lưu tệp vào bộ nhớ đệm (có thể hết dùng lượng lưu trữ)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
+    <string name="import_error_multiple_colpkg">Nhiều tệp colpkg đã được chọn.</string>
+    <string name="import_error_colpkg_apkg">Cả hai tệp apkg &amp; colpkg đã được chọn cùng một lúc.</string>
     <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
     <string name="export_include_schedule">Gồm cả việc lên lịch</string>
     <string name="export_include_media">Gồm cả các tệp đa phương tiện</string>
@@ -177,12 +176,12 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">Xuất %d ghi chú đã chọn dưới dạng tệp apkg?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">Đang chuẩn bị xuất &#8230;</string>
+    <string name="export_ready_title">Trích xuất sẵn sàng</string>
     <string name="export_send_no_handlers">Không có ứng dụng nào khả dụng để xử lý apkg. Đang lưu...</string>
     <string name="export_save_apkg_successful">Lưu gói Anki thành công</string>
     <string name="export_save_apkg_unsuccessful">Lưu gói Anki thất bại</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Gửi gói Anki đang dùng</string>
     <string name="export_email_subject">AnkiDroid đã kết xuất các thẻ ghi nhớ: %s</string>
     <string name="export_email_text"><![CDATA[        Xin chào!
         <br/><br/>
@@ -254,7 +253,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Không thể mở bộ thẻ ‘%s’</string>
     <string name="search_decks">Tìm kiếm bộ thẻ</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Hiển thị tiến trình di chuyển</string>
     <string name="ankidroid_init_failed_webview_title">Lỗi nghiêm trọng</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid dựa trên WebView hệ thống không khả dụng. Điều này có thể xảy ra nếu hệ thống đang cài đặt các bản cập nhật. Vui lòng thử lại sau vài phút.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -273,7 +272,7 @@
     <string name="after_text">HTML Sau Vùng chọn</string>
     <string name="add_toolbar_item">Tạo mục trên Thanh công cụ</string>
     <string name="edit_toolbar_item">Chỉnh sửa mục Thanh công cụ</string>
-    <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
+    <string name="toolbar_item_explain_edit_or_remove">Nhập HTML sẽ được chèn vào trước và sau văn bản đã chọn\n\nNhấn và giữ một mục trên thanh công cụ để chỉnh sửa hoặc xóa nó</string>
     <string name="remove_toolbar_item">Xóa Mục Thanh công cụ?</string>
     <string name="note_editor_paste_too_large">Hình ảnh quá lớn để dán, vui lòng chèn hình ảnh theo cách thủ công</string>
     <string name="ankidroid_cannot_open_after_backup_try_again" comment="After an Android backup is restored, AnkiDroid opens and shows this message.         Opening AnkiDroid again will work correctly">        Android đang sao lưu. Hãy thử lại sau</string>
@@ -303,7 +302,7 @@
     <string name="deck_download_progress_message">Bạn được phép sử dụng những ứng dụng khác khi đang tải.</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">Tải xuống bị hủy, bộ nhớ ngoài không khả dụng</string>
     <string name="home">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -320,9 +319,9 @@
     <string name="scoped_storage_migrate">Di chuyển</string>
     <string name="search_card_js_api_no_results">Không có kết quả tìm kiếm</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="start_migration_progress_message">Bắt đầu di chuyển bộ nhớ. Bạn có thể tiếp tục sử dụng AnkiDroid trong thời gian ngắn.</string>
+    <string name="migration_part_1_done_resume">Bạn có thể tiếp tục sử dụng AnkiDroid.
+\nQuá trình di chuyển bộ nhớ sẽ tiếp tục ở chế độ nền.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s không phải là gói tiện ích javascript hợp lệ</string>
     <string name="could_not_create_dir">Không thể tạo thư mục %s</string>
@@ -348,10 +347,10 @@
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Các thẻ</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Ghi chú</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
+    <string name="toggle_cards_notes">Chuyển đổi thẻ/ghi chú</string>
     <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
+    <string name="truncate_content_help">Cắt bớt chiều cao của mỗi hàng của Trình duyệt để chỉ hiển thị 3 dòng nội dung đầu tiên</string>
+    <string name="browser_options_dialog_heading">Tuỳ chọn trình duyệt</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Chạm để bắt đầu di chuyển bộ nhớ</string>

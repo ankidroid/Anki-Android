@@ -136,8 +136,6 @@
     <string name="app_theme" maxLength="41">Temo</string>
     <string name="day_theme" maxLength="41">Taga etoso</string>
     <string name="night_theme" maxLength="41">Nokta etoso</string>
-    <string name="default_font" maxLength="41">Implicita tiparo</string>
-    <string name="override_font" maxLength="41">Uzi implicitan tiparon</string>
     <string name="language" maxLength="41">Lingvo</string>
     <string name="language_system">Laŭ operaciumo</string>
     <string name="notification_pref" maxLength="41">Sciigoj</string>
@@ -233,7 +231,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Ĝeneralaj</string>
     <string name="deck_conf_reminders" maxLength="41">Memorigaĵoj</string>
-    <string name="pref_browser_editor_font" maxLength="41">Tiparo de foliumilo kaj redaktilo</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtri</string>
     <string name="deck_conf_cram_search" maxLength="41">Serĉi</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limigi al</string>

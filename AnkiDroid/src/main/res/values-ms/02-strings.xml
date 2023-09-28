@@ -71,7 +71,6 @@
     <string name="replay_audio">Main semula audio</string>
     <string name="leech_suspend_notification">Kad ditanda lintah dan dibekukan</string>
     <string name="leech_notification">Kad ditanda lintah</string>
-    <string name="corrupt_font">Fail fon rosak %s</string>
     <string name="webview_crash_unknown">Ralat tidak diketahui</string>
     <string name="webview_crash_unknwon_detailed">Ini disebabkan oleh ralat dalaman dalam WebView</string>
     <string name="webview_crash_oom">Kehabisan Memori</string>

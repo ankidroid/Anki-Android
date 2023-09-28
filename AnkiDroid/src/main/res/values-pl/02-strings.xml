@@ -71,7 +71,6 @@
     <string name="replay_audio">Odtwórz dźwięk</string>
     <string name="leech_suspend_notification">Karta oznaczona jako pijawka i zawieszona</string>
     <string name="leech_notification">Karta oznaczona jako pijawka</string>
-    <string name="corrupt_font">Uszkodzony plik czcionki %s</string>
     <string name="webview_crash_unknown">Nieznany błąd</string>
     <string name="webview_crash_unknwon_detailed">To było spowodowane przez wewnętrzny błąd w WebView</string>
     <string name="webview_crash_oom">Brak pamięci</string>

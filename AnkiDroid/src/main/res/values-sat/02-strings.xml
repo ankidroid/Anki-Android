@@ -71,7 +71,6 @@
     <string name="replay_audio">Audio replay ᱢᱮ </string>
     <string name="leech_suspend_notification">ᱠᱟᱰ ᱫᱚ leech ᱟᱨ ᱵᱚᱸᱫ ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ </string>
     <string name="leech_notification">ᱠᱟᱰ ᱫᱚ leech ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ </string>
-    <string name="corrupt_font">%s ᱯᱷᱚᱱᱴ ᱯᱷᱟᱤᱞ corrupt ᱜᱮᱭᱟ </string>
     <string name="webview_crash_unknown">ᱵᱟᱝᱵᱟᱰᱟᱭᱟᱜ ᱵᱷᱩᱞ </string>
     <string name="webview_crash_unknwon_detailed">ᱱᱚᱶᱟ ᱫᱚ WebView ᱨᱮ ᱵᱷᱤᱛᱨᱤ ᱵᱷᱩᱞ ᱠᱷᱟᱛᱤᱨ ᱛᱮ </string>
     <string name="webview_crash_oom">Out of Memory</string>

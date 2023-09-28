@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Sử dụng xấp thẻ hiện tại</string>
     <string name="add_to_deck_decide_by_note_type">Quyết định theo kiểu ghi chú</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Khi không có phông chữ nào được chỉ định trên thẻ flashcard</string>
-    <string name="override_font_always" comment="Option to always override font">Luôn cho phép</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Theo hệ thống</string>
     <!-- day_theme_labels -->

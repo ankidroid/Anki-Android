@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">მიმდინარე დასტის გამოყენება</string>
     <string name="add_to_deck_decide_by_note_type">შენიშვნის ტიპის მიხედვით გადაწყვეტა</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">როცა ბარათებზე შრიფტი არაა მითითებული</string>
-    <string name="override_font_always" comment="Option to always override font">ყოველთვის</string>
     <!-- theme labels -->
     <string name="theme_follow_system">სისტემის მიხედვით</string>
     <!-- day_theme_labels -->
@@ -82,10 +79,10 @@
     <string name="html_size_code_x_large">უფრო დიდი</string>
     <string name="html_size_code_xx_large">ყველაზე დიდი</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">პასუხი: თავიდან</string>
+    <string name="answer_hard">პასუხი: რთული</string>
+    <string name="answer_good">პასუხი: კარგი</string>
+    <string name="answer_easy">პასუხი: მარტივი</string>
     <string name="gesture_play">მედიაფაილების დაკვრა</string>
     <string name="gesture_abort_learning">სწავლის შეწყვეტა</string>
     <string name="gesture_flag_red">წითელი დროშის მიმაგრება/მოძრობა</string>

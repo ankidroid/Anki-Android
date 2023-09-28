@@ -71,7 +71,6 @@
     <string name="replay_audio">重播錄音</string>
     <string name="leech_suspend_notification">Card marked as leech and suspended</string>
     <string name="leech_notification">Card marked as leech</string>
-    <string name="corrupt_font">Corrupt font file %s</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>

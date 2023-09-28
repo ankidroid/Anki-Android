@@ -71,7 +71,6 @@
     <string name="replay_audio">Reludi sonaĵon</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
-    <string name="corrupt_font">Difektita dosiero de tiparo %s</string>
     <string name="webview_crash_unknown">Nekonata eraro</string>
     <string name="webview_crash_unknwon_detailed">Eraro kaŭzita pro interna eraro en WebView</string>
     <string name="webview_crash_oom">Memormanko</string>

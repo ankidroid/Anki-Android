@@ -71,7 +71,6 @@
     <string name="replay_audio">Audio wiederholen</string>
     <string name="leech_suspend_notification">Karte als Lernbremse markiert und ausgeschlossen</string>
     <string name="leech_notification">Karte als Lernbremse markiert</string>
-    <string name="corrupt_font">Fehlerhafte Schriftartdatei %s</string>
     <string name="webview_crash_unknown">Unbekannter Fehler</string>
     <string name="webview_crash_unknwon_detailed">Dies wurde durch einen internen Fehler in der WebView verursacht</string>
     <string name="webview_crash_oom">Nicht genügend Speicher</string>

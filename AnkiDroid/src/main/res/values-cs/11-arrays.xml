@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Použít aktuální balíček</string>
     <string name="add_to_deck_decide_by_note_type">Rozhodnout podle typu poznámky</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Když není určeno žádné písmo pro kartičky</string>
-    <string name="override_font_always" comment="Option to always override font">Vždy</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Systémový</string>
     <!-- day_theme_labels -->

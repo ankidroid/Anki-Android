@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">使用當前牌組</string>
     <string name="add_to_deck_decide_by_note_type">由筆記種類決定</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">當單字卡沒有指定字型時</string>
-    <string name="override_font_always" comment="Option to always override font">總是</string>
     <!-- theme labels -->
     <string name="theme_follow_system">依據系統設置</string>
     <!-- day_theme_labels -->

@@ -71,7 +71,6 @@
     <string name="replay_audio">Поново пусти аудио</string>
     <string name="leech_suspend_notification">Карта је означена као пијавица и отказана</string>
     <string name="leech_notification">Картица је означена као пијавица</string>
-    <string name="corrupt_font">Оштећена датотека фонта %s</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>

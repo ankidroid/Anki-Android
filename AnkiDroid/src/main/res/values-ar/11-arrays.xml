@@ -44,27 +44,24 @@
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
     <string name="error_reporting_choice_always_report">أبلغ دائمًا</string>
-    <string name="error_reporting_choice_never_report">لا تبلغ أبدًا</string>
+    <string name="error_reporting_choice_never_report">عدم الإبلاغ أبداً</string>
     <string name="error_reporting_choice_ask_user">اسألني</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">مشاهدة الأقدم أولا</string>
-    <string name="cram_deck_conf_order_random">عشوائي</string>
+    <string name="cram_deck_conf_order_random">بشكل عشوائي</string>
     <string name="cram_deck_conf_order_increasing_intervals">فواصل زمنية متزايدة</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">تقليل الفترات</string>
-    <string name="cram_deck_conf_order_most_lapsed">الأكثر نسيانا</string>
-    <string name="cram_deck_conf_order_order_added">تاريخ الإضافة</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">فترات زمنية ناقصة</string>
+    <string name="cram_deck_conf_order_most_lapsed">المقضية</string>
+    <string name="cram_deck_conf_order_order_added">بتاريخ الإضافة</string>
     <string name="cram_deck_conf_order_order_due">ترتيب الاستحقاق</string>
     <string name="cram_deck_conf_order_latest_added_first">المضافة مؤخرًا أولًا</string>
     <string name="cram_deck_conf_order_relative_overdueness">التأخير النسبي</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">استخدام الرزمة الحالية</string>
+    <string name="add_to_deck_use_current_deck">استخدم المجموعة الحالية</string>
     <string name="add_to_deck_decide_by_note_type">تقرير حسب نوع الملحوظة</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">عندما لا يكون هناك خط محدد في البطاقات</string>
-    <string name="override_font_always" comment="Option to always override font">دائمًا</string>
     <!-- theme labels -->
     <string name="theme_follow_system">حسب النظام</string>
     <!-- day_theme_labels -->
@@ -82,10 +79,10 @@
     <string name="html_size_code_x_large">x-كبير</string>
     <string name="html_size_code_xx_large">xx-كبير</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">إعادة الإجابة</string>
+    <string name="answer_hard">إجابة صعبة</string>
+    <string name="answer_good">إجابة جيدة</string>
+    <string name="answer_easy">إجابة سهلة</string>
     <string name="gesture_play">تشغيل الوسائط</string>
     <string name="gesture_abort_learning">توقف عن التعلم</string>
     <string name="gesture_flag_red">تفعيل المؤشر الأحمر</string>

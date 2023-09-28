@@ -126,7 +126,7 @@
     <string name="check_media_warning">Cela peut prendre longtemps avec les grandes collections de médias</string>
     <string name="check_media_message">Vérification des médias&#8230;</string>
     <string name="check_media_acknowledge">Média vérifié</string>
-    <string name="check_media_failed">Echec de la vérification des médias</string>
+    <string name="check_media_failed">Échec de la vérification des médias</string>
     <string name="check_media_invalid">Fichiers avec un codage non valide : %d</string>
     <string name="check_media_unused">Fichiers dans le dossier de médias, mais utilisés par aucune carte : %d</string>
     <string name="check_media_nohave">Fichiers utilisés par une carte, mais pas présents dans le dossier de médias : %d</string>

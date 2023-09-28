@@ -71,7 +71,6 @@
     <string name="replay_audio">Repetir audio</string>
     <string name="leech_suspend_notification">Tarjeta marcada como sanguijuela y suspendida</string>
     <string name="leech_notification">Tarjeta marcada como sanguijuela</string>
-    <string name="corrupt_font">Archivo de fuentes %s corrupto</string>
     <string name="webview_crash_unknown">Error desconocido</string>
     <string name="webview_crash_unknwon_detailed">Esto fue causado por un error interno en WebView</string>
     <string name="webview_crash_oom">Memoria Insuficiente</string>

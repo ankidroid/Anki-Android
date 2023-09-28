@@ -71,7 +71,6 @@
     <string name="replay_audio">ხმის თავიდან ჩართვა</string>
     <string name="leech_suspend_notification">ბარათი მოინიშნა როგორც სწავლის შემაფერხებელი ბარათი და Anki მას ამიერიდან გამოტოვებს</string>
     <string name="leech_notification">ბარათი შემაფერხებლად მოინიშნა</string>
-    <string name="corrupt_font">დაზიანებული შრიფტის ფაილი %s</string>
     <string name="webview_crash_unknown">უცნობი შეცდომა</string>
     <string name="webview_crash_unknwon_detailed">ეს იყო გამოწვეული WebWiew-ის შიდა შეცდომით</string>
     <string name="webview_crash_oom">მეხსიერება აღარ არის</string>

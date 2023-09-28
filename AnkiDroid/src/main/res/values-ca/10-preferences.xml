@@ -127,7 +127,7 @@
     <string name="automatic_sync_choice" maxLength="41">Sincronització automàtica</string>
     <string name="automatic_sync_choice_summ">Sincronitza automàticament en l\'app al Inici/sortir si el sync anterior va ser fa més de 10 minuts.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Sempre</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">Només amb connexions no mesurades</string>
     <string name="sync_media_never">Mai</string>
     <string name="sync_status_badge" maxLength="41">Mostra l\'estat de sincronització</string>
     <string name="sync_status_badge_summ">Canvia la icona de sincronització quan es puguin pujar canvis</string>
@@ -136,8 +136,6 @@
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema diürn</string>
     <string name="night_theme" maxLength="41">Tema nocturn</string>
-    <string name="default_font" maxLength="41">Tipus de lletra per omissió</string>
-    <string name="override_font" maxLength="41">Aplicabilitat de tipus de lletra per defecte</string>
     <string name="language" maxLength="41">Idioma</string>
     <string name="language_system">Idioma del sistema</string>
     <string name="notification_pref" maxLength="41">Notificacions</string>
@@ -165,7 +163,7 @@
     <string name="pref_backup_max" maxLength="41">Màxim número de còpies de seguretat</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interval de doble tacte (milisegons)</string>
     <string name="pref_double_tap_time_interval_summary">Un segon toc dels botons de resposta s\'ignorarà si aquest temps no ha passat. D’aquesta manera s’impedeixen dobles cops accidentals</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Ensenyar resposta de temps de pulsació llarga (ms)</string>
     <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Mostra el temps al botó</string>
     <string name="show_estimates_summ">Mostra el temps de la pròxima revisió al botons de resposta</string>
@@ -233,7 +231,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Recordatoris</string>
-    <string name="pref_browser_editor_font" maxLength="41">Tipus de lletra del navegador i de l\'editor</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41">Cerca</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limita-ho a</string>

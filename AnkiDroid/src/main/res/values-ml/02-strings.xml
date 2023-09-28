@@ -71,7 +71,6 @@
     <string name="replay_audio">ഓഡിയോ വീണ്ടും പ്ലേ ചെയ്യുക</string>
     <string name="leech_suspend_notification">കാർഡ് അട്ടയാണെന്ന് അടയാളപ്പെടുത്തി താൽക്കാലികമായി നിർത്തിവച്ചിരിക്കുന്നു</string>
     <string name="leech_notification">കാർഡ് അട്ടയാണെന്ന് അടയാളപ്പെടുത്തി</string>
-    <string name="corrupt_font">കേടായ ഫോണ്ട് ഫയൽ %s</string>
     <string name="webview_crash_unknown">അജ്ഞാത പിശക്</string>
     <string name="webview_crash_unknwon_detailed">വെബ്‌കാഴ്‌ചയിലെ ആന്തരിക പിശക് മൂലമാണ് ഇത് സംഭവിച്ചത്</string>
     <string name="webview_crash_oom">മെമ്മറി തീർന്നു</string>

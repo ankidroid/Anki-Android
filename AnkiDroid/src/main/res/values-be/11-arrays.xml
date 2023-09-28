@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Выкарыстоўваць бягучую калоду</string>
     <string name="add_to_deck_decide_by_note_type">Вырашаць па тыпе запісу</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Калі не пазначаны шрыфт у картках</string>
-    <string name="override_font_always" comment="Option to always override font">Заўсёды</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Прытрымлівацца сістэмы</string>
     <!-- day_theme_labels -->

@@ -49,7 +49,7 @@
         <item quantity="other">%d thẻ hiển thị</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="other">%d notes shown</item>
+        <item quantity="other">%d ghi chú hiển thị</item>
     </plurals>
     <string name="card_browser_all_decks">Tất cả bộ thẻ</string>
     <string name="card_browser_delete_card">Xóa ghi chú</string>
@@ -98,7 +98,7 @@
         <item quantity="other">Xuất thẻ</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="other">Export notes</item>
+        <item quantity="other">Xuất ghi chú</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d thẻ đã bị xóa</item>

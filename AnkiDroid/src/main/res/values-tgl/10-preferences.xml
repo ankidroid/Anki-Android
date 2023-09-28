@@ -137,8 +137,6 @@
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Araw ng tema</string>
     <string name="night_theme" maxLength="41">Tema ng gabi</string>
-    <string name="default_font" maxLength="41">Default na font</string>
-    <string name="override_font" maxLength="41">Paggamit ng default na font</string>
     <string name="language" maxLength="41">Wika</string>
     <string name="language_system">Wika ng sistema</string>
     <string name="notification_pref" maxLength="41">Notipikasyon</string>
@@ -234,7 +232,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Pangkalahatan</string>
     <string name="deck_conf_reminders" maxLength="41">Mga Paalala</string>
-    <string name="pref_browser_editor_font" maxLength="41">Browser at editor ng font</string>
     <string name="deck_conf_cram_filter" maxLength="41">Salain</string>
     <string name="deck_conf_cram_search" maxLength="41">Paghahanap</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limitasyon sa</string>

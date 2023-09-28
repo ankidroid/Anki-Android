@@ -71,7 +71,6 @@
     <string name="replay_audio">Ŏḍi\'ō punhā plē karā</string>
     <string name="leech_suspend_notification">Kārḍa līka asē cinhāṅkita kēlē āhē āṇi nilambita kēlē āhē</string>
     <string name="leech_notification">Kārḍa jaḷū mhaṇūna cinhāṅkita</string>
-    <string name="corrupt_font">Dūṣita phŏnṭa phā\'īla%s</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">हे वेब व्ह्यूमध्ये अंतर्गत त्रुटीमुळे होते</string>
     <string name="webview_crash_oom">स्मृतीच्याबाहेर</string>

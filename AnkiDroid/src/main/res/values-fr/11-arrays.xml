@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilisez le paquet courant</string>
     <string name="add_to_deck_decide_by_note_type">Décider par type de note</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Lorsque aucune police n’est spécifié sur la carte</string>
-    <string name="override_font_always" comment="Option to always override font">Toujours</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Suivre le système</string>
     <!-- day_theme_labels -->
@@ -82,10 +79,10 @@
     <string name="html_size_code_x_large">x-grande</string>
     <string name="html_size_code_xx_large">xx-grande</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Répondre encore</string>
+    <string name="answer_hard">Réponse difficile</string>
+    <string name="answer_good">Bonne réponse</string>
+    <string name="answer_easy">Réponse facile</string>
     <string name="gesture_play">Lire le média</string>
     <string name="gesture_abort_learning">Abandonner l\'apprentissage</string>
     <string name="gesture_flag_red">Activer/désactiver la balise rouge</string>

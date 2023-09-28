@@ -251,28 +251,26 @@
         Пожалуйста, позаботьтесь о сохранности ваших данных и регулярно синхронизируйте или экспортируйте резервные копии.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Не удалось перенести файлы</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[         Не удалось скопировать файлы базы данных с ошибкой:%1$s.
         <br><br>
-        The changes were reverted.
+        Изменения были отменены.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Пожалуйста, попробуйте повторно запустить миграцию.
+        Чтобы устранить проблему, вам, возможно, потребуется освободить немного места на диске,
+        или повторно подключите съемный накопитель, на котором хранится ваша коллекция.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+        <a href="%2$s">Узнайте больше и обратитесь за помощью</a>]]></string>
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Перемещение медиафайлов приостанавливается после сбоя с ошибкой:%1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        Изменения не были отменены.
+        Хотя никакие данные не должны были быть потеряны,
+медиафайлы могли быть разделены между старой и новой папками.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Пожалуйста, попробуйте повторно запустить миграцию.
+        Чтобы устранить проблему, вам, возможно, потребуется освободить немного места на диске,
+        или повторно подключите съемный накопитель, на котором хранится ваша коллекция.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
+        <a href="%2$s">Узнайте больше и обратитесь за помощью</a>]]></string>
     <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Перенос хранилища приостановлен после сбоя с ошибкой: %1$s.
         <br><br>
         <a href="%2$s">Подробности и помощь</a>

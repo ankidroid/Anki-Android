@@ -71,7 +71,6 @@
     <string name="replay_audio">Muling i-play ang audio</string>
     <string name="leech_suspend_notification">Ang card ay minarkahan bilang linta at sinuspinde</string>
     <string name="leech_notification">Ang card ay minarkahan bilang linta</string>
-    <string name="corrupt_font">Sira ang file ng font %s</string>
     <string name="webview_crash_unknown">Hindi matukoy na kamalian</string>
     <string name="webview_crash_unknwon_detailed">Ito ay dulot ng isang internal na kamalian sa WebView</string>
     <string name="webview_crash_oom">Naubusan ng Memorya</string>

@@ -136,8 +136,6 @@
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema pro sa die</string>
     <string name="night_theme" maxLength="41">Tema pro sa note</string>
-    <string name="default_font" maxLength="41">Caràtere predefinidu</string>
-    <string name="override_font" maxLength="41">Aplicabilidade de su caràtere predefinidu</string>
     <string name="language" maxLength="41">Limba</string>
     <string name="language_system">Limba de sistema</string>
     <string name="notification_pref" maxLength="41">Notìficas</string>
@@ -233,7 +231,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Generale</string>
     <string name="deck_conf_reminders" maxLength="41">Avisos</string>
-    <string name="pref_browser_editor_font" maxLength="41">Caràtere de su navigadore e de s\'editore</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtru</string>
     <string name="deck_conf_cram_search" maxLength="41">Chirca</string>
     <string name="deck_conf_cram_limit" maxLength="41">Lìmita a</string>

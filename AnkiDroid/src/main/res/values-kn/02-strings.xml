@@ -71,7 +71,6 @@
     <string name="replay_audio">ಆಡಿಯೊವನ್ನು ರಿಪ್ಲೇ ಮಾಡಿ</string>
     <string name="leech_suspend_notification">ಕಾರ್ಡ್ ಅನ್ನು ಲೀಚ್ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ ಮತ್ತು ಅಮಾನತುಗೊಳಿಸಲಾಗಿದೆ </string>
     <string name="leech_notification">ಕಾರ್ಡ್ ಅನ್ನು ಲೀಚ್ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>
-    <string name="corrupt_font">ಭ್ರಷ್ಟ ಫಾಂಟ್ ಫೈಲ್%s</string>
     <string name="webview_crash_unknown">ಅಜ್ಞಾತ ದೋಷ</string>
     <string name="webview_crash_unknwon_detailed">ವೆಬ್‌ವೀಕ್ಷಣೆಯಲ್ಲಿನ ಆಂತರಿಕ ದೋಷದಿಂದಾಗಿ ಇದು ಸಂಭವಿಸಿದೆ</string>
     <string name="webview_crash_oom">ಮೆಮೊರಿ ಇಲ್ಲ</string>

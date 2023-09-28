@@ -71,7 +71,6 @@
     <string name="replay_audio">Аудиото отново</string>
     <string name="leech_suspend_notification">Карта, маркирана като залепена и спряна</string>
     <string name="leech_notification">Карта, маркирана като залепена</string>
-    <string name="corrupt_font">Повреден шрифт %s</string>
     <string name="webview_crash_unknown">Неизвестна грешка</string>
     <string name="webview_crash_unknwon_detailed">Това е причинено от вътрешна грешка в WebView</string>
     <string name="webview_crash_oom">Недостиг на памет</string>

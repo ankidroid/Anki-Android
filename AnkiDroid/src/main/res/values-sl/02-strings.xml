@@ -71,7 +71,6 @@
     <string name="replay_audio">Ponovno predvajaj zvok</string>
     <string name="leech_suspend_notification">Kartica označena kot odvečna in je bila pridržana</string>
     <string name="leech_notification">Kartica označena kot odvečna</string>
-    <string name="corrupt_font">Pokvarjena datoteka pisave %s</string>
     <string name="webview_crash_unknown">Neznana napaka</string>
     <string name="webview_crash_unknwon_detailed">To je povzročila notranja napaka v WebViewu</string>
     <string name="webview_crash_oom">Zmanjkalo je pomnilnika</string>

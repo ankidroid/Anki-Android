@@ -77,8 +77,8 @@
         <item>並び替えなし（高速）</item>
         <item>ソートフィールド順</item>
         <item>作成日時順</item>
-        <item>ノート編集日時順</item>
-        <item>カード編集日時順</item>
+        <item>ノート更新日時順</item>
+        <item>カード更新日時順</item>
         <item>学習予定日時順</item>
         <item>復習間隔順</item>
         <item>易しさ順</item>

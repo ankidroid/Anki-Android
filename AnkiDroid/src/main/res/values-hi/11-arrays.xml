@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">वर्तमान डेक का उपयोग करें</string>
     <string name="add_to_deck_decide_by_note_type">नोट प्रकार द्वारा तय</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">जब स्पैनिश पर कोई फ़ॉंट निर्दिष्ट नहीं है</string>
-    <string name="override_font_always" comment="Option to always override font">हमेशा</string>
     <!-- theme labels -->
     <string name="theme_follow_system">सिस्टम का पालन करें</string>
     <!-- day_theme_labels -->

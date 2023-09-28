@@ -71,7 +71,6 @@
     <string name="replay_audio">ఆడియోను రీప్లే చేయండి</string>
     <string name="leech_suspend_notification">కార్డ్ జ్వాల మరియు సస్పెండ్ గా గుర్తించబడింది</string>
     <string name="leech_notification">కార్డు లీచ్గా గుర్తించబడింది</string>
-    <string name="corrupt_font">కరప్ట్ ఫాంట్ ఫైల్ %s</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>

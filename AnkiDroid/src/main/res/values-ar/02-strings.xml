@@ -71,10 +71,9 @@
     <string name="replay_audio">إعادة تشغيل الصوت</string>
     <string name="leech_suspend_notification">عُلِّمت البطاقة كمستعصية وعُلِّقت</string>
     <string name="leech_notification">عُلِّمت البطاقة كمستعصية</string>
-    <string name="corrupt_font">ملف خط معطوب %s</string>
     <string name="webview_crash_unknown">‏‏خطأ غير معروف</string>
     <string name="webview_crash_unknwon_detailed">حدث هذا بسبب خطأ داخلي في عارض الويب</string>
-    <string name="webview_crash_oom">‮نفذت الذاكرة</string>
+    <string name="webview_crash_oom">Out of Memory</string>
     <string name="webview_crash_oom_details">تم إنهاء عارض الويب من قبل النظام. يحدث هذا عادة عندما ينفذ التطبيق من الذاكرة، غالبًا بسبب خطوط أو وسائط كبيرة.</string>
     <string name="webview_crash_nonfatal">توقف معالج عارض الويب عن العمل. السبب: %s</string>
     <string name="webview_crash_fatal">خطأ قاتل: توقف معالج عارض الويب عن العمل. السبب: %s</string>

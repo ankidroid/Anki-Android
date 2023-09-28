@@ -71,7 +71,6 @@
     <string name="replay_audio">Riprodui s\'àudio</string>
     <string name="leech_suspend_notification">Carta marcada comente sambisua e suspèndida</string>
     <string name="leech_notification">Carta marcada comente sambisua</string>
-    <string name="corrupt_font">Documentu de sos caràteres corrùmpiu %s</string>
     <string name="webview_crash_unknown">Faddina disconnota</string>
     <string name="webview_crash_unknwon_detailed">Custu est istadu causadu dae una faddina interna de su renderizadore WebView</string>
     <string name="webview_crash_oom">Memòria agabbada</string>

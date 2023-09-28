@@ -71,7 +71,6 @@
     <string name="replay_audio">Spela om ljud</string>
     <string name="leech_suspend_notification">Markerat som utsugarkort och åsidosatt</string>
     <string name="leech_notification">Markerat som utsugarkort</string>
-    <string name="corrupt_font">Felaktig teckensnittsfil %s</string>
     <string name="webview_crash_unknown">Okänt fel</string>
     <string name="webview_crash_unknwon_detailed">Detta orsakades av ett internt fel i WebView</string>
     <string name="webview_crash_oom">Slut på minne</string>

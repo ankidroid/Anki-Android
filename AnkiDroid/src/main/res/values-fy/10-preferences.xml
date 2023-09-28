@@ -137,8 +137,6 @@
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Day theme</string>
     <string name="night_theme" maxLength="41">Night theme</string>
-    <string name="default_font" maxLength="41">Default font</string>
-    <string name="override_font" maxLength="41">Default font applicability</string>
     <string name="language" maxLength="41">Taal</string>
     <string name="language_system">Systeemtaal</string>
     <string name="notification_pref" maxLength="41">Notifications</string>
@@ -234,7 +232,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Reminders</string>
-    <string name="pref_browser_editor_font" maxLength="41">Browser and editor font</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41">Search</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limit to</string>

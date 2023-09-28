@@ -137,8 +137,6 @@
     <string name="app_theme" maxLength="41">იერსახე</string>
     <string name="day_theme" maxLength="41">დღის იერსახე</string>
     <string name="night_theme" maxLength="41">ღამის იერსახე</string>
-    <string name="default_font" maxLength="41">ნაგულისხმევი შრიფტი</string>
-    <string name="override_font" maxLength="41">ნაგულისხმევი შრიფტის გამოყენება</string>
     <string name="language" maxLength="41">ენა</string>
     <string name="language_system">სისტემის ენა</string>
     <string name="notification_pref" maxLength="41">შეტყობინებები</string>
@@ -234,7 +232,6 @@
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ზოგადი</string>
     <string name="deck_conf_reminders" maxLength="41">შეხსენებები</string>
-    <string name="pref_browser_editor_font" maxLength="41">შრიფტი ბარათების საძიებოსა და რედაქტორისთვის</string>
     <string name="deck_conf_cram_filter" maxLength="41">ფილტრი</string>
     <string name="deck_conf_cram_search" maxLength="41">ძებნა</string>
     <string name="deck_conf_cram_limit" maxLength="41">ზღვარი</string>

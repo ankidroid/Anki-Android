@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">選択中のデッキ</string>
     <string name="add_to_deck_decide_by_note_type">選択中のノートタイプを最後に使用したデッキ</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">フォントが指定されていない場合</string>
-    <string name="override_font_always" comment="Option to always override font">すべて</string>
     <!-- theme labels -->
     <string name="theme_follow_system">システムの設定に従う</string>
     <!-- day_theme_labels -->
@@ -88,13 +85,13 @@
     <string name="answer_easy">回答 (簡単)</string>
     <string name="gesture_play">音声・動画を再生</string>
     <string name="gesture_abort_learning">学習を中断</string>
-    <string name="gesture_flag_red">赤フラグを付ける/取り外す</string>
-    <string name="gesture_flag_orange">橙フラグを付ける/取り外す</string>
-    <string name="gesture_flag_green">緑フラグを付ける/取り外す</string>
-    <string name="gesture_flag_blue">青フラグを付ける/取り外す</string>
+    <string name="gesture_flag_red">レッドフラグを付ける/取り外す</string>
+    <string name="gesture_flag_orange">オレンジフラグを付ける/取り外す</string>
+    <string name="gesture_flag_green">グリーンフラグを付ける/取り外す</string>
+    <string name="gesture_flag_blue">ブルーフラグを付ける/取り外す</string>
     <string name="gesture_flag_pink">ピンクフラグを付ける/取り外す</string>
     <string name="gesture_flag_turquoise">ターコイズフラグを付ける/取り外す</string>
-    <string name="gesture_flag_purple">紫フラグを付ける/取り外す</string>
+    <string name="gesture_flag_purple">パープルフラグを付ける/取り外す</string>
     <string name="gesture_flag_remove">フラグを取り外す</string>
     <string name="gesture_page_up">１画面分上へスクロール</string>
     <string name="gesture_page_down">１画面分下へスクロール</string>

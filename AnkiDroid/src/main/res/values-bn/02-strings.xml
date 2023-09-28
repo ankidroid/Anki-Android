@@ -71,7 +71,6 @@
     <string name="replay_audio">অডিও আবার চালান</string>
     <string name="leech_suspend_notification">কার্ডটি লীচ হিসেবে চিহ্নিত হয়েছে এবং স্থগিত  হয়েছে</string>
     <string name="leech_notification">কার্ডটি লীচ হিসেবে চিহ্নিত হয়েছে</string>
-    <string name="corrupt_font">ত্রুটিপূর্ণ ফন্ট ফাইল %s</string>
     <string name="webview_crash_unknown">অজানা সমস্যা</string>
     <string name="webview_crash_unknwon_detailed">ওয়েবভিউ-এর কোনো অভ্যন্তরীণ ত্রুটির কারণে এমনটি হচ্ছে</string>
     <string name="webview_crash_oom">যথেষ্ট মেমরি নেই</string>

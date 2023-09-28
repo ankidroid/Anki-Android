@@ -71,7 +71,6 @@
     <string name="replay_audio">Riproduci audio</string>
     <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
     <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
-    <string name="corrupt_font">File dei caratteri corrotto %s</string>
     <string name="webview_crash_unknown">Errore sconosciuto</string>
     <string name="webview_crash_unknwon_detailed">Questo è stato causato da un errore interno nella WebView</string>
     <string name="webview_crash_oom">Memoria insufficiente</string>

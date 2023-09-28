@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilizar el mazo actual</string>
     <string name="add_to_deck_decide_by_note_type">Decidir por tipo de nota</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Cuando no haya una fuente especificada en las tarjetas flash</string>
-    <string name="override_font_always" comment="Option to always override font">Siempre</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Seguir sistema</string>
     <!-- day_theme_labels -->

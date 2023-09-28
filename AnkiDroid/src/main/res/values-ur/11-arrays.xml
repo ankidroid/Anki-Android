@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">موجودہ ڈیک استعمال کریں</string>
     <string name="add_to_deck_decide_by_note_type">نوٹ کی قسم کے مطابق فیصلہ کریں</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">جب فلیش کارڈز پر کوئی فونٹ متعین نہ ہو</string>
-    <string name="override_font_always" comment="Option to always override font">ہمیشہ</string>
     <!-- theme labels -->
     <string name="theme_follow_system">سسٹم پر عمل کریں۔</string>
     <!-- day_theme_labels -->

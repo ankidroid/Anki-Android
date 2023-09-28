@@ -71,7 +71,6 @@
     <string name="replay_audio">Putar ulang audio</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai leech dan ditangguhkan</string>
     <string name="leech_notification">Kartu ditandai sebagai leech</string>
-    <string name="corrupt_font">Berkas fon %s rusak</string>
     <string name="webview_crash_unknown">Galat Tidak Diketahui</string>
     <string name="webview_crash_unknwon_detailed">Ini disebabkan oleh galat internal dalam WebView</string>
     <string name="webview_crash_oom">Kehabisan memori</string>
@@ -177,8 +176,8 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">Mempersiapkan ekspor&#8230;</string>
+    <string name="export_ready_title">Ekspor siap</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>
     <string name="export_save_apkg_successful">Berhasil menyimpan paket Anki</string>
     <string name="export_save_apkg_unsuccessful">Paket Anki gagal disimpan</string>
@@ -191,8 +190,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Bagikan</string>
+    <string name="export_choice_save_to">Simpan ke</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
     <string name="menu__deck_options">Opsi dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>
@@ -226,8 +225,8 @@
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Kembalikan ke baku</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Cntoh</string>
+    <string name="basic_answer_sample_text">contoh</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Harap gunakan layar penuh untuk menggunakan Tampilkan Menu Navigasi menggunakan JavaScript.</string>
@@ -246,7 +245,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Lihat</string>
     <string name="anki_js_error_code">(Kode Galat: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Tersalin ke papan klip</string>
     <string name="about_ankidroid_error_copy_debug_info">Galat menyalin informasi debug ke papan klip</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
@@ -254,7 +253,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Gagal memuat dek \'%s\'</string>
     <string name="search_decks">Cari dek</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Tampilkan progress migrasi</string>
     <string name="ankidroid_init_failed_webview_title">Kegagalan fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid membutuhkan System Webview yang sekarang sedang tidak ada. Hal ini dapat terjadi karena sistem sedang meng-install pembaruan. Mohon mencoba lagi dalam beberapa menit.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -268,11 +267,11 @@
     <string name="format_font_size">Ubah Ukuran Font</string>
     <string name="insert_mathjax">Masukkan rumus MathJax</string>
     <string name="insert_cloze">Masukkan Cloze Deletion</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Teks tombol</string>
     <string name="before_text">HTML Sebelum Pilihan</string>
     <string name="after_text">HTML Sesudah Pilihan</string>
     <string name="add_toolbar_item">Buat Item Toolbar</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="edit_toolbar_item">Ubah Item Toolbar</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Copot Item Toolbar?</string>
     <string name="note_editor_paste_too_large">Gambar ini terlalu besar untuk ditempel, mohon masukkan gambar secara manual.</string>

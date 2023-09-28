@@ -71,7 +71,6 @@
     <string name="replay_audio">Επανάληψη ήχου</string>
     <string name="leech_suspend_notification">Η κάρτα χαρακτηρίστηκε βδέλλα και αναστάλθηκε</string>
     <string name="leech_notification">Κάρτα σημαδεμένη ως βδέλλα</string>
-    <string name="corrupt_font">Κατεστραμμένο αρχείο γραμματοσειράς %s</string>
     <string name="webview_crash_unknown">Άγνωστο σφάλμα</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>

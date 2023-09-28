@@ -71,7 +71,6 @@
     <string name="replay_audio">Sesi yeniden çal</string>
     <string name="leech_suspend_notification">Kart asalak olarak işaretlenip askıya alınmış</string>
     <string name="leech_notification">Kart asalak olarak işaretlenmiş</string>
-    <string name="corrupt_font">Bozuk yazı tipi dosyası %s</string>
     <string name="webview_crash_unknown">Bilinmeyen hata</string>
     <string name="webview_crash_unknwon_detailed">Bu, Web Görünümü\'ndeki dahili bir hatadan kaynaklandı</string>
     <string name="webview_crash_oom">Yetersiz Bellek</string>

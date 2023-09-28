@@ -62,9 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilitza aquest paquet</string>
     <string name="add_to_deck_decide_by_note_type">Dedueix pel tipus de nota</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Quan cap font està especificada en les flashcards</string>
-    <string name="override_font_always" comment="Option to always override font">Sempre</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Segueix el sistema</string>
     <!-- day_theme_labels -->

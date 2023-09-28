@@ -71,7 +71,6 @@
     <string name="replay_audio">Повторити звук</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
-    <string name="corrupt_font">Пошкоджений файл шрифтів %s</string>
     <string name="webview_crash_unknown">Невідома помилка</string>
     <string name="webview_crash_unknwon_detailed">Викликано внутрішньою помилкою в WebView</string>
     <string name="webview_crash_oom">Недостатньо пам\'яті</string>

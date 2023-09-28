@@ -71,7 +71,6 @@
     <string name="replay_audio">Аудионы кабатлау</string>
     <string name="leech_suspend_notification">Кәрт бәйләнчек итеп куелган hәм искә алынмас</string>
     <string name="leech_notification">Кәрт бәйләнчек итеп куелган</string>
-    <string name="corrupt_font">%s шрифт файлы бозылган</string>
     <string name="webview_crash_unknown">Билгесез хата</string>
     <string name="webview_crash_unknwon_detailed">Бу WebViewның эчке хатасы аркасында килеп чыкты</string>
     <string name="webview_crash_oom">Хәтер җитми</string>

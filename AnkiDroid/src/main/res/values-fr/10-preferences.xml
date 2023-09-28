@@ -52,7 +52,7 @@
     <string name="pref_search_no_results">Pas de résultat</string>
     <!-- preferences.xml categories-->
     <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Général</string>
-    <string name="pref_cat_studying" maxLength="41">Etudier</string>
+    <string name="pref_cat_studying" maxLength="41">Étudier</string>
     <string name="pref_cat_system_wide" maxLength="41">À l\'échelle du système</string>
     <string name="pref_cat_reviewing" maxLength="41">Révision</string>
     <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synchronisation</string>
@@ -65,7 +65,7 @@
     <string name="pref_cat_controls" maxLength="41">Contrôles</string>
     <string name="pref_cat_advanced" maxLength="41">Avancé</string>
     <string name="pref_cat_workarounds" maxLength="41">Solution</string>
-    <string name="pref_cat_plugins" maxLength="41">Plugins</string>
+    <string name="pref_cat_plugins" maxLength="41">Extensions</string>
     <!-- preferences.xml entries-->
     <string name="whiteboard_stroke_width" maxLength="41">Largeur des traits</string>
     <string name="use_input_tag" maxLength="41">Saisir la réponse dans la carte</string>
@@ -136,8 +136,6 @@
     <string name="app_theme" maxLength="41">Thème</string>
     <string name="day_theme" maxLength="41">Thème de jour</string>
     <string name="night_theme" maxLength="41">Thème de nuit</string>
-    <string name="default_font" maxLength="41">Police par défaut</string>
-    <string name="override_font" maxLength="41">Application de la police par défaut</string>
     <string name="language" maxLength="41">Langue</string>
     <string name="language_system">Langue du système</string>
     <string name="notification_pref" maxLength="41">Notifications</string>
@@ -146,7 +144,7 @@
     <string name="notify_when_pending">Messages en attente disponibles</string>
     <string name="notification_minimum_cards_due">Plus de %d cartes dues</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Vibrer</string>
-    <string name="notification_minimum_cards_due_blink" maxLength="41">LED de notification</string>
+    <string name="notification_minimum_cards_due_blink" maxLength="41">Lumière de notification</string>
     <string name="timeout_answer_text" maxLength="41">Affichage automatique de la réponse</string>
     <string name="timeout_answer" maxLength="41">Délai pour répondre</string>
     <string name="timeout_answer_summ">Voir la réponse automatiquement sans intervention de l’utilisateur. Ceci comprend le temps utilisé par les fichiers audio joués automatiquements.</string>
@@ -165,8 +163,8 @@
     <string name="pref_backup_max" maxLength="41">Nombre de sauvegarde max</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Temps d\'intervalle de l\'appui double (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un deusième appui sur le bouton de réponse va être ignoré si le temps est écoulé. Cela évite les appuis doubles involontaires.</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Afficher le temps d\'appui long (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Temps minimal d\'appui long avant que le bouton d\'affichage de la réponse enregistre une touche. Peut réduire les risques d\'appui accidentel du bouton supplémentaire. La valeur par défaut est 0 ms</string>
     <string name="show_estimates" maxLength="41">Afficher le temps</string>
     <string name="show_estimates_summ">Afficher le temps avant la prochaine révision sur les boutons de réponse</string>
     <string name="show_large_answer_buttons" maxLength="41">Afficher de gros boutons de réponse</string>
@@ -222,18 +220,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Clavier</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
+    <string name="answer_buttons" maxLength="41">Boutons de réponse</string>
+    <string name="card" maxLength="41">Carte</string>
     <string name="note" maxLength="41">Note</string>
     <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="media" maxLength="41">Média</string>
+    <string name="misc" maxLength="41">Divers</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Sélectionner les étiquettes</string>
     <!-- Deck configurations -->
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Général</string>
     <string name="deck_conf_reminders" maxLength="41">Rappels</string>
-    <string name="pref_browser_editor_font" maxLength="41">Police du navigateur et de l’éditeur</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41">Recherche</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limiter à</string>
@@ -284,7 +281,7 @@
     <string name="pref_cat_dev_options" maxLength="41">Options de développement</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activer les options de développement</string>
     <string name="disable_dev_options">Désactiver les options de développement</string>
-    <string name="dev_options_warning">        S\'il vous plaît soyez sûr avant d\'activer les options de développement. Ces options sont dangereuses et peuvent casser l\'application ou corrompre votre collection.\n\nNotez que ces options ne sont pas adaptées à la majorité des utilisateurs et par conséquent, elles ne sont pas traduites, elles sont donc en anglais.</string>
+    <string name="dev_options_warning">        Veuillez être sûr·e avant d\'activer les options de développement. Ces options sont dangereuses et peuvent casser l\'application ou corrompre votre collection.\n\nNotez que ces options ne sont pas adaptées à la majorité des utilisateurs et par conséquent, elles ne sont pas traduites, elles sont donc en anglais.</string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
@@ -325,13 +322,13 @@
     <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Supprimer la collection</string>
     <string name="pref__delete_collection__summary">Supprimer la collection, les médias et les sauvegardes. Les paramètres de l\'application ne sont pas supprimés</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Supprimer la collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Êtes-vous sûr de vouloir supprimer vos collections, médias et sauvegardes ?\n\nNote : cette action va fermer la fenêtre.</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Êtes-vous sûr·e de vouloir supprimer vos collections, médias et sauvegardes ?\n\nNote : cette action va fermer la fenêtre.</string>
     <string name="progress__deleting_collection">Suppression de la collection&#8230;</string>
     <!-- Delete everything -->
     <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Tout supprimer</string>
     <string name="pref__delete_everything__summary">Supprimer les collections, médias, sauvegardes et paramètres</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Tout supprimer</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Êtes-vous sûr de vouloir tout supprimer ? Cela inclue vos collections, médias, sauvegardes et vos préférences.\n\nNote : cette action va fermer la fenêtre.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Êtes-vous sûr·e de vouloir tout supprimer ? Ceci inclue vos collections, médias, sauvegardes et vos préférences.\n\nNote : cette action va fermer la fenêtre.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Supprimer les données de l\'application</string>
     <string name="pref__delete_app_data__summary">Supprimer les paramètres et les autres données de l’application</string>

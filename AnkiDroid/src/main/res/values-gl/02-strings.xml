@@ -71,7 +71,6 @@
     <string name="replay_audio">Repetir audio</string>
     <string name="leech_suspend_notification">Cartón marcado como sambesuga e suspendido</string>
     <string name="leech_notification">Cartón marcado como sambesuga</string>
-    <string name="corrupt_font">Arquivo de fonte corrupto %s</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>

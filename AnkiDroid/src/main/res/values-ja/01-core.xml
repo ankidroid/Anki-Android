@@ -88,7 +88,7 @@
     <string name="undo">元に戻す</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">描線を一つ取り消す</string>
     <string name="move_all_to_deck">移動先デッキを選択</string>
-    <string name="unbury">延期を取り消す</string>
+    <string name="unbury">非表示を解除</string>
     <string name="rename_deck">デッキの名前を変更</string>
     <string name="create_shortcut">ショートカットを作成</string>
     <string name="browse_cards">カードをブラウザで表示</string>
@@ -96,23 +96,23 @@
     <string name="menu_add_note">ノートを追加</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">アカウントの設定と同期</string>
     <string name="menu_dismiss_note">非表示 / 削除</string>
-    <string name="menu_bury_card">カードを明日に延期</string>
-    <string name="menu_bury_note">ノートを明日に延期</string>
+    <string name="menu_bury_card">カードを今日は非表示</string>
+    <string name="menu_bury_note">ノートを今日は非表示</string>
     <string name="menu_suspend_card">カードを休止</string>
     <string name="menu_suspend_note">ノートを休止</string>
-    <string name="menu_bury">明日に延期</string>
+    <string name="menu_bury">今日は非表示</string>
     <string name="menu_suspend">休止</string>
     <string name="menu_delete_note">ノートを削除</string>
     <string name="menu_flag">フラグ</string>
     <string name="menu_flag_card">カードにフラグを付ける</string>
     <string name="menu_flag_card_zero">フラグなし</string>
-    <string name="menu_flag_card_one">赤フラグ</string>
-    <string name="menu_flag_card_two">橙フラグ</string>
-    <string name="menu_flag_card_three">緑フラグ</string>
-    <string name="menu_flag_card_four">青フラグ</string>
-    <string name="menu_flag_card_five">ピンクフラグ</string>
-    <string name="menu_flag_card_six">ターコイズフラグ</string>
-    <string name="menu_flag_card_seven">紫フラグ</string>
+    <string name="menu_flag_card_one">レッド</string>
+    <string name="menu_flag_card_two">オレンジ</string>
+    <string name="menu_flag_card_three">グリーン</string>
+    <string name="menu_flag_card_four">ブルー</string>
+    <string name="menu_flag_card_five">ピンク</string>
+    <string name="menu_flag_card_six">ターコイズ</string>
+    <string name="menu_flag_card_seven">パープル</string>
     <string name="menu_edit_tags">タグを編集</string>
     <string name="delete_note_message">このカードの元となるノートを削除してもよろしいですか？　同じノートから作られたカード（例：裏表反転カード）があれば、それらもすべて削除されます。\n%s</string>
     <string name="menu_search">%1$s で検索</string>
