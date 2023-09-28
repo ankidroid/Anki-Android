@@ -58,7 +58,7 @@ open class AvTag
 val AV_REF_RE = Regex("\\[anki:(play:(.):(\\d+))]")
 val AV_PLAYLINK_RE = Regex("playsound:(.):(\\d+)")
 
-fun strip_av_refs(text: String) = AV_REF_RE.replace("", text)
+fun stripAvRefs(text: String) = AV_REF_RE.replace("", text)
 
 fun addPlayIcons(content: String): String {
     return AV_REF_RE.replace(content) { match ->
