@@ -34,6 +34,8 @@ import timber.log.Timber
 import java.util.*
 import java.util.regex.Pattern
 
+val VIDEO_EXTENSIONS = setOf("mp4", "mov", "mpg", "mpeg", "mkv", "avi")
+
 private typealias SoundPath = String
 // NICE_TO_HAVE: Abstract, then add tests for #6111
 /**
@@ -191,6 +193,9 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
          * Pattern used to identify the markers for sound files
          */
         val SOUND_PATTERN: Pattern = Pattern.compile("\\[sound:([^\\[\\]]*)]")
+
+        // TODO join with SOUND_PATTERN
+        val SOUND_RE = SOUND_PATTERN.toRegex()
 
         /**
          * Pattern used to parse URI (according to http://tools.ietf.org/html/rfc3986#page-50)

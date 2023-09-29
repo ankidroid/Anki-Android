@@ -22,6 +22,7 @@
 
 package com.ichi2.libanki
 
+import com.ichi2.libanki.Sound.Companion.SOUND_RE
 import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
@@ -30,6 +31,7 @@ import com.ichi2.libanki.utils.len
 import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
+import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 import timber.log.Timber
 
@@ -211,18 +213,41 @@ class TemplateManager {
                 )
             }
 
-            val qtext = applyCustomFilters(partial.qnodes, this, front_side = null)
+            /**
+             * NOT in libanki.
+             *
+             * The desktop version handles videos in an external player (mpv)
+             * because of old webview codecs in python, and to allow extending the video player.
+             * To simplify things and deliver a better result,
+             * we use the webview player, like AnkiMobile does
+             */
+            fun parseVideos(text: String): String {
+                return SOUND_RE.replace(text) { match ->
+                    val fileName = match.groupValues[1]
+                    val extension = fileName.substringAfterLast(".", "")
+                    if (extension in VIDEO_EXTENSIONS) {
+                        @Language("HTML")
+                        val result =
+                            """<video src="$fileName" controls controlsList="nodownload"></video>"""
+                        result
+                    } else {
+                        match.value
+                    }
+                }
+            }
+
+            val qtext = parseVideos(applyCustomFilters(partial.qnodes, this, front_side = null))
             val qout = col().backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
-            val atext = applyCustomFilters(partial.anodes, this, front_side = qout.text)
+            val atext = parseVideos(applyCustomFilters(partial.anodes, this, front_side = qout.text))
             val aout = col().backend.extractAvTags(text = atext, questionSide = false)
             var aoutText = aout.text
 
             if (!_browser) {
                 val svg = _note_type.optBoolean("latexsvg", false)
-                qoutText = LaTeX.mungeQA(qout.text, _col, svg)
-                aoutText = LaTeX.mungeQA(aout.text, _col, svg)
+                qoutText = LaTeX.mungeQA(qoutText, _col, svg)
+                aoutText = LaTeX.mungeQA(aoutText, _col, svg)
             }
 
             val output = TemplateRenderOutput(
