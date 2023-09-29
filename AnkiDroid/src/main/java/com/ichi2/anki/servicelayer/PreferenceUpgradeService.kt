@@ -82,7 +82,7 @@ object PreferenceUpgradeService {
             const val upgradeVersionPrefKey = "preferenceUpgradeVersion"
 
             /** Returns all instances of preference upgrade classes */
-            internal fun getAllInstances(legacyPreviousVersionCode: LegacyVersionIdentifier) = sequence<PreferenceUpgrade> {
+            private fun getAllInstances(legacyPreviousVersionCode: LegacyVersionIdentifier) = sequence {
                 yield(LegacyPreferenceUpgrade(legacyPreviousVersionCode))
                 yield(UpdateNoteEditorToolbarPrefs())
                 yield(UpgradeGesturesToControls())
@@ -91,6 +91,7 @@ object PreferenceUpgradeService {
                 yield(UpgradeAppLocale())
                 yield(RemoveScrollingButtons())
                 yield(RemoveAnswerRecommended())
+                yield(RemoveBackupMax())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -423,6 +424,23 @@ object PreferenceUpgradeService {
                 preferences.edit {
                     putString(destinyPrefKey, joinedBindings.toPreferenceString())
                     remove(sourcePrefKey)
+                }
+            }
+        }
+
+        /**
+         * Switch from using a single backup option to using separate preferences for
+         * daily/weekly/monthly as well as frequency of backups.
+         */
+        internal class RemoveBackupMax : PreferenceUpgrade(13) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val legacyValue = preferences.getInt("backupMax", 4)
+                preferences.edit {
+                    remove("backupMax")
+                    putInt("minutes_between_automatic_backups", 30) // 30 minutes default
+                    putInt("daily_backups_to_keep", legacyValue)
+                    putInt("weekly_backups_to_keep", legacyValue)
+                    putInt("monthly_backups_to_keep", legacyValue)
                 }
             }
         }

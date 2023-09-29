@@ -32,13 +32,6 @@
             android:key="@string/pref_ankidroid_directory_key"
             android:title="@string/col_path"
             app1:useSimpleSummaryProvider="true"/>
-        <com.ichi2.preferences.IncrementerNumberRangePreferenceCompat
-            android:defaultValue="8"
-            android:key="@string/pref_backup_max_key"
-            android:title="@string/pref_backup_max"
-            app1:useSimpleSummaryProvider="true"
-            app:min="0"
-            app:max="99" />
         <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="@string/tts_key"

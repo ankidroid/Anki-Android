@@ -167,7 +167,6 @@
     <string name="about_screen_key">aboutScreen</string>
 
     <!-- Backup limits -->
-    <string name="pref_backup_max_key">backupMax</string>
     <string name="pref_backups_help_key">backups_help</string>
     <string name="pref_minutes_between_automatic_backups_key">minutes_between_automatic_backups</string>
     <string name="pref_daily_backups_to_keep_key">daily_backups_to_keep</string>
