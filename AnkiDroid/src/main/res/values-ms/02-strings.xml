@@ -217,7 +217,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Anda mungkin mahu memampatkan dan ubah saiz gambar dalam direktori media]]></string>
     <string name="no_browser_notification">Tiada pelayar ditemui，sila lawat laman web melalui PC atau telefon: </string>
     <string name="web_page_error">Ralat memuatkan halaman: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Pautan halaman luar dalam kad tidak disokong</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Latar belakang</string>

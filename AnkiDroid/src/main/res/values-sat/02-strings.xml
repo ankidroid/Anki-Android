@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ᱠᱮᱢᱨᱟ ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ ᱜᱮ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ ᱾ ᱢᱮᱰᱤᱭᱟ ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱪᱤᱛᱟᱨ ᱠᱚᱥᱚᱴ ᱢᱮ]]></string>
     <string name="no_browser_notification">ᱵᱨᱚᱩᱡᱚᱨ ᱵᱟᱭ ᱧᱟᱢ ᱞᱮᱱᱟ，ᱣᱮᱵᱯᱮᱡ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱢᱚᱵᱚᱤᱞ ᱛᱮ ᱪᱟᱞᱟᱜ ᱢᱮ:</string>
     <string name="web_page_error">ᱥᱟᱦᱴᱟ ᱞᱟᱫᱮ ᱵᱷᱩᱞ:%s</string>
-    <string name="no_outgoing_link_in_cardbrowser">ᱵᱟᱦᱨᱮ ᱡᱟᱱᱟᱲ ᱠᱟᱰ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">ᱵᱮᱠᱜᱟᱨᱩᱸᱰ</string>

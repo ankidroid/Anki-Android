@@ -91,7 +91,7 @@
         <item>Тип записи</item>
         <item>Вопрос</item>
         <item>Метки</item>
-        <item>Ошибки</item>
+        <item>Забытые</item>
         <item>Повторения</item>
         <item>Интервал</item>
         <item>Лёгкость</item>
@@ -235,7 +235,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Фотографии могут быть большими. Возможно, вы захотите сжать или изменить размер изображений в папке медиаданных]]></string>
     <string name="no_browser_notification">Браузер не найден. Посетите сайт с компьютера или телефона: </string>
     <string name="web_page_error">Ошибка загрузки страницы: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">В карточках не поддерживаются внешние ссылки</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>

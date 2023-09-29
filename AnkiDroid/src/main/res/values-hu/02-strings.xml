@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[A kamera képei lehet túl nagyok. Lehet, hogy tömörítenie vagy újra kéne méreteznie őket a média mappájában.]]></string>
     <string name="no_browser_notification">Nem találtunk böngészőt, kérjük látogasson meg egy weblapot PC-n vagy mobilon: </string>
     <string name="web_page_error">Az oldal betöltése sikertelen: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">A kártyán külsős link nem támogatott.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Háttér</string>

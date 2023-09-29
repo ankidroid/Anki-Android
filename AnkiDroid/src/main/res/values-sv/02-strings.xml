@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Kamerbilder kan ta upp mycket lagringsutrymme. Du kan vilja komprimera & ändra storleken på bilderna i media-mappen.]]></string>
     <string name="no_browser_notification">Ingen webbläsare funnen, var god vänlig och besök webbsidan med dator eller mobil: </string>
     <string name="web_page_error">Fel vid inläsning av sidan: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Extern sidlänk i kort stöds inte.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Bakgrund</string>

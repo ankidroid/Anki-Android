@@ -226,7 +226,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Sas immàgines de sa fotocàmera diant pòdere resurtare mannas. Dias pòdere chèrrere a las cumprimire e mudare de mannària in sa cartella de sos documentos multimediales]]></string>
     <string name="no_browser_notification">Perunu navigadore agatadu，bìsita sa pàgina dae unu pc o dae unu dispositivu mòbile:</string>
     <string name="web_page_error">Faddina de carrigamentu de sa pàgina: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Sos ligàmenes esternos in sas cartas non sunt suportados.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Isfundu</string>

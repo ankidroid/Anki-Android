@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ಕ್ಯಾಮೆರಾ ಚಿತ್ರಗಳು ದೊಡ್ಡದಾಗಿರಬಹುದು. ಮಾಧ್ಯಮ ಡೈರೆಕ್ಟರಿಯಲ್ಲಿ ಚಿತ್ರಗಳನ್ನು ಕುಗ್ಗಿಸಲು ಮತ್ತು ಮರುಗಾತ್ರಗೊಳಿಸಲು ನೀವು ಬಯಸಬಹುದು]]></string>
     <string name="no_browser_notification">ಯಾವುದೇ ಬ್ರೌಸರ್ ಕಂಡುಬಂದಿಲ್ಲ ， ದಯವಿಟ್ಟು ಪಿಸಿ ಅಥವಾ ಮೊಬೈಲ್ ಮೂಲಕ ವೆಬ್ ಪುಟಕ್ಕೆ ಭೇಟಿ ನೀಡಿ: </string>
     <string name="web_page_error">ಪುಟವನ್ನು ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ:%s</string>
-    <string name="no_outgoing_link_in_cardbrowser">ಕಾರ್ಡ್‌ನಲ್ಲಿನ ಬಾಹ್ಯ ಪುಟ ಲಿಂಕ್ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">ಹಿನ್ನೆಲೆ</string>

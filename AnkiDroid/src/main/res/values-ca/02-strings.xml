@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les imatges de la càmera poden ser grans. És possible que vulgueu comprimir i canviar la mida de les imatges al directori multimèdia]]></string>
     <string name="no_browser_notification">No s\'ha trobat cap navegador, visiteu la pàgina web amb un ordinador o un mòbil:</string>
     <string name="web_page_error">Error carregant la pàgina: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">No s\'admet enllaç a pàgina externa a la targeta.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Fons</string>

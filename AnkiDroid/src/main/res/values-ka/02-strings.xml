@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[კამერის სურათები შეიძლება დიდი იყოს.  სურათების შეკუმშვას და ზომის შეცვლას ფაილების დირექტორიაში შეძლებთ]]></string>
     <string name="no_browser_notification">ბრაუზერი ვერ მოიძებნა, გთხოვთ ვებგვერდი კომპიუტერზე ან მობილურ მოწყობილობაზე იხილოთ: </string>
     <string name="web_page_error">შეცდომა გვერდის ჩატვირთვისას: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">ბარათში არსებული გარე გვერდის ბმული არ არის გათვალისწინებული.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">ფონი</string>

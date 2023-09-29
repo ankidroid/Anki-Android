@@ -235,7 +235,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Зображення можуть бути завеликими. Можливо вам треба буде стиснути або змінити розмір зображень в медіатеці]]></string>
     <string name="no_browser_notification">Браузер не знайдено, будь ласка, відвідайте веб-сторінку з компʼютера чи з мобільного телефону: </string>
     <string name="web_page_error">Помилка при завантаженні сторінки: \"%s\"</string>
-    <string name="no_outgoing_link_in_cardbrowser">Посилання на зовнішні сторінки в картках не підтримується.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Тло</string>
