@@ -217,7 +217,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Hình ảnh máy ảnh có thể lớn. Bạn có thể muốn nén và thay đổi kích thước hình ảnh trong thư mục media]]></string>
     <string name="no_browser_notification">Không tìm thấy trình duyệt, vui lòng truy cập trang web bằng máy tính hoặc điện thoại di động:</string>
     <string name="web_page_error">Lỗi khi tải trang: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Liên kết trang bên ngoài trong thẻ không được hỗ trợ.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Hình nền</string>

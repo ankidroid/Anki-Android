@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[କ୍ୟାମେରା ପ୍ରତିଛବିଗୁଡ଼ିକ ବଡ଼ ହେଇପାରେ। ମିଡ଼ିଆ ଡିରେକ୍ଟୋରୀରେ ଆପଣ ପ୍ରତିଛବିଗୁଡ଼ିକର ସଙ୍କୋଚନ ଏବଂ ଆକାର ପରିବର୍ତ୍ତନ କରିପାରିବେ]]></string>
     <string name="no_browser_notification">କୌଣସି ବ୍ରାଉଜର୍ ମିଳିଲା ନାହିଁ, ଦୟାକରି PC କିମ୍ୱା ମୋବାଇଲ୍ ଦ୍ୱାରା ୱେବ୍ ପୃଷ୍ଠା ପରିଦର୍ଶନ କରନ୍ତୁ: </string>
     <string name="web_page_error">ପୃଷ୍ଠା ଲୋଡ୍ ହେବାରେ ତ୍ରୁଟି: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">ବହିଃ-ପୃଷ୍ଠା ଲିଙ୍କ୍ ପତ୍ରରେ ସମର୍ଥିତ ନୁହେଁ।</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">ପୃଷ୍ଠପଟ</string>

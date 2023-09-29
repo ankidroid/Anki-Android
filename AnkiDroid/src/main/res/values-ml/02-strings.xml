@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ക്യാമറ ഇമേജുകൾ വലുതായിരിക്കാം. മീഡിയ ഡയറക്ടറിയിലെ ഇമേജുകൾ കം‌പ്രസ്സുചെയ്യാനും വലുപ്പം മാറ്റാനും നിങ്ങൾ ആഗ്രഹിച്ചേക്കാം]]></string>
     <string name="no_browser_notification">browser സറൊന്നും കണ്ടെത്തിയില്ല p ദയവായി പിസി അല്ലെങ്കിൽ മൊബൈൽ വഴി വെബ് പേജ് സന്ദർശിക്കുക:</string>
     <string name="web_page_error">പേജ് ലോഡുചെയ്യുന്നതിൽ പിശക്:%s</string>
-    <string name="no_outgoing_link_in_cardbrowser">കാർഡിലെ ബാഹ്യ പേജ് ലിങ്ക് പിന്തുണയ്‌ക്കുന്നില്ല.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>

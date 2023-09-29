@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Las imágenes de la cámara pueden ser grandes. Puede que desee comprimir y cambiar el tamaño de las imágenes en el directorio de medios]]></string>
     <string name="no_browser_notification">No hay ningún browser, por favor visite la página web por PC o móvil: </string>
     <string name="web_page_error">Error al cargar la página: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Enlaces de páginas externas no son soportados en la tarjeta.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Fondo</string>

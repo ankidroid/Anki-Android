@@ -235,7 +235,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky fotoaparáta môžu byť priveľké. Môžete skúsiť kompresiu a zmenu veľkosti obrázkov v mediálnom priečinku]]></string>
     <string name="no_browser_notification">Nenašiel sa žiaden prehliadač，navštívte prosím webovú stránku cez PC alebo mobil: </string>
     <string name="web_page_error">Chyba pri načítavaní %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Externý odkaz v kartičke nie je podporovaný.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Pozadie</string>

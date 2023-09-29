@@ -217,7 +217,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相機圖像可能很龐大。你可能希望壓縮和重設媒體資料夾中的圖像大小]]></string>
     <string name="no_browser_notification">無瀏覽器已找到，請使用PC或行動裝置訪問網頁： </string>
     <string name="web_page_error">載入頁面時發生錯誤：%s</string>
-    <string name="no_outgoing_link_in_cardbrowser">卡片中的外部頁面連結不受支援。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">背景</string>

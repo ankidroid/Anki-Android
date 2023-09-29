@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Maaring malaki ang litrato ng kamera. Pwede mong i-compress o paliitin ang litrato sa media directory.]]></string>
     <string name="no_browser_notification">Walang makitang browser, mangyaring bisitahin ang pahina sa web gamit ang PC o mobile: </string>
     <string name="web_page_error">Kamalian sa pag-lo-load ng pahina: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Hindi suportado ang link mula sa labas sa loob ng card.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Likuran</string>

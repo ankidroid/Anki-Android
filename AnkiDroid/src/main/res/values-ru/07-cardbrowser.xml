@@ -89,7 +89,7 @@
         <item>По интервалу</item>
         <item>По лёгкости</item>
         <item>По повторениям</item>
-        <item>По ошибкам</item>
+        <item>По забытым</item>
     </string-array>
     <string name="card_browser_select_all">Выбрать все</string>
     <string name="card_browser_select_none">Снять выделение</string>

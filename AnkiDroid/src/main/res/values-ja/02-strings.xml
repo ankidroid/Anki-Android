@@ -217,7 +217,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[撮影画像のデータ量が多い可能性があります。メディアディレクトリ内の画像を圧縮してサイズを変更したほうがよいかもしれません。]]></string>
     <string name="no_browser_notification">ブラウザが見つかりません。PCまたはスマートフォンのブラウザで次のウェブページをご覧ください： </string>
     <string name="web_page_error">ページの読み込みエラー: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">カード内の外部ページリンクはサポートされていません。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">デッキリスト画面の背景</string>

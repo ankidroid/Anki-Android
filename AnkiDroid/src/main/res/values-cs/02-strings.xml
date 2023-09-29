@@ -235,7 +235,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky kamery mohou být velké. Můžete komprimovat a změnit velikost obrázků v adresáři media]]></string>
     <string name="no_browser_notification">Nebyl nalezen žádný prohlížeč, prosím navštivte webovou stránku pomocí pc nebo mobilu: </string>
     <string name="web_page_error">Chyba při načítání stránky: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Odkaz na externí stránku v kartě není podporován.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Pozadí</string>

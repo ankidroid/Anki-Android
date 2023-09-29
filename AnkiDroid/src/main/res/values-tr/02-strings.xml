@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Fotoğraf dosyaları büyük olabilir. Resimleri medya dizininde sıkıştırmak ve boyutlarını değiştirmek isteyebilirsiniz.]]></string>
     <string name="no_browser_notification">Tarayıcı bulunmadı, lütfen web sayfasına bilgisayardan veya telefondan girin: </string>
     <string name="web_page_error">Sayfa yüklenirken hata: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Karttaki harici sayfa linki desteklenmiyor.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Arkaplan</string>

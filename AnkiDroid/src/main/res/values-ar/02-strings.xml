@@ -247,7 +247,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
     <string name="no_browser_notification">تعذر العثور على متصفح، الرجاء زيارة صفحة الويب بواسطة حاسوب شخصي أو هاتف محمول: </string>
     <string name="web_page_error">خطأ في تحميل الصفحة: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">روابط الصفحات الخارجية في البطاقات غير مدعومة.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">خلفية</string>

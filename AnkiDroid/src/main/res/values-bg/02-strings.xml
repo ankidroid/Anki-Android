@@ -223,7 +223,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Изображенията на камерата може да са големи. Бихте могли да искате да компресирате и преоразмерите изображенията в медийната директория]]></string>
     <string name="no_browser_notification">Не е намерен браузър， моля, посетете уеб страница от компютър или мобилен телефон: </string>
     <string name="web_page_error">Грешка при зареждане на страница: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Връзка към външна страница в картата не се поддържа.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>

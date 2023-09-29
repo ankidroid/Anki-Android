@@ -235,7 +235,6 @@
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Відарысы камеры могуць быць надта вялікімі. Магчыма, што вы захочаце сціснуць або змяніць іх памер у адпаведным каталогу]]></string>
     <string name="no_browser_notification">Браўзер не знойдзены. Вы можаце наведаць вэб-старонку з камп\'ютара або мабільнай прылады: </string>
     <string name="web_page_error">Памылка загрузкі старонкі: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Знешнія спасылкі ў картках не падтрымліваюцца.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>

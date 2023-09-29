@@ -220,7 +220,6 @@ Context | Request Context    [1]</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[카메라 사진은 클 수 있습니다. 미디어 디렉토리에 있는 이미지를 압축하거나 크기를 조장할 수 있습니다.]]></string>
     <string name="no_browser_notification">브라우저를 찾을 수 없습니다. 컴퓨터 또는 모바일로 웹 페이지를 방문하세요:</string>
     <string name="web_page_error">페이지 로드 오류: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">카드의 외부 페이지 링크는 지원되지 않습니다.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
     <!-- Deckpicker Background -->
     <string name="background_image_title">배경</string>
