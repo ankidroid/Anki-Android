@@ -41,7 +41,7 @@ open class BackupManagerTest {
 
         // assert
         assertThat("should fail if backups are disabled", performBackupResult, equalTo(false))
-        verify(bm, times(1)).performBackupInBackground(anyString(), anyInt(), any())
+        verify(bm, times(1)).performBackupInBackground(anyString(), any())
         verify(bm, times(1)).hasDisabledBackups(any())
         verifyNoMoreInteractions(bm)
     }
@@ -94,7 +94,7 @@ open class BackupManagerTest {
     }
 
     private fun performBackup(bm: BackupManager, time: Time = MockTime(100000000)): Boolean {
-        return bm.performBackupInBackground("/AnkiDroid/", 100, time)
+        return bm.performBackupInBackground("/AnkiDroid/", time)
     }
 
     /** Returns a spy of BackupManager which would pass  */

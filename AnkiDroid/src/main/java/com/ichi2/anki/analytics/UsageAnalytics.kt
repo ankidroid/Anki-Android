@@ -539,7 +539,6 @@ object UsageAnalytics {
         "showCardAnswerButtonTime",
         // Advanced
         "deckPath", // AnkiDroid directory
-        "backupMax", // Max number of backups
         "double_scrolling", // Double scrolling
         "softwareRender", // Disable card hardware render
         "safeDisplay", // Safe display mode
