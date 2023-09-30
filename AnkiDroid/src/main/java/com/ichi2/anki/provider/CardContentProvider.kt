@@ -1039,8 +1039,8 @@ class CardContentProvider : ContentProvider() {
         } catch (je: JSONException) {
             throw IllegalArgumentException("Card is using an invalid template", je)
         }
-        val question = currentCard.q()
-        val answer = currentCard.a()
+        val question = currentCard.question()
+        val answer = currentCard.answer()
         val rb = rv.newRow()
         for (column in columns) {
             when (column) {
@@ -1066,7 +1066,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.ReviewInfo.CARD_ORD -> rb.add(currentCard.ord)
                 FlashCardsContract.ReviewInfo.BUTTON_COUNT -> rb.add(buttonCount)
                 FlashCardsContract.ReviewInfo.NEXT_REVIEW_TIMES -> rb.add(nextReviewTimesJson.toString())
-                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.q() + currentCard.a())))
+                FlashCardsContract.ReviewInfo.MEDIA_FILES -> rb.add(JSONArray(col.media.filesInStr(currentCard.question() + currentCard.answer())))
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }
         }

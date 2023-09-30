@@ -28,11 +28,11 @@ class MathJaxClozeTest : JvmTest() {
 
         val cards = note.cards()
 
-        assertThat(cards[0].q(), containsString(clozeClass()))
-        assertThat(cards[1].q(), containsString(clozeClass()))
-        assertThat(cards[2].q(), not(containsString(clozeClass())))
-        assertThat(cards[3].q(), containsString(clozeClass()))
-        assertThat(cards[4].q(), containsString(clozeClass()))
+        assertThat(cards[0].question(), containsString(clozeClass()))
+        assertThat(cards[1].question(), containsString(clozeClass()))
+        assertThat(cards[2].question(), not(containsString(clozeClass())))
+        assertThat(cards[3].question(), containsString(clozeClass()))
+        assertThat(cards[4].question(), containsString(clozeClass()))
     }
 
     @Test

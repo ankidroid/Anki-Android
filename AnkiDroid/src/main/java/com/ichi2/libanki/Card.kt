@@ -221,11 +221,11 @@ open class Card : Cloneable {
         col.log(this)
     }
 
-    fun q(reload: Boolean = false, browser: Boolean = false): String {
+    fun question(reload: Boolean = false, browser: Boolean = false): String {
         return renderOutput(reload, browser).questionAndStyle()
     }
 
-    fun a(): String {
+    fun answer(): String {
         return renderOutput().answerAndStyle()
     }
 
