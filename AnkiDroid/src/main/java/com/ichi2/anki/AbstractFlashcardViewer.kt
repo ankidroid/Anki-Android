@@ -1610,6 +1610,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryCards(listOf(currentCard!!.id))
                 }
             }
+            mSoundPlayer.stopSounds()
             showSnackbar(R.string.card_buried, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1623,6 +1624,7 @@ abstract class AbstractFlashcardViewer :
                     sched.suspendCards(listOf(currentCard!!.id))
                 }
             }
+            mSoundPlayer.stopSounds()
             showSnackbar(TR.studyingCardSuspended(), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1638,6 +1640,7 @@ abstract class AbstractFlashcardViewer :
             }
             val count = changed.count
             val noteSuspended = resources.getQuantityString(R.plurals.note_suspended, count, count)
+            mSoundPlayer.stopSounds()
             showSnackbar(noteSuspended, Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
@@ -1651,6 +1654,7 @@ abstract class AbstractFlashcardViewer :
                     sched.buryNotes(listOf(currentCard!!.nid))
                 }
             }
+            mSoundPlayer.stopSounds()
             showSnackbar(TR.studyingCardsBuried(changed.count), Reviewer.ACTION_SNACKBAR_TIME)
         }
         return true
