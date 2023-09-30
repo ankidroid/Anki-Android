@@ -796,7 +796,7 @@ abstract class AbstractFlashcardViewer :
             message(
                 text = resources.getString(
                     R.string.delete_note_message,
-                    Utils.stripHTML(currentCard!!.q(true))
+                    Utils.stripHTML(currentCard!!.question(true))
                 )
             )
             positiveButton(R.string.dialog_positive_delete) {

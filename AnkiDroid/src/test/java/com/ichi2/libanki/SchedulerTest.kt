@@ -373,17 +373,17 @@ open class SchedulerTest : JvmTest() {
         col.db.execute("update cards set queue=0, type=0")
         // should get '1' first
         var c = col.sched.card!!
-        Assert.assertTrue(c.q().endsWith("1"))
+        Assert.assertTrue(c.question().endsWith("1"))
         // pass it so it's due in 10 minutes
         col.sched.answerCard(c, BUTTON_THREE)
         // get the other card
         c = col.sched.card!!
-        Assert.assertTrue(c.q().endsWith("2"))
+        Assert.assertTrue(c.question().endsWith("2"))
         // fail it so it's due in 1 minute
         col.sched.answerCard(c, BUTTON_ONE)
         // we shouldn't get the same card again
         c = col.sched.card!!
-        Assert.assertFalse(c.q().endsWith("2"))
+        Assert.assertFalse(c.question().endsWith("2"))
     }
 
     @Test
