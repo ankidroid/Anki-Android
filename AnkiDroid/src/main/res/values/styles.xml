@@ -118,7 +118,6 @@
         <item name="android:textColorSecondary">@color/white</item>
         <!-- Overflow menu style -->
         <item name="popupTheme">@style/ActionBar.Popup</item>
-        <item name="iconColor">@color/white</item>
     </style>
 
     <style name="NoBackgroundButton" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">

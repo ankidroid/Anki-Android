@@ -58,7 +58,6 @@
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
-        <item name="iconColor">?attr/colorPrimary</item>
 
         <!--Dialog-->
         <item name="md_color_button_text">@color/black</item>
