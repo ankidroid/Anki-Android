@@ -137,7 +137,6 @@
         <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
         <item name="overflowAndPopupMenuIconColor">#9effffff</item>
-        <item name="iconColor">?android:attr/textColor</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">@color/theme_dark_primary</item>
         <item name="android:windowLightStatusBar">false</item>
