@@ -45,6 +45,7 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import anki.config.ConfigKey
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -72,6 +73,8 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
+import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -105,7 +108,7 @@ import kotlin.math.roundToInt
  */
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
-class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, TagsDialogListener {
+class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, TagsDialogListener, BaseSnackbarBuilderProvider {
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
     private var isTagsEdited = false
@@ -205,6 +208,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
             // Otherwise, display "no cards created".
         }
+
+    override val baseSnackbarBuilder: SnackbarBuilder = {
+        anchorView = findViewById<FloatingActionButton>(R.id.editor_toolbar)
+    }
 
     private fun allFieldsHaveContent() = currentFieldStrings.none { it.isNullOrEmpty() }
 
