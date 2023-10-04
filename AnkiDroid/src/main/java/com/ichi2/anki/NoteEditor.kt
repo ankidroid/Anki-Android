@@ -73,6 +73,8 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
+import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -106,7 +108,12 @@ import kotlin.math.roundToInt
  */
 @KotlinCleanup("Go through the class and select elements to fix")
 @KotlinCleanup("see if we can lateinit")
-class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, TagsDialogListener {
+class NoteEditor :
+    AnkiActivity(),
+    DeckSelectionListener,
+    SubtitleListener,
+    TagsDialogListener,
+    BaseSnackbarBuilderProvider {
     /** Whether any change are saved. E.g. multimedia, new card added, field changed and saved. */
     private var changed = false
     private var isTagsEdited = false
@@ -163,6 +170,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private var mToggleStickyText: HashMap<Int, String?> = HashMap()
     private val mOnboarding = Onboarding.NoteEditor(this)
+
+    override val baseSnackbarBuilder: SnackbarBuilder = {
+        anchorView = findViewById<Toolbar>(R.id.editor_toolbar)
+    }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
