@@ -125,7 +125,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
         requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
             launchCatchingTask { isChecked = withCol { config.get("estTimes") ?: true } }
             setOnPreferenceChangeListener { newETA ->
-                launchCatchingTask { withCol { config.set("estTimes", newETA) } }
+                val newETABool = newETA as? Boolean ?: false
+                launchCatchingTask { withCol { config.set("estTimes", newETABool) } }
             }
         }
         // Show progress
@@ -134,7 +135,8 @@ class AppearanceSettingsFragment : SettingsFragment() {
         requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
             launchCatchingTask { isChecked = withCol { config.get("dueCounts") ?: true } }
             setOnPreferenceChangeListener { newDueCountsValue ->
-                launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValue) } }
+                val newDueCountsValueBool = newDueCountsValue as? Boolean ?: false
+                launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValueBool) } }
             }
         }
     }
