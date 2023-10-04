@@ -181,4 +181,8 @@
          The latter is set by colorPrimary, but theme overlay can't use it,
          as it itself overrides colorPrimary, which is used by the view directly. -->
     <attr name="tabLayoutBackgroundColor" format="color"/>
+
+    <!-- BottomDialogSheet-->
+    <attr name="bottomModalSheetColor" format="color"/>
+
 </resources>

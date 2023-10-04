@@ -25,6 +25,8 @@
         <item name="actionModeBackground">@color/theme_plain_primary</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_plain_primary</item>
+        <!-- BottomModal Sheet-->
+        <item name="bottomModalSheetColor">#F7F2FA</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_plain_primary_light</item>
         <!-- Reviewer button drawables -->

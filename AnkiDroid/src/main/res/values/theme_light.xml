@@ -63,6 +63,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="actionModeBackground">@color/theme_light_primary</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_light_primary</item>
+        <!-- BottomModal Sheet-->
+        <item name="bottomModalSheetColor">#F7F2FA</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_light_row_current</item>

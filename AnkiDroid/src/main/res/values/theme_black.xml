@@ -34,6 +34,8 @@
         <item name="actionModeBackground">@color/theme_black_primary_dark</item>
         <!-- Tab layout -->
         <item name="tabLayoutBackgroundColor">@color/theme_black_primary_dark</item>
+        <!-- BottomModal Sheet-->
+        <item name="bottomModalSheetColor">#1D1B20</item>
         <!-- Deck list colors and divider -->
         <item name="currentDeckBackground">@drawable/item_background_selected</item>
         <item name="currentDeckBackgroundColor">@color/theme_black_row_current</item>
