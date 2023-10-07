@@ -24,7 +24,7 @@ object HashUtil {
      * @return Initial capacity for the hash structure. Copied from HashMap code
      */
     private fun capacity(size: Int): Int {
-        return Math.max((size / .75f).toInt() + 1, 16)
+        return ((size / .75f).toInt() + 1).coerceAtLeast(16)
     }
 
     fun <T> hashSetInit(size: Int): HashSet<T> {

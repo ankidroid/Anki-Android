@@ -49,7 +49,15 @@ class OnGestureListener(
     override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
         val dx = e2.x - e1.x
         val dy = e2.y - e1.y
-        val gesture = gestureMapper.gesture(dx, dy, velocityX, velocityY, false, false, false)
+        val gesture = gestureMapper.gesture(
+            dx,
+            dy,
+            velocityX,
+            velocityY,
+            isSelecting = false,
+            isXScrolling = false,
+            isYScrolling = false
+        )
         if (gesture != null) {
             consumer.accept(gesture)
         }

@@ -18,7 +18,6 @@ package com.ichi2.anki.dialogs.tags
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentResultListener
 import com.ichi2.utils.KotlinCleanup
 import java.util.ArrayList
 
@@ -38,14 +37,15 @@ interface TagsDialogListener {
     fun <F> F.registerFragmentResultReceiver() where F : Fragment, F : TagsDialogListener {
         parentFragmentManager.setFragmentResultListener(
             ON_SELECTED_TAGS_KEY,
-            this,
-            FragmentResultListener { _: String?, bundle: Bundle ->
-                val selectedTags: List<String> = bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS)!!
-                val indeterminateTags: List<String> = bundle.getStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS)!!
-                val option = bundle.getInt(ON_SELECTED_TAGS__OPTION)
-                onSelectedTags(selectedTags, indeterminateTags, option)
-            }
-        )
+            this
+        ) { _: String?, bundle: Bundle ->
+            val selectedTags: List<String> =
+                bundle.getStringArrayList(ON_SELECTED_TAGS__SELECTED_TAGS)!!
+            val indeterminateTags: List<String> =
+                bundle.getStringArrayList(ON_SELECTED_TAGS__INDETERMINATE_TAGS)!!
+            val option = bundle.getInt(ON_SELECTED_TAGS__OPTION)
+            onSelectedTags(selectedTags, indeterminateTags, option)
+        }
     }
 
     companion object {

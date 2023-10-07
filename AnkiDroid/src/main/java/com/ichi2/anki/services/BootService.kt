@@ -85,7 +85,7 @@ class BootService : BroadcastReceiver() {
             // Don't schedule a notification if the due reminders setting is not enabled
             if (sp.getString(
                     Preferences.MINIMUM_CARDS_DUE_FOR_NOTIFICATION,
-                    Integer.toString(Preferences.PENDING_NOTIFICATIONS_ONLY)
+                    Preferences.PENDING_NOTIFICATIONS_ONLY.toString()
                 )!!.toInt() >= Preferences.PENDING_NOTIFICATIONS_ONLY
             ) {
                 return
@@ -112,7 +112,7 @@ class BootService : BroadcastReceiver() {
         }
 
         /** Returns the hour of day when rollover to the next day occurs  */
-        protected fun getRolloverHourOfDay(context: Context): Int {
+        private fun getRolloverHourOfDay(context: Context): Int {
             // TODO; We might want to use the BootService retry code here when called from preferences.
             val defValue = 4
             return try {
