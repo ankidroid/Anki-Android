@@ -30,7 +30,7 @@ interface TagsDialogListener {
      * @param indeterminateTags a list of tags which can checked or unchecked, should be ignored if not expected
      * determining if tags in this list is checked or not is done by looking at the list of
      * previous tags. if the tag is found in both previous and indeterminate, it should be kept
-     * otherwise it should be removed @see [TagsUtil.getUpdatedTags]
+     * otherwise it should be removed @see [com.ichi2.utils.TagsUtil.getUpdatedTags]
      * @param option selection radio option, should be ignored if not expected
      */
     fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int)

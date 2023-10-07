@@ -443,13 +443,14 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
+    private var updateValuesFromDeckJob: Job? = null
+
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
      *
      * @param resetDecklist Indicates whether to call back to the parent activity in order to
      *                      also refresh the deck list.
      */
-    private var updateValuesFromDeckJob: Job? = null
     fun refreshInterface(resetDecklist: Boolean = false) {
         Timber.d("Refreshing StudyOptionsFragment")
         updateValuesFromDeckJob?.cancel()
