@@ -29,11 +29,13 @@ import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -275,16 +277,10 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         Timber.d("onRequestPermissionsResult. Code: %d", requestCode)
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_AUDIO_PERMISSION && permissions.size == 1) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                recreateEditingUIUsingCachedRequest()
-                return
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                this.showSnackbar(resources.getString(R.string.multimedia_editor_audio_permission_refused), Snackbar.LENGTH_LONG)
             }
-            UIUtils.showThemedToast(
-                this,
-                resources.getString(R.string.multimedia_editor_audio_permission_refused),
-                true
-            )
-            UIRecreationHandler.onRequiredPermissionDenied(mCurrentChangeRequest!!, this)
+            recreateEditingUIUsingCachedRequest()
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.size == 1) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
