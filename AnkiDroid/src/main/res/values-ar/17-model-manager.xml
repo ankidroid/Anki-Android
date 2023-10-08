@@ -55,7 +55,6 @@
     <string name="model_browser_delete">حذف نوع الملحوظة</string>
     <string name="model_browser_rename" comment="Rename a note type">إعادة التسمية</string>
     <string name="model_browser_template">تحرير البطاقات</string>
-    <string name="model_browser_add">إضافة نوع ملحوظة</string>
     <!--Rename-->
     <string name="rename_model">تغيير اسم نوع الملحوظة</string>
     <!--Language Hint-->
@@ -71,7 +70,6 @@
     <string name="model_field_editor_toggle_sticky">تذكّر المدخلات الأخيرة عند الإضافة</string>
     <string name="model_field_editor_changing">يجري تحديث الحقول</string>
     <string name="model_field_editor_sort_field">فرز حسب هذا الحقل</string>
-    <string name="model_clone_suffix">نسخ</string>
     <!--Warnings-->
     <string name="model_delete_warning">هل أنت متأكد من رغبتك في حذف نوع الملحوظة هذا؟</string>
     <string name="field_delete_warning">هل أنت متأكد من رغبتك في حذف هذا الحقل؟</string>

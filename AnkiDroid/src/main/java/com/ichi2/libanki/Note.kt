@@ -18,11 +18,9 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
-import com.ichi2.libanki.utils.TimeManager.time
-import com.ichi2.utils.BlocksSchemaUpgrade
+import com.ichi2.libanki.exception.WrongId
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.BackendFactory.defaultLegacySchema
+import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
@@ -40,7 +38,7 @@ class Note : Cloneable {
     @get:VisibleForTesting
     var guId: String? = null
         private set
-    private lateinit var mModel: Model
+    private lateinit var notetype: NotetypeJson
 
     var mid: Long = 0
         private set
@@ -56,7 +54,6 @@ class Note : Cloneable {
         private set
     var mod: Long = 0
         private set
-    private var mNewlyAdded = false
 
     constructor(col: Collection, id: Long) {
         this.col = col
@@ -64,21 +61,17 @@ class Note : Cloneable {
         load()
     }
 
-    constructor(col: Collection, model: Model) {
+    constructor(col: Collection, notetype: NotetypeJson) {
         this.col = col
-        this.id = if (BackendFactory.defaultLegacySchema) {
-            time.timestampID(col.db, "notes")
-        } else {
-            0
-        }
+        this.id = 0
         guId = Utils.guid64()
-        mModel = model
-        mid = model.getLong("id")
+        this.notetype = notetype
+        mid = notetype.getLong("id")
         tags = ArrayList()
-        fields = Array(model.getJSONArray("flds").length()) { "" }
+        fields = Array(notetype.getJSONArray("flds").length()) { "" }
         mFlags = 0
         mData = ""
-        mFMap = Models.fieldMap(mModel)
+        mFMap = Notetypes.fieldMap(this.notetype)
         mScm = col.scm
     }
 
@@ -100,58 +93,22 @@ class Note : Cloneable {
                 fields = Utils.splitFields(cursor.getString(5))
                 mFlags = cursor.getInt(6)
                 mData = cursor.getString(7)
-                mModel = col.models.get(mid)!!
-                mFMap = Models.fieldMap(mModel)
+                notetype = col.notetypes.get(mid)!!
+                mFMap = Notetypes.fieldMap(notetype)
                 mScm = col.scm
             }
     }
 
     fun reloadModel() {
-        mModel = col.models.get(mid)!!
+        notetype = col.notetypes.get(mid)!!
     }
 
     /*
      * If fields or tags have changed, write changes to disk.
      */
-    @BlocksSchemaUpgrade("new path must update to native note adding/updating routine")
-    fun flush(mod: Long? = null, changeUsn: Boolean = true) {
-        assert(mScm == col.scm)
-        preFlush()
-        if (changeUsn) {
-            usn = col.usn()
-        }
-        val csumAndStrippedFieldField = Utils.sfieldAndCsum(
-            fields,
-            col.models.sortIdx(mModel)
-        )
-        val sfld = csumAndStrippedFieldField.first
-        val tags = stringTags()
-        val fields = joinedFields()
-        if (mod == null && col.db.queryScalar(
-                "select 1 from notes where id = ? and tags = ? and flds = ?",
-                this.id.toString(),
-                tags,
-                fields
-            ) > 0
-        ) {
-            return
-        }
-        val csum = csumAndStrippedFieldField.second
-        this.mod = mod ?: time.intTime()
-        col.db.execute(
-            "insert or replace into notes values (?,?,?,?,?,?,?,?,?,?,?)",
-            this.id, guId!!, mid, this.mod, usn, tags, fields, sfld, csum, mFlags, mData!!
-        )
-        if (defaultLegacySchema) {
-            col.tags.register(this.tags)
-        } else {
-            // TODO: tags are not registered; calling code must switch to using backend add/update notes
-        }
-        postFlush()
-    }
-
-    private fun joinedFields(): String {
-        return Utils.joinFields(fields)
+    @RustCleanup("code should call col.updateNote() instead, in undoableOp {}")
+    fun flush() {
+        col.updateNote(this)
     }
 
     fun numberOfCards(): Int {
@@ -184,8 +141,8 @@ class Note : Cloneable {
     }
 
     @KotlinCleanup("replace with variable")
-    fun model(): Model {
-        return mModel
+    fun model(): NotetypeJson {
+        return notetype
     }
 
     /**
@@ -319,26 +276,6 @@ class Note : Cloneable {
         return DupeOrEmpty.CORRECT
     }
 
-    /**
-     * Flushing cloze notes
-     * ***********************************************************
-     */
-    /*
-     * have we been added yet?
-     */
-    private fun preFlush() {
-        mNewlyAdded = col.db.queryScalar("SELECT 1 FROM cards WHERE nid = ?", this.id) == 0
-    }
-
-    /*
-     * generate missing cards
-     */
-    private fun postFlush() {
-        if (!mNewlyAdded) {
-            col.genCards(this.id, mModel)
-        }
-    }
-
     val sFld: String
         get() = col.db.queryString("SELECT sfld FROM notes WHERE id = ?", this.id)
 
@@ -392,5 +329,35 @@ class Note : Cloneable {
             }
             return highestClozeId + 1
         }
+    }
+
+    fun ephemeralCard(
+        col: Collection,
+        ord: Int = 0,
+        fillEmpty: Boolean = false
+    ): Card {
+        val card = Card(col, null)
+        card.ord = ord
+        card.did = 1
+
+        val nt = notetype
+        val templateIdx = if (nt.type == Consts.MODEL_CLOZE) {
+            0
+        } else {
+            ord
+        }
+        val template = nt.tmpls[templateIdx] as JSONObject
+        template.put("ord", card.ord)
+
+        val output = TemplateManager.TemplateRenderContext.fromCardLayout(
+            this,
+            card,
+            notetype = nt,
+            template = template,
+            fillEmpty = fillEmpty
+        ).render()
+        card.renderOutput = output
+        card.setNote(this)
+        return card
     }
 }

@@ -18,10 +18,8 @@ package com.ichi2.anki.preferences
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.core.content.edit
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.SyncPreferences
-import com.ichi2.anki.web.CustomSyncServer
 import com.ichi2.preferences.VersatileTextPreference
 import okhttp3.HttpUrl.Companion.toHttpUrl
 
@@ -58,7 +56,6 @@ class CustomSyncServerSettingsFragment : SettingsFragment() {
             key == SyncPreferences.CUSTOM_SYNC_URI ||
             key == SyncPreferences.CUSTOM_SYNC_ENABLED
         ) {
-            CustomSyncServer.handleSyncServerPreferenceChange(AnkiDroidApp.instance)
             prefs.edit {
                 remove(SyncPreferences.CURRENT_SYNC_URI)
             }

@@ -71,7 +71,6 @@
     <string name="replay_audio">Reludi sonaĵon</string>
     <string name="leech_suspend_notification">Karto markita kiel forgesema kaj kaŝita</string>
     <string name="leech_notification">Karto markita kiel forgesema</string>
-    <string name="corrupt_font">Difektita dosiero de tiparo %s</string>
     <string name="webview_crash_unknown">Nekonata eraro</string>
     <string name="webview_crash_unknwon_detailed">Eraro kaŭzita pro interna eraro en WebView</string>
     <string name="webview_crash_oom">Memormanko</string>
@@ -125,7 +124,6 @@
     <string name="save">Konservi</string>
     <string name="close">Fermi</string>
     <string name="select">Elekti</string>
-    <string name="reordering_cards">Reordigado de kartoj&#8230;</string>
     <string name="field_remapping">%1$s (de “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Ĉiuj senasignitaj kartoj estos forigitaj. Se noto ne havas restajn kartojn, ĝi ankaŭ perdiĝos. Ĉu vi certe volas pluigi?</string>
     <!-- Timebox -->
@@ -146,17 +144,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Replani</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Antaŭrigardi</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d el %2$d</string>
-    <string name="error_insufficient_memory">Ago ne eblas pro nesufiĉa memoro en via aparato</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Alinomi</string>
-    <string name="default_conf_delete_error">Ne povas forigi implicitan grupon de agordoj</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">aldonis %d karton</item>
-        <item quantity="other">%d kartoj estas aldonitaj</item>
-    </plurals>
     <string name="check_db">Kontroli datumbazon</string>
     <string name="check_media">Kontroli aŭdvidaĵojn</string>
     <string name="empty_cards">Malplenaj kartoj</string>
-    <string name="check_db_message">Kontrolado de datumbazo&#8230;</string>
     <string name="empty_card_warning">Tiu ĉi karto estas malplena. Uzu la agon “malplenaj kartoj” en la menuo ĉe la ekrano de kartaroj.</string>
     <string name="unknown_type_field_warning">Enigu respondon: nekonata kampo %s</string>
     <string name="delete_deck">Forigado de kartaro&#8230;</string>
@@ -170,13 +161,6 @@
     </plurals>
     <string name="import_log_no_apkg">Tio ĉi ne estas valida dosiero Anki-pakaĵo</string>
     <string name="import_title_error" comment="Title of error dialog">Eraro</string>
-    <string name="import_log_failed_unzip">Fiaskis maldensigi la dosieron apkg: %s</string>
-    <string name="import_log_failed_copy_to">Fiaskis kopii la dosieron apkg al %s</string>
-    <string name="import_log_failed_validate">Fiaskis validigi la dosieron apkg</string>
-    <string name="import_log_insufficient_space_error">Mankas spaco por enporti la pakaĵon.\nPostulata: %1$s\nDisponebla: %2$s\n\nProvu liberigi iom da spaco en via telefono. Samtempigado uzas malpli da spaco ol enportado. Vi povas enporti la pakaĵon ĉe aparato kun pli da spaco (ekzemple per Anki Desktop ĉe via komputilo) kaj sekve samtempigi ĝin kun tiu ĉi aparato.</string>
-    <string name="import_log_file_cache_cleared">Eraro dum enporti dosieron, probable la kaŝmemoro forviŝiĝis dum pritraktado.\nReprovu</string>
-    <string name="import_succeeded_but_check_database">Sukcese enportis datumojn, sed fiaskis ordigi la datumojn. Plenumu kontrolon de datumbazo poste. Ĉefa kialo: %s</string>
-    <string name="import_error_corrupt_zip">La apkg-dosiero estas difektita. Forigu kaj reelŝutu ĝin.\n\nĈefa kialo: %s</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Dosiernomo \"%s\" ne finiĝas per .apkg aŭ .colpkg</string>
     <string name="import_error_load_imported_database">Anstataŭigoj de Anki-datumbazo (.anki2) ankoraŭ ne estas subtenataj. Legu la manlibron por instrukciojn pri anstataŭigo.</string>
@@ -184,8 +168,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Anstataŭigado de kolekto&#8230;</string>
     <string name="import_interrupted">Enportado interrompita</string>
     <string name="export_include_schedule">Inkluzivi lern-planon</string>
     <string name="export_include_media">Inkluzivi aŭdvidaĵojn</string>
@@ -224,47 +206,11 @@
     <string name="dyn_deck_desc">Tio ĉi estas speciala kartaro por lerni ekster la norma lern-plano. Kartoj aŭtomate revenos al originalaj kartaroj post ripeti ilin. Forigi tiun ĉi kartaron el la listo de kartaroj redonos ĉiujn restantajn kartojn al originalaj kartaroj.</string>
     <string name="steps_error">Nombro da paŝoj estu pli granda ol 0</string>
     <string name="steps_min_error">Almenaŭ unu paŝo estas postulata</string>
-    <string name="sched_end">(fino)</string>
-    <string name="sched_unbury_action">Por vidigi ilin nun, frapetu la butonon “malkaŝi” en la menuo</string>
-    <string name="sched_has_buried">Kelkaj rilataj kaj kaŝitaj kartoj atendos ĝis morgaŭ</string>
     <string name="tag_editor_add_feedback">Frapetu “%2$s” por konfirmi aldoni “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Elektis ekzistan etikedon “%1$s”</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekundo</item>
-        <item quantity="other">%s sekundoj</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuto</item>
-        <item quantity="other">%s minutoj</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s horo</item>
-        <item quantity="other">%s horoj</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s tago</item>
-        <item quantity="other">%s tagoj</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s monato</item>
-        <item quantity="other">%s monatoj</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s jaro</item>
-        <item quantity="other">%s jaroj</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s sekundoj</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Tiu ĉi kartaro jam ekzistas</string>
     <string name="decks_rename_filtered_nosubdecks">Filtrita kartaro ne povas enhavi subkartarojn</string>
-    <string name="filtered_deck_name">Filtrita kartaro</string>
     <string name="reminder_title">Ne forgesu lerni hodiaŭ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d karto por ripeti en %1$s</item>
@@ -273,14 +219,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Eraro dum kunhavigado de apkg-dosiero</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Ĉi tiu dosiero postulas pli novan version de Anki.</string>
     <string name="activity_start_failed">Mankas instalita aplikaĵo por plenumi tiun ĉi agon.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Bildoj el la fotilo povas esti grandaj. Konsideru densigi bildojn kaj malpliigi iliajn dimensiojn]]></string>
     <string name="no_browser_notification">Ne trovis retumilon, vizitu la retpaĝon per via komputilo: </string>
     <string name="web_page_error">Eraro dum enlegi paĝon: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Ekstera ligilo en karto ne estas subtenata.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Restarigitaj kartoj</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Fono</string>
     <string name="choose_an_image">Elekti bildon</string>
@@ -403,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Kartaro ekzistas</string>
     <string name="deck_created">Kartaro kreita</string>
     <string name="deck_renamed">Kartaro renomigita</string>
     <!-- Deck Deletion -->

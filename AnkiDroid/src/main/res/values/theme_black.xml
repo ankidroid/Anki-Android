@@ -45,7 +45,7 @@
         <item name="newCountColor">@color/material_blue_700</item>
         <item name="learnCountColor">@color/material_red_400</item>
         <item name="reviewCountColor">@color/material_green_400</item>
-        <item name="zeroCountColor">#808080</item>
+        <item name="zeroCountColor">#202020</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_black_primary</item>
         <item name="maxTimerColor">@color/material_red_300</item>
@@ -116,7 +116,6 @@
 
         <item name="editTextDisabled">@color/material_grey_700</item>
         <item name="android:navigationBarColor">@color/black</item>
-        <item name="iconColor">?android:attr/textColor</item>
 
         <!-- Filter Bottom sheet -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemeBlack</item>

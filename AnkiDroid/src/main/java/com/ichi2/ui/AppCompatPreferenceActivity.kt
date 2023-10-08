@@ -62,7 +62,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
     protected lateinit var deck: Deck
 
     abstract inner class AbstractPreferenceHack : SharedPreferences {
-        val mValues: MutableMap<String, String> = HashUtil.HashMapInit(30) // At most as many as in cacheValues
+        val mValues: MutableMap<String, String> = HashUtil.hashMapInit(30) // At most as many as in cacheValues
         val mSummaries: MutableMap<String, String?> = HashMap()
         protected val listeners: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> = LinkedList()
 
@@ -182,7 +182,7 @@ abstract class AppCompatPreferenceActivity<PreferenceHack : AppCompatPreferenceA
         delegate.installViewFactory()
         delegate.onCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
-        val col = CollectionHelper.instance.getCol(this)
+        val col = CollectionHelper.instance.getColUnsafe(this)
         if (col != null) {
             this.col = col
         } else {

@@ -71,7 +71,6 @@
     <string name="replay_audio">Rejouer le son</string>
     <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
     <string name="leech_notification">Carte marquée « encombrante »</string>
-    <string name="corrupt_font">Fichier de police corrompu %s</string>
     <string name="webview_crash_unknown">Erreur inconnue</string>
     <string name="webview_crash_unknwon_detailed">Erreur interne dans le système WebView</string>
     <string name="webview_crash_oom">Mémoire insuffisante</string>
@@ -125,7 +124,6 @@
     <string name="save">Enregistrer</string>
     <string name="close">Fermer</string>
     <string name="select">Sélectionner</string>
-    <string name="reordering_cards">Tri des cartes...</string>
     <string name="field_remapping">%1$s (de « %2$s »)</string>
     <string name="confirm_map_cards_to_nothing">Toute carte sans connexion sera effacée. Si une note n’a aucune carte restante, elle sera perdue. Êtes-vous sûr de vouloir continuer ?</string>
     <!-- Timebox -->
@@ -146,17 +144,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Replanifier</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Aperçu</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sur %2$d</string>
-    <string name="error_insufficient_memory">L’opération n’a pas pu être accomplie car votre appareil manque de mémoire disponible</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renommer</string>
-    <string name="default_conf_delete_error">Le groupe d’option par défaut ne peut pas être supprimé</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d carte ajoutée</item>
-        <item quantity="other">%d cartes ajoutées</item>
-    </plurals>
     <string name="check_db">Vérifier la base de données</string>
     <string name="check_media">Vérifier les médias</string>
     <string name="empty_cards">Cartes vides</string>
-    <string name="check_db_message">Vérification de la base de données&#8230;</string>
     <string name="empty_card_warning">Cette carte est vide. Utilisez l\'option \"cartes vides\" du menu sur l\'écran de la liste de paquets.</string>
     <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
     <string name="delete_deck">Suppression du paquet&#8230;</string>
@@ -170,13 +161,6 @@
     </plurals>
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
     <string name="import_title_error" comment="Title of error dialog">Erreur</string>
-    <string name="import_log_failed_unzip">Échec de la décompression de l\'APKG : %s</string>
-    <string name="import_log_failed_copy_to">Échec de la copie de l\'APKG vers %s</string>
-    <string name="import_log_failed_validate">La validation de l\'APKG a échoué</string>
-    <string name="import_log_insufficient_space_error">Il n\'y a pas assez d\'espace pour importer le paquet.\nEspace nécessaire - %1$s \nEspace disponible - %2$s.\n\nVous avez du mal ? Essayez de libérer de l\'espace sur votre appareil. Sinon, la synchronisation utilise moins d\'espace que l\'importation. Vous pouvez essayer d\'importer le paquet sur un appareil qui possède plus d\'espace (par exemple Anki Desktop) et ensuite le synchroniser à cet appareil.</string>
-    <string name="import_log_file_cache_cleared">Erreur lors de l\'importation du fichier, il est probable que le cache ait été effacé pendant le traitement.\nVeuillez réessayer</string>
-    <string name="import_succeeded_but_check_database">L\'importation des données a réussi, mais le nettoyage après l\'importation a échoué. Exécutez la vérification de la base de données plus tard. Cause racine : %s</string>
-    <string name="import_error_corrupt_zip">Le fichier APKG est corrompu. Veuillez le supprimer et le retélécharger.\n\nRaison racine : %s</string>
     <string name="import_error_handle_exception">Impossible d\'importer le fichier\n\n%s</string>
     <string name="import_error_not_apkg_extension">Le nom de fichier « %s » n\'a pas d\'extension .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Les remplacements de la base de données Anki (.anki2) ne sont pas pris en charge. Veuillez voir le guide d’utilisation pour les instructions de remplacement.</string>
@@ -184,13 +168,11 @@
     <string name="import_error_copy_to_cache">Échec de la mise en cache du fichier (éventuellement à court d\'espace de stockage)</string>
     <string name="import_error_multiple_colpkg">Plusieurs fichiers colpkg étaient sélectionnés.</string>
     <string name="import_error_colpkg_apkg">Des fichiers apkg &amp; colpkg étaient sélectionnés à la fois.</string>
-    <string name="import_stats_error">Des erreurs se sont produites lors de l\'importation des fichiers suivants :\n%s</string>
-    <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="import_interrupted">Importation interrompue : AnkiDroid a fermé</string>
     <string name="export_include_schedule">Inclure la planification</string>
     <string name="export_include_media">Inclure les médias</string>
     <string name="confirm_apkg_export">Exporter la collection sous forme de paquet Anki ?</string>
-    <string name="confirm_apkg_export_deck">Exporter \"%s\" au format apkg ?</string>
+    <string name="confirm_apkg_export_deck">Exporter « %s » au format apkg ?</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">Exporter les cartes sélectionnées au format .apkg ?</item>
         <item quantity="other">Exporter les %d cartes sélectionnées au format .apkg ?</item>
@@ -224,47 +206,11 @@
     <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
     <string name="steps_error">Les pas doivent être des nombres supérieurs à 0</string>
     <string name="steps_min_error">Au moins un pas est requis</string>
-    <string name="sched_end">(fin)</string>
-    <string name="sched_unbury_action">Pour les voir maintenant appuyez sur « Déterrer » dans le menu</string>
-    <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
     <string name="tag_editor_add_feedback">Appuyez sur « %2$s » pour confirmer l\'addition de « %1$s »</string>
     <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s seconde</item>
-        <item quantity="other">%s secondes</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minute</item>
-        <item quantity="other">%s minutes</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s heure</item>
-        <item quantity="other">%s heures</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s jour</item>
-        <item quantity="other">%s jours</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mois</item>
-        <item quantity="other">%s mois</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s an</item>
-        <item quantity="other">%s ans</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s secondes</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Ce paquet existe déjà.</string>
     <string name="decks_rename_filtered_nosubdecks">Un paquet filtré ne peut pas avoir de sous-paquets.</string>
-    <string name="filtered_deck_name">Paquet Filtré</string>
     <string name="reminder_title">N’oubliez pas d’étudier aujourd\'hui !</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d carte à réviser en %1$s</item>
@@ -273,14 +219,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erreur lors du partage du fichier apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Ce fichier nécessite une version plus récente d\'Anki.</string>
     <string name="activity_start_failed">Le système ne dispose pas d\'une application qui peut effectuer cette action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les photos d\'appareils sont potentiellement lourdes. Envisager les compresser et redimensionner dans le dossier "media"]]></string>
     <string name="no_browser_notification">Aucun navigateur internet trouvé, merci de visiter cette page sur un PC ou smartphone.</string>
     <string name="web_page_error">Erreur lors du chargement de la page : %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Le lien vers les pages externes n\'est pas autorisé dans les cartes.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Cartes récupérées</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Arrière-plan</string>
     <string name="choose_an_image">Sélectionner une image</string>
@@ -364,7 +307,7 @@
     <string name="deck_download_progress_message">Vous pouvez utiliser d\'autres applications pendant que le téléchargement est en cours d\'exécution</string>
     <string name="check_network">Veuillez vérifier votre connexion réseau</string>
     <string name="search_using_deck_name">Chercher en utilisant le nom du paquet</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">Téléchargement interrompu, le stockage externe n\'est pas disponible</string>
     <string name="home">Accueil</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -392,7 +335,7 @@
     <string name="malicious_archive_exceeds_limit">Archive malveillante. La taille dépasse %1$s ou contient plus de %2$d fichiers</string>
     <string name="file_extract_exceeds_storage_space">L\'extraction de fichiers dépasse la capacité de stockage</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Développer le tag \'%s\'</string>
+    <string name="expand_tag">Développer l\'étiquette « %s »</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Impossible d\'accéder à la collection. Veuillez réessayer !</string>
     <!-- App Intro -->
@@ -403,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">Synchroniser avec AnkiWeb</string>
     <string name="already_logged_in">Déjà connecté</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Le paquet existe déjà</string>
     <string name="deck_created">Paquet créé</string>
     <string name="deck_renamed">Paquet renommé</string>
     <!-- Deck Deletion -->

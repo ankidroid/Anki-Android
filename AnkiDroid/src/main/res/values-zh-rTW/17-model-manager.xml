@@ -45,7 +45,6 @@
     <string name="model_browser_delete">刪除筆記類型</string>
     <string name="model_browser_rename" comment="Rename a note type">重新命名</string>
     <string name="model_browser_template">編輯卡片</string>
-    <string name="model_browser_add">新增筆記類型</string>
     <!--Rename-->
     <string name="rename_model">重新命名筆記類型</string>
     <!--Language Hint-->
@@ -61,7 +60,6 @@
     <string name="model_field_editor_toggle_sticky">新增時記住最後輸入</string>
     <string name="model_field_editor_changing">更新欄位</string>
     <string name="model_field_editor_sort_field">按此字段排序</string>
-    <string name="model_clone_suffix">複本</string>
     <!--Warnings-->
     <string name="model_delete_warning">是否希望刪除此筆記類型？</string>
     <string name="field_delete_warning">你確定要刪除此欄位嗎？</string>

@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">بررسی پایگاه داده</string>
     <string name="check_db_warning">این عملیات ممکن است مدت زیادی طول بکشد</string>
-    <string name="check_db_acknowledge">بانک اطلاعاتی بررسی شد</string>
-    <string name="check_db_acknowledge_shrunk">دیتابیس بررسی و بهینه سازی شد.\nحجم کاهش یافته: %d مگابایت.</string>
     <string name="contextmenu_deckpicker_delete_deck">حذف دسته</string>
-    <string name="delete_deck_default_deck">دسته پیش فرض نمی تواند حذف شود</string>
     <string name="delete_deck_title">حذف دسته؟</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
-        <item quantity="other">حذف همه کارت ها در %1$s؟ این دسته شامل %2$d کارت می باشد.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">آیا مایلید که همه کارتهای موجود در %s  را به دسته اصلی خودتان برگردانید؟</string>
     <string name="no_tts_available_message">زبان متن به گفتار در دسترس نیست</string>
     <string name="initializing_tts">در حال راه‌اندازی تبدیل متن به گفتار&#8230;</string>
     <string name="tts_no_tts">حرف نزن</string>
@@ -107,17 +99,6 @@
     <string name="custom_study_random">انتخاب x کارت تصادفی از دسته:</string>
     <string name="custom_study_preview">پیش نمایش کارت های جدید اضافه شده در  x روز گذشته:</string>
     <string name="custom_study_rebuild_deck_corrupt">بازسازی دستۀ مطالعۀ سفارشی انجام نشد</string>
-    <string name="importing_collection">در حال ورود مجموعه.\nلطفا صبر کنید&#8230;</string>
-    <string name="import_media_count">در حال وارد کردن فایلهای رسانه %1$d%%&#8230;</string>
-    <string name="import_progress">• در حال وارد کردن یادداشتها: %1$d%%\n
-• در حال وارد کردن کارت ها: %2$d%%\n
-• پردازش انجام شده: %3$d%%\n</string>
-    <string name="import_update_details">%1$d از %2$d یادداشت موجود به روزرسانی شده است.</string>
-    <string name="import_update_ignored">بعضی از به روزرسانی ها نادیده گرفته شدند زیرا نوع یادداشت تغییر کرده است</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">کارت های وارد شده: %2$d</item>
-        <item quantity="other">فایل های وارد شده: %1$d\nکل کارت های وارد شده: %2$d</item>
-    </plurals>
     <string name="storage_full_title">حافظه</string>
     <string name="storage_almost_full_title">اوکی</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">جای خالی وجود ندارد</string>
@@ -137,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">غیر فعال کردن</string>
     <string name="dialog_positive_overwrite">رونويسي</string>
-    <string name="dialog_positive_remove">حذف</string>
     <string name="dialog_positive_repair">اصلاح</string>
     <string name="dialog_positive_replace">جایگزین کردن</string>
-    <string name="dialog_positive_restore">بازگرداني</string>
-    <string name="dialog_positive_set">تنظیم</string>
     <string name="dialog_collection_path_not_dir">مسیر مشخص شده یک مسیر معتبر نیست</string>
     <!-- Media checking -->
     <string name="check_media_title">رسانه بررسی شود؟</string>
@@ -182,18 +160,11 @@
     <string name="integrity_check_continue_anyway">ادامه بده</string>
     <string name="integrity_check_insufficient_space">بررسی دیتابیس حجم زیادی از حافظۀ موقت را اشغال خواهد کرد.\n\nبه شدت پیشنهاد می‌کنیم قبل از اجرای بررسی دیتابیس از خالی بودن حداقل %s از حافظۀ موقت دستگاهتان اطمینان حاصل کنید.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n%sاز حافظۀ موقت شما خالی است.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">ویدیو پخش نشد</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">تغییر دسته انجام نشد</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">خطا در دریافت اطلاعات از کارت</string>
-    <string name="undo_succeeded">\"%s\" برگشت به حالت قبل</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">پردازش اختیارات دسته انجام نشد: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">دیتابیس قفل است</string>
     <string name="database_locked_summary">نرم‌افزاری دیگر در حال استفاده از دیتابیس آنکی‌دروید است. لطفاً نرم افزار دیگر را ببندید سپس آنکی‌دروید را باز کنید.</string>

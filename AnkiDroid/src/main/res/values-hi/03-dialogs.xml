@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">डेटाबेस की जाँच करें?</string>
     <string name="check_db_warning">इसमें बहुत समय लग सकता है</string>
-    <string name="check_db_acknowledge">डेटाबेस की जाँच की गई</string>
-    <string name="check_db_acknowledge_shrunk">डेटाबेस जाँची और अनुकूलित की गई।\n%d MB से घटाया गया।</string>
     <string name="contextmenu_deckpicker_delete_deck">डेक मिटाएँ</string>
-    <string name="delete_deck_default_deck">डिफ़ॉल्ट डेक को मिटाया नहीं जा सकता।</string>
     <string name="delete_deck_title">डेक मिटाएँ?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">%1$s के सारे पत्ते मिटाएँ? इसमें %2$d पत्ता है।</item>
-        <item quantity="other">%1$s के सारे पत्ते मिटाएँ? इसमें %2$d पत्ते है।</item>
-    </plurals>
-    <string name="delete_cram_deck_message">%s के सारे पत्ते उनके मूल डेक में भेज दें?</string>
     <string name="no_tts_available_message">कोई लेख-से-बोली भाषा उपलब्ध नहीं</string>
     <string name="initializing_tts">लेख-से-बोली सेवा शुरू की जा रही है...</string>
     <string name="tts_no_tts">बात न करें</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">डेक से यादृच्छिक रूप से एक्स कार्ड का चयन करें:</string>
     <string name="custom_study_preview">पिछले x दिनों में जोड़े गए नए कार्ड का पूर्वावलोकन करें:</string>
     <string name="custom_study_rebuild_deck_corrupt">कस्टम अध्ययन डेक का पुनर्निर्माण नहीं किया जा सका</string>
-    <string name="importing_collection">संग्रह आयात कर रहा है.. ।</string>
-    <string name="import_media_count">मीडिया फ़ाइलें आयात कर रहा है %1$d%%.. ।</string>
-    <string name="import_progress">• आयात नोट्स: %1$d%% \ n • कार्ड आयात: %2$d%% \ n • पोस्ट-प्रोसेसिंग: %3$d%%</string>
-    <string name="import_update_details">%2$d मौजूदा नोट्स का अद्यतन %1$d ।</string>
-    <string name="import_update_ignored">नोट प्रकार बदल गया है, क्योंकि कुछ अद्यतनों पर ध्यान नहीं दिया गया</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">कार्ड आयात किए गए: %2$d</item>
-        <item quantity="other">फ़ाइलें आयात की गईं: %1$d\nआयात किए गए कुल कार्ड: %2$d</item>
-    </plurals>
     <string name="storage_full_title">स्टोरेज भर गया</string>
     <string name="storage_almost_full_title">स्टोरेज लगभग पूर्ण</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">कोई जगह नहीं</string>
@@ -135,11 +118,8 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">डिसेबल</string>
     <string name="dialog_positive_overwrite">उपरिलेखित करें</string>
-    <string name="dialog_positive_remove">हटाएं</string>
     <string name="dialog_positive_repair">सुधारें</string>
     <string name="dialog_positive_replace">की जगह</string>
-    <string name="dialog_positive_restore">पुनर्स्थापित करें</string>
-    <string name="dialog_positive_set">सेट करें</string>
     <string name="dialog_collection_path_not_dir">निर्दिष्ट पथ कोई मांय निर्देशिका नहीं है</string>
     <!-- Media checking -->
     <string name="check_media_title">मीडिया की जांच करें?</string>
@@ -180,18 +160,11 @@
     <string name="integrity_check_continue_anyway">किसी तरह से जारी रखें</string>
     <string name="integrity_check_insufficient_space">चेक डेटाबेस बड़ी मात्रा में अस्थायी storage का उपयोग करता है। \n \n यह दृढ़ता से अनुशंसा की जाती है कि आपके डिवाइस पर कम से कम %s खाली स्थान हो।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n आपके पास वर्तमान में %s खाली स्थान है।</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">वीडियो नहीं चला सका</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">डेक नहीं बदल सका</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">कार्ड से डेटा डिकोड करने में त्रुटि</string>
-    <string name="undo_succeeded">\"%s\" पूर्ववत करें</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">डेक विकल्पों को संसाधित करने में विफल: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">डेटाबेस लॉक है</string>
     <string name="database_locked_summary">AnkiDroid डेटाबेस किसी अन्य एप्लिकेशन द्वारा उपयोग में है। कृपया अन्य एप्लिकेशन को बंद करें और फिर AnkiDroid को फिर से खोलें।</string>

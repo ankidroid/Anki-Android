@@ -71,7 +71,6 @@
     <string name="replay_audio">Odtwórz dźwięk</string>
     <string name="leech_suspend_notification">Karta oznaczona jako pijawka i zawieszona</string>
     <string name="leech_notification">Karta oznaczona jako pijawka</string>
-    <string name="corrupt_font">Uszkodzony plik czcionki %s</string>
     <string name="webview_crash_unknown">Nieznany błąd</string>
     <string name="webview_crash_unknwon_detailed">To było spowodowane przez wewnętrzny błąd w WebView</string>
     <string name="webview_crash_oom">Brak pamięci</string>
@@ -125,7 +124,6 @@
     <string name="save">Zapisz</string>
     <string name="close">Zamknij</string>
     <string name="select">Wybierz</string>
-    <string name="reordering_cards">Zmiana kolejności kart...</string>
     <string name="field_remapping">%1$s (z “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Wszystkie nieprzypisane karty zostaną usunięte. Jeśli notatka nie zawiera już kart, również zostanie usunięta. Czy na pewno chcesz kontynuować?</string>
     <!-- Timebox -->
@@ -150,19 +148,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Zaplanuj ponownie</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Podgląd</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d z %2$d</string>
-    <string name="error_insufficient_memory">Operacja nie może być wykonana z powodu niewystarczającej pamięci na urządzeniu</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Zmień nazwę</string>
-    <string name="default_conf_delete_error">Nie można usunąć domyślnej grupy ustawień</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d karta dodana</item>
-        <item quantity="few">%d karty dodane</item>
-        <item quantity="many">%d kart dodanych</item>
-        <item quantity="other">%d kart dodanych</item>
-    </plurals>
     <string name="check_db">Sprawdź bazę danych</string>
     <string name="check_media">Sprawdź media</string>
     <string name="empty_cards">Puste karty</string>
-    <string name="check_db_message">Sprawdzanie bazy danych.\nProszę czekać...</string>
     <string name="empty_card_warning">Ta karta jest pusta. Użyj opcji \"Puste karty\" z menu na ekranie z listą talii.</string>
     <string name="unknown_type_field_warning">Wpisz odpowiedź: nieznane pole %s</string>
     <string name="delete_deck">Usuwanie talii...\nProszę czekać...</string>
@@ -178,13 +167,6 @@
     </plurals>
     <string name="import_log_no_apkg">To nie jest prawidłowy plik pakietu Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Błąd</string>
-    <string name="import_log_failed_unzip">Nie udało się rozpakować apkg: %s</string>
-    <string name="import_log_failed_copy_to">Nie udało się skopiować apkg do %s</string>
-    <string name="import_log_failed_validate">Walidacja apkg zakończona niepowodzeniem</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Błąd importowania pliku, prawdopodobnie spowodowane czyszczeniem pamięci podręcznej podczas przetwarzania.\nSpróbuj ponownie</string>
-    <string name="import_succeeded_but_check_database">Importowanie danych zakończone powodzeniem, ale czyszczenie po imporcie nie powiodło się. Uruchom sprawdzanie bazy danych. Przyczyna: %s</string>
-    <string name="import_error_corrupt_zip">Plik apkg jest uszkodzony. Należy spróbować pobrać go ponownie.\n\nPrzyczyna: %s</string>
     <string name="import_error_handle_exception">Nie udało się zaimportować pliku \n\n%s</string>
     <string name="import_error_not_apkg_extension">Nazwa pliku \"%s\" nie ma rozszerzenia .apkg lub .colpkg</string>
     <string name="import_error_load_imported_database">Pliki bazy danych Anki (.anki2) nie są jeszcze obsługiwane. W podręczniku możesz przeczytać o alternatywnych możliwościach importu</string>
@@ -192,8 +174,6 @@
     <string name="import_error_copy_to_cache">Błąd copyFileToCache() (prawdopodobnie brak miejsca)</string>
     <string name="import_error_multiple_colpkg">Wybrano wiele plików colpkg.</string>
     <string name="import_error_colpkg_apkg">Pliki apkg &amp; colpkg zostały wybrane jednocześnie.</string>
-    <string name="import_stats_error">Podczas importowania następujących plików wystąpiły pewne błędy:\n%s</string>
-    <string name="import_replacing">Zamiana kolekcji&#8230;</string>
     <string name="import_interrupted">Import przerwany</string>
     <string name="export_include_schedule">Włącznie z zaplanowanymi powtórkami</string>
     <string name="export_include_media">Włącznie z plikami mediów</string>
@@ -236,59 +216,11 @@
     <string name="dyn_deck_desc">To jest specjalna talia do nauki poza normalnym trybem. Karty automatycznie powrócą do oryginalnych talii po ich przejrzeniu. Usunięcie tej talii z listy spowoduje przywrócenie pozostałych w niej kart do oryginalnych talii.</string>
     <string name="steps_error">Kroki muszą być liczbą większą niż 0</string>
     <string name="steps_min_error">Przynajmniej jeden krok jest wymagany</string>
-    <string name="sched_end">(koniec)</string>
-    <string name="sched_unbury_action">Żeby zobaczyć je teraz, dotknij elementu \"Odkop\" w menu</string>
-    <string name="sched_has_buried">Niektóre związane lub zakopane karty zostały odroczone do następnej sesji.</string>
     <string name="tag_editor_add_feedback">Dotknij “%2$s” aby potwierdzić dodanie “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Wybrano istniejący tag “%1$s”</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekunda</item>
-        <item quantity="few">%s sekundy</item>
-        <item quantity="many">%s sekund</item>
-        <item quantity="other">%s sekund</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuta</item>
-        <item quantity="few">%s minuty</item>
-        <item quantity="many">%s minut</item>
-        <item quantity="other">%s minut</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s godzina</item>
-        <item quantity="few">%s godziny</item>
-        <item quantity="many">%s godzin</item>
-        <item quantity="other">%s godzin</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s dzień</item>
-        <item quantity="few">%s dni</item>
-        <item quantity="many">%s dni</item>
-        <item quantity="other">%s dni</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s miesiąc</item>
-        <item quantity="few">%s miesiące</item>
-        <item quantity="many">%s miesięcy</item>
-        <item quantity="other">%s miesięcy</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s rok</item>
-        <item quantity="few">%s lata</item>
-        <item quantity="many">%s lat</item>
-        <item quantity="other">%s lat</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s sekund</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Ta talia już istnieje</string>
     <string name="decks_rename_filtered_nosubdecks">Filtrowana talia nie może mieć podtalii</string>
-    <string name="filtered_deck_name">Talia filtrowana</string>
     <string name="reminder_title">Nie zapomnij się dziś pouczyć!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d karta do powtórki w %1$s</item>
@@ -299,14 +231,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Błąd udostępniania pliku apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Ten plik wymaga nowszej wersji Anki.</string>
     <string name="activity_start_failed">System nie ma zainstalowanej aplikacji, która może wykonać tę czynność.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Zdjęcia z kamery mogą mieć duży rozmiar. Możesz skompresować oraz zmienić rozmiar obrazów w katalogu mediów]]></string>
     <string name="no_browser_notification">Nie znaleziono przeglądarki, odwiedź stronę przez komputer lub telefon komórkowy: </string>
     <string name="web_page_error">Błąd ładowania strony: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Linki zewnętrzne w kartach nie są obsługiwane.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Odzyskane karty</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Tło</string>
     <string name="choose_an_image">Wybierz obraz</string>
@@ -431,7 +360,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizacja z AnkiWeb</string>
     <string name="already_logged_in">Już zalogowany!</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Talia już istnieje</string>
     <string name="deck_created">Utworzono talię</string>
     <string name="deck_renamed">Zmieniono nazwę talii</string>
     <!-- Deck Deletion -->

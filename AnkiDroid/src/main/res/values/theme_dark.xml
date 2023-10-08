@@ -60,7 +60,7 @@
         <item name="newCountColor">@color/material_indigo_200</item>
         <item name="learnCountColor">@color/material_red_200</item>
         <item name="reviewCountColor">@color/material_green_200</item>
-        <item name="zeroCountColor">#808080</item>
+        <item name="zeroCountColor">#404040</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_dark_primary_light</item>
         <item name="maxTimerColor">@color/material_red_300</item>
@@ -137,10 +137,9 @@
         <item name="popupBackgroundColor">@color/popup_background_theme_dark</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
         <item name="overflowAndPopupMenuIconColor">#9effffff</item>
-        <item name="iconColor">?android:attr/textColor</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">@color/theme_dark_primary</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:windowLightStatusBar">false</item>
         <!-- Navbar -->
         <item name="android:navigationBarColor">@color/material_theme_grey</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>

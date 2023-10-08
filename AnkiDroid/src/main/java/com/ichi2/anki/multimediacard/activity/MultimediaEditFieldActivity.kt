@@ -93,7 +93,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         Timber.d("Completing activity via finishCancel()")
         val resultData = Intent()
         setResult(RESULT_CANCELED, resultData)
-        finishWithoutAnimation()
+        finish()
     }
 
     private fun hasPerformedPermissionRequestForField(field: IField): Boolean {
@@ -324,7 +324,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
             putExtra(EXTRA_RESULT_FIELD_INDEX, mFieldIndex)
         }
         setResult(RESULT_OK, resultData)
-        finishWithoutAnimation()
+        finish()
     }
 
     override fun onDestroy() {

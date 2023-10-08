@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Tanya saya</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tag sahaja</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Kad baru secara rawak</string>
-    <string name="new_order_order_added">Kad baru ikut susunan tambahan</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Lihat tertua terdahulu</string>
     <string name="cram_deck_conf_order_random">Rawak</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Guna dek kini</string>
     <string name="add_to_deck_decide_by_note_type">Tentukan melalui jenis nota</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Campur kad baru dan semakan</string>
-    <string name="new_spread_new_after_review">Kad baru selepas semakan</string>
-    <string name="new_spread_new_before_review">Kad baru sebelum semakan</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Apabila tiada fon dinyatakan pada kad imbasan</string>
-    <string name="override_font_always" comment="Option to always override font">Sentiasa</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Ikuti sistem</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-besar</string>
     <string name="html_size_code_xx_large">xx-besar</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Butang jawapan 1</string>
-    <string name="gesture_answer_2">Butang jawapan 2</string>
-    <string name="gesture_answer_3">Butang jawapan 3</string>
-    <string name="gesture_answer_4">Butang jawapan 4</string>
-    <string name="gesture_answer_green">Jawapan saranan (hijau)</string>
-    <string name="gesture_answer_better_recommended">Jawapan lebih baik dari saranan</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Main media</string>
     <string name="gesture_abort_learning">Batal pembelajaran</string>
     <string name="gesture_flag_red">Togel Tanda Merah</string>

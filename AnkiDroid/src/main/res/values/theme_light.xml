@@ -150,7 +150,6 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!--Custom Tabs colors-->
         <item name="customTabNavBarColor">@color/material_light_blue_500</item>
         <item name="popupBackgroundColor">@android:color/white</item>
-        <item name="iconColor">?android:attr/textColor</item>
         <item name="overflowAndPopupMenuIconColor">#9e000000</item>
         <!-- StatusBar -->
         <item name="android:statusBarColor">?attr/colorPrimary</item>

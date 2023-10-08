@@ -71,7 +71,6 @@
     <string name="replay_audio">Pagroti dar kartą</string>
     <string name="leech_suspend_notification">Kortelė pažymėta kaip sunkiai įsimenama, todėl buvo atidėta</string>
     <string name="leech_notification">Kortelė buvo pažymėta kaip sunkiai įsimenama</string>
-    <string name="corrupt_font">Sugadintas šriftų failas %s</string>
     <string name="webview_crash_unknown">Nežinoma klaida</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Nepakanka atminties</string>
@@ -125,7 +124,6 @@
     <string name="save">Išsaugoti</string>
     <string name="close">Uždaryti</string>
     <string name="select">Pažymėti</string>
-    <string name="reordering_cards">Keičiamas kortelių eiliškumas&#8230;</string>
     <string name="field_remapping">%1$s (nuo “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Bet kokios tuščios kortelės bus ištrintos. Jei užrašas neturės susijusių kortelių, jis bus ištrintas. Ar tikrai norite tęsti?</string>
     <!-- Timebox -->
@@ -150,19 +148,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Atidėti</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Peržiūra</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d iš %2$d</string>
-    <string name="error_insufficient_memory">Veiksmo atlikti neįmanoma, nes jūsų įrenginyje neužtenka atminties</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Pervadinti</string>
-    <string name="default_conf_delete_error">Numatytųjų parinkčių grupė negali būti pašalinta</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">Pridėta %d kortelė</item>
-        <item quantity="few">Pridėtos %d kortelės</item>
-        <item quantity="many">Pridėta %d kortelių</item>
-        <item quantity="other">Pridėta %d kort.</item>
-    </plurals>
     <string name="check_db">Tikrinti duomenų bazę</string>
     <string name="check_media">Tikrinti laikmenas</string>
     <string name="empty_cards">Tuščios kortelės</string>
-    <string name="check_db_message">Tikrinama duomenų bazė&#8230;</string>
     <string name="empty_card_warning">Ši kortelė yra tuščia. Naudokite parinktį „Tuščios kortelės“, esančią rinkinių sąrašo meniu.</string>
     <string name="unknown_type_field_warning">Atsakymo tipas: nežinomas laukelis %s</string>
     <string name="delete_deck">Rinkinys trinamas&#8230;</string>
@@ -178,13 +167,6 @@
     </plurals>
     <string name="import_log_no_apkg">Tai negaliojantis „Anki“ paketo failas</string>
     <string name="import_title_error" comment="Title of error dialog">Klaida</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Failas „%s“ neturi .apkg arba .colpkg plėtinio</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
@@ -192,8 +174,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Pakeičiama kolekcija&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Įtraukti mokymosi laiko planavimą</string>
     <string name="export_include_media">Įtraukti laikmenas</string>
@@ -236,59 +216,11 @@
     <string name="dyn_deck_desc">Tai yra specialus rinkinys, skirtas mokytis papildomai. Peržiūrėjus korteles, jos bus automatiškai grąžintos į savo pagrindinius rinkinius. Ištrynus šį rinkinį iš sąrašo, visos kortelės bus grąžintos į savo pradinį rinkinį.</string>
     <string name="steps_error">Veiksmų skaičius privalo būti didesnis už 0</string>
     <string name="steps_min_error">Reikia nurodyti bent vieną veiksmą</string>
-    <string name="sched_end">(pabaiga)</string>
-    <string name="sched_unbury_action">Norėdami jas dabar pamatyti, meniu pasirinkite „Ištraukti“</string>
-    <string name="sched_has_buried">Kai kurios susijusios arba paslėptos kortelės buvo nukeltos rytdienai</string>
     <string name="tag_editor_add_feedback">Norėdami pridėti „%1$s“, spauskite „%2$s“</string>
     <string name="tag_editor_add_feedback_existing">Pasirinkta esama žymė „%1$s“</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekundė</item>
-        <item quantity="few">%s sekundės</item>
-        <item quantity="many">%s sekundžių</item>
-        <item quantity="other">%s s.</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minutė</item>
-        <item quantity="few">%s minutės</item>
-        <item quantity="many">%s minučių</item>
-        <item quantity="other">%s min.</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s valanda</item>
-        <item quantity="few">%s valandos</item>
-        <item quantity="many">%s valandų</item>
-        <item quantity="other">%s val.</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s diena</item>
-        <item quantity="few">%s dienos</item>
-        <item quantity="many">%s dienų</item>
-        <item quantity="other">%s d.</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mėnuo</item>
-        <item quantity="few">%s mėnesiai</item>
-        <item quantity="many">%s mėnesių</item>
-        <item quantity="other">%s mėn.</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s metai</item>
-        <item quantity="few">%s metai</item>
-        <item quantity="many">%s metų</item>
-        <item quantity="other">%s m.</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s sekundės</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Toks rinkinys jau yra</string>
     <string name="decks_rename_filtered_nosubdecks">Rinktinis rinkinys negali turėti poaplankių</string>
-    <string name="filtered_deck_name">Rinktinis rinkinys</string>
     <string name="reminder_title">Nepamirškite šiandien pasimokyti!</string>
     <plurals name="reminder_text">
         <item quantity="one">Peržiūrėti %2$d kortelę per %1$s</item>
@@ -299,14 +231,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Pasidalinti apkg failo nepavyko</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Šiam failui reikia naujesnės „Anki“ versijos.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="web_page_error">Error loading page: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Fonas</string>
     <string name="choose_an_image">Pasirinkite paveikslėlį</string>
@@ -431,7 +360,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

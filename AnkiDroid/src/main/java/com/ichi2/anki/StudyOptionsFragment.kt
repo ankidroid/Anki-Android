@@ -37,13 +37,8 @@ import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.slide
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
-import com.ichi2.anki.servicelayer.ComputeResult
-import com.ichi2.anki.servicelayer.Undo
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.async.CollectionTask.*
-import com.ichi2.async.TaskListener
-import com.ichi2.async.TaskManager
 import com.ichi2.async.updateValuesFromDeck
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
@@ -52,9 +47,7 @@ import com.ichi2.libanki.Utils
 import com.ichi2.ui.RtlCompliantActionProvider
 import com.ichi2.utils.FragmentFactoryUtils.instantiate
 import com.ichi2.utils.HtmlUtils.convertNewlinesToHtml
-import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.Job
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -155,7 +148,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             mToolbar!!.inflateMenu(R.menu.study_options_fragment)
             configureToolbar()
         }
-        refreshInterface(true)
+        refreshInterface()
         return studyOptionsView
     }
 
@@ -168,7 +161,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onResume() {
         super.onResume()
-        refreshInterface(true)
+        refreshInterface()
     }
 
     private fun closeStudyOptions(result: Int) {
@@ -236,33 +229,13 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         ankiActivity.showDialogFragment(contextMenu)
     }
 
-    fun setFragmentContentView(newView: View?) {
-        val parent = this.view as ViewGroup?
-        parent!!.removeAllViews()
-        parent.addView(newView)
-    }
-
-    private val mUndoListener: TaskListener<Unit, ComputeResult?> = object : TaskListener<Unit, ComputeResult?>() {
-        override fun onPreExecute() {}
-        override fun onPostExecute(result: ComputeResult?) {
-            openReviewer()
-        }
-    }
-
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_undo -> {
                 Timber.i("StudyOptionsFragment:: Undo button pressed")
-                if (BackendFactory.defaultLegacySchema) {
-                    Undo().runWithHandler(mUndoListener)
-                } else {
-                    launchCatchingTask {
-                        if (requireActivity().backendUndoAndShowPopup()) {
-                            openReviewer()
-                        } else {
-                            Undo().runWithHandler(mUndoListener)
-                        }
-                    }
+                launchCatchingTask {
+                    requireActivity().undoAndShowSnackbar()
+                    openReviewer()
                 }
                 return true
             }
@@ -271,11 +244,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 if (col!!.decks.isDyn(col!!.decks.selected())) {
                     openFilteredDeckOptions()
                 } else {
-                    val i = if (BackendFactory.defaultLegacySchema) {
-                        Intent(activity, DeckOptionsActivity::class.java)
-                    } else {
-                        com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
-                    }
+                    val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), col!!.decks.current().id)
                     Timber.i("Opening deck options for activity result")
                     onDeckOptionsActivityResult.launch(i)
                     slide(requireActivity(), ActivityTransitionAnimation.Direction.FADE)
@@ -290,7 +259,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.id.action_unbury -> {
                 Timber.i("StudyOptionsFragment:: unbury button pressed")
                 col!!.sched.unburyCardsForDeck()
-                refreshInterfaceAndDecklist(true)
+                refreshInterface(true)
                 item.isVisible = false
                 return true
             }
@@ -325,7 +294,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             withCol {
                 Timber.d("doInBackground - RebuildCram")
                 sched.rebuildDyn(decks.selected())
-                updateValuesFromDeck(this, true)
+                updateValuesFromDeck(this)
             }
         }
         rebuildUi(result, true)
@@ -337,7 +306,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             withCol {
                 Timber.d("doInBackgroundEmptyCram")
                 sched.emptyDyn(decks.selected())
-                updateValuesFromDeck(this, true)
+                updateValuesFromDeck(this)
             }
         }
         rebuildUi(result, true)
@@ -382,7 +351,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 menu.findItem(R.id.action_export).isVisible = false
             }
             // Switch on or off unbury depending on if there are cards to unbury
-            menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuried()
+            menu.findItem(R.id.action_unbury).isVisible = col != null && col!!.sched.haveBuriedInCurrentDeck()
             // Set the proper click target for the undo button's ActionProvider
             val undoActionProvider: RtlCompliantActionProvider? = MenuItemCompat.getActionProvider(
                 menu.findItem(R.id.action_undo)
@@ -393,8 +362,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 menu.findItem(R.id.action_undo).isVisible = false
             } else {
                 menu.findItem(R.id.action_undo).isVisible = true
-                val res = AnkiDroidApp.appResources
-                menu.findItem(R.id.action_undo).title = res.getString(R.string.studyoptions_congrats_undo, col!!.undoName(res))
+                menu.findItem(R.id.action_undo).title = col?.undoLabel()
             }
             // Set the back button listener
             if (!mFragmented) {
@@ -404,7 +372,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 mToolbar!!.setNavigationOnClickListener { (activity as AnkiActivity).finishWithAnimation(ActivityTransitionAnimation.Direction.END) }
             }
         } catch (e: IllegalStateException) {
-            if (!CollectionHelper.instance.colIsOpen()) {
+            if (!CollectionHelper.instance.colIsOpenUnsafe()) {
                 if (recur) {
                     Timber.i(e, "Database closed while working. Probably auto-sync. Will re-try after sleep.")
                     try {
@@ -435,7 +403,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         if (result.resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             // If no more cards getting returned while counts > 0 (due to learn ahead limit) then show a snackbar
-            if (col!!.sched.count() > 0 && mStudyOptionsView != null) {
+            if (col!!.sched.totalCount() > 0 && mStudyOptionsView != null) {
                 mStudyOptionsView!!.findViewById<View>(R.id.studyoptions_main)
                     .showSnackbar(R.string.studyoptions_no_cards_due)
             }
@@ -452,13 +420,12 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (mLoadWithDeckOptions) {
             mLoadWithDeckOptions = false
             val deck = col!!.decks.current()
-            if (deck.isDyn && deck.has("empty")) {
+            if (deck.isFiltered && deck.has("empty")) {
                 deck.remove("empty")
             }
             launchCatchingTask { rebuildCram() }
         } else {
-            TaskManager.waitToFinish()
-            refreshInterface(true)
+            refreshInterface()
         }
     }
 
@@ -476,35 +443,20 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    fun refreshInterface() {
-        refreshInterface(resetSched = false, resetDecklist = false)
-    }
-
-    @KotlinCleanup("default value + add overloads")
-    private fun refreshInterfaceAndDecklist(resetSched: Boolean) {
-        refreshInterface(resetSched, true)
-    }
-
-    fun refreshInterface(resetSched: Boolean) {
-        refreshInterface(resetSched, false)
-    }
-
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
      *
-     * @param resetSched    Indicates whether to rebuild the queues as well. Set to true for any
-     *                      task that modifies queues (e.g., unbury or empty filtered deck).
      * @param resetDecklist Indicates whether to call back to the parent activity in order to
      *                      also refresh the deck list.
      */
     private var updateValuesFromDeckJob: Job? = null
-    private fun refreshInterface(resetSched: Boolean = false, resetDecklist: Boolean = false) {
+    fun refreshInterface(resetDecklist: Boolean = false) {
         Timber.d("Refreshing StudyOptionsFragment")
         updateValuesFromDeckJob?.cancel()
         // Load the deck counts for the deck from Collection asynchronously
         updateValuesFromDeckJob = launchCatchingTask {
             if (CollectionManager.isOpenUnsafe()) {
-                val result = withCol { updateValuesFromDeck(this, resetSched) }
+                val result = withCol { updateValuesFromDeck(this) }
                 rebuildUi(result, resetDecklist)
             }
         }
@@ -551,7 +503,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val col: Collection?
         get() {
             try {
-                return CollectionHelper.instance.getCol(context)
+                return CollectionHelper.instance.getColUnsafe(context)
             } catch (e: Exception) {
                 // This may happen if the backend is locked or similar.
             }
@@ -619,7 +571,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             }
 
             // Switch between the empty view, the ordinary view, and the "congratulations" view
-            val isDynamic = deck.isDyn
+            val isDynamic = deck.isFiltered
             if (result.numberOfCardsInDeck == 0 && !isDynamic) {
                 mCurrentContentView = CONTENT_EMPTY
                 deckInfoLayout.visibility = View.VISIBLE
@@ -636,7 +588,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                     buttonStart.visibility = View.GONE
                 }
                 textCongratsMessage.visibility = View.VISIBLE
-                textCongratsMessage.text = col.sched.finishedMsg(requireActivity())
+                textCongratsMessage.text = col.sched.finishedMsg()
             } else {
                 mCurrentContentView = CONTENT_STUDY_OPTIONS
                 deckInfoLayout.visibility = View.VISIBLE

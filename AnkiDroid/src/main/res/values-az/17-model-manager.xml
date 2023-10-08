@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Qeyd növünü sil</string>
     <string name="model_browser_rename" comment="Rename a note type">Yenidən adlandır</string>
     <string name="model_browser_template">Kartlara düzəliş et</string>
-    <string name="model_browser_add">Qeyd növü əlavə et</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Sahələr yenilənir</string>
     <string name="model_field_editor_sort_field">Bu sahəyə görə sırala</string>
-    <string name="model_clone_suffix">kopyala</string>
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Bu sahəni silmək istədiyinizə əminsiniz?</string>

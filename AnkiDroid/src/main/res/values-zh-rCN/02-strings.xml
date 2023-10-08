@@ -71,7 +71,6 @@
     <string name="replay_audio">重新播放</string>
     <string name="leech_suspend_notification">卡片被标记为「记忆难点」并暂停复习</string>
     <string name="leech_notification">卡片被标记为「记忆难点」</string>
-    <string name="corrupt_font">字体文件 %s 已损坏</string>
     <string name="webview_crash_unknown">未知错误</string>
     <string name="webview_crash_unknwon_detailed">这是由 WebView 内部错误导致的</string>
     <string name="webview_crash_oom">内存不足</string>
@@ -125,7 +124,6 @@
     <string name="save">保存</string>
     <string name="close">关闭</string>
     <string name="select">选择</string>
-    <string name="reordering_cards">重新排列卡片中...</string>
     <string name="field_remapping">%1$s（来自「%2$s」）</string>
     <string name="confirm_map_cards_to_nothing">任何无法映射的卡片都会被删除。如果该笔记没有生成其他卡片，该笔记将会丢失。你确定要继续吗？</string>
     <!-- Timebox -->
@@ -144,16 +142,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">重新安排</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">预览</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d 中的 %1$d</string>
-    <string name="error_insufficient_memory">由于设备内存不足导致操作无法完成。</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">重命名</string>
-    <string name="default_conf_delete_error">不能删除默认牌组</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="other">已添加 %d 张卡片</item>
-    </plurals>
     <string name="check_db">检查数据库</string>
     <string name="check_media">检查媒体</string>
     <string name="empty_cards">空白卡片</string>
-    <string name="check_db_message">正在检查数据库\n请等待...</string>
     <string name="empty_card_warning">这张卡片是空的。请使用牌组列表界面右上角菜单中的「空白卡片」选项来查找空白卡片。</string>
     <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
     <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
@@ -166,13 +158,6 @@
     </plurals>
     <string name="import_log_no_apkg">这不是一个有效的 apkg 文件</string>
     <string name="import_title_error" comment="Title of error dialog">错误</string>
-    <string name="import_log_failed_unzip">无法解压 apkg：%s</string>
-    <string name="import_log_failed_copy_to">无法将 apkg 复制到 %s</string>
-    <string name="import_log_failed_validate">apkg 验证失败</string>
-    <string name="import_log_insufficient_space_error">没有足够的空间来导入包。\n 需要 - %1$s \n 可用 - %2$s。\n\n 有问题？如果可能，请尝试在您的手机上腾出空间。 或者，同步使用的空间少于导入。 您可以尝试用具备更多可用空间的设备（例如 Anki Desktop）导入包，然后将其同步到此设备。</string>
-    <string name="import_log_file_cache_cleared">导入文件错误，可能处理期间的缓存清理造成的。\n请再次尝试</string>
-    <string name="import_succeeded_but_check_database">数据导入成功，但导入后的清理失败。稍后运行检查数据库。根原因：%s</string>
-    <string name="import_error_corrupt_zip">apkg 文件已损坏。请删除并重新下载。\n\n根原因：%s</string>
     <string name="import_error_handle_exception">导入文件\n\n%s 失败</string>
     <string name="import_error_not_apkg_extension">「%s」并不是具有 .apkg 或 .colpkg 扩展名的文件</string>
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
@@ -180,8 +165,6 @@
     <string name="import_error_copy_to_cache">缓存文件失败（可能超出存储空间）</string>
     <string name="import_error_multiple_colpkg">选择了多个 colpkg 文件。</string>
     <string name="import_error_colpkg_apkg">同时选择了 apkg &amp; colpkg 文件。</string>
-    <string name="import_stats_error">导入以下文件时发生了一些错误：\n%s</string>
-    <string name="import_replacing">正在导入牌组集合&#8230;</string>
     <string name="import_interrupted">导入中断</string>
     <string name="export_include_schedule">包括学习进度</string>
     <string name="export_include_media">包括媒体文件</string>
@@ -218,41 +201,11 @@
     <string name="dyn_deck_desc">这是一个在计划外学习的特殊牌组，卡片在复习后会自动返回原来的牌组。\n在牌组列表中删除此牌组也将会把所有卡片都移回原来的牌组。</string>
     <string name="steps_error">间隔必须是大于 0 的数字</string>
     <string name="steps_min_error">至少需要一个间隔</string>
-    <string name="sched_end">（结束）</string>
-    <string name="sched_unbury_action">在菜单中点击「取消搁置」来查看这些卡片</string>
-    <string name="sched_has_buried">一些相关的或被搁置的卡片被推迟到明天。</string>
     <string name="tag_editor_add_feedback">点击「%2$s」以确认添加「%1$s」</string>
     <string name="tag_editor_add_feedback_existing">已选中 %1$s</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="other">%s 秒</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="other">%s 分钟</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="other">%s 小时</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="other">%s 天</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="other">%s 个月</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="other">%s 年</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s 秒</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">该牌组已存在</string>
     <string name="decks_rename_filtered_nosubdecks">筛选牌组不能有子牌组</string>
-    <string name="filtered_deck_name">筛选牌组</string>
     <string name="reminder_title">不要忘记今天去学习 ！</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d 张卡片在 %1$s 中待复习</item>
@@ -260,14 +213,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">共享 apkg 文件时出错</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">此文件需要更新版本的 Anki。</string>
     <string name="activity_start_failed">系统中没有安装可以执行此操作的应用程序。</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[相机图像可能偏大。您可能希望在媒体目录中压缩并调整图像大小]]></string>
     <string name="no_browser_notification">未找到浏览器，请通过 PC 或移动设备访问网页： </string>
     <string name="web_page_error">加载页面出错：%s</string>
-    <string name="no_outgoing_link_in_cardbrowser">不支持卡片中的外部页面链接。</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">已恢复的卡片</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">背景</string>
     <string name="choose_an_image">选择图片</string>
@@ -389,7 +339,6 @@
     <string name="intro_sync_from_ankiweb">从 AnkiWeb 同步</string>
     <string name="already_logged_in">已经登录</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">牌组已存在</string>
     <string name="deck_created">已创建牌组</string>
     <string name="deck_renamed">重命名牌组</string>
     <!-- Deck Deletion -->

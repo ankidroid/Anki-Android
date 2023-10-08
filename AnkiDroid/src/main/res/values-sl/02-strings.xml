@@ -71,7 +71,6 @@
     <string name="replay_audio">Ponovno predvajaj zvok</string>
     <string name="leech_suspend_notification">Kartica označena kot odvečna in je bila pridržana</string>
     <string name="leech_notification">Kartica označena kot odvečna</string>
-    <string name="corrupt_font">Pokvarjena datoteka pisave %s</string>
     <string name="webview_crash_unknown">Neznana napaka</string>
     <string name="webview_crash_unknwon_detailed">To je povzročila notranja napaka v WebViewu</string>
     <string name="webview_crash_oom">Zmanjkalo je pomnilnika</string>
@@ -125,7 +124,6 @@
     <string name="save">Shrani</string>
     <string name="close">Zapri</string>
     <string name="select">Izberi</string>
-    <string name="reordering_cards">Prerazvrščanje kartic &#8230;</string>
     <string name="field_remapping">%1$s (od \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Vse kartice, ki so preslikane v nič, bodo izbrisane. Če zapisek nima preostalih kartic, bo izgubljen. Ali res želite nadaljevati?</string>
     <!-- Timebox -->
@@ -150,19 +148,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Predogled</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d od%2$d</string>
-    <string name="error_insufficient_memory">Opravila ni mogoče izvesti, ker je na napravi na voljo premalo pomnilnika</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Preimenuj</string>
-    <string name="default_conf_delete_error">Privzete skupine možnosti ni mogoče premakniti</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d kartica dodana</item>
-        <item quantity="two">%d kartici dodani</item>
-        <item quantity="few">%d kartice dodane</item>
-        <item quantity="other">%d kartic dodanih</item>
-    </plurals>
     <string name="check_db">Preveri podatkovno zbirko</string>
     <string name="check_media">Preveri predstavnost</string>
     <string name="empty_cards">Prazne kartice</string>
-    <string name="check_db_message">Preverjanje podatkovne zbirke &#8230;</string>
     <string name="empty_card_warning">Ta kartica je prazna. Uporabite možnost \"Prazne kartice\" iz menija seznama kompletov.</string>
     <string name="unknown_type_field_warning">Vnos odgovora: neznano polje %s</string>
     <string name="delete_deck">Brisanje kompleta &#8230;</string>
@@ -178,13 +167,6 @@
     </plurals>
     <string name="import_log_no_apkg">To ni veljavna datoteka Anki package.</string>
     <string name="import_title_error" comment="Title of error dialog">Napaka</string>
-    <string name="import_log_failed_unzip">Neuspešna razširitev datoteke apkg: %s</string>
-    <string name="import_log_failed_copy_to">Neuspešno kopiranje datoteke apkg v %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_handle_exception">Napaka pri uvažanju datoteke\n\n%s</string>
     <string name="import_error_not_apkg_extension">Datoteka %s nima končnice .apkg ali .colpkg</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
@@ -192,8 +174,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Več colpkg datotek je bilo izbranih.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Nadomeščanje zbirke &#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Vključi urnik</string>
     <string name="export_include_media">Vključi predstavnost</string>
@@ -236,59 +216,11 @@
     <string name="dyn_deck_desc">To je poseben komplet za učenje izven običajnega urnika. Kartice bodo samodejno vrnjene v izvirne komplete, ko jih pregledate. Izbris tega kompleta s seznama bo vrnil vse preostale kartice v izvirni komplet.</string>
     <string name="steps_error">Koraki morajo biti številke večje od 0</string>
     <string name="steps_min_error">Zahtevan je vsaj en korak</string>
-    <string name="sched_end">(konec)</string>
-    <string name="sched_unbury_action">Da si jih ogledate zdaj, pritisnite \"Odkrij\" v meniju</string>
-    <string name="sched_has_buried">Nekatere povezane ali skrite kartice so bile odložene do jutri</string>
     <string name="tag_editor_add_feedback">Pritisnite \"%2$s\", da potrdite dodajanje \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Izbrana obstoječa oznaka \"%1$s\"</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekunda</item>
-        <item quantity="two">%s sekundi</item>
-        <item quantity="few">%s sekunde</item>
-        <item quantity="other">%s sekund</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuti</item>
-        <item quantity="two">%s-h minutah</item>
-        <item quantity="few">%s-h minutah</item>
-        <item quantity="other">%s-h minutah</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s ura</item>
-        <item quantity="two">%s uri</item>
-        <item quantity="few">%s ure</item>
-        <item quantity="other">%s ur</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s dan</item>
-        <item quantity="two">%s dni</item>
-        <item quantity="few">%s dni</item>
-        <item quantity="other">%s dni</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mesec</item>
-        <item quantity="two">%s meseca</item>
-        <item quantity="few">%s meseci</item>
-        <item quantity="other">%s mesecev</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s leto</item>
-        <item quantity="two">%s leti</item>
-        <item quantity="few">%s leta</item>
-        <item quantity="other">%s let</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Ta komplet že obstaja</string>
     <string name="decks_rename_filtered_nosubdecks">Filtriran komplet ne more imeti podkompletov</string>
-    <string name="filtered_deck_name">Filtriran komplet</string>
     <string name="reminder_title">Ne pozabite se učiti danes!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
@@ -299,14 +231,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Napaka pri deljenju datoteke apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="web_page_error">Error loading page: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Select image</string>
@@ -431,7 +360,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

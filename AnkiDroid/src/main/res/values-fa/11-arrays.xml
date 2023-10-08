@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">بپرس  ازم</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">تنها برچسب</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">كارتهاي جديد با ترتيب تصادفي</string>
-    <string name="new_order_order_added">كارتهاي جديد به ترتيب اضافه شدن</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">اول قديمي ها ديده شود</string>
     <string name="cram_deck_conf_order_random">تصادفي</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">استفاده از دسته فعلی</string>
     <string name="add_to_deck_decide_by_note_type">تصمیم گیری براساس نوع یادداشت</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">ادغام کارتهای جدید و مرور شده</string>
-    <string name="new_spread_new_after_review">کارتهای جدید بعد از مرور شده ها</string>
-    <string name="new_spread_new_before_review">کارتهای جدید قبل از مرور شده ها</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">هنگامیکه هیچ فونتی برای فلش کارت تعیین نشده</string>
-    <string name="override_font_always" comment="Option to always override font">همیشه</string>
     <!-- theme labels -->
     <string name="theme_follow_system">پیروی از سیستم</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-بزرگ</string>
     <string name="html_size_code_xx_large">xx-بزرگ</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">دكمه پاسخ 1</string>
-    <string name="gesture_answer_2">دكمه پاسخ 2</string>
-    <string name="gesture_answer_3">دكمه پاسخ 3</string>
-    <string name="gesture_answer_4">دكمه پاسخ 4</string>
-    <string name="gesture_answer_green">پاسخ توصيه شده-سبز</string>
-    <string name="gesture_answer_better_recommended">پاسخ بهتر از توصيه شده</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">پخش رسانه</string>
     <string name="gesture_abort_learning">لغو یادگیری</string>
     <string name="gesture_flag_red">پرچم قرمز</string>

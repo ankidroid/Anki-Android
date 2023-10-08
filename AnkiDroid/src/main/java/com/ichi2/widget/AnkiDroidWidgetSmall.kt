@@ -38,7 +38,7 @@ import kotlin.math.sqrt
 class AnkiDroidWidgetSmall : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         Timber.d("SmallWidget: onUpdate")
-        WidgetStatus.update(context)
+        WidgetStatus.updateInBackground(context)
     }
 
     override fun onEnabled(context: Context) {
@@ -100,7 +100,7 @@ class AnkiDroidWidgetSmall : AppWidgetProvider() {
                             if (action != null && action == Intent.ACTION_MEDIA_MOUNTED) {
                                 Timber.d("mMountReceiver - Action = Media Mounted")
                                 if (remounted) {
-                                    WidgetStatus.update(AnkiDroidApp.instance)
+                                    WidgetStatus.updateInBackground(AnkiDroidApp.instance)
                                     remounted = false
                                     if (mMountReceiver != null) {
                                         AnkiDroidApp.instance.unregisterReceiver(mMountReceiver)

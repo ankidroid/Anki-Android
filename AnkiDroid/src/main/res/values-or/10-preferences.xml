@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">ଅକ୍ଷମ</string>
-    <string name="enabled">ସକ୍ଷମ</string>
     <string name="pref_summary_seconds">%s ସେ</string>
     <string name="pref_summary_minutes">%s ମି</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -122,7 +121,7 @@
     <string name="tts" maxLength="41">ପାଠ୍ୟ ରୁ କଥନ</string>
     <string name="tts_summ">ଯଦି କୌଣସି ଧ୍ୱନି ଫାଇଲ୍ ଅନ୍ତର୍ଭୂକ୍ତ ହୁଏ ନାହିଁ ତେବେ ଏହା ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ପଢ଼େ</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">ସିଙ୍କରେ ମିଡ଼ିଆ ଆଣିବା</string>
+    <string name="sync_fetch_missing_media" maxLength="41">ସୀଙ୍କ୍‌ରେ ମିଡ଼ିଆ ଆଣ</string>
     <string name="sync_account" maxLength="41">AnkiWeb ଖାତା</string>
     <string name="sync_account_summ_logged_out">ଲଗ୍ ଇନ୍‌ ହୋଇନାହି</string>
     <string name="automatic_sync_choice" maxLength="41">ସ୍ୱଚାଳିତ ସୀଙ୍କ୍ରୋନାଇଜେଶନ୍</string>
@@ -137,8 +136,6 @@
     <string name="app_theme" maxLength="41">ଥିମ୍</string>
     <string name="day_theme" maxLength="41">ଦିନ ଥିମ୍</string>
     <string name="night_theme" maxLength="41">ରାତ୍ରି ଥିମ୍</string>
-    <string name="default_font" maxLength="41">ଡିଫଲ୍ଟ ଫଣ୍ଟ</string>
-    <string name="override_font" maxLength="41">ଡିଫଲ୍ଟ ଫଣ୍ଟ ପ୍ରୟୋଗତା</string>
     <string name="language" maxLength="41">ଭାଷା</string>
     <string name="language_system">ସିଷ୍ଟମ୍ ଭାଷା</string>
     <string name="notification_pref" maxLength="41">ଵିଜ୍ଞପ୍ତି</string>
@@ -152,7 +149,6 @@
     <string name="timeout_answer" maxLength="41">ସମୟ-ସମାପ୍ତି ଉତ୍ତର</string>
     <string name="timeout_answer_summ">ଉପଭୋକ୍ତା ଇନପୁଟ୍ ବିନା ସ୍ୱଚାଳିତ ଭାଵେ ଉତ୍ତର ଦେଖାଅ। ଵିଳମ୍ବରେ ସ୍ୱଚାଳିତ ଭାଵେ ଚାଳନ ହୋଇଥିବା ଅଡ଼ିଓ ଫାଇଲଗୁଡ଼ିକ ପାଇଁ ସମୟ ଅନ୍ତର୍ଭୁକ୍ତ</string>
     <string name="timeout_answer_seconds" maxLength="41">ଉତ୍ତର ଦେଖାଇବା ସମୟ</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">ପରଵର୍ତ୍ତୀ ପ୍ରଶ୍ନ ଦେଖାଇବା ସମୟ</string>
     <string name="select_locale_title">ଭାଷା ବାଛନ୍ତୁ</string>
     <string name="software_render" maxLength="41">କାର୍ଡ ହାର୍ଡୱେର ପ୍ରସ୍ତୁତକର୍ତ୍ତା କୁ ଅକ୍ଷମ କରନ୍ତୁ</string>
@@ -167,6 +163,8 @@
     <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ (ମିଲିସେକେଣ୍ଡ)</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">ବଟନ୍ ସମୟ ଦେଖାଇବା</string>
     <string name="show_estimates_summ">ଉତ୍ତର ବଟନ୍‌ଗୁଡ଼ିକରେ ପରଵର୍ତ୍ତୀ ସମୀକ୍ଷା ସମୟ ଦର୍ଶାଇବା</string>
     <string name="show_large_answer_buttons" maxLength="41">ବଡ଼ ଉତ୍ତର ବଟନ୍ ଦେଖାଇବା</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">ETA ଦେଖାଇବା</string>
     <string name="show_eta_summ">ବଳକା ସମୟ ଦେଖାଇବା</string>
     <string name="use_current" maxLength="41">ନୂଆ ପତ୍ର ପାଇଁ ତାସଖଣ୍ଡ</string>
-    <string name="new_spread" maxLength="41">ନୂଆ ପତ୍ରର ଅଵସ୍ଥିତି</string>
     <string name="learn_cutoff" maxLength="41">ଆଗୁଆ ଶିଖିବା ସମୟସୀମା</string>
     <string name="time_limit" maxLength="41">ଟାଇମ୍ ବକ୍ସ ସମୟ ସୀମା</string>
     <string name="new_timezone" maxLength="41">ନୂତନ ସମୟମଣ୍ଡଳ ପରିଚାଳନା</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">ମିଡ଼ିଆ ଆମଦାନୀରେ ସବୁ ଫାଇଲକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="media_import_allow_all_files_summ">ଯଦି ଆଣ୍ଡ୍ରଏଡ୍ ଏକ ମିଡ଼ିଆ ଫାଇଲ୍ ଚିହ୍ନି ପାରେ ନାହିଁ</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">ପରିସଂଖ୍ୟାନ ଖୋଲିବା ବେଳେ ଡିଫଲ୍ଟ ତାସଖଣ୍ଡ</string>
-    <string name="stats_default_deck_current">ସବୁଠାରୁ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡର ପରିସଂଖ୍ୟାନ ଦେଖାଇବା</string>
-    <string name="stats_default_deck_all">ସବୁ ତାସଖଣ୍ଡର ପରିସଂଖ୍ୟାନ ଦେଖାଇବା</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">ଉନ୍ନତ ପରିସଂଖ୍ୟାନ ସକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="enable_advanced_statistics_summ">ଭବିଷ୍ୟତର ସମୀକ୍ଷା (ସକ୍ଷମ) କିମ୍ବା ଆଗରୁ ନିର୍ଦ୍ଧାରିତ ଭବିଷ୍ୟତର ସମୀକ୍ଷା (ଅକ୍ଷମ) ର ଏକ ସଂକଳନ କିମ୍ବା ଅନୁକରଣ ଉପରେ ଆଧାର କରି ପୂର୍ବାନୁମାନ ପରିସଂଖ୍ୟାନ ପ୍ରଦର୍ଶନ କରନ୍ତୁ</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">ପ୍ରଥମ n ଦିନ ଗଣନା କରନ୍ତୁ, ଅବଶିଷ୍ଟ ଅନୁକରଣ କରନ୍ତୁ</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">ଗଣନର ସଠିକତା</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">ଅନୁକରଣର ପୁନରାବୃତ୍ତି ସଂଖ୍ୟା</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">କଷ୍ଟମ୍ ସୀଙ୍କ୍ ସର୍ଵର୍</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">ଵ୍ୟଵହାର ହୋଇନାହିଁ</string>
@@ -234,67 +220,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">କୀବୋର୍ଡ୍</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">କମାଣ୍ଡ୍ ମ୍ୟାପିଂ</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">ତାସଖଣ୍ଡ ଗୋଷ୍ଠୀର ବିକଳ୍ପଗୁଡ଼ିକର ପରିବର୍ତ୍ତନ ଏକାଧିକ ତାସଖଣ୍ଡ ଉପରେ ପ୍ରଭାବ ପକାଇବ। ଯଦି ଆପଣ କେବଳ ଚଳିତ ତାସଖଣ୍ଡକୁ ପରିବର୍ତ୍ତନ କରିବାକୁ ଚାହୁଁଛନ୍ତି, ଦୟାକରି ପ୍ରଥମେ ଗୋଟେ ନୂଆ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="studyoptions_limit_select_tags">ଟ୍ୟାଗ୍ ଚୟନ କରନ୍ତୁ</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">ତାସଖଣ୍ଡ ବର୍ଣ୍ଣନା (କେବଳ ସାମ୍ପ୍ରତିକ ତାସଖଣ୍ଡ କୁ ପ୍ରଭାବିତ କରେ)</string>
-    <string name="deck_conf_group" maxLength="41">ଵିକଳ୍ପ ଗୋଷ୍ଠୀ</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$dଟିଏ ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରେ</item>
-        <item quantity="other">%1$s\n%2$dଟି  ତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରନ୍ତି</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">ନୂଆ ପତ୍ର</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">ସମୀକ୍ଷା</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">ଲାପ୍ସ ସଂଖ୍ୟା</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ସାଧାରଣ</string>
     <string name="deck_conf_reminders" maxLength="41">ସ୍ମାରକ</string>
-    <string name="deck_conf_steps" maxLength="41">ପାହୁଣ୍ଡ (ମିନିଟ୍ ରେ)</string>
-    <string name="deck_conf_order" maxLength="41">କ୍ରମ</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">ନୂତନ ପତ୍ର/ଦିନ</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">ସ୍ନାତକୋତ୍ତର ଅନ୍ତରାଳ</string>
-    <string name="deck_conf_days">XXX ଦିନ</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">ସହଜ ଅନ୍ତରାଳ</string>
-    <string name="deck_conf_start_ease" maxLength="41">ପ୍ରାରମ୍ଭିକ ସହଜତା</string>
-    <string name="deck_conf_max_rev" maxLength="41">ସର୍ବାଧିକ ସମୀକ୍ଷା/ଦିନ</string>
-    <string name="deck_conf_new_bury" maxLength="41">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
-    <string name="deck_conf_new_bury_summ">ସମ୍ପୃକ୍ତ ନୂତନ ପତ୍ରଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
-    <string name="deck_conf_rev_bury" maxLength="41">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ସ୍ଥଗିତ କରନ୍ତୁ</string>
-    <string name="deck_conf_rev_bury_summ">ସମ୍ପୃକ୍ତ ସମୀକ୍ଷାଗୁଡ଼ିକୁ ତା\' ବାସିଦିନ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥଗିତ କରି ଦିଆଯାଏ</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">ସାଧାରଣ ସେଟିଂ ଵ୍ୟଵହାର କରିବା</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">ଏହି ଗୋଷ୍ଠୀର ସେଟିଂ ଵ୍ୟଵହାର କରିବା ପରିଵର୍ତ୍ତେ ସାଧାରଣ \'ସ୍ୱଚାଳିତ ଉତ୍ତର ପ୍ରଦର୍ଶନ\' ସେଟିଂ ଵ୍ୟଵହାର କରିବା।</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">ସହଜ ଅଧିଲାଭ</string>
-    <string name="deck_conf_hard_factor" maxLength="41">କଠିନ ଅନ୍ତରାଳ</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">ଅନ୍ତରାଳ ସଂଶୋଧକ</string>
-    <string name="deck_conf_max_ivl" maxLength="41">ସର୍ବାଧିକ ଅନ୍ତରାଳ</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">ନୂତନ ଅନ୍ତରାଳ</string>
-    <string name="deck_conf_min_ivl" maxLength="41">ସର୍ବନିମ୍ନ ଅନ୍ତରାଳ</string>
-    <string name="deck_conf_leech_thres" maxLength="41">ଜୋକ (leech) ଦୁଆରସୀମା</string>
-    <string name="deck_conf_fails">XXX (ଟି) ଲାପ୍ସ</string>
-    <string name="deck_conf_leech_action" maxLength="41">ଜୋକ (leech) କାର୍ଯ୍ୟ</string>
-    <string name="deck_conf_max_time" maxLength="41">ସର୍ବାଧିକ ଉତ୍ତର ସମୟ</string>
-    <string name="deck_conf_seconds">XXX ସେକେଣ୍ଡ</string>
-    <string name="deck_conf_timer" maxLength="41">ଉତ୍ତର ସମୟ-ନିୟାମକ ଦେଖାଇବା</string>
-    <string name="deck_conf_autoplay" maxLength="41">ସ୍ୱଚାଳିତ ଭାଵେ ଅଡ଼ିଓ ଚଲାଅ</string>
-    <string name="deck_conf_replayq" maxLength="41">ପ୍ରଶ୍ନର ପୁନରାବୃତ୍ତି କରନ୍ତୁ</string>
-    <string name="deck_conf_replayq_summ">ଉତ୍ତର ଦେଖାଯିବା ବେଳେ, ଉଭୟ ପ୍ରଶ୍ନ ଏବଂ ଉତ୍ତର ଅଡ଼ିଓ ପୁନଃଚାଳନ କରନ୍ତୁ</string>
-    <string name="deck_conf_manage" maxLength="41">ଗୋଷ୍ଠୀ ପରିଚାଳନା</string>
-    <string name="deck_conf_manage_summ">ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଯୋଡ଼ିବା ଏବଂ ପରିବର୍ତ୍ତନ କରିବା</string>
-    <string name="deck_conf_current_group" maxLength="41">ଚଳିତ ଗୋଷ୍ଠୀ</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">ନାମ ବଦଳାନ୍ତୁ</string>
-    <string name="deck_conf_reset" maxLength="41">ଡିଫଲ୍ଟଗୁଡିକ ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
-    <string name="deck_conf_reset_message">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ କୁ ଡିଫଲ୍ଟ ମୂଲ୍ୟଗୁଡ଼ିକୁ ପୁନରୁଦ୍ଧାର କରିବେ କି?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">ଯୋଡ଼ନ୍ତୁ</string>
-    <string name="deck_conf_add_summ">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀର ଏକ କପି ସୃଷ୍ଟି କରନ୍ତୁ</string>
-    <string name="deck_conf_remove_message">ସାମ୍ପ୍ରତିକ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ଅପସାରଣ କରିବେ କି?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">ସବୁ ଉପତାସଖଣ୍ଡ ପାଇଁ ସେଟ୍ କରିବା</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%sଟିଏ ଉପତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରିବ</item>
-        <item quantity="other">%sଟି ଉପତାସଖଣ୍ଡ ଏହି ଗୋଷ୍ଠୀକୁ ବ୍ୟବହାର କରିବେ</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">ଏହି ତାସଖଣ୍ଡର ସମସ୍ତ ଉପତାସଖଣ୍ଡ ପାଇଁ ଚଳିତ ବିକଳ୍ପ ଗୋଷ୍ଠୀ ସେଟ୍ କରିବେ ତ?</string>
-    <string name="pref_browser_editor_font" maxLength="41">ବ୍ରାଉଜର୍ ଏବଂ ସମ୍ପାଦକର ଫଣ୍ଟ</string>
     <string name="deck_conf_cram_filter" maxLength="41">ଶୋଧକ</string>
     <string name="deck_conf_cram_search" maxLength="41">ସନ୍ଧାନ</string>
     <string name="deck_conf_cram_limit" maxLength="41">ଏତିକିରେ ସୀମିତ କର</string>
@@ -304,8 +240,6 @@
     <string name="deck_conf_cram_filter_2_check">ଦ୍ୱିତୀୟ ଶୋଧକ ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="deck_conf_cram_steps" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ (ମିନିଟ୍ ରେ)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">କଷ୍ଟମ୍ ପାହୁଣ୍ଡ ନିର୍ଦ୍ଧାରଣ କରନ୍ତୁ</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">ଏହି ତାସଖଣ୍ଡ-ଗୋଷ୍ଠୀର ଵିଜ୍ଞପ୍ତି ସକ୍ଷମ କରିବା</string>
-    <string name="deck_conf_reminders_time" maxLength="41">…ରେ ମନେ ପକାନ୍ତୁ</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">AnkiDroid କୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରନ୍ତୁ!</string>
     <string name="analytics_title" maxLength="41">ବୈଶିଷ୍ଟ୍ୟ ବ୍ୟବହାର ଅଂଶୀଦାର କରନ୍ତୁ</string>
@@ -342,12 +276,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ ଅପସାରଣ କରନ୍ତୁ</string>
     <string name="bindings_already_bound">ଆଗରୁ ‘%s’କୁ ବନ୍ଧା</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">ପ୍ରାୟୋଗିକ</string>
-    <string name="experimental_pref_confirmation" maxLength="41">‘%s’ ସକ୍ଷମ କରିବା</string>
-    <string name="use_rust_backend_title" maxLength="41">ନୂଆ ବ୍ୟାକେଣ୍ଡ୍ ଵ୍ୟଵହାର କରିବା</string>
-    <string name="use_rust_backend_summary">ନୂଆ Anki ଵୈଶିଷ୍ଟ୍ୟଗୁଡ଼ିକ ସକ୍ଷମ କରେ, ଯେପରିକି v3 scheduler\nଅସ୍ଥିର ଅଟେ। ଆପଣଙ୍କ କୌଣସି ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ସଂଗ୍ରହ ଉପରେ ଵ୍ୟଵହାର କରନ୍ତୁନି। ଆପ୍ ବନ୍ଦ କଲେ ପ୍ରତ୍ୟାଵର୍ତ୍ତନ ହୁଏନାହିଁ</string>
-    <string name="use_rust_backend_warning">ଏମିତି ବି ସମ୍ଭାଵନା ଅଛି ଯେ ଏହା ଆପଣଙ୍କ ଅଧିସ୍ଥାପନକୁ ସମ୍ପୂର୍ଣ୍ଣ ଭାଵରେ ଦୁର୍ନୀତିଗ୍ରସ୍ତ କରି ଛାଡ଼ିଦେବ, ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ଓ AnkiDroid ଫୋଲ୍ଡରକୁ ଵିଲୋପ କରିବା ଆଵଶ୍ୟକତା ପଡ଼ିପାରେ, ଆଉ AnkiWebରେ ସୀଙ୍କ୍ ମାଧ୍ୟମରେ ଦୁର୍ନୀତି ପ୍ରଚାର କରିବାର ସୁଯୋଗ ରହିଛି।\n\nଆମେ ପରୀକ୍ଷଣକୁ ସ୍ୱାଗତ କରୁ, କିନ୍ତୁ ଦୟାକରି ସୁନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ଆପଣଙ୍କ ପାଖରେ ଏକ ଵୈଧ ଅଣ-AnkiWeb ବ୍ୟାକଅପ୍ ଅଛି।</string>
-    <string name="enable_v3_sched_title" maxLength="41">v3 ଅନୁସୂଚକ ଵ୍ୟଵହାର କରିବା</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">ପ୍ରାୟୋଗିକ</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">ଡେଵେଲପର୍ ଵିକଳ୍ପ</string>
     <string name="dev_options_enabled_pref" maxLength="41">ଡେଵେଲପର୍ ଵିକଳ୍ପ ସକ୍ଷମ କରିବା</string>
@@ -386,7 +315,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">ଅଵ୍ୟଵହୃତ ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକୁ ଵିଲୋପ କରିଦେବା</string>
     <string name="pref__delete_unused_media_files__summary">ସମସ୍ତ ପ୍ରତିଛଵି ଓ ଅନ୍ୟ ମିଡ଼ିଆ ଯେଉଁଥିରେ _ ଉପସର୍ଗ ଭାଵେ ନାହିଁ ଆଉ କୌଣସି ନୋଟ୍ ଦ୍ୱାରା ଵ୍ୟଵହାର ହୋଇନି ଵିଲୋପ ହେବ</string>
-    <string name="dialog__media_check_required__message">ଅଵ୍ୟଵହୃତ ମିଡ଼ିଆ ଫାଇଲ୍ ଖୋଜିବା ପାଇଁ ଗୋଟିଏ ମିଡ଼ିଆ ଯାଞ୍ଚ ଆଵଶ୍ୟକ ଅଟେ</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">ଅଵ୍ୟଵହୃତ ମିଡ଼ିଆ ଫାଇଲଗୁଡ଼ିକୁ ଵିଲୋପ କରିଦେବେ</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">ବ୍ୟାକଅପଗୁଡ଼ିକୁ ଵିଲୋପ କରିବା</string>

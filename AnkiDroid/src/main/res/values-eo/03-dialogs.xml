@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Ĉu kontroli datumbazon?</string>
     <string name="check_db_warning">Tio ĉi povas okupi multan tempon</string>
-    <string name="check_db_acknowledge">Kontrolis datumbazon</string>
-    <string name="check_db_acknowledge_shrunk">Datumbazo kontrolita kaj plejbonigita.\nEtigita je %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Forigi kartaron</string>
-    <string name="delete_deck_default_deck">La ĉefa kartaro ne povas esti forigita</string>
     <string name="delete_deck_title">Ĉu forigi kartaron?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Ĉu forigi ĉiujn kartojn el %1$s? Ĝi enhavas %2$d karton.</item>
-        <item quantity="other">Ĉu forigi ĉiujn kartojn el %1$s? Ĝi enhavas %2$d kartojn.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Ĉu sendi ĉiujn kartojn el %s reen al iliaj originalaj kartaroj?</string>
     <string name="no_tts_available_message">Neniu parol-sintezilo disponebla</string>
     <string name="initializing_tts">Lanĉado de parol-sintezilo&#8230;</string>
     <string name="tts_no_tts">ne paroli</string>
@@ -107,16 +99,6 @@
     <string name="custom_study_random">Elekti tiom da hazardaj kartoj el la kartaro:</string>
     <string name="custom_study_preview">Antaŭrigardi novajn kartojn aldonitajn dum tiom da antaŭaj tagoj:</string>
     <string name="custom_study_rebuild_deck_corrupt">Ne povis rekrei kartaron por propra lernado</string>
-    <string name="importing_collection">Enportado de kolekto&#8230;</string>
-    <string name="import_media_count">Enportado de aŭdvidaĵoj %1$d%%&#8230;</string>
-    <string name="import_progress">• Enportado de notoj: %1$d%%\n• Enportado de kartoj: %2$d%%\n• Prilaborado: %3$d%%</string>
-    <string name="import_update_details">Aktualigis %1$d el %2$d ekzistajn notojn.</string>
-    <string name="import_update_ignored">Ignoris kelkajn aktualigojn pro ŝanĝo de tipo de noto</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Kartojn Enportis: %2$d</item>
-        <item quantity="other">Kartojn enportis: %1$d\n
-Totalaj kartoj enportitaj: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Konservejo plena</string>
     <string name="storage_almost_full_title">Konservejo preskaŭ plena</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Mankas spaco</string>
@@ -136,11 +118,8 @@ Totalaj kartoj enportitaj: %2$d</item>
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Malaktivigi</string>
     <string name="dialog_positive_overwrite">Anstataŭigi</string>
-    <string name="dialog_positive_remove">Forigi</string>
     <string name="dialog_positive_repair">Ripari</string>
     <string name="dialog_positive_replace">Anstataŭigi</string>
-    <string name="dialog_positive_restore">Restarigi</string>
-    <string name="dialog_positive_set">Agordi</string>
     <string name="dialog_collection_path_not_dir">La difinita dosier-indiko estas malĝusta</string>
     <!-- Media checking -->
     <string name="check_media_title">Ĉu kontroli aŭdvidaĵojn?</string>
@@ -181,18 +160,11 @@ Totalaj kartoj enportitaj: %2$d</item>
     <string name="integrity_check_continue_anyway">Pluigi malgraŭ tio</string>
     <string name="integrity_check_insufficient_space">Kontrolado de datumbazo uzos multon da provizora memoro.\n\nEstas tre konsilinde por ke vi havu almenaŭ %s da libera spaco en via aparato antaŭ pluigi.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nLibera spaco: %s.</string>
-    <plurals name="integrity_check_fixed_no_home_deck_new">
-        <item quantity="one">%d card with incorrect home deck was recovered. Please see the manual for more information.</item>
-        <item quantity="other">%d cards with incorrect home decks were recovered. Please see the manual for more information.</item>
-    </plurals>
     <string name="video_creation_error">Ne povis ludi filmeton</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Ne povis ŝanĝi kartaron</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Eraro dum malkodi datumojn el la karto</string>
-    <string name="undo_succeeded">Malfaris “%s”</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Fiaskis pritrakti agordojn de kartaro: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Datumbazo ŝlosita</string>
     <string name="database_locked_summary">La datumbazo de AnkiDroid estas uzata de alia aplikaĵo. Bonvolu fermi la alian aplikaĵon kaj remalfermi AnkiDroid.</string>

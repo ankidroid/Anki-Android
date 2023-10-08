@@ -282,7 +282,7 @@ class AutomaticAnswerSettings(
 
         private fun getAction(col: Collection): AutomaticAnswerAction {
             return try {
-                val value: Int = col.get_config(AutomaticAnswerAction.CONFIG_KEY, null as Int?) ?: return AutomaticAnswerAction.BURY_CARD
+                val value: Int = col.config.get(AutomaticAnswerAction.CONFIG_KEY) ?: return AutomaticAnswerAction.BURY_CARD
                 AutomaticAnswerAction.fromPreferenceValue(value)
             } catch (e: Exception) {
                 AutomaticAnswerAction.BURY_CARD
@@ -304,7 +304,7 @@ enum class AutomaticAnswerAction(private val preferenceValue: Int) {
     ANSWER_EASY(4);
 
     fun execute(reviewer: Reviewer) {
-        val numberOfButtons = reviewer.buttonCount
+        val numberOfButtons = 4
         val actualAction = handleInvalidButtons(numberOfButtons)
         val action = actualAction.toCommand(numberOfButtons)
         Timber.i("Executing %s", action)

@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Вимкнено</string>
-    <string name="enabled">Ввімкнено</string>
     <string name="pref_summary_seconds">%s сек</string>
     <string name="pref_summary_minutes">%s хв</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -138,8 +137,6 @@
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
-    <string name="default_font" maxLength="41">Шрифт за замовчуванням</string>
-    <string name="override_font" maxLength="41">Застосування шрифту за замовчуванням</string>
     <string name="language" maxLength="41">Мова</string>
     <string name="language_system">Мова системи</string>
     <string name="notification_pref" maxLength="41">Сповіщення</string>
@@ -153,7 +150,6 @@
     <string name="timeout_answer" maxLength="41">Затримка відповіді</string>
     <string name="timeout_answer_summ">Показати відповідь автоматично, без введення даних користувачем. Затримка включає в себе час автоматичного відтворення аудіофайлів.</string>
     <string name="timeout_answer_seconds" maxLength="41">Час показу відповіді</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX сек.</string>
     <string name="timeout_question_seconds" maxLength="41">Час показу наступного питання</string>
     <string name="select_locale_title">Виберіть мову</string>
     <string name="software_render" maxLength="41">Вимкнути апаратне відображення карт</string>
@@ -168,6 +164,8 @@
     <string name="pref_backup_max" maxLength="41">Кількість резервних копій</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтервал подвійного дотику в мілісекундах</string>
     <string name="pref_double_tap_time_interval_summary">Другий дотик відповіді буде проігнорований, якщо час ще не минув. Це запобігає подвійному натисканню</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Показувати час кнопки</string>
     <string name="show_estimates_summ">Показувати час наступного повторення над кнопками відповіді</string>
     <string name="show_large_answer_buttons" maxLength="41">Показати великі кнопки відповіді</string>
@@ -179,7 +177,6 @@
     <string name="show_eta" maxLength="41">Показувати залишок часу</string>
     <string name="show_eta_summ">Показувати скільки залишилося часу навчання</string>
     <string name="use_current" maxLength="41">Колода для нових карт</string>
-    <string name="new_spread" maxLength="41">Позиція нових карток</string>
     <string name="learn_cutoff" maxLength="41">Ліміт вивчення карток наперед</string>
     <string name="time_limit" maxLength="41">Період лічильника переглядів</string>
     <string name="new_timezone" maxLength="41">Обробка нового часового поясу</string>
@@ -212,17 +209,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Дозволити всі файли при імпорті медіа</string>
     <string name="media_import_allow_all_files_summ">Якщо Android не розпізнає медіа-файл</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Колода при відкритті статистики</string>
-    <string name="stats_default_deck_current">Показати статистику для нещодавньої колоди</string>
-    <string name="stats_default_deck_all">Показати статистику для всіх колод</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Розширена статистика</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Увімкнути розширену статистику</string>
-    <string name="enable_advanced_statistics_summ">Якщо увімкнено, відображає прогноз, заснований на обчисленнях і моделюванні майбутніх повторень, а якщо вимкнено, то на основі вже запланованих повторень.</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Обчислювати перші Х дн., симулювати решту</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Точність обчислень</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число кроків моделювання</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Користувацький сервер</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не використовується</string>
@@ -235,71 +221,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Клавіатура</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Прив\'язування команд</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Зміни опцій групи колоди впливатимуть на кілька колод. Якщо ви бажаєте змінити лише поточну колоду, спочатку додайте нову групу опцій</string>
     <string name="studyoptions_limit_select_tags">Оберіть позначки</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Опис колоди (впливає лише на поточну колоду)</string>
-    <string name="deck_conf_group" maxLength="41">Група опцій</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d колода використовує цю групу</item>
-        <item quantity="few">%1$s\n%2$d колод використовують цю групу</item>
-        <item quantity="many">%1$s\n%2$d колод використовують цю групу</item>
-        <item quantity="other">%1$s\n%2$d колод використовують цю групу</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Нові картки</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторювані картки</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Забуті</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Загальні</string>
     <string name="deck_conf_reminders" maxLength="41">Нагадування</string>
-    <string name="deck_conf_steps" maxLength="41">Кроки (в хвилинах)</string>
-    <string name="deck_conf_order" maxLength="41">Порядок</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Нових карток за добу</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Інтервал «Добре»</string>
-    <string name="deck_conf_days">ХХХ днів</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Інтервал «Легко»</string>
-    <string name="deck_conf_start_ease" maxLength="41">Початкова легкість</string>
-    <string name="deck_conf_max_rev" maxLength="41">Максимальна кількість повторень за день</string>
-    <string name="deck_conf_new_bury" maxLength="41">Відкласти пов\'язані нові картки</string>
-    <string name="deck_conf_new_bury_summ">Пов\'язані нові картки будуть відкладені до завтра</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Відкласти пов’язані повторення</string>
-    <string name="deck_conf_rev_bury_summ">Пов\'язані повторення будуть відкладені на завтра</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Використати загальні налаштування</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Використовувати загальні налаштування \"Автоматичного відображення відповіді\" замість параметрів для цієї групи.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Бонус легкості</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Інтервал \"Важко\"</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Модифікатор інтервалу</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Максимальний інтервал</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Новий інтервал</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Мінімальний інтервал</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Поріг липкої картки</string>
-    <string name="deck_conf_fails">XXX разів забуто</string>
-    <string name="deck_conf_leech_action" maxLength="41">Дія для липкої картки</string>
-    <string name="deck_conf_max_time" maxLength="41">Максимальний час відповіді</string>
-    <string name="deck_conf_seconds">ХХХ секунд</string>
-    <string name="deck_conf_timer" maxLength="41">Показати таймер відповіді</string>
-    <string name="deck_conf_autoplay" maxLength="41">Програвати аудіо автоматично</string>
-    <string name="deck_conf_replayq" maxLength="41">Відтворити питання</string>
-    <string name="deck_conf_replayq_summ">Після показу відповіді відтворити аудіо питання і відповіді</string>
-    <string name="deck_conf_manage" maxLength="41">Керування групами</string>
-    <string name="deck_conf_manage_summ">Додати і змінити налаштування груп</string>
-    <string name="deck_conf_current_group" maxLength="41">Поточна група</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Перейменувати</string>
-    <string name="deck_conf_reset" maxLength="41">Відновити базові налаштування</string>
-    <string name="deck_conf_reset_message">Відновити поточну групу опцій до базових налаштувань?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Створити нову групу</string>
-    <string name="deck_conf_add_summ">Створіть копію поточної групи опцій</string>
-    <string name="deck_conf_remove_message">Видалити поточну групу опцій?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Встановити для усіх підколод</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s підколод використовуватимуть групу опцій</item>
-        <item quantity="few">%s підколоди використовуватимуть конфігурацію</item>
-        <item quantity="many">%s підколод використовуватимуть конфігурацію</item>
-        <item quantity="other">%s підколод використовуватимуть конфігурацію</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Установити групу поточних параметрів для усіх підколод цієї колоди?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Переглядач та редактор шрифтів</string>
     <string name="deck_conf_cram_filter" maxLength="41">Фільтр</string>
     <string name="deck_conf_cram_search" maxLength="41">Пошук</string>
     <string name="deck_conf_cram_limit" maxLength="41">Обмежити до</string>
@@ -309,8 +241,6 @@
     <string name="deck_conf_cram_filter_2_check">Увімкнути другий фільтр</string>
     <string name="deck_conf_cram_steps" maxLength="41">Власні кроки (в хвилинах)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задати власні кроки</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Увімкнути нагадувальне сповіщення для колод у цій групі</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Нагадати в</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Допоможіть зробити AnkiDroid кращим!</string>
     <string name="analytics_title" maxLength="41">Поділитися інформацією про використання функцій</string>
@@ -347,12 +277,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Видалити \'%s\'</string>
     <string name="bindings_already_bound">Вже прив\'язано до %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Експериментальні</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Ввімкнути \'%s\'</string>
-    <string name="use_rust_backend_title" maxLength="41">Використовувати новий бекенд</string>
-    <string name="use_rust_backend_summary">Вмикає нові функції Anki, такі як планувальник v3 scheduler\nUNSTABLE. Не використовуйте в потрібній вам колекції. Не спрямовано на закриття додатку.</string>
-    <string name="use_rust_backend_warning">Є ймовірність, що це може повністю зіпсувати вашу установку, вимагається видалення AnkiDroid та папки AnkiDroid, є імовірність розповсюдження корупції через синхронізацію з AnkiWeb.\n\nМи вітаємо тестування, але будь ласка, переконайтеся, що у вас є дійсна резервна копія не AnkiWeb.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Використовувати v3 планувальник </string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Експериментальні</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Параметри розробника</string>
     <string name="dev_options_enabled_pref" maxLength="41">Увімкнути параметри розробника</string>
@@ -392,7 +317,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Видалити невикористані мультимедійні файли</string>
     <string name="pref__delete_unused_media_files__summary">Видалити зображення та інші нотатки, які не мають префікса _ і на які не посилаються жодні примітки</string>
-    <string name="dialog__media_check_required__message">Щоб знайти невикористані мультимедійні файли, потрібна перевірка медіа</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Видалити невикористані медіафайли</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Видалити резервні копії</string>

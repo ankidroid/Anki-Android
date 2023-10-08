@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">オフラインです</string>
-    <string name="sync_even_if_offline">再試行</string>
     <string name="sync_error">同期エラー</string>
     <string name="vague_error" comment="Network error dialog title">エラー</string>
     <string name="retry">再試行</string>
@@ -63,66 +62,15 @@
     <string name="sign_up">新規登録用ページに進む</string>
     <string name="logged_as">ログイン中のアカウント：</string>
     <string name="log_out">ログアウト</string>
-    <string name="alert_logging_message">ログインしています&#8230;</string>
-    <string name="invalid_username_password">メールアドレスまたはパスワードが無効です</string>
     <string name="reset_password">パスワードをリセット</string>
     <string name="lost_mail_instructions">メールアドレスを忘れましたか？</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX のオプション</string>
-    <string name="sync_prepare_syncing">同期の準備中...</string>
-    <string name="sync_preparing_full_sync_message">完全同期の準備をしています&#8230;</string>
-    <string name="sync_uploading_message">アップロード中...</string>
-    <string name="sync_downloading_message">ダウンロード中...</string>
     <string name="sync_title">同期</string>
     <string name="sync_log_uploading_message">この端末側のコレクションによる完全同期が完了しました</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="other">このデバイスの時計が %1$d秒%2$s ずれています。デバイスのシステムの日付、時刻、タイムゾーンが正しく設定されていることを確認してから、再び同期してください。</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">。端末のタイムゾーンが間違っている可能性があります</string>
-    <string name="sync_log_clocks_unsynchronized_date">。端末の日付が間違っている可能性があります</string>
-    <string name="sync_no_changes_message">変更はありません。</string>
     <string name="sync_database_acknowledge">コレクションの同期が完了しました</string>
-    <string name="sync_log_error_specific">同期エラー　*タイプ: %1$s　*メッセージ: %2$s</string>
     <string name="sync_corrupt_database">データベースが破損しています。同期を再試行する前にデータベースを修復してください。修復に関する情報は %s を参照してください。</string>
-    <string name="sync_too_busy">サーバーがビジー状態です。しばらくしてからもう一度試してください。</string>
-    <string name="sync_remote_db_error">ダウンロードしたデータベースが破損していました。もう一度試してください。</string>
-    <string name="sync_overwrite_error">現在のコレクションを、ダウンロードしたファイルで上書きできませんでした。</string>
-    <string name="sync_connection_error">接続がタイムアウトしました。インターネット接続に問題があるか、メディア用フォルダー内に非常に大きなファイルがあります。</string>
-    <string name="sync_write_access_error_on_storage">内部ストレージにダウンロードしたファイルを保存できませんでした。ストレージが読み取り専用か、または、十分な空き容量がありません。</string>
-    <string name="sync_error_invalid_sync_server">詳細設定のカスタム同期サーバーが無効です (%s). 有効なサーバーを入力するか、設定を無効にしてください。</string>
-    <string name="sync_deletions_message">削除データに関する情報を同期しています...</string>
-    <string name="sync_small_objects_message">小さなオブジェクトを同期しています...</string>
-    <string name="sync_finish_message">同期を終了しています...</string>
-    <string name="sync_log_finish_error">同期終了の指示をサーバーへ送信中にエラーが発生しました</string>
-    <string name="sync_writing_db">データベースに変更を記録しています...</string>
-    <string name="sync_download_chunk">変更内容をダウンロードしています...</string>
-    <string name="sync_upload_chunk">変更内容をアップロードしています...</string>
-    <string name="sync_up_down_size">アップロード: %1$d KB　\nダウンロード: %2$d KB</string>
-    <string name="sync_generic_error">エラーが発生しました。後でもう一度実行してください。</string>
-    <string name="sync_check_upload_file">アップロード前にファイルを確認しています...</string>
-    <string name="sync_check_download_file">ダウンロードしたファイルを確認しています...</string>
-    <string name="sync_media_find">変更されたメディアを探しています...</string>
-    <string name="sync_media_no_changes">メディアファイルに変更はありません</string>
-    <string name="sync_media_success">メディアの同期が完了しました</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="other">メディアの同期が部分的に完了しました:\n%d個のメディアファイルをダウンロードしました。</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="other">%d個のメディアファイルをアップロードしました</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="other">%d個のメディアの変更をアップロードします</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="other">%d個のメディアファイルをダウンロードしました</item>
-    </plurals>
-    <string name="sync_sanity_failed">同期中にコレクションの不整合が発見されました。この問題を解決するためには完全同期が必要です。Ankiweb側（クラウド）と AnkiDroid側（ローカル）のいずれのコレクションを保持するかを選択してください。</string>
-    <string name="sync_media_sanity_failed">メディアの同期が完了しました。しかし、メディアの数がAnkiWeb上のものと一致しません。次にメディアを同期するときには、エラーを修正するために完全同期を行います。</string>
-    <string name="sync_media_db_error">現在のデータベースが破損しているため、メディアの同期に失敗しました。「メディアをチェック」を実行することをお勧めします。</string>
-    <string name="sync_media_error">メディアデータの同期中のエラー</string>
-    <string name="sync_media_error_check">メディアの同期中にエラーが発生しました。「メディアをチェック」の実行をおすすめします。</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">同期する前に ‘%s’ を実行してください</string>
     <string name="sync_sanity_local">ローカル</string>
     <string name="sync_sanity_remote">クラウド</string>
     <string name="force_full_sync_title">完全同期を強制する</string>
@@ -130,15 +78,7 @@
     <string name="force_full_sync_confirmation">完全同期の設定が完了しました</string>
     <string name="full_sync_confirmation">要求した変更を行うには、次回のコレクションの同期の際にデータベースの完全なアップロードが必要です。他の端末で学習やその他の変更を行ってまだ同期が済んでいない場合、それらの変更は失われます。処理を続けますか？</string>
     <string name="full_sync_confirmation_upgrade">以前のバージョンのバグの修正を反映させるため、完全同期をおすすめします。</string>
-    <string name="sync_error_407_proxy_required">プロキシ認証が必要です</string>
-    <string name="sync_error_409">AnkiWebとの間の同期は、同時に複数の端末で実行できません。同期に失敗した場合は、数分後に再び試しください。</string>
-    <string name="sync_error_413_collection_size">コレクションまたはメディアファイルが大きすぎるため、同期できません。</string>
-    <string name="sync_error_500_unknown">AnkiWebでエラーが発生しました。数分後にもう一度お試しください。問題が解決しない場合は、バグレポートをお寄せください。</string>
-    <string name="sync_error_501_upgrade_required">AnkiDroidの最新バージョンにアップグレードしてください</string>
-    <string name="sync_error_502_maintenance">AnkiWebは現在メンテナンス中です。数分後にもう一度試してください。</string>
-    <string name="sync_error_504_gateway_timeout">504ゲートウェイタイムアウトエラーを受信しました。</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">同期 (完全同期)</string>
     <string name="sync_menu_title_no_account">同期 (ログイン)</string>
-    <string name="sync_error_unknown_host_readable">AnkiWebに接続できませんでした。インターネットに接続できていますか？\n\n%s</string>
 </resources>

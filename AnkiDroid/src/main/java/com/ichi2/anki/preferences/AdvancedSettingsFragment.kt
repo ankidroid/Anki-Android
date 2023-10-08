@@ -19,11 +19,9 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 import com.ichi2.anki.*
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.provider.CardContentProvider
@@ -31,8 +29,6 @@ import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.show
-import net.ankiweb.rsdroid.BackendFactory
-import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 
 class AdvancedSettingsFragment : SettingsFragment() {
@@ -41,16 +37,8 @@ class AdvancedSettingsFragment : SettingsFragment() {
     override val analyticsScreenNameConstant: String
         get() = "prefs.advanced"
 
-    @RustCleanup(
-        "Remove 'Default deck for statistics' and 'Advanced statistics' preferences" +
-            "once the new backend is the default"
-    )
     override fun initSubscreen() {
         removeUnnecessaryAdvancedPrefs()
-
-        /*
-         * First section
-         */
 
         // Check that input is valid before committing change in the collection path
         requirePreference<EditTextPreference>(CollectionHelper.PREF_COLLECTION_PATH).apply {
@@ -93,37 +81,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
         }
 
         /*
-         * Statistics section
-         */
-
-        // Default deck for statistics
-        requirePreference<Preference>(R.string.stats_default_deck_key).apply {
-            // It doesn't have an effect on the new Statistics page,
-            // which is enabled together with the new backend
-            if (!BackendFactory.defaultLegacySchema) {
-                isEnabled = false
-            }
-        }
-
-        // Advanced statistics
-        requirePreference<Preference>(R.string.pref_advanced_statistics_key).apply {
-            // It doesn't have an effect on the new Statistics page,
-            // which is enabled together with the new backend
-            if (!BackendFactory.defaultLegacySchema) {
-                isEnabled = false
-            }
-            setSummaryProvider {
-                if (requireContext().sharedPrefs()
-                    .getBoolean("advanced_statistics_enabled", false)
-                ) {
-                    getString(R.string.enabled)
-                } else {
-                    getString(R.string.disabled)
-                }
-            }
-        }
-
-        /*
          * Plugins section
          */
 
@@ -144,72 +101,6 @@ class AdvancedSettingsFragment : SettingsFragment() {
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED
             }
             requireActivity().packageManager.setComponentEnabledSetting(providerName, state, PackageManager.DONT_KILL_APP)
-        }
-
-        /*
-         * Experimental
-         */
-
-        @RustCleanup("move this to Reviewing > Scheduling once the new backend is the default")
-        val v3schedPref = requirePreference<SwitchPreferenceCompat>(R.string.enable_v3_sched_key)
-
-        // Use V16 backend
-        requirePreference<SwitchPreferenceCompat>(R.string.pref_rust_backend_key).apply {
-            if (!BuildConfig.LEGACY_SCHEMA) {
-                title = "New schema already enabled on local.properties"
-                isEnabled = false
-                isChecked = true
-            }
-            disableIfStorageMigrationInProgress()
-            setOnPreferenceChangeListener { newValue ->
-                if (newValue == true) {
-                    confirmExperimentalChange(
-                        R.string.use_rust_backend_title,
-                        R.string.use_rust_backend_warning,
-                        onCancel = { isChecked = false },
-                        onConfirm = {
-                            BackendFactory.defaultLegacySchema = false
-                            (requireActivity() as Preferences).restartWithNewDeckPicker()
-                        }
-                    )
-                } else {
-                    BackendFactory.defaultLegacySchema = true
-                    v3schedPref.isChecked = false
-                    (requireActivity() as Preferences).restartWithNewDeckPicker()
-                }
-            }
-        }
-
-        // v3 scheduler
-        v3schedPref.apply {
-            launchCatchingTask {
-                withCol { isChecked = v3Enabled }
-                setOnPreferenceChangeListener { newValue: Any ->
-                    Timber.d("v3 scheduler set to $newValue")
-                    launchCatchingTask { withCol { v3Enabled = newValue as Boolean } }
-                }
-            }
-            // if new backend was enabled on local.properties, remove the pref dependency
-            if (!BuildConfig.LEGACY_SCHEMA) {
-                dependency = null
-                isEnabled = true
-            }
-        }
-    }
-
-    /**
-     * Shows a dialog to confirm if the user wants to enable an experimental preference
-     */
-    private fun confirmExperimentalChange(@StringRes prefTitle: Int, @StringRes message: Int? = null, onCancel: () -> Unit, onConfirm: () -> Unit) {
-        val prefTitleString = getString(prefTitle)
-        val dialogTitle = getString(R.string.experimental_pref_confirmation, prefTitleString)
-
-        AlertDialog.Builder(requireContext()).show {
-            setTitle(dialogTitle)
-            message?.let { setMessage(it) }
-            setPositiveButton(R.string.dialog_ok) { _, _ -> onConfirm() }
-            setNegativeButton(R.string.dialog_cancel) { _, _ -> onCancel() }
-            setCancelable(false) // to avoid `onCancel` not being triggered on outside cancels
         }
     }
 

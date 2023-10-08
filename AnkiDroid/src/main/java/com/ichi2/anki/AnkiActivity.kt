@@ -30,13 +30,11 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.browser.customtabs.CustomTabsIntent.*
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.AsyncDialogFragment
@@ -53,15 +51,13 @@ import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
 import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.CollectionGetter
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.KotlinCleanup
-import com.ichi2.utils.SyncStatus
 import timber.log.Timber
 
 @UiThread
-open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, CollectionGetter {
+open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
 
     /** The name of the parent class (example: 'Reviewer')  */
     private val mActivityName: String
@@ -93,7 +89,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             )
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            window.navigationBarColor = ContextCompat.getColor(this, R.color.transparent)
+            window.navigationBarColor = getColor(R.color.transparent)
         }
     }
 
@@ -126,7 +122,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     }
 
     protected open fun onActionBarBackPressed(): Boolean {
-        finishWithoutAnimation()
+        finish()
         return true
     }
 
@@ -135,11 +131,13 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         hideProgressBar()
     }
 
-    override val col: Collection
-        get() = CollectionHelper.instance.getCol(this)!!
+    /** Legacy code should migrate away from this, and use withCol {} instead.
+     * */
+    val getColUnsafe: Collection
+        get() = CollectionManager.getColUnsafe()
 
-    fun colIsOpen(): Boolean {
-        return CollectionHelper.instance.colIsOpen()
+    fun colIsOpenUnsafe(): Boolean {
+        return CollectionManager.isOpenUnsafe()
     }
 
     /**
@@ -250,14 +248,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
         }
     }
 
-    fun launchActivityForResultWithoutAnimation(
-        intent: Intent,
-        launcher: ActivityResultLauncher<Intent?>
-    ) {
-        disableIntentAnimation(intent)
-        launchActivityForResult(intent, launcher, NONE)
-    }
-
     fun launchActivityForResultWithAnimation(
         intent: Intent,
         launcher: ActivityResultLauncher<Intent?>,
@@ -269,12 +259,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
 
     override fun finish() {
         finishWithAnimation(DEFAULT)
-    }
-
-    fun finishWithoutAnimation() {
-        Timber.i("finishWithoutAnimation")
-        super.finish()
-        disableActivityAnimation()
     }
 
     fun finishWithAnimation(animation: Direction) {
@@ -322,9 +306,9 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
     /** Method for loading the collection which is inherited by every [AnkiActivity]  */
     fun startLoadingCollection() {
         Timber.d("AnkiActivity.startLoadingCollection()")
-        if (colIsOpen()) {
+        if (colIsOpenUnsafe()) {
             Timber.d("Synchronously calling onCollectionLoaded")
-            onCollectionLoaded(col)
+            onCollectionLoaded(getColUnsafe)
             return
         }
         // Open collection asynchronously if it hasn't already been opened
@@ -513,7 +497,7 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
                 .setSmallIcon(R.drawable.ic_star_notify)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setColor(ContextCompat.getColor(this, R.color.material_light_blue_500))
+                .setColor(this.getColor(R.color.material_light_blue_500))
                 .setStyle(NotificationCompat.BigTextStyle().bigText(message))
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setTicker(ticker)
@@ -591,28 +575,6 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener, Collec
             savedInstanceState = savedInstanceState,
             activitySuperOnCreate = { state -> super.onCreate(state) }
         )
-
-    fun saveCollectionInBackground(syncIgnoresDatabaseModification: Boolean = false) {
-        if (CollectionHelper.instance.colIsOpen()) {
-            launchCatchingTask {
-                Timber.d("saveCollectionInBackground: start")
-                withCol {
-                    Timber.d("doInBackgroundSaveCollection")
-                    try {
-                        if (syncIgnoresDatabaseModification) {
-                            SyncStatus.ignoreDatabaseModification { col.save() }
-                        } else {
-                            col.save()
-                        }
-                    } catch (e: Exception) {
-                        Timber.e(e, "Error on saving deck in background")
-                        CrashReportService.sendExceptionReport(e, "AnkiActivity:: saveCollectionInBackground")
-                    }
-                }
-                Timber.d("saveCollectionInBackground: finished")
-            }
-        }
-    }
 
     companion object {
         const val REQUEST_REVIEW = 901

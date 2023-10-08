@@ -71,7 +71,6 @@
     <string name="replay_audio">Znovu prehrať zvuk</string>
     <string name="leech_suspend_notification">Kartička označená ako pijavica a pozastavená</string>
     <string name="leech_notification">Kartička označená ako pijavica</string>
-    <string name="corrupt_font">Poškodený súbor písma %s</string>
     <string name="webview_crash_unknown">Neznáma chyba</string>
     <string name="webview_crash_unknwon_detailed">Toto bolo spôsobené internou chybou vo WebView</string>
     <string name="webview_crash_oom">Nedostatok pamäte</string>
@@ -125,7 +124,6 @@
     <string name="save">Uložiť</string>
     <string name="close">Zavrieť</string>
     <string name="select">Zvoliť</string>
-    <string name="reordering_cards">Zmena poradia kartičiek&#8230;</string>
     <string name="field_remapping">%1$s (z “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Akékoľvek kartičky, ktoré nie sú na nič mapované, budú zmazané. Ak poznámka nemá žiadne zostávajúce kartičky, bude stratená. Ste si istý, že chcete pokračovať?</string>
     <!-- Timebox -->
@@ -150,19 +148,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Preplánovať</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Náhľad</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d z %2$d</string>
-    <string name="error_insufficient_memory">Operáciu nie je možné vykonať pre nedostatok pamäte vo vašom prístroji</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Premenovať</string>
-    <string name="default_conf_delete_error">Predvolenú skupinu nastavení nie je možné odstrániť</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d pridaná kartička</item>
-        <item quantity="few">%d pridané kartičky</item>
-        <item quantity="many">%d pridaných kartičiek</item>
-        <item quantity="other">%d pridaných kartičiek</item>
-    </plurals>
     <string name="check_db">Skontrolovať databázu</string>
     <string name="check_media">Skontrolovať multimédia</string>
     <string name="empty_cards">Prázdne kartičky</string>
-    <string name="check_db_message">Kontroluje sa databáza&#8230;</string>
     <string name="empty_card_warning">Táto kartička je prázdna. Použite možnosť \"Prázdne kartičky\" v menu na obrazovke, kde je zobrazený zoznam balíčkov.</string>
     <string name="unknown_type_field_warning">Typ odpovede: neznáme pole %s</string>
     <string name="delete_deck">Balíček sa odstraňuje&#8230;</string>
@@ -178,13 +167,6 @@
     </plurals>
     <string name="import_log_no_apkg">Toto nie je platný Anki balík</string>
     <string name="import_title_error" comment="Title of error dialog">Chyba</string>
-    <string name="import_log_failed_unzip">Nepodarilo sa rozbaliť apkg: %s</string>
-    <string name="import_log_failed_copy_to">Nepodarilo sa skopírovať apkg do %s</string>
-    <string name="import_log_failed_validate">apkg sa nepodarilo overiť</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Chyba pri importovaní súboru, pravdepodobne vymazanie pamäte cache počas spracovávania.\nProsím, skúste znovu</string>
-    <string name="import_succeeded_but_check_database">Import dát bol úspešný, avšak čistenie po importe zlyhalo. Skúste neskôr skontrolovať databázu. Hlavná príčina: %s</string>
-    <string name="import_error_corrupt_zip">Súbor apkg je poškodený. Vymažte ho, prosím, alebo znovu stiahnite..\n\nHlavná príčina: %s</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Názov súboru “%s” nemá príponu .apkg alebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady anki databázy (.anki2) ešte nie sú podporované. Pozrite si, prosím, manuál pre náhrady.</string>
@@ -192,8 +174,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Zbierka sa nahrádza&#8230;</string>
     <string name="import_interrupted">Import prerušený</string>
     <string name="export_include_schedule">Zahrnúť plánovanie</string>
     <string name="export_include_media">Zahrnúť multimédia</string>
@@ -236,59 +216,11 @@
     <string name="dyn_deck_desc">Toto je špeciálny balíček na štúdium mimo bežného plánu. Kartičky sa automaticky vrátia do svojich pôvodných balíčkov po tom, čo si ich zopakujete. Odstránením tohto balíčku zo zoznamu balíčkov sa všetky zostávajúce kartičky vrátia do svojich pôvodných balíčkov.</string>
     <string name="steps_error">Kroky musia byť čísla väčšie ako 0</string>
     <string name="steps_min_error">Je nutné zadať aspoň jeden krok</string>
-    <string name="sched_end">(koniec)</string>
-    <string name="sched_unbury_action">Ak ich chcete vidieť teraz, ťuknite v menu na položku “Odkryť”</string>
-    <string name="sched_has_buried">Niektoré súvisiace alebo skryté kartičky boli odložené až na zajtra</string>
     <string name="tag_editor_add_feedback">Ťuknite “%2$s” pre potvrdenie pridania “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Existujúci štítok “%1$s” zvolený</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekunda</item>
-        <item quantity="few">%s sekundy</item>
-        <item quantity="many">%s sekúnd</item>
-        <item quantity="other">%s sekúnd</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minúty</item>
-        <item quantity="few">%s minút</item>
-        <item quantity="many">%s minút</item>
-        <item quantity="other">%s minút</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s hodina</item>
-        <item quantity="few">%s hodiny</item>
-        <item quantity="many">%s hodín</item>
-        <item quantity="other">%s hodín</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s deň</item>
-        <item quantity="few">%s dni</item>
-        <item quantity="many">%s dní</item>
-        <item quantity="other">%s dní</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mesiac</item>
-        <item quantity="few">%s mesiace</item>
-        <item quantity="many">%s mesiacov</item>
-        <item quantity="other">%s mesiacov</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s rok</item>
-        <item quantity="few">%s roky</item>
-        <item quantity="many">%s rokov</item>
-        <item quantity="other">%s rokov</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s sekúnd</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Tento balíček už existuje</string>
     <string name="decks_rename_filtered_nosubdecks">Filtrovaný balíček nemôže mať podbalíčky</string>
-    <string name="filtered_deck_name">Filtrovaný balíček</string>
     <string name="reminder_title">Nezabudnite dnes študovať!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kartička na zopakovanie v %1$s</item>
@@ -299,14 +231,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba pri zdieľaní apkg súboru</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Tento súbor vyžaduje novšiu verziu Anki.</string>
     <string name="activity_start_failed">Systém nemá nainštalovanú aplikáciu, ktorá by mohla uskutočniť túto operáciu.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky fotoaparáta môžu byť priveľké. Môžete skúsiť kompresiu a zmenu veľkosti obrázkov v mediálnom priečinku]]></string>
     <string name="no_browser_notification">Nenašiel sa žiaden prehliadač，navštívte prosím webovú stránku cez PC alebo mobil: </string>
     <string name="web_page_error">Chyba pri načítavaní %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Externý odkaz v kartičke nie je podporovaný.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Kartičky získané späť</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Pozadie</string>
     <string name="choose_an_image">Zvoliť obrázok</string>
@@ -431,7 +360,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

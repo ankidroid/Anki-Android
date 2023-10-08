@@ -32,7 +32,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.app.TaskStackBuilder
-import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
@@ -50,7 +49,6 @@ import com.ichi2.libanki.CardId
 import com.ichi2.themes.Themes
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 
 @KotlinCleanup("IDE-lint")
@@ -116,7 +114,7 @@ abstract class NavigationDrawerActivity :
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START)
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
-        window.statusBarColor = ContextCompat.getColor(this, R.color.transparent)
+        window.statusBarColor = getColor(R.color.transparent)
         mDrawerLayout.setStatusBarBackgroundColor(
             Themes.getColorFromAttr(
                 this,
@@ -251,7 +249,7 @@ abstract class NavigationDrawerActivity :
             if (this is Reviewer && preferences.getBoolean("tts", false)) {
                 // Workaround to kick user back to StudyOptions after opening settings from Reviewer
                 // because onDestroy() of old Activity interferes with TTS in new Activity
-                finishWithoutAnimation()
+                finish()
             } else {
                 ActivityCompat.recreate(this)
             }
@@ -308,11 +306,7 @@ abstract class NavigationDrawerActivity :
 
                 R.id.nav_stats -> {
                     Timber.i("Navigating to stats")
-                    val intent = if (BackendFactory.defaultLegacySchema) {
-                        Intent(this@NavigationDrawerActivity, Statistics::class.java)
-                    } else {
-                        com.ichi2.anki.pages.Statistics.getIntent(this)
-                    }
+                    val intent = com.ichi2.anki.pages.Statistics.getIntent(this)
                     startActivityWithAnimation(intent, START)
                 }
 
@@ -326,8 +320,6 @@ abstract class NavigationDrawerActivity :
                         mPreferencesLauncher,
                         FADE
                     )
-                    // #6192 - stop crash on changing collection path - cancel tasks if moving to settings
-                    (this as? Statistics)?.finishWithAnimation(FADE)
                 }
 
                 R.id.nav_help -> {
@@ -384,7 +376,7 @@ abstract class NavigationDrawerActivity :
         val stackBuilder = TaskStackBuilder.create(activity)
         stackBuilder.addNextIntentWithParentStack(intent)
         stackBuilder.startActivities(Bundle())
-        activity.finishWithoutAnimation()
+        activity.finish()
     }
 
     fun toggleDrawer() {

@@ -25,11 +25,11 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Storage
-import com.ichi2.libanki.exception.UnknownDatabaseVersionException
+import com.ichi2.libanki.DB
 import com.ichi2.preferences.getOrSetString
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.KotlinCleanup
@@ -37,6 +37,7 @@ import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbFileTooN
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import timber.log.Timber
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.lang.Exception
 import kotlin.Throws
@@ -47,39 +48,17 @@ import kotlin.Throws
 @KotlinCleanup("convert to object")
 open class CollectionHelper {
     /**
-     * Prevents [com.ichi2.async.CollectionLoader] from spuriously re-opening the [Collection].
-     *
-     *
-     * Accessed only from synchronized methods.
-     */
-    @get:Synchronized
-    var isCollectionLocked = false
-        private set
-
-    @Synchronized
-    fun lockCollection() {
-        Timber.i("Locked Collection - Collection Loading should fail")
-        isCollectionLocked = true
-    }
-
-    @Synchronized
-    fun unlockCollection() {
-        Timber.i("Unlocked Collection")
-        isCollectionLocked = false
-    }
-
-    /**
      * Get the single instance of the [Collection], creating it if necessary  (lazy initialization).
      * @param context is no longer used, as the global AnkidroidApp instance is used instead
      * @return instance of the Collection
      */
     @Synchronized
-    open fun getCol(context: Context?): Collection? {
+    open fun getColUnsafe(context: Context?): Collection? {
         return CollectionManager.getColUnsafe()
     }
 
     /**
-     * Calls [getCol] inside a try / catch statement.
+     * Calls [getColUnsafe] inside a try / catch statement.
      * Send exception report if [reportException] is set and return null if there was an exception.
      * @param context
      * @param reportException Whether to send a crash report if an [Exception] was thrown when opening the collection (excluding
@@ -87,10 +66,10 @@ open class CollectionHelper {
      * @return the [Collection] if it could be obtained, `null` otherwise.
      */
     @Synchronized
-    fun getColSafe(context: Context?, reportException: Boolean = true): Collection? {
+    fun tryGetColUnsafe(context: Context?, reportException: Boolean = true): Collection? {
         lastOpenFailure = null
         return try {
-            getCol(context)
+            getColUnsafe(context)
         } catch (e: BackendDbLockedException) {
             lastOpenFailure = CollectionOpenFailure.LOCKED
             Timber.w(e)
@@ -118,15 +97,15 @@ open class CollectionHelper {
      * @param save whether or not save before closing
      */
     @Synchronized
-    fun closeCollection(save: Boolean, reason: String?) {
+    fun closeCollection(reason: String?) {
         Timber.i("closeCollection: %s", reason)
-        CollectionManager.closeCollectionBlocking(save)
+        CollectionManager.closeCollectionBlocking()
     }
 
     /**
      * @return Whether or not [Collection] and its child database are open.
      */
-    fun colIsOpen(): Boolean {
+    fun colIsOpenUnsafe(): Boolean {
         return CollectionManager.isOpenUnsafe()
     }
 
@@ -532,20 +511,23 @@ open class CollectionHelper {
             preferences.edit { putString(PREF_COLLECTION_PATH, directory) }
         }
 
-        /** Fetches additional collection data not required for
-         * application startup
-         *
-         * Allows mandatory startup procedures to return early, speeding up startup. Less important tasks are offloaded here
-         * No-op if data is already fetched
-         */
-        fun loadCollectionComplete(col: Collection) {
-            col.models
-        }
-
         @Throws(UnknownDatabaseVersionException::class)
         fun getDatabaseVersion(context: Context): Int {
             // backend can't open a schema version outside range, so fall back to a pure DB implementation
-            return Storage.getDatabaseVersion(context, getCollectionPath(context))
+            val colPath = getCollectionPath(context)
+            if (!File(colPath).exists()) {
+                throw UnknownDatabaseVersionException(FileNotFoundException(colPath))
+            }
+            var db: DB? = null
+            return try {
+                db = DB.withAndroidFramework(context, colPath)
+                db.queryScalar("SELECT ver FROM col")
+            } catch (e: Exception) {
+                Timber.w(e, "Couldn't open the database to obtain collection version!")
+                throw UnknownDatabaseVersionException(e)
+            } finally {
+                db?.close()
+            }
         }
     }
 }

@@ -32,7 +32,6 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.TimePicker
 import java.io.*
 import java.util.*
 
@@ -44,7 +43,7 @@ import java.util.*
  *
  *
  * Each implementation ends with a `V<n>` suffix, identifying the minimum API version on which this implementation
- * can be used. For example, see [CompatV21].
+ * can be used. For example, see [CompatV23].
  *
  *
  * Each implementation `CompatVn` should extend the implementation `CompatVm` for the greatest m<n such that `CompatVm`
@@ -75,9 +74,6 @@ import java.util.*
 interface Compat {
     fun setupNotificationChannel(context: Context)
     fun setTooltipTextByContentDescription(view: View)
-    fun setTime(picker: TimePicker, hour: Int, minute: Int)
-    fun getHour(picker: TimePicker): Int
-    fun getMinute(picker: TimePicker): Int
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder
     fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?

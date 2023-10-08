@@ -71,7 +71,6 @@
     <string name="replay_audio">ध्वनि फिर चलाएँ</string>
     <string name="leech_suspend_notification">जोंक के रूप में के रूप में चिह्नित और निलंबित कार्ड</string>
     <string name="leech_notification">जोंक के रूप में के रूप में चिह्नित कार्ड</string>
-    <string name="corrupt_font">दूषित फ़ॉन्ट फ़ाइल %s</string>
     <string name="webview_crash_unknown">अज्ञात त्रुटि</string>
     <string name="webview_crash_unknwon_detailed">यह WebView में आंतरिक त्रुटि के कारण हुआ</string>
     <string name="webview_crash_oom">मेमोरी कम हो गया</string>
@@ -125,7 +124,6 @@
     <string name="save">सेव</string>
     <string name="close">बंद करें</string>
     <string name="select">का चयन करें</string>
-    <string name="reordering_cards">कार्ड reordering...</string>
     <string name="field_remapping">%1$s (\"%2$s\" से)</string>
     <string name="confirm_map_cards_to_nothing">कुछ नहीं के लिए मैप किए गए किसी भी कार्ड को हटा दिया जाएगा । यदि किसी नोट में कोई शेष कार्ड नहीं है, तो वह खो जाएगा । क्या आप निश्चयपूर्वक जारी रखना चाहते हैं?</string>
     <!-- Timebox -->
@@ -146,17 +144,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">पुनः शेड्यूल करें</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">पूर्वावलोकन</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d का %2$d</string>
-    <string name="error_insufficient_memory">आपकी डिवाइस पर अपर्याप्त स्मृति के कारण संभव नहीं ऑपरेशन</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">का नाम बदलें</string>
-    <string name="default_conf_delete_error">डिफ़ॉल्ट विकल्प समूह निकाला नहीं जा सकता</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d कार्ड जोड़ा गया</item>
-        <item quantity="other">%d कार्ड जोड़ा गया</item>
-    </plurals>
     <string name="check_db">डेटाबेस की जाँच करें</string>
     <string name="check_media">मीडिया जांचें</string>
     <string name="empty_cards">खाली कार्ड</string>
-    <string name="check_db_message">जाँच डेटाबेस। \nPlease रुको...</string>
     <string name="empty_card_warning">यह कार्ड खाली है । डेक सूची स्क्रीन पर मेनू से \"खाली कार्ड\" विकल्प का उपयोग करें ।</string>
     <string name="unknown_type_field_warning">उत्तर टाइप करें: अज्ञात फ़ील्ड %s</string>
     <string name="delete_deck">हटाने deck...\nPlease रुको।</string>
@@ -170,13 +161,6 @@
     </plurals>
     <string name="import_log_no_apkg">यह एक मान्य Anki पैकेज फ़ाइल नहीं है</string>
     <string name="import_title_error" comment="Title of error dialog">त्रुटि</string>
-    <string name="import_log_failed_unzip">apkg को अनज़िप करने में विफल:%s</string>
-    <string name="import_log_failed_copy_to">एपीके को %s में कॉपी करने में विफल</string>
-    <string name="import_log_failed_validate">apkg सत्यापन विफल रहा</string>
-    <string name="import_log_insufficient_space_error">पैकेज आयात करने के लिए पर्याप्त स्थान नहीं है\आवश्यकता है- %1$s \nउपलब्ध - %2$s.\n\nपरेशानी हो रही है? हो सके तो अपने फोन में जगह खाली करने की कोशिश करें।वैकल्पिक रूप से, सिंक आयात की तुलना में कम स्थान का उपयोग करता है। आप पैकेज को अधिक स्थान वाले डिवाइस (उदाहरण के लिए Anki Desktop) के साथ आयात करने का प्रयास कर सकते हैं और फिर इसे इस डिवाइस से सिंक कर सकते हैं।</string>
-    <string name="import_log_file_cache_cleared">फ़ाइल आयात करने में त्रुटि हुई, प्रसंस्करण के दौरान कैश स्पष्ट होने की संभावना है। \n कृपया पुनः प्रयास करें</string>
-    <string name="import_succeeded_but_check_database">डेटा आयात सफल रहा, लेकिन आयात के बाद का क्लीनअप विफल रहा। बाद में चेक डेटाबेस चलाएं। मूल कारण : %s</string>
-    <string name="import_error_corrupt_zip">एपीकेजी फ़ाइल भ्रष्ट है। कृपया हटाएं और इसे फिर से डाउनलोड करें। \n\n कारण:%s</string>
     <string name="import_error_handle_exception">फ़ाइल आयात करने में विफल\n\n%s</string>
     <string name="import_error_not_apkg_extension">फ़ाइल नाम \"%s\" में .apkg या .colpkg एक्सटेंशन नहीं है</string>
     <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
@@ -184,8 +168,6 @@
     <string name="import_error_copy_to_cache">फ़ाइल कैश करने में विफल (संभवतः भंडारण स्थान से बाहर)</string>
     <string name="import_error_multiple_colpkg">एकाधिक colpkg फ़ाइलें चुनी गईं</string>
     <string name="import_error_colpkg_apkg">akpg &amp; colpkg दोनों फाइलों को एक साथ सेलेक्ट किया गया</string>
-    <string name="import_stats_error">निम्न फ़ाइलें आयात करते समय कुछ त्रुटियाँ हुईं:\n%s</string>
-    <string name="import_replacing">संग्रह की जगह.. ।</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
     <string name="export_include_schedule">शेड्यूलिंग शामिल करें</string>
     <string name="export_include_media">मीडिया शामिल करें</string>
@@ -224,47 +206,11 @@
     <string name="dyn_deck_desc">यह सामान्य समय के बाहर अध्ययन करने के लिए एक विशेष डेक है। तुम उन की समीक्षा करने के बाद कार्ड स्वचालित रूप से उनके मूल डेक को लौट जाएगा। इस डेक डेक सूची से हटाने के सभी शेष कार्ड उनके मूल डेक करने के लिए वापस आ जाएगी।</string>
     <string name="steps_error">कदम नंबर 0 से अधिक होना चाहिए</string>
     <string name="steps_min_error">कम से कम एक कदम की आवश्यकता है</string>
-    <string name="sched_end">(अंत)</string>
-    <string name="sched_unbury_action">उन्हें अभी देखने के लिए मेनू में \"स्थगित से वापस लाएं\" आइटम स्पर्श करें</string>
-    <string name="sched_has_buried">कुछ संबंधित या स्थगित पत्ते को कल तक विलंबित किया गया</string>
     <string name="tag_editor_add_feedback">\"%1$s\" जोड़ने की पुष्टि करने के लिए \"%2$s\" स्पर्श करें</string>
     <string name="tag_editor_add_feedback_existing">मौजूदा टैग \"%1$s\" चयनित</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s सेकंड</item>
-        <item quantity="other">%s सेकंड</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s मिनट</item>
-        <item quantity="other">%s मिनट</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s घंटा</item>
-        <item quantity="other">%s घंटे</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s दिन</item>
-        <item quantity="other">%s दिन</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s महीना</item>
-        <item quantity="other">%s महीने</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s साल</item>
-        <item quantity="other">%s वर्षों</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s सेकंड</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">यह टैग पहले से ही मौजूद है|</string>
     <string name="decks_rename_filtered_nosubdecks">एक फ़िल्टर्ड डेक उपडेक नहीं हो सकता</string>
-    <string name="filtered_deck_name">छान डेक</string>
     <string name="reminder_title">आज पढ़ाई करना न भूलें!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d कार्ड %1$s मे पुनरावलोकन कीजिये</item>
@@ -273,14 +219,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg फ़ाइल साझा करने में त्रुटि</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">इस फ़ाइल को Anki के नए संस्करण की आवश्यकता है।</string>
     <string name="activity_start_failed">सिस्टम में कोई ऐप इंस्टॉल नहीं है जो इस क्रिया को कर सके।</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[कैमरे के चित्र बड़े हो सकते हैं। आप मीडिया फ़ोल्डर में छवियों को संपीड़ित और आकार देना चाह सकते हैं]]></string>
     <string name="no_browser_notification">कोई ब्राउज़र नहीं मिला, कृपया कंप्यूटर या मोबाइल द्वारा वेब पेज पर जाएँ:</string>
     <string name="web_page_error">पृष्ठ लोड करने में त्रुटि: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">कार्ड में बाहरी पेज लिंक समर्थित नहीं है।</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">कार्ड पुनः प्राप्त किया</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">पृष्ठभूमि</string>
     <string name="choose_an_image">चित्र चुनें</string>
@@ -403,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">AnkiWeb से सिंक करें</string>
     <string name="already_logged_in">पहले से ही लॉगिन है</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">डेक मौजूद है</string>
     <string name="deck_created">बनाया गया डेक</string>
     <string name="deck_renamed">नाम बदला हुआ डेक</string>
     <!-- Deck Deletion -->

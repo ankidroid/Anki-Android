@@ -119,7 +119,7 @@ class IntentHandler : Activity() {
         val deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0)
         Timber.i("Handling intent to review deck '%d'", deckId)
         val reviewIntent = Intent(this, Reviewer::class.java)
-        CollectionHelper.instance.getCol(this)!!.decks.select(deckId)
+        CollectionHelper.instance.getColUnsafe(this)!!.decks.select(deckId)
         startActivity(reviewIntent)
         AnkiActivity.finishActivityWithFade(this)
     }
@@ -274,7 +274,7 @@ class IntentHandler : Activity() {
                         )
                     }
                 }
-                deckPicker.finishWithoutAnimation()
+                deckPicker.finish()
             }
 
             override fun toMessage(): Message = emptyMessage(this.what)

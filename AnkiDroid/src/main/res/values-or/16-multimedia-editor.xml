@@ -86,7 +86,7 @@
     <string name="crop_image">ଆପଣ ଏହି ପ୍ରତିଛବି କ୍ରପ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
     <string name="crop_button">ପ୍ରତିଛବି କ୍ରପ୍ କରନ୍ତୁ</string>
     <string name="save_dialog_content">ଚଳିତ ପ୍ରତିଛଵିର ଆକାର %sMB ଅଟେ। ଆଉ ଡିଫଲ୍ଟ ପ୍ରତିଛଵି ଆକାର ସୀମା ହେଉଛି 1MB। ଆପଣ ଏହାକୁ କ୍ରପ୍ କରିବାକୁ ଚାହାଁନ୍ତି କି?</string>
-    <string name="select_image_failed">"ପ୍ରତିଛବି ଚୟନ ବିଫଳ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରନ୍ତୁ"</string>
+    <string name="select_image_failed">"ପ୍ରତିଛବି ଚୟନ ବିଫଳ ହୋଇଛି, ଦୟାକରି ପୁନଃଚେଷ୍ଟା କରିବା"</string>
     <string name="activity_result_unexpected">ଆପ୍ ଏକ ଅପ୍ରତ୍ୟାଶିତ ମୂଲ୍ୟ ଫେରସ୍ତ କଲା। ଆପଣଙ୍କୁ ଏକ ଭିନ୍ନ ଆପ୍ ବ୍ୟବହାର କରିବାକୁ ପଡ଼ିପାରେ</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">କ୍ଷେତ୍ର ବିଷୟବସ୍ତୁ</string>
 </resources>

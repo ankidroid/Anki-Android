@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Ta bort nottyp</string>
     <string name="model_browser_rename" comment="Rename a note type">Byt namn</string>
     <string name="model_browser_template">Redigera kort</string>
-    <string name="model_browser_add">Lägg till nottyp</string>
     <!--Rename-->
     <string name="rename_model">Byt namn på anteckningstyp</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Kom ihåg senaste inmatning när du lägger till</string>
     <string name="model_field_editor_changing">Uppdaterar fält</string>
     <string name="model_field_editor_sort_field">Sortera efter detta fält</string>
-    <string name="model_clone_suffix">kopiera</string>
     <!--Warnings-->
     <string name="model_delete_warning">Är du säker på att du vill ta bort denna anteckningstyp?</string>
     <string name="field_delete_warning">Är du säker på att du vill ta bort detta fält?</string>

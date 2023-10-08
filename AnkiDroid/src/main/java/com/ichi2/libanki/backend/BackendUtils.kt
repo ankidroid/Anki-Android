@@ -22,7 +22,6 @@ import com.google.protobuf.ByteString
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.UnsupportedEncodingException
 
 object BackendUtils {
     fun from_json_bytes(json: ByteString): JSONObject {
@@ -31,18 +30,6 @@ object BackendUtils {
 
     fun jsonToArray(json: ByteString): JSONArray {
         return JSONArray(json.toStringUtf8())
-    }
-
-    fun jsonToString(json: ByteString): String {
-        return json.toStringUtf8()
-    }
-
-    fun jsonToString(json: anki.generic.Json): String {
-        return try {
-            json.json.toString("UTF-8")
-        } catch (e: UnsupportedEncodingException) {
-            throw IllegalStateException("Could not deserialize JSON", e)
-        }
     }
 
     @RustCleanup("Confirm edge cases")

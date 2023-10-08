@@ -51,7 +51,6 @@
     <string name="model_browser_delete">מחיקת סוג רשומה</string>
     <string name="model_browser_rename" comment="Rename a note type">שינוי שם</string>
     <string name="model_browser_template">עריכת קלפים</string>
-    <string name="model_browser_add">הוספת סוג רשומה חדש</string>
     <!--Rename-->
     <string name="rename_model">שנה את שם סוג פתק</string>
     <!--Language Hint-->
@@ -67,7 +66,6 @@
     <string name="model_field_editor_toggle_sticky">זכור קלט אחרון בעת ​​הוספה</string>
     <string name="model_field_editor_changing">השדות מעודכנים</string>
     <string name="model_field_editor_sort_field">מיין לפי שדה</string>
-    <string name="model_clone_suffix">העתק</string>
     <!--Warnings-->
     <string name="model_delete_warning">האם אתה בטוח שברצונך למחוק את סוג פתק זה?</string>
     <string name="field_delete_warning">למחוק את השדה הזה?</string>

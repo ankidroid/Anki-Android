@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Питај ме</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Додај само таг</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Нове картице у случајном редоследу</string>
-    <string name="new_order_order_added">Нове картице у редоследу додавања</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Најстарије виђене прво</string>
     <string name="cram_deck_conf_order_random">Насумице</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Користи текући шпил</string>
     <string name="add_to_deck_decide_by_note_type">Одлучи по типу белешке</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Помешај нове и поновљене картице</string>
-    <string name="new_spread_new_after_review">Нове картице после поновљених</string>
-    <string name="new_spread_new_before_review">Нове картице пре поновљених</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Када нема фонт одређен за картице</string>
-    <string name="override_font_always" comment="Option to always override font">Увек</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Дугме одговора 1</string>
-    <string name="gesture_answer_2">Дугме одговора 2</string>
-    <string name="gesture_answer_3">Дугме одговора 3</string>
-    <string name="gesture_answer_4">Дугме одговора 4</string>
-    <string name="gesture_answer_green">Препоручени одговор (зелени)</string>
-    <string name="gesture_answer_better_recommended">Боље од препорученог</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

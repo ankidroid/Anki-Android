@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Paquets</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navigateur de cartes</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">La collection est vide</string>
     <string name="no_cards_placeholder_description">Ajoutez de nouvelles cartes\nen utilisant l\'icône +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Aujourd’hui, %1$d carte a été étudiée en %2$s</item>
-        <item quantity="other">Aujourd’hui, %1$d cartes ont été étudiées en %2$s</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Saisissez la réponse</string>
     <string name="show_answer">Afficher la réponse</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">Difficile</string>
     <string name="ease_button_good">Correct</string>
     <string name="ease_button_easy">Facile</string>
-    <string name="studyoptions_congrats_undo">Annuler %s</string>
     <string name="menu_import">Importer</string>
     <string name="undo">Annuler</string>
-    <string name="undo_action_review">Dernière révision</string>
-    <string name="undo_action_change_deck_multi">changer les paquets</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Annuler le trait</string>
     <string name="move_all_to_deck">Tout déplacer dans le paquet</string>
     <string name="unbury">Déterrer</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">Vous avez révisé toutes vos cartes d\'aujourd\'hui</string>
     <string name="studyoptions_empty_schedule">Aucune carte à réviser actuellement</string>
     <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé… pour l’instant !</string>
-    <string name="studyoptions_congrats_more_rev">Vous avez atteint votre limite aujourd’hui, mais il reste des cartes à passer en revue. Vous pouvez augmenter le seuil journalier dans les options.</string>
-    <string name="studyoptions_congrats_more_new">Il reste des nouvelles cartes disponibles, mais la limite journalière a été atteinte. Vous pouvez augmenter cette limite dans les options, mais gardez à l’esprit que cela augmentera votre charge de travail à court terme.</string>
-    <string name="studyoptions_congrats_custom">Pour étudier en dehors des horaires normaux, cliquez sur le bouton d\'étude personnalisée ci-dessous.</string>
     <string name="studyoptions_no_cards_due">Aucune carte due actuellement</string>
     <string name="sd_card_not_mounted">Aucune carte SD</string>
-    <string name="empty_cloze_warning">Modifier cette note et ajouter quelques textes à trous. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrer vers l\'espace de stockage étendu</string>
-    <string name="cancel_sync_confirm">Voulez-vous annuler la synchronisation ?</string>
-    <string name="continue_sync">Continuer la synchronisation</string>
-    <string name="sync_cancelled">Synchronisation annulée</string>
-    <string name="sync_cancel_message">Annulation...\nCeci peut prendre un certain temps.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Voulez-vous annuler la synchronisation ?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Continuer la synchronisation</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronisation annulée</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Annulation...\nCeci peut prendre un certain temps.</string>
     <string name="export">Exporter</string>
     <string name="export_collection">Exporter la collection</string>
     <string name="export_deck">Exporter le paquet</string>
@@ -210,7 +199,6 @@
     <string name="template_for_current_card_deleted">Le type de carte pour la carte actuelle a été supprimé.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Apparence du navigateur</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Infos sur la carte</string>
     <!-- Permissions -->
@@ -219,14 +207,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navigateur de cartes</string>
     <string name="context_menu_anki_card_label">Carte Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s a un problème :<br/>%2$s</string>
-    <string name="more_information">Plus d\'informations</string>
-    <string name="no_field">\'{{%1$s}}\' a été trouvé, mais il n\'y a pas de champ appelé \'%1$s\'.</string>
-    <string name="closed_tag_not_open">\'{{/%1$s}}\' a été trouvé, mais il manque \'{{#%1$s}}\' ou \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">« }}» manquant dans «%s».</string>
-    <string name="open_tag_not_closed">\'{{%s }}\' manquant.</string>
-    <string name="wrong_tag_closed">\'{{/%1$s}}\' trouvé, mais \'{{/%2$s}}\' est attendu</string>
-    <string name="filter_error">Erreur dans le filtre %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Les collections ne peuvent pas être combinées.\nQuelle collection voulez-vous garder ?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -239,7 +219,6 @@
         <item quantity="one">%1$d carte (0 à faire)</item>
         <item quantity="other">%1$d cartes (0 à faire)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copie</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Impossible d\'éditer ou de créer le fichier %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Erreurs multiples, les plus récentes : %s"</string>
@@ -267,17 +246,17 @@ Pour résoudre le problème, vous devrez peut-être libérer de l\'espace disque
 ou reconnecter le support amovible qui contient votre collection.
 <br><br>
 <a href="%2$s">En savoir plus et obtenir de l\'aide</a>]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Déplacer les fichiers média est mis en pause après l\'erreur : %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        Les changements n\'ont <i>pas</i> été annulés.
+        Même si aucune donnée ne devrait avoir été perdue,
+        les fichiers média sont peut-être divisés entre le nouveau et l\'ancien dossier.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Veuillez réessayer d\'exécuter la migration.
+        Pour résoudre le probème, vous aurez peut-être besoin de libérer de l\'espace disque
+        ou de reconnecter le stockage amovible qui contient votre collection.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">En savoir plus et obtenir de l\'aide</a>
     ]]></string>
     <string name="migration__resume_after_failed_dialog__message"><![CDATA[        La migration du stockage est suspendue après échec avec l\'erreur : %1$s.
         <br><br>

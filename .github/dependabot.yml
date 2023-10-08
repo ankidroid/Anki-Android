@@ -20,7 +20,3 @@ updates:
   - dependency-name: org.apache.commons:commons-compress
     versions:
     - ">= 1.12, < 1.23"
-    # We cannot update this one until minimum API24. Ignore range should slide with known versions so we stay informed.
-  - dependency-name: com.fasterxml.jackson.core:jackson-databind
-    versions:
-      - ">= 2.13.5, < 2.16"

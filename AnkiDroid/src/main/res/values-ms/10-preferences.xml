@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Dilumpuhkan</string>
-    <string name="enabled">Didayakan</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s m</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -138,8 +137,6 @@
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema siang</string>
     <string name="night_theme" maxLength="41">Tema malam</string>
-    <string name="default_font" maxLength="41">Fon lalai</string>
-    <string name="override_font" maxLength="41">Kebolehgunaan fon lalai</string>
     <string name="language" maxLength="41">Bahasa</string>
     <string name="language_system">Bahasa sistem</string>
     <string name="notification_pref" maxLength="41">Pemberitahuan</string>
@@ -153,7 +150,6 @@
     <string name="timeout_answer" maxLength="41">Jawapan tamat masa</string>
     <string name="timeout_answer_summ">Tunjuk jawapan secara automatik tanpa input pengguna. Kiraan mula selepas memainkan fail audio secara automatik.</string>
     <string name="timeout_answer_seconds" maxLength="41">Masa untuk tunjuk jawapan</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Masa untuk tunjuk soalan seterusnya</string>
     <string name="select_locale_title">Pilih bahasa</string>
     <string name="software_render" maxLength="41">Lumpuhkan pemapar perkakasan kad</string>
@@ -168,6 +164,8 @@
     <string name="pref_backup_max" maxLength="41">Bilangan sandaran maksimum</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Selang sentuh dua kali (milisaat)</string>
     <string name="pref_double_tap_time_interval_summary">Sentuhan kedua butang jawapan akan diabaikan jika masa ini belum berlalu. Elakkan sentuh dua kali secara tidak sengaja</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Tunjuk masa</string>
     <string name="show_estimates_summ">Tunjuk masa semakan seterusnya pada butang jawapan</string>
     <string name="show_large_answer_buttons" maxLength="41">Tunjuk butang jawapan besar</string>
@@ -179,7 +177,6 @@
     <string name="show_eta" maxLength="41">Tunjuk ETA</string>
     <string name="show_eta_summ">Tunjuk baki masa</string>
     <string name="use_current" maxLength="41">Dek untuk kad baru</string>
-    <string name="new_spread" maxLength="41">Posisi kad baru</string>
     <string name="learn_cutoff" maxLength="41">Had belajar awal</string>
     <string name="time_limit" maxLength="41">Had kotak masa</string>
     <string name="new_timezone" maxLength="41">Pengendalian zon masa baru</string>
@@ -212,17 +209,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Benarkan semua fail dalam import media</string>
     <string name="media_import_allow_all_files_summ">Jika Android tidak kenal pasti fail media</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Dek lalai apabila membuka statistik</string>
-    <string name="stats_default_deck_current">Tunjuk statistik bagi dek terakhir dipilih</string>
-    <string name="stats_default_deck_all">Tunjuk statistik bagi semua dek</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Statistik lanjutan</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Dayakan statistik lanjutan</string>
-    <string name="enable_advanced_statistics_summ">Paparkan statistik ramalan berdasarkan pengiraan atau simulasi semakan masa hadapan (dayakan) atau ikut semakan masa hadapan yang telah dijadualkan (lumpuhkan).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Kira n hari terdahulu, simulasi saki baki</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Ketepatan pengiraan</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Bilangan iterasi simulasi</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Pelayan penyegerakan sendiri</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Tidak digunakan</string>
@@ -235,65 +221,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Papan kekunci</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Pemetaan perintah</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Perubahan pada kumpulan tetapan akan mempengaruhi pelbagai dek. Jika anda mahu mengubah hanya dek ini, sila tambah kumpulan tetapan baru terdahulu</string>
     <string name="studyoptions_limit_select_tags">Pilih tag</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Penhuraian dek (dek ini sahaja)</string>
-    <string name="deck_conf_group" maxLength="41">Kumpuan tetapan</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="other">%1$s\n%2$d dek gunakan group ini</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Kad baru</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Semakan</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Cuaian</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Umum</string>
     <string name="deck_conf_reminders" maxLength="41">Peringatan</string>
-    <string name="deck_conf_steps" maxLength="41">Langkah (dalam minit)</string>
-    <string name="deck_conf_order" maxLength="41">Susunan</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Kad baru/hari</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Seling tamat belajar</string>
-    <string name="deck_conf_days">XXX hari</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Seling senang</string>
-    <string name="deck_conf_start_ease" maxLength="41">Longgaran mulaan</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maksimum semakan/hari</string>
-    <string name="deck_conf_new_bury" maxLength="41">Sorok kad baru berkaitan</string>
-    <string name="deck_conf_new_bury_summ">Kad baru berkaitan disorokkan sehingga esok</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Sorok semakan berkaitan</string>
-    <string name="deck_conf_rev_bury_summ">Semakan berkaitan disorokkan sehingga esok</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Guna tetapan umum</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Guna tetapan \'Papar jawapan secara automatik\' daripada menggunakan tetapan kumpulan ini.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bonus senang</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Seling susah</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Pengganda seling</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Seling maksimum</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Seling baru</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Seling minimum</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Ambang lintah</string>
-    <string name="deck_conf_fails">XXX cuaian</string>
-    <string name="deck_conf_leech_action" maxLength="41">Tindakan lintah</string>
-    <string name="deck_conf_max_time" maxLength="41">Masa jawab maksimum</string>
-    <string name="deck_conf_seconds">XXX saat</string>
-    <string name="deck_conf_timer" maxLength="41">Tunjuk masa jawab</string>
-    <string name="deck_conf_autoplay" maxLength="41">Main audio secara automatik</string>
-    <string name="deck_conf_replayq" maxLength="41">Main semula soalan</string>
-    <string name="deck_conf_replayq_summ">Apabila jawapan ditunjuk, main semula kedua-dua soalan dan jawapan audio</string>
-    <string name="deck_conf_manage" maxLength="41">Pengurusan kumpulan</string>
-    <string name="deck_conf_manage_summ">Tambah dan ubah kumpulan tetapan</string>
-    <string name="deck_conf_current_group" maxLength="41">Kumpulan ini</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Nama semula</string>
-    <string name="deck_conf_reset" maxLength="41">Pulih lalai</string>
-    <string name="deck_conf_reset_message">Pulih nilai lalai kumpulan tetapan ini?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Tambah</string>
-    <string name="deck_conf_add_summ">Salin kumpulan tetapan ini</string>
-    <string name="deck_conf_remove_message">Buang kumpulan tetapan ini?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Tetap untuk semua subdek</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="other">%s subdek akan gunakan kumpulan ini</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Tetap kumpulan tetapan ini untuk semua subdek dek ini?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Fon pelayar dan penyunting</string>
     <string name="deck_conf_cram_filter" maxLength="41">Tapisan</string>
     <string name="deck_conf_cram_search" maxLength="41">Cari</string>
     <string name="deck_conf_cram_limit" maxLength="41">Had kepada</string>
@@ -303,8 +241,6 @@
     <string name="deck_conf_cram_filter_2_check">Dayakan tapisan kedua</string>
     <string name="deck_conf_cram_steps" maxLength="41">Langkah tersuai (dalam minit)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Jelaskan langkah tersuai</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Dayakan pemberitahuan untuk kumpulan dek ini</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Ingatkan pada</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Bantu majukan AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Kongsi penggunaan ciri-ciri</string>
@@ -341,12 +277,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Buang ‘%s’</string>
     <string name="bindings_already_bound">Telah dipetakan ke ‘%s’</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Percubaan</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Dayakan ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Guna hujung belakang baru</string>
-    <string name="use_rust_backend_summary">Dayakan ciri-ciri Anki baru, seperti penjadual v3\nTIDAK STABIL. Jangan guna pada koleksi yang anda ambil berat. TIDAK dibalikkan bila tutup aplikasi</string>
-    <string name="use_rust_backend_warning">Kemungkinan ini akan rosakkan seluruh pemasangan anda, memerlukan nyahpasang aplikasi dan padaman folder AnkiDroid, serta kemungkinan menyebarkan kerosakan melalui penyegerakan ke AnkiWeb.\n\nKami buka tangan terima pengujian, tetapi pastikan anda mempunyai sandaran bukan AnkiWeb yang sah.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Guna penjadual v3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Percubaan</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Pilihan pembangun</string>
     <string name="dev_options_enabled_pref" maxLength="41">Dayakan pilihan pembangun</string>
@@ -383,7 +314,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Buang fail media tidak digunakan</string>
     <string name="pref__delete_unused_media_files__summary">Buang gambar dan media lain yang tidak diawali dengan _ dan tidak dirujuk oleh mana-mana nota</string>
-    <string name="dialog__media_check_required__message">Pemeriksaan media diperlukan untuk cari fail media tidak digunakan</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Buang fail media tidak digunakan</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Buang sandaran</string>

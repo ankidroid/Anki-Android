@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">ମୋତେ ପଚାରନ୍ତୁ</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">କେଵଳ ଟ୍ୟାଗ୍ କରନ୍ତୁ</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">ଅନିୟମିତ କ୍ରମରେ ନୂତନ ପତ୍ର</string>
-    <string name="new_order_order_added">ଯୋଡ଼ାଯିବା କ୍ରମରେ ନୂତନ ପତ୍ର</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">ପ୍ରଥମେ ସର୍ବପୁରାତନ</string>
     <string name="cram_deck_conf_order_random">ଅନିୟମିତ</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">ଚଳିତ ତାସଖଣ୍ଡ ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="add_to_deck_decide_by_note_type">ନୋଟ୍ ପ୍ରକାର ଅନୁଯାୟୀ ନିଷ୍ପତ୍ତି ନିଅନ୍ତୁ</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">ନୂଆ ପତ୍ର ଏବଂ ସମୀକ୍ଷାସବୁ ର ମିଶ୍ରଣ</string>
-    <string name="new_spread_new_after_review">ସମୀକ୍ଷା ପରେ ନୂଆ ପତ୍ର</string>
-    <string name="new_spread_new_before_review">ସମୀକ୍ଷା ପୂର୍ବରୁ ନୂଆ ପତ୍ର</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">ଯେତେବେଳେ ଫ୍ଲାସକାର୍ଡରେ କୌଣସି font ନିର୍ଦ୍ଦିଷ୍ଟ କରାଯାଇ ନାହିଁ</string>
-    <string name="override_font_always" comment="Option to always override font">ସର୍ଵଦା</string>
     <!-- theme labels -->
     <string name="theme_follow_system">ସିଷ୍ଟମ୍‌କୁ ଅନୁସରଣ କରିବା</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-ବଡ଼</string>
     <string name="html_size_code_xx_large">xx-ବଡ଼</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">ଉତ୍ତର ବଟନ୍ ୧</string>
-    <string name="gesture_answer_2">ଉତ୍ତର ବଟନ୍ ୨</string>
-    <string name="gesture_answer_3">ଉତ୍ତର ବଟନ୍ ୩</string>
-    <string name="gesture_answer_4">ଉତ୍ତର ବଟନ୍ ୪</string>
-    <string name="gesture_answer_green">ସୁପାରିଶିତ ଉତ୍ତର (ସବୁଜ)</string>
-    <string name="gesture_answer_better_recommended">ଉତ୍ତର ସୁପାରିଶିତ ଅପେକ୍ଷା ଭଲ</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
     <string name="gesture_abort_learning">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରିବା</string>

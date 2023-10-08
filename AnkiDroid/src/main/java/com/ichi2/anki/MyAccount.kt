@@ -24,23 +24,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.StringRes
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.edit
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.anki.web.HostNumFactory.getInstance
-import com.ichi2.async.Connection
-import com.ichi2.libanki.sync.CustomSyncServerUrlException
-import com.ichi2.themes.StyledProgressDialog
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
-import java.net.UnknownHostException
 
 /**
  * Note: [LoginActivity] extends this and should not handle account creation
@@ -52,8 +43,6 @@ open class MyAccount : AnkiActivity() {
     private lateinit var mPassword: TextInputEditField
     private lateinit var mUsernameLoggedIn: TextView
 
-    @Suppress("Deprecation")
-    private var mProgressDialog: android.app.ProgressDialog? = null
     var toolbar: Toolbar? = null
     private lateinit var mPasswordLayout: TextInputLayout
     private lateinit var mAnkidroidLogo: ImageView
@@ -87,7 +76,7 @@ open class MyAccount : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         if (isUserATestClient) {
-            finishWithoutAnimation()
+            finish()
             return
         }
         mayOpenUrl(Uri.parse(resources.getString(R.string.register_url)))
@@ -112,28 +101,7 @@ open class MyAccount : AnkiActivity() {
             return
         }
         Timber.i("Attempting auto-login")
-        if (!BackendFactory.defaultLegacySchema) {
-            handleNewLogin(username, password)
-        } else {
-            Connection.login(
-                mLoginListener,
-                Connection.Payload(
-                    arrayOf(
-                        username,
-                        password,
-                        getInstance(this)
-                    )
-                )
-            )
-        }
-    }
-
-    private fun saveUserInformation(username: String, hkey: String) {
-        val preferences = baseContext.sharedPrefs()
-        preferences.edit {
-            putString("username", username)
-            putString("hkey", hkey)
-        }
+        handleNewLogin(username, password)
     }
 
     private fun login() {
@@ -152,26 +120,12 @@ open class MyAccount : AnkiActivity() {
             mPassword.requestFocus()
             return
         }
-        if (!BackendFactory.defaultLegacySchema) {
-            handleNewLogin(username, password)
-        } else {
-            Connection.login(
-                mLoginListener,
-                Connection.Payload(
-                    arrayOf(
-                        username,
-                        password,
-                        getInstance(this)
-                    )
-                )
-            )
-        }
+        handleNewLogin(username, password)
     }
 
     private fun logout() {
         launchCatchingTask {
             syncLogout(baseContext)
-            getInstance(this@MyAccount).reset()
             switchToState(STATE_LOG_IN)
         }
     }
@@ -231,105 +185,6 @@ open class MyAccount : AnkiActivity() {
                 attemptLogin()
             }
         }
-    }
-
-    private fun showLoginLogMessage(@StringRes messageResource: Int, loginMessage: String?) {
-        run {
-            if (loginMessage.isNullOrEmpty()) {
-                if (messageResource == R.string.youre_offline && !Connection.allowLoginSyncOnNoConnection) {
-                    // #6396 - Add a temporary "Try Anyway" button until we sort out `isOnline`
-                    showSnackbar(messageResource) {
-                        setAction(R.string.sync_even_if_offline) {
-                            Connection.allowLoginSyncOnNoConnection = true
-                            login()
-                        }
-                    }
-                } else {
-                    showSnackbar(messageResource)
-                }
-            } else {
-                val res = AnkiDroidApp.appResources
-                showSimpleMessageDialog(title = res.getString(messageResource), message = loginMessage)
-            }
-        }
-    }
-
-    /**
-     * Listeners
-     */
-    private val mLoginListener: Connection.TaskListener = object : Connection.TaskListener {
-        override fun onProgressUpdate(vararg values: Any?) {
-            // Pass
-        }
-
-        override fun onPreExecute() {
-            Timber.d("loginListener.onPreExecute()")
-            if (mProgressDialog == null || !mProgressDialog!!.isShowing) {
-                mProgressDialog = StyledProgressDialog.show(
-                    this@MyAccount,
-                    null,
-                    resources.getString(R.string.alert_logging_message),
-                    false
-                )
-            }
-        }
-
-        override fun onPostExecute(data: Connection.Payload) {
-            if (mProgressDialog != null) {
-                mProgressDialog!!.dismiss()
-            }
-            if (data.success) {
-                Timber.i("User successfully logged in!")
-                saveUserInformation(data.data[0] as String, data.data[1] as String)
-                val i = this@MyAccount.intent
-                if (i.hasExtra("notLoggedIn") && i.extras!!.getBoolean("notLoggedIn", false)) {
-                    this@MyAccount.setResult(RESULT_OK, i)
-                    finishWithAnimation(ActivityTransitionAnimation.Direction.FADE)
-                } else {
-                    // Show logged view
-                    mUsernameLoggedIn.text = data.data[0] as String
-                    switchToState(STATE_LOGGED_IN)
-                }
-            } else {
-                Timber.e("Login failed, error code %d", data.returnType)
-                if (data.returnType == 403) {
-                    showSnackbar(R.string.invalid_username_password)
-                } else {
-                    val message = resources.getString(R.string.connection_error_message)
-                    val result = data.result
-                    if (result.isNotEmpty() && result[0] is Exception) {
-                        showSimpleMessageDialog(
-                            title = message,
-                            message = getHumanReadableLoginErrorMessage(result[0] as Exception),
-                            reload = false
-                        )
-                    } else {
-                        showSnackbar(message)
-                    }
-                }
-            }
-        }
-
-        override fun onDisconnected() {
-            showLoginLogMessage(R.string.youre_offline, "")
-        }
-    }
-
-    protected fun getHumanReadableLoginErrorMessage(exception: Exception?): String? {
-        if (exception == null) {
-            return ""
-        }
-        if (exception is CustomSyncServerUrlException) {
-            val url = exception.url
-            return resources.getString(R.string.sync_error_invalid_sync_server, url)
-        }
-        if (exception.cause != null) {
-            val cause = exception.cause
-            if (cause is UnknownHostException) {
-                return getString(R.string.sync_error_unknown_host_readable, exception.localizedMessage)
-            }
-        }
-        return exception.localizedMessage
     }
 
     private val isScreenSmall: Boolean

@@ -25,7 +25,6 @@ import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.libanki.Utils
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.systemIsInNightMode
@@ -120,56 +119,24 @@ class AppearanceSettingsFragment : SettingsFragment() {
             }
         }
 
-        // Default font
-        requirePreference<ListPreference>(R.string.pref_default_font_key).apply {
-            entries = getCustomFonts("System default")
-            entryValues = getCustomFonts("")
-        }
-        // Browser and Note editor font
-        requirePreference<ListPreference>(R.string.pref_browser_and_editor_font_key).apply {
-            entries = getCustomFonts("System default")
-            entryValues = getCustomFonts("", useFullPath = true)
-        }
-
         // Show estimate time
         // Represents the collection pref "estTime": i.e.
         // whether the buttons should indicate the duration of the interval if we click on them.
         requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
-            launchCatchingTask { isChecked = withCol { get_config_boolean("estTimes") } }
+            launchCatchingTask { isChecked = withCol { config.get("estTimes") ?: true } }
             setOnPreferenceChangeListener { newETA ->
-                launchCatchingTask { withCol { set_config("estTimes", newETA) } }
+                launchCatchingTask { withCol { config.set("estTimes", newETA) } }
             }
         }
         // Show progress
         // Represents the collection pref "dueCounts": i.e.
         // whether the remaining number of cards should be shown.
         requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
-            launchCatchingTask { isChecked = withCol { get_config_boolean("dueCounts") } }
+            launchCatchingTask { isChecked = withCol { config.get("dueCounts") ?: true } }
             setOnPreferenceChangeListener { newDueCountsValue ->
-                launchCatchingTask { withCol { set_config("dueCounts", newDueCountsValue) } }
+                launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValue) } }
             }
         }
-    }
-
-    /** Returns a list of the names of the installed custom fonts */
-    private fun getCustomFonts(defaultValue: String, useFullPath: Boolean = false): Array<String?> {
-        val fonts = Utils.getCustomFonts(requireContext())
-        val count = fonts.size
-        Timber.d("There are %d custom fonts", count)
-        val names = arrayOfNulls<String>(count + 1)
-        names[0] = defaultValue
-        if (useFullPath) {
-            for (index in 1 until count + 1) {
-                names[index] = fonts[index - 1].path
-                Timber.d("Adding custom font: %s", names[index])
-            }
-        } else {
-            for (index in 1 until count + 1) {
-                names[index] = fonts[index - 1].name
-                Timber.d("Adding custom font: %s", names[index])
-            }
-        }
-        return names
     }
 
     private val mBackgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->

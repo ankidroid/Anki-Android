@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Hỏi tôi</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Chỉ có thẻ</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Các thẻ mới theo thứ tự ngẫu nhiên</string>
-    <string name="new_order_order_added">Thẻ mới theo thứ tự đã được thêm vào</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Cũ nhất nhìn thấy đầu tiên</string>
     <string name="cram_deck_conf_order_random">Ngẫu nhiên</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Sử dụng xấp thẻ hiện tại</string>
     <string name="add_to_deck_decide_by_note_type">Quyết định theo kiểu ghi chú</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Trộn thẻ mới và đánh giá</string>
-    <string name="new_spread_new_after_review">Thẻ mới sau khi đánh giá</string>
-    <string name="new_spread_new_before_review">Thẻ mới trước khi đánh giá</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Khi không có phông chữ nào được chỉ định trên thẻ flashcard</string>
-    <string name="override_font_always" comment="Option to always override font">Luôn cho phép</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Theo hệ thống</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">lớn hon</string>
     <string name="html_size_code_xx_large">cực kỳ lớn</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Nút trả lời 1</string>
-    <string name="gesture_answer_2">Nút trả lời 2</string>
-    <string name="gesture_answer_3">Nút trả lời 3</string>
-    <string name="gesture_answer_4">Nút trả lời 4</string>
-    <string name="gesture_answer_green">Câu trả lời được đề xuất (màu xanh lá cây)</string>
-    <string name="gesture_answer_better_recommended">Trả lời tốt hơn đề xuất</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Phát file đa phương tiện</string>
     <string name="gesture_abort_learning">Bỏ học</string>
     <string name="gesture_flag_red">Chuyển đổi cờ đỏ</string>

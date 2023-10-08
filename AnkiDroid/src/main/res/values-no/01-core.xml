@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Kortstokker</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Kortoversikt</string>
@@ -80,10 +80,6 @@
     <string name="no_cards_placeholder_title">Samlingen er tom</string>
     <string name="no_cards_placeholder_description">Begynn å legge til nye kort\nved å bruke + ikonet.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">%1$d kort studert i %2$s i dag</item>
-        <item quantity="other">%1$d kort studert i %2$s i dag</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Skriv svar</string>
     <string name="show_answer">Vis svaret</string>
@@ -92,11 +88,8 @@
     <string name="ease_button_hard">Vanskelig</string>
     <string name="ease_button_good">Bra</string>
     <string name="ease_button_easy">Lett</string>
-    <string name="studyoptions_congrats_undo">Angre %s</string>
     <string name="menu_import">Importer</string>
     <string name="undo">Angre</string>
-    <string name="undo_action_review">siste gjennomgang</string>
-    <string name="undo_action_change_deck_multi">endre kortstokker</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Angre strek</string>
     <string name="move_all_to_deck">Flytt alle til kortstokk</string>
     <string name="unbury">Grav opp igjen</string>
@@ -170,18 +163,14 @@
     <string name="studyoptions_limit_reached">Grensen for daglig studie er nådd</string>
     <string name="studyoptions_empty_schedule">Ingen kort planlagt for i dag</string>
     <string name="studyoptions_congrats_finished">Gratulerer! Du er ferdig for i dag.</string>
-    <string name="studyoptions_congrats_more_rev">Du har nådd grensen for gjennomgang i dag, men det er fortsatt kort du ikke har gått gjennom. For best mulig effekt, bør du vurdere å øke grensen i alternativene.</string>
-    <string name="studyoptions_congrats_more_new">Det finnes flere nye kort tilgjengelig, men den daglige grensen er nådd. Du kan øke grensen i innstillingene, men vær oppmerksom på at dette også vil øke den kortsiktige mengden av kort til repetering.</string>
-    <string name="studyoptions_congrats_custom">For å studere utenfor den vanlige tidsrammen, trykk på \"Tilpassede studier\"-knappen.</string>
     <string name="studyoptions_no_cards_due">Ingen kort forfaller ennå</string>
     <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="empty_cloze_warning">Rediger dette notatet og legg til hulltekst. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synkroniser</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">Vil du avbryte synkroniseringen?</string>
-    <string name="continue_sync">Fortsett synkronisering</string>
-    <string name="sync_cancelled">Synkronisering Avbrutt</string>
-    <string name="sync_cancel_message">Avbryter...\nDet kan ta en stund.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Vil du avbryte synkroniseringen?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Fortsett synkronisering</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Synkronisering Avbrutt</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Avbryter...\nDet kan ta en stund.</string>
     <string name="export">Eksporter</string>
     <string name="export_collection">Eksporter samling</string>
     <string name="export_deck">Eksporter kortstokk</string>
@@ -210,7 +199,6 @@
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Informasjon om kort</string>
     <!-- Permissions -->
@@ -219,14 +207,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Kortoversikt</string>
     <string name="context_menu_anki_card_label">Anki kort</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">Mer informasjon</string>
-    <string name="no_field">Funnet \'{{%1$s}}\', men det er ikke noe felt som heter \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Funnet \'{{/%1$s}}\', men mangler \'{{#%1$s}}\' eller \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Mangler \'}}\' i \'%s\'.</string>
-    <string name="open_tag_not_closed">Mangler \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Funnet \'{{/%1$s}}\', men forventet \'{{/%2$s}}\'</string>
-    <string name="filter_error">Feil i filter %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Samlingene kan ikke kombineres.\nHvilken samling vil du beholde?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -239,7 +219,6 @@
         <item quantity="one">%1$d kort (0 forfalt)</item>
         <item quantity="other">%1$d kort (0 forfalt)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s kopi</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>

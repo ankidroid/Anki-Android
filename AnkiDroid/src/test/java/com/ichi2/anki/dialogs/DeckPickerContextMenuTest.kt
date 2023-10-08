@@ -27,7 +27,6 @@ import com.afollestad.materialdialogs.internal.rtl.RtlTextView
 import com.ichi2.anki.*
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.BackupManagerTestUtilities.setupSpaceForBackup
-import net.ankiweb.rsdroid.BackendFactory
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.containsInAnyOrder
 import org.hamcrest.Matchers.not
@@ -59,16 +58,16 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun addCards() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val models = col.models
+            val models = getColUnsafe.notetypes
             val didA = addDeck("Deck 1")
             updateDeckList()
-            col.decks.select(didA)
+            getColUnsafe.decks.select(didA)
             val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
             basic!!.put("did", didA)
             addNoteUsingBasicModel("Front", "Back")
             assertEquals(1, visibleDeckCount)
             openContextMenuAndSelectItem(recyclerView, 0)
-            assertEquals(1, col.cardCount(didA))
+            assertEquals(1, getColUnsafe.cardCount(didA))
         }
     }
 
@@ -84,7 +83,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             val browser = shadowOf(this).nextStartedActivity!!
             assertEquals("com.ichi2.anki.CardBrowser", browser.component!!.className)
 
-            assertEquals(deckId, col.decks.selected())
+            assertEquals(deckId, getColUnsafe.decks.selected())
         }
     }
 
@@ -117,20 +116,11 @@ class DeckPickerContextMenuTest : RobolectricTest() {
     @Test
     fun testShowDeckOptions() = runTest {
         startActivityNormallyOpenCollectionWithIntent(DeckPicker::class.java, Intent()).run {
-            val deckId = addDeck("Deck 1")
+            addDeck("Deck 1")
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
             openContextMenuAndSelectItem(recyclerView, 4)
-
-            val deckOptions = shadowOf(this).nextStartedActivity!!
-            if (BackendFactory.defaultLegacySchema) {
-                assertEquals(
-                    "com.ichi2.anki.DeckOptionsActivity",
-                    deckOptions.component!!.className
-                )
-                assertEquals(deckId, deckOptions.getLongExtra("did", 1))
-            }
         }
     }
 
@@ -143,7 +133,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
 
             openContextMenuAndSelectItem(recyclerView, 8)
 
-            assertThat(col.decks.allIds(), not(containsInAnyOrder(deckId)))
+            assertThat(getColUnsafe.decks.allNamesAndIds().map { it.id }, not(containsInAnyOrder(deckId)))
         }
     }
 
@@ -171,17 +161,18 @@ class DeckPickerContextMenuTest : RobolectricTest() {
             updateDeckList()
 
             val deckId = addDeck("Deck 1")
-            col.models.byName("Basic")!!.put("did", deckId)
+            getColUnsafe.decks.select(deckId)
+            getColUnsafe.notetypes.byName("Basic")!!.put("did", deckId)
             val card = addNoteUsingBasicModel("front", "back").firstCard()
-            col.sched.buryCards(longArrayOf(card.id))
+            getColUnsafe.sched.buryCards(listOf(card.id))
             updateDeckList()
             assertEquals(1, visibleDeckCount)
 
-            assertTrue(col.sched.haveBuried(deckId), "Deck should have buried cards")
+            assertTrue(getColUnsafe.sched.haveBuriedInCurrentDeck(), "Deck should have buried cards")
 
             openContextMenuAndSelectItem(recyclerView, 7)
 
-            assertFalse(col.sched.haveBuried(deckId))
+            assertFalse(getColUnsafe.sched.haveBuriedInCurrentDeck())
         }
     }
 
@@ -218,7 +209,7 @@ class DeckPickerContextMenuTest : RobolectricTest() {
                 .map { addNoteUsingBasicModel("$it", "").firstCard().id }
             assertTrue(allCardsInSameDeck(cardIds, 1))
             val deckId = addDynamicDeck("Deck 1")
-            col.sched.rebuildDyn(deckId)
+            getColUnsafe.sched.rebuildDyn(deckId)
             assertTrue(allCardsInSameDeck(cardIds, deckId))
             updateDeckList()
             assertEquals(1, visibleDeckCount)

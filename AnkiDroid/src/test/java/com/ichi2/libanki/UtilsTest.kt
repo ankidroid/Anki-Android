@@ -17,90 +17,19 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.TestUtils
-import com.ichi2.utils.FileOperation.Companion.getFileResource
-import org.apache.commons.compress.archivers.zip.ZipFile
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.File
-import java.io.IOException
-import java.lang.Exception
 import java.util.*
-import kotlin.Throws
 
 @RunWith(AndroidJUnit4::class)
 class UtilsTest {
-    @Test
-    fun testZipWithPathTraversal() {
-        val classLoader = javaClass.classLoader
-        val resource = classLoader!!.getResource("path-traversal.zip")
-        try {
-            val file = File(resource.toURI())
-            val zipFile = ZipFile(file)
-            val zipEntries = zipFile.entries
-            while (zipEntries.hasMoreElements()) {
-                val ze2 = zipEntries.nextElement()
-                Utils.unzipFiles(zipFile, "/tmp", arrayOf(ze2.name), null)
-            }
-            Assert.fail("Expected an IOException")
-        } catch (e: Exception) {
-            assertEquals("File is outside extraction target directory.", e.message)
-        }
-    }
-
-    @Test
-    fun testInvalidPaths() {
-        try {
-            val tmpDir = File("/tmp")
-            Assert.assertFalse(Utils.isInside(File(tmpDir, "../foo"), tmpDir))
-            Assert.assertFalse(Utils.isInside(File(tmpDir, "/tmp/one/../../../foo"), tmpDir))
-        } catch (ioe: IOException) {
-            Assert.fail("Unexpected exception: $ioe")
-        }
-    }
-
-    @Test
-    fun testValidPaths() {
-        try {
-            val tmpDir = File("/tmp")
-            Assert.assertTrue(Utils.isInside(File(tmpDir, "test/file/path/no/parent"), tmpDir))
-            Assert.assertTrue(Utils.isInside(File(tmpDir, "/tmp/absolute/path"), tmpDir))
-            Assert.assertTrue(Utils.isInside(File(tmpDir, "test/file/../../"), tmpDir))
-        } catch (ioe: IOException) {
-            Assert.fail("Unexpected exception: $ioe")
-        }
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun testCopyFile() {
-        val resourcePath = getFileResource("path-traversal.zip")
-        val copy = File.createTempFile("testCopyFileToStream", ".zip")
-        copy.deleteOnExit()
-        Utils.copyFile(File(resourcePath), copy)
-        assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
-    }
 
     @Test
     fun testSplit() {
         Assert.assertArrayEquals(arrayOf("foo", "bar"), Utils.splitFields("foobar"))
         Assert.assertArrayEquals(arrayOf("", "foo", "", "", ""), Utils.splitFields("foo"))
-    }
-
-    @Test
-    fun nonEmptyFieldsTest() {
-        val m: MutableMap<String, String> = HashMap()
-        val s: MutableSet<String> = HashSet()
-        assertEquals(s, Utils.nonEmptyFields(m))
-        m["baz"] = ""
-        assertEquals(s, Utils.nonEmptyFields(m))
-        m["foo"] = "   "
-        assertEquals(s, Utils.nonEmptyFields(m))
-        m["bar"] = " plop  "
-        s.add("bar")
-        assertEquals(s, Utils.nonEmptyFields(m))
     }
 
     @Test

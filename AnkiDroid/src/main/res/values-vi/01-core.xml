@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Các bộ thẻ</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Trình duyệt thẻ</string>
@@ -76,9 +76,6 @@
     <string name="no_cards_placeholder_title">Bộ sưu tập đang trống</string>
     <string name="no_cards_placeholder_description">Hãy thêm thẻ\nbằng biểu tượng +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="other">Đã học %1$d thẻ trong %2$s hôm nay</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Gõ đáp án</string>
     <string name="show_answer">Hiện đáp án</string>
@@ -87,11 +84,8 @@
     <string name="ease_button_hard">Khó</string>
     <string name="ease_button_good">Tốt</string>
     <string name="ease_button_easy">Dễ</string>
-    <string name="studyoptions_congrats_undo">Hoàn tác %s</string>
     <string name="menu_import">Nhập</string>
     <string name="undo">Hoàn tác</string>
-    <string name="undo_action_review">lần ôn tập trước</string>
-    <string name="undo_action_change_deck_multi">đổi bộ thẻ</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Hoàn tác</string>
     <string name="move_all_to_deck">Di chuyển tất cả đến bộ thẻ</string>
     <string name="unbury">Bỏ tạm ẩn</string>
@@ -165,18 +159,14 @@
     <string name="studyoptions_limit_reached">Đã đạt giới hạn học hằng ngày</string>
     <string name="studyoptions_empty_schedule">Không có thẻ nào được lên lịch học</string>
     <string name="studyoptions_congrats_finished">Chúc mừng! Bạn đã tạm thời hoàn thành.</string>
-    <string name="studyoptions_congrats_more_rev">Đã đạt giới hạn của ngày hôm nay, nhưng vẫn còn thẻ cần ôn tập. Bạn có thể tăng giới hạn này trong mục tuỳ chọn.</string>
-    <string name="studyoptions_congrats_more_new">Đã đạt giới hạn của ngày hôm nay. Vẫn còn nhiều thẻ mới chưa được học; bạn có thể tăng giới hạn này trong mục tuỳ chọn, nhưng nó sẽ làm tăng khối lượng ôn tập trong thời gian ngắn.</string>
-    <string name="studyoptions_congrats_custom">Để học ngoài lịch trình thông thường, hãy bấm nút \"Học theo tuỳ chọn\"</string>
     <string name="studyoptions_no_cards_due">Chưa có thẻ nào tới hạn</string>
     <string name="sd_card_not_mounted">Chưa gắn ổ lưu trữ thiết bị</string>
-    <string name="empty_cloze_warning">Xin hãy sửa lại ghi chú và thêm một số miêu tả đúng nhất  (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Đồng bộ</string>
     <string name="button_upgrade" comment="Text of the sync button">Chuyển đổi sang lưu trữ được phân quyền</string>
-    <string name="cancel_sync_confirm">Bạn có muốn huỷ đồng bộ?</string>
-    <string name="continue_sync">Tiếp tục đồng bộ</string>
-    <string name="sync_cancelled">Đã huỷ đồng bộ</string>
-    <string name="sync_cancel_message">Đang huỷ&#8230;\nCó thể hơi lâu.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Bạn có muốn huỷ đồng bộ?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Tiếp tục đồng bộ</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Đã huỷ đồng bộ</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Đang huỷ&#8230;\nCó thể hơi lâu.</string>
     <string name="export">Xuất</string>
     <string name="export_collection">Xuất bộ sưu tập</string>
     <string name="export_deck">Xuất bộ thẻ</string>
@@ -203,7 +193,6 @@
     <string name="template_for_current_card_deleted">Loại thẻ cho thẻ hiện tại đã bị xóa</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Giao diện trình duyệt</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Thông tin thẻ</string>
     <!-- Permissions -->
@@ -212,14 +201,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Trình duyệt Thẻ</string>
     <string name="context_menu_anki_card_label">Thẻ Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s bị lỗi:<br/>%2$s</string>
-    <string name="more_information">Thông tin chi tiết</string>
-    <string name="no_field">Đã tìm thấy \'{{%1$s}}\', nhưng không tìm thấy trường \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Đã tìm thấy \'{{/%1$s}}\', nhưng thiếu \'{{#%1$s}}\' hoặc \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Thiếu \'}}\' tại \'%s\'.</string>
-    <string name="open_tag_not_closed">Thiếu \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Đã tìm thấy \'{{/%1$s}}\', nhưng phải là \'{{/%2$s}}\'</string>
-    <string name="filter_error">Lỗi trong bộ lọc %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Các bộ sưu tập không thể đồng nhất.\nBạn muốn giữ lại bộ sưu tập nào?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -231,7 +212,6 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d (0 thẻ đến hạn)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">Bản sao của %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Không thể ghi hoặc tạo tệp %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Nhiều lỗi, gần đây nhất: %s"</string>

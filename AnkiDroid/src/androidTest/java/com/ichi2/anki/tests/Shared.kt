@@ -18,11 +18,9 @@ package com.ichi2.anki.tests
 import android.content.Context
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
-import com.ichi2.libanki.Utils
 import com.ichi2.utils.KotlinCleanup
 import org.junit.Assert.assertTrue
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.IOException
 
 /**
@@ -31,13 +29,13 @@ import java.io.IOException
 @KotlinCleanup("maybe delete Shared object and make inner functions as top level")
 object Shared {
     @Throws(IOException::class)
-    fun getEmptyCol(context: Context): Collection {
+    fun getEmptyCol(): Collection {
         val f = File.createTempFile("test", ".anki2")
         // Provide a string instead of an actual File. Storage.Collection won't populate the DB
         // if the file already exists (it assumes it's an existing DB).
         val path = f.absolutePath
         assertTrue(f.delete())
-        return Storage.collection(context, path)
+        return Storage.collection(path)
     }
 
     /**
@@ -73,21 +71,5 @@ object Shared {
             assertTrue(f.delete())
         }
         return dir
-    }
-
-    /**
-     * Copy a file from the application's assets directory and return the absolute path of that
-     * copy.
-     *
-     * Files located inside the application's assets collection are not stored on the file
-     * system and can not return a usable path, so copying them to disk is a requirement.
-     */
-    @Throws(IOException::class)
-    fun getTestFilePath(context: Context, name: String): String {
-        val inputStream = context.classLoader.getResourceAsStream("assets/$name")
-            ?: throw FileNotFoundException("Could not find test file: assets/$name")
-        val dst = File(getTestDir(context, name), name).absolutePath
-        Utils.writeToFile(inputStream, dst)
-        return dst
     }
 }

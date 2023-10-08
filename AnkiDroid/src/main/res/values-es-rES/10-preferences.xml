@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Deshabilitado</string>
-    <string name="enabled">Activado</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -137,8 +136,6 @@
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema del día</string>
     <string name="night_theme" maxLength="41">Tema nocturno</string>
-    <string name="default_font" maxLength="41">Fuente predeterminada</string>
-    <string name="override_font" maxLength="41">Aplicabilidad de fuente por defecto</string>
     <string name="language" maxLength="41">Idioma</string>
     <string name="language_system">Idioma del sistema</string>
     <string name="notification_pref" maxLength="41">Notificaciones</string>
@@ -152,7 +149,6 @@
     <string name="timeout_answer" maxLength="41">Tiempo de respuesta agotado</string>
     <string name="timeout_answer_summ">Mostrar respuesta automáticamente sin intervención del usuario. El retraso incluye tiempo para reproduciones automáticas de archivos de audio.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tiempo para mostrar respuesta</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Tiempo para mostrar la siguiente pregunta</string>
     <string name="select_locale_title">Selecciona idioma</string>
     <string name="software_render" maxLength="41">Deshabilitar el procesamiento de hardware de la tarjeta</string>
@@ -167,6 +163,8 @@
     <string name="pref_backup_max" maxLength="41">Número máximo de copias de seguridad</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Mostrar botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el próximo repaso en los botones de respuesta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botones de respuestas grandes</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">Mostrar tiempo restante</string>
     <string name="show_eta_summ">Mostrar el tiempo restante</string>
     <string name="use_current" maxLength="41">Mazo para las nuevas tarjetas</string>
-    <string name="new_spread" maxLength="41">Posición de nuevas tarjetas</string>
     <string name="learn_cutoff" maxLength="41">Aprender por delante del límite</string>
     <string name="time_limit" maxLength="41">Límite de tiempo del Timebox</string>
     <string name="new_timezone" maxLength="41">Nuevo manejo de zona horaria</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Permitir todos los archivos en las importaciones de medios</string>
     <string name="media_import_allow_all_files_summ">Si Android no reconoce un archivo multimedia</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Mazo por defecto al abrir las estadísticas</string>
-    <string name="stats_default_deck_current">Mostrar estadísticas del mazo más reciente</string>
-    <string name="stats_default_deck_all">Mostrar estadísticas de todos los mazos</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Estadísticas avanzadas</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Activar estadísticas avanzadas</string>
-    <string name="enable_advanced_statistics_summ">Despliega estadísticas de pronóstico basadas en un cálculo o simulación de futuros repasos (activado) o de repasos futuros ya programados (desactivado).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Calcular primeros n días, simular el resto</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precisión de la computación</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Número de iteraciones de la simulación</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Servidor de sincronización personalizado</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">No en uso</string>
@@ -234,67 +220,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Teclado</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Mapeo de comandos</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Los cambios en las opciones del grupo de mazos afectarán a varios mazos. Si desea cambiar sólo el mazo actual, primero añada un nuevo grupo de opciones</string>
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Descripción del mazo (sólo afecta al mazo actual)</string>
-    <string name="deck_conf_group" maxLength="41">Grupo de opciones</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">El mazo %1$s\n%2$d utiliza este grupo</item>
-        <item quantity="other">Los mazos %1$s\n%2$d utilizan este grupo</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Tarjetas nuevas</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Repasos</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Lapsos</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Recordatorios</string>
-    <string name="deck_conf_steps" maxLength="41">Pasos (en minutos)</string>
-    <string name="deck_conf_order" maxLength="41">Orden</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Nuevas tarjetas/día</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Intervalo de graduación</string>
-    <string name="deck_conf_days">XXX día(s)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Intervalo fácil</string>
-    <string name="deck_conf_start_ease" maxLength="41">Facilidad de comienzo</string>
-    <string name="deck_conf_max_rev" maxLength="41">Máximo de repasos/día</string>
-    <string name="deck_conf_new_bury" maxLength="41">Enterrar tarjetas nuevas relacionadas</string>
-    <string name="deck_conf_new_bury_summ">Las tarjetas nuevas relacionadas se entierran hasta el día siguiente</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Enterrar repasos relacionados</string>
-    <string name="deck_conf_rev_bury_summ">Los repasos relacionados se entierran hasta el día siguiente</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Usar ajustes generales</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Utilice la configuración general de \'Respuesta de pantalla automática\' en lugar de usar la configuración de este grupo.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bonus para Fácil</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Intervalo Difícil</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Modificador de intervalo</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Intervalo máximo</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Intervalo de nuevas</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Intervalo mínimo</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Umbral de Sanguijuelas</string>
-    <string name="deck_conf_fails">XXX fallos</string>
-    <string name="deck_conf_leech_action" maxLength="41">Acción para Sanguijuelas</string>
-    <string name="deck_conf_max_time" maxLength="41">Tiempo de respuesta máximo</string>
-    <string name="deck_conf_seconds">XXX segundos</string>
-    <string name="deck_conf_timer" maxLength="41">Mostrar temporizador de respuesta</string>
-    <string name="deck_conf_autoplay" maxLength="41">Reproducir audio automáticamente</string>
-    <string name="deck_conf_replayq" maxLength="41">Volver a reproducir pregunta</string>
-    <string name="deck_conf_replayq_summ">Cuando la respuesta sea mostrada, reproducir el audio de la pregunta y de la respuesta</string>
-    <string name="deck_conf_manage" maxLength="41">Administración de grupos</string>
-    <string name="deck_conf_manage_summ">Añadir y cambiar opciones de grupo</string>
-    <string name="deck_conf_current_group" maxLength="41">Grupo actual</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Renombrar</string>
-    <string name="deck_conf_reset" maxLength="41">Restablecer predefinidos</string>
-    <string name="deck_conf_reset_message">¿Restaurar el grupo de opciones actual a los valores predeterminados?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Añadir</string>
-    <string name="deck_conf_add_summ">Crear una copia del grupo de opciones actual</string>
-    <string name="deck_conf_remove_message">¿Eliminar el grupo de opciones actual?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Establecer para todos los submazos</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s submazo utilizará este grupo</item>
-        <item quantity="other">%s submazos utilizarán este grupo</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">¿Establecer el grupo de opciones actual para todos los submazos de este mazo?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Fuente del explorador y editor</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtrar</string>
     <string name="deck_conf_cram_search" maxLength="41">Buscar</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limitar a</string>
@@ -304,8 +240,6 @@
     <string name="deck_conf_cram_filter_2_check">Activar segundo filtro</string>
     <string name="deck_conf_cram_steps" maxLength="41">Pasos personalizados (en minutos)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definir pasos personalizados</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Habilitar notificaciones de recordatorio para mazos en este grupo de mazos</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Recordar en</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">¡Ayuda a mejorar AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Compartir uso de funciones</string>
@@ -342,12 +276,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Eliminar ‘%s’</string>
     <string name="bindings_already_bound">Ya vinculado a %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Activar ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Usar el nuevo backend</string>
-    <string name="use_rust_backend_summary">Activa nuevas características de Anki, como el planificador v3\nINESTABLE. No lo uses en una colección que te importe. NO será revertido al cerrar la aplicación</string>
-    <string name="use_rust_backend_warning">Existe la posibilidad de que esto pueda dañar completamente tu instalación, siendo necesario desinstalar y eliminar la aplicación de la carpeta AnkiDroid y existe la posibilidad de que se propague la corrupción a través de la sincronización con AnkiWeb.\n\nLe damos la bienvenida a la prueba, pero, por favor, asegúrate de que tienes una copia de seguridad válida que no sea de AnkiWeb.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Usar el planificador v3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opciones de desarrollador</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activar opciones de desarrollador</string>
@@ -384,7 +313,6 @@ Puedes restaurar una colección desde una copia de seguridad en el menú de la l
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Elimina archivos multimedia inutilizados</string>
     <string name="pref__delete_unused_media_files__summary">Elimina imágenes y otros archivos multimedia que no empiezen por _ y no sean referenciadas por ninguna nota.</string>
-    <string name="dialog__media_check_required__message">Hace falta una comprobación de los archivos multimedia para encontrar los inusados</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Eliminar archivos multimedia inutilizados</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Eliminar copias de seguridad</string>

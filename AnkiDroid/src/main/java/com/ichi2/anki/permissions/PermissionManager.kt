@@ -145,7 +145,7 @@ class PermissionManager private constructor(
  * We finish the activity as setting permissions terminates the app
  */
 fun AnkiActivity.finishActivityAndShowAppPermissionManagementScreen() {
-    this.finishWithoutAnimation()
+    this.finish()
     showAppPermissionManagementScreen()
 }
 

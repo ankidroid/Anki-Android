@@ -45,7 +45,6 @@
     <string name="model_browser_delete">Hapus tipe catatan</string>
     <string name="model_browser_rename" comment="Rename a note type">Ubah nama</string>
     <string name="model_browser_template">Edit kartu</string>
-    <string name="model_browser_add">Tambah tipe catatan</string>
     <!--Rename-->
     <string name="rename_model">Ubah nama tipe catatan</string>
     <!--Language Hint-->
@@ -61,7 +60,6 @@
     <string name="model_field_editor_toggle_sticky">Ingat masukan terakhir saat menambahkan</string>
     <string name="model_field_editor_changing">Memperbarui kolom</string>
     <string name="model_field_editor_sort_field">Urutkan menurut kolom ini</string>
-    <string name="model_clone_suffix">salin</string>
     <!--Warnings-->
     <string name="model_delete_warning">Yakin ingin menghapus tipe catatan ini?</string>
     <string name="field_delete_warning">Yakin ingin menghapus kolom ini?</string>

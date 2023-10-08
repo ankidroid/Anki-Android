@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Naka - offline ka</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Mali sa pag-sync</string>
     <string name="vague_error" comment="Network error dialog title">Error</string>
     <string name="retry">Muling subukan</string>
@@ -63,71 +62,15 @@
     <string name="sign_up">Mag Sign up</string>
     <string name="logged_as">Naka-login bilang</string>
     <string name="log_out">Mag log out</string>
-    <string name="alert_logging_message">Naglo-login&#8230;</string>
-    <string name="invalid_username_password">Di-wastong email address o password</string>
     <string name="reset_password">I-reset ang password</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Mga opsiyon para sa XXX</string>
-    <string name="sync_prepare_syncing">Inihahanda ang pag-sync&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Inihahanda ang buong pag-sync&#8230;</string>
-    <string name="sync_uploading_message">Uploading&#8230;</string>
-    <string name="sync_downloading_message">Downloading&#8230;</string>
     <string name="sync_title">Pag-synchronize</string>
     <string name="sync_log_uploading_message">Buong pag-sync mula sa lokal</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">ang time zone ay maaaring mali</string>
-    <string name="sync_log_clocks_unsynchronized_date">ang date ay maaaring mali</string>
-    <string name="sync_no_changes_message">Walang pagbabago na nakita</string>
     <string name="sync_database_acknowledge">Nai-sync na ang mga koleksyon</string>
-    <string name="sync_log_error_specific">Error sa pag-sync, type: %1$s, mensahe: %2$s</string>
     <string name="sync_corrupt_database">Ang iyong database ay sira. Mangyaring ayusin ito bago muling subukan na i-sync.\n\n Tingnan ang %s para sa impormasyon tungkol sa pag-aayos ng iyong database.</string>
-    <string name="sync_too_busy">Abala ang server. Subukan muli mamaya.</string>
-    <string name="sync_remote_db_error">Ang nai-download na database ay sira. Pakisubukang muli.</string>
-    <string name="sync_overwrite_error">Ang iyong kasalukuyang koleksyon ay hindi maaaring mapatungan ng nai-download na file</string>
-    <string name="sync_connection_error">Ang koneksiyon ay nagtime - out na. Maaring ang iyong koneksyon sa internet ay nakakaranas ng mga problema, o di kaya`y mayroon kang isang napakalaking file sa iyong media folder.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Pag-sync ng mga pagbura&#8230;</string>
-    <string name="sync_small_objects_message">Pag-sync ng mga maliit na mga bagay&#8230;</string>
-    <string name="sync_finish_message">Tinatapos ang pag-sync&#8230;</string>
-    <string name="sync_log_finish_error">Error habang nagpapadala ng direksyon na tapusin sa server</string>
-    <string name="sync_writing_db">Pagsulat ng mga pagbabago sa database&#8230;</string>
-    <string name="sync_download_chunk">Pagdownload ng mga pagbabago&#8230;</string>
-    <string name="sync_upload_chunk">Pag-upload ng mga pagbabago&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
-    <string name="sync_generic_error">May nangyaring error. Subukan muli mamaya.</string>
-    <string name="sync_check_upload_file">Sinusuri ang file bago mag-upload&#8230;</string>
-    <string name="sync_check_download_file">Sinusuri ang nai-download na file&#8230;</string>
-    <string name="sync_media_find">Hinahanap ang mga pagbabago sa media&#8230;</string>
-    <string name="sync_media_no_changes">Walang nakitang pagbabago sa mga media file</string>
-    <string name="sync_media_success">Nai-sync na ang media</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">Pagkatapos ng pag-sync, ang koleksyon ay nasa isang hindi pantay na estado. Upang ayusin ang problemang ito, pipilitin ng AnkiDroid ang isang buong pag-sync. Piliin kung aling bahagi ang nais mong panatilihin.</string>
-    <string name="sync_media_sanity_failed">Natapos ang pag-sync ng media, ngunit ang bilang ng media ay hindi sumasang-ayon sa server. Ang susunod na pag-sync ng media ay puno upang itama ang anumang error.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">Nagkaroon ng error sa pag-sync ng media data</string>
-    <string name="sync_media_error_check">Nagkaroon ng error sa pag-sync ng media. Inirerekomenda ang pagsusuri ng media.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Lokal</string>
     <string name="sync_sanity_remote">Remote</string>
     <string name="force_full_sync_title">Pilitin ang buong pag-sync</string>
@@ -135,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Ang hiniling na pagbabago ay mangangailangan ng isang buong pag-upload ng database kapag susunod mong i-synchronize ang iyong koleksyon. Kung mayroon kang mga review o iba pang mga pagbabago na naghihintay sa iba pang mga device na hindi pa naka-synchronize dito, mawawala ang mga ito. Magpatuloy?</string>
     <string name="full_sync_confirmation_upgrade">Dahil sa isang bug sa naunang naka-install na bersyon ng AnkiDroid, inirerekumenda ang isang buong pag-sync.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
-    <string name="sync_error_409">Isang client lamang ang maaring mag-access ng AnkiWeb sa isang pagkakataon. Kung nabigo ang nakaraang pag-sync, pakisubukang muli sa ilang minuto.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
-    <string name="sync_error_501_upgrade_required">Mangyaring mag-upgrade sa pinakabagong bersyon ng AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

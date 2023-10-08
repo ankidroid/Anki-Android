@@ -61,8 +61,8 @@
     <string name="updated_version">%s verzióra frissítve</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Rajztábla mentése</string>
-    <string name="enable_stylus">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
+    <string name="enable_stylus">E-tollal írás bekapcsolása</string>
+    <string name="disable_stylus">E-tollal írás kikapcsolása</string>
     <string name="enable_whiteboard">Rajztábla be</string>
     <string name="disable_whiteboard">Rajztábla ki</string>
     <string name="show_whiteboard">Rajztábla mutatása</string>
@@ -71,7 +71,6 @@
     <string name="replay_audio">Hang ismétlés</string>
     <string name="leech_suspend_notification">Kártya megjelölve piócaként és felfüggesztésre került</string>
     <string name="leech_notification">Kártya megjelölve piócaként</string>
-    <string name="corrupt_font">Sérült font fájl %s</string>
     <string name="webview_crash_unknown">Ismeretlen hiba</string>
     <string name="webview_crash_unknwon_detailed">Ezt egy belső hiba okozta a WebView-ban</string>
     <string name="webview_crash_oom">Kevés a memória</string>
@@ -125,7 +124,6 @@
     <string name="save">Mentés</string>
     <string name="close">Bezárás</string>
     <string name="select">Kiválasztás</string>
-    <string name="reordering_cards">Újrarendelési kártyák...</string>
     <string name="field_remapping">%1$s (az “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Az összes üres kártyát töröljük. Ha a jegyzet összes kártyája törlődik, akkor ez is eltávolításra kerül. Folytatod?</string>
     <!-- Timebox -->
@@ -146,17 +144,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Átütemezés</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Előnézet</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ennyiből %2$d</string>
-    <string name="error_insufficient_memory">A művelet nem végrhajtható:  a készülék nem rendelkezik elég memóriával</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Átnevezés</string>
-    <string name="default_conf_delete_error">Az alapértelmezett beállítások csoport nem távolítható el</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d kártya hozzáadva</item>
-        <item quantity="other">%d kártyák hozzáadva</item>
-    </plurals>
     <string name="check_db">Adatbázis ellenőrzése</string>
     <string name="check_media">Média ellenőrzése</string>
     <string name="empty_cards">Üres kártyák listája</string>
-    <string name="check_db_message">Adatbázis ellenőrzése.\nKérlek, várj...</string>
     <string name="empty_card_warning">Ez a kártya üres. Használd az \"Üres kártyák\" funkciót a főképernyő menüjében.</string>
     <string name="unknown_type_field_warning">Válaszadás: ismeretlen mező: %s</string>
     <string name="delete_deck">Pakli törlése...\nKérlek, várj...</string>
@@ -170,13 +161,6 @@
     </plurals>
     <string name="import_log_no_apkg">Ez nem egy érvényes Anki csomag fájl</string>
     <string name="import_title_error" comment="Title of error dialog">Hiba</string>
-    <string name="import_log_failed_unzip">Nem sikerült kicsomagolni az apkg-t: %s</string>
-    <string name="import_log_failed_copy_to">Nem sikerült átmásolni az apkg-t a(z) %s-hoz</string>
-    <string name="import_log_failed_validate">Az apkg nem ment át az érvényesítésen</string>
-    <string name="import_log_insufficient_space_error">Nincs elég hely a csomag importálásához.\nSzükséges - %1$s\nRendelkezésre áll - %2$s\n\nProblémád van? Próbálj meg helyet felszabadítani a telefonjodon. Másik lehetőségként használd a szinkronizálást, ez kevesebb helyet használ mint az import. Megpróbálhatod importálni a csomagot egy olyan eszközön aminek több tárterülete van (pl Anki Desktop) és aztán szinkronizálni erre az eszközre. </string>
-    <string name="import_log_file_cache_cleared">Hiba történt a fájl importálása során valószínű a cache törlés során.\n.Kérjük próbálja újra</string>
-    <string name="import_succeeded_but_check_database">Adat importálás sikeres, de az import utáni takarítás sikertelen. Futass egy adatbázis ellenőrzést később. Hiba eredete: %s</string>
-    <string name="import_error_corrupt_zip">Hibás apkg fájl. Próbáld meg törölni és újra letölteni.\n\nA hiba oka: %s</string>
     <string name="import_error_handle_exception">Nem sikerült importálni a fájlt\n\n%s</string>
     <string name="import_error_not_apkg_extension">A \"%s\" fájlnévnek nincsen .apkg vagy .colpkg kiterjesztése</string>
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
@@ -184,27 +168,25 @@
     <string name="import_error_copy_to_cache">Nem sikerült gyorsítótárba helyezni a fájlt (valószínűleg elfogyott a tárhely)</string>
     <string name="import_error_multiple_colpkg">Több colpkg fájl lett kiválasztva.</string>
     <string name="import_error_colpkg_apkg">Az apkg &amp; colpkg fájlok egyszerre lettek kiválasztva.</string>
-    <string name="import_stats_error">Hibák történtek a következő fájlok importálásánál:\n%s</string>
-    <string name="import_replacing">A gyűjtemény cseréje&#8230;</string>
     <string name="import_interrupted">Importálás megszakítva</string>
     <string name="export_include_schedule">Ütemezéssel együtt</string>
     <string name="export_include_media">Médiával együtt</string>
     <string name="confirm_apkg_export">Exportálja a gyűjteményt Anki csomagként?</string>
     <string name="confirm_apkg_export_deck">Exportáljon \"%s\"-t apkg-ként?</string>
     <plurals name="confirm_apkg_export_selected_cards">
-        <item quantity="one">Export selected card as apkg file?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="one">Kijelölt kártya exportálása apkg-ként?</item>
+        <item quantity="other">Kijelölt %d kártya exportálása apkg-ként?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Export selected note as apkg file?</item>
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="one">Kijelölt jegyzet exportálása apkg-ként?</item>
+        <item quantity="other">Kijelölt %d jegyzet exportálása apkg-ként?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">Exportálás előkészítése...</string>
+    <string name="export_ready_title">Exportálás kész</string>
     <string name="export_send_no_handlers">Nincs elérhető alkalmazás, ami kezelni tudja az apkg-t. Mentés...</string>
     <string name="export_save_apkg_successful">Az Anki csomag sikeresen mentve</string>
     <string name="export_save_apkg_unsuccessful">Az Anki csomag mentése sikertelen</string>
-    <string name="export_share_title">Send Anki package using</string>
+    <string name="export_share_title">Anki csomag küldése</string>
     <string name="export_email_subject">AnkiDroid exportált index kártyák: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
         <br/><br/>
@@ -213,8 +195,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Megosztás</string>
+    <string name="export_choice_save_to">Mentés ide</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Beállítások</string>
     <string name="menu__deck_options">Pakli beállítások</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Tanulási beállítások</string>
@@ -224,47 +206,11 @@
     <string name="dyn_deck_desc">Ez egy különleges pakli a normál ütemezésen kívüli tanuláshoz. A kártyák ismétlés után automatikusan visszakerülnek belőle az eredeti paklijukba. Ha törlöd a paklit a paklilistából, a benne levő maradék kártyák visszakerülnek az eredeti pakliba.</string>
     <string name="steps_error">A lépések száma 0-nál nagyobb kell hogy legyen</string>
     <string name="steps_min_error">Legalább egy lépés szükség</string>
-    <string name="sched_end">(vége)</string>
-    <string name="sched_unbury_action">A \"Félretétel megszüntetése\" menüponttal megjelenítheted őket.</string>
-    <string name="sched_has_buried">Néhány kapcsolódó vagy félretett kártya halasztásra került a következő gyakorlásig.</string>
     <string name="tag_editor_add_feedback">Érintsd meg a(z) “%2$s” elemet a “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">“%1$s” címke kiválasztva</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s másodperc</item>
-        <item quantity="other">%s másodperc</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s perc</item>
-        <item quantity="other">%s perc</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s óra</item>
-        <item quantity="other">%s óra</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s nap</item>
-        <item quantity="other">%s nap</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s hónap</item>
-        <item quantity="other">%s hónap</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s év</item>
-        <item quantity="other">%s év</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s másodperc</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Ez a pakli már létezik</string>
     <string name="decks_rename_filtered_nosubdecks">A szűrt pakli nem tartalmazhat alapcsomagokat</string>
-    <string name="filtered_deck_name">Szűrt Pakli</string>
     <string name="reminder_title">Ne feledkezz meg a tanulásról ma sem!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d kártya ismétlése %1$s-ban</item>
@@ -273,14 +219,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Hiba történt az apkg fájl megosztásakor</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">A fájlhoz egy újabb Anki verzió szükséges.</string>
     <string name="activity_start_failed">Nincsen letöltve olyan alkalmazás, ami végre tudná hajtani ezt a műveletet.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[A kamera képei lehet túl nagyok. Lehet, hogy tömörítenie vagy újra kéne méreteznie őket a média mappájában.]]></string>
     <string name="no_browser_notification">Nem találtunk böngészőt, kérjük látogasson meg egy weblapot PC-n vagy mobilon: </string>
     <string name="web_page_error">Az oldal betöltése sikertelen: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">A kártyán külsős link nem támogatott.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Visszaszerzett Kártya</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Háttér</string>
     <string name="choose_an_image">Válasszon egy képet</string>
@@ -307,7 +250,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Nézet</string>
     <string name="anki_js_error_code">(Hiba Kód: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Vágólapra másolva</string>
     <string name="about_ankidroid_error_copy_debug_info">Hiba történt a hibakeresési információk vágólapra másolása közben</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Hibás kártya tartalom: \"%s\" betöltése sikertelen</string>
@@ -315,7 +258,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">A(z) \'%s\' pakli betöltése nem sikerült</string>
     <string name="search_decks">Keresés a paklikban</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Áttelepítés állapota</string>
     <string name="ankidroid_init_failed_webview_title">Végzetes hiba</string>
     <string name="ankidroid_init_failed_webview">Az AnkiDroid a System WebView-t használja, ami jelenleg nem elérhető. Lehetséges, hogy a rendszer frissítéseket telepít. Próbáld újra pár perc múlva.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -364,14 +307,14 @@
     <string name="deck_download_progress_message">Más alkalmazásokat használhatsz, amíg a letöltés folyik.</string>
     <string name="check_network">Ellenőrizd a hálózati kapcsolatodat!</string>
     <string name="search_using_deck_name">Keresés a paklik nevében</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">A letöltés megszakadt, a külső tároló nem elérhető</string>
     <string name="home">Kezdőlap</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Kártya elhalasztva.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d kártya felfüggesztve.</item>
+        <item quantity="other">%d kártya felfüggesztve.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">A %s mező kitűzőcédulára</string>
@@ -381,10 +324,10 @@
     <string name="scoped_storage_postpone">Elhalasztás</string>
     <string name="scoped_storage_migrate">Áttelepítés</string>
     <string name="search_card_js_api_no_results">A keresés nem adott vissza találatokat.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
-    <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
-\nStorage migration will continue in the background.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">Az AnkiDroidnak át kell telepítenie a tárhelyét, hogy megfeleljen az Android 10 biztonsági szabályzatának.\n\nEz javítja a médiaszinkronizálás teljesítményét.&lt;br&gt;&lt;br&gt;Az áttelepítés során nem lesz lehetőség a szinkronizálásra, és néhány beállítás le lesz tiltva. Az áttelepítés megkezdése előtt médiaszinkronizálásra kerül sor, hogy az adatok biztonságban legyenek.&lt;br&gt;&lt;br&gt;Az AnkiDroid használata vagy bezárása biztonságos a folyamat alatt.</string>
+    <string name="start_migration_progress_message">A tároló áttelepítése elindult. Hamarosan folytathatja az AnkiDroid használatát.</string>
+    <string name="migration_part_1_done_resume">Folytathatja az AnkiDroid használatát.
+\nA tároló áttelepítése folytatódik a háttérben.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s nem érvényes javascript csomag</string>
     <string name="could_not_create_dir">Nem sikerült létrehozni a könyvtárat: 
@@ -397,28 +340,26 @@
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Nem sikerült elérni a gyűjteményt. Kérjük próbálja meg később!</string>
     <!-- App Intro -->
-    <string name="intro_ankidroid_tagline_one">Study less</string>
-    <string name="intro_ankidroid_tagline_two">Remember more</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
-    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Get Started</string>
-    <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
-    <string name="already_logged_in">Already logged in</string>
+    <string name="intro_ankidroid_tagline_one">Tanulj kevesebbet</string>
+    <string name="intro_ankidroid_tagline_two">Jegyezz meg többet </string>
+    <string name="intro_short_ankidroid_explanation">Az Anki kártyatervező időt spórol: megerősíti a leggyengébb emlékeidet, és megőrzi a legerősebbeket.</string>
+    <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Kezdj hozzá</string>
+    <string name="intro_sync_from_ankiweb">Szinkronizálás AnkiWebről</string>
+    <string name="already_logged_in">Már bejelentkeztél</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
-    <string name="deck_created">Deck created</string>
-    <string name="deck_renamed">Deck renamed</string>
+    <string name="deck_created">Pakli elkészült</string>
+    <string name="deck_renamed">Pakli átnevezve</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Pakli letörölve. Távolítsd el a közvetlen elérést</string>
     <!-- Browser Options Dialog -->
-    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cards</string>
-    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
-    <string name="toggle_cards_notes">Toggle Cards/Notes</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
-    <string name="truncate_content_help">Truncate the height of each row of the Browser to show only first 3 lines of content</string>
-    <string name="browser_options_dialog_heading">Browser Options</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Kártyák</string>
+    <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Jegyzetek</string>
+    <string name="toggle_cards_notes">Kártyák/Jegyzetek váltása</string>
+    <string name="toggle_browser_mode_help">Kártyák vagy jegyzetek megjelenítésének váltása</string>
+    <string name="truncate_content_help">A böngésző minden sorának magasságát úgy állítja be, hogy csak az első 3 sor legyen látható.</string>
+    <string name="browser_options_dialog_heading">Böngésző beállításai</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Ez a funkció nem érhető el a tároló áttelepítése alatt.</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tároló áttelepítésének elindítása</string>
+    <string name="media_sync_required_title">Média szinkronizálása szükséges</string>
+    <string name="media_sync_unavailable_message">A média szinkronizálás ki van kapcsolva a beállításokban. Folytatás előtt szinkronizálj és készíts biztonsági másolatot minden olyan médiáról, amely még nem volt szinkronizálva.</string>
 </resources>

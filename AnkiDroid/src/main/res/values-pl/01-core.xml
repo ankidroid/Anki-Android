@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Talie</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Przeglądarka kart</string>
@@ -88,12 +88,6 @@
     <string name="no_cards_placeholder_title">Kolekcja jest pusta</string>
     <string name="no_cards_placeholder_description">Zacznij dodawać karty używając przycisku +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Przejrzano dziś %1$d kartę w %2$s</item>
-        <item quantity="few">Przejrzano dziś %1$d karty w %2$s</item>
-        <item quantity="many">Przejrzano dziś %1$d kart w %2$s</item>
-        <item quantity="other">Przejrzano dziś %1$d karty w %2$s</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Podaj odpowiedź</string>
     <string name="show_answer">Pokaż odpowiedź</string>
@@ -102,11 +96,8 @@
     <string name="ease_button_hard">Trudna</string>
     <string name="ease_button_good">Dobra</string>
     <string name="ease_button_easy">Łatwa</string>
-    <string name="studyoptions_congrats_undo">Cofnij %s</string>
     <string name="menu_import">Importuj</string>
     <string name="undo">Cofnij</string>
-    <string name="undo_action_review">ostatnia powtórka</string>
-    <string name="undo_action_change_deck_multi">zmień talie</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Cofnij pociągnięcie pędzlem</string>
     <string name="move_all_to_deck">Przenieś wszystkie do talii</string>
     <string name="unbury">Odkop</string>
@@ -180,18 +171,14 @@
     <string name="studyoptions_limit_reached">Dzienny limit nauki został osiągnięty</string>
     <string name="studyoptions_empty_schedule">Nie ma zaplanowanych kart do nauki</string>
     <string name="studyoptions_congrats_finished">Gratulacje! Zakończono powtórki na dziś.</string>
-    <string name="studyoptions_congrats_more_rev">Dzisiejszy limit powtórek został wyczerpany, ale wciąż pozostają karty do przejrzenia. Dla optymalnego zapamiętywania proszę rozważyć zwiększenie dziennego limitu w ustawieniach.</string>
-    <string name="studyoptions_congrats_more_new">Pozostało więcej kart do przejrzenia, ale dzienny limit został osiągnięty. Możesz zwiększyć limit w opcjach, ale miej na uwadze, że zwiększy to ilość powtórzeń w najbliższych dniach.</string>
-    <string name="studyoptions_congrats_custom">Aby kontynuować naukę poza zwykłym schematem kliknij przycisk Nauki Niestandardowej poniżej.</string>
     <string name="studyoptions_no_cards_due">Nie ma żadnych kart do przejrzenia.</string>
     <string name="sd_card_not_mounted">Urządzenie pamięci masowej nie zostało zamontowane</string>
-    <string name="empty_cloze_warning">Edytuj notatkę i dodaj luki w tekście. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Synchronizuj</string>
     <string name="button_upgrade" comment="Text of the sync button">Migruj dane do przestrzeni dyskowej</string>
-    <string name="cancel_sync_confirm">Chcesz przerwać synchronizację?</string>
-    <string name="continue_sync">Kontynuuj synchronizację</string>
-    <string name="sync_cancelled">Synchronizacja przerwana</string>
-    <string name="sync_cancel_message">Anulowanie...\nTo może chwilę zająć.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Chcesz przerwać synchronizację?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Kontynuuj synchronizację</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Synchronizacja przerwana</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Anulowanie...\nTo może chwilę zająć.</string>
     <string name="export">Eksportuj</string>
     <string name="export_collection">Eksportuj kolekcję</string>
     <string name="export_deck">Eksportuj talię</string>
@@ -224,7 +211,6 @@
     <string name="template_for_current_card_deleted">Typ karty dla aktualnej karty został usunięty</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Wygląd przeglądarki</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Informacje o karcie</string>
     <!-- Permissions -->
@@ -233,14 +219,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Przeglądarka kart</string>
     <string name="context_menu_anki_card_label">Karta Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s ma problem:<br/>%2$s</string>
-    <string name="more_information">Więcej informacji</string>
-    <string name="no_field">Znaleziono \'{{%1$s}}\', ale brakuje pola o nazwie \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Znaleziono  \'{{/%1$s}}\', ale brakuje \'{{#%1$s}}\' lub \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Brakuje \'}}\' w \'%s\'.</string>
-    <string name="open_tag_not_closed">Brakuje \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Znaleziono \'{{/%1$s}}\', ale oczekiwano \'{{/%2$s}}\'</string>
-    <string name="filter_error">Błąd w filtrze %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Kolekcje nie mogą zostać połączone.\nKtórą kolekcję chcesz zachować?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -255,7 +233,6 @@
         <item quantity="many">%1$d kart (0 do przejrzenia)</item>
         <item quantity="other">%1$d kart (0 do przejrzenia)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">Kopia %s</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Nie można zapisać do lub utworzyć pliku %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Wiele błędów, najnowszy: %s"</string>

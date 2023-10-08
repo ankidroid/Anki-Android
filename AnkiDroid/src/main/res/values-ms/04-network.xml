@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Anda diluar talian</string>
-    <string name="sync_even_if_offline">Cuba Juga</string>
     <string name="sync_error">Ralat penyegerakan</string>
     <string name="vague_error" comment="Network error dialog title">Ralat</string>
     <string name="retry">Cuba semula</string>
@@ -63,66 +62,15 @@
     <string name="sign_up">Daftar</string>
     <string name="logged_as">Log masuk sebagai</string>
     <string name="log_out">Log keluar</string>
-    <string name="alert_logging_message">Sedang log masuk&#8230;</string>
-    <string name="invalid_username_password">Alamat e-mel atau kata laluan tidak sah</string>
     <string name="reset_password">Tetap semula kata laluan</string>
     <string name="lost_mail_instructions">Terlupa E-mel?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Tetapan bagi XXX</string>
-    <string name="sync_prepare_syncing">Menyediakan penyegerakan&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Menyediakan penyegerakan penuh&#8230;</string>
-    <string name="sync_uploading_message">Memuat naik&#8230;</string>
-    <string name="sync_downloading_message">Memuat turun&#8230;</string>
     <string name="sync_title">Penyegerakan</string>
     <string name="sync_log_uploading_message">Penyegerakan penuh daripada tempatan</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="other">Jam anda mati %1$d saat%2$s. Pastikan tarikh, masa, dan zon masa pada telefon anda ditetapkan dengan betul, kemudian segerak sekali lagi.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, zon masa mungkin salah</string>
-    <string name="sync_log_clocks_unsynchronized_date">, tarikh mungkin salah</string>
-    <string name="sync_no_changes_message">Tiada perubahan ditemui</string>
     <string name="sync_database_acknowledge">Koleksi telah disegerakkan</string>
-    <string name="sync_log_error_specific">Ralat penyegerakan, jenis: %1$s, pesanan: %2$s</string>
     <string name="sync_corrupt_database">Pangkalan data anda rosak. Sila membaikinya sebelum cuba penyegerakan lagi.\n\nLihat %s untuk maklumat tentang membaiki pangkalan data anda.</string>
-    <string name="sync_too_busy">Pelayan sibuk. Cuba lagi kemudian.</string>
-    <string name="sync_remote_db_error">Pangkalan data yang dimuat turun rosak. Sila cuba lagi.</string>
-    <string name="sync_overwrite_error">Koleksi semasa anda tidak dapat ditulis ganti oleh fail yang dimuat turun</string>
-    <string name="sync_connection_error">Sambungan tamat masa. Sama ada sambungan internet anda mengalami masalah, atay anda mempunyai fail yang sangat besar dalam folder media anda.</string>
-    <string name="sync_write_access_error_on_storage">Fail yang dimuat turun tidak dapat disimpan dalam storan anda. Sama ada storan baca-sahaja atau kekurangan ruang</string>
-    <string name="sync_error_invalid_sync_server">Pelayan Penyegerakan Sendiri dalam Tetapan Lanjutan tidak sah (%s). Sila masukkan pelayan yang sah, atau lumpuhkan tetapan ini.</string>
-    <string name="sync_deletions_message">Menyegerakkan padaman&#8230;</string>
-    <string name="sync_small_objects_message">Menyegerakkan benda kecil&#8230;</string>
-    <string name="sync_finish_message">Menyelesaikan penyegerakan&#8230;</string>
-    <string name="sync_log_finish_error">Ralat ketika menghantar perintah selesai ke pelayan</string>
-    <string name="sync_writing_db">Menulis perubahan dalam pangkalan data&#8230;</string>
-    <string name="sync_download_chunk">Memuat turun perubahan&#8230;</string>
-    <string name="sync_upload_chunk">Memuat naik perubahan&#8230;</string>
-    <string name="sync_up_down_size">Naik: %1$d KB, turun: %2$d KB</string>
-    <string name="sync_generic_error">Ralat telah berlaku. Sila cuba kemudian.</string>
-    <string name="sync_check_upload_file">Memeriksa fail sebelum memuat naik&#8230;</string>
-    <string name="sync_check_download_file">Memeriksa fail dimuat turun&#8230;</string>
-    <string name="sync_media_find">Mencari media yang telah berubah&#8230;</string>
-    <string name="sync_media_no_changes">Tiada perubahan pada fail media</string>
-    <string name="sync_media_success">Media telah disegerakkan</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="other">Penyegerakan media separa siap:\n%d fail media dimuat turun.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="other">%d fail media telah dimuat naik.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="other">%d perubahan media untuk muat naik</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="other">%d fail media telah dimuat turun</item>
-    </plurals>
-    <string name="sync_sanity_failed">Selepas penyegerakan, koleksi terdahulu dalam keadaan tidak konsisten. Untuk menyelesaikan masalah ini, AnkiDroid akan memaksa penyegerakan penuh. Pilih mana satu yang anda mahu simpan.</string>
-    <string name="sync_media_sanity_failed">Penyegerakan media selesai, namun bilangan media berlawanan dengan pelayan. Penyegerakan media seterusnya akan dijadikan penuh untuk membetulkan apa-apa ralat.</string>
-    <string name="sync_media_db_error">Penyegerakan media gagal kerana pangkalan data semasa rosak. Pemeriksaan media disarankan.</string>
-    <string name="sync_media_error">Ralat menyegerakkan data media</string>
-    <string name="sync_media_error_check">Ralat semasa menyegerakkan media. Pemeriksaan media disarankan.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Sila lakukan ‘%s’ sebelum menyegerak</string>
     <string name="sync_sanity_local">Tempatan</string>
     <string name="sync_sanity_remote">Jarak Jauh</string>
     <string name="force_full_sync_title">Paksa penyegerakan penuh</string>
@@ -130,15 +78,7 @@
     <string name="force_full_sync_confirmation">Telah dipaksa penyegerakan penuh</string>
     <string name="full_sync_confirmation">perubahan diminta akan memerlukan muat naik penuh pangkalan data apabila anda menyegerakkan koleksi anda. Jika anda mempunyai semakan atau perubahan pada peranti lain yang belum disegerakkan ke sini, maka mereka akan dibuang. Teruskan?</string>
     <string name="full_sync_confirmation_upgrade">Akibat pepijat dalam versi yang dipasang sebelum ini, disarankan anda memaksa penyegerakan penuh.</string>
-    <string name="sync_error_407_proxy_required">Pengesahan proksi diperlukan.</string>
-    <string name="sync_error_409">Hanya satu pelanggan boleh mencapai AnkiWeb pada suatu masa. Jika penyegerakan sebelum ini gagal, sila cuba lagi dalam beberapa minit.</string>
-    <string name="sync_error_413_collection_size">Koleksi atau fail media anda terlalu besar untuk disegerakkan.</string>
-    <string name="sync_error_500_unknown">AnkiWeb menghadapi ralat. Sila cuba lagi dalam beberapa minit, dan jika kesulitan beterusan, sila failkan laporan pepijat.</string>
-    <string name="sync_error_501_upgrade_required">Sila naik taraf ke versi AnkiDroid terkini</string>
-    <string name="sync_error_502_maintenance">AnkiWeb di bawah penyelenggaraan. Sila cuba lagi dalam beberapa minit.</string>
-    <string name="sync_error_504_gateway_timeout">Ralat 504 gateway timeout diperoleh.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Segerak (penuh)</string>
     <string name="sync_menu_title_no_account">Segerak (log in)</string>
-    <string name="sync_error_unknown_host_readable">Tidak dapat menyambung ke AnkiWeb. Adakah internet anda berfungsi?\n\n%s</string>
 </resources>

@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Вы не в сети</string>
-    <string name="sync_even_if_offline">Всё равно попробовать</string>
     <string name="sync_error">Ошибка синхронизации</string>
     <string name="vague_error" comment="Network error dialog title">Ошибка</string>
     <string name="retry">Повторить</string>
@@ -63,84 +62,15 @@
     <string name="sign_up">Зарегистрироваться</string>
     <string name="logged_as">Вы вошли как</string>
     <string name="log_out">Выйти</string>
-    <string name="alert_logging_message">Вход в систему&#8230;</string>
-    <string name="invalid_username_password">Неверный адрес почты или пароль</string>
     <string name="reset_password">Сбросить пароль</string>
     <string name="lost_mail_instructions">Забыли адрес почты?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Параметры XXX</string>
-    <string name="sync_prepare_syncing">Подготавливается 
-синхронизация&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Подготавливается 
-полная синхронизация&#8230;</string>
-    <string name="sync_uploading_message">Выгружается&#8230;</string>
-    <string name="sync_downloading_message">Загружается&#8230;</string>
     <string name="sync_title">Синхронизация</string>
     <string name="sync_log_uploading_message">Полностью синхронизировано с устройством</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="few">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="many">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, неверный часовой пояс</string>
-    <string name="sync_log_clocks_unsynchronized_date">, неверная дата</string>
-    <string name="sync_no_changes_message">Изменений нет</string>
     <string name="sync_database_acknowledge">Коллекция синхронизирована</string>
-    <string name="sync_log_error_specific">Ошибка синхронизации, тип: %1$s, сообщение: %2$s</string>
     <string name="sync_corrupt_database">База данных повреждена. Попробуйте исправить её и синхронизироваться опять.\n\nОб исправлении см. %s.</string>
-    <string name="sync_too_busy">Сервер занят. Попробуйте позже.</string>
-    <string name="sync_remote_db_error">Скачанная база данных была повреждена. Пожалуйста, попробуйте еще раз.</string>
-    <string name="sync_overwrite_error">Текущая коллекция не может быть перезаписана загруженным файлом</string>
-    <string name="sync_connection_error">Время ожидания истекло. У вас или проблемы с подключением к интернету, или очень большие медиафайлы.</string>
-    <string name="sync_write_access_error_on_storage">Не удалось сохранить загруженный файл в хранилище. Либо хранилище в режиме только для чтения, либо в нём недостаточно места.</string>
-    <string name="sync_error_invalid_sync_server">Пользовательский сервер синхронизации, указанный в дополнительных настройках недопустим (%s). Введите допустимый сервер или отключите настройку.</string>
-    <string name="sync_deletions_message">Синхронизируются удалённые&#8230;</string>
-    <string name="sync_small_objects_message">Синхронизируются малые объекты&#8230;</string>
-    <string name="sync_finish_message">Синхронизация заканчивается&#8230;</string>
-    <string name="sync_log_finish_error">Ошибка при отправке на сервер команды завершения</string>
-    <string name="sync_writing_db">Изменения записываются&#8230;</string>
-    <string name="sync_download_chunk">Изменения загружаются&#8230;</string>
-    <string name="sync_upload_chunk">Изменения выгружаются&#8230;</string>
-    <string name="sync_up_down_size">Выгружено: %1$d кБ,\nзагружено: %2$d кБ</string>
-    <string name="sync_generic_error">Произошла ошибка. Попробуйте позже.</string>
-    <string name="sync_check_upload_file">Файл проверяется перед выгрузкой&#8230;</string>
-    <string name="sync_check_download_file">Проверяется загруженный файл&#8230;</string>
-    <string name="sync_media_find">Медиафайлы 
-сравниваются&#8230;</string>
-    <string name="sync_media_no_changes">Изменений в медифайлах нет</string>
-    <string name="sync_media_success">Медиафайлы сихронизированы</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Частичная синхронизация завершена:\n%d медиафайл загружено.</item>
-        <item quantity="few">Частичная синхронизация завершена:\n%d медиафайла загружено.</item>
-        <item quantity="many">Частичная синхронизация завершена:\n%d медиафайлов загружено.</item>
-        <item quantity="other">Частичная синхронизация завершена:\n%d медиафайлов загружено.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d медиафайл выгружен</item>
-        <item quantity="few">%d медиафайла выгружены</item>
-        <item quantity="many">%d медиафайлов выгружены</item>
-        <item quantity="other">%d медиафайлов выгружено</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d медиафайл для выгрузки</item>
-        <item quantity="few">%d медиафайла для выгрузки</item>
-        <item quantity="many">%d медиафайлов для выгрузки</item>
-        <item quantity="other">%d медиафайлов для выгрузки</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d медиафайл загружен</item>
-        <item quantity="few">%d медиафайла загружены</item>
-        <item quantity="many">%d медиафайлов загружено</item>
-        <item quantity="other">%d медиафайлов загружено</item>
-    </plurals>
-    <string name="sync_sanity_failed">После синхронизации коллекция в несогласованном состоянии. Будет запущена полная синхронизации. Выберите версию коллекции, которая останется.</string>
-    <string name="sync_media_sanity_failed">Синхронизация медиафайлов завершена, но количество файлов не совпадает. В следующей раз будет произведена полная синхронизация.</string>
-    <string name="sync_media_db_error">Не удалось синхронизировать медиафайлы, потому что текущая база данных повреждена. Запустите проверку медиафайлов.</string>
-    <string name="sync_media_error">Ошибка при синхронизации медиафайлов</string>
-    <string name="sync_media_error_check">Ошибка при синхронизации медиафайлов. Попробуйте проверить медиафайлы.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Запустите «%s» перед синхронизацией</string>
     <string name="sync_sanity_local">Локальную</string>
     <string name="sync_sanity_remote">Удалённую</string>
     <string name="force_full_sync_title">Выполнить полную синхронизацию</string>
@@ -148,15 +78,7 @@
     <string name="force_full_sync_confirmation">Принудительная синхронизация</string>
     <string name="full_sync_confirmation">Последние изменения требуют полную выгрузку базы данных при следующей синхронизации. Если на другом вашем устройстве есть изменения, они будут утеряны. Продолжить?</string>
     <string name="full_sync_confirmation_upgrade">Из-за ошибке в прошлой версии AnkiDroid рекомендуем полную синхронизацию.</string>
-    <string name="sync_error_407_proxy_required">Требуется проверка подлинности прокси.</string>
-    <string name="sync_error_409">Только один клиент за раз может быть подключён к AnkiWeb. Если синхронизация не удалась, попробуйте позже.</string>
-    <string name="sync_error_413_collection_size">Коллекция или медиафайл слишком велики для синхронизации.</string>
-    <string name="sync_error_500_unknown">На AnkiWeb произошла ошибка. Попробуйте ещё раз через несколько минут. Если не исчезнет, пожалуйста, сообщите об ошибке.</string>
-    <string name="sync_error_501_upgrade_required">Пожалуйста, установите последнюю версию AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb находится на обслуживании. Повторите ещё раз через несколько минут.</string>
-    <string name="sync_error_504_gateway_timeout">Ошибка 504: шлюз не отвечает</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Синхро (полностью)</string>
     <string name="sync_menu_title_no_account">Синхро (войти)</string>
-    <string name="sync_error_unknown_host_readable">Не удалось подключиться к AnkiWeb. Ваш интернет работает?\n\n%s</string>
 </resources>

@@ -47,7 +47,6 @@
     <string name="model_browser_delete">नोट प्रकार मिटाएँ</string>
     <string name="model_browser_rename" comment="Rename a note type">नाम बदलें</string>
     <string name="model_browser_template">पत्ते संपादित करें</string>
-    <string name="model_browser_add">नोट प्रकार जोड़ें</string>
     <!--Rename-->
     <string name="rename_model">नोट प्रकार का नाम बदलें</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">जोड़ते समय अंतिम इनपुट याद रखें</string>
     <string name="model_field_editor_changing">फ़ील्ड अद्यतित हो रहे हैं</string>
     <string name="model_field_editor_sort_field">इस फ़ील्ड के अनुसार क्रम में रखें</string>
-    <string name="model_clone_suffix">प्रतिलिपि</string>
     <!--Warnings-->
     <string name="model_delete_warning">आप सुनिश्चित करें कि आप इस नोटों को हटाना चाहते हैं?</string>
     <string name="field_delete_warning">क्या आप सचमुच इस फ़ील्ड को मिटाना चाहते हैं?</string>

@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">आप ऑफ़लाइन हैं</string>
-    <string name="sync_even_if_offline">फिर भी कोशिश करे</string>
     <string name="sync_error">सिंक में दिकत </string>
     <string name="vague_error" comment="Network error dialog title">गलती</string>
     <string name="retry">पुनः प्रयास करें</string>
@@ -63,71 +62,15 @@
     <string name="sign_up">साइन अप करें</string>
     <string name="logged_as">के रूप में लॉग इन</string>
     <string name="log_out">लॉग आउट</string>
-    <string name="alert_logging_message">लॉग इन कर रहे हैं...</string>
-    <string name="invalid_username_password">अमान्य ईमेल पता या पासवर्ड</string>
     <string name="reset_password">पासवर्ड रीसेट करें</string>
     <string name="lost_mail_instructions">ईमेल भूल गए?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX के लिए विकल्प</string>
-    <string name="sync_prepare_syncing">सिंकोराइजेशन हो रहा है...</string>
-    <string name="sync_preparing_full_sync_message">पूर्ण समकालन की तैयारी हो रही है...</string>
-    <string name="sync_uploading_message">अपलोड हो रहा है...</string>
-    <string name="sync_downloading_message">डाउनलोड कर रहा है...</string>
     <string name="sync_title">समकालन</string>
     <string name="sync_log_uploading_message">स्थानीय से पूर्ण सिंक्रनाइज़ेशन</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">, समय ज़ोन संभवत: गलत</string>
-    <string name="sync_log_clocks_unsynchronized_date">, तारीख संभवत: गलत</string>
-    <string name="sync_no_changes_message">कोई परिवर्तन नहीं मिला</string>
     <string name="sync_database_acknowledge">संग्रह सिंक्रनाइज़</string>
-    <string name="sync_log_error_specific">सिंक्रनाइज़ेशन त्रुटि, प्रकार: %1$s, संदेश: %2$s</string>
     <string name="sync_corrupt_database">आपका डेटाबेस दूषित है । कृपया सिंक्रनाइज़ करने के लिए पुन: प्रयास करने से पहले इसे ठीक करें. \ n \ nSee %s आपके डेटाबेस को सुधारने के बारे में जानकारी के लिए ।</string>
-    <string name="sync_too_busy">सर्वर व्यस्त है । बाद में पुन: प्रयास करें ।</string>
-    <string name="sync_remote_db_error">डाउनलोड किया गया डेटाबेस दूषित था । कृपया पुन: प्रयास करें ।</string>
-    <string name="sync_overwrite_error">आपका वर्तमान संग्रह डाउनलोड की गई फ़ाइल द्वारा अधिलेखित नहीं किया जा सका</string>
-    <string name="sync_connection_error">कनेक्शन टाइम आउट हो गया । या तो आपका इंटरनेट कनेक्शन समस्याओं का सामना कर रहा है, या आपके मीडिया फ़ोल्डर में एक बहुत बड़ी फ़ाइल है ।</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">उन्नत सेटिंग्स में कस्टम सिंक सर्वर अमान्य है (%s)। कृपया एक मान्य सर्वर दर्ज करें, या सेटिंग अक्षम करें।</string>
-    <string name="sync_deletions_message">हटाए गए सिंक्रनाइज़ कर रहा है.. ।</string>
-    <string name="sync_small_objects_message">छोटी ऑब्जेक्ट्स सिंक्रनाइज़ कर रहा है.. ।</string>
-    <string name="sync_finish_message">सिंक्रनाइज़ करना समाप्त कर रहा है.. ।</string>
-    <string name="sync_log_finish_error">सर्वर को पूर्ण दिशा भेजते समय त्रुटि</string>
-    <string name="sync_writing_db">डेटाबेस में परिवर्तन लिख रहा है.. ।</string>
-    <string name="sync_download_chunk">परिवर्तन डाउनलोड कर रहा है.. ।</string>
-    <string name="sync_upload_chunk">परिवर्तन अपलोड कर रहा है.. ।</string>
-    <string name="sync_up_down_size">अप: %1$d डी KB, डाउन: %2$dडी KB</string>
-    <string name="sync_generic_error">कुछ समस्या प्रकट हुई। दोबारा प्रयत्न करें।</string>
-    <string name="sync_check_upload_file">अपलोड करने से पहले फ़ाइल जांच रहा है.. ।</string>
-    <string name="sync_check_download_file">डाउनलोड की गई फ़ाइल जांच रहा है.. ।</string>
-    <string name="sync_media_find">परिवर्तित मीडिया ढूंढ रहा है.. ।</string>
-    <string name="sync_media_no_changes">मीडिया फ़ाइलों में कोई परिवर्तन नहीं</string>
-    <string name="sync_media_success">मीडिया सिंक किए गए</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">सिंक्रनाइज़ करने के बाद, संग्रह एक असंगत स्थिति में था । इस समस्या को हल करने के लिए, AnkiDroid पूर्ण सिंक्रनाइज़ेशन को बाध्य करेगा । चुनें जो पक्ष आप रखना चाहते हैं ।</string>
-    <string name="sync_media_sanity_failed">मीडिया सिंक्रनाइज़ेशन पूर्ण, लेकिन मीडिया गणना सर्वर से सहमत नहीं है । किसी भी त्रुटि को सही करने के लिए अगला मीडिया सिंक्रनाइज़ेशन पूर्ण हो जाएगा ।</string>
-    <string name="sync_media_db_error">मीडिया sync विफल हुआ क्योंकि वर्तमान डेटाबेस दूषित है। एक मीडिया चेक की सिफारिश की जाती है।</string>
-    <string name="sync_media_error">मीडिया डेटा सिंक्रनाइज़ करने में त्रुटि</string>
-    <string name="sync_media_error_check">मीडिया सिंक्रनाइज़ करते समय त्रुटि । कोई मीडिया जांच अनुशंसित है ।</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">कृपया सिंक करने से पहले ‘%s’ चलाएं</string>
     <string name="sync_sanity_local">स्थानीय</string>
     <string name="sync_sanity_remote">दूरस्थ</string>
     <string name="force_full_sync_title">पूर्ण सिंक्रनाइज़ेशन को बाध्य करें</string>
@@ -135,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">जब आप अगले अपने संग्रह सिंक्रनाइज़ अनुरोध परिवर्तन डेटाबेस का एक पूर्ण अपलोड की आवश्यकता होगी । यदि आपके पास अभी तक सिंक्रनाइज़ नहीं किए गए किसी अन्य डिवाइस पर प्रतीक्षारत समीक्षाएँ या अन्य परिवर्तन हैं, तो वे खो जाएँगे. जारी?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid के पहले से स्थापित संस्करण में एक बग के कारण, यह एक पूर्ण सिंक मजबूर करने के लिए सिफारिश की है.</string>
-    <string name="sync_error_407_proxy_required">Proxy प्रमाणीकरण की आवश्यकता है।</string>
-    <string name="sync_error_409">एक समय में केवल एक क्लाइंट AnkiWeb तक पहुंच सकता है । यदि कोई पिछला सिंक्रनाइज़ेशन विफल रहा, तो कृपया कुछ मिनटों में पुन: प्रयास करें ।</string>
-    <string name="sync_error_413_collection_size">आपका संग्रह या मीडिया फ़ाइल सिंक करने के लिए बहुत बड़ी है।</string>
-    <string name="sync_error_500_unknown">AnkiWeb को एक त्रुटि का सामना करना पड़ा। कृपया कुछ मिनटों में पुन: प्रयास करें, और यदि समस्या बनी रहती है, तो कृपया bug रिपोर्ट दर्ज करें।</string>
-    <string name="sync_error_501_upgrade_required">कृपया AnkiDroid के नवीनतम संस्करण में नवीनीकृत करें</string>
-    <string name="sync_error_502_maintenance">AnkiWeb maintenance में है। कृपया कुछ देर बाद दुबारा कोशिश करे।</string>
-    <string name="sync_error_504_gateway_timeout">504 गेटवे टाइमआउट त्रुटि प्राप्त हुई।</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">सिंक (पूर्ण)</string>
     <string name="sync_menu_title_no_account">सिंक (लॉग इन)</string>
-    <string name="sync_error_unknown_host_readable">AnkiWeb से कनेक्ट नहीं हो सका। क्या आपका इंटरनेट काम कर रहा है?\n\n%s</string>
 </resources>

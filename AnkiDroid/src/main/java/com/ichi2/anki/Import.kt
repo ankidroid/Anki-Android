@@ -27,10 +27,6 @@ import com.ichi2.anki.pages.CsvImporter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.libanki.importer.AnkiPackageImporter
-import com.ichi2.themes.StyledProgressDialog
-import com.ichi2.utils.Computation
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
 
@@ -100,49 +96,3 @@ class DatabaseRestorationListener(val deckPicker: DeckPicker, val newAnkiDroidDi
         CollectionHelper.ankiDroidDirectoryOverride = null
     }
 }
-
-/* Legacy Backend */
-
-fun DeckPicker.importReplaceListener(): TaskListenerWithContext<DeckPicker, String, Computation<*>?> {
-    return ImportReplaceListener(this)
-}
-
-private class ImportReplaceListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Computation<*>?>(deckPicker) {
-    override fun actualOnPostExecute(context: DeckPicker, result: Computation<*>?) {
-        Timber.i("Import: Replace Task Completed")
-        if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-            context.mProgressDialog!!.dismiss()
-        }
-        val res = context.resources
-        if (result!!.succeeded()) {
-            context.onImportColpkg(colpkgPath = null)
-        } else {
-            context.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), reload = true)
-        }
-    }
-
-    override fun actualOnPreExecute(context: DeckPicker) {
-        if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context,
-                context.resources.getString(R.string.import_title),
-                context.resources.getString(R.string.import_replacing),
-                false
-            )
-        }
-    }
-
-    /**
-     * @param value A message
-     */
-    override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-        @Suppress("Deprecation")
-        context.mProgressDialog!!.setMessage(value)
-    }
-}
-
-/**
- * @param impList: List of packages to import
- * @param errList: a string describing the errors. Null if no error.
- */
-data class ImporterData(val impList: List<AnkiPackageImporter>?, val errList: String?)

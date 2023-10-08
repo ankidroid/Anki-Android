@@ -71,7 +71,6 @@
     <string name="replay_audio">Putar ulang audio</string>
     <string name="leech_suspend_notification">Kartu ditandai sebagai leech dan ditangguhkan</string>
     <string name="leech_notification">Kartu ditandai sebagai leech</string>
-    <string name="corrupt_font">Berkas fon %s rusak</string>
     <string name="webview_crash_unknown">Galat Tidak Diketahui</string>
     <string name="webview_crash_unknwon_detailed">Ini disebabkan oleh galat internal dalam WebView</string>
     <string name="webview_crash_oom">Kehabisan memori</string>
@@ -125,7 +124,6 @@
     <string name="save">Simpan</string>
     <string name="close">Tutup</string>
     <string name="select">Pilih</string>
-    <string name="reordering_cards">Mengurutkan ulang kartu&#8230;</string>
     <string name="field_remapping">%1$s (dari “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">Semua kartu yang yang dibuat kosong akan dihapus. Jika catatan tidak memiliki sisa kartu, kartu tersebut akan hilang. Apa kamu yakin?</string>
     <!-- Timebox -->
@@ -144,16 +142,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Jadwalkan ulang</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pratinjau</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d dari %2$d</string>
-    <string name="error_insufficient_memory">Operasi gagal karena memori tidak cukup pada perangkat</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Ubah nama</string>
-    <string name="default_conf_delete_error">Grup opsi bawaan tidak dapat dihapus</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="other">%d kartu ditambahkan</item>
-    </plurals>
     <string name="check_db">Periksa basisdata</string>
     <string name="check_media">Periksa media</string>
     <string name="empty_cards">Kartu kosong</string>
-    <string name="check_db_message">Memeriksa basisdata&#8230;</string>
     <string name="empty_card_warning">Kartu ini kosong. Gunakan opsi \"Kosongkan kartu\" dari menu di halaman daftar dek.</string>
     <string name="unknown_type_field_warning">Ketik jawaban: bidang %s tidak diketahui</string>
     <string name="delete_deck">Menghapus dek&#8230;</string>
@@ -166,13 +158,6 @@
     </plurals>
     <string name="import_log_no_apkg">Ini bukan paket Anki yang valid</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Gagal mengekstrak apkg: %s</string>
-    <string name="import_log_failed_copy_to">Gagal menyalin apkg ke %s</string>
-    <string name="import_log_failed_validate">validasi apkg gagal</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Galat mengimpor berkas. Harap coba lagi</string>
-    <string name="import_succeeded_but_check_database">Impor data berhasil namun pembersihan pasca impor gagal.Periksa basisdata nanti. Sebab: %s</string>
-    <string name="import_error_corrupt_zip">Terjadi kesalahan dengan file apkg. Tolong hapus dan unduh kembali.\n\nAkar penyebab: %s</string>
     <string name="import_error_handle_exception">Gagal mengimpor file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Berkas bernama “%s” tidak memiliki ekstensi .apkg atau .colpkg</string>
     <string name="import_error_load_imported_database">Pengganti basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
@@ -180,8 +165,6 @@
     <string name="import_error_copy_to_cache">Gagal cache file (mungkin kehabisan ruang penyimpanan)</string>
     <string name="import_error_multiple_colpkg">Beberapa file colpkg dipilih.</string>
     <string name="import_error_colpkg_apkg">Kedua file apkg &amp; colpkg dipilih bersamaan.</string>
-    <string name="import_stats_error">Beberapa error terjadi saat melakukan impor file berikut:\n%s</string>
-    <string name="import_replacing">Mengganti koleksi&#8230;</string>
     <string name="import_interrupted">Impor terganggu</string>
     <string name="export_include_schedule">Sertakan penjadwalan</string>
     <string name="export_include_media">Sertakan media</string>
@@ -193,8 +176,8 @@
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">Mempersiapkan ekspor&#8230;</string>
+    <string name="export_ready_title">Ekspor siap</string>
     <string name="export_send_no_handlers">Tidak ada aplikasi tersedia untuk memproses apkg. Menyimpan...</string>
     <string name="export_save_apkg_successful">Berhasil menyimpan paket Anki</string>
     <string name="export_save_apkg_unsuccessful">Paket Anki gagal disimpan</string>
@@ -207,8 +190,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Bagikan</string>
+    <string name="export_choice_save_to">Simpan ke</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opsi</string>
     <string name="menu__deck_options">Opsi dek</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Pilihan belajar</string>
@@ -218,41 +201,11 @@
     <string name="dyn_deck_desc">Ini adalah dek khusus untuk belajar di luar jadwal normal. Kartu akan otomatis dikembalikan ke dek aslinya setelah kamu mengulasnya. Menghapus dek ini dari daftar dek akan mengembalikan semua kartu yang tersisa ke dek aslinya.</string>
     <string name="steps_error">Langkah-langkah harus lebih besar dari 0</string>
     <string name="steps_min_error">Setidaknya satu langkah diperlukan</string>
-    <string name="sched_end">(selesai)</string>
-    <string name="sched_unbury_action">Untuk melihatnya sentuh item \"Angkat\" di menu</string>
-    <string name="sched_has_buried">Beberapa kartu yang terkait atau dipendam ditunda sampai besok</string>
     <string name="tag_editor_add_feedback">Sentuh “%2$s” untuk konfirmasi menambah “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Tag “%1$s” dipilih</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="other">%s detik</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="other">%s menit</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="other">%s jam</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="other">%s hari</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="other">%s bulan</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="other">%s tahun</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s detik</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Dek sudah ada</string>
     <string name="decks_rename_filtered_nosubdecks">Dek yang difilter tidak dapat memiliki subdek</string>
-    <string name="filtered_deck_name">Dek difilter</string>
     <string name="reminder_title">Jangan lupa belajar hari ini!</string>
     <plurals name="reminder_text">
         <item quantity="other">%2$d kartu perlu diulas di %1$s</item>
@@ -260,22 +213,19 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Galat membagikan berkas apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Berkas ini memerlukan versi terbaru dari Anki.</string>
     <string name="activity_start_failed">Sistem tidak mempunyai aplikasi terinstal yang dapat melakukan aksi ini.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Gambar kamera mungkin terlalu besar. Diharap untuk memampatkan & merubah ukuran gambar di direktori media]]></string>
     <string name="no_browser_notification">Tidak ada peramban yang ditemukan, harap kunjungi halaman web lewat PC atau HP</string>
     <string name="web_page_error">Gagal memuat halaman: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">tautan halaman eksternal dalam kartu tidak didukung.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Kartu dipulihkan</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Latar belakang</string>
     <string name="choose_an_image">Pilih gambar</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Kembalikan ke baku</string>
     <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
-    <string name="basic_answer_sample_text">an example</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">Cntoh</string>
+    <string name="basic_answer_sample_text">contoh</string>
     <string name="reviewer_tts_cloze_spoken_replacement">Kosong</string>
     <!-- in options menu & Navigation Drawer -->
     <string name="ankidroid_turn_on_fullscreen_nav_drawer">Harap gunakan layar penuh untuk menggunakan Tampilkan Menu Navigasi menggunakan JavaScript.</string>
@@ -294,7 +244,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Lihat</string>
     <string name="anki_js_error_code">(Kode Galat: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Tersalin ke papan klip</string>
     <string name="about_ankidroid_error_copy_debug_info">Galat menyalin informasi debug ke papan klip</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Isi Kartu Gagal: Gagal memuat \'%s\'</string>
@@ -302,7 +252,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Gagal memuat dek \'%s\'</string>
     <string name="search_decks">Cari dek</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Tampilkan progress migrasi</string>
     <string name="ankidroid_init_failed_webview_title">Kegagalan fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid membutuhkan System Webview yang sekarang sedang tidak ada. Hal ini dapat terjadi karena sistem sedang meng-install pembaruan. Mohon mencoba lagi dalam beberapa menit.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -316,11 +266,11 @@
     <string name="format_font_size">Ubah Ukuran Font</string>
     <string name="insert_mathjax">Masukkan rumus MathJax</string>
     <string name="insert_cloze">Masukkan Cloze Deletion</string>
-    <string name="note_editor_toolbar_icon">Button text</string>
+    <string name="note_editor_toolbar_icon">Teks tombol</string>
     <string name="before_text">HTML Sebelum Pilihan</string>
     <string name="after_text">HTML Sesudah Pilihan</string>
     <string name="add_toolbar_item">Buat Item Toolbar</string>
-    <string name="edit_toolbar_item">Edit Toolbar Item</string>
+    <string name="edit_toolbar_item">Ubah Item Toolbar</string>
     <string name="toolbar_item_explain_edit_or_remove">Enter HTML to be inserted before and after the selected text\n\nLong press a toolbar item to edit or remove it</string>
     <string name="remove_toolbar_item">Copot Item Toolbar?</string>
     <string name="note_editor_paste_too_large">Gambar ini terlalu besar untuk ditempel, mohon masukkan gambar secara manual.</string>
@@ -389,7 +339,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

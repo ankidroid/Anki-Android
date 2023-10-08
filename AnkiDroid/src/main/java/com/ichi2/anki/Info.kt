@@ -98,6 +98,8 @@ class Info : AnkiActivity() {
         val anchorTextColor = anchorTextThemeColor.toRGBHex()
 
         mWebView!!.setBackgroundColor(backgroundColor)
+        mWebView!!.settings.allowFileAccess = true
+        mWebView!!.settings.allowContentAccess = true
         setRenderWorkaround(this)
         when (type) {
             TYPE_NEW_VERSION -> {
@@ -106,7 +108,7 @@ class Info : AnkiActivity() {
                     setOnClickListener { close() }
                 }
                 val background = backgroundColor.toRGBHex()
-                mWebView!!.loadUrl("file:///android_asset/changelog.html")
+                mWebView!!.loadUrl("/android_asset/changelog.html")
                 mWebView!!.settings.javaScriptEnabled = true
                 mWebView!!.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView, url: String) {
@@ -146,7 +148,7 @@ class Info : AnkiActivity() {
                     }
                 }
             }
-            else -> finishWithoutAnimation()
+            else -> finish()
         }
     }
 

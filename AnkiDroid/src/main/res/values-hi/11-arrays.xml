@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">मुझसे पूछें</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">केवल टैग</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">नए पत्ते यादृच्छिक क्रम में</string>
-    <string name="new_order_order_added">क्रम में नए कार्ड जोड़े गए</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">सबसे पुराना देखा पहले</string>
     <string name="cram_deck_conf_order_random">यादृच्छिक</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">वर्तमान डेक का उपयोग करें</string>
     <string name="add_to_deck_decide_by_note_type">नोट प्रकार द्वारा तय</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">नए कार्ड और समीक्षाएं मिक्स</string>
-    <string name="new_spread_new_after_review">समीक्षा के बाद नए कार्ड</string>
-    <string name="new_spread_new_before_review">समीक्षा से पहले नए कार्ड</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">जब स्पैनिश पर कोई फ़ॉंट निर्दिष्ट नहीं है</string>
-    <string name="override_font_always" comment="Option to always override font">हमेशा</string>
     <!-- theme labels -->
     <string name="theme_follow_system">सिस्टम का पालन करें</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-बड़ा</string>
     <string name="html_size_code_xx_large">xx-बड़ा</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">उत्तर बटन १</string>
-    <string name="gesture_answer_2">उत्तर बटन २</string>
-    <string name="gesture_answer_3">उत्तर बटन ३</string>
-    <string name="gesture_answer_4">उत्तर बटन ४</string>
-    <string name="gesture_answer_green">सुझाया गया उत्तर (हरा)</string>
-    <string name="gesture_answer_better_recommended">उत्तर सुझाव से बेहतर</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">मीडिया चलाएं</string>
     <string name="gesture_abort_learning">सीखना रोक दें</string>
     <string name="gesture_flag_red">लाल ध्वज टॉगल करें</string>

@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Спрашивать</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Добавить метку</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Новые в случайном порядке</string>
-    <string name="new_order_order_added">Новые карточки в порядке добавления</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Давно не повторяемые</string>
     <string name="cram_deck_conf_order_random">Случайные</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Использовать текущую</string>
     <string name="add_to_deck_decide_by_note_type">Выбрать по типу записи</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Перемешивать новые и повторяемые</string>
-    <string name="new_spread_new_after_review">Повторяемые до новых</string>
-    <string name="new_spread_new_before_review">Новые до повторяемых</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Если в карточке не указан шрифт</string>
-    <string name="override_font_always" comment="Option to always override font">Всегда</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Как в системе</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">очень большой</string>
     <string name="html_size_code_xx_large">самый большой</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Кнопка ответа 1</string>
-    <string name="gesture_answer_2">Кнопка ответа 2</string>
-    <string name="gesture_answer_3">Кнопка ответа 3</string>
-    <string name="gesture_answer_4">Кнопка ответа 4</string>
-    <string name="gesture_answer_green">Рекомендованный ответ (зелёный)</string>
-    <string name="gesture_answer_better_recommended">Лучше рекомендованного ответа</string>
+    <string name="answer_again">Ответить снова</string>
+    <string name="answer_hard">Сложный ответ</string>
+    <string name="answer_good">Хороший ответ</string>
+    <string name="answer_easy">Простой ответ</string>
     <string name="gesture_play">Воспроизвести медиафайл</string>
     <string name="gesture_abort_learning">Прервать учёбу</string>
     <string name="gesture_flag_red">Красный флажок</string>

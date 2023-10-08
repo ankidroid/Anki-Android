@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Matzos</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Navigadore de cartas</string>
@@ -81,10 +81,6 @@
     <string name="no_cards_placeholder_description">Incumintza a annànghere cartas\n
                         impreende s\'icona +.</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">%1$d carta istudiada in %2$s oe</item>
-        <item quantity="other">%1$d cartas istudiadas in %2$s oe</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Iscrie sa risposta</string>
     <string name="show_answer">Ammustra sa risposta</string>
@@ -93,11 +89,8 @@
     <string name="ease_button_hard">Difìtzile</string>
     <string name="ease_button_good">Bonu</string>
     <string name="ease_button_easy">Fàtzile</string>
-    <string name="studyoptions_congrats_undo">Annulla %s</string>
     <string name="menu_import">Importa</string>
     <string name="undo">Annulla</string>
-    <string name="undo_action_review">ùrtima revisione</string>
-    <string name="undo_action_change_deck_multi">càmbia matzu</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Annulla su tratu</string>
     <string name="move_all_to_deck">Move totu a intro de su matzu</string>
     <string name="unbury">Disinterra</string>
@@ -172,18 +165,14 @@
     <string name="studyoptions_limit_reached">Ses arribbadu a su lìmite de istùdiu pro oe</string>
     <string name="studyoptions_empty_schedule">Peruna carta pranificada de istudiare</string>
     <string name="studyoptions_congrats_finished">Bene meda! Pro como as agabbadu.</string>
-    <string name="studyoptions_congrats_more_rev">Ses arribbadu a su lìmite pro oe, ma bi sunt galu cartas de revisionare. Podes aumentare su lìmite in sas optziones.</string>
-    <string name="studyoptions_congrats_more_new">Ses arribbadu a su lìmite de oe. Bi sunt àteras cartas noas a disponimentu; podes aumentare su lìmite in sas optziones, ma custu at a fàghere crèschere su càrrigu de traballu pro sas revisiones a tèrmine curtzu.</string>
-    <string name="studyoptions_congrats_custom">Pro istudiare in foras de sa pranificatzione normale toca su butone “Istùdiu personalizadu”</string>
     <string name="studyoptions_no_cards_due">Peruna carta de revisionare como</string>
     <string name="sd_card_not_mounted">Sa memòria de su dispositivu no est montada</string>
-    <string name="empty_cloze_warning">Modìfica custa nota e annanghe unos cantos iscantzellamentos de cloze. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Sincroniza</string>
     <string name="button_upgrade" comment="Text of the sync button">Tràmuda a sa memòria cun punna</string>
-    <string name="cancel_sync_confirm">Chetes annullare sa sincronizatzione?</string>
-    <string name="continue_sync">Sighi a sincronizare</string>
-    <string name="sync_cancelled">Sincronizatzione annullada</string>
-    <string name="sync_cancel_message">Annullende&#8230;\n
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Chetes annullare sa sincronizatzione?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Sighi a sincronizare</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizatzione annullada</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Annullende&#8230;\n
     Bi diat pòdere chèrrere unu pagu de tempus.</string>
     <string name="export">Esporta</string>
     <string name="export_collection">Esporta sa colletzione</string>
@@ -213,7 +202,6 @@
     <string name="template_for_current_card_deleted">Sa casta de carta pro sa carta atuale est istada iscantzellada.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Aparèntzia de su navigadore</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Info de sa carta</string>
     <!-- Permissions -->
@@ -222,14 +210,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navigadore de cartas</string>
     <string name="context_menu_anki_card_label">Carta Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s tenet unu problema:&lt;br &gt;&lt;/br&gt;%2$s</string>
-    <string name="more_information">Àteras informatziones</string>
-    <string name="no_field">S\'est agatadu \'{{%1$s}}\', ma non b\'at perunu campu chi si mutat \'%1$s\'.</string>
-    <string name="closed_tag_not_open">\'{{/%1$s}}\' agatadu, ma mancat \'{{#%1$s}}\' o \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Mancat \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Mancat \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Agatadu \'{{/%1$s}}\', ma fiat isetadu \'{{/%2$s}}\'</string>
-    <string name="filter_error">Faddina in su filtru %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Sas colletziones non si podent cumbinare.\n
     Cale colletzione cheres mantènnere·?</string>
@@ -243,7 +223,6 @@
         <item quantity="one">%1$d carta (0 de revisionare)</item>
         <item quantity="other">%1$d cartas (0 de revisionare)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s còpia</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Non faghet a iscrìere o creare su documentu %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Errores mùltiplos, su prus reghente: %s"</string>

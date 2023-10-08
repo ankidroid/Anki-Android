@@ -17,20 +17,20 @@
 package com.ichi2.anki.cardviewer
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.cardviewer.TypeAnswer.Companion.cleanCorrectAnswer
+import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.contentForCloze
-import com.ichi2.testutils.EmptyApplication
-import org.hamcrest.MatcherAssert
-import org.hamcrest.Matchers
 import org.intellij.lang.annotations.Language
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.annotation.Config
 
-@RunWith(AndroidJUnit4::class) // dependency on TextUtils.htmlEncode
-@Config(application = EmptyApplication::class)
-class TypeAnswerTest {
+@RunWith(AndroidJUnit4::class)
+class TypeAnswerTest : RobolectricTest() {
+    override fun setUp() {
+        super.setUp()
+        col
+    }
+
     @Test
     fun testTypeAnsAnswerFilterNormalCorrect() {
         @Language("HTML")
@@ -57,7 +57,7 @@ $!"""
  background-color: white;
 }
 </style>Type in hello
-<div><code id="typeans"><span class="typeGood">hello</span><span id="typecheckmark">✔</span></code></div>
+<code id=typeans><span class=typeGood>hello</span></code>
 
 <hr id=answer>
 
@@ -91,7 +91,7 @@ hello"""
  background-color: white;
 }
 </style>Type in hello
-<div><code id="typeans"><span class="typeBad">hello</span><br><span id="typearrow">&darr;</span><br><span class="typeMissed">xyzzy${"$"}${"$"}$22</span></code></div>
+<code id=typeans><span class=typeBad>hello</span><br><span id=typearrow>&darr;</span><br><span class=typeMissed>xyzzy${"$"}${"$"}$22</span></code>
 
 <hr id=answer>
 
@@ -126,7 +126,7 @@ hello"""
  background-color: white;
 }
 </style>Type in hello
-<div><code id="typeans"><span class="typeMissed">hello</span></code></div>
+<code id=typeans>hello</code>
 
 <hr id=answer>
 
@@ -161,7 +161,7 @@ $!"""
  background-color: white;
 }
 </style>Type in $!
-<div><code id="typeans"><span class="typeGood">$!</span><span id="typecheckmark">✔</span></code></div>
+<code id=typeans><span class=typeGood>$!</span></code>
 
 <hr id=answer>
 
@@ -196,7 +196,7 @@ $!"""
  background-color: white;
 }
 </style>Type in $!
-<div><code id="typeans"><span class="typeBad">$!</span><br><span id="typearrow">&darr;</span><br><span class="typeMissed">hello</span></code></div>
+<code id=typeans><span class=typeBad>$!</span><br><span id=typearrow>&darr;</span><br><span class=typeMissed>hello</span></code>
 
 <hr id=answer>
 
@@ -231,7 +231,7 @@ $!"""
  background-color: white;
 }
 </style>Type in $!
-<div><code id="typeans"><span class="typeMissed">$!</span></code></div>
+<code id=typeans>$!</code>
 
 <hr id=answer>
 
@@ -247,16 +247,6 @@ $!"""
         assertEquals("test", contentForCloze(cloze1, 1))
         val cloze2 = "This is {{c1::test}} which is containing {{c1::test}} word twice {{c1::test2}}"
         assertEquals("test, test, test2", contentForCloze(cloze2, 1))
-    }
-
-    @Test
-    fun testMediaIsNotExpected() {
-        // #0096 - Anki Desktop did not expect media.
-        @Language("HTML")
-        val input = "ya[sound:36_ya.mp3]<div><img src=\"paste-efbfdfbff329f818e3b5568e578234d0d0054067.png\" /><br /></div>"
-        val expected = "ya"
-        val actual: String = cleanCorrectAnswer(input)
-        MatcherAssert.assertThat(actual, Matchers.equalTo(expected))
     }
 
     private fun typeAnsAnswerFilter(answer: String, correctAnswer: String, userAnswer: String): String =

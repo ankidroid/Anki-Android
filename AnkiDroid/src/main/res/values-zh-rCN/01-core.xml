@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">牌组</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">卡片浏览器</string>
@@ -76,9 +76,6 @@
     <string name="no_cards_placeholder_title">收藏夹为空</string>
     <string name="no_cards_placeholder_description">开始添加卡牌\n使用 + 图标。</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="other">今天学习了%1$d张卡片，用了%2$s。</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">输入答案</string>
     <string name="show_answer">显示答案</string>
@@ -87,11 +84,8 @@
     <string name="ease_button_hard">困难</string>
     <string name="ease_button_good">良好</string>
     <string name="ease_button_easy">简单</string>
-    <string name="studyoptions_congrats_undo">撤消%s</string>
     <string name="menu_import">导入牌组</string>
     <string name="undo">撤销</string>
-    <string name="undo_action_review">上次复习</string>
-    <string name="undo_action_change_deck_multi">更换牌组</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">撤销画笔</string>
     <string name="move_all_to_deck">全部移动至牌组</string>
     <string name="unbury">取消搁置</string>
@@ -165,18 +159,14 @@
     <string name="studyoptions_limit_reached">达到每日学习限制</string>
     <string name="studyoptions_empty_schedule">计划中没有需要学习的卡片</string>
     <string name="studyoptions_congrats_finished">恭喜！你已经完成了目前的学习任务。</string>
-    <string name="studyoptions_congrats_more_rev">已达到今天的复习数量限制，但仍有一些卡片需要复习。你可以选择在牌组选项中增加复习数量。</string>
-    <string name="studyoptions_congrats_more_new">还有新卡牌待学习，但已达到每日上限。您可以增加设置中的每日学习上限，不过请留意，这会增加您短期的复习工作量。</string>
-    <string name="studyoptions_congrats_custom">若要在正常计划之外学习，请点击下面的自定义学习按钮。</string>
     <string name="studyoptions_no_cards_due">没有卡片待复习。</string>
     <string name="sd_card_not_mounted">未挂载储存设备</string>
-    <string name="empty_cloze_warning">编辑此笔记并添加一些填空。（%1$s）</string>
     <string name="button_sync" comment="Text of the sync button">同步</string>
     <string name="button_upgrade" comment="Text of the sync button">迁移到作用域存储</string>
-    <string name="cancel_sync_confirm">你想要取消同步吗？</string>
-    <string name="continue_sync">继续同步</string>
-    <string name="sync_cancelled">同步已取消</string>
-    <string name="sync_cancel_message">正在取消&#8230;\n这可能需要一点时间。</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">你想要取消同步吗？</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">继续同步</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">同步已取消</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">正在取消&#8230;\n这可能需要一点时间。</string>
     <string name="export">导出</string>
     <string name="export_collection">导出集合</string>
     <string name="export_deck">导出牌组</string>
@@ -203,7 +193,6 @@
     <string name="template_for_current_card_deleted">当前卡片的卡片模板已被删除。</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">浏览器外观</string>
-    <string name="current_and_default_deck">%1$s（%2$s）</string>
     <!-- card Info -->
     <string name="card_info_title">卡片信息</string>
     <!-- Permissions -->
@@ -212,14 +201,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">卡片浏览器</string>
     <string name="context_menu_anki_card_label">Anki 卡片</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s 有一个问题：<br/>%2$s</string>
-    <string name="more_information">更多信息</string>
-    <string name="no_field">找到了「{{%1$s}}」，但没有一个字段叫「%1$s」。</string>
-    <string name="closed_tag_not_open">找到了「{{/%1$s}}」，但缺少「{{#%1$s}}」或「{{^%1$s}}」。</string>
-    <string name="missing_closing_bracket">在「%s」中缺少「}}」。</string>
-    <string name="open_tag_not_closed">缺少「{{%s}}」。</string>
-    <string name="wrong_tag_closed">找到了「{{/%1$s}}」，但预期「{{/%2$s}}」</string>
-    <string name="filter_error">筛选 %s 出错</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">卡片组无法合并。\n您想要保留哪个卡片组？</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -231,7 +212,6 @@
     <plurals name="deckpicker_title_zero_due">
         <item quantity="other">%1$d 张卡片（0 到期）</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s 的副本</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">无法写入或创建文件 %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"同一错误发生多次，最近造成该错误的原因： %s"</string>

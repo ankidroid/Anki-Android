@@ -2,28 +2,25 @@ plugins {
     id 'maven-publish'
     id 'com.android.library'
     id 'kotlin-android'
+    id "org.jetbrains.dokka"
 }
 
 group = "com.ichi2.anki"
 version = "2.0.0"
 
-repositories {
-    google()
-    mavenCentral()
-}
 android {
 
     namespace 'com.ichi2.anki.api'
-    compileSdkVersion 33
+    compileSdk 33
 
     buildFeatures {
         buildConfig = true
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdk 16
         //noinspection OldTargetApi
-        targetSdkVersion 32
+        targetSdk 32
         buildConfigField "String", "READ_WRITE_PERMISSION", '"com.ichi2.anki.permission.READ_WRITE_DATABASE"'
         buildConfigField "String", "AUTHORITY", '"com.ichi2.anki.flashcards"'
     }
@@ -68,23 +65,13 @@ task androidSourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
 }
 
-task androidJavadocs(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    android.libraryVariants.all { variant ->
-        if (variant.name == 'release') {
-            owner.classpath += variant.javaCompileProvider.get().classpath
-        }
+task dokkaJavadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    from(dokkaJavadoc)
+    archiveClassifier.set("javadoc")
+    doLast {
+        println("API javadocs output directory: ${dokkaJavadoc.outputDirectory.get()}")
+        println("API javadocs jar output directory: ${destinationDirectory.get()}")
     }
-    exclude '**/R.html', '**/R.*.html', '**/index.html'
-    if (JavaVersion.current().isJava9Compatible()) {
-        options.addBooleanOption('html5', true)
-    }
-}
-
-task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-    archiveClassifier.set('javadoc')
-    from androidJavadocs.destinationDir
 }
 
 publishing {
@@ -94,7 +81,7 @@ publishing {
 
             artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
             artifact androidSourcesJar
-            artifact androidJavadocsJar
+            artifact dokkaJavadocJar
 
             versionMapping {
                 usage('java-api') {

@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">మీరు ఆఫ్లైన్లో ఉన్నారు</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">సమకాలీకరణ లోపం</string>
     <string name="vague_error" comment="Network error dialog title">తప్పు</string>
     <string name="retry">మళ్ళీ ప్రయత్నించండి</string>
@@ -63,71 +62,15 @@
     <string name="sign_up">చేరండి</string>
     <string name="logged_as">లాగా లాగిన్ అయ్యింది</string>
     <string name="log_out">లాగ్ అవుట్</string>
-    <string name="alert_logging_message">లాగిన్ అవుతోంది&#8230;</string>
-    <string name="invalid_username_password">చెల్లని ఇమెయిల్ చిరునామా లేదా పాస్వర్డ్</string>
     <string name="reset_password">పాస్వర్డ్ మార్చండి</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX కోసం ఎంపికలు</string>
-    <string name="sync_prepare_syncing">సమకాలీకరించడానికి సిద్ధం చేస్తోంది&#8230;</string>
-    <string name="sync_preparing_full_sync_message">పూర్తి సమకాలీకరణను సిద్ధం చేస్తోంది&#8230;</string>
-    <string name="sync_uploading_message">అప్లోడ్ అవుతోంది&#8230;</string>
-    <string name="sync_downloading_message">డౌన్లోడ్ అవుతోంది&#8230;</string>
     <string name="sync_title">సమకాలీకరణ</string>
     <string name="sync_log_uploading_message">స్థానికం నుండి పూర్తి సమకాలీకరణ</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">టైమ్ జోన్ బహుశా తప్పు</string>
-    <string name="sync_log_clocks_unsynchronized_date">తేదీ బహుశా తప్పు</string>
-    <string name="sync_no_changes_message">మార్పులు ఏవీ కనుగొనబడలేదు</string>
     <string name="sync_database_acknowledge">సేకరణ సమకాలీకరించబడింది</string>
-    <string name="sync_log_error_specific">సమకాలీకరణ లోపం, రకం: %1$s, సందేశం:%2$s</string>
     <string name="sync_corrupt_database">మీ డేటాబేస్ అవినీతి ఉంది. దయచేసి మళ్లీ సమకాలీకరించడానికి ప్రయత్నించే ముందు దాన్ని పరిష్కరించండి.\n\n మీ డేటాబేస్ను సరిచేయడానికి సమాచారం కోసం %s వీక్షించండి.</string>
-    <string name="sync_too_busy">సర్వర్ బిజీగా ఉంది. తరువాత మళ్ళీ ప్రయత్నించండి.</string>
-    <string name="sync_remote_db_error">డౌన్లోడ్ చేసిన డేటాబేస్ అవినీతికి గురైంది. దయచేసి మళ్లీ ప్రయత్నించండి.</string>
-    <string name="sync_overwrite_error">మీ ప్రస్తుత సేకరణ ఫైల్ డౌన్లోడ్ చేసిన ఫైల్ ద్వారా భర్తీ చేయబడలేదు</string>
-    <string name="sync_connection_error">కనెక్షన్ సమయం ముగిసింది. మీ ఇంటర్నెట్ కనెక్షన్ సమస్యలను ఎదుర్కొంటోంది లేదా మీ మీడియా ఫోల్డర్లో చాలా పెద్ద ఫైల్ని కలిగి ఉంది.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">తొలగింపులను సమకాలీకరిస్తోంది&#8230;</string>
-    <string name="sync_small_objects_message">చిన్న అంశాలను సమకాలీకరిస్తోంది&#8230;</string>
-    <string name="sync_finish_message">సమకాలీకరణను పూర్తి చెయ్యబడింది&#8230;</string>
-    <string name="sync_log_finish_error">సర్వర్కు ముగింపు దిశను పంపడంలో లోపం</string>
-    <string name="sync_writing_db">డేటాబేస్లో మార్పులను రాయడం&#8230;</string>
-    <string name="sync_download_chunk">మార్పులను డౌన్లోడ్ చేస్తోంది&#8230;</string>
-    <string name="sync_upload_chunk">మార్పులను అప్లోడ్ చేస్తోంది&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
-    <string name="sync_generic_error">లోపం సంభవించింది. తరువాత మళ్ళీ ప్రయత్నించండి.</string>
-    <string name="sync_check_upload_file">అప్లోడ్ చేసే ముందు ఫైల్ను తనిఖీ చేస్తోంది&#8230;</string>
-    <string name="sync_check_download_file">డౌన్లోడ్ చేసిన ఫైల్ తనిఖీ చేస్తోంది&#8230;</string>
-    <string name="sync_media_find">మార్చిన మీడియాను కనుగొనడం&#8230;</string>
-    <string name="sync_media_no_changes">మీడియా ఫైళ్ళకు మార్పులు లేవు</string>
-    <string name="sync_media_success">మీడియా సమకాలీకరించబడింది</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">సమకాలీకరించిన తర్వాత, సేకరణ అస్థిరమైన రాష్ట్రంలో ఉంది. ఈ సమస్యను పరిష్కరించడానికి, AnkiDroid పూర్తి సమకాలీకరణను బలవంతం చేస్తుంది. మీరు ఉంచాలని కోరుకునే వైపు ఎంచుకోండి.</string>
-    <string name="sync_media_sanity_failed">మీడియా సింక్రొనైజేషన్ పూర్తయింది, కానీ మీడియా లెక్కింపు సర్వర్తో ఏకకాలం లేదు. ఏదైనా లోపాన్ని సరిచేయడానికి తదుపరి మీడియా సమకాలీకరణ పూర్తి అవుతుంది.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">మీడియా డేటాను సమకాలీకరించడంలో లోపం</string>
-    <string name="sync_media_error_check">మీడియాని సమకాలీకరించడంలో లోపం. ఒక మీడియా చెక్ సిఫారసు చేయబడింది.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">స్థానిక</string>
     <string name="sync_sanity_remote">రిమోట్</string>
     <string name="force_full_sync_title">పూర్తి సమకాలీకరణను బలవంతం చేయండి</string>
@@ -135,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">మీ సేకరణ సమకాలీకరించినప్పుడు అభ్యర్థించిన మార్పుకు మీ డేటాబేస్ యొక్క పూర్తి అప్లోడ్ అవసరం అవుతుంది. ఇప్పటికీ సమీక్షలు లేదా ఇతర మార్పులు ఇప్పటికీ ఇక్కడ సమకాలీకరించబడకపోతే, అవి పోతాయి. కొనసాగించు?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid గతంలో సంస్థాపించిన సంస్కరణలో బగ్, ఇది పూర్తి సమకాలీకరణను బలపరచటానికి మద్దతిస్తుంది.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
-    <string name="sync_error_409">ఒక క్లయింట్ మాత్రమే ఒక సమయంలో AnkiWeb యాక్సెస్ చేయవచ్చు. మునుపటి సమకాలీకరణ విఫలమైతే, దయచేసి కొన్ని నిమిషాల్లో మళ్లీ ప్రయత్నించండి.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
-    <string name="sync_error_501_upgrade_required">దయచేసి AnkiDroid యొక్క తాజా సంస్కరణకు అప్గ్రేడ్ చేయండి</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

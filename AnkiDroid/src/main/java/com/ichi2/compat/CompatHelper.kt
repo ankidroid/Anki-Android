@@ -45,8 +45,7 @@ class CompatHelper private constructor() {
         sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
         sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
         sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
-        sdkVersion >= Build.VERSION_CODES.M -> CompatV23()
-        else -> CompatV21()
+        else -> CompatV23()
     }
 
     companion object {
@@ -56,10 +55,6 @@ class CompatHelper private constructor() {
         /** Get the current Android API level.  */
         val sdkVersion: Int
             get() = Build.VERSION.SDK_INT
-
-        /** Determine if the device is running API level 23 or higher.  */
-        val isMarshmallow: Boolean
-            get() = sdkVersion >= Build.VERSION_CODES.M
 
         /**
          * Main public method to get the compatibility class

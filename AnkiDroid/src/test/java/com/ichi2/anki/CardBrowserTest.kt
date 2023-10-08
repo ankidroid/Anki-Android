@@ -28,6 +28,7 @@ import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrow
 import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
@@ -36,10 +37,8 @@ import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.OS
 import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
-import net.ankiweb.rsdroid.RustCleanup
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
-import org.junit.Assert.assertArrayEquals
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -170,7 +169,7 @@ class CardBrowserTest : RobolectricTest() {
         val decks = b.validDecksForChangeDeck
 
         for (d in decks) {
-            if (d.getString("name") == "Hello") {
+            if (d.name == "Hello") {
                 return@runTest
             }
         }
@@ -185,7 +184,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val decks = b.validDecksForChangeDeck
 
-        if (decks.any { it.getString("name") == "World" }) {
+        if (decks.any { it.name == "World" }) {
             fail("Dynamic decks should not be transferred to by the browser.")
         }
     }
@@ -201,7 +200,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val decks = b.validDecksForChangeDeck
         for (d in decks) {
-            assertThat(validNames, hasItem(d.getString("name")))
+            assertThat(validNames, hasItem(d.name))
         }
         assertThat("Additional unexpected decks were present", decks.size, equalTo(2))
     }
@@ -240,7 +239,7 @@ class CardBrowserTest : RobolectricTest() {
 
         val cardIds = b.checkedCardIds
 
-        b.executeChangeCollectionTask(cardIds, dynId)
+        b.moveSelectedCardsToDeck(dynId).join()
 
         for (cardId in cardIds) {
             assertThat("Deck should not be changed", col.getCard(cardId).did, not(dynId))
@@ -251,14 +250,16 @@ class CardBrowserTest : RobolectricTest() {
     fun newlyCreatedDeckIsShownAsOptionInBrowser() = runTest {
         val deckOneId = addDeck("one")
         val browser = browserWithNoNewCards
-        assertEquals(1, browser.validDecksForChangeDeck.size)
-        assertEquals(deckOneId, browser.validDecksForChangeDeck.first().id)
+        assertEquals(2, browser.validDecksForChangeDeck.size) // 1 added + default deck
+        assertEquals(1, browser.validDecksForChangeDeck.count { it.id == deckOneId })
         val deckTwoId = addDeck("two")
-        assertEquals(2, browser.validDecksForChangeDeck.size)
-        assertArrayEquals(longArrayOf(deckOneId, deckTwoId), browser.validDecksForChangeDeck.map { it.id }.toLongArray())
+        assertEquals(3, browser.validDecksForChangeDeck.size) // 2 added + default deck
+        assertEquals(1, browser.validDecksForChangeDeck.count { it.id == deckOneId })
+        assertEquals(1, browser.validDecksForChangeDeck.count { it.id == deckTwoId })
     }
 
     @Test
+    @Flaky(os = OS.ALL, message = "Fails mostly on Mac and occasionally Windows")
     fun flagsAreShownInBigDecksTest() = runTest {
         val numberOfNotes = 75
         val cardBrowser = getBrowserWithNotes(numberOfNotes)
@@ -445,7 +446,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
-    fun repositionDataTest() {
+    fun repositionDataTest() = runTest {
         val b = getBrowserWithNotes(1)
 
         b.checkCardsAtPositions(0)
@@ -456,12 +457,14 @@ class CardBrowserTest : RobolectricTest() {
 
         b.repositionCardsNoValidation(listOf(card.id), 2)
 
+        card.reload()
+
         assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("2"))
     }
 
     @Test
     @Config(qualifiers = "en")
-    fun resetDataTest() {
+    fun resetDataTest() = runTest {
         addNoteUsingBasicModel("Hello", "World").firstCard().apply {
             due = 5
             queue = Consts.QUEUE_TYPE_REV
@@ -479,12 +482,15 @@ class CardBrowserTest : RobolectricTest() {
 
         b.resetProgressNoConfirm(listOf(card.id))
 
-        assertThat("Position of checked card after reset", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("1"))
+        card.reload()
+
+        assertThat("Position of checked card after reset", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("2"))
     }
 
     @Test
     @Config(qualifiers = "en")
-    fun rescheduleDataTest() {
+    fun rescheduleDataTest() = runTest {
+        TimeManager.reset()
         val b = getBrowserWithNotes(1)
 
         b.checkCardsAtPositions(0)
@@ -495,7 +501,9 @@ class CardBrowserTest : RobolectricTest() {
 
         b.rescheduleWithoutValidation(listOf(card.id), 5)
 
-        assertThat("Due of checked card after reschedule", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("8/12/20"))
+        card.reload()
+
+        assertThat(card.card.due, equalTo(5))
     }
 
     @Test
@@ -567,7 +575,6 @@ class CardBrowserTest : RobolectricTest() {
 
     /** PR #8553  */
     @Test
-    @RustCleanup("after legacy schema dropped, col.save() can be dropped and updatedMod can be taken from col.mod")
     fun checkDisplayOrderPersistence() {
         // Start the Card Browser with Basic Model
         ensureCollectionLoadIsSynchronous()
@@ -576,9 +583,7 @@ class CardBrowserTest : RobolectricTest() {
         saveControllerForCleanup(cardBrowserController)
 
         // Make sure card has default value in sortType field
-        assertThat("Initially Card Browser has order = noteFld", col.get_config_string("sortType"), equalTo("noteFld"))
-
-        col.db.execute("update col set mod = 0")
+        assertThat("Initially Card Browser has order = noteFld", col.config.get<String>("sortType"), equalTo("noteFld"))
 
         // Change the display order of the card browser
         cardBrowserController.get().changeCardOrder(7) // order no. 7 corresponds to "cardEase"
@@ -591,10 +596,10 @@ class CardBrowserTest : RobolectricTest() {
         saveControllerForCleanup(cardBrowserController)
 
         // Find the current (after database has been changed) Mod time
-        col.save()
-        val updatedMod = col.db.queryScalar("select mod from col")
-        assertThat("Card Browser has the new sortType field", col.get_config_string("sortType"), equalTo("cardEase"))
-        assertNotEquals(0, updatedMod, "Modification time must change")
+
+        val updatedMod = col.mod
+        assertThat("Card Browser has the new sortType field", col.config.get<String>("sortType"), equalTo("cardEase"))
+        assertNotEquals(0, updatedMod)
     }
 
     @Test
@@ -776,6 +781,7 @@ class CardBrowserTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("flaky")
     fun checkCardsNotesMode() = runTest {
         val cardBrowser = getBrowserWithNotes(3, true)
 

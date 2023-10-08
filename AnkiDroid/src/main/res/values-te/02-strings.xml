@@ -71,7 +71,6 @@
     <string name="replay_audio">ఆడియోను రీప్లే చేయండి</string>
     <string name="leech_suspend_notification">కార్డ్ జ్వాల మరియు సస్పెండ్ గా గుర్తించబడింది</string>
     <string name="leech_notification">కార్డు లీచ్గా గుర్తించబడింది</string>
-    <string name="corrupt_font">కరప్ట్ ఫాంట్ ఫైల్ %s</string>
     <string name="webview_crash_unknown">Unknown error</string>
     <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
     <string name="webview_crash_oom">Out of Memory</string>
@@ -125,7 +124,6 @@
     <string name="save">సేవ్</string>
     <string name="close">మూయుట</string>
     <string name="select">ఎంచుకోండి</string>
-    <string name="reordering_cards">క్రమాన్ని క్రమం చేస్తుంది&#8230;</string>
     <string name="field_remapping">%1$s (from “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">ఏదైనా మ్యాప్ చేసిన కార్డ్లు తొలగించబడతాయి. గమనికకు మిగిలిన కార్డులు లేకుంటే, అది కోల్పోతుంది. మీరు ఖచ్చితంగా కొనసాగించాలనుకుంటున్నారా?</string>
     <!-- Timebox -->
@@ -146,17 +144,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ప్రత్యేక ప్రదర్శన</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">మీ పరికరంలో తగినంత మెమరీ కారణంగా ఆపరేషన్ సాధ్యపడదు</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">పేరుమార్చు</string>
-    <string name="default_conf_delete_error">డిఫాల్ట్ ఎంపికల సమూహం తొలగించబడదు</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d కార్డ్ జోడించబడింది</item>
-        <item quantity="other">%d కార్డ్ జోడించబడింది</item>
-    </plurals>
     <string name="check_db">డేటాబేస్ను తనిఖీ చేయండి</string>
     <string name="check_media">మీడియా తనిఖీ చేయండి</string>
     <string name="empty_cards">ఖాళీ కార్డులు</string>
-    <string name="check_db_message">డేటాబేస్ను తనిఖీ చేస్తోంది&#8230;</string>
     <string name="empty_card_warning">ఈ కార్డ్ ఖాళీగా ఉంది. డెక్ జాబితా తెరపై మెను నుండి \"ఖాళీ కార్డులు\" ఎంపికను ఉపయోగించండి.</string>
     <string name="unknown_type_field_warning">సమాధానం టైప్: తెలియని ఫీల్డ్ %s</string>
     <string name="delete_deck">డెక్ను తొలగిస్తోంది&#8230;</string>
@@ -170,13 +161,6 @@
     </plurals>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
@@ -184,8 +168,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">సేకరణను భర్తీ చేస్తోంది&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">షెడ్యూల్ను జోడించండి</string>
     <string name="export_include_media">మీడియాను చేర్చండి</string>
@@ -224,47 +206,11 @@
     <string name="dyn_deck_desc">సాధారణ షెడ్యూల్ అధ్యయనం కోసం ఇది ప్రత్యేక డెక్. స్వయంచాలకంగా కార్డ్లను వాటిని సమీక్షించి, దాని అసలు డెక్స్కు వాటిని స్వయంచాలకంగా పునరుద్ధరించండి. డెక్ జాబితా నుండి ఈ డెక్ను తొలగిస్తే మిగిలిన అన్ని కార్డులను వారి అసలు డెక్కు తిరిగి పంపుతుంది.</string>
     <string name="steps_error">దశలు 0 కన్నా ఎక్కువ ఉండాలి</string>
     <string name="steps_min_error">కనీసం ఒక అడుగు అవసరం</string>
-    <string name="sched_end">(ముగింపు)</string>
-    <string name="sched_unbury_action">వాటిని ఇప్పుడు మెనులో \"అన్ బర్రీ\" ఐటెమ్ ను తాకడానికి చూడడానికి</string>
-    <string name="sched_has_buried">కొన్ని సంబంధిత లేదా ఖననం చేసిన కార్డులు రేపు వరకు ఆలస్యం అయ్యాయి</string>
     <string name="tag_editor_add_feedback">\"%1$s\" ని జోడించడాన్ని నిర్ధారించడానికి \"%2$s\" తాకండి</string>
     <string name="tag_editor_add_feedback_existing">ఇప్పటికే ఉన్న ట్యాగ్ \"%1$s\" ఎంచుకోబడింది</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s second</item>
-        <item quantity="other">%s seconds</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minute</item>
-        <item quantity="other">%s minutes</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s hour</item>
-        <item quantity="other">%s hours</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s రోజు</item>
-        <item quantity="other">%s రోజులు</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%sనెల</item>
-        <item quantity="other">%s నెలల</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%sసంవత్సరాల</item>
-        <item quantity="other">%sసంవత్సరాల</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">ఆ డెక్ ఇప్పటికే ఉంది</string>
     <string name="decks_rename_filtered_nosubdecks">ఫిల్టర్ డెక్ subdecks కాదు</string>
-    <string name="filtered_deck_name">ఫిల్టర్ డెక్</string>
     <string name="reminder_title">నేడు అధ్యయనం చేయడం మర్చిపోవద్దు!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
@@ -273,14 +219,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Apkg ఫైల్ను భాగస్వామ్యం చేయడంలో లోపం</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="web_page_error">Error loading page: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Select image</string>
@@ -403,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

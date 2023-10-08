@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">מבוטל</string>
-    <string name="enabled">מאופשר</string>
     <string name="pref_summary_seconds">%sשניות</string>
     <string name="pref_summary_minutes">%s דקות</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -138,8 +137,6 @@
     <string name="app_theme" maxLength="41">ערכת נושא</string>
     <string name="day_theme" maxLength="41">ערכת יום</string>
     <string name="night_theme" maxLength="41">ערכת לילה</string>
-    <string name="default_font" maxLength="41">גופן ברירת המחדל</string>
-    <string name="override_font" maxLength="41">החלת גופן ברירת המחדל</string>
     <string name="language" maxLength="41">שפה</string>
     <string name="language_system">שפת מערכת</string>
     <string name="notification_pref" maxLength="41">התראות</string>
@@ -153,7 +150,6 @@
     <string name="timeout_answer" maxLength="41">פסק זמן לתשובה</string>
     <string name="timeout_answer_summ">הצג תשובה אוטומטית ללא קלט משתמש. השהיה כולל זמן לקבצי שמע המושמעים אוטומטית.</string>
     <string name="timeout_answer_seconds" maxLength="41">זמן להצגת התשובה</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX שנ׳</string>
     <string name="timeout_question_seconds" maxLength="41">הגיע הזמן להציג את השאלה הבאה</string>
     <string name="select_locale_title">בחר שפה</string>
     <string name="software_render" maxLength="41">השבת את עיבוד החומרה של הכרטיס</string>
@@ -168,6 +164,8 @@
     <string name="pref_backup_max" maxLength="41">מספר גיבויים מרבי</string>
     <string name="pref_double_tap_time_interval" maxLength="41">מרווח זמן של לחיצה כפולה (מילישניות)</string>
     <string name="pref_double_tap_time_interval_summary">לחיצה שנייה על כפתורי התשובה תתעלם אם הזמן הזה לא חלף. זה מונע הקשה כפולה בשוגג</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">הצג כפתורי זמן</string>
     <string name="show_estimates_summ">הצג את זמן הסקירה הבאה על כפתורי התשובה</string>
     <string name="show_large_answer_buttons" maxLength="41">לחצני תשובה גדולים</string>
@@ -179,7 +177,6 @@
     <string name="show_eta" maxLength="41">הצג הערכת זמן לסיום</string>
     <string name="show_eta_summ">הצג זמן שנותר</string>
     <string name="use_current" maxLength="41">חפיסה לכרטיסים חדשים</string>
-    <string name="new_spread" maxLength="41">מיקום כרטיסים חדשים</string>
     <string name="learn_cutoff" maxLength="41">לימוד מעבר למכסה</string>
     <string name="time_limit" maxLength="41">מגבלת זמן בתיבת-זמן</string>
     <string name="new_timezone" maxLength="41">טיפול באזור זמן חדש</string>
@@ -212,17 +209,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">אפשר את כל הקבצים בייבוא מדיה</string>
     <string name="media_import_allow_all_files_summ">אם אנדרואיד לא מזהה קובץ מדיה</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">חפיסת ברירת מחדל בעת פתיחת סטטיסטיקה</string>
-    <string name="stats_default_deck_current">הצג נתונים סטטיסטיים עבור החפיסה האחרונה</string>
-    <string name="stats_default_deck_all">הצג נתונים סטטיסטיים עבור כל החפיסות</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">סטטיסטיקות מתקדמות</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">אפשר סטטיסטיקות מתקדמות</string>
-    <string name="enable_advanced_statistics_summ">הצג סטטיסטיקות תחזיות המבוססות על חישוב או סימולציה של סקירות עתידיות (מופעלות) או על סקירות עתידיות שכבר מתוזמנות (מושבתות).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">חשב את X הימים הראשונים, הדמה את השאר</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">דיוק החישוב</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">מספר האיטרציות של הסימולציה</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">שרת סנכרון מותאם אישית</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">לא בשימוש</string>
@@ -234,71 +220,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">מקלדת</string>
     <string name="bluetooth">בלוטות\'</string>
-    <string name="controls_main_category" maxLength="41">מיפוי פקודות</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">שינויים ב\'קבוצת אפשרויות\' ישפיעו על מספר חפיסות. אם ברצונך לשנות רק את החפיסה הנוכחית, אנא הוסף תחילה \'קבוצת אפשרויות\' חדשה</string>
     <string name="studyoptions_limit_select_tags">בחר תגיות</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">תיאור החפיסה (חפיסה נוכחית בלבד)</string>
-    <string name="deck_conf_group" maxLength="41">קבוצת אפשרויות</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">החפיסה %1$s\n%2$d משתמשת בקבוצה זו</item>
-        <item quantity="two">%1$s\n%2$d חפיסות משתמשות בקבוצה זו</item>
-        <item quantity="many">%1$s\n%2$d חפיסות משתמשות בקבוצה זו</item>
-        <item quantity="other">%1$s\n%2$d חפיסות משתמשות בקבוצה זו</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">כרטיסים חדשים</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">סקירות</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">שגיאות</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">כללי</string>
     <string name="deck_conf_reminders" maxLength="41">תזכורות</string>
-    <string name="deck_conf_steps" maxLength="41">צעדים (דקות)</string>
-    <string name="deck_conf_order" maxLength="41">סדר</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">קלפים חדשים/יום</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">מרווח סיום הלימודים</string>
-    <string name="deck_conf_days">XXX ימים</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">מרווח זמן של \'קל\'</string>
-    <string name="deck_conf_start_ease" maxLength="41">קלות התחלתית</string>
-    <string name="deck_conf_max_rev" maxLength="41">מקסימום חזרות/ליום</string>
-    <string name="deck_conf_new_bury" maxLength="41">הטמן קלפים חדשים קשורים</string>
-    <string name="deck_conf_new_bury_summ">הטמן כרטיסים חדשים קשורים עד יום למחרת</string>
-    <string name="deck_conf_rev_bury" maxLength="41">הטמנת חזרות קשורות</string>
-    <string name="deck_conf_rev_bury_summ">לימודים קשורים קבורים עד למחרת</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">השתמש בהגדרות כלליות</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">השתמש בהגדרות כלליות של \'תשובה לתצוגה אוטומטית\' במקום להשתמש בהגדרות של קבוצה זו.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">בונוס קל</string>
-    <string name="deck_conf_hard_factor" maxLength="41">מרווח זמן של \'קשה\'</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">שינוי מרווח זמן</string>
-    <string name="deck_conf_max_ivl" maxLength="41">מרווח זמן מקסימלי</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">מרווח זמן חדש</string>
-    <string name="deck_conf_min_ivl" maxLength="41">מרווח זמן מינימלי</string>
-    <string name="deck_conf_leech_thres" maxLength="41">סף \'קלף עלוקה\'</string>
-    <string name="deck_conf_fails">XXX שגיאות</string>
-    <string name="deck_conf_leech_action" maxLength="41">התנהגות קלף \'עלוקה\'</string>
-    <string name="deck_conf_max_time" maxLength="41">זמן תשובה מרבי</string>
-    <string name="deck_conf_seconds">XXX שניות</string>
-    <string name="deck_conf_timer" maxLength="41">הצגת מתזמן תשובה</string>
-    <string name="deck_conf_autoplay" maxLength="41">הפעל אודיו באופן אוטומטי</string>
-    <string name="deck_conf_replayq" maxLength="41">שאלה חוזרת</string>
-    <string name="deck_conf_replayq_summ">כאשר התשובה מוצגת, הפעל שוב את אודיו של השאלה והתשובה</string>
-    <string name="deck_conf_manage" maxLength="41">ניהול קבוצה</string>
-    <string name="deck_conf_manage_summ">הוסף ושנה קבוצות אפשרויות</string>
-    <string name="deck_conf_current_group" maxLength="41">קבוצה נוכחית</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">שינוי שם</string>
-    <string name="deck_conf_reset" maxLength="41">שחזור ברירות מחדל</string>
-    <string name="deck_conf_reset_message">האם לשחזר את קבוצת האפשרויות הנוכחית לערכי ברירת המחדל?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">הוספה</string>
-    <string name="deck_conf_add_summ">צור עותק של קבוצת האפשרויות הנוכחית</string>
-    <string name="deck_conf_remove_message">האם להסיר את קבוצת האפשרויות הנוכחית?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">הגדרה לכל תת החפיסות</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">חפיסת המשנה של %s ישתמש בקבוצה זו</item>
-        <item quantity="two">חפיסות המשנה של %s ישתמש בקבוצה זו</item>
-        <item quantity="many">חפיסות המשנה של %s ישתמש בקבוצה זו</item>
-        <item quantity="other">חפיסות המשנה של %s ישתמש בקבוצה זו</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">האם להגדיר קבוצת אפשרויות נוכחית עבור כל תת החפיסות של החפיסה הזו?</string>
-    <string name="pref_browser_editor_font" maxLength="41">גופן דפדפן ועורך</string>
     <string name="deck_conf_cram_filter" maxLength="41">מסנן</string>
     <string name="deck_conf_cram_search" maxLength="41">חיפוש</string>
     <string name="deck_conf_cram_limit" maxLength="41">הגבלה לכדי</string>
@@ -308,8 +240,6 @@
     <string name="deck_conf_cram_filter_2_check">אפשר סינון משני</string>
     <string name="deck_conf_cram_steps" maxLength="41">שלבים מותאמים אישית (בדקות)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">הגדר שלבים מותאמים אישית</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">אפשר התראות עבור קבוצת החפיסה הזו</string>
-    <string name="deck_conf_reminders_time" maxLength="41">הזכר ב</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">סיוע בשיפור AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">שיתוף השימוש ביכולת</string>
@@ -346,12 +276,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">הסר ׳%s׳</string>
     <string name="bindings_already_bound">כבר קשור ל\'%s\'</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">ניסיוני</string>
-    <string name="experimental_pref_confirmation" maxLength="41">הפעל \'%s\'</string>
-    <string name="use_rust_backend_title" maxLength="41">השתמש ב-backend החדש</string>
-    <string name="use_rust_backend_summary">מאפשר תכונות חדשות יותר של Anki, כגון מתזמן v3\לא יציב. אל תשתמש באוסף שחשוב לך. לא ניתן לשחזור בסגירת האפליקציה</string>
-    <string name="use_rust_backend_warning">יש סיכוי שזה עלול להשחית את ההתקנה שלך לחלוטין, לדרוש הסרת אפליקציה ומחיקה של תיקיית AnkiDroid, ויש לו סיכוי להפיץ שחיתות באמצעות סנכרון עם AnkiWeb.\n\nאנו מברכים על הבדיקה, אך אנא ודא שיש לך גיבוי תקין של AnkiWeb.</string>
-    <string name="enable_v3_sched_title" maxLength="41">השתמש במתזמן v3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">ניסיוני</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">אפשרויות מפתח</string>
     <string name="dev_options_enabled_pref" maxLength="41">הפעלת מצב מפתח</string>
@@ -391,7 +316,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">מחק קבצי מדיה שאינם בשימוש</string>
     <string name="pref__delete_unused_media_files__summary">מחק תמונות ומדיה אחרת שאין להן קידומת _ ואין להן התייחסות באמצעות הערות</string>
-    <string name="dialog__media_check_required__message">נדרשת בדיקת מדיה כדי למצוא קבצי מדיה שאינם בשימוש</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">מחק קבצי מדיה שאינם בשימוש</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">מחק גיבויים</string>

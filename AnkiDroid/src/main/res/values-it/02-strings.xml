@@ -71,7 +71,6 @@
     <string name="replay_audio">Riproduci audio</string>
     <string name="leech_suspend_notification">Carta contrassegnata come sanguisuga e sospesa</string>
     <string name="leech_notification">Carta contrassegnata come sanguisuga</string>
-    <string name="corrupt_font">File dei caratteri corrotto %s</string>
     <string name="webview_crash_unknown">Errore sconosciuto</string>
     <string name="webview_crash_unknwon_detailed">Questo è stato causato da un errore interno nella WebView</string>
     <string name="webview_crash_oom">Memoria insufficiente</string>
@@ -125,7 +124,6 @@
     <string name="save">Salva</string>
     <string name="close">Chiudi</string>
     <string name="select">Seleziona</string>
-    <string name="reordering_cards">Riordino le carte...</string>
     <string name="field_remapping">%1$s (di \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Verranno eliminate eventuali carte senza connessione. Se una nota non ha nessuna carta rimanente, sarà perduta. Sei sicuro/a di voler continuare?</string>
     <!-- Timebox -->
@@ -146,17 +144,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Ripianifica</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Anteprima</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d di %2$d</string>
-    <string name="error_insufficient_memory">Operazione non possibile a causa di memoria insufficiente sul tuo dispositivo</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Rinomina</string>
-    <string name="default_conf_delete_error">Il gruppo di opzioni predefinito non può essere rimosso</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d carta aggiunta</item>
-        <item quantity="other">%d carte aggiunte</item>
-    </plurals>
     <string name="check_db">Controlla database</string>
     <string name="check_media">Controlla file multimediali</string>
     <string name="empty_cards">Carte vuote</string>
-    <string name="check_db_message">Controllo database.\nAttendi...</string>
     <string name="empty_card_warning">Questa carta è vuota. Utilizza l\'opzione \"Carte vuote\" dal menu sulla schermata di elenco dei mazzi.</string>
     <string name="unknown_type_field_warning">Digita la risposta: campo sconosciuto %s</string>
     <string name="delete_deck">Eliminazione mazzo...\nAttendi.</string>
@@ -170,13 +161,6 @@
     </plurals>
     <string name="import_log_no_apkg">Questo non è un file di pacchetto Anki valido</string>
     <string name="import_title_error" comment="Title of error dialog">Errore</string>
-    <string name="import_log_failed_unzip">Decompressione dell\'apkg fallita: %s</string>
-    <string name="import_log_failed_copy_to">Impossibile copiare l\'apkg in %s</string>
-    <string name="import_log_failed_validate">convalida dell\'apkg fallita</string>
-    <string name="import_log_insufficient_space_error">Non c\'è abbastanza spazio per importare il pacchetto.\nNecessario - %1$s \nDisponibile - %2$s.\n\nHai Problemi? Prova a liberare spazio sul tuo telefono, se possibile. In alternativa, la sincronizzazione utilizza meno spazio dell\'importazione. Si può provare a importare il pacchetto con un dispositivo con più spazio (ad esempio Anki Desktop) e quindi sincronizzarlo con questo dispositivo.</string>
-    <string name="import_log_file_cache_cleared">Errore nell\'importazione del file, probabilmente una cache pulita durante l\'elaborazione.\nSi prega di riprovare</string>
-    <string name="import_succeeded_but_check_database">L\'importazione dei dati ha riuscito ma la pulizia postimportazione no. Esegui il controllo di banca dati più tardi. Causa: %s</string>
-    <string name="import_error_corrupt_zip">Il file apkg è corrotto. Si prega di eliminare e ri-scaricarlo.\n\nCausa root: %s</string>
     <string name="import_error_handle_exception">Impossibile importare il file\n\n%s</string>
     <string name="import_error_not_apkg_extension">Il file \"%s\" non ha estensione .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Le sostituzioni di Anki Database (.anki2) non sono ancora supportate. Consultare il manuale per le istruzioni di sostituzione.</string>
@@ -184,8 +168,6 @@
     <string name="import_error_copy_to_cache">Impossibile cache del file (forse fuori dallo spazio di archiviazione)</string>
     <string name="import_error_multiple_colpkg">Sono stati selezionati più file colpkg.</string>
     <string name="import_error_colpkg_apkg">Entrambi i file apkg &amp; colpkg sono stati selezionati contemporaneamente.</string>
-    <string name="import_stats_error">Si sono verificati degli errori durante l\'importazione dei seguenti file:\n%s</string>
-    <string name="import_replacing">Sostituzione collezione&#8230;</string>
     <string name="import_interrupted">Importazione interrotta</string>
     <string name="export_include_schedule">Includi schedulazione</string>
     <string name="export_include_media">Includi Media</string>
@@ -224,47 +206,11 @@
     <string name="dyn_deck_desc">Questo è un mazzo speciale per studiare al di fuori della pianificazione normale. Le carte ritorneranno automaticamente nel mazzo originale dopo che le hai ripetute. L\'eliminazione di questo mazzo dall\'elenco dei mazzi riporterà tutte le carte rimanenti nel loro mazzo originale.</string>
     <string name="steps_error">I passi devono essere un numero maggiore di 0</string>
     <string name="steps_min_error">Almeno un passo è necessario</string>
-    <string name="sched_end">(fine)</string>
-    <string name="sched_unbury_action">Per vederle ora tocca \"Disseppellisci\" nel menu.</string>
-    <string name="sched_has_buried">Alcune carte correlate o seppellite sono state rinviate ad una prossima sessione.</string>
     <string name="tag_editor_add_feedback">Tocca \"%2$s\" per confermare l\'aggiunta di \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etichetta esistente \"%1$s\" selezionata</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s secondo</item>
-        <item quantity="other">%s secondi</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuto</item>
-        <item quantity="other">%s minuti</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s ora</item>
-        <item quantity="other">%s ore</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s giorno</item>
-        <item quantity="other">%s giorni</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mese</item>
-        <item quantity="other">%s mesi</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s anno</item>
-        <item quantity="other">%s anni</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s secondi</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Quel mazzo esiste già.</string>
     <string name="decks_rename_filtered_nosubdecks">Un mazzo filtrato non può avere sottomazzi.</string>
-    <string name="filtered_deck_name">Mazzo filtrato</string>
     <string name="reminder_title">Non dimenticare di studiare oggi!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d carta da studiare in %1$s</item>
@@ -273,14 +219,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Errore nella condivisione del file apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Questo file richiede una versione più recente di Anki.</string>
     <string name="activity_start_failed">Il sistema non ha un\'applicazione installata che può eseguire questa azione.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Le immagini della fotocamera possono essere grandi. Dovrai forse comprimere e ridimensionare le immagini nella directory multimediale]]></string>
     <string name="no_browser_notification">Nessun browser trovato, visita la pagina web tramite pc o cellulare: </string>
     <string name="web_page_error">Errore nel caricamento della pagina: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Collegamento di pagina esterna nella carta non è supportato.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Carte recuperate</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Sfondo</string>
     <string name="choose_an_image">Scegli un\'immagine</string>
@@ -402,7 +345,6 @@
     <string name="intro_sync_from_ankiweb">Sincronizza da AnkiWeb</string>
     <string name="already_logged_in">Già loggato</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Il mazzo esiste</string>
     <string name="deck_created">Mazzo creato</string>
     <string name="deck_renamed">Mazzo rinominato</string>
     <!-- Deck Deletion -->

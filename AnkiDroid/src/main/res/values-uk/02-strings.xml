@@ -71,7 +71,6 @@
     <string name="replay_audio">Повторити звук</string>
     <string name="leech_suspend_notification">Картку позначено як набридливу і призупинено</string>
     <string name="leech_notification">Картку позначено як набридливу</string>
-    <string name="corrupt_font">Пошкоджений файл шрифтів %s</string>
     <string name="webview_crash_unknown">Невідома помилка</string>
     <string name="webview_crash_unknwon_detailed">Викликано внутрішньою помилкою в WebView</string>
     <string name="webview_crash_oom">Недостатньо пам\'яті</string>
@@ -125,7 +124,6 @@
     <string name="save">Зберегти</string>
     <string name="close">Закрити</string>
     <string name="select">Вибрати</string>
-    <string name="reordering_cards">Зміна порядку карт...</string>
     <string name="field_remapping">%1$s (з\"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Картки, які не прив\'язані, будуть видалені. Якщо запис не має жодної картки, то запис буде втрачено. Ви хочете продовжити?</string>
     <!-- Timebox -->
@@ -150,19 +148,10 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перепланувати</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Попередній перегляд</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d з %2$d</string>
-    <string name="error_insufficient_memory">Дія не можлива через брак пам’яті на вашому пристрої</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Перейменувати</string>
-    <string name="default_conf_delete_error">Неможливо видалити групу з типовими параметрами</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">Додано %d картку</item>
-        <item quantity="few">Додано %d картки</item>
-        <item quantity="many">Додано %d карток</item>
-        <item quantity="other">Додано карток: %d</item>
-    </plurals>
     <string name="check_db">Перевірити базу даних</string>
     <string name="check_media">Перевірити медіафайли</string>
     <string name="empty_cards">Порожні картки</string>
-    <string name="check_db_message">Перевірка бази даних.\n Будь ласка, зачекайте...</string>
     <string name="empty_card_warning">Ця картка порожня. Скористайтеся опцією \"Порожні картки\" в меню на екрані зі списком колод.</string>
     <string name="unknown_type_field_warning">Введіть відповідь: невідоме поле %s</string>
     <string name="delete_deck">Видалення колоди...\n Будь ласка, зачекайте.</string>
@@ -178,13 +167,6 @@
     </plurals>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Помилка</string>
-    <string name="import_log_failed_unzip">Не вдалося розпакувати apkg: %s</string>
-    <string name="import_log_failed_copy_to">Помилка копіювання apkg до %s</string>
-    <string name="import_log_failed_validate">apkg не пройшло перевірку</string>
-    <string name="import_log_insufficient_space_error">Недостатньо місця для імпорту пакету даних.\nПотрібно - %1$s \nДоступно - %2$s.\n\nВиникли проблеми? Спробуйте звільнити пам\'ять на телефоні. Також спробуйте синхронізацію, яка займає менше місця, ніж імпорт. Ви можете імпортувати пакет на пристрої з більшим об\'ємом пам\'яті (наприклад, Anki Desktop), а потім синхронізувати його з цим пристроєм.</string>
-    <string name="import_log_file_cache_cleared">Помилка імпорту файлу, можливо очищено кеш під час обробки.\nБудь ласка, спробуйте ще раз</string>
-    <string name="import_succeeded_but_check_database">Імпорт даних виконано успішно, але не вдалось виконати після імпортну очистку. Запустіть перевірку бази даних пізніше. Корінь причина: %s</string>
-    <string name="import_error_corrupt_zip">Файл apkg пошкоджений. Будь ласка, видаліть і повторно завантажте його.\n\nГоловна причина: %s</string>
     <string name="import_error_handle_exception">Не вдалося імпортувати пакет\n\n%s</string>
     <string name="import_error_not_apkg_extension">Ім\'я пакету “%s” не містить закінчення .apkg чи .colpkg</string>
     <string name="import_error_load_imported_database">Заміна Anki Database (.anki2) ще не підтримується. Перегляньте у посібнику інструкцію по заміні.</string>
@@ -192,8 +174,6 @@
     <string name="import_error_copy_to_cache">Не вдалося зберегти файл в кеш (можливо закінчується пам\'ять на пристрої)</string>
     <string name="import_error_multiple_colpkg">Було вибрано декілька файлів colpkl.</string>
     <string name="import_error_colpkg_apkg">Файли apkg &amp; colpkg були вибрані одночасно</string>
-    <string name="import_stats_error">Виникли помилки під час імпорту наступних файлів:\n%s</string>
-    <string name="import_replacing">Заміна колекції&#8230;</string>
     <string name="import_interrupted">Імпортування перервано</string>
     <string name="export_include_schedule">Додати планування</string>
     <string name="export_include_media">Додати медіа</string>
@@ -236,59 +216,11 @@
     <string name="dyn_deck_desc">Це спеціальна колода для навчання поза межами нормального графіку. Картки будуть автоматично повернуті до своїх колод після повторення. Видалення цієї колоди поверне всі карточки до своїх колод.</string>
     <string name="steps_error">Кроки повинні бути числами, більшими ніж 0</string>
     <string name="steps_min_error">Принаймні один крок потрібний</string>
-    <string name="sched_end">(кінець)</string>
-    <string name="sched_unbury_action">Щоб побачити їх знову, натисніть «Повернути» в меню</string>
-    <string name="sched_has_buried">Деякі пов\'язані або відкладені картки були перенесені на завтра</string>
     <string name="tag_editor_add_feedback">Натисніть \"%2$s\", аби підтвердити додавання \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Обрано існуючу позначку \"%1$s\"</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s секунда</item>
-        <item quantity="few">%s секунди</item>
-        <item quantity="many">%s секунд</item>
-        <item quantity="other">%s секунди</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s хвилина</item>
-        <item quantity="few">%s хвилини</item>
-        <item quantity="many">%s хвилин</item>
-        <item quantity="other">%s хвилини</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s година</item>
-        <item quantity="few">%s години</item>
-        <item quantity="many">%s годин</item>
-        <item quantity="other">%s години</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s день</item>
-        <item quantity="few">%s доби</item>
-        <item quantity="many">%s діб</item>
-        <item quantity="other">%s доби</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s місяць</item>
-        <item quantity="few">%s місяці</item>
-        <item quantity="many">%s місяців</item>
-        <item quantity="other">%s місяці</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s рік</item>
-        <item quantity="few">%s роки</item>
-        <item quantity="many">%s років</item>
-        <item quantity="other">%s роки</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s секунд</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Така колода вже існує</string>
     <string name="decks_rename_filtered_nosubdecks">Фільтрована колода не може мати підколод</string>
-    <string name="filtered_deck_name">Фільтрована колода</string>
     <string name="reminder_title">Не забудьте про сьогоднішнє навчання!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d картка для повторення в %1$s</item>
@@ -299,14 +231,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Помилка поширення файлу apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Цей файл потребує новішої версії Anki.</string>
     <string name="activity_start_failed">Система не має встановленого додатку, який може це виконати.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Зображення можуть бути завеликими. Можливо вам треба буде стиснути або змінити розмір зображень в медіатеці]]></string>
     <string name="no_browser_notification">Браузер не знайдено, будь ласка, відвідайте веб-сторінку з компʼютера чи з мобільного телефону: </string>
     <string name="web_page_error">Помилка при завантаженні сторінки: \"%s\"</string>
-    <string name="no_outgoing_link_in_cardbrowser">Посилання на зовнішні сторінки в картках не підтримується.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Відновлені картки</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Тло</string>
     <string name="choose_an_image">Оберіть зображення</string>
@@ -431,7 +360,6 @@
     <string name="intro_sync_from_ankiweb">Синхронізувати з AnkiWeb</string>
     <string name="already_logged_in">Вже ввійшли в систему</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Колода вже існує</string>
     <string name="deck_created">Створена колода</string>
     <string name="deck_renamed">Перейменовано колоду</string>
     <!-- Deck Deletion -->

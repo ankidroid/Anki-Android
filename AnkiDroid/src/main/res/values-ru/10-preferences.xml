@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Выкл.</string>
-    <string name="enabled">Включено</string>
     <string name="pref_summary_seconds">%s с</string>
     <string name="pref_summary_minutes">%s мин.</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -137,8 +136,6 @@
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Дневная тема</string>
     <string name="night_theme" maxLength="41">Ночная тема</string>
-    <string name="default_font" maxLength="41">Шрифт по умолчанию</string>
-    <string name="override_font" maxLength="41">Когда применять шрифт по умолчанию</string>
     <string name="language" maxLength="41">Язык</string>
     <string name="language_system">Как в системе</string>
     <string name="notification_pref" maxLength="41">Уведомления</string>
@@ -152,7 +149,6 @@
     <string name="timeout_answer" maxLength="41">Задержка ответа</string>
     <string name="timeout_answer_summ">Показывает ответ автоматически. Задержка включает в себя время для воспроизведения звука.</string>
     <string name="timeout_answer_seconds" maxLength="41">Показать ответ через</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX с</string>
     <string name="timeout_question_seconds" maxLength="41">Показать следующий вопрос через</string>
     <string name="select_locale_title">Выберите язык</string>
     <string name="software_render" maxLength="41">Отключить аппаратную отрисовку</string>
@@ -167,6 +163,8 @@
     <string name="pref_backup_max" maxLength="41">Число резервных копий</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия (в мс)</string>
     <string name="pref_double_tap_time_interval_summary">Второе нажатие на ответ будет проигнорировано, если это время не истекло. Предотвращает случайное двойное нажатие</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Длительность нажатия для ответа</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Показывать время на кнопках</string>
     <string name="show_estimates_summ">Показывает время следующего повторения над кнопками ответа</string>
     <string name="show_large_answer_buttons" maxLength="41">Большие кнопки ответа</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">Показывать оценку времени</string>
     <string name="show_eta_summ">Показывает оставшееся время</string>
     <string name="use_current" maxLength="41">Колода для новых карточек</string>
-    <string name="new_spread" maxLength="41">Позиция новых карточек</string>
     <string name="learn_cutoff" maxLength="41">Лимит опережения</string>
     <string name="time_limit" maxLength="41">Лимит учебного блока</string>
     <string name="new_timezone" maxLength="41">Новая обработка часовых поясов</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Разрешить все медиафайлы при импорте</string>
     <string name="media_import_allow_all_files_summ">Используйте, если Android не распознаёт файлы</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Колода при открытии статистики</string>
-    <string name="stats_default_deck_current">Показывать статистику последней колоды</string>
-    <string name="stats_default_deck_all">Показать статистику всех колод</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Расширенная статистика</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Включить расширенную статистику</string>
-    <string name="enable_advanced_statistics_summ">Если включена, отображает прогноз, основанный на вычислениях и моделировании будущих повторений, иначе — на основе уже запланированных повторений.</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Вычислять первые N дней, симулировать остальные</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Точность вычислений</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Число итераций моделирования</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Пользовательский сервер</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Не используется</string>
@@ -233,71 +219,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Клавиатура</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Сопоставление команд</string>
+    <string name="answer_buttons" maxLength="41">Кнопки ответа</string>
+    <string name="card" maxLength="41">Карточка</string>
+    <string name="note" maxLength="41">Запись</string>
+    <string name="navigation" maxLength="41">Навигация</string>
+    <string name="media" maxLength="41">Медиа</string>
+    <string name="misc" maxLength="41">Разное</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Изменения набора параметров затронут несколько колод. Если вы хотите изменить только текущую колоду, сначала добавьте новый набор</string>
     <string name="studyoptions_limit_select_tags">Выберите метки</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Описание колоды (влияет только на текущую)</string>
-    <string name="deck_conf_group" maxLength="41">Набор параметров</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d колода использует эту группу</item>
-        <item quantity="few">%1$s\n%2$d колоды использует эту группу</item>
-        <item quantity="many">%1$s\n%2$d колод использует эту группу</item>
-        <item quantity="other">%1$s\n%2$d колод использует эту группу</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Новые карточки</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Повторяемые</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Ошибки</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Общие</string>
     <string name="deck_conf_reminders" maxLength="41">Напоминания</string>
-    <string name="deck_conf_steps" maxLength="41">Шаги (в минутах)</string>
-    <string name="deck_conf_order" maxLength="41">Порядок</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Новых карточек в день</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Интервал перевода</string>
-    <string name="deck_conf_days">XXX дней</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Интервал лёгких</string>
-    <string name="deck_conf_start_ease" maxLength="41">Начальная лёгкость</string>
-    <string name="deck_conf_max_rev" maxLength="41">Максимум повторяемых в день</string>
-    <string name="deck_conf_new_bury" maxLength="41">Откладывать новые связанные</string>
-    <string name="deck_conf_new_bury_summ">Новые связанные откладываются до следующего дня</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Откладывать новые повторяемые</string>
-    <string name="deck_conf_rev_bury_summ">Повторяемые связанные откладываются до следующего дня</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Использовать общие настройки</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Использовать общие настройки «Автоматически показывать ответ» вместо настроек для этой группы.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Множитель для «Легко»</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Интервал для «Трудно»</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Модификатор интервала</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Максимальный интервал</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Новый интервал</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Минимальный интервал</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Порог для приставучих</string>
-    <string name="deck_conf_fails">XXX ошибок</string>
-    <string name="deck_conf_leech_action" maxLength="41">Что делать с приставучими</string>
-    <string name="deck_conf_max_time" maxLength="41">Максимальное время ответа</string>
-    <string name="deck_conf_seconds">XXX секунд</string>
-    <string name="deck_conf_timer" maxLength="41">Показывать таймер</string>
-    <string name="deck_conf_autoplay" maxLength="41">Воспроизводить звук</string>
-    <string name="deck_conf_replayq" maxLength="41">Повторять вопрос</string>
-    <string name="deck_conf_replayq_summ">Воспроизводит вопрос и ответ при показе ответа</string>
-    <string name="deck_conf_manage" maxLength="41">Управление наборами параметров</string>
-    <string name="deck_conf_manage_summ">Добавить или изменить набор параметров</string>
-    <string name="deck_conf_current_group" maxLength="41">Текущий набор</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Переименовать</string>
-    <string name="deck_conf_reset" maxLength="41">Сбросить параметры</string>
-    <string name="deck_conf_reset_message">Сбросить текущий набор параметров?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Добавить</string>
-    <string name="deck_conf_add_summ">Создать копию текущего набора параметров</string>
-    <string name="deck_conf_remove_message">Удалить текущий набор параметров?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Установить для всех подколод</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s подколода задействует набор</item>
-        <item quantity="few">%s подколоды задействуют набор</item>
-        <item quantity="many">%s подколод задействуют набор</item>
-        <item quantity="other">%s подколод задействуют набор</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Установить текущий набор параметров для всех подколод этой колоды?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Шрифт в списке и редакторе</string>
     <string name="deck_conf_cram_filter" maxLength="41">Фильтр</string>
     <string name="deck_conf_cram_search" maxLength="41">Запрос</string>
     <string name="deck_conf_cram_limit" maxLength="41">Количество</string>
@@ -307,8 +239,6 @@
     <string name="deck_conf_cram_filter_2_check">Включить второй фильтр</string>
     <string name="deck_conf_cram_steps" maxLength="41">Заданные шаги (мин.)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Задать свои шаги</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Включает напоминания для колод в этой группе</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Напомнить в</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Помогите сделать AnkiDroid лучше!</string>
     <string name="analytics_title" maxLength="41">Делиться статистикой использования</string>
@@ -345,12 +275,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Удалить «%s»</string>
     <string name="bindings_already_bound">Уже назначено на «%s»</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Экспериментальная</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Включить «%s»</string>
-    <string name="use_rust_backend_title" maxLength="41">Использовать новый бэк-энд</string>
-    <string name="use_rust_backend_summary">Включает новые функции Anki, например, планировщик v3\nНЕСТАБИЛЬНО. Не используйте для коллекции, о которой вы заботитесь. Не изменяется при закрытии приложения</string>
-    <string name="use_rust_backend_warning">Есть вероятность того, что данные будут повреждены, что требует удаления приложения и папки AnkiDroid, а также вероятность порчи после синхронизации с AnkiWeb.\n\nСпасибо вам за тестирование. Убедитесь, что у вас есть резервная копия кроме AnkiWeb!</string>
-    <string name="enable_v3_sched_title" maxLength="41">Использовать планировщик v3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Экспериментальная</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Настройки разработчика</string>
     <string name="dev_options_enabled_pref" maxLength="41">Включить параметры для разработчиков</string>
@@ -389,7 +314,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Удалить неиспользуемые медиафайлы</string>
     <string name="pref__delete_unused_media_files__summary">Удалять изображения и другие носители, которые не начинаются с «_» и не связаны ни с какими записями</string>
-    <string name="dialog__media_check_required__message">Выполните проверку медиафайлов, чтобы найти неиспользуемые</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Удалить неиспользуемые медиафайлы</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Удалить резервные копии</string>

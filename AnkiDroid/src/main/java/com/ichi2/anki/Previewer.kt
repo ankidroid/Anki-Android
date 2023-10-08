@@ -67,7 +67,7 @@ class Previewer : AbstractFlashcardViewer() {
         }
         if (mCardList.isEmpty() || mIndex < 0 || mIndex > mCardList.size - 1) {
             Timber.e("Previewer started with empty card list or invalid index")
-            finishWithoutAnimation()
+            finish()
             return
         }
         showBackIcon()
@@ -97,7 +97,7 @@ class Previewer : AbstractFlashcardViewer() {
                 if (fromUser) {
                     mIndex = progress
                     updateProgress()
-                    currentCard = col.getCard(mCardList[mIndex])
+                    currentCard = getColUnsafe.getCard(mCardList[mIndex])
                     displayCardQuestion()
                 }
             }
@@ -108,7 +108,7 @@ class Previewer : AbstractFlashcardViewer() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 if (mIndex >= 0 && mIndex < mCardList.size) {
-                    currentCard = col.getCard(mCardList[mIndex])
+                    currentCard = getColUnsafe.getCard(mCardList[mIndex])
                     displayCardQuestion()
                 }
             }
@@ -214,14 +214,14 @@ class Previewer : AbstractFlashcardViewer() {
 
     override fun performReload() {
         mReloadRequired = true
-        val newCardList = col.filterToValidCards(mCardList)
+        val newCardList = getColUnsafe.filterToValidCards(mCardList)
         if (newCardList.isEmpty()) {
-            finishWithoutAnimation()
+            finish()
             return
         }
         mIndex = getNextIndex(newCardList)
         mCardList = newCardList.toLongArray()
-        currentCard = col.getCard(mCardList[mIndex])
+        currentCard = getColUnsafe.getCard(mCardList[mIndex])
         displayCardQuestion()
     }
 
@@ -233,7 +233,7 @@ class Previewer : AbstractFlashcardViewer() {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun changePreviewedCard(nextCard: Boolean) {
         mIndex = if (nextCard) mIndex + 1 else mIndex - 1
-        currentCard = col.getCard(mCardList[mIndex])
+        currentCard = getColUnsafe.getCard(mCardList[mIndex])
         displayCardQuestion()
         updateProgress()
     }

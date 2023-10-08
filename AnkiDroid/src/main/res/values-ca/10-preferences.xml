@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Deshabilitat</string>
-    <string name="enabled">Habilitat</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -128,7 +127,7 @@
     <string name="automatic_sync_choice" maxLength="41">Sincronització automàtica</string>
     <string name="automatic_sync_choice_summ">Sincronitza automàticament en l\'app al Inici/sortir si el sync anterior va ser fa més de 10 minuts.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Sempre</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">Només amb connexions no mesurades</string>
     <string name="sync_media_never">Mai</string>
     <string name="sync_status_badge" maxLength="41">Mostra l\'estat de sincronització</string>
     <string name="sync_status_badge_summ">Canvia la icona de sincronització quan es puguin pujar canvis</string>
@@ -137,8 +136,6 @@
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema diürn</string>
     <string name="night_theme" maxLength="41">Tema nocturn</string>
-    <string name="default_font" maxLength="41">Tipus de lletra per omissió</string>
-    <string name="override_font" maxLength="41">Aplicabilitat de tipus de lletra per defecte</string>
     <string name="language" maxLength="41">Idioma</string>
     <string name="language_system">Idioma del sistema</string>
     <string name="notification_pref" maxLength="41">Notificacions</string>
@@ -152,7 +149,6 @@
     <string name="timeout_answer" maxLength="41">Resposta fora de temps</string>
     <string name="timeout_answer_summ">Mostra la resposta automàticament sense aportació d\'usuari. El retard inclou el temps de les reproduccions automàtiques d\'arxius d\'àudio.</string>
     <string name="timeout_answer_seconds" maxLength="41">Temps per mostrar la resposta</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Temps per mostrar la següent pregunta</string>
     <string name="select_locale_title">Seleccioneu l\'idioma</string>
     <string name="software_render" maxLength="41">Desactiva hardware de mostrar carta</string>
@@ -167,6 +163,8 @@
     <string name="pref_backup_max" maxLength="41">Màxim número de còpies de seguretat</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interval de doble tacte (milisegons)</string>
     <string name="pref_double_tap_time_interval_summary">Un segon toc dels botons de resposta s\'ignorarà si aquest temps no ha passat. D’aquesta manera s’impedeixen dobles cops accidentals</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Ensenyar resposta de temps de pulsació llarga (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Mostra el temps al botó</string>
     <string name="show_estimates_summ">Mostra el temps de la pròxima revisió al botons de resposta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostra botons de resposta grans</string>
@@ -178,7 +176,6 @@
     <string name="show_eta" maxLength="41">Mostra el temps restant</string>
     <string name="show_eta_summ">Mostra el temps restant</string>
     <string name="use_current" maxLength="41">Paquet per a cartes noves</string>
-    <string name="new_spread" maxLength="41">Nova posició de la carta</string>
     <string name="learn_cutoff" maxLength="41">Informeu-vos de límit per davant</string>
     <string name="time_limit" maxLength="41">Límit de temps de Timebox</string>
     <string name="new_timezone" maxLength="41">Gestió de nova zona horària</string>
@@ -211,17 +208,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Permet tots els fitxers en la importació de multimèdia</string>
     <string name="media_import_allow_all_files_summ">Si Android no reconeix un fitxer multimèdia</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Paquet per omissió en obrir les estadístiques</string>
-    <string name="stats_default_deck_current">Mostra les estadístiques del paquet més recent</string>
-    <string name="stats_default_deck_all">Mostra les estadístiques de tots els paquets</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Estadístiques avançades</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Permetre estadístiques avançades</string>
-    <string name="enable_advanced_statistics_summ">Mostra la previsió d\'estadístiques basades en un càlcul o simulació de futurs repassos (activat) o sobre els futurs repassos ja planificats (desactivat).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Computa els n primers dies, simula els restants</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precisió de la computació</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Nombre d\'iteracions de la simulació</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Servidor de sincronització personalitzat</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Sense utilitzar</string>
@@ -234,67 +220,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Teclat</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Assignació d\'ordres</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Els canvis a les opcions de grup de paquets afectaran varis paquets. Si voleu canviar només el paquet actual, afegiu primer un grup d\'opcions nou</string>
     <string name="studyoptions_limit_select_tags">Trieu les etiquetes</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Descripció de paquet (sols paquet actual)</string>
-    <string name="deck_conf_group" maxLength="41">Grup d\'opcions</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d paquet utilitza aquest grup</item>
-        <item quantity="other">%1$s\n%2$d paquets utilitzen aquest grup</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Noves fitxes</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Revisions</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Intervals</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">General</string>
     <string name="deck_conf_reminders" maxLength="41">Recordatoris</string>
-    <string name="deck_conf_steps" maxLength="41">Passos (en minuts)</string>
-    <string name="deck_conf_order" maxLength="41">Ordre</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Noves fitxes per dia</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Interval gradual</string>
-    <string name="deck_conf_days">XXX dia(es)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Interval amb facilitat</string>
-    <string name="deck_conf_start_ease" maxLength="41">Interval de partida</string>
-    <string name="deck_conf_max_rev" maxLength="41">Nombre màxim de revisions/dia</string>
-    <string name="deck_conf_new_bury" maxLength="41">Enterra noves cartes relacionades</string>
-    <string name="deck_conf_new_bury_summ">Les noves targetes relacionades seran enterrades fins al dia següent</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Enterra revisions relacionades</string>
-    <string name="deck_conf_rev_bury_summ">Les revisions relacionades estan enterrades fins al dia següent</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Usar la configuració general</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Usar ajustos generals per \'mostrar resposta automàtica\'  en contes d\'usar els ajustos per aquest grup.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bonus de facilitat</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Interval difícil</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Modificador de l\'interval</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Interval màxim</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Interval nou</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Interval mínim</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Llindar de lapa</string>
-    <string name="deck_conf_fails">XXX errors</string>
-    <string name="deck_conf_leech_action" maxLength="41">Acció de lapa</string>
-    <string name="deck_conf_max_time" maxLength="41">Temps màxim de la resposta</string>
-    <string name="deck_conf_seconds">XXX segons</string>
-    <string name="deck_conf_timer" maxLength="41">Temporitzador de mostra la resposta</string>
-    <string name="deck_conf_autoplay" maxLength="41">Reprodueix l\'àudio automàticament</string>
-    <string name="deck_conf_replayq" maxLength="41">Torna a mostra la pregunta</string>
-    <string name="deck_conf_replayq_summ">Al mostra la resposta, torna a reproduir l\'àudio de la pregunta i de la resposta</string>
-    <string name="deck_conf_manage" maxLength="41">Administració dels grups</string>
-    <string name="deck_conf_manage_summ">Afegeix i canvia grups d\'opcions</string>
-    <string name="deck_conf_current_group" maxLength="41">Grup actual</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Canvia el nom</string>
-    <string name="deck_conf_reset" maxLength="41">Restaurar valors predeterminats</string>
-    <string name="deck_conf_reset_message">Restaurar l\'actual grup d\'opcions als valors per defecte?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Afegeix una configuració</string>
-    <string name="deck_conf_add_summ">Crear una còpia de l\'actual grup d\'opcions</string>
-    <string name="deck_conf_remove_message">Eliminar l\'actual grup d\'opcions?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Aplica per a totes les sub-coleccions</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">La sub-colecció %s utilitzarà aquest grup</item>
-        <item quantity="other">Les sub-coleccions %s utilitzaran aquest grup</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Vols aplicar l\'actual grup d\'opcions per a totes les sub-coleccions de aquesta targeta?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Tipus de lletra del navegador i de l\'editor</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtre</string>
     <string name="deck_conf_cram_search" maxLength="41">Cerca</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limita-ho a</string>
@@ -304,8 +240,6 @@
     <string name="deck_conf_cram_filter_2_check">Activar segon filtre</string>
     <string name="deck_conf_cram_steps" maxLength="41">Passos personalitzats (en minuts)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Defines els passos personalitzats</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Activar notificacions pel grup de paquets</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Recordar a</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Ajuda a que AnkiDroid sigui millor!</string>
     <string name="analytics_title" maxLength="41">Compartir ús de característica</string>
@@ -342,12 +276,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Suprimeix ‘%s’</string>
     <string name="bindings_already_bound">Ja està lligat a \'%s\'</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Activa ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Utilitzeu el nou fons</string>
-    <string name="use_rust_backend_summary">Activa les noves funcions d\'Anki, com ara el planificador v3\nINESTABLE. No l\'utilitzeu en una col·lecció que us interessa. NO s\'ha revertit en tancar l\'aplicació</string>
-    <string name="use_rust_backend_warning">És possible que això malmeti completament la vostra instal·lació, que requereixi la desinstal·lació de l\'aplicació i l\'eliminació de la carpeta AnkiDroid, i la possibilitat de propagar la corrupció mitjançant la sincronització amb AnkiWeb.\n\nEns alegra que ho proveu, però assegureu-vos que teniu una còpia de seguretat vàlida que no sigui d\'AnkiWeb.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Utilitza el planificador versió v3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opcions per a desenvolupadors</string>
     <string name="dev_options_enabled_pref" maxLength="41">Activa les opcions per a desenvolupadors</string>
@@ -385,7 +314,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Suprimeix els mitjans no utilitzats</string>
     <string name="pref__delete_unused_media_files__summary">Suprimeix imatges i altres mitjans que no tinguin el prefix _ i que no hi facin referència cap nota</string>
-    <string name="dialog__media_check_required__message">Cal comprovar els suports per trobar fitxers multimèdia no utilitzats</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Suprimeix els mitjans no utilitzats</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Suprimeix les còpies de seguretat</string>

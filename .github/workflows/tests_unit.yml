@@ -39,16 +39,12 @@ concurrency:
 
 jobs:
   unit:
-    name: JUnit Tests (${{ matrix.os}}, legacy_schema = ${{ matrix.legacy_schema }})
+    name: JUnit Tests (${{ matrix.os}}
     timeout-minutes: 40
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        legacy_schema: [true, false]
-        exclude:
-          - os: macos-latest
-            legacy_schema: false
     runs-on: ${{ matrix.os }}
     #env:
     #  CODACY_TOKEN: ${{ secrets.CODACY_TOKEN }}
@@ -61,7 +57,7 @@ jobs:
           maximum-size: 12GB
           disk-root: "D:"
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 50
 
@@ -102,9 +98,6 @@ jobs:
           retry_wait_seconds: 60
           max_attempts: 3
           command: ./gradlew robolectricSdkDownload --daemon
-
-      - name: Set legacy schema property
-        run: echo "legacy_schema = ${{ matrix.legacy_schema }}" >> local.properties
 
       - name: Run Unit Tests
         uses: gradle/gradle-build-action@v2

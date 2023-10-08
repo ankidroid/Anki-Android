@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Калоды</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Аглядальнік картак</string>
@@ -88,12 +88,6 @@
     <string name="no_cards_placeholder_title">Калекцыя пустая</string>
     <string name="no_cards_placeholder_description">Пачніце дадаваць карткі\nз дапамогай значка \"+\"</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Сёння вывучана %1$d картка за %2$s</item>
-        <item quantity="few">Сёння вывучана %1$d карткі за %2$s</item>
-        <item quantity="many">Сёння вывучана %1$d картак за %2$s</item>
-        <item quantity="other">Сёння вывучана %1$d карткі за %2$s</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Увядзіце адказ</string>
     <string name="show_answer">Паказаць адказ</string>
@@ -102,11 +96,8 @@
     <string name="ease_button_hard">Цяжка</string>
     <string name="ease_button_good">Добра</string>
     <string name="ease_button_easy">Лёгка</string>
-    <string name="studyoptions_congrats_undo">Адмяніць %s</string>
     <string name="menu_import">Імпартаваць</string>
     <string name="undo">Адмяніць</string>
-    <string name="undo_action_review">апошняе паўтарэнне</string>
-    <string name="undo_action_change_deck_multi">змену калод</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Адрабіць штрых</string>
     <string name="move_all_to_deck">Перамясціць усё ў калоду</string>
     <string name="unbury">Вярнуць</string>
@@ -180,18 +171,14 @@
     <string name="studyoptions_limit_reached">Вы выканалі дзённую норму</string>
     <string name="studyoptions_empty_schedule">Няма запланаваных картак для навучання</string>
     <string name="studyoptions_congrats_finished">Віншуем! Пакуль няма картак для навучання.</string>
-    <string name="studyoptions_congrats_more_rev">Вы выканалі дзённую норму, але карткі для паўтору яшчэ засталіся. Вы можаце змяніць абмежаванні дзённай нормы ў наладах праграмы.</string>
-    <string name="studyoptions_congrats_more_new">Вы выканалі дзённую норму, але новыя карткі яшчэ засталіся. Вы можаце змяніць абмежаванні ў наладах праграмы, але гэта павялічыць аб\'ёмы паўтарэнняў у наступныя дні.</string>
-    <string name="studyoptions_congrats_custom">Для змянення звыклага графіка вывучэння калоды, націсніце кнопку \"Дадатковае навучанне\"</string>
     <string name="studyoptions_no_cards_due">На сёння картак не засталося.</string>
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
-    <string name="empty_cloze_warning">Адрэдагуйце гэты запіс і дадайце пропускі. (%1$s)</string>
     <string name="button_sync" comment="Text of the sync button">Сінхранізаваць</string>
     <string name="button_upgrade" comment="Text of the sync button">Перанос даных у вобласць сховішча</string>
-    <string name="cancel_sync_confirm">Скасаваць сінхранізацыю?</string>
-    <string name="continue_sync">Працягнуць сiнхранiзацыю</string>
-    <string name="sync_cancelled">Сiнхранiзацыя скасаваная</string>
-    <string name="sync_cancel_message">Адбываецца скасаванне сінхранізацыі...\nГэта можа заняць некаторы час.</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Скасаваць сінхранізацыю?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Працягнуць сiнхранiзацыю</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Сiнхранiзацыя скасаваная</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Адбываецца скасаванне сінхранізацыі...\nГэта можа заняць некаторы час.</string>
     <string name="export">Экспартаваць</string>
     <string name="export_collection">Экспартаваць калекцыю</string>
     <string name="export_deck">Экспартаваць калоду</string>
@@ -224,7 +211,6 @@
     <string name="template_for_current_card_deleted">Тып карткі для бягучай карткі быў выдалены.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Выгляд аглядальніка</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
     <string name="card_info_title">Звесткі пра картку</string>
     <!-- Permissions -->
@@ -233,14 +219,6 @@
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Аглядальнік картак</string>
     <string name="context_menu_anki_card_label">Картка Anki</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">У %1$s праблема:<br/>%2$s</string>
-    <string name="more_information">Больш інфармацыі</string>
-    <string name="no_field">Знойдзена \'{{%1$s}}\', але поле з назвай \'%1$s\' адсутнічае.</string>
-    <string name="closed_tag_not_open">Знойдзена \'{{/%1$s}}\', але адсутнічае \'{{#%1$s}}\' або \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Адсутнічаюць \'}}\' у \'%s\'.</string>
-    <string name="open_tag_not_closed">Адсутнічае \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Знойдзена \'{{/%1$s}}\', але чакалася \'{{/%2$s}}\'</string>
-    <string name="filter_error">Памылка ў фільтры %s</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">Гэтыя калекцыі не могуць быць аб\'яднаныя.\nЯкую калекцыю вы хочаце пакінуць?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -255,7 +233,6 @@
         <item quantity="many">%1$d картак (0 для паўтору)</item>
         <item quantity="other">%1$d карткі (0 для паўтору)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s копія</string>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Немагчыма запісаць або стварыць файл %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Некалькі памылак, самая нядаўняя: %s"</string>

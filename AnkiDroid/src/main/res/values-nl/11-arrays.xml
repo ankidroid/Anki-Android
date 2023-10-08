@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Mij vragen</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Alleen label toevoegen</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Nieuwe kaarten in willekeurige volgorde</string>
-    <string name="new_order_order_added">Nieuwe kaarten in volgorde toegevoegd</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Oudste eerst zien</string>
     <string name="cram_deck_conf_order_random">Willekeurig</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Gebruik huidige set</string>
     <string name="add_to_deck_decide_by_note_type">Beslissen per memotype</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mix nieuwe en overhoorde kaarten</string>
-    <string name="new_spread_new_after_review">Nieuwe kaarten na overhoorde kaarten</string>
-    <string name="new_spread_new_before_review">Nieuwe kaarten voor overhoorde kaarten</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Wanneer geen lettertype opgegeven op flitskaartjes</string>
-    <string name="override_font_always" comment="Option to always override font">Altijd</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Volg systeem</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-groot</string>
     <string name="html_size_code_xx_large">xx-groot</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Antwoordknop 1</string>
-    <string name="gesture_answer_2">Antwoordknop 2</string>
-    <string name="gesture_answer_3">Antwoordknop 3</string>
-    <string name="gesture_answer_4">Antwoordknop 4</string>
-    <string name="gesture_answer_green">Aanbevolen antwoord (groen)</string>
-    <string name="gesture_answer_better_recommended">Antwoord beter dan aangeraden</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Media afspelen</string>
     <string name="gesture_abort_learning">Leren afbreken</string>
     <string name="gesture_flag_red">Rode vlag in-/uitschakelen</string>

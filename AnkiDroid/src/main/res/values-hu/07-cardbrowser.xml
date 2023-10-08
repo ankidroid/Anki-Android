@@ -50,8 +50,8 @@
         <item quantity="other">%d kártyát mutat</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d jegyzetet mutat</item>
+        <item quantity="other">%d jegyzetet mutat</item>
     </plurals>
     <string name="card_browser_all_decks">Minden pakli</string>
     <string name="card_browser_delete_card">Jegyzet törlése</string>
@@ -61,7 +61,6 @@
     <string name="card_browser_mark_card">Jegyzet megjelölése</string>
     <string name="card_browser_unmark_card">Bejegyzések elvetése</string>
     <string name="delete_card_title">Jegyzet törlése?</string>
-    <string name="changed_deck_message">Áthelyezés ide %s</string>
     <string name="card_browser_show_marked">Megjelöltek szűrése</string>
     <string name="card_browser_show_suspended">Szűrés felfüggesztve</string>
     <string name="card_browser_search_by_tag">Címke szerinti szűrés</string>
@@ -75,7 +74,6 @@
     <string name="card_browser_list_my_searches_remove_content">Törlés “%1$s”?</string>
     <string name="card_browser_change_display_order">Megjelenítési sorrend módosítása</string>
     <string name="card_browser_change_display_order_title">Válassz megjelenítési sorrendet</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Esedékes</string>
     <string name="card_details_tags">Címkék</string>
     <string-array name="card_browser_order_labels">
         <item>Rendezés nélkül (gyorsabb)</item>
@@ -99,39 +97,16 @@
     <string name="card_browser_unknown_deck_name">Ismeretlen</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">Tartalom csonkolása</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Kártya exportálása</item>
+        <item quantity="other">Kártyák exportálása</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Jegyzet exportálása</item>
+        <item quantity="other">Jegyzetek exportálása</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d kártya törölve</item>
         <item quantity="other">%d kártya törölve</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Hozzáaadva</string>
-    <string name="card_info_first_review">Első ismétlés</string>
-    <string name="card_info_latest_review">Legutóbbi ismétlés</string>
-    <string name="card_info_interval">Intervallum</string>
-    <string name="card_info_ease">Nehézség</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Ismétlések</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Elfelejtések száma</string>
-    <string name="card_info_average_time">Átlagos idő</string>
-    <string name="card_info_total_time">Összes idő</string>
-    <string name="card_info_card_type">Kártya típus</string>
-    <string name="card_info_note_type">Jegyzettípus</string>
-    <string name="card_info_deck_name">Pakli neve</string>
-    <string name="card_info_card_id">Kártya azonosító</string>
-    <string name="card_info_note_id">Jegyzet azonosító</string>
-    <string name="card_info_revlog_time">Idő</string>
-    <string name="card_info_revlog_date">Dátum</string>
-    <string name="card_info_revlog_rating">Értékelés</string>
-    <string name="card_info_revlog_type">Típus</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Tanulás</string>
-    <string name="card_info_revlog_review">Ismétlés</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Újratanulás</string>
-    <string name="card_info_revlog_filtered">Szűrt</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

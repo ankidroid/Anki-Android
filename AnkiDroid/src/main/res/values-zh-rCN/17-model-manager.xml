@@ -45,7 +45,6 @@
     <string name="model_browser_delete">删除笔记类型</string>
     <string name="model_browser_rename" comment="Rename a note type">重命名</string>
     <string name="model_browser_template">编辑卡片</string>
-    <string name="model_browser_add">添加笔记类型</string>
     <!--Rename-->
     <string name="rename_model">重命名卡牌记录类型</string>
     <!--Language Hint-->
@@ -61,7 +60,6 @@
     <string name="model_field_editor_toggle_sticky">添加时记住上次输入</string>
     <string name="model_field_editor_changing">更新字段</string>
     <string name="model_field_editor_sort_field">按此字段排序</string>
-    <string name="model_clone_suffix">复制</string>
     <!--Warnings-->
     <string name="model_delete_warning">您确定要删除此卡牌记录类型吗？</string>
     <string name="field_delete_warning">是否确定删除此字段？</string>

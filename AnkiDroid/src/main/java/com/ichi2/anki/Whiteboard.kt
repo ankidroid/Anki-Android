@@ -30,13 +30,12 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
-import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import com.ichi2.anki.dialogs.WhiteBoardWidthDialog
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.utils.getTimestamp
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.utils.Time
-import com.ichi2.libanki.utils.TimeUtils
 import com.ichi2.themes.Themes.currentTheme
 import com.ichi2.utils.DisplayUtils.getDisplayDimensions
 import com.ichi2.utils.KotlinCleanup
@@ -110,7 +109,11 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
     private fun handleDrawEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
-        if (event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS && toggleStylus == true) {
+        if (event.getToolType(event.actionIndex) == MotionEvent.TOOL_TYPE_ERASER) {
+            stylusErase(event)
+            return true
+        }
+        if (event.getToolType(event.actionIndex) != MotionEvent.TOOL_TYPE_STYLUS && toggleStylus) {
             return false
         }
         return when (event.actionMasked) {
@@ -145,14 +148,8 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 false
             }
             211, 213 -> {
-                if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY && !undoEmpty()) {
-                    val didErase = mUndo.erase(event.x.toInt(), event.y.toInt())
-                    if (didErase) {
-                        mUndo.apply()
-                        if (undoEmpty()) {
-                            mAnkiActivity.invalidateOptionsMenu()
-                        }
-                    }
+                if (event.buttonState == MotionEvent.BUTTON_STYLUS_PRIMARY) {
+                    stylusErase(event)
                 }
                 true
             }
@@ -174,6 +171,21 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             }
         } else {
             false
+        }
+    }
+
+    /**
+     * Erase with stylus pen.(By using the eraser button on the stylus pen or by using the digital eraser)
+     */
+    private fun stylusErase(event: MotionEvent) {
+        if (!undoEmpty()) {
+            val didErase = mUndo.erase(event.x.toInt(), event.y.toInt())
+            if (didErase) {
+                mUndo.apply()
+                if (undoEmpty()) {
+                    mAnkiActivity.invalidateOptionsMenu()
+                }
+            }
         }
     }
 
@@ -333,19 +345,19 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
                 penColor = Color.BLACK
             }
             R.id.pen_color_red -> {
-                val redPenColor = ContextCompat.getColor(context, R.color.material_red_500)
+                val redPenColor = context.getColor(R.color.material_red_500)
                 penColor = redPenColor
             }
             R.id.pen_color_green -> {
-                val greenPenColor = ContextCompat.getColor(context, R.color.material_green_500)
+                val greenPenColor = context.getColor(R.color.material_green_500)
                 penColor = greenPenColor
             }
             R.id.pen_color_blue -> {
-                val bluePenColor = ContextCompat.getColor(context, R.color.material_blue_500)
+                val bluePenColor = context.getColor(R.color.material_blue_500)
                 penColor = bluePenColor
             }
             R.id.pen_color_yellow -> {
-                val yellowPenColor = ContextCompat.getColor(context, R.color.material_yellow_500)
+                val yellowPenColor = context.getColor(R.color.material_yellow_500)
                 penColor = yellowPenColor
             }
             R.id.pen_color_custom -> {
@@ -510,7 +522,7 @@ class Whiteboard(activity: AnkiActivity, handleMultiTouch: Boolean, inverted: Bo
             canvas.drawColor(Color.WHITE)
         }
         draw(canvas)
-        val baseFileName = "Whiteboard" + TimeUtils.getTimestamp(time!!)
+        val baseFileName = "Whiteboard" + getTimestamp(time!!)
         return CompatHelper.compat.saveImage(context, bitmap, baseFileName, "jpg", Bitmap.CompressFormat.JPEG, 95)
     }
 

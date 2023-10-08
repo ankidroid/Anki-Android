@@ -58,25 +58,6 @@ fun JSONArray.deepClone(): JSONArray {
     return clone
 }
 
-fun JSONArray.jsonArrayIterable(): Iterable<JSONArray> {
-    return Iterable { jsonArrayIterator() }
-}
-
-fun JSONArray.jsonArrayIterator(): Iterator<JSONArray> {
-    return object : Iterator<JSONArray> {
-        private var mIndex = 0
-        override fun hasNext(): Boolean {
-            return mIndex < length()
-        }
-
-        override fun next(): JSONArray {
-            val array = getJSONArray(mIndex)
-            mIndex++
-            return array
-        }
-    }
-}
-
 fun JSONArray.jsonObjectIterable(): Iterable<JSONObject> {
     return Iterable { jsonObjectIterator() }
 }
@@ -114,52 +95,6 @@ fun JSONArray.stringIterator(): Iterator<String> {
             return string
         }
     }
-}
-
-fun JSONArray.longIterable(): Iterable<Long> {
-    return Iterable { longIterator() }
-}
-
-fun JSONArray.longIterator(): Iterator<Long> {
-    return object : Iterator<Long> {
-        private var mIndex = 0
-        override fun hasNext(): Boolean {
-            return mIndex < length()
-        }
-
-        override fun next(): Long {
-            val long_ = getLong(mIndex)
-            mIndex++
-            return long_
-        }
-    }
-}
-
-@KotlinCleanup("simplify fun with apply and forEach")
-fun JSONArray.toJSONObjectList(): List<JSONObject> {
-    val l: MutableList<JSONObject> = ArrayList(length())
-    for (`object` in jsonObjectIterable()) {
-        l.add(`object`)
-    }
-    return l
-}
-
-@KotlinCleanup("simplify fun with apply and forEach")
-fun JSONArray.toLongList(): List<Long> {
-    val l: MutableList<Long> = ArrayList(length())
-    for (`object` in longIterable()) {
-        l.add(`object`)
-    }
-    return l
-}
-
-@KotlinCleanup("simplify fun with apply and forEach")
-fun JSONArray.toStringList(): List<String> {
-    val l: MutableList<String> = ArrayList(length())
-    for (`object` in stringIterable()) {
-        l.add(`object`)
-    }
-    return l
 }
 
 /**

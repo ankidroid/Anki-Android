@@ -35,10 +35,8 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.tools.AsyncDialogBuilder.CheckedItems
 import com.ichi2.anki.ui.dialogs.tools.DialogResult
 import com.ichi2.anki.ui.dialogs.tools.awaitDialog
-import com.ichi2.anki.ui.preferences.screens.BackupLimitsPresenter
 import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.async.deleteMedia
-import com.ichi2.libanki.Media
 import com.ichi2.preferences.TextWidgetPreference
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -79,18 +77,10 @@ class ManageSpaceViewModel(val app: Application) : AndroidViewModel(app), Collec
     private fun launchSearchForUnusedMedia() = viewModelScope.launch {
         flowOfDeleteUnusedMediaSize.ifCollectionDirectoryExistsEmit {
             withCol {
-                val unusedFiles = with(media) { findUnusedMediaFiles() }
+                val unusedFiles = media.findUnusedMediaFiles()
                 val unusedFilesSize = unusedFiles.sumOf(::calculateSize)
                 Size.FilesAndBytes(unusedFiles, unusedFilesSize)
             }
-        }
-    }
-
-    suspend fun performMediaCheck() {
-        try {
-            withCol { media.performFullCheck() }
-        } finally {
-            launchSearchForUnusedMedia()
         }
     }
 
@@ -190,8 +180,6 @@ class ManageSpaceFragment : SettingsFragment() {
     override val preferenceResource = R.xml.manage_space
     override val analyticsScreenNameConstant = "manageSpace"
 
-    private val backupLimitsPresenter = BackupLimitsPresenter(this).also { it.observeLifecycle() }
-
     private val viewModel: ManageSpaceViewModel by viewModels()
 
     override fun initSubscreen() {
@@ -221,19 +209,7 @@ class ManageSpaceFragment : SettingsFragment() {
 
     private suspend fun onDeleteUnusedMediaClick() {
         val size = viewModel.flowOfDeleteUnusedMediaSize.value
-        if (size is Size.Error && size.exception is Media.MediaCheckRequiredException) {
-            val mediaCheckPromptResult = requireContext().awaitDialog {
-                setMessage(R.string.dialog__media_check_required__message)
-                setPositiveButton(R.string.check_media)
-                setNegativeButton(R.string.dialog_cancel)
-            }
-
-            if (mediaCheckPromptResult is DialogResult.Ok) {
-                withProgress(R.string.check_media_message) {
-                    viewModel.performMediaCheck()
-                }
-            }
-        } else if (size is Size.FilesAndBytes) {
+        if (size is Size.FilesAndBytes) {
             val unusedFiles = size.files
             val unusedFileNames = unusedFiles.map { it.name }
 

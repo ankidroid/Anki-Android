@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Tanya aku</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Hanya tag</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Kartu baru dalam urutan acak</string>
-    <string name="new_order_order_added">Kartu baru dalam urutan ditambahkan</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Lihat yang paling lama dahulu</string>
     <string name="cram_deck_conf_order_random">Acak</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Gunakan dek saat ini</string>
     <string name="add_to_deck_decide_by_note_type">Tentukan menurut tipe catatan</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Campur kartu dan ulasan baru</string>
-    <string name="new_spread_new_after_review">Kartu baru setelah ulasan</string>
-    <string name="new_spread_new_before_review">kartu baru sebelum ulasan</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Bila tidak ada fon yang ditentukan dalam kartu flash</string>
-    <string name="override_font_always" comment="Option to always override font">Selalu</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-besar</string>
     <string name="html_size_code_xx_large">xx-besar</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Tombol jawaban 1</string>
-    <string name="gesture_answer_2">Tombol jawaban 2</string>
-    <string name="gesture_answer_3">Tombol jawaban 3</string>
-    <string name="gesture_answer_4">Tombol jawaban 4</string>
-    <string name="gesture_answer_green">Jawaban yang disarankan (hijau)</string>
-    <string name="gesture_answer_better_recommended">Jawaban yang lebih baik dari yang disarankan</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Putar media</string>
     <string name="gesture_abort_learning">Batalkan belajar</string>
     <string name="gesture_flag_red">Setel Panji Merah</string>

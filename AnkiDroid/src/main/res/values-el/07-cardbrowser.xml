@@ -61,7 +61,6 @@
     <string name="card_browser_mark_card">Μαρκάρισμα σημειώσεων</string>
     <string name="card_browser_unmark_card">Ξεμαρκάρισμα σημειώσεων</string>
     <string name="delete_card_title">Διαγραφή σημείωσης;</string>
-    <string name="changed_deck_message">Μεταφέρθηκε στο %s</string>
     <string name="card_browser_show_marked">Δείξε μαρκαρισμένες</string>
     <string name="card_browser_show_suspended">Δείξε ανεσταλμένες</string>
     <string name="card_browser_search_by_tag">Δείξε κατά ετικέτα</string>
@@ -75,7 +74,6 @@
     <string name="card_browser_list_my_searches_remove_content">Διαγραφή του «%1$s»;</string>
     <string name="card_browser_change_display_order">Αλλαγή σειράς εμφάνισης</string>
     <string name="card_browser_change_display_order_title">Επιλέξτε τη σειρά εμφάνισης</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Προγρ/μένος</string>
     <string name="card_details_tags">Ετικέτες</string>
     <string-array name="card_browser_order_labels">
         <item>Χωρίς ταξινόμηση (γρήγορο)</item>
@@ -111,27 +109,4 @@
         <item quantity="other">Διαγράφηκαν %d κάρτες</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Προστέθηκε</string>
-    <string name="card_info_first_review">Πρώτη επανάληψη</string>
-    <string name="card_info_latest_review">Τελευταία Επανάληψη</string>
-    <string name="card_info_interval">Διάστημα</string>
-    <string name="card_info_ease">Ευκολία</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Επαναλήψεις</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Γύροι</string>
-    <string name="card_info_average_time">Μέσος χρόνος</string>
-    <string name="card_info_total_time">Συνολικός χρόνος</string>
-    <string name="card_info_card_type">Τύπος κάρτας</string>
-    <string name="card_info_note_type">Τύπος σημείωσης</string>
-    <string name="card_info_deck_name">Όνομα τράπουλας</string>
-    <string name="card_info_card_id">ID κάρτας</string>
-    <string name="card_info_note_id">ID σημείωσης</string>
-    <string name="card_info_revlog_time">Ώρα</string>
-    <string name="card_info_revlog_date">Ημερομηνία</string>
-    <string name="card_info_revlog_rating">Βαθμολογία</string>
-    <string name="card_info_revlog_type">Τύπος</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Εκμάθηση</string>
-    <string name="card_info_revlog_review">Επανάληψη</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Επανεκμάθηση</string>
-    <string name="card_info_revlog_filtered">Φιλτραρισμένο</string>
-    <string name="card_info_ease_not_applicable">Μ/Δ</string>
 </resources>

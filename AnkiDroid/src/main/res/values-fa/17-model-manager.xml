@@ -47,7 +47,6 @@
     <string name="model_browser_delete">حذف نوع یادداشت</string>
     <string name="model_browser_rename" comment="Rename a note type">تغییر نام</string>
     <string name="model_browser_template">ویرایش کارتها</string>
-    <string name="model_browser_add">اضافه کردن نوع یادداشت</string>
     <!--Rename-->
     <string name="rename_model">تغییر نام نوع یادداشت</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">ذخیرۀ آخرین متن ورودی هنگام افزودن کارت</string>
     <string name="model_field_editor_changing">به روزرسانی فیلدها</string>
     <string name="model_field_editor_sort_field">مرتب کردن بر اساس این فیلد</string>
-    <string name="model_clone_suffix">کپی</string>
     <!--Warnings-->
     <string name="model_delete_warning">آیا از حذف این نوع یادداشت اطمینان دارید؟</string>
     <string name="field_delete_warning">از حذف این فیلد مطمئن هستید؟</string>

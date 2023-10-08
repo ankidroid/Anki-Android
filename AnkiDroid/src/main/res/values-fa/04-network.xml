@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">به شبکه متصل نیستيد</string>
-    <string name="sync_even_if_offline">انجام بده</string>
     <string name="sync_error">خطا در همگام سازی</string>
     <string name="vague_error" comment="Network error dialog title">خطا</string>
     <string name="retry">تلاش مجدد</string>
@@ -63,71 +62,15 @@
     <string name="sign_up">ثبت نام</string>
     <string name="logged_as">ورود به حساب کاربری به عنوان</string>
     <string name="log_out">خروج</string>
-    <string name="alert_logging_message">درحال ورود به حساب کاربری&#8230;</string>
-    <string name="invalid_username_password">نشانی رایانامه یا رمز عبور وارد شده اشتباه است</string>
     <string name="reset_password">تنظیم مجدد گذرواژه</string>
     <string name="lost_mail_instructions">ایمیل خود را فراموش کردید؟</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">گزینه هایي برای XXX</string>
-    <string name="sync_prepare_syncing">آماده سازى همگام سازي&#8230;</string>
-    <string name="sync_preparing_full_sync_message">درحال آماده سازی همگام سازی کامل&#8230;</string>
-    <string name="sync_uploading_message">درحال بارگذاری...</string>
-    <string name="sync_downloading_message">درحال بارگيري...</string>
     <string name="sync_title">همگام سازى</string>
     <string name="sync_log_uploading_message">همگام سازی کامل از دستگاه</string>
-    <plurals name="sync_log_clocks_unsynchronized_new">
-        <item quantity="one">Your clock is off by %1$d second%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-        <item quantity="other">Your clock is off by %1$d seconds%2$s. Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</item>
-    </plurals>
-    <string name="sync_log_clocks_unsynchronized_tz">منطقه زماني دستگاه احتمالا اشتباه است</string>
-    <string name="sync_log_clocks_unsynchronized_date">تاريخ دستگاه احتمالا اشتباه است</string>
-    <string name="sync_no_changes_message">هيچ تغييري يافت نشد.</string>
     <string name="sync_database_acknowledge">کل مجموعه همگام سازی شد</string>
-    <string name="sync_log_error_specific">خطای همگام سازی, نوع: %1$s, پیام: %2$s</string>
     <string name="sync_corrupt_database">پایگاه داده شما آسیب دیده است. لطفا قبل از همگام سازی مجدد آن را تعمیر نمایید.\n\nبرای اطلاعاتی درباره تعمیر پایگاه داده تان %s را ببینید.</string>
-    <string name="sync_too_busy">سرويس دهنده بسيار مشغول است. مجددا امتحان كنيد.</string>
-    <string name="sync_remote_db_error">بانک اطلاعات دریافت شده خراب شده بود. لطفا مجددا امتحان نمایید.</string>
-    <string name="sync_overwrite_error">مجموعه فعلی شما با فایل دانلود شده نمی تواند رونویسی شود.</string>
-    <string name="sync_connection_error">مدت اتصال به اینترنت به پایان رسید. یا به خاطر مشکلات اتصال اینترنت شما یا به خاطر حجیم بودن فایل در پوشه رسانه.</string>
-    <string name="sync_write_access_error_on_storage">فایل دانلود شده نمی تواند بر روی کارت حافظه ذخیره شود. یا کارت حافظه شما بصورت فقط خواندنی نصب شده و یا فضای کافی وجود ندارد.</string>
-    <string name="sync_error_invalid_sync_server">سرور همسان‌سازی (Sync Server) مشخص شده در تنظیمات پیشرفته، معتبر نیست (%s). لطفا یک سرور معتبر وارد کنید یا این تنظیم را غیر فعال کنید.</string>
-    <string name="sync_deletions_message">حذف همگام سازی...</string>
-    <string name="sync_small_objects_message">همگام سازی موارد کوچک&#8230;</string>
-    <string name="sync_finish_message">پایان همگام سازی...</string>
-    <string name="sync_log_finish_error">هنگام پایان ارسال به سرویس دهنده خطا رخ داد</string>
-    <string name="sync_writing_db">نوشتن تغییرات در پایگاه داده&#8230;</string>
-    <string name="sync_download_chunk">بارگیری تغییرات...</string>
-    <string name="sync_upload_chunk">بارگذاری تغییرات...</string>
-    <string name="sync_up_down_size">آپلود: %1$d کیلوبایت، دانلود: %2$d کیلوبایت</string>
-    <string name="sync_generic_error">خطایی رخ داده است. لطفا بعدا دوباره سعی کنید.</string>
-    <string name="sync_check_upload_file">درحال بررسی فایل قبل از بارگذاری...</string>
-    <string name="sync_check_download_file">بررسی فایل دانلود شده...</string>
-    <string name="sync_media_find">یافتن رسانه تغییر یافته...</string>
-    <string name="sync_media_no_changes">فایل رسانه تغییری نکرده است.</string>
-    <string name="sync_media_success">رسانه با موفقیت همگام سازی شد.</string>
-    <plurals name="sync_media_partial_downloaded_files">
-        <item quantity="one">Media sync partially completed:\n%d media file downloaded.</item>
-        <item quantity="other">Media sync partially completed:\n%d media files downloaded.</item>
-    </plurals>
-    <plurals name="sync_media_partial_uploaded_files">
-        <item quantity="one">%d media file uploaded.</item>
-        <item quantity="other">%d media files uploaded.</item>
-    </plurals>
-    <plurals name="sync_media_changes_count_new">
-        <item quantity="one">%d media change to upload</item>
-        <item quantity="other">%d media changes to upload</item>
-    </plurals>
-    <plurals name="sync_media_downloaded_count_new">
-        <item quantity="one">%d media file downloaded</item>
-        <item quantity="other">%d media files downloaded</item>
-    </plurals>
-    <string name="sync_sanity_failed">پس از همگام سازی، این مجموعه در وضعیت متناقض بود. برای رفع این مشکل آنکی دروید یک همگامسازی کامل و تحمیلی انجام خواهد داد. لطفا آنچه را که دوست دارید نگه دارید انتخاب کنید، یا اگر ترجیح می دهید بعدا همگامسازی کنید آن را لغو کنید.</string>
-    <string name="sync_media_sanity_failed">همگام سازی رسانه کامل شد, اما تعداد رسانه با سرویس دهنده یکسان نیست. برای رفع هر خطایی رسانه بعدی بطور کامل همگام سازی خواهد شد.</string>
-    <string name="sync_media_db_error">همگام‌سازی رسانه انجام نشد چون دیتابیس فعلی خراب است. انجام بررسی رسانه را به شما پیشنهاد می‌کنیم.</string>
-    <string name="sync_media_error">خطا در همگام سازی اطلاعات رسانه.</string>
-    <string name="sync_media_error_check">خطا در همگام سازی رسانه. توصیه می شود رسانه را بررسی کنید.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">قبل از همسان کردن ‘%s’ را اجرا کنید</string>
     <string name="sync_sanity_local">محلی</string>
     <string name="sync_sanity_remote">از راه دور</string>
     <string name="force_full_sync_title">اجبار به همگام سازی کامل</string>
@@ -135,15 +78,7 @@
     <string name="force_full_sync_confirmation">اجبار به همگام سازی کامل</string>
     <string name="full_sync_confirmation">تغییر درخواستی شما در هنگام همگام سازی بعدی مجموعه منجر به ارسال کامل پایگاه داده به سرور خواهد شد. اگر شما کارتهایی برای مرور دارید یا تغییرات دیگری که در دستگاه های دیگر دارید که با مجموعه اینجا همگام سازی نشده اند ،همه آنها با همگام سازی بعدی از دست خواهند رفت. ادامه می دهید؟</string>
     <string name="full_sync_confirmation_upgrade">به خاطر یک اشکال در نسخه نصب شده قبلی برنامه، اجبار به همگام سازی کامل توصیه می شود.</string>
-    <string name="sync_error_407_proxy_required">تأیید هویت پراکسی لازم است.</string>
-    <string name="sync_error_409">در یک لحظه فقط یک عامل مثلا فقط نسخه اندروید یا نسخه رایانه می تواند به AnkiWeb دسترسی داشته باشد. اگر همگام سازی قبلی با خطا همراه بوده است لطفا دقایقی دیگر دوباره امتحان کنید.</string>
-    <string name="sync_error_413_collection_size">فایل مجموعه یا رسانۀ شما به دلیل حجم زیاد قابل همگام‌سازی نیست.</string>
-    <string name="sync_error_500_unknown">آنکی‌وب با مشکل مواجه شد. لطفاً پس از چند دقیقه دوباره تلاش کنید، اگر مشکل همچنان ادامه داشت، خرابی را گزارش دهید.</string>
-    <string name="sync_error_501_upgrade_required">لطفا برنامه را به آخرین نسخه ارتقا دهید</string>
-    <string name="sync_error_502_maintenance">آنکی‌وب در حال تعمیر است. لطفاً بعداً تلاش کنید.</string>
-    <string name="sync_error_504_gateway_timeout">ارور 504</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">همسان کردن (کامل)</string>
     <string name="sync_menu_title_no_account">همسان کردن (ورود به حساب)</string>
-    <string name="sync_error_unknown_host_readable">عدم اتصال به AnkiWeb، آیا اتصال به اینترنت برقرار است؟ \n\n%s</string>
 </resources>

@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">مجھ سے پوچھیں</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">صرف ٹیگ کریں</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">بے ترتیب میں نئے کارڈ</string>
-    <string name="new_order_order_added">ترتیب میں نئے کارڈز شامل کیے گئے</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">سب سے پرانا پہلے دیکھا گیا۔</string>
     <string name="cram_deck_conf_order_random">بے ترتیب</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">موجودہ ڈیک استعمال کریں</string>
     <string name="add_to_deck_decide_by_note_type">نوٹ کی قسم کے مطابق فیصلہ کریں</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">نئے کارڈز اور تجزیوں کو مکس کریں</string>
-    <string name="new_spread_new_after_review">جائزوں کے بعد نئے کارڈز</string>
-    <string name="new_spread_new_before_review">جائزوں سے پہلے نئے کارڈز</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">جب فلیش کارڈز پر کوئی فونٹ متعین نہ ہو</string>
-    <string name="override_font_always" comment="Option to always override font">ہمیشہ</string>
     <!-- theme labels -->
     <string name="theme_follow_system">سسٹم پر عمل کریں۔</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-بڑا</string>
     <string name="html_size_code_xx_large">xx-بڑا</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">جواب بٹن ایک</string>
-    <string name="gesture_answer_2">جواب بٹن دو</string>
-    <string name="gesture_answer_3">جواب بٹن تین</string>
-    <string name="gesture_answer_4">جواب بٹن چار</string>
-    <string name="gesture_answer_green">جواب تجویز کیا گیا (سبز)</string>
-    <string name="gesture_answer_better_recommended">تجویز کردہ سے بہتر جواب دیں۔</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">میڈیا چلائیں۔</string>
     <string name="gesture_abort_learning">سیکھنے کو روکنا</string>
     <string name="gesture_flag_red">سرخ پرچم ٹوگل کریں۔</string>

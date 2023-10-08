@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Slett notattype</string>
     <string name="model_browser_rename" comment="Rename a note type">Endre navn</string>
     <string name="model_browser_template">Rediger kort</string>
-    <string name="model_browser_add">Legg til notattype</string>
     <!--Rename-->
     <string name="rename_model">Gi nytt navn til notattype</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Husk siste inndata når du legger til</string>
     <string name="model_field_editor_changing">Oppdaterer felt</string>
     <string name="model_field_editor_sort_field">Sorter etter dette feltet</string>
-    <string name="model_clone_suffix">kopi</string>
     <!--Warnings-->
     <string name="model_delete_warning">Er du sikker på at du vil slette denne notattypen?</string>
     <string name="field_delete_warning">Er du sikker på at du vil sletta dette feltet?</string>

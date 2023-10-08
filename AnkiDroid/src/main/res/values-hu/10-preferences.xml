@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Kikapcsolva</string>
-    <string name="enabled">Engedélyezve</string>
     <string name="pref_summary_seconds">%s mp</string>
     <string name="pref_summary_minutes">%s perc</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -98,7 +97,7 @@
     <string name="gestures_corner_touch_summary">Érintési gesztusok engedélyezése a képernyő sarkaiban</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Navigációs sáv bezárása</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Navigációs sáv megnyitása amikor a képernyő jobb oldalára csúsztat</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Nincs</string>
     <string name="gestures_swipe_up" maxLength="41">Felfelé csúsztatás</string>
     <string name="gestures_swipe_down" maxLength="41">Lefelé csúsztatás</string>
     <string name="gestures_swipe_left" maxLength="41">Balra csúsztatás</string>
@@ -128,18 +127,16 @@
     <string name="automatic_sync_choice" maxLength="41">Automatikus szinkronizálás</string>
     <string name="automatic_sync_choice_summ">Automatikus szinkronizálás az applikáció indításakor/kilépéskor, ha az utolsó több mint 10
         perce volt.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Mindig</string>
+    <string name="sync_media_only_unmetered">Csak forgalmi díj mentes kapcsolat esetén</string>
+    <string name="sync_media_never">Soha</string>
     <string name="sync_status_badge" maxLength="41">Szinkronizálás állapotának megjelenítése</string>
     <string name="sync_status_badge_summ">A szinkronizálás ikonjának módosítása, amikor a változások feltölthetők</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Szinkronizálás forgalmi díjas kapcsolaton</string>
+    <string name="metered_sync_summary">Ha letiltva, figyelmeztet, ha szinkronizálni próbál mért kapcsolaton.</string>
     <string name="app_theme" maxLength="41">Sablon</string>
     <string name="day_theme" maxLength="41">Nappali téma</string>
     <string name="night_theme" maxLength="41">Éjszakai téma</string>
-    <string name="default_font" maxLength="41">Alapértelmezett betűtípus</string>
-    <string name="override_font" maxLength="41">Alapértelmezett betűtípus alkalmazhatóság</string>
     <string name="language" maxLength="41">Nyelv</string>
     <string name="language_system">Rendszer nyelvének használata</string>
     <string name="notification_pref" maxLength="41">Értesítések</string>
@@ -153,7 +150,6 @@
     <string name="timeout_answer" maxLength="41">Időtúllépésnél a válasz</string>
     <string name="timeout_answer_summ">Válasz automatikus megjelenítése, felhasználói beavatkozása nélkül. A késleltetés magában foglalja az automatikusan lejátszott audió fájlok idejét.</string>
     <string name="timeout_answer_seconds" maxLength="41">Válasz mutatása ennyi idő elteltével</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX másodperc</string>
     <string name="timeout_question_seconds" maxLength="41">A következő kérdés megjelenítése ennyi idő után</string>
     <string name="select_locale_title">Nyelv kiválasztása</string>
     <string name="software_render" maxLength="41">Kártya hw megjelenítő (render) tiltása</string>
@@ -168,6 +164,8 @@
     <string name="pref_backup_max" maxLength="41">Biztonsági másolatok maximális száma</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Két érintés időzítése (millisec)</string>
     <string name="pref_double_tap_time_interval_summary">A második érintést nem fogja figyelembe venni, ha ezen időn belül történik. Ez megakadályozza a véletlen kettős érintéseket</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Válasz nyomva tartási ideje (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Ennyi ideig kell nyomva tartani a \"Válasz\" gombot, hogy regisztráljon egy érintést. Ez csökkentheti a nem kívánt gombnyomások esélyét. Az alapértelmezett érték 0ms.</string>
     <string name="show_estimates" maxLength="41">Idő mutatása a gombokon</string>
     <string name="show_estimates_summ">A gombokon látszódjon a következő esedékesség időpontja</string>
     <string name="show_large_answer_buttons" maxLength="41">Nagy válasz gombok megjelenítése</string>
@@ -179,7 +177,6 @@
     <string name="show_eta" maxLength="41">ETA megjelenítése</string>
     <string name="show_eta_summ">Hátralévő idő mutatása</string>
     <string name="use_current" maxLength="41">Új kártyák paklija</string>
-    <string name="new_spread" maxLength="41">Új kártyák beszúrása</string>
     <string name="learn_cutoff" maxLength="41">Korai tanulás korlátai</string>
     <string name="time_limit" maxLength="41">Időkorlát érték</string>
     <string name="new_timezone" maxLength="41">Új időzóna kezelés</string>
@@ -195,8 +192,8 @@
     <string name="custom_buttons_setting_if_room">Mutasd ha van hely</string>
     <string name="custom_buttons_setting_menu_only">Csak a menü</string>
     <string name="reset_custom_buttons" maxLength="41">Alapértelmezett értékek visszaállítása</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Beállítások visszaállítása alapértelmezettre</string>
+    <string name="reset">Visszaállít</string>
     <string name="thirdparty_apps_title" maxLength="41">Külsős API alkalmazások</string>
     <string name="thirdparty_apps_summary">Egy lista az alkalmazásokról, amik az AnkiDroid API-t használják, mint például szótárak és segédprogramok.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript hibakeresés</string>
@@ -212,90 +209,28 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">A tárolón lévő összes fájl importálása</string>
     <string name="media_import_allow_all_files_summ">Ha az Android nem ismeri fel egy média fájl</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Alapértelmezett pakli a stat nyitáskor</string>
-    <string name="stats_default_deck_current">Legfrissebb pakli statisztika megjelenítése</string>
-    <string name="stats_default_deck_all">Statisztika minden paklira</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Bővített statisztikák</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Bővített statisztikák bekapcsolása</string>
-    <string name="enable_advanced_statistics_summ">A statisztikai nézetben lévő előrejelzéshez szimulálja a jövőbeni ismétléseket (aktiválva), vagy csak a már ütemezett ismétléseket használja (deaktiválva).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Számítsd ki az első n napot, szimuláld a többit</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">A számítás pontossága</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">A szimuláció ismétléseinek száma</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Egyéni szinkronizáló kiszolgáló</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nem használt</string>
+    <string name="custom_sync_server_help2"><![CDATA[        AnkiWeb-es szinkronizálás helyett használsz saját szervert is.
+        Ha nincs beállítva, akkor az AnkiWeb lesz használva.
+        <a href="%s">További információk</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Szinkronizáló Url</string>
     <!-- Key Bindings -->
     <string name="keyboard">Billentyűzet</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Parancs összerendelés</string>
+    <string name="answer_buttons" maxLength="41">Válasz gombok</string>
+    <string name="card" maxLength="41">Kártya</string>
+    <string name="note" maxLength="41">Jegyzet</string>
+    <string name="navigation" maxLength="41">Navigáció</string>
+    <string name="media" maxLength="41">Média</string>
+    <string name="misc" maxLength="41">Egyéb</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">A pakli csoport változtatása több más csoportot is érint. Ha csak a jelenlegi paklit kívánja megváltoztatni, akkor kérjük adjon hozzá egy új csoportot.</string>
     <string name="studyoptions_limit_select_tags">Válassz címkét</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Pakli leírás (csak a jelenlegi paklit érinti)</string>
-    <string name="deck_conf_group" maxLength="41">Beállítás csoport</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d pakli ezt a csoportot használja</item>
-        <item quantity="other">%1$s\n%2$d pakli használata ebben a csoportban</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Új kártyák</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Ismétlések</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Körök</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Általános</string>
     <string name="deck_conf_reminders" maxLength="41">Emlékeztetők</string>
-    <string name="deck_conf_steps" maxLength="41">Lépések (percben)</string>
-    <string name="deck_conf_order" maxLength="41">Rendezés</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Új kártyák/nap</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Befejező időtartam</string>
-    <string name="deck_conf_days">XXX nap</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Egyszerű időtartam</string>
-    <string name="deck_conf_start_ease" maxLength="41">Kezdeti könnyített bónusz</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maximális ismétlések/nap</string>
-    <string name="deck_conf_new_bury" maxLength="41">Kapcsolódó új kártyák elrejtése</string>
-    <string name="deck_conf_new_bury_summ">A kapcsolódó új kártyákat félretenni a következő napra</string>
-    <string name="deck_conf_rev_bury" maxLength="41">A kapcsolódó kártyák visszaállítása</string>
-    <string name="deck_conf_rev_bury_summ">A kapcsolódó kártyákat a következő napra halasztani</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Általános beállítások használata</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Az általános \'Automatikus válaszmegjelenítő\' beállítás használata, a jelenlegi csoporthoz használt beállítások helyett.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bónusz az \"egyszerű\"</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Nehéz kártyák ismétlési ideje</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Időtartam változtatása</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Maximális időtartam</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Új időtartam</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Minimális időtartam</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Ragadós kártya küszöbértéke</string>
-    <string name="deck_conf_fails">XXX sikertelen</string>
-    <string name="deck_conf_leech_action" maxLength="41">Művelet a ragadós kártyákhoz</string>
-    <string name="deck_conf_max_time" maxLength="41">Maximális idő válaszadásra</string>
-    <string name="deck_conf_seconds">XXX másodperc</string>
-    <string name="deck_conf_timer" maxLength="41">Válasz időmérő mutatása</string>
-    <string name="deck_conf_autoplay" maxLength="41">Hang lejátszása automatikusan</string>
-    <string name="deck_conf_replayq" maxLength="41">Ismételje meg a kérdést</string>
-    <string name="deck_conf_replayq_summ">Ismételje meg a kérdést és a választ hanggal együtt, amikor a válasz megjelenik</string>
-    <string name="deck_conf_manage" maxLength="41">Konfigurációkezelés</string>
-    <string name="deck_conf_manage_summ">Opciócsoportok hozzáadása és változtatása</string>
-    <string name="deck_conf_current_group" maxLength="41">Aktuális csoport</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Átnevezés</string>
-    <string name="deck_conf_reset" maxLength="41">Alapértelmezések visszaállítása</string>
-    <string name="deck_conf_reset_message">Alaphelyzetbe állítod az aktuális opciócsoportot?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Új beállítás</string>
-    <string name="deck_conf_add_summ">Készítsen egy másolatot az aktuális opciócsoportról</string>
-    <string name="deck_conf_remove_message">Törlöd az aktuális opciócsoportot?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Alkalmazás minden alcsoportra</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s pakli használata ebben a csoportban</item>
-        <item quantity="other">%s alpakli használata ebben a csoportban</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Állítsa be az aktuális opciócsoportot a pakli minden alcsoportjában?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Böngésző és szerkesztő betűtípus</string>
     <string name="deck_conf_cram_filter" maxLength="41">Szűrő</string>
     <string name="deck_conf_cram_search" maxLength="41">Keresés</string>
     <string name="deck_conf_cram_limit" maxLength="41">Határ</string>
@@ -305,8 +240,6 @@
     <string name="deck_conf_cram_filter_2_check">Második szűrő engedélyezése</string>
     <string name="deck_conf_cram_steps" maxLength="41">Egyéni lépések (percben)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Add meg az egyéni lépéseket</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Emlékeztetők engedélyezése ebben a paklicsoportban található paklikhoz</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Ne feledd</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Segítsen az AnkiDroidot jobbá tenni!</string>
     <string name="analytics_title" maxLength="41">Funkiók megosztása</string>
@@ -343,12 +276,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">‘%s’ törlése</string>
     <string name="bindings_already_bound">Már össze van kötve: %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Kísérleti</string>
-    <string name="experimental_pref_confirmation" maxLength="41">‘%s’ engedélyezése</string>
-    <string name="use_rust_backend_title" maxLength="41">Használd az új backendet</string>
-    <string name="use_rust_backend_summary">Engedélyezi az újabb Anki funkciókat, mint a scheduler v3\nINSTABIL. Ne használd olyan gyűjteményen, ami komolyabban érdelel. NEM áll vissza az alkalmazás bezárásakor.</string>
-    <string name="use_rust_backend_warning">Van esély rá, hogy ez teljesen korruptá teszi a telepítést, ami az alkalmazás törlését és az AnkiDroid mappa törlését igényli és van rá esély, hogy az AnkiWeb szinkronizálásával továbbterjed a korrupció.\n\nSzívesen fogadjuk a tesztelést, de kérjük, győződjön meg róla, hogy van egy érvényes, nem AnkiWeb biztonsági mentése.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Kísérleti</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Fejlesztői beállítások</string>
     <string name="dev_options_enabled_pref" maxLength="41">Fejlesztői beállítások engedélyezése</string>
@@ -357,63 +285,62 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backup_options__title" maxLength="41">Biztonsági mentés opciók</string>
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid rendszeresen biztonsági másolatot készít a gyűjteményedről.
+        Ha a biztonsági másolatok több mint két naposak,
+        AnkiDroid elkezd törölni néhányat közülük, hogy helyet szabadítson fel.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Ne feledd, hogy a médiafájlokról nem készül biztonsági másolat.
+        A biztonság kedvéért rendszeresen szinkronizáld a gyűjteményed, vagy készíts biztonsági másolatot az exportálásokról.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        A biztonsági másolatról való visszaállításhoz és a gyűjtemény exportálásához nyisd meg a paklilista menüt.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Aut. biztonsági mentés gyakorisága (perc)</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Napi mentések megtartása</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Heti mentések megtartása</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Havi mentések megtartása</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Tárhely kezelése</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Hiba</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Számol&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d fájl\n%2$s</item>
+        <item quantity="other">%1$d fájl\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Nem használt média fájlok törlése</string>
+    <string name="pref__delete_unused_media_files__summary">Törölje azokat a képeket és egyéb médiát, amelyek nem rendelkeznek _ előtaggal, és amelyekre nem hivatkozik jegyzet</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Nem használt média fájlok törlése</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Biztonsági mentések törlése</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Biztonsági mentések törlése</string>
+    <string name="progress__deleting_backups">Mentések törlése..</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Gyűjtemény törlése</string>
+    <string name="pref__delete_collection__summary">Gyűjtemény, média fájlok és biztonsági másolatok törlése. Alkalmazás beállításai maradnak</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Gyűjtemény törlése</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Biztos, hogy törölni szeretnéd a gyűjteményt, a média fájlokokat és a biztonsági másolatokat?\n\nMegjegyzés: ez a művelet bezárja az ablakot.</string>
+    <string name="progress__deleting_collection">Gyűjtemény törlése&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Minden törlése</string>
+    <string name="pref__delete_everything__summary">Gyűjtemény, média fájlok, biztonsági másolatok és beállítások törlése</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Minden törlése</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Biztos, hogy törölni szeretnéd az összes adatot? (gyűjteményt, média fájlokokat, biztonsági másolatokat és beállításokat)\n\nMegjegyzés: ez a művelet bezárja az ablakot.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Alkalmazás adatainak törlése</string>
+    <string name="pref__delete_app_data__summary">Beállítások és egyéb alkalmazásadatok törlése</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Akalmazásadatok törlése</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Biztos, hogy törölni szeretnéd az alkalmazás adatokat? (beállításokat és egyéb alkalmazásadatokat)\n\nMegjegyzés: ez a művelet bezárja az ablakot.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Nincs gyűjtemény.</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Hiba</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Letöltés&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Számolás&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Gyűjtemény nem létezik</string>
 </resources>
