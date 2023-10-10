@@ -102,7 +102,7 @@ Thanks to these awesome code contributors who keep this project going
 
 ### [Backers](https://opencollective.com/ankidroid#backer)
 
-A big thank you to each of our 🙏
+A big thank you to each of our backers 🙏
 <a href="https://opencollective.com/Ankidroid#backers" target="_blank"><img width=110 src="https://opencollective.com/Ankidroid/backers/badge.svg?"></a>
 
 <p>Your generous donations mean the world to us, and we can't express our gratitude enough. Your support fuels our mission and helps us make a real difference</p>
