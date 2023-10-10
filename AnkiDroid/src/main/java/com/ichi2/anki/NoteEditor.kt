@@ -612,15 +612,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             return true
         }
         // changed fields?
-        if (isFieldEdited) {
-            for (value in mEditFields!!) {
-                if (value?.text.toString() != "") {
-                    return true
-                }
-            }
-            return false
+        return if (isFieldEdited) {
+            true
         } else {
-            return isTagsEdited
+            isTagsEdited
         }
         // changed tags?
     }
@@ -2135,6 +2130,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 setDuplicateFieldStyles()
             }
         }
+
         override fun beforeTextChanged(arg0: CharSequence, arg1: Int, arg2: Int, arg3: Int) {
             // do nothing
         }
