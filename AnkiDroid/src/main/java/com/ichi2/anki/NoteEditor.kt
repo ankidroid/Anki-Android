@@ -1656,6 +1656,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         updateFieldsFromStickyText()
     }
 
+    private fun addClozeButton(@DrawableRes drawableRes: Int, description: String, type: AddClozeType) {
+        val drawable = ResourcesCompat.getDrawable(resources, drawableRes, null)!!.apply {
+            setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+        }
+        val button = toolbar.insertItem(0, drawable) { insertCloze(type) }.apply {
+            contentDescription = description
+        }
+        TooltipCompat.setTooltipText(button, description)
+    }
+
     private fun updateToolbar() {
         val editorLayout = findViewById<View>(R.id.note_editor_layout)
         val bottomMargin =
@@ -1676,25 +1686,16 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         toolbar.clearCustomItems()
         if (mEditorNote!!.model().isCloze) {
-            val clozeFormatter = Toolbar.TextFormatter { s: String ->
-                val stringFormat = Toolbar.StringFormat()
-                val prefix = "{{c$nextClozeIndex::"
-                stringFormat.result = "$prefix$s}}"
-                if (s.isEmpty()) {
-                    stringFormat.selectionStart = prefix.length
-                    stringFormat.selectionEnd = prefix.length
-                } else {
-                    stringFormat.selectionStart = 0
-                    stringFormat.selectionEnd = stringFormat.result.length
-                }
-                stringFormat
-            }
-
-            val clozeDrawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_cloze_black_24dp, null)
-            clozeDrawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
-            val clozeButton = toolbar.insertItem(0, clozeDrawable, Runnable { toolbar.onFormat(clozeFormatter) })
-            clozeButton.contentDescription = resources.getString(R.string.insert_cloze)
-            TooltipCompat.setTooltipText(clozeButton, resources.getString(R.string.insert_cloze))
+            addClozeButton(
+                drawableRes = R.drawable.ic_cloze_new_card,
+                description = TR.editingClozeDeletion(),
+                type = AddClozeType.INCREMENT_NUMBER
+            )
+            addClozeButton(
+                drawableRes = R.drawable.ic_cloze_same_card,
+                description = TR.editingClozeDeletionRepeat(),
+                type = AddClozeType.SAME_NUMBER
+            )
         }
         val buttons = toolbarButtons
         for (b in buttons) {
@@ -1720,7 +1721,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Sets the add custom tag icon color.
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_add_toolbar_icon, null)
         drawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
-        val addButton = toolbar.insertItem(0, drawable, Runnable { displayAddToolbarDialog() })
+        val addButton = toolbar.insertItem(0, drawable) { displayAddToolbarDialog() }
         addButton.contentDescription = resources.getString(R.string.add_toolbar_item)
         TooltipCompat.setTooltipText(addButton, resources.getString(R.string.add_toolbar_item))
     }
