@@ -34,7 +34,6 @@ fun MaterialDialog.contentNullable(message: CharSequence?): MaterialDialog {
  * Method to display keyboard when dialog is shown.
  *
  * @param editText EditText present in the dialog.
- * @param materialDialog Dialog which contains the EditText and needs the keyboard to be displayed.
  */
 fun MaterialDialog.displayKeyboard(editText: EditText) {
     AndroidUiUtils.setFocusAndOpenKeyboard(editText, window!!)

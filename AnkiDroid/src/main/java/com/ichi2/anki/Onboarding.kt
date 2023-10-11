@@ -90,8 +90,6 @@ abstract class Onboarding<Feature>(
      * Contains the logic for iterating through various tutorials of a screen and displaying the first one
      * in the list which is not visited yet and condition (if any) also holds true for it.
      *
-     * @param mContext Context of the Activity
-     * @param mTutorials List of tutorials for the Activity
      */
     fun onCreate() {
         tutorials.forEach {

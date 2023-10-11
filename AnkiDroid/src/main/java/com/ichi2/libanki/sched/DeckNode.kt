@@ -46,7 +46,7 @@ data class DeckNode(
      * part that does not belong to its parents. E.g.  for deck
      * "A::B::C", returns "C".
      */
-    val lastDeckNameComponent = node.name
+    val lastDeckNameComponent: String = node.name
 
     /**
      * @return The depth of a deck. Top level decks have depth 0,

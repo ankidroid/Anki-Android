@@ -28,9 +28,12 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileInputStream
 import java.lang.Exception
+import kotlin.math.ln
+import kotlin.math.pow
+import kotlin.math.roundToInt
 
 object BitmapUtil {
-    fun decodeFile(theFile: File, IMAGE_MAX_SIZE: Int): Bitmap? {
+    fun decodeFile(theFile: File, imageMaxSize: Int): Bitmap? {
         var bmp: Bitmap? = null
         try {
             if (!theFile.exists()) {
@@ -48,13 +51,12 @@ object BitmapUtil {
                 fis?.close()
             }
             var scale = 1
-            if (o.outHeight > IMAGE_MAX_SIZE || o.outWidth > IMAGE_MAX_SIZE) {
-                scale = Math.pow(
-                    2.0,
-                    Math.round(
-                        Math.log(IMAGE_MAX_SIZE / Math.max(o.outHeight, o.outWidth).toDouble()) /
-                            Math.log(0.5)
-                    ).toDouble()
+            if (o.outHeight > imageMaxSize || o.outWidth > imageMaxSize) {
+                scale = 2.0.pow(
+                    (
+                        ln(imageMaxSize / o.outHeight.coerceAtLeast(o.outWidth).toDouble()) /
+                            ln(0.5)
+                        ).roundToInt().toDouble()
                 ).toInt()
             }
 

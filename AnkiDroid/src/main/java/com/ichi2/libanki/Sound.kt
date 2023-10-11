@@ -219,7 +219,6 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
          * expandSounds takes content with embedded sound file placeholders and expands them to reference the actual media
          * file
          *
-         * @param soundDir -- the base path of the media files
          * @param content -- card content to be rendered that may contain embedded audio
          * @return -- the same content but in a format that will render working play buttons when audio was embedded
          */

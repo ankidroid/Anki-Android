@@ -23,13 +23,13 @@ class DeckNameComparator : Comparator<String> {
     override fun compare(lhs: String, rhs: String): Int {
         val o1 = Decks.path(lhs)
         val o2 = Decks.path(rhs)
-        for (i in 0 until Math.min(o1.size, o2.size)) {
+        for (i in 0 until o1.size.coerceAtMost(o2.size)) {
             val result = o1[i].compareTo(o2[i], ignoreCase = true)
             if (result != 0) {
                 return result
             }
         }
-        return Integer.compare(o1.size, o2.size)
+        return o1.size.compareTo(o2.size)
     }
 
     companion object {

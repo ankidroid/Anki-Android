@@ -194,7 +194,7 @@ object ImportUtils {
             var colpkgCount = 0
 
             for (data in dataList) {
-                var fileName = getFileNameFromContentProvider(context, data)
+                val fileName = getFileNameFromContentProvider(context, data)
                 when {
                     isDeckPackage(fileName) -> {
                         apkgCount += 1
@@ -282,17 +282,13 @@ object ImportUtils {
          */
         protected open fun copyFileToCache(context: Context, data: Uri?, tempPath: String): Boolean {
             // Get an input stream to the data in ContentProvider
-            val inputStream: InputStream? = try {
+            val inputStream: InputStream = try {
                 context.contentResolver.openInputStream(data!!)
             } catch (e: FileNotFoundException) {
                 Timber.e(e, "Could not open input stream to intent data")
                 return false
-            }
+            } ?: return false
             // Check non-null
-            @Suppress("FoldInitializerAndIfToElvis")
-            if (inputStream == null) {
-                return false
-            }
             try {
                 CompatHelper.compat.copyFile(inputStream, tempPath)
             } catch (e: IOException) {

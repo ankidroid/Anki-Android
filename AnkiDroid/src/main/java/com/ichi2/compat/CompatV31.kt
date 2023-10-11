@@ -27,7 +27,7 @@ open class CompatV31 : CompatV29(), Compat {
     override fun vibrate(context: Context, durationMillis: Long) {
         val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
         val effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE)
-        val vibrator = vibratorManager.getDefaultVibrator()
+        val vibrator = vibratorManager.defaultVibrator
         vibrator.vibrate(effect)
     }
 

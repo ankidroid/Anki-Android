@@ -61,11 +61,7 @@ class SyncSettingsFragment : SettingsFragment() {
             val preferences = requireContext().sharedPrefs()
             val url = customSyncBase(preferences)
 
-            if (url == null) {
-                getString(R.string.custom_sync_server_summary_none_of_the_two_servers_used)
-            } else {
-                url
-            }
+            url ?: getString(R.string.custom_sync_server_summary_none_of_the_two_servers_used)
         }
     }
 

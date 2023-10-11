@@ -26,10 +26,10 @@ fun DeckPicker.handleDatabaseCheck() {
                 if (progress.hasDatabaseCheck()) {
                     progress.databaseCheck.let {
                         text = it.stage
-                        if (it.stageTotal > 0) {
-                            amount = Pair(it.stageCurrent, it.stageTotal)
+                        amount = if (it.stageTotal > 0) {
+                            Pair(it.stageCurrent, it.stageTotal)
                         } else {
-                            amount = null
+                            null
                         }
                     }
                 }
