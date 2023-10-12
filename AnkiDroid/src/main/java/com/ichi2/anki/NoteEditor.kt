@@ -209,7 +209,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
 
     override val baseSnackbarBuilder: SnackbarBuilder = {
-        if (sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, false)) {
+        if (sharedPrefs().getBoolean(PREF_NOTE_EDITOR_SHOW_TOOLBAR, true)) {
             anchorView = findViewById<Toolbar>(R.id.editor_toolbar)
         }
     }
