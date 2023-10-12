@@ -58,6 +58,7 @@ import com.ichi2.anki.DrawingActivity
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.*

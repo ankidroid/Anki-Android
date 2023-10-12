@@ -17,6 +17,7 @@ package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.utils.SECONDS_PER_DAY
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.Consts.BUTTON_FOUR
 import com.ichi2.libanki.Consts.BUTTON_ONE
 import com.ichi2.libanki.Consts.BUTTON_THREE
@@ -41,7 +42,6 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.libanki.utils.TimeManager.time
 import com.ichi2.testutils.AnkiAssert
 import com.ichi2.testutils.JvmTest
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers

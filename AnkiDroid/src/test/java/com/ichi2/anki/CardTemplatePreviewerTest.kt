@@ -20,9 +20,9 @@ import android.os.Bundle
 import android.view.View
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.getFieldsAsBundleForPreview
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.NotetypeJson
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat

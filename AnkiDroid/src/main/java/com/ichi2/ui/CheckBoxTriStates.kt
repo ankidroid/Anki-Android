@@ -22,7 +22,7 @@ import android.util.AttributeSet
 import android.widget.CompoundButton.OnCheckedChangeListener
 import androidx.appcompat.widget.AppCompatCheckBox
 import com.ichi2.anki.R
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 
 /**
  * Based on https://gist.github.com/kevin-barrientos/d75a5baa13a686367d45d17aaec7f030.

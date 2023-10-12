@@ -18,7 +18,7 @@ package com.ichi2.anki.dialogs.tags
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 import java.util.ArrayList
 
 @KotlinCleanup("make selectedTags and indeterminateTags non-null")

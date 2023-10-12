@@ -19,7 +19,7 @@
 
 package com.ichi2.anki.multimediacard.fields
 
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 
 /**
  * Base for all field types.

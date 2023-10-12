@@ -27,10 +27,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.DeckNode
-import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

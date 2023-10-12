@@ -26,7 +26,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.fragment.app.DialogFragment
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 import java.util.*
 
 /**

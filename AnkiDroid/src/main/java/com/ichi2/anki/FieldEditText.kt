@@ -38,13 +38,13 @@ import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.core.view.inputmethod.InputConnectionCompat
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.NoteService
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.ui.FixedEditText
 import com.ichi2.utils.ClipboardUtil.IMAGE_MIME_TYPES
 import com.ichi2.utils.ClipboardUtil.getImageUri
 import com.ichi2.utils.ClipboardUtil.getPlainText
 import com.ichi2.utils.ClipboardUtil.hasImage
-import com.ichi2.utils.KotlinCleanup
 import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 import java.util.*

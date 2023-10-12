@@ -16,8 +16,8 @@
 
 package com.ichi2.themes
 
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.utils.HashUtil.hashMapInit
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.util.*
 import java.util.regex.Matcher

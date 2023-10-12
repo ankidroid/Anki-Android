@@ -21,7 +21,7 @@ package com.ichi2.anki.multimediacard.fields
 import android.os.Bundle
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 
 @KotlinCleanup("remove hungarian notation")
 @Suppress("VariableNamingDetector")

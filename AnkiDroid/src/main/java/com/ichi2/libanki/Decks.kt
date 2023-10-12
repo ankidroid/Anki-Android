@@ -29,10 +29,10 @@ import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.decks.FilteredDeckForUpdate
 import com.google.protobuf.kotlin.toByteStringUtf8
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.libanki.utils.*
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendDeckIsFilteredException

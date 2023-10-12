@@ -44,11 +44,11 @@ import com.ichi2.anki.dialogs.HelpDialog
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.CardId
 import com.ichi2.themes.Themes
 import com.ichi2.utils.HandlerUtils
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 @KotlinCleanup("IDE-lint")

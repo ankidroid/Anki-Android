@@ -22,7 +22,7 @@ import android.os.Build
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.testutil.GrantStoragePermission
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 import org.hamcrest.Matchers
 import org.junit.Assume
 import org.junit.Before

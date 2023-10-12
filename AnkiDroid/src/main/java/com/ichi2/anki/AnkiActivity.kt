@@ -46,6 +46,7 @@ import com.ichi2.anki.preferences.Preferences.Companion.MINIMUM_CARDS_DUE_FOR_NO
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.async.CollectionLoader
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.compat.customtabs.CustomTabsFallback
@@ -53,7 +54,6 @@ import com.ichi2.compat.customtabs.CustomTabsHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.themes.Themes
 import com.ichi2.utils.AdaptionUtil
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 @UiThread

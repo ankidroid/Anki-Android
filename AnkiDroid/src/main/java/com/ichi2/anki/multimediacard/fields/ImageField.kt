@@ -21,8 +21,8 @@ package com.ichi2.anki.multimediacard.fields
 
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.Collection
-import com.ichi2.utils.KotlinCleanup
 import org.jsoup.Jsoup
 import timber.log.Timber
 import java.io.File

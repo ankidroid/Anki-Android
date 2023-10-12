@@ -29,8 +29,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CrashReportService.sendExceptionReport
 import com.ichi2.anki.dialogs.DatabaseErrorDialog
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.utils.DatabaseChangeDecorator
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.database.AnkiSupportSQLiteDatabase
 import org.intellij.lang.annotations.Language

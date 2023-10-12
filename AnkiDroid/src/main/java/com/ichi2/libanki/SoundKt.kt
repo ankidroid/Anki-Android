@@ -25,7 +25,7 @@
 package com.ichi2.libanki
 
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 
 @KotlinCleanup("combine file with Sound.kt if done in libAnki")
 /**

@@ -26,7 +26,7 @@ import android.os.Vibrator
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.NotificationChannels
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 import java.io.*
 import java.nio.file.*
 

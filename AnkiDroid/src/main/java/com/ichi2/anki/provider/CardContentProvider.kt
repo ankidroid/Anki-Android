@@ -26,6 +26,7 @@ import android.database.sqlite.SQLiteQueryBuilder
 import android.net.Uri
 import android.webkit.MimeTypeMap
 import com.ichi2.anki.*
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts.BUTTON_TYPE
@@ -36,7 +37,6 @@ import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.FileUtil.internalizeUri
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions.arePermissionsDefinedInManifest
 import org.json.JSONArray
 import org.json.JSONException

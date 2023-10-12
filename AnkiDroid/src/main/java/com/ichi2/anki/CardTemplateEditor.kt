@@ -49,6 +49,7 @@ import com.ichi2.anki.dialogs.DiscardChangesDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog
 import com.ichi2.anki.dialogs.InsertFieldDialog.Companion.REQUEST_FIELD_INSERT
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.*
@@ -57,7 +58,6 @@ import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.ui.FixedEditText
 import com.ichi2.ui.FixedTextView
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.jsonObjectIterable
 import org.json.JSONArray
 import org.json.JSONException

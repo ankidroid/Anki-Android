@@ -23,9 +23,9 @@ import androidx.core.os.BundleCompat
 import com.ichi2.anki.FieldEditLine
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.NotetypeJson
 import com.ichi2.libanki.Notetypes
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.MapUtil.getKeyByValue
 import org.json.JSONObject
 import java.util.*

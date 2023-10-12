@@ -26,12 +26,12 @@ import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Scheduler
 import com.ichi2.testutils.JsonUtils.toOrderedString
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.items
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers

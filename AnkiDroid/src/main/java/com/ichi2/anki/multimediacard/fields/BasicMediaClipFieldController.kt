@@ -30,10 +30,10 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.ExceptionUtil.executeSafe
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 

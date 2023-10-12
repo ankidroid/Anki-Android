@@ -17,7 +17,7 @@ package com.ichi2.anki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.StudyOptionsFragment.Companion.formatDescription
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith

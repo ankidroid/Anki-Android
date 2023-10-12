@@ -34,8 +34,8 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
 import timber.log.Timber
 import java.io.File

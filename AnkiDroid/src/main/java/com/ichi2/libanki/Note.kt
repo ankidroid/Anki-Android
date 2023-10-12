@@ -18,8 +18,8 @@
 package com.ichi2.libanki
 
 import androidx.annotation.VisibleForTesting
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.exception.WrongId
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber

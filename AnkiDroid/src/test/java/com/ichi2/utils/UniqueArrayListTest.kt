@@ -15,6 +15,7 @@
  */
 package com.ichi2.utils
 
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.utils.ListUtil.Companion.assertListEquals
 import org.hamcrest.CoreMatchers.instanceOf
 import org.hamcrest.CoreMatchers.not

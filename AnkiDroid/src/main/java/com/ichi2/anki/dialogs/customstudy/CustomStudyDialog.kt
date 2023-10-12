@@ -44,6 +44,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
@@ -51,7 +52,6 @@ import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
 import com.ichi2.utils.HashUtil.hashMapInit
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.asLocalizedMessage
 import org.json.JSONArray
 import org.json.JSONObject

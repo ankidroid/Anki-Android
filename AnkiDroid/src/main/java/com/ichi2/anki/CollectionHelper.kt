@@ -28,11 +28,11 @@ import com.ichi2.anki.exception.StorageAccessException
 import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.DB
 import com.ichi2.preferences.getOrSetString
 import com.ichi2.utils.FileUtil
-import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbFileTooNewException
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
 import timber.log.Timber

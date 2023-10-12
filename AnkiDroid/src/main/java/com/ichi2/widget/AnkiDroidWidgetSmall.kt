@@ -31,7 +31,7 @@ import com.ichi2.anki.IntentHandler
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 import timber.log.Timber
 import kotlin.math.sqrt
 

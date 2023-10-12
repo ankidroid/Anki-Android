@@ -25,7 +25,7 @@ import com.ichi2.anki.multimediacard.fields.IField
 import com.ichi2.anki.multimediacard.fields.IFieldController
 import com.ichi2.anki.multimediacard.fields.TextField
 import com.ichi2.anki.multimediacard.impl.MultimediaEditableNote
-import com.ichi2.utils.KotlinCleanup
+import com.ichi2.annotations.KotlinCleanup
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
 import org.robolectric.Robolectric

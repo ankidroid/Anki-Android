@@ -18,11 +18,11 @@ package com.ichi2.anki
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.PackageInfoFlagsCompat
 import com.ichi2.testutils.ActivityList
 import com.ichi2.testutils.ActivityList.ActivityLaunchParam
-import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test

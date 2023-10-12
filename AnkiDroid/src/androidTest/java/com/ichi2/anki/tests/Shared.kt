@@ -16,9 +16,9 @@
 package com.ichi2.anki.tests
 
 import android.content.Context
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Storage
-import com.ichi2.utils.KotlinCleanup
 import org.junit.Assert.assertTrue
 import java.io.File
 import java.io.IOException

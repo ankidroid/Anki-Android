@@ -19,6 +19,7 @@ package com.ichi2.libanki
 
 import androidx.annotation.WorkerThread
 import com.google.protobuf.kotlin.toByteString
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.exception.EmptyMediaException
 import com.ichi2.utils.*
 import timber.log.Timber

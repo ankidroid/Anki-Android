@@ -31,10 +31,10 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.RecursivePictureMenu.Companion.createInstance
 import com.ichi2.anki.dialogs.RecursivePictureMenu.ItemHeader
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
 import com.ichi2.utils.IntentUtil.canOpenIntent
 import com.ichi2.utils.IntentUtil.tryOpenIntent
-import com.ichi2.utils.KotlinCleanup
 import java.io.Serializable
 import java.util.*
 

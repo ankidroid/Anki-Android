@@ -18,7 +18,7 @@
         "@RunWith(AndroidJUnit4::class) to speed up tests (if no other Android references)"
 )
 
-package com.ichi2.utils
+package com.ichi2.annotations
 
 /** Use when code can be changed after further conversion to Kotlin */
 @Target(

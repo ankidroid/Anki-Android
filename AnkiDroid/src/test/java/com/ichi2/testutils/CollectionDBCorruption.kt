@@ -18,8 +18,8 @@ package com.ichi2.testutils
 
 import android.content.Context
 import com.ichi2.anki.CollectionHelper
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 import java.io.File
 import java.io.RandomAccessFile

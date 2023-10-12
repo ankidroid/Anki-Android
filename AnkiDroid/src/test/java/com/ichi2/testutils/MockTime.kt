@@ -16,8 +16,8 @@
 package com.ichi2.testutils
 
 import android.annotation.SuppressLint
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.libanki.utils.Time
-import com.ichi2.utils.KotlinCleanup
 import java.util.*
 
 /** @param [step] Number of milliseconds between each call.

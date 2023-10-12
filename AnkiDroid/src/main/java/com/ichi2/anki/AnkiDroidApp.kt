@@ -47,6 +47,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.*
 import timber.log.Timber

@@ -28,9 +28,9 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.textfield.TextInputLayout
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.annotations.KotlinCleanup
 import com.ichi2.ui.TextInputEditField
 import com.ichi2.utils.AdaptionUtil.isUserATestClient
-import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
 
 /**
