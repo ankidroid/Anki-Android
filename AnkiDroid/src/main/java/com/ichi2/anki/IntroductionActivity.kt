@@ -66,6 +66,8 @@ class IntroductionActivity : AppIntro() {
         }
         Themes.setTheme(this)
 
+        showStatusBar(true)
+
         setTransformer(AppIntroPageTransformerType.Zoom)
 
         addSlide(SetupCollectionFragment())
