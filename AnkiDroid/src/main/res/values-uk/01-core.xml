@@ -113,13 +113,13 @@
     <string name="menu_suspend_card">Виключити картку</string>
     <string name="menu_suspend_note">Призупинити запис</string>
     <string name="menu_bury">Відкласти</string>
-    <string name="menu_suspend">Призупинити</string>
+    <string name="menu_suspend">Тимчасово зупинити</string>
     <string name="menu_delete_note">Видалити запис</string>
     <string name="menu_flag">Прапорець</string>
     <string name="menu_flag_card">Позначити картку</string>
     <string name="menu_flag_card_zero">Без позначки</string>
     <string name="menu_flag_card_one">Червоний прапорець</string>
-    <string name="menu_flag_card_two">Помаранчевий прапорець</string>
+    <string name="menu_flag_card_two">Жовтогарячий прапорець</string>
     <string name="menu_flag_card_three">Зелений прапорець</string>
     <string name="menu_flag_card_four">Синій прапорець</string>
     <string name="menu_flag_card_five">Рожевий прапорець</string>
@@ -133,7 +133,7 @@
     <string name="menu_toggle_mic_tool_bar">Перевірити вимову</string>
     <string name="new_deck">Створити колоду</string>
     <string name="new_dynamic_deck">Створити фільтровану колоду</string>
-    <string name="directory_inaccessible">AnkiDroid каталог не доступний</string>
+    <string name="directory_inaccessible">AnkiDroid-каталог недоступний</string>
     <!--This is shown when AnkiDroid starts up with no storage permissions.
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations

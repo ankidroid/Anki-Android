@@ -61,7 +61,7 @@
     <string name="cram_deck_conf_order_relative_overdueness">Адносна затрымкі</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Выкарыстоўваць бягучую калоду</string>
-    <string name="add_to_deck_decide_by_note_type">Вырашаць па тыпе запісу</string>
+    <string name="add_to_deck_decide_by_note_type">Вырашаць па тыпе нататкі</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Прытрымлівацца сістэмы</string>
     <!-- day_theme_labels -->
@@ -80,11 +80,11 @@
     <string name="html_size_code_xx_large">самы вялікі</string>
     <!-- gestures_labels -->
     <string name="answer_again">Адказаць яшчэ раз</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_hard">Складаны адказ</string>
+    <string name="answer_good">Добры адказ</string>
+    <string name="answer_easy">Просты адказ</string>
     <string name="gesture_play">Прайграць медыяфайлы</string>
-    <string name="gesture_abort_learning">Скасаваць навучанне</string>
+    <string name="gesture_abort_learning">Перарваць навучанне</string>
     <string name="gesture_flag_red">Пераключыць чырвоны сцяжок</string>
     <string name="gesture_flag_orange">Пераключыць аранжавы сцяжок</string>
     <string name="gesture_flag_green">Пераключыць зялёны сцяжок</string>
@@ -95,7 +95,7 @@
     <string name="gesture_flag_remove">Прыбраць сцяжок</string>
     <string name="gesture_page_up">Папярэдняя старонка</string>
     <string name="gesture_page_down">Наступная старонка</string>
-    <string name="gesture_abort_sync">Скасаваць навучанне і сінхранізацыю</string>
+    <string name="gesture_abort_sync">Перарваць навучанне і сінхранізацыю</string>
     <string name="gesture_toggle_whiteboard">Пераключыць дошку</string>
     <string name="gesture_show_hint">Паказаць падказку</string>
     <string name="gesture_show_all_hints">Паказаць усе падказкі</string>

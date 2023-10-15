@@ -56,7 +56,7 @@
     <string name="model_field_editor_rename">名前を変更</string>
     <string name="model_field_editor_language_hint">キーボード言語を設定</string>
     <string name="model_field_editor_reposition_menu">配置順序を変更</string>
-    <string name="model_field_editor_reposition">上から何番目にこのフィールドを配置しますか？（ %1$d ～ %2$d ）</string>
+    <string name="model_field_editor_reposition">何番目にこのフィールドを配置しますか？ (%1$d～%2$d)</string>
     <string name="model_field_editor_toggle_sticky">ノート連続追加時に直前の入力内容を保持する</string>
     <string name="model_field_editor_changing">フィールドを更新</string>
     <string name="model_field_editor_sort_field">ブラウザでのソートフィールド（見出し）にする</string>

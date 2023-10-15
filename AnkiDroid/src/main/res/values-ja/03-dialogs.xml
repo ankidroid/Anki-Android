@@ -51,7 +51,7 @@
     <string name="no_tts_available_message">テキスト読み上げ可能な言語がありません</string>
     <string name="initializing_tts">テキスト読み上げ（TTS）機能を初期化しています...</string>
     <string name="tts_no_tts">発声なし</string>
-    <string name="unused_strings">\n\n(1) のファイルのリスト:\n</string>
+    <string name="unused_strings">\n\n(*) のファイルのリスト:\n</string>
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">プレビュー</string>
     <string name="reposition_card_dialog_title">新規カードの導入順序を変更</string>
     <string name="reposition_card_dialog_message">開始位置</string>
@@ -123,11 +123,11 @@
     <string name="check_media_acknowledge">メディアのチェックの完了</string>
     <string name="check_media_failed">メディアのチェック時にエラーが発生しました</string>
     <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
-    <string name="check_media_unused">(1) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d個</string>
-    <string name="check_media_nohave">(2) カードに表示するよう記載されているが、メディア用フォルダ内に存在しないファイル: %d個</string>
+    <string name="check_media_unused">(*) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d個</string>
+    <string name="check_media_nohave">カードに表示するよう記載されているが、メディア用フォルダ内に存在しないファイル: %d個</string>
     <string name="check_media_no_unused_missing">使用されていないファイル、不足しているファイルはありません</string>
     <string name="check_media_db_updated">メディアのデータベースを再構築しました</string>
-    <string name="check_media_delete_unused">(1) のファイルを削除</string>
+    <string name="check_media_delete_unused">(*) のファイルを削除</string>
     <string name="delete_media_message">メディアを削除中&#8230;</string>
     <string name="delete_media_result_title">削除結果</string>
     <plurals name="delete_media_result_message">
@@ -229,7 +229,7 @@
     <string name="cannot_create_subdeck_for_all_decks">すべてのデッキのサブデッキを作成することはできません</string>
     <!-- scoped storage -->
     <string name="backup_your_collection">コレクションのバックアップ</string>
-    <string name="backup_collection_message">しばらくコレクションをバックアップしていません。データの損失を防ぐためにすぐにバックアップを行うことを強くおすすめします。</string>
+    <string name="backup_collection_message">しばらくの期間、コレクションのバックアップをアプリの外部に作成していません。アプリ内のデータを失う不測の事態に備え、今すぐアプリ外部にバックアップを作成することをお勧めします。</string>
     <string name="button_backup">バックアップ</string>
     <string name="button_disable_reminder">リマインダーを無効にする</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">後で</string>

@@ -58,17 +58,17 @@
     <string name="reposition_card_not_new_error">Толькі новыя карткі могуць быць перамешчаныя</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">Перамешчана %d картка</item>
-        <item quantity="few">Перамешчана %d карткі</item>
-        <item quantity="many">Перамешчана %d картак</item>
-        <item quantity="other">Перамешчана %d карткі</item>
+        <item quantity="few">Перамешчаны %d карткі</item>
+        <item quantity="many">Перамешчаны %d картак</item>
+        <item quantity="other">Перамешчаны %d картак</item>
     </plurals>
     <string name="reset_card_dialog_title">Скінуць дасягненні па картцы</string>
     <string name="reset_card_dialog_message">Гэтая картка будзе змешчана ў канец чаргі новых картак</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">Скінутая %d картка</item>
-        <item quantity="few">Скінутыя %d карткі</item>
-        <item quantity="many">Скінутыя %d картак</item>
-        <item quantity="other">Скінутыя %d карткі</item>
+        <item quantity="one">Скінута %d картка</item>
+        <item quantity="few">Скінуты %d карткі</item>
+        <item quantity="many">Скінуты %d картак</item>
+        <item quantity="other">Скінуты %d картак</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
@@ -85,19 +85,19 @@
     </plurals>
     <string name="reschedule_card_dialog_message">Запланаваць паўтарэнне ў наступныя х дзён:</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d картка перапланаваная</item>
-        <item quantity="few">%d карткі перапланаваныя</item>
-        <item quantity="many">%d картак перапланаваныя</item>
-        <item quantity="other">%d карткі перапланаваныя</item>
+        <item quantity="one">Перапланавана %d картка</item>
+        <item quantity="few">Перапланаваны %d карткі</item>
+        <item quantity="many">Перапланаваны %d картак</item>
+        <item quantity="other">Перапланаваны %d картак</item>
     </plurals>
-    <string name="reschedule_card_dialog_new_card_warning">Новая картка перапланаваная. Дадзеная аперацыя дадае новыя карткі ў паўтораныя. Скарыстайцеся параметрам \"перамясціць картку\" для змянення пазіцыі новай карткі ў чарзе.</string>
+    <string name="reschedule_card_dialog_new_card_warning">Новая картка перапланавана. Дадзеная аперацыя дадае новыя карткі ў паўтораныя. Скарыстайцеся параметрам \"перамясціць картку\" для змянення пазіцыі новай карткі ў чарзе.</string>
     <string name="reschedule_card_dialog_warning_ease_reset">Перапланаванне таксама скіне налады таго, як планіроўшчык будзе апрацоўваць картку ў будучым (лёгкасць карткі будзе прызначаная на %d%%) </string>
-    <string name="firefox_workaround_launched_reviewer_opening_deck">Выберыце калоду ў вашым менеджары файлаў або наведайце старонку about:downloads (пра:спампоўкі) для яе імпарту.</string>
+    <string name="firefox_workaround_launched_reviewer_opening_deck">Выберыце калоду ў вашым менеджары файлаў або наведайце старонку about:downloads для яе імпартавання.</string>
     <string name="answering_error_title">Памылка базы даных</string>
-    <string name="answering_error_message">Адбылася памылка падчас запісу ў калекцыю. Прычынаю можа быць пашкоджаная база даных або недахоп свабоднага месца на дыску.\n\nПаспрабуйце праверыць базу даных або аднавіць калекцыю з рэзервовай копіі. Для гэтага націсніце \"Параметры\". \n\Таксама гэта памылка можа быць выклікана самой праграмай; калі ласка, паведаміце пра гэта распрацоўшчыкам.</string>
+    <string name="answering_error_message">Збой запісу ў калекцыю. Прычынаю можа быць пашкоджаная база даных або недахоп свабоднага месца на дыску.\n\nПаспрабуйце праверыць базу даных або аднавіць калекцыю з рэзервовай копіі. Для гэтага націсніце \"Параметры\". \n\Таксама гэта памылка можа быць выклікана самой праграмай; паведаміце пра гэта распрацоўшчыкам.</string>
     <string name="answering_error_report">Паведаміць пра памылку</string>
     <string name="storage_full_message">Недастаткова свабоднага месца, каб адрыць AnkiDroid. Вызваліце крыху месца на прыладзе, каб працягнуць.</string>
-    <string name="repair_deck_dialog">Аднавіць базу даных?\n\nПерад тым, як пачнецца аднаўленне, копія базы даных будзе змешчана ў створаную падпапку \'%s\'.</string>
+    <string name="repair_deck_dialog">Вы сапраўды хочаце аднавіць базу даных?\n\nПерад спробай па яе аднаўленні, будзе створана копія ў  падпапцы \'%s\'.</string>
     <string name="intent_aedict_empty">Катэгорыя “default” нічога не змяшчае</string>
     <string name="intent_aedict_category">Для таго, каб дадаць карткі ў AnkiDroid, выдаліце ўсе катэгорыі Notepad або дадайце катэгорыю з назвай \"default\"</string>
     <string name="custom_study_new_total_new">Новых картак у калодзе: %d</string>
@@ -107,8 +107,8 @@
     <string name="custom_study_forgotten">Паўтарыць забытыя карткі за апошнія некалькі дзён:</string>
     <string name="custom_study_ahead">Вывучыць на некалькі дзён наперад:</string>
     <string name="custom_study_random">Выбраць некалькі выпадковых картак з калоды:</string>
-    <string name="custom_study_preview">Прагледзець новыя карткі, якія дадзеныя за апошнія некалькі дзён:</string>
-    <string name="custom_study_rebuild_deck_corrupt">Не атрымалася перабудаваць калоду дадатковага навучання</string>
+    <string name="custom_study_preview">Прагледзець новыя карткі, якія дадзены за апошнія некалькі дзён:</string>
+    <string name="custom_study_rebuild_deck_corrupt">Не атрымалася перабудаваць калоду індывідуальнага навучання</string>
     <string name="storage_full_title">Сховішча запоўнена</string>
     <string name="storage_almost_full_title">Сховішча амаль запоўнена</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Памяць запоўненая</string>
@@ -147,9 +147,9 @@
     <string name="delete_media_result_title">Вынік выдалення</string>
     <plurals name="delete_media_result_message">
         <item quantity="one">Выдалены %d файл</item>
-        <item quantity="few">Выдаленыя %d файлы</item>
-        <item quantity="many">Выдаленыя %d файлаў</item>
-        <item quantity="other">Выдаленыя %d файлы</item>
+        <item quantity="few">Выдалены %d файлы</item>
+        <item quantity="many">Выдалены %d файлаў</item>
+        <item quantity="other">Выдалены %d файлаў</item>
     </plurals>
     <!-- Tags Dialog Options -->
     <string name="tags_dialog_option_all_cards">Усе карткі</string>
@@ -171,11 +171,11 @@
     <string name="integrity_check_startup_content">Праграма AnkiDroid абноўленая. Дадзенае абнаўленне змяшчае выпраўленні магчымых праблем з базай даных і мы раім вам запусціць яе праверку. </string>
     <string name="integrity_check_continue_anyway">Усё роўна працягнуць</string>
     <string name="integrity_check_insufficient_space">Праверка базы даных патрабуе вялікай колькасці часовага сховішча.\n\nВельмі пажадана мець прынамсі %s свабоднага месца на прыладзе для таго, каб паспяхова выканаць гэту аперацыю.</string>
-    <string name="integrity_check_insufficient_space_extra_content">\n\nЗараз у вас %s свабоднага месца.</string>
+    <string name="integrity_check_insufficient_space_extra_content">\n\nУ цяперашні час у вас %s вольнага месца.</string>
     <string name="video_creation_error">Не атрымалася ўзнавіць відэа</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
-    <string name="card_viewer_url_decode_error">Памылка дэкадавання даных карткі</string>
+    <string name="card_viewer_url_decode_error">Памылка дэкадзіравання даных карткі</string>
     <!-- Deck Options -->
     <!-- Database Errors-->
     <string name="database_locked_title">База даных заблакаваная</string>
@@ -189,7 +189,7 @@
     <string name="error_selecting_image">Памылка выбару відарыса. Калі ласка, звярніцеся да даведніка. %s</string>
     <string name="error_deleting_image">Памылка выдалення відарыса</string>
     <string name="failed_to_apply_background_image">Памылка ўжывання фонавага відарыса %s</string>
-    <string name="background_image_too_large">Фонавы відарыс надта вялікі</string>
+    <string name="background_image_too_large">Фонавы відарыс занадта вялікі</string>
     <string name="image_max_size_allowed">Максімальны памер відарыса можа складаць %d МБ</string>
     <!-- Global Intent handler -->
     <!-- Also used by Card Browser, not renaming to save translators effort -->
@@ -256,10 +256,10 @@
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Пазней</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Больш не паказваць</string>
     <string name="dismiss_backup_warning_title">Папярэджанне пра страту даных</string>
-    <string name="dismiss_backup_warning_new_user">        У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматызаваныя рэзервовыя копіі будуць выдалены з вашай прылады
+    <string name="dismiss_backup_warning_new_user">        У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі будуць выдалены з вашай прылады
     
     </string>
-    <string name="dismiss_backup_warning_upgrade">        У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматызаваныя рэзервовыя копіі стануць недаступны
+    <string name="dismiss_backup_warning_upgrade">        У сувязі са змяненнямі палітыкі прыватнасці Android, пасля выдалення праграмы вашы даныя і аўтаматычныя рэзервовыя копіі стануць недаступны
     
     </string>
 </resources>

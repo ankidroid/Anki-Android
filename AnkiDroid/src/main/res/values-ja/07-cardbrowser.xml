@@ -82,8 +82,8 @@
         <item>学習予定日時順</item>
         <item>復習間隔順</item>
         <item>易しさ順</item>
-        <item>回答回数順</item>
-        <item>忘却回数順</item>
+        <item>学習回数順</item>
+        <item>復習での忘却回数順</item>
     </string-array>
     <string name="card_browser_select_all">すべて選択</string>
     <string name="card_browser_select_none">選択をすべて解除</string>
