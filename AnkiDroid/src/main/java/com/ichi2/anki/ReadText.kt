@@ -289,7 +289,7 @@ object ReadText {
             }
         }
         // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-//        showThemedToast(context, context.getString(R.string.initializing_tts), false)
+
         val ankiActivit = context as AnkiActivity
         ankiActivit.showSnackbar((R.string.initializing_tts), 1000)
     }
