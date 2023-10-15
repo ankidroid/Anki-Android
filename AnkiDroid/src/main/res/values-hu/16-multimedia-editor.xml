@@ -41,8 +41,8 @@
 <resources>
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Kép hozzáadása</string>
-    <string name="multimedia_editor_popup_audio_clip">Hank klip hozzáadása</string>
-    <string name="multimedia_editor_popup_video_clip">Video klip hozzáadás</string>
+    <string name="multimedia_editor_popup_audio_clip">Hanganyag hozzáadása</string>
+    <string name="multimedia_editor_popup_video_clip">Video hozzáadása</string>
     <string name="multimedia_editor_popup_audio">Hang rögzítése</string>
     <string name="multimedia_editor_popup_text">Speciális szerkesztő</string>
     <string name="multimedia_editor_popup_cloze">Kitöltés</string>
@@ -73,20 +73,20 @@
     <string name="multimedia_editor_something_wrong">Valami hiba történt</string>
     <string name="multimedia_editor_svg_preview">SVG képek előnézete nem lehetséges</string>
     <string name="multimedia_editor_png_paste_error">Hiba a vágólap kép png-re konvertáláskor: %s</string>
-    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Adj hozzá multimédiás tartalmat a (z) %1$s mezőbe</string>
-    <string name="multimedia_editor_attach_media">Adathordozó csatolása</string>
+    <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Adj hozzá multimédiás tartalmat a(z) %1$s mezőbe</string>
+    <string name="multimedia_editor_attach_media">Média csatolása</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Felvétel nem sikerült</string>
     <string name="multimedia_editor_audio_view_playing_failed">Lejátszás sikertelen</string>
-    <string name="multimedia_editor_audio_view_create_failed">Nem sikerült hangfelvevő eszköztárat létrehozni</string>
+    <string name="multimedia_editor_audio_view_create_failed">Nem lehet hangfelvevő eszköztárat létrehozni</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Szerkesztési mező</string>
     <!-- Crop function-->
     <string name="crop_image">Meg akarod vágni ezt a képet?</string>
     <string name="crop_button">Kép megvágása</string>
     <string name="save_dialog_content">A kép mérete %s MB. Az alap kép méretének limitje 1MB. Meg akarod vágni?</string>
-    <string name="select_image_failed">"Képválasztás sikertelen, Próbáld újra"</string>
-    <string name="activity_result_unexpected">Az alkalmazás egy váratlan értéket dobott vissza. Lehet, hogy egy másik alkalmazást kell használni</string>
+    <string name="select_image_failed">"Képválasztás sikertelen. Próbáld újra!"</string>
+    <string name="activity_result_unexpected">Az alkalmazás egy váratlan értéket dobott vissza. Másik alkalmazást kell használnod.</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Mező tartalma</string>
 </resources>

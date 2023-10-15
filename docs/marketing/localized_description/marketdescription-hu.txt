@@ -1,10 +1,10 @@
 Memorizálj bármit az AnkiDroiddal!
 
-Az AnkiDroid segítségével hatékonyan tanulhatsz szókártyákat, mert akkor szedi elő újra őket, mielőtt elfelejtenéd. Teljen kompatibilis és szinkronizálható az Anki nevű késleltetett ismétléses programmal, amely elérhető Windowson, Linuxon és MaxOS-en is.
+Az AnkiDroid segítségével hatékonyan tanulhatsz szókártyákat, mert akkor szedi elő újra őket, mielőtt elfelejtenéd. Teljesen kompatibilis és szinkronizálható az Anki nevű késleltetett ismétléses programmal, amely elérhető Windowson, Linuxon és MaxOS-en is.
 
 Tanulj meg akármit, bármikor, bárhol, ha rád tör a tanulhatnék! Használd ki jól a buszozás, sorban állás, vagy másféle várakozás miatt kieső időt!
 
-Készíts saját tanulókártya paklit, vagy tölts le néhányat a több, mint 6000, különböző témájú és nyelvű ingyen elérhető pakli közül!
+Készíts saját tanulókártya paklikat, vagy tölts le néhányat a több, mint 6000, különböző témájú és nyelvű ingyen elérhető pakli közül!
 
 Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroiddal. Az alkalmazással akár automatikusan is tudsz szavakat hozzáadni egy szótárból!
 
@@ -30,7 +30,7 @@ Adj új szavakat a paklihoz az asztali Ankival, vagy közvetlenül az AnkiDroidd
 • teljes mentési rendszer
 • navigáció söpréssel, lenyomással
 • testreszabható
-dinamikus pakli kezelés
+• dinamikus pakli kezelés
 • éjszakai mód
 • 27 fordítás
 • minden korábbi AnkiDroid verzió letölthető a honlapról

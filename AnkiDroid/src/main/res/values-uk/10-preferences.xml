@@ -164,8 +164,8 @@
     <string name="pref_backup_max" maxLength="41">Кількість резервних копій</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтервал подвійного дотику в мілісекундах</string>
     <string name="pref_double_tap_time_interval_summary">Другий дотик відповіді буде проігнорований, якщо час ще не минув. Це запобігає подвійному натисканню</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Тривалість довгого натискання для показу відповіді (мс)</string>
+    <string name="pref_show_answer_long_press_summary">Мінімальна тривалість натискання для того, аби кнопка відповіді зафіксувала дотик. Може зменшити ймовірність випадкових натискань. За замовчуванням - 0 мс</string>
     <string name="show_estimates" maxLength="41">Показувати час кнопки</string>
     <string name="show_estimates_summ">Показувати час наступного повторення над кнопками відповіді</string>
     <string name="show_large_answer_buttons" maxLength="41">Показати великі кнопки відповіді</string>
@@ -221,12 +221,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">Клавіатура</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">Кнопки відповідей</string>
+    <string name="card" maxLength="41">Картка</string>
+    <string name="note" maxLength="41">Запис</string>
+    <string name="navigation" maxLength="41">Навігація</string>
+    <string name="media" maxLength="41">Медіафайли</string>
+    <string name="misc" maxLength="41">Різне</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Оберіть позначки</string>
     <!-- Deck configurations -->

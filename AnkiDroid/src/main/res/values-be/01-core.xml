@@ -62,28 +62,28 @@
     <string name="collapse">Згарнуць</string>
     <string name="study_more">Вучыць яшчэ</string>
     <plurals name="deckpicker_title">
-        <item quantity="one">Засталася %1$d картка (%2$s)</item>
-        <item quantity="few">Засталося %1$d карткі (%2$s)</item>
-        <item quantity="many">Засталося %1$d картак (%2$s)</item>
-        <item quantity="other">Засталося %1$d карткі (%2$s)</item>
+        <item quantity="one">%1$d картка для прагляду (%2$s)</item>
+        <item quantity="few">%1$d карткі для прагляду</item>
+        <item quantity="many">%1$d картак для прагляду (%2$s)</item>
+        <item quantity="other">%1$d картак для прагляду (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Засталася %d хвіліна</item>
         <item quantity="few">Засталося %d хвіліны</item>
         <item quantity="many">Засталося %d хвілін</item>
-        <item quantity="other">Засталося %d хвіліны</item>
+        <item quantity="other">Засталося %d хвілін</item>
     </plurals>
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">Засталася %1$d гадзіна %2$d</item>
         <item quantity="few">Засталося %1$d гадзіны %2$d</item>
         <item quantity="many">Засталося %1$d гадзін %2$d</item>
-        <item quantity="other">Засталося %1$d гадзіны %2$d</item>
+        <item quantity="other">Засталося %1$d гадзін %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">Застаўся %1$d дзень %2$d</item>
         <item quantity="few">Засталося %1$d дні %2$d</item>
         <item quantity="many">Засталося %1$d дзён %2$d</item>
-        <item quantity="other">Засталося %1$d дні %2$d</item>
+        <item quantity="other">Засталося %1$d дзён %2$d</item>
     </plurals>
     <string name="no_cards_placeholder_title">Калекцыя пустая</string>
     <string name="no_cards_placeholder_description">Пачніце дадаваць карткі\nз дапамогай значка \"+\"</string>
@@ -105,16 +105,16 @@
     <string name="create_shortcut">Стварыць ярлык</string>
     <string name="browse_cards">Праглядзець карткі</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Дадаць</string>
-    <string name="menu_add_note">Дадаць запіс</string>
+    <string name="menu_add_note">Дадаць нататку</string>
     <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Сінхранізаваць уліковы запіс</string>
     <string name="menu_dismiss_note">Схаваць / выдаліць</string>
     <string name="menu_bury_card">Адкласці картку</string>
-    <string name="menu_bury_note">Адкласці запіс</string>
+    <string name="menu_bury_note">Адкласці нататку</string>
     <string name="menu_suspend_card">Прыпыніць картку</string>
-    <string name="menu_suspend_note">Прыпыніць запіс</string>
+    <string name="menu_suspend_note">Прыпыніць нататку</string>
     <string name="menu_bury">Адкласці</string>
     <string name="menu_suspend">Прыпыніць</string>
-    <string name="menu_delete_note">Выдаліць запіс</string>
+    <string name="menu_delete_note">Выдаліць нататку</string>
     <string name="menu_flag">Сцяжок</string>
     <string name="menu_flag_card">Пазначыць картку</string>
     <string name="menu_flag_card_zero">Без сцяжка</string>
@@ -126,10 +126,10 @@
     <string name="menu_flag_card_six">Туркусовы сцяжок</string>
     <string name="menu_flag_card_seven">Фіялетавы сцяжок</string>
     <string name="menu_edit_tags">Адрэдагаваць меткі</string>
-    <string name="delete_note_message">Сапраўды выдаліць гэты запіс і ўсе яе карткі?\n%s</string>
+    <string name="delete_note_message">Сапраўды выдаліць гэту нататку і ўсе яе карткі?\n%s</string>
     <string name="menu_search">Шукаць у %1$s</string>
-    <string name="menu_mark_note">Пазначыць запіс</string>
-    <string name="menu_unmark_note">Зняць пазнаку з запісу</string>
+    <string name="menu_mark_note">Пазначыць нататку</string>
+    <string name="menu_unmark_note">Зняць пазнаку з нататкі</string>
     <string name="menu_toggle_mic_tool_bar">Праверыць вымаўленне</string>
     <string name="new_deck">Стварыць калоду</string>
     <string name="new_dynamic_deck">Стварыць фільтраваную калоду</string>
@@ -161,8 +161,8 @@
     <string name="empty_cram_label">Ачысціць</string>
     <string name="create_subdeck">Стварыць падкалоду</string>
     <string name="empty_filtered_deck">Ачыстка фільтраванай калоды...</string>
-    <string name="custom_study_deck_name">Дадатковая навучанне</string>
-    <string name="custom_study_deck_exists">Спачатку дайце новую назву калодзе дадатковага навучання</string>
+    <string name="custom_study_deck_name">Сеанс індывідуальнага навучання</string>
+    <string name="custom_study_deck_exists">Спачатку дайце новую назву калодзе індывідуальнага навучання</string>
     <string name="empty_deck">Гэта калода пустая</string>
     <string name="search_deck" comment="Deck search for selecting it">Пошук калоды</string>
     <string name="search_for_download_deck" comment="Deck search value for downloading deck">Пошук калоды</string>
@@ -175,7 +175,7 @@
     <string name="sd_card_not_mounted">Картка памяці не падключаная</string>
     <string name="button_sync" comment="Text of the sync button">Сінхранізаваць</string>
     <string name="button_upgrade" comment="Text of the sync button">Перанос даных у вобласць сховішча</string>
-    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Скасаваць сінхранізацыю?</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Вы сапраўды хочаце скасаваць сінхранізацыю?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Працягнуць сiнхранiзацыю</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Сiнхранiзацыя скасаваная</string>
     <string name="sync_cancel_message" tools:ignore="UnusedResources">Адбываецца скасаванне сінхранізацыі...\nГэта можа заняць некаторы час.</string>
@@ -195,18 +195,18 @@
     <string name="card_template_editor_cant_delete">Патрабуецца прынамсі адзін тып картак</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">Будзе створана %1$d картка. Працягнуць?</item>
-        <item quantity="few">Будзе створана %1$d карткі. Працягнуць?</item>
-        <item quantity="many">Будзе створана %1$d картак. Працягнуць?</item>
-        <item quantity="other">Будзе створана %1$d карткі. Працягнуць?</item>
+        <item quantity="few">Будуць створаны %1$d карткі. Працягнуць?</item>
+        <item quantity="many">Будуць створаны %1$d картак. Працягнуць?</item>
+        <item quantity="other">Будуць створаны %1$d карткі. Працягнуць?</item>
     </plurals>
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Выдаліць тып карткі \'%2$s\' і %1$d яе картку?</item>
         <item quantity="few">Выдаліць тып карткі \'%2$s\' і %1$d яе карткі?</item>
         <item quantity="many">Выдаліць тып карткі \'%2$s\' і %1$d яе картак?</item>
-        <item quantity="other">Выдаліць тып карткі \'%2$s\' і %1$d яе карткі?</item>
+        <item quantity="other">Выдаліць тып карткі \'%2$s\' і %1$d яе картак?</item>
     </plurals>
     <string name="invalid_template">Немагчыма згенерыраваць картку</string>
-    <string name="card_template_editor_would_delete_note">Выдаленне гэтага тыпу картак прывядзе да выдалення некаторых запісаў. Спачатку стварыце і захавайце новы тып картак.</string>
+    <string name="card_template_editor_would_delete_note">Выдаленне гэтага тыпу картак прывядзе да выдалення некаторых нататак. Спачатку стварыце і захавайце новы тып картак.</string>
     <string name="card_template_editor_save_error">Немагчыма захаваць змены ў шаблоне карткі: %s</string>
     <string name="template_for_current_card_deleted">Тып карткі для бягучай карткі быў выдалены.</string>
     <!-- Card Browser Appearance -->
@@ -215,12 +215,12 @@
     <string name="card_info_title">Звесткі пра картку</string>
     <!-- Permissions -->
     <string name="read_write_permission_label">Чытанне і запіс у базу даных AnkiDroid</string>
-    <string name="read_write_permission_description">доступ да існуючых запісаў, картак, тыпаў запісаў і калод, а таксама стварэнне новых</string>
+    <string name="read_write_permission_description">доступ да існуючых нататак, картак, тыпаў нататак і калод, а таксама стварэнне новых</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Аглядальнік картак</string>
     <string name="context_menu_anki_card_label">Картка Anki</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">Гэтыя калекцыі не могуць быць аб\'яднаныя.\nЯкую калекцыю вы хочаце пакінуць?</string>
+    <string name="sync_conflict_message_new">Гэтыя калекцыі не могуць быць аб\'яднаны.\nЯкую калекцыю вы хочаце пакінуць?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
     <string name="sync_conflict_remote_confirm_new">Замяніць вашу калекцыю AnkiDroid калекцыяй з AnkiWeb?</string>
@@ -228,17 +228,17 @@
     <string name="sync_conflict_title_new">Выберыце, якую калекцыю вы хочаце пакінуць</string>
     <string name="sync_conflict_replace_title">Замяніць калекцыю</string>
     <plurals name="deckpicker_title_zero_due">
-        <item quantity="one">%1$d картка (0 для паўтору)</item>
-        <item quantity="few">%1$d карткі (0 для паўтору)</item>
-        <item quantity="many">%1$d картак (0 для паўтору)</item>
-        <item quantity="other">%1$d карткі (0 для паўтору)</item>
+        <item quantity="one">%1$d картка (0 для прагляду)</item>
+        <item quantity="few">%1$d карткі (0 для прагляду)</item>
+        <item quantity="many">%1$d картак (0 для прагляду)</item>
+        <item quantity="other">%1$d картак (0 для прагляду)</item>
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">Немагчыма запісаць або стварыць файл %s</string>
     <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Некалькі памылак, самая нядаўняя: %s"</string>
     <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Некалькі паслядоўных памылак без выканання, самая нядаўняя: %s</string>
     <!-- Scoped storage migration -->
-    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Міграцыя файлаў базы даных</string>
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Перанос файлаў базы даных</string>
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Капіяванне...</string>
     <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Міграцыя мультымедыя</string>
     <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Падлік памеру для пераносу&#8230;</string>
@@ -251,29 +251,29 @@
         Рэгулярна сінхранізуйце вашы даныя або выконвайце экспартаванне рэзервовых копій, каб не згубіць іх.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Збой пераносу</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Капіявання базы даных прыпынена, бо адбылася памылка: %1$s.
         <br><br>
-        The changes were reverted.
+        Змяненні былі скасаваны.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Паспрабуйце перазапусціць перанос.
+        Магчыма, што для вырашэння дадзенай праблемы спатрэбіцца вызваліць крыху месца на прыладзе
+        або паўторна падключыць здымнае сховішча, якое змяшчае вашу калекцыю.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Даведацца больш і атрымаць дапамогу</a>
     ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Перамяшчэнне медыяфайлаў прыпынена, бо адбылася памылка: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        Змяненні <i>не</i> былі скасаваны.
+        Хоць даныя і не былі страчаны, але        
+        медыяфайлы маглі быць раздзелены паміж старой і новай папкай.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Паспрабуйце перазапусціць перанос.
+        Магчыма, што для вырашэння дадзенай праблемы спатрэбіцца вызваліць крыху месца на прыладзе
+        або паўторна падключыць здымнае сховішча, якое змяшчае вашу калекцыю.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Даведацца больш і атрымаць дапамогу</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Міграцыя сховішча прыпынена пасля збою з памылкай: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Перанос сховішча прыпынены пасля збою з памылкай: %1$s.
         <br><br>
         <a href="%2$s">Даведацца больш і атрымаць дапамогу</a>
     ]]></string>

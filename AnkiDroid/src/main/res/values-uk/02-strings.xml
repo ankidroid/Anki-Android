@@ -319,7 +319,7 @@
     <string name="deck_download_progress_message">Ви можете використовувати інші додатки під час завантаження</string>
     <string name="check_network">Будь ласка, перевірте підключення до мережі</string>
     <string name="search_using_deck_name">Пошук за назвою колоди</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">Завантаження перервано, зовнішнє сховище недоступне</string>
     <string name="home">Головна</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
