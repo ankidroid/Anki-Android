@@ -34,6 +34,10 @@ suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH
                 undo()
             }
         }
-        showSnackbar(TR.undoActionUndone(changes.operation), duration)
+        if (changes.operation.isEmpty()) {
+            showSnackbar(TR.actionsNothingToUndo(), duration)
+        } else {
+            showSnackbar(TR.undoActionUndone(changes.operation), duration)
+        }
     }
 }
