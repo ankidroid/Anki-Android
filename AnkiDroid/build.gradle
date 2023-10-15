@@ -383,7 +383,7 @@ dependencies {
     // robolectricDownloader.gradle *may* need a new SDK jar entry if they release one or if we change targetSdk. Instructions in that gradle file.
     testImplementation "org.robolectric:robolectric:$robolectric_version"
     testImplementation "androidx.test:core:$androidx_test_version"
-    testImplementation "androidx.test.ext:junit:$androidx_test_junit_version"
+    testImplementation "androidx.test.ext:junit:1.1.5"
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit5:$kotlin_version"
