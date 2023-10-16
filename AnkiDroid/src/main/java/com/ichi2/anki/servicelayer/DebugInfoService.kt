@@ -26,7 +26,7 @@ import org.acra.util.Installation
 
 object DebugInfoService {
     fun getDebugInfo(info: Context): String {
-        var dbV2Enabled = true
+        val dbV2Enabled = true
         val webviewUserAgent = getWebviewUserAgent(info)
         return """
                AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})

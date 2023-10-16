@@ -46,7 +46,7 @@ internal object Utils {
     }
 
     fun joinTags(tags: Set<String?>?): String {
-        if (tags == null || tags.isEmpty()) {
+        if (tags.isNullOrEmpty()) {
             return ""
         }
         for (t in tags) {

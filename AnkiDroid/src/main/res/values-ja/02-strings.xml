@@ -69,8 +69,8 @@
     <string name="hide_whiteboard">ホワイトボードを隠す</string>
     <string name="clear_whiteboard">ホワイトボードの内容を消去</string>
     <string name="replay_audio">音声を再生</string>
-    <string name="leech_suspend_notification">このカードに \"leech\"  (無駄、習得困難) というタグを付け、学習を休止しました</string>
-    <string name="leech_notification">このカードに \"leech\" (無駄、習得困難) というタグを付けました</string>
+    <string name="leech_suspend_notification">このカードに \"leech\"  (苦戦、忘却多発) というタグを付け、学習を休止しました</string>
+    <string name="leech_notification">このカードに \"leech\" (苦戦、忘却多発) というタグを付けました</string>
     <string name="webview_crash_unknown">原因不明のエラー</string>
     <string name="webview_crash_unknwon_detailed">これはWebViewの内部エラーによって引き起こされました。</string>
     <string name="webview_crash_oom">メモリ不足</string>
@@ -91,7 +91,7 @@
         <item>ノートタイプ</item>
         <item>質問</item>
         <item>タグ</item>
-        <item>忘却回数</item>
+        <item>復習での忘却回数</item>
         <item>学習回数</item>
         <item>間隔</item>
         <item>易しさ</item>

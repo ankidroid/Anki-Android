@@ -78,19 +78,24 @@ object NoteFieldDecorator {
     }
 
     private fun huevoRevuelto(huevo: String?): String? {
-        if (huevo == null || huevo.length == 0) {
+        if (huevo.isNullOrEmpty()) {
             return huevo
         }
         val revuelto = StringBuilder()
-        for (i in 0 until huevo.length) {
-            var c = huevo[i]
-            if (c >= 'a' && c <= 'm') {
-                c += 13.toChar().code
-            } else if (c >= 'A' && c <= 'M') {
-                c += 13.toChar().code
-            } else if (c >= 'n' && c <= 'z') {
-                c -= 13.toChar().code
-            } else if (c >= 'N' && c <= 'Z') c -= 13.toChar().code
+        for (element in huevo) {
+            var c = element
+            when (c) {
+                in 'a'..'m' -> {
+                    c += 13.toChar().code
+                }
+                in 'A'..'M' -> {
+                    c += 13.toChar().code
+                }
+                in 'n'..'z' -> {
+                    c -= 13.toChar().code
+                }
+                in 'N'..'Z' -> c -= 13.toChar().code
+            }
             revuelto.append(c)
         }
         return revuelto.toString()

@@ -325,8 +325,8 @@
     <string name="not_valid_js_addon">%s không phải là gói tiện ích javascript hợp lệ</string>
     <string name="could_not_create_dir">Không thể tạo thư mục %s</string>
     <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
-    <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
-    <string name="file_extract_exceeds_storage_space">File extract exceeds storage space</string>
+    <string name="malicious_archive_exceeds_limit">Lưu trữ độc hại. Kích thước vượt quá %1$s hoặc chứa nhiều hơn %2$d tệp</string>
+    <string name="file_extract_exceeds_storage_space">Tệp giải nén vượt quá dung lượng lưu trữ</string>
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Mở rộng thẻ \'%s\'</string>
     <!-- Manage note types -->
@@ -334,7 +334,7 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Học ít</string>
     <string name="intro_ankidroid_tagline_two">Nhớ nhiều hơn</string>
-    <string name="intro_short_ankidroid_explanation">Anki\'s card scheduler saves time by strengthening your weakest memories and preserving your strongest</string>
+    <string name="intro_short_ankidroid_explanation">Trình lập lịch thẻ Anki giúp bạn học hiệu quả hơn bằng cách tập trung vào những kiến thức bạn còn chưa vững và ghi nhớ những kiến thức bạn đã nắm vững</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">Bắt đầu</string>
     <string name="intro_sync_from_ankiweb">Đồng bộ từ AnkiWeb</string>
     <string name="already_logged_in">Đã đăng nhập</string>
@@ -347,10 +347,10 @@
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Các thẻ</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Ghi chú</string>
     <string name="toggle_cards_notes">Chuyển đổi thẻ/ghi chú</string>
-    <string name="toggle_browser_mode_help">Toggle Showing cards or notes in the browser</string>
+    <string name="toggle_browser_mode_help">Chuyển đổi giữa hiển thị thẻ hoặc ghi chú trong trình duyệt</string>
     <string name="truncate_content_help">Cắt bớt chiều cao của mỗi hàng của Trình duyệt để chỉ hiển thị 3 dòng nội dung đầu tiên</string>
     <string name="browser_options_dialog_heading">Tuỳ chọn trình duyệt</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Chức năng này không khả dụng trong quá trình di chuyển lưu trữ
     </string>
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Chạm để bắt đầu di chuyển bộ nhớ</string>
     <string name="media_sync_required_title">Yêu cầu đồng bộ hóa phương tiện</string>

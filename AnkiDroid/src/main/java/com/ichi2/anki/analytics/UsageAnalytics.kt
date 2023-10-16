@@ -71,7 +71,7 @@ object UsageAnalytics {
                     AndroidDefaultRequest()
                         .setAndroidRequestParameters(context)
                         .applicationName(context.getString(R.string.app_name))
-                        .applicationVersion(Integer.toString(BuildConfig.VERSION_CODE))
+                        .applicationVersion(BuildConfig.VERSION_CODE.toString())
                         .applicationId(BuildConfig.APPLICATION_ID)
                         .trackingId(getAnalyticsTag(context))
                         .clientId(Installation.id(context))

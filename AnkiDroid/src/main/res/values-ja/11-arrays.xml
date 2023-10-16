@@ -54,7 +54,7 @@
     <string name="cram_deck_conf_order_random">ランダム</string>
     <string name="cram_deck_conf_order_increasing_intervals">間隔が小さい順</string>
     <string name="cram_deck_conf_order_decreasing_intervals">間隔が大きい順</string>
-    <string name="cram_deck_conf_order_most_lapsed">忘却回数が多い順</string>
+    <string name="cram_deck_conf_order_most_lapsed">復習での忘却回数が多い順</string>
     <string name="cram_deck_conf_order_order_added">作成日時が古い順</string>
     <string name="cram_deck_conf_order_order_due">学習予定日時が古い順</string>
     <string name="cram_deck_conf_order_latest_added_first">作成日時が新しい順</string>

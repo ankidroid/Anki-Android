@@ -48,7 +48,6 @@ class PreviousAnswerIndicator(private val chosenAnswerText: TextView) {
      * in SchedV1, button 2 could be hard or good
      *
      * @param ease The ordinal of the button answered
-     * @param buttonCount The number of buttons
      */
     fun displayAnswerIndicator(ease: Int) {
         when (ease) {

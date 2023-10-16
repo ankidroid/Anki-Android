@@ -77,13 +77,13 @@
     <string name="multimedia_editor_attach_media">Дадаць Media-файл</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
-    <string name="multimedia_editor_audio_view_recording_failed">Памылка запісу</string>
+    <string name="multimedia_editor_audio_view_recording_failed">Збой запісу</string>
     <string name="multimedia_editor_audio_view_playing_failed">Памылка прайгравання</string>
     <string name="multimedia_editor_audio_view_create_failed">Немагчыма стварыць панэль інструментаў для кіравання запісам</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Поле праўкі</string>
     <!-- Crop function-->
-    <string name="crop_image">Хочаце абрэзаць гэты відарыс?</string>
+    <string name="crop_image">Вы сапраўды хочаце абрэзаць гэты відарыс?</string>
     <string name="crop_button">Абрэзаць відарыс</string>
     <string name="save_dialog_content">Памер бягучага відарыса складае %s МБ. Стандартна, памер відарыса абмежаваны да 1 МБ. Хочаце абрэзаць гэты відарыс?</string>
     <string name="select_image_failed">"Не атрымалася выбраць відарыс. Паўтарыце спробу"</string>

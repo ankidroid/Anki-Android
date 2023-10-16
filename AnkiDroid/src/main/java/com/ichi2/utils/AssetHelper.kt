@@ -49,8 +49,7 @@ object AssetHelper {
      * @return MIME type guessed from file extension or "text/plain".
      */
     fun guessMimeType(path: String?): String {
-        val extension = MimeTypeMap.getFileExtensionFromUrl(path)
-        return when (extension) {
+        return when (val extension = MimeTypeMap.getFileExtensionFromUrl(path)) {
             "js" -> "text/javascript"
             "mjs" -> "text/javascript"
             "json" -> "application/json"

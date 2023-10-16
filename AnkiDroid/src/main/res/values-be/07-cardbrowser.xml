@@ -47,24 +47,24 @@
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
         <item quantity="one">Паказана %d картка</item>
-        <item quantity="few">Паказана %d карткі</item>
-        <item quantity="many">Паказана %d картак</item>
-        <item quantity="other">Паказана %d карткі</item>
+        <item quantity="few">Паказаны %d карткі</item>
+        <item quantity="many">Паказаны %d картак</item>
+        <item quantity="other">Паказаны %d картак</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
         <item quantity="one">Паказана %d нататка</item>
         <item quantity="few">Паказана %d нататкі</item>
         <item quantity="many">Паказана %d нататак</item>
-        <item quantity="other">Паказана %d нататкі</item>
+        <item quantity="other">Паказана %d нататак</item>
     </plurals>
     <string name="card_browser_all_decks">Усе калоды</string>
-    <string name="card_browser_delete_card">Выдаліць запісы</string>
+    <string name="card_browser_delete_card">Выдаліць нататкі</string>
     <string name="card_browser_suspend_card">Прыпыніць карткі</string>
     <string name="card_browser_change_deck">Змяніць калоду</string>
     <string name="card_browser_unsuspend_card">Аднавіць прыпыненыя карткі</string>
-    <string name="card_browser_mark_card">Пазначыць запісы</string>
-    <string name="card_browser_unmark_card">Зняць пазнакі з запісаў</string>
-    <string name="delete_card_title">Выдаліць запіс?</string>
+    <string name="card_browser_mark_card">Адзначыць нататкі</string>
+    <string name="card_browser_unmark_card">Зняць пазнакі з нататак</string>
+    <string name="delete_card_title">Выдаліць нататку?</string>
     <string name="card_browser_show_marked">Фільтраваць пазначаныя</string>
     <string name="card_browser_show_suspended">Фільтраваць прыпыненыя</string>
     <string name="card_browser_search_by_tag">Фільтраваць па метках</string>
@@ -83,7 +83,7 @@
         <item>Без сартавання (хутка)</item>
         <item>Па полі сартавання</item>
         <item>Па часе стварэння</item>
-        <item>Па часе змянення запісу</item>
+        <item>Па часе змянення нататкі</item>
         <item>Па часе змянення карткі</item>
         <item>Па часе паўтарэння</item>
         <item>Па інтэрвале</item>
@@ -114,9 +114,9 @@
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">Выдалена %d картка</item>
-        <item quantity="few">Выдалена %d карткі</item>
-        <item quantity="many">Выдалена %d картак</item>
-        <item quantity="other">Выдалена %d карткі</item>
+        <item quantity="few">Выдалены %d карткі</item>
+        <item quantity="many">Выдалены %d картак</item>
+        <item quantity="other">Выдалены %d картак</item>
     </plurals>
     <!-- Card Info subscreen -->
 </resources>

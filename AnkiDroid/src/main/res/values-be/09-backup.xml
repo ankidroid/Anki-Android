@@ -49,9 +49,9 @@
     <string name="backup_restore">Аднавіць з рэзервовай копіі</string>
     <string name="backup_new_collection">Новая калекцыя</string>
     <string name="backup_del_collection">Выдаліць калекцыю і стварыць новую</string>
-    <string name="backup_del_collection_question">Выдаліць калекцыю і стварыць новую? Вы згубіце ўсе звесткі пра вашы дасягненні і выдаліце ўсе каркі.</string>
+    <string name="backup_del_collection_question">Выдаліць калекцыю і стварыць новую? Вы згубіце ўсе звесткі пра вашы дасягненні і выдаліце ўсе карткі.</string>
     <string name="backup_full_sync_from_server">Поўная сінхранізацыя з сервера</string>
-    <string name="backup_full_sync_from_server_question">Перазапісаць вашу калекцыю той, якая атрыманая з AnkiWeb? Вы згубіце ўсе звесткі пра свае дасягненні і час апошняй сінхранізацыі.</string>
+    <string name="backup_full_sync_from_server_question">Перазапісаць вашу калекцыю той, якая атрымана з AnkiWeb? Вы згубіце ўсе звесткі пра свае дасягненні і час апошняй сінхранізацыі.</string>
     <string name="error_handling_title">Апрацоўка памылак</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Параметры</string>
     <string name="backup_retry_opening">Адкрыць паўторна</string>

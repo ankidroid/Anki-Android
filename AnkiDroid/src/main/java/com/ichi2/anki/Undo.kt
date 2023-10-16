@@ -34,6 +34,11 @@ suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH
                 undo()
             }
         }
-        showSnackbar(TR.undoActionUndone(changes.operation), duration)
+        val message = if (changes.operation.isEmpty()) {
+            TR.actionsNothingToUndo()
+        } else {
+            TR.undoActionUndone(changes.operation)
+        }
+        showSnackbar(message, duration)
     }
 }

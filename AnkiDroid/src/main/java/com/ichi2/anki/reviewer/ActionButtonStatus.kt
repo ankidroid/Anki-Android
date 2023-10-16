@@ -29,7 +29,7 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
     /**
      * Custom button allocation
      */
-    protected val mCustomButtons: MutableMap<Int, Int> = hashMapInit(25) // setup's size
+    private val mCustomButtons: MutableMap<Int, Int> = hashMapInit(25) // setup's size
 
     fun setup(preferences: SharedPreferences) {
         // NOTE: the default values below should be in sync with preferences_custom_buttons.xml and reviewer.xml
@@ -57,7 +57,10 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
     }
 
     private fun setupButton(preferences: SharedPreferences, @IdRes resourceId: Int, preferenceName: String, showAsActionType: Int) {
-        mCustomButtons[resourceId] = preferences.getString(preferenceName, Integer.toString(showAsActionType))!!.toInt()
+        mCustomButtons[resourceId] = preferences.getString(
+            preferenceName,
+            showAsActionType.toString()
+        )!!.toInt()
     }
 
     fun setCustomButtons(menu: Menu) {

@@ -79,10 +79,10 @@
     <string name="html_size_code_x_large">Дуже великий</string>
     <string name="html_size_code_xx_large">Найбільший</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Відповідь: знову</string>
+    <string name="answer_hard">Відповідь: важко</string>
+    <string name="answer_good">Відповідь: добре</string>
+    <string name="answer_easy">Відповідь: легко</string>
     <string name="gesture_play">Програти медіа</string>
     <string name="gesture_abort_learning">Перервати навчання</string>
     <string name="gesture_flag_red">Переключити червоний прапорець</string>

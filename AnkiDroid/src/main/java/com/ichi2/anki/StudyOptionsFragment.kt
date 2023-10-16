@@ -289,7 +289,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    suspend fun rebuildCram() {
+    private suspend fun rebuildCram() {
         val result = requireActivity().withProgress(resources.getString(R.string.rebuild_filtered_deck)) {
             withCol {
                 Timber.d("doInBackground - RebuildCram")
@@ -312,7 +312,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         rebuildUi(result, true)
     }
 
-    fun configureToolbar() {
+    private fun configureToolbar() {
         configureToolbarInternal(true)
     }
 
@@ -389,7 +389,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
-    var onRequestReviewActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+    private var onRequestReviewActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         Timber.i("StudyOptionsFragment::mOnRequestReviewActivityResult")
         Timber.d("Handling onActivityResult for StudyOptionsFragment (openReview, resultCode = %d)", result.resultCode)
         if (mToolbar != null) {
@@ -443,13 +443,14 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
     }
 
+    private var updateValuesFromDeckJob: Job? = null
+
     /**
      * Rebuild the fragment's interface to reflect the status of the currently selected deck.
      *
      * @param resetDecklist Indicates whether to call back to the parent activity in order to
      *                      also refresh the deck list.
      */
-    private var updateValuesFromDeckJob: Job? = null
     fun refreshInterface(resetDecklist: Boolean = false) {
         Timber.d("Refreshing StudyOptionsFragment")
         updateValuesFromDeckJob?.cancel()
