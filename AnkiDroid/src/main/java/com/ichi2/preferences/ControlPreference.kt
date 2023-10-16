@@ -197,15 +197,12 @@ class ControlPreference : ListPreference {
     }
 
     /**
-     * Remove binding from all control preferences
-     * in the parent PreferenceGroup of this [ControlPreference]
+     * Remove binding from all control preferences other than this one
      */
     private fun clearBinding(binding: MappableBinding) {
-        val preferenceGroup = parent
-            ?: return
-
         for (command in ViewerCommand.values()) {
-            val commandPreference = preferenceGroup.findPreference<ControlPreference>(command.preferenceKey)!!
+            val commandPreference = preferenceManager.findPreference<ControlPreference>(command.preferenceKey)
+                ?: continue
             val bindings = MappableBinding.fromPreferenceString(commandPreference.value)
             if (binding in bindings) {
                 bindings.remove(binding)
