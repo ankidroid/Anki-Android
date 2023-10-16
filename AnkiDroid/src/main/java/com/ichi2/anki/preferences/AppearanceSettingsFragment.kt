@@ -124,8 +124,10 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // whether the buttons should indicate the duration of the interval if we click on them.
         requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
             launchCatchingTask { isChecked = withCol { config.get("estTimes") ?: true } }
-            setOnPreferenceChangeListener { newETA ->
-                launchCatchingTask { withCol { config.set("estTimes", newETA) } }
+            setOnPreferenceChangeListener { _, newETA ->
+                val newETABool = newETA as? Boolean ?: return@setOnPreferenceChangeListener false
+                launchCatchingTask { withCol { config.set("estTimes", newETABool) } }
+                true
             }
         }
         // Show progress
@@ -133,8 +135,10 @@ class AppearanceSettingsFragment : SettingsFragment() {
         // whether the remaining number of cards should be shown.
         requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
             launchCatchingTask { isChecked = withCol { config.get("dueCounts") ?: true } }
-            setOnPreferenceChangeListener { newDueCountsValue ->
-                launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValue) } }
+            setOnPreferenceChangeListener { _, newDueCountsValue ->
+                val newDueCountsValueBool = newDueCountsValue as? Boolean ?: return@setOnPreferenceChangeListener false
+                launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValueBool) } }
+                true
             }
         }
     }
