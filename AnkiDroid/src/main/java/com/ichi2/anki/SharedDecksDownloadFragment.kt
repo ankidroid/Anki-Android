@@ -165,7 +165,7 @@ class SharedDecksDownloadFragment : Fragment() {
                 ctx,
                 mOnComplete,
                 IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE),
-                ContextCompat.RECEIVER_NOT_EXPORTED
+                ContextCompat.RECEIVER_EXPORTED
             )
         }
 
