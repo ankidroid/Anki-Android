@@ -41,6 +41,9 @@ import com.ichi2.libanki.syncLogin
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.preferences.VersatileTextWithASwitchPreference
 import com.ichi2.utils.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.exceptions.BackendSyncException
 import timber.log.Timber
@@ -348,13 +351,16 @@ private suspend fun monitorMediaSync(
         try {
             while (true) {
                 // this will throw if the sync exited with an error
-                val resp = CollectionManager.getBackend().mediaSyncStatus()
+                val resp = withContext(Dispatchers.IO) {
+                    CollectionManager.getBackend().mediaSyncStatus()
+                }
                 if (!resp.active) {
                     deckPicker.onMediaSyncCompleted(SyncCompletion(isSuccess = true))
                     return@launchCatchingTask
                 }
                 val text = resp.progress.run { "\n$added\n$removed\n$checked" }
                 dialog.setMessage(text)
+                delay(100)
             }
         } catch (exc: Exception) {
             deckPicker.onMediaSyncCompleted(SyncCompletion(isSuccess = false))
