@@ -32,6 +32,17 @@ static def gitCommitHash() {
     "git rev-parse HEAD".execute().text.trim()
 }
 
+/**
+ * Set this to true to create five separate APKs instead of one:
+ *   - 2 APKs that only work on ARM/ARM64 devices
+ *   - 2 APKs that only works on x86/x86_64 devices
+ *   - a universal APK that works on all devices
+ * The advantage is the size of most APKs is reduced by about 2.5MB.
+ * Upload all the APKs to the Play Store and people will download
+ * the correct one based on the CPU architecture of their device.
+ */
+def enableSeparateBuildPerCPUArchitecture = true
+
 android {
     namespace "com.ichi2.anki"
 
@@ -98,7 +109,7 @@ android {
             versionNameSuffix "-debug"
             debuggable true
             applicationIdSuffix ".debug"
-            splits.abi.universalApk = true // Build universal APK for debug always
+            enableSeparateBuildPerCPUArchitecture = false // Build one universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
             // buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
             if (project.rootProject.file('local.properties').exists()) {
@@ -171,17 +182,6 @@ android {
             dimension "appStore"
         }
     }
-
-    /**
-     * Set this to true to create five separate APKs instead of one:
-     *   - 2 APKs that only work on ARM/ARM64 devices
-     *   - 2 APKs that only works on x86/x86_64 devices
-     *   - a universal APK that works on all devices
-     * The advantage is the size of most APKs is reduced by about 2.5MB.
-     * Upload all the APKs to the Play Store and people will download
-     * the correct one based on the CPU architecture of their device.
-     */
-    def enableSeparateBuildPerCPUArchitecture = true
 
     splits {
         abi {
