@@ -277,7 +277,7 @@ class ReviewerTest : RobolectricTest() {
         assertThat("Unexpected card ord", ord + 1, not(equalTo(i)))
     }
 
-    private suspend fun undo(reviewer: Reviewer) {
+    private fun undo(reviewer: Reviewer) {
         reviewer.undo()
     }
 
@@ -345,12 +345,6 @@ class ReviewerTest : RobolectricTest() {
         newTemplate.put("qfmt", newTemplate.getString("qfmt") + extra)
 
         notetypes.addTemplate(m, newTemplate)
-    }
-
-    private fun displayAnswer(reviewer: Reviewer) {
-        waitForAsyncTasksToComplete()
-        reviewer.displayCardAnswer()
-        waitForAsyncTasksToComplete()
     }
 
     private fun startReviewer(): Reviewer {
