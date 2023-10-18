@@ -106,6 +106,7 @@ import com.ichi2.anki.utils.timeQuantityTopDeckPicker
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
@@ -994,6 +995,7 @@ open class DeckPicker :
                 savedInstanceState.getString("dbRestorationPath", it.newAnkiDroidDirectory)
             }
         }
+        savedInstanceState.putSerializable("mediaUsnOnConflict", mediaUsnOnConflict)
     }
 
     public override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -1004,6 +1006,7 @@ open class DeckPicker :
             CollectionHelper.ankiDroidDirectoryOverride = path
             importColpkgListener = DatabaseRestorationListener(this, path)
         }
+        mediaUsnOnConflict = savedInstanceState.getSerializableCompat("mediaUsnOnConflict")
     }
 
     override fun onPause() {
