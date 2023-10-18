@@ -37,7 +37,7 @@ plugins {
     id 'org.jetbrains.kotlin.android' version "$kotlin_version" apply false
     id 'org.jetbrains.kotlin.plugin.parcelize' version "$kotlin_version" apply false
     id 'org.jetbrains.kotlin.plugin.serialization' version "$kotlin_version" apply false
-    id 'org.jlleitschuh.gradle.ktlint' version '11.6.0' apply false
+    id 'org.jlleitschuh.gradle.ktlint' version '11.6.1' apply false
     id 'org.jetbrains.dokka' version "$dokka_version" apply false
 }
 
