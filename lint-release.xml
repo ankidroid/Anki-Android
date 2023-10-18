@@ -162,6 +162,10 @@
 
     <issue id="MonochromeLauncherIcon" severity="fatal" />
 
+    <!-- this is temporary - needed to work with android gradle plugin 8.1 -->
+    <!-- ideally commits to fix this are completed, such as in https://github.com/ankidroid/Anki-Android/pull/14158 -->
+    <issue id="UnspecifiedRegisterReceiverFlag" severity="ignore" />
+
     <!-- this is new with AGP7.1+, does not appear to create value -->
     <issue id="IntentFilterUniqueDataAttributes" severity="ignore" />
 
