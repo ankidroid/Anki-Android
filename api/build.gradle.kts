@@ -8,6 +8,12 @@ plugins {
     id("org.jetbrains.dokka")
 }
 
+repositories {
+    google()
+    mavenCentral()
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+}
+
 group = "com.ichi2.anki"
 version = "2.0.0"
 
@@ -21,8 +27,7 @@ android {
 
     defaultConfig {
         minSdk = 16
-        //noinspection OldTargetApi
-        targetSdk = 32
+        targetSdk = 33
         buildConfigField(
             "String",
             "READ_WRITE_PERMISSION",
