@@ -17,7 +17,7 @@ buildscript {
     ext.androidx_test_junit_version = '1.1.5'
     ext.robolectric_version = '4.10.3'
     ext.android_gradle_plugin = "8.1.2"
-    ext.dokka_version = "1.9.0" // not the same with kotlin version!
+    ext.dokka_version = "1.9.10" // not the same with kotlin version!
 
     configurations.all {
         resolutionStrategy.eachDependency { details ->
