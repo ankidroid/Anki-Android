@@ -656,7 +656,7 @@ class BasicImageFieldController : FieldControllerBase(), IFieldController {
 
         AlertDialog.Builder(mActivity).show {
             message(text = content)
-            positiveButton(R.string.dialog_ok) {
+            positiveButton(R.string.dialog_yes) {
                 mViewModel = requestCrop(mViewModel)
             }
             negativeButton(R.string.dialog_no) {
