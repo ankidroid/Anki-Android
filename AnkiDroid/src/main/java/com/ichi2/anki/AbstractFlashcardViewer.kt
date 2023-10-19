@@ -1907,20 +1907,20 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal open inner class MyGestureDetector : SimpleOnGestureListener() {
-        override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        override fun onFling(e1: MotionEvent?, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
             Timber.d("onFling")
 
             // #5741 - A swipe from the top caused delayedHide to be triggered,
             // accepting a gesture and quickly disabling the status bar, which wasn't ideal.
             // it would be lovely to use e1.getEdgeFlags(), but alas, it doesn't work.
-            if (isTouchingEdge(e1)) {
+            if (e1 != null && isTouchingEdge(e1)) {
                 Timber.d("ignoring edge fling")
                 return false
             }
 
             // Go back to immersive mode if the user had temporarily exited it (and then execute swipe gesture)
             this@AbstractFlashcardViewer.onFling()
-            if (mGesturesEnabled) {
+            if (e1 != null && mGesturesEnabled) {
                 try {
                     val dy = e2.y - e1.y
                     val dx = e2.x - e1.x

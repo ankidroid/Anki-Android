@@ -13,7 +13,7 @@ version = "2.0.0"
 
 android {
     namespace = "com.ichi2.anki.api"
-    compileSdk = 33
+    compileSdk = 34
 
     buildFeatures {
         buildConfig = true

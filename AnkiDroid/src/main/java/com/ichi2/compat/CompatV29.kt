@@ -61,7 +61,9 @@ open class CompatV29 : CompatV26(), Compat {
         }
         val newImageUri = context.contentResolver.insert(imagesCollection, newImage)
         context.contentResolver.openOutputStream(newImageUri!!).use {
-            bitmap.compress(format, quality, it)
+            if (it != null) {
+                bitmap.compress(format, quality, it)
+            }
         }
         newImage.clear()
         newImage.put(MediaStore.Images.Media.IS_PENDING, 0)
