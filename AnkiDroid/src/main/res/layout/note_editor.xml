@@ -88,7 +88,7 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/CardEditorTagButton"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         tools:text="Tags: AnkiDroid"
                         android:gravity="start|center_vertical"
                         android:paddingStart="15dip"
@@ -99,7 +99,7 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/CardEditorCardsButton"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         tools:text="Cards: Card 1"
                         android:gravity="start|center_vertical"
                         android:paddingStart="15dip"
