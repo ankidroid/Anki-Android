@@ -23,6 +23,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ichi2.anki.UIUtils
 
+/**
+ * The provided BottomSheetDialogFragmentFix focuses on adjusting the peek height of the Bottom Sheet based on the
+ * device's orientation. By detecting the landscape orientation and dynamically setting the peek
+ * height to a specific value, the Bottom Sheet is displayed appropriately without any alignment
+ * issues. The code is integrated within the BottomSheetDialogFragmentFix class, ensuring that
+ * the fix is applied during device rotation and when the Bottom Sheet is first displayed.
+ * Fixing: https://stackoverflow.com/questions/41591733/bottom-sheet-landscape-issue
+ **/
 open class BottomSheetDialogFragmentFix : BottomSheetDialogFragment() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)

@@ -19,7 +19,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/bottom_modal_sheet"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -32,6 +33,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

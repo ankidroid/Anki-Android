@@ -28,7 +28,7 @@ import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.UsageAnalytics
 
-class BottomDialogSheetFragment : BottomSheetDialogFragmentFix() {
+class HelpBottomSheetDialogFragment : BottomSheetDialogFragmentFix() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,10 +36,10 @@ class BottomDialogSheetFragment : BottomSheetDialogFragmentFix() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.help_bottom_sheet, container, false)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = HelpBottomSheetAdapter(helpDialogModelList())
-        recyclerView?.adapter = adapter
+        view.findViewById<RecyclerView>(R.id.recycler_view).apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = HelpBottomSheetAdapter(helpDialogModelList())
+        }
         UsageAnalytics.sendAnalyticsEvent(
             UsageAnalytics.Category.LINK_CLICKED,
             UsageAnalytics.Actions.OPENED_HELPDIALOG

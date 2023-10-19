@@ -40,7 +40,7 @@ import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
-import com.ichi2.anki.bottomdialogsheet.BottomDialogSheetFragment
+import com.ichi2.anki.bottomdialogsheet.HelpBottomSheetDialogFragment
 import com.ichi2.anki.dialogs.HelpDialog
 import com.ichi2.anki.preferences.Preferences
 import com.ichi2.anki.preferences.sharedPrefs
@@ -325,7 +325,7 @@ abstract class NavigationDrawerActivity :
 
                 R.id.nav_help -> {
                     Timber.i("Navigating to help")
-                    val helpBottomSheet = BottomDialogSheetFragment()
+                    val helpBottomSheet = HelpBottomSheetDialogFragment()
                     helpBottomSheet.show(supportFragmentManager, "HelpBottomSheet")
                 }
 
