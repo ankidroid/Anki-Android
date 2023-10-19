@@ -819,8 +819,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         closeNoteEditor()
     }
 
+    @Suppress("DEPRECATION", "Deprecated in API34+dependencies for predictive back feature")
     override fun onBackPressed() {
         Timber.i("NoteEditor:: onBackPressed()")
+        super.onBackPressed()
         closeCardEditorWithCheck()
     }
 

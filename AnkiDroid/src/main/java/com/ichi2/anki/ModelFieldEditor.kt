@@ -469,7 +469,9 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
+    @Suppress("DEPRECATION", "Deprecated in API34+dependencies for predictive back feature")
     override fun onBackPressed() {
+        super.onBackPressed()
         closeActivity()
     }
 
