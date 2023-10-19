@@ -17,16 +17,19 @@
 package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Decks
@@ -39,7 +42,12 @@ import java.util.function.Consumer
 
 // TODO: Use snackbars instead of toasts: https://github.com/ankidroid/Anki-Android/pull/12139#issuecomment-1224963182
 @NeedsTest("Ensure a toast is shown on a successful action")
-class CreateDeckDialog(private val context: Context, private val title: Int, private val deckDialogType: DeckDialogType, private val parentId: Long?) {
+class CreateDeckDialog(
+    private val context: Context,
+    private val title: Int,
+    private val deckDialogType: DeckDialogType,
+    private val parentId: Long?
+) {
     private var mPreviousDeckName: String? = null
     private var mOnNewDeckCreated: Consumer<Long>? = null
     private var mInitialDeckName = ""
@@ -116,10 +124,10 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         if (Decks.isValidDeckName(deckName)) {
             createNewDeck(deckName)
             // 11668: Display feedback if a deck is created
-            showThemedToast(context, R.string.deck_created, true)
+            displayFeedback(context.getString(R.string.deck_created))
         } else {
             Timber.d("CreateDeckDialog::createDeck - Not creating invalid deck name '%s'", deckName)
-            showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
+            displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
         }
         closeDialog()
     }
@@ -131,7 +139,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
             val newDeckId = col.decks.newDyn(deckName)
             mOnNewDeckCreated!!.accept(newDeckId)
         } catch (ex: DeckRenameException) {
-            showThemedToast(context, ex.asLocalizedMessage(context), false)
+            displayFeedback(ex.asLocalizedMessage(context), Snackbar.LENGTH_LONG)
             return false
         }
         return true
@@ -176,7 +184,7 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
         val newName = newDeckName.replace("\"".toRegex(), "")
         if (!Decks.isValidDeckName(newName)) {
             Timber.i("CreateDeckDialog::renameDeck not renaming deck to invalid name '%s'", newName)
-            showThemedToast(context, context.getString(R.string.invalid_deck_name), false)
+            displayFeedback(context.getString(R.string.invalid_deck_name), Snackbar.LENGTH_LONG)
         } else if (newName != mPreviousDeckName) {
             try {
                 val decks = col.decks
@@ -184,12 +192,20 @@ class CreateDeckDialog(private val context: Context, private val title: Int, pri
                 decks.rename(decks.get(deckId)!!, newName)
                 mOnNewDeckCreated!!.accept(deckId)
                 // 11668: Display feedback if a deck is renamed
-                showThemedToast(context, R.string.deck_renamed, true)
+                displayFeedback(context.getString(R.string.deck_renamed))
             } catch (e: DeckRenameException) {
                 Timber.w(e)
                 // We get a localized string from libanki to explain the error
-                showThemedToast(context, e.asLocalizedMessage(context), false)
+                displayFeedback(e.asLocalizedMessage(context), Snackbar.LENGTH_LONG)
             }
+        }
+    }
+
+    private fun displayFeedback(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
+        if (context is Activity) {
+            context.showSnackbar(message, duration)
+        } else {
+            showThemedToast(context, message, duration == Snackbar.LENGTH_SHORT)
         }
     }
 
