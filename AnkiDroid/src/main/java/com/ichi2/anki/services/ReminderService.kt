@@ -48,7 +48,9 @@ class ReminderService : BroadcastReceiver() {
             0,
             false
         )
-        alarmManager.cancel(reminderIntent)
+        if (reminderIntent != null) {
+            alarmManager.cancel(reminderIntent)
+        }
     }
 
     override fun onReceive(context: Context, intent: Intent) {

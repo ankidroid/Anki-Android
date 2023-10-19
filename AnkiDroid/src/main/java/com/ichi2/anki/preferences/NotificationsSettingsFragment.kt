@@ -60,7 +60,9 @@ class NotificationsSettingsFragment : SettingsFragment() {
                         false
                     )
                     val alarmManager = requireActivity().getSystemService(ALARM_SERVICE) as AlarmManager
-                    alarmManager.cancel(intent)
+                    if (intent != null) {
+                        alarmManager.cancel(intent)
+                    }
                 }
                 true
             }

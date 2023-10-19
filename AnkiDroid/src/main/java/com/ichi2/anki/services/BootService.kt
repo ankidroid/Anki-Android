@@ -103,12 +103,14 @@ class BootService : BroadcastReceiver() {
                 0,
                 false
             )
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                AlarmManager.INTERVAL_DAY,
-                notificationIntent
-            )
+            if (notificationIntent != null) {
+                alarmManager.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.timeInMillis,
+                    AlarmManager.INTERVAL_DAY,
+                    notificationIntent
+                )
+            }
         }
 
         /** Returns the hour of day when rollover to the next day occurs  */
