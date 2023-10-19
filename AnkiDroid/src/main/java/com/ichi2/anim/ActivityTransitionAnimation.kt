@@ -11,6 +11,7 @@ import com.ichi2.anki.R
 import kotlinx.parcelize.Parcelize
 
 object ActivityTransitionAnimation {
+    @Suppress("DEPRECATION", "deprecated in API34 for predictive back, must plumb through new open/close parameter")
     fun slide(activity: Activity, direction: Direction?) {
         when (direction) {
             Direction.START -> if (isRightToLeft(activity)) {

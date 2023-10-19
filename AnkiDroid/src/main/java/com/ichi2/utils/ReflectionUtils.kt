@@ -16,5 +16,5 @@
 package com.ichi2.utils
 
 inline fun <reified T> getInstanceFromClassName(javaClassName: String): T {
-    return Class.forName(javaClassName).newInstance() as T
+    return Class.forName(javaClassName).getDeclaredConstructor().newInstance() as T
 }
