@@ -26,6 +26,11 @@ import java.io.FileInputStream
 
 class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiServer(activity) {
     var reviewerHtml: String = ""
+    val jsApi = if (activity is Reviewer) {
+        reviewer().javaScriptFunction()
+    } else {
+        cardTemplatePreviewer().javaScriptFunction()
+    }
 
     override fun start() {
         super.start()
@@ -72,6 +77,11 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
                     handlePostRequest(uri.substring(ANKI_PREFIX.length), inputBytes)
                 }
             }
+            if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
+                return buildResponse {
+                    handleJsApiPostRequest(uri.substring(ANKIDROID_JS_PREFIX.length), inputBytes)
+                }
+            }
         }
 
         Timber.w("not found: $uri")
@@ -88,8 +98,71 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
         }
     }
 
+    private suspend fun handleJsApiPostRequest(methodName: String, bytes: ByteArray): ByteArray {
+        return when (methodName) {
+            "init" -> jsApi.init(bytes)
+            "newCardCount" -> jsApi.ankiGetNewCardCount()
+            "lrnCardCount" -> jsApi.ankiGetLrnCardCount()
+            "revCardCount" -> jsApi.ankiGetRevCardCount()
+            "eta" -> jsApi.ankiGetETA()
+            "cardMark" -> jsApi.ankiGetCardMark()
+            "cardFlag" -> jsApi.ankiGetCardFlag()
+            "cardReps" -> jsApi.ankiGetCardReps()
+            "cardInterval" -> jsApi.ankiGetCardInterval()
+            "cardFactor" -> jsApi.ankiGetCardFactor()
+            "cardMod" -> jsApi.ankiGetCardMod()
+            "cardId" -> jsApi.ankiGetCardId()
+            "cardNid" -> jsApi.ankiGetCardNid()
+            "cardType" -> jsApi.ankiGetCardType()
+            "cardDid" -> jsApi.ankiGetCardDid()
+            "cardLeft" -> jsApi.ankiGetCardLeft()
+            "cardODid" -> jsApi.ankiGetCardODid()
+            "cardODue" -> jsApi.ankiGetCardODue()
+            "cardQueue" -> jsApi.ankiGetCardQueue()
+            "cardLapses" -> jsApi.ankiGetCardLapses()
+            "cardDue" -> jsApi.ankiGetCardDue()
+            "deckName" -> jsApi.ankiGetDeckName()
+            "isActiveNetworkMetered" -> jsApi.ankiIsActiveNetworkMetered()
+            "ttsSetLanguage" -> jsApi.ankiTtsSetLanguage(bytes)
+            "ttsSpeak" -> jsApi.ankiTtsSpeak(bytes)
+            "ttsIsSpeaking" -> jsApi.ankiTtsIsSpeaking()
+            "ttsSetPitch" -> jsApi.ankiTtsSetPitch(bytes)
+            "ttsSetSpeechRate" -> jsApi.ankiTtsSetSpeechRate(bytes)
+            "ttsFieldModifierIsAvailable" -> jsApi.ankiTtsFieldModifierIsAvailable()
+            "ttsStop" -> jsApi.ankiTtsStop()
+            "nextTime1" -> jsApi.ankiGetNextTime1()
+            "nextTime2" -> jsApi.ankiGetNextTime2()
+            "nextTime3" -> jsApi.ankiGetNextTime3()
+            "nextTime4" -> jsApi.ankiGetNextTime4()
+            "searchCard" -> jsApi.ankiSearchCard(bytes)
+            "searchCardWithCallback" -> jsApi.ankiSearchCardWithCallback(bytes)
+            "buryCard" -> jsApi.ankiBuryCard(bytes)
+            "buryNote" -> jsApi.ankiBuryNote(bytes)
+            "suspendCard" -> jsApi.ankiSuspendCard(bytes)
+            "suspendNote" -> jsApi.ankiSuspendNote(bytes)
+            "setCardDue" -> jsApi.ankiSetCardDue(bytes)
+            "resetProgress" -> jsApi.ankiResetProgress(bytes)
+            "isDisplayingAnswer" -> jsApi.ankiIsDisplayingAnswer()
+            "addTagToCard" -> jsApi.ankiAddTagToCard()
+            "isInFullscreen" -> jsApi.ankiIsInFullscreen()
+            "isTopbarShown" -> jsApi.ankiIsTopbarShown()
+            "isInNightMode" -> jsApi.ankiIsInNightMode()
+            "enableHorizontalScrollbar" -> jsApi.ankiEnableHorizontalScrollbar(bytes)
+            "enableVerticalScrollbar" -> jsApi.ankiEnableVerticalScrollbar(bytes)
+            "toggleFlag" -> jsApi.ankiToggleFlag(bytes)
+            "markCard" -> jsApi.ankiMarkCard(bytes)
+            else -> {
+                throw Exception("unhandled request: $methodName")
+            }
+        }
+    }
+
     private fun reviewer(): Reviewer {
         return (activity as Reviewer)
+    }
+
+    private fun cardTemplatePreviewer(): CardTemplatePreviewer {
+        return (activity as CardTemplatePreviewer)
     }
 
     private fun getSchedulingStatesWithContext(): ByteArray {

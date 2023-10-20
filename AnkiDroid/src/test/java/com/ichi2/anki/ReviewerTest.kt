@@ -222,7 +222,7 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Test
-    fun jsAnkiGetDeckName() {
+    fun jsAnkiGetDeckName() = runTest {
         val models = col.notetypes
         val decks = col.decks
 
@@ -238,7 +238,7 @@ class ReviewerTest : RobolectricTest() {
         val javaScriptFunction = reviewer.javaScriptFunction()
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.ankiGetDeckName(), equalTo("B"))
+        assertThat(javaScriptFunction.ankiGetDeckName().decodeToString(), equalTo("B"))
     }
 
     @Ignore("needs update for v3")
@@ -324,12 +324,12 @@ class ReviewerTest : RobolectricTest() {
     }
 
     @Suppress("SameParameterValue")
-    private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) {
+    private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) = runTest {
         val jsApi = r.javaScriptFunction()
         val countList = listOf(
-            jsApi.ankiGetNewCardCount(),
-            jsApi.ankiGetLrnCardCount(),
-            jsApi.ankiGetRevCardCount()
+            jsApi.ankiGetNewCardCount().decodeToString().toInt(),
+            jsApi.ankiGetLrnCardCount().decodeToString().toInt(),
+            jsApi.ankiGetRevCardCount().decodeToString().toInt()
         )
 
         val expected = listOf(

@@ -31,8 +31,8 @@ object AnkiDroidJsAPIConstants {
     const val ankiJsErrorCodeSetDue: Int = 7
 
     // js api developer contact
-    const val sCurrentJsApiVersion = "0.0.1"
-    const val sMinimumJsApiVersion = "0.0.1"
+    const val sCurrentJsApiVersion = "0.0.2"
+    const val sMinimumJsApiVersion = "0.0.2"
 
     const val MARK_CARD = "markCard"
     const val TOGGLE_FLAG = "toggleFlag"
