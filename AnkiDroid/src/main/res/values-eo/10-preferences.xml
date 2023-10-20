@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Temo</string>
     <string name="day_theme" maxLength="41">Taga etoso</string>
     <string name="night_theme" maxLength="41">Nokta etoso</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Montri la kuntekstan menuon “truteksta malpleno” kiam en horizontala orientiĝo.</string>
     <string name="vertical_centering" maxLength="41">Centrigi vertikale</string>
     <string name="vertical_centering_summ">Centrigi enhavon de kartoj vertikale</string>
-    <string name="pref_backup_max" maxLength="41">Maksimuma nombro da sekurkopioj</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Ignori duan frapeton antaŭ (milisekundoj)</string>
     <string name="pref_double_tap_time_interval_summary">La dua frapeto sur la butonoj de respondoj estos ignorita, se ĝi okazos antaŭ la agordita tempo Tio ĉi preventas de fari neatenditajn duoblaj frapetojn</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -286,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.

@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">Changer l\'icône de synchronisation quand des changements peuvent être téléversés</string>
     <string name="metered_sync_title" maxLength="41">Autoriser la synchronisation sur les connexions limitées</string>
     <string name="metered_sync_summary">Si ceci est désactivé, vous serez averti(e) si vous essayez de synchroniser sur une connexion limitée</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Thème</string>
     <string name="day_theme" maxLength="41">Thème de jour</string>
     <string name="night_theme" maxLength="41">Thème de nuit</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Autorise le menu contextuel « Texte à trous » dans le mode paysage.</string>
     <string name="vertical_centering" maxLength="41">Aligner au centre</string>
     <string name="vertical_centering_summ">Centrer verticalement le contenu des cartes</string>
-    <string name="pref_backup_max" maxLength="41">Nombre de sauvegarde max</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Temps d\'intervalle de l\'appui double (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un deusième appui sur le bouton de réponse va être ignoré si le temps est écoulé. Cela évite les appuis doubles involontaires.</string>
     <string name="pref_show_answer_long_press" maxLength="41">Afficher le temps d\'appui long (ms)</string>
@@ -285,7 +286,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Options de sauvegarde</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid sauvegarde régulièrement vos collections.
         Après que les sauvegardes sont âgées de plus de deux jours,
         AnkiDroid va supprimer quelques-un pour libérer de l\'espace sur le disque.

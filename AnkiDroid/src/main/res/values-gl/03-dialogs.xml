@@ -126,7 +126,6 @@
     <string name="check_media_warning">Isto pode levar moito tempo con coleccións grandes de medios</string>
     <string name="check_media_message">Verificando multimedia&#8230;</string>
     <string name="check_media_acknowledge">Multimedia verificada</string>
-    <string name="check_media_failed">Fallou a verificación da multimedia</string>
     <string name="check_media_invalid">Ficheiros cunha codificación inválida: %d</string>
     <string name="check_media_unused">Ficheiros no cartafol de medios pero sen usar por calquera cartón: %d</string>
     <string name="check_media_nohave">Ficheiros usados nos cartóns pero non existen no cartafol de medios: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>

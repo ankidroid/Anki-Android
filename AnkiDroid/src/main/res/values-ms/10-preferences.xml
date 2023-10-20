@@ -134,6 +134,8 @@
     <string name="sync_status_badge_summ">Tukar ikon segerkan apabila perubahan boleh dimuat naik</string>
     <string name="metered_sync_title" maxLength="41">Benarkan penyegerakan pada sambungan bermeter</string>
     <string name="metered_sync_summary">Jika dilumpuhkan, anda akan diberi amaran jika anda cuba segerak pada sambungan bermeter</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema siang</string>
     <string name="night_theme" maxLength="41">Tema malam</string>
@@ -161,7 +163,6 @@
     <string name="disable_extended_text_ui_summ">Benarkan menu konteks \'Penghapusan Kloz\' ketika mod landskap.</string>
     <string name="vertical_centering" maxLength="41">Jajar ke tengah</string>
     <string name="vertical_centering_summ">Tengahkan kandungan kad secara menegak</string>
-    <string name="pref_backup_max" maxLength="41">Bilangan sandaran maksimum</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Selang sentuh dua kali (milisaat)</string>
     <string name="pref_double_tap_time_interval_summary">Sentuhan kedua butang jawapan akan diabaikan jika masa ini belum berlalu. Elakkan sentuh dua kali tanpa sengaja</string>
     <string name="pref_show_answer_long_press" maxLength="41">Masa tunjuk jawapan tekan lama (ms)</string>
@@ -287,7 +288,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Pilihan sandaran</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid sandarkan koleksi anda secara berkala
         Setelah sandaran usianya lebih dua hari,
         AnkiDroid akan mula membuang sebahagian daripada mereka untuk mengosongkan ruang cakera.

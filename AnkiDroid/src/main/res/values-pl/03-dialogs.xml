@@ -136,7 +136,6 @@
     <string name="check_media_warning">To może trwać bardzo długo przy dużych kolekcjach</string>
     <string name="check_media_message">Sprawdzanie mediów&#8230;</string>
     <string name="check_media_acknowledge">Media sprawdzone</string>
-    <string name="check_media_failed">Sprawdzenie mediów nie powiodło się</string>
     <string name="check_media_invalid">Plików z błędnym kodowaniem: %d</string>
     <string name="check_media_unused">Plików z foldera mediów, które nie są użyte na żadnej karcie: %d</string>
     <string name="check_media_nohave">Plików wymienionych na kartach ale nie znalezionych w folderze mediów: %d</string>
@@ -172,7 +171,6 @@
     <string name="integrity_check_continue_anyway">Kontynuuj mimo to</string>
     <string name="integrity_check_insufficient_space">Funkcja \"sprawdź bazę danych\" używa dużej ilości pamięci tymczasowej.\n\nZalecane jest, aby przed kontynuowaniem na urządzeniu było dostępne przynajmniej  %s wolnego miejsca.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nObecnie jest dostępne %s</string>
-    <string name="video_creation_error">Nie udało się odtworzyć nagrania</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Błąd dekodowania danych z karty</string>

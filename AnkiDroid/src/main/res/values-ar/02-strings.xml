@@ -153,6 +153,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">معاينة</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d من %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">إعادة التسمية</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">فحص قاعدة البيانات</string>
     <string name="check_media">فحص الوسائط</string>
     <string name="empty_cards">بطاقات فارغة</string>
@@ -295,7 +296,6 @@
     <string name="insert_heading">إضافة عنوان</string>
     <string name="format_font_size">تغيير لون الخط</string>
     <string name="insert_mathjax">إضافة معادلة MathJax</string>
-    <string name="insert_cloze">إضافة عبارة ملء فراغات</string>
     <string name="note_editor_toolbar_icon">نص الزر</string>
     <string name="before_text">HTML قبل التحديد</string>
     <string name="after_text">HTML بعد التحديد</string>

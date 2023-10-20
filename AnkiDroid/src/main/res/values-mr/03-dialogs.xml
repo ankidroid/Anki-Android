@@ -126,7 +126,6 @@
     <string name="check_media_warning">मोठ्या मीडिया संकलनासह यास बराच वेळ लागू शकेल</string>
     <string name="check_media_message">मीडिया तपासत आहे&#8230;</string>
     <string name="check_media_acknowledge">माध्यम तपासले</string>
-    <string name="check_media_failed">मीडिया तपासणी अयशस्वी</string>
     <string name="check_media_invalid">अवैध एन्कोडिंगसह फायली:%d</string>
     <string name="check_media_unused">मीडिया फोल्डरमधील फायली परंतु कोणत्याही कार्डांद्वारे वापरल्या जात नाहीत:%d</string>
     <string name="check_media_nohave">फायली कार्डावर वापरल्या परंतु मीडिया फोल्डरमध्ये नाहीत:%d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">तरीही सुरू ठेवा</string>
     <string name="integrity_check_insufficient_space">तपासणी डेटाबेसमध्ये मोठ्या प्रमाणात तात्पुरते संचयन वापरले जाते. Continuing \n\n सुरू ठेवण्यापूर्वी आपल्याकडे कमीतकमी %s मोकळी जागा असावी अशी जोरदार शिफारस केली जाते.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n आपल्याकडे सध्या%s विनामूल्य आहे.</string>
-    <string name="video_creation_error">व्हिडिओ प्ले करू शकलो नाही</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">कार्ड वरून डेटा डिकोड करताना त्रुटी</string>

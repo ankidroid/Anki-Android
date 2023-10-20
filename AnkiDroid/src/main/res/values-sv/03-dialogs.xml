@@ -126,7 +126,6 @@
     <string name="check_media_warning">Det här kan ta lång tid för stora mediasamlingar</string>
     <string name="check_media_message">Kontrollerar media&#8230;</string>
     <string name="check_media_acknowledge">Media kontrollerat</string>
-    <string name="check_media_failed">Mediakontroll misslyckades</string>
     <string name="check_media_invalid">Filer med ogiltig kodning: %d</string>
     <string name="check_media_unused">Filer i mediamapp som inte används i kort: %d</string>
     <string name="check_media_nohave">Filer som används på kort med saknas i mediamapp: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Fortsätt ändå</string>
     <string name="integrity_check_insufficient_space">Databaskontrollen använder en stor mängd tillfällig lagring.\n\nDet rekommenderas starkt att du har minst %s ledigt utrymme på din enhet innan du fortsätter.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nDu har för närvarande %s gratis.</string>
-    <string name="video_creation_error">Kunde inte spela upp video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fel vid avkodning av data från kortet</string>

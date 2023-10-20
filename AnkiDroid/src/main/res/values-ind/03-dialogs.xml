@@ -121,7 +121,6 @@
     <string name="check_media_warning">Ini dapat memakan waktu lama karena koleksi media yang besar</string>
     <string name="check_media_message">Memeriksa media&#8230;</string>
     <string name="check_media_acknowledge">Media diperiksa</string>
-    <string name="check_media_failed">Media gagal diperiksa</string>
     <string name="check_media_invalid">Berkas dengan pengodean tidak valid: %d</string>
     <string name="check_media_unused">Berkas di folder media tapi tidak digunakan di kartu manapun: %d</string>
     <string name="check_media_nohave">Berkas digunakan kartu tapi tidak ada di folder media: %d</string>
@@ -154,7 +153,6 @@
     <string name="integrity_check_continue_anyway">Tetap lanjutkan</string>
     <string name="integrity_check_insufficient_space">Memeriksa Basisdata memerlukan jumlah penyimpanan sementara yang besar.\n\nSangat disarankan untuk memiliki setidaknya %s ruang kosong sebelum melanjutkan.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nKamu memiliki %s bebas saat ini.</string>
-    <string name="video_creation_error">Tidak dapat memutar video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Galat pendekodean data dari kartu</string>

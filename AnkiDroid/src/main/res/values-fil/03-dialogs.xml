@@ -126,7 +126,6 @@
     <string name="check_media_warning">Ito ay maaaring tumagal ng mahabang oras kasama ang malalaking koleksyon ng media</string>
     <string name="check_media_message">Sinusuri ang media&#8230;</string>
     <string name="check_media_acknowledge">Ang media ay sinuri</string>
-    <string name="check_media_failed">Ang pagsusuri ng media ay nabigo</string>
     <string name="check_media_invalid">60/5000
 Mga file na may di-wastong pag-encode:%d</string>
     <string name="check_media_unused">Mga file sa folder ng media ngunit hindi ginamit ng anumang mga kard:%d</string>
@@ -161,7 +160,6 @@ Mga file na may di-wastong pag-encode:%d</string>
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>

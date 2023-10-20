@@ -143,6 +143,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">名前を変更</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">データベースをチェック</string>
     <string name="check_media">メディアをチェック</string>
     <string name="empty_cards">白紙カードをチェック</string>
@@ -265,7 +266,6 @@
     <string name="insert_heading">見出し</string>
     <string name="format_font_size">フォントサイズ変更</string>
     <string name="insert_mathjax">MathJax式を挿入</string>
-    <string name="insert_cloze">穴埋め箇所</string>
     <string name="note_editor_toolbar_icon">ボタンに表示する文字</string>
     <string name="before_text">選択文字列の前のHTML</string>
     <string name="after_text">選択文字列の後のHTML</string>

@@ -134,6 +134,8 @@
     <string name="sync_status_badge_summ">Zmeniť ikonu synchronizácie, keď je možné odoslať zmeny</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Denný motív</string>
     <string name="night_theme" maxLength="41">Nočný motív</string>
@@ -161,7 +163,6 @@
     <string name="disable_extended_text_ui_summ">Povoliť kontextové menu doplňovačky pri horizontálnom zobrazení.</string>
     <string name="vertical_centering" maxLength="41">Zarovnanie na stred</string>
     <string name="vertical_centering_summ">Vycentrovať obsah kartičiek vertikálne</string>
-    <string name="pref_backup_max" maxLength="41">Maximálny počet záloh</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Čas pre dvojklepnutie (milisekundy)</string>
     <string name="pref_double_tap_time_interval_summary">Druhé klepnutie na tlačidlo odpovede bude ignorované, ak tento čas neuplynul. Zabraňuje to nechceným dvojklepnutiam</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -287,7 +288,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.

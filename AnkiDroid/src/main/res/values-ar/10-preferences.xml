@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">تغيير زر المزامنة المعروض عندما يكون من الممكن رفع التغييرات</string>
     <string name="metered_sync_title" maxLength="41">السماح بالمزامنة على الاتصالات المحدودة</string>
     <string name="metered_sync_summary">إذا كان معطلًا، سيتم إنذارك إذا حاولت المزامنة باتصال محدود</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">السمة</string>
     <string name="day_theme" maxLength="41">سمة النهار</string>
     <string name="night_theme" maxLength="41">سمة الليل</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">السماح بقائمة سياق «عبارات ملء الفراغات» في الوضع الأفقي.</string>
     <string name="vertical_centering" maxLength="41">محاذاة للوسط</string>
     <string name="vertical_centering_summ">محاذاة محتوى البطاقات إلى الوسط عموديًا</string>
-    <string name="pref_backup_max" maxLength="41">عدد النسخ الاحتياطية الأقصى</string>
     <string name="pref_double_tap_time_interval" maxLength="41">الفاصل الزمني للنقر المزدوج (مللي ثانية)</string>
     <string name="pref_double_tap_time_interval_summary">سيتم تجاهل نقرة ثانية على أزرار الإجابة إذا لم يمر الوقت. يمنع هذا النقر المزدوج غير المقصود</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -285,7 +286,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">خيارات النسخ الاحتياطي</string>
     <string name="pref__backups_help__summary"><![CDATA[        يأخذ أنكيدرويد نسخة احتياطية من مجموعتك بشكل دوري.        بعد مضي يومين على أخذ نسخة،        يبدأ أنكيدرويد بحذف بعض النسخ لتفريغ المساحة.        <br><br>        لاحظ أن الوسائط لا يتم أخذ نسخ منها.        للضمانة، يرجى مزامنة مجموعتك بانتظام أو تصدير نسخ منها.        <br><br>تستطيع استرجاع نسخة وتصدير مجموعتك من قائمة شاشة الرزم.]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">الدقائق بين النسخ التلقائية</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">عدد النسخ اليومية المحفوظة</string>

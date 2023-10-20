@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">علامت همگام سازی را تغییر بده وقتی تغییرات در حال آپلود شدن هستند</string>
     <string name="metered_sync_title" maxLength="41">مجاز بر روی ارتباطات دارای محدودیت</string>
     <string name="metered_sync_summary">اگر غیرفعال شود، چنانچه شبکه شما دارای محدودیت ارتباطی باشد، هنگام سینک کردن پیغام هشدار دریافت می‌کنید</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">تِم</string>
     <string name="day_theme" maxLength="41">پس زمینه روز</string>
     <string name="night_theme" maxLength="41">پس زمینه شب</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">فعالسازی فهرست امکانات کارت کلوز در حالت لندسکیپ.</string>
     <string name="vertical_centering" maxLength="41">تراز در وسط</string>
     <string name="vertical_centering_summ">تراز کردن محتوای کارت‌ها بصورت عمودی در وسط</string>
-    <string name="pref_backup_max" maxLength="41">حداکثر تعداد پشتیبان‌ها</string>
     <string name="pref_double_tap_time_interval" maxLength="41">فاصله زمانی دو بار زدن (میلی ثانیه)</string>
     <string name="pref_double_tap_time_interval_summary">ضربه دوم به دکمه های پاسخ صرف نظر می شود اگر این مدت زمان سپری نشده باشد. این عمل از دوبار ضربه های تصادفی جلوگیری میکند</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -286,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">گزینه های پشتیبان گیری</string>
     <string name="pref__backups_help__summary"><![CDATA[        انکی‌دروید به صورت دوره‌ای از مجموعه شما پشتیبان تهیه می‌کند.
         بعد از تهیه پشتیبان، نسخه‌هایی که بیشتر از دو روز از آنها گذشته باشد
         به تدریج توسط انکی‌دروید پاک می‌شوند تا فضای حافظه خالی بماند.

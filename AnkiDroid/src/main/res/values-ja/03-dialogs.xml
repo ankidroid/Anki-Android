@@ -121,7 +121,6 @@
     <string name="check_media_warning">大きなコレクションの場合は、長い時間がかかる場合があります。</string>
     <string name="check_media_message">メディアをチェックしています...</string>
     <string name="check_media_acknowledge">メディアのチェックの完了</string>
-    <string name="check_media_failed">メディアのチェック時にエラーが発生しました</string>
     <string name="check_media_invalid">エンコーディングが無効なファイル数: %d</string>
     <string name="check_media_unused">(*) メディア用フォルダ内に存在するが、どのカードにも使用されていないファイル: %d個</string>
     <string name="check_media_nohave">カードに表示するよう記載されているが、メディア用フォルダ内に存在しないファイル: %d個</string>
@@ -154,7 +153,6 @@
     <string name="integrity_check_continue_anyway">続ける</string>
     <string name="integrity_check_insufficient_space">データベースのチェックには一時ファイル用のデータ領域が必要です。\n\n続行する前に、お使いのデバイスに少なくとも %s の空き領域を確保してください。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n現在の空き容量は %s です。</string>
-    <string name="video_creation_error">動画を再生できませんでした</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">カードからのデータのデコードエラー</string>

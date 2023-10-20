@@ -136,7 +136,6 @@
     <string name="check_media_warning">Гэта можа заняць шмат часу ў тым выпадку, калі калекцыя медыяфайлаў надта вялікая</string>
     <string name="check_media_message">Праверка медыяфайлаў&#8230;</string>
     <string name="check_media_acknowledge">Медыяфайлы правераныя</string>
-    <string name="check_media_failed">Памылка праверкі медыяфайлаў</string>
     <string name="check_media_invalid">Файлы з памылковым кадаваннем: %d</string>
     <string name="check_media_unused">Медыяфайлы знаходзяцца ў адпаведнай папцы, але не прымацаваныя да картак: %d</string>
     <string name="check_media_nohave">Медыяфайлы не знаходзяцца ў адпаведнай папцы, але прымацаваныя да картак: %d</string>
@@ -172,7 +171,6 @@
     <string name="integrity_check_continue_anyway">Усё роўна працягнуць</string>
     <string name="integrity_check_insufficient_space">Праверка базы даных патрабуе вялікай колькасці часовага сховішча.\n\nВельмі пажадана мець прынамсі %s свабоднага месца на прыладзе для таго, каб паспяхова выканаць гэту аперацыю.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nУ цяперашні час у вас %s вольнага месца.</string>
-    <string name="video_creation_error">Не атрымалася ўзнавіць відэа</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Памылка дэкадзіравання даных карткі</string>

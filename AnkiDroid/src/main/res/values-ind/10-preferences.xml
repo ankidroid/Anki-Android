@@ -134,6 +134,8 @@
     <string name="sync_status_badge_summ">Ubah ikon sinkronisasi saat perubahan dapat diunggah</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Tema siang</string>
     <string name="night_theme" maxLength="41">Tema malam</string>
@@ -161,7 +163,6 @@
     <string name="disable_extended_text_ui_summ">Membolehkan konteks menu \'titik-titik\' saat mode lanskap</string>
     <string name="vertical_centering" maxLength="41">Rata tengah</string>
     <string name="vertical_centering_summ">Ratakan tengah isi kartu secara vertikal</string>
-    <string name="pref_backup_max" maxLength="41">Jumlah cadangan maksimal</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interval sentuhan dua kali (milisekon)</string>
     <string name="pref_double_tap_time_interval_summary">Menyentuh tombol jawaban untuk kedua kalinya akan dihiraukan jika jumlah waktu ini belum terlewati. Hal ini akan mencegah melakukan sentuhan dua kali tanpa sengaja</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -287,7 +288,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.

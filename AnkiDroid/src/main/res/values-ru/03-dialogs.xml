@@ -136,7 +136,6 @@
     <string name="check_media_warning">Это может занять много времени, если медиафайлов много</string>
     <string name="check_media_message">Медиафайлы проверяются&#8230;</string>
     <string name="check_media_acknowledge">Медиафайлы проверены</string>
-    <string name="check_media_failed">Не удалось проверить медиафайлы</string>
     <string name="check_media_invalid">Файлы с недопустимой кодировкой: %d</string>
     <string name="check_media_unused">Медиафайлы, не прикреплённые к карточкам: %d</string>
     <string name="check_media_nohave">Ссылок на отсутствующие медиафайлы: %d</string>
@@ -173,7 +172,6 @@
     <string name="integrity_check_continue_anyway">Всё равно продолжить</string>
     <string name="integrity_check_insufficient_space">Проверка базы данных использует большое количество временного хранилища.\n\nЖелательно иметь по крайней мере %s свободного места на вашем устройстве, прежде чем продолжить.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nСейчас свободно %s.</string>
-    <string name="video_creation_error">Не удалось воспроизвести видео</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Ошибка при декодировании данных карточки</string>

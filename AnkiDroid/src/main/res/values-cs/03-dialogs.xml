@@ -136,7 +136,6 @@
     <string name="check_media_warning">Toto může trvat dlouhou dobu u velké sbírky multimédií</string>
     <string name="check_media_message">Kontrolují se multimédia&#8230;</string>
     <string name="check_media_acknowledge">Multimédia zkontrolována</string>
-    <string name="check_media_failed">Kontrola multimédií se nezdařila</string>
     <string name="check_media_invalid">Soubory s neplatným kódováním: %d</string>
     <string name="check_media_unused">Soubory ve složce s multimédii, ale nejsou používány na žádné kartě: %d</string>
     <string name="check_media_nohave">Soubory používané na kartách, ale nejsou ve složce s multimédii: %d</string>
@@ -172,7 +171,6 @@
     <string name="integrity_check_continue_anyway">Přesto pokračovat</string>
     <string name="integrity_check_insufficient_space">Kontrola databáze používá velké množství dočasného úložiště.\n\nDůrazně se doporučuje, abyste předtím, než budete pokračovat, měli v zařízení alespoň %s volného místa.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nMomentálně máte %s volného místa.</string>
-    <string name="video_creation_error">Nelze přehrát video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Chyba při dekódování dat z karty</string>

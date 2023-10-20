@@ -145,6 +145,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">پیش نمایش</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">تغییر نام</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">بررسی پایگاه داده</string>
     <string name="check_media">بررسی رسانه ها</string>
     <string name="empty_cards">کارت های خالی</string>
@@ -269,7 +270,6 @@
     <string name="insert_heading">افزودن سربرگ</string>
     <string name="format_font_size">تغییر اندازۀ قلم</string>
     <string name="insert_mathjax">افزودن معادله MathJax</string>
-    <string name="insert_cloze">کلوز را وارد کن</string>
     <string name="note_editor_toolbar_icon">نوشته دکمه</string>
     <string name="before_text">کد HTML قبل از نوشته</string>
     <string name="after_text">کد HTML بعد از نوشته</string>

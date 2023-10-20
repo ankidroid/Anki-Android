@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
     <string name="metered_sync_title" maxLength="41">Ölçülü bağlantılarda senkron. izin ver</string>
     <string name="metered_sync_summary">Kapatılırsa, ölçülü bir bağlantıda senkronizasyon yapmaya çalışırsanız uyarılırsınız</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Gündüz teması</string>
     <string name="night_theme" maxLength="41">Gece teması</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Yatay moddayken \"boşluk doldurma\" durum menüsüne izin ver</string>
     <string name="vertical_centering" maxLength="41">Ortaya hizala</string>
     <string name="vertical_centering_summ">Kartların içeriğini dikey olarak ortala</string>
-    <string name="pref_backup_max" maxLength="41">En fazla yedek sayısı</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Çift dokunma zaman aralığı (milisaniye)</string>
     <string name="pref_double_tap_time_interval_summary">Cevaplama düğmelerine ikinci bir tıklama, bu süre geçmediyse, göz ardı edilecektir. Bu, yanlışlıkla çift tıklamayı önler</string>
     <string name="pref_show_answer_long_press" maxLength="41">Cevabı göster basılı tutma süresi (ms)</string>
@@ -285,7 +286,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Yedekleme seçenekleri</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid düzenli aralıklarla koleksiyonunuzu yedekler.
         Yedekler iki günden fazla eskidiğinde,
         AnkiDroid disk alanı boşaltmak için bazılarını kaldırmaya başlar.

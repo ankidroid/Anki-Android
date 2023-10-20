@@ -126,7 +126,6 @@
     <string name="check_media_warning">పెద్ద మీడియా సేకరణలతో ఇది ఎక్కువ సమయం పట్టవచ్చు</string>
     <string name="check_media_message">మీడియాను తనిఖీ చేస్తోంది&#8230;</string>
     <string name="check_media_acknowledge">మీడియా తనిఖీ చేయబడింది</string>
-    <string name="check_media_failed">మీడియా తనిఖీ విఫలమైంది</string>
     <string name="check_media_invalid">చెల్లని ఎన్కోడింగ్ ఫైల్లు: %d</string>
     <string name="check_media_unused">మీడియా ఫోల్డర్లోని ఫైళ్ళు కానీ ఏ కార్డులు ఉపయోగించరు: %d</string>
     <string name="check_media_nohave">మీడియా ఫోల్డర్లో కానీ కార్డులలో ఉపయోగించబడే ఫైళ్ళు: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>

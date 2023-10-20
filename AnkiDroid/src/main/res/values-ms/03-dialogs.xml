@@ -121,7 +121,6 @@
     <string name="check_media_warning">Mungkin mengambil masa lama dengan koleksi media besar</string>
     <string name="check_media_message">Memeriksa media&#8230;</string>
     <string name="check_media_acknowledge">Media telah diperiksa</string>
-    <string name="check_media_failed">Pemeriksaan media gagal</string>
     <string name="check_media_invalid">Fail dengan pengekodan tidak sah: %d</string>
     <string name="check_media_unused">Fail dalam folder media namun tidak digunakan oleh mana-mana kad: %d</string>
     <string name="check_media_nohave">Fail digunakan pada kad namun bukan dalam folder media: %d</string>
@@ -154,7 +153,6 @@
     <string name="integrity_check_continue_anyway">Teruskan Juga</string>
     <string name="integrity_check_insufficient_space">Periksa Pangkalan Data menggunakan storan sementara yang besar.\n\nSangat digalakkan anda sekurang-kurangnya mengandungi %s ruang kosong pada peranti anda dahulu.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAnda kini mengandungi %s ruang kosong.</string>
-    <string name="video_creation_error">Tidak dapat memainkan video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Ralat menyahkod data dari kad</string>

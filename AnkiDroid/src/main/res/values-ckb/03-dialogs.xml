@@ -126,7 +126,6 @@
     <string name="check_media_warning">Ev dê demekî dirêj hilde tev koleksiyonên medyayê</string>
     <string name="check_media_message">...Medyayê kontrol dike</string>
     <string name="check_media_acknowledge">Medyayê kontrol kir</string>
-    <string name="check_media_failed">Çewtiya kontrolkirina medyayê</string>
     <string name="check_media_invalid">Pelên bi kodvekirinên çewt: %d</string>
     <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
     <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>

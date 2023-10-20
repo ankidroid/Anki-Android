@@ -126,7 +126,6 @@
     <string name="check_media_warning">ᱢᱟᱨᱟᱝ ᱢᱮᱰᱤᱭᱟ ᱴᱩᱢᱟᱹᱞ ᱫᱚ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤᱟᱭ</string>
     <string name="check_media_message">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="check_media_acknowledge">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞᱮᱱᱟ</string>
-    <string name="check_media_failed">ᱢᱮᱰᱤᱭᱟ ᱧᱮᱞ ᱰᱤᱜᱟᱹᱣᱮᱱᱟ</string>
     <string name="check_media_invalid">ᱨᱚᱫ ᱨᱮ ᱵᱟᱲ ᱫᱟᱱᱟᱲ ᱪᱤᱱᱦᱟ: %d</string>
     <string name="check_media_unused">ᱨᱮᱫ ᱫᱚ ᱢᱮᱰᱤᱭᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱢᱮᱱᱟᱜᱟ ᱦᱮᱞᱮ ᱚᱠᱟ ᱠᱟᱰ ᱨᱮ ᱵᱟᱭ ᱵᱮᱵᱽᱷᱟᱨ ᱠᱟᱱᱟ: %d</string>
     <string name="check_media_nohave">ᱨᱮᱫ ᱠᱟᱰ ᱨᱮ ᱢᱮᱱᱟᱜᱼᱟ ᱦᱮᱞᱮ ᱢᱮᱰᱤᱭᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱵᱟᱹᱱᱩᱜᱼᱟ: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">ᱡᱟᱦᱟᱸ ᱞᱮᱠᱟᱛᱮ ᱞᱮᱛᱟᱲ ᱢᱮ</string>
     <string name="integrity_check_insufficient_space">ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱫᱚ ᱟᱰᱤᱜᱟᱱ ᱥᱩᱭᱫᱚᱢᱟᱠ ᱡᱟᱭᱜᱟ ᱤᱫᱤᱟᱭ ᱾\n\n ᱞᱮᱛᱟᱲ ᱢᱟᱲᱟᱝ ᱨᱮ ᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱹᱞᱤ ᱡᱟᱭᱜᱟ ᱛᱟᱦᱮᱱ ᱠᱟᱛᱷᱟ ᱾</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nᱟᱢ ᱴᱷᱮᱱ %s ᱠᱷᱟᱞᱤ ᱡᱟᱭᱜᱟ ᱢᱮᱱᱟᱜᱼᱟ.</string>
-    <string name="video_creation_error">ᱧᱮᱱᱮᱞᱚᱢ ᱵᱟᱭ ᱮᱱᱮᱡ ᱪᱷᱚᱭᱚᱜ ᱠᱟᱱᱟ</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ᱠᱟᱰ ᱠᱷᱚᱱ ᱰᱟᱴᱟ ᱰᱤᱠᱚᱰᱤᱝ ᱦᱩᱰᱟᱜ</string>

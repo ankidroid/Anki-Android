@@ -126,7 +126,6 @@
     <string name="check_media_warning">यह बड़े मीडिया संग्रह के साथ एक लंबा समय लग सकता है</string>
     <string name="check_media_message">मीडिया जांच कर रहा है.. ।</string>
     <string name="check_media_acknowledge">मीडिया जांचा गया</string>
-    <string name="check_media_failed">कैप्चा जांच विफल रही</string>
     <string name="check_media_invalid">अमांय एंकोडिंग वाली फ़ाइलें: %d</string>
     <string name="check_media_unused">मीडिया फ़ोल्डर में फ़ाइलें लेकिन किसी भी कार्ड द्वारा उपयोग नहीं: %d</string>
     <string name="check_media_nohave">कार्ड पर उपयोग की गई फ़ाइलें मीडिया फ़ोल्डर में नहीं: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">किसी तरह से जारी रखें</string>
     <string name="integrity_check_insufficient_space">चेक डेटाबेस बड़ी मात्रा में अस्थायी storage का उपयोग करता है। \n \n यह दृढ़ता से अनुशंसा की जाती है कि आपके डिवाइस पर कम से कम %s खाली स्थान हो।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n आपके पास वर्तमान में %s खाली स्थान है।</string>
-    <string name="video_creation_error">वीडियो नहीं चला सका</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">कार्ड से डेटा डिकोड करने में त्रुटि</string>

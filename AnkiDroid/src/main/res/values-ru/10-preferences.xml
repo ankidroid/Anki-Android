@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">Добавляет точку на значок синхронизации, когда можно выгрузить изменения</string>
     <string name="metered_sync_title" maxLength="41">Разрешить синхронизацию в тарифицируемых сетях</string>
     <string name="metered_sync_summary">Если отключено, предупреждает, если вы синхронизируетесь через тарифицированную сеть</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Дневная тема</string>
     <string name="night_theme" maxLength="41">Ночная тема</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Включает контекстное меню «Задание с пропусками» в альбомном режиме</string>
     <string name="vertical_centering" maxLength="41">Выравнивать по центру</string>
     <string name="vertical_centering_summ">Выравнивает содержимое карточек по вертикали</string>
-    <string name="pref_backup_max" maxLength="41">Число резервных копий</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Интервал двойного нажатия (в мс)</string>
     <string name="pref_double_tap_time_interval_summary">Второе нажатие на ответ будет проигнорировано, если это время не истекло. Предотвращает случайное двойное нажатие</string>
     <string name="pref_show_answer_long_press" maxLength="41">Длительность нажатия для ответа</string>
@@ -285,7 +286,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Параметры резервного копирования</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid периодически делает резервную копию вашей коллекции.
         AnkiDroid удаляет копии старше двух дней, чтобы освободить место на диске.
         <br><br>

@@ -145,6 +145,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Önizle</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d içinden %1$d tanesi</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Yeniden adlandır</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">Veritabanını denetle</string>
     <string name="check_media">Medyayı kontrol et</string>
     <string name="empty_cards">Boş kartlar</string>
@@ -271,7 +272,6 @@
     <string name="insert_heading">Başlık ekle</string>
     <string name="format_font_size">Yazı Tipi Boyutunu Değiştir</string>
     <string name="insert_mathjax">MathJax denklemi ekle</string>
-    <string name="insert_cloze">Boşluk doldurma ekle</string>
     <string name="note_editor_toolbar_icon">Düğme yazısı</string>
     <string name="before_text">Seçimden önce HTML</string>
     <string name="after_text">Seçimden sonra HTML</string>

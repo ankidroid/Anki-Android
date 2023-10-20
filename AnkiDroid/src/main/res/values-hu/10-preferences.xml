@@ -134,6 +134,8 @@
     <string name="sync_status_badge_summ">A szinkronizálás ikonjának módosítása, amikor a változások feltölthetők</string>
     <string name="metered_sync_title" maxLength="41">Szinkronizálás forgalmi díjas kapcsolaton</string>
     <string name="metered_sync_summary">Ha letiltva, figyelmeztet, ha szinkronizálni próbál mért kapcsolaton.</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Sablon</string>
     <string name="day_theme" maxLength="41">Nappali téma</string>
     <string name="night_theme" maxLength="41">Éjszakai téma</string>
@@ -161,7 +163,6 @@
     <string name="disable_extended_text_ui_summ">Engedélyezi a \'Részleges Törlés\' lehetőséget tájkép módban.</string>
     <string name="vertical_centering" maxLength="41">Középre igazítás</string>
     <string name="vertical_centering_summ">A kártyák tartalmának középre igazítása függőlegesen</string>
-    <string name="pref_backup_max" maxLength="41">Biztonsági másolatok maximális száma</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Két érintés időzítése (millisec)</string>
     <string name="pref_double_tap_time_interval_summary">A második érintést nem fogja figyelembe venni, ha ezen időn belül történik. Ez megakadályozza a véletlen kettős érintéseket</string>
     <string name="pref_show_answer_long_press" maxLength="41">Válasz nyomva tartási ideje (ms)</string>
@@ -285,7 +286,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Biztonsági mentés opciók</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid rendszeresen biztonsági másolatot készít a gyűjteményedről.
         Ha a biztonsági másolatok több mint két naposak,
         AnkiDroid elkezd törölni néhányat közülük, hogy helyet szabadítson fel.

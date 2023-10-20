@@ -131,7 +131,6 @@
     <string name="check_media_warning">In casu de colletziones multimediales mannas bi diat pòdere chèrrere tempus meda</string>
     <string name="check_media_message">Vetifichende sos mèdios&#8230;</string>
     <string name="check_media_acknowledge">Mèdios verificados</string>
-    <string name="check_media_failed">Verìfica de sos mèdios fallida</string>
     <string name="check_media_invalid">Documentos cun una codìfica non vàlida: %d</string>
     <string name="check_media_unused">Documentos in sa cartella de sos mèdios ma chi non benint impreados dae peruna carta: %d</string>
     <string name="check_media_nohave">Documentos impreados in sas cartas ma chi mancant in sa cartella de sos mèdios: %d</string>
@@ -167,7 +166,6 @@
                               \n
                               Ti cunsigiamus de tènnere a su nessi %s de ispàtziu lìberu in su dispositivu tuo in antis de sighire.</string>
     <string name="integrity_check_insufficient_space_extra_content">Como tenes %s lìberos.</string>
-    <string name="video_creation_error">Riprodutzione de su vìdeu fallida</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Errore decodifichende sos datos dae sa carta</string>

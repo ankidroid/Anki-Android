@@ -126,7 +126,6 @@
     <string name="check_media_warning">در صورت حجیم بودن رسانه مجموعه،این ممکن است طول بکشد</string>
     <string name="check_media_message">در حال بررسی رسانه&#8230;</string>
     <string name="check_media_acknowledge">رسانه بررسی شد</string>
-    <string name="check_media_failed">خطا در بررسی رسانه</string>
     <string name="check_media_invalid">فایل هایي با کدگذاری نامعتبر: %d</string>
     <string name="check_media_unused">فایل هایي که در پوشه رسانه هستند ولی توسط هیچ کارتی استفاده نشده اند: %d</string>
     <string name="check_media_nohave">فایل هایي که در کارت ها استفاده شده اند ولی در پوشه رسانه وجود ندارند: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">ادامه بده</string>
     <string name="integrity_check_insufficient_space">بررسی دیتابیس حجم زیادی از حافظۀ موقت را اشغال خواهد کرد.\n\nبه شدت پیشنهاد می‌کنیم قبل از اجرای بررسی دیتابیس از خالی بودن حداقل %s از حافظۀ موقت دستگاهتان اطمینان حاصل کنید.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n%sاز حافظۀ موقت شما خالی است.</string>
-    <string name="video_creation_error">ویدیو پخش نشد</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">خطا در دریافت اطلاعات از کارت</string>

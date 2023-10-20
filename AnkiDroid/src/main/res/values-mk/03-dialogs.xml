@@ -126,7 +126,6 @@
     <string name="check_media_warning">Ова може да потрае долго време со големи медиумски колекции</string>
     <string name="check_media_message">Проверка на медиумит&#8230;</string>
     <string name="check_media_acknowledge">Медиумите се проверени</string>
-    <string name="check_media_failed">Проверката на медиумите не успеа</string>
     <string name="check_media_invalid">Датотеки со невалидно шифрирање: %d</string>
     <string name="check_media_unused">Датотеки во медиумски фолдер, но не се користат од било која картичка: %d</string>
     <string name="check_media_nohave">Датотеки кои се користат на картички, но не во медиумски фолдер: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>

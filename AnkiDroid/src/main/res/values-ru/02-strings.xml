@@ -149,6 +149,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Предпросмотр</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d из %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Переименовать</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">Проверить базу данных</string>
     <string name="check_media">Проверить медиафайлы</string>
     <string name="empty_cards">Пустые карточки</string>
@@ -283,7 +284,6 @@
     <string name="insert_heading">Вставить заголовок</string>
     <string name="format_font_size">Изменить размер шрифта</string>
     <string name="insert_mathjax">Вставить уравнение MathJax</string>
-    <string name="insert_cloze">Вставить задание с пропусками</string>
     <string name="note_editor_toolbar_icon">Текст на кнопке</string>
     <string name="before_text">HTML перед выделением</string>
     <string name="after_text">HTML после выделения</string>

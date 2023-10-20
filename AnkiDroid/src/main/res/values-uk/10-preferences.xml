@@ -134,6 +134,8 @@
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
     <string name="metered_sync_title" maxLength="41">Дозволити синхронізацію на вимірюваному Інтернет-підключенні</string>
     <string name="metered_sync_summary">Якщо вимкнено, то вас буде попереджено коли ви спробуєте синхронізувати при вимірюваному Інтернет підключенні</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
@@ -161,7 +163,6 @@
     <string name="disable_extended_text_ui_summ">Включає контекстне меню «Завдання з пропусками» в альбомному (горизонтальному) режимі</string>
     <string name="vertical_centering" maxLength="41">Вирівнювання по центру</string>
     <string name="vertical_centering_summ">Центрувати вміст карт вертикально</string>
-    <string name="pref_backup_max" maxLength="41">Кількість резервних копій</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтервал подвійного дотику в мілісекундах</string>
     <string name="pref_double_tap_time_interval_summary">Другий дотик відповіді буде проігнорований, якщо час ще не минув. Це запобігає подвійному натисканню</string>
     <string name="pref_show_answer_long_press" maxLength="41">Тривалість довгого натискання для показу відповіді (мс)</string>
@@ -287,7 +288,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Параметри резервного копіювання</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         Після створення резервних копій більше двох днів,
         AnkiDroid почне видаляти деякі з них, щоб звільнити місце на диску.

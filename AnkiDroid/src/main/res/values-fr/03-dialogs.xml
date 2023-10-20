@@ -126,7 +126,6 @@
     <string name="check_media_warning">Cela peut prendre longtemps avec les grandes collections de médias</string>
     <string name="check_media_message">Vérification des médias&#8230;</string>
     <string name="check_media_acknowledge">Média vérifié</string>
-    <string name="check_media_failed">Échec de la vérification des médias</string>
     <string name="check_media_invalid">Fichiers avec un codage non valide : %d</string>
     <string name="check_media_unused">Fichiers dans le dossier de médias, mais utilisés par aucune carte : %d</string>
     <string name="check_media_nohave">Fichiers utilisés par une carte, mais pas présents dans le dossier de médias : %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Continuer quand même</string>
     <string name="integrity_check_insufficient_space">La vérification de la base de données exige beaucoup d’espace de stockage temporaire. \n\n Il est fortement recommandé d’avoir au moins %s d’espace libre sur votre appareil avant de continuer.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nVous avez actuellement %s libres.</string>
-    <string name="video_creation_error">Impossible de lire la vidéo.</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Erreur lors de la lecture des données de la carte.</string>

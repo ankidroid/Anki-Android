@@ -126,7 +126,6 @@
     <string name="check_media_warning">Això pot trigar molt de temps amb col·leccions de grans recursos de multimèdia</string>
     <string name="check_media_message">Comprovant multimèdia&#8230;</string>
     <string name="check_media_acknowledge">Multimèdia comprovada</string>
-    <string name="check_media_failed">Ha fallat la comprovació de la multimèdia</string>
     <string name="check_media_invalid">Arxius amb codificació no vàlida: %d</string>
     <string name="check_media_unused">Arxius existents en carpeta de multimèdia però no utilitzats per qualsevol carta: %d</string>
     <string name="check_media_nohave">Fitxers utilitzats en cartes però no existents en carpeta de multimèdia: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Continua igualment</string>
     <string name="integrity_check_insufficient_space">La comprovació de la base de dades utilitza una gran quantitat d\'emmagatzematge temporal.\n\nEs recomana tenir almenys %s d\'espai lliure al dispositiu abans de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualment teniu %s lliures.</string>
-    <string name="video_creation_error">No s\'ha pogut reproduir el vídeo</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decodificant dades de la carta</string>

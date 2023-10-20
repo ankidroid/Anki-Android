@@ -136,7 +136,6 @@
     <string name="check_media_warning">To lahko traja dolgo časa z velikimi zbirkami predstavnosti</string>
     <string name="check_media_message">Preverjanje predstavnosti &#8230;</string>
     <string name="check_media_acknowledge">Predstavnost preverjena</string>
-    <string name="check_media_failed">Preverjanje predstavnosti spodletelo</string>
     <string name="check_media_invalid">Datoteke z neveljavnim kodiranjem: %d</string>
     <string name="check_media_unused">Datoteke v mapi predstavnosti, vendar jih ne uporablja nobena kartica: %d</string>
     <string name="check_media_nohave">Datoteke uporabljene na karticah, vendar se ne nahajajo v mapi predstavnosti: %d</string>
@@ -172,7 +171,6 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>

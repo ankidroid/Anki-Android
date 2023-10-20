@@ -145,6 +145,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Előnézet</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ennyiből %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Átnevezés</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">Adatbázis ellenőrzése</string>
     <string name="check_media">Média ellenőrzése</string>
     <string name="empty_cards">Üres kártyák listája</string>
@@ -271,7 +272,6 @@
     <string name="insert_heading">Címsor beszúrása</string>
     <string name="format_font_size">Betűméret módosítása</string>
     <string name="insert_mathjax">MathJax egyenlet beszúrása</string>
-    <string name="insert_cloze">Kihagyásos szöveg létrehozás</string>
     <string name="note_editor_toolbar_icon">Gombfelirat</string>
     <string name="before_text">Kiválasztás előtti HTML</string>
     <string name="after_text">Kiválasztás utáni HTML</string>

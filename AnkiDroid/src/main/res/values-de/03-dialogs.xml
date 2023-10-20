@@ -126,7 +126,6 @@
     <string name="check_media_warning">Bei großen Mediensammlungen kann dies lange dauern</string>
     <string name="check_media_message">Medien werden überprüft &#8230;</string>
     <string name="check_media_acknowledge">Medien überprüft</string>
-    <string name="check_media_failed">Überprüfen der Medien gescheitert</string>
     <string name="check_media_invalid">Dateien mit ungültiger Codierung: %d</string>
     <string name="check_media_unused">Dateien im Medienordner, die von keiner Karte genutzt werden: %d</string>
     <string name="check_media_nohave">Von Karten genutzte Dateien, die im Medienordner fehlen: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Trotzdem fortfahren</string>
     <string name="integrity_check_insufficient_space">»Datenbank überprüfen« verwendet eine große Menge an temporärem Speicher.\n\nMindestens %s freien Speicherplatzes auf Ihrem Gerät werden daher dringend empfohlen, bevor Sie fortfahren.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAktuell sind %s frei.</string>
-    <string name="video_creation_error">Video konnte nicht abgespielt werden</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fehler beim Decodieren der Daten von Karte</string>
