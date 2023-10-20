@@ -52,8 +52,8 @@
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Lihat tertua terdahulu</string>
     <string name="cram_deck_conf_order_random">Rawak</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Tingkatkan selingan</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Kurangkan selingan</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Selang menaik</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Selang menurun</string>
     <string name="cram_deck_conf_order_most_lapsed">Paling cuai</string>
     <string name="cram_deck_conf_order_order_added">Susunan ditambah</string>
     <string name="cram_deck_conf_order_order_due">Susunan tunggakan</string>
@@ -79,10 +79,10 @@
     <string name="html_size_code_x_large">x-besar</string>
     <string name="html_size_code_xx_large">xx-besar</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">Jawab ulang</string>
+    <string name="answer_hard">Jawab susah</string>
+    <string name="answer_good">Jawab baik</string>
+    <string name="answer_easy">Jawab Senang</string>
     <string name="gesture_play">Main media</string>
     <string name="gesture_abort_learning">Batal pembelajaran</string>
     <string name="gesture_flag_red">Togel Tanda Merah</string>

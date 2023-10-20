@@ -163,9 +163,9 @@
     <string name="vertical_centering_summ">Tengahkan kandungan kad secara menegak</string>
     <string name="pref_backup_max" maxLength="41">Bilangan sandaran maksimum</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Selang sentuh dua kali (milisaat)</string>
-    <string name="pref_double_tap_time_interval_summary">Sentuhan kedua butang jawapan akan diabaikan jika masa ini belum berlalu. Elakkan sentuh dua kali secara tidak sengaja</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_double_tap_time_interval_summary">Sentuhan kedua butang jawapan akan diabaikan jika masa ini belum berlalu. Elakkan sentuh dua kali tanpa sengaja</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Masa tunjuk jawapan tekan lama (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Masa minimum tekan lama sebelum butang tunjuk jawapan akui tekanan. Mungkin kurangkan tekanan tanpa sengaja. Lalai kepada 0ms</string>
     <string name="show_estimates" maxLength="41">Tunjuk masa</string>
     <string name="show_estimates_summ">Tunjuk masa semakan seterusnya pada butang jawapan</string>
     <string name="show_large_answer_buttons" maxLength="41">Tunjuk butang jawapan besar</string>
@@ -205,7 +205,7 @@
     <string name="paste_as_png" maxLength="41">Tampal gambar papan keratan sebagai PNG</string>
     <string name="paste_as_png_summary">Secara lalai Anki tampal gambar pada papan keratan sebagai fail JPG untuk jimat ruang cakera. Anda boleh guna tetapan ini untuk sebaliknya tampal gambar PNG.</string>
     <string name="exit_via_double_tap_back" maxLength="41">Tekan kembali dua kali untuk kembali/keluar</string>
-    <string name="exit_via_double_tap_back_summ">Elak keluar dari penyemak atau aplikasi secara tidak sengaja</string>
+    <string name="exit_via_double_tap_back_summ">Elak keluar dari penyemak atau aplikasi tanpa sengaja</string>
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Benarkan semua fail dalam import media</string>
     <string name="media_import_allow_all_files_summ">Jika Android tidak kenal pasti fail media</string>
@@ -221,12 +221,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">Papan kekunci</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="answer_buttons" maxLength="41">Butang jawapan</string>
+    <string name="card" maxLength="41">Kad</string>
+    <string name="note" maxLength="41">Nota</string>
+    <string name="navigation" maxLength="41">Navigasi</string>
     <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">Lain-lain</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Pilih tag</string>
     <!-- Deck configurations -->
