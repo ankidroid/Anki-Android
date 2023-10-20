@@ -79,10 +79,10 @@
     <string name="html_size_code_x_large">x-ବଡ଼</string>
     <string name="html_size_code_xx_large">xx-ବଡ଼</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_again">ଉତ୍ତର ପୁଣି</string>
+    <string name="answer_hard">ଉତ୍ତର କଠିନ</string>
+    <string name="answer_good">ଉତ୍ତର ଭଲ</string>
+    <string name="answer_easy">ଉତ୍ତର ସହଜ</string>
     <string name="gesture_play">ମିଡ଼ିଆ ଚଲାନ୍ତୁ</string>
     <string name="gesture_abort_learning">ପଢ଼ିବା ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="gesture_flag_red">ନାଲି ପତାକା ଟୋଗଲ୍ କରିବା</string>

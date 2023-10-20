@@ -127,12 +127,12 @@
     <string name="automatic_sync_choice" maxLength="41">Đồng bộ hóa tự động</string>
     <string name="automatic_sync_choice_summ">Đồng bộ hóa tự động khi khởi động / thoát ứng dụng nếu lần đồng bộ hóa cuối cùng nhiều hơn 10         phút trước.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Luôn luôn</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">Chỉ trên các kết nối không tính cước</string>
     <string name="sync_media_never">Không bao giờ</string>
     <string name="sync_status_badge" maxLength="41">Hiển thị trạng thái đồng bộ hóa</string>
     <string name="sync_status_badge_summ">Thay đổi biểu tượng đồng bộ hóa khi các thay đổi có thể được tải lên</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="metered_sync_title" maxLength="41">Cho phép đồng bộ trên các kết nối tính cước</string>
+    <string name="metered_sync_summary">Nếu tắt, bạn sẽ được cảnh báo khi cố gắng đồng bộ hóa trên kết nối có tính cước</string>
     <string name="app_theme" maxLength="41">Giao diện</string>
     <string name="day_theme" maxLength="41">Chủ đề ban ngày</string>
     <string name="night_theme" maxLength="41">Chủ đề ban đêm</string>
@@ -164,7 +164,7 @@
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press" maxLength="41">Hiển thị thời gian nhấn và giữ câu trả lời (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press_summary">Thời gian nhấn và giữ tối thiểu trước khi hiển thị nút câu trả lời sẽ tiếp nhận thao tác bấm. Có thể giảm nguy cơ nhấn nhầm thêm các nút. Mặc định là 0ms</string>
     <string name="show_estimates" maxLength="41">Hiển thị nút thời gian</string>
     <string name="show_estimates_summ">Hiển thị thời gian đánh giá tiếp theo trên các nút trả lời</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
@@ -286,14 +286,14 @@
          #################################### Backup options ###################################
          ####################################################################################### -->
     <string name="pref__backup_options__title" maxLength="41">Các tùy chọn sao lưu</string>
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid sao lưu định kỳ bộ sưu tập của bạn.
+        Sau khi bản sao lưu cũ hơn hai ngày,
+        AnkiDroid sẽ bắt đầu xóa một số bản sao lưu để giải phóng dung lượng đĩa.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Lưu ý rằng các đa phương tiện không được sao lưu
+        Để an toàn, vui lòng đồng bộ bộ sưu tập của bạn định kỳ hoặc sao lưu bản xuất của nó.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        Bạn có thể khôi phục từ bản sao lưu và xuất bộ sưu tập của mình trong bảng chọn danh sách bộ thẻ.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Phút giữa các lần sao lưu tự động</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">Sao lưu hàng ngày để giữ</string>

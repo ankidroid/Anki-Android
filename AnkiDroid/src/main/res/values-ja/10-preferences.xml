@@ -287,19 +287,19 @@
          #################################### Backup options ###################################
          ####################################################################################### -->
     <string name="pref__backup_options__title" maxLength="41">バックアップオプション</string>
-    <string name="pref__backups_help__summary"><![CDATA[        Ankiは定期的にあなたのコレクションをバックアップしています。
-        ２日以上経過したバックアップは、
-       ストレージの空き容量を確保するため、順次削除されていきます。
+    <string name="pref__backups_help__summary"><![CDATA[        Ankiは一定時間ごとにコレクションのバックアップを作成しています。
+        各期間の代表として保管するバックアップ以外のバックアップは、
+        ディスク領域を空けるために、作成から2日以上経過した後に削除していきます。
         <br><br>
-        注意：メディアファイルは定期バックアップの対象外です。
+        注意：メディアファイルはこの自動バックアップの対象外です。
         万一に備え、AnkiWebとの同期やコレクションのエクスポートを、メディアを含めた状態で定期的に行うことを強くおすすめします。
         <br><br>
         バックアップからのコレクションの復元や、コレクションのエクスポートは、デッキリスト画面のメニューから行えます。
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動バックアップの間隔（分）</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">毎日保存するバックアップの数</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">毎週保存するバックアップの数</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">毎月保存するバックアップの数</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">各日代表のバックアップ保管数（何日分）</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">各週代表のバックアップ保管数（何週分）</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">各月代表のバックアップ保管数（何か月分）</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->

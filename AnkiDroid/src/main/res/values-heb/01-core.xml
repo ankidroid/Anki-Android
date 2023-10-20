@@ -60,7 +60,7 @@
     <!-- DeckPicker.kt -->
     <string name="expand">הרחב</string>
     <string name="collapse">צמצם</string>
-    <string name="study_more">תוספות</string>
+    <string name="study_more">למידה נוספת</string>
     <plurals name="deckpicker_title">
         <item quantity="one">כרטיס אחד נותר (%2$s)</item>
         <item quantity="two">%1$d קלפים נותרים (%2$s)</item>

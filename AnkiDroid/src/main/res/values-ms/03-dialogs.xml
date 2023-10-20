@@ -69,7 +69,7 @@
         <item quantity="other">Jadualkan semula %d kad</item>
     </plurals>
     <plurals name="reschedule_card_dialog_interval">
-        <item quantity="other">Seling kini: %d hari</item>
+        <item quantity="other">Selang kini: %d hari</item>
     </plurals>
     <string name="reschedule_card_dialog_message">Jadualkan semula untuk semakan dalam x hari</string>
     <plurals name="reschedule_cards_dialog_acknowledge">

@@ -234,7 +234,7 @@
     <string name="basic_answer_sample_text">ଏକ ଉଦାହରଣ</string>
     <string name="reviewer_tts_cloze_spoken_replacement">ଖାଲି</string>
     <!-- in options menu & Navigation Drawer -->
-    <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScript ଵ୍ୟଵହାର କରି ନେଵିଗେଶନ୍ ଡ୍ରୟର ଦେଖାଅ ଵ୍ୟଵହାର କରିବାଲାଗି ଦୟାକରି ପୂର୍ଣ୍ଣସ୍କ୍ରୀନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
+    <string name="ankidroid_turn_on_fullscreen_nav_drawer">JavaScript ବ୍ୟବହାର କରି ଦିଗଚଳନ ଡ୍ରର୍ ଦେଖାଅ ବ୍ୟବହାର କରିବାଲାଗି ଦୟାକରି ପୂର୍ଣ୍ଣସ୍କ୍ରୀନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
     <string name="ankidroid_turn_on_fullscreen_options_menu">JavaScript ଵ୍ୟଵହାର କରି ଵିକଳ୍ପ ଦେଖାଅ ମେନୁ ଵ୍ୟଵହାର କରିବାଲାଗି ପୂର୍ଣ୍ଣସ୍କ୍ରୀନ୍ ଚାଲୁ କରନ୍ତୁ।</string>
     <!-- Whiteboard save image message in Reviewer -->
     <string name="white_board_image_save_failed">ଧଳାପଟା ଛବି ସଂରକ୍ଷଣ କରିବାରେ ବିଫଳ। %s</string>

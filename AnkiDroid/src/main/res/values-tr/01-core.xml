@@ -55,7 +55,7 @@
     <string name="studyoptions_due_today">Bugün sırada:</string>
     <string name="studyoptions_new_total">Toplam yeni kart:</string>
     <string name="studyoptions_total_cards">Toplam kart:</string>
-    <string name="studyoptions_eta">Tahminî süre (dk):</string>
+    <string name="studyoptions_eta">Tahmini süre (dk):</string>
     <string name="studyoptions_start">Çalışmaya Başla</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Genişlet</string>

@@ -80,9 +80,9 @@
     <string name="html_size_code_xx_large">cực kỳ lớn</string>
     <!-- gestures_labels -->
     <string name="answer_again">Trả lời lại</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
+    <string name="answer_hard">Trả lời khó</string>
+    <string name="answer_good">Trả lời tốt</string>
+    <string name="answer_easy">Trả lời dễ</string>
     <string name="gesture_play">Phát file đa phương tiện</string>
     <string name="gesture_abort_learning">Bỏ học</string>
     <string name="gesture_flag_red">Chuyển đổi cờ đỏ</string>
