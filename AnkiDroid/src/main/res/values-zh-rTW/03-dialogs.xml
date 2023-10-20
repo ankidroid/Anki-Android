@@ -121,7 +121,6 @@
     <string name="check_media_warning">因爲大量的媒體集合，這可能會花上好一段時間</string>
     <string name="check_media_message">正在檢查媒體&#8230;</string>
     <string name="check_media_acknowledge">媒體已檢查</string>
-    <string name="check_media_failed">媒體檢查失敗</string>
     <string name="check_media_invalid">使用無效編碼的檔案：%d</string>
     <string name="check_media_unused">存在媒體資料夾內卻沒被任何卡片使用的檔案：%d</string>
     <string name="check_media_nohave">卡片有用到卻不再媒體資料夾內的檔案：%d</string>
@@ -154,7 +153,6 @@
     <string name="integrity_check_continue_anyway">仍要繼續</string>
     <string name="integrity_check_insufficient_space">檢查資料庫將使用大量暫存。\n\n強烈推薦您在繼續前保證裝置上至少擁有 %s 閒置空間。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n你當前擁有 %s 閒置空間。</string>
-    <string name="video_creation_error">無法播放影片</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">解碼卡片中資料時出錯</string>

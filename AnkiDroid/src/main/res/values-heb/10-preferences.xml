@@ -134,6 +134,8 @@
     <string name="sync_status_badge_summ">שנה את סמל הסנכרון כאשר ניתן להעלות שינויים</string>
     <string name="metered_sync_title" maxLength="41">אפשר סנכרון בחיבורים מדורגים</string>
     <string name="metered_sync_summary">אם מושבת, תקבל אזהרה אם תנסה לסנכרן בחיבור בנדידה</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">ערכת נושא</string>
     <string name="day_theme" maxLength="41">ערכת יום</string>
     <string name="night_theme" maxLength="41">ערכת לילה</string>
@@ -161,7 +163,6 @@
     <string name="disable_extended_text_ui_summ">מאפשר תפריט ההקשר \'מחיקת Cloze\' במצב לרוחב.</string>
     <string name="vertical_centering" maxLength="41">מירכוז</string>
     <string name="vertical_centering_summ">מרכז את תוכן הכרטיסים בצורה אנכית</string>
-    <string name="pref_backup_max" maxLength="41">מספר גיבויים מרבי</string>
     <string name="pref_double_tap_time_interval" maxLength="41">מרווח זמן של לחיצה כפולה (מילישניות)</string>
     <string name="pref_double_tap_time_interval_summary">לחיצה שנייה על כפתורי התשובה תתעלם אם הזמן הזה לא חלף. זה מונע הקשה כפולה בשוגג</string>
     <string name="pref_show_answer_long_press" maxLength="41">הצגת תשובה זמן לחיצה ארוכה (מ\"ש)</string>
@@ -286,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">אפשרויות גיבוי</string>
     <string name="pref__backups_help__summary"><![CDATA[         AnkiDroid מגבה מעת לעת את האוסף שלך.
          לאחר שהגיבויים הם בני יותר מיומיים,
          AnkiDroid יתחיל להסיר חלק מהם כדי לפנות שטח דיסק.

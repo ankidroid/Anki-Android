@@ -126,7 +126,6 @@
     <string name="check_media_warning">Ez sokáig tarthat nagy média gyűjtemények esetén</string>
     <string name="check_media_message">Média ellenőrzése&#8230;</string>
     <string name="check_media_acknowledge">Média ellenőrizve</string>
-    <string name="check_media_failed">Média ellenőrzés sikertelen</string>
     <string name="check_media_invalid">Érvénytelen kódolású fájlok: %d</string>
     <string name="check_media_unused">Fájlok a média mappában, használaton kívül: %d</string>
     <string name="check_media_nohave">Fájlok kártyákon, de mappából hiányozva: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Folytatás Mindenképpen</string>
     <string name="integrity_check_insufficient_space">Az Adatbázis ellenőrzés sok ideiglenes helyet használ.\n\n.Erősen ajánlott, hogy legalább %s szabad tárhelyed legyen a készüléken mielőtt folytatnád.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nJelenleg %s szabad hely van.</string>
-    <string name="video_creation_error">Nem sikerült lejátszani a videót</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Hiba a kártya adatainak dekódolása közben</string>

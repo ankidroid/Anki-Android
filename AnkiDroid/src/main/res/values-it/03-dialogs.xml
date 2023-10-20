@@ -126,7 +126,6 @@
     <string name="check_media_warning">Ciò può richiedere molto tempo con le collezioni multimediali di grandi dimensioni</string>
     <string name="check_media_message">Controllo i media&#8230;</string>
     <string name="check_media_acknowledge">Media controllati</string>
-    <string name="check_media_failed">Controllo dei media fallito</string>
     <string name="check_media_invalid">File con codifica non valida: %d</string>
     <string name="check_media_unused">File nella cartella media ma non utilizzati da nessuna carta: %d</string>
     <string name="check_media_nohave">File utilizzati sulle carte, ma non nella cartella media: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Continua comunque</string>
     <string name="integrity_check_insufficient_space">Il controllo banca dati utilizza una grande quantità di memoria temporanea.\n\nSi raccomanda vivamente di avere almeno %s spazio libero sul dispositivo prima di continuare.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAttualmente hai %s liberi.</string>
-    <string name="video_creation_error">Impossibile riprodurre il video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Errore nella decodifica dei dati dalla carta</string>

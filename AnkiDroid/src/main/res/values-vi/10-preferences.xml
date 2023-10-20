@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">Thay đổi biểu tượng đồng bộ hóa khi các thay đổi có thể được tải lên</string>
     <string name="metered_sync_title" maxLength="41">Cho phép đồng bộ trên các kết nối tính cước</string>
     <string name="metered_sync_summary">Nếu tắt, bạn sẽ được cảnh báo khi cố gắng đồng bộ hóa trên kết nối có tính cước</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Giao diện</string>
     <string name="day_theme" maxLength="41">Chủ đề ban ngày</string>
     <string name="night_theme" maxLength="41">Chủ đề ban đêm</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Cho phép menu ngữ cảnh \'Đánh dấu Cloze\' khi ở chế độ ngang.</string>
     <string name="vertical_centering" maxLength="41">Chọn Center align</string>
     <string name="vertical_centering_summ">Thiết lập nội dung chính của thẻ theo chiều dọc</string>
-    <string name="pref_backup_max" maxLength="41">Tối đa số lượng bản sao lưu</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press" maxLength="41">Hiển thị thời gian nhấn và giữ câu trả lời (ms)</string>
@@ -285,7 +286,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Các tùy chọn sao lưu</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid sao lưu định kỳ bộ sưu tập của bạn.
         Sau khi bản sao lưu cũ hơn hai ngày,
         AnkiDroid sẽ bắt đầu xóa một số bản sao lưu để giải phóng dung lượng đĩa.

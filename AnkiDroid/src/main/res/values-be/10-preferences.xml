@@ -134,6 +134,8 @@
     <string name="sync_status_badge_summ">Значок сінхранізацыі зменіцца, калі можна будзе загрузіць змены</string>
     <string name="metered_sync_title" maxLength="41">Дазволіць сінхранізацыю пры тарыфікацыі злучэння</string>
     <string name="metered_sync_summary">Калі адключана, то вы атрымаеце папярэджанне, што адбудзецца сінхранізацыя праз тарыфікаванае злучэнне.</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Тэма</string>
     <string name="day_theme" maxLength="41">Дзённая тэма</string>
     <string name="night_theme" maxLength="41">Начная тэма</string>
@@ -161,7 +163,6 @@
     <string name="disable_extended_text_ui_summ">Уключае кантэкстнае меню \"Заданне з пропускамі\" ў альбомным рэжыме.</string>
     <string name="vertical_centering" maxLength="41">Выраўноўваць па цэнтры</string>
     <string name="vertical_centering_summ">Цэнтраваць змесціва картак вертыкальна</string>
-    <string name="pref_backup_max" maxLength="41">Колькасць рэзервовых копій</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Інтэрвал у падвойным дотыку (мілісек.)</string>
     <string name="pref_double_tap_time_interval_summary">Другі націск на кнопку адказу будзе праігнараваны, калі час яшчэ не мінуў. Гэта прадухіляе выпадковы двайны націск</string>
     <string name="pref_show_answer_long_press" maxLength="41">Працягласць націску для адказу (мс)</string>
@@ -287,7 +288,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Параметры рэзервовага капіявання</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid перыядычна робіць рэзервовую копію вашай калекцыі.
         AnkiDroid выдаляе рэзервовыя копіі, якія старэйшыя за два дні, 
         каб вызваліць месца на дыску.

@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">Cambiar el icono de sincronización cuando se pueden subir los cambios</string>
     <string name="metered_sync_title" maxLength="41">Permitir sincronización en conexiones medidas</string>
     <string name="metered_sync_summary">Si está deshabilitado, serás avisado si intentas sincronizar con una conexión medida</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema del día</string>
     <string name="night_theme" maxLength="41">Tema nocturno</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Permite el menú contextual \'huecos\' cuando está en modo horizontal.</string>
     <string name="vertical_centering" maxLength="41">Alinear al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
-    <string name="pref_backup_max" maxLength="41">Número máximo de copias de seguridad</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -286,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Opciones de copia de seguridad</string>
     <string name="pref__backups_help__summary"><![CDATA[AnkiDroid crea copias de seguridad de tu colección periódicamente.
 Si las copias tienen más de dos días de edad,
 AnkiDroid empezará a eliminar algunas de ellas para liberar espacio de almacenamiento.

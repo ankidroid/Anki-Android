@@ -145,6 +145,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar"> %2$d ᱨᱮᱱᱟᱜ %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
     <string name="check_media">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
     <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
@@ -271,7 +272,6 @@
     <string name="insert_heading">ᱦᱮᱰᱤᱝ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="format_font_size">ᱯᱪᱤᱠᱤ ᱢᱟᱯ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
-    <string name="insert_cloze">ᱠᱞᱚᱡᱽ ᱢᱮᱴᱟᱣ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="note_editor_toolbar_icon">ᱵᱩᱛᱟᱹᱢ ᱚᱞ</string>
     <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ</string>

@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">ଯେତେବେଳେ ପରିବର୍ତ୍ତନଗୁଡିକ ଅପଲୋଡ୍ ହୋଇପାରିବ, ସିଙ୍କ ଚିହ୍ନ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
     <string name="metered_sync_title" maxLength="41">ମିଟର୍ ସଂଯୋଜନାଗୁଡ଼ିକରେ ସିଙ୍କ୍ କରିବାକୁ ଦେବା</string>
     <string name="metered_sync_summary">ଯଦି ଅକ୍ଷମ କରାଗଲା, ଆଉ ଆପଣ କୌଣସି ମିଟର୍ ହେଉଥିବା ସଂଯୋଜନାରେ ସିଙ୍କ୍ କରିବାକୁ ଚେଷ୍ଟା କରନ୍ତି ତେବେ ଆପଣଙ୍କୁ ଚେତାଵନୀ ଦିଆଯିବ</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">ଥିମ୍</string>
     <string name="day_theme" maxLength="41">ଦିନ ଥିମ୍</string>
     <string name="night_theme" maxLength="41">ରାତ୍ରି ଥିମ୍</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">ଲ୍ୟାଣ୍ଡସ୍କେପ୍ ମୋଡ୍ ରେ \'କ୍ଲୋଜ ବିଲୋପ\' ପ୍ରସଙ୍ଗ ମେନୁକୁ ଅନୁମତି ଦିଏ</string>
     <string name="vertical_centering" maxLength="41">କେନ୍ଦ୍ର ଶ୍ରେଣୀବଦ୍ଧତା</string>
     <string name="vertical_centering_summ">ପତ୍ରଗୁଡ଼ିକର ଵିଷୟବସ୍ତୁକୁ ଭୂଲମ୍ବ ଭାଵରେ କେନ୍ଦ୍ରିତ କରିରଖିବା</string>
-    <string name="pref_backup_max" maxLength="41">ବ୍ୟାକଅପ୍ ର ସର୍ବାଧିକ ସଂଖ୍ୟା</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ଡବଲ୍ ଟ୍ୟାପ୍ ସମୟ ଅନ୍ତରାଳ (ମିଲିସେକେଣ୍ଡ)</string>
     <string name="pref_double_tap_time_interval_summary">ଯଦି ଏହି ସମୟ ଅତିବାହିତ ହୋଇନାହିଁ ତେବେ ଉତ୍ତର ବଟନର ଦ୍ୱିତୀୟ ଟ୍ୟାପ୍ ଅଣଦେଖା କରାଯିବ। ଏହା ଆକସ୍ମିକ ଡବଲ୍ ଟ୍ୟାପ୍ ପ୍ରତିରୋଧ କରେ</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -286,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">ବ୍ୟାକଅପ୍ ଵିକଳ୍ପ</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid ପର୍ଯ୍ୟାୟକ୍ରମେ ଆପଣଙ୍କ ସଂଗ୍ରହର ବ୍ୟାକଅପ୍ ନିଏ।
         ବ୍ୟାକଅପ୍ ଦୁଇ ଦିନରୁ ଅଧିକ ପୁରୁଣା ହେବା ପରେ,
         AnkiDroid ଡିସ୍କ ସ୍ପେସ୍ ମୁକ୍ତ କରିବାକୁ ସେମାନଙ୍କ ମଧ୍ୟରୁ କିଛିଟି ଅପସାରଣ କରିବା ଆରମ୍ଭ କରିବ।

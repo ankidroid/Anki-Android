@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">当更改可被上传时改变同步图标</string>
     <string name="metered_sync_title" maxLength="41">允许通过按流量计费连接同步</string>
     <string name="metered_sync_summary">禁用后，当您尝试通过流量进行同步时，将收到提醒</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">主题</string>
     <string name="day_theme" maxLength="41">白天主题</string>
     <string name="night_theme" maxLength="41">夜间主题</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">旋转至横屏时允许上下文菜单中选择「创建填空题」。</string>
     <string name="vertical_centering" maxLength="41">居中对齐</string>
     <string name="vertical_centering_summ">垂直居中卡片内容</string>
-    <string name="pref_backup_max" maxLength="41">最大备份数量</string>
     <string name="pref_double_tap_time_interval" maxLength="41">双击时间间隔（毫秒）</string>
     <string name="pref_double_tap_time_interval_summary">如果指定的时间没有过去，那么应用将忽略回答按钮的第二次点击。这可以防止意外的双击</string>
     <string name="pref_show_answer_long_press" maxLength="41">“显示回答”长按时间 (ms)</string>
@@ -286,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">备份选项</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid 定期备份您的牌组集合。
         在备份文件生成超过两天后，
         AnkiDroid 会开始删除一些备份释放磁盘空间。

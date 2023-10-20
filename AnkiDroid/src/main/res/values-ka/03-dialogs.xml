@@ -126,7 +126,6 @@
     <string name="check_media_warning">ამას დიდი ზომის მედია-კოლექციების შემთხვევაში შეიძლება დიდი ხანი დასჭირდეს</string>
     <string name="check_media_message">მედიაფაილების შემოწმება&#8230;</string>
     <string name="check_media_acknowledge">მედიაფაილები შემოწმდა</string>
-    <string name="check_media_failed">მედიაფაილები ვერ შემოწმდა</string>
     <string name="check_media_invalid">ფაილები არასწორი კოდირებით: %d</string>
     <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
     <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">მაინც გაგრძელება</string>
     <string name="integrity_check_insufficient_space">„მონაცემთა ბაზის შემოწმება“ დიდი რაოდენობის დროებით მეხსიერებას მოითხოვს.\n\nდაბეჯითებით გირჩევთ %s-ის ადგილი მაინც გქონდეთ განთავისუფლებული მანამ, სანამ გააგრძელებთ.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nამჟამად თავისუფალია %s.</string>
-    <string name="video_creation_error">ვიდეოს გაშვება ვერ მოხერხდა</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">შეცდომა ბარათის მონაცემების გაშიფვრისას</string>

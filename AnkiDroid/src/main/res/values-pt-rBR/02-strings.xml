@@ -145,6 +145,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pré-visualizar</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renomear</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">Verificar banco de dados</string>
     <string name="check_media">Verificar mídia</string>
     <string name="empty_cards">Cards vazios</string>
@@ -271,7 +272,6 @@
     <string name="insert_heading">Inserir título</string>
     <string name="format_font_size">Alterar tamanho da fonte</string>
     <string name="insert_mathjax">Inserir equação MathJax</string>
-    <string name="insert_cloze">Ocultar</string>
     <string name="note_editor_toolbar_icon">Texto do botão</string>
     <string name="before_text">HTML antes da seleção</string>
     <string name="after_text">HTML depois da seleção</string>

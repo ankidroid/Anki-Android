@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">Muda s\'icona de sincronizatzione cando  sas modìficas si podent carrigare</string>
     <string name="metered_sync_title" maxLength="41">Permite sa sincronizatzione cun connessiones a consumu</string>
     <string name="metered_sync_summary">Si est disabilitadu at a retzire un\'avisu si as a proare a sincronizare cun una connessione a consumu</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema pro sa die</string>
     <string name="night_theme" maxLength="41">Tema pro sa note</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Permitet su menù de cuntestu \'Iscantzellamentu cloze\' in sa modalidade orizontale</string>
     <string name="vertical_centering" maxLength="41">Allìnia a tzentru</string>
     <string name="vertical_centering_summ">Tzentra in verticale su cuntenutu de sas cartas</string>
-    <string name="pref_backup_max" maxLength="41">Nùmeru màssimu de còpias de seguresa</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervallu de tempus tocu dòpiu (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Su de duos tocos in sos butones de risposta s\'at a ignorare si custu tempus no at a èssere coladu. Custu prevenit tocos dòpios atzidentales</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -286,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.

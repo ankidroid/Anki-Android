@@ -131,7 +131,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">გთხოვთ მისცეთ AnkiDroid-ს მეხსიერებასთან წვდომა, რომ გავაგრძელოთ</string>
-    <string name="startup_all_files_access_permission">გასაგრძელებლად გთხოვთ AnkiDroid-ს მიანიჭოთ ყველა ფაილზე წვდომის უფლება</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -272,4 +271,9 @@
     <string name="restore_data_from_backup">არდგენა .colpkg სარეზერვო ასლიდან (გაღრმავებული პარამეტრი)</string>
     <string name="create_new_collection">ახალი კოლექციის შექმნა</string>
     <string name="new_unsafe_collection">ახალი კოლექცია წაიშლება თქვენი მოწყობილობიდან თუკი მოახდენთ AnkiDroid-ის დეინსტალაციას</string>
+    <!-- Permissions screen -->
+    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="storage_access_title">Storage access</string>
+    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
 </resources>

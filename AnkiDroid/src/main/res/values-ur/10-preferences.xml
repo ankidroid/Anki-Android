@@ -134,6 +134,8 @@
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Day theme</string>
     <string name="night_theme" maxLength="41">رات کا تھیم</string>
@@ -161,7 +163,6 @@
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Center align</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
-    <string name="pref_backup_max" maxLength="41">Max number of backups</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -287,7 +288,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.

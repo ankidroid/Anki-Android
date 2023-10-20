@@ -143,6 +143,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">预览</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d 中的 %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">重命名</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">检查数据库</string>
     <string name="check_media">检查媒体</string>
     <string name="empty_cards">空白卡片</string>
@@ -265,7 +266,6 @@
     <string name="insert_heading">插入标题</string>
     <string name="format_font_size">更改字体大小</string>
     <string name="insert_mathjax">插入 MathJax 方程</string>
-    <string name="insert_cloze">插入填空题</string>
     <string name="note_editor_toolbar_icon">按钮文本</string>
     <string name="before_text">选择文本前的 HTML</string>
     <string name="after_text">选择文本后的 HTML</string>

@@ -126,7 +126,6 @@
     <string name="check_media_warning">Dit kan lang duren met grote hoeveelheden media</string>
     <string name="check_media_message">Media controleren&#8230;</string>
     <string name="check_media_acknowledge">Media gecontroleerd</string>
-    <string name="check_media_failed">Controle van de media mislukt</string>
     <string name="check_media_invalid">Bestanden met ongeldige codering: %d</string>
     <string name="check_media_unused">Bestanden in media-map maar niet in kaarten gebruikt: %d</string>
     <string name="check_media_nohave">Bestanden die worden gebruikt op kaarten maar niet in mediamap: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Toch doorgaan</string>
     <string name="integrity_check_insufficient_space">Controle van de database gebruikt een grote hoeveelheid tijdelijke geheugen.\n\nHet wordt sterk aanbevolen dat u ten minste %s vrije ruimte op uw toestel hebt voordat u verder gaat.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nU hebt momenteel %s vrij.</string>
-    <string name="video_creation_error">Kon video niet afspelen</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fout bij decoderen van gegevens uit de kaart</string>

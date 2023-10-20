@@ -146,7 +146,6 @@
     <string name="check_media_warning">قد يأخذ هذا وقتًا طويلًا لمجموعات الوسائط الكبيرة</string>
     <string name="check_media_message">يجري فحص الوسائط&#8230;</string>
     <string name="check_media_acknowledge">تم فحص الوسائط</string>
-    <string name="check_media_failed">فشل فحص الوسائط</string>
     <string name="check_media_invalid">ملفات بترميز غير صالح: %d</string>
     <string name="check_media_unused">ملفات موجودة في مجلد الوسائط لكنها غير مستخدمة من قبل أي بطاقة: %d</string>
     <string name="check_media_nohave">ملفات مستخدمة في البطاقات لكنها غير موجودة في مجلد الوسائط: %d</string>
@@ -184,7 +183,6 @@
     <string name="integrity_check_continue_anyway">استمر على أي حال</string>
     <string name="integrity_check_insufficient_space">تستخدم ميزة فحص قاعدة البيانات مساحة كبيرة من التخزين المؤقت.\n\nينصح بشدة أن يكون لديك مساحة %s خالية على الأقل في جهازك قبل الاستمرار.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nلديك حاليًا مساحة %s خالية.</string>
-    <string name="video_creation_error">تعذر تشغيل الفيديو</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">تعذر فك ترميز البيانات من البطاقة</string>

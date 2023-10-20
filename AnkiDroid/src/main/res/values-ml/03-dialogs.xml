@@ -126,7 +126,6 @@
     <string name="check_media_warning">വലിയ മീഡിയ ശേഖരണങ്ങളുമായി ഇത് വളരെയധികം സമയമെടുക്കും</string>
     <string name="check_media_message">മീഡിയ പരിശോധിക്കുന്നു&#8230;</string>
     <string name="check_media_acknowledge">മീഡിയ പരിശോധിച്ചു</string>
-    <string name="check_media_failed">മീഡിയ പരിശോധിച്ചു</string>
     <string name="check_media_invalid">അസാധുവായ എൻ‌കോഡിംഗ് ഉള്ള ഫയലുകൾ‌:%d</string>
     <string name="check_media_unused">മീഡിയ ഫോൾഡറിലെ ഫയലുകൾ എന്നാൽ ഏതെങ്കിലും കാർഡുകൾ ഉപയോഗിക്കുന്നില്ല:%d</string>
     <string name="check_media_nohave">കാർഡുകളിൽ ഉപയോഗിക്കുന്ന ഫയലുകൾ പക്ഷേ മീഡിയ ഫോൾഡറിൽ ഇല്ല:%d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">എന്തായാലും തുടരുക</string>
     <string name="integrity_check_insufficient_space">ചെക്ക് ഡാറ്റാബേസ് ഒരു വലിയ അളവിലുള്ള താൽക്കാലിക സംഭരണം ഉപയോഗിക്കുന്നു. \n\n തുടരുന്നതിന് മുമ്പ് നിങ്ങളുടെ ഉപകരണത്തിൽ കുറഞ്ഞത് %s സ space ജന്യ സ്ഥലമെങ്കിലും ഉണ്ടായിരിക്കണമെന്ന് ശക്തമായി ശുപാർശ ചെയ്യുന്നു.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nനിങ്ങൾക്ക് നിലവിൽ %s സ .ജന്യമാണ്.</string>
-    <string name="video_creation_error">വീഡിയോ പ്ലേ ചെയ്യാൻ കഴിഞ്ഞില്ല</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">കാർഡിൽ നിന്ന് ഡാറ്റ ഡീകോഡ് ചെയ്യുന്നതിൽ പിശക്</string>

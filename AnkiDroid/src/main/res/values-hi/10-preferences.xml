@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">जब बदलाव अपलोड किए जा सकें तो सिंक आइकन बदलें</string>
     <string name="metered_sync_title" maxLength="41">मीटर वाले कनेक्शनों पर समन्वयन की अनुमति दें</string>
     <string name="metered_sync_summary">यदि अक्षम है, तो मीटर वाले कनेक्शन पर सिंक करने का प्रयास करने पर आपको चेतावनी दी जाएगी</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">थीम </string>
     <string name="day_theme" maxLength="41">दिवस थीम</string>
     <string name="night_theme" maxLength="41">रात विषय</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">मध्य संरेखित करें</string>
     <string name="vertical_centering_summ">कार्ड की सामग्री को अनुलंब रूप से केंद्रित करना</string>
-    <string name="pref_backup_max" maxLength="41">बैकअप की अधिकतम संख्या</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -286,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.

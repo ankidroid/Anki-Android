@@ -143,6 +143,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Xem trước</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Đổi tên</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">Kiểm tra CSDL</string>
     <string name="check_media">Kiểm tra các tệp đa phương tiện</string>
     <string name="empty_cards">Các thẻ rỗng</string>
@@ -265,7 +266,6 @@
     <string name="insert_heading">Trèn đề mục</string>
     <string name="format_font_size">Thay đổi cỡ chữ</string>
     <string name="insert_mathjax">Chèn công thức toán</string>
-    <string name="insert_cloze">Chèn Đánh dấu Cloze</string>
     <string name="note_editor_toolbar_icon">Chữ trên nút</string>
     <string name="before_text">HTML trước vùng chọn</string>
     <string name="after_text">HTML Sau Vùng chọn</string>

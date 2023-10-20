@@ -121,7 +121,6 @@
     <string name="check_media_warning">큰 미디어 컬렉션은 시간이 오래 걸릴 수 있습니다</string>
     <string name="check_media_message">미디어 점검 중...</string>
     <string name="check_media_acknowledge">미디어 점검됨</string>
-    <string name="check_media_failed">미디어 점검 실패</string>
     <string name="check_media_invalid">올바르지 않은 인코딩을 포함한 파일: %d</string>
     <string name="check_media_unused">미디어 폴더에 있지만 어떠한 카드에도 사용되지 않은 파일: %d</string>
     <string name="check_media_nohave">카드에 사용되었지만 미디어 폴더에는 없는 파일: %d</string>
@@ -154,7 +153,6 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>

@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">Cambia l\'icona di sincronizzazione quando le modifiche possono essere caricate</string>
     <string name="metered_sync_title" maxLength="41">Consenti sincronizzazione con connessione a consumo.</string>
     <string name="metered_sync_summary">Se disabilitato, verrai avvisato se provi a sincronizzare quando usi una connessione a consumo</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema di giorno</string>
     <string name="night_theme" maxLength="41">Tema notturno</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Consente il menù contestuale «Cloze» quando in modalità orizzontale.</string>
     <string name="vertical_centering" maxLength="41">Allinea al centro</string>
     <string name="vertical_centering_summ">Centra verticalmente il contenuto delle carte</string>
-    <string name="pref_backup_max" maxLength="41">Numero massimo di backup</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervallo di tempo doppio tocco (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un secondo tocco dei pulsanti di risposta verrà ignorato se questo tempo non è trascorso. Questo impedisce doppi tocchi accidentali</string>
     <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
@@ -286,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Opzioni backup</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid esegue periodicamente il backup della tua collezione.
         Se i backup hanno più di due giorni,
         AnkiDroid inizierà a rimuoverne alcuni per liberare spazio su disco.

@@ -133,6 +133,8 @@
     <string name="sync_status_badge_summ">Synchronisationssymbol ändern, wenn Änderungen hochgeladen werden können</string>
     <string name="metered_sync_title" maxLength="41">Synchronisierung über Mobilfunk zulassen</string>
     <string name="metered_sync_summary">Wenn deaktiviert werden Sie gewarnt, falls Sie versuchen, über eine getaktete Verbindung zu synchronisieren</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Design</string>
     <string name="day_theme" maxLength="41">Design Tag</string>
     <string name="night_theme" maxLength="41">Design Nacht</string>
@@ -160,7 +162,6 @@
     <string name="disable_extended_text_ui_summ">Erlaubt im Querformat das Kontextmenü »Auslassung erzeugen«</string>
     <string name="vertical_centering" maxLength="41">Zentriert</string>
     <string name="vertical_centering_summ">Den Inhalt der Karten vertikal zentrieren</string>
-    <string name="pref_backup_max" maxLength="41">Maximale Anzahl an Sicherungen</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Zeitintervall für Doppeltippen (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Ein zweites Antippen der Antworttasten wird ignoriert, wenn diese Zeit nicht verstrichen ist. Dies verhindert versehentliches doppeltes Antippen</string>
     <string name="pref_show_answer_long_press" maxLength="41">Dauer des Gedrückthaltens zum Antwort zeigen (ms)</string>
@@ -285,7 +286,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Sicherungsoptionen</string>
     <string name="pref__backups_help__summary"><![CDATA[AnkiDroid erstellt regelmäßig Sicherungskopien deiner Sammlung.
         Wenn die Backups mehr als zwei Tage alt sind,
         fängt AnkiDroid an, einige von ihnen zu löschen, um Speicherplatz freizugeben.

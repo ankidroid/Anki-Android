@@ -144,6 +144,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">미리보기</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d 중 %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">이름 바꾸기</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">데이터베이스 점검하기</string>
     <string name="check_media">미디어 확인</string>
     <string name="empty_cards">빈 카드</string>
@@ -268,7 +269,6 @@ Context | Request Context    [1]</string>
     <string name="insert_heading">제목 삽입</string>
     <string name="format_font_size">글꼴 크기 변경</string>
     <string name="insert_mathjax">MathJax 수식 삽입</string>
-    <string name="insert_cloze">빈칸 삽입</string>
     <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">선택 전 HTML</string>
     <string name="after_text">선택 후 HTML</string>

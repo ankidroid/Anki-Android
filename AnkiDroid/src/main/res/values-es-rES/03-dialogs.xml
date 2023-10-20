@@ -126,7 +126,6 @@
     <string name="check_media_warning">Esto puede tardar mucho con las colecciones de grandes archivos multimedia</string>
     <string name="check_media_message">Comprobando archivos multimedia&#8230;</string>
     <string name="check_media_acknowledge">Archivos multimedia comprobados</string>
-    <string name="check_media_failed">La comprobación de los archivos multimedia ha fallado</string>
     <string name="check_media_invalid">Archivos con codificación no válida: %d</string>
     <string name="check_media_unused">Archivos en la carpeta de archivos multimedia pero no utilizados por ninguna tarjeta: %d</string>
     <string name="check_media_nohave">Archivos utilizados en las tarjetas pero no en la carpeta de archivos multimedia: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Continuar igualmente</string>
     <string name="integrity_check_insufficient_space">Compruebar de la base de datos utiliza una gran cantidad de almacenamiento temporal.\n\nEs altamente recomendable que tenga al menos %s espacio libre en su dispositivo antes de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualmente tienes %s libre.</string>
-    <string name="video_creation_error">Reproducción de vídeo fallida</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error al decodificar datos de la tarjeta</string>

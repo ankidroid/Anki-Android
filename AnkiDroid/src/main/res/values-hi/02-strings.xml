@@ -145,6 +145,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">पूर्वावलोकन</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d का %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">का नाम बदलें</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">डेटाबेस की जाँच करें</string>
     <string name="check_media">मीडिया जांचें</string>
     <string name="empty_cards">खाली कार्ड</string>
@@ -271,7 +272,6 @@
     <string name="insert_heading">शीर्षक डालें</string>
     <string name="format_font_size">फॉण्ट आकार बदलें</string>
     <string name="insert_mathjax">MathJax समीकरण सम्मिलित करें</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="note_editor_toolbar_icon">बटन टेक्स्ट</string>
     <string name="before_text">चयन से पहले का HTML</string>
     <string name="after_text">चयन के बाद का HTML</string>

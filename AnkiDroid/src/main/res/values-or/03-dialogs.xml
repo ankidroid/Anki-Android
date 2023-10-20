@@ -126,7 +126,6 @@
     <string name="check_media_warning">ବଡ଼ ମିଡ଼ିଆ ସଂଗ୍ରହ ସହିତ ଏହା ଏକ ଦୀର୍ଘ ସମୟ ନେଇପାରେ</string>
     <string name="check_media_message">ମିଡ଼ିଆ ଯାଞ୍ଚ ଚାଲିଛି&#8230;</string>
     <string name="check_media_acknowledge">ମିଡ଼ିଆ ଯାଞ୍ଚ କରାଗଲା</string>
-    <string name="check_media_failed">ମିଡ଼ିଆ ଯାଞ୍ଚ ଵିଫଳ ହେଲା</string>
     <string name="check_media_invalid">ଅବୈଧ ଏନକୋଡିଂ ସହିତ ଫାଇଲଗୁଡିକ: %d</string>
     <string name="check_media_unused">ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ଗଚ୍ଛିତ କିନ୍ତୁ କୌଣସି ପତ୍ର ଦ୍ୱାରା ବ୍ୟବହାର ହେଉନଥିବା ଫାଇଲଗୁଡ଼ିକ: %d</string>
     <string name="check_media_nohave">ପତ୍ରରେ ବ୍ୟବହୃତ କିନ୍ତୁ ମିଡ଼ିଆ ଫୋଲ୍ଡରରେ ନଥିବା ଫାଇଲଗୁଡ଼ିକ: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">ଯେକୌଣସି ପ୍ରକାରେ ଜାରି ରଖନ୍ତୁ</string>
     <string name="integrity_check_insufficient_space">ଡାଟାବେସ୍ ଯାଞ୍ଚ ବହୁ ପରିମାଣର ଅସ୍ଥାୟୀ ଷ୍ଟୋରେଜ୍ ବ୍ୟବହାର କରେ।\n\nଏହା ଜାରି ରଖିବା ପୂର୍ବରୁ ଆପଣଙ୍କ ଡିଵାଇସରେ ଅତି କମରେ %s ଖାଲି ସ୍ଥାନ ଥିବା ଦୃଢ଼ ଭାବରେ ପରାମର୍ଶ ଦିଆଯାଇଛି।</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nଆପଣଙ୍କ ପାଖରେ ବର୍ତ୍ତମାନ %s ଖାଲି ଅଛି।</string>
-    <string name="video_creation_error">ଵିଡ଼ିଓ ଚାଳନ କରିହେଲା ନାହିଁ</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">ପତ୍ରରୁ ତଥ୍ୟ ଡିକୋଡିଂ କରିବାରେ ତ୍ରୁଟି</string>

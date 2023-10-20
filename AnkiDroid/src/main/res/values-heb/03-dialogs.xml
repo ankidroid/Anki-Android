@@ -137,7 +137,6 @@
     <string name="check_media_warning">ייתכן שפעולה זו תארך זמן אם מדובר באוסף גדול</string>
     <string name="check_media_message">קבצי המדיה בבדיקה&#8230;</string>
     <string name="check_media_acknowledge">קבצי המדיה נבדקו</string>
-    <string name="check_media_failed">בדיקת קבצי המדיה נכשלה</string>
     <string name="check_media_invalid">קבצים בקידוד תקול: %d</string>
     <string name="check_media_unused">קבצים שנמצאים בספריית המדיה אבל אינם בשימוש על ידי אף קלף: %d</string>
     <string name="check_media_nohave">קבצים בשימוש קלפים שאינם בתיקיית המדיה: %d</string>
@@ -173,7 +172,6 @@
     <string name="integrity_check_continue_anyway">המשך בכל זאת</string>
     <string name="integrity_check_insufficient_space">״בדוק מסד נתונים״ משתמש בכמות גדולה של אחסון זמני.\n\nמומלץ מאוד שיהיה לך לפחות %s שטח פנוי במכשיר שלך לפני שתמשיך.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n כרגע יש לך %s פנוי.</string>
-    <string name="video_creation_error">לא ניתן להפעיל וידאו</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">תקלה בפענוח מידע מקלף</string>

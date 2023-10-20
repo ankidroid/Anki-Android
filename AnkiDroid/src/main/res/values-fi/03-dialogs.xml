@@ -126,7 +126,6 @@
     <string name="check_media_warning">Jos sinulla on suuri mediakokoelma, tämä voi kestää pitkään</string>
     <string name="check_media_message">Tarkistetaan mediaa&#8230;</string>
     <string name="check_media_acknowledge">Media tarkistettu</string>
-    <string name="check_media_failed">Median tarkistaminen epäonnistui</string>
     <string name="check_media_invalid">%d tiedostoa virheellisellä koodauksella</string>
     <string name="check_media_unused">%d käyttämätöntä tiedostoa mediakansiossa</string>
     <string name="check_media_nohave">%d tiedostoa, joita käytetään korteissa, mutta jotka eivät ole mediakansiossa</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>

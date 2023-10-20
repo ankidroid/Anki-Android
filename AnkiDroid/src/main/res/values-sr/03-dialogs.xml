@@ -131,7 +131,6 @@
     <string name="check_media_warning">Ово може заузети много времена када су у питању велике колекције.</string>
     <string name="check_media_message">Проверавање медијске датотеке&#8230;</string>
     <string name="check_media_acknowledge">Медије проверене</string>
-    <string name="check_media_failed">Проверавање медијске датотеке неуспешно</string>
     <string name="check_media_invalid">Кодирање датотеке је нетачан: %d</string>
     <string name="check_media_unused">Датотеке у фасциклу за медију које немају картицу која их користи: %d</string>
     <string name="check_media_nohave">Датотеке у картицама које нису у фасциклу за медију: %d</string>
@@ -166,7 +165,6 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>

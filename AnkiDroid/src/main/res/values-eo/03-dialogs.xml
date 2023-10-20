@@ -126,7 +126,6 @@
     <string name="check_media_warning">Tio ĉi povas okupi multan tempon por grandaj aŭdvidaĵaj kolektoj</string>
     <string name="check_media_message">Kontrolado de aŭdvidaĵoj&#8230;</string>
     <string name="check_media_acknowledge">Kontrolis aŭdvidaĵojn</string>
-    <string name="check_media_failed">Fiaskis kontroli aŭdvidaĵojn</string>
     <string name="check_media_invalid">Dosieroj kun erara signokodo: %d</string>
     <string name="check_media_unused">Dosieroj ene aŭdvidaĵa dosierujo, sed ne uzataj de iu karto: %d</string>
     <string name="check_media_nohave">Dosieroj uzataj de kartoj, sed malestaj en aŭdvidaĵa dosierujo: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Pluigi malgraŭ tio</string>
     <string name="integrity_check_insufficient_space">Kontrolado de datumbazo uzos multon da provizora memoro.\n\nEstas tre konsilinde por ke vi havu almenaŭ %s da libera spaco en via aparato antaŭ pluigi.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nLibera spaco: %s.</string>
-    <string name="video_creation_error">Ne povis ludi filmeton</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Eraro dum malkodi datumojn el la karto</string>

@@ -121,7 +121,6 @@
     <string name="check_media_warning">如果媒体数据较多，检查媒体文件可能会需要较长的时间</string>
     <string name="check_media_message">正在检查媒体文件&#8230;</string>
     <string name="check_media_acknowledge">媒体文件检查完毕</string>
-    <string name="check_media_failed">媒体文件检查失败</string>
     <string name="check_media_invalid">编码无效的文件：%d</string>
     <string name="check_media_unused">存在于媒体文件夹中但未被用于任何卡牌的文件：%d</string>
     <string name="check_media_nohave">被用于一些卡牌，但不存在于媒体文件夹中的文件：%d</string>
@@ -154,7 +153,6 @@
     <string name="integrity_check_continue_anyway">仍要继续</string>
     <string name="integrity_check_insufficient_space">检查数据库使用大量临时存储。\n\n强烈建议您在继续之前在设备上至少有 %s 可用空间。</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n您当前有 %s 可用。</string>
-    <string name="video_creation_error">无法播放视频</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">从卡片解码数据时出错</string>

@@ -126,7 +126,6 @@
     <string name="check_media_warning">Bu, büyük medya koleksiyonlarıyla uzun sürebilir.</string>
     <string name="check_media_message">Medya kontrol ediliyor&#8230;</string>
     <string name="check_media_acknowledge">Medya kontrol edildi</string>
-    <string name="check_media_failed">Medya kontrolü başarısız</string>
     <string name="check_media_invalid">Geçersiz kodlamalı dosyalar: %d</string>
     <string name="check_media_unused">Medya klasöründe olup hiçbir kartta kullanılmayan dosyalar: %d</string>
     <string name="check_media_nohave">Kartlarda kullanılıp medya klasöründe olmayan dosyalar: %d</string>
@@ -160,7 +159,6 @@
     <string name="integrity_check_continue_anyway">Yine de devam et</string>
     <string name="integrity_check_insufficient_space">Veritabanı Kontrolü büyük miktarda geçici depolama alanı kullanıyor.\n\nDevam etmeden önce cihazınızda en az %s boş alanın olması şiddetle önerilir.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nŞu anda %s boş alanınız var. </string>
-    <string name="video_creation_error">Video oynatılamadı</string>
     <!-- Card Browser -->
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Karttaki verinin kod çözme hatası</string>

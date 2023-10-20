@@ -149,6 +149,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Peržiūra</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d iš %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Pervadinti</string>
+    <string name="checks_action">Check</string>
     <string name="check_db">Tikrinti duomenų bazę</string>
     <string name="check_media">Tikrinti laikmenas</string>
     <string name="empty_cards">Tuščios kortelės</string>
@@ -283,7 +284,6 @@
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
