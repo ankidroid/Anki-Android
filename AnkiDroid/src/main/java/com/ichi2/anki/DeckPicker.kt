@@ -97,9 +97,9 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.timeQuantityTopDeckPicker
-import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
@@ -124,7 +124,6 @@ import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
-import kotlin.math.roundToLong
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -242,7 +241,7 @@ open class DeckPicker :
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
 
     private val permissionScreenLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        recreate()
+        ActivityCompat.recreate(this)
     }
 
     private var migrateStorageAfterMediaSyncCompleted = false

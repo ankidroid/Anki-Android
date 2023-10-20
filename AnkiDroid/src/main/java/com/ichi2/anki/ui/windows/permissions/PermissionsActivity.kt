@@ -51,14 +51,15 @@ class PermissionsActivity : AnkiActivity() {
         }
 
         val permissionSet = IntentCompat.getParcelableExtra(intent, PERMISSIONS_SET_EXTRA, PermissionSet::class.java) ?: return
-        val permissionsFragment = permissionSet.permissionsFragment?.newInstance() ?: return
+        val permissionsFragment = permissionSet.permissionsFragment?.getDeclaredConstructor()?.newInstance() ?: return
         supportFragmentManager.commit {
             replace(R.id.fragment_container, permissionsFragment)
         }
     }
 
-    @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION", "needs update to handle predictive back, see 14558")
     override fun onBackPressed() {
+        super.onBackPressed()
         // only close the activity by tapping the continue button
     }
 
