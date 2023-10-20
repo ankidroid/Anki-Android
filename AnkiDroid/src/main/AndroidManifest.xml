@@ -250,6 +250,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
         <activity
+            android:name=".ui.windows.permissions.PermissionsActivity"
+            android:exported="false"
+            />
+        <activity
             android:name=".ModelFieldEditor"
             android:label="@string/model_editor_label"
             android:configChanges="keyboardHidden|orientation|screenSize"

@@ -25,7 +25,6 @@
 
 package com.ichi2.anki
 
-import android.Manifest
 import android.app.Activity
 import android.content.*
 import android.database.SQLException
@@ -37,6 +36,7 @@ import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
@@ -84,9 +84,6 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.notetype.ManageNotetypes
-import com.ichi2.anki.permissions.PermissionManager
-import com.ichi2.anki.permissions.PermissionsRequestRawResults
-import com.ichi2.anki.permissions.PermissionsRequestResults
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -100,6 +97,7 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
+import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.timeQuantityTopDeckPicker
 import com.ichi2.anki.widgets.DeckAdapter
@@ -126,7 +124,6 @@ import org.json.JSONException
 import timber.log.Timber
 import java.io.File
 import java.lang.Runnable
-import java.lang.ref.WeakReference
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -243,15 +240,9 @@ open class DeckPicker :
     private lateinit var mCustomStudyDialogFactory: CustomStudyDialogFactory
     private lateinit var mContextMenuFactory: DeckPickerContextMenu.Factory
 
-    private lateinit var startupStoragePermissionManager: StartupStoragePermissionManager
-
-    // used for check media
-    private val checkMediaStoragePermissionCheck = PermissionManager.register(
-        this,
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE) else emptyArray(),
-        useCallbackIfActivityRecreated = true,
-        callback = callbackHandlingStoragePermissionsCheckForCheckMedia(WeakReference(this))
-    )
+    private val permissionScreenLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        ActivityCompat.recreate(this)
+    }
 
     private var migrateStorageAfterMediaSyncCompleted = false
 
@@ -325,7 +316,6 @@ open class DeckPicker :
         // Then set theme and content view
         super.onCreate(savedInstanceState)
 
-        startupStoragePermissionManager = StartupStoragePermissionManager.register(this, useCallbackIfActivityRecreated = false)
         // handle the first load: display the app introduction
         if (!hasShownAppIntro()) {
             val appIntro = Intent(this, IntroductionActivity::class.java)
@@ -491,11 +481,11 @@ open class DeckPicker :
      *   This method triggers backups, sync, and may re-show dialogs
      *   that may have been dismissed. Make this run only once?
      */
-    fun handleStartup() {
-        val storagePermissionsResult = startupStoragePermissionManager.checkPermissions()
-        if (storagePermissionsResult.requiresPermissionDialog) {
+    private fun handleStartup() {
+        val ankiDroidFolder = selectAnkiDroidFolder(this)
+        if (!ankiDroidFolder.hasRequiredPermissions(this)) {
             Timber.i("postponing startup code - dialog shown")
-            startupStoragePermissionManager.displayStoragePermissionDialog()
+            permissionScreenLauncher.launch(PermissionsActivity.getIntent(this, ankiDroidFolder.permissionSet))
             return
         }
 
@@ -1473,7 +1463,10 @@ open class DeckPicker :
      * If has the storage permission, job is scheduled, otherwise storage permission is asked first.
      */
     override fun mediaCheck() {
-        checkMediaStoragePermissionCheck.launchDialogOrExecuteCallbackNow()
+        launchCatchingTask {
+            val mediaCheckResult = checkMedia() ?: return@launchCatchingTask
+            showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
+        }
     }
 
     override fun deleteUnused(unused: List<String>) {
@@ -2182,26 +2175,6 @@ open class DeckPicker :
         // 10 minutes in milliseconds..
         private const val AUTOMATIC_SYNC_MINIMAL_INTERVAL_IN_MINUTES: Long = 10
         private const val SWIPE_TO_SYNC_TRIGGER_DISTANCE = 400
-
-        /**
-         * Handles a [PermissionsRequestResults] for storage permissions to launch 'checkMedia'
-         * Static to avoid a context leak
-         */
-        fun callbackHandlingStoragePermissionsCheckForCheckMedia(deckPickerRef: WeakReference<DeckPicker>): (permissionResultRaw: PermissionsRequestRawResults) -> Unit {
-            fun handleStoragePermissionsCheckForCheckMedia(permissionResultRaw: PermissionsRequestRawResults) {
-                val deckPicker = deckPickerRef.get() ?: return
-                val permissionResult = PermissionsRequestResults.from(deckPicker, permissionResultRaw)
-                if (permissionResult.allGranted) {
-                    deckPicker.launchCatchingTask {
-                        val mediaCheckResult = deckPicker.checkMedia() ?: return@launchCatchingTask
-                        deckPicker.showMediaCheckDialog(MediaCheckDialog.DIALOG_MEDIA_CHECK_RESULTS, mediaCheckResult)
-                    }
-                } else {
-                    showThemedToast(deckPicker, R.string.check_media_failed, true)
-                }
-            }
-            return ::handleStoragePermissionsCheckForCheckMedia
-        }
 
         // Animation utility methods used by renderPage() method
         fun fadeIn(view: View?, duration: Int, translation: Float = 0f, startAction: Runnable? = Runnable { view!!.visibility = View.VISIBLE }): ViewPropertyAnimator {

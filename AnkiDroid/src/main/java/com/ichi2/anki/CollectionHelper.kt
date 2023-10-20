@@ -399,7 +399,7 @@ open class CollectionHelper {
         // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
         @CheckResult
         fun getDefaultAnkiDroidDirectory(context: Context): String {
-            val legacyStorage = StartupStoragePermissionManager.selectAnkiDroidFolder(context) != AppPrivateFolder
+            val legacyStorage = selectAnkiDroidFolder(context) != AppPrivateFolder
             return if (!legacyStorage) {
                 File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid").absolutePath
             } else {

@@ -297,6 +297,12 @@
         <item>xx-large</item>
     </string-array>
 
+    <string name="manage_external_storage_permission">android.permission.MANAGE_EXTERNAL_STORAGE</string>
+    <string-array name="legacy_storage_permissions">
+        <item>android.permission.READ_EXTERNAL_STORAGE</item>
+        <item>android.permission.WRITE_EXTERNAL_STORAGE</item>
+    </string-array>
+
     <!-- Onboarding -->
     <string name="reset_onboarding" maxLength="41">Reset onboarding walkthrough</string>
     <string name="show_onboarding" maxLength="41">Show onboarding walkthrough</string>
