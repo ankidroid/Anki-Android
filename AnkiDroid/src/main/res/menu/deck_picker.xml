@@ -30,15 +30,15 @@
             android:title="@string/button_sync"
             ankidroid:showAsAction="always"/>
         <item
+            android:id="@+id/action_undo"
+            ankidroid:showAsAction="never"
+            android:visible="false"
+            tools:title="Undo X"/>
+        <item
             android:id="@+id/checks"
             android:title="@string/checks_action"
             ankidroid:showAsAction="never">
             <menu>
-                <item
-                    android:id="@+id/action_undo"
-                    ankidroid:showAsAction="never"
-                    android:visible="false"
-                    tools:title="Undo X"/>
                 <item
                     android:id="@+id/action_check_database"
                     android:menuCategory="secondary"
