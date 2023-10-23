@@ -7,6 +7,32 @@
         <link rel="stylesheet" type="text/css" href="/assets/mathjax/mathjax.css">
         <style>
         ::style::
+
+/* copied from anki/ts/image-occlusion/review.scss */
+#image-occlusion-container {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    max-height: calc(95vh - 40px);
+}
+
+#image-occlusion-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: unset;
+    max-height: unset;
+}
+
+#image-occlusion-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
         </style>
         ::script::
         <script src="/assets/jquery.min.js"> </script>
