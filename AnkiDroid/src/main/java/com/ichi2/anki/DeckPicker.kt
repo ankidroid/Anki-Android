@@ -964,7 +964,7 @@ open class DeckPicker :
             Timber.i("Performing Sync on Resume")
             sync()
             mSyncOnResume = false
-        } else if (colIsOpenUnsafe()) {
+        } else {
             selectNavigationItem(R.id.nav_decks)
             if (dueTree == null) {
                 updateDeckList()
@@ -1008,10 +1008,7 @@ open class DeckPicker :
 
     override fun onStop() {
         super.onStop()
-        if (colIsOpenUnsafe()) {
-            WidgetStatus.updateInBackground(this)
-            // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
-        }
+        WidgetStatus.updateInBackground(this@DeckPicker)
     }
 
     override fun onDestroy() {
