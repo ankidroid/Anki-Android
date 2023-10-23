@@ -64,7 +64,7 @@ abstract class NavigationDrawerActivity :
 
     // Navigation drawer list item entries
     private lateinit var mDrawerLayout: DrawerLayout
-    private lateinit var mNavigationView: NavigationView
+    private var mNavigationView: NavigationView? = null
     lateinit var drawerToggle: ActionBarDrawerToggle
         private set
 
@@ -107,6 +107,10 @@ abstract class NavigationDrawerActivity :
         return true
     }
 
+    fun navDrawerIsReady(): Boolean {
+        return mNavigationView != null
+    }
+
     // Navigation drawer initialisation
     protected fun initNavigationDrawer(mainView: View) {
         // Create inherited navigation drawer layout here so that it can be used by parent class
@@ -123,7 +127,7 @@ abstract class NavigationDrawerActivity :
         )
         // Setup toolbar and hamburger
         mNavigationView = mDrawerLayout.findViewById(R.id.navdrawer_items_container)
-        mNavigationView.setNavigationItemSelectedListener(this)
+        mNavigationView!!.setNavigationItemSelectedListener(this)
         val toolbar: Toolbar? = mainView.findViewById(R.id.toolbar)
         if (toolbar != null) {
             setSupportActionBar(toolbar)
@@ -177,7 +181,7 @@ abstract class NavigationDrawerActivity :
      * Sets selected navigation drawer item
      */
     protected fun selectNavigationItem(itemId: Int) {
-        val menu = mNavigationView.menu
+        val menu = mNavigationView!!.menu
         if (itemId == -1) {
             for (i in 0 until menu.size()) {
                 menu.getItem(i).isChecked = false
@@ -398,7 +402,7 @@ abstract class NavigationDrawerActivity :
     fun focusNavigation() {
         // mNavigationView.getMenu().getItem(0).setChecked(true);
         selectNavigationItem(R.id.nav_decks)
-        mNavigationView.requestFocus()
+        mNavigationView!!.requestFocus()
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
