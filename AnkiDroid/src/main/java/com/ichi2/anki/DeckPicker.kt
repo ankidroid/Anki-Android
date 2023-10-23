@@ -966,9 +966,6 @@ open class DeckPicker :
             mSyncOnResume = false
         } else {
             selectNavigationItem(R.id.nav_decks)
-            if (dueTree == null) {
-                updateDeckList()
-            }
             updateDeckList()
             title = resources.getString(R.string.app_name)
         }
