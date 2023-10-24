@@ -66,7 +66,11 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         // has started
         RECORDING // The recorder being played status
     }
-
+    
+     private fun gtxt(id: Int): String {
+        return mContext.getText(id).toString()
+    }
+     
     private constructor(
         context: Context,
         resPlay: Int,
