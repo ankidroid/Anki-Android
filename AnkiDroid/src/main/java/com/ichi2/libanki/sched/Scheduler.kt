@@ -76,7 +76,7 @@ open class Scheduler(val col: Collection) {
         val queue = queuedCards
         return queue.cardsList.firstOrNull()?.let {
             CurrentQueueState(
-                topCard = Card(col, it.card),
+                topCard = Card(col, it.card).apply { startTimer() },
                 countsIndex = when (it.queue) {
                     QueuedCards.Queue.NEW -> Counts.Queue.NEW
                     QueuedCards.Queue.LEARNING -> Counts.Queue.LRN
