@@ -36,8 +36,8 @@ open class NumberRangePreferenceCompat
 constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.editTextPreferenceStyle,
-    defStyleRes: Int = R.style.Preference_DialogPreference_EditTextPreference
+    defStyleAttr: Int = androidx.preference.R.attr.editTextPreferenceStyle,
+    defStyleRes: Int = androidx.preference.R.style.Preference_DialogPreference_EditTextPreference
 ) : EditTextPreference(context, attrs, defStyleAttr, defStyleRes), DialogFragmentProvider {
 
     var defaultValue: String? = null
@@ -164,8 +164,6 @@ constructor(
          * on the current value of the [.mMax] field.
          */
         override fun onBindDialogView(view: View) {
-            super.onBindDialogView(view)
-
             editText = view.findViewById(android.R.id.edit)!!
 
             // Only allow integer input
@@ -173,6 +171,8 @@ constructor(
 
             // Clone the existing filters so we don't override them, then append our one at the end.
             editText.filters = arrayOf(*editText.filters, InputFilter.LengthFilter(numberRangePreference.maxDigits))
+
+            super.onBindDialogView(view)
         }
 
         @NeedsTest("value is set to preference previous value if text is blank")

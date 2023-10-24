@@ -100,10 +100,6 @@ class AbstractFlashcardViewerKeyboardInputTest : RobolectricTest() {
             }
         }
 
-        override fun setTitle() {
-            // required for interface. Intentionally left blank
-        }
-
         fun focusTextField() {
             mFocusTextField = true
         }

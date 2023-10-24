@@ -23,6 +23,7 @@ import java.util.*
 /**
  * Representation of the contents of a note in AnkiDroid.
  */
+@Suppress("unused")
 public class NoteInfo {
     private val id: Long
     private val fields: Array<String>

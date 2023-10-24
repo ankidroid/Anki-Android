@@ -61,6 +61,8 @@
     <string name="updated_version">Обновлено до версии %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Сохранить написанное</string>
+    <string name="enable_stylus">Включить режим стилуса</string>
+    <string name="disable_stylus">Выключить режим стилуса</string>
     <string name="enable_whiteboard">Включить доску</string>
     <string name="disable_whiteboard">Отключить доску</string>
     <string name="show_whiteboard">Показать доску</string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">Проиграть звук</string>
     <string name="leech_suspend_notification">Карточка помечена как приставучая и исключена</string>
     <string name="leech_notification">Карточка помечена как приставучая</string>
-    <string name="corrupt_font">Файл шрифта %s повреждён</string>
     <string name="webview_crash_unknown">Неизвестная ошибка</string>
     <string name="webview_crash_unknwon_detailed">Вызвано внутренней ошибкой в WebView</string>
     <string name="webview_crash_oom">Нехватка памяти</string>
@@ -90,7 +91,7 @@
         <item>Тип записи</item>
         <item>Вопрос</item>
         <item>Метки</item>
-        <item>Ошибки</item>
+        <item>Забытые</item>
         <item>Повторения</item>
         <item>Интервал</item>
         <item>Лёгкость</item>
@@ -123,9 +124,9 @@
     <string name="save">Сохранить</string>
     <string name="close">Закрыть</string>
     <string name="select">Выбрать</string>
-    <string name="reordering_cards">Карточки перемешиваются&#8230;</string>
     <string name="field_remapping">%1$s (из «%2$s»)</string>
     <string name="confirm_map_cards_to_nothing">Несопоставленные карты будут удалены. Записи, оставшиеся без карт, будут утеряны. Продолжить?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Достигнут лимит учебного блока</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d карточка изучена за %2$s</item>
@@ -147,19 +148,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Перепланировать</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Предпросмотр</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d из %2$d</string>
-    <string name="error_insufficient_memory">Операция невозможна из-за нехватки места в хранилище устройства</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Переименовать</string>
-    <string name="default_conf_delete_error">Нельзя удалить набор параметров по умолчанию</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">Добавлена %d карточка</item>
-        <item quantity="few">Добавлены %d карточки</item>
-        <item quantity="many">Добавлено %d карточек</item>
-        <item quantity="other">Добавлено %d карточек</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">Проверить базу данных</string>
     <string name="check_media">Проверить медиафайлы</string>
     <string name="empty_cards">Пустые карточки</string>
-    <string name="check_db_message">База данных проверяется&#8230;</string>
     <string name="empty_card_warning">Эта карточка пуста. Используйте опцию «Пустые карточки» из меню списка колод.</string>
     <string name="unknown_type_field_warning">Неизвестный тип поля: %s</string>
     <string name="delete_deck">Колода удаляется&#8230;</string>
@@ -175,13 +168,6 @@
     </plurals>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Ошибка</string>
-    <string name="import_log_failed_unzip">Не удалось распаковать apkg: %s</string>
-    <string name="import_log_failed_copy_to">Не удалось скопировать apkg в %s</string>
-    <string name="import_log_failed_validate">Не удалось проверить apkg</string>
-    <string name="import_log_insufficient_space_error">Недостаточно места для импорта пакета.\nНужно %1$s \nДоступно %2$s.\n\nЧто-то не получается? Попытайтесь освободить место на телефоне. Или попробуйте синхронизацию, для которой нужно меньше места, чем для импорта. Вы можете импортировать пакет на устройстве с большим объемом памяти (например, Anki на компьютере) и синхронизировать его с этим устройством.</string>
-    <string name="import_log_file_cache_cleared">Ошибка при импорте файла: скорее всего, был очищен кеш. Попробуйте снова</string>
-    <string name="import_succeeded_but_check_database">Импорт данных удался, но очистка — нет. Выполните проверку базы данных. Главная причина: %s</string>
-    <string name="import_error_corrupt_zip">Файл apkg повреждён.Удалите и повторно загрузите его.\n\nПервопричина: %s</string>
     <string name="import_error_handle_exception">Не удалось импортировать файл\n\n%s</string>
     <string name="import_error_not_apkg_extension">У файла “%s” должно быть расширение .apkg или .colpkg</string>
     <string name="import_error_load_imported_database">Замена базы данных Anki (.anki2) пока не поддерживается. Смотрите руководство для инструкций по замене.</string>
@@ -189,8 +175,6 @@
     <string name="import_error_copy_to_cache">Не удалось кэшировать файл (возможно, не хватает места)</string>
     <string name="import_error_multiple_colpkg">Было выбрано несколько файлов colpkg.</string>
     <string name="import_error_colpkg_apkg">Были выбраны одновременно файлы apkg и colpkg</string>
-    <string name="import_stats_error">При импорте этих файлов произошла ошибка:\n%s</string>
-    <string name="import_replacing">Коллекция заменяется&#8230;</string>
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_include_schedule">Вместе с расписанием</string>
     <string name="export_include_media">Вместе с медиафайлами</string>
@@ -203,17 +187,16 @@
         <item quantity="other">Экспортировать %d выбранных карточек в apkg файл?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="one">Экспортировать выбранную запись как apkg файл?</item>
-        <item quantity="few">Экспортировать %d выбранных записей как apkg файл?</item>
-        <item quantity="many">Экспортировать %d выбранных записей как apkg файл?</item>
-        <item quantity="other">Экспортировать %d выбранных записей как apkg файл?</item>
+        <item quantity="one">Экспортировать выбранную запись как apkg-файл?</item>
+        <item quantity="few">Экспортировать %d выбранных записей как apkg-файл?</item>
+        <item quantity="many">Экспортировать %d выбранных записей как apkg-файл?</item>
+        <item quantity="other">Экспортировать %d выбранных записей как apkg-файл?</item>
     </plurals>
-    <string name="export_in_progress">Пакет Anki экспортируется&#8230;</string>
-    <string name="export_success_title">Коллекция успешно экспортирована</string>
+    <string name="export_preparation_in_progress">Подготовка экспорта&#8230;</string>
+    <string name="export_ready_title">Экспорт готов</string>
     <string name="export_send_no_handlers">Нет приложений для чтения файлов apkg. Сохраняется...</string>
     <string name="export_save_apkg_successful">Пакет Anki успешно сохранён</string>
     <string name="export_save_apkg_unsuccessful">Не удалось сохранить пакет Anki</string>
-    <string name="export_success_message">Вы можете выбрать папку для сохранения или поделиться через другое приложение.</string>
     <string name="export_share_title">Отправить пакет Anki с помощью</string>
     <string name="export_email_subject">AnkiDroid экспортировал колоды карточек: %s</string>
     <string name="export_email_text"><![CDATA[        Привет!
@@ -223,8 +206,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Выберите место сохранения</string>
-    <string name="export_select_share_app">Выберите, как поделиться</string>
+    <string name="export_choice_share">Поделиться</string>
+    <string name="export_choice_save_to">Сохранить в</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Параметры</string>
     <string name="menu__deck_options">Параметры колоды</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Параметры учёбы</string>
@@ -234,59 +217,11 @@
     <string name="dyn_deck_desc">Это специальная колода для зубрёжки не по расписанию. После просмотра карточки вернутся в свою колоду. Удаление этой колоды вернёт все оставшиеся карточки в их колоду.</string>
     <string name="steps_error">Шаги должны быть больше 0</string>
     <string name="steps_min_error">Требуется хотя бы один шаг</string>
-    <string name="sched_end">(конец)</string>
-    <string name="sched_unbury_action">Чтобы просмотреть их сейчас, выберите «Вернуть» в меню.</string>
-    <string name="sched_has_buried">Некоторые связанные или отложенные карточки были перенесены на завтра.</string>
     <string name="tag_editor_add_feedback">Выберите “%2$s” чтобы подтвердить добавление “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">Выбрана существующая метка «%1$s»</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s секунда</item>
-        <item quantity="few">%s секунды</item>
-        <item quantity="many">%s секунд</item>
-        <item quantity="other">%s секунд</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s минута</item>
-        <item quantity="few">%s минуты</item>
-        <item quantity="many">%s минут</item>
-        <item quantity="other">%s мин.</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s час</item>
-        <item quantity="few">%s часа</item>
-        <item quantity="many">%s часов</item>
-        <item quantity="other">%s часов</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s день</item>
-        <item quantity="few">%s дня</item>
-        <item quantity="many">%s дней</item>
-        <item quantity="other">%s дней</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s месяц</item>
-        <item quantity="few">%s месяца</item>
-        <item quantity="many">%s месяцев</item>
-        <item quantity="other">%s месяцев</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s год</item>
-        <item quantity="few">%s года</item>
-        <item quantity="many">%s лет</item>
-        <item quantity="other">%s лет</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s секунд</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Такая колода уже существует</string>
     <string name="decks_rename_filtered_nosubdecks">В фильтрованной колоде не может быть подколод</string>
-    <string name="filtered_deck_name">Фильтрованная колода</string>
     <string name="reminder_title">Не забудьте повторить сегодня!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d карточка для повторения в %1$s</item>
@@ -297,17 +232,14 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Ошибка при отправке файла apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Этот файл требует новой версии Anki.</string>
     <string name="activity_start_failed">В системе нет приложения, которое может выполнить это действие.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Фотографии могут быть большими. Возможно, вы захотите сжать или изменить размер изображений в папке медиаданных]]></string>
     <string name="no_browser_notification">Браузер не найден. Посетите сайт с компьютера или телефона: </string>
     <string name="web_page_error">Ошибка загрузки страницы: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">В карточках не поддерживаются внешние ссылки</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Восстановленные карточки</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>
-    <string name="choose_an_image">Выберите изображение</string>
+    <string name="choose_an_image">Выбрать изображение</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">Сбросить настройки</string>
     <string name="cloze_sample_text">Это {{%1$s::пример}} задания с пропусками</string>
@@ -331,7 +263,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Вид</string>
     <string name="anki_js_error_code">(Код ошибки: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Скопировано в буфер</string>
     <string name="about_ankidroid_error_copy_debug_info">Ошибка при копировании отладочной информации в буфер обмена</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
@@ -339,6 +271,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
     <string name="search_decks">Найти колоду</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Показать прогресс переноса файлов</string>
     <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid использует системный WebView, который сейчас не доступен. Это может произойти, если система устанавливает обновления. Повторите попытку через несколько минут.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -351,7 +284,6 @@
     <string name="insert_heading">Вставить заголовок</string>
     <string name="format_font_size">Изменить размер шрифта</string>
     <string name="insert_mathjax">Вставить уравнение MathJax</string>
-    <string name="insert_cloze">Вставить задание с пропусками</string>
     <string name="note_editor_toolbar_icon">Текст на кнопке</string>
     <string name="before_text">HTML перед выделением</string>
     <string name="after_text">HTML после выделения</string>
@@ -387,15 +319,16 @@
     <string name="deck_download_progress_message">Вы можете использовать другие приложения во время загрузки</string>
     <string name="check_network">Проверьте подключение к Интернету</string>
     <string name="search_using_deck_name">Искать по названию колоды</string>
+    <string name="external_storage_unavailable">Загрузка прервана, внешняя память недоступна</string>
     <string name="home">Главная</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Карточка отложена.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="few">%d cards suspended.</item>
-        <item quantity="many">%d cards suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d карточка исключена.</item>
+        <item quantity="few">%d карточки исключено.</item>
+        <item quantity="many">%d карточек исключено.</item>
+        <item quantity="other">%d карточек исключено.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Закрепить поле %s</string>
@@ -405,12 +338,10 @@
     <string name="scoped_storage_postpone">Отложить</string>
     <string name="scoped_storage_migrate">Перенести</string>
     <string name="search_card_js_api_no_results">Ничего не найдено</string>
-    <string name="sync_impossible_during_migration">Синхронизация отключена до завершения переноса.\n
-        Осталось пернести %1$d медиафайлов.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
-    <string name="start_migration_progress_message">Начало перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
-    <string name="migration_part_1_done_resume">Вы можете продолжить учёбу с AnkiDroid.
-\nПеренос хранилища будет продолжаться в фоновом режиме.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid должен перенести свое файловое хранилище в соответствии с политикой безопасности Android 10.\n\nБлагодаря этому повысится производительность синхронизации медиафайлов.&lt;br&gt;&lt;br&gt;Во время процесса вы не сможете синхронизироваться и некоторые настройки будут недоступны. Чтобы ваши данные не потерялись, перед переносом хранилища произойдёт синхронизация медиафайлов.&lt;br&gt;&lt;br&gt;Во время переноса вы можете безопасно использовать или закрывать AnkiDroid.</string>
+    <string name="start_migration_progress_message">Начался перенос хранилища. Скоро вы сможете продолжить учёбу с AnkiDroid.</string>
+    <string name="migration_part_1_done_resume">Вы можете продолжать использовать AnkiDroid.
+\nПеренос хранилища будет идти в фоновом режиме.</string>
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s не является допустимым пакетом дополнения JavaScript</string>
     <string name="could_not_create_dir">Не удалось создать каталог «%s»</string>
@@ -420,7 +351,7 @@
     <!--  Hierarchical Tags  -->
     <string name="expand_tag">Развернуть метку «%s»</string>
     <!-- Manage note types -->
-    <string name="field_editor_model_not_available">Не удалось получить доступ к коллекции. Попробуйте еще раз!</string>
+    <string name="field_editor_model_not_available">Не удалось получить доступ к коллекции. Попробуйте еще раз.</string>
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">Учиться эффективнее</string>
     <string name="intro_ankidroid_tagline_two">Запоминать больше</string>
@@ -429,7 +360,6 @@
     <string name="intro_sync_from_ankiweb">Скачать с AnkiWeb</string>
     <string name="already_logged_in">Вход уже выполнен</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Колода существует</string>
     <string name="deck_created">Колода создана</string>
     <string name="deck_renamed">Колода переименована</string>
     <!-- Deck Deletion -->
@@ -440,10 +370,10 @@
     <string name="toggle_cards_notes">Переключить карточки/заметки</string>
     <string name="toggle_browser_mode_help">Показывать карточки или записи в списке</string>
     <string name="truncate_content_help">Показывать в списке только первые 3 строки</string>
-    <string name="browser_options_dialog_heading">Настройки браузера</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="browser_options_dialog_heading">Параметры списка карточек</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Эта функция недоступна во время переноса хранилища
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Нажмите, чтобы начать перенос хранилища</string>
+    <string name="media_sync_required_title">Требуется синхронизация медиафайлов</string>
+    <string name="media_sync_unavailable_message">Синхронизация медиафайлов отключена в настройках. Пожалуйста, перед продолжением синхронизируйте и сделайте резервную копию всех медиафайлов, которые не были синхронизированы</string>
 </resources>

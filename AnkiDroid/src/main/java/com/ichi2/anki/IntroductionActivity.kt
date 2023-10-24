@@ -30,10 +30,10 @@ import com.ichi2.anki.InitialActivity.StartupFailure
 import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.*
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.themes.Themes
-import com.ichi2.themes.Themes.getColorFromAttr
 import com.ichi2.utils.*
 import timber.log.Timber
 
@@ -66,6 +66,8 @@ class IntroductionActivity : AppIntro() {
         }
         Themes.setTheme(this)
 
+        showStatusBar(true)
+
         setTransformer(AppIntroPageTransformerType.Zoom)
 
         addSlide(SetupCollectionFragment())
@@ -77,7 +79,8 @@ class IntroductionActivity : AppIntro() {
             }
         }
 
-        this.setColorDoneText(getColorFromAttr(this, android.R.attr.textColorPrimary))
+        this.showSeparator(false)
+        isButtonsEnabled = false
     }
 
     private fun openLoginDialog() {
@@ -95,7 +98,7 @@ class IntroductionActivity : AppIntro() {
     }
 
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {
-        AnkiDroidApp.getSharedPrefs(this).edit { putBoolean(INTRODUCTION_SLIDES_SHOWN, true) }
+        this.sharedPrefs().edit { putBoolean(INTRODUCTION_SLIDES_SHOWN, true) }
         val deckPicker = Intent(this, DeckPicker::class.java)
         deckPicker.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         if (result == RESULT_SYNC_PROFILE) {
@@ -116,7 +119,7 @@ class IntroductionActivity : AppIntro() {
         if (startupFailure == StartupFailure.WEBVIEW_FAILED) {
             AlertDialog.Builder(this).show {
                 title(R.string.ankidroid_init_failed_webview_title)
-                message(R.string.ankidroid_init_failed_webview, AnkiDroidApp.webViewErrorMessage)
+                message(text = getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.webViewErrorMessage))
                 positiveButton(R.string.close) { finish() }
                 cancelable(false)
             }

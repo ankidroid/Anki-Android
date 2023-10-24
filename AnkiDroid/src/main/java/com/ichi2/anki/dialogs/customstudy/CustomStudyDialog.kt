@@ -50,9 +50,9 @@ import com.ichi2.libanki.Consts.DYN_PRIORITY
 import com.ichi2.libanki.Deck
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.utils.HashUtil.HashMapInit
+import com.ichi2.utils.HashUtil.hashMapInit
 import com.ichi2.utils.KotlinCleanup
-import net.ankiweb.rsdroid.BackendFactory
+import com.ichi2.utils.asLocalizedMessage
 import org.json.JSONArray
 import org.json.JSONObject
 import timber.log.Timber
@@ -111,13 +111,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                     DECK_OPTIONS -> {
                         // User asked to permanently change the deck options
                         val deckId = requireArguments().getLong("did")
-                        val i = if (BackendFactory.defaultLegacySchema) {
-                            Intent(requireContext(), DeckOptionsActivity::class.java).apply {
-                                putExtra("did", deckId)
-                            }
-                        } else {
-                            com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
-                        }
+                        val i = com.ichi2.anki.pages.DeckOptions.getIntent(requireContext(), deckId)
                         requireActivity().startActivity(i)
                     }
                     MORE_OPTIONS -> {
@@ -141,7 +135,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                         val dialogFragment = TagsDialog().withArguments(
                             TagsDialog.DialogType.CUSTOM_STUDY_TAGS,
                             ArrayList(),
-                            ArrayList(collection.tags.byDeck(currentDeck, true))
+                            ArrayList(collection.tags.byDeck(currentDeck))
                         )
                         customStudyListener?.showDialogFragment(dialogFragment)
                     }
@@ -200,7 +194,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val jumpToReviewer = requireArguments().getBoolean("jumpToReviewer")
         // Set material dialog parameters
         val dialog = MaterialDialog(requireActivity())
-            .customView(view = v, scrollable = true, noVerticalPadding = true, horizontalPadding = true)
+            .customView(view = v, scrollable = true, noVerticalPadding = false, horizontalPadding = true)
             .positiveButton(R.string.dialog_ok) {
                 // Get the value selected by user
                 val n: Int = try {
@@ -212,16 +206,16 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
                 }
                 when (contextMenuOption) {
                     STUDY_NEW -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendNew", n) }
-                        val deck = collection.decks.get(did)
+                        requireActivity().sharedPrefs().edit { putInt("extendNew", n) }
+                        val deck = collection.decks.get(did)!!
                         deck.put("extendNew", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(n, 0)
                         onLimitsExtended(jumpToReviewer)
                     }
                     STUDY_REV -> {
-                        AnkiDroidApp.getSharedPrefs(requireActivity()).edit { putInt("extendRev", n) }
-                        val deck = collection.decks.get(did)
+                        requireActivity().sharedPrefs().edit { putInt("extendRev", n) }
+                        val deck = collection.decks.get(did)!!
                         deck.put("extendRev", n)
                         collection.decks.save(deck)
                         collection.sched.extendLimits(0, n)
@@ -304,7 +298,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
     private val keyValueMap: HashMap<Int, String>
         get() {
             val res = resources
-            val keyValueMap = HashMapInit<Int, String>(10)
+            val keyValueMap = hashMapInit<Int, String>(10)
             keyValueMap[STANDARD.value] = res.getString(R.string.custom_study)
             keyValueMap[STUDY_NEW.value] = res.getString(R.string.custom_study_increase_new_limit)
             keyValueMap[STUDY_REV.value] = res.getString(R.string.custom_study_increase_review_limit)
@@ -394,7 +388,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
 
     private val text1: String
         get() {
-            val res = AnkiDroidApp.appResources
+            val res = resources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_total_new, collection.sched.totalNewForCurrentDeck())
                 STUDY_REV -> res.getString(R.string.custom_study_rev_total_rev, collection.sched.totalRevForCurrentDeck())
@@ -403,7 +397,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
     private val text2: String
         get() {
-            val res = AnkiDroidApp.appResources
+            val res = resources
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> res.getString(R.string.custom_study_new_extend)
                 STUDY_REV -> res.getString(R.string.custom_study_rev_extend)
@@ -416,7 +410,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         }
     private val defaultValue: String
         get() {
-            val prefs = AnkiDroidApp.getSharedPrefs(requireActivity())
+            val prefs = requireActivity().sharedPrefs()
             return when (ContextMenuOption.fromInt(requireArguments().getInt("id"))) {
                 STUDY_NEW -> prefs.getInt("extendNew", 10).toString()
                 STUDY_REV -> prefs.getInt("extendRev", 50).toString()
@@ -439,12 +433,12 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val did = requireArguments().getLong("did")
 
         val decks = collection.decks
-        val deckToStudyName = decks.get(did).getString("name")
+        val deckToStudyName = decks.name(did)
         val customStudyDeck = resources.getString(R.string.custom_study_deck_name)
         val cur = decks.byName(customStudyDeck)
         if (cur != null) {
             Timber.i("Found deck: '%s'", customStudyDeck)
-            if (cur.isStd) {
+            if (cur.isNormal) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck)
                 showSnackbar(R.string.custom_study_deck_exists, Snackbar.LENGTH_SHORT)
                 return
@@ -459,7 +453,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         } else {
             Timber.i("Creating Dynamic Deck '%s' for custom study", customStudyDeck)
             dyn = try {
-                decks.get(decks.newDyn(customStudyDeck))
+                decks.get(decks.newDyn(customStudyDeck))!!
             } catch (ex: DeckRenameException) {
                 showSnackbar(ex.getLocalizedMessage(this.resources), Snackbar.LENGTH_SHORT)
                 return

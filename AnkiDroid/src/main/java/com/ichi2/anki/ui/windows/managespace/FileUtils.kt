@@ -23,7 +23,9 @@ import android.os.storage.StorageVolume
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.TranslatableException
 import kotlinx.coroutines.*
+import timber.log.Timber
 import java.io.File
 import java.util.*
 import kotlin.coroutines.Continuation
@@ -44,10 +46,6 @@ suspend fun Context.getUserDataAndCacheSize(): Long =
  * The logic was taken from this SO question: https://stackoverflow.com/q/43472398/#44708209
  * Asked & answered by android developer: https://stackoverflow.com/users/878126/android-developer
  *
- * Regarding obtaining valid storage volume UUID, see:
- *   https://issuetracker.google.com/issues/62982912
- *   https://stackoverflow.com/questions/48589109/invalid-uuid-of-storage-gained-from-android-storagemanager
- *
  * TODO The below platform class uses a simpler approach:
  *       val appStorageUuid = packageManager.getApplicationInfo(packageName, 0).storageUuid
  *   The docstring of the method says, "Get number of bytes of the app data of the package".
@@ -63,11 +61,30 @@ private fun Context.getUserDataAndCacheSizeUsingStorageStatsManager(): Long {
     fun String.fromFatVolumeIdentifierToUuid() =
         UUID.fromString("fafafafa-fafa-5afa-8afa-fafa" + replace("-", ""))
 
-    fun StorageVolume.getValidUuid() = uuid.let { uuidish ->
-        when {
-            uuidish == null -> StorageManager.UUID_DEFAULT
-            uuidish.isFatVolumeIdentifier() -> uuidish.fromFatVolumeIdentifierToUuid()
-            else -> UUID.fromString(uuidish)
+    // For input we mostly get a valid UUID string, 36 characters (32 hex digits + 4 dashes),
+    // but sometimes we can get invalid values:
+    //   * On emulators we can get 9 character FAT volume identifiers (8 hex digits + 1 dash).
+    //     We can convert these to valid UUIDs.
+    //   * 40-character hex strings such as 0000000000000000000000000000CAFEF00D2019.
+    //     Not sure what can be done about these.
+    //
+    // Note that there's `StorageVolume.storageUuid` that returns `UUID?`,
+    // not investigated as it is only available on API 31.
+    //
+    // See also:
+    //   * https://issuetracker.google.com/issues/62982912
+    //   * https://stackoverflow.com/questions/48589109/invalid-uuid-of-storage-gained-from-android-storagemanager
+    //   * https://github.com/ankidroid/Anki-Android/issues/14027
+    fun StorageVolume.getValidUuidOrNull() = uuid.let { uuidish ->
+        try {
+            when {
+                uuidish == null -> StorageManager.UUID_DEFAULT
+                uuidish.isFatVolumeIdentifier() -> uuidish.fromFatVolumeIdentifierToUuid()
+                else -> UUID.fromString(uuidish)
+            }
+        } catch (e: IllegalArgumentException) {
+            Timber.w(e, "Error while retrieving storage volume UUID")
+            null
         }
     }
 
@@ -76,7 +93,7 @@ private fun Context.getUserDataAndCacheSizeUsingStorageStatsManager(): Long {
     val currentUser = android.os.Process.myUserHandle()
 
     return storageManager.storageVolumes
-        .mapTo(mutableSetOf()) { volume -> volume.getValidUuid() }
+        .mapNotNullTo(mutableSetOf()) { volume -> volume.getValidUuidOrNull() }
         .sumOf { uuid ->
             storageStatsManager.queryStatsForPackage(uuid, packageName, currentUser).dataBytes
         }
@@ -134,10 +151,10 @@ private suspend fun Context.getUserDataAndCacheSizeUsingGetPackageSizeInfo(): Lo
 fun File.isInsideDirectoriesRemovedWithTheApp(context: Context): Boolean {
     infix fun File.isInsideOf(parent: File) = this.canonicalFile.startsWith(parent.canonicalFile)
 
-    return context.getExternalFilesDirs(null).any { this isInsideOf it } ||
-        context.externalCacheDirs.any { this isInsideOf it } ||
-        context.externalMediaDirs.any { this isInsideOf it } ||
-        context.obbDirs.any { this isInsideOf it } ||
+    return context.getExternalFilesDirs(null).filterNotNull().any { this isInsideOf it } ||
+        context.externalCacheDirs.filterNotNull().any { this isInsideOf it } ||
+        context.externalMediaDirs.filterNotNull().any { this isInsideOf it } ||
+        context.obbDirs.filterNotNull().any { this isInsideOf it } ||
         context.externalDirs.any { this isInsideOf it }
 }
 
@@ -149,6 +166,7 @@ fun File.isInsideDirectoriesRemovedWithTheApp(context: Context): Boolean {
  */
 private val Context.externalDirs: Set<File> get() =
     (getExternalFilesDirs(null) + externalCacheDirs)
+        .filterNotNull()
         .mapNotNullTo(mutableSetOf()) { externalFilesOrCacheDir ->
             externalFilesOrCacheDir.parentFile?.let { parentDir ->
                 if (parentDir.name == packageName) parentDir else null
@@ -177,8 +195,10 @@ fun File.canWriteToOrCreate(): Boolean =
 
 interface CollectionDirectoryProvider { val collectionDirectory: File }
 
-class CanNotWriteToOrCreateFileException(val file: File) : Exception() {
+class CanNotWriteToOrCreateFileException(val file: File) : Exception(), TranslatableException {
     override val message get() = "Can not write to or create file: $file"
+    override fun getTranslatedMessage(context: Context) =
+        context.getString(R.string.error__etc__cannot_write_to_or_create_file, file)
 }
 
 suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirectory() {
@@ -189,15 +209,3 @@ suspend fun CollectionDirectoryProvider.ensureCanWriteToOrCreateCollectionDirect
 
 suspend fun CollectionDirectoryProvider.collectionDirectoryExists() =
     withContext(Dispatchers.IO) { collectionDirectory.exists() }
-
-/********************************************* Etc ************************************************/
-
-fun Context.getUserFriendlyErrorText(e: Exception): CharSequence =
-    if (e is CanNotWriteToOrCreateFileException) {
-        getString(R.string.error__etc__cannot_write_to_or_create_file, e.file)
-    } else {
-        e.localizedMessage
-            ?: e.message
-            ?: e::class.simpleName
-            ?: getString(R.string.error__etc__unknown_error)
-    }

@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Forigi nototipon</string>
     <string name="model_browser_rename" comment="Rename a note type">Alinomi</string>
     <string name="model_browser_template">Redakti kartojn</string>
-    <string name="model_browser_add">Aldoni nototipon</string>
     <!--Rename-->
     <string name="rename_model">Alinomi nototipon</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Memori la antaŭan enigon je aldoni</string>
     <string name="model_field_editor_changing">Ĝisdatigado de kampoj</string>
     <string name="model_field_editor_sort_field">Ordigi laŭ tiu kampo</string>
-    <string name="model_clone_suffix">kopio</string>
     <!--Warnings-->
     <string name="model_delete_warning">Ĉu vi certe volas forigi tiun ĉi nototipon?</string>
     <string name="field_delete_warning">Ĉu vi efektive volas forigi tiun kampon?</string>

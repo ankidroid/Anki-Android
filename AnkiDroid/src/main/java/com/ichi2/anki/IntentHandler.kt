@@ -27,14 +27,18 @@ import androidx.core.content.FileProvider
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.DialogHandler.Companion.storeMessage
 import com.ichi2.anki.dialogs.DialogHandlerMessage
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
+import com.ichi2.annotations.NeedsTest
+import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.ImportUtils.handleFileImport
 import com.ichi2.utils.ImportUtils.isInvalidViewIntent
 import com.ichi2.utils.ImportUtils.showImportUnsuccessfulDialog
 import com.ichi2.utils.NetworkUtils
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
@@ -53,8 +57,8 @@ import kotlin.math.min
 class IntentHandler : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
-        Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
+        Themes.setTheme(this)
         disableXiaomiForceDarkMode(this)
         setContentView(R.layout.progress_bar)
         val intent = intent
@@ -65,8 +69,7 @@ class IntentHandler : Activity() {
         // #6157 - We want to block actions that need permissions we don't have, but not the default case
         // as this requires nothing
         val runIfStoragePermissions = Consumer { runnable: Runnable -> performActionIfStorageAccessible(runnable, reloadIntent, action) }
-        val launchType = getLaunchType(intent)
-        when (launchType) {
+        when (getLaunchType(intent)) {
             LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
             LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
             LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })
@@ -100,8 +103,9 @@ class IntentHandler : Activity() {
      * has been granted (as long as AnkiDroid targeted API < 30, requested legacy storage, and has not been uninstalled since)
      *
      */
+    @NeedsTest("clicking a file in 'Files' to import")
     private fun performActionIfStorageAccessible(runnable: Runnable, reloadIntent: Intent, action: String?) {
-        if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this)) {
+        if (!ScopedStorageService.isLegacyStorage(this) || hasStorageAccessPermission(this) || Permissions.isExternalStorageManagerCompat()) {
             Timber.i("User has storage permissions. Running intent: %s", action)
             runnable.run()
         } else {
@@ -115,7 +119,7 @@ class IntentHandler : Activity() {
         val deckId = intent.getLongExtra(ReminderService.EXTRA_DECK_ID, 0)
         Timber.i("Handling intent to review deck '%d'", deckId)
         val reviewIntent = Intent(this, Reviewer::class.java)
-        CollectionHelper.instance.getCol(this)!!.decks.select(deckId)
+        CollectionHelper.instance.getColUnsafe(this)!!.decks.select(deckId)
         startActivity(reviewIntent)
         AnkiActivity.finishActivityWithFade(this)
     }
@@ -132,6 +136,22 @@ class IntentHandler : Activity() {
     private fun handleFileImport(intent: Intent, reloadIntent: Intent, action: String?) {
         Timber.i("Handling file import")
         val importResult = handleFileImport(this, intent)
+        // attempt to delete the downloaded deck if it is a shared deck download import
+        if (intent.hasExtra(SharedDecksDownloadFragment.EXTRA_IS_SHARED_DOWNLOAD)) {
+            try {
+                val sharedDeckUri = intent.data
+                if (sharedDeckUri != null) {
+                    // TODO move the file deletion on a background thread
+                    contentResolver.delete(intent.data!!, null, null)
+                    Timber.i("onCreate: downloaded shared deck deleted")
+                } else {
+                    Timber.i("onCreate: downloaded a shared deck but uri was null when trying to delete its file")
+                }
+            } catch (e: Exception) {
+                Timber.w(e, "onCreate: failed to delete downloaded shared deck")
+            }
+        }
+
         // Start DeckPicker if we correctly processed ACTION_VIEW
         if (importResult.isSuccess) {
             try {
@@ -226,7 +246,7 @@ class IntentHandler : Activity() {
             analyticName = "DoSyncDialog"
         ) {
             override fun handleAsyncMessage(deckPicker: DeckPicker) {
-                val preferences = AnkiDroidApp.getSharedPrefs(deckPicker)
+                val preferences = deckPicker.sharedPrefs()
                 val res = deckPicker.resources
                 val hkey = preferences.getString("hkey", "")
                 val millisecondsSinceLastSync = millisecondsSinceLastSync(preferences)
@@ -236,16 +256,25 @@ class IntentHandler : Activity() {
                 } else {
                     val err = res.getString(R.string.sync_error)
                     if (limited) {
-                        val remainingTimeInSeconds = max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
+                        val remainingTimeInSeconds =
+                            max((INTENT_SYNC_MIN_INTERVAL - millisecondsSinceLastSync) / 1000, 1)
                         // getQuantityString needs an int
                         val remaining = min(Int.MAX_VALUE.toLong(), remainingTimeInSeconds).toInt()
-                        val message = res.getQuantityString(R.plurals.sync_automatic_sync_needs_more_time, remaining, remaining)
+                        val message = res.getQuantityString(
+                            R.plurals.sync_automatic_sync_needs_more_time,
+                            remaining,
+                            remaining
+                        )
                         deckPicker.showSimpleNotification(err, message, Channel.SYNC)
                     } else {
-                        deckPicker.showSimpleNotification(err, res.getString(R.string.youre_offline), Channel.SYNC)
+                        deckPicker.showSimpleNotification(
+                            err,
+                            res.getString(R.string.youre_offline),
+                            Channel.SYNC
+                        )
                     }
                 }
-                deckPicker.finishWithoutAnimation()
+                deckPicker.finish()
             }
 
             override fun toMessage(): Message = emptyMessage(this.what)

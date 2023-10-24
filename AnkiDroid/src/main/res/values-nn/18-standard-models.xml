@@ -26,17 +26,17 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Forsiden</string>
-    <string name="back_field_name">Baksiden</string>
+    <string name="front_field_name">Framside</string>
+    <string name="back_field_name">Bakside</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Tekst</string>
     <string name="extra_field_name_new">Ekstra baksiden </string>
     <string name="field_to_ask_front_name">Legg til revers</string>
     <!--Card type-->
     <string name="card_n_name">Kort %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Grunnleggende</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Grunnleggende (skriv inn svaret)</string>
+    <string name="basic_model_name">Enkelt</string>
+    <string name="cloze_model_name">Hulltekst</string>
+    <string name="basic_typing_model_name">Enkelt (skriv in svar)</string>
     <string name="forward_reverse_model_name">Grunnleggende (og motsatt kortet)</string>
     <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
 </resources>

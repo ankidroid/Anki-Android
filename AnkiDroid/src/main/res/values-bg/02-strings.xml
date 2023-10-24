@@ -61,6 +61,8 @@
     <string name="updated_version">Обновено до версия %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Запазете бялата дъска</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">Разрешаване на бяла дъска</string>
     <string name="disable_whiteboard">Забраняване на бяла дъска</string>
     <string name="show_whiteboard">Покажи бялатадъска</string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">Аудиото отново</string>
     <string name="leech_suspend_notification">Карта, маркирана като залепена и спряна</string>
     <string name="leech_notification">Карта, маркирана като залепена</string>
-    <string name="corrupt_font">Повреден шрифт %s</string>
     <string name="webview_crash_unknown">Неизвестна грешка</string>
     <string name="webview_crash_unknwon_detailed">Това е причинено от вътрешна грешка в WebView</string>
     <string name="webview_crash_oom">Недостиг на памет</string>
@@ -123,9 +124,9 @@
     <string name="save">Запис</string>
     <string name="close">Затвори</string>
     <string name="select">Изберете</string>
-    <string name="reordering_cards">Пренареждане на карти&#8230;</string>
     <string name="field_remapping">%1$s (от \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Несъпоставените карти ще бъдат отстранени. Бележки, останали без карти ще бъдат загубени. Продължавате ли?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Лимит на време е достигнат</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d карта изучена за %2$s</item>
@@ -143,17 +144,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Повторно планиране</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Преглед</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d от %2$d</string>
-    <string name="error_insufficient_memory">Операцията е невъзможна поради недостатъчна памет на вашето устройство</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Преименуване</string>
-    <string name="default_conf_delete_error">Опциите по подразбиране на групата не могат да се махнат</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d карта добавена</item>
-        <item quantity="other">%d карти добавени</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">Проверка на базата данни</string>
     <string name="check_media">Проверка на медии</string>
     <string name="empty_cards">Празни карти</string>
-    <string name="check_db_message">Проверка на базата данни&#8230;</string>
     <string name="empty_card_warning">Тази карта е празна. Използвайте опцията \"Празни карти\" от менюто на екрана със списъка с тестета.</string>
     <string name="unknown_type_field_warning">Въведете отговор: неизвестно поле %s</string>
     <string name="delete_deck">Изтриване на тесте&#8230;</string>
@@ -167,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Това не е валиден Anki package файл</string>
     <string name="import_title_error" comment="Title of error dialog">Грешка</string>
-    <string name="import_log_failed_unzip">Неуспешно разархивиране на apkg %s:</string>
-    <string name="import_log_failed_copy_to">Неуспешно копиране на apkg до %s</string>
-    <string name="import_log_failed_validate">apkg провали проверка</string>
-    <string name="import_log_insufficient_space_error">Няма достатъчно място за импортиране на пакетът\nТрябвало - %1$s \nДостъпно - %2$s.\n\nНещо не е наред? Опитайте се да освободите место на телефона си, ако е възможно. Или опитайте синхронизиране, който заема по-малко място от импортиране. Вие можете да импортирате пакетът на устройство който има повече място (например Anki Desktop) и след това да го синхронизира с това устройството.</string>
-    <string name="import_log_file_cache_cleared">Възникна грешка при импортирането на файла, най-вероятно кеш беше изтрит.\nМоля, опитайте отново</string>
-    <string name="import_succeeded_but_check_database">Импортирането на данните е успешно, но почистването на след импортирането се провали. Стартирайте проверка на базата данни по-късно. Главна причина: %s</string>
-    <string name="import_error_corrupt_zip">Файлът apkg е повреден. Моля, изхвърляйте го и качите го отново.\n\nПървопричина: %s</string>
     <string name="import_error_handle_exception">Неуспешно внасяне на файл\n\n%s</string>
     <string name="import_error_not_apkg_extension">Файлът „%s“ няма разширение .apkg или .colpkg</string>
     <string name="import_error_load_imported_database">Замената на базата данни Anki (.anki2) все още не се поддържат. Моля, вижте инструкцията за замена.</string>
@@ -181,8 +169,6 @@
     <string name="import_error_copy_to_cache">Пропадна кеширането на файла (възможна е липса на място за съхранение)</string>
     <string name="import_error_multiple_colpkg">Били са избрани множество файлове colpkg.</string>
     <string name="import_error_colpkg_apkg">Били са едновременно избрани файловете apkg и colpkg.</string>
-    <string name="import_stats_error">Някои грешки са възникнали, внасяйки следните файлове:\n%s</string>
-    <string name="import_replacing">Замяна на колекция&#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Включване на планирането</string>
     <string name="export_include_media">Включване на медия</string>
@@ -196,12 +182,11 @@
         <item quantity="one">Export selected note as apkg file?</item>
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_in_progress">Експортиране на Anki пакетен файл&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Успешно запазване на Anki пакет</string>
     <string name="export_save_apkg_unsuccessful">Неуспешно запазване на пакета Anki</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">Експортирани от AnkiDroid флашкарти: %s</string>
     <string name="export_email_text"><![CDATA[        Здравейте!
@@ -211,8 +196,8 @@
         [1] %1$s<br/
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Изберете къде да запазите файла</string>
-    <string name="export_select_share_app">Изберете приложение за споделяне</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Настройки</string>
     <string name="menu__deck_options">Опции за тестето</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Опции за учене</string>
@@ -222,47 +207,11 @@
     <string name="dyn_deck_desc">Това е специално тесте за учене извън нормалния график. Картите автоматично ще бъдат върнати в техните първоначални тестета след като бъдат разгледани. Изтриването на това тесте от списъка с тестета ще върне всички останали карти в тестетата, където са били първоначално.</string>
     <string name="steps_error">Стъпките трябва да са числа, по-големи от 0</string>
     <string name="steps_min_error">Изисква се една стъпка</string>
-    <string name="sched_end">(край)</string>
-    <string name="sched_unbury_action">за да ги видите сега докосване \"Откопаване\" в менюто</string>
-    <string name="sched_has_buried">Някои свързани или заровени карти са отложени до утре</string>
     <string name="tag_editor_add_feedback">Докоснете \"%2$s\", за да потвърдите добавянето на \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Избран е съществуващ етикет \"%1$s\"</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s секунда</item>
-        <item quantity="other">%s секунди</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s минута</item>
-        <item quantity="other">%s минути</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s час</item>
-        <item quantity="other">%s часа</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s ден</item>
-        <item quantity="other">%s дни</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s месец</item>
-        <item quantity="other">%s месеца</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s година</item>
-        <item quantity="other">%s години</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s секунди</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Това тесте вече съществува</string>
     <string name="decks_rename_filtered_nosubdecks">Филтрирано тесте не може да има подтестета</string>
-    <string name="filtered_deck_name">Филтриране на тестета</string>
     <string name="reminder_title">Не забравяйте да учите днес!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
@@ -271,14 +220,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Грешка при споделяне apkg файл</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Този файл изисква по-нова версия на Anki.</string>
     <string name="activity_start_failed">Системата няма инсталирано приложение, което може да извърши това действие.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Изображенията на камерата може да са големи. Бихте могли да искате да компресирате и преоразмерите изображенията в медийната директория]]></string>
     <string name="no_browser_notification">Не е намерен браузър， моля, посетете уеб страница от компютър или мобилен телефон: </string>
     <string name="web_page_error">Грешка при зареждане на страница: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Връзка към външна страница в картата не се поддържа.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Възстановени карти</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Фон</string>
     <string name="choose_an_image">Изберете изображение</string>
@@ -313,6 +259,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Пропадна зареждането на тесте ‘%s’</string>
     <string name="search_decks">Потърси тесте</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Фатална грешка</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -325,7 +272,6 @@
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Промяна на размера на шрифта</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML преди избраното</string>
     <string name="after_text">HTML след избраното</string>
@@ -361,6 +307,7 @@
     <string name="deck_download_progress_message">Може да употребявате други приложения, теглейки от мрежата</string>
     <string name="check_network">Проверете връзката си с мрежата</string>
     <string name="search_using_deck_name">Търсене посредством име на тесте</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Начало</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -377,8 +324,6 @@
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Търсенето върна нула резултати</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
@@ -401,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">Синхро от AnkiWeb</string>
     <string name="already_logged_in">Вече сте влезли</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Тестето съществува</string>
     <string name="deck_created">Създадено тесте</string>
     <string name="deck_renamed">Преименувано тесте</string>
     <!-- Deck Deletion -->

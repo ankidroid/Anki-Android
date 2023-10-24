@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Bana sor</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Yalnızca etiket</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Yeni kartlar rastgele sırada</string>
-    <string name="new_order_order_added">Yeni kartlar ekleniş sırasına göre</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Önce en eski görüntülenir</string>
     <string name="cram_deck_conf_order_random">Rastgele</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Geçerli desteyi kullan</string>
     <string name="add_to_deck_decide_by_note_type">Not türüne göre karar ver</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Yeni kartları ve tekrarları karıştır</string>
-    <string name="new_spread_new_after_review">Yeni kartlar tekrarlardan sonra</string>
-    <string name="new_spread_new_before_review">Yeni kartlar tekrarlardan önce</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Bilgi kartlarında font belirtilmediği zaman</string>
-    <string name="override_font_always" comment="Option to always override font">Her zaman</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Sistemi izle</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">çok büyük</string>
     <string name="html_size_code_xx_large">çok çok büyük</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Cevap butonu 1</string>
-    <string name="gesture_answer_2">Cevap butonu 2</string>
-    <string name="gesture_answer_3">Cevap butonu 3</string>
-    <string name="gesture_answer_4">Cevap butonu 4</string>
-    <string name="gesture_answer_green">Önerilen cevabı (yeşil) ver</string>
-    <string name="gesture_answer_better_recommended">Önerilenden daha iyi cevap ver</string>
+    <string name="answer_again">Tekrar cevapla</string>
+    <string name="answer_hard">Zor cevapla</string>
+    <string name="answer_good">İyi cevapla</string>
+    <string name="answer_easy">Kolay cevapla</string>
     <string name="gesture_play">Medyayı oynat</string>
     <string name="gesture_abort_learning">Öğrenmeyi durdur</string>
     <string name="gesture_flag_red">Kırmızı bayrağı etkinleştir</string>

@@ -6,7 +6,7 @@
     <color name="theme_black_primary_text">#fff</color> <!-- Alternative: #808080 -->
     <color name="theme_black_row_current">#1a1a1a</color>
 
-    <style name="Theme_Dark.Black">
+    <style name="Theme_Dark.Black" parent="Theme_Dark">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_black_primary_dark</item>
         <item name="colorPrimaryDark">@color/black</item>
@@ -15,7 +15,7 @@
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/theme_black_primary</item>
         <item name="android:windowBackground">@color/theme_black_primary</item>
-        <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
         <!-- App buttons -->
         <item name="largeButtonBackgroundColor">#303030</item>
         <item name="largeButtonBackgroundColorFocused">#444444</item>
@@ -45,7 +45,7 @@
         <item name="newCountColor">@color/material_blue_700</item>
         <item name="learnCountColor">@color/material_red_400</item>
         <item name="reviewCountColor">@color/material_green_400</item>
-        <item name="zeroCountColor">#808080</item>
+        <item name="zeroCountColor">#202020</item>
         <!-- Reviewer colors -->
         <item name="topBarColor">@color/theme_black_primary</item>
         <item name="maxTimerColor">@color/material_red_300</item>
@@ -116,7 +116,6 @@
 
         <item name="editTextDisabled">@color/material_grey_700</item>
         <item name="android:navigationBarColor">@color/black</item>
-        <item name="iconColor">?android:attr/textColor</item>
 
         <!-- Filter Bottom sheet -->
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemeBlack</item>

@@ -61,6 +61,8 @@
     <string name="updated_version">Aktualizováno na verzi %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Uložit tabuli</string>
+    <string name="enable_stylus">Povolit stylus režim</string>
+    <string name="disable_stylus">Zakázat stylus režim</string>
     <string name="enable_whiteboard">Povolit tabuli</string>
     <string name="disable_whiteboard">Zakázat tabuli</string>
     <string name="show_whiteboard">Zobrazit tabuli</string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">Přehrát zvuk</string>
     <string name="leech_suspend_notification">Karta označena jako pijavice a vyřazena</string>
     <string name="leech_notification">Karta byla označena jako pijavice</string>
-    <string name="corrupt_font">Poškozený soubor písma %s</string>
     <string name="webview_crash_unknown">Neznámá chyba</string>
     <string name="webview_crash_unknwon_detailed">To bylo způsobeno vnitřní chybou WebView</string>
     <string name="webview_crash_oom">Nedostatek paměti</string>
@@ -81,7 +82,7 @@
     <!-- Browser -->
     <string-array name="browser_column1_headings">
         <item>Otázka</item>
-        <item>Pole pro třídění</item>
+        <item>Pole řazení</item>
     </string-array>
     <string-array name="browser_column2_headings">
         <item>Odpověď</item>
@@ -123,9 +124,9 @@
     <string name="save">Uložit</string>
     <string name="close">Zavřít</string>
     <string name="select">Vybrat</string>
-    <string name="reordering_cards">Mění se pořadí karet&#8230;</string>
     <string name="field_remapping">%1$s (z \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Karty mapované na prázdný cíl budou odstraněny. Nezbývají-li už v poznámce žádné karty, bude poznámka ztracena. Opravdu chcete pokračovat?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Časové omezení dosaženo</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d karta studována za %2$s</item>
@@ -147,19 +148,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Přeplánovat</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Náhled</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d z %2$d</string>
-    <string name="error_insufficient_memory">Operace není možná z důvodu nedostatku paměti na zařízení</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Přejmenovat</string>
-    <string name="default_conf_delete_error">Nelze odstranit výchozí skupinu</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">přidána %d karta</item>
-        <item quantity="few">přidány %d karty</item>
-        <item quantity="many">přidáno %d karty</item>
-        <item quantity="other">přidáno %d karet</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">Zkontrolovat databázi</string>
     <string name="check_media">Zkontrolovat multimédia</string>
     <string name="empty_cards">Prázdné karty</string>
-    <string name="check_db_message">Kontroluje se databáze&#8230;</string>
     <string name="empty_card_warning">Tato karta je prázdná. Použijte možnost \"Prázdné karty\" z menu na obrazovce seznamu balíčků.</string>
     <string name="unknown_type_field_warning">Zápis odpovědi: neznámé pole %s</string>
     <string name="delete_deck">Odstraňuje se balíček&#8230;</string>
@@ -175,13 +168,6 @@
     </plurals>
     <string name="import_log_no_apkg">Toto není platný Anki balíček</string>
     <string name="import_title_error" comment="Title of error dialog">Chyba</string>
-    <string name="import_log_failed_unzip">Nepodařilo se rozbalit apkg: %s</string>
-    <string name="import_log_failed_copy_to">Nepodařilo se zkopírovat apkg do %s</string>
-    <string name="import_log_failed_validate">Selhalo ověření apkg </string>
-    <string name="import_log_insufficient_space_error">Nedostatek místa pro import balíčku.\nPotřeba - %1$s \nK dispozici - %2$s.\n\nMáte potíže? Zkuste uvolnit místo v telefonu, pokud je to možné. Nebo, synchronizace využívá méně místa než import. Můžete zkusit importovat balíček v zařízení, které má více místa (například Anki Desktop), a poté jej synchronizovat s tímto zařízením.</string>
-    <string name="import_log_file_cache_cleared">Chyba při importu souboru, pravděpodobně se během zpracování vyčistila mezipaměť.\nZkuste to prosím znovu</string>
-    <string name="import_succeeded_but_check_database">Import dat se zdařil, ale čištění po importu selhalo. Spusťte kontrolu databáze. Příčina: %s</string>
-    <string name="import_error_corrupt_zip">Soubor apkg je poškozen. Prosím odstraňte ho a stáhněte ho znovu.\n\nPříčina: %s</string>
     <string name="import_error_handle_exception">Nepodařilo se importovat soubor\n\n%s</string>
     <string name="import_error_not_apkg_extension">Název souboru „%s“ nemá příponu .apkg nebo .colpkg</string>
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
@@ -189,8 +175,6 @@
     <string name="import_error_copy_to_cache">Nepodařilo se uložit soubor do mezipaměti (možná nedostatek místa v úložišti)</string>
     <string name="import_error_multiple_colpkg">Bylo vybráno více colpkg souborů.</string>
     <string name="import_error_colpkg_apkg">Soubory apkg &amp; colpkg byly vybrány najednou.</string>
-    <string name="import_stats_error">Došlo k chybám při importu následujících souborů:\n%s</string>
-    <string name="import_replacing">Nahrazuje se kolekce&#8230;</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_include_schedule">Zahrnout plánování</string>
     <string name="export_include_media">Zahrnout multimédia</string>
@@ -208,12 +192,11 @@
         <item quantity="many">Exportovat %d vybrané poznámky jako soubor apkg?</item>
         <item quantity="other">Exportovat %d vybraných poznámek jako soubor apkg?</item>
     </plurals>
-    <string name="export_in_progress">Exportuje se Anki balíček&#8230;</string>
-    <string name="export_success_title">Kolekce úspěšně exportována</string>
+    <string name="export_preparation_in_progress">Připravuje se export&#8230;</string>
+    <string name="export_ready_title">Export připraven</string>
     <string name="export_send_no_handlers">Nenalezena žádná aplikace pro zpracování apkg. Ukládá se...</string>
     <string name="export_save_apkg_successful">Anki balíček úspěšně uložen</string>
     <string name="export_save_apkg_unsuccessful">Nepodařilo se uložit Anki balíček</string>
-    <string name="export_success_message">Můžete zvolit umístění, kam se soubor uloží, nebo jej sdílet jinou aplikací.</string>
     <string name="export_share_title">Odeslat Anki balíček pomocí</string>
     <string name="export_email_subject">AnkiDroid exportované kartičky: %s</string>
     <string name="export_email_text"><![CDATA[        Ahoj!
@@ -223,8 +206,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Vyberte, kam uložit soubor</string>
-    <string name="export_select_share_app">Vyberte aplikaci pro sdílení</string>
+    <string name="export_choice_share">Sdílet</string>
+    <string name="export_choice_save_to">Uložit do</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Možnosti</string>
     <string name="menu__deck_options">Nastavení balíčku</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Možnosti studia</string>
@@ -234,59 +217,11 @@
     <string name="dyn_deck_desc">Toto je speciální balíček pro studium mimo normální plán. Karty se po opakování automaticky vrátí do svých původních balíčků. Odstraněním tohoto balíčku ze seznamu se všechny zbývající karty vrátí do svých původních balíčků.</string>
     <string name="steps_error">Kroky musí být čísla větší než 0</string>
     <string name="steps_min_error">Je požadován alespoň jeden krok</string>
-    <string name="sched_end">(konec)</string>
-    <string name="sched_unbury_action">Pro jejich zobrazení stiskněte v menu položku „Zrušit přeskočení“.</string>
-    <string name="sched_has_buried">Některé související nebo přeskočené karty byly přesunuty na zítra.</string>
     <string name="tag_editor_add_feedback">Klepněte na „%2$s“, abyste potvrdili přidání „%1$s“</string>
     <string name="tag_editor_add_feedback_existing">Vybrán stávající štítek „%1$s“</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekunda</item>
-        <item quantity="few">%s sekundy</item>
-        <item quantity="many">%s sekundy</item>
-        <item quantity="other">%s sekund</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuta</item>
-        <item quantity="few">%s minuty</item>
-        <item quantity="many">%s minuty</item>
-        <item quantity="other">%s minut</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s hodina</item>
-        <item quantity="few">%s hodiny</item>
-        <item quantity="many">%s hodiny</item>
-        <item quantity="other">%s hodin</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s den</item>
-        <item quantity="few">%s dny</item>
-        <item quantity="many">%s dne</item>
-        <item quantity="other">%s dnů</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s měsíc</item>
-        <item quantity="few">%s měsíce</item>
-        <item quantity="many">%s měsíce</item>
-        <item quantity="other">%s měsíců</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s rok</item>
-        <item quantity="few">%s roky</item>
-        <item quantity="many">%s roku</item>
-        <item quantity="other">%s let</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s sekundy</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Balíček již existuje</string>
     <string name="decks_rename_filtered_nosubdecks">Filtrovaný balíček nemůže obsahovat podřízené balíčky</string>
-    <string name="filtered_deck_name">Filtrovaný balíček</string>
     <string name="reminder_title">Nezapomeňte dnes studovat!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d karta k zopakování v %1$s</item>
@@ -297,14 +232,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Chyba sdílení souboru apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Tento soubor vyžaduje novější verzi Anki.</string>
     <string name="activity_start_failed">V systému není nainstalována aplikace, která může provést tuto akci.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Obrázky kamery mohou být velké. Můžete komprimovat a změnit velikost obrázků v adresáři media]]></string>
     <string name="no_browser_notification">Nebyl nalezen žádný prohlížeč, prosím navštivte webovou stránku pomocí pc nebo mobilu: </string>
     <string name="web_page_error">Chyba při načítání stránky: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Odkaz na externí stránku v kartě není podporován.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Obnovené karty</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Pozadí</string>
     <string name="choose_an_image">Vybrat obrázek</string>
@@ -331,7 +263,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Zobrazit</string>
     <string name="anki_js_error_code">(Kód chyby: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Zkopírováno do schránky</string>
     <string name="about_ankidroid_error_copy_debug_info">Chyba při kopírování ladicích informací do schránky</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Chyba obsahu karty: Nepodařilo se načíst „%s“</string>
@@ -339,6 +271,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Nepodařilo se načíst balíček „%s“</string>
     <string name="search_decks">Hledat balíčky</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Zobrazit průběh přesunu dat</string>
     <string name="ankidroid_init_failed_webview_title">Kritická chyba</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid spoléhá na systémový WebView, který je nedostupný. K tomu může dojít, jestliže systém instaluje aktualizace. Zkuste to prosím znovu za pár minut.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -351,7 +284,6 @@
     <string name="insert_heading">Vložit nadpis</string>
     <string name="format_font_size">Změnit velikost písma</string>
     <string name="insert_mathjax">Vložit rovnici MathJax</string>
-    <string name="insert_cloze">Vložit doplňovačku</string>
     <string name="note_editor_toolbar_icon">Text tlačítka</string>
     <string name="before_text">HTML před výběrem</string>
     <string name="after_text">HTML za výběrem</string>
@@ -387,15 +319,16 @@
     <string name="deck_download_progress_message">Během stahování můžete používat jiné aplikace</string>
     <string name="check_network">Zkontrolujte prosím připojení k síti</string>
     <string name="search_using_deck_name">Hledat pomocí názvu balíčku</string>
+    <string name="external_storage_unavailable">Stahování přerušeno, externí úložiště není k dispozici</string>
     <string name="home">Domů</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Karta přeskočena.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="few">%d cards suspended.</item>
-        <item quantity="many">%d cards suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d karta vyřazena.</item>
+        <item quantity="few">%d karty vyřazeny.</item>
+        <item quantity="many">%d karty vyřazeno.</item>
+        <item quantity="other">%d karet vyřazeno.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Pamatovat si obsah pole %s</string>
@@ -405,9 +338,7 @@
     <string name="scoped_storage_postpone">Odložit</string>
     <string name="scoped_storage_migrate">Přesunout</string>
     <string name="search_card_js_api_no_results">Hledání nevrátilo žádné výsledky</string>
-    <string name="sync_impossible_during_migration">Synchronizace je zakázána, dokud nebude dokončen přesun dat.\n
-        %1$d multimediálních souborů zbývá přesunout.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid potřebuje přesunout své úložiště, aby splňoval zásady zabezpečení Androidu 10.\n\nTo zlepší výkon synchronizace multimédií.&lt;br&gt;&lt;br&gt;Během přesunu dat nebudete moci synchronizovat a některá nastavení budou zakázána. Před spuštěním přesunu dat dojde k synchronizaci multimédií, aby byla vaše data v bezpečí.&lt;br&gt;&lt;br&gt;Během tohoto procesu je bezpečné používat AnkiDroid nebo ho zavřít.</string>
     <string name="start_migration_progress_message">Začíná přesun úložiště. Brzy můžete pokračovat v používání AnkiDroid.</string>
     <string name="migration_part_1_done_resume">Můžete pokračovat v používání AnkiDroid.
 \nPřesun úložiště bude pokračovat na pozadí.</string>
@@ -429,7 +360,6 @@
     <string name="intro_sync_from_ankiweb">Synchronizovat z AnkiWebu</string>
     <string name="already_logged_in">Již jste přihlášeni</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Balíček existuje</string>
     <string name="deck_created">Balíček vytvořen</string>
     <string name="deck_renamed">Balíček přejmenován</string>
     <!-- Deck Deletion -->
@@ -443,7 +373,7 @@
     <string name="browser_options_dialog_heading">Možnosti prohlížeče</string>
     <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Tato funkcionalita není k dispozici během přesunu úložiště
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Klepnutím spustíte přesun úložiště</string>
+    <string name="media_sync_required_title">Je vyžadována synchronizace multimédií</string>
+    <string name="media_sync_unavailable_message">Synchronizace multimédií je zakázána v nastavení. Před pokračováním prosím synchronizujte a zazálohujte multimédia, která nebyla synchronizována</string>
 </resources>

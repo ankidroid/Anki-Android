@@ -47,7 +47,6 @@
     <string name="model_browser_delete">შენიშვნის ტიპის წაშლა</string>
     <string name="model_browser_rename" comment="Rename a note type">გადარქმევა</string>
     <string name="model_browser_template">ბარათების რედაქტირება</string>
-    <string name="model_browser_add">შენიშვნის ტიპის დამატება</string>
     <!--Rename-->
     <string name="rename_model">შენიშვნის ტიპის სახელის შეცვლა</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">დამატებისას ბოლოს შეყვანილის დამახსოვრება</string>
     <string name="model_field_editor_changing">ველების განახლება</string>
     <string name="model_field_editor_sort_field">ამ ველის მიხედვით დახარისხება</string>
-    <string name="model_clone_suffix">ასლი</string>
     <!--Warnings-->
     <string name="model_delete_warning">ნამდვილად გსურთ ამ შენიშვნის ტიპის წაშლა?</string>
     <string name="field_delete_warning">ნამდვილად გსურთ ამ ველის წაშლა?</string>

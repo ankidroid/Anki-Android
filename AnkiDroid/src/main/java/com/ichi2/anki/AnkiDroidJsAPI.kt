@@ -26,7 +26,6 @@ import android.webkit.JavascriptInterface
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Card
@@ -41,6 +40,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 
+@Suppress("unused")
 open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private val currentCard: Card
         get() = activity.currentCard!!
@@ -134,13 +134,13 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 }
                 versionSupplied.lessThan(versionCurrent) -> {
                     activity.runOnUiThread {
-                        showThemedToast(context, context.getString(R.string.update_js_api_version, cardSuppliedDeveloperContact), false)
+                        activity.showSnackbar(context.getString(R.string.update_js_api_version, cardSuppliedDeveloperContact))
                     }
                     versionSupplied.greaterThanOrEqualTo(Version.valueOf(AnkiDroidJsAPIConstants.sMinimumJsApiVersion))
                 }
                 else -> {
                     activity.runOnUiThread {
-                        showThemedToast(context, context.getString(R.string.valid_js_api_version, cardSuppliedDeveloperContact), false)
+                        activity.showSnackbar(context.getString(R.string.valid_js_api_version, cardSuppliedDeveloperContact))
                     }
                     false
                 }
@@ -177,7 +177,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         } catch (j: JSONException) {
             Timber.w(j)
             activity.runOnUiThread {
-                showThemedToast(context, context.getString(R.string.invalid_json_data, j.localizedMessage), false)
+                activity.showSnackbar(context.getString(R.string.invalid_json_data, j.localizedMessage))
             }
         }
         return apiStatusJson
@@ -338,7 +338,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
 
     @JavascriptInterface
     fun ankiGetDeckName(): String {
-        return Decks.basename(activity.col.decks.get(currentCard.did).getString("name"))
+        return Decks.basename(activity.getColUnsafe.decks.name(currentCard.did))
     }
 
     @JavascriptInterface

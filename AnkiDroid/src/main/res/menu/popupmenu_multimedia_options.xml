@@ -24,10 +24,6 @@
             android:id="@+id/menu_multimedia_text"
             android:icon="@drawable/ic_popup_menu_item_editor"
             android:title="@string/multimedia_editor_popup_text" />
-        <item
-            android:id="@+id/menu_multimedia_clear_field"
-            android:icon="@drawable/ic_popup_menu_item_clear"
-            android:title="@string/multimedia_editor_popup_clear_field" />
     </group>
 
 </menu>

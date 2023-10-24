@@ -61,7 +61,6 @@
     <string name="card_browser_mark_card">Memo\'s markeren</string>
     <string name="card_browser_unmark_card">Memo onmarkeren</string>
     <string name="delete_card_title">Memo verwijderen</string>
-    <string name="changed_deck_message">Verplaatst naar %s</string>
     <string name="card_browser_show_marked">Filteren op gemarkeerd</string>
     <string name="card_browser_show_suspended">Filteren op verwijderd</string>
     <string name="card_browser_search_by_tag">Filteren op tag</string>
@@ -75,8 +74,6 @@
     <string name="card_browser_list_my_searches_remove_content">Verwijder “%1$s”?</string>
     <string name="card_browser_change_display_order">Weergavevolgorde wijzigen</string>
     <string name="card_browser_change_display_order_title">Kies weergavevolgorde</string>
-    <string name="card_browser_change_display_order_reverse">Selecteer een veld tweemaal om de volgorde om te keren.</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Te doen</string>
     <string name="card_details_tags">Labels</string>
     <string-array name="card_browser_order_labels">
         <item>Niet sorteren (sneller)</item>
@@ -112,27 +109,4 @@
         <item quantity="other">%d kaarten verwijderd</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Toegevoegd</string>
-    <string name="card_info_first_review">Eerste overhoring</string>
-    <string name="card_info_latest_review">Laatste overhoring</string>
-    <string name="card_info_interval">Interval</string>
-    <string name="card_info_ease">Gemakkelijkheid</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Overhoringen</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Missers</string>
-    <string name="card_info_average_time">Gemiddelde tijd</string>
-    <string name="card_info_total_time">Totale tijd</string>
-    <string name="card_info_card_type">Kaarttype</string>
-    <string name="card_info_note_type">Memotype</string>
-    <string name="card_info_deck_name">Leerset Naam</string>
-    <string name="card_info_card_id">Kaart ID</string>
-    <string name="card_info_note_id">Memo-ID</string>
-    <string name="card_info_revlog_time">Tijd</string>
-    <string name="card_info_revlog_date">Datum</string>
-    <string name="card_info_revlog_rating">Beoordeling</string>
-    <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Leren</string>
-    <string name="card_info_revlog_review">Overhoren</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Opnieuw leren</string>
-    <string name="card_info_revlog_filtered">Gefilterd</string>
-    <string name="card_info_ease_not_applicable">N/B</string>
 </resources>

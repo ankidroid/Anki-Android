@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Вы па-за сеткай</string>
-    <string name="sync_even_if_offline">Усё роўна спрабаваць</string>
     <string name="sync_error">Памылка сінхранізацыі</string>
     <string name="vague_error" comment="Network error dialog title">Памылка</string>
     <string name="retry">Паўтарыць</string>
@@ -63,71 +62,23 @@
     <string name="sign_up">Зарэгістравацца</string>
     <string name="logged_as">Вы ўвайшлі як</string>
     <string name="log_out">Выйсці</string>
-    <string name="alert_logging_message">Уваход&#8230;</string>
-    <string name="invalid_username_password">Памылковая электронная пошта або пароль</string>
     <string name="reset_password">Скінуць пароль</string>
     <string name="lost_mail_instructions">Забылі электронную пошту?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Параметры для XXX</string>
-    <string name="sync_prepare_syncing">Падрыхтоўка да сінхранізацыі&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Падрыхтоўка да поўнай сінхранізацыі&#8230;</string>
-    <string name="sync_uploading_message">Запампаванне&#8230;</string>
-    <string name="sync_downloading_message">Спампаванне&#8230;</string>
     <string name="sync_title">Сінхранізацыя</string>
     <string name="sync_log_uploading_message">Цалкам сінхранізавана з прыладай</string>
-    <string name="sync_log_clocks_unsynchronized">Гадзіннік на вашай прыладзе паказвае час з памылкай на %1$d секунд %2$s. Пераканайцеся, што дата і часавы пояс прызначаныя слушна і паспрабуйце паўтарыць сінхранізацыю.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">і магчыма, што часавы пояс прызначаны няправільна</string>
-    <string name="sync_log_clocks_unsynchronized_date">і магчыма, што дата прызначаная няправільна</string>
-    <string name="sync_no_changes_message">Змяненняў не знойдзена</string>
     <string name="sync_database_acknowledge">Калекцыя сінхранізаваная</string>
-    <string name="sync_log_error_specific">Памылка сінхранізацыі, тып: %1$s, паведамленне: %2$s</string>
     <string name="sync_corrupt_database">Ваша база даных пашкоджаная. Паспрабуйце выправіць яе, а потым паўтарыце сінхранізацыю.\n\nЗвярніцеся да %s, каб даведацца больш пра выпраўленне базы даных.</string>
-    <string name="sync_too_busy">Сервер перагружаны. Паспрабуйце яшчэ раз пазней.</string>
-    <string name="sync_remote_db_error">Спампаваная база даных была пашкоджаная. Калі ласка, паспрабуйце яшчэ раз.</string>
-    <string name="sync_overwrite_error">Бягучая калекцыя не можа быць перазапісаная спампаваным файлам</string>
-    <string name="sync_connection_error">Скончыўся тэрмін злучэння. Магчыма, што зараз у вас праблемы з падлучэннем да інтэрнэту або ў папцы змешчаны вельмі вялікі медыяфайл.</string>
-    <string name="sync_write_access_error_on_storage">Спампаваны файл не можа быць захаваны ў ваша сховішча. Магчыма, што яно знаходзіцца ў рэжыме чытання або на ім недастаткова свабоднага месца.</string>
-    <string name="sync_error_invalid_sync_server">Азначаны памылковы карыстальніцкі сервер сінхранізацыя ў дадатковых наладах (%s). Увядзіце, калі ласка, слушных сервер або адключыце гэту функцыю ў наладах.</string>
-    <string name="sync_deletions_message">Сінхранізуюцца выдаленыя&#8230;</string>
-    <string name="sync_small_objects_message">Сінхранізацыя невялікіх аб\'ектаў&#8230;</string>
-    <string name="sync_finish_message">Завяршэнне сінхранізацыі&#8230;</string>
-    <string name="sync_log_finish_error">Адбылася памылка падчас адпраўкі канцавога напрамку на сервер</string>
-    <string name="sync_writing_db">Запіс змен у базу даных&#8230;</string>
-    <string name="sync_download_chunk">Спампаванне змен&#8230;</string>
-    <string name="sync_upload_chunk">Запампаванне змен&#8230;</string>
-    <string name="sync_up_down_size">Адпраўлена: %1$d КБ, прынята: %2$d КБ</string>
-    <string name="sync_generic_error">Адбылася памылка. Калі ласка, паспрабуйце пазней.</string>
-    <string name="sync_check_upload_file">Праверка файла перад запампаваннем&#8230;</string>
-    <string name="sync_check_download_file">Праверка спампаванага файла&#8230;</string>
-    <string name="sync_media_find">Пошук змененых медыяфайлаў&#8230;</string>
-    <string name="sync_media_no_changes">Медыяфайлы не змененыя</string>
-    <string name="sync_media_success">Медыяфайлы сінхранізаваныя</string>
-    <string name="sync_media_partial_updated">Сінхранізацыя медыя часткова завершана:\n%1$d - файлаў з медыя спампавана.\n%2$d - файлаў з медыя запампавана.</string>
-    <string name="sync_media_changes_count">Будуць запампаваныя %d змененых медыяфайлаў</string>
-    <string name="sync_media_downloaded_count">%d медыяфайлаў спампавана</string>
-    <string name="sync_sanity_failed">Пасля сінхранізацыі з\'явіліся канфлікты ў калекцыі. Праграма AnkiDroid выканае поўную сінхранізацыю, каб вырашыць гэту праблему. Выберыце, якую версію калекцыі вы хочаце пакінуць.</string>
-    <string name="sync_media_sanity_failed">Сінхранізацыя завершаная, але колькасць медыяфайлаў на вашай прыладзе і серверы не супадаюць. Наступная сінхранізацыя медыяфайлаў цалкам выправіць усе праблемы.</string>
-    <string name="sync_media_db_error">Не атрымалася сінхранізаваць медыяфайлы, бо бягучая база даных пашкоджаная. Пажадана запусціць праверку медыяфайлаў.</string>
-    <string name="sync_media_error">Памылка сінхранізацыі даных медыяфайлаў</string>
-    <string name="sync_media_error_check">Памылка падчас сінхранізацыі медыяфайлаў. Пажадана праверыць медыяфайлы.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Выканайце \"%s\" перад сінхранізацыяй</string>
     <string name="sync_sanity_local">Лакальна</string>
     <string name="sync_sanity_remote">Аддалена</string>
     <string name="force_full_sync_title">Выканаць поўную сінхранізацыю</string>
     <string name="force_full_sync_summary">Падчас наступнай сінхранізацыі перазапісаць змены ў адным кірунку</string>
     <string name="force_full_sync_confirmation">Поўная прымусовая сінхранізацыя</string>
-    <string name="full_sync_confirmation">Выбраныя змяненні патрабуюць поўнай запампоўкі базы даных падчас наступнай сінхранізацыі вашай калекцыі. Калі на іншай прыладзе вы паўтаралі нейкія карткі або ў вас былі іншыя змены і яны не былі сінхранізаваныя, то яны будуць страчаныя. Працягнуць?</string>
+    <string name="full_sync_confirmation">Выбраныя змяненні патрабуюць поўнага запампоўвання базы даных пры наступнай сінхранізацыі вашай калекцыі. Калі на іншай прыладзе вы паўтаралі нейкія карткі або ў вас былі іншыя змены і яны не былі сінхранізаваны, то яны будуць страчаны. Працягнуць?</string>
     <string name="full_sync_confirmation_upgrade">З-за памылкі ў папярэдняй версіі праграмы, пажадана зрабіць поўную сінхранізацыю.</string>
-    <string name="sync_error_407_proxy_required">Патрабуецца праверка сапраўднасці проксі-сервера.</string>
-    <string name="sync_error_409">Толькі адзін кліент адначасова можа падлучыцца да AnkiWeb. Калі падчас апошняй сінхранізацыі адбылася памылка, калі ласка, крыху пачакайце і паспрабуйце яшчэ раз праз некалькі хвілін.</string>
-    <string name="sync_error_413_collection_size">Ваша калекцыя або медыяфайл занадта вялікія для сінхранізацыі.</string>
-    <string name="sync_error_500_unknown">На серверы AnkiWeb узнікла памылка. Паспрабуйце яшчэ раз праз некалькі хвілін. Калі праблема не знікае, адпраўце справаздачу пра памылку.</string>
-    <string name="sync_error_501_upgrade_required">Калі ласка, абнавіце праграму да апошняй версіі</string>
-    <string name="sync_error_502_maintenance">Сервер AnkiWeb знаходзіцца ў стане абслугоўвання. Паспрабуйце яшчэ раз праз некалькі хвілін.</string>
-    <string name="sync_error_504_gateway_timeout">Памылка 504: час чакання адказу шлюза скончыўся.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Сінхранізацыя (поўная)</string>
     <string name="sync_menu_title_no_account">Сінхранізацыя (пасля ўваходу)</string>
-    <string name="sync_error_unknown_host_readable">Немагчыма падлучыцца да AnkiWeb. Злучэнне з інтэрнэтам на вашай прыладзе адсутнічае?\n\n%s</string>
 </resources>

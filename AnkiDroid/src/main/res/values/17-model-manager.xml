@@ -31,7 +31,6 @@
     <string name="model_browser_delete">Delete note type</string>
     <string name="model_browser_rename" comment="Rename a note type">Rename</string>
     <string name="model_browser_template">Edit cards</string>
-    <string name="model_browser_add">Add note type</string>
 
 
     <!--Rename-->
@@ -51,7 +50,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Updating fields</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
-    <string name="model_clone_suffix">copy</string>
 
 
     <!--Warnings-->

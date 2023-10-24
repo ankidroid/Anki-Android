@@ -48,30 +48,20 @@
     <string name="error_reporting_choice_ask_user">询问我</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">仅打标签</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">按随机顺序学习新卡片</string>
-    <string name="new_order_order_added">按添加顺序学习新卡片</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">优先显示老卡片</string>
     <string name="cram_deck_conf_order_random">随机</string>
     <string name="cram_deck_conf_order_increasing_intervals">间隔由小到大</string>
     <string name="cram_deck_conf_order_decreasing_intervals">间隔由大到小</string>
-    <string name="cram_deck_conf_order_most_lapsed">忘记最多的</string>
+    <string name="cram_deck_conf_order_most_lapsed">遗忘最多的</string>
     <string name="cram_deck_conf_order_order_added">添加顺序</string>
     <string name="cram_deck_conf_order_order_due">到期顺序</string>
     <string name="cram_deck_conf_order_latest_added_first">优先显示最晚添加的卡片</string>
     <string name="cram_deck_conf_order_relative_overdueness">相对到期</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">使用当前牌组</string>
-    <string name="add_to_deck_decide_by_note_type">由笔记类型决定</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">混合新卡片和复习</string>
-    <string name="new_spread_new_after_review">复习后再学习新卡片</string>
-    <string name="new_spread_new_before_review">学习新卡片后再复习</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">当卡片中没有指定字体时</string>
-    <string name="override_font_always" comment="Option to always override font">总是</string>
+    <string name="add_to_deck_decide_by_note_type">由笔记模板决定</string>
     <!-- theme labels -->
     <string name="theme_follow_system">跟随系统</string>
     <!-- day_theme_labels -->
@@ -89,21 +79,19 @@
     <string name="html_size_code_x_large">很大</string>
     <string name="html_size_code_xx_large">极大</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">回答按钮 1</string>
-    <string name="gesture_answer_2">回答按钮 2</string>
-    <string name="gesture_answer_3">回答按钮 3</string>
-    <string name="gesture_answer_4">回答按钮 4</string>
-    <string name="gesture_answer_green">建议的回答（绿色）</string>
-    <string name="gesture_answer_better_recommended">好于建议的回答</string>
+    <string name="answer_again">再答一次</string>
+    <string name="answer_hard">回答 “困难”</string>
+    <string name="answer_good">回答“良好”</string>
+    <string name="answer_easy">回答 “简单”</string>
     <string name="gesture_play">播放媒体</string>
     <string name="gesture_abort_learning">终止学习</string>
     <string name="gesture_flag_red">切换红色旗标</string>
     <string name="gesture_flag_orange">切换橙色旗标</string>
-    <string name="gesture_flag_green">切换绿色标识</string>
+    <string name="gesture_flag_green">切换绿色旗标</string>
     <string name="gesture_flag_blue">切换蓝色旗标</string>
-    <string name="gesture_flag_pink">切换粉色标志</string>
-    <string name="gesture_flag_turquoise">切换蓝绿色标志</string>
-    <string name="gesture_flag_purple">切换紫色标志</string>
+    <string name="gesture_flag_pink">切换粉色旗标</string>
+    <string name="gesture_flag_turquoise">切换青色旗标</string>
+    <string name="gesture_flag_purple">切换紫色旗标</string>
     <string name="gesture_flag_remove">移除旗标</string>
     <string name="gesture_page_up">向上翻页</string>
     <string name="gesture_page_down">向下翻页</string>
@@ -113,6 +101,6 @@
     <string name="gesture_show_all_hints">显示所有提示</string>
     <string name="record_voice">录制音频</string>
     <string name="replay_voice">重播音频</string>
-    <string name="automatic_answer_option_2">难(如果不可用很好)</string>
-    <string name="automatic_answer_option_4">易(如果不可用很好)</string>
+    <string name="automatic_answer_option_2">难（如果不可用很好）</string>
+    <string name="automatic_answer_option_4">易（如果不可用很好）</string>
 </resources>

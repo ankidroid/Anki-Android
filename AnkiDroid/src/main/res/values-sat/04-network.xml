@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">ᱟᱢ ᱫᱚ ᱚᱯᱷᱞᱟᱭᱤᱱ ᱨᱮ</string>
-    <string name="sync_even_if_offline">ᱡᱮᱞᱠᱟᱭ ᱢᱮ</string>
     <string name="sync_error">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ </string>
     <string name="vague_error" comment="Network error dialog title">ᱵᱷᱩᱞ</string>
     <string name="retry">ᱫᱼᱪᱮᱥᱴᱟ </string>
@@ -63,55 +62,15 @@
     <string name="sign_up">ᱧᱩᱛᱩᱢ ᱚᱞ</string>
     <string name="logged_as">ᱞᱮᱠᱷᱟ ᱵᱚᱞᱚᱣᱟᱠ </string>
     <string name="log_out">ᱵᱟᱦᱨᱮ ᱚᱰᱚᱠ</string>
-    <string name="alert_logging_message">ᱵᱚᱞᱚᱣᱟᱠ&#8230;</string>
-    <string name="invalid_username_password">ᱵᱷᱩᱞ ᱤ-ᱢᱮᱞ ᱴᱷᱤᱠᱟᱹᱱᱟ ᱵᱟᱝᱠᱷᱟᱱ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
     <string name="reset_password">ᱫᱚᱦᱲᱟ ᱫᱟᱱᱟᱝ ᱥᱟᱵᱟᱫᱽ</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX ᱞᱟᱹᱜᱤᱫ ᱟᱯᱟᱱᱟᱨ ᱢᱚᱱᱮᱛᱮᱭᱟᱜ</string>
-    <string name="sync_prepare_syncing">ᱟᱹᱭᱩᱨᱚᱜ ᱥᱚᱡᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="sync_preparing_full_sync_message">ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨᱚᱜ ᱥᱚᱡᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="sync_uploading_message">ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ</string>
-    <string name="sync_downloading_message">ᱟᱹᱛᱩᱨ ᱟᱬᱜᱚ ᱠᱟᱱᱟ&#8230;</string>
     <string name="sync_title">ᱟᱭᱩᱨ ᱤᱫᱤᱜ ᱪᱟᱹᱞᱩᱜ ᱠᱟᱱᱟ</string>
     <string name="sync_log_uploading_message">ᱞᱚᱠᱟᱞ ᱠᱷᱚᱱ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ</string>
-    <string name="sync_log_clocks_unsynchronized">ᱟᱢᱟᱜ ᱥᱚᱢᱚᱭ %1$d ᱴᱤᱡ %2$s ᱠᱷᱚᱱ ᱵᱚᱸᱫ ᱜᱮᱭᱟ ᱾  Make sure that the date, time, and timezone on your phone are set correctly, then sync again.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, ᱚᱠᱛᱚ ᱡᱟᱭᱜᱟ ᱵᱷᱩᱞᱽ</string>
-    <string name="sync_log_clocks_unsynchronized_date">, ᱢᱟᱹᱦᱤᱛ ᱵᱷᱩᱞ</string>
-    <string name="sync_no_changes_message">ᱵᱟᱭ ᱵᱚᱫᱚᱞ ᱠᱟᱱᱟ</string>
     <string name="sync_database_acknowledge">ᱴᱩᱢᱟᱹᱞ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
-    <string name="sync_log_error_specific">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ , ᱯᱨᱚᱠᱟᱨ: %1$s, ᱠᱷᱚᱵᱚᱨ: %2$s</string>
     <string name="sync_corrupt_database">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱮᱱᱟ ᱾ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱢᱟᱲᱟᱹᱝ ᱨᱮ ᱴᱷᱤᱠ ᱢᱮ ᱾ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ \n\nᱧᱮᱞᱢᱮ %s ᱾</string>
-    <string name="sync_too_busy">ᱥᱚᱨᱵᱦᱚᱨ ᱵᱤᱡᱤ ᱜᱮᱭᱟ ᱾  ᱛᱟᱭᱚᱢ ᱛᱮ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾</string>
-    <string name="sync_remote_db_error">ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱜᱮᱭᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
-    <string name="sync_overwrite_error">ᱱᱤᱛᱚᱜᱽᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱨᱮᱫ ᱥᱟᱞᱟᱜ ᱛᱮ ᱵᱟᱝ ᱫᱩᱦᱲᱟ ᱚᱞ ᱲᱫᱟᱲᱮᱟᱜᱟ</string>
-    <string name="sync_connection_error">ᱡᱚᱲᱟᱣ ᱚᱠᱛᱚ ᱵᱟᱦᱨᱮ ᱾ ᱤᱱᱴᱚᱨᱱᱮᱴ ᱡᱚᱲᱟᱣ ᱰᱤᱜᱟᱹᱣ ᱮᱱᱟ, ᱟᱨ ᱵᱟᱝᱠᱦᱟᱱ ᱟᱢ ᱴᱷᱮᱱ ᱱᱟᱶᱟ ᱯᱚᱴᱚᱢ ᱨᱮ ᱢᱟᱨᱟᱝ ᱨᱚᱫ ᱢᱮᱰᱤᱭᱟ ᱛᱮᱦᱮᱸ ᱠᱚᱜᱽᱟ ᱾</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">ᱮᱰᱵᱷᱟᱸᱥᱼᱰ ᱥᱟᱡᱟᱣ ᱠᱚ ᱨᱮ ᱠᱟᱹᱥᱴᱚᱢ ᱥᱭᱸᱠ ᱥᱟᱹᱨᱣᱟᱹᱨ ᱵᱷᱩᱞ ᱜᱮᱭᱟ (%s) ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱣᱮᱞᱤᱰ ᱥᱟᱹᱨᱣᱟᱹᱨ ᱟᱫᱮᱨ ᱢᱮ, ᱟᱨ ᱵᱟᱝ ᱥᱟᱡᱟᱣ ᱠᱷᱚᱱ ᱵᱚᱸᱫᱚᱭ ᱢᱮ ᱾</string>
-    <string name="sync_deletions_message">ᱜᱮᱫ ᱜᱤᱰᱤ ᱠᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="sync_small_objects_message">ᱠᱟᱴᱤᱡ ᱡᱤᱱᱤᱥ ᱠᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="sync_finish_message">ᱟᱹᱭᱩᱨ ᱢᱤᱫᱚᱜ ᱪᱟᱵᱟᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="sync_log_finish_error">ᱥᱚᱨᱵᱷᱚᱨ ᱛᱮ ᱡᱤᱱᱤᱥ ᱵᱦᱮᱡᱟᱜ ᱡᱷᱚᱜ ᱵᱷᱩᱞ</string>
-    <string name="sync_writing_db">ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱮ ᱚᱞ ᱵᱚᱫᱚᱞᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
-    <string name="sync_download_chunk">ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱵᱚᱫᱚᱞ ᱠᱚ&#8230;</string>
-    <string name="sync_upload_chunk">ᱞᱟᱫᱮ ᱢᱮ ᱵᱚᱫᱚᱞ ᱠᱚ&#8230;</string>
-    <string name="sync_up_down_size">ᱪᱮᱛᱟᱱᱺ%1$d KB, ᱞᱟᱛᱟᱨᱺ %2$d KB</string>
-    <string name="sync_generic_error">ᱵᱷᱩᱞ ᱦᱩᱭᱮᱱᱟ ᱾ ᱛᱟᱭᱚᱢ ᱛᱮ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
-    <string name="sync_check_upload_file">ᱞᱟᱫᱮ ᱢᱟᱲᱟᱝ ᱨᱮ ᱨᱮᱫ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ&#8230;</string>
-    <string name="sync_check_download_file">ᱨᱮᱫ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱢᱟᱲᱟᱝ ᱨᱮ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ&#8230;</string>
-    <string name="sync_media_find">ᱵᱚᱫᱚᱞ ᱠᱚᱜ ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱯᱟᱱᱛᱮ&#8230;</string>
-    <string name="sync_media_no_changes">ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱨᱮ ᱪᱮᱫ ᱵᱚᱫᱚᱞ ᱵᱟᱝᱟ</string>
-    <string name="sync_media_success">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱮᱱᱟ</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d ᱞᱟᱫᱮ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱰᱤᱭᱟ ᱵᱚᱫᱚᱞᱮᱱᱟ</string>
-    <string name="sync_media_downloaded_count">%d ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ ᱟᱹᱛᱩᱨᱩᱨ ᱟᱬᱜᱚ ᱮᱟ</string>
-    <string name="sync_sanity_failed">ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱯᱚᱨᱮ, ᱴᱩᱢᱟᱹᱞ ᱴᱷᱤᱠ ᱚᱵᱚᱥᱛᱷᱟ ᱨᱮ ᱵᱟᱱᱤᱜᱜᱽᱟ ᱾ ᱰᱤᱜᱟᱹᱣ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ, AnkiDroid ᱯᱩᱨᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱟᱭ ᱾ ᱚᱠᱟ ᱟᱦᱴᱟ ᱫᱦᱚ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ ᱪᱚᱭᱟᱱ ᱢᱮ ᱾</string>
-    <string name="sync_media_sanity_failed">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱪᱟᱵᱟᱭᱱᱟ, ᱢᱮᱰᱤᱭᱟ ᱥᱚᱨᱵᱷᱚᱨ ᱥᱟᱞᱟᱜ ᱛᱟᱞᱢᱮᱞ ᱴᱷᱤᱠ ᱵᱟᱝᱟ ᱾ ᱤᱱᱟ ᱛᱟᱭᱚᱢ ᱵᱷᱩᱞ ᱴᱷᱤᱠ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱚᱜᱟ ᱾</string>
-    <string name="sync_media_db_error">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱦᱩᱲᱟᱜ ᱱᱤᱛᱚᱜᱟᱜ ᱥᱟᱫᱽᱠᱷᱤᱭᱟᱹ ᱵᱟᱹᱭᱥᱟᱣ ᱨᱟᱹᱯᱩᱫ ᱜᱮᱭᱟ ᱾ ᱢᱮᱰᱩᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ ᱾</string>
-    <string name="sync_media_error">ᱢᱮᱰᱤᱭᱟ ᱥᱟᱠᱷᱤᱭᱟᱛ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱷᱩᱞ</string>
-    <string name="sync_media_error_check">ᱢᱮᱰᱤᱭᱟ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱡᱚᱠᱷᱟᱜ ᱵᱷᱩᱞ ᱾ ᱢᱮᱰᱩᱭᱟ ᱧᱮᱞ ᱵᱤᱰᱟᱣᱜ ᱫᱚᱨᱠᱟᱨᱚᱜ ᱠᱟᱱᱟ ᱾</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">ᱥᱭᱸᱠ ᱢᱟᱲᱟᱝ ᱨᱮ ᱫᱚᱭᱟᱠᱟᱛᱮ ‘%s’ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="sync_sanity_local">ᱱᱚᱰᱮᱱᱟᱜ</string>
     <string name="sync_sanity_remote">ᱥᱟᱝᱜᱤᱧ ᱨᱮᱭᱟᱜ</string>
     <string name="force_full_sync_title">ᱫᱟᱲᱮ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ</string>
@@ -119,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">ᱵᱚᱫᱚᱞᱠᱟᱱ ᱫᱚᱨᱠᱷᱥᱛᱚ ᱟᱢᱟᱜ ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱞᱟᱹᱜᱤᱫ ᱯᱩᱨᱟ ᱞᱟᱫᱮ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ ᱾  ᱚᱞᱜᱟ ᱰᱤᱵᱷᱟᱤᱥ ᱵᱟᱭ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱠᱚᱜ ᱠᱷᱟᱱ ᱰᱟᱴᱟ ᱟᱫᱚᱜ ᱛᱟᱢᱮ, ᱞᱮᱛᱟᱲ ᱟᱢ?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroid ᱨᱮᱭᱟᱜ ᱢᱟᱲᱟᱝ ᱵᱷᱚᱨᱥᱚᱱ ᱨᱮ ᱰᱤᱜᱟᱹᱣ ᱧᱟᱢ ᱮᱱᱟ , ᱡᱩᱨ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱫᱚᱨᱠᱟᱨ ᱠᱟᱱᱟ</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication ᱫᱚᱨᱠᱟᱨ ᱾</string>
-    <string name="sync_error_409">ᱢᱤᱫ ᱥᱚᱢᱟᱭ ᱨᱮ ᱢᱤᱫᱴᱟᱝ AnkiWeb ᱠᱞᱟᱮᱸᱴ ᱠᱟᱢᱤ ᱨᱮ ᱟᱜᱩ ᱜᱟᱱᱚᱜᱽᱟ ᱾ ᱢᱟᱲᱟᱝ ᱠᱚᱜ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱵᱟᱭ ᱜᱟᱱᱠᱚᱜ ᱠᱷᱟᱱ ᱫᱚ, ᱯᱚᱨᱮ ᱠᱤᱦᱤ ᱥᱚᱢᱚᱭ ᱯᱚᱨᱮ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾</string>
-    <string name="sync_error_413_collection_size">ᱟᱢᱟᱜ ᱢᱮᱰᱤᱭᱟ ᱨᱮᱫ/ᱴᱩᱢᱟᱹᱞ ᱫᱚ ᱟᱹᱭᱩᱨ ᱢᱤᱫ ᱞᱟᱹᱜᱤᱫ ᱢᱟᱨᱟᱝ ᱜᱮᱭᱟ ᱾</string>
-    <string name="sync_error_500_unknown">AnkiWeb ᱵᱷᱩᱞ ᱧᱟᱢ ᱠᱮᱜᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱟᱨ ᱠᱤᱪᱷᱤ ᱥᱚᱢᱚᱭ ᱯᱚᱨᱮ ᱪᱮᱥᱴᱟᱭ ᱢᱮ, ᱟᱨ ᱡᱚᱫᱤ ᱰᱤᱜᱟᱹᱣ ᱛᱟᱦᱮᱱ ᱠᱟᱱᱟ ᱢᱮᱱᱠᱷᱟᱱ, ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱮᱫ ᱨᱤᱯᱴ ᱢᱮ ᱾</string>
-    <string name="sync_error_501_upgrade_required">ᱱᱤᱛ ᱩᱛᱟᱹᱨᱟᱜ AnkiDroid  ᱯᱟᱸᱡᱤ ᱛᱮ ᱚᱯᱜᱨᱮᱰ ᱢᱮ</string>
-    <string name="sync_error_502_maintenance">AnkiWeb ᱫᱚ ᱧᱮᱞᱥᱟᱢᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱠᱤᱪᱷᱤ ᱥᱚᱢᱚᱭ ᱯᱚᱨᱮ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout ᱵᱷᱩᱞ ᱪᱟᱢᱮᱱᱟ ᱾</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">ᱥᱭᱸᱠ (ᱯᱩᱨᱟᱹ)</string>
     <string name="sync_menu_title_no_account">ᱥᱭᱸᱠ (ᱵᱚᱞᱚᱱ ᱢᱮ)</string>
-    <string name="sync_error_unknown_host_readable"> AnkiWeb ᱥᱟᱞᱟᱜ ᱵᱟᱝ ᱡᱚᱲᱟᱣ ᱠᱟᱱᱟ ।. ᱟᱢᱟᱜ ᱤᱱᱴᱚᱨᱱᱮᱴ ᱮ ᱠᱟᱹᱢᱤ ᱠᱟᱱᱟ ?\n\n%s</string>
 </resources>

@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Zapytaj mnie</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tylko znaczniki</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Nowe karty w kolejności losowej</string>
-    <string name="new_order_order_added">Nowe karty w kolejności dodania</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Najstarszy jako pierwszy</string>
     <string name="cram_deck_conf_order_random">Losowo</string>
@@ -65,15 +62,8 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Użyj obecnej talii</string>
     <string name="add_to_deck_decide_by_note_type">Wybór na podstawie typu notatki</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mieszaj nowe karty i powtórki</string>
-    <string name="new_spread_new_after_review">Nowe karty po powtórkach</string>
-    <string name="new_spread_new_before_review">Nowe karty przed powtórkami</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Kiedy żaden font nie jest wybrany dla danych kart</string>
-    <string name="override_font_always" comment="Option to always override font">Zawsze</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Według ustawień systemowych</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Jasny</string>
     <string name="day_theme_plain">Zwykły</string>
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">Bardzo duży</string>
     <string name="html_size_code_xx_large">Największy</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Przycisk odpowiedzi 1</string>
-    <string name="gesture_answer_2">Przycisk odpowiedzi 2</string>
-    <string name="gesture_answer_3">Przycisk odpowiedzi 3</string>
-    <string name="gesture_answer_4">Przycisk odpowiedzi 4</string>
-    <string name="gesture_answer_green">Zalecana odpowiedź (zielony)</string>
-    <string name="gesture_answer_better_recommended">Odpowiedź lepsza niż zalecana</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Odtwarzaj</string>
     <string name="gesture_abort_learning">Przerwij naukę</string>
     <string name="gesture_flag_red">Włącz/wyłącz czerwoną flagę</string>
@@ -110,7 +98,7 @@
     <string name="gesture_abort_sync">Przerwij naukę i synchronizuj</string>
     <string name="gesture_toggle_whiteboard">Przełącz Tablicę</string>
     <string name="gesture_show_hint">Pokaż podpowiedź</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
+    <string name="gesture_show_all_hints">Pokaż wszystkie podpowiedzi</string>
     <string name="record_voice">Nagraj głos</string>
     <string name="replay_voice">Odtwórz głos</string>
     <string name="automatic_answer_option_2">Trudne (Dobre, jeśli niedostępne)</string>

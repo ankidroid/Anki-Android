@@ -1,6 +1,7 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ankidroid="http://schemas.android.com/apk/res-auto" >
+    xmlns:ankidroid="http://schemas.android.com/apk/res-auto"
+    tools:context=".DeckPicker">
     <group android:id="@+id/allItems">
         <item
             android:id="@+id/deck_picker_action_filter"
@@ -8,10 +9,10 @@
             android:title="@string/search_decks"
             ankidroid:actionViewClass="androidx.appcompat.widget.SearchView"
             ankidroid:showAsAction="always|collapseActionView"/>
-        <!--        TODO: add a title for this action-->
         <item
             android:id="@+id/action_migration_progress"
             android:visible="false"
+            android:title="@string/show_migration_progress"
             ankidroid:actionLayout="@layout/migration_progress_menu_layout"
             ankidroid:showAsAction="always" />
         <!--
@@ -30,26 +31,28 @@
             ankidroid:showAsAction="always"/>
         <item
             android:id="@+id/action_undo"
-            android:title="@string/undo_action_review"
-            ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
             ankidroid:showAsAction="never"
-            android:visible="false"/>
+            android:visible="false"
+            tools:title="Undo X"/>
         <item
-            android:id="@+id/action_new_filtered_deck"
-            android:menuCategory="secondary"
-            android:title="@string/new_dynamic_deck"/>
-        <item
-            android:id="@+id/action_check_database"
-            android:menuCategory="secondary"
-            android:title="@string/check_db"/>
-        <item
-            android:id="@+id/action_check_media"
-            android:menuCategory="secondary"
-            android:title="@string/check_media"/>
-        <item
-            android:id="@+id/action_empty_cards"
-            android:menuCategory="secondary"
-            android:title="@string/empty_cards"/>
+            android:id="@+id/checks"
+            android:title="@string/checks_action"
+            ankidroid:showAsAction="never">
+            <menu>
+                <item
+                    android:id="@+id/action_check_database"
+                    android:menuCategory="secondary"
+                    android:title="@string/check_db"/>
+                <item
+                    android:id="@+id/action_check_media"
+                    android:menuCategory="secondary"
+                    android:title="@string/check_media"/>
+                <item
+                    android:id="@+id/action_empty_cards"
+                    android:menuCategory="secondary"
+                    android:title="@string/empty_cards"/>
+            </menu>
+        </item>
         <item
             android:id="@+id/action_restore_backup"
             android:menuCategory="secondary"

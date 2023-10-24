@@ -61,6 +61,8 @@
     <string name="updated_version">Actualitzeu a la versió %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Desar pissarra</string>
+    <string name="enable_stylus">Activa el mode de llapis</string>
+    <string name="disable_stylus">Desactiva el mode de llapis</string>
     <string name="enable_whiteboard">Activar pissarra</string>
     <string name="disable_whiteboard">Desactiva la pissarra</string>
     <string name="show_whiteboard">Mostra la pissarra</string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">Repetir àudio</string>
     <string name="leech_suspend_notification">Fitxa marcada com a lapa i suspesa</string>
     <string name="leech_notification">Fitxa marcada com a lapa</string>
-    <string name="corrupt_font">Fitxer de tipus de lletra incorrecte %s</string>
     <string name="webview_crash_unknown">Error desconegut</string>
     <string name="webview_crash_unknwon_detailed">Això ha estat causat per un error intern a WebView</string>
     <string name="webview_crash_oom">No hi ha memòria suficient</string>
@@ -123,9 +124,9 @@
     <string name="save">Desa</string>
     <string name="close">Tanca</string>
     <string name="select">Seleccioneu</string>
-    <string name="reordering_cards">Reordenant cartes&#8230;</string>
     <string name="field_remapping">%1$s (de \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">S\'esborrarà qualsevol carta assignada a res. Si una anotació té cap carta restant, serà perduda. Esteu segur que voleu continuar?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Límit de temps assolit</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d carta estudiada en %2$s</item>
@@ -143,17 +144,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Torna a planificar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Previsualització</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">Targeta %1$d de %2$d</string>
-    <string name="error_insufficient_memory">No hi ha suficient memòria al dispositiu per a aquesta operació</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Canvia el nom</string>
-    <string name="default_conf_delete_error">El grup d\'opcions per defecte no es pot esborrar</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d carta afegida</item>
-        <item quantity="other">%d cartes afegides</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">Comprova la base de dades</string>
     <string name="check_media">Comprovar la multimèdia</string>
     <string name="empty_cards">Targetes buides</string>
-    <string name="check_db_message">S\'està comprovant la base de dades.\nUn moment si us plau...</string>
     <string name="empty_card_warning">Aquesta targeta està buida. Utilitza l\'opció del menú de \"Buit de targetes\" a la pantalla de llista de malls.</string>
     <string name="unknown_type_field_warning">Tipus de resposta: camp desconegut %s</string>
     <string name="delete_deck">S\'està suprimint el paquet...\nUn moment si us plau.</string>
@@ -167,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Aquest no és un fitxer de paquet Anki vàlid</string>
     <string name="import_title_error" comment="Title of error dialog">S\'ha produït un error</string>
-    <string name="import_log_failed_unzip">Error al descomprimir apkg: %s</string>
-    <string name="import_log_failed_copy_to">Error al copiar apkg a %s</string>
-    <string name="import_log_failed_validate">Error al validar apkg</string>
-    <string name="import_log_insufficient_space_error">No hi ha prou espai per importar el paquet.\nCalen  - %1$s \nDisposeu de - %2$s.\n\nTeniu problemes? Intenteu alliberar espai al dispositiu si és possible. O bé, sincronitzant us cal menys espai que important. Proveu d\'importar el paquet amb un dispositiu amb més espai (per exemple, Anki per a l\'Escriptori) i després sincronitzar-lo amb aquest dispositiu.</string>
-    <string name="import_log_file_cache_cleared">S\'ha produït un error en importar el fitxer, potser s\'ha esborrat la memòria cau durant el processament.\nIntenteu-ho de nou si us plau</string>
-    <string name="import_succeeded_but_check_database">La importació de dades ha funcionat correctament, però ha fallat la neteja posterior a la importació. Executeu la comprovació de la base de dade més tard. Causa fonamental: %s</string>
-    <string name="import_error_corrupt_zip">El fitxer apkg està malmès. Suprimiu-lo i torneu-lo a descarregar.\n\nCausa fonamental: %s</string>
     <string name="import_error_handle_exception">No ha estat possible importar el paquet\n\n%s</string>
     <string name="import_error_not_apkg_extension">El nom del fitxer \"%s\" no té l\'extensió .apkg o .colpkg</string>
     <string name="import_error_load_imported_database">Les substitucions a la base de dades Anki (.anki2) encara no són suportades. Consulteu el manual per obtenir instruccions de substitució.</string>
@@ -181,8 +169,6 @@
     <string name="import_error_copy_to_cache">No ha estat possible copiar el fitxer a la memòria cau (segurament falta espai)</string>
     <string name="import_error_multiple_colpkg">Heu triat diversos fitxers colpkg.</string>
     <string name="import_error_colpkg_apkg">Heu triat els fitxers  apkg &amp; i colpkg alhora.</string>
-    <string name="import_stats_error">S\'han produït alguns errors en importar els fitxers següents:\n%s</string>
-    <string name="import_replacing">Substituint la col·lecció&#8230;</string>
     <string name="import_interrupted">Importació interrompuda: AnkiDroid s\'ha tancat</string>
     <string name="export_include_schedule">Incloueu la planificació</string>
     <string name="export_include_media">Incloure multimèdia</string>
@@ -196,12 +182,11 @@
         <item quantity="one">Voleu exportar com a fitxer apkg la bota que heu triat?</item>
         <item quantity="other">Voleu exportar com a fitxer apkg les %d notes que heu triat?</item>
     </plurals>
-    <string name="export_in_progress">Exportant arxiu de paquet Anki&#8230;</string>
-    <string name="export_success_title">La col·lecció s\'ha exportat correctament</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No hi ha aplicacions disponibles per a gestionar apkg. Desant...</string>
     <string name="export_save_apkg_successful">Paquet Anki desat amb èxit</string>
     <string name="export_save_apkg_unsuccessful">Error al desar paquet Anki</string>
-    <string name="export_success_message">Podeu triar una ubicació per desar el fitxer o compartir-ho amb una altra aplicació.</string>
     <string name="export_share_title">Voleu enviar el paquet Anki?</string>
     <string name="export_email_subject">Notes exportades a AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Hola!
@@ -211,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Triu on voleu desar el fitxer</string>
-    <string name="export_select_share_app">Selecciona l\'aplicació per compartir</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opcions d\'estudi</string>
     <string name="menu__deck_options">Opcions de paquet</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opcions d\'estudi</string>
@@ -222,47 +207,11 @@
     <string name="dyn_deck_desc">Es tracta d\'un paquet especial per a l\'estudi fora de la planificació normal. Després de revisar-les, les fitxes es tornaran automàticament al seus paquets originals. Si suprimiu aquest paquet de la llista de paquets, totes les fitxes tornaran al seu paquet inicial.</string>
     <string name="steps_error">Els passos han de ser números majors que 0</string>
     <string name="steps_min_error">Com a mínim un pas s\'exigeix</string>
-    <string name="sched_end">(fi)</string>
-    <string name="sched_unbury_action">Per veure-les apreti el botó de \"Desenterrar\" al menú.</string>
-    <string name="sched_has_buried">Algunes cartes relacionades o enterrades es van retardar fins demà.</string>
     <string name="tag_editor_add_feedback">Prem \"%2$s\" per confirmar afegir \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Etiqueta existent \"%1$s\" seleccionada</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s segon</item>
-        <item quantity="other">%s segons</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minut</item>
-        <item quantity="other">%s minuts</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s hora</item>
-        <item quantity="other">%s hores</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s dia</item>
-        <item quantity="other">%s dies</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mes</item>
-        <item quantity="other">%s mesos</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s any</item>
-        <item quantity="other">%s anys</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s segons</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Aquest mall ja existeix</string>
     <string name="decks_rename_filtered_nosubdecks">Un mall filtrat no pot tenir submalls</string>
-    <string name="filtered_deck_name">Mall filtrat</string>
     <string name="reminder_title">No t\'oblidis d\'estudiar avui!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d carta per revisar a %1$s</item>
@@ -271,14 +220,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Error en compartir l\'arxiu apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Aquest arxiu requereix una versió més recent d\'Anki.</string>
     <string name="activity_start_failed">El sistema no té instal·lada cap aplicació que pugui realitzar aquesta acció.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les imatges de la càmera poden ser grans. És possible que vulgueu comprimir i canviar la mida de les imatges al directori multimèdia]]></string>
     <string name="no_browser_notification">No s\'ha trobat cap navegador, visiteu la pàgina web amb un ordinador o un mòbil:</string>
     <string name="web_page_error">Error carregant la pàgina: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">No s\'admet enllaç a pàgina externa a la targeta.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Cartes recuperades</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Fons</string>
     <string name="choose_an_image">Selecciona una imatge</string>
@@ -305,7 +251,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Veure</string>
     <string name="anki_js_error_code">(Codi d\'error: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">S\'ha copiat al porta-retalls</string>
     <string name="about_ankidroid_error_copy_debug_info">Error copiant al porta-retalls informació de depuració</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Error de contingut de la carta: Error al carregar \'%s\'</string>
@@ -313,6 +259,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Error al carregar paquet \'%s\'</string>
     <string name="search_decks">Cerca de paquets</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostra el progrés de la migració</string>
     <string name="ankidroid_init_failed_webview_title">Error fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid confia en el sistema WebView que no està disponible. Això pot passar si el sistema instal·la actualitzacions. Torneu-ho a provar d\'aquí a uns quants minuts.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -325,7 +272,6 @@
     <string name="insert_heading">Insereix titular</string>
     <string name="format_font_size">Canvia la mida de la lletra</string>
     <string name="insert_mathjax">Insereix equació MathJax</string>
-    <string name="insert_cloze">Insertar supressió parcial</string>
     <string name="note_editor_toolbar_icon">Text del botó</string>
     <string name="before_text">HTML abans de la selecció</string>
     <string name="after_text">HTML després de la selecció</string>
@@ -361,12 +307,13 @@
     <string name="deck_download_progress_message">Es poden usar altres aplicacions mentre es fa la baixada</string>
     <string name="check_network">Comproveu la vostra connexió de xarxa si us plau</string>
     <string name="search_using_deck_name">Cercar usant el nom del paquet</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Inici</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">S\'ha enterrat la targeta.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
+        <item quantity="one">%d fitxa suspesa</item>
         <item quantity="other">%d cards suspended.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
@@ -377,8 +324,6 @@
     <string name="scoped_storage_postpone">Ajorna-ho</string>
     <string name="scoped_storage_migrate">Migra</string>
     <string name="search_card_js_api_no_results">La cerca ha tornat cap resultat</string>
-    <string name="sync_impossible_during_migration">La sincronització està desactivada mentre dura la migració.\n
-         Queden per migrar %1$d fitxers multimèdia.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">S\'està iniciant la migració. Podreu reprendre l\'ús d\'AnkiDroid en breu.</string>
     <string name="migration_part_1_done_resume">Podeu tornar a utilitzar l\'AnkiDroid.
@@ -401,11 +346,10 @@
     <string name="intro_sync_from_ankiweb">Sincronitza-ho amb AnkiWeb</string>
     <string name="already_logged_in">Ja heu iniciat la sessió</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">El paquet ja existeix</string>
     <string name="deck_created">S\'ha generat un paquet</string>
     <string name="deck_renamed">S\'ha canviat el nom del paquet</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">S\'ha suprimit el paquet. Si us plau, elimineu la drecera</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Targetes</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notes</string>
@@ -413,9 +357,9 @@
     <string name="toggle_browser_mode_help">Alterna entre mostrar targetes i notes al navegador</string>
     <string name="truncate_content_help">Trunca l\'alçada de cada fila del navegador per mostrar només les 3 primeres línies de contingut</string>
     <string name="browser_options_dialog_heading">Opcions del navegador</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Aquesta funcionalitat no està disponible durant una migració d\'emmagatzematge
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toqueu per iniciar la migració d\'emmagatzematge</string>
+    <string name="media_sync_required_title">Cal sincronitzar els mitjans</string>
+    <string name="media_sync_unavailable_message">La sincronització multimèdia està desactivada als paràmetres. Si us plau, abans de continuar, sincronitzeu i feu una còpia de seguretat de qualsevol mitjà que no s\'hagi sincronitzat</string>
 </resources>

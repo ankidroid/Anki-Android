@@ -29,7 +29,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Pamahalaan ang mga uri ng tala</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Pamahalaan ang mga patlang</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">Hindi mo maaaring tanggalin o burahin ang iyong huling uri ng tala.</string>
     <string name="toast_last_field">Ang mga uri ng tala ay dapat magkaroon ng hindi bababa sa isang larangan</string>
     <string name="toast_empty_name">Dapat kang magpasok ng pangalan</string>
     <string name="toast_duplicate_field">Ginamit na ang pangalan ng patlang</string>
@@ -47,9 +47,8 @@
     <string name="model_browser_delete">Tanggalin ang uri ng tala</string>
     <string name="model_browser_rename" comment="Rename a note type">Palitan ang pangalan</string>
     <string name="model_browser_template">I-edit ang mga card</string>
-    <string name="model_browser_add">Magdagdag ng uri ng tala</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">Palitan ang pangalan ng uri ng tala.</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
     <!--Field Editing-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Ina-update ang mga patlang</string>
     <string name="model_field_editor_sort_field">Ayusin ayon sa patlang na ito</string>
-    <string name="model_clone_suffix">kopya</string>
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Sigurado ka bang nais mong tanggalin ang field na ito?</string>

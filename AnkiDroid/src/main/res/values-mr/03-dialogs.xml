@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">डेटाबेस तपासा?</string>
     <string name="check_db_warning">यास बराच काळ लागू शकेल</string>
-    <string name="check_db_acknowledge">डेटाबेस तपासला</string>
-    <string name="check_db_acknowledge_shrunk">डेटाबेस तपासला आणि ऑप्टिमाइझ केला. \n%d MB द्वारे शर्करा.</string>
     <string name="contextmenu_deckpicker_delete_deck">डेक हटवा</string>
-    <string name="delete_deck_default_deck">डीफॉल्ट डेक हटविला जाऊ शकत नाही</string>
     <string name="delete_deck_title">डेक हटवायचा?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">%1$s मधील सर्व कार्डे हटवायची? यात %2$d कार्ड आहे.</item>
-        <item quantity="other">%1$s मधील सर्व कार्डे हटवायची? यात %2$d कार्ड आहे.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">%s मधील सर्व कार्डे त्यांच्या मूळ डेकवर परत पाठवायची?</string>
     <string name="no_tts_available_message">मजकूर-ते-भाषणाची भाषा उपलब्ध नाही</string>
     <string name="initializing_tts">टीटीएस प्रारंभ करीत आहे&#8230;</string>
     <string name="tts_no_tts">बोलू नका</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">डेकमधून सहजतेने x कार्ड निवडा:</string>
     <string name="custom_study_preview">शेवटच्या x दिवसात जोडलेल्या नवीन कार्डांचे पूर्वावलोकन करा:</string>
     <string name="custom_study_rebuild_deck_corrupt">सानुकूल अभ्यास डेक पुन्हा तयार करू शकलो नाही</string>
-    <string name="importing_collection">संग्रह आयात करीत आहे&#8230;</string>
-    <string name="import_media_count">%1$d%% मीडिया फाइल्स आयात करीत आहे&#8230;</string>
-    <string name="import_progress">Notes नोट्स आयात करीत आहे:%1$d%% \ n cards कार्ड आयात करीत आहे:%2$d%% \n • पोस्ट-प्रक्रिया:%3$d%%</string>
-    <string name="import_update_details">विद्यमान नोट्स %2$d पैकी %1$d अद्यतनित केले.</string>
-    <string name="import_update_ignored">काही अद्यतनांकडे दुर्लक्ष केले गेले कारण टीपाचा प्रकार बदलला आहे</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
@@ -135,18 +118,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">असक्रिय</string>
     <string name="dialog_positive_overwrite">अधिलिखित</string>
-    <string name="dialog_positive_remove">काढा</string>
     <string name="dialog_positive_repair">दुरुस्ती</string>
     <string name="dialog_positive_replace">पुनर्स्थित करा</string>
-    <string name="dialog_positive_restore">पुनर्संचयित करा</string>
-    <string name="dialog_positive_set">सेट</string>
     <string name="dialog_collection_path_not_dir">निर्दिष्ट पथ वैध निर्देशिका नाही</string>
     <!-- Media checking -->
     <string name="check_media_title">मीडिया तपासा?</string>
     <string name="check_media_warning">मोठ्या मीडिया संकलनासह यास बराच वेळ लागू शकेल</string>
     <string name="check_media_message">मीडिया तपासत आहे&#8230;</string>
     <string name="check_media_acknowledge">माध्यम तपासले</string>
-    <string name="check_media_failed">मीडिया तपासणी अयशस्वी</string>
     <string name="check_media_invalid">अवैध एन्कोडिंगसह फायली:%d</string>
     <string name="check_media_unused">मीडिया फोल्डरमधील फायली परंतु कोणत्याही कार्डांद्वारे वापरल्या जात नाहीत:%d</string>
     <string name="check_media_nohave">फायली कार्डावर वापरल्या परंतु मीडिया फोल्डरमध्ये नाहीत:%d</string>
@@ -165,8 +144,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">देय</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">रिक्त कार्ड शोधत आहे ...</string>
-    <string name="confirm_cancel">आपण रद्द करू इच्छिता?</string>
-    <string name="empty_cards_none">रिक्त कार्डे नाहीत</string>
     <string name="empty_cards_count">हटविण्यासाठी कार्डे:%d</string>
     <string name="empty_cards_deleted">कार्ड हटविली:%d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +159,10 @@
     <string name="integrity_check_continue_anyway">तरीही सुरू ठेवा</string>
     <string name="integrity_check_insufficient_space">तपासणी डेटाबेसमध्ये मोठ्या प्रमाणात तात्पुरते संचयन वापरले जाते. Continuing \n\n सुरू ठेवण्यापूर्वी आपल्याकडे कमीतकमी %s मोकळी जागा असावी अशी जोरदार शिफारस केली जाते.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n आपल्याकडे सध्या%s विनामूल्य आहे.</string>
-    <string name="integrity_check_fixed_no_home_deck">चुकीच्या होम डेकसह %d कार्ड पुनर्प्राप्त केली. अधिक माहितीसाठी कृपया मॅन्युअल पहा.</string>
-    <string name="video_creation_error">व्हिडिओ प्ले करू शकलो नाही</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">डेक बदलणे शक्य झाले नाही</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">कार्ड वरून डेटा डिकोड करताना त्रुटी</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">डेक पर्यायांवर प्रक्रिया करण्यात अयशस्वी:%s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">डेटाबेस लॉक केले</string>
     <string name="database_locked_summary">AnkiDroid डेटाबेस दुसर्‍या अनुप्रयोगाद्वारे वापरात आहे. कृपया अन्य अनुप्रयोग बंद करा आणि नंतर पुन्हा एंकीड्रॉइड उघडा.</string>

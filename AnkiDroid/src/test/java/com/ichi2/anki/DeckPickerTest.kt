@@ -6,18 +6,15 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.view.Menu
 import androidx.core.content.edit
-import androidx.fragment.app.DialogFragment
 import androidx.test.core.app.ActivityScenario
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
-import com.ichi2.anki.dialogs.DeckPickerConfirmDeleteDeckDialog
+import com.ichi2.anki.exception.UnknownDatabaseVersionException
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Storage
-import com.ichi2.libanki.exception.UnknownDatabaseVersionException
 import com.ichi2.testutils.*
-import com.ichi2.testutils.AnkiActivityUtils.getDialogFragment
 import com.ichi2.utils.ResourceLoader
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import net.ankiweb.rsdroid.BackendFactory
 import org.apache.commons.exec.OS
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
@@ -166,7 +163,7 @@ class DeckPickerTest : RobolectricTest() {
             DeckPicker::class.java,
             Intent()
         )
-        assertEquals(10, deckPicker.dueTree!![0].value.newCount.toLong())
+        assertEquals(10, deckPicker.dueTree!!.children[0].newCount.toLong())
     }
 
     @Test
@@ -180,28 +177,6 @@ class DeckPickerTest : RobolectricTest() {
         deckPicker.confirmDeckDeletion(did)
         advanceRobolectricLooperWithSleep()
         assertThat("deck was deleted", col.decks.count(), equalTo(1))
-    }
-
-    @Test
-    fun deletion_of_filtered_deck_shows_warning_issue_10238() {
-        if (!BackendFactory.defaultLegacySchema) {
-            // undoable
-            return
-        }
-        // Filtered decks contain their own options, deleting one can cause a significant loss of work.
-        // And they are more likely to be empty temporarily
-        val did = addDynamicDeck("filtered")
-        val deckPicker = startActivityNormallyOpenCollectionWithIntent(
-            DeckPicker::class.java,
-            Intent()
-        )
-        deckPicker.confirmDeckDeletion(did)
-        val fragment = deckPicker.getDialogFragment<DialogFragment>()
-        assertThat(
-            "deck deletion confirmation window should be shown",
-            fragment,
-            instanceOf(DeckPickerConfirmDeleteDeckDialog::class.java)
-        )
     }
 
     @Test
@@ -275,7 +250,7 @@ class DeckPickerTest : RobolectricTest() {
             grantWritePermissions()
             BackupManagerTestUtilities.setupSpaceForBackup(targetContext)
             // We don't show it if the user is new.
-            AnkiDroidApp.getSharedPrefs(targetContext).edit().putString("lastVersion", "0.1")
+            targetContext.sharedPrefs().edit().putString("lastVersion", "0.1")
                 .apply()
             val d = super.startActivityNormallyOpenCollectionWithIntent(
                 DeckPickerEx::class.java,
@@ -345,7 +320,7 @@ class DeckPickerTest : RobolectricTest() {
             // Neither collection, not its models will be initialized without storage permission
 
             // assert: Lazy Collection initialization CollectionTask.LoadCollectionComplete fails
-            assertFailsWith<Exception> { d.col }
+            assertFailsWith<Exception> { d.getColUnsafe }
         } finally {
             disableNullCollection()
         }
@@ -361,12 +336,12 @@ class DeckPickerTest : RobolectricTest() {
             )
             assertThat(
                 "Collection initialization ensured by CollectionTask.LoadCollectionComplete",
-                d.col,
+                d.getColUnsafe,
                 notNullValue()
             )
             assertThat(
                 "Collection Models Loaded",
-                d.col.models,
+                d.getColUnsafe.notetypes,
                 notNullValue()
             )
         } finally {
@@ -391,7 +366,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should now be open",
-                CollectionHelper.instance.colIsOpen()
+                CollectionHelper.instance.colIsOpenUnsafe()
             )
             assertThat(
                 CollectionType.SCHEMA_V_16.isCollection(
@@ -409,6 +384,7 @@ class DeckPickerTest : RobolectricTest() {
         }
     }
 
+    @Ignore("needs refactoring")
     @Test
     fun corruptVersion16CollectionShowsDatabaseError() {
         try {
@@ -424,7 +400,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should not be open",
-                !CollectionHelper.instance.colIsOpen()
+                !CollectionHelper.instance.colIsOpenUnsafe()
             )
             assertThat(
                 "An error dialog should be displayed",
@@ -448,7 +424,7 @@ class DeckPickerTest : RobolectricTest() {
             waitForAsyncTasksToComplete()
             assertThat(
                 "Collection should not be open",
-                !CollectionHelper.instance.colIsOpen()
+                !CollectionHelper.instance.colIsOpenUnsafe()
             )
             assertThat(
                 "An error dialog should be displayed",
@@ -522,14 +498,14 @@ class DeckPickerTest : RobolectricTest() {
         val collectionDirectory = p.parent
 
         // set collection path
-        AnkiDroidApp.getSharedPrefs(targetContext).edit {
+        targetContext.sharedPrefs().edit {
             putString(CollectionHelper.PREF_COLLECTION_PATH, collectionDirectory)
         }
 
         // ensure collection not loaded yet
         assertThat(
             "collection should not be loaded",
-            CollectionHelper.instance.colIsOpen(),
+            CollectionHelper.instance.colIsOpenUnsafe(),
             equalTo(false)
         )
     }
@@ -551,7 +527,7 @@ class DeckPickerTest : RobolectricTest() {
         );
 
         fun isCollection(col: com.ichi2.libanki.Collection): Boolean {
-            return col.decks.allNames().contains(deckName)
+            return col.decks.byName(deckName) != null
         }
     }
 

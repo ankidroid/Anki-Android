@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Uitgeschakeld</string>
-    <string name="enabled">Ingeschakeld</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Druk midden rechts</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Druk linksonder</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Druk rechtsonder</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">Gebruik ook kanji/katakana, emoji/kao-moji knoppen voor scrollen</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Schakelt het contextmenu \' \'%s\' overal in</string>
     <string name="double_scrolling_gap" maxLength="41">Sneller scrollen</string>
@@ -136,11 +133,11 @@
     <string name="sync_status_badge_summ">Verander het synchronisatie-icoon wanneer wijzigingen kunnen worden geüpload</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Thema</string>
     <string name="day_theme" maxLength="41">Dag thema</string>
     <string name="night_theme" maxLength="41">Nacht thema</string>
-    <string name="default_font" maxLength="41">Standaardlettertype</string>
-    <string name="override_font" maxLength="41">Toepassen van het standaard lettertype</string>
     <string name="language" maxLength="41">Taal</string>
     <string name="language_system">Systeemtaal</string>
     <string name="notification_pref" maxLength="41">Meldingen</string>
@@ -154,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">Time-out antwoord</string>
     <string name="timeout_answer_summ">Toon antwoord automatisch zonder invoer van de gebruiker. Tijd voor het automatisch spelen van audio files is in rekening gehouden.</string>
     <string name="timeout_answer_seconds" maxLength="41">Tijd om het antwoord te tonen</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Tijd om de volgende vraag te tonen</string>
     <string name="select_locale_title">Taal selecteren</string>
     <string name="software_render" maxLength="41">Hardware render kaart uitschakelen</string>
@@ -166,9 +162,10 @@
     <string name="disable_extended_text_ui_summ">Laat het contextmenu \'Invuloefening\' toe in de landschapsmodus.</string>
     <string name="vertical_centering" maxLength="41">Uitlijnen in het midden</string>
     <string name="vertical_centering_summ">De inhoud van kaarten verticaal centreren</string>
-    <string name="pref_backup_max" maxLength="41">Maximum aantal back-ups</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Dubbele aanraking tijdsinterval (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Een tweede aanraking op de antwoordknoppen wordt genegeerd als deze tijd nog niet voorbij is gegaan. Dit voorkomt dubbele aanrakingen.</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Herhaaltijd in knoppen</string>
     <string name="show_estimates_summ">In de antwoordknoppen weergeven wanneer de volgende overhoring is</string>
     <string name="show_large_answer_buttons" maxLength="41">Laat grote antwoordknoppen zien</string>
@@ -180,18 +177,13 @@
     <string name="show_eta" maxLength="41">Toon ETA</string>
     <string name="show_eta_summ">Resterende tijd tonen</string>
     <string name="use_current" maxLength="41">Set voor nieuwe kaarten</string>
-    <string name="new_spread" maxLength="41">Positie nieuwe kaart</string>
     <string name="learn_cutoff" maxLength="41">Max vooruit leren</string>
     <string name="time_limit" maxLength="41">Stel een tijdslimiet in</string>
     <string name="new_timezone" maxLength="41">Nieuwe tijdzone afhandeling</string>
     <string name="day_offset_with_description" maxLength="41">Begin van de volgende dag (0 is middernacht, 23 is 11PM)</string>
     <string name="day_offset_summary">%s uur na middernacht</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Middernacht</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Scherm aanlaten</string>
     <string name="pref_keep_screen_on_summ">Schermtimeout uitschakelen</string>
-    <string name="convert_fen_text" maxLength="41">Schaaknotaties</string>
-    <string name="convert_fen_text_summ">Teken schaakbord met de Forsyth-Edwards notering. Voor de notering gebruik de [fen][/fen] tags.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API inschakelen</string>
     <string name="enable_api_summary">Laat andere apps verbinding maken met AnkiDroid en gegevens zonder uw tussenkomst lezen/schrijven</string>
     <string name="custom_buttons" maxLength="41">App bar knoppen</string>
@@ -200,8 +192,8 @@
     <string name="custom_buttons_setting_if_room">Toon als er ruimte is</string>
     <string name="custom_buttons_setting_menu_only">Alleen menu</string>
     <string name="reset_custom_buttons" maxLength="41">Standaardinstellingen herstellen</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Instellingen terugzetten op standaard</string>
+    <string name="reset">Resetten</string>
     <string name="thirdparty_apps_title" maxLength="41">API-apps van derden</string>
     <string name="thirdparty_apps_summary">Raadpleeg de lijst van applicaties die gebruik maken van de AnkiDroid API zoals woordenboeken, hulpprogramma\'s.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript debugging</string>
@@ -217,17 +209,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Alle bestanden bij media-import toestaan</string>
     <string name="media_import_allow_all_files_summ">Als Android een mediabestand niet herkent</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Standaardset bij het openen van statistieken</string>
-    <string name="stats_default_deck_current">Statistieken van meest recente set tonen</string>
-    <string name="stats_default_deck_all">Statistieken voor alle sets weergeven</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Geavanceerde statistieken</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Geavanceerde statistieken inschakelen</string>
-    <string name="enable_advanced_statistics_summ">Laat prognose statistieken zien op basis van een berekening of simulatie van toekomstige overhoringen (ingeschakeld) of op basis van de reeds ingeplande toekomstige overhoringen (uitgeschakeld).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Eerste n dagen berekenen, rest simuleren</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Nauwkeurigheid van de berekening</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Aantal iteraties van de simulatie</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Aangepaste synchronisatie-server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Niet gebruikt</string>
@@ -240,67 +221,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Toetsenbord</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Command mapping</string>
+    <string name="answer_buttons" maxLength="41">Antwoordknoppen</string>
+    <string name="card" maxLength="41">Kaart</string>
+    <string name="note" maxLength="41">Notitie</string>
+    <string name="navigation" maxLength="41">Navigatie</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Diversen</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Veranderingen in de setgroepopties zullen een invloed hebben op meerdere sets. Als u alleen de huidige set wilt wijzigen, voeg dan eerst een nieuwe optiegroep toe</string>
     <string name="studyoptions_limit_select_tags">Selecteer Tags</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Setbeschrijving (beïnvloedt alleen de huidige set)</string>
-    <string name="deck_conf_group" maxLength="41">Optiesgroep</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d set gebruikt in deze groep</item>
-        <item quantity="other">%1$s\n%2$d sets gebruikt in deze groep</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Nieuwe kaarten</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Overhoringen</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Missers</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Algemeen</string>
     <string name="deck_conf_reminders" maxLength="41">Herinneringen</string>
-    <string name="deck_conf_steps" maxLength="41">Stappen (in minuten)</string>
-    <string name="deck_conf_order" maxLength="41">Volgorde</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Nieuwe kaarten/dag</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Afstuderen interval</string>
-    <string name="deck_conf_days">XXX dag(en)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Gemakkelijk interval</string>
-    <string name="deck_conf_start_ease" maxLength="41">Begin gemakkelijk</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maximale overhoringen/dag</string>
-    <string name="deck_conf_new_bury" maxLength="41">Blokkeer gerelateerde nieuwe kaarten</string>
-    <string name="deck_conf_new_bury_summ">Gerelateerde nieuwe kaarten worden geblokkeerd tot de volgende dag</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Verberg gerelateerde overhoringen</string>
-    <string name="deck_conf_rev_bury_summ">Gerelateerde overhoringen worden verborgen tot de volgende dag</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Algemene instellingen gebruiken</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Gebruik de algemene instellingen voor \'Automatisch antwoord weergeven\' in plaats van de instellingen voor deze groep.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bonus bij gemakkelijk</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Moeilijk interval</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Intervalsfactor</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Grootste interval</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Nieuw interval</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Kleinste interval</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Drempel voor moeilijke kaart</string>
-    <string name="deck_conf_fails">XXX mislukt</string>
-    <string name="deck_conf_leech_action" maxLength="41">Actie bij moeilijke kaart</string>
-    <string name="deck_conf_max_time" maxLength="41">Maximale antwoordtijd</string>
-    <string name="deck_conf_seconds">XXX seconden</string>
-    <string name="deck_conf_timer" maxLength="41">Toon stopwatch</string>
-    <string name="deck_conf_autoplay" maxLength="41">Geluid automatisch afspelen</string>
-    <string name="deck_conf_replayq" maxLength="41">Vraag opnieuw stellen</string>
-    <string name="deck_conf_replayq_summ">Bij het antwoord ook het geluid van de vraag en het antwoord afspelen</string>
-    <string name="deck_conf_manage" maxLength="41">Groepenbeheer</string>
-    <string name="deck_conf_manage_summ">Set aan instellingen toevoegen en wijzigen</string>
-    <string name="deck_conf_current_group" maxLength="41">Huidige groep</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Naam wijzigen</string>
-    <string name="deck_conf_reset" maxLength="41">Standaardinstellingen herstellen</string>
-    <string name="deck_conf_reset_message">Standaardwaarden instellen voor de huidige set aan instellingen?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Configuratie toevoegen</string>
-    <string name="deck_conf_add_summ">Maak een kopie van de huidige groep instellingen</string>
-    <string name="deck_conf_remove_message">Huidige set aan instellingen verwijderen?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Instellen voor alle subsets</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s subset zal gebruikmaken van deze groep</item>
-        <item quantity="other">%s subsets zullen gebruikmaken van deze groep</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Huidige set aan instellingen laten gelden voor alle subsets van deze set?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Lettertype browser/bewerker</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41">Zoeken</string>
     <string name="deck_conf_cram_limit" maxLength="41">Beperken tot</string>
@@ -310,8 +241,6 @@
     <string name="deck_conf_cram_filter_2_check">Tweede filter inschakelen</string>
     <string name="deck_conf_cram_steps" maxLength="41">Aangepaste stappen (in minuten)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Aangepaste stapgroottes definiëren</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Herinnering meldingen voor sets in deze setgroep inschakelen</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Herinneren op</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help AnkiDroid te verbeteren!</string>
     <string name="analytics_title" maxLength="41">Gebruik van functies delen</string>
@@ -348,12 +277,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Verwijder ‘%s’</string>
     <string name="bindings_already_bound">Reeds gekoppeld aan %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimenteel</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Schakel de ‘%s’ in</string>
-    <string name="use_rust_backend_title" maxLength="41">Gebruik de nieuwe backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Gebruik de v3 planner</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimenteel</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Opties voor ontwikkelaars</string>
     <string name="dev_options_enabled_pref" maxLength="41">Opties voor ontwikkelaars inschakelen</string>
@@ -363,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.
@@ -380,46 +303,45 @@
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Ruimte beheren</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Foutmelding</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d bestand\n%2$s</item>
+        <item quantity="other">%1$d bestanden\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Ongebruikte mediabestanden verwijderen</string>
+    <string name="pref__delete_unused_media_files__summary">Verwijder afbeeldingen en andere media die niet zijn voorafgegaan door _ en niet worden genoemd door notities</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Ongebruikte mediabestanden verwijderen</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Back-ups verwijderen</string>
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Back-ups verwijderen</string>
     <string name="progress__deleting_backups">Back-ups verwijderen&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Verwijder collectie</string>
+    <string name="pref__delete_collection__summary">Verzameling, media en back-ups verwijderen. App-instellingen worden niet verwijderd</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Verwijder collectie</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Weet je zeker dat je je verzameling, media en backups wilt verwijderen?\n\nOpmerking: deze actie zal het venster sluiten.</string>
+    <string name="progress__deleting_collection">Collectie verwijderen&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Alles verwijderen</string>
+    <string name="pref__delete_everything__summary">Collectie, media, back-ups en instellingen verwijderen</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Alles verwijderen?</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Weet je zeker dat je alle gegevens wilt verwijderen? Dit omvat je verzameling, media, back-ups en voorkeuren.\n\nOpmerking: deze actie sluit het venster.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">App-gegevens verwijderen</string>
+    <string name="pref__delete_app_data__summary">Instellingen en andere app-gegevens verwijderen</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">App-gegevens verwijderen</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Geen collectie</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Foutmelding</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Ophalen&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Berekenen&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collectie bestaat niet</string>
 </resources>

@@ -44,18 +44,10 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="check_db_title">Adatbázis ellenőrzése</string>
+    <string name="check_db_title">Adatbázis ellenőrzése?</string>
     <string name="check_db_warning">Ez sokáig tarthat</string>
-    <string name="check_db_acknowledge">Adatbázis ellenőrizve</string>
-    <string name="check_db_acknowledge_shrunk">Adatbázis ellenőrizve és optimalizálva.\n%d MB-t csökkent.</string>
     <string name="contextmenu_deckpicker_delete_deck">Pakli törlése</string>
-    <string name="delete_deck_default_deck">Az alapértelmezett pakli nem törölhető</string>
     <string name="delete_deck_title">Pakli törlése</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Minden kártya törlése %1$s? -ból %2$d kártyát tartalmaz.</item>
-        <item quantity="other">Minden kártya törlése %1$s-ból? %2$d kártyát tartalmaz.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Biztosan szeretnéd, hogy a %s kártyái visszakerüljenek az eredeti paklijukba?</string>
     <string name="no_tts_available_message">Nincs rendelkezésre álló szövegfelolvasási nyelv</string>
     <string name="initializing_tts">TTS indítása&#8230;</string>
     <string name="tts_no_tts">Ne beszélj</string>
@@ -94,7 +86,7 @@
     <string name="answering_error_title">Adatbázis hiba</string>
     <string name="answering_error_message">A gyűjteménybe írás sikertelen. Az adatbázis lehet, hogy korrupt vagy nincs elég hely a lemezen.\n\n. Ha gyakrabban történik ilyen, akkor próbálja ellenőrizni az adatbázist, javítsa meg a gyűjteményt vagy állítsa azt vissza egy biztonsági másolatból. Ehhez nyomjon rá a \"beállításokra\".\n. Vagy lehet, hogy ez egy AnkiDroid bug; kérjük jelentse a hibát, hogy le tudjuk ellenőrizni.</string>
     <string name="answering_error_report">Hibák jelentése</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Nincs elég szabad tárhely az AnkiDroid megnyitásához. Szabadítson fel helyet a folytatáshoz.</string>
     <string name="repair_deck_dialog">Tényleg megpróbálod megjavítani az adatbázist?\n\nEnnek megkísérlése előtt a program létrehoz egy másolatot a \'%s\' almappában.</string>
     <string name="intent_aedict_empty">Az \"alap\" kategória üres</string>
     <string name="intent_aedict_category">Hogy új kártyákat adj az AnkiDroid-hoz, távolítsd el az összes Jegyzettömb/Notepad/ kategóriát, vagy adj hozzá egyet \'default\' névvel</string>
@@ -107,17 +99,8 @@
     <string name="custom_study_random">A pakliból x kártya véletlen kiválasztása:</string>
     <string name="custom_study_preview">Az elmúlt x nap új kártyáinak előre átnézése:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nem lehetett újraépíteni a jelenlegi egyéni tanulókártyákat</string>
-    <string name="importing_collection">Gyűjtemény importálása.\nKérlek, várj&#8230;</string>
-    <string name="import_media_count">Média fájlok importálása %1$d%%\nKérlek, várj&#8230;</string>
-    <string name="import_progress">• Importált megjegyzések: %1$d%%\n• importált kártyák: %2$d%%\n• utómunka: %3$d%%</string>
-    <string name="import_update_details">Frissített %1$d %2$d meglévő jegyzetek.</string>
-    <string name="import_update_ignored">Néhány frissítést figyelmen kívül hagytak, mert a jegyzet típusa megváltozott</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Importált kártyák: %2$d</item>
-        <item quantity="other">Importált kártyák: %2$d</item>
-    </plurals>
-    <string name="storage_full_title">Storage full</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_full_title">Tárhely megtelt</string>
+    <string name="storage_almost_full_title">Tárhely majdnem megtelt</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nincs hely</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid-nak szüksége van %s szabad tárterületre a folytatáshoz. Szabadíts fel helyet, légyszíves!</string>
     <string name="restore_backup_title">Biztonsági mentés visszaállítása?</string>
@@ -125,7 +108,7 @@
     <string name="restore_backup_choose_another">Válasszon másikat</string>
     <string name="dialog_cancel">Mégsem</string>
     <string name="dialog_ok">OK</string>
-    <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
+    <string name="dialog_confirm" tools:ignore="UnusedResources">Megerősít</string>
     <string name="dialog_no">Nem</string>
     <string name="dialog_yes">Igen</string>
     <string name="dialog_continue">Folytatás</string>
@@ -135,18 +118,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Letilt</string>
     <string name="dialog_positive_overwrite">Felülír</string>
-    <string name="dialog_positive_remove">Eltávolít</string>
     <string name="dialog_positive_repair">Javít</string>
     <string name="dialog_positive_replace">Kicserél</string>
-    <string name="dialog_positive_restore">Visszaállít</string>
-    <string name="dialog_positive_set">Beállít</string>
     <string name="dialog_collection_path_not_dir">A megadott elérési út nem érvényes mappa</string>
     <!-- Media checking -->
     <string name="check_media_title">Média ellenőrzése?</string>
     <string name="check_media_warning">Ez sokáig tarthat nagy média gyűjtemények esetén</string>
     <string name="check_media_message">Média ellenőrzése&#8230;</string>
     <string name="check_media_acknowledge">Média ellenőrizve</string>
-    <string name="check_media_failed">Média ellenőrzés sikertelen</string>
     <string name="check_media_invalid">Érvénytelen kódolású fájlok: %d</string>
     <string name="check_media_unused">Fájlok a média mappában, használaton kívül: %d</string>
     <string name="check_media_nohave">Fájlok kártyákon, de mappából hiányozva: %d</string>
@@ -165,8 +144,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Esedékes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Üres kártyák keresése&#8230;</string>
-    <string name="confirm_cancel">Meg akarod szakítani?</string>
-    <string name="empty_cards_none">Nem találtam üres kártyát</string>
     <string name="empty_cards_count">%d darab törlendő kártya</string>
     <string name="empty_cards_deleted">%d darab kártya törölve</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +159,10 @@
     <string name="integrity_check_continue_anyway">Folytatás Mindenképpen</string>
     <string name="integrity_check_insufficient_space">Az Adatbázis ellenőrzés sok ideiglenes helyet használ.\n\n.Erősen ajánlott, hogy legalább %s szabad tárhelyed legyen a készüléken mielőtt folytatnád.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nJelenleg %s szabad hely van.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d kártya helytelen főkártyával lett visszaszerezve. Kérjük olvassa el az útmutatót további információért.</string>
-    <string name="video_creation_error">Nem sikerült lejátszani a videót</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Nem sikerült paklit változtatni</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Hiba a kártya adatainak dekódolása közben</string>
-    <string name="undo_succeeded">%s visszavonva</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Sikertelen a pakli beállításainak feldolgozása: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Adatbázis zárolva</string>
     <string name="database_locked_summary">Az AnkiDroid adatbázist egy másik alkalmazás használja. Kérjük zárja be ezt az alkalmazást, majd nyissa meg újra az AnkiDroidot.</string>
@@ -230,7 +202,7 @@
     <string name="help_item_support_develop_ankidroid">Feljesztés</string>
     <string name="help_item_support_rate_ankidroid">Értékelés</string>
     <string name="help_item_support_other_ankidroid">Egyéb</string>
-    <string name="multimedia_editor_trans_translate">Translate</string>
+    <string name="multimedia_editor_trans_translate">Fordítás</string>
     <string name="help_title_community">Közösség</string>
     <string name="help_item_anki_forums">Anki fórumok</string>
     <string name="help_item_discord">Discord</string>
@@ -247,7 +219,7 @@
         <item quantity="one">Egy auto szinkronizálás elindulhat %d másodperc elteltével.</item>
         <item quantity="other">Egy automatikus szinkronizálás elindulhat %d másodperc múlva</item>
     </plurals>
-    <string name="metered_sync_warning">Your connection is metered. Data transfer may cost money</string>
+    <string name="metered_sync_warning">A kapcsolat forgalmi díjas. Az adatátvitel pénzbe kerülhet</string>
     <string name="deck_picker_new">A ma megnézendő új kártyák száma ebben a pakliban.</string>
     <string name="deck_picker_rev">A ma elvégzendő kártyák száma ebben a pakliban.</string>
     <string name="deck_picker_lrn">A tanulandó kártyák száma ebben a pakliban.</string>
@@ -261,15 +233,13 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nem hozhatsz létre alpaklit minden paklihoz</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
+    <string name="backup_your_collection">Biztonsági mentés a gyűjteményről</string>
+    <string name="backup_collection_message">Nem készült biztonsági mentés a gyűjteményedről egy ideje. Az adatvesztés elkerülése érdekében ennek itt az ideje</string>
+    <string name="button_backup">Mentés</string>
+    <string name="button_disable_reminder">Emlékeztető kikapcsolása</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Később</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Ne mutassa újra</string>
+    <string name="dismiss_backup_warning_title">Figyelmeztetés adatveszteségről</string>
+    <string name="dismiss_backup_warning_new_user">Az Android adatvédelmi módosításai miatt az adatok és az automatikus biztonsági mentések is törlődnek, ha az alkalmazás eltávolításra kerül.</string>
+    <string name="dismiss_backup_warning_upgrade">Az Android adatvédelmi módosításai miatt az adatok és az automatikus biztonsági mentések is elérhetetlenné válnak, ha az alkalmazás eltávolításra kerül.</string>
 </resources>

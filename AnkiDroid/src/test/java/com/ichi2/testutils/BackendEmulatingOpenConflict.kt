@@ -15,7 +15,6 @@
  */
 package com.ichi2.testutils
 
-import android.content.Context
 import anki.backend.BackendError
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
@@ -25,13 +24,12 @@ import org.mockito.Mockito
 /** Test helper:
  * causes getCol to emulate an exception caused by having another AnkiDroid instance open on the same collection
  */
-class BackendEmulatingOpenConflict(context: Context) : Backend(context) {
+class BackendEmulatingOpenConflict() : Backend() {
     @Suppress("UNUSED_PARAMETER")
     override fun openCollection(
         collectionPath: String,
         mediaFolderPath: String,
-        mediaDbPath: String,
-        forceSchema11: Boolean
+        mediaDbPath: String
     ) {
         val error = Mockito.mock(BackendError::class.java)
         throw BackendDbLockedException(error)
@@ -39,7 +37,7 @@ class BackendEmulatingOpenConflict(context: Context) : Backend(context) {
 
     companion object {
         fun enable() {
-            BackendFactory.setOverride() { context, _, _ -> BackendEmulatingOpenConflict(context) }
+            BackendFactory.setOverride() { BackendEmulatingOpenConflict() }
         }
 
         fun disable() {

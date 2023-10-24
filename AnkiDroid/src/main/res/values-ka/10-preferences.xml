@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">გამორთულია</string>
-    <string name="enabled">ჩართულია</string>
     <string name="pref_summary_seconds">%s წმ</string>
     <string name="pref_summary_minutes">%s წთ</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -72,9 +71,9 @@
     <string name="use_input_tag" maxLength="41">პასუხის აკრეფა ბარათში</string>
     <string name="use_input_tag_summ">Use a text input box inside the card to type in the answer</string>
     <string name="reset_languages" maxLength="41">ენების გადატვირთვა</string>
-    <string name="reset_languages_summ">Reset language assignments (for text to speech and dictionaries) for all decks</string>
-    <string name="reset_languages_question">Reset all language assignments?</string>
-    <string name="reset_confirmation">All states reset</string>
+    <string name="reset_languages_summ">ყველა დასტისთვის (ხმოვანი წამკითხველისთვის და ლექსიკონებისთვის) მისადაგებული ენების დაყენება საწყის პარამეტრებზე</string>
+    <string name="reset_languages_question">დაყენდეს ყველა მისადაგებული ენა საწყის პარამეტრებზე?</string>
+    <string name="reset_confirmation">დაყენდა ყველა საწყისი პარამეტრი</string>
     <string name="card_zoom" maxLength="41">ბარათის ზომა</string>
     <string name="image_zoom" maxLength="41">სურათის ზომა</string>
     <string name="button_size" maxLength="41">პასუხის ღილაკის ზომა</string>
@@ -85,19 +84,19 @@
     <string name="fullscreen_review" maxLength="41">სრულეკრანიანი რეჟიმი</string>
     <string name="full_screen_off">გამორთულია</string>
     <string name="full_screen_system">სისტემის ზოლების დამალვა</string>
-    <string name="full_screen_complete">Hide the system bars and answer buttons</string>
-    <string name="answer_buttons_position" maxLength="41">Answer buttons position</string>
+    <string name="full_screen_complete">სისტემის ზოლების და პასუხის ღილაკების დამალვა</string>
+    <string name="answer_buttons_position" maxLength="41">პასუხის ღილაკის ადგილმდებარეობა</string>
     <string-array name="answer_buttons_position_labels">
         <item>ზევით</item>
         <item>ქვევით</item>
         <item>არცერთი</item>
     </string-array>
     <string name="gestures" maxLength="41">ჟესტების ჩართვა</string>
-    <string name="gestures_summ">Assign gestures to actions such as answering and editing cards.</string>
+    <string name="gestures_summ">ჟესტების მიბმა მოქმედებებთან, როგორებიცაა მაგალითად პასუხის გაცემა ან ბარათის რედაქტირება.</string>
     <string name="gestures_corner_touch" maxLength="41">9-წერტილიანი შეხება</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
+    <string name="gestures_corner_touch_summary">ეკრანის კუთხეებში შეხების ჟესტების დაშვება</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">სრულეკრანიანი რეჟიმის ნავიგაციის პანელი</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">ეკრანის ნებისმიერი წერტილიდან მარჯვნივ გასმისას ნავიგაციის პანელის გახსნა</string>
     <string name="gestures_none" maxLength="41">არცერთი</string>
     <string name="gestures_swipe_up" maxLength="41">ამოსმა</string>
     <string name="gestures_swipe_down" maxLength="41">ჩამოსმა</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">ცენტრის შუაგულში შეხება</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">ქვედა მარცხენა კუთხეში შეხება</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">ქვედა მარჯვენა კუთხეში შეხება</string>
-    <string name="more_scrolling_buttons" maxLength="41">ელ-წამკითხველი</string>
-    <string name="more_scrolling_buttons_summ">Also use kanji/katakana, emoji/kao-moji buttons for scrolling</string>
     <string name="card_browser_enable_external_context_menu">„%s“-მენიუ</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">ორმაგი ჩამოყოლა</string>
@@ -124,56 +121,56 @@
     <string name="tts" maxLength="41">ტექსტის გახმოვანება</string>
     <string name="tts_summ">Reads out question and answer if no sound file is included</string>
     <!-- Sync -->
-    <string name="sync_fetch_missing_media" maxLength="41">Fetch media on sync</string>
+    <string name="sync_fetch_missing_media" maxLength="41">მედიაფაილების სინქრონიზაცია</string>
     <string name="sync_account" maxLength="41">AnkiWeb ანგარიში</string>
     <string name="sync_account_summ_logged_out">არ ხართ შესული</string>
     <string name="automatic_sync_choice" maxLength="41">ავტომატური სინქრონიზაცია</string>
     <string name="automatic_sync_choice_summ">Sync automatically on app start/exit if the last sync was more than 10
         minutes ago.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">ყოველთვის</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">მხოლოდ ულიმიტო ინტერნეტ-კავშირის ქონისას</string>
     <string name="sync_media_never">არასდროს</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
+    <string name="sync_status_badge" maxLength="41">სინქრონიზაციის სტატუსის ჩვენება</string>
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
+    <string name="metered_sync_title" maxLength="41">სინქრონიზაციის დაშვება ლიმიტირებული ტარიფის მქონე კავშირებით</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">იერსახე</string>
     <string name="day_theme" maxLength="41">დღის იერსახე</string>
     <string name="night_theme" maxLength="41">ღამის იერსახე</string>
-    <string name="default_font" maxLength="41">ნაგულისხმევი შრიფტი</string>
-    <string name="override_font" maxLength="41">ნაგულისხმევი შრიფტის გამოყენება</string>
     <string name="language" maxLength="41">ენა</string>
     <string name="language_system">სისტემის ენა</string>
     <string name="notification_pref" maxLength="41">შეტყობინებები</string>
     <string name="notification_pref_title" maxLength="41">შეტყობინება როცა</string>
     <string name="never_notify">არასდროს შეტყობინება</string>
-    <string name="notify_when_pending">Pending messages available</string>
+    <string name="notify_when_pending">ხელმისაწვდომია განსახილველი შეტყობინებები</string>
     <string name="notification_minimum_cards_due">სასწავლოა %d-ზე მეტი ბარათი</string>
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">ვიბრაცია</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">სინათლის ციმციმი</string>
-    <string name="timeout_answer_text" maxLength="41">Automatic display answer</string>
+    <string name="timeout_answer_text" maxLength="41">პასუხის ავტომატური ჩვენება</string>
     <string name="timeout_answer" maxLength="41">პასუხი დროის ამოწურვის შემთხვევაში</string>
     <string name="timeout_answer_summ">Show answer automatically without user input. Delay includes time for automatically played audio files.</string>
-    <string name="timeout_answer_seconds" maxLength="41">Time to show answer</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX წმ</string>
-    <string name="timeout_question_seconds" maxLength="41">Time to show next question</string>
+    <string name="timeout_answer_seconds" maxLength="41">დრო პასუხის ჩვენებამდე</string>
+    <string name="timeout_question_seconds" maxLength="41">დრო შემდეგი კითხვის ჩვენებამდე</string>
     <string name="select_locale_title">ენის არჩევა</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
+    <string name="software_render" maxLength="41">ბარათების აპარატული ვიზუალიზაციის გამორთვა</string>
     <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
     <string name="safe_display" maxLength="41">უსაფრთხო ჩვენების რეჟიმი</string>
-    <string name="safe_display_summ">Disable all animations and use safer method for drawing cards. E-ink devices may require this.</string>
+    <string name="safe_display_summ">ყველა ანიმაციის გამორთვა და ბარათების საჩვენებლად უფრო უსაფრთხო მეთოდის გამოყენება. ელ-წამკითხველებისთვის ეს შეიძლება აუცილებელი იყოს.</string>
     <string name="disable_extended_text_ui" maxLength="41">ცალკე ველის რედაქტირების რეჟიმის გამორთვა</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">ცენტრში მოთავსება</string>
     <string name="vertical_centering_summ">Center the content of cards vertically</string>
-    <string name="pref_backup_max" maxLength="41">სარეზერვო ასლების მაქსიმალური რაოდენობა</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">ორმაგი შეხების შუალედის დრო (მილიწამებში)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="show_estimates" maxLength="41">Show button time</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="show_estimates" maxLength="41">ღილაკზე დროის ჩვენება</string>
     <string name="show_estimates_summ">Show next review time on answer buttons</string>
     <string name="show_large_answer_buttons" maxLength="41">დიდი პასუხის ღილაკების ჩვენება</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
+    <string name="show_large_answer_buttons_summ">პასუხის ღილაკების ორ რიგში ჩვენება</string>
     <string name="show_top_bar" maxLength="41">ზედა ზოლის ჩვენება</string>
     <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
     <string name="show_progress" maxLength="41">დარჩენილის ჩვენება</string>
@@ -181,18 +178,13 @@
     <string name="show_eta" maxLength="41">სავარაუდოდ დარჩენილი დროის ჩვენება</string>
     <string name="show_eta_summ">დარჩენილი დროის ჩვენება</string>
     <string name="use_current" maxLength="41">დასტა ახალი ბარათებისთვის</string>
-    <string name="new_spread" maxLength="41">ახალი ბარათების პოზიცია</string>
-    <string name="learn_cutoff" maxLength="41">Learn ahead limit</string>
-    <string name="time_limit" maxLength="41">Timebox time limit</string>
+    <string name="learn_cutoff" maxLength="41">წინასწარი სწავლის ლიმიტი</string>
+    <string name="time_limit" maxLength="41">განკუთვნილი დროის ლიმიტი</string>
     <string name="new_timezone" maxLength="41">ახალი სასაათო სარტყლის გათვალისწინება</string>
     <string name="day_offset_with_description" maxLength="41">ახალი დღის დასაწყისი</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">შუაღამე</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="day_offset_summary">ნაშუაღამევის %s საათზე</string>
     <string name="pref_keep_screen_on" maxLength="41">ეკრანი ჩართული დარჩეს</string>
     <string name="pref_keep_screen_on_summ">ეკრანის თვითგამორთვის გამორთვა</string>
-    <string name="convert_fen_text" maxLength="41">საჭადრაკო ნოტაციის მხარდაჭერა</string>
-    <string name="convert_fen_text_summ">ჭადრაკის დაფის დახატვა ფორსაით-ედუარდსის ნოტაციის მიხედვით. ნოტაცია უნდა მოთავსდეს [fen][/fen]-ტეგებს შორის.</string>
     <string name="enable_api_title" maxLength="41">AnkiDroid API-ს ჩართვა</string>
     <string name="enable_api_summary">სხვა აპლიკაციებისთვის AnkiDroid-თან დაკავშირებისა და თქვენი ჩარევის გარეშე მონაცემების წაკითხვის / ჩაწერის უფლების მინიჭება</string>
     <string name="custom_buttons" maxLength="41">აპლიკაციის ზოლის ღილაკები</string>
@@ -200,12 +192,12 @@
     <string name="custom_buttons_setting_always_show">ყოველთვის ჩვენება</string>
     <string name="custom_buttons_setting_if_room">ჩვენება ადგილის არსებობის შემთხვევაში</string>
     <string name="custom_buttons_setting_menu_only">მხოლოდ მენიუ</string>
-    <string name="reset_custom_buttons" maxLength="41">Reset to default</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_custom_buttons" maxLength="41">საწყის პარამეტრებზე დაყენება</string>
+    <string name="reset_settings_to_default">პარამეტრების გადაყენება ნაგულისხმევზე</string>
+    <string name="reset">საწყისი პარამეტრების აღდგენა</string>
     <string name="thirdparty_apps_title" maxLength="41">მესამე მხარეების API-აპლიკაციები</string>
     <string name="thirdparty_apps_summary">იხილეთ სია იმ აპლიკაციებისა, როგორებიცაა მაგალითად ლექსიკონები, რომლებიც AnkiDroid-ის API-ს მოიხმარებენ.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript კოდის გამართვა</string>
     <string name="html_javascript_debugging_summ">Enable remote WebView connections, and save card HTML to AnkiDroid directory</string>
     <!-- Appearance settings -->
     <string name="pref_cat_reviewer" maxLength="41">გადამხედველი</string>
@@ -218,19 +210,8 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">ნაგულისხმევი დასტა სტატისტიკის გახსნისას</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">გაღრმავებული სტატისტიკა</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">გაღრმავებული სტატისტიკის ჩართვა</string>
-    <string name="enable_advanced_statistics_summ">Display forecast statistics based on a computation or simulation of future reviews (enabled) or on the future reviews already scheduled (disabled).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Compute first n days, simulate remainder</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">გამოანგარიშების სიზუსტე</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">იტერაციათა რაოდენობა სიმულაციაში</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">Custom sync server</string>
+    <string name="custom_sync_server_title" maxLength="41">სინქრონიზაციის სხვა სერვერი</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">არ არის გამოყენებაში</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
@@ -241,67 +222,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">კლავიატურა</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">ბრძანებების მისადაგება</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">იარლიყების მონიშვნა</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
-    <string name="deck_conf_group" maxLength="41">პარამეტრების ჯგუფი</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d deck uses this group</item>
-        <item quantity="other">%1$s\n%2$d decks use this group</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">ახალი ბარათები</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">გადახედვები</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">გადავიწყებული ბარათები</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">ზოგადი</string>
     <string name="deck_conf_reminders" maxLength="41">შეხსენებები</string>
-    <string name="deck_conf_steps" maxLength="41">ნაბიჯები (წუთებში)</string>
-    <string name="deck_conf_order" maxLength="41">თანმიმდევრობა</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">ახალი ბარათი/დღეში</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Graduating interval</string>
-    <string name="deck_conf_days">XXX დღე</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">შუალედი მარტივი ბარათებისთვის</string>
-    <string name="deck_conf_start_ease" maxLength="41">საწყისი სიმარტივე</string>
-    <string name="deck_conf_max_rev" maxLength="41">მაქასიმალური გადახედვა/დღეში</string>
-    <string name="deck_conf_new_bury" maxLength="41">Bury related new cards</string>
-    <string name="deck_conf_new_bury_summ">Related new cards are buried until the next day</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Bury related reviews</string>
-    <string name="deck_conf_rev_bury_summ">Related reviews are buried until the next day</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">ზოგადი პარამეტრების გამოყენება</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">ბონუსი \"მარტივისთვის\"</string>
-    <string name="deck_conf_hard_factor" maxLength="41">შუალედი რთული ბარათებისთვის</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">შუალედების შემცვლელი</string>
-    <string name="deck_conf_max_ivl" maxLength="41">მაქსიმალური შუალედი</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">შუალედი ახლებისთვის</string>
-    <string name="deck_conf_min_ivl" maxLength="41">მინიმალური შუალედი</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Leech threshold</string>
-    <string name="deck_conf_fails">XXX გადავიწყება</string>
-    <string name="deck_conf_leech_action" maxLength="41">მოქმედება შემაფერხებელი ბარათებისთვის</string>
-    <string name="deck_conf_max_time" maxLength="41">მაქსიმალური საპასუხო დრო</string>
-    <string name="deck_conf_seconds">XXX წამი</string>
-    <string name="deck_conf_timer" maxLength="41">Show answer timer</string>
-    <string name="deck_conf_autoplay" maxLength="41">აუდიოს ავტომატური დაკვრა</string>
-    <string name="deck_conf_replayq" maxLength="41">კითხვის ხელახლა დაკვრა</string>
-    <string name="deck_conf_replayq_summ">When answer shown, replay both question and answer audio</string>
-    <string name="deck_conf_manage" maxLength="41">ჯგუფების მართვა</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group" maxLength="41">მიმდინარე ჯგუფი</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">გადარქმევა</string>
-    <string name="deck_conf_reset" maxLength="41">ნაგულისხმევის აღდგენა</string>
-    <string name="deck_conf_reset_message">Restore current options group to default values?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">კონფიგურაციის დამატება</string>
-    <string name="deck_conf_add_summ">Create a copy of the current options group</string>
-    <string name="deck_conf_remove_message">Remove current options group?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Set for all subdecks</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s subdeck will use this group</item>
-        <item quantity="other">%s subdecks will use this group</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Set current options group for all of this deck’s subdecks?</string>
-    <string name="pref_browser_editor_font" maxLength="41">შრიფტი ბარათების საძიებოსა და რედაქტორისთვის</string>
     <string name="deck_conf_cram_filter" maxLength="41">ფილტრი</string>
     <string name="deck_conf_cram_search" maxLength="41">ძებნა</string>
     <string name="deck_conf_cram_limit" maxLength="41">ზღვარი</string>
@@ -309,17 +240,15 @@
     <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">გადადება</string>
     <string name="deck_conf_cram_reschedule_summ">Reschedule cards based on my answers in this deck</string>
     <string name="deck_conf_cram_filter_2_check">მეორე ფილტრის გააქტიურება</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Custom steps (in minutes)</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Define custom steps</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
-    <string name="deck_conf_reminders_time" maxLength="41">შეხსენების დრო:</string>
+    <string name="deck_conf_cram_steps" maxLength="41">ინდივიდუალური ნაბიჯები (წუთებში)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">ინდივიდუალური ნაბიჯების განსაზღვრა</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">მოგვეხმარეთ AnkiDroid-ის გაუმჯობესებაში!</string>
     <string name="analytics_title" maxLength="41">ფუნქციების მოხმარების მონაცემების გაზიარება</string>
     <string name="analytics_summ">You can contribute to AnkiDroid by helping the development team see which features people use</string>
     <string name="note_editor_replace_newlines" maxLength="41">აბზაცების ჩანაცვლება HTML-ით</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
+    <string name="no_code_formatting" maxLength="41">აკრეფილი პასუხების მარტივი ფორმატირება</string>
     <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
     <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
@@ -347,24 +276,18 @@
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">\"%s-ს\" წაშლა</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="bindings_already_bound">უკვე მიბმულია „%s-ზე“</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">ექსპერიმენტალური</string>
-    <string name="experimental_pref_confirmation" maxLength="41">\"%s-ს\" ჩართვა</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">V3 მგეგმავის გამოყენება</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">ექსპერიმენტალური</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">დეველოპერის პარამეტრები</string>
     <string name="dev_options_enabled_pref" maxLength="41">დეველოპერის პარამეტრების ჩართვა</string>
-    <string name="disable_dev_options">Disable developer options</string>
+    <string name="disable_dev_options">დეველოპერის პარამეტრების გამორთვა</string>
     <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
     </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">რეზერვირების პარამეტრები</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.
@@ -375,7 +298,7 @@
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">წუთი ავტომატური სარეზერვო ასლებს შორის</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">ყოველდღიური სარეზერვო ასლების შენახვა</string>
     <string name="pref__weekly_backups_to_keep__title" maxLength="41">ყოველკვირეული სარეზერვო ასლების შენახვა</string>
     <string name="pref__monthly_backups_to_keep__title" maxLength="41">ყოველთვიური სარეზერვო ასლების შენახვა</string>
     <!-- #######################################################################################
@@ -386,13 +309,12 @@
     <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">შეცდომა</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">გამო-\nთვლა&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d ფაილი\n%2$s</item>
+        <item quantity="other">%1$d ფაილი\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">უხმარი მედიაფაილების წაშლა</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">უხმარი მედიაფაილების წაშლა</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">სარეზერვო ასლების წაშლა</string>
@@ -411,7 +333,7 @@
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
     <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">აპლიკაციის მონაცემების წაშლა</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
+    <string name="pref__delete_app_data__summary">პარამეტრებისა და აპლიკაციის სხვა მონაცემების წაშლა</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">აპლიკაციის მონაცემების წაშლა</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
     <!-- #######################################################################################

@@ -56,7 +56,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -78,7 +78,7 @@ class TagsDialogTest {
         val args = TagsDialog(ParametersUtils.whatever())
             .withArguments(type, ArrayList(), allTags)
             .arguments
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -116,7 +116,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -151,7 +151,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -189,7 +189,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -244,7 +244,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -291,7 +291,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -345,7 +345,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -393,7 +393,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -434,7 +434,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -481,7 +481,7 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
@@ -600,12 +600,12 @@ class TagsDialogTest {
             .arguments
         val mockListener = Mockito.mock(TagsDialogListener::class.java)
         val factory = TagsDialogFactory(mockListener)
-        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, R.style.Theme_AppCompat, factory)
+        val scenario = FragmentScenario.launch(TagsDialog::class.java, args, androidx.appcompat.R.style.Theme_AppCompat, factory)
         scenario.moveToState(Lifecycle.State.STARTED)
         scenario.onFragment { f: TagsDialog ->
             val dialog = f.dialog as MaterialDialog?
             MatcherAssert.assertThat(dialog, IsNull.notNullValue())
-            val editText = f.getSearchView()!!.findViewById<EditText>(R.id.search_src_text)!!
+            val editText = f.getSearchView()!!.findViewById<EditText>(androidx.appcompat.R.id.search_src_text)!!
 
             editText.setText("hello ")
             Assert.assertEquals(

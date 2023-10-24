@@ -35,6 +35,7 @@ import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.ThreadUtils.sleep
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
+import com.ichi2.anki.utils.EnsureAllFilesAccessRule
 import org.hamcrest.Matchers.instanceOf
 import org.junit.Assume.assumeFalse
 import org.junit.Assume.assumeTrue
@@ -49,6 +50,9 @@ class DeckPickerTest {
 
     @get:Rule
     val mRuntimePermissionRule = grantPermissions(storagePermission, notificationPermission)
+
+    @get:Rule
+    val ensureAllFilesAccessRule = EnsureAllFilesAccessRule()
 
     @Ignore("This test appears to be flaky everywhere")
     @Test
@@ -102,7 +106,7 @@ class DeckPickerTest {
         onView(withId(R.id.fab_main)).perform(click())
         onView(withId(R.id.add_deck_action)).perform(click())
         onView(withId(R.id.action_edit)).perform(typeText("TestDeck$testString"))
-        onView(withId(R.id.md_button_positive)).perform(click())
+        onView(withId(com.afollestad.materialdialogs.R.id.md_button_positive)).perform(click())
 
         // The deck is currently empty, so if we tap on it, it becomes the selected deck but doesn't enter
         onView(withId(R.id.files)).perform(
@@ -114,7 +118,7 @@ class DeckPickerTest {
 
         // Create a card belonging to the new deck, using Basic type (guaranteed to exist)
         onView(withId(R.id.fab_main)).perform(click())
-        onView(withId(R.id.add_note_action)).perform(click())
+        onView(withId(R.id.add_note_label)).perform(click())
 
         // Close the keyboard, it auto-focuses and obscures enough of the screen
         // on some devices that espresso complains about global visibility being <90%

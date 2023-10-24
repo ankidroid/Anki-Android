@@ -29,6 +29,7 @@ import com.ichi2.anki.multimediacard.AudioView
 import com.ichi2.anki.multimediacard.AudioView.Companion.createRecorderInstance
 import com.ichi2.anki.multimediacard.AudioView.Companion.generateTempAudioFile
 import com.ichi2.anki.multimediacard.AudioView.OnRecordingFinishEventListener
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.UiUtil.makeBold
 import java.io.File
@@ -41,6 +42,7 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
     private var mTempAudioPath: String? = null
     private var mAudioView: AudioView? = null
 
+    @NeedsTest("'Field Contents' label should be invisible if there's no fields with contents")
     override fun createUI(context: Context, layout: LinearLayout) {
         val origAudioPath = mField.audioPath
         var bExist = false
@@ -87,6 +89,7 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
             label.text = makeBold(this.getString(R.string.audio_recording_field_list))
             label.gravity = Gravity.CENTER_HORIZONTAL
             previewLayout.addView(label)
+            var hasTextContents = false
             for (i in 0 until mNote.initialFieldCount) {
                 val field = mNote.getInitialField(i)
                 val textView = FixedTextView(this)
@@ -94,7 +97,9 @@ class BasicAudioRecordingFieldController : FieldControllerBase(), IFieldControll
                 textView.textSize = 16f
                 textView.setPadding(16, 0, 16, 24)
                 previewLayout.addView(textView)
+                hasTextContents = hasTextContents or !field?.text.isNullOrBlank()
             }
+            label.visibility = if (hasTextContents) View.VISIBLE else View.GONE
         }
     }
 

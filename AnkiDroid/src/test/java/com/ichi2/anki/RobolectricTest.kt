@@ -17,12 +17,14 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.content.DialogInterface.*
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Looper
 import android.widget.TextView
 import androidx.annotation.CallSuper
 import androidx.annotation.CheckResult
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
 import androidx.sqlite.db.SupportSQLiteOpenHelper
@@ -33,21 +35,17 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.utils.FragmentTestActivity
-import com.ichi2.anki.exception.ConfirmModSchemaException
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.async.*
 import com.ichi2.compat.customtabs.CustomTabActivityHelper
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.backend.exception.DeckRenameException
-import com.ichi2.libanki.sched.Sched
-import com.ichi2.libanki.sched.SchedV2
+import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.testutils.AndroidTest
-import com.ichi2.testutils.IgnoreFlakyTestsInCIRule
-import com.ichi2.testutils.MockTime
-import com.ichi2.testutils.TaskSchedulerRule
-import com.ichi2.utils.Computation
+import com.ichi2.testutils.*
 import com.ichi2.utils.InMemorySQLiteOpenHelperFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.*
 import net.ankiweb.rsdroid.BackendException
@@ -62,14 +60,14 @@ import org.robolectric.Shadows
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.shadows.ShadowDialog
 import org.robolectric.shadows.ShadowLog
+import org.robolectric.shadows.ShadowLooper
 import org.robolectric.shadows.ShadowMediaPlayer
 import timber.log.Timber
-import java.util.concurrent.locks.ReentrantLock
-import kotlin.concurrent.withLock
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.time.Duration.Companion.milliseconds
 
-open class RobolectricTest : CollectionGetter, AndroidTest {
+open class RobolectricTest : AndroidTest {
 
     @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
     private fun Any.wait(timeMs: Long) = (this as Object).wait(timeMs)
@@ -100,12 +98,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
 
         // resolved issues with the collection being reused if useInMemoryDatabase is false
         CollectionHelper.instance.setColForTests(null)
-
-        if (mTaskScheduler.shouldRunInForeground()) {
-            runTasksInForeground()
-        } else {
-            runTasksInBackground()
-        }
 
         maybeSetupBackend()
 
@@ -152,11 +144,11 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         mControllersForCleanup.clear()
 
         try {
-            if (CollectionHelper.instance.colIsOpen()) {
-                CollectionHelper.instance.getCol(targetContext)!!.debugEnsureNoOpenPointers()
+            if (CollectionHelper.instance.colIsOpenUnsafe()) {
+                CollectionHelper.instance.getColUnsafe(targetContext)!!.debugEnsureNoOpenPointers()
             }
             // If you don't tear down the database you'll get unexpected IllegalStateExceptions related to connections
-            CollectionHelper.instance.closeCollection(false, "RobolectricTest: End")
+            CollectionHelper.instance.closeCollection("RobolectricTest: End")
         } catch (ex: BackendException) {
             if ("CollectionNotOpen" == ex.message) {
                 Timber.w(ex, "Collection was already disposed - may have been a problem")
@@ -173,30 +165,28 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
 
             TimeManager.reset()
         }
+        Dispatchers.resetMain()
         runBlocking { CollectionManager.discardBackend() }
     }
 
-    /**
-     * Ensure that each task in backgrounds are executed immediately instead of being queued.
-     * This may help debugging test without requiring to guess where `advanceRobolectricLooper` are needed.
-     */
-    @Suppress("MemberVisibilityCanBePrivate")
-    fun runTasksInForeground() {
-        TaskManager.setTaskManager(ForegroundTaskManager(this))
-        mBackground = false
-    }
-
-    /**
-     * Set back the standard background process
-     */
-    fun runTasksInBackground() {
-        TaskManager.setTaskManager(SingleTaskManager())
-        mBackground = true
-    }
-
-    protected fun clickDialogButton(button: WhichButton?, @Suppress("SameParameterValue") checkDismissed: Boolean) {
+    protected fun clickMaterialDialogButton(button: WhichButton, @Suppress("SameParameterValue") checkDismissed: Boolean) {
         val dialog = ShadowDialog.getLatestDialog() as MaterialDialog
-        dialog.getActionButton(button!!).performClick()
+        dialog.getActionButton(button).performClick()
+        if (checkDismissed) {
+            Assert.assertTrue("Dialog not dismissed?", Shadows.shadowOf(dialog).hasBeenDismissed())
+        }
+    }
+
+    /**
+     * Click on a dialog button for an AlertDialog dialog box. Replaces the above helper.
+     */
+    protected fun clickAlertDialogButton(button: Int, @Suppress("SameParameterValue") checkDismissed: Boolean) {
+        val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+
+        dialog.getButton(button).performClick()
+        // Need to run UI thread tasks to actually run the onClickHandler
+        ShadowLooper.runUiThreadTasks()
+
         if (checkDismissed) {
             Assert.assertTrue("Dialog not dismissed?", Shadows.shadowOf(dialog).hasBeenDismissed())
         }
@@ -207,13 +197,32 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
      *
      * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
      */
-    protected fun getDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
+    protected fun getMaterialDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
         val dialog: MaterialDialog = ShadowDialog.getLatestDialog() as MaterialDialog
         if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
             Timber.e("The latest dialog has already been dismissed.")
             return null
         }
-        return dialog.view.contentLayout.findViewById<TextView>(R.id.md_text_message).text.toString()
+        return dialog.view.contentLayout.findViewById<TextView>(com.afollestad.materialdialogs.R.id.md_text_message).text.toString()
+    }
+
+    /**
+     * Get the current dialog text for AlertDialogs (which are replacing MaterialDialogs). Will return null if no dialog visible
+     * *or* if you check for dismissed and it has been dismissed
+     *
+     * @param checkDismissed true if you want to check for dismissed, will return null even if dialog exists but has been dismissed
+     * TODO: Rename to getDialogText when all MaterialDialogs are changed to AlertDialogs
+     */
+    protected fun getAlertDialogText(@Suppress("SameParameterValue") checkDismissed: Boolean): String? {
+        val dialog = ShadowDialog.getLatestDialog() as AlertDialog
+        if (checkDismissed && Shadows.shadowOf(dialog).hasBeenDismissed()) {
+            Timber.e("The latest dialog has already been dismissed.")
+            return null
+        }
+        val messageViewWithinDialog = dialog.findViewById<TextView>(android.R.id.message)
+        Assert.assertFalse(messageViewWithinDialog == null)
+
+        return messageViewWithinDialog?.text?.toString()
     }
 
     // Robolectric needs a manual advance with the new PAUSED looper mode
@@ -302,7 +311,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
      * @see [editPreferences] for editing
      */
     fun getPreferences(): SharedPreferences {
-        return AnkiDroidApp.getSharedPrefs(targetContext)
+        return targetContext.sharedPrefs()
     }
 
     protected fun getResourceString(res: Int): String {
@@ -316,9 +325,9 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
     /** A collection. Created one second ago, not near cutoff time.
      * Each time time is checked, it advance by 10 ms. Not enough to create any change visible to user, but ensure
      * we don't get two equal time. */
-    override val col: Collection
+    val col: Collection
         get() = try {
-            CollectionHelper.instance.getCol(targetContext)!!
+            CollectionHelper.instance.getColUnsafe(targetContext)!!
         } catch (e: UnsatisfiedLinkError) {
             throw RuntimeException("Failed to load collection. Did you call super.setUp()?", e)
         }
@@ -331,7 +340,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         CollectionManager.closeCollectionBlocking()
         CollectionHelper.setInstanceForTesting(object : CollectionHelper() {
             @Synchronized
-            override fun getCol(context: Context?): Collection? = null
+            override fun getColUnsafe(context: Context?): Collection? = null
         })
         CollectionManager.emulateOpenFailure = true
     }
@@ -343,9 +352,9 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
     }
 
     @Throws(JSONException::class)
-    protected fun getCurrentDatabaseModelCopy(modelName: String): Model {
-        val collectionModels = col.models
-        return Model(collectionModels.byName(modelName).toString().trim { it <= ' ' })
+    protected fun getCurrentDatabaseModelCopy(modelName: String): NotetypeJson {
+        val collectionModels = col.notetypes
+        return NotetypeJson(collectionModels.byName(modelName).toString().trim { it <= ' ' })
     }
 
     protected fun <T : AnkiActivity?> startActivityNormallyOpenCollectionWithIntent(clazz: Class<T>?, i: Intent?): T {
@@ -382,7 +391,7 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
     }
 
     protected fun addNoteUsingModelName(name: String?, vararg fields: String): Note {
-        val model = col.models.byName((name)!!)
+        val model = col.notetypes.byName((name)!!)
             ?: throw IllegalArgumentException("Could not find model '$name'")
         // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
         // Saves a database trip afterwards.
@@ -395,39 +404,48 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
     }
 
     protected fun addNonClozeModel(name: String, fields: Array<String>, qfmt: String?, afmt: String?): String {
-        val model = col.models.newModel(name)
+        val model = col.notetypes.newModel(name)
         for (field in fields) {
-            col.models.addFieldInNewModel(model, col.models.newField(field))
+            col.notetypes.addFieldInNewModel(model, col.notetypes.newField(field))
         }
-        val t = Models.newTemplate("Card 1")
+        val t = Notetypes.newTemplate("Card 1")
         t.put("qfmt", qfmt)
         t.put("afmt", afmt)
-        col.models.addTemplateInNewModel(model, t)
-        col.models.add(model)
-        col.models.flush()
+        col.notetypes.addTemplateInNewModel(model, t)
+        col.notetypes.add(model)
         return name
     }
 
-    private fun addField(model: Model, name: String) {
-        val models = col.models
+    private fun addField(notetype: NotetypeJson, name: String) {
+        val models = col.notetypes
         try {
-            models.addField(model, models.newField(name))
+            models.addField(notetype, models.newField(name))
         } catch (e: ConfirmModSchemaException) {
             throw RuntimeException(e)
         }
     }
 
-    protected fun addDeck(deckName: String?): Long {
+    /**
+     * Return a new standard deck and set it as the current deck.
+     * If a deck with this name already exists, returns it instead.
+     * It may be dynamic.
+     */
+    protected fun addDeck(deckName: String): Long {
         return try {
-            col.decks.id(deckName!!)
+            col.decks.id(deckName)
         } catch (filteredAncestor: DeckRenameException) {
             throw RuntimeException(filteredAncestor)
         }
     }
 
-    protected fun addDynamicDeck(name: String?): Long {
+    /**
+     * Return a new dynamic deck and set it as the current deck.
+     * If a deck with this name already exists, returns it instead.
+     * It may be non-dynamic.
+     */
+    protected fun addDynamicDeck(name: String): Long {
         return try {
-            col.decks.newDyn(name!!)
+            col.decks.newDyn(name)
         } catch (filteredAncestor: DeckRenameException) {
             throw RuntimeException(filteredAncestor)
         }
@@ -437,37 +455,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         // HACK: We perform this to ensure that onCollectionLoaded is performed synchronously when startLoadingCollection
         // is called.
         col
-    }
-
-    @Throws(ConfirmModSchemaException::class)
-    protected fun upgradeToSchedV2(): SchedV2 {
-        col.changeSchedulerVer(2)
-        val sched = col.sched
-        // Sched inherits from schedv2...
-        MatcherAssert.assertThat("sched should be v2", sched !is Sched)
-        return sched as SchedV2
-    }
-
-    @Synchronized
-    @Throws(InterruptedException::class)
-    protected fun <Progress, Result : Computation<*>?> waitForTask(task: TaskDelegateBase<Progress, Result>, timeoutMs: Int) {
-        val completed = booleanArrayOf(false)
-        val listener: TaskListener<Progress, Result?> = object : TaskListener<Progress, Result?>() {
-            override fun onPreExecute() {}
-            override fun onPostExecute(result: Result?) {
-                require(!(result == null || !result.succeeded())) { "Task failed" }
-                completed[0] = true
-                val robolectricTest = ReentrantLock()
-                val condition = robolectricTest.newCondition()
-                robolectricTest.withLock { condition.signal() }
-                // synchronized(this@RobolectricTest) { this@RobolectricTest.notify() }
-            }
-        }
-        TaskManager.launchCollectionTask(task, listener)
-        advanceRobolectricLooper()
-        wait(timeoutMs.toLong())
-        advanceRobolectricLooper()
-        if (!completed[0]) { throw IllegalStateException("Task ${task.javaClass} didn't finish in $timeoutMs ms") }
     }
 
     /**
@@ -538,13 +525,6 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         return activity
     }
 
-    protected val card: Card?
-        get() {
-            val card = col.sched.card
-            advanceRobolectricLooperWithSleep()
-            return card
-        }
-
     /**
      * Allows editing of preferences, followed by a call to [apply][SharedPreferences.Editor.apply]:
      *
@@ -607,7 +587,8 @@ open class RobolectricTest : CollectionGetter, AndroidTest {
         dispatchTimeoutMs: Long = 60_000L,
         testBody: suspend TestScope.() -> Unit
     ) {
-        kotlinx.coroutines.test.runTest(context, dispatchTimeoutMs) {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
+        runTest(context, dispatchTimeoutMs.milliseconds) {
             CollectionManager.setTestDispatcher(UnconfinedTestDispatcher(testScheduler))
             testBody()
         }

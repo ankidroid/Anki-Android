@@ -61,6 +61,8 @@
     <string name="updated_version">Atualizado para a versão %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Salvar quadro.</string>
+    <string name="enable_stylus">Ativar o modo stylus</string>
+    <string name="disable_stylus">Desativar o modo stylus</string>
     <string name="enable_whiteboard">Habilitar quadro</string>
     <string name="disable_whiteboard">Desabilitar quadro</string>
     <string name="show_whiteboard">Mostrar quadro</string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">Repetir áudio</string>
     <string name="leech_suspend_notification">Cartão marcado como sanguessuga e suspenso</string>
     <string name="leech_notification">Cartão marcado como sanguessuga</string>
-    <string name="corrupt_font">Arquivo de fonte %s danificado</string>
     <string name="webview_crash_unknown">Erro desconhecido</string>
     <string name="webview_crash_unknwon_detailed">Isso foi causado por um erro interno no WebView</string>
     <string name="webview_crash_oom">Memória Insuficiente</string>
@@ -123,9 +124,9 @@
     <string name="save">Salvar</string>
     <string name="close">Fechar</string>
     <string name="select">Selecionar</string>
-    <string name="reordering_cards">Reordenando cards...</string>
     <string name="field_remapping">%1$s (de \'%2$s\')</string>
     <string name="confirm_map_cards_to_nothing">Quaisquer cards não-mapeados serão removidos. Se não houverem cards para uma nota, ela será perdida. Tem certeza de que deseja continuar?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Caixa do tempo alcançada</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d card estudado em %2$s</item>
@@ -143,17 +144,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reagendar</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pré-visualizar</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
-    <string name="error_insufficient_memory">Operação impossível devido a memória insuficiente no dispositivo</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renomear</string>
-    <string name="default_conf_delete_error">O grupo de opções padrão não pode ser removido</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d card adicionado</item>
-        <item quantity="other">%d cards adicionados</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">Verificar banco de dados</string>
     <string name="check_media">Verificar mídia</string>
     <string name="empty_cards">Cards vazios</string>
-    <string name="check_db_message">Verificando banco de dados.\nPor favor Aguarde...</string>
     <string name="empty_card_warning">Este card está vazio. Use a opção \"Cards vazios\" do menu da lista de baralhos.</string>
     <string name="unknown_type_field_warning">Digite a resposta: campo desconhecido %s</string>
     <string name="delete_deck">Excluindo baralho&#8230;</string>
@@ -167,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Este não é um arquivo válido para o Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Erro</string>
-    <string name="import_log_failed_unzip">Falha ao descompactar apkg: %s</string>
-    <string name="import_log_failed_copy_to">Falha ao copiar apkg para %s</string>
-    <string name="import_log_failed_validate">falha na validação do apkg</string>
-    <string name="import_log_insufficient_space_error">Não há espaço suficiente para importar o pacote.\nNecessário - %1$s \nDisponível - %2$s.\n\nTendo problemas? Tente liberar espaço no seu telefone, se possível. Alternativamente, a sincronização usa menos espaço do que a importação. Você pode tentar importar o pacote com um dispositivo com mais espaço (por exemplo, Anki Desktop) e, em seguida, sincronizá-lo com este dispositivo.</string>
-    <string name="import_log_file_cache_cleared">Erro ao importar arquivo, provavelmente um cache foi limpo durante o processamento.\nPor favor, tente novamente</string>
-    <string name="import_succeeded_but_check_database">Importação de dados bem-sucedida, mas a limpeza pós importação falhou. Execute a verificação do banco de dados mais tarde. Causa: %s</string>
-    <string name="import_error_corrupt_zip">O arquivo apkg está corrompido. Por favor delete-o e baixe-o novamente.\n\nCausa raiz: %s</string>
     <string name="import_error_handle_exception">Falha ao importar arquivo\n\n%s</string>
     <string name="import_error_not_apkg_extension">O arquivo \"%s\" não tem a extensão .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Substituições do banco de dados do Anki (.anki2) não são ainda suportadas. Por favor, consulte o manual para obter instruções de substituição.</string>
@@ -181,8 +169,6 @@
     <string name="import_error_copy_to_cache">Falha ao armazenar em cache o arquivo (possivelmente sem espaço de armazenamento)</string>
     <string name="import_error_multiple_colpkg">Vários arquivos colpkg foram selecionados.</string>
     <string name="import_error_colpkg_apkg">Tanto arquivos apkg &amp; colpkg foram selecionados de uma vez.</string>
-    <string name="import_stats_error">Ocorreram alguns erros ao importar os seguintes arquivos:\n%s</string>
-    <string name="import_replacing">Substituindo coleção&#8230;</string>
     <string name="import_interrupted">Importação interrompida: AnkiDroid foi fechado</string>
     <string name="export_include_schedule">Incluir agendamento</string>
     <string name="export_include_media">Incluir mídia</string>
@@ -196,12 +182,11 @@
         <item quantity="one">Exportar nota selecionada como arquivo apkg?</item>
         <item quantity="other">Exportar %d notas selecionadas como arquivo apkg?</item>
     </plurals>
-    <string name="export_in_progress">Exportando arquivo Anki (.apkg)&#8230;</string>
-    <string name="export_success_title">Coleção exportada com sucesso</string>
+    <string name="export_preparation_in_progress">Preparando exportação&#8230;</string>
+    <string name="export_ready_title">Exportação pronta</string>
     <string name="export_send_no_handlers">Nenhum aplicativo disponível para lidar com apkg. Salvando...</string>
     <string name="export_save_apkg_successful">Arquivo Anki (.apkg) salvo com sucesso</string>
     <string name="export_save_apkg_unsuccessful">Arquivo Anki (.apkg) não pode ser salvo</string>
-    <string name="export_success_message">Você pode escolher um local de arquivo para salvá-lo, ou compartilhá-lo com outro aplicativo.</string>
     <string name="export_share_title">Enviar pacote Anki usando</string>
     <string name="export_email_subject">AnkiDroid cards exportados: %s</string>
     <string name="export_email_text"><![CDATA[        Olá!
@@ -211,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Selecione onde salvar o arquivo</string>
-    <string name="export_select_share_app">Selecione o aplicativo para compartilhar</string>
+    <string name="export_choice_share">Compartilhar</string>
+    <string name="export_choice_save_to">Salvar em</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Opções</string>
     <string name="menu__deck_options">Opções de baralho</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Opções de estudo</string>
@@ -222,47 +207,11 @@
     <string name="dyn_deck_desc">Esse é um baralho especial para estudar fora do planejamento normal. Os cards retornarão um a um para os baralhos originais após revisá-los. Ao apagar esse baralho os cards restantes retornarão automaticamente à seus baralhos originais.</string>
     <string name="steps_error">Número de passos deve ser maior do que 0</string>
     <string name="steps_min_error">Pelo menos um passo é necessário</string>
-    <string name="sched_end">(fim)</string>
-    <string name="sched_unbury_action">Para vê-los agora, toque em \"Desenterrar\" no menu.</string>
-    <string name="sched_has_buried">Alguns cards relacionados ou Ocultados foram adiados.</string>
     <string name="tag_editor_add_feedback">Toque \"%2$s\" para confirmar a adição de \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Tag existente \"%1$s\" selecionada</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s segundo</item>
-        <item quantity="other">%s segundos</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuto</item>
-        <item quantity="other">%s minutos</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s hora</item>
-        <item quantity="other">%s horas</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s dia</item>
-        <item quantity="other">%s dias</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mês</item>
-        <item quantity="other">%s meses</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s ano</item>
-        <item quantity="other">%s anos</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s segundos</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Esse baralho já existe.</string>
     <string name="decks_rename_filtered_nosubdecks">Um baralho filtrado não pode ter sub-baralhos.</string>
-    <string name="filtered_deck_name">Baralho filtrado</string>
     <string name="reminder_title">Não se esqueça de estudar hoje!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d novo card para revisar em %1$s</item>
@@ -271,14 +220,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erro ao compartilhar arquivo apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Este arquivo requer uma versão mais recente do Anki.</string>
     <string name="activity_start_failed">O sistema não tem um aplicativo instalado que possa executar esta ação.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[As imagens da câmera podem ser grandes. Você pode querer comprimir e redimensionar as imagens na pasta de mídia.]]></string>
     <string name="no_browser_notification">Nenhum navegador encontrado, por favor visite a página através de um computador ou celular.</string>
     <string name="web_page_error">Erro ao carregar página: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Link de página externa não é suportado no card.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Cards Recuperados</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Plano de fundo</string>
     <string name="choose_an_image">Escolha uma imagem</string>
@@ -305,7 +251,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Visualizar</string>
     <string name="anki_js_error_code">(Código de erro: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copiado para a área de transferência</string>
     <string name="about_ankidroid_error_copy_debug_info">Erro ao copiar informações de debug para a área de transferência.</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Erro de Conteúdo do Card: Falha ao carregar ‘%s\'</string>
@@ -313,6 +259,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
     <string name="search_decks">Pesquisar baralhos</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostrar progresso da migração</string>
     <string name="ankidroid_init_failed_webview_title">Erro Fatal</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid depende do System WebView que não está disponível. Isso pode acontecer se o sistema está instalando atualizações. Por favor, tente novamente em alguns minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -325,7 +272,6 @@
     <string name="insert_heading">Inserir título</string>
     <string name="format_font_size">Alterar tamanho da fonte</string>
     <string name="insert_mathjax">Inserir equação MathJax</string>
-    <string name="insert_cloze">Ocultar</string>
     <string name="note_editor_toolbar_icon">Texto do botão</string>
     <string name="before_text">HTML antes da seleção</string>
     <string name="after_text">HTML depois da seleção</string>
@@ -361,13 +307,14 @@
     <string name="deck_download_progress_message">Você pode usar outros apps enquanto o download está rodando</string>
     <string name="check_network">Por favor verifique sua conexão de rede</string>
     <string name="search_using_deck_name">Pesquisar usando o nome do baralho</string>
+    <string name="external_storage_unavailable">Transferência abortada, o armazenamento externo não está disponível</string>
     <string name="home">Início</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Cartão enterrado.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d Cartão suspenso.</item>
+        <item quantity="other">%d Cartões suspensos.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Fixar o campo %s</string>
@@ -377,9 +324,7 @@
     <string name="scoped_storage_postpone">Adiar</string>
     <string name="scoped_storage_migrate">Migrar</string>
     <string name="search_card_js_api_no_results">Nenhum resultado para a busca</string>
-    <string name="sync_impossible_during_migration">A sincronização está desativada até que a migração seja concluída.\n
-        %1$d arquivos de mídia restantes para migrar.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid precisa migrar seu armazenamento para estar em conformidade com a política de segurança do Android 10.\n\nIsso melhorará o desempenho de sincronização de mídia.&lt;br&gt;&lt;br&gt;Durante a migração, você não poderá sincronizar e algumas configurações serão desativadas. Uma sincronização de mídia ocorrerá antes do início da migração para manter seus dados seguros.&lt;br&gt;&lt;br&gt;É seguro usar ou fechar o AnkiDroid durante este processo.</string>
     <string name="start_migration_progress_message">Iniciando a migração do armazenamento. Você pode retomar usando o AnkiDroid em breve.</string>
     <string name="migration_part_1_done_resume">Você pode continuar usando o AnkiDroid.
 \nA migração do armazenamento continuará em segundo plano.</string>
@@ -401,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">Sincronizar do AnkiWeb</string>
     <string name="already_logged_in">Já está logado</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">O Baralho existe</string>
     <string name="deck_created">Baralho criado</string>
     <string name="deck_renamed">Baralho renomeado</string>
     <!-- Deck Deletion -->
@@ -413,9 +357,9 @@
     <string name="toggle_browser_mode_help">Mostrando cards ou notas no navegador</string>
     <string name="truncate_content_help">Truncar a altura de cada linha do navegador para mostrar apenas as 3 primeiras linhas de conteúdo</string>
     <string name="browser_options_dialog_heading">Opções do Navegador</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Esta funcionalidade não está disponível durante a migração de armazenamento.
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toque para iniciar a migração de armazenamento.</string>
+    <string name="media_sync_required_title">Sincronização de Mídia Necessária</string>
+    <string name="media_sync_unavailable_message">A sincronização de mídia está desativada nas configurações. Por favor, sincronize e faça uma cópia de qualquer mídia que ainda não tenha sido sincronizada antes de continuar.</string>
 </resources>

@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">오류 보고전 묻기</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">태그 전용</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">무작위 순서대로 새 카드</string>
-    <string name="new_order_order_added">추가한 순서대로 새 카드</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">오래된 카드 먼저</string>
     <string name="cram_deck_conf_order_random">무작위</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">현재 카드 묶음을 사용</string>
     <string name="add_to_deck_decide_by_note_type">노트 형식에 따라 결정</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">새 카드와 복습 섞기</string>
-    <string name="new_spread_new_after_review">복습을 새 카드보다 먼저</string>
-    <string name="new_spread_new_before_review">새 카드를 복습보다 먼저</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">플래시카드에 특정 글꼴이 지정되지 않은 경우</string>
-    <string name="override_font_always" comment="Option to always override font">항상</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">매우 크게</string>
     <string name="html_size_code_xx_large">엄청나게 크게</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">답변 버튼 1</string>
-    <string name="gesture_answer_2">답변 버튼 2</string>
-    <string name="gesture_answer_3">답변 버튼 3</string>
-    <string name="gesture_answer_4">답변 버튼 4</string>
-    <string name="gesture_answer_green">답변 추천 (녹색)</string>
-    <string name="gesture_answer_better_recommended">권장된 것 보다 더 나은 답변</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">미디어 재생</string>
     <string name="gesture_abort_learning">학습 중단</string>
     <string name="gesture_flag_red">빨간색 플래그 넣기 / 빼기</string>

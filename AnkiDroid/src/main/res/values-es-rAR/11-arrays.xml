@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Pregúnteme</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Solamente etiqueta</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Tarjetas nuevas al azar</string>
-    <string name="new_order_order_added">Tarjetas nuevas en orden añadido</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Ver primero las más antiguas</string>
     <string name="cram_deck_conf_order_random">Al azar</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Utilizar el mazo actual</string>
     <string name="add_to_deck_decide_by_note_type">Decidir por tipo de nota</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mezclar tarjetas nuevas y repasos</string>
-    <string name="new_spread_new_after_review">Tarjetas nuevas después de los repasos</string>
-    <string name="new_spread_new_before_review">Tarjetas nuevas antes de los repasos</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Cuando no haya una fuente especificada en las tarjetas flash</string>
-    <string name="override_font_always" comment="Option to always override font">Siempre</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Seguir sistema</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-grande</string>
     <string name="html_size_code_xx_large">xx-grande</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Botón de respuesta 1</string>
-    <string name="gesture_answer_2">Botón de respuesta 2</string>
-    <string name="gesture_answer_3">Botón de respuesta 3</string>
-    <string name="gesture_answer_4">Botón de respuesta 4</string>
-    <string name="gesture_answer_green">Respuesta recomendada (verde)</string>
-    <string name="gesture_answer_better_recommended">Respuesta mejor que la recomendada</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Reproducir multimedia</string>
     <string name="gesture_abort_learning">Abandonar aprendizaje</string>
     <string name="gesture_flag_red">Cambiar Bandera Roja</string>

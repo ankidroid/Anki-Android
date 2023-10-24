@@ -32,15 +32,15 @@ class ViewerCommandTest {
         assertEquals(
             "binding_SHOW_ANSWER, binding_FLIP_OR_ANSWER_EASE1, " +
                 "binding_FLIP_OR_ANSWER_EASE2, binding_FLIP_OR_ANSWER_EASE3, binding_FLIP_OR_ANSWER_EASE4, " +
-                "binding_FLIP_OR_ANSWER_RECOMMENDED, binding_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED, " +
                 "binding_UNDO, binding_EDIT, binding_MARK, binding_BURY_CARD, " +
                 "binding_SUSPEND_CARD, binding_DELETE, binding_PLAY_MEDIA, " +
                 "binding_EXIT, binding_BURY_NOTE, binding_SUSPEND_NOTE, binding_TOGGLE_FLAG_RED, " +
                 "binding_TOGGLE_FLAG_ORANGE, binding_TOGGLE_FLAG_GREEN, binding_TOGGLE_FLAG_BLUE, " +
                 "binding_TOGGLE_FLAG_PINK, binding_TOGGLE_FLAG_TURQUOISE, binding_TOGGLE_FLAG_PURPLE, " +
                 "binding_UNSET_FLAG, binding_PAGE_UP, binding_PAGE_DOWN, binding_TAG, binding_CARD_INFO, binding_ABORT_AND_SYNC, " +
-                "binding_RECORD_VOICE, binding_REPLAY_VOICE, binding_TOGGLE_WHITEBOARD, binding_SHOW_HINT, " +
-                "binding_SHOW_ALL_HINTS, binding_ADD_NOTE",
+                "binding_RECORD_VOICE, binding_REPLAY_VOICE, binding_TOGGLE_WHITEBOARD, binding_CLEAR_WHITEBOARD, " +
+                "binding_CHANGE_WHITEBOARD_PEN_COLOR, binding_SHOW_HINT, binding_SHOW_ALL_HINTS, binding_ADD_NOTE, " +
+                "binding_RESCHEDULE_NOTE",
             names
         )
     }

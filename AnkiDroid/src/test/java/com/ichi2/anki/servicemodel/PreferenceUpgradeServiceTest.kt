@@ -19,9 +19,9 @@ package com.ichi2.anki.servicemodel
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.RobolectricTest
 import com.ichi2.anki.noteeditor.CustomToolbarButton
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.PreferenceUpgrade
 import com.ichi2.anki.servicelayer.RemovedPreferences
@@ -46,7 +46,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Before
     override fun setUp() {
         super.setUp()
-        mPrefs = AnkiDroidApp.getSharedPrefs(targetContext)
+        mPrefs = targetContext.sharedPrefs()
     }
 
     @Test
@@ -111,7 +111,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
     @Test
     fun note_editor_toolbar_button_text() {
         // add two example toolbar buttons
-        val buttons = HashUtil.HashSetInit<String>(2)
+        val buttons = HashUtil.hashSetInit<String>(2)
 
         var values = arrayOf(0, "<h1>", "</h1>")
         buttons.add(values.joinToString(Consts.FIELD_SEPARATOR))
@@ -126,7 +126,7 @@ class PreferenceUpgradeServiceTest : RobolectricTest() {
         // now update it and check it
         PreferenceUpgrade.UpdateNoteEditorToolbarPrefs().performUpgrade(mPrefs)
 
-        val set = mPrefs.getStringSet("note_editor_custom_buttons", HashUtil.HashSetInit<String>(0)) as Set<String?>
+        val set = mPrefs.getStringSet("note_editor_custom_buttons", HashUtil.hashSetInit<String>(0)) as Set<String?>
         val toolbarButtons = CustomToolbarButton.fromStringSet(set)
 
         assertEquals("Set size", 2, set.size)

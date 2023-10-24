@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Məndən soruş</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Yalnız etiket</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Yeni kartlar təsadüfi sırada</string>
-    <string name="new_order_order_added">Yeni kartlar əlavə edilmiş sıraya görə</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Birinci köhnələr</string>
     <string name="cram_deck_conf_order_random">Təsadüfi</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Use current deck</string>
     <string name="add_to_deck_decide_by_note_type">Qeyd növünə görə qərar ver</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mix new cards and reviews</string>
-    <string name="new_spread_new_after_review">New cards after reviews</string>
-    <string name="new_spread_new_before_review">New cards before reviews</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">When no font specified on flashcards</string>
-    <string name="override_font_always" comment="Option to always override font">Həmişə</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">1. cavab düyməsi</string>
-    <string name="gesture_answer_2">2. cavab düyməsi</string>
-    <string name="gesture_answer_3">3. cavab düyməsi</string>
-    <string name="gesture_answer_4">4. cavab düyməsi</string>
-    <string name="gesture_answer_green">Tövsiyə edilən cavab (yaşıl)</string>
-    <string name="gesture_answer_better_recommended">Tövsiyə ediləndən daha yaxşı cavabla</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Medianı oynat</string>
     <string name="gesture_abort_learning">Öyrənməni dayandır</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

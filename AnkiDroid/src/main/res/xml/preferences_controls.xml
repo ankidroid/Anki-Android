@@ -17,40 +17,232 @@
 
 <!-- Key com.ichi2.ui.BindingPreferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://arbitrary.app.namespace/com.ichi2.anki"
-    xmlns:app1="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/pref_cat_controls"
     android:key="@string/pref_controls_screen_key">
 
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:disableDependentsState="false"
         android:key="@string/gestures_preference"
         android:summary="@string/gestures_summ"
         android:title="@string/gestures" />
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:dependency="@string/gestures_preference"
         android:key="@string/gestures_corner_touch_preference"
         android:summary="@string/gestures_corner_touch_summary"
         android:title="@string/gestures_corner_touch" />
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:dependency="@string/gestures_preference"
         android:disableDependentsState="false"
         android:key="@string/nav_drawer_gesture_key"
         android:summary="@string/gestures_fullscreen_nav_drawer_summary"
         android:title="@string/gestures_full_screen_nav_drawer" />
-    <com.ichi2.preferences.SeekBarPreferenceCompat
-        android:defaultValue="100"
-        android:dependency="@string/gestures_preference"
+    <com.ichi2.preferences.SliderPreference
         android:key="@string/pref_swipe_sensitivity_key"
-        android:max="180"
-        android:text=""
+        android:dependency="@string/gestures_preference"
         android:title="@string/swipe_sensitivity"
-        app:interval="1"
-        app:min="20"
-        app1:useSimpleSummaryProvider="true"/>
-    <!-- This category is expanded in BindingPreference.setup -->
-    <PreferenceCategory android:title="@string/controls_main_category" android:key="@string/controls_command_mapping_cat_key" />
+        android:defaultValue="100"
+        android:valueFrom="20"
+        android:valueTo="180"
+        app:displayValue="true"/>
+
+    <PreferenceCategory android:title="@string/answer_buttons">
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/show_answer_command_key"
+            android:title="@string/show_answer"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/answer_again_command_key"
+            android:title="@string/answer_again"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/answer_hard_command_key"
+            android:title="@string/answer_hard"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/answer_good_command_key"
+            android:title="@string/answer_good"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/answer_easy_command_key"
+            android:title="@string/answer_easy"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/filter_by_flags">
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/flag_red_command_key"
+            android:title="@string/gesture_flag_red"
+            android:icon="@drawable/ic_flag_red"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/flag_orange_command_key"
+            android:title="@string/gesture_flag_orange"
+            android:icon="@drawable/ic_flag_orange"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/flag_green_command_key"
+            android:title="@string/gesture_flag_green"
+            android:icon="@drawable/ic_flag_green"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/flag_blue_command_key"
+            android:title="@string/gesture_flag_blue"
+            android:icon="@drawable/ic_flag_blue"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/flag_pink_command_key"
+            android:title="@string/gesture_flag_pink"
+            android:icon="@drawable/ic_flag_pink"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/flag_turquoise_command_key"
+            android:title="@string/gesture_flag_turquoise"
+            android:icon="@drawable/ic_flag_turquoise"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/flag_purple_command_key"
+            android:title="@string/gesture_flag_purple"
+            android:icon="@drawable/ic_flag_purple"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/remove_flag_command_key"
+            android:title="@string/gesture_flag_remove"
+            android:icon="@drawable/ic_flag_transparent"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/card">
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/bury_card_command_key"
+            android:title="@string/menu_bury_card"
+            android:icon="@drawable/ic_flip_to_back_white"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/suspend_card_command_key"
+            android:title="@string/menu_suspend_card"
+            android:icon="@drawable/ic_suspend"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/reschedule_command_key"
+            android:title="@string/card_editor_reschedule_card"
+            android:icon="@drawable/ic_reschedule"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/card_info_command_key"
+            android:title="@string/card_info_title"
+            android:icon="@drawable/ic_outline_info_24"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/note">
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/bury_note_command_key"
+            android:title="@string/menu_bury_note"
+            android:icon="@drawable/ic_flip_to_back_white"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/suspend_note_command_key"
+            android:title="@string/menu_suspend_note"
+            android:icon="@drawable/ic_suspend"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/delete_command_key"
+            android:title="@string/menu_delete_note"
+            android:icon="@drawable/ic_delete_white"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/mark_command_key"
+            android:title="@string/menu_mark_note"
+            android:icon="@drawable/ic_star_border_white"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/edit_command_key"
+            android:title="@string/cardeditor_title_edit_card"
+            android:icon="@drawable/ic_popup_menu_item_editor"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/tag_command_key"
+            android:title="@string/add_tag"
+            android:icon="@drawable/ic_tag"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/add_note_command_key"
+            android:title="@string/menu_add_note"
+            android:icon="@drawable/ic_add"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/navigation">
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/page_up_command_key"
+            android:title="@string/gesture_page_up"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/page_down_command_key"
+            android:title="@string/gesture_page_down"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/abort_command_key"
+            android:title="@string/gesture_abort_learning"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/abort_and_sync_command_key"
+            android:title="@string/gesture_abort_sync"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/media">
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/play_media_command_key"
+            android:title="@string/gesture_play"
+            android:icon="@drawable/ic_play_circle_white"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/record_voice_command_key"
+            android:title="@string/record_voice"
+            android:icon="@drawable/ic_action_mic"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/replay_voice_command_key"
+            android:title="@string/replay_voice"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_cat_whiteboard">
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/toggle_whiteboard_command_key"
+            android:title="@string/gesture_toggle_whiteboard"
+            android:icon="@drawable/ic_gesture_white"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/clear_whiteboard_command_key"
+            android:title="@string/clear_whiteboard"
+            android:icon="@drawable/ic_clear_white"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/change_whiteboard_pen_color_command_key"
+            android:title="@string/title_whiteboard_editor"
+            android:icon="@drawable/ic_color_lens_white_24dp"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/misc">
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/undo_command_key"
+            android:title="@string/undo"
+            android:icon="@drawable/ic_undo_white"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/show_hint_command_key"
+            android:title="@string/gesture_show_hint"
+            />
+        <com.ichi2.preferences.ControlPreference
+            android:key="@string/show_all_hints_command_key"
+            android:title="@string/gesture_show_all_hints"
+            />
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -51,7 +51,6 @@
     <string name="model_browser_delete">Ištrinti užrašo tipą</string>
     <string name="model_browser_rename" comment="Rename a note type">Pervadinti</string>
     <string name="model_browser_template">Redaguoti korteles</string>
-    <string name="model_browser_add">Pridėti užrašo tipą</string>
     <!--Rename-->
     <string name="rename_model">Pervadinti užrašo tipą</string>
     <!--Language Hint-->
@@ -67,7 +66,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Atnaujinami laukeliai</string>
     <string name="model_field_editor_sort_field">Rūšiuoti pagal šį lauką</string>
-    <string name="model_clone_suffix">kopijuoti</string>
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Ar tikrai norite ištrinti šį laukelį?</string>

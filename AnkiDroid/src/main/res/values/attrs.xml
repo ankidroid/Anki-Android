@@ -24,13 +24,8 @@
     <attr name="actionBarPopupTextColor" format="color"/>
 
     <!-- Custom preferences -->
-    <attr name="min" format="integer" />
-    <attr name="max" format="integer" />
     <attr name="allowEmpty" format="boolean" />
 
-    <declare-styleable name="SeekBarPreference">
-        <attr name="interval" format="integer" />
-    </declare-styleable>
 
     <declare-styleable name="CustomPreference">
         <!-- Whether the preference should automatically set its summary to the value saved for the
@@ -53,6 +48,31 @@
         <attr name="summaryEntries" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="SliderPreference">
+        <!-- Format string to be used as template to display the value
+             There must be ONLY ONE placeholder, which will be replaced by the preference value -->
+        <attr name="displayFormat" format="boolean"/>
+        <!-- Whether to show the value adjacent to the slider -->
+        <attr name="displayValue" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="PermissionItem">
+        <!-- Title of the permission -->
+        <attr name="permissionTitle" format="string"/>
+        <!-- Brief description of the permission. It can be used to explain to the user
+         why the permission should be granted -->
+        <attr name="permissionSummary" format="string"/>
+        <!-- Icon to be shown at the side of the button -->
+        <attr name="permissionIcon" format="reference"/>
+        <!-- Permission string to be asked.
+         Will be overridden by app:permissions if set -->
+        <attr name="permission" format="string"/>
+        <!-- Array of permission strings to be asked.
+        Overrides app:permission if set -->
+        <attr name="permissions" format="string"/>
+    </declare-styleable>
+
+    <attr name="widgetColorActivated" format="color"/>
     <!-- App buttons -->
     <attr name="largeButtonBackgroundColor" format="color"/>
     <attr name="largeButtonBackgroundColorFocused" format="color"/>
@@ -159,13 +179,14 @@
     <attr name="customTabNavBarColor" format="color"/>
     <!-- Popup menus' background color -->
     <attr name="popupBackgroundColor" format="reference"/>
-    <attr name="iconColor" format="color"/>
     <attr name="overflowAndPopupMenuIconColor" format="color"/>
 
     <attr name="editTextDisabled" format="color"/>
 
     <attr name="snackbarBackgroundTintColor" format="color"/>
     <attr name="snackbarButtonTextColor" format="color"/>
+
+    <attr name="sliderLabelTextColor" format="color"/>
 
     <declare-styleable name="CheckBoxTriStates">
         <attr name="cycle_checked_to_indeterminate" format="boolean" />

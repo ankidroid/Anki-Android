@@ -46,17 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Selectare bază de date</string>
     <string name="check_db_warning">This may take a long time</string>
-    <string name="check_db_acknowledge">Database checked</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Sterge carte</string>
-    <string name="delete_deck_default_deck">The default deck can’t be deleted</string>
     <string name="delete_deck_title">Sterge carte</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Delete all cards in %1$s? It contains %2$d card.</item>
-        <item quantity="few">Delete all cards in %1$s? It contains %2$d cards.</item>
-        <item quantity="other">Delete all cards in %1$s? It contains %2$d cards.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Sunteţi sigur că doriţi să trimiteţi toate cardurile în %s înapoi în pachetele lor originale?</string>
     <string name="no_tts_available_message">No text-to-speech language available</string>
     <string name="initializing_tts">Initializing TTS&#8230;</string>
     <string name="tts_no_tts">Nu vorbi</string>
@@ -113,16 +104,6 @@
     <string name="custom_study_random">Select x cards randomly from the deck:</string>
     <string name="custom_study_preview">Preview new cards added in the last x days:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">Importing collection&#8230;</string>
-    <string name="import_media_count">Importing media files %1$d%%&#8230;</string>
-    <string name="import_progress">• Importing notes: %1$d%%\n• Importing cards: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">Updated %1$d of %2$d existing notes.</string>
-    <string name="import_update_ignored">Some updates were ignored because note type has changed</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="few">Files imported: %1$d\nTotal cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
@@ -130,7 +111,7 @@
     <string name="restore_backup_title">Restore backup?</string>
     <string name="restore_backup">Your collection will be replaced with an older copy. Any unsaved progress will be lost.</string>
     <string name="restore_backup_choose_another">Choose another</string>
-    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_cancel">Anulează</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_confirm" tools:ignore="UnusedResources">Confirm</string>
     <string name="dialog_no">No</string>
@@ -142,18 +123,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disable</string>
     <string name="dialog_positive_overwrite">Overwrite</string>
-    <string name="dialog_positive_remove">Remove</string>
     <string name="dialog_positive_repair">Repair</string>
     <string name="dialog_positive_replace">Replace</string>
-    <string name="dialog_positive_restore">Restore</string>
-    <string name="dialog_positive_set">Set</string>
     <string name="dialog_collection_path_not_dir">The path specified wasn’t a valid directory</string>
     <!-- Media checking -->
     <string name="check_media_title">Check media?</string>
     <string name="check_media_warning">This may take a long time with large media collections</string>
     <string name="check_media_message">Checking media&#8230;</string>
     <string name="check_media_acknowledge">Media checked</string>
-    <string name="check_media_failed">Media check failed</string>
     <string name="check_media_invalid">Files with invalid encoding: %d</string>
     <string name="check_media_unused">Files in media folder but not used by any cards: %d</string>
     <string name="check_media_nohave">Files used on cards but not in media folder: %d</string>
@@ -173,8 +150,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Due</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Finding empty cards&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">No empty cards</string>
     <string name="empty_cards_count">Cards to delete: %d</string>
     <string name="empty_cards_deleted">Cards deleted: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -190,15 +165,10 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>
@@ -266,7 +236,7 @@
     <string name="deck_picker_counts">Open the deck overview page containing the number of cards to see today.</string>
     <string name="import_deck_package">Deck package (.apkg)</string>
     <string name="import_collection_package">Collection package (.colpkg)</string>
-    <string name="import_csv">Text file (.txt, .csv)</string>
+    <string name="import_csv">Fișier text (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">You cannot create a subdeck for all decks</string>
     <!-- scoped storage -->
@@ -274,7 +244,7 @@
     <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
     <string name="button_backup">Backup</string>
     <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Mai târziu</string>
     <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
     <string name="dismiss_backup_warning_title">Data loss warning</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled

@@ -22,9 +22,9 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.RobolectricTest
-import com.ichi2.anki.exception.ConfirmModSchemaException
 import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.anki.preferences.Preferences.Companion.setDayOffset
+import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.preferences.HeaderPreference
 import com.ichi2.testutils.getJavaMethodAsAccessible
 import kotlinx.coroutines.runBlocking
@@ -64,7 +64,6 @@ class PreferencesTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun testDayOffsetExhaustiveV2() {
-        col.changeSchedulerVer(2)
         runBlocking {
             for (i in 0..23) {
                 setDayOffset(preferences, i)
@@ -79,7 +78,7 @@ class PreferencesTest : RobolectricTest() {
         val activityScenario = ActivityScenario.launch(Preferences::class.java)
 
         activityScenario.onActivity { activity ->
-            PreferenceUtils.getAllPreferencesFragments(activity).forEach {
+            PreferenceTestUtils.getAllPreferencesFragments(activity).forEach {
                 activity.supportFragmentManager.commitNow {
                     add(R.id.settings_container, it)
                 }
@@ -96,10 +95,9 @@ class PreferencesTest : RobolectricTest() {
     @Test
     @Throws(ConfirmModSchemaException::class)
     fun setDayOffsetSetsConfig() {
-        col.changeSchedulerVer(2)
         val offset = runBlocking { getDayOffset() }
         assertThat("Default offset should be 4", offset, equalTo(4))
         runBlocking { setDayOffset(preferences, 2) }
-        assertThat("rollover config should be set to new value", col.get_config("rollover", 4.toInt()), equalTo(2))
+        assertThat("rollover config should be set to new value", col.config.get("rollover") ?: 4, equalTo(2))
     }
 }

@@ -40,7 +40,6 @@ import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
-import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
@@ -158,20 +157,6 @@ class Preferences :
             index(R.xml.preferences_accessibility)
         }
 
-        /**
-         * The command bindings preferences are created programmatically
-         * on [ControlsSettingsFragment.addAllControlPreferencesToCategory],
-         * so they should be added programmatically to the search index as well.
-         */
-        for (command in ViewerCommand.values()) {
-            searchConfig.indexItem()
-                .withTitle(getString(command.resourceId))
-                .withKey(command.preferenceKey)
-                .withResId(R.xml.preferences_controls)
-                .addBreadcrumb(getString(R.string.pref_cat_controls))
-                .addBreadcrumb(getString(R.string.controls_main_category))
-        }
-
         // Some preferences and categories are only shown conditionally,
         // so they should be searchable based on the same conditions
 
@@ -187,10 +172,6 @@ class Preferences :
         /** From [HeaderFragment.onCreatePreferences] */
         if (!AdaptionUtil.isXiaomiRestrictedLearningDevice) {
             searchConfig.index(R.xml.preferences_advanced)
-            // Advanced statistics is a subscreen of Advanced, so it should be indexed along with it
-            searchConfig.index(R.xml.preferences_advanced_statistics)
-                .addBreadcrumb(R.string.pref_cat_advanced)
-                .addBreadcrumb(R.string.statistics)
         }
 
         /** From [NotificationsSettingsFragment.initSubscreen] */
@@ -199,10 +180,6 @@ class Preferences :
             searchConfig.ignorePreference(getString(R.string.pref_notifications_blink_key))
         }
 
-        /** From [AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs] */
-        if (!CompatHelper.hasKanaAndEmojiKeys()) {
-            searchConfig.ignorePreference(getString(R.string.more_scrolling_buttons_key))
-        }
         /** From [AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs] */
         if (!CompatHelper.hasScrollKeys()) {
             searchConfig.ignorePreference(getString(R.string.double_scrolling_gap_key))
@@ -251,11 +228,12 @@ class Preferences :
      */
     fun setDevOptionsEnabled(isEnabled: Boolean) {
         // Update the "devOptionsEnabledByUser" pref value
-        AnkiDroidApp.getSharedPrefs(this).edit {
+        this.sharedPrefs().edit {
             putBoolean(getString(R.string.dev_options_enabled_by_user_key), isEnabled)
         }
         // Show/hide the header
-        val headerFragment = supportFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
+        val headerFragment =
+            supportFragmentManager.findFragmentByTag(HeaderFragment::class.java.name)
         if (headerFragment is HeaderFragment) {
             headerFragment.setDevOptionsVisibility(isEnabled)
         }
@@ -289,8 +267,6 @@ class Preferences :
     }
 
     companion object {
-        /** Key of the language preference  */
-        const val LANGUAGE = "language"
 
         /* Only enable AnkiDroid notifications unrelated to due reminders */
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
@@ -323,12 +299,12 @@ class Preferences :
                 R.xml.preferences_general -> GeneralSettingsFragment()
                 R.xml.preferences_reviewing -> ReviewingSettingsFragment()
                 R.xml.preferences_sync -> SyncSettingsFragment()
+                R.xml.preferences_backup_limits -> BackupLimitsSettingsFragment()
                 R.xml.preferences_custom_sync_server -> CustomSyncServerSettingsFragment()
                 R.xml.preferences_notifications -> NotificationsSettingsFragment()
                 R.xml.preferences_appearance -> AppearanceSettingsFragment()
                 R.xml.preferences_controls -> ControlsSettingsFragment()
                 R.xml.preferences_advanced -> AdvancedSettingsFragment()
-                R.xml.preferences_advanced_statistics -> AdvancedStatisticsSettingsFragment()
                 R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
                 R.xml.preferences_dev_options -> DevOptionsFragment()
                 R.xml.preferences_custom_buttons -> CustomButtonsSettingsFragment()
@@ -346,14 +322,12 @@ class Preferences :
             withCol {
                 when (getSchedVer(this)) {
                     2 -> {
-                        set_config("rollover", hours)
-                        flush()
+                        config.set("rollover", hours)
                     }
                     else -> { // typically "1"
                         val date: Calendar = crtGregorianCalendar()
                         date[Calendar.HOUR_OF_DAY] = hours
                         crt = date.timeInMillis / 1000
-                        setMod()
                     }
                 }
             }
@@ -363,7 +337,7 @@ class Preferences :
         suspend fun getDayOffset(): Int {
             return withCol {
                 when (schedVer()) {
-                    2 -> get_config("rollover", DEFAULT_ROLLOVER_VALUE)!!
+                    2 -> config.get("rollover") ?: DEFAULT_ROLLOVER_VALUE
                     // 1, or otherwise:
                     else -> crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
                 }

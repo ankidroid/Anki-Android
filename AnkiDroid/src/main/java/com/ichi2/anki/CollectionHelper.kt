@@ -25,18 +25,19 @@ import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.AnkiDroidFolder.AppPrivateFolder
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.exception.UnknownDatabaseVersionException
 import com.ichi2.anki.preferences.Preferences
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.Storage
-import com.ichi2.libanki.exception.UnknownDatabaseVersionException
-import com.ichi2.preferences.PreferenceExtensions
+import com.ichi2.libanki.DB
+import com.ichi2.preferences.getOrSetString
 import com.ichi2.utils.FileUtil
 import com.ichi2.utils.KotlinCleanup
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbFileTooNewException
 import net.ankiweb.rsdroid.BackendException.BackendDbException.BackendDbLockedException
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.lang.Exception
 import kotlin.Throws
@@ -47,81 +48,17 @@ import kotlin.Throws
 @KotlinCleanup("convert to object")
 open class CollectionHelper {
     /**
-     * Prevents [com.ichi2.async.CollectionLoader] from spuriously re-opening the [Collection].
-     *
-     *
-     * Accessed only from synchronized methods.
-     */
-    @get:Synchronized
-    var isCollectionLocked = false
-        private set
-
-    @Synchronized
-    fun lockCollection() {
-        Timber.i("Locked Collection - Collection Loading should fail")
-        isCollectionLocked = true
-    }
-
-    @Synchronized
-    fun unlockCollection() {
-        Timber.i("Unlocked Collection")
-        isCollectionLocked = false
-    }
-
-    /**
-     * Opens the collection without checking to see if the directory exists.
-     *
-     * path should be tested with File.exists() and File.canWrite() before this is called
-     */
-    private fun openCollection(context: Context, path: String): Collection {
-        Timber.i("Begin openCollection: %s", path)
-        val backend = BackendFactory.getBackend(context)
-        val collection = Storage.collection(
-            context,
-            path,
-            server = false,
-            log = true,
-            backend = backend
-        )
-        Timber.i("End openCollection: %s", path)
-        return collection
-    }
-
-    /**
      * Get the single instance of the [Collection], creating it if necessary  (lazy initialization).
      * @param context is no longer used, as the global AnkidroidApp instance is used instead
      * @return instance of the Collection
      */
     @Synchronized
-    open fun getCol(context: Context?): Collection? {
+    open fun getColUnsafe(context: Context?): Collection? {
         return CollectionManager.getColUnsafe()
     }
 
     /**
-     * Given a path to a .anki2 file returns an open [Collection] associated with the path.
-     *
-     * This operation does not call [initializeAnkiDroidDirectory] and does not set [CollectionManager.collection]
-     *
-     * @param path The path to collection.anki2
-     * @return An open [Collection] object
-     *
-     * @throws StorageAccessException the file at `path` is not writable
-     * @throws StorageAccessException `path` does not exist
-     */
-    @Throws(StorageAccessException::class)
-    fun getColFromPath(path: String, context: Context): Collection {
-        val f = File(path)
-        if (!f.exists()) {
-            throw StorageAccessException("$path does not exist")
-        }
-        if (!f.canWrite()) {
-            throw StorageAccessException("$path is not writable")
-        }
-        return openCollection(context, path)
-    }
-
-    /**
-     * Calls [getCol] inside a try / catch statement.
+     * Calls [getColUnsafe] inside a try / catch statement.
      * Send exception report if [reportException] is set and return null if there was an exception.
      * @param context
      * @param reportException Whether to send a crash report if an [Exception] was thrown when opening the collection (excluding
@@ -129,10 +66,10 @@ open class CollectionHelper {
      * @return the [Collection] if it could be obtained, `null` otherwise.
      */
     @Synchronized
-    fun getColSafe(context: Context?, reportException: Boolean = true): Collection? {
+    fun tryGetColUnsafe(context: Context?, reportException: Boolean = true): Collection? {
         lastOpenFailure = null
         return try {
-            getCol(context)
+            getColUnsafe(context)
         } catch (e: BackendDbLockedException) {
             lastOpenFailure = CollectionOpenFailure.LOCKED
             Timber.w(e)
@@ -160,15 +97,15 @@ open class CollectionHelper {
      * @param save whether or not save before closing
      */
     @Synchronized
-    fun closeCollection(save: Boolean, reason: String?) {
+    fun closeCollection(reason: String?) {
         Timber.i("closeCollection: %s", reason)
-        CollectionManager.closeCollectionBlocking(save)
+        CollectionManager.closeCollectionBlocking()
     }
 
     /**
      * @return Whether or not [Collection] and its child database are open.
      */
-    fun colIsOpen(): Boolean {
+    fun colIsOpenUnsafe(): Boolean {
         return CollectionManager.isOpenUnsafe()
     }
 
@@ -462,7 +399,7 @@ open class CollectionHelper {
         // TODO Tracked in https://github.com/ankidroid/Anki-Android/issues/5304
         @CheckResult
         fun getDefaultAnkiDroidDirectory(context: Context): String {
-            val legacyStorage = StartupStoragePermissionManager.selectAnkiDroidFolder(context) != AppPrivateFolder
+            val legacyStorage = selectAnkiDroidFolder(context) != AppPrivateFolder
             return if (!legacyStorage) {
                 File(getAppSpecificExternalAnkiDroidDirectory(context), "AnkiDroid").absolutePath
             } else {
@@ -507,8 +444,8 @@ open class CollectionHelper {
          * @return Returns an array of [File]s reflecting the directories that AnkiDroid can access without storage permissions
          * @see android.content.Context.getExternalFilesDirs
          */
-        fun getAppSpecificExternalDirectories(context: Context): Array<File> {
-            return context.getExternalFilesDirs(null)
+        fun getAppSpecificExternalDirectories(context: Context): List<File> {
+            return context.getExternalFilesDirs(null).filterNotNull()
         }
 
         /**
@@ -540,21 +477,25 @@ open class CollectionHelper {
          * @return the absolute path to the AnkiDroid directory.
          */
         fun getCurrentAnkiDroidDirectory(context: Context): String {
-            val preferences = AnkiDroidApp.getSharedPrefs(context)
+            val preferences = context.sharedPrefs()
             return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
                 // create an "androidTest" directory inside the current collection directory which contains the test data
                 // "/AnkiDroid/androidTest" would be a new collection path
+                val currentCollectionDirectory = preferences.getOrSetString(PREF_COLLECTION_PATH) {
+                    getDefaultAnkiDroidDirectory(context)
+                }
                 File(
-                    getDefaultAnkiDroidDirectory(context),
+                    currentCollectionDirectory,
                     "androidTest"
                 ).absolutePath
             } else if (ankiDroidDirectoryOverride != null) {
                 ankiDroidDirectoryOverride!!
             } else {
-                PreferenceExtensions.getOrSetString(
-                    preferences,
-                    PREF_COLLECTION_PATH
-                ) { getDefaultAnkiDroidDirectory(context) }
+                preferences.getOrSetString(PREF_COLLECTION_PATH) {
+                    getDefaultAnkiDroidDirectory(
+                        context
+                    )
+                }
             }
         }
 
@@ -564,26 +505,29 @@ open class CollectionHelper {
          * this will represent a change from `/AnkiDroid` to `/Android/data/...`
          */
         fun resetAnkiDroidDirectory(context: Context) {
-            val preferences = AnkiDroidApp.getSharedPrefs(context)
+            val preferences = context.sharedPrefs()
             val directory = getDefaultAnkiDroidDirectory(context)
             Timber.d("resetting AnkiDroid directory to %s", directory)
             preferences.edit { putString(PREF_COLLECTION_PATH, directory) }
         }
 
-        /** Fetches additional collection data not required for
-         * application startup
-         *
-         * Allows mandatory startup procedures to return early, speeding up startup. Less important tasks are offloaded here
-         * No-op if data is already fetched
-         */
-        fun loadCollectionComplete(col: Collection) {
-            col.models
-        }
-
         @Throws(UnknownDatabaseVersionException::class)
         fun getDatabaseVersion(context: Context): Int {
             // backend can't open a schema version outside range, so fall back to a pure DB implementation
-            return Storage.getDatabaseVersion(context, getCollectionPath(context))
+            val colPath = getCollectionPath(context)
+            if (!File(colPath).exists()) {
+                throw UnknownDatabaseVersionException(FileNotFoundException(colPath))
+            }
+            var db: DB? = null
+            return try {
+                db = DB.withAndroidFramework(context, colPath)
+                db.queryScalar("SELECT ver FROM col")
+            } catch (e: Exception) {
+                Timber.w(e, "Couldn't open the database to obtain collection version!")
+                throw UnknownDatabaseVersionException(e)
+            } finally {
+                db?.close()
+            }
         }
     }
 }

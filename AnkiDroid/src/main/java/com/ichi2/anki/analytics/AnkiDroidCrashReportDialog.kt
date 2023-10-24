@@ -24,9 +24,9 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.core.content.edit
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.sharedPrefs
 import org.acra.dialog.CrashReportDialog
 import org.acra.dialog.CrashReportDialogHelper
 
@@ -59,7 +59,7 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
      * Build the custom view used by the dialog
      */
     override fun buildCustomView(savedInstanceState: Bundle?): View {
-        val preferences = AnkiDroidApp.getSharedPrefs(this)
+        val preferences = this.sharedPrefs()
         val inflater = layoutInflater
 
         @SuppressLint("InflateParams")
@@ -82,11 +82,16 @@ class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickL
         if (which == DialogInterface.BUTTON_POSITIVE) {
             // Next time don't tick the auto-report checkbox by default
             val autoReport = mAlwaysReportCheckBox!!.isChecked
-            val preferences = AnkiDroidApp.getSharedPrefs(this)
+            val preferences = this.sharedPrefs()
             preferences.edit { putBoolean("autoreportCheckboxValue", autoReport) }
             // Set the autoreport value to true if ticked
             if (autoReport) {
-                preferences.edit { putString(CrashReportService.FEEDBACK_REPORT_KEY, CrashReportService.FEEDBACK_REPORT_ALWAYS) }
+                preferences.edit {
+                    putString(
+                        CrashReportService.FEEDBACK_REPORT_KEY,
+                        CrashReportService.FEEDBACK_REPORT_ALWAYS
+                    )
+                }
                 CrashReportService.setAcraReportingMode(CrashReportService.FEEDBACK_REPORT_ALWAYS)
             }
             // Send the crash report

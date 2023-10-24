@@ -23,8 +23,9 @@ import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.ichi2.anim.ActivityTransitionAnimation
-import com.ichi2.anki.*
-import com.ichi2.anki.StudyOptionsFragment.StudyOptionsListener
+import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.DeckPicker
+import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog
 import com.ichi2.libanki.Collection
@@ -83,7 +84,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 contextMenuOptions.add(DeckPickerContextMenuOption.CUSTOM_STUDY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.EXPORT_DECK)
-            if (collection.sched.haveBuried(did)) {
+            if (collection.sched.haveBuriedInCurrentDeck()) {
                 contextMenuOptions.add(DeckPickerContextMenuOption.UNBURY)
             }
             contextMenuOptions.add(DeckPickerContextMenuOption.CREATE_SHORTCUT)
@@ -93,6 +94,7 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
 
     // Handle item selection on context menu which is shown when the user long-clicks on a deck
     private fun handleActionOnLongClick(selectedOption: DeckPickerContextMenuOption) {
+        val activity = requireActivity() as DeckPicker
         when (selectedOption) {
             DeckPickerContextMenuOption.DELETE_DECK -> {
                 Timber.i("Delete deck selected")
@@ -100,87 +102,83 @@ class DeckPickerContextMenu(private val collection: Collection) : AnalyticsDialo
                 /* we can only disable the shortcut for now as it is restricted by Google https://issuetracker.google.com/issues/68949561?pli=1#comment4
                  * if fixed or given free hand to delete the shortcut with the help of API update this method and use the new one
                  */
-                (activity as DeckPicker).disableDeckAndChildrenShortcuts(deckId)
+                activity.disableDeckAndChildrenShortcuts(deckId)
 
-                (activity as DeckPicker).confirmDeckDeletion(deckId)
+                activity.confirmDeckDeletion(deckId)
             }
             DeckPickerContextMenuOption.DECK_OPTIONS -> {
                 Timber.i("Open deck options selected")
-                (activity as DeckPicker).showContextMenuDeckOptions(deckId)
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.showContextMenuDeckOptions(deckId)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY -> {
                 Timber.i("Custom study option selected")
-                val ankiActivity = requireActivity() as AnkiActivity
-                val d = FragmentFactoryUtils.instantiate(ankiActivity, CustomStudyDialog::class.java)
+                val d = FragmentFactoryUtils.instantiate(activity, CustomStudyDialog::class.java)
                 d.withArguments(CustomStudyDialog.ContextMenuConfiguration.STANDARD, deckId)
-                ankiActivity.showDialogFragment(d)
+                activity.showDialogFragment(d)
             }
             DeckPickerContextMenuOption.CREATE_SHORTCUT -> {
                 Timber.i("Create icon for a deck")
-                (activity as DeckPicker).createIcon(requireContext(), deckId)
+                activity.createIcon(requireContext(), deckId)
             }
             DeckPickerContextMenuOption.RENAME_DECK -> {
                 Timber.i("Rename deck selected")
-                (activity as DeckPicker).renameDeckDialog(deckId)
+                activity.renameDeckDialog(deckId)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.EXPORT_DECK -> {
                 Timber.i("Export deck selected")
-                (activity as DeckPicker).exportDeck(deckId)
+                activity.exportDeck(deckId)
             }
             DeckPickerContextMenuOption.UNBURY -> {
                 Timber.i("Unbury deck selected")
                 collection.sched.unburyCardsForDeck(deckId)
-                (activity as StudyOptionsListener).onRequireDeckListUpdate()
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.onRequireDeckListUpdate()
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_REBUILD -> {
                 Timber.i("Rebuild deck selected")
-                launchCatchingTask { (activity as DeckPicker).rebuildFiltered(deckId) }
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.rebuildFiltered(deckId)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CUSTOM_STUDY_EMPTY -> {
                 Timber.i("Empty deck selected")
-                (activity as DeckPicker).emptyFiltered(deckId)
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.emptyFiltered(deckId)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.CREATE_SUBDECK -> {
                 Timber.i("Create Subdeck selected")
-                (activity as DeckPicker).createSubDeckDialog(deckId)
+                activity.createSubDeckDialog(deckId)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.BROWSE_CARDS -> {
                 collection.decks.select(deckId)
                 val intent = Intent(activity, CardBrowser::class.java)
-                (activity as DeckPicker).startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
+                activity.startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.START)
+                activity.dismissAllDialogFragments()
             }
             DeckPickerContextMenuOption.ADD_CARD -> {
                 Timber.i("Add selected")
                 collection.decks.select(deckId)
-                (activity as DeckPicker).addNote()
-                (activity as AnkiActivity).dismissAllDialogFragments()
+                activity.addNote()
+                activity.dismissAllDialogFragments()
             }
         }
     }
 
-    private enum class DeckPickerContextMenuOption(val itemId: Int, @StringRes val optionName: Int) {
-        RENAME_DECK(0, R.string.rename_deck),
-        DECK_OPTIONS(1, R.string.menu__deck_options),
-        CUSTOM_STUDY(2, R.string.custom_study),
-        DELETE_DECK(3, R.string.contextmenu_deckpicker_delete_deck),
-        EXPORT_DECK(4, R.string.export_deck),
-        UNBURY(5, R.string.unbury),
-        CUSTOM_STUDY_REBUILD(6, R.string.rebuild_cram_label),
-        CUSTOM_STUDY_EMPTY(7, R.string.empty_cram_label),
-        CREATE_SUBDECK(8, R.string.create_subdeck),
-        CREATE_SHORTCUT(9, R.string.create_shortcut),
-        BROWSE_CARDS(10, R.string.browse_cards),
-        ADD_CARD(11, R.string.menu_add);
-
-        companion object {
-            fun fromId(targetId: Int): DeckPickerContextMenuOption {
-                return values().first { it.itemId == targetId }
-            }
-        }
+    private enum class DeckPickerContextMenuOption(@StringRes val optionName: Int) {
+        RENAME_DECK(R.string.rename_deck),
+        DECK_OPTIONS(R.string.menu__deck_options),
+        CUSTOM_STUDY(R.string.custom_study),
+        DELETE_DECK(R.string.contextmenu_deckpicker_delete_deck),
+        EXPORT_DECK(R.string.export_deck),
+        UNBURY(R.string.unbury),
+        CUSTOM_STUDY_REBUILD(R.string.rebuild_cram_label),
+        CUSTOM_STUDY_EMPTY(R.string.empty_cram_label),
+        CREATE_SUBDECK(R.string.create_subdeck),
+        CREATE_SHORTCUT(R.string.create_shortcut),
+        BROWSE_CARDS(R.string.browse_cards),
+        ADD_CARD(R.string.menu_add);
     }
 
     class Factory(val collectionSupplier: Supplier<Collection>) : ExtendedFragmentFactory() {

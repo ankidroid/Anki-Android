@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Vypnuté</string>
-    <string name="enabled">Zapnuté</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Dotyk v strede uprostred</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Dotyk dole vľavo</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Dotyk dole vpravo</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">Použiť tiež tlačidlá kanji/katakana, emoji/kao-moji pre posúvanie</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Povoliť globálne kontextové menu pre ‘%s’</string>
     <string name="double_scrolling_gap" maxLength="41">Dvojitý posun</string>
@@ -137,11 +134,11 @@
     <string name="sync_status_badge_summ">Zmeniť ikonu synchronizácie, keď je možné odoslať zmeny</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Denný motív</string>
     <string name="night_theme" maxLength="41">Nočný motív</string>
-    <string name="default_font" maxLength="41">Predvolené písmo</string>
-    <string name="override_font" maxLength="41">Použitie východiskového písma</string>
     <string name="language" maxLength="41">Jazyk</string>
     <string name="language_system">Systémový jazyk</string>
     <string name="notification_pref" maxLength="41">Oznámenia</string>
@@ -155,7 +152,6 @@
     <string name="timeout_answer" maxLength="41">Odpoveď po uplynutí času</string>
     <string name="timeout_answer_summ">Ukázať odpoveď automaticky bez podnetu používateľa. Oneskorenie zahŕňa čas na automatické prehranie audio súborov.</string>
     <string name="timeout_answer_seconds" maxLength="41">Čas do zobrazenia odpovede</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Čas do zobrazenia ďalšej otázky</string>
     <string name="select_locale_title">Zvoliť jazyk</string>
     <string name="software_render" maxLength="41">Vypnúť hardvérové renderovanie kartičky</string>
@@ -167,9 +163,10 @@
     <string name="disable_extended_text_ui_summ">Povoliť kontextové menu doplňovačky pri horizontálnom zobrazení.</string>
     <string name="vertical_centering" maxLength="41">Zarovnanie na stred</string>
     <string name="vertical_centering_summ">Vycentrovať obsah kartičiek vertikálne</string>
-    <string name="pref_backup_max" maxLength="41">Maximálny počet záloh</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Čas pre dvojklepnutie (milisekundy)</string>
     <string name="pref_double_tap_time_interval_summary">Druhé klepnutie na tlačidlo odpovede bude ignorované, ak tento čas neuplynul. Zabraňuje to nechceným dvojklepnutiam</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Zobraziť tlačidlo času</string>
     <string name="show_estimates_summ">Zobraziť čas ďalšieho opakovania nad tlačidlami odpovedí</string>
     <string name="show_large_answer_buttons" maxLength="41">Ukázať veľké tlačidla pre odpovede</string>
@@ -181,18 +178,13 @@
     <string name="show_eta" maxLength="41">Zobraziť ETA</string>
     <string name="show_eta_summ">Zobraziť zostávajúci čas</string>
     <string name="use_current" maxLength="41">Balíček pre nové kartičky</string>
-    <string name="new_spread" maxLength="41">Pozícia novej kartičky</string>
     <string name="learn_cutoff" maxLength="41">Limit pre učenie sa dopredu</string>
     <string name="time_limit" maxLength="41">Hodnota časového limitu</string>
     <string name="new_timezone" maxLength="41">Nové spracovanie časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začiatok ďalšieho dňa</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Polnoc</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">2300</string>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínať obrazovku</string>
     <string name="pref_keep_screen_on_summ">Zakázať vypínanie obrazovky</string>
-    <string name="convert_fen_text" maxLength="41">Podpora šachového zápisu</string>
-    <string name="convert_fen_text_summ">Vykresliť šachovnicu zo systému zápisu Forsyth–Edwards. Zápis musí byť uzavretý medzi značkami [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Povoliť AnkiDroid API</string>
     <string name="enable_api_summary">Umožniť ostatným aplikáciám pripojiť sa k AnkiDroid a dovoliť čítať/zapisovať údaje bez vášho zásahu</string>
     <string name="custom_buttons" maxLength="41">Tlačidlá panelu aplikácie</string>
@@ -218,17 +210,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Pokročilá štatistika</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Zapnúť pokročilú štatistiku</string>
-    <string name="enable_advanced_statistics_summ">Zobraziť štatistickú predpoveď na základe výpočtov alebo simulácie budúcich opakovaní (zapnuté) alebo na základe budúcich opakovaní, ktoré sú už naplánované (vypnuté).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Vypočítať prvých n dní, simulovať zvyšok</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Presnosť výpočtu</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Počet iterácií simulácie</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Vlastný server synchronizácie</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
@@ -241,71 +222,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Mapovanie príkazov</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Zmeny v nastaveniach balíčkových skupín majú vplyv na viaceré balíčky. Ak si želáte zmeniť len aktuálny balíček, prosím, pridajte najprv novú skupinu v možnostiach</string>
     <string name="studyoptions_limit_select_tags">Zvoliť štítky</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Opis balíčka (ovplyvňuje len aktuálny balíček)</string>
-    <string name="deck_conf_group" maxLength="41">Skupina nastavení</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d balíček používa túto skupinu</item>
-        <item quantity="few">%1$s\n%2$d balíčky používajú túto skupinu</item>
-        <item quantity="many">%1$s\n%2$d balíčkov používa túto skupinu</item>
-        <item quantity="other">%1$s\n%2$d balíčkov používa túto skupinu</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Nové kartičky</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Opakovania</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Zabudnutia</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Všeobecné</string>
     <string name="deck_conf_reminders" maxLength="41">Pripomienky</string>
-    <string name="deck_conf_steps" maxLength="41">Kroky (v minútach)</string>
-    <string name="deck_conf_order" maxLength="41">Poradie</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Denne nových kartičiek</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Interval postupu</string>
-    <string name="deck_conf_days">XXX dní</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Interval ľahkých</string>
-    <string name="deck_conf_start_ease" maxLength="41">Počiatočná jednoduchosť</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maximálny počet opakovaných kariet za deň</string>
-    <string name="deck_conf_new_bury" maxLength="41">Skryť súvisiace nové kartičky</string>
-    <string name="deck_conf_new_bury_summ">Súvisiace nové kartičky sú skryté do ďalšieho dňa</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Skryť súvisiace opakovania</string>
-    <string name="deck_conf_rev_bury_summ">Súvisiace opakovania sú skryté do ďalšieho dňa</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Použiť všeobecné nastavenia</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Použiť všeobecné nastavenie „automaticky zobraziť odpoveď\" namiesto nastavení pre túto skupinu.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bonus za jednoduchosť</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Interval ťažkých</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Modifikátor intervalu</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Maximálny interval</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Nový interval</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Minimálny Interval</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Hranica pre pijavice</string>
-    <string name="deck_conf_fails">XXX zabudnutí</string>
-    <string name="deck_conf_leech_action" maxLength="41">Čo s pijavicou</string>
-    <string name="deck_conf_max_time" maxLength="41">Maximálny čas na odpoveď</string>
-    <string name="deck_conf_seconds">XXX sekúnd</string>
-    <string name="deck_conf_timer" maxLength="41">Zobraziť časovač odpovede</string>
-    <string name="deck_conf_autoplay" maxLength="41">Automaticky prehrať audio</string>
-    <string name="deck_conf_replayq" maxLength="41">Znova prehrať otázku</string>
-    <string name="deck_conf_replayq_summ">Pri zobrazení odpovede prehrať audio otázky aj odpovede</string>
-    <string name="deck_conf_manage" maxLength="41">Spravovanie skupiny</string>
-    <string name="deck_conf_manage_summ">Pridať a zmeniť skupinu možností</string>
-    <string name="deck_conf_current_group" maxLength="41">Aktuálna skupina</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Premenovať</string>
-    <string name="deck_conf_reset" maxLength="41">Obnoviť predvolené</string>
-    <string name="deck_conf_reset_message">Obnoviť pôvodné hodnoty aktuálnej skupiny nastavení ?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Pridať konfiguráciu</string>
-    <string name="deck_conf_add_summ">Vytvoriť kópiu aktuálnej skupiny nastavení</string>
-    <string name="deck_conf_remove_message">Odstrániť aktuálnu skupinu nastavení?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Nastaviť pre všetky podbalíčky</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s podbalíček použije túto skupinu</item>
-        <item quantity="few">%s podbalíčky použijú túto skupinu</item>
-        <item quantity="many">%s podbalíčkov použije túto skupinu</item>
-        <item quantity="other">%s podbalíčkov použije túto skupinu</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Nastaviť aktuálnu skupinu nastavení pre všetky podbalíčky tohto balíčka?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Font prehliadača a editora</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filter</string>
     <string name="deck_conf_cram_search" maxLength="41">Hľadať</string>
     <string name="deck_conf_cram_limit" maxLength="41">Obmedziť na</string>
@@ -315,8 +242,6 @@
     <string name="deck_conf_cram_filter_2_check">Povoliť druhý filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Vlastný postup (v minútach)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Definovať vlastný postup</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Povoliť oznámenia pre tieto balíčky v tejto skupine balíčkov</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Pripomenúť o</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Pomôžte spraviť AnkiDroid lepším!</string>
     <string name="analytics_title" maxLength="41">Zdieľať používanie prvkov</string>
@@ -353,12 +278,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Odstrániť \"%s\"</string>
     <string name="bindings_already_bound">Už naviazané na %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
@@ -368,7 +288,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.
@@ -398,7 +317,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>

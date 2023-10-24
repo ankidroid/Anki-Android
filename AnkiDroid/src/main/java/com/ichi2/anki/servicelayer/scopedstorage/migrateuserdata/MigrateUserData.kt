@@ -18,7 +18,6 @@ package com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata
 
 import android.content.SharedPreferences
 import androidx.annotation.VisibleForTesting
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 import com.ichi2.anki.model.Directory
 import com.ichi2.anki.model.DiskFile
@@ -29,21 +28,14 @@ import com.ichi2.anki.servicelayer.scopedstorage.MoveFile
 import com.ichi2.anki.servicelayer.scopedstorage.MoveFileOrDirectory
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.Operation
 import com.ichi2.anki.servicelayer.scopedstorage.migrateuserdata.MigrateUserData.SingleRetryDecorator
+import com.ichi2.anki.utils.TranslatableAggregateException
+import com.ichi2.anki.utils.getUserFriendlyErrorText
 import com.ichi2.compat.CompatHelper
-import com.ichi2.exceptions.AggregateException
 import timber.log.Timber
 import java.io.File
 import java.util.concurrent.CountDownLatch
 
 typealias NumberOfBytes = Long
-
-fun NumberOfBytes.toKB(): Int {
-    return ((this / 1024).toInt())
-}
-
-fun NumberOfBytes.toMB(): Int {
-    return this.toKB() / 1024
-}
 
 /**
  * Function that is executed when one file is migrated, with the number of bytes moved.
@@ -71,13 +63,15 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
          * Creates an instance of [MigrateUserData] if valid, returns null if a migration is not in progress, or throws if data is invalid
          * @return null if a migration is not taking place, otherwise a valid [MigrateUserData] instance
          *
-         * @throws IllegalStateException If preferences are in an invalid state (should be logically impossible - currently unrecoverable)
+         * @throws IllegalStateException if migration is not taking place,
+         *   or if preferences are in an invalid state
+         *   (should be logically impossible - currently unrecoverable)
          * @throws MissingDirectoryException If either or both the source/destination do not exist
          */
-        fun createInstance(preferences: SharedPreferences): MigrateUserData? {
+        fun createInstance(preferences: SharedPreferences): MigrateUserData {
             val migrationPreferences = UserDataMigrationPreferences.createInstance(preferences)
             if (!migrationPreferences.migrationInProgress) {
-                return null
+                throw IllegalStateException("Migration is not in progress")
             }
 
             return createInstance(migrationPreferences)
@@ -456,7 +450,18 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
             loggedExceptions.add(ex)
             consecutiveExceptionsWithoutProgress++
             if (consecutiveExceptionsWithoutProgress >= 10) {
-                val exception = AggregateException.raise("10 consecutive exceptions without progress", loggedExceptions)
+                val exception = loggedExceptions.singleOrNull()
+                    ?: TranslatableAggregateException(
+                        message = "Multiple consecutive errors without progress",
+                        translatableMessage = {
+                            getString(
+                                R.string.error__etc__multiple_consecutive_errors_without_progress_most_recent,
+                                getUserFriendlyErrorText(loggedExceptions.last())
+                            )
+                        },
+                        causes = loggedExceptions
+                    )
+
                 failOperationWith(exception)
             }
         }
@@ -507,7 +512,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * @throws AggregateException If multiple exceptions were thrown when executing
      * @throws RuntimeException Various other failings if only a single exception was thrown
      */
-    fun migrateFiles(progressListener: MigrationProgressListener): Boolean {
+    fun migrateFiles(progressListener: MigrationProgressListener) {
         val context = initializeContext(progressListener)
 
         // define the function here, so we can execute it on retry
@@ -529,14 +534,12 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
         // otherwise, there were a few exceptions which didn't stop execution, throw these.
         if (!context.successfullyCompleted) {
             context.terminatedWith?.let { throw it }
-            val migrationFailedMessage = AnkiDroidApp.instance.getString(R.string.migration_failed_message)
-            throw AggregateException.raise(migrationFailedMessage, context.loggedExceptions)
+            throw context.loggedExceptions.singleOrNull()
+                ?: TranslatableAggregateException(causes = context.loggedExceptions)
         }
 
         // we are successfully migrated here
         // TODO: fix "conflicts" - check to see if conflicts are due to partially copied files in the destination
-
-        return true
     }
 
     @VisibleForTesting

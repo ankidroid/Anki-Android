@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Wyłączone</string>
-    <string name="enabled">Włączone</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s minut</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -78,7 +77,7 @@
     <string name="card_zoom" maxLength="41">Powiększenie karty</string>
     <string name="image_zoom" maxLength="41">Powiększenie obrazów/grafiki</string>
     <string name="button_size" maxLength="41">Rozmiar przycisku odpowiedzi</string>
-    <string name="card_browser_font_size" maxLength="41">Skalowanie fontu przeglądania kart</string>
+    <string name="card_browser_font_size" maxLength="41">Skalowanie czcionki przeglądania kart</string>
     <string name="card_browser_hide_media" maxLength="41">Wyświetlaj nazwy plików w przeglądarce kart</string>
     <string name="card_browser_hide_media_summary">Wyświetlaj nazwy plików mediów w polach pytania/odpowiedzi w przeglądarce kart</string>
     <string name="col_path" maxLength="41">Katalog AnkiDroid</string>
@@ -98,7 +97,7 @@
     <string name="gestures_corner_touch_summary">Zezwalaj na gesty dotykowe w rogach ekranu</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Panel nawigacyjny w pełnym ekranie</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Otwórz panel nawigacyjny po przesunięciu w prawo w dowolnym miejscu ekranu</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Brak</string>
     <string name="gestures_swipe_up" maxLength="41">Przesuń w górę</string>
     <string name="gestures_swipe_down" maxLength="41">Przesuń w dół</string>
     <string name="gestures_swipe_left" maxLength="41">Przesuń w lewo</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Dotknij środka ekranu</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Dotknij lewej dolnej części ekranu</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Dotknij prawej dolnej części ekranu</string>
-    <string name="more_scrolling_buttons" maxLength="41">eCzytnik</string>
-    <string name="more_scrolling_buttons_summ">Użyj także przycisków kanji/katakana, emoji/kao-moji do przewijania</string>
     <string name="card_browser_enable_external_context_menu">Menu „%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Włącza menu kontekstowe „%s”globalne </string>
     <string name="double_scrolling_gap" maxLength="41">Podwójne przewijanie</string>
@@ -128,19 +125,19 @@
     <string name="sync_account" maxLength="41">Konto AnkiWeb</string>
     <string name="sync_account_summ_logged_out">Nie zalogowany</string>
     <string name="automatic_sync_choice" maxLength="41">Synchronizacja automatyczna</string>
-    <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zakończenia aplikacji jeżeli ostatnia synchronizacja była później niż 10 minut.</string>
+    <string name="automatic_sync_choice_summ">Synchronizuj automatycznie podczas startu/zamykania aplikacji, jeżeli od ostatniej synchronizacji minęło ponad 10 minut.</string>
     <string name="sync_media_always" comment="Option to always fetch media when syncing">Zawsze</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
+    <string name="sync_media_only_unmetered">Tylko przy połączeniach bez opłat</string>
     <string name="sync_media_never">Nigdy</string>
     <string name="sync_status_badge" maxLength="41">Wyświetl status synchronizacji</string>
     <string name="sync_status_badge_summ">Zmień ikonę synchronizacji, jeśli istnieją zmiany do przesłania</string>
     <string name="metered_sync_title" maxLength="41">Zezwalaj na synchronizację przy połączeniach taryfowych</string>
     <string name="metered_sync_summary">Jeśli wyłączone, zostaniesz ostrzeżony, jeśli spróbujesz zsynchronizować używając połączenia taryfowego</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Motyw</string>
     <string name="day_theme" maxLength="41">Motyw na dzień</string>
     <string name="night_theme" maxLength="41">Motyw na noc</string>
-    <string name="default_font" maxLength="41">Domyślna czcionka</string>
-    <string name="override_font" maxLength="41">Zastosowanie standardowego fontu</string>
     <string name="language" maxLength="41">Język</string>
     <string name="language_system">Język systemu</string>
     <string name="notification_pref" maxLength="41">Powiadomienia</string>
@@ -152,9 +149,8 @@
     <string name="notification_minimum_cards_due_blink" maxLength="41">Migotanie</string>
     <string name="timeout_answer_text" maxLength="41">Automatyczne wyświetlanie odpowiedzi</string>
     <string name="timeout_answer" maxLength="41">Przekroczenie czasu na odpowiedź</string>
-    <string name="timeout_answer_summ">Pokaż odpowiedź automatycznie bez interakcji z użytkownikiem. Opóźnienie czas automatycznego odtwarzania plików dźwiękowych.</string>
+    <string name="timeout_answer_summ">Pokaż odpowiedź automatycznie nawet bez działania użytkownika. Opóźnienie zawiera czas na automatyczne odtworzenie dźwięku.</string>
     <string name="timeout_answer_seconds" maxLength="41">Czas do pokazania odpowiedzi</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Czas do pokazania kolejnego pytania</string>
     <string name="select_locale_title">Wybór języka</string>
     <string name="software_render" maxLength="41">Wyłącz renderowanie sprzętowe kart</string>
@@ -166,9 +162,10 @@
     <string name="disable_extended_text_ui_summ">Zezwala na menu kontekstowe luk do wypełnienia w trybie poziomym.</string>
     <string name="vertical_centering" maxLength="41">Wycentruj</string>
     <string name="vertical_centering_summ">Wycentruj w pionie zawartość kart</string>
-    <string name="pref_backup_max" maxLength="41">Maksymalna liczba kopii zapasowych</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Interwał czasu podwójnego dotknięcia (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Drugie dotknięcie przycisków odpowiedzi zostanie zignorowane jeśli od poprzedniego nie upłynął ustawiony czas. Zapobiega to przypadkowym podwójnym dotknięciom</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Pokaż czas przy przyciskach</string>
     <string name="show_estimates_summ">Pokazuj czas kolejnej powtórki nad przyciskami odpowiedzi</string>
     <string name="show_large_answer_buttons" maxLength="41">Pokaż duże przyciski odpowiedzi</string>
@@ -180,18 +177,13 @@
     <string name="show_eta" maxLength="41">Pokaż ETA</string>
     <string name="show_eta_summ">Pokaż pozostały czas</string>
     <string name="use_current" maxLength="41">Talia dla nowych kart</string>
-    <string name="new_spread" maxLength="41">Pozycja nowych kart</string>
     <string name="learn_cutoff" maxLength="41">Limit nauki z wyprzedzeniem</string>
     <string name="time_limit" maxLength="41">Ograniczenie czasu</string>
-    <string name="new_timezone" maxLength="41">Obsługa nowej strefy czasowej</string>
+    <string name="new_timezone" maxLength="41">Nowa obsługa stref czasowych</string>
     <string name="day_offset_with_description" maxLength="41">Początek nowego dnia</string>
     <string name="day_offset_summary">%s godzin po północy</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Północ</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
     <string name="pref_keep_screen_on" maxLength="41">Utrzymuj włączony ekran</string>
     <string name="pref_keep_screen_on_summ">Zablokuj wyłącznik czasowy ekranu</string>
-    <string name="convert_fen_text" maxLength="41">Obsługa notacji szachowej</string>
-    <string name="convert_fen_text_summ">Rysuj szachownicę z notacji Forsytha-Edwardsa. Notacja musi być w znacznikach [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Zezwól na AnkiDroid API</string>
     <string name="enable_api_summary">Pozwól innym aplikacjom na podłączanie do AnkiDroid i zapisywanie i odczyt danych bez Twojej ingerencji</string>
     <string name="custom_buttons" maxLength="41">Przyciski paska aplikacji</string>
@@ -200,14 +192,14 @@
     <string name="custom_buttons_setting_if_room">Pokaż jeśli jest miejsce</string>
     <string name="custom_buttons_setting_menu_only">Tylko w menu</string>
     <string name="reset_custom_buttons" maxLength="41">Resetuj do domyślnych</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Przywróć domyślne ustawienia</string>
+    <string name="reset">Zresetuj</string>
     <string name="thirdparty_apps_title" maxLength="41">API aplikacji stron trzecich</string>
     <string name="thirdparty_apps_summary">Zobacz listę aplikacji, które używają API AnkiDroid takie jak słowniki, narzędzia.</string>
     <string name="html_javascript_debugging" maxLength="41">Debugowanie HTML / Javascript</string>
     <string name="html_javascript_debugging_summ">Włącz zdalne połączenia WebView i zapisz kartę HTML do katalogu AnkiDroid</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Recenzent</string>
+    <string name="pref_cat_reviewer" maxLength="41">Ekran nauki</string>
     <string name="accessibility" maxLength="41">Ułatwienia dostępu</string>
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Wklej zdjęcia ze schowka jako PNG</string>
@@ -217,94 +209,29 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Zezwalaj na import wszystkich plików</string>
     <string name="media_import_allow_all_files_summ">Jeśli Android nie rozpoznaje pliku multimedialnego</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Domyślna talia podczas otwierania statystyk</string>
-    <string name="stats_default_deck_current">Pokaż statystyki dla ostatnio używanej talii</string>
-    <string name="stats_default_deck_all">Pokaż statystyki dla wszystkich talii</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Zaawansowane statystyki</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Włącz zaawansowane statystyki</string>
-    <string name="enable_advanced_statistics_summ">Prognozy na podstawie obliczeń lub symulacji przyszłych powtórek (włączone) lub przyszłych już zaplanowanych powtórek (wyłączone).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Oblicz dla pierwszych n dni, symuluj resztę</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Dokładność obliczeń</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Liczba iteracji symulacji</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Własny serwer synchronizacji</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Nie używane</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Brak</string>
+    <string name="custom_sync_server_help2"><![CDATA[        Jako alternatywa dla synchronizacji z AnkiWeb,
+        możesz użyć własnego serwera do synchronizacji.
+        Jeśli nie jest ustawiony, zamiast tego zostanie użyty domyślny serwer AnkiWeb.
+        <a href="%s">Dowiedz się więcej</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Adres url synchronizacji</string>
     <!-- Key Bindings -->
     <string name="keyboard">Klawiatura</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Przypisywanie poleceń</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Zmiany opcji grup talii będzie mieć wpływ na wiele talii. Jeśli chcesz zmienić tylko obecną talię, najpierw dodaj nowe ustawienie talii</string>
     <string name="studyoptions_limit_select_tags">Wybierz etykiety</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Opis talii (ma wpływ tylko na obecną talię)</string>
-    <string name="deck_conf_group" maxLength="41">Grupa opcji</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d talia używa tej grupy</item>
-        <item quantity="few">%1$s\n%2$d talie używają tej grupy</item>
-        <item quantity="many">%1$s\n%2$d talii używa tej grupy</item>
-        <item quantity="other">%1$s\n%2$d talii używa tej grupy</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Nowe karty</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Powtórki</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Pomyłki</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Ogólne</string>
     <string name="deck_conf_reminders" maxLength="41">Przypomnienia</string>
-    <string name="deck_conf_steps" maxLength="41">Kroki (w minutach)</string>
-    <string name="deck_conf_order" maxLength="41">Kolejność</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Nowe karty/dzień</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Interwał po nauce karty</string>
-    <string name="deck_conf_days">XXX dni</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Przerwa dla łatwych</string>
-    <string name="deck_conf_start_ease" maxLength="41">Początkowa łatwość</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maksymalnie przejrzeń dziennie</string>
-    <string name="deck_conf_new_bury" maxLength="41">Zakop nowe karty powiązane</string>
-    <string name="deck_conf_new_bury_summ">Nowe karty powiązane są zakopane do kolejnego dnia</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Zakop powiązane powtórki</string>
-    <string name="deck_conf_rev_bury_summ">Powiązane powtórki są zakopane do kolejnego dnia</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Użyj ustawień ogólnych</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Użyj ustawień ogólnych \"Automatycznego wyświetlania odpowiedzi\" zamiast używać ustawień dla tej grupy.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Bonus dla łatwych</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Przerwa dla trudnych</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Modyfikator interwału</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Maksymalny interwał</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Nowy interwał</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Minimalny interwał</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Próg pijawek</string>
-    <string name="deck_conf_fails">XXX niepowodzeń</string>
-    <string name="deck_conf_leech_action" maxLength="41">Akcja dla słów-„hamulców nauki”</string>
-    <string name="deck_conf_max_time" maxLength="41">Maksymalny czas odpowiedzi</string>
-    <string name="deck_conf_seconds">XXX sekund</string>
-    <string name="deck_conf_timer" maxLength="41">Pokaż czas odpowiedzi</string>
-    <string name="deck_conf_autoplay" maxLength="41">Automatycznie odtwarzaj audio</string>
-    <string name="deck_conf_replayq" maxLength="41">Powtórz pytanie</string>
-    <string name="deck_conf_replayq_summ">Po pokazaniu odpowiedzi powtórz i audio pytania i odpowiedzi</string>
-    <string name="deck_conf_manage" maxLength="41">Zarządzanie grupą ustawień</string>
-    <string name="deck_conf_manage_summ">Dodaj i zmień grupy opcji</string>
-    <string name="deck_conf_current_group" maxLength="41">Bieżąca grupa ustawień</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Zmień nazwę</string>
-    <string name="deck_conf_reset" maxLength="41">Przywróć domyślne</string>
-    <string name="deck_conf_reset_message">Przywrócić bieżące ustawienia grupy do wartości domyślnych?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Dodaj konfigurację</string>
-    <string name="deck_conf_add_summ">Utwórz kopię bieżących ustawień grupy</string>
-    <string name="deck_conf_remove_message">Usunąć bieżące ustawienia grupy?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Ustaw dla wszystkich sub-talii</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s sub-talia używa tej grupy</item>
-        <item quantity="few">%s sub-talie używają tej grupy</item>
-        <item quantity="many">%s sub-talii używa tej grupy</item>
-        <item quantity="other">%s sub-talii używa tej grupy</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Zastosować bieżące ustawienia grupy dla wszystkich sub-talii tej talii?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Czcionka przeglądarki i edytora</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtrowanie</string>
     <string name="deck_conf_cram_search" maxLength="41">Szukaj</string>
     <string name="deck_conf_cram_limit" maxLength="41">Ogranicz do</string>
@@ -314,8 +241,6 @@
     <string name="deck_conf_cram_filter_2_check">Włącz drugi filtr</string>
     <string name="deck_conf_cram_steps" maxLength="41">Własne kroki (w minutach)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Zdefiniuj własne kroki</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Włącz powiadomienia dla talii w tej grupie talii</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Przypomnij o</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Pomóż ulepszyć AnkiDroid!</string>
     <string name="analytics_title" maxLength="41">Udostępnij użycie aplikacji</string>
@@ -352,80 +277,73 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Usuń \'%s\'</string>
     <string name="bindings_already_bound">Już przypisane do %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Eksperymentalne</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Włącz „%s”</string>
-    <string name="use_rust_backend_title" maxLength="41">Użyj nowego backendu</string>
-    <string name="use_rust_backend_summary">Włącza nowsze funkcje Anki, takie jak silnik v3\nNIESTABILNY. Nie używaj na kolekcji, której nie możesz stracić. NIE cofaj po zamknięciu aplikacji</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Użyj harmonogramu v3</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperymentalne</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Ustawienia programisty</string>
     <string name="dev_options_enabled_pref" maxLength="41">Włącz opcje dla programistów</string>
     <string name="disable_dev_options">Wyłącz opcje dla programistów </string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="dev_options_warning">        Przed włączeniem opcji deweloperskich upewnij się, że wiesz co robisz. Te opcje są niebezpieczne i mogą zniszczyć aplikację lub uszkodzić kolekcję.\n\nZauważ, że te opcje nie są odpowiednie dla większości użytkowników i dlatego nie są przetłumaczone, więc są w języku angielskim.
     </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid okresowo wykonuje kopię zapasową twojej kolekcji.
+        Po utworzeniu kopii zapasowych starsze niż dwa dni,
+        AnkiDroid rozpocznie usuwanie niektórych z nich, aby zwolnić miejsce na dysku.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Zauważ, że pliki multimedialne nie wchodzą w skład są kopii zapasowej.
+        Aby być bezpiecznym, synchronizuj swoją kolekcję lub wykonaj kopię zapasową - eksport.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        Możesz przywrócić z kopię zapasową i eksportować swoją kolekcję w menu listy talii.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minuty między automatycznymi kopiami zapasowymi</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Codzienne kopie zapasowe do utrzymania</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Tygodniowe kopie zapasowe do utrzymania</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Miesięczne kopie zapasowe do utrzymania</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Zarządzaj miejscem</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Błąd</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Obli-\nczanie&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="few">%1$d files\n%2$s</item>
-        <item quantity="many">%1$d files\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d plik\n%2$s</item>
+        <item quantity="few">%1$d pliki\n%2$s</item>
+        <item quantity="many">%1$d plików\n%2$s</item>
+        <item quantity="other">%1$d plików\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Usuń nieużywane pliki multimedialne</string>
+    <string name="pref__delete_unused_media_files__summary">Usuń obrazy i inne media, które nie są poprzedzone _ i nie są odwoływane przez żadne notatki</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Usuń nieużywane pliki multimedialne</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Usuń kopie zapasowe</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Usuń kopie zapasowe</string>
+    <string name="progress__deleting_backups">Usuwanie kopii zapasowych&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Usuń kolekcję</string>
+    <string name="pref__delete_collection__summary">Usuń kolekcję, media i kopie zapasowe. Ustawienia aplikacji nie są usuwane</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Usuń kolekcję</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Czy na pewno chcesz usunąć swoją kolekcję, media i kopie zapasowe?\n\nUwaga: ta akcja zamknie okno.</string>
+    <string name="progress__deleting_collection">Usuwanie kolekcji&#8230;</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Usuń wszystko</string>
+    <string name="pref__delete_everything__summary">Usuń kolekcję, media, kopie zapasowe i ustawienia</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Usuń wszystko</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Czy na pewno chcesz usunąć wszystkie dane? Obejmuje to kolekcję, media, kopie zapasowe i preferencje.\n\nUwaga: ta akcja zamknie okno.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Usuń dane aplikacji</string>
+    <string name="pref__delete_app_data__summary">Usuń ustawienia i inne dane aplikacji</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Usuń dane aplikacji</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Czy na pewno chcesz usunąć dane aplikacji? Obejmuje to ustawienia i inne dane aplikacji.\n\nUwaga: ta akcja zamknie okno.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Brak kolekcji</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Błąd</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Pobieranie&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Obliczanie&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekcja nie istnieje</string>
 </resources>

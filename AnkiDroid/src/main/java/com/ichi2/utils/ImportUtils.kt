@@ -32,7 +32,6 @@ import com.ichi2.anki.dialogs.DialogHandler
 import com.ichi2.anki.dialogs.DialogHandlerMessage
 import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.compat.CompatHelper
-import org.apache.commons.compress.archivers.zip.ZipFile
 import org.jetbrains.annotations.Contract
 import timber.log.Timber
 import java.io.File
@@ -42,8 +41,6 @@ import java.io.InputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
-import java.util.zip.ZipException
-import java.util.zip.ZipInputStream
 import kotlin.collections.ArrayList
 
 object ImportUtils {
@@ -156,13 +153,13 @@ object ImportUtils {
 
                 // Hack to fix bug where ContentResolver not returning filename correctly
                 if (filename == null) {
-                    if (intent.type != null && ("application/apkg" == intent.type || hasValidZipFile(context, data))) {
+                    if (intent.type == "application/apkg" || intent.type == "application/zip") {
                         // Set a dummy filename if MIME type provided or is a valid zip file
                         filename = "unknown_filename.apkg"
                         Timber.w("Could not retrieve filename from ContentProvider, but was valid zip file so we try to continue")
                     } else {
-                        Timber.e("Could not retrieve filename from ContentProvider or read content as ZipFile")
-                        CrashReportService.sendExceptionReport(RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed")
+                        Timber.e("Could not retrieve filename from ContentProvider")
+                        CrashReportService.sendExceptionReport(RuntimeException("Could not import apkg from ContentProvider"), "IntentHandler.java", "apkg import failed; mime type ${intent.type}")
                         return ImportResult.fromErrorString(AnkiDroidApp.appResources.getString(R.string.import_error_content_provider, AnkiDroidApp.manualUrl + "#importing"))
                     }
                 }
@@ -185,11 +182,6 @@ object ImportUtils {
                         CrashReportService.sendExceptionReport(RuntimeException("Error importing apkg file"), "IntentHandler.java", "apkg import failed")
                         return ImportResult.fromErrorString(errorMessage)
                     }
-                    val validateZipResult = validateZipFile(context, tempOutDir)
-                    if (validateZipResult != null) {
-                        File(tempOutDir).delete()
-                        return validateZipResult
-                    }
                     tempOutDirList.add(tempOutDir)
                 }
                 sendShowImportFileDialogMsg(tempOutDirList)
@@ -197,32 +189,12 @@ object ImportUtils {
             return ImportResult.fromSuccess()
         }
 
-        private fun validateZipFile(ctx: Context, filePath: String): ImportResult? {
-            val file = File(filePath)
-            var zf: ZipFile? = null
-            try {
-                zf = ZipFile(file)
-            } catch (e: Exception) {
-                Timber.w(e, "Failed to validate zip")
-                return ImportResult.fromInvalidZip(ctx, file, e)
-            } finally {
-                if (zf != null) {
-                    try {
-                        zf.close()
-                    } catch (e: IOException) {
-                        Timber.w(e, "Failed to close zip")
-                    }
-                }
-            }
-            return null
-        }
-
         private fun validateImportTypes(context: Context, dataList: ArrayList<Uri>): String? {
             var apkgCount = 0
             var colpkgCount = 0
 
             for (data in dataList) {
-                var fileName = getFileNameFromContentProvider(context, data)
+                val fileName = getFileNameFromContentProvider(context, data)
                 when {
                     isDeckPackage(fileName) -> {
                         apkgCount += 1
@@ -293,6 +265,7 @@ object ImportUtils {
             AlertDialog.Builder(activity).show {
                 title(text = title)
                 message(text = errorMessage!!)
+                setCancelable(false)
                 positiveButton(R.string.dialog_ok) {
                     if (exitActivity) {
                         AnkiActivity.finishActivityWithFade(activity)
@@ -309,17 +282,13 @@ object ImportUtils {
          */
         protected open fun copyFileToCache(context: Context, data: Uri?, tempPath: String): Boolean {
             // Get an input stream to the data in ContentProvider
-            val inputStream: InputStream? = try {
+            val inputStream: InputStream = try {
                 context.contentResolver.openInputStream(data!!)
             } catch (e: FileNotFoundException) {
                 Timber.e(e, "Could not open input stream to intent data")
                 return false
-            }
+            } ?: return false
             // Check non-null
-            @Suppress("FoldInitializerAndIfToElvis")
-            if (inputStream == null) {
-                return false
-            }
             try {
                 CompatHelper.compat.copyFile(inputStream, tempPath)
             } catch (e: IOException) {
@@ -392,50 +361,6 @@ object ImportUtils {
                 // COULD_BE_BETTE: accepts .apkgaa"
                 return extensionSegment.lowercase(Locale.ROOT).startsWith(extension!!)
             }
-
-            /**
-             * Check if the InputStream is to a valid non-empty zip file
-             * @param data uri from which to get input stream
-             * @return whether or not valid zip file
-             */
-            private fun hasValidZipFile(context: Context, data: Uri?): Boolean {
-                // Get an input stream to the data in ContentProvider
-                var inputStream: InputStream? = null
-                try {
-                    inputStream = context.contentResolver.openInputStream(data!!)
-                } catch (e: FileNotFoundException) {
-                    Timber.e(e, "Could not open input stream to intent data")
-                }
-                // Make sure it's not null
-                if (inputStream == null) {
-                    Timber.e("Could not open input stream to intent data")
-                    return false
-                }
-                // Open zip input stream
-                val zis = ZipInputStream(inputStream)
-                var ok = false
-                try {
-                    try {
-                        val ze = zis.nextEntry
-                        if (ze != null) {
-                            // set ok flag to true if there are any valid entries in the zip file
-                            ok = true
-                        }
-                    } catch (e: Exception) {
-                        // don't set ok flag
-                        Timber.d(e, "Error checking if provided file has a zip entry")
-                    }
-                } finally {
-                    // close the input streams
-                    try {
-                        zis.close()
-                        inputStream.close()
-                    } catch (e: Exception) {
-                        Timber.d(e, "Error closing the InputStream")
-                    }
-                }
-                return ok
-            }
         }
     }
 
@@ -450,25 +375,6 @@ object ImportUtils {
 
             fun fromSuccess(): ImportResult {
                 return ImportResult(null)
-            }
-
-            fun fromInvalidZip(ctx: Context, file: File, e: Exception): ImportResult {
-                return fromErrorString(getInvalidZipException(ctx, file, e))
-            }
-
-            private fun getInvalidZipException(ctx: Context, @Suppress("UNUSED_PARAMETER") file: File, e: Exception): String {
-                // This occurs when there is random corruption in a zip file
-                if (e is IOException && "central directory is empty, can't expand corrupt archive." == e.message) {
-                    return ctx.getString(R.string.import_error_corrupt_zip, e.getLocalizedMessage())
-                }
-                // 7050 - this occurs when a file is truncated at the end (partial download/corrupt).
-                if (e is ZipException && "archive is not a ZIP archive" == e.message) {
-                    return ctx.getString(R.string.import_error_corrupt_zip, e.getLocalizedMessage())
-                }
-
-                // If we don't have a good string, send a silent exception that we can better handle this in the future
-                CrashReportService.sendExceptionReport(e, "Import - invalid zip", "improve UI message here", true)
-                return ctx.getString(R.string.import_log_failed_unzip, e.localizedMessage)
             }
         }
     }

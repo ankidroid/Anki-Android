@@ -50,8 +50,8 @@
         <item quantity="other">%d کارت نمایش داده شده</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d یادداشت نمایش داده‌شده</item>
+        <item quantity="other">%d یادداشت نمایش داده شده</item>
     </plurals>
     <string name="card_browser_all_decks">همه دسته ها</string>
     <string name="card_browser_delete_card">حذف یادداشت‌ها</string>
@@ -61,7 +61,6 @@
     <string name="card_browser_mark_card">علامت گذاری یادداشت</string>
     <string name="card_browser_unmark_card">برداشتن علامت گذاری یادداشت</string>
     <string name="delete_card_title">حذف یادداشت</string>
-    <string name="changed_deck_message">انتقال به %s</string>
     <string name="card_browser_show_marked">فیلتر علامتگذاری شد</string>
     <string name="card_browser_show_suspended">فیلتر معلق شد</string>
     <string name="card_browser_search_by_tag">بوسیله برچسب فیلتر شد</string>
@@ -75,8 +74,6 @@
     <string name="card_browser_list_my_searches_remove_content">%1$s حذف شود؟</string>
     <string name="card_browser_change_display_order">تغییر تنظیم صفحه نمایش</string>
     <string name="card_browser_change_display_order_title">تغییر تنظیم صفحه نمایش</string>
-    <string name="card_browser_change_display_order_reverse">انتخاب مجدد یک فیلد به صورت وارونه.</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">موعد</string>
     <string name="card_details_tags">برچسب ها</string>
     <string-array name="card_browser_order_labels">
         <item>مرتب سازی نکن (سریعتر)</item>
@@ -100,39 +97,16 @@
     <string name="card_browser_unknown_deck_name">ناشناخته</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">محتوا را کوتاه کن</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">خروجی گرفتن کارت</item>
+        <item quantity="other">خروجی گرفتن کارت‌ها</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">خروجی گرفتن یادداشت</item>
+        <item quantity="other">خروجی گرفتن یادداشت‌ها</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d کارت حذف شده</item>
         <item quantity="other">%d کارت حذف شده.</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">اضافه شده</string>
-    <string name="card_info_first_review">اولین بازبینی</string>
-    <string name="card_info_latest_review">آخرین بازبینی</string>
-    <string name="card_info_interval">بازه</string>
-    <string name="card_info_ease">سهولت</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">بازبینی‌ها</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">دفعات</string>
-    <string name="card_info_average_time">زمان متوسط</string>
-    <string name="card_info_total_time">زمان کلی</string>
-    <string name="card_info_card_type">نوع کارت</string>
-    <string name="card_info_note_type">نوع یادداشت</string>
-    <string name="card_info_deck_name">نام دسته کارت</string>
-    <string name="card_info_card_id">شماره کارت</string>
-    <string name="card_info_note_id">شماره یادداشت</string>
-    <string name="card_info_revlog_time">زمان</string>
-    <string name="card_info_revlog_date">تاریخ</string>
-    <string name="card_info_revlog_rating">امتیاز</string>
-    <string name="card_info_revlog_type">نوع</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">یادگیری</string>
-    <string name="card_info_revlog_review">بازبینی</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">بازآموزی</string>
-    <string name="card_info_revlog_filtered">فیلتر شده</string>
-    <string name="card_info_ease_not_applicable">نامشخص</string>
 </resources>

@@ -17,20 +17,37 @@
 package com.ichi2.utils
 
 import android.Manifest
-import android.Manifest.permission.MANAGE_EXTERNAL_STORAGE
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.GET_PERMISSIONS
 import android.os.Build
 import android.os.Environment
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.ichi2.compat.CompatHelper.Companion.getPackageInfoCompat
 import com.ichi2.compat.PackageInfoFlagsCompat
 import timber.log.Timber
 import java.lang.Exception
 
 object Permissions {
+    const val MANAGE_EXTERNAL_STORAGE = "android.permission.MANAGE_EXTERNAL_STORAGE"
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    val tiramisuPhotosAndVideosPermissions = listOf(
+        Manifest.permission.READ_MEDIA_IMAGES,
+        Manifest.permission.READ_MEDIA_VIDEO
+    )
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    val tiramisuAudioPermission = Manifest.permission.READ_MEDIA_AUDIO
+
+    val legacyStorageAccessPermissions = listOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
     fun canUseCamera(context: Context): Boolean {
         return hasPermission(context, Manifest.permission.CAMERA)
     }
@@ -48,6 +65,10 @@ object Permissions {
         return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
     }
 
+    fun hasAllPermissions(context: Context, permissions: Collection<String>): Boolean {
+        return permissions.all { hasPermission(context, it) }
+    }
+
     @RequiresApi(Build.VERSION_CODES.R)
     fun isExternalStorageManager(): Boolean {
         // BUG: Environment.isExternalStorageManager() crashes under robolectric
@@ -56,6 +77,18 @@ object Permissions {
             return false // TODO: handle tests with both 'true' and 'false'
         }
         return Environment.isExternalStorageManager()
+    }
+
+    /**
+     * On < Android 11, returns false.
+     * On >= Android 11, returns [isExternalStorageManager]
+     */
+    fun isExternalStorageManagerCompat(): Boolean {
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+            return false
+        } else {
+            isExternalStorageManager()
+        }
     }
 
     /**
@@ -87,10 +120,6 @@ object Permissions {
     @JvmStatic // unit tests were flaky - maybe remove later
     fun hasStorageAccessPermission(context: Context): Boolean {
         return hasStorageReadAccessPermission(context) && hasStorageWriteAccessPermission(context)
-    }
-
-    fun canUseWakeLock(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.WAKE_LOCK)
     }
 
     /**
@@ -140,14 +169,11 @@ object Permissions {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
             context.arePermissionsDefinedInAnkiDroidManifest(MANAGE_EXTERNAL_STORAGE)
     }
+}
 
-    /**
-     * Whether 'all files access' (permission: [MANAGE_EXTERNAL_STORAGE]) is granted on a device on Android 11 or later
-     */
-    fun allFileAccessPermissionGranted(context: Context): Boolean {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
-            return false
-        }
-        return hasPermission(context, MANAGE_EXTERNAL_STORAGE)
+fun Fragment.hasAnyOfPermissionsBeenDenied(permissions: Collection<String>): Boolean {
+    val activity = requireActivity()
+    return permissions.any {
+        ActivityCompat.shouldShowRequestPermissionRationale(activity, it)
     }
 }

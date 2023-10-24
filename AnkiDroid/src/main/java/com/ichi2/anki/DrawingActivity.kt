@@ -23,6 +23,8 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.MenuItemCompat
 import com.ichi2.libanki.utils.TimeManager
 import timber.log.Timber
 import java.io.FileNotFoundException
@@ -53,6 +55,14 @@ class DrawingActivity : AnkiActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.drawing_menu, menu)
+        val whiteboardEditItem = menu.findItem(R.id.action_whiteboard_edit)
+        MenuItemCompat.setIconTintList(
+            whiteboardEditItem,
+            ContextCompat.getColorStateList(
+                this,
+                R.color.white
+            )
+        )
         return super.onCreateOptionsMenu(menu)
     }
 

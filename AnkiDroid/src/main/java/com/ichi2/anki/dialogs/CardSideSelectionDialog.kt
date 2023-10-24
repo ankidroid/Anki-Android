@@ -17,10 +17,11 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.list.listItems
+import androidx.appcompat.app.AlertDialog
 import com.ichi2.anki.R
 import com.ichi2.anki.reviewer.CardSide
+import com.ichi2.utils.show
+import com.ichi2.utils.title
 
 /** Allows selecting between [CardSide.QUESTION], [CardSide.ANSWER] or [CardSide.BOTH0] */
 class CardSideSelectionDialog {
@@ -34,9 +35,9 @@ class CardSideSelectionDialog {
                 R.string.card_side_answer
             )
 
-            MaterialDialog(ctx).show {
+            AlertDialog.Builder(ctx).show {
                 title(R.string.card_side_selection_title)
-                listItems(items = items.map { ctx.getString(it) }) { _: MaterialDialog, index: Int, _: CharSequence ->
+                setItems(items.map { ctx.getString(it) }.toTypedArray()) { _, index ->
                     when (items[index]) {
                         R.string.card_side_both -> callback(CardSide.BOTH)
                         R.string.card_side_question -> callback(CardSide.QUESTION)

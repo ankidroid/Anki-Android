@@ -60,7 +60,9 @@
     <string name="no_tags">Niste dodali še nobene oznake</string>
     <string name="updated_version">Posodobljen na različico %s</string>
     <!-- Reviewer.kt -->
-    <string name="save_whiteboard">Save whiteboard</string>
+    <string name="save_whiteboard">Shrani tablo</string>
+    <string name="enable_stylus">Omogoči način stylus</string>
+    <string name="disable_stylus">Onemogoči način stylus</string>
     <string name="enable_whiteboard">Omogoči belo tablo</string>
     <string name="disable_whiteboard">Onemogoči belo tablo</string>
     <string name="show_whiteboard">Prikaži belo tablo</string>
@@ -69,10 +71,9 @@
     <string name="replay_audio">Ponovno predvajaj zvok</string>
     <string name="leech_suspend_notification">Kartica označena kot odvečna in je bila pridržana</string>
     <string name="leech_notification">Kartica označena kot odvečna</string>
-    <string name="corrupt_font">Pokvarjena datoteka pisave %s</string>
-    <string name="webview_crash_unknown">Unknown error</string>
-    <string name="webview_crash_unknwon_detailed">This was caused by an internal error in the WebView</string>
-    <string name="webview_crash_oom">Out of Memory</string>
+    <string name="webview_crash_unknown">Neznana napaka</string>
+    <string name="webview_crash_unknwon_detailed">To je povzročila notranja napaka v WebViewu</string>
+    <string name="webview_crash_oom">Zmanjkalo je pomnilnika</string>
     <string name="webview_crash_oom_details">The WebView was terminated by the system. This typically happens when the application runs out of memory, often due to large fonts or media.</string>
     <string name="webview_crash_nonfatal">WebView renderer crashed. Cause: %s</string>
     <string name="webview_crash_fatal">Fatal Error: WebView renderer crashed. Cause: %s</string>
@@ -95,16 +96,16 @@
         <item>Interval</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Card Modified</item>
-        <item>Created</item>
-        <item>Note Modified</item>
+        <item>Spremenjena kartica</item>
+        <item>Ustvarjeno</item>
+        <item>Spremenjen zapisek</item>
     </string-array>
     <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
-    <string name="filter_by_flags">Flags</string>
+    <string name="apply_filter">Uporabi</string>
+    <string name="filter_by_flags">Oznaka</string>
     <!-- Custom study options -->
-    <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>
-    <string name="custom_study_increase_review_limit">Modify today’s review card limit</string>
+    <string name="custom_study_increase_new_limit">Povečaj omejitev novih kartic za danes</string>
+    <string name="custom_study_increase_review_limit">Povečaj današnjo omejitev kartic za pregled</string>
     <string name="custom_study_review_forgotten">Preglej pozabljene kartice</string>
     <string name="custom_study_review_ahead">Preglej vnaprej</string>
     <string name="custom_study_random_selection">Preučite naključno izbiro kartic</string>
@@ -113,19 +114,19 @@
     <!-- Card editor -->
     <string name="cardeditor_title_edit_card">Uredi zapisek</string>
     <string name="discard_unsaved_changes">Zapri in izgubi trenutni vnos?</string>
-    <string name="note_editor_no_cards_created">No cards created. Please fill in more fields</string>
-    <string name="note_editor_no_first_field">The first field is empty</string>
+    <string name="note_editor_no_cards_created">Nobena kartica ni bila ustvarjena. Prosim izpolni več polj.</string>
+    <string name="note_editor_no_first_field">Prvo polje je prazno.</string>
     <string name="note_editor_no_cloze_delations">This note type must contain cloze deletions</string>
     <string name="note_editor_no_cards_created_all_fields">The current note type did not produce any cards.\nPlease choose another note type, or click ‘Cards’ and add a field substitution</string>
     <string name="note_editor_insert_cloze_no_cloze_note_type">Cloze deletions will only work on a Cloze note type</string>
     <string name="saving_facts">Shranjevanje zapiska</string>
-    <string name="saving_model">Saving note type</string>
+    <string name="saving_model">Način shranjevanja zapiska</string>
     <string name="save">Shrani</string>
     <string name="close">Zapri</string>
     <string name="select">Izberi</string>
-    <string name="reordering_cards">Prerazvrščanje kartic &#8230;</string>
     <string name="field_remapping">%1$s (od \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">Vse kartice, ki so preslikane v nič, bodo izbrisane. Če zapisek nima preostalih kartic, bo izgubljen. Ali res želite nadaljevati?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Timebox reached</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d kartica preučena v %2$s</item>
@@ -141,25 +142,17 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <string name="fact_adder_intent_title" comment="Label of the \'Add Note\' window. This title can\'t be seen in AnkiDroid directly.">Kartica AnkiDroid</string>
-    <string name="note_editor_copy_note">Copy note</string>
+    <string name="note_editor_copy_note">Kopiraj zapisek</string>
     <string name="card_editor_reposition_card">Reposition</string>
     <string name="card_editor_reset_card">Ponastavi napredek</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Reschedule</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Predogled</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">Opravila ni mogoče izvesti, ker je na napravi na voljo premalo pomnilnika</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d od%2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Preimenuj</string>
-    <string name="default_conf_delete_error">Privzete skupine možnosti ni mogoče premakniti</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d kartica dodana</item>
-        <item quantity="two">%d kartici dodani</item>
-        <item quantity="few">%d kartice dodane</item>
-        <item quantity="other">%d kartic dodanih</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">Preveri podatkovno zbirko</string>
     <string name="check_media">Preveri predstavnost</string>
     <string name="empty_cards">Prazne kartice</string>
-    <string name="check_db_message">Preverjanje podatkovne zbirke &#8230;</string>
     <string name="empty_card_warning">Ta kartica je prazna. Uporabite možnost \"Prazne kartice\" iz menija seznama kompletov.</string>
     <string name="unknown_type_field_warning">Vnos odgovora: neznano polje %s</string>
     <string name="delete_deck">Brisanje kompleta &#8230;</string>
@@ -168,29 +161,20 @@
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">To bo izbrisalo vašo obstoječo zbirko in jo nadomestilo s podatki datoteke %s</string>
     <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
+        <item quantity="one">Dodaj %s  zbirki? To lahko vzame veliko časa.</item>
         <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
         <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
         <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
     </plurals>
-    <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
-    <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Failed to unzip apkg: %s</string>
-    <string name="import_log_failed_copy_to">Failed to copy apkg to %s</string>
-    <string name="import_log_failed_validate">apkg failed validation</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">Error importing file, likely a cache clear during processing.\nPlease try again</string>
-    <string name="import_succeeded_but_check_database">Data import succeeded but post-import cleanup failed. Run check database later. Root cause: %s</string>
-    <string name="import_error_corrupt_zip">The apkg file is corrupt. Please delete and re-download it.\n\nRoot cause: %s</string>
-    <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
-    <string name="import_error_not_apkg_extension">Filename “%s” doesn’t have .apkg or .colpkg extension</string>
+    <string name="import_log_no_apkg">To ni veljavna datoteka Anki package.</string>
+    <string name="import_title_error" comment="Title of error dialog">Napaka</string>
+    <string name="import_error_handle_exception">Napaka pri uvažanju datoteke\n\n%s</string>
+    <string name="import_error_not_apkg_extension">Datoteka %s nima končnice .apkg ali .colpkg</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Izbrane datoteke AnkiDroid ni mogel samodejno uvoziti. Oglejte si uporabniški priročnik o načinu ročnega uvoza datotek anki: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
+    <string name="import_error_multiple_colpkg">Več colpkg datotek je bilo izbranih.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">Nadomeščanje zbirke &#8230;</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Vključi urnik</string>
     <string name="export_include_media">Vključi predstavnost</string>
@@ -208,12 +192,11 @@
         <item quantity="few">Export %d selected notes as apkg file?</item>
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_in_progress">Exporting Anki package file&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">No applications available to handle apkg. Saving...</string>
     <string name="export_save_apkg_successful">Successfully saved Anki package</string>
     <string name="export_save_apkg_unsuccessful">Save Anki package failed</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">Izvožene pomnilne kartice AnkiDroid: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -223,8 +206,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Deck options</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Study options</string>
@@ -234,59 +217,11 @@
     <string name="dyn_deck_desc">To je poseben komplet za učenje izven običajnega urnika. Kartice bodo samodejno vrnjene v izvirne komplete, ko jih pregledate. Izbris tega kompleta s seznama bo vrnil vse preostale kartice v izvirni komplet.</string>
     <string name="steps_error">Koraki morajo biti številke večje od 0</string>
     <string name="steps_min_error">Zahtevan je vsaj en korak</string>
-    <string name="sched_end">(konec)</string>
-    <string name="sched_unbury_action">Da si jih ogledate zdaj, pritisnite \"Odkrij\" v meniju</string>
-    <string name="sched_has_buried">Nekatere povezane ali skrite kartice so bile odložene do jutri</string>
     <string name="tag_editor_add_feedback">Pritisnite \"%2$s\", da potrdite dodajanje \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">Izbrana obstoječa oznaka \"%1$s\"</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s sekunda</item>
-        <item quantity="two">%s sekundi</item>
-        <item quantity="few">%s sekunde</item>
-        <item quantity="other">%s sekund</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minuti</item>
-        <item quantity="two">%s-h minutah</item>
-        <item quantity="few">%s-h minutah</item>
-        <item quantity="other">%s-h minutah</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s ura</item>
-        <item quantity="two">%s uri</item>
-        <item quantity="few">%s ure</item>
-        <item quantity="other">%s ur</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s dan</item>
-        <item quantity="two">%s dni</item>
-        <item quantity="few">%s dni</item>
-        <item quantity="other">%s dni</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mesec</item>
-        <item quantity="two">%s meseca</item>
-        <item quantity="few">%s meseci</item>
-        <item quantity="other">%s mesecev</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s leto</item>
-        <item quantity="two">%s leti</item>
-        <item quantity="few">%s leta</item>
-        <item quantity="other">%s let</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s seconds</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Ta komplet že obstaja</string>
     <string name="decks_rename_filtered_nosubdecks">Filtriran komplet ne more imeti podkompletov</string>
-    <string name="filtered_deck_name">Filtriran komplet</string>
     <string name="reminder_title">Ne pozabite se učiti danes!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d card to review in %1$s</item>
@@ -297,14 +232,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Napaka pri deljenju datoteke apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">This file requires a newer version of Anki.</string>
     <string name="activity_start_failed">The system does not have an app installed that can perform this action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Camera images may be large. You may wish to compress & resize images in the media directory]]></string>
     <string name="no_browser_notification">No browser found，please visit web page by pc or mobile: </string>
     <string name="web_page_error">Error loading page: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">External page link in card is not supported.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Recovered Cards</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">Select image</string>
@@ -339,6 +271,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Fatal Error</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid relies on the System WebView which is unavailable. This can happen if the system is installing updates. Please try again in a few minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -351,7 +284,6 @@
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
@@ -387,6 +319,7 @@
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -405,8 +338,6 @@
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
@@ -429,7 +360,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

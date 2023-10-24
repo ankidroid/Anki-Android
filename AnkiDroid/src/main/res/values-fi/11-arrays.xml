@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Kysy</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Vain tunniste</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Uusia kortteja satunnaisessa järjestyksessä</string>
-    <string name="new_order_order_added">Uudet kortit lisäysjärjestyksessä</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Vanhimmat nähdyt ensin</string>
     <string name="cram_deck_conf_order_random">Satunnainen</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Käytä tätä pakkaa</string>
     <string name="add_to_deck_decide_by_note_type">Valitse korttityyppi</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Sekoita uusiakortteja ja kertauksia</string>
-    <string name="new_spread_new_after_review">Uudet kortit kertauksien jälkeen</string>
-    <string name="new_spread_new_before_review">Uudet kortit ennen kertauksia</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Kun korteille ei ole määritelty kirjasintyyppiä</string>
-    <string name="override_font_always" comment="Option to always override font">Aina</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Vastauspainike 1</string>
-    <string name="gesture_answer_2">Vastauspainike 2</string>
-    <string name="gesture_answer_3">Vastauspainike 3</string>
-    <string name="gesture_answer_4">Vastauspainike 4</string>
-    <string name="gesture_answer_green">Vastaa ehdotettu (vihreä)</string>
-    <string name="gesture_answer_better_recommended">Vastaa paremmin kuin ehdotettu</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Play media</string>
     <string name="gesture_abort_learning">Abort learning</string>
     <string name="gesture_flag_red">Toggle Red Flag</string>

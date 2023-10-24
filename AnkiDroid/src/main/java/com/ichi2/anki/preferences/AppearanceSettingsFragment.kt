@@ -18,13 +18,13 @@ package com.ichi2.anki.preferences
 import android.os.Build
 import android.provider.MediaStore
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
-import androidx.preference.SwitchPreference
+import androidx.preference.SwitchPreferenceCompat
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.libanki.Utils
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.systemIsInNightMode
@@ -35,7 +35,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 
 class AppearanceSettingsFragment : SettingsFragment() {
-    private var mBackgroundImage: SwitchPreference? = null
+    private var mBackgroundImage: SwitchPreferenceCompat? = null
     override val preferenceResource: Int
         get() = R.xml.preferences_appearance
     override val analyticsScreenNameConstant: String
@@ -43,7 +43,7 @@ class AppearanceSettingsFragment : SettingsFragment() {
 
     override fun initSubscreen() {
         // Configure background
-        mBackgroundImage = requirePreference<SwitchPreference>("deckPickerBackground")
+        mBackgroundImage = requirePreference<SwitchPreferenceCompat>("deckPickerBackground")
         mBackgroundImage!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             if (mBackgroundImage!!.isChecked) {
                 try {
@@ -69,9 +69,9 @@ class AppearanceSettingsFragment : SettingsFragment() {
             true
         }
 
-        val appThemePref = requirePreference<ListPreference>(getString(R.string.app_theme_key))
-        val dayThemePref = requirePreference<ListPreference>(getString(R.string.day_theme_key))
-        val nightThemePref = requirePreference<ListPreference>(getString(R.string.night_theme_key))
+        val appThemePref = requirePreference<ListPreference>(R.string.app_theme_key)
+        val dayThemePref = requirePreference<ListPreference>(R.string.day_theme_key)
+        val nightThemePref = requirePreference<ListPreference>(R.string.night_theme_key)
         val themeIsFollowSystem = appThemePref.value == Themes.FOLLOW_SYSTEM_MODE
 
         // Remove follow system options in android versions which do not have system dark mode
@@ -102,73 +102,45 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 updateCurrentTheme(requireContext())
 
                 if (previousThemeId != Themes.currentTheme.id) {
-                    requireActivity().recreate()
+                    ActivityCompat.recreate(requireActivity())
                 }
             }
         }
 
         dayThemePref.setOnPreferenceChangeListener { newValue ->
             if (newValue != dayThemePref.value && !systemIsInNightMode(requireContext()) && newValue != Themes.currentTheme.id) {
-                requireActivity().recreate()
+                ActivityCompat.recreate(requireActivity())
             }
         }
 
         nightThemePref.setOnPreferenceChangeListener { newValue ->
             if (newValue != nightThemePref.value && systemIsInNightMode(requireContext()) && newValue != Themes.currentTheme.id) {
-                requireActivity().recreate()
+                ActivityCompat.recreate(requireActivity())
             }
-        }
-
-        // Default font
-        requirePreference<ListPreference>(R.string.pref_default_font_key).apply {
-            entries = getCustomFonts("System default")
-            entryValues = getCustomFonts("")
-        }
-        // Browser and Note editor font
-        requirePreference<ListPreference>(R.string.pref_browser_and_editor_font_key).apply {
-            entries = getCustomFonts("System default")
-            entryValues = getCustomFonts("", useFullPath = true)
         }
 
         // Show estimate time
         // Represents the collection pref "estTime": i.e.
         // whether the buttons should indicate the duration of the interval if we click on them.
-        requirePreference<SwitchPreference>(R.string.show_estimates_preference).apply {
-            launchCatchingTask { isChecked = withCol { get_config_boolean("estTimes") } }
-            setOnPreferenceChangeListener { newETA ->
-                launchWithCol { set_config("estTimes", newETA) }
+        requirePreference<SwitchPreferenceCompat>(R.string.show_estimates_preference).apply {
+            launchCatchingTask { isChecked = withCol { config.get("estTimes") ?: true } }
+            setOnPreferenceChangeListener { _, newETA ->
+                val newETABool = newETA as? Boolean ?: return@setOnPreferenceChangeListener false
+                launchCatchingTask { withCol { config.set("estTimes", newETABool) } }
+                true
             }
         }
         // Show progress
         // Represents the collection pref "dueCounts": i.e.
         // whether the remaining number of cards should be shown.
-        requirePreference<SwitchPreference>(R.string.show_progress_preference).apply {
-            launchCatchingTask { isChecked = withCol { get_config_boolean("dueCounts") } }
-            setOnPreferenceChangeListener { newDueCountsValue ->
-                launchWithCol { set_config("dueCounts", newDueCountsValue) }
+        requirePreference<SwitchPreferenceCompat>(R.string.show_progress_preference).apply {
+            launchCatchingTask { isChecked = withCol { config.get("dueCounts") ?: true } }
+            setOnPreferenceChangeListener { _, newDueCountsValue ->
+                val newDueCountsValueBool = newDueCountsValue as? Boolean ?: return@setOnPreferenceChangeListener false
+                launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValueBool) } }
+                true
             }
         }
-    }
-
-    /** Returns a list of the names of the installed custom fonts */
-    private fun getCustomFonts(defaultValue: String, useFullPath: Boolean = false): Array<String?> {
-        val fonts = Utils.getCustomFonts(requireContext())
-        val count = fonts.size
-        Timber.d("There are %d custom fonts", count)
-        val names = arrayOfNulls<String>(count + 1)
-        names[0] = defaultValue
-        if (useFullPath) {
-            for (index in 1 until count + 1) {
-                names[index] = fonts[index - 1].path
-                Timber.d("Adding custom font: %s", names[index])
-            }
-        } else {
-            for (index in 1 until count + 1) {
-                names[index] = fonts[index - 1].name
-                Timber.d("Adding custom font: %s", names[index])
-            }
-        }
-        return names
     }
 
     private val mBackgroundImageResultLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { selectedImage ->

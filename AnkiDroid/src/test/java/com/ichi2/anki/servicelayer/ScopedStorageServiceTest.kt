@@ -19,7 +19,7 @@ package com.ichi2.anki.servicelayer
 import android.content.SharedPreferences
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_DESTINATION
 import com.ichi2.anki.servicelayer.ScopedStorageService.PREF_MIGRATION_SOURCE
-import com.ichi2.anki.servicelayer.ScopedStorageService.userMigrationIsInProgress
+import com.ichi2.anki.servicelayer.ScopedStorageService.mediaMigrationIsInProgress
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
@@ -32,14 +32,14 @@ class ScopedStorageServiceTest {
     fun no_migration_by_default() {
         val preferences = getScopedStorageMigrationPreferences(setSource = false, setDestination = false)
 
-        assertThat("migration is not in progress if neither preference set", userMigrationIsInProgress(preferences), equalTo(false))
+        assertThat("migration is not in progress if neither preference set", mediaMigrationIsInProgress(preferences), equalTo(false))
     }
 
     @Test
     fun error_if_only_source_set() {
         val preferences = getScopedStorageMigrationPreferences(setSource = true, setDestination = false)
 
-        val exception = assertFailsWith<IllegalStateException> { userMigrationIsInProgress(preferences) }
+        val exception = assertFailsWith<IllegalStateException> { mediaMigrationIsInProgress(preferences) }
         assertThat(
             exception.message,
             equalTo(
@@ -54,7 +54,7 @@ class ScopedStorageServiceTest {
     fun error_if_only_destination_set() {
         val preferences = getScopedStorageMigrationPreferences(setSource = false, setDestination = true)
 
-        val exception = assertFailsWith<IllegalStateException> { userMigrationIsInProgress(preferences) }
+        val exception = assertFailsWith<IllegalStateException> { mediaMigrationIsInProgress(preferences) }
         assertThat(
             exception.message,
             equalTo(
@@ -69,7 +69,7 @@ class ScopedStorageServiceTest {
     fun migration_if_both_set() {
         val preferences = getScopedStorageMigrationPreferences(setSource = true, setDestination = true)
 
-        assertThat("migration is in progress if both preferences set", userMigrationIsInProgress(preferences), equalTo(true))
+        assertThat("migration is in progress if both preferences set", mediaMigrationIsInProgress(preferences), equalTo(true))
     }
 
     private fun getScopedStorageMigrationPreferences(setSource: Boolean, setDestination: Boolean): SharedPreferences {

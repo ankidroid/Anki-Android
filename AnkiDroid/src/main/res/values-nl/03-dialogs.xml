@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Database controleren?</string>
     <string name="check_db_warning">Dit kan een lange tijd duren</string>
-    <string name="check_db_acknowledge">Database gecontroleerd</string>
-    <string name="check_db_acknowledge_shrunk">Database gecontroleerd en geoptimaliseerd. \nVerkleind met %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Leerset verwijderen</string>
-    <string name="delete_deck_default_deck">De standaardset kan niet worden verwijderd</string>
     <string name="delete_deck_title">Verwijder set</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Verwijder alle kaarten in %1$s? Het bevat %2$d kaart.</item>
-        <item quantity="other">Verwijder alle kaarten in %1$s? Het bevat %2$d kaarten.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Weet u zeker dat u alle kaarten in %s terug wenst te zenden naar hun oorspronkelijke leersets?</string>
     <string name="no_tts_available_message">Geen tekst-naar-spraak taal beschikbaar</string>
     <string name="initializing_tts">TTS initialiseren&#8230;</string>
     <string name="tts_no_tts">Niet spreken</string>
@@ -94,7 +86,7 @@
     <string name="answering_error_title">Fout in database</string>
     <string name="answering_error_message">Het schrijven naar de collectie is mislukt. De database kan corrupt zijn of er is onvoldoende opslagruimte op de schijf.\n\nAls dit vaker gebeurt, probeer de database te controleren, de collectie te herstellen of terug te zetten vanaf een back-up. Klik hiervoor op \'instellingen\'.\n\nHet kan ook een fout in AnkiDroid zijn. Gelieve de fout te melden zodat we dit kunnen controleren.</string>
     <string name="answering_error_report">Fout melden</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Er is onvoldoende opslagruimte beschikbaar om AnkiDroid te openen. Maak ruimte vrij om door te gaan. </string>
     <string name="repair_deck_dialog">Weet u zeker dat wilt proberen de database te repareren?\n\nVoordat dit wordt geprobeerd, wordt een kopie gemaakt in de submap \'%s\'.</string>
     <string name="intent_aedict_empty">Categorie \'standaard\' is leeg</string>
     <string name="intent_aedict_category">Om kaarten aan AnkiDroid toe te voegen verwijder je alle Notepad categorieën of voeg een toe met de naam \'standaard\'</string>
@@ -107,17 +99,8 @@
     <string name="custom_study_random">Kies willekeurig x kaarten uit de set:</string>
     <string name="custom_study_preview">Voorbeschouw nieuwe kaarten toegevoegd in de laatste x dagen:</string>
     <string name="custom_study_rebuild_deck_corrupt">De aangepaste studieset kon niet opnieuw worden opgebouwd</string>
-    <string name="importing_collection">Collectie aan het importeren.\nGelieve even te wachten&#8230;</string>
-    <string name="import_media_count">Mediabestanden aan het importeren %1$d%%\nGelieve even te wachten&#8230;</string>
-    <string name="import_progress">• Importeren memo\'s: %1$d%%\n• Importeren kaarten: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">%1$d van de %2$d bestaande memo\'s bijgewerkt.</string>
-    <string name="import_update_ignored">Sommige veranderingen zijn genegeerd omdat het memotype is veranderd</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Kaarten geïmporteerd: %2$d</item>
-        <item quantity="other">Geïmporteerde bestanden: %1$d\nTotaal kaarten: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Opslag vol</string>
-    <string name="storage_almost_full_title">Storage almost full</string>
+    <string name="storage_almost_full_title">Opslag is bijna vol</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Geen ruimte</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroid vereist %s vrije ruimte om door te gaan.  Gelieve ruimte vrij maken</string>
     <string name="restore_backup_title">Back-up herstellen?</string>
@@ -135,18 +118,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Uitschakelen</string>
     <string name="dialog_positive_overwrite">Overschrijven</string>
-    <string name="dialog_positive_remove">Verwijderen</string>
     <string name="dialog_positive_repair">Repareer</string>
     <string name="dialog_positive_replace">Vervangen</string>
-    <string name="dialog_positive_restore">Herstellen</string>
-    <string name="dialog_positive_set">Instellen</string>
     <string name="dialog_collection_path_not_dir">Het opgegeven pad was geen geldige map</string>
     <!-- Media checking -->
     <string name="check_media_title">Media controleren?</string>
     <string name="check_media_warning">Dit kan lang duren met grote hoeveelheden media</string>
     <string name="check_media_message">Media controleren&#8230;</string>
     <string name="check_media_acknowledge">Media gecontroleerd</string>
-    <string name="check_media_failed">Controle van de media mislukt</string>
     <string name="check_media_invalid">Bestanden met ongeldige codering: %d</string>
     <string name="check_media_unused">Bestanden in media-map maar niet in kaarten gebruikt: %d</string>
     <string name="check_media_nohave">Bestanden die worden gebruikt op kaarten maar niet in mediamap: %d</string>
@@ -165,8 +144,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Te doen</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Lege kaarten aan het zoeken...</string>
-    <string name="confirm_cancel">Wilt u annuleren?</string>
-    <string name="empty_cards_none">Geen lege kaarten</string>
     <string name="empty_cards_count">Kaarten te verwijderen: %d</string>
     <string name="empty_cards_deleted">Kaarten verwijderd: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +159,10 @@
     <string name="integrity_check_continue_anyway">Toch doorgaan</string>
     <string name="integrity_check_insufficient_space">Controle van de database gebruikt een grote hoeveelheid tijdelijke geheugen.\n\nHet wordt sterk aanbevolen dat u ten minste %s vrije ruimte op uw toestel hebt voordat u verder gaat.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nU hebt momenteel %s vrij.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d kaarten met verkeerde sets werden hersteld. Raadpleeg de handleiding voor meer informatie.</string>
-    <string name="video_creation_error">Kon video niet afspelen</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Kon de set niet wijzigen</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Fout bij decoderen van gegevens uit de kaart</string>
-    <string name="undo_succeeded">Onvoltooide \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Verwerken van de setopties mislukt: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database vergrendeld</string>
     <string name="database_locked_summary">De AnkiDroid-database is in gebruik door een andere applicatie. Sluit de andere applicatie en open vervolgens AnkiDroid opnieuw.</string>
@@ -261,13 +233,13 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">U kunt geen subset maken voor alle sets</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
+    <string name="backup_your_collection">Maak een back-up van je collectie</string>
+    <string name="backup_collection_message">Je hebt een tijdje geen back-up van je collectie gemaakt. Je moet dit nu doen om gegevensverlies te voorkomen</string>
+    <string name="button_backup">Back-up</string>
+    <string name="button_disable_reminder">Herinnering uitschakelen</string>
     <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Dit bericht niet meer tonen</string>
+    <string name="dismiss_backup_warning_title">Waarschuwing voor dataverlies</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled

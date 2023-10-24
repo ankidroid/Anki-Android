@@ -197,10 +197,6 @@ class AbstractFlashcardViewerCommandTest : RobolectricTest() {
                 currentCardOverride = card
             }
 
-        override fun setTitle() {
-            // Intentionally blank
-        }
-
         override fun performReload() {
             // intentionally blank
         }

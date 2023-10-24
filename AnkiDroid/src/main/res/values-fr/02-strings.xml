@@ -61,6 +61,8 @@
     <string name="updated_version">Mis à jour à la version %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Enregistrer le tableau blanc</string>
+    <string name="enable_stylus">Activer le mode stylet</string>
+    <string name="disable_stylus">Désactiver le mode stylet</string>
     <string name="enable_whiteboard">Activer le tableau blanc</string>
     <string name="disable_whiteboard">Désactiver le tableau blanc</string>
     <string name="show_whiteboard">Afficher le tableau blanc</string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">Rejouer le son</string>
     <string name="leech_suspend_notification">Carte marquée comme sangsue et suspendue</string>
     <string name="leech_notification">Carte marquée « encombrante »</string>
-    <string name="corrupt_font">Fichier de police corrompu %s</string>
     <string name="webview_crash_unknown">Erreur inconnue</string>
     <string name="webview_crash_unknwon_detailed">Erreur interne dans le système WebView</string>
     <string name="webview_crash_oom">Mémoire insuffisante</string>
@@ -123,9 +124,9 @@
     <string name="save">Enregistrer</string>
     <string name="close">Fermer</string>
     <string name="select">Sélectionner</string>
-    <string name="reordering_cards">Tri des cartes...</string>
     <string name="field_remapping">%1$s (de « %2$s »)</string>
     <string name="confirm_map_cards_to_nothing">Toute carte sans connexion sera effacée. Si une note n’a aucune carte restante, elle sera perdue. Êtes-vous sûr de vouloir continuer ?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">Le temps imparti est écoulé</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d carte étudiée en %2$s</item>
@@ -143,17 +144,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Replanifier</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Aperçu</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d sur %2$d</string>
-    <string name="error_insufficient_memory">L’opération n’a pas pu être accomplie car votre appareil manque de mémoire disponible</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Renommer</string>
-    <string name="default_conf_delete_error">Le groupe d’option par défaut ne peut pas être supprimé</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d carte ajoutée</item>
-        <item quantity="other">%d cartes ajoutées</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">Vérifier la base de données</string>
     <string name="check_media">Vérifier les médias</string>
     <string name="empty_cards">Cartes vides</string>
-    <string name="check_db_message">Vérification de la base de données&#8230;</string>
     <string name="empty_card_warning">Cette carte est vide. Utilisez l\'option \"cartes vides\" du menu sur l\'écran de la liste de paquets.</string>
     <string name="unknown_type_field_warning">Taper la réponse : champ inconnu %s</string>
     <string name="delete_deck">Suppression du paquet&#8230;</string>
@@ -167,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
     <string name="import_title_error" comment="Title of error dialog">Erreur</string>
-    <string name="import_log_failed_unzip">Échec de la décompression de l\'APKG : %s</string>
-    <string name="import_log_failed_copy_to">Échec de la copie de l\'APKG vers %s</string>
-    <string name="import_log_failed_validate">La validation de l\'APKG a échoué</string>
-    <string name="import_log_insufficient_space_error">Il n\'y a pas assez d\'espace pour importer le paquet.\nEspace nécessaire - %1$s \nEspace disponible - %2$s.\n\nVous avez du mal ? Essayez de libérer de l\'espace sur votre appareil. Sinon, la synchronisation utilise moins d\'espace que l\'importation. Vous pouvez essayer d\'importer le paquet sur un appareil qui possède plus d\'espace (par exemple Anki Desktop) et ensuite le synchroniser à cet appareil.</string>
-    <string name="import_log_file_cache_cleared">Erreur lors de l\'importation du fichier, il est probable que le cache ait été effacé pendant le traitement.\nVeuillez réessayer</string>
-    <string name="import_succeeded_but_check_database">L\'importation des données a réussi, mais le nettoyage après l\'importation a échoué. Exécutez la vérification de la base de données plus tard. Cause racine : %s</string>
-    <string name="import_error_corrupt_zip">Le fichier APKG est corrompu. Veuillez le supprimer et le retélécharger.\n\nRaison racine : %s</string>
     <string name="import_error_handle_exception">Impossible d\'importer le fichier\n\n%s</string>
     <string name="import_error_not_apkg_extension">Le nom de fichier « %s » n\'a pas d\'extension .apkg ou .colpkg</string>
     <string name="import_error_load_imported_database">Les remplacements de la base de données Anki (.anki2) ne sont pas pris en charge. Veuillez voir le guide d’utilisation pour les instructions de remplacement.</string>
@@ -181,13 +169,11 @@
     <string name="import_error_copy_to_cache">Échec de la mise en cache du fichier (éventuellement à court d\'espace de stockage)</string>
     <string name="import_error_multiple_colpkg">Plusieurs fichiers colpkg étaient sélectionnés.</string>
     <string name="import_error_colpkg_apkg">Des fichiers apkg &amp; colpkg étaient sélectionnés à la fois.</string>
-    <string name="import_stats_error">Des erreurs se sont produites lors de l\'importation des fichiers suivants :\n%s</string>
-    <string name="import_replacing">Remplacement de la collection en cours&#8230;</string>
     <string name="import_interrupted">Importation interrompue : AnkiDroid a fermé</string>
     <string name="export_include_schedule">Inclure la planification</string>
     <string name="export_include_media">Inclure les médias</string>
     <string name="confirm_apkg_export">Exporter la collection sous forme de paquet Anki ?</string>
-    <string name="confirm_apkg_export_deck">Exporter \"%s\" au format apkg ?</string>
+    <string name="confirm_apkg_export_deck">Exporter « %s » au format apkg ?</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">Exporter les cartes sélectionnées au format .apkg ?</item>
         <item quantity="other">Exporter les %d cartes sélectionnées au format .apkg ?</item>
@@ -196,12 +182,11 @@
         <item quantity="one">Exporter les notes sélectionnées au format .apkg ?</item>
         <item quantity="other">Exporter les %d notes sélectionnées au format .apkg ?</item>
     </plurals>
-    <string name="export_in_progress">Exportation du fichier Anki&#8230;</string>
-    <string name="export_success_title">Collection exportée avec succès</string>
+    <string name="export_preparation_in_progress">Préparation de l\'export...</string>
+    <string name="export_ready_title">Exportation prête</string>
     <string name="export_send_no_handlers">Aucune application disponible pour ouvrir le fichier APKG. Sauvegarde...</string>
     <string name="export_save_apkg_successful">Paquet Anki sauvegardé avec succès</string>
     <string name="export_save_apkg_unsuccessful">Échec de la sauvegarde du paquet Anki</string>
-    <string name="export_success_message">Vous devez choisir un emplacement de fichier pour le sauvegarder, ou le partager avec une autre application.</string>
     <string name="export_share_title">Envoyer le paquet Anki ?</string>
     <string name="export_email_subject">AnkiDroid a exporté %s cartes</string>
     <string name="export_email_text"><![CDATA[        Bonjour !
@@ -211,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Sélectionner où sauvegarder le fichier</string>
-    <string name="export_select_share_app">Sélectionner l\'application pour le partage</string>
+    <string name="export_choice_share">Partager</string>
+    <string name="export_choice_save_to">Enregistrer sous</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Options</string>
     <string name="menu__deck_options">Options du deck</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Options de révision</string>
@@ -222,47 +207,11 @@
     <string name="dyn_deck_desc">Ceci est un paquet pour l\'étude en dehors des horaires normaux. Les cartes reviendront automatiquement à leur paquet d\'origine après leur révision. La suppression de ce paquet remettra toutes les cartes restantes dans leur paquet d\'origine.</string>
     <string name="steps_error">Les pas doivent être des nombres supérieurs à 0</string>
     <string name="steps_min_error">Au moins un pas est requis</string>
-    <string name="sched_end">(fin)</string>
-    <string name="sched_unbury_action">Pour les voir maintenant appuyez sur « Déterrer » dans le menu</string>
-    <string name="sched_has_buried">Certaines cartes enterrées ou différées ont été reportées à une prochaine séance.</string>
     <string name="tag_editor_add_feedback">Appuyez sur « %2$s » pour confirmer l\'addition de « %1$s »</string>
     <string name="tag_editor_add_feedback_existing">Étiquette existante «%1$s» sélectionnée</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s seconde</item>
-        <item quantity="other">%s secondes</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s minute</item>
-        <item quantity="other">%s minutes</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s heure</item>
-        <item quantity="other">%s heures</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s jour</item>
-        <item quantity="other">%s jours</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s mois</item>
-        <item quantity="other">%s mois</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s an</item>
-        <item quantity="other">%s ans</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s secondes</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">Ce paquet existe déjà.</string>
     <string name="decks_rename_filtered_nosubdecks">Un paquet filtré ne peut pas avoir de sous-paquets.</string>
-    <string name="filtered_deck_name">Paquet Filtré</string>
     <string name="reminder_title">N’oubliez pas d’étudier aujourd\'hui !</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d carte à réviser en %1$s</item>
@@ -271,14 +220,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">Erreur lors du partage du fichier apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">Ce fichier nécessite une version plus récente d\'Anki.</string>
     <string name="activity_start_failed">Le système ne dispose pas d\'une application qui peut effectuer cette action.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[Les photos d\'appareils sont potentiellement lourdes. Envisager les compresser et redimensionner dans le dossier "media"]]></string>
     <string name="no_browser_notification">Aucun navigateur internet trouvé, merci de visiter cette page sur un PC ou smartphone.</string>
     <string name="web_page_error">Erreur lors du chargement de la page : %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">Le lien vers les pages externes n\'est pas autorisé dans les cartes.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">Cartes récupérées</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Arrière-plan</string>
     <string name="choose_an_image">Sélectionner une image</string>
@@ -305,7 +251,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Voir</string>
     <string name="anki_js_error_code">(Code d\'erreur : %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copié dans le presse-papier</string>
     <string name="about_ankidroid_error_copy_debug_info">Erreur lors de la copie des informations de débogage dans le presse-papiers</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Impossible de charger « %s »</string>
@@ -313,6 +259,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">Impossible de charger le paquet « %s »</string>
     <string name="search_decks">Rechercher dans les paquets</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Afficher la progression de la migration</string>
     <string name="ankidroid_init_failed_webview_title">Erreur fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid s\'appuie sur la WebView du système qui n\'est pas disponible. Ceci peut se produire si le système installe des mises à jour. Veuillez réessayer dans quelques minutes.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -325,7 +272,6 @@
     <string name="insert_heading">Insérer un entête</string>
     <string name="format_font_size">Changer la taille de la police</string>
     <string name="insert_mathjax">Insérer une équation MathJax</string>
-    <string name="insert_cloze">Insérer un texte à trous</string>
     <string name="note_editor_toolbar_icon">Texte du bouton</string>
     <string name="before_text">HTML avant sélection</string>
     <string name="after_text">HTML après sélection</string>
@@ -361,13 +307,14 @@
     <string name="deck_download_progress_message">Vous pouvez utiliser d\'autres applications pendant que le téléchargement est en cours d\'exécution</string>
     <string name="check_network">Veuillez vérifier votre connexion réseau</string>
     <string name="search_using_deck_name">Chercher en utilisant le nom du paquet</string>
+    <string name="external_storage_unavailable">Téléchargement interrompu, le stockage externe n\'est pas disponible</string>
     <string name="home">Accueil</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Carte enterrée.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d carte suspendue.</item>
+        <item quantity="other">%d cartes suspendues.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Rendre le champ %s collant</string>
@@ -377,9 +324,7 @@
     <string name="scoped_storage_postpone">Reporter</string>
     <string name="scoped_storage_migrate">Transférer</string>
     <string name="search_card_js_api_no_results">La recherche n\'a pas donné de résultats</string>
-    <string name="sync_impossible_during_migration">La synchronisation est désactivée jusqu\'à ce que la migration soit terminée.\n
-        %1$d fichiers multimédia restants à migrer.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid a besoin de migrer son stockage pour se conformer à la politique de sécurité d\'Android 10.\n\nCeci améliorera les performances de la synchronisation des médias.&lt;br&gt;&lt;br&gt;Durant la migration, vous ne pourrez pas faire de synchronisation et certains paramètres seront désactivés. Une synchronisation des médias se produira avant que la migration ne commence à sécuriser vos données.&lt;br&gt;&lt;br&gt;Il est sécurisé d\'utiliser ou de fermer AnkiDroid pendant ce processus.</string>
     <string name="start_migration_progress_message">Démarrage de la migration du stockage. Vous pouvez reprendre votre utilisation d\'AnkiDroid sous peu.</string>
     <string name="migration_part_1_done_resume">Vous pouvez continuer à utiliser AnkiDroid.
 \nLa migration du stockage continuera en arrière-plan.</string>
@@ -390,7 +335,7 @@
     <string name="malicious_archive_exceeds_limit">Archive malveillante. La taille dépasse %1$s ou contient plus de %2$d fichiers</string>
     <string name="file_extract_exceeds_storage_space">L\'extraction de fichiers dépasse la capacité de stockage</string>
     <!--  Hierarchical Tags  -->
-    <string name="expand_tag">Développer le tag \'%s\'</string>
+    <string name="expand_tag">Développer l\'étiquette « %s »</string>
     <!-- Manage note types -->
     <string name="field_editor_model_not_available">Impossible d\'accéder à la collection. Veuillez réessayer !</string>
     <!-- App Intro -->
@@ -401,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">Synchroniser avec AnkiWeb</string>
     <string name="already_logged_in">Déjà connecté</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Le paquet existe déjà</string>
     <string name="deck_created">Paquet créé</string>
     <string name="deck_renamed">Paquet renommé</string>
     <!-- Deck Deletion -->
@@ -413,9 +357,8 @@
     <string name="toggle_browser_mode_help">Activer/désactiver l\'affichage des cartes ou des notes dans le navigateur</string>
     <string name="truncate_content_help">Tronquer la hauteur de chaque ligne du navigateur pour ne montrer que les 3 premières lignes de contenu</string>
     <string name="browser_options_dialog_heading">Options du navigateur</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">Cette fonctionnalité n\'est pas disponible durant la migration de stockage</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Appuyez pour démarrer la migration de stockage</string>
+    <string name="media_sync_required_title">Synchronisation des médias requise</string>
+    <string name="media_sync_unavailable_message">La synchronisation des médias est désactivée dans les paramètres. Veuillez synchroniser et sauvegarder tout média qui n\'a pas encore été synchronisé avant de continuer.</string>
 </resources>

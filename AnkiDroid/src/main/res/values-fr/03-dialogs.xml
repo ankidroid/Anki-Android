@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Vérifier la base de données ?</string>
     <string name="check_db_warning">Cela peut prendre du temps</string>
-    <string name="check_db_acknowledge">Base de données vérifiée</string>
-    <string name="check_db_acknowledge_shrunk">Base de données vérifiée et optimisée.\nRéduite de %d Mo.</string>
     <string name="contextmenu_deckpicker_delete_deck">Supprimer le jeu de cartes</string>
-    <string name="delete_deck_default_deck">Le paquet par défaut ne peut pas être supprimé.</string>
     <string name="delete_deck_title">Supprimer le paquet ?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Supprimez toutes les cartes dans %1$s ? Il contient %2$d carte.</item>
-        <item quantity="other">Supprimez toutes les cartes dans %1$s ? Il contient %2$d cartes.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Êtes-vous certain de vouloir renvoyer toutes les cartes en %s dans leur paquet d\'origine ?</string>
     <string name="no_tts_available_message">Aucun langage de synthèse vocale disponible</string>
     <string name="initializing_tts">Initialisation de la synthèse vocale&#8230;</string>
     <string name="tts_no_tts">Ne pas parler</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Sélectionner x cartes au hasard dans ce paquet :</string>
     <string name="custom_study_preview">Afficher les nouvelles cartes ajoutées dans les x derniers jours :</string>
     <string name="custom_study_rebuild_deck_corrupt">Le paquet d’étude personnalisée n’a pas pu être généré</string>
-    <string name="importing_collection">Importation de la collection. \nVeuillez patienter&#8230;</string>
-    <string name="import_media_count">Importation des fichiers médias %1$d%%\nVeuillez patienter&#8230;</string>
-    <string name="import_progress">• Importation de notes : %1$d%%\n• importation de cartes : %2$d%%\n• post-traitement : %3$d%%</string>
-    <string name="import_update_details">Mise à jour de %1$d de %2$d notes existantes.</string>
-    <string name="import_update_ignored">Certaines mises à jour ont été ignorées parce que le type de note a changé</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cartes importées : %2$d</item>
-        <item quantity="other">Fichiers importés : %1$d\nNombre total de cartes importées : %2$d</item>
-    </plurals>
     <string name="storage_full_title">Stockage plein</string>
     <string name="storage_almost_full_title">Il n\'y a presque plus d\'espace libre</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Aucun espace</string>
@@ -135,18 +118,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Désactiver</string>
     <string name="dialog_positive_overwrite">Écraser</string>
-    <string name="dialog_positive_remove">Supprimer</string>
     <string name="dialog_positive_repair">Réparer</string>
     <string name="dialog_positive_replace">Remplacer</string>
-    <string name="dialog_positive_restore">Rétablir</string>
-    <string name="dialog_positive_set">Définir</string>
     <string name="dialog_collection_path_not_dir">Le chemin indiqué ne mène pas à un répertoire valide</string>
     <!-- Media checking -->
     <string name="check_media_title">Vérifier les médias ?</string>
     <string name="check_media_warning">Cela peut prendre longtemps avec les grandes collections de médias</string>
     <string name="check_media_message">Vérification des médias&#8230;</string>
     <string name="check_media_acknowledge">Média vérifié</string>
-    <string name="check_media_failed">Echec de la vérification des médias</string>
     <string name="check_media_invalid">Fichiers avec un codage non valide : %d</string>
     <string name="check_media_unused">Fichiers dans le dossier de médias, mais utilisés par aucune carte : %d</string>
     <string name="check_media_nohave">Fichiers utilisés par une carte, mais pas présents dans le dossier de médias : %d</string>
@@ -165,8 +144,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">À faire</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Recherche de cartes vides en cours&#8230;</string>
-    <string name="confirm_cancel">Voulez-vous annuler ?</string>
-    <string name="empty_cards_none">Aucune carte vide</string>
     <string name="empty_cards_count">Cartes à supprimer : %d</string>
     <string name="empty_cards_deleted">Cartes supprimées : %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +159,10 @@
     <string name="integrity_check_continue_anyway">Continuer quand même</string>
     <string name="integrity_check_insufficient_space">La vérification de la base de données exige beaucoup d’espace de stockage temporaire. \n\n Il est fortement recommandé d’avoir au moins %s d’espace libre sur votre appareil avant de continuer.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nVous avez actuellement %s libres.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cartes avec des paquets incorrects ont été récupérées. Veuillez consulter le manuel pour plus d\'informations.</string>
-    <string name="video_creation_error">Impossible de lire la vidéo.</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Impossible de changer de paquet</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Erreur lors de la lecture des données de la carte.</string>
-    <string name="undo_succeeded"> « %s » annulé</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Impossible de traiter les options du paquet : %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Base de données verrouillée</string>
     <string name="database_locked_summary">La base de données AnkiDroid est utilisée par une autre application. Veuillez fermer l\'autre application puis rouvrir AnkiDroid.</string>
@@ -261,15 +233,13 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Vous ne pouvez pas créer un sous-paquet pour tous les paquets</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
+    <string name="backup_your_collection">Sauvegarder votre collection</string>
+    <string name="backup_collection_message">Vous n\'avez pas sauvegardé votre collection depuis un moment. Vous devriez le faire maintenant pour éviter toute perte de données.</string>
+    <string name="button_backup">Sauvegarder</string>
+    <string name="button_disable_reminder">Désactiver le rappel</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Plus tard</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Ne plus me montrer</string>
+    <string name="dismiss_backup_warning_title">Risque de perte de données</string>
+    <string name="dismiss_backup_warning_new_user">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront supprimées de votre téléphone si l\'application est désinstallée</string>
+    <string name="dismiss_backup_warning_upgrade">En raison de changement dans la politique de confidentialité d\'Android, vos données et sauvegardes automatiques seront inaccessibles si l\'application est désinstallée</string>
 </resources>

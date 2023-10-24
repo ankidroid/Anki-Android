@@ -46,15 +46,6 @@
     <string name="multimedia_editor_popup_audio">Pořídit zvukový záznam</string>
     <string name="multimedia_editor_popup_text">Pokročilý editor</string>
     <string name="multimedia_editor_popup_cloze">Doplňovačka</string>
-    <string name="multimedia_editor_popup_clear_field">Vymazat pole</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Nahrát</string>
-    <string name="multimedia_editor_pron_looking_up">Vyhledává se výslovnost</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">Výslovnost selhala</string>
-    <string name="multimedia_editor_only_one_word">Zadejte pouze jedno slovo</string>
-    <string name="multimedia_editor_word_search_try_lower_case">Zkuste použít pouze malá písmena</string>
-    <string name="multimedia_editor_poweredbeolingus">Běží na Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
@@ -64,11 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Hotovo</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">Výslovnost</string>
     <string name="multimedia_editor_text_field_editing_clear">Vymazat</string>
     <string name="multimedia_editor_text_field_editing_clone">Klonovat z</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">Nejprve zadejte nějaký text</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Vzít z</string>
     <!-- Multimedia card editor activity -->
@@ -81,16 +69,6 @@
     <string name="multimedia_editor_import_audio">Zvuk</string>
     <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">Stahování</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Hotovo</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">Slovo nebylo nalezeno</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">Hledání slova</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Počkejte</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Něco se pokazilo</string>
     <string name="multimedia_editor_svg_preview">Náhled pro SVG není dostupný</string>
@@ -104,8 +82,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Nelze vytvořit nástrojovou lištu pro nahrávání</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Editační pole</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">Žádné připojení</string>
     <!-- Crop function-->
     <string name="crop_image">Chcete oříznout tento obrázek?</string>
     <string name="crop_button">Oříznout obrázek</string>

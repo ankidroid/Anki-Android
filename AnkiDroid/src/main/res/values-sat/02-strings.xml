@@ -61,6 +61,8 @@
     <string name="updated_version">%s ᱵᱷᱟᱹᱨᱥᱚᱱ ᱛᱮ ᱟᱹᱯᱰᱮᱴ ᱮᱱᱟ  </string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">ᱯᱩᱸᱰ ᱵᱚᱰ ᱥᱟᱱᱪᱟᱣ ᱢᱮ </string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">ᱥᱤᱠᱮᱴ ᱞᱟᱜᱩᱭ ᱢᱮ </string>
     <string name="disable_whiteboard">ᱥᱤᱠᱮᱴ ᱵᱚᱱᱫ ᱢᱮ </string>
     <string name="show_whiteboard">ᱥᱤᱠᱮᱴ ᱫᱮᱠᱷᱟᱣ ᱢᱮ </string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">Audio replay ᱢᱮ </string>
     <string name="leech_suspend_notification">ᱠᱟᱰ ᱫᱚ leech ᱟᱨ ᱵᱚᱸᱫ ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ </string>
     <string name="leech_notification">ᱠᱟᱰ ᱫᱚ leech ᱛᱮ ᱢᱟᱨᱠ ᱮᱱᱟ </string>
-    <string name="corrupt_font">%s ᱯᱷᱚᱱᱴ ᱯᱷᱟᱤᱞ corrupt ᱜᱮᱭᱟ </string>
     <string name="webview_crash_unknown">ᱵᱟᱝᱵᱟᱰᱟᱭᱟᱜ ᱵᱷᱩᱞ </string>
     <string name="webview_crash_unknwon_detailed">ᱱᱚᱶᱟ ᱫᱚ WebView ᱨᱮ ᱵᱷᱤᱛᱨᱤ ᱵᱷᱩᱞ ᱠᱷᱟᱛᱤᱨ ᱛᱮ </string>
     <string name="webview_crash_oom">Out of Memory</string>
@@ -123,9 +124,9 @@
     <string name="save">ᱥᱟᱝᱪᱚᱣ</string>
     <string name="close">ᱵᱚᱫᱽ</string>
     <string name="select">ᱵᱟᱪᱷᱟᱣ</string>
-    <string name="reordering_cards">ᱠᱟᱰ ᱨᱮᱠᱚᱰᱤᱝ&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ᱠᱷᱚᱱ)</string>
     <string name="confirm_map_cards_to_nothing">ᱡᱟᱷᱟᱭ ᱠᱟᱰ ᱵᱟᱭ ᱢᱮᱯ ᱠᱚᱜᱼᱟ ᱚᱱᱟ ᱠᱟᱲ ᱫᱚ ᱜᱮᱫ ᱜᱤᱰᱤᱜᱼᱟ ᱾ ᱡᱚᱫᱤ ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱨᱮ ᱠᱟᱰ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱠᱷᱟᱱ ᱪᱮᱫ ᱢᱟᱱᱮ ᱵᱟᱝ ᱛᱟᱦᱮᱱᱟ ᱾ ᱢᱤᱫ ᱞᱮᱛᱟᱲ ᱥᱮᱱᱟᱢ ᱠᱟᱱᱟ?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">ᱚᱠᱛᱚᱵᱚᱠᱥᱟ ᱥᱮᱴᱮᱨᱟ ᱠᱟᱱᱟ</string>
     <plurals name="timebox_reached">
         <item quantity="one">1$d ᱠᱟᱲ %2$s ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱠᱮᱜᱟᱢ</item>
@@ -143,17 +144,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ᱨᱤᱥᱮᱰᱭᱩᱞ ᱢᱮ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱧᱮᱞ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar"> %2$d ᱨᱮᱱᱟᱜ %1$d</string>
-    <string name="error_insufficient_memory">ᱠᱟᱹᱢᱤ ᱠᱚᱢ ᱩᱭᱦᱟᱹᱨ ᱫᱟᱲᱮᱟᱼᱜ ᱠᱷᱟᱹᱛᱤᱨ ᱵᱟᱭ ᱚᱯᱨᱮᱥᱚᱱ ᱵᱟᱭ ᱦᱩᱭ ᱫᱟᱲᱮᱟᱜᱼᱟ</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ᱫᱚᱦᱲᱟ ᱧᱩᱛᱩᱢ</string>
-    <string name="default_conf_delete_error">ᱟᱯᱱᱟᱨ ᱢᱚᱱᱮ ᱛᱮᱭᱟᱜ ᱫᱚᱞ ᱵᱟᱭ ᱚᱰᱚᱠ ᱦᱩᱭᱩᱜᱼᱟ</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
-        <item quantity="other">%d ᱠᱟᱰ ᱥᱮᱞᱮᱫ ᱮᱱᱟ</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠ ᱢᱮ</string>
     <string name="check_media">ᱢᱤᱰᱤᱭᱟ ᱪᱮᱠ ᱢᱮ</string>
     <string name="empty_cards">ᱱᱩᱬᱤᱭᱟᱹ ᱠᱟᱰ ᱠᱚ</string>
-    <string name="check_db_message">ᱰᱟᱴᱟᱵᱮᱥ ᱪᱮᱠᱚᱜ ᱠᱟᱱᱟ</string>
     <string name="empty_card_warning">ᱱᱚᱶᱟ ᱠᱟᱰ ᱫᱚ ᱱᱩᱬᱤ ᱜᱮᱭᱟ ᱾ \"ᱱᱩᱬᱤ ᱠᱟᱰ\" ᱰᱮᱠ ᱥᱠᱨᱤᱱ ᱛᱟᱞᱠᱟ ᱢᱮᱱᱩ ᱠᱷᱚᱱ ᱵᱟᱪᱷᱟᱣ ᱢᱮ ᱾</string>
     <string name="unknown_type_field_warning">ᱨᱚᱲ ᱴᱟᱭᱤᱯ ᱢᱮᱺ ᱵᱚᱭ ᱵᱟᱰᱟᱭᱠᱟᱱ ᱡᱟᱭᱜᱟ %s</string>
     <string name="delete_deck">ᱰᱮᱠ ᱢᱮᱴᱟᱣᱚᱜ ᱠᱟᱱᱟ&#8230;</string>
@@ -167,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">ᱱᱚᱶᱟ ᱫᱚ ᱵᱦᱮᱞᱤᱰ Anki ᱯᱮᱠ ᱵᱟᱝ ᱠᱟᱱᱟ</string>
     <string name="import_title_error" comment="Title of error dialog">ᱵᱷᱩᱞ</string>
-    <string name="import_log_failed_unzip">apkg ᱠᱷᱩᱞᱟᱹ ᱦᱩᱲᱟᱜᱺ %s</string>
-    <string name="import_log_failed_copy_to">apkg ᱠᱷᱚᱱ %s ᱱᱚᱠᱚᱞ ᱦᱩᱲᱟᱜ</string>
-    <string name="import_log_failed_validate">apkg ᱯᱩᱥᱴᱚᱣ ᱵᱷᱩᱞ</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">ᱨᱮᱫ ᱞᱟᱫᱮ ᱵᱷᱩᱞ, ᱠᱟᱨᱬ ᱠᱮᱪ ᱥᱟᱯᱷᱟ ᱦᱩᱭ ᱠᱚᱜᱼᱟ ᱾\n ᱫᱚᱭᱟᱠᱟᱛᱮ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ</string>
-    <string name="import_succeeded_but_check_database">ᱰᱟᱴᱟ ᱟᱹᱜᱩ ᱦᱩᱭ ᱦᱮᱞᱮ ᱯᱚᱥᱴ-ᱟᱜᱩ ᱠᱞᱤᱱᱚᱯᱷ ᱰᱤᱜᱟᱹᱣ ᱾ ᱪᱮᱠ ᱰᱟᱴᱟᱵᱮᱥ ᱯᱚᱨᱮ ᱫᱟᱹᱲ ᱪᱷᱚᱭ ᱢᱮ ᱾ ᱢᱩᱞ ᱠᱟᱨᱚᱬ: %s</string>
-    <string name="import_error_corrupt_zip">apkg  ᱫᱚ ᱠᱷᱟᱨᱟᱯ ᱜᱮᱭᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱜᱮᱫ ᱜᱤᱰᱤ ᱵᱤᱱ ᱟᱨ ᱫᱩᱦᱲᱟᱹ ᱰᱟᱩᱱᱞᱳᱰ ᱵᱤᱱ ᱾ \n\n ᱢᱩᱞ ᱠᱟᱨᱚᱬ:%s</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">ᱨᱮᱫᱧᱩᱛᱩᱢ “%s” ᱴᱷᱮᱱ .apkg or .colpkg extension ᱵᱟᱱᱩᱜᱽᱟ</string>
     <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
@@ -181,8 +169,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">ᱴᱩᱢᱟᱹ ᱳᱪᱳᱜᱳᱜ ᱠᱟᱱᱟ&#8230;</string>
     <string name="import_interrupted">ᱨᱮᱫ ᱟᱠᱚᱴ ᱮᱱᱟ</string>
     <string name="export_include_schedule">ᱥᱮᱰᱤᱭᱩᱞ ᱨᱮ ᱢᱮᱥᱟᱭ ᱯᱮ</string>
     <string name="export_include_media">ᱢᱮᱰᱤᱭᱟ ᱢᱮᱥᱟᱭ ᱯᱮ</string>
@@ -196,12 +182,11 @@
         <item quantity="one">Export selected note as apkg file?</item>
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_in_progress">Anki ᱯᱮᱠᱮᱡ ᱨᱮᱫ&#8230; ᱵᱷᱟᱡᱟᱜ ᱠᱟᱱᱟ </string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">ᱪᱚᱫ ᱮᱯᱞᱤᱠᱮᱥᱚᱱ ᱵᱟᱹᱱᱩᱜᱼᱟ apkg ᱦᱮᱱᱰᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱾ ᱥᱟᱝᱪᱟᱣ ᱪᱟᱹᱞᱩ ᱟᱠᱟᱱᱟ...</string>
     <string name="export_save_apkg_successful">Anki ᱯᱮᱠᱮᱡ ᱵᱮᱥ ᱪᱚᱨᱚᱠ ᱥᱟᱝᱪᱟᱣ ᱮᱱᱟ</string>
     <string name="export_save_apkg_unsuccessful">Anki ᱯᱮᱠᱮᱡ ᱥᱟᱝᱪᱟᱣ ᱵᱷᱩᱞ</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid ᱯᱷᱟᱥᱠᱟᱰ ᱵᱟᱡᱟᱠᱮᱜᱼᱟᱭ: %s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -211,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__deck_options">ᱰᱮᱠ ᱚᱯᱥᱚᱱᱠᱚ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ᱯᱟᱲᱦᱟᱣ ᱚᱯᱥᱚᱱ ᱠᱚ</string>
@@ -222,47 +207,11 @@
     <string name="dyn_deck_desc">ᱱᱚᱶᱟ ᱫᱚ ᱱᱚᱨᱢᱟᱞ ᱥᱮᱰᱭᱩᱞ ᱠᱷᱣᱱ ᱮᱴᱟᱜ ᱨᱮ ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱥᱯᱮᱥᱟᱞ ᱰᱮᱠ ᱠᱟᱱᱟ ᱾ ᱠᱟᱰ ᱠᱚ ᱨᱤᱵᱷᱤᱣ ᱯᱚᱨᱮ ᱟᱡ ᱛᱮᱜᱮ ᱢᱩᱞ ᱰᱮᱢᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ ᱾ ᱰᱮᱠ ᱞᱤᱥᱴ ᱠᱷᱚᱱ ᱰᱮᱠᱜᱮᱫ ᱜᱤᱰᱤ ᱞᱮᱠᱷᱱᱟ ᱫᱚ ᱡᱷᱚᱛᱚ ᱠᱟᱲ ᱢᱩᱞ ᱰᱮᱠ ᱥᱮᱱ ᱥᱮᱱᱚᱜᱼᱟ  </string>
     <string name="steps_error">ᱥᱴᱮᱯᱥ ᱫᱚ ᱥᱩᱱᱭᱚ ᱱᱩᱚᱢᱵᱚᱨ ᱠᱷᱚᱱ ᱰᱷᱮᱨ ᱜᱮ ᱛᱟᱦᱮᱱ ᱢᱟ</string>
     <string name="steps_min_error">ᱠᱚᱢ ᱥᱮ ᱠᱚᱢ ᱢᱤᱫᱴᱟᱝ ᱥᱴᱮᱯ ᱫᱚᱨᱠᱟᱨ</string>
-    <string name="sched_end">(ᱢᱩᱪᱟᱹᱫᱽ)</string>
-    <string name="sched_unbury_action">ᱱᱤᱛᱚᱜ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱱᱚᱟ “Unbury” ᱵᱚᱴᱚᱱ ᱚᱛᱟᱭ ᱢᱮ ᱢᱮᱱᱩ ᱠᱷᱚᱱ</string>
-    <string name="sched_has_buried">ᱥᱚᱢᱯᱚᱨᱠᱤᱭᱚ ᱟᱨ ᱛᱚᱯᱟᱠᱟᱱᱟ ᱠᱚᱰ ᱠᱚ ᱠᱟᱯᱟ ᱦᱟᱫᱵᱤᱡ ᱛᱮ ᱵᱟᱝ ᱫᱮᱠᱷᱣᱜᱼᱟ</string>
     <string name="tag_editor_add_feedback">“%1$s” ᱥᱞᱮᱫ ᱞᱟᱹᱜᱤᱫ ᱛᱮ “%2$s” ᱚᱛᱟᱭᱯᱮ</string>
     <string name="tag_editor_add_feedback_existing">ᱢᱟᱲᱟᱝ ᱨᱮ ᱢᱮᱱᱟᱜᱠᱟ ᱴᱮᱛᱜ “%1$s” ᱪᱚᱭᱟᱱᱮᱱᱟ</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">ᱥᱰ%s ᱴᱤᱡ</item>
-        <item quantity="other">ᱥᱰ%s ᱴᱤᱡ</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s ᱴᱤᱯᱤᱡ</item>
-        <item quantity="other">%s ᱴᱤᱯᱤᱡ</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s ᱴᱟᱲᱟᱝ</item>
-        <item quantity="other">%s ᱴᱟᱲᱟᱝ</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s ᱫᱤᱱ</item>
-        <item quantity="other">%s ᱫᱤᱱ</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s ᱪᱟᱸᱫᱚ</item>
-        <item quantity="other">%s ᱪᱟᱸᱫᱚ</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s ᱥᱮᱨᱢᱟ</item>
-        <item quantity="other">%s ᱥᱮᱨᱢᱟ</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s ᱴᱤᱡ ᱠᱚ</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">ᱱᱚᱶᱟ ᱰᱮᱠ ᱫᱚ ᱢᱟᱰᱟᱝ ᱠᱷᱚᱵ ᱜᱣ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="decks_rename_filtered_nosubdecks">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱨᱮ ᱥᱚᱵᱰᱮᱠ ᱵᱟᱭ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ</string>
-    <string name="filtered_deck_name">ᱯᱷᱤᱞᱴᱚᱨᱟᱠᱟᱱ ᱰᱮᱠ</string>
     <string name="reminder_title">ᱯᱟᱲᱦᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱟᱞᱚᱢ ᱦᱤᱲᱤᱧᱟ ᱛᱮᱦᱮᱸᱧ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%2$d ᱠᱟᱰ %1$s ᱨᱮ ᱞᱟᱦᱟ ᱛᱮᱭᱟᱜ ᱧᱮᱞ</item>
@@ -271,14 +220,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ᱨᱮᱫ ᱵᱷᱮᱡᱟ ᱵᱷᱩᱞ</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">ᱱᱚᱶᱟ ᱨᱮᱫ ᱠᱷᱩᱞᱟᱹ ᱞᱟᱹᱜᱤᱫ Anki ᱨᱮᱭᱟᱜ ᱱᱟᱶᱟ ᱵᱷᱚᱨᱥᱚᱱ ᱫᱚᱨᱠᱟᱨ ᱾</string>
     <string name="activity_start_failed">ᱱᱚᱶᱟ ᱥᱮᱤᱴᱚᱢ ᱴᱷᱮᱱ ᱠᱟᱹᱢᱤ ᱠᱚᱨᱟᱣ ᱞᱟᱹᱜᱤᱫ ᱮᱯᱯ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ᱠᱮᱢᱨᱟ ᱪᱤᱛᱟᱨ ᱢᱟᱨᱟᱝ ᱜᱮ ᱛᱟᱦᱮᱸ ᱫᱟᱲᱮᱟᱜᱼᱟ ᱾ ᱢᱮᱰᱤᱭᱟ ᱩᱱᱩᱫᱩᱜ ᱨᱮ ᱪᱤᱛᱟᱨ ᱠᱚᱥᱚᱴ ᱢᱮ]]></string>
     <string name="no_browser_notification">ᱵᱨᱚᱩᱡᱚᱨ ᱵᱟᱭ ᱧᱟᱢ ᱞᱮᱱᱟ，ᱣᱮᱵᱯᱮᱡ ᱥᱟᱦᱴᱟ ᱧᱮᱞ ᱞᱟᱹᱜᱤᱫ ᱠᱚᱢᱯᱩᱴᱚᱨ ᱟᱨ ᱵᱟᱝᱠᱷᱟᱱ ᱢᱚᱵᱚᱤᱞ ᱛᱮ ᱪᱟᱞᱟᱜ ᱢᱮ:</string>
     <string name="web_page_error">ᱥᱟᱦᱴᱟ ᱞᱟᱫᱮ ᱵᱷᱩᱞ:%s</string>
-    <string name="no_outgoing_link_in_cardbrowser">ᱵᱟᱦᱨᱮ ᱡᱟᱱᱟᱲ ᱠᱟᱰ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">ᱨᱤᱠᱚᱵᱷᱚᱨ ᱟᱠᱟᱱ ᱠᱟᱰ ᱠᱚ</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">ᱵᱮᱠᱜᱟᱨᱩᱸᱰ</string>
     <string name="choose_an_image">ᱪᱤᱛᱟᱨ ᱵᱟᱪᱷᱟᱣ ᱢᱮ</string>
@@ -313,6 +259,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ᱰᱮᱠ ᱞᱟᱫᱮ ᱰᱤᱜᱟᱹᱣ ‘%s’</string>
     <string name="search_decks">ᱰᱮᱠ ᱠᱚ ᱥᱮᱸᱫᱽᱨᱟ</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">ᱯᱩᱨᱟᱹ ᱵᱷᱩᱞ</string>
     <string name="ankidroid_init_failed_webview">Ankidroid ᱫᱚ ᱥᱭᱥᱴᱮᱢ ᱣᱮᱵᱼᱵᱷᱤᱭᱩ ᱪᱮᱛᱟᱱ ᱨᱮ ᱱᱤᱨᱵᱷᱚᱨᱚᱜ ᱠᱟᱱᱟᱭ ᱚᱠᱟ ᱫᱚ ᱱᱤᱛᱚᱜ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱱᱚᱶᱟ ᱫᱚ ᱛᱮᱵᱮ ᱦᱩᱭᱩᱜᱼᱟ ᱚᱠᱟ ᱡᱷᱚᱜ ᱥᱭᱥᱴᱟᱹᱢ ᱟᱹᱯᱰᱮᱴ ᱠᱚ ᱠᱚ ᱵᱚᱦᱟᱞ ᱮᱪᱟᱭ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱱᱟᱥᱮ ᱴᱤᱯᱤᱡ ᱜᱦᱟᱹᱬᱤᱡ ᱛᱟᱭᱚᱢ ᱫᱩᱦᱲᱟᱹ ᱪᱮᱥᱴᱟᱭ ᱢᱮ ᱾ \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -325,7 +272,6 @@
     <string name="insert_heading">ᱦᱮᱰᱤᱝ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="format_font_size">ᱯᱪᱤᱠᱤ ᱢᱟᱯ ᱵᱚᱫᱚᱞ ᱢᱮ</string>
     <string name="insert_mathjax">MathJax ᱤᱠᱣᱨᱥᱚᱱ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
-    <string name="insert_cloze">ᱠᱞᱚᱡᱽ ᱢᱮᱴᱟᱣ ᱵᱚᱞᱚ ᱪᱷᱚᱭ ᱢᱮ</string>
     <string name="note_editor_toolbar_icon">ᱵᱩᱛᱟᱹᱢ ᱚᱞ</string>
     <string name="before_text">HTML ᱢᱟᱲᱟᱝ ᱵᱟᱪᱷᱟᱣ</string>
     <string name="after_text">HTML ᱞᱟᱦᱟᱛᱮᱭᱟᱜ ᱵᱟᱪᱷᱟᱣ</string>
@@ -361,6 +307,7 @@
     <string name="deck_download_progress_message">ᱰᱟᱩᱱᱞᱳᱰᱤᱝ ᱚᱠᱛᱚᱨᱮ ᱟᱢ ᱮᱴᱟᱜ ᱟᱯᱥ ᱮᱢ ᱵᱮᱵᱷᱟᱨ ᱫᱟᱲᱮ ᱟᱫ-ᱟ</string>
     <string name="check_network">ᱫᱟᱭᱟᱠᱟᱛᱮ ᱟᱢᱟᱜ ᱱᱮᱴᱣᱟᱨᱠ ᱠᱳᱱᱮᱠᱥᱚᱱ ᱡᱟᱸᱪ ᱢᱮ</string>
     <string name="search_using_deck_name">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱵᱮᱵᱷᱟᱨ ᱠᱟᱛᱮ ᱥᱮᱸᱫᱽᱨᱟᱭ ᱢᱮ</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">ᱚᱲᱟᱜ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -377,8 +324,6 @@
     <string name="scoped_storage_postpone">ᱵᱚᱸᱫ</string>
     <string name="scoped_storage_migrate">ᱩᱪᱟᱹᱲ</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
@@ -401,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">ᱰᱮᱠ ᱢᱟᱲᱟᱝ ᱠᱷᱚᱱ ᱢᱮᱱᱟᱜᱼᱟ</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">ᱰᱮᱠ ᱧᱩᱛᱩᱢ ᱮᱱᱟ</string>
     <!-- Deck Deletion -->

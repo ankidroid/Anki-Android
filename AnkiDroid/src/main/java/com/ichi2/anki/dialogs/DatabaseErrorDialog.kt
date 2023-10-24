@@ -25,6 +25,8 @@ import android.os.Parcelable
 import android.view.KeyEvent
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -35,14 +37,11 @@ import com.ichi2.anki.*
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.*
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.servicelayer.ScopedStorageService
-import com.ichi2.async.Connection
-import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.*
 import com.ichi2.utils.UiUtil.makeBold
 import kotlinx.parcelize.Parcelize
-import net.ankiweb.rsdroid.BackendFactory
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -56,7 +55,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
     @SuppressLint("CheckResult")
     override fun onCreateDialog(savedInstanceState: Bundle?): MaterialDialog {
         super.onCreate(savedInstanceState)
-        val res = resources
+        val res = res()
         val dialog = MaterialDialog(requireActivity())
         val isLoggedIn = isLoggedIn()
         dialog.cancelable(true)
@@ -113,11 +112,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // to the previous dialog
                 val options = ArrayList<String>(6)
                 val values = ArrayList<Int>(6)
-                if (!(activity as AnkiActivity).colIsOpen()) {
+                if (!(activity as AnkiActivity).colIsOpenUnsafe()) {
                     // retry
                     options.add(res.getString(R.string.backup_retry_opening))
                     values.add(0)
-                } else if (!ScopedStorageService.userMigrationIsInProgress(requireContext())) {
+                } else if (!ScopedStorageService.mediaMigrationIsInProgress(requireContext())) {
                     // fix integrity
                     options.add(res.getString(R.string.check_db))
                     values.add(1)
@@ -152,7 +151,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     listItems(items = titles.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (mRepairValues[index]) {
                             0 -> {
-                                (activity as DeckPicker).recreate()
+                                ActivityCompat.recreate(activity as DeckPicker)
                                 return@listItems
                             }
                             1 -> {
@@ -224,7 +223,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                                 dismissAllDialogFragments()
                             } else {
                                 // otherwise show an error dialog
-                                MaterialDialog(requireActivity()).show {
+                                AlertDialog.Builder(requireActivity()).show {
                                     title(R.string.vague_error)
                                     message(R.string.backup_invalid_file_error)
                                     positiveButton(R.string.dialog_ok)
@@ -253,10 +252,10 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.dialog_positive_create) {
                         val ch = CollectionHelper.instance
                         val time = TimeManager.time
-                        ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
+                        ch.closeCollection("DatabaseErrorDialog: Before Create New Collection")
                         val path1 = CollectionHelper.getCollectionPath(requireActivity())
                         if (BackupManager.moveDatabaseToBrokenDirectory(path1, false, time)) {
-                            (activity as DeckPicker).recreate()
+                            ActivityCompat.recreate(activity as DeckPicker)
                         } else {
                             (activity as DeckPicker).showDatabaseErrorDialog(DIALOG_LOAD_FAILED)
                         }
@@ -291,7 +290,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     contentNullable(message)
                     positiveButton(R.string.dialog_positive_overwrite) {
-                        (activity as DeckPicker).sync(Connection.ConflictResolution.FULL_DOWNLOAD)
+                        (activity as DeckPicker).sync(ConflictResolution.FULL_DOWNLOAD)
                         dismissAllDialogFragments()
                     }
                     negativeButton(R.string.dialog_cancel)
@@ -435,7 +434,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     positiveButton(R.string.dialog_positive_create) {
                         Timber.w("Creating new collection")
                         val ch = CollectionHelper.instance
-                        ch.closeCollection(false, "DatabaseErrorDialog: Before Create New Collection")
+                        ch.closeCollection("DatabaseErrorDialog: Before Create New Collection")
                         CollectionHelper.resetAnkiDroidDirectory(context)
                         context.exit()
                     }
@@ -464,20 +463,20 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             DIALOG_LOAD_FAILED -> if (databaseCorruptFlag) {
                 // The sqlite database has been corrupted (DatabaseErrorHandler.onCorrupt() was called)
                 // Show a specific message appropriate for the situation
-                resources.getString(R.string.corrupt_db_message, resources.getString(R.string.repair_deck))
+                res().getString(R.string.corrupt_db_message, res().getString(R.string.repair_deck))
             } else {
                 // Generic message shown when a libanki task failed
-                resources.getString(R.string.access_collection_failed_message, resources.getString(R.string.link_help))
+                res().getString(R.string.access_collection_failed_message, res().getString(R.string.link_help))
             }
-            DIALOG_DB_ERROR -> resources.getString(R.string.answering_error_message)
-            DIALOG_DISK_FULL -> resources.getString(R.string.storage_full_message)
-            DIALOG_REPAIR_COLLECTION -> resources.getString(R.string.repair_deck_dialog, BackupManager.BROKEN_COLLECTIONS_SUFFIX)
-            DIALOG_RESTORE_BACKUP -> resources.getString(R.string.backup_restore_no_backups)
-            DIALOG_NEW_COLLECTION -> resources.getString(R.string.backup_del_collection_question)
-            DIALOG_CONFIRM_DATABASE_CHECK -> resources.getString(R.string.check_db_warning)
-            DIALOG_CONFIRM_RESTORE_BACKUP -> resources.getString(R.string.restore_backup)
-            DIALOG_FULL_SYNC_FROM_SERVER -> resources.getString(R.string.backup_full_sync_from_server_question)
-            DIALOG_DB_LOCKED -> resources.getString(R.string.database_locked_summary)
+            DIALOG_DB_ERROR -> res().getString(R.string.answering_error_message)
+            DIALOG_DISK_FULL -> res().getString(R.string.storage_full_message)
+            DIALOG_REPAIR_COLLECTION -> res().getString(R.string.repair_deck_dialog, BackupManager.BROKEN_COLLECTIONS_SUFFIX)
+            DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore_no_backups)
+            DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_del_collection_question)
+            DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_warning)
+            DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup)
+            DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server_question)
+            DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_summary)
             INCOMPATIBLE_DB_VERSION -> {
                 var databaseVersion = -1
                 try {
@@ -485,44 +484,40 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 } catch (e: Exception) {
                     Timber.w(e, "Failed to get database version, using -1")
                 }
-                val schemaVersion = if (BackendFactory.defaultLegacySchema) {
-                    Consts.LEGACY_SCHEMA_VERSION
-                } else {
-                    Consts.BACKEND_SCHEMA_VERSION
-                }
-                resources.getString(
+                val schemaVersion = Consts.BACKEND_SCHEMA_VERSION
+                res().getString(
                     R.string.incompatible_database_version_summary,
                     schemaVersion,
                     databaseVersion
                 )
             }
-            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> getString(R.string.directory_inaccessible_after_uninstall_summary, CollectionHelper.getCurrentAnkiDroidDirectory(requireContext()))
+            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> res().getString(R.string.directory_inaccessible_after_uninstall_summary, CollectionHelper.getCurrentAnkiDroidDirectory(requireContext()))
             else -> requireArguments().getString("dialogMessage")
         }
     private val title: String
         get() = when (requireDialogType()) {
-            DIALOG_LOAD_FAILED -> resources.getString(R.string.open_collection_failed_title)
-            DIALOG_ERROR_HANDLING -> resources.getString(R.string.error_handling_title)
-            DIALOG_REPAIR_COLLECTION -> resources.getString(R.string.dialog_positive_repair)
-            DIALOG_RESTORE_BACKUP -> resources.getString(R.string.backup_restore)
-            DIALOG_NEW_COLLECTION -> resources.getString(R.string.backup_new_collection)
-            DIALOG_CONFIRM_DATABASE_CHECK -> resources.getString(R.string.check_db_title)
-            DIALOG_CONFIRM_RESTORE_BACKUP -> resources.getString(R.string.restore_backup_title)
-            DIALOG_FULL_SYNC_FROM_SERVER -> resources.getString(R.string.backup_full_sync_from_server)
-            DIALOG_DB_LOCKED -> resources.getString(R.string.database_locked_title)
-            INCOMPATIBLE_DB_VERSION -> resources.getString(R.string.incompatible_database_version_title)
-            DIALOG_DB_ERROR -> resources.getString(R.string.answering_error_title)
-            DIALOG_DISK_FULL -> resources.getString(R.string.storage_full_title)
-            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> resources.getString(R.string.directory_inaccessible_after_uninstall)
+            DIALOG_LOAD_FAILED -> res().getString(R.string.open_collection_failed_title)
+            DIALOG_ERROR_HANDLING -> res().getString(R.string.error_handling_title)
+            DIALOG_REPAIR_COLLECTION -> res().getString(R.string.dialog_positive_repair)
+            DIALOG_RESTORE_BACKUP -> res().getString(R.string.backup_restore)
+            DIALOG_NEW_COLLECTION -> res().getString(R.string.backup_new_collection)
+            DIALOG_CONFIRM_DATABASE_CHECK -> res().getString(R.string.check_db_title)
+            DIALOG_CONFIRM_RESTORE_BACKUP -> res().getString(R.string.restore_backup_title)
+            DIALOG_FULL_SYNC_FROM_SERVER -> res().getString(R.string.backup_full_sync_from_server)
+            DIALOG_DB_LOCKED -> res().getString(R.string.database_locked_title)
+            INCOMPATIBLE_DB_VERSION -> res().getString(R.string.incompatible_database_version_title)
+            DIALOG_DB_ERROR -> res().getString(R.string.answering_error_title)
+            DIALOG_DISK_FULL -> res().getString(R.string.storage_full_title)
+            DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL -> res().getString(R.string.directory_inaccessible_after_uninstall)
         }
 
     override val notificationMessage: String? get() = message
-    override val notificationTitle: String get() = resources.getString(R.string.answering_error_title)
+    override val notificationTitle: String get() = res().getString(R.string.answering_error_title)
 
     override val dialogHandlerMessage
         get() = ShowDatabaseErrorDialog(requireDialogType())
 
-    private fun requireDialogType() = requireArguments().getParcelableCompat<DatabaseErrorDialogType>("dialog")!!
+    private fun requireDialogType() = BundleCompat.getParcelable(requireArguments(), "dialog", DatabaseErrorDialogType::class.java)!!
 
     fun dismissAllDialogFragments() {
         (activity as DeckPicker).dismissAllDialogFragments()
@@ -590,7 +585,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
         companion object {
             fun fromMessage(message: Message): ShowDatabaseErrorDialog {
-                val dialogType = message.data.getParcelableCompat<DatabaseErrorDialogType>("dialog")!!
+                val dialogType = BundleCompat.getParcelable(message.data, "dialog", DatabaseErrorDialogType::class.java)!!
                 return ShowDatabaseErrorDialog(dialogType)
             }
         }

@@ -70,14 +70,6 @@
         <item>@string/error_reporting_choice_never_report</item>
         <item>@string/error_reporting_choice_ask_user</item>
     </string-array>
-    <string-array name="leech_action_labels">
-        <item>@string/menu_suspend_card</item>
-        <item>@string/leech_action_tag_only</item>
-    </string-array>
-    <string-array name="new_order_labels">
-        <item>@string/new_order_random</item>
-        <item>@string/new_order_order_added</item>
-    </string-array>
     <string-array name="cram_deck_conf_order_labels">
         <item>@string/cram_deck_conf_order_oldest_seen_first</item>
         <item>@string/cram_deck_conf_order_random</item>
@@ -92,15 +84,6 @@
     <string-array name="add_to_cur_labels">
         <item>@string/add_to_deck_use_current_deck</item>
         <item>@string/add_to_deck_decide_by_note_type</item>
-    </string-array>
-    <string-array name="new_spread_labels">
-        <item>@string/new_spread_mix_new_and_review</item>
-        <item>@string/new_spread_new_after_review</item>
-        <item>@string/new_spread_new_before_review</item>
-    </string-array>
-    <string-array name="override_font_labels">
-        <item>@string/override_font_if_missing</item>
-        <item>@string/override_font_always</item>
     </string-array>
     <string-array name="day_theme_labels">
         <item>@string/day_theme_light</item>
@@ -159,22 +142,13 @@
     <string name="link_ankidroid_development_guide">https://github.com/ankidroid/Anki-Android/wiki/Development-Guide</string>
     <string name="link_ankidroid_faq">https://github.com/ankidroid/Anki-Android/wiki/FAQ</string>
     <string name="link_opencollective_donate">https://opencollective.com/ankidroid/contribute</string>
-    <string name="link_ankiweb_docs_cloze_deletion">https://docs.ankiweb.net/editing.html#cloze-deletion</string>
     <string name="link_distributions">https://apps.ankiweb.net/#download</string>
     <string name="link_ankiweb_lost_email_instructions">https://github.com/ankidroid/Anki-Android/wiki/FAQ#forgotten-ankiweb-email-instructions</string>
     <string name="link_scoped_storage_faq">https://github.com/ankidroid/Anki-Android/wiki/Storage-Migration-FAQ</string>
     <string name="link_install_non_play_store_install">https://github.com/ankidroid/Anki-Android/wiki/Full-Storage-Access</string>
     <string name="link_custom_sync_server_help_learn_more_en">https://docs.ankidroid.org/#_custom_sync_server</string>
-
-    <string-array name="leech_action_values">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-    <string-array name="new_order_values">
-        <item>0</item>
-        <item>1</item>
-    </string-array>
-    <string name="deck_conf_percent">XXX %</string>
+    <string name="link_migration_failed_dialog_learn_more_en">https://docs.ankidroid.org/storage-migration-error.html</string>
+    <string name="migration_failed_help_url">https://docs.ankidroid.org/storage-migration-error.html</string>
 
     <string-array name="cram_deck_conf_order_values">
         <item>0</item>
@@ -191,11 +165,6 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-    <string-array name="new_spread_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
     <string-array name="automatic_answer_options">
         <item>@string/menu_bury_card</item>
         <item>@string/ease_button_again</item>
@@ -209,10 +178,6 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
-    </string-array>
-    <string-array name="override_font_values">
-        <item>0</item>
-        <item>1</item>
     </string-array>
     <string-array name="full_screen_mode_values">
         <item>0</item>
@@ -282,6 +247,11 @@
         <item>@string/automatic_sync_choice</item>
     </string-array>
 
+    <string-array name="backup_limits_summary_entries">
+        <item>@string/backup_limits_frequency</item>
+        <item>@string/backup_limits_lifetime</item>
+    </string-array>
+
     <string-array name="notifications_summary_entries">
         <item>@string/notification_pref_title</item>
         <item>@string/notification_minimum_cards_due_vibrate</item>
@@ -306,7 +276,6 @@
     </string-array>
 
     <string-array name="advanced_summary_entries">
-        <item>@string/statistics</item>
         <item>@string/pref_cat_workarounds</item>
         <item>@string/pref_cat_plugins</item>
     </string-array>
@@ -328,19 +297,15 @@
         <item>xx-large</item>
     </string-array>
 
+    <string name="manage_external_storage_permission">android.permission.MANAGE_EXTERNAL_STORAGE</string>
+    <string-array name="legacy_storage_permissions">
+        <item>android.permission.READ_EXTERNAL_STORAGE</item>
+        <item>android.permission.WRITE_EXTERNAL_STORAGE</item>
+    </string-array>
+
     <!-- Onboarding -->
     <string name="reset_onboarding" maxLength="41">Reset onboarding walkthrough</string>
     <string name="show_onboarding" maxLength="41">Show onboarding walkthrough</string>
     <string name="show_onboarding_desc">Display feature tutorial to learn more about the app</string>
     <string name="reset_onboarding_desc">Show all tutorials again</string>
-
-    <!-- Stats -->
-    <string-array name="stats_default_deck_labels">
-        <item>@string/stats_default_deck_current</item>
-        <item>@string/stats_default_deck_all</item>
-    </string-array>
-    <string-array name="stats_default_deck_values">
-        <item>current</item>
-        <item>all</item>
-    </string-array>
 </resources>

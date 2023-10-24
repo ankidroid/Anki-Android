@@ -46,18 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Sprawdź bazę danych</string>
     <string name="check_db_warning">To może zająć dużo czasu.</string>
-    <string name="check_db_acknowledge">Baza danych sprawdzona</string>
-    <string name="check_db_acknowledge_shrunk">Baza danych sprawdzona i zoptymalizowana.\nZmniejszono rozmiar o %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Skasuj talię</string>
-    <string name="delete_deck_default_deck">Domyślna talia nie może zostać usunięta</string>
     <string name="delete_deck_title">Skasuj talię</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Usunąć wszystkie karty z %1$s? Jest tam %2$d karta.</item>
-        <item quantity="few">Usunąć wszystkie karty z %1$s? Jest ich tam %2$d.</item>
-        <item quantity="many">Usunąć wszystkie karty z %1$s? Jest ich tam %2$d.</item>
-        <item quantity="other">Usunąć wszystkie karty z %1$s? Jest ich tam %2$d.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Czy na pewno chcesz wysłać wszystkie karty w %s z powrotem do ich pierwotnych talii?</string>
     <string name="no_tts_available_message">Brak dostępnego języka zamiany tekstu na mowę</string>
     <string name="initializing_tts">Inicjowanie TTS&#8230;</string>
     <string name="tts_no_tts">Nie mów</string>
@@ -106,7 +96,7 @@
     <string name="answering_error_title">Błąd bazy danych</string>
     <string name="answering_error_message">Wystąpił błąd podczas zapisywania do kolekcji. Powodem może być uszkodzenie bazy danych albo niewystarczająca ilość miejsca na dysku.\n\nJeśli błąd ten występuje często, spróbuj użyć opcji \"sprawdź bazę danych\" oraz naprawić kolekcję lub przywróć ją z kopii zapasowej (by tego dokonać kliknij „opcje”).\n\nRównie dobrze może to być też błąd AnkiDroid; zgłoś go abyśmy mogli to sprawdzić.</string>
     <string name="answering_error_report">Zgłoś błąd</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">Nie ma wystarczającej ilości wolnego miejsca, aby otworzyć AnkiDroid. Zwolnij trochę miejsca, aby kontynuować. </string>
     <string name="repair_deck_dialog">Czy na pewno chcesz próbować naprawić bazę danych? \n\nPrzed próbą naprawy zostanie utworzona kopia w katalogu \'%s\'.</string>
     <string name="intent_aedict_empty">Kategoria \'Domyślne\' jest pusta</string>
     <string name="intent_aedict_category">Aby dodać karty AnkiDroid usuń wszystkie kategorie Notatnika lub dodaj jedną o nazwie \'default\'</string>
@@ -119,17 +109,6 @@
     <string name="custom_study_random">Wybierz losowo x kart z talii:</string>
     <string name="custom_study_preview">Podgląd nowych kart dodanych w ostatnich x dniach:</string>
     <string name="custom_study_rebuild_deck_corrupt">Nie udało się przebudować talii nauki niestandardowej</string>
-    <string name="importing_collection">Importowanie kolekcji.\nProszę czekaj&#8230;</string>
-    <string name="import_media_count">Importowanie mediów %1$d%%\nProszę czekaj&#8230;</string>
-    <string name="import_progress">• Importowanie notatek: %1$d%%\n• Importowanie kart: %2$d%%\n• Post-processing: %3$d%%</string>
-    <string name="import_update_details">Zaktualizowano %1$d z %2$d istniejących notatek.</string>
-    <string name="import_update_ignored">Niektóre aktualizacje zostały zignorowane, ponieważ zmienił się typ notatki</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Zaimportowanych kart: %2$d</item>
-        <item quantity="few">Zaimportowanych kart: %2$d</item>
-        <item quantity="many">Zaimportowanych kart: %2$d</item>
-        <item quantity="other">Zaimportowanych kart: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Pamięć jest pełna</string>
     <string name="storage_almost_full_title">Pamięć jest prawie pełna</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Brak miejsca</string>
@@ -149,18 +128,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Wyłacz</string>
     <string name="dialog_positive_overwrite">Nadpisz</string>
-    <string name="dialog_positive_remove">Usuń</string>
     <string name="dialog_positive_repair">Napraw</string>
     <string name="dialog_positive_replace">Zastąp</string>
-    <string name="dialog_positive_restore">Przywróć</string>
-    <string name="dialog_positive_set">Ustaw</string>
     <string name="dialog_collection_path_not_dir">Wybrana ścieżka nie wskazuje prawidłowo katalogu</string>
     <!-- Media checking -->
     <string name="check_media_title">Sprawdzić media?</string>
     <string name="check_media_warning">To może trwać bardzo długo przy dużych kolekcjach</string>
     <string name="check_media_message">Sprawdzanie mediów&#8230;</string>
     <string name="check_media_acknowledge">Media sprawdzone</string>
-    <string name="check_media_failed">Sprawdzenie mediów nie powiodło się</string>
     <string name="check_media_invalid">Plików z błędnym kodowaniem: %d</string>
     <string name="check_media_unused">Plików z foldera mediów, które nie są użyte na żadnej karcie: %d</string>
     <string name="check_media_nohave">Plików wymienionych na kartach ale nie znalezionych w folderze mediów: %d</string>
@@ -181,8 +156,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Do przejrzenia</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Wyszukiwanie pustych kart&#8230;</string>
-    <string name="confirm_cancel">Czy chcesz przerwać?</string>
-    <string name="empty_cards_none">Brak pustych kart</string>
     <string name="empty_cards_count">Kart do usunięcia: %d</string>
     <string name="empty_cards_deleted">Usuniętych kart: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -198,15 +171,10 @@
     <string name="integrity_check_continue_anyway">Kontynuuj mimo to</string>
     <string name="integrity_check_insufficient_space">Funkcja \"sprawdź bazę danych\" używa dużej ilości pamięci tymczasowej.\n\nZalecane jest, aby przed kontynuowaniem na urządzeniu było dostępne przynajmniej  %s wolnego miejsca.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nObecnie jest dostępne %s</string>
-    <string name="integrity_check_fixed_no_home_deck">Odzyskano %d kart z nieprawidłowymi taliami głównymi. Więcej informacji znajdziesz w podręczniku.</string>
-    <string name="video_creation_error">Nie udało się odtworzyć nagrania</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Nie udało się zmienić talii</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Błąd dekodowania danych z karty</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Nie udało się przetworzyć opcji talii: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Baza danych zablokowana</string>
     <string name="database_locked_summary">Baza danych AnkiDroid jest teraz używana przez inną aplikację. Zamknij drugą aplikację, a następnie ponownie otwórz AnkiDroid.</string>
@@ -279,15 +247,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Nie można utworzyć podtalii dla wszystkich talii</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="backup_your_collection">Utwórz kopię zapasową swojej kolekcji</string>
+    <string name="backup_collection_message">Nie wykonałeś kopii zapasowej swojej kolekcji przez jakiś czas. Powinieneś to zrobić teraz, aby zapobiec utracie danych</string>
+    <string name="button_backup">Kopia zapasowa</string>
+    <string name="button_disable_reminder">Wyłącz przypomnienie</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Później</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Nie pokazuj ponownie</string>
+    <string name="dismiss_backup_warning_title">Ostrzeżenie o utracie danych</string>
+    <string name="dismiss_backup_warning_new_user">        Ze względu na zmiany prywatności w systemie Android Twoje dane i automatyczne kopie zapasowe zostaną usunięte z telefonu, jeśli aplikacja zostanie odinstalowana
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        Ze względu na zmiany prywatności w systemie Android Twoje dane i automatyczne kopie zapasowe będą niedostępne, jeśli aplikacja zostanie odinstalowana
     </string>
 </resources>

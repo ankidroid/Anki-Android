@@ -18,7 +18,6 @@ package com.ichi2.anki.preferences
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import com.google.android.material.snackbar.Snackbar
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.anki.customSyncBase
@@ -55,18 +54,14 @@ class SyncSettingsFragment : SettingsFragment() {
                 }
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> }
             }
-            true
+            false
         }
         // Custom sync server
         requirePreference<Preference>(R.string.custom_sync_server_key).setSummaryProvider {
-            val preferences = AnkiDroidApp.getSharedPrefs(requireContext())
+            val preferences = requireContext().sharedPrefs()
             val url = customSyncBase(preferences)
 
-            if (url == null) {
-                getString(R.string.custom_sync_server_summary_none_of_the_two_servers_used)
-            } else {
-                url
-            }
+            url ?: getString(R.string.custom_sync_server_summary_none_of_the_two_servers_used)
         }
     }
 
@@ -77,7 +72,7 @@ class SyncSettingsFragment : SettingsFragment() {
     }
 
     private fun updateForceFullSyncEnabledState() {
-        val isLoggedIn = Preferences.hasAnkiWebAccount(AnkiDroidApp.getSharedPrefs(requireContext()))
+        val isLoggedIn = Preferences.hasAnkiWebAccount(requireContext().sharedPrefs())
         requirePreference<Preference>(R.string.force_full_sync_key).isEnabled = isLoggedIn
     }
 

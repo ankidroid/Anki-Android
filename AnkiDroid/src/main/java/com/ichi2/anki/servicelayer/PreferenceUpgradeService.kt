@@ -22,17 +22,18 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.os.LocaleListCompat
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.noteeditor.CustomToolbarButton
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.Binding.Companion.keyCode
 import com.ichi2.anki.reviewer.CardSide
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.MappableBinding
+import com.ichi2.anki.reviewer.MappableBinding.Companion.toPreferenceString
 import com.ichi2.libanki.Consts
-import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.HashUtil.hashSetInit
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,8 +42,8 @@ private typealias VersionIdentifier = Int
 private typealias LegacyVersionIdentifier = Long
 
 object PreferenceUpgradeService {
-    fun upgradePreferences(context: Context?, previousVersionCode: LegacyVersionIdentifier): Boolean =
-        upgradePreferences(AnkiDroidApp.getSharedPrefs(context), previousVersionCode)
+    fun upgradePreferences(context: Context, previousVersionCode: LegacyVersionIdentifier): Boolean =
+        upgradePreferences(context.sharedPrefs(), previousVersionCode)
 
     /** @return Whether any preferences were upgraded */
     internal fun upgradePreferences(preferences: SharedPreferences, previousVersionCode: LegacyVersionIdentifier): Boolean {
@@ -60,7 +61,7 @@ object PreferenceUpgradeService {
      * Typically because the app has been run for the first time, or the preferences
      * have been deleted
      */
-    @JvmStatic // reqired for mockito for now
+    @JvmStatic // required for mockito for now
     fun setPreferencesUpToDate(preferences: SharedPreferences) {
         Timber.i("Marking preferences as up to date")
         PreferenceUpgrade.setPreferenceToLatestVersion(preferences)
@@ -81,13 +82,16 @@ object PreferenceUpgradeService {
             const val upgradeVersionPrefKey = "preferenceUpgradeVersion"
 
             /** Returns all instances of preference upgrade classes */
-            internal fun getAllInstances(legacyPreviousVersionCode: LegacyVersionIdentifier) = sequence<PreferenceUpgrade> {
+            private fun getAllInstances(legacyPreviousVersionCode: LegacyVersionIdentifier) = sequence {
                 yield(LegacyPreferenceUpgrade(legacyPreviousVersionCode))
                 yield(UpdateNoteEditorToolbarPrefs())
                 yield(UpgradeGesturesToControls())
                 yield(UpgradeDayAndNightThemes())
                 yield(UpgradeFetchMedia())
                 yield(UpgradeAppLocale())
+                yield(RemoveScrollingButtons())
+                yield(RemoveAnswerRecommended())
+                yield(RemoveBackupMax())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -203,7 +207,7 @@ object PreferenceUpgradeService {
 
             private fun getNewToolbarButtons(preferences: SharedPreferences): ArrayList<CustomToolbarButton> {
                 // get old toolbar prefs
-                val set = preferences.getStringSet("note_editor_custom_buttons", HashSetInit<String>(0)) as Set<String?>
+                val set = preferences.getStringSet("note_editor_custom_buttons", hashSetInit<String>(0)) as Set<String?>
                 // new list with buttons size
                 val buttons = ArrayList<CustomToolbarButton>(set.size)
 
@@ -239,8 +243,6 @@ object PreferenceUpgradeService {
                 Pair(3, ViewerCommand.FLIP_OR_ANSWER_EASE2),
                 Pair(4, ViewerCommand.FLIP_OR_ANSWER_EASE3),
                 Pair(5, ViewerCommand.FLIP_OR_ANSWER_EASE4),
-                Pair(6, ViewerCommand.FLIP_OR_ANSWER_RECOMMENDED),
-                Pair(7, ViewerCommand.FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED),
                 Pair(8, ViewerCommand.UNDO),
                 Pair(9, ViewerCommand.EDIT),
                 Pair(10, ViewerCommand.MARK),
@@ -267,6 +269,8 @@ object PreferenceUpgradeService {
                 Pair(35, ViewerCommand.RECORD_VOICE),
                 Pair(36, ViewerCommand.REPLAY_VOICE),
                 Pair(37, ViewerCommand.TOGGLE_WHITEBOARD),
+                Pair(44, ViewerCommand.CLEAR_WHITEBOARD),
+                Pair(45, ViewerCommand.CHANGE_WHITEBOARD_PEN_COLOR),
                 Pair(41, ViewerCommand.SHOW_HINT),
                 Pair(42, ViewerCommand.SHOW_ALL_HINTS),
                 Pair(43, ViewerCommand.ADD_NOTE)
@@ -397,6 +401,47 @@ object PreferenceUpgradeService {
                 // 2. Set the locale with the new AndroidX API
                 val localeList = LocaleListCompat.forLanguageTags(languageTag)
                 AppCompatDelegate.setApplicationLocales(localeList)
+            }
+        }
+
+        internal class RemoveScrollingButtons : PreferenceUpgrade(11) {
+            override fun upgrade(preferences: SharedPreferences) {
+                preferences.edit { remove("scrolling_buttons") }
+            }
+        }
+
+        internal class RemoveAnswerRecommended : PreferenceUpgrade(12) {
+            override fun upgrade(preferences: SharedPreferences) {
+                moveControlBindings(preferences, "binding_FLIP_OR_ANSWER_RECOMMENDED", ViewerCommand.FLIP_OR_ANSWER_EASE3.preferenceKey)
+                moveControlBindings(preferences, "binding_FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED", ViewerCommand.FLIP_OR_ANSWER_EASE4.preferenceKey)
+            }
+
+            private fun moveControlBindings(preferences: SharedPreferences, sourcePrefKey: String, destinyPrefKey: String) {
+                val sourcePrefValue = preferences.getString(sourcePrefKey, null) ?: return
+                val destinyPrefValue = preferences.getString(destinyPrefKey, null)
+
+                val joinedBindings = MappableBinding.fromPreferenceString(destinyPrefValue) + MappableBinding.fromPreferenceString(sourcePrefValue)
+                preferences.edit {
+                    putString(destinyPrefKey, joinedBindings.toPreferenceString())
+                    remove(sourcePrefKey)
+                }
+            }
+        }
+
+        /**
+         * Switch from using a single backup option to using separate preferences for
+         * daily/weekly/monthly as well as frequency of backups.
+         */
+        internal class RemoveBackupMax : PreferenceUpgrade(13) {
+            override fun upgrade(preferences: SharedPreferences) {
+                val legacyValue = preferences.getInt("backupMax", 4)
+                preferences.edit {
+                    remove("backupMax")
+                    putInt("minutes_between_automatic_backups", 30) // 30 minutes default
+                    putInt("daily_backups_to_keep", legacyValue)
+                    putInt("weekly_backups_to_keep", legacyValue)
+                    putInt("monthly_backups_to_keep", legacyValue)
+                }
             }
         }
     }

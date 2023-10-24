@@ -47,23 +47,23 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">Картак для паўтарэння</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">Засталася %d картка</item>
-        <item quantity="few">Засталося %d карткі</item>
-        <item quantity="many">Засталося %d картак</item>
-        <item quantity="other">Засталося %d карткі</item>
+        <item quantity="one">%d картка AnkiDroid для прагляду</item>
+        <item quantity="few">%d карткі AnkiDroid для прагляду</item>
+        <item quantity="many">%d картак AnkiDroid для прагляду</item>
+        <item quantity="other">%d картак AnkiDroid для прагляду</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Маленькі AnkiDroid</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">У чарзе %d картка</item>
-        <item quantity="few">У чарзе %d карткі</item>
-        <item quantity="many">У чарзе %d картак</item>
-        <item quantity="other">У чарзе %d карткі</item>
+        <item quantity="one">%d картка для прагляду</item>
+        <item quantity="few">%d карткі для прагляду</item>
+        <item quantity="many">%d картак для прагляду</item>
+        <item quantity="other">%d картак для прагляду</item>
     </plurals>
     <plurals name="widget_eta">
         <item quantity="one">Засталася %d хвіліна</item>
         <item quantity="few">Засталося %d хвіліны</item>
         <item quantity="many">Засталося %d хвілін</item>
-        <item quantity="other">Засталося %d хвіліны</item>
+        <item quantity="other">Засталося %d хвілін</item>
     </plurals>
-    <string name="widget_add_note_button">Дадаць новы запіс у AnkiDroid</string>
+    <string name="widget_add_note_button">Дадаць новую нататку ў AnkiDroid</string>
 </resources>

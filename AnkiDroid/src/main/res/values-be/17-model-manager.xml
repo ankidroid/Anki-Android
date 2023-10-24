@@ -26,34 +26,33 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Кіраванне тыпамі запісаў</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Кіраванне тыпамі нататак</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Кіраваць палямі</string>
     <!--Toasts-->
-    <string name="toast_last_model">Вы не можаце выдаліць ваш апошні тып запісу</string>
-    <string name="toast_last_field">Тып запісаў павінен утрымліваць хоць адно поле</string>
+    <string name="toast_last_model">Вы не можаце выдаліць ваш апошні тып нататкі</string>
+    <string name="toast_last_field">Тыпы нататак павінны ўтрымліваць хоць адно поле</string>
     <string name="toast_empty_name">Вы павінны ўвесці назву поля</string>
     <string name="toast_duplicate_field">Такая назва поля ўжо існуе</string>
     <string name="toast_out_of_range">Вы павінны ўвесці карэктнае значэнне</string>
     <!--Plurals-->
     <plurals name="model_browser_types_available">
-        <item quantity="one">Даступны %d тып запісу</item>
-        <item quantity="few">Даступныя %d тыпы запісу</item>
-        <item quantity="many">Даступныя %d тыпаў запісу</item>
-        <item quantity="other">Даступныя %d тыпы запісу</item>
+        <item quantity="one">Даступны %d тып нататкі</item>
+        <item quantity="few">Даступны %d тыпы нататак</item>
+        <item quantity="many">Даступны %d тыпаў нататак</item>
+        <item quantity="other">Даступны %d тыпаў нататак</item>
     </plurals>
     <plurals name="model_browser_of_type">
-        <item quantity="one">%d запіс</item>
-        <item quantity="few">%d запісы</item>
-        <item quantity="many">%d запісаў</item>
-        <item quantity="other">%d запісы</item>
+        <item quantity="one">%d нататка</item>
+        <item quantity="few">%d нататкі</item>
+        <item quantity="many">%d нататак</item>
+        <item quantity="other">%d нататак</item>
     </plurals>
     <!--Browser-->
-    <string name="model_browser_delete">Выдаліць тып запісу</string>
+    <string name="model_browser_delete">Выдаліць тып нататкі</string>
     <string name="model_browser_rename" comment="Rename a note type">Перайменаваць</string>
     <string name="model_browser_template">Змяніць карткі</string>
-    <string name="model_browser_add">Дадаць тып запісу</string>
     <!--Rename-->
-    <string name="rename_model">Перайменаваць тып запісу</string>
+    <string name="rename_model">Перайменаваць тып нататкі</string>
     <!--Language Hint-->
     <string name="model_field_editor_language_hint_dialog_success_result">Прызначыць %s у якасці мовы падказак</string>
     <!--Field Editing-->
@@ -67,10 +66,9 @@
     <string name="model_field_editor_toggle_sticky">Пры дабаўленні памятаць апошні ўвод</string>
     <string name="model_field_editor_changing">Адбываецца абнаўленне палёў</string>
     <string name="model_field_editor_sort_field">Сартаваць па гэтым полі</string>
-    <string name="model_clone_suffix">капіяваць</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Вы ўпэўненыя, што хочаце выдаліць гэты тып запісу?</string>
-    <string name="field_delete_warning">Вы ўпэўненыя, што хочаце выдаліць гэта поле?</string>
+    <string name="model_delete_warning">Вы сапраўды хочаце выдаліць гэты тып нататкі?</string>
+    <string name="field_delete_warning">Вы сапраўды хочаце выдаліць гэта поле?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Дадаць: %1$s </string>
     <!--This prefix is used for standard note types-->

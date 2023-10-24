@@ -21,6 +21,7 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import com.ichi2.anki.IntroductionActivity.Companion.INTRODUCTION_SLIDES_SHOWN
+import com.ichi2.anki.preferences.sharedPrefs
 import timber.log.Timber
 import java.util.*
 
@@ -53,7 +54,7 @@ class OnboardingUtils {
          */
         fun isVisited(featureIdentifier: OnboardingFlag, context: Context): Boolean {
             // Return if onboarding is not enabled.
-            if (!AnkiDroidApp.getSharedPrefs(context).getBoolean(SHOW_ONBOARDING, false)) {
+            if (!context.sharedPrefs().getBoolean(SHOW_ONBOARDING, false)) {
                 return true
             }
 
@@ -73,14 +74,19 @@ class OnboardingUtils {
             // Set the bit at the index defined for a feature once the tutorial for that feature is seen by the user.
             visitedFeatures.set(featureIdentifier.getOnboardingEnumValue())
 
-            AnkiDroidApp.getSharedPrefs(context).edit { putLong(featureIdentifier.getFeatureConstant(), visitedFeatures.toLongArray()[0]) }
+            context.sharedPrefs().edit {
+                putLong(
+                    featureIdentifier.getFeatureConstant(),
+                    visitedFeatures.toLongArray()[0]
+                )
+            }
         }
 
         /**
          * Returns a BitSet where the set bits indicate the visited screens.
          */
         private fun getAllVisited(context: Context, featureConstant: String): BitSet {
-            val currentValue = AnkiDroidApp.getSharedPrefs(context).getLong(featureConstant, 0)
+            val currentValue = context.sharedPrefs().getLong(featureConstant, 0)
             return BitSet.valueOf(longArrayOf(currentValue))
         }
 
@@ -90,7 +96,7 @@ class OnboardingUtils {
         }
 
         private fun reset(context: Context, featureConstants: Collection<String>) {
-            AnkiDroidApp.getSharedPrefs(context).edit {
+            context.sharedPrefs().edit {
                 featureConstants.forEach {
                     this@edit.putLong(it, 0)
                 }

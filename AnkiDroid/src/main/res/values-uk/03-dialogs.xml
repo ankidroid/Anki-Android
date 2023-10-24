@@ -46,18 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Перевірити базу даних?</string>
     <string name="check_db_warning">Це може зайняти багато часу</string>
-    <string name="check_db_acknowledge">База даних перевірена</string>
-    <string name="check_db_acknowledge_shrunk">База даних перевірена та оптимізована.\nРозмір зменшено на %d МБ.</string>
     <string name="contextmenu_deckpicker_delete_deck">Видалити колоду</string>
-    <string name="delete_deck_default_deck">Колода за замовчанням не може бути видалена</string>
     <string name="delete_deck_title">Видалити колоду?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Видалити всі картки в %1$s? Вона містить %2$d картку.</item>
-        <item quantity="few">Видалити всі карти в %1$s? Вона містить %2$d картки.</item>
-        <item quantity="many">Видалити всі карти в %1$s? Вона містить %2$d карток.</item>
-        <item quantity="other">Видалити всі картки в %1$s? Там міститься %2$d карток.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Відправити всі картки з %s назад до їх початкових колод?</string>
     <string name="no_tts_available_message">Відсутня мова для перетворення тексту в мовлення</string>
     <string name="initializing_tts">Запуск синтезу мовлення&#8230;</string>
     <string name="tts_no_tts">Не говорити</string>
@@ -119,17 +109,6 @@
     <string name="custom_study_random">Вибрати х випадкових карт з колоди:</string>
     <string name="custom_study_preview">Переглянути нові картки додані за останні x днів:</string>
     <string name="custom_study_rebuild_deck_corrupt">Не вдалося перебудувати колоду додаткового навчання</string>
-    <string name="importing_collection">Завантаження колекції. \nБудь ласка, зачекайте&#8230;</string>
-    <string name="import_media_count">Завантаження медіа файлів %1$d%%\nБудь ласка, зачекайте&#8230;</string>
-    <string name="import_progress">• Імпортування записів: %1$d%%\n• Імпортування карток: %2$d%%\n• Обробка: %3$d%%</string>
-    <string name="import_update_details">Оновлено %1$d з %2$d існуючих записів.</string>
-    <string name="import_update_ignored">Деякі оновлення пропущено, оскільки тип записів змінений</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Карток імпортовано: %2$d</item>
-        <item quantity="few">Карток імпортовано: %2$d</item>
-        <item quantity="many">Карток імпортовано: %2$d</item>
-        <item quantity="other">Файлів імпортовано: %1$d\nЗагалом карток імпортовано: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Сховище заповнено</string>
     <string name="storage_almost_full_title">Сховище майже заповнено</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Пам\'ять заповнена</string>
@@ -149,18 +128,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Вимкнути</string>
     <string name="dialog_positive_overwrite">Перезаписати</string>
-    <string name="dialog_positive_remove">Видалити</string>
     <string name="dialog_positive_repair">Виправити</string>
     <string name="dialog_positive_replace">Замінити</string>
-    <string name="dialog_positive_restore">Відновити</string>
-    <string name="dialog_positive_set">Встановлення</string>
     <string name="dialog_collection_path_not_dir">Вказаний шлях не є дійсним</string>
     <!-- Media checking -->
     <string name="check_media_title">Перевірити медіафайли?</string>
     <string name="check_media_warning">Процес може зайняти багато часу з великими колекціями медіафайлів</string>
     <string name="check_media_message">Перевіряємо мультимедіа&#8230;</string>
     <string name="check_media_acknowledge">Перевірено мультимедіа</string>
-    <string name="check_media_failed">Не вдалося перевірити медіафайли</string>
     <string name="check_media_invalid">Файли з неправильним кодуванням: %d</string>
     <string name="check_media_unused">Медіафайли не використані жодною з карток: %d</string>
     <string name="check_media_nohave">Файли використані в картках, але не в медіапапці: %d</string>
@@ -181,8 +156,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">На черзі</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Пошук порожніх карток&#8230;</string>
-    <string name="confirm_cancel">Ви справді хочете скасувати?</string>
-    <string name="empty_cards_none">Немає порожніх карток</string>
     <string name="empty_cards_count">Картки до видалення: %d</string>
     <string name="empty_cards_deleted">Карток видалено: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -198,15 +171,10 @@
     <string name="integrity_check_continue_anyway">Все одно продовжити</string>
     <string name="integrity_check_insufficient_space">Перевірка бази даних використовує багато тимчасового сховища.\n\nНаполегливо рекомендується мати принаймні %s вільного місця на пристрої перед продовженням.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nЗараз %s вільного місця.</string>
-    <string name="integrity_check_fixed_no_home_deck">Відновлено %d карток з неправильними початковими колодами. Будь ласка, перегляньте посібник для отримання детальної інформації.</string>
-    <string name="video_creation_error">Не вдалося відтворити відео</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Не вдалося змінити колоду</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Помилка при декодуванні даних з картки</string>
-    <string name="undo_succeeded">Повернено назад \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Не вдалося обробити параметри колоди: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">База даних заблокована</string>
     <string name="database_locked_summary">База даних AnkiDroid використовується іншою програмою. Будь ласка, закрийте іншу програму, а потім повторно відкрийте AnkiDroid.</string>
@@ -279,15 +247,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Ви не можете створити підколоду для всіх колод</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="backup_your_collection">Резервне копіювання колекції</string>
+    <string name="backup_collection_message">Ви давно не зберігали резервну копію своєї колекції. Зробіть це зараз, аби запобігти втраті даних</string>
+    <string name="button_backup">Резервна копія</string>
+    <string name="button_disable_reminder">Вимкнути нагадування</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Пізніше</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Більше не показувати</string>
+    <string name="dismiss_backup_warning_title">Ризик втрати даних</string>
+    <string name="dismiss_backup_warning_new_user">        У зв\'язку зі зміною політики конфіденційності Android, ваші дані та автоматизовані резервні копії будуть видалені з вашого пристрою, якщо додаток буде видалено
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        У зв\'язку зі зміною політики конфіденційності Android, ваші дані та автоматизовані резервні копії стануть недоступними, якщо додаток буде видалено
     </string>
 </resources>

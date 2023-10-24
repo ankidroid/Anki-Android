@@ -43,7 +43,7 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Navigation drawer items-->
     <string name="decks">Pachete</string>
     <string name="card_browser" comment="The usage of card browser inside the app (note the casing)">Browser-ul de carduri</string>
@@ -58,13 +58,13 @@
     <string name="studyoptions_eta">Timp estimat (min):</string>
     <string name="studyoptions_start">Studiază Acum</string>
     <!-- DeckPicker.kt -->
-    <string name="expand">Extinde</string>
-    <string name="collapse">Colaps</string>
+    <string name="expand">Extindeți</string>
+    <string name="collapse">Restrângeți</string>
     <string name="study_more">Studiaza mai mult </string>
     <plurals name="deckpicker_title">
         <item quantity="one">%1$d card due (%2$s)</item>
         <item quantity="few">%1$d cards due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
+        <item quantity="other">%1$d cartonașe scadente (%2$s)</item>
     </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut rămas</item>
@@ -74,21 +74,16 @@
     <plurals name="reviewer_window_title_hours_new">
         <item quantity="one">%1$d hour %2$d left</item>
         <item quantity="few">%1$d hours %2$d left</item>
-        <item quantity="other">%1$d hours %2$d left</item>
+        <item quantity="other">%1$d ore rămase %2$d</item>
     </plurals>
     <plurals name="reviewer_window_title_days_new">
         <item quantity="one">%1$d day %2$d left</item>
         <item quantity="few">%1$d days %2$d left</item>
-        <item quantity="other">%1$d days %2$d left</item>
+        <item quantity="other">%1$d zile %2$d rămase</item>
     </plurals>
     <string name="no_cards_placeholder_title">Colecția este goală</string>
     <string name="no_cards_placeholder_description">Puteți începe a adăuga\ncarduri folosind iconiţa +</string>
     <!-- The deck picker via AnkiStatsTaskHandler.java -->
-    <plurals name="studied_cards_today">
-        <item quantity="one">Studied %1$d card in %2$s today</item>
-        <item quantity="few">Studied %1$d cards in %2$s today</item>
-        <item quantity="other">Studied %1$d cards in %2$s today</item>
-    </plurals>
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">Scrie răspunsul</string>
     <string name="show_answer">Arată răspuns</string>
@@ -97,16 +92,13 @@
     <string name="ease_button_hard">Greu</string>
     <string name="ease_button_good">Bine</string>
     <string name="ease_button_easy">Ușor</string>
-    <string name="studyoptions_congrats_undo">Anulare %s</string>
     <string name="menu_import">Importă</string>
     <string name="undo">Anulare</string>
-    <string name="undo_action_review">Ultima recenzie</string>
-    <string name="undo_action_change_deck_multi">Schimba punțile</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
     <string name="move_all_to_deck">Mută totul pe punte</string>
     <string name="unbury">Dezgroapă</string>
     <string name="rename_deck">Redenumește puntea</string>
-    <string name="create_shortcut">Crează o scurtătură</string>
+    <string name="create_shortcut">Creați o scurtătură</string>
     <string name="browse_cards">Răsfoiește carduri</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">Adaugă</string>
     <string name="menu_add_note">Adaugă nota</string>
@@ -116,21 +108,21 @@
     <string name="menu_bury_note">Ingroapa notă</string>
     <string name="menu_suspend_card">Suspendă Card</string>
     <string name="menu_suspend_note">Suspenda Notă</string>
-    <string name="menu_bury">Bury</string>
+    <string name="menu_bury">Îngropați</string>
     <string name="menu_suspend">Suspendă</string>
     <string name="menu_delete_note">Ștergere notă</string>
     <string name="menu_flag">Marcaj</string>
     <string name="menu_flag_card">Marchează card</string>
-    <string name="menu_flag_card_zero">Fara marcaj</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
+    <string name="menu_flag_card_zero">Fără steag</string>
+    <string name="menu_flag_card_one">Steag roșu</string>
+    <string name="menu_flag_card_two">Steag portocaliu</string>
+    <string name="menu_flag_card_three">Steag verde</string>
+    <string name="menu_flag_card_four">Steag albastru</string>
+    <string name="menu_flag_card_five">Steag roz</string>
+    <string name="menu_flag_card_six">Steag turcoaz</string>
+    <string name="menu_flag_card_seven">Steag violet</string>
     <string name="menu_edit_tags">Editează etichete </string>
-    <string name="delete_note_message">Chiar doriţi să ştergeţi această notă şi toate cardurile ei?\n%s sale</string>
+    <string name="delete_note_message">Doriți sigur să ștergeți această notă și toate cardurile sale?\n%s</string>
     <string name="menu_search">Căutare în %1$s</string>
     <string name="menu_mark_note">Marcheaza nota</string>
     <string name="menu_unmark_note">Demarcheaza nota </string>
@@ -142,8 +134,7 @@
     The user is taken to the "App Info" screen, and needs to click "Permissions" and
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
-    <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
-    <string name="startup_all_files_access_permission">Please grant AnkiDroid the ‘All files access’ permission to continue</string>
+    <string name="startup_no_storage_permission">Vă rugăm să acordați AnkiDroid permisiunea de „Stocare” pentru a continua</string>
     <!--
         The time_quantities are units of time. They are used without
         plurals or dots.
@@ -155,52 +146,47 @@
     <string name="time_quantity_minutes">%d min</string>
     <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
     <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
-    <string name="time_quantity_years">%.1f yr</string>
+    <string name="time_quantity_days">%d z</string>
+    <string name="time_quantity_days_hours">%1$d z %2$d h</string>
+    <string name="time_quantity_months">%.1f luni</string>
+    <string name="time_quantity_years">%.1f an</string>
     <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Reconstruieste</string>
     <string name="empty_cram_label">Goleste</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">Creați sub-pachet</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Sesiune de studiu personalizata</string>
     <string name="custom_study_deck_exists">Vă rugăm să redenumiţi mai inati pachetul de Studiu Personalizat .</string>
-    <string name="empty_deck">This deck is empty</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
-    <string name="studyoptions_empty">This deck is empty. Press the + button to add new content.</string>
-    <string name="studyoptions_limit_reached">Daily study limit reached</string>
-    <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
+    <string name="empty_deck">Acest pachet este gol</string>
+    <string name="search_deck" comment="Deck search for selecting it">Căutare Pachete</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Căutare Pachete</string>
+    <string name="invalid_deck_name">Nume pachet invalid</string>
+    <string name="studyoptions_empty">Acest pachet este gol. Apăsați butonul + pentru a adăuga conținut nou.</string>
+    <string name="studyoptions_limit_reached">Limita zilnică a fost atinsă</string>
+    <string name="studyoptions_empty_schedule">Niciun cartonaș programat de studiat</string>
     <string name="studyoptions_congrats_finished">Felicitări! Aţi terminat pentru moment.</string>
-    <string name="studyoptions_congrats_more_rev">S-a atins limita de recapitulare pentru astăzi, dar încă mai există carduri ce aştepta sa fie revizuite. Pentru memorare optima, ia în considerare creşterea limitei zilnice în opţiuni.</string>
-    <string name="studyoptions_congrats_more_new">Sunt disponibile mai multe carduri noi, dar s-a atins limita zilnică. Puteţi mări limita în opţiuni, dar vă rugăm să ţineţi cont de faptul că aceasta va creşte volumul dumneavoastră de muncă de revizuire pe termen scurt.</string>
-    <string name="studyoptions_congrats_custom">Pentru a studia în afara programului normal, faceţi clic pe butonul Studiu Personalizat de mai jos.</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="empty_cloze_warning">Edit this note and add some cloze deletions. (%1$s)</string>
+    <string name="studyoptions_no_cards_due">Niciun cartonaș scadent</string>
+    <string name="sd_card_not_mounted">Cardul SD nu a fost găsit</string>
     <string name="button_sync" comment="Text of the sync button">Sincronizare</string>
-    <string name="button_sync_disabled" comment="Text of the sync button when disabled">Sync temporarily disabled</string>
     <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
-    <string name="cancel_sync_confirm">Do you want to cancel the sync?</string>
-    <string name="continue_sync">Continue sync</string>
-    <string name="sync_cancelled">Sync cancelled</string>
-    <string name="sync_cancel_message">Cancelling&#8230;\nThis may take some time.</string>
-    <string name="export">Export</string>
-    <string name="export_collection">Export collection</string>
-    <string name="export_deck">Export deck</string>
-    <string name="nothing">Nothing</string>
+    <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Doriți să anulați sincronizarea?</string>
+    <string name="continue_sync" tools:ignore="UnusedResources">Continuați sincronizarea</string>
+    <string name="sync_cancelled" tools:ignore="UnusedResources">Sincronizare anulată</string>
+    <string name="sync_cancel_message" tools:ignore="UnusedResources">Anulare&#8230;\nAceasta poate dura ceva timp.</string>
+    <string name="export">Exportați</string>
+    <string name="export_collection">Exportați colecția</string>
+    <string name="export_deck">Exportați pachetul</string>
+    <string name="nothing">Nimic</string>
     <!-- Card template editor -->
-    <string name="title_activity_template_editor">Card types</string>
-    <string name="card_template_editor_front">Front template</string>
-    <string name="card_template_editor_back">Back template</string>
-    <string name="card_template_editor_styling">Styling</string>
+    <string name="title_activity_template_editor">Tipuri de cartonașe</string>
+    <string name="card_template_editor_front">Șablon față</string>
+    <string name="card_template_editor_back">Șablon spate</string>
+    <string name="card_template_editor_styling">Stilizare</string>
     <string name="card_template_editor_menu_card_browser_appearance">Card Browser Appearance</string>
     <string name="card_template_editor_deck_override">Deck override</string>
-    <string name="card_template_editor_insert_field">Insert field</string>
-    <string name="card_template_editor_select_field">Select field</string>
+    <string name="card_template_editor_insert_field">Adaugă câmp</string>
+    <string name="card_template_editor_select_field">Selectează câmpul</string>
     <string name="card_template_editor_cant_delete">At least one card type is required</string>
     <plurals name="card_template_editor_confirm_add">
         <item quantity="one">This will create %1$d card. Proceed?</item>
@@ -212,56 +198,89 @@
         <item quantity="few">Delete the “%2$s” card type, and its %1$d cards?</item>
         <item quantity="other">Delete the “%2$s” card type, and its %1$d cards?</item>
     </plurals>
-    <string name="invalid_template">A card could not be generated</string>
+    <string name="invalid_template">Cartonașul nu a putut fi generat</string>
     <string name="card_template_editor_would_delete_note">Removing this card type would cause one or more notes to be deleted. Please create and save a new card type first.</string>
     <string name="card_template_editor_save_error">Unable to save card template changes: %s</string>
     <string name="template_for_current_card_deleted">The card type for the current card was deleted.</string>
     <!-- Card Browser Appearance -->
     <string name="card_template_browser_appearance_title">Browser appearance</string>
-    <string name="current_and_default_deck">%1$s (%2$s)</string>
     <!-- card Info -->
-    <string name="card_info_title">Card info</string>
+    <string name="card_info_title">Informații despre cartonaș</string>
     <!-- Permissions -->
-    <string name="read_write_permission_label">Read and write to the AnkiDroid database</string>
+    <string name="read_write_permission_label">Citește și scrie în baza de date a AnkiDroid</string>
     <string name="read_write_permission_description">access existing notes, cards, note types, and decks, as well as create new ones</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Card Browser</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
-    <string name="has_a_problem" comment="First field is either front template or back template. Second field is the error message.">%1$s has a problem:<br/>%2$s</string>
-    <string name="more_information">More information</string>
-    <string name="no_field">Found \'{{%1$s}}\', but there is no field called \'%1$s\'.</string>
-    <string name="closed_tag_not_open">Found \'{{/%1$s}}\', but missing \'{{#%1$s}}\' or \'{{^%1$s}}\'.</string>
-    <string name="missing_closing_bracket">Missing \'}}\' in \'%s\'.</string>
-    <string name="open_tag_not_closed">Missing \'{{%s}}\'.</string>
-    <string name="wrong_tag_closed">Found \'{{/%1$s}}\', but expected \'{{/%2$s}}\'</string>
-    <string name="filter_error">Error in filter %s</string>
+    <string name="context_menu_anki_card_label">Cartonaș Anki</string>
     <!-- Sync conflict -->
-    <string name="sync_conflict_message_new">The collections can’t be combined.\nWhich collection do you want to keep?</string>
+    <string name="sync_conflict_message_new">Colecțiile nu pot fi combinate.\nCe colecție doriți să păstrați?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
     <string name="sync_conflict_keep_remote_new" comment="Select AnkiWeb files to keep while syncing">AnkiWeb</string>
-    <string name="sync_conflict_remote_confirm_new">Replace your collection on AnkiDroid with your collection from AnkiWeb?</string>
-    <string name="sync_conflict_local_confirm_new">Replace your collection on AnkiWeb with your collection from AnkiDroid?</string>
-    <string name="sync_conflict_title_new">Select collection to keep</string>
-    <string name="sync_conflict_replace_title">Replace collection</string>
+    <string name="sync_conflict_remote_confirm_new">Înlocuiește-ți colecția din AnkiDroid cu colecția ta din AnkiWeb?</string>
+    <string name="sync_conflict_local_confirm_new">Înlocuiește-ți colecția din AnkiWeb cu colecția ta din AnkiDroid?</string>
+    <string name="sync_conflict_title_new">Selectează colecția care va fi păstrată</string>
+    <string name="sync_conflict_replace_title">Înlocuiește colecția</string>
     <plurals name="deckpicker_title_zero_due">
         <item quantity="one">%1$d card (0 due)</item>
         <item quantity="few">%1$d cards (0 due)</item>
         <item quantity="other">%1$d cards (0 due)</item>
     </plurals>
-    <string name="copy_note_type_name" comment="The new name of a copied note type">%s copy</string>
     <!-- Generic errors -->
-    <string name="error__etc__cannot_write_to_or_create_file">Cannot write to or create file %s</string>
-    <!-- Scoped Storage Migration -->
-    <string name="migrating_data_message">Migrating your data</string>
-    <string name="migration_successful_message">Migration successful</string>
-    <string name="migration_failed_message">Migration failed</string>
-    <string name="migration_transferred_size">Migrated %1$.0f MB of %2$.0f MB</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="error__etc__cannot_write_to_or_create_file">Nu se poate crea or scrie în fișierul %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <!-- Scoped storage migration -->
+    <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
+    <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">Copying&#8230;</string>
+    <string name="migration__migrating_media" comment="Notification title that is shown when migrating media files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating media</string>
+    <string name="migration__calculating_transfer_size" comment="Notification message that is shown when calculating the total size of media files to move.         As this is shown on the same line as the notification title, prefer shorter text.">Se calculează dimensiunea transferului&#8230;</string>
+    <string name="migration__moved_x_of_y" comment="Notification message that is shown when moving media files.         As this is shown on the same line as the notification title, prefer shorter text.         The placeholders will be replaced with short localized byte amounts,         e.g. Moved 10 kB of 5.2 MB">Moved %1$s of %2$s</string>
+    <string name="migration_successful_message" comment="A title for a dialog, or a short message shown in a notification,         when storage migration succeeds">Migrare reușită</string>
+    <string name="migration__succeeded__message" comment="A more detailed message shown when storage migration succeeds">        Datele tale au fost migrate cu succes.
+        AnkiDroid este din nou complet funcțional și poți sincroniza.
+        \n
+        \nReține că acum colecția ta se află într-un dosar care este șters atunci când dezinstalezi aplicația.
+        Te rugăm să te asiguri că datele tale sunt în siguranță prin sincronizarea regulată sau exportul de copii de rezervă.
+    </string>
+    <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Migrare eșuată</string>
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+        <br><br>
+        The changes were reverted.
+        <br><br>
+        Please try re-running the migration.
+        To resolve the problem, you may need to free up some disk space,
+        or reconnect the removable storage that holds your collection.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+        <br><br>
+        The changes were <i>not</i> reverted.
+        While no data should’ve been lost,
+        the media files might be split between the old and the new folder.
+        <br><br>
+        Please try re-running the migration.
+        To resolve the problem, you may need to free up some disk space,
+        or reconnect the removable storage that holds your collection.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+        <br><br>
+        <a href="%2$s">Learn more and get help</a>
+    ]]></string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Colecție inaccesibilă</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Nu putem accesa colecția ta după ce AnkiDroid este dezinstalat din cauza unei schimbări în Politica Magazinului Play.\n\nDatele tale sunt sigure și pot fi restaurate. Se află la\n%s\n\nSelectați una din opțiunile de mai jos pentru a le restaura:</string>
+    <string name="restore_data_from_ankiweb">Restaurează din AnkiWeb (recomandat)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Restaurează accesul la dosar (recomandat)</string>
+    <string name="install_non_play_store_ankidroid">Restaurează accesul la dosar (avansat)</string>
+    <string name="restore_data_from_backup">Restaurează dintr-o copie de rezervă .colpkg (avansat)</string>
+    <string name="create_new_collection">Creați o colecție nouă</string>
+    <string name="new_unsafe_collection">Noua colecție va fi ștearsă de pe telefon dacă dezinstalați AnkiDroid</string>
+    <!-- Permissions screen -->
+    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="storage_access_title">Storage access</string>
+    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
 </resources>

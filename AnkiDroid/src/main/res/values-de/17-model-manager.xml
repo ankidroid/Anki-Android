@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Notiztyp löschen</string>
     <string name="model_browser_rename" comment="Rename a note type">Umbenennen</string>
     <string name="model_browser_template">Karten bearbeiten</string>
-    <string name="model_browser_add">Notiztyp hinzufügen</string>
     <!--Rename-->
     <string name="rename_model">Notiztyp umbenennen</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Beim Hinzufügen letzte Eingabe merken</string>
     <string name="model_field_editor_changing">Felder werden aktualisiert</string>
     <string name="model_field_editor_sort_field">Nach diesem Feld sortieren</string>
-    <string name="model_clone_suffix">Kopie</string>
     <!--Warnings-->
     <string name="model_delete_warning">Möchten Sie diesen Notiztyp wirklich löschen?</string>
     <string name="field_delete_warning">Möchten Sie dieses Feld wirklich löschen?</string>

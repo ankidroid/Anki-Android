@@ -56,7 +56,6 @@ class Previewer : AbstractFlashcardViewer() {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-        Timber.d("onCreate()")
         super.onCreate(savedInstanceState)
         mCardList = intent.getLongArrayExtra("cardList")!!
         mIndex = intent.getIntExtra("index", -1)
@@ -68,7 +67,7 @@ class Previewer : AbstractFlashcardViewer() {
         }
         if (mCardList.isEmpty() || mIndex < 0 || mIndex > mCardList.size - 1) {
             Timber.e("Previewer started with empty card list or invalid index")
-            finishWithoutAnimation()
+            finish()
             return
         }
         showBackIcon()
@@ -98,7 +97,7 @@ class Previewer : AbstractFlashcardViewer() {
                 if (fromUser) {
                     mIndex = progress
                     updateProgress()
-                    currentCard = col.getCard(mCardList[mIndex])
+                    currentCard = getColUnsafe.getCard(mCardList[mIndex])
                     displayCardQuestion()
                 }
             }
@@ -109,7 +108,7 @@ class Previewer : AbstractFlashcardViewer() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar) {
                 if (mIndex >= 0 && mIndex < mCardList.size) {
-                    currentCard = col.getCard(mCardList[mIndex])
+                    currentCard = getColUnsafe.getCard(mCardList[mIndex])
                     displayCardQuestion()
                 }
             }
@@ -144,14 +143,11 @@ class Previewer : AbstractFlashcardViewer() {
         throw IllegalStateException("newCardList was empty")
     }
 
-    override fun setTitle() {
-        supportActionBar!!.setTitle(R.string.preview_title)
-    }
-
     override fun initLayout() {
         super.initLayout()
         topBarLayout!!.visibility = View.GONE
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
+        findViewById<View>(R.id.bottom_area_layout).visibility = View.VISIBLE
         previewLayout = PreviewLayout.createAndDisplay(this, mToggleAnswerHandler)
         previewLayout!!.setOnNextCard { changePreviewedCard(true) }
         previewLayout!!.setOnPreviousCard { changePreviewedCard(false) }
@@ -218,14 +214,14 @@ class Previewer : AbstractFlashcardViewer() {
 
     override fun performReload() {
         mReloadRequired = true
-        val newCardList = col.filterToValidCards(mCardList)
+        val newCardList = getColUnsafe.filterToValidCards(mCardList)
         if (newCardList.isEmpty()) {
-            finishWithoutAnimation()
+            finish()
             return
         }
         mIndex = getNextIndex(newCardList)
         mCardList = newCardList.toLongArray()
-        currentCard = col.getCard(mCardList[mIndex])
+        currentCard = getColUnsafe.getCard(mCardList[mIndex])
         displayCardQuestion()
     }
 
@@ -237,7 +233,7 @@ class Previewer : AbstractFlashcardViewer() {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     internal fun changePreviewedCard(nextCard: Boolean) {
         mIndex = if (nextCard) mIndex + 1 else mIndex - 1
-        currentCard = col.getCard(mCardList[mIndex])
+        currentCard = getColUnsafe.getCard(mCardList[mIndex])
         displayCardQuestion()
         updateProgress()
     }

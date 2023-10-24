@@ -36,17 +36,17 @@
         android:key="@string/sync_fetch_media_key"
         android:title="@string/sync_fetch_missing_media"
         app:useSimpleSummaryProvider="true"/>
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/automatic_sync_choice_key"
         android:summary="@string/automatic_sync_choice_summ"
         android:title="@string/automatic_sync_choice" />
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="true"
         android:key="@string/sync_status_badge_key"
         android:summary="@string/sync_status_badge_summ"
         android:title="@string/sync_status_badge" />
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
         android:key="@string/metered_sync_key"
         android:title="@string/metered_sync_title"

@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Spýtať sa</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Iba oštítkovať</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Nové kartičky v náhodnom poradí</string>
-    <string name="new_order_order_added">Nové kartičky v poradí, v akom boli pridané</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Od najstarších</string>
     <string name="cram_deck_conf_order_random">Náhodne</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Použiť aktuálny balíček</string>
     <string name="add_to_deck_decide_by_note_type">Rozhodnúť podľa typu poznámky</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Zmiešať nové kartičky s opakovanými</string>
-    <string name="new_spread_new_after_review">Nové kartičky po opakovaných</string>
-    <string name="new_spread_new_before_review">Nové kartičky pred opakovanými</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Keď pre kartičky nie je určené žiadne písmo</string>
-    <string name="override_font_always" comment="Option to always override font">Vždy</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-veľký</string>
     <string name="html_size_code_xx_large">xx-veľký</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Tlačidlo odpovede 1</string>
-    <string name="gesture_answer_2">Tlačidlo odpovede 2</string>
-    <string name="gesture_answer_3">Tlačidlo odpovede 3</string>
-    <string name="gesture_answer_4">Tlačidlo odpovede 4</string>
-    <string name="gesture_answer_green">Odporúčaná odpoveď (zelená)</string>
-    <string name="gesture_answer_better_recommended">Odpoveď lepšia ako odporúčaná</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Prehrať médium</string>
     <string name="gesture_abort_learning">Prerušiť učenie</string>
     <string name="gesture_flag_red">Označiť červenou vlajkou</string>

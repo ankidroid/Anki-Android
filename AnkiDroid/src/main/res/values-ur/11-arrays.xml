@@ -43,75 +43,63 @@
     <!-- 11-arrays.xml used to contain arrays. This caused problems when changing the ordering.
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
-    <string name="error_reporting_choice_always_report">Always report</string>
-    <string name="error_reporting_choice_never_report">Never report</string>
-    <string name="error_reporting_choice_ask_user">Ask me</string>
+    <string name="error_reporting_choice_always_report">ہمیشہ رپورٹ کریں</string>
+    <string name="error_reporting_choice_never_report">کبھی رپورٹ نہ کریں</string>
+    <string name="error_reporting_choice_ask_user">مجھ سے پوچھیں</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Tag only</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">New cards in random order</string>
-    <string name="new_order_order_added">New cards in order added</string>
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Oldest seen first</string>
-    <string name="cram_deck_conf_order_random">Random</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Increasing intervals</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Decreasing intervals</string>
-    <string name="cram_deck_conf_order_most_lapsed">Most lapsed</string>
-    <string name="cram_deck_conf_order_order_added">Order added</string>
-    <string name="cram_deck_conf_order_order_due">Order due</string>
-    <string name="cram_deck_conf_order_latest_added_first">Latest added first</string>
-    <string name="cram_deck_conf_order_relative_overdueness">Relative overdueness</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">سب سے پرانا پہلے دیکھا گیا۔</string>
+    <string name="cram_deck_conf_order_random">بے ترتیب</string>
+    <string name="cram_deck_conf_order_increasing_intervals">وقفوں میں اضافہ</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">وقفوں کو کم کرنا</string>
+    <string name="cram_deck_conf_order_most_lapsed">زیادہ تر لیپس</string>
+    <string name="cram_deck_conf_order_order_added">آرڈر شامل کیا گیا۔</string>
+    <string name="cram_deck_conf_order_order_due">آرڈر واجب الادا</string>
+    <string name="cram_deck_conf_order_latest_added_first">تازہ ترین پہلے شامل کیا گیا</string>
+    <string name="cram_deck_conf_order_relative_overdueness">نسبتاً زائد المیعاد</string>
     <!-- add_to_cur_labels -->
-    <string name="add_to_deck_use_current_deck">Use current deck</string>
-    <string name="add_to_deck_decide_by_note_type">Decide by note type</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Mix new cards and reviews</string>
-    <string name="new_spread_new_after_review">New cards after reviews</string>
-    <string name="new_spread_new_before_review">New cards before reviews</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">When no font specified on flashcards</string>
-    <string name="override_font_always" comment="Option to always override font">Always</string>
+    <string name="add_to_deck_use_current_deck">موجودہ ڈیک استعمال کریں</string>
+    <string name="add_to_deck_decide_by_note_type">نوٹ کی قسم کے مطابق فیصلہ کریں</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">سسٹم پر عمل کریں۔</string>
     <!-- day_theme_labels -->
-    <string name="day_theme_light">Light</string>
-    <string name="day_theme_plain">Plain</string>
+    <string name="day_theme_light">روشنی</string>
+    <string name="day_theme_plain">سادہ</string>
     <!-- night_theme_labels -->
-    <string name="night_theme_black">Black</string>
-    <string name="night_theme_dark">Dark</string>
+    <string name="night_theme_black">سیاہ</string>
+    <string name="night_theme_dark">اندھیرا</string>
     <!-- html_size_code_labels -->
-    <string name="html_size_code_xx_small">xx-small</string>
-    <string name="html_size_code_x_small">x-small</string>
-    <string name="html_size_code_small">small</string>
-    <string name="html_size_code_medium">medium</string>
-    <string name="html_size_code_large">large</string>
-    <string name="html_size_code_x_large">x-large</string>
-    <string name="html_size_code_xx_large">xx-large</string>
+    <string name="html_size_code_xx_small">xx-چھوٹا</string>
+    <string name="html_size_code_x_small">x-چھوٹا</string>
+    <string name="html_size_code_small">چھوٹا</string>
+    <string name="html_size_code_medium">درمیانہ</string>
+    <string name="html_size_code_large">بڑا</string>
+    <string name="html_size_code_x_large">x-بڑا</string>
+    <string name="html_size_code_xx_large">xx-بڑا</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Answer button 1</string>
-    <string name="gesture_answer_2">Answer button 2</string>
-    <string name="gesture_answer_3">Answer button 3</string>
-    <string name="gesture_answer_4">Answer button 4</string>
-    <string name="gesture_answer_green">Answer recommended (green)</string>
-    <string name="gesture_answer_better_recommended">Answer better than recommended</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
+    <string name="gesture_play">میڈیا چلائیں۔</string>
+    <string name="gesture_abort_learning">سیکھنے کو روکنا</string>
+    <string name="gesture_flag_red">سرخ پرچم ٹوگل کریں۔</string>
+    <string name="gesture_flag_orange">اورنج فلیگ ٹوگل کریں</string>
+    <string name="gesture_flag_green">سبز پرچم ٹوگل کریں</string>
+    <string name="gesture_flag_blue">بلیو فلیگ ٹوگل کریں</string>
+    <string name="gesture_flag_pink">گلابی پرچم ٹوگل کریں</string>
+    <string name="gesture_flag_turquoise">فیروزی پرچم ٹوگل کریں</string>
+    <string name="gesture_flag_purple">جامنی پرچم کو ٹوگل کریں</string>
+    <string name="gesture_flag_remove">جھنڈا ہٹا دیں</string>
+    <string name="gesture_page_up">صفحہ اوپر</string>
+    <string name="gesture_page_down">نیچے صفحہ</string>
+    <string name="gesture_abort_sync">سیکھنے اور مطابقت پذیری کو ختم کریں۔</string>
+    <string name="gesture_toggle_whiteboard">وائٹ بورڈ کو ٹوگل کریں۔</string>
+    <string name="gesture_show_hint">اشارہ دکھائیں</string>
+    <string name="gesture_show_all_hints">تمام اشارے دکھائیں</string>
+    <string name="record_voice">آواز ریکارڈ کریں</string>
     <string name="replay_voice">Replay Voice</string>
     <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
     <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>

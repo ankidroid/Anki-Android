@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Controllare la banca dati?</string>
     <string name="check_db_warning">Può richiedere molto tempo</string>
-    <string name="check_db_acknowledge">Banca dati controllata</string>
-    <string name="check_db_acknowledge_shrunk">Banca dati controllata e ottimizzata.\nRidotta di %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Elimina il mazzo</string>
-    <string name="delete_deck_default_deck">Il mazzo predefinito non può essere eliminato.</string>
     <string name="delete_deck_title">Elimina il mazzo</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Eliminare tutte le carte in %1$s? Esso contiene %2$d carta.</item>
-        <item quantity="other">Eliminare tutte le carte in %1$s? Esso contiene %2$d carte.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Sei sicuro di voler riportare tutte le carte in %s nel loro mazzo originale?</string>
     <string name="no_tts_available_message">Nessuna lingua per la sintesi vocale disponibile</string>
     <string name="initializing_tts">Inizializzo TTS&#8230;</string>
     <string name="tts_no_tts">Non parlare</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Seleziona x carte casualmente dal mazzo:</string>
     <string name="custom_study_preview">Anteprima carte nuove aggiunte negli ultimi x giorni:</string>
     <string name="custom_study_rebuild_deck_corrupt">Impossibile ricostruire il mazzo di studio personalizzato</string>
-    <string name="importing_collection">Importazione collezione.\nAttendi&#8230;</string>
-    <string name="import_media_count">Importazione file multimediali %1$d%%\nAttendi&#8230;</string>
-    <string name="import_progress">• Importazione note: %1$d%%\n• Importazione carte: %2$d%%\n• Post-elaborazione: %3$d%%</string>
-    <string name="import_update_details">Aggiornate %1$d di %2$d note esistenti.</string>
-    <string name="import_update_ignored">Alcuni aggiornamenti sono stati ignorati perché il tipo di nota è cambiato</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Carte importate: %2$d</item>
-        <item quantity="other">File importati: %1$d\nCarte importate in totale: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Spazio di archiviazione pieno</string>
     <string name="storage_almost_full_title">Spazio di archiviazione quasi pieno</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Nessuno spazio</string>
@@ -135,18 +118,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Disattiva</string>
     <string name="dialog_positive_overwrite">Sovrascrivi</string>
-    <string name="dialog_positive_remove">Rimuovi</string>
     <string name="dialog_positive_repair">Ripara</string>
     <string name="dialog_positive_replace">Sostituisci</string>
-    <string name="dialog_positive_restore">Ripristina</string>
-    <string name="dialog_positive_set">Imposta</string>
     <string name="dialog_collection_path_not_dir">Il percorso specificato non era una cartella valida</string>
     <!-- Media checking -->
     <string name="check_media_title">Controllare i media?</string>
     <string name="check_media_warning">Ciò può richiedere molto tempo con le collezioni multimediali di grandi dimensioni</string>
     <string name="check_media_message">Controllo i media&#8230;</string>
     <string name="check_media_acknowledge">Media controllati</string>
-    <string name="check_media_failed">Controllo dei media fallito</string>
     <string name="check_media_invalid">File con codifica non valida: %d</string>
     <string name="check_media_unused">File nella cartella media ma non utilizzati da nessuna carta: %d</string>
     <string name="check_media_nohave">File utilizzati sulle carte, ma non nella cartella media: %d</string>
@@ -165,8 +144,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Scadute</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Cerco carte vuote&#8230;</string>
-    <string name="confirm_cancel">Vuoi annullare?</string>
-    <string name="empty_cards_none">Nessuna carta vuota</string>
     <string name="empty_cards_count">Carte de eliminare: %d</string>
     <string name="empty_cards_deleted">Carte eliminate: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +159,10 @@
     <string name="integrity_check_continue_anyway">Continua comunque</string>
     <string name="integrity_check_insufficient_space">Il controllo banca dati utilizza una grande quantità di memoria temporanea.\n\nSi raccomanda vivamente di avere almeno %s spazio libero sul dispositivo prima di continuare.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nAttualmente hai %s liberi.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d carte con mazzi di origine non corretti sono state recuperate. Si prega di vedere il manuale per maggiori informazioni.</string>
-    <string name="video_creation_error">Impossibile riprodurre il video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Impossibile cambiare mazzo</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Errore nella decodifica dei dati dalla carta</string>
-    <string name="undo_succeeded"> «%s» annullato</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Elaborazione delle opzioni del mazzo non riuscita: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Banca dati bloccata</string>
     <string name="database_locked_summary">La banca dati di AnkiDroid è in uso da un\'altra applicazione. Chiudi l\'altra applicazione e riapri AnkiDroid.</string>
@@ -261,15 +233,15 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">Non puoi creare un sottomazzo per tutti i mazzi</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
+    <string name="backup_your_collection">Salva la tua collezione</string>
+    <string name="backup_collection_message">Non hai eseguito il backup della tua collezione da un pò. Dovresti farlo ora per prevenire una perdita di dati</string>
     <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
+    <string name="button_disable_reminder">Disattiva promemoria</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Più tardi</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Non mostrare più</string>
+    <string name="dismiss_backup_warning_title">Avviso di perdita dati</string>
+    <string name="dismiss_backup_warning_new_user">        A causa delle modifiche alla privacy di Android, i tuoi dati e i backup automatici verranno eliminati dal tuo telefono se l\'app viene disinstallata
     </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
+    <string name="dismiss_backup_warning_upgrade">        A causa delle modifiche alla privacy di Android, i tuoi dati e i backup automatici verranno eliminati dal tuo telefono se l\'app viene disinstallata
     </string>
 </resources>

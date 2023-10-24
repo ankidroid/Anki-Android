@@ -45,19 +45,19 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards pendentes</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">Cartões pendentes</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d Card pendente no AnkiDroid</item>
-        <item quantity="other">%d Cards pendentes no AnkiDroid</item>
+        <item quantity="one">%d Cartão pendente no AnkiDroid</item>
+        <item quantity="other">Ainda faltam %d cartões</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid pequeno</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d card pendente</item>
-        <item quantity="other">%d cards pendentes</item>
+        <item quantity="one">%d cartão pendente</item>
+        <item quantity="other">%d cartões pendentes</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minutos restantes</item>
+        <item quantity="one">%d minuto restante</item>
         <item quantity="other">%d minutos restantes</item>
     </plurals>
-    <string name="widget_add_note_button">Adicionar nova nota do AnkiDroid</string>
+    <string name="widget_add_note_button">Adicionar nova nota</string>
 </resources>

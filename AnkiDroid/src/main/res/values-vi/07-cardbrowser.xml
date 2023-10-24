@@ -49,7 +49,7 @@
         <item quantity="other">%d thẻ hiển thị</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="other">%d notes shown</item>
+        <item quantity="other">%d ghi chú hiển thị</item>
     </plurals>
     <string name="card_browser_all_decks">Tất cả bộ thẻ</string>
     <string name="card_browser_delete_card">Xóa ghi chú</string>
@@ -59,7 +59,6 @@
     <string name="card_browser_mark_card">Đánh dấu ghi chú</string>
     <string name="card_browser_unmark_card">Bỏ đánh dấu ghi chú</string>
     <string name="delete_card_title">Xoá ghi chú?</string>
-    <string name="changed_deck_message">Đã chuyển sang %s</string>
     <string name="card_browser_show_marked">Bộ lọc được đánh dấu</string>
     <string name="card_browser_show_suspended">Bộ lọc bị tạm dừng</string>
     <string name="card_browser_search_by_tag">Lọc bởi từ khóa</string>
@@ -73,8 +72,6 @@
     <string name="card_browser_list_my_searches_remove_content">Xóa “%1$s”?</string>
     <string name="card_browser_change_display_order">Thay đổi thứ tự hiển thị</string>
     <string name="card_browser_change_display_order_title">Chọn thứ tự hiển thị</string>
-    <string name="card_browser_change_display_order_reverse">Chọn một trường hai lần để đảo ngược</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Đến hạn</string>
     <string name="card_details_tags">Thẻ</string>
     <string-array name="card_browser_order_labels">
         <item>Không sắp xếp (nhanh hơn)</item>
@@ -101,33 +98,10 @@
         <item quantity="other">Xuất thẻ</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="other">Export notes</item>
+        <item quantity="other">Xuất ghi chú</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d thẻ đã bị xóa</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Đã thêm</string>
-    <string name="card_info_first_review">Ôn tập đầu tiên</string>
-    <string name="card_info_latest_review">Ôn tập cuối cùng</string>
-    <string name="card_info_interval">Khoảng thời gian</string>
-    <string name="card_info_ease">Dễ</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Đánh giá</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Vòng lặp</string>
-    <string name="card_info_average_time">Thời gian trung bình</string>
-    <string name="card_info_total_time">Tổng thời gian</string>
-    <string name="card_info_card_type">Loại thẻ</string>
-    <string name="card_info_note_type">Loại ghi chú</string>
-    <string name="card_info_deck_name">Tên bộ thẻ</string>
-    <string name="card_info_card_id">Thẻ định danh</string>
-    <string name="card_info_note_id">Ghi chú định danh</string>
-    <string name="card_info_revlog_time">Thời gian</string>
-    <string name="card_info_revlog_date">Ngày</string>
-    <string name="card_info_revlog_rating">Xếp hạng</string>
-    <string name="card_info_revlog_type">Kiểu</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Thẻ cần học</string>
-    <string name="card_info_revlog_review">Ôn tập</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Học lại</string>
-    <string name="card_info_revlog_filtered">Đã lọc</string>
-    <string name="card_info_ease_not_applicable">Không có</string>
 </resources>

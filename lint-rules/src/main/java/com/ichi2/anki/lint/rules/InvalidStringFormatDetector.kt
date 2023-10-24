@@ -36,8 +36,11 @@ import java.util.*
 import java.util.regex.Pattern
 
 /**
- * Fix for "Linting Error - String format should be valid."
+ * Fix for 2 issues
+ * 1. "Linting Error - String format should be valid."
  * [https://github.com/ankidroid/Anki-Android/issues/10604](https://github.com/ankidroid/Anki-Android/issues/10604)
+ * 2."Check formatters like %1$D"
+ * https://github.com/ankidroid/Anki-Android/issues/14079
  */
 class InvalidStringFormatDetector : ResourceXmlDetector() {
     companion object {
@@ -58,6 +61,14 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
         )
 
         private val INVALID_FORMAT_PATTERN = Pattern.compile("[^%]+%").toRegex()
+
+        /**
+         * (?<!%)% => should match %, but does not match if there's another % immediately to the left
+         * [^%a-zA-Z]* => should match any characters (zero or more) that are not %, alphabetical or whitespace
+         * [DFNOGC] => should match any of the capital characters that cause the errors
+         * .* => can match any non whitespace characters (zero or more) following the format specifier
+         */
+        private val INVALID_CAPITALIZATION = Pattern.compile("(?<!%)%[^%a-zA-Z]*[DFNOGC].*").toRegex()
     }
 
     override fun appliesTo(folderType: ResourceFolderType): Boolean =
@@ -102,6 +113,19 @@ class InvalidStringFormatDetector : ResourceXmlDetector() {
                         "Please check that '%' sign been applied only to valid parameters. " +
                         "Your string might be having a regular word with '%' sign after it. " +
                         "eg: 'I have completed% %s cards.' "
+                )
+            }
+
+            if (it.matches(INVALID_CAPITALIZATION)) {
+                val location = context.createLocationHandle(element).resolve()
+                context.report(
+                    ISSUE,
+                    location,
+                    "Formatted string should not use capital letter. " +
+                        "eg: %D, %1D, %9D, %-9D, %1\$D, " +
+                        "%F, %1F, %9F, %-9F, %1\$F, " +
+                        "%N, %O, %G, %C " +
+                        "should all be in lowercase."
                 )
             }
         }

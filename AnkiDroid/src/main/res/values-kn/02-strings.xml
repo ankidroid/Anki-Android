@@ -61,6 +61,8 @@
     <string name="updated_version">ಆವೃತ್ತಿ%s ಗೆ ನವೀಕರಿಸಲಾಗಿದೆ</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಉಳಿಸಿ</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="disable_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="show_whiteboard">ವೈಟ್‌ಬೋರ್ಡ್‌ ತೋರಿಸಿ</string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">ಆಡಿಯೊವನ್ನು ರಿಪ್ಲೇ ಮಾಡಿ</string>
     <string name="leech_suspend_notification">ಕಾರ್ಡ್ ಅನ್ನು ಲೀಚ್ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ ಮತ್ತು ಅಮಾನತುಗೊಳಿಸಲಾಗಿದೆ </string>
     <string name="leech_notification">ಕಾರ್ಡ್ ಅನ್ನು ಲೀಚ್ ಎಂದು ಗುರುತಿಸಲಾಗಿದೆ</string>
-    <string name="corrupt_font">ಭ್ರಷ್ಟ ಫಾಂಟ್ ಫೈಲ್%s</string>
     <string name="webview_crash_unknown">ಅಜ್ಞಾತ ದೋಷ</string>
     <string name="webview_crash_unknwon_detailed">ವೆಬ್‌ವೀಕ್ಷಣೆಯಲ್ಲಿನ ಆಂತರಿಕ ದೋಷದಿಂದಾಗಿ ಇದು ಸಂಭವಿಸಿದೆ</string>
     <string name="webview_crash_oom">ಮೆಮೊರಿ ಇಲ್ಲ</string>
@@ -123,9 +124,9 @@
     <string name="save">ಉಳಿಸಿ</string>
     <string name="close">ಹತ್ತಿರ</string>
     <string name="select">ಆರಿಸಿ</string>
-    <string name="reordering_cards">ಕಾರ್ಡ್‌ಗಳನ್ನು ಮರುಕ್ರಮಗೊಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ನಿಂದ)</string>
     <string name="confirm_map_cards_to_nothing">ಯಾವುದಕ್ಕೂ ಮ್ಯಾಪ್ ಮಾಡದ ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ. ಟಿಪ್ಪಣಿಯಲ್ಲಿ ಉಳಿದ ಕಾರ್ಡ್‌ಗಳಿಲ್ಲದಿದ್ದರೆ, ಅದು ಕಳೆದುಹೋಗುತ್ತದೆ. ನೀವು ಮುಂದುವರಿಯಲು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">ಟೈಮ್‌ಬಾಕ್ಸ್ ತಲುಪಿದೆ</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d ಕಾರ್ಡ್ ಅನ್ನು%2$s ನಲ್ಲಿ ಅಧ್ಯಯನ ಮಾಡಲಾಗಿದೆ</item>
@@ -143,17 +144,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">ಮರುಹೊಂದಿಸಿ</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ಮುನ್ನೋಟ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿ ಸಾಕಷ್ಟು ಮೆಮೊರಿ ಇಲ್ಲದಿರುವುದರಿಂದ ಕಾರ್ಯಾಚರಣೆ ಸಾಧ್ಯವಿಲ್ಲ</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ಮರುಹೆಸರಿಸಿ</string>
-    <string name="default_conf_delete_error">ಡೀಫಾಲ್ಟ್ ಆಯ್ಕೆಗಳ ಗುಂಪನ್ನು ತೆಗೆದುಹಾಕಲಾಗುವುದಿಲ್ಲ</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d ಕಾರ್ಡ್ ಸೇರಿಸಲಾಗಿದೆ</item>
-        <item quantity="other">%d ಕಾರ್ಡ್‌ಗಳನ್ನು ಸೇರಿಸಲಾಗಿದೆ</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಿ</string>
     <string name="check_media">ಮಾಧ್ಯಮವನ್ನು ಪರಿಶೀಲಿಸಿ</string>
     <string name="empty_cards">ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು</string>
-    <string name="check_db_message">ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="empty_card_warning">ಈ ಕಾರ್ಡ್ ಖಾಲಿಯಾಗಿದೆ. ಡೆಕ್ ಪಟ್ಟಿ ಪರದೆಯಲ್ಲಿರುವ ಮೆನುವಿನಿಂದ “ಖಾಲಿ ಕಾರ್ಡ್‌ಗಳು” ಆಯ್ಕೆಯನ್ನು ಬಳಸಿ.</string>
     <string name="unknown_type_field_warning">ಉತ್ತರವನ್ನು ಟೈಪ್ ಮಾಡಿ: ಅಜ್ಞಾತ ಕ್ಷೇತ್ರ %s</string>
     <string name="delete_deck">ಡೆಕ್ ಅಳಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
@@ -167,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">ಇದು ಮಾನ್ಯ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಫೈಲ್ ಅಲ್ಲ</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">Apkg ಅನ್ನು ಅನ್ಜಿಪ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ:%s</string>
-    <string name="import_log_failed_copy_to">%s ಗೆ apkg ಅನ್ನು ನಕಲಿಸಲು ವಿಫಲವಾಗಿದೆ</string>
-    <string name="import_log_failed_validate">apkg ಮೌಲ್ಯಮಾಪನ ವಿಫಲವಾಗಿದೆ</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">ಫೈಲ್ ಆಮದು ಮಾಡುವಲ್ಲಿ ದೋಷ, ಪ್ರಕ್ರಿಯೆಗೊಳಿಸುವಾಗ ಸಂಗ್ರಹ ಸ್ಪಷ್ಟವಾಗಿದೆ. \n ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
-    <string name="import_succeeded_but_check_database">ಡೇಟಾ ಆಮದು ಯಶಸ್ವಿಯಾಗಿದೆ ಆದರೆ ಆಮದು ನಂತರದ ಸ್ವಚ್ clean ಗೊಳಿಸುವಿಕೆ ವಿಫಲವಾಗಿದೆ. ನಂತರ ಡೇಟಾಬೇಸ್ ಪರಿಶೀಲಿಸಿ. ಮೂಲ ಕಾರಣ: %s</string>
-    <string name="import_error_corrupt_zip">ಎಪಿಕೆಜಿ ಫೈಲ್ ಭ್ರಷ್ಟವಾಗಿದೆ. ದಯವಿಟ್ಟು ಅದನ್ನು ಅಳಿಸಿ ಮತ್ತು ಮರು-ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ. \n\n ಮೂಲ ಕಾರಣ:%s</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">“%s” ಫೈಲ್ ಹೆಸರು .apkg ಅಥವಾ .colpkg ವಿಸ್ತರಣೆಯನ್ನು ಹೊಂದಿಲ್ಲ</string>
     <string name="import_error_load_imported_database">ಅಂಕಿ ಡೇಟಾಬೇಸ್ (.anki2) ಬದಲಿಗಳನ್ನು ಇನ್ನೂ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ. ಬದಲಿ ಸೂಚನೆಗಳಿಗಾಗಿ ದಯವಿಟ್ಟು ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ.</string>
@@ -181,8 +169,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">ಸಂಗ್ರಹವನ್ನು ಬದಲಾಯಿಸಲಾಗುತ್ತಿದೆ&#8230;</string>
     <string name="import_interrupted">ಆಮದು ಅಡ್ಡಿಪಡಿಸಲಾಗಿದೆ: ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ಮುಚ್ಚಲಾಗಿದೆ</string>
     <string name="export_include_schedule">ವೇಳಾಪಟ್ಟಿ ಸೇರಿಸಿ</string>
     <string name="export_include_media">ಮಾಧ್ಯಮವನ್ನು ಸೇರಿಸಿ</string>
@@ -196,12 +182,11 @@
         <item quantity="one">Export selected note as apkg file?</item>
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_in_progress">ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಫೈಲ್ ರಫ್ತು ಮಾಡಲಾಗುತ್ತಿದೆ&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">ಎಪಿಕೆಜಿ ನಿರ್ವಹಿಸಲು ಯಾವುದೇ ಅಪ್ಲಿಕೇಶನ್‌ಗಳು ಲಭ್ಯವಿಲ್ಲ. ಉಳಿಸಲಾಗುತ್ತಿದೆ ...</string>
     <string name="export_save_apkg_successful">ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="export_save_apkg_unsuccessful">ಉಳಿಸಿ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ವಿಫಲವಾಗಿದೆ</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">ಆಂಕಿಡ್ರಾಯ್ಡ್ ರಫ್ತು ಮಾಡಿದ ಫ್ಲ್ಯಾಷ್‌ಕಾರ್ಡ್‌ಗಳು:%s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -211,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ಆಯ್ಕೆಗಳು</string>
     <string name="menu__deck_options">ಡೆಕ್ ಆಯ್ಕೆಗಳು</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">ಅಧ್ಯಯನ ಆಯ್ಕೆಗಳು</string>
@@ -222,47 +207,11 @@
     <string name="dyn_deck_desc">ಸಾಮಾನ್ಯ ವೇಳಾಪಟ್ಟಿಯ ಹೊರಗೆ ಅಧ್ಯಯನ ಮಾಡಲು ಇದು ವಿಶೇಷ ಡೆಕ್ ಆಗಿದೆ. ನೀವು ಅವುಗಳನ್ನು ಪರಿಶೀಲಿಸಿದ ನಂತರ ಕಾರ್ಡ್‌ಗಳನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗಳಿಗೆ ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ. ಡೆಕ್ ಪಟ್ಟಿಯಿಂದ ಈ ಡೆಕ್ ಅನ್ನು ಅಳಿಸುವುದರಿಂದ ಉಳಿದ ಎಲ್ಲಾ ಕಾರ್ಡ್‌ಗಳನ್ನು ಅವುಗಳ ಮೂಲ ಡೆಕ್‌ಗೆ ಹಿಂತಿರುಗಿಸುತ್ತದೆ.</string>
     <string name="steps_error">ಹಂತಗಳು 0 ಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಸಂಖ್ಯೆಯಾಗಿರಬೇಕು</string>
     <string name="steps_min_error">ಕನಿಷ್ಠ ಒಂದು ಹೆಜ್ಜೆ ಅಗತ್ಯವಿದೆ</string>
-    <string name="sched_end">(ಅಂತ್ಯ)</string>
-    <string name="sched_unbury_action">ಅವುಗಳನ್ನು ನೋಡಲು ಈಗ ಮೆನುವಿನಲ್ಲಿರುವ “ಅನ್ಬರಿ” ಐಟಂ ಅನ್ನು ಸ್ಪರ್ಶಿಸಿ</string>
-    <string name="sched_has_buried">ಕೆಲವು ಸಂಬಂಧಿತ ಅಥವಾ ಸಮಾಧಿ ಮಾಡಿದ ಕಾರ್ಡ್‌ಗಳು ನಾಳೆಯವರೆಗೆ ವಿಳಂಬವಾಗಿದ್ದವು</string>
     <string name="tag_editor_add_feedback">“%1$s” ಸೇರಿಸುವುದನ್ನು ಖಚಿತಪಡಿಸಲು “%2$s” ಸ್ಪರ್ಶಿಸಿ</string>
     <string name="tag_editor_add_feedback_existing">ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಟ್ಯಾಗ್ “%1$s” ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s ಸೆಕೆಂಡು</item>
-        <item quantity="other">%s ಸೆಕೆಂಡುಗಳು</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s ನಿಮಿಷ</item>
-        <item quantity="other">%s ನಿಮಿಷಗಳು</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s ಗಂಟೆ</item>
-        <item quantity="other">%s ಗಂಟೆಗಳು</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s ದಿನ</item>
-        <item quantity="other">%s ದಿನಗಳು</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s ತಿಂಗಳು</item>
-        <item quantity="other">%s ತಿಂಗಳುಗಳು</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s ವರ್ಷ</item>
-        <item quantity="other">%s ವರ್ಷಗಳು</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s ಸೆಕೆಂಡುಗಳು</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt; %s</string>
     <string name="decks_rename_exists">ಆ ಡೆಕ್ ಈಗಾಗಲೇ ಅಸ್ತಿತ್ವದಲ್ಲಿದೆ</string>
     <string name="decks_rename_filtered_nosubdecks">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಡೆಕ್‌ನಲ್ಲಿ ಸಬ್‌ಡೆಕ್‌ಗಳು ಇರಬಾರದು</string>
-    <string name="filtered_deck_name">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಡೆಕ್</string>
     <string name="reminder_title">ಇಂದು ಅಧ್ಯಯನ ಮಾಡಲು ಮರೆಯಬೇಡಿ!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s ನಲ್ಲಿ ಪರಿಶೀಲಿಸಲು%2$d ಕಾರ್ಡ್</item>
@@ -271,14 +220,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">ಎಪಿಕೆಜಿ ಫೈಲ್ ಹಂಚುವಲ್ಲಿ ದೋಷ</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">ಈ ಫೈಲ್‌ಗೆ ಅಂಕಿಯ ಹೊಸ ಆವೃತ್ತಿಯ ಅಗತ್ಯವಿದೆ.</string>
     <string name="activity_start_failed">ಈ ಕ್ರಿಯೆಯನ್ನು ನಿರ್ವಹಿಸಬಲ್ಲ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಸಿಸ್ಟಮ್ ಸ್ಥಾಪಿಸಿಲ್ಲ.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ಕ್ಯಾಮೆರಾ ಚಿತ್ರಗಳು ದೊಡ್ಡದಾಗಿರಬಹುದು. ಮಾಧ್ಯಮ ಡೈರೆಕ್ಟರಿಯಲ್ಲಿ ಚಿತ್ರಗಳನ್ನು ಕುಗ್ಗಿಸಲು ಮತ್ತು ಮರುಗಾತ್ರಗೊಳಿಸಲು ನೀವು ಬಯಸಬಹುದು]]></string>
     <string name="no_browser_notification">ಯಾವುದೇ ಬ್ರೌಸರ್ ಕಂಡುಬಂದಿಲ್ಲ ， ದಯವಿಟ್ಟು ಪಿಸಿ ಅಥವಾ ಮೊಬೈಲ್ ಮೂಲಕ ವೆಬ್ ಪುಟಕ್ಕೆ ಭೇಟಿ ನೀಡಿ: </string>
     <string name="web_page_error">ಪುಟವನ್ನು ಲೋಡ್ ಮಾಡುವಲ್ಲಿ ದೋಷ:%s</string>
-    <string name="no_outgoing_link_in_cardbrowser">ಕಾರ್ಡ್‌ನಲ್ಲಿನ ಬಾಹ್ಯ ಪುಟ ಲಿಂಕ್ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">ಮರುಪಡೆಯಲಾದ ಕಾರ್ಡ್‌ಗಳು</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">ಹಿನ್ನೆಲೆ</string>
     <string name="choose_an_image">ಚಿತ್ರವನ್ನು ಆರಿಸಿ</string>
@@ -313,6 +259,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ಡೆಕ್ ‘%s’ ಅನ್ನು ಲೋಡ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ</string>
     <string name="search_decks">ಹುಡುಕಾಟ ಡೆಕ್‌ಗಳು</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">ಗಂಭೀರವಾದ ತಪ್ಪು</string>
     <string name="ankidroid_init_failed_webview">ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸಿಸ್ಟಮ್ ವೆಬ್‌ವೀಕ್ಷಣೆಯನ್ನು ಅವಲಂಬಿಸಿದೆ, ಅದು ಲಭ್ಯವಿಲ್ಲ. ಸಿಸ್ಟಮ್ ನವೀಕರಣಗಳನ್ನು ಸ್ಥಾಪಿಸುತ್ತಿದ್ದರೆ ಇದು ಸಂಭವಿಸಬಹುದು. ದಯವಿಟ್ಟು ಕೆಲವು ನಿಮಿಷಗಳಲ್ಲಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -325,7 +272,6 @@
     <string name="insert_heading">ಶಿರೋನಾಮೆ ಸೇರಿಸಿ</string>
     <string name="format_font_size">ಫಾಂಟ್ ಗಾತ್ರವನ್ನು ಬದಲಾಯಿಸಿ</string>
     <string name="insert_mathjax">ಮ್ಯಾಥ್‌ಜಾಕ್ಸ್ ಸಮೀಕರಣವನ್ನು ಸೇರಿಸಿ</string>
-    <string name="insert_cloze">ಕ್ಲೋಜ್ ಅಳಿಸುವಿಕೆಯನ್ನು ಸೇರಿಸಿ</string>
     <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">ಆಯ್ಕೆಗೆ ಮೊದಲು HTML</string>
     <string name="after_text">ಆಯ್ಕೆಯ ನಂತರ HTML</string>
@@ -361,6 +307,7 @@
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -377,8 +324,6 @@
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
@@ -401,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

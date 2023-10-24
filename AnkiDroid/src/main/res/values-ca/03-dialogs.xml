@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Base de dades de verificació</string>
     <string name="check_db_warning">Això pot trigar molt de temps</string>
-    <string name="check_db_acknowledge">Base de dades comprovada</string>
-    <string name="check_db_acknowledge_shrunk">Base de dades comprovada i optimitzada.\nEncongida %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Suprimeix el paquet</string>
-    <string name="delete_deck_default_deck">No es pot suprimir el paquet per defecte.</string>
     <string name="delete_deck_title">Suprimeix el paquet</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Eliminar totes les cartes en %1$s? Conté %2$d carta.</item>
-        <item quantity="other">Eliminar totes les cartes en %1$s? Conté %2$d cartes.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Esteu segur que voleu enviar totes les fitxes de %s als seus paquets inicials?</string>
     <string name="no_tts_available_message">No hi ha idiomes de síntesi de veu disponibles</string>
     <string name="initializing_tts">S\'està inicialitzant el TTS&#8230;</string>
     <string name="tts_no_tts">No parlis</string>
@@ -94,7 +86,7 @@
     <string name="answering_error_title">Error de la base de dades</string>
     <string name="answering_error_message">No s\'ha pogut escriure a la col·lecció. La base de dades podria estar malmesa o potser no hi ha prou espai buit al disc. \n\nSi això passa més sovint, proveu de comprovar la base de dades, reparar la col·lecció o restaurar-la des d\'una còpia de seguretat. Toqueu \"opcions\" per fer-ho.\n\nTambé podria ser un error d\'AnkiDroid; Informeu de l’error perquè puguem comprovar-ho.</string>
     <string name="answering_error_report">Informa dels errors</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">No hi ha prou espai d\'emmagatzematge lliure per obrir AnkiDroid. Allibereu una mica d\'espai per continuar. </string>
     <string name="repair_deck_dialog">Realment voleu intentar reparar la base de dades? \n\nAbans de començar, es desarà una còpia a la carpeta \'%s\'.</string>
     <string name="intent_aedict_empty">La categoria \'per omissió\' és buida</string>
     <string name="intent_aedict_category">Per afegir fitxes d\'AnkiDroid treieu totes les categories del bloc de notes o afegiu-ne una anomenada \'per omissió\'</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Tria aleatòriament x fitxes del paquet:</string>
     <string name="custom_study_preview">Mostra les fitxes noves afegides en els últims x dies:</string>
     <string name="custom_study_rebuild_deck_corrupt">No s\'ha pogut reconstruir el paquet d\'estudi personalitzat</string>
-    <string name="importing_collection">S\'està important la col·lecció. \nUn moment si us plau ...</string>
-    <string name="import_media_count">S\'estant importació els continguts multimèdia %1$d%%\nun moment si us plau...</string>
-    <string name="import_progress">• Important notes: %1$d%%\n• Important targetes: %2$d%%\n• Post-processant: %3$d%%</string>
-    <string name="import_update_details">S\'ha actualitzat %1$d de %2$d notes existents.</string>
-    <string name="import_update_ignored">Algunes actualitzacions han estat ignorades perquè el tipus de nota ha canviat</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">S\'han importat: %2$d targetes</item>
-        <item quantity="other">S\'han importat: %1$d fitxers\nEn total s\'han importat: %2$d targetes</item>
-    </plurals>
     <string name="storage_full_title">No queda espai al disc</string>
     <string name="storage_almost_full_title">El disc està gairebé ple</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sense espai</string>
@@ -135,18 +118,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Desactiva</string>
     <string name="dialog_positive_overwrite">Sobreescriure</string>
-    <string name="dialog_positive_remove">Eliminar</string>
     <string name="dialog_positive_repair">Repara</string>
     <string name="dialog_positive_replace">Reemplaça</string>
-    <string name="dialog_positive_restore">Restaura</string>
-    <string name="dialog_positive_set">Aplicar</string>
     <string name="dialog_collection_path_not_dir">El camí especificat no era un directori vàlid</string>
     <!-- Media checking -->
     <string name="check_media_title">Comprovar la multimèdia?</string>
     <string name="check_media_warning">Això pot trigar molt de temps amb col·leccions de grans recursos de multimèdia</string>
     <string name="check_media_message">Comprovant multimèdia&#8230;</string>
     <string name="check_media_acknowledge">Multimèdia comprovada</string>
-    <string name="check_media_failed">Ha fallat la comprovació de la multimèdia</string>
     <string name="check_media_invalid">Arxius amb codificació no vàlida: %d</string>
     <string name="check_media_unused">Arxius existents en carpeta de multimèdia però no utilitzats per qualsevol carta: %d</string>
     <string name="check_media_nohave">Fitxers utilitzats en cartes però no existents en carpeta de multimèdia: %d</string>
@@ -165,8 +144,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Venciment</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Trobar targetes buides&#8230;</string>
-    <string name="confirm_cancel">Voleu cancel·lar?</string>
-    <string name="empty_cards_none">No hi ha targetes buides</string>
     <string name="empty_cards_count">Targetes per eliminar: %d</string>
     <string name="empty_cards_deleted">Targetes eliminades: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +159,10 @@
     <string name="integrity_check_continue_anyway">Continua igualment</string>
     <string name="integrity_check_insufficient_space">La comprovació de la base de dades utilitza una gran quantitat d\'emmagatzematge temporal.\n\nEs recomana tenir almenys %s d\'espai lliure al dispositiu abans de continuar.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nActualment teniu %s lliures.</string>
-    <string name="integrity_check_fixed_no_home_deck">S\'han recuperat %d cartes procedents de paquets incorrectes. Consulteu el manual per obtenir més informació si us plau.</string>
-    <string name="video_creation_error">No s\'ha pogut reproduir el vídeo</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">No s\'ha pogut canviar el paquet</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decodificant dades de la carta</string>
-    <string name="undo_succeeded">Desfes \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Error al processar les opcions del paquet: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Base de dades  bloquejada</string>
     <string name="database_locked_summary">Una altra aplicació fa servir la base de dades AnkiDroid. Tanqueu l’altra aplicació i torneu a obrir AnkiDroid.</string>
@@ -261,13 +233,13 @@
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">No podeu generar un subgrup per tots els paquets</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
+    <string name="backup_your_collection">Còpia de seguretat de la vostra col·lecció</string>
+    <string name="backup_collection_message">Fa temps que no feu una còpia de seguretat de la col·lecció. Hauríeu de fer-ho ara per evitar la pèrdua de dades</string>
+    <string name="button_backup">Còpia de seguretat</string>
+    <string name="button_disable_reminder">Desactiva el recordatori</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Més endavant</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">No ho mostris més</string>
+    <string name="dismiss_backup_warning_title">Avís de pèrdua de dades</string>
     <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
     </string>
     <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled

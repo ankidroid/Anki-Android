@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">డేటాబేస్ తనిఖీ చేయాలా?</string>
     <string name="check_db_warning">దీనికి కొంత సమయం పడుతుంది, దయచేసి వేచి వుండండి</string>
-    <string name="check_db_acknowledge">డేటా బేస్ తనిఖీ పూర్తి అయ్యింది</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">డెక్ను త్వలిగించు</string>
-    <string name="delete_deck_default_deck">డిఫాల్ట్ డెక్ తొలగించబడదు</string>
     <string name="delete_deck_title">డెక్ను త్వలిగించాల?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">%1$s లో అన్ని కార్డ్లను తొలగించాలా? ఇది %2$d కార్డును కలిగి ఉంది.</item>
-        <item quantity="other">%1$s లో అన్ని కార్డులు తొలగించాలా? ఇది %2$d కార్డును కలిగి ఉంది.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">%s లో అన్ని కార్డులనూ వారి అసలు డెక్స్లోకి పంపాలా?</string>
     <string name="no_tts_available_message">టెక్స్ట్-టు-స్పీచ్ లాంగ్వేజ్ అందుబాటులో లేదు</string>
     <string name="initializing_tts">TTS ను ప్రారంభిస్తోంది&#8230;</string>
     <string name="tts_no_tts">మాట్లాడకండి</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">డెక్ నుండి యాదృచ్ఛికంగా x కార్డులను ఎంచుకోండి:</string>
     <string name="custom_study_preview">గత x రోజులలో జోడించిన కొత్త కార్డులను ప్రివ్యూ చేయండి:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">సేకరణను దిగుమతి చేస్తోంది&#8230;</string>
-    <string name="import_media_count">మీడియా ఫైళ్ళు ను దిగుమతి చేస్తున్నాయి %1$d%%&#8230;</string>
-    <string name="import_progress">• దిగుమతి గమనికలు:%1$d%%\n• దిగుమతి కార్డులు:%2$d%%\n• పోస్ట్ ప్రాసెసింగ్:%3$d%%</string>
-    <string name="import_update_details">%2$d ప్రస్తుత గమనికలు %1$d ను నవీకరించారు.</string>
-    <string name="import_update_ignored">కొన్ని నవీకరించబడింది విస్మరించబడిన గమనిక రకం మార్చబడింది ఎందుకంటే</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
@@ -135,18 +118,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">అచేతనం</string>
     <string name="dialog_positive_overwrite">తిరిగి వ్రాయండి</string>
-    <string name="dialog_positive_remove">తొలగించు</string>
     <string name="dialog_positive_repair">బాగు చేయు</string>
     <string name="dialog_positive_replace">పునఃస్థాపించుము</string>
-    <string name="dialog_positive_restore">తిరిగి పొందండి</string>
-    <string name="dialog_positive_set">సెట్</string>
     <string name="dialog_collection_path_not_dir">పేర్కొన్న మార్గం చెల్లుబాటు అయ్యే డైరెక్టరీ కాదు</string>
     <!-- Media checking -->
     <string name="check_media_title">మీడియా తనిఖీ చేయాలా?</string>
     <string name="check_media_warning">పెద్ద మీడియా సేకరణలతో ఇది ఎక్కువ సమయం పట్టవచ్చు</string>
     <string name="check_media_message">మీడియాను తనిఖీ చేస్తోంది&#8230;</string>
     <string name="check_media_acknowledge">మీడియా తనిఖీ చేయబడింది</string>
-    <string name="check_media_failed">మీడియా తనిఖీ విఫలమైంది</string>
     <string name="check_media_invalid">చెల్లని ఎన్కోడింగ్ ఫైల్లు: %d</string>
     <string name="check_media_unused">మీడియా ఫోల్డర్లోని ఫైళ్ళు కానీ ఏ కార్డులు ఉపయోగించరు: %d</string>
     <string name="check_media_nohave">మీడియా ఫోల్డర్లో కానీ కార్డులలో ఉపయోగించబడే ఫైళ్ళు: %d</string>
@@ -165,8 +144,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">గడువు</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">ఖాళీ కార్డ్లు కనుగొనడం&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">ఖాళీ కార్డ్లు లేవు</string>
     <string name="empty_cards_count">తొలగించడానికి కార్డులు:%d</string>
     <string name="empty_cards_deleted">కార్డ్లు తొలగించబడ్డాయి:%d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +159,10 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>

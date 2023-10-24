@@ -35,12 +35,12 @@
  */
 package com.ichi2.utils
 
-import java.net.URLConnection
+import android.webkit.MimeTypeMap
 
 /** Clone of RestrictedApi functionality  */
 object AssetHelper {
     /**
-     * Use [URLConnection.guessContentTypeFromName] to guess MIME type or return the
+     * Use [MimeTypeMap.getMimeTypeFromExtension] to guess MIME type or return the
      * "text/plain" if it can't guess.
      *
      * Copy of [androidx.webkit.internal.AssetHelper.guessMimeType]
@@ -49,7 +49,11 @@ object AssetHelper {
      * @return MIME type guessed from file extension or "text/plain".
      */
     fun guessMimeType(path: String?): String {
-        val mimeType = URLConnection.guessContentTypeFromName(path)
-        return mimeType ?: "text/plain"
+        return when (val extension = MimeTypeMap.getFileExtensionFromUrl(path)) {
+            "js" -> "text/javascript"
+            "mjs" -> "text/javascript"
+            "json" -> "application/json"
+            else -> MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) ?: "text/plain"
+        }
     }
 }

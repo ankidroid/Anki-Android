@@ -66,7 +66,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
                 !canRecoverFromWebViewRendererCrash() -> {
                     Timber.e("Unrecoverable WebView Render crash")
                     if (!activityIsMinimised()) displayFatalError(detail)
-                    target.finishWithoutAnimation()
+                    target.finish()
                     return true
                 }
                 !activityIsMinimised() -> {
@@ -127,7 +127,7 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
 
     @TargetApi(Build.VERSION_CODES.O)
     protected open fun displayRenderLoopDialog(currentCardId: CardId, detail: RenderProcessGoneDetail) {
-        val cardInformation = java.lang.Long.toString(currentCardId)
+        val cardInformation = currentCardId.toString()
         val res = target.resources
         val errorDetails = if (detail.didCrash()) res.getString(R.string.webview_crash_unknwon_detailed) else res.getString(R.string.webview_crash_oom_details)
         AlertDialog.Builder(target).show {
@@ -167,5 +167,5 @@ open class OnRenderProcessGoneDelegate(val target: AbstractFlashcardViewer) {
         // Revisit webViewCrashedOnCard() if changing this. Logic currently assumes we have a card.
         target.currentCard != null
 
-    protected fun onCloseRenderLoopDialog() = target.finishWithoutAnimation()
+    protected fun onCloseRenderLoopDialog() = target.finish()
 }

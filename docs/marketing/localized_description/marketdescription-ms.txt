@@ -1,36 +1,36 @@
-Memorize anything with AnkiDroid!
+Ingat apa-apa jua dengan AnkiDroid!
 
-AnkiDroid lets you learn flashcards very efficiently by showing them just before you will forget. It is fully compatible with the spaced repetition software Anki (including synchronization), which is available for Windows, Linux and MacOS.
+AnkiDroid membolehkan anda belajara kad imbasan dengan cekap dengan menyemak kad tersebut sebelum anda lupa. Ia serasi sepenuhnya dengan perisian ulangan jarak Anki (termasuk penyegerakan), yang tersedia untuk Windows, Linux dan MacOS.
 
-Study all sorts of things wherever and whenever you want. Make good use of idle times on bus trips, in supermarket queues or any other waiting situation!
+Belajar pelbagai perkara bila-bila dan di mana jua anda mahu. Manfaatkan masa terbiar semasa perjalanan bas, dalam barisan pasar raya atau mana-mana suasana menunggu!
 
-Create your own flashcard decks or download free decks compiled for many languages and topics (more than 6000 available).
+Cipta dek kad imbasan sendiri atau muat turun dek percuma disusun untuk pelbagai bahasa dan topik (lebih dari 6000 tersedia).
 
-Add material through the desktop application Anki or directly through AnkiDroid. The application even supports adding material automatically from a dictionary!
+Tambah bahan melalui aplikasi desktop Anki atau terus melalui AnkiDroid. Aplikasi ini juga mampu menambah bahan secara automatik daripada kamus!
 
-★ Key features:
-• supported flashcard contents: text, images, sounds, LaTeX
-• spaced repetition (supermemo 2 algorithm)
-• text-to-speech integration
-• more than 6000 premade decks
-• progress widget
-• detailed statistics
-• syncing with AnkiWeb
-• open source
+★ Ciri-ciri utama:
+• kandungan kad imbasan yang disokong: teks, gambar, audio, LaTeX
+• ulangan jarak (algoritma supermemo 2)
+• integrasi teks-ke-ucapan
+• lebih dari 6000 dek prabuatan
+• widget kemajuan
+• statistik terperinci
+• segerak ke AnkiWeb
+• sumber terbuka
 
-★ Additional features:
-• write answers (optional)
-• whiteboard
-• card editor/adder
-• card browser
-• tablet layout
-• import existing collection files (via Anki Desktop)
-• add cards by intent from other applications like dictionaries
-• custom font support
-• full backup system
-• navigation by swipe, tap
-• customisable
-• dynamic deck handling
-• night mode
-• 27 localisations
-• All previous AnkiDroid versions can be downloaded from the website
+★ ciri-ciri tambahan:
+• tulis jawapan (pilihan)
+• papan putih
+• penyunting/penambah kad
+• pencari kad
+• susun atur tablet
+• import koleksi sedia ada (melalui Anki Desktop)
+• tambah kad mengikut kehendak dari aplikasi lain seperti kamus
+• sokongan fon tersuai
+• sistem sandaran penuh
+• navigasi melalui leretan, sentuhan
+• boleh suaikan
+• pengendalian dek dinamik
+• mod malam
+• 27 penyetempatan
+• Semua versi AnkiDroid dahulu boleh dimuat turun dari laman web

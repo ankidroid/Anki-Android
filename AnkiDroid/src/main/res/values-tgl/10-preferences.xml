@@ -43,10 +43,9 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">I-disable</string>
-    <string name="enabled">I-enable</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="more_scrolling_buttons" maxLength="41">eReader</string>
-    <string name="more_scrolling_buttons_summ">Gamitin din ang kanji / katakana, emoji / kao-moji na mga pindutan para sa pag-scroll</string>
     <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
     <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
     <string name="double_scrolling_gap" maxLength="41">Double scroll</string>
@@ -137,11 +134,11 @@
     <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Theme</string>
     <string name="day_theme" maxLength="41">Araw ng tema</string>
     <string name="night_theme" maxLength="41">Tema ng gabi</string>
-    <string name="default_font" maxLength="41">Default na font</string>
-    <string name="override_font" maxLength="41">Paggamit ng default na font</string>
     <string name="language" maxLength="41">Wika</string>
     <string name="language_system">Wika ng sistema</string>
     <string name="notification_pref" maxLength="41">Notipikasyon</string>
@@ -155,7 +152,6 @@
     <string name="timeout_answer" maxLength="41">Timeout answer</string>
     <string name="timeout_answer_summ">Awtomatikong ipakita ang sagot nang hindi gumagamit ng input. Kasama ang pag-antala ng oras para sa awtomatikong pag-play ng mga audio file.</string>
     <string name="timeout_answer_seconds" maxLength="41">Oras upang ipakita ang sagot</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Oras upang ipakita ang susunod na tanong</string>
     <string name="select_locale_title">Piliin ang wika</string>
     <string name="software_render" maxLength="41">Disable card hardware render</string>
@@ -167,9 +163,10 @@
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">Sentrong hanayin</string>
     <string name="vertical_centering_summ">I-sentro ang nilalaman ng mga baraha</string>
-    <string name="pref_backup_max" maxLength="41">Max na bilang ng mga backup</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Ipakita ang oras na pindutan</string>
     <string name="show_estimates_summ">Ipakita ang susunod na oras ng pagsusuri sa mga pindutan ng sagot</string>
     <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
@@ -181,18 +178,13 @@
     <string name="show_eta" maxLength="41">Ipakita ang ETA</string>
     <string name="show_eta_summ">Ipakita ang natitirang oras</string>
     <string name="use_current" maxLength="41">Deck para sa mga bagong card</string>
-    <string name="new_spread" maxLength="41">Bagong posisyon ng card</string>
     <string name="learn_cutoff" maxLength="41">Matuto nang higit na limitasyon</string>
     <string name="time_limit" maxLength="41">Limitasyon ng oras ng Timebox</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
     <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">Midnight</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">11PM</string>
     <string name="pref_keep_screen_on" maxLength="41">Panatilihin naka on ang screen</string>
     <string name="pref_keep_screen_on_summ">Huwag paganahin ang timeout ng screen</string>
-    <string name="convert_fen_text" maxLength="41">Chess notation support</string>
-    <string name="convert_fen_text_summ">Gumuhit ng chessboard mula sa Forsyth-Edwards Notation. Ang notasyon ay dapat na nakapaloob sa [fen][/fen] na mga tag.</string>
     <string name="enable_api_title" maxLength="41">Paganahin ang AnkiDroid API</string>
     <string name="enable_api_summary">Hayaan ang iba pang apps na kumonekta sa AnkiDroid at basahin / isulat ang data nang wala ang iyong interbensyon</string>
     <string name="custom_buttons" maxLength="41">Mga pindutan ng bar ng app</string>
@@ -218,17 +210,6 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Default deck when opening statistics</string>
-    <string name="stats_default_deck_current">Show stats for most recent deck</string>
-    <string name="stats_default_deck_all">Show stats for all decks</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Mga advanced na istatistika</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Paganahin ang mga advanced na istatistika</string>
-    <string name="enable_advanced_statistics_summ">Ipakita ang mga istatistika ng forecast batay sa isang pag-compute o simulation ng mga review sa hinaharap (pinagana) o sa mga review sa hinaharap na naka-iskedyul (hindi pinagana).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Kuwentahin ang unang mga araw, gayahin ang natitira</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Katiyakan ng pagkukuwenta</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Bilang ng mga pag-ulit ng simulation</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Gumamit ng custom sync server</string>
     <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
@@ -241,67 +222,17 @@
     <!-- Key Bindings -->
     <string name="keyboard">Keyboard</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Command mapping</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Changes to deck group options will affect multiple decks. If you wish to change only the current deck, please add a new options group first</string>
     <string name="studyoptions_limit_select_tags">Piliin ang mga tag</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Deck description (current deck only)</string>
-    <string name="deck_conf_group" maxLength="41">Opsyon na grupo</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">Ang %1$s\n%2$d deck ay gumagamit ng pangkat na ito</item>
-        <item quantity="other">Ang %1$s\n%2$d deck ay gumagamit ng pangkat na ito</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Mga bagong kard</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Mga Review</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Mga pagkakamali</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Pangkalahatan</string>
     <string name="deck_conf_reminders" maxLength="41">Mga Paalala</string>
-    <string name="deck_conf_steps" maxLength="41">Mga hakbang (sa ilang minuto)</string>
-    <string name="deck_conf_order" maxLength="41">Kaayusan</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Mga Bagong kard / araw</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Pagtatapos ng agwat</string>
-    <string name="deck_conf_days">XXX araw (s)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Madaling pagitan</string>
-    <string name="deck_conf_start_ease" maxLength="41">Madaling pagsisimula</string>
-    <string name="deck_conf_max_rev" maxLength="41">Pinakamataas na review / araw</string>
-    <string name="deck_conf_new_bury" maxLength="41">Ibaon ang kaugnay na mga bagong card</string>
-    <string name="deck_conf_new_bury_summ">Ang mga kaugnay na bagong card ay ibinaon hanggang sa susunod na araw</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Ibaon kaugnay na mga review</string>
-    <string name="deck_conf_rev_bury_summ">Ang mga kaugnay na review ay ibinaon hanggang sa susunod na araw</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Use general settings</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Use general \'Automatic display answer\' settings instead of using the settings for this group.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Madaling bonus</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Hard interval</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Modifier ng agwat</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Pinakamataas na agwat</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Bagong agwat</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Pinakamababa na agwat</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Pasukan ng Leech</string>
-    <string name="deck_conf_fails">XXX lapse(s)</string>
-    <string name="deck_conf_leech_action" maxLength="41">Pumili ng aksyon</string>
-    <string name="deck_conf_max_time" maxLength="41">Pinakamataas na oras ng sagot</string>
-    <string name="deck_conf_seconds">XXX segundo</string>
-    <string name="deck_conf_timer" maxLength="41">Ipakita ang timer ng sagot</string>
-    <string name="deck_conf_autoplay" maxLength="41">Awtomatikong magtugtogin ang audio</string>
-    <string name="deck_conf_replayq" maxLength="41">I-replay ang tanong</string>
-    <string name="deck_conf_replayq_summ">Kapag ipinakita ang sagot, i-replay ang parehong tanong at sagot na audio</string>
-    <string name="deck_conf_manage" maxLength="41">Pamamahala ng grupo</string>
-    <string name="deck_conf_manage_summ">Add and change options groups</string>
-    <string name="deck_conf_current_group" maxLength="41">Kasalukuyang grupo</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Palitan ang pangalan</string>
-    <string name="deck_conf_reset" maxLength="41">Ibalik sa dating ayos</string>
-    <string name="deck_conf_reset_message">Ibalik ang kasalukuyang mga opsyon ng pangkat sa mga default na halaga?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Magdagdag</string>
-    <string name="deck_conf_add_summ">Lumikha ng isang kopya ng kasalukuyang pangkat ng mga pagpipilian</string>
-    <string name="deck_conf_remove_message">Alisin ang mga kasalukuyang pangkat ng mga pagpipilian?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Itakda para sa lahat ng mga subdecks</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s subdeck ang gagamitin sa pangkat na ito</item>
-        <item quantity="other">%s subdeck ang gagamitin sa pangkat na ito</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Itakda ang kasalukuyang mga opsyon na pangkat para sa lahat ng mga subdecks ng deck na ito?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Browser at editor ng font</string>
     <string name="deck_conf_cram_filter" maxLength="41">Salain</string>
     <string name="deck_conf_cram_search" maxLength="41">Paghahanap</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limitasyon sa</string>
@@ -311,8 +242,6 @@
     <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
     <string name="deck_conf_cram_steps" maxLength="41">Mga pasadyang hakbang (sa ilang minuto)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Magtakda ng mga pasadyang hakbang</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Enable notifications for this deck group</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Paalala sa</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Help make AnkiDroid better!</string>
     <string name="analytics_title" maxLength="41">Share feature usage</string>
@@ -349,12 +278,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
     <string name="bindings_already_bound">Already bound to ‘%s’</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
@@ -364,7 +288,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.
@@ -392,7 +315,6 @@
     <!-- Delete unused media -->
     <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>

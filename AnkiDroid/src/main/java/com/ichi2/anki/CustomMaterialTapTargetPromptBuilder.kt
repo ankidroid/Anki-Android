@@ -18,7 +18,6 @@
 package com.ichi2.anki
 
 import android.app.Activity
-import androidx.core.content.ContextCompat
 import com.ichi2.anki.PromptBackgroundAdapter.Companion.toPromptBackground
 import com.ichi2.themes.Themes
 import com.ichi2.utils.DimmedPromptBackgroundDecorator
@@ -51,7 +50,7 @@ class CustomMaterialTapTargetPromptBuilder<T>(val activity: Activity, val featur
     }
 
     fun setFocalColourResource(focalColourRes: Int): CustomMaterialTapTargetPromptBuilder<T> {
-        focalColour = ContextCompat.getColor(activity, focalColourRes)
+        focalColour = activity.getColor(focalColourRes)
         return this
     }
 

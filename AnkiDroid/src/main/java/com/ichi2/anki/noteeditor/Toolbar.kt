@@ -41,8 +41,8 @@ import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.NoteEditor
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.convertDpToPixel
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.compat.CompatHelper
-import com.ichi2.libanki.Utils
 import com.ichi2.utils.ViewGroupUtils
 import com.ichi2.utils.ViewGroupUtils.getAllChildrenRecursive
 import com.ichi2.utils.show
@@ -99,7 +99,7 @@ class Toolbar : FrameLayout {
             findViewById<View>(id).setOnClickListener { onFormat(TextWrapper(prefix, suffix)) }
 
         setupButtonWrappingText(R.id.note_editor_toolbar_button_bold, "<b>", "</b>")
-        setupButtonWrappingText(R.id.note_editor_toolbar_button_italic, "<em>", "</em>")
+        setupButtonWrappingText(R.id.note_editor_toolbar_button_italic, "<i>", "</i>")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_underline, "<u>", "</u>")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_insert_mathjax, "\\(", "\\)")
         setupButtonWrappingText(R.id.note_editor_toolbar_button_horizontal_rule, "<hr>", "")
@@ -133,7 +133,7 @@ class Toolbar : FrameLayout {
         }
         val expected = c.toString()
         for (v in getAllChildrenRecursive(this)) {
-            if (Utils.equals(expected, v.tag)) {
+            if (Objects.equals(expected, v.tag)) {
                 Timber.i("Handling Ctrl + %s", c)
                 v.performClick()
                 return true
@@ -142,19 +142,19 @@ class Toolbar : FrameLayout {
         return super.onKeyUp(keyCode, event)
     }
 
-    fun insertItem(@IdRes id: Int, @DrawableRes drawable: Int, runnable: Runnable): AppCompatImageButton {
+    fun insertItem(@IdRes id: Int, @DrawableRes drawable: Int, block: () -> Unit): AppCompatImageButton {
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
         val themeContext: Context = ContextThemeWrapper(context, R.style.Theme_Light_Compat)
         val d = VectorDrawableCompat.create(context.resources, drawable, themeContext.theme)
-        return insertItem(id, d, runnable)
+        return insertItem(id, d, block)
     }
 
     fun insertItem(id: Int, drawable: Drawable?, formatter: TextFormatter): View {
-        return insertItem(id, drawable, Runnable { onFormat(formatter) })
+        return insertItem(id, drawable) { onFormat(formatter) }
     }
 
-    fun insertItem(@IdRes id: Int, drawable: Drawable?, runnable: Runnable): AppCompatImageButton {
+    fun insertItem(@IdRes id: Int, drawable: Drawable?, block: () -> Unit): AppCompatImageButton {
         val context = context
         val button = AppCompatImageButton(context)
         button.id = id
@@ -179,7 +179,7 @@ class Toolbar : FrameLayout {
         val twoDp = ceil((2 / context.resources.displayMetrics.density).toDouble()).toInt()
         button.setPadding(twoDp, twoDp, twoDp, twoDp)
         // end apply style
-        val shouldScroll = AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+        val shouldScroll = AnkiDroidApp.instance.sharedPrefs()
             .getBoolean(NoteEditor.PREF_NOTE_EDITOR_SCROLL_TOOLBAR, true)
         if (shouldScroll) {
             mToolbar.addView(button, mToolbar.childCount)
@@ -187,14 +187,15 @@ class Toolbar : FrameLayout {
             addViewToToolbar(button)
         }
         mCustomButtons.add(button)
-        button.setOnClickListener { runnable.run() }
+        button.setOnClickListener { block.invoke() }
 
         // Hack - items are truncated from the scrollview
         val v = findViewById<View>(R.id.toolbar_layout)
         val expectedWidth = getVisibleItemCount(mToolbar) * convertDpToPixel(48F, context)
         val width = screenWidth
         val p = LayoutParams(v.layoutParams)
-        p.gravity = Gravity.CENTER_VERTICAL or if (expectedWidth > width) Gravity.START else Gravity.CENTER_HORIZONTAL
+        p.gravity =
+            Gravity.CENTER_VERTICAL or if (expectedWidth > width) Gravity.START else Gravity.CENTER_HORIZONTAL
         v.layoutParams = p
         return button
     }

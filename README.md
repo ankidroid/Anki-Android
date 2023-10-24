@@ -22,17 +22,17 @@ A semi-official port of the open source [Anki](https://apps.ankiweb.net/index.ht
 
 <div style="display:flex;">
  
-- night mode
-- whiteboard 
-- progress widget
-- detailed statistics
-- syncing with AnkiWeb
-- write answers (optional)
-- text-to-speech integration
-- more than 6000 premade decks
-- spaced repetition (supermemo 2 algorithm)
-- supported contents: text, images, sounds, MathJax
-- add cards by intent from other applications like dictionaries
+- Night mode
+- Whiteboard 
+- Progress widget
+- Detailed statistics
+- Syncing with AnkiWeb
+- Write answers (optional)
+- Text-to-speech integration
+- More than 6000 premade decks
+- Spaced repetition (supermemo 2 algorithm)
+- Supported contents: text, images, sounds, MathJax
+- Add cards by intent from other applications like dictionaries
 
 </div>
 
@@ -42,23 +42,15 @@ Install
 
 <a href="https://play.google.com/store/apps/details?id=com.ichi2.anki&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
     <img alt="Get it on Google Play" height="80"
-        src="docs/graphics/logos/google-badge.png" />
-</a>
+        src="docs/graphics/logos/google-badge.png" /></a>
 
 <a href="https://f-droid.org/repository/browse/?fdid=com.ichi2.anki">
     <img alt="Get it on F-Droid" height="80"
-        src="docs/graphics/logos/f-droid-badge.png">
-</a>
+        src="docs/graphics/logos/f-droid-badge.png"></a>
 
 <a href="http://www.amazon.com/gp/product/B004L1G7T2/ref=mas_pm_ankidroid_flashcards">
     <img alt="Get it on Amazon app store" height="80"
-        src="docs/graphics/logos/amazon-badge.png"/>
-</a>
-
-<a href="https://appgallery5.huawei.com/#/app/C102711481">
-    <img alt="Get it on Huawei app gallery" height="80"
-        src="docs/graphics/logos/huawei-badge.png"/>
-</a>
+        src="docs/graphics/logos/amazon-badge.png"/></a>
 
 </div>
 
@@ -96,33 +88,20 @@ Thanks to these awesome code contributors who keep this project going
 <a href="https://github.com/ankidroid/Anki-Android/graphs/contributors"><img src="https://opencollective.com/ankidroid/contributors.svg?width=890&button=false" /></a>
 
 ### [Sponsors](https://opencollective.com/ankidroid#sponsor)
-<a href="https://opencollective.com/ankidroid/sponsor/0/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/1/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/2/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/3/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/4/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/4/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/5/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/6/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/7/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/8/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/9/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/9/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/10/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/10/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/11/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/11/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/12/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/12/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/13/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/13/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/14/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/14/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/15/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/15/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/16/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/16/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/17/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/17/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/18/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/18/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/19/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/19/avatar.svg"></a>
-<a href="https://opencollective.com/ankidroid/sponsor/20/website" target="_blank"><img src="https://opencollective.com/ankidroid/sponsor/20/avatar.svg"></a>
+<a href="https://opencollective.com/ankidroid#sponsor" target="_blank">
+  <img src="https://opencollective.com/Ankidroid/sponsors.svg?width=890" />
+</a>
 
 ### [Backers](https://opencollective.com/ankidroid#backer)
 
-Thank you to all our backers! 🙏
+A big thank you to each of our backers 🙏
+<a href="https://opencollective.com/Ankidroid#backers" target="_blank"><img width=110 src="https://opencollective.com/Ankidroid/backers/badge.svg?"></a>
 
-<a href="https://opencollective.com/ankidroid#backers" target="_blank"><img src="https://opencollective.com/ankidroid/backers.svg?width=890"></a>
+<p>Your generous donations mean the world to us, and we can't express our gratitude enough. Your support fuels our mission and helps us make a real difference</p>
+
+<a href="https://opencollective.com/Ankidroid/donate" target="_blank">
+  <img src="https://opencollective.com/Ankidroid/donate/button@2x.png?color=blue" width=200 />
+</a>
 
 ### [Translators](https://crowdin.com/project/ankidroid/activity-stream)
 

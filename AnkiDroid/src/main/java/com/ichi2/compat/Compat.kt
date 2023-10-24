@@ -17,7 +17,6 @@
 
 package com.ichi2.compat
 
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -32,12 +31,7 @@ import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.SparseArray
 import android.view.View
-import android.widget.TimePicker
-import androidx.annotation.IntDef
 import java.io.*
 import java.util.*
 
@@ -49,7 +43,7 @@ import java.util.*
  *
  *
  * Each implementation ends with a `V<n>` suffix, identifying the minimum API version on which this implementation
- * can be used. For example, see [CompatV21].
+ * can be used. For example, see [CompatV23].
  *
  *
  * Each implementation `CompatVn` should extend the implementation `CompatVm` for the greatest m<n such that `CompatVm`
@@ -80,17 +74,11 @@ import java.util.*
 interface Compat {
     fun setupNotificationChannel(context: Context)
     fun setTooltipTextByContentDescription(view: View)
-    fun setTime(picker: TimePicker, hour: Int, minute: Int)
-    fun getHour(picker: TimePicker): Int
-    fun getMinute(picker: TimePicker): Int
     fun vibrate(context: Context, durationMillis: Long)
     fun getMediaRecorder(context: Context): MediaRecorder
-    fun <T> readSparseArray(parcel: Parcel, loader: ClassLoader, clazz: Class<T>): SparseArray<T>?
-    fun <T : Parcelable> getParcelableArrayList(bundle: Bundle, key: String, clazz: Class<T>): ArrayList<T>?
+    fun resolveActivity(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun resolveService(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo?
     fun queryIntentActivities(packageManager: PackageManager, intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo>
-    fun <T> getParcelable(bundle: Bundle, key: String?, clazz: Class<T>): T?
-    fun <T : Parcelable> getSparseParcelableArray(bundle: Bundle, key: String, clazz: Class<T>): SparseArray<T>?
 
     /**
      * Retrieve extended data from the intent.
@@ -99,14 +87,6 @@ interface Compat {
      * @return the value of an item previously added with putExtra(), or null if no [Serializable] value was found.
      */
     fun <T : Serializable?> getSerializableExtra(intent: Intent, name: String, className: Class<T>): T?
-
-    /**
-     * Retrieve extended data from the intent.
-     * @param name – The name of the desired item.
-     * @param clazz – The type of the object expected.
-     * @return the value of an item previously added with putExtra(), or null if no [Parcelable] value was found.
-     */
-    fun <T : Parcelable?> getParcelableExtra(intent: Intent, name: String, clazz: Class<T>): T?
 
     /**
      * Returns the value associated with the given key, or `null` if:
@@ -119,13 +99,6 @@ interface Compat {
      * @return a Serializable value, or `null`
      */
     fun <T : Serializable?> getSerializable(bundle: Bundle, key: String, clazz: Class<T>): T?
-
-    /**
-     * Read and return a new Serializable object from the parcel.
-     * @return the Serializable object, or null if the Serializable name
-     * wasn't found in the parcel.
-     */
-    fun <T> readSerializable(parcel: Parcel, loader: ClassLoader?, clazz: Class<T>): T?
 
     /**
      * Retrieve overall information about an application package that is
@@ -194,71 +167,6 @@ interface Compat {
     fun requestAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
     fun abandonAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
 
-    @IntDef(
-        flag = true,
-        value = [
-            PendingIntent.FLAG_ONE_SHOT, PendingIntent.FLAG_NO_CREATE, PendingIntent.FLAG_CANCEL_CURRENT, PendingIntent.FLAG_UPDATE_CURRENT, // PendingIntent.FLAG_IMMUTABLE
-            // PendingIntent.FLAG_MUTABLE
-            Intent.FILL_IN_ACTION, Intent.FILL_IN_DATA, Intent.FILL_IN_CATEGORIES, Intent.FILL_IN_COMPONENT, Intent.FILL_IN_PACKAGE, Intent.FILL_IN_SOURCE_BOUNDS, Intent.FILL_IN_SELECTOR, Intent.FILL_IN_CLIP_DATA
-        ]
-    )
-    @Retention(AnnotationRetention.SOURCE)
-    annotation class PendingIntentFlags
-
-    /**
-     * Retrieve a PendingIntent that will start a new activity, like calling
-     * [Context.startActivity(Intent)][Context.startActivity].
-     * Note that the activity will be started outside of the context of an
-     * existing activity, so you must use the [ Intent.FLAG_ACTIVITY_NEW_TASK][Intent.FLAG_ACTIVITY_NEW_TASK] launch flag in the Intent.
-     *
-     *
-     * For security reasons, the [android.content.Intent]
-     * you supply here should almost always be an *explicit intent*,
-     * that is specify an explicit component to be delivered to through
-     * [Intent.setClass]
-     *
-     * @param context The Context in which this PendingIntent should start
-     * the activity.
-     * @param requestCode Private request code for the sender
-     * @param intent Intent of the activity to be launched.
-     * @param flags May be [PendingIntent.FLAG_ONE_SHOT], [PendingIntent.FLAG_NO_CREATE],
-     * [PendingIntent.FLAG_CANCEL_CURRENT], [PendingIntent.FLAG_UPDATE_CURRENT],
-     * or any of the flags as supported by
-     * [Intent.fillIn()][Intent.fillIn] to control which unspecified parts
-     * of the intent that can be supplied when the actual send happens.
-     *
-     * @return Returns an existing or new PendingIntent matching the given
-     * parameters.  May return null only if [PendingIntent.FLAG_NO_CREATE] has been
-     * supplied.
-     */
-    fun getImmutableActivityIntent(context: Context, requestCode: Int, intent: Intent, @PendingIntentFlags flags: Int): PendingIntent
-
-    /**
-     * Retrieve a PendingIntent that will perform a broadcast, like calling
-     * [Context.sendBroadcast()][Context.sendBroadcast].
-     *
-     *
-     * For security reasons, the [android.content.Intent]
-     * you supply here should almost always be an *explicit intent*,
-     * that is specify an explicit component to be delivered to through
-     * [Intent.setClass]
-     *
-     * @param context The Context in which this PendingIntent should perform
-     * the broadcast.
-     * @param requestCode Private request code for the sender
-     * @param intent The Intent to be broadcast.
-     * @param flags May be [PendingIntent.FLAG_ONE_SHOT], [PendingIntent.FLAG_NO_CREATE],
-     * [PendingIntent.FLAG_CANCEL_CURRENT], [PendingIntent.FLAG_UPDATE_CURRENT],
-     * [PendingIntent.FLAG_IMMUTABLE] or any of the flags as supported by
-     * [Intent.fillIn()][Intent.fillIn] to control which unspecified parts
-     * of the intent that can be supplied when the actual send happens.
-     *
-     * @return Returns an existing or new PendingIntent matching the given
-     * parameters.  May return null only if [PendingIntent.FLAG_NO_CREATE] has been
-     * supplied.
-     */
-    fun getImmutableBroadcastIntent(context: Context, requestCode: Int, intent: Intent, @PendingIntentFlags flags: Int): PendingIntent
-
     /**
      * Writes an image represented by bitmap to the Pictures/AnkiDroid directory under the primary
      * external storage directory. Requires the WRITE_EXTERNAL_STORAGE permission to be obtained on devices running
@@ -290,13 +198,6 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun contentOfDirectory(directory: File): FileStream
-
-    /**
-     * Read into an existing List object from the parcel at the current
-     * dataPosition(), using the given class loader to load any enclosed
-     * Parcelables.  If it is null, the default class loader is used.
-     */
-    fun <T> readList(parcel: Parcel, outVal: MutableList<in T>, classLoader: ClassLoader?, clazz: Class<T>)
 
     companion object {
         /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */

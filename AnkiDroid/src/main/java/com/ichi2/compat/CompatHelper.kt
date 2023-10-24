@@ -23,9 +23,6 @@ import android.content.pm.PackageManager.NameNotFoundException
 import android.content.pm.ResolveInfo
 import android.os.Build
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.SparseArray
 import android.view.KeyCharacterMap.deviceHasKey
 import android.view.KeyEvent.*
 import com.ichi2.compat.CompatHelper.Companion.compat
@@ -48,8 +45,7 @@ class CompatHelper private constructor() {
         sdkVersion >= Build.VERSION_CODES.S -> CompatV31()
         sdkVersion >= Build.VERSION_CODES.Q -> CompatV29()
         sdkVersion >= Build.VERSION_CODES.O -> CompatV26()
-        sdkVersion >= Build.VERSION_CODES.M -> CompatV23()
-        else -> CompatV21()
+        else -> CompatV23()
     }
 
     companion object {
@@ -59,10 +55,6 @@ class CompatHelper private constructor() {
         /** Get the current Android API level.  */
         val sdkVersion: Int
             get() = Build.VERSION.SDK_INT
-
-        /** Determine if the device is running API level 23 or higher.  */
-        val isMarshmallow: Boolean
-            get() = sdkVersion >= Build.VERSION_CODES.M
 
         /**
          * Main public method to get the compatibility class
@@ -78,10 +70,6 @@ class CompatHelper private constructor() {
         val isKindle: Boolean
             get() = "amazon".equals(Build.BRAND, ignoreCase = true) || "amazon".equals(Build.MANUFACTURER, ignoreCase = true)
 
-        fun hasKanaAndEmojiKeys(): Boolean {
-            return deviceHasKey(KEYCODE_SWITCH_CHARSET) && deviceHasKey(KEYCODE_PICTSYMBOLS)
-        }
-
         fun hasScrollKeys(): Boolean {
             return deviceHasKey(KEYCODE_PAGE_UP) || deviceHasKey(KEYCODE_PAGE_DOWN)
         }
@@ -93,18 +81,6 @@ class CompatHelper private constructor() {
         @Suppress("unused")
         inline fun <reified T : Serializable?> Intent.getSerializableExtraCompat(name: String): T? {
             return compat.getSerializableExtra(this, name, T::class.java)
-        }
-
-        inline fun <reified T : Parcelable> Intent.getParcelableExtraCompat(name: String): T? {
-            return compat.getParcelableExtra(this, name, T::class.java)
-        }
-
-        inline fun <reified T : Parcelable> Bundle.getParcelableArrayListCompat(key: String, clazz: Class<T>): ArrayList<T>? {
-            return compat.getParcelableArrayList(this, key, clazz)
-        }
-
-        inline fun <reified T> Parcel.readSparseArrayCompat(loader: ClassLoader, clazz: Class<T>): SparseArray<T>? {
-            return compat.readSparseArray(this, loader, clazz)
         }
 
         /**
@@ -128,10 +104,6 @@ class CompatHelper private constructor() {
         @Throws(NameNotFoundException::class)
         fun PackageManager.getPackageInfoCompat(packageName: String, flags: PackageInfoFlagsCompat): PackageInfo? =
             compat.getPackageInfo(this, packageName, flags)
-
-        inline fun <reified T> Parcel.readSerializableCompat(): T? {
-            return compat.readSerializable(this, T::class.java.classLoader, T::class.java)
-        }
 
         /**
          * Determine the best service to handle for a given Intent.
@@ -167,43 +139,32 @@ class CompatHelper private constructor() {
         }
 
         /**
-         * Returns the value associated with the given key or `null` if:
-         *  * No mapping of the desired type exists for the given key.
-         *  * A `null` value is explicitly associated with the key.
-         *  * The object is not of type `T`.
+         * Determine the best action to perform for a given Intent. This is how
+         * resolveActivity finds an activity if a class has not been
+         * explicitly specified.
          *
-         * **Note: ** if the expected value is not a class provided by the Android platform,
-         * you must call [.setClassLoader] with the proper [ClassLoader] first.
-         * Otherwise, this method might throw an exception or return `null`.
+         * Note: if using an implicit Intent (without an explicit
+         * ComponentName specified), be sure to consider whether to set the
+         * MATCH_DEFAULT_ONLY only flag. You need to do so to resolve the
+         * activity in the same way that
+         * android.content.Context#startActivity(Intent) and
+         * android.content.Intent#resolveActivity(PackageManager)
+         * Intent.resolveActivity(PackageManager) do.
          *
-         * @param key a String, or `null`
-         * @return a Parcelable value, or `null`
+         * @param intent An intent containing all of the desired specification
+         *            (action, data, type, category, and/or component).
+         * @param flags Additional option flags to modify the data returned. The
+         *            most important is MATCH_DEFAULT_ONLY, to limit the
+         *            resolution to only those activities that support the
+         *            android.content.Intent#CATEGORY_DEFAULT.
+         * @return Returns a ResolveInfo object containing the final activity intent
+         *         that was determined to be the best action. Returns null if no
+         *         matching activity was found. If multiple matching activities are
+         *         found and there is no default set, returns a ResolveInfo object
+         *         containing something else, such as the activity resolver.
          */
-        inline fun <reified T> Bundle.getParcelableCompat(key: String): T? {
-            return compat.getParcelable(this, key, T::class.java)
-        }
-
-        /**
-         * Read into an existing List object from the parcel at the current
-         * dataPosition(), using the given class loader to load any enclosed
-         * Parcelables.  If it is null, the default class loader is used.
-         */
-        inline fun <reified T> Parcel.readListCompat(outVal: MutableList<in T>) {
-            compat.readList(this, outVal, T::class.java.classLoader, T::class.java)
-        }
-
-        /**
-         * Returns the value associated with the given key, or null if:
-         *
-         * * No mapping of the desired type exists for the given key.
-         * * A null value is explicitly associated with the key.
-         * * The object is not of type T.
-         *
-         * @param key a String, or null
-         * @return a [SparseArray] of T values, or null
-         */
-        inline fun <reified T : Parcelable> Bundle.getSparseParcelableArrayCompat(key: String): SparseArray<T>? {
-            return compat.getSparseParcelableArray(this, key, T::class.java)
+        fun PackageManager.resolveActivityCompat(intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo? {
+            return compat.resolveActivity(this, intent, flags)
         }
     }
 }

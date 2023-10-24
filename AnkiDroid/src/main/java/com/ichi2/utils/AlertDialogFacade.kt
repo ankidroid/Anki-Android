@@ -22,6 +22,7 @@ import android.content.DialogInterface
 import android.content.DialogInterface.OnClickListener
 import android.view.View
 import android.widget.CheckBox
+import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
@@ -156,4 +157,25 @@ fun AlertDialog.Builder.checkBoxPrompt(
     }
 
     return this.setView(checkBoxView)
+}
+
+fun AlertDialog.Builder.customView(
+    view: View,
+    paddingTop: Int = 0,
+    paddingBottom: Int = 0,
+    paddingLeft: Int = 0,
+    paddingRight: Int = 0
+): AlertDialog.Builder {
+    val container = FrameLayout(context)
+
+    val containerParams = FrameLayout.LayoutParams(
+        FrameLayout.LayoutParams.MATCH_PARENT,
+        FrameLayout.LayoutParams.WRAP_CONTENT
+    )
+
+    container.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+    container.addView(view, containerParams)
+    setView(container)
+
+    return this
 }

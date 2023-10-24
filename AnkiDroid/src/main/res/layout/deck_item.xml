@@ -56,6 +56,7 @@
             android:background="@color/transparent"
             android:gravity="start|center_vertical"
             android:maxLines="2"
+            android:ellipsize="end"
             android:textColor="?android:textColorPrimary"
             android:textSize="20sp"
             android:textStyle="bold"

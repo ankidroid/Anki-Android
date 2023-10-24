@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">현재 오프라인 상태입니다</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">동기화 오류</string>
     <string name="vague_error" comment="Network error dialog title">오류</string>
     <string name="retry">재시도</string>
@@ -63,55 +62,15 @@
     <string name="sign_up">가입</string>
     <string name="logged_as">다음 사용자로 로그인 됨</string>
     <string name="log_out">로그아웃</string>
-    <string name="alert_logging_message">로그인하는 중, 잠시 기다려 주십시오...</string>
-    <string name="invalid_username_password">잘못된 이메일 주소 혹은 암호입니다.</string>
     <string name="reset_password">암호 재설정</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">XXX 옵션</string>
-    <string name="sync_prepare_syncing">동기화 준비 중...</string>
-    <string name="sync_preparing_full_sync_message">전체 동기화를 준비하는 중...</string>
-    <string name="sync_uploading_message">업로드 중...</string>
-    <string name="sync_downloading_message">다운로드 중...</string>
     <string name="sync_title">동기화</string>
     <string name="sync_log_uploading_message">기기 기준 전체 동기화</string>
-    <string name="sync_log_clocks_unsynchronized">장치의 시각이 다음만큼 올바르지 않습니다 : %1$d seconds%2$s; 동기화 시 오류를 피하기 위해서 시각과 시간대 둘 다 올바르게 설정해야 합니다. 휴대전화의 날짜, 시각, 시간대를 올바르게 설정했는지 확인하시고 다시 동기화를 시도하세요.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">,기기 표준 시간대 오류 가능성</string>
-    <string name="sync_log_clocks_unsynchronized_date">,기기 날짜 오류 가능성</string>
-    <string name="sync_no_changes_message">변경사항이 없습니다.</string>
     <string name="sync_database_acknowledge">컬렉션 동기화됨</string>
-    <string name="sync_log_error_specific">동기화 오류, 종류: %1$s, 메시지: %2$s</string>
     <string name="sync_corrupt_database">데이터베이스가 손상되었습니다. 동기화 재시도 전에 문제를 수정하십시오. \n\n 데이터베이스 수정을 위해서는 %s 를 참고하세요.</string>
-    <string name="sync_too_busy">서버 폭주: 잠시 후 다시 시도해 보세요.</string>
-    <string name="sync_remote_db_error">다운로드한 데이터베이스 파일이 손상되었습니다. 다시 시도 하십시오.</string>
-    <string name="sync_overwrite_error">다운로드한 파일을 현재 컬렉션 파일에 덮어쓸 수 없습니다.</string>
-    <string name="sync_connection_error">연결 시간이 초과되었습니다. 인터넷 연결 상태에 문제가 있거나 미디어 폴더에 매우 큰 용량의 파일이 있는 것 같습니다.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">삭제 내용 동기화...</string>
-    <string name="sync_small_objects_message">오브젝트 동기화...</string>
-    <string name="sync_finish_message">동기화 종료 중...</string>
-    <string name="sync_log_finish_error">동기화 중 오류가 발생했습니다</string>
-    <string name="sync_writing_db">데이터베이스에 변경 내용을 쓰는 중...</string>
-    <string name="sync_download_chunk">변경 내용 다운로드...</string>
-    <string name="sync_upload_chunk">변경 내용을 업로드 중...</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
-    <string name="sync_generic_error">오류가 발생 했습니다. 나중에 다시 시도하십시오.</string>
-    <string name="sync_check_upload_file">업로드 전 파일 확인 중...</string>
-    <string name="sync_check_download_file">다운로드 파일 점검 중...</string>
-    <string name="sync_media_find">변경된 미디어 파일 찾는중...</string>
-    <string name="sync_media_no_changes">변경된 미디어 파일이 없습니다.</string>
-    <string name="sync_media_success">미디어 파일이 성공적으로 동기화 되었습니다.</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d개의 업로드할 미디어 변경 사항</string>
-    <string name="sync_media_downloaded_count">%d개의 미디어 파일 다운로드됨</string>
-    <string name="sync_sanity_failed">동기화 후에, 컬렉션이 불안정한 상태에 있습니다. 이 문제를 해결하기 위해, AnkiDroid는 완전 동기화를 시도할 것입니다. 어느 쪽을 유지하고 싶은지 선택해주세요. 나중에 동기화하고 싶다면 취소를 누르세요.</string>
-    <string name="sync_media_sanity_failed">미디어 동기화는 마쳤지만, 미디어 갯수가 서버와 맞지 않습니다. 오류를 해결하기 위해 다음에는 미디어 완전 동기화가 필요합니다.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">미디어 데이터 동기화 에러.</string>
-    <string name="sync_media_error_check">미디어 동기화 도중 오류가 발생했습니다. 미디어 점검을 하는 것이 좋습니다.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">장치</string>
     <string name="sync_sanity_remote">서버</string>
     <string name="force_full_sync_title">강제로 전체 동기화</string>
@@ -119,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">요청된 변경 사항은 다음에 컬렉션 동기화를 할 때 전체 업로드를 필요로 합니다. 만약 아직 동기화되지 않은, 다른 기기에서 대기중인 변경 사항이나 복습 사항이 있다면 손실됩니다. 계속할까요?</string>
     <string name="full_sync_confirmation_upgrade">이전에 설치된 버전의 AnkiDroid 버그로 인해, 강제 전체 동기화를 하는 것이 좋습니다.</string>
-    <string name="sync_error_407_proxy_required">Proxy authentication required.</string>
-    <string name="sync_error_409">한번에 단 하나의 클라이언트만 AnkiWeb에 접속할 수 있습니다. 만약 이전의 동기화가 실패했다면 몇 분 뒤에 다시 시도하세요.</string>
-    <string name="sync_error_413_collection_size">컬렉션 또는 미디어 파일의 용량이 너무 커서 동기화를 할 수 없습니다.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
-    <string name="sync_error_501_upgrade_required">최신 버전의 AnkiDroid로 업그레이드 하세요</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

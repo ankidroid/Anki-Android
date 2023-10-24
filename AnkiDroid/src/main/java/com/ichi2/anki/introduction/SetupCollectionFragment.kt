@@ -39,13 +39,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.setFragmentResult
 import com.ichi2.anki.R
 import com.ichi2.anki.introduction.SetupCollectionFragment.CollectionSetupOption.*
-import com.ichi2.compat.CompatHelper.Companion.getParcelableCompat
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -97,7 +97,7 @@ class SetupCollectionFragment : Fragment() {
         /** Handles a result from a [SetupCollectionFragment] */
         fun FragmentActivity.handleCollectionSetupOption(handleResult: (CollectionSetupOption) -> Unit) {
             supportFragmentManager.setFragmentResultListener(FRAGMENT_KEY, this) { _, b ->
-                val item = b.getParcelableCompat<CollectionSetupOption>(RESULT_KEY)!!
+                val item = BundleCompat.getParcelable(b, RESULT_KEY, CollectionSetupOption::class.java)!!
                 handleResult(item)
             }
         }

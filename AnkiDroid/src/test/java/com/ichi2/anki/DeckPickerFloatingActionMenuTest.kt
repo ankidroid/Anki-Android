@@ -53,6 +53,10 @@ class DeckPickerFloatingActionMenuTest {
 
     @Mock private val mAddDeckLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
+    @Mock private val mAddFilteredDeckLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+
+    @Mock private val addNoteLabel: TextView = mock(defaultAnswer = Answers.RETURNS_MOCKS)
+
     @Mock private val mAddNoteLayout: LinearLayout = mock(defaultAnswer = Answers.RETURNS_MOCKS)
 
     @Mock private val mFabBGLayout: View = mock()
@@ -69,11 +73,13 @@ class DeckPickerFloatingActionMenuTest {
 
     @Mock private val addDeckButton: FloatingActionButton = mock()
 
-    @Mock private val addNoteLabel: TextView = mock()
+    @Mock private val addFilteredDeckButton: FloatingActionButton = mock()
 
     @Mock private val addSharedLabel: TextView = mock()
 
     @Mock private val addDeckLabel: TextView = mock()
+
+    @Mock private val addFilteredDeckLabel: TextView = mock()
 
     @InjectMocks
     private lateinit var menu: DeckPickerFloatingActionMenu
@@ -89,17 +95,18 @@ class DeckPickerFloatingActionMenuTest {
             on { findViewById<FloatingActionButton>(R.id.fab_main) } doReturn mFabMain
             on { findViewById<LinearLayout>(R.id.add_shared_layout) } doReturn mAddSharedLayout
             on { findViewById<LinearLayout>(R.id.add_deck_layout) } doReturn mAddDeckLayout
-            on { findViewById<LinearLayout>(R.id.add_note_layout) } doReturn mAddNoteLayout
+            on { findViewById<LinearLayout>(R.id.add_filtered_deck_layout) } doReturn mAddFilteredDeckLayout
             on { findViewById<View>(R.id.fabBGLayout) } doReturn mFabBGLayout
             on { findViewById<LinearLayout>(R.id.deckpicker_view) } doReturn mLinearLayout
             on { findViewById<View>(R.id.studyoptions_fragment) } doReturn mStudyOptionsFrame
+            on { findViewById<TextView>(R.id.add_note_label) } doReturn addNoteLabel
 
-            on { findViewById<FloatingActionButton>(R.id.add_note_action) } doReturn addNoteButton
             on { findViewById<FloatingActionButton>(R.id.add_shared_action) } doReturn addSharedButton
             on { findViewById<FloatingActionButton>(R.id.add_deck_action) } doReturn addDeckButton
-            on { findViewById<TextView>(R.id.add_note_label) } doReturn addNoteLabel
+            on { findViewById<FloatingActionButton>(R.id.add_filtered_deck_action) } doReturn addDeckButton
             on { findViewById<TextView>(R.id.add_shared_label) } doReturn addSharedLabel
             on { findViewById<TextView>(R.id.add_deck_label) } doReturn addDeckLabel
+            on { findViewById<TextView>(R.id.add_filtered_deck_label) } doReturn addDeckLabel
         }
         menu = DeckPickerFloatingActionMenu(ApplicationProvider.getApplicationContext(), view, deckPicker)
     }
@@ -121,6 +128,6 @@ class DeckPickerFloatingActionMenuTest {
 
         mFabMain.simulateUnconfirmedSingleTap()
 
-        assertFalse("after a second tap, menu should not be open") { menu.isFABOpen }
+        verify(deckPicker).addNote() // On single tap when FAB is already opened, it opens Add Note.
     }
 }

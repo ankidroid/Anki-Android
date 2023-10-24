@@ -17,9 +17,6 @@
 package com.ichi2.utils
 
 import android.os.Looper
-import androidx.annotation.UiThread
-import androidx.annotation.WorkerThread
-import timber.log.Timber
 import java.lang.RuntimeException
 
 /**
@@ -44,24 +41,4 @@ object Threads {
                     throw exc
                 }
             }
-
-    /**
-     * Checks that it is called from the main thread and fails if it is called from another thread.
-     */
-    @UiThread
-    fun checkMainThread() {
-        if (!isOnMainThread) {
-            Timber.e("must be called on the main thread instead of %s", Thread.currentThread())
-        }
-    }
-
-    /**
-     * Checks that it is not called from the main thread and fails if it is.
-     */
-    @WorkerThread
-    fun checkNotMainThread() {
-        if (isOnMainThread) {
-            Timber.e("must not be called on the main thread")
-        }
-    }
 }

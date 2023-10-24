@@ -43,32 +43,20 @@
     <string name="multimedia_editor_popup_image">画像を追加</string>
     <string name="multimedia_editor_popup_audio_clip">音声ファイルを追加</string>
     <string name="multimedia_editor_popup_video_clip">動画ファイルを追加</string>
-    <string name="multimedia_editor_popup_audio">録音音声</string>
+    <string name="multimedia_editor_popup_audio">録音</string>
     <string name="multimedia_editor_popup_text">高度な編集</string>
-    <string name="multimedia_editor_popup_cloze">穴埋め問題</string>
-    <string name="multimedia_editor_popup_clear_field">フィールドを消去</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">読み込み</string>
-    <string name="multimedia_editor_pron_looking_up">発音を検索しています...</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">発音に失敗しました</string>
-    <string name="multimedia_editor_only_one_word">１度に１単語のみ読み込み可能です。単語２語以上は読み込めません。</string>
-    <string name="multimedia_editor_word_search_try_lower_case">小文字のみ使用してください</string>
-    <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
+    <string name="multimedia_editor_popup_cloze">穴埋め箇所</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">テキスト</string>
     <string name="multimedia_editor_field_editing_image">画像</string>
-    <string name="multimedia_editor_field_editing_audio">音声を録音</string>
+    <string name="multimedia_editor_field_editing_audio">録音</string>
     <string name="multimedia_editor_field_editing_audio_clip">音声・動画のファイルを添付</string>
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">完了</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">発音</string>
     <string name="multimedia_editor_text_field_editing_clear">消去</string>
     <string name="multimedia_editor_text_field_editing_clone">複製</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">先にテキストを入力してください</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">引用する</string>
     <!-- Multimedia card editor activity -->
@@ -81,22 +69,12 @@
     <string name="multimedia_editor_import_audio">音声</string>
     <string name="multimedia_editor_import_video">動画</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">ダウンロード中...</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">完了</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">単語が見つかりません</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">単語を検索しています...</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">しばらくお待ちください</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">予期しないエラーが発生しました</string>
     <string name="multimedia_editor_svg_preview">SVG形式のファイルはプレビューできません</string>
     <string name="multimedia_editor_png_paste_error">クリップボードの画像をPNG形式に変換中にエラーが発生しました: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">ﾌｨｰﾙﾄﾞ「%1$s」にﾏﾙﾁﾒﾃﾞｨｱｺﾝﾃﾝﾂを添付</string>
-    <string name="multimedia_editor_attach_media">メディアを貼付け</string>
+    <string name="multimedia_editor_attach_media">メディアを追加</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">録音に失敗しました</string>
@@ -104,13 +82,11 @@
     <string name="multimedia_editor_audio_view_create_failed">録音ツールバーを作成できません</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">フィールド編集</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">ネットワークに接続されていません</string>
     <!-- Crop function-->
     <string name="crop_image">この画像をトリミングしますか？</string>
-    <string name="crop_button">画像のトリミング</string>
-    <string name="save_dialog_content">現在の画像サイズは %sMB です。画像サイズ制限は 1MB です。トリミングしますか？</string>
-    <string name="select_image_failed">"画像の選択に失敗しました。再試行してください。"</string>
+    <string name="crop_button">画像の回転とトリミング</string>
+    <string name="save_dialog_content">現在の画像サイズは%sMBですが、1MB未満にすることを推奨します。画像サイズを減らすためトリミングしますか？</string>
+    <string name="select_image_failed">"画像の選択に失敗しました。もう一度試してください"</string>
     <string name="activity_result_unexpected">予期しないエラーが発生しました。別のアプリを使用する必要があるかもしれません。</string>
     <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">フィールドの内容</string>
 </resources>

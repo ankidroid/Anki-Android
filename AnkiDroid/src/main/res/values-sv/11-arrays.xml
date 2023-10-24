@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Fråga mig</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Endast etikett</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Nya kort i slumpmässig ordning</string>
-    <string name="new_order_order_added">Nya kort i ordningen de lades till</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Äldst först</string>
     <string name="cram_deck_conf_order_random">Slumpmässigt</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Använd nuvarande kortlek</string>
     <string name="add_to_deck_decide_by_note_type">Välj efter nottyp</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Blanda nya kort och repetitionskort</string>
-    <string name="new_spread_new_after_review">Nya kort efter repetitioner</string>
-    <string name="new_spread_new_before_review">Nya kort före repetitioner</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">När inget typsnitt angetts på flashkort</string>
-    <string name="override_font_always" comment="Option to always override font">Alltid</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Follow system</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Svarsknapp 1</string>
-    <string name="gesture_answer_2">Svarsknapp 2</string>
-    <string name="gesture_answer_3">Svarsknapp 3</string>
-    <string name="gesture_answer_4">Svarsknapp 4</string>
-    <string name="gesture_answer_green">Rekommenderat svar (grön)</string>
-    <string name="gesture_answer_better_recommended">Svar bättre än rekommenderat</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Spela upp media</string>
     <string name="gesture_abort_learning">Avbryt inlärning</string>
     <string name="gesture_flag_red">Växla Röd Flagga</string>

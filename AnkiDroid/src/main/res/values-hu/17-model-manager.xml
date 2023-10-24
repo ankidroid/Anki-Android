@@ -37,17 +37,16 @@
     <!--Plurals-->
     <plurals name="model_browser_types_available">
         <item quantity="one">%d féle jegyzettípus</item>
-        <item quantity="other">%d féle jegyzettípus</item>
+        <item quantity="other">%d jegyzettípus elérhető</item>
     </plurals>
     <plurals name="model_browser_of_type">
         <item quantity="one">%d jegyzet</item>
         <item quantity="other">%d jegyzet</item>
     </plurals>
     <!--Browser-->
-    <string name="model_browser_delete">Megjegyzéstípus törlése</string>
+    <string name="model_browser_delete">Jegyzettípus törlése</string>
     <string name="model_browser_rename" comment="Rename a note type">Átnevezés</string>
     <string name="model_browser_template">Kártya szerkesztése</string>
-    <string name="model_browser_add">Jegyzettípus hozzáadása</string>
     <!--Rename-->
     <string name="rename_model">Jegyzettípus átnevezése</string>
     <!--Language Hint-->
@@ -57,29 +56,28 @@
     <string name="model_field_editor_add">Mező hozzáadása</string>
     <string name="model_field_editor_delete">Mező törlése</string>
     <string name="model_field_editor_rename">Mező átnevezése</string>
-    <string name="model_field_editor_language_hint">Billentyű nyelvi javaslat beállítás</string>
+    <string name="model_field_editor_language_hint">Billentyűzet nyelvi javaslat beállítás</string>
     <string name="model_field_editor_reposition_menu">Áthelyezési mező</string>
-    <string name="model_field_editor_reposition">Áthelyezési mező (írd be a következő értéket: %1$d–%2$d)</string>
+    <string name="model_field_editor_reposition">Áthelyezési mező (írj be egy értéket: %1$d–%2$d)</string>
     <string name="model_field_editor_toggle_sticky">A beviteli érték megjegyzése hozzáadáskor</string>
-    <string name="model_field_editor_changing">A mezők frissítése</string>
-    <string name="model_field_editor_sort_field">Rendezd ezt a mezőt</string>
-    <string name="model_clone_suffix">másolás</string>
+    <string name="model_field_editor_changing">Mezők frissítése</string>
+    <string name="model_field_editor_sort_field">Aktuális mező szerinti rendezés</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Tényleg törölni akarod ezt a jegyzettípust?</string>
-    <string name="field_delete_warning">Tényleg törölni szeretnéd ezt a mezőt?</string>
+    <string name="model_delete_warning">Biztosan törölni akarja ezt a jegyzettípust?</string>
+    <string name="field_delete_warning">Biztosan törölni akarja ezt a mezőt?</string>
     <!--Model Add Suffixes-->
-    <string name="model_browser_add_add">Hozzáad: %1$s </string>
+    <string name="model_browser_add_add">Hozzáadás: %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Klón: %1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Írd be a sablont, amit a kártya böngésző használni fog, hogy megjelenítse a kártyákat. Használt ezt, hogy tömörebb választ kapj.\n\nAz első oldali sablonon található \n\"A {{Country}}-nak a fővárosa:\"\na kártya böngészőben tömörítve így néz ki\n\"Főváros: {{Country}}\"</string>
-    <string name="card_template_browser_appearance_question_format">Kérdés formátum</string>
-    <string name="card_template_browser_appearance_answer_format">Válasz formátum</string>
+    <string name="card_template_browser_appearance_summary">Írja be a mintát, amit a kártya böngésző használni fog, hogy megjelenítse a kártyákat. Használja ezt, hogy tömörebb választ kapjon.\n\nAz első oldali sablonon található \n\"{{Country}} fővárosa:\"\na kártya böngészőben tömörítve így néz ki\n\"Főváros: {{Country}}\"</string>
+    <string name="card_template_browser_appearance_question_format">Kérdés formátuma</string>
+    <string name="card_template_browser_appearance_answer_format">Válasz formátuma</string>
     <string name="card_template_browser_appearance_restore_default_dialog">Vissza akarja állítani az eredeti értékeket?</string>
-    <string name="card_template_browser_appearance_saving_note">Ezek a változások a kártya sablon mentésénél lépnek életbe</string>
+    <string name="card_template_browser_appearance_saving_note">Ezek a változtatások a sablon mentésénél lépnek életbe</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Pakli Felülírása (be)</string>
-    <string name="card_template_editor_deck_override_off">Pakli Felülírása (ki)</string>
+    <string name="card_template_editor_deck_override_on">Pakli felülírása (be)</string>
+    <string name="card_template_editor_deck_override_off">Pakli felülírása (ki)</string>
     <string name="model_manager_deck_override_added_message">Állítsa az alapértelmezett  ‘%1$s’  pakli értékét,  ‘%2$s’ értékre</string>
     <string name="model_manager_deck_override_removed_message">Az alapértelmezett  ‘%s’ pakli eltávolításra került</string>
     <string name="deck_override_explanation">Válasszon egy paklit az új ‘%s’ kártyáknak</string>

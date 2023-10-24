@@ -101,21 +101,6 @@ fun getCoroutineExceptionHandler(activity: Activity, errorMessage: String? = nul
     }
 
 /**
- * Calls [runBlocking] while catching errors with [runCatchingTask].
- * This routine has a niche use case - it allows us to integrate coroutines into NanoHTTPD, which runs
- * request handlers in a synchronous context on a background thread. In most cases, you will want
- * to use [FragmentActivity.launchCatchingTask] instead.
- */
-fun <T> FragmentActivity.runBlockingCatching(
-    errorMessage: String? = null,
-    block: suspend CoroutineScope.() -> T?
-): T? {
-    return runBlocking {
-        runCatchingTask(errorMessage) { block() }
-    }
-}
-
-/**
  * Launch a job that catches any uncaught errors and reports them to the user.
  * Errors from the backend contain localized text that is often suitable to show to the user as-is.
  * Other errors should ideally be handled in the block.
@@ -136,20 +121,6 @@ fun Fragment.launchCatchingTask(
 ): Job {
     return lifecycle.coroutineScope.launch {
         requireActivity().runCatchingTask(errorMessage) { block() }
-    }
-}
-
-/** Launches a [CollectionManager.withCol] job while catching its errors with [launchCatchingTask] */
-fun <T> FragmentActivity.launchWithCol(block: Collection.() -> T): Job {
-    return launchCatchingTask {
-        withCol { block() }
-    }
-}
-
-/** See [FragmentActivity.launchWithCol] */
-fun <T> Fragment.launchWithCol(block: Collection.() -> T): Job {
-    return launchCatchingTask {
-        withCol { block() }
     }
 }
 
@@ -255,9 +226,10 @@ suspend fun <T> Fragment.withProgress(@StringRes messageId: Int, block: suspend 
     requireActivity().withProgress(messageId, block)
 
 @Suppress("Deprecation") // ProgressDialog deprecation
-private suspend fun <T> withProgressDialog(
+suspend fun <T> withProgressDialog(
     context: Activity,
     onCancel: (() -> Unit)?,
+    delayMillis: Long = 600,
     op: suspend (android.app.ProgressDialog) -> T
 ): T = coroutineScope {
     val dialog = android.app.ProgressDialog(context).apply {
@@ -270,7 +242,7 @@ private suspend fun <T> withProgressDialog(
     context.window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     // reveal the dialog after 600ms
     val dialogJob = launch {
-        delay(600)
+        delay(delayMillis)
         dialog.show()
     }
     try {

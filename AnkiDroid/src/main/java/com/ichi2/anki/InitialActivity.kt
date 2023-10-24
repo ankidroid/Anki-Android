@@ -16,20 +16,24 @@
 
 package com.ichi2.anki
 
-import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
+import android.os.Environment
+import android.os.Parcelable
 import androidx.annotation.CheckResult
+import androidx.annotation.RequiresApi
 import androidx.core.content.edit
-import com.ichi2.anki.permissions.PermissionManager
-import com.ichi2.anki.permissions.PermissionsRequestResults
-import com.ichi2.anki.permissions.finishActivityAndShowAppPermissionManagementScreen
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService
 import com.ichi2.anki.servicelayer.PreferenceUpgradeService.setPreferencesUpToDate
-import com.ichi2.annotations.NeedsTest
+import com.ichi2.anki.servicelayer.ScopedStorageService.isLegacyStorage
+import com.ichi2.anki.ui.windows.permissions.Full30and31PermissionsFragment
+import com.ichi2.anki.ui.windows.permissions.PermissionsFragment
+import com.ichi2.anki.ui.windows.permissions.PermissionsUntil29Fragment
+import com.ichi2.anki.ui.windows.permissions.TiramisuPermissionsFragment
 import com.ichi2.utils.Permissions
 import com.ichi2.utils.VersionUtils.pkgVersionName
+import kotlinx.parcelize.Parcelize
 import timber.log.Timber
 
 /** Utilities for launching the first activity (currently the DeckPicker)  */
@@ -43,7 +47,7 @@ object InitialActivity {
         }
 
         // If we're OK, return null
-        if (CollectionHelper.instance.getColSafe(context, reportException = false) != null) {
+        if (CollectionHelper.instance.tryGetColUnsafe(context, reportException = false) != null) {
             return null
         }
         if (!AnkiDroidApp.isSdCardMounted) {
@@ -66,7 +70,7 @@ object InitialActivity {
 
     /** @return Whether any preferences were upgraded
      */
-    fun upgradePreferences(context: Context?, previousVersionCode: Long): Boolean {
+    fun upgradePreferences(context: Context, previousVersionCode: Long): Boolean {
         return PreferenceUpgradeService.upgradePreferences(context, previousVersionCode)
     }
 
@@ -123,19 +127,15 @@ object InitialActivity {
     }
 }
 
-/**
- * Whether we should try a startup with a permission dialog + folder which is safe from uninstalling
- * or go straight into AnkiDroid
- */
-sealed interface AnkiDroidFolder {
+sealed class AnkiDroidFolder(val permissionSet: PermissionSet) {
     /**
      * AnkiDroid will use the folder ~/AnkiDroid by default
-     * To access it, we must first get [requiredPermissions].
+     * To access it, we must first get [permissionSet].permissions.
      * This folder is not deleted when the user uninstalls the app, which reduces the risk of data loss,
      * but increase the risk of space used on their storage when they don't want to.
      * It can not be used on the play store starting with Sdk 30.
      **/
-    class PublicFolder(val requiredPermissions: Array<String>) : AnkiDroidFolder
+    class PublicFolder(requiredPermissions: PermissionSet) : AnkiDroidFolder(requiredPermissions)
 
     /**
      * AnkiDroid will use the app-private folder: `~/Android/data/com.ichi2.anki[.A]/files/AnkiDroid`.
@@ -143,7 +143,27 @@ sealed interface AnkiDroidFolder {
      * No permission dialog is required.
      * Google will not allow [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE], so this is default on the Play Store.
      */
-    object AppPrivateFolder : AnkiDroidFolder
+    object AppPrivateFolder : AnkiDroidFolder(PermissionSet.APP_PRIVATE)
+
+    fun hasRequiredPermissions(context: Context): Boolean {
+        return Permissions.hasAllPermissions(context, permissionSet.permissions)
+    }
+}
+
+@Parcelize
+enum class PermissionSet(val permissions: List<String>, val permissionsFragment: Class<out PermissionsFragment>?) : Parcelable {
+    LEGACY_ACCESS(Permissions.legacyStorageAccessPermissions, PermissionsUntil29Fragment::class.java),
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    EXTERNAL_MANAGER(listOf(Permissions.MANAGE_EXTERNAL_STORAGE), Full30and31PermissionsFragment::class.java),
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    TIRAMISU_EXTERNAL_MANAGER(
+        permissions = listOf(Permissions.MANAGE_EXTERNAL_STORAGE),
+        permissionsFragment = TiramisuPermissionsFragment::class.java
+    ),
+
+    APP_PRIVATE(emptyList(), null);
 }
 
 /**
@@ -152,137 +172,36 @@ sealed interface AnkiDroidFolder {
  * When impossible, we use the app-private directory.
  * See https://github.com/ankidroid/Anki-Android/issues/5304 for more context.
  */
-internal fun selectAnkiDroidFolder(canManageExternalStorage: Boolean): AnkiDroidFolder {
-    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+internal fun selectAnkiDroidFolder(
+    canManageExternalStorage: Boolean,
+    currentFolderIsAccessibleAndLegacy: Boolean
+): AnkiDroidFolder {
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q || currentFolderIsAccessibleAndLegacy) {
         // match AnkiDroid behaviour before scoped storage - force the use of ~/AnkiDroid,
         // since it's fast & safe up to & including 'Q'
         // If a user upgrades their OS from Android 10 to 11 then storage speed is severely reduced
         // and a user should use one of the below options to provide faster speeds
-        return AnkiDroidFolder.PublicFolder(
-            arrayOf(
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        )
+        return AnkiDroidFolder.PublicFolder(PermissionSet.LEGACY_ACCESS)
     }
 
     // If the user can manage external storage, we can access the safe folder & access is fast
     return if (canManageExternalStorage) {
-        AnkiDroidFolder.PublicFolder(arrayOf(Manifest.permission.MANAGE_EXTERNAL_STORAGE))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            AnkiDroidFolder.PublicFolder(PermissionSet.TIRAMISU_EXTERNAL_MANAGER)
+        } else {
+            AnkiDroidFolder.PublicFolder(PermissionSet.EXTERNAL_MANAGER)
+        }
     } else {
         return AnkiDroidFolder.AppPrivateFolder
     }
 }
 
-/**
- * Logic related to [DeckPicker] startup - required permissions for storage
- * Handles: Accept, Deny + Permanent Deny of permissions
- *
- * Designed to allow expansion for more complex logic
- */
-@NeedsTest("New User: Accepts permission")
-@NeedsTest("New User: Denies permission then accepts")
-@NeedsTest("New User: Denies permission then denies permanently")
-@NeedsTest("New User: Denies permission permanently")
-@NeedsTest("Existing User: Permission Granted")
-@NeedsTest("Existing User: System removed permission")
-@NeedsTest("Existing User: Changes Deck")
-class StartupStoragePermissionManager private constructor(
-    private val deckPicker: DeckPicker,
-    ankidroidFolder: AnkiDroidFolder,
-    useCallbackIfActivityRecreated: Boolean
-) {
-    private var timesRequested: Int = 0
-    private val requiredPermissions = when (ankidroidFolder) {
-        is AnkiDroidFolder.AppPrivateFolder -> noPermissionDialogRequired
-        is AnkiDroidFolder.PublicFolder -> ankidroidFolder.requiredPermissions
-    }
+fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
+    val canAccessLegacyStorage = Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || Environment.isExternalStorageLegacy()
+    val currentFolderIsAccessibleAndLegacy = canAccessLegacyStorage && isLegacyStorage(context, setCollectionPath = false) == true
 
-    /**
-     * Show "Please grant AnkiDroid the ‘Storage’ permission to continue" and open Android settings
-     * for AnkiDroid's permissions
-     */
-    private fun onPermissionPermanentlyDenied() {
-        // User denied access to file storage  so show error toast and display "App Info"
-        UIUtils.showThemedToast(deckPicker, R.string.startup_no_storage_permission, false)
-        // note: this may not be defined on some Phones. In which case we still have a toast
-        deckPicker.finishActivityAndShowAppPermissionManagementScreen()
-    }
-
-    private fun onRegularStartup() {
-        deckPicker.invalidateOptionsMenu()
-        deckPicker.handleStartup()
-    }
-
-    private fun retryPermissionRequest(displayError: Boolean) {
-        if (timesRequested < 3) {
-            displayStoragePermissionDialog()
-        } else {
-            if (displayError) {
-                Timber.w("doing nothing - app is probably broken")
-                CrashReportService.sendExceptionReport("Multiple errors obtaining permissions", "InitialActivity::permissionManager")
-            }
-            onPermissionPermanentlyDenied()
-        }
-    }
-
-    private val permissionManager = PermissionManager.register(
-        activity = deckPicker,
-        permissions = requiredPermissions,
-        useCallbackIfActivityRecreated = useCallbackIfActivityRecreated,
-        callback = { permissionDialogResultRaw ->
-            val permissionDialogResult = PermissionsRequestResults.from(deckPicker, permissionDialogResultRaw)
-            with(permissionDialogResult) {
-                when {
-                    allGranted -> onRegularStartup()
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && hasPermanentlyDeniedPermissions -> onPermissionPermanentlyDenied()
-                    // try again (recurse), we need the permission
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && hasTemporarilyDeniedPermissions -> retryPermissionRequest(displayError = false)
-                    hasRejectedPermissions -> retryPermissionRequest(displayError = false)
-                    cancelled -> {
-                        if (timesRequested == 1) {
-                            UIUtils.showThemedToast(deckPicker, R.string.something_wrong, false)
-                        }
-                        retryPermissionRequest(displayError = true)
-                    }
-                }
-            }
-        }
+    return selectAnkiDroidFolder(
+        canManageExternalStorage = Permissions.canManageExternalStorage(context),
+        currentFolderIsAccessibleAndLegacy = currentFolderIsAccessibleAndLegacy
     )
-
-    fun displayStoragePermissionDialog() {
-        timesRequested++
-        permissionManager.launchPermissionDialog()
-    }
-
-    fun checkPermissions() = permissionManager.checkPermissions()
-
-    companion object {
-        /** If no permissions are provided, no dialog is shown */
-        private val noPermissionDialogRequired = emptyArray<String>()
-
-        /**
-         * This **must** be called unconditionally, as part of initialization path inside after `super.onCreate`
-         * */
-        fun register(
-            deckPicker: DeckPicker,
-            useCallbackIfActivityRecreated: Boolean
-        ): StartupStoragePermissionManager {
-            // This must be called unconditionally due to the use of PermissionManager.register
-            // This must be called after `onCreate` due to the use of deckPicker as a context
-
-            val permissionRequest = selectAnkiDroidFolder(deckPicker)
-            return StartupStoragePermissionManager(
-                deckPicker,
-                permissionRequest,
-                useCallbackIfActivityRecreated = useCallbackIfActivityRecreated
-            )
-        }
-
-        fun selectAnkiDroidFolder(context: Context): AnkiDroidFolder {
-            return selectAnkiDroidFolder(
-                canManageExternalStorage = Permissions.canManageExternalStorage(context)
-            )
-        }
-    }
 }

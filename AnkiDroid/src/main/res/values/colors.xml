@@ -127,7 +127,7 @@
     <!-- For flag icons -->
     <color name="flag_reviewer_red">#ff0000</color>
     <color name="flag_reviewer_orange">#ff9800</color>
-    <color name="flag_reviewer_green">#77ff77</color>
+    <color name="flag_reviewer_green">#057A05</color>
     <color name="flag_reviewer_blue">#ff1976d2</color>
     <color name="flag_reviewer_pink">#FF82EE</color>
     <color name="flag_reviewer_turquoise">#00D1B5</color>

@@ -26,7 +26,7 @@
  
 <resources>
     <!--Menu Labels-->
-    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Manage note types</string>
+    <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Խմբագրել քարտերի տեսակները</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Manage fields</string>
     <!--Toasts-->
     <string name="toast_last_model">You cannot delete your last note type</string>
@@ -47,7 +47,6 @@
     <string name="model_browser_delete">Delete note type</string>
     <string name="model_browser_rename" comment="Rename a note type">Վերանվանել</string>
     <string name="model_browser_template">Խմբագրել քարտերը</string>
-    <string name="model_browser_add">Add note type</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
@@ -63,7 +62,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Updating fields</string>
     <string name="model_field_editor_sort_field">Sort by this field</string>
-    <string name="model_clone_suffix">պատճենել</string>
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Are you sure you wish to delete this field?</string>

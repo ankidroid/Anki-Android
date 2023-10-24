@@ -17,7 +17,7 @@ package com.ichi2.anki.noteeditor
 
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
 import com.ichi2.libanki.Consts
-import com.ichi2.utils.HashUtil.HashSetInit
+import com.ichi2.utils.HashUtil.hashSetInit
 import timber.log.Timber
 import java.util.*
 
@@ -31,7 +31,7 @@ class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix
     companion object {
         const val KEEP_EMPTY_ENTRIES = -1
         fun fromString(s: String?): CustomToolbarButton? {
-            if (s == null || s.isEmpty()) {
+            if (s.isNullOrEmpty()) {
                 return null
             }
             val fields = s.split(Consts.FIELD_SEPARATOR.toRegex(), KEEP_EMPTY_ENTRIES.coerceAtLeast(0)).toTypedArray()
@@ -63,7 +63,7 @@ class CustomToolbarButton(var index: Int, var buttonText: ButtonText, val prefix
         }
 
         fun toStringSet(buttons: ArrayList<CustomToolbarButton>): Set<String> {
-            val ret = HashSetInit<String>(buttons.size)
+            val ret = hashSetInit<String>(buttons.size)
             for (b in buttons) {
                 val values = arrayOf(b.index.toString(), b.buttonText, b.prefix, b.suffix)
                 for (i in values.indices) {

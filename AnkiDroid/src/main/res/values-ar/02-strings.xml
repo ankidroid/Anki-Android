@@ -61,6 +61,8 @@
     <string name="updated_version">تم التحديث إلى الإصدار: %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">حفظ السبورة</string>
+    <string name="enable_stylus">تمكين وضع Stylus</string>
+    <string name="disable_stylus"> تعطيل وضع Stylus</string>
     <string name="enable_whiteboard">تفعيل السبورة</string>
     <string name="disable_whiteboard">تعطيل السبورة</string>
     <string name="show_whiteboard">إظهار السبورة</string>
@@ -69,10 +71,9 @@
     <string name="replay_audio">إعادة تشغيل الصوت</string>
     <string name="leech_suspend_notification">عُلِّمت البطاقة كمستعصية وعُلِّقت</string>
     <string name="leech_notification">عُلِّمت البطاقة كمستعصية</string>
-    <string name="corrupt_font">ملف خط معطوب %s</string>
     <string name="webview_crash_unknown">‏‏خطأ غير معروف</string>
     <string name="webview_crash_unknwon_detailed">حدث هذا بسبب خطأ داخلي في عارض الويب</string>
-    <string name="webview_crash_oom">‮نفذت الذاكرة</string>
+    <string name="webview_crash_oom">Out of Memory</string>
     <string name="webview_crash_oom_details">تم إنهاء عارض الويب من قبل النظام. يحدث هذا عادة عندما ينفذ التطبيق من الذاكرة، غالبًا بسبب خطوط أو وسائط كبيرة.</string>
     <string name="webview_crash_nonfatal">توقف معالج عارض الويب عن العمل. السبب: %s</string>
     <string name="webview_crash_fatal">خطأ قاتل: توقف معالج عارض الويب عن العمل. السبب: %s</string>
@@ -123,9 +124,9 @@
     <string name="save">حفظ</string>
     <string name="close">إغلاق</string>
     <string name="select">حدد</string>
-    <string name="reordering_cards">إعادة ترتيب البطاقات&#8230;</string>
     <string name="field_remapping">%1$s (من “%2$s”)</string>
     <string name="confirm_map_cards_to_nothing">البطاقات غير المُوزعة ستُحذف. إذا لم يتبقَّ لملحوظة أي بطاقة، ستُحذف. هل أنت متأكد من الاستمرار؟</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">انتهت مهلة تقسيم المهام</string>
     <plurals name="timebox_reached">
         <item quantity="zero">درست %1$d بطاقة خلال %2$s</item>
@@ -151,21 +152,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">إعادة الجدولة</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">معاينة</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d من %2$d</string>
-    <string name="error_insufficient_memory">العملية غير ممكنة نظرًا للذاكرة غير الكافية في جهازك</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">إعادة التسمية</string>
-    <string name="default_conf_delete_error">لا يمكن إزالة مجموعة الخيارات الافتراضية</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="zero">أضيفت %d بطاقة</item>
-        <item quantity="one">أضيفت %d بطاقة</item>
-        <item quantity="two">أضيفت %d بطاقة</item>
-        <item quantity="few">أضيفت %d بطاقات</item>
-        <item quantity="many">أضيفت %d بطاقة</item>
-        <item quantity="other">أضيفت %d بطاقة</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">فحص قاعدة البيانات</string>
     <string name="check_media">فحص الوسائط</string>
     <string name="empty_cards">بطاقات فارغة</string>
-    <string name="check_db_message">فحص قاعدة البيانات&#8230;</string>
     <string name="empty_card_warning">هذه البطاقة فارغة. استخدم خيار «بطاقات فارغة» من القائمة في شاشة قائمة الرزم.</string>
     <string name="unknown_type_field_warning">إدخال الجواب: حقل غير معروف %s</string>
     <string name="delete_deck">يجري حذف الرزمة...</string>
@@ -183,13 +174,6 @@
     </plurals>
     <string name="import_log_no_apkg">ملف حزمة أنكي غير صالح</string>
     <string name="import_title_error" comment="Title of error dialog">خطأ</string>
-    <string name="import_log_failed_unzip">فشل فك ضغط ملف apkg: %s</string>
-    <string name="import_log_failed_copy_to">فشل نسخ ملف apkg إلى %s</string>
-    <string name="import_log_failed_validate">فشل التحقق من صحة ملف apkg</string>
-    <string name="import_log_insufficient_space_error">لا توجد مساحة كافية لاستيراد الحزمة.\nالمتطلب - %1$s \nالمتوفر - %2$s.\n\nهل تواجه مشكلة؟ جرب تفريغ مساحة في هاتفك إن أمكن. كحل بديل، تستخدم المزامنة مساحة أقل من الاستيراد، لذلك يمكنك تجربة استيراد الحزمة في جهاز فيه مساحة أكثر (على نسخة أنكي للكمبيوتر مثلًا) ثم المزامنة لهذا الجهاز.</string>
-    <string name="import_log_file_cache_cleared">حدث خطأ عند استيراد الملف. يحتمل أن يكون بسبب مسح ذاكرة الكاش عند المعالجة.\nحاول مجددًا</string>
-    <string name="import_succeeded_but_check_database">نجح استيراد البيانات لكن فشل تنظيف ما بعد الاستيراد. استخدم ميزة فحص قاعدة البيانات لاحقًا. السبب: %s</string>
-    <string name="import_error_corrupt_zip">ملف apkg تالف. الرجاء حذفه وتحميله مجددًا.\n\nالسبب: %s</string>
     <string name="import_error_handle_exception">فشل استيراد الملف\n\n%s</string>
     <string name="import_error_not_apkg_extension">لا يحتوي اسم الملف “%s” على لاحقة .apkg أو .colpkg</string>
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات أنكي (.anki2) غير مدعومة. الرجاء الاطلاع على الدليل لتعليمات الاستبدال.</string>
@@ -197,8 +181,6 @@
     <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاذ مساحة التخزين)</string>
     <string name="import_error_multiple_colpkg">تم تحديد العديد من ملفات colpkg.</string>
     <string name="import_error_colpkg_apkg">تم تحديد كل من ملفات apkg &amp; colpkg في وقت واحد.</string>
-    <string name="import_stats_error">حدثت بعض الأخطاء أثناء استيراد الملفات التالية:\n%s</string>
-    <string name="import_replacing">يجري استبدال المجموعة&#8230;</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
     <string name="export_include_schedule">تضمين معلومات الجدولة</string>
     <string name="export_include_media">تضمين الوسائط</string>
@@ -220,12 +202,11 @@
         <item quantity="many">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
         <item quantity="other">هل تريد تصدير %d ملحوظة محددة كملف apkg؟</item>
     </plurals>
-    <string name="export_in_progress">يجري تصدير ملف حزمة أنكي&#8230;</string>
-    <string name="export_success_title">تم تصدير المجموعة بنجاح</string>
+    <string name="export_preparation_in_progress">يجري تجهيز التصدير&#8230;</string>
+    <string name="export_ready_title">جهز التصدير</string>
     <string name="export_send_no_handlers">لا توجد تطبيقات متاحة للتعامل مع apkg. يجري الحفظ...</string>
     <string name="export_save_apkg_successful">تم حفظ حزمة أنكي بنجاح</string>
     <string name="export_save_apkg_unsuccessful">فشل حفظ حزمة أنكي</string>
-    <string name="export_success_message">تستطيع اختيار ملف للحفظ فيه، أو المشاركة مع تطبيق آخر</string>
     <string name="export_share_title">إرسال حزمة أنكي باستخدام</string>
     <string name="export_email_subject">بطاقات مصدّرة من قبل أنكيدرويد: %s</string>
     <string name="export_email_text"><![CDATA[        مرحبًا
@@ -235,8 +216,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">حدد مكان حفظ الملف</string>
-    <string name="export_select_share_app">اختر تطبيقًا للمشاركة</string>
+    <string name="export_choice_share">مشاركة</string>
+    <string name="export_choice_save_to">حفظ في</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">الخيارات</string>
     <string name="menu__deck_options">خيارات الرزمة</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">خيارات الدراسة</string>
@@ -246,71 +227,11 @@
     <string name="dyn_deck_desc">هذه رزمة خاصة للدراسة خارج الجدول المعتاد. ستعود البطاقات إلى رزمها الأصلية تلقائيًا بعد مراجعتها. يؤدي حذف هذه الرزمة من قائمة الرزم إلى إعادة كل البطاقات المتبقية إلى رزمها الأصلية.</string>
     <string name="steps_error">يجب أن تكون الخطوات أعداد أكبر من 0</string>
     <string name="steps_min_error">يلزم خطوة واحدة على الأقل</string>
-    <string name="sched_end">(النهاية)</string>
-    <string name="sched_unbury_action">لرؤيتها اختر عنصر «إخراج» من القائمة</string>
-    <string name="sched_has_buried">تم تأجيل بعض البطاقات المدفونة أو ذات الصلة حتى الغد</string>
     <string name="tag_editor_add_feedback">انقر “%2$s” لتأكيد إضافة “%1$s”</string>
     <string name="tag_editor_add_feedback_existing">تم تحديد الوسم الموجود “%1$s”</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="zero">%s ثانية</item>
-        <item quantity="one">%s ثانية</item>
-        <item quantity="two">%s ثانية</item>
-        <item quantity="few">%s ثواني</item>
-        <item quantity="many">%s ثانية</item>
-        <item quantity="other">%s ثانية</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="zero">%s دقيقة</item>
-        <item quantity="one">%s دقيقة</item>
-        <item quantity="two">%s دقيقة</item>
-        <item quantity="few">%s دقائق</item>
-        <item quantity="many">%s دقيقة</item>
-        <item quantity="other">%s دقيقة</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="zero">%s ساعة</item>
-        <item quantity="one">%s ساعة</item>
-        <item quantity="two">%s ساعة</item>
-        <item quantity="few">%s ساعات</item>
-        <item quantity="many">%s ساعة</item>
-        <item quantity="other">%s ساعة</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="zero">%s يوم</item>
-        <item quantity="one">%s يوم</item>
-        <item quantity="two">%s يوم</item>
-        <item quantity="few">%s أيام</item>
-        <item quantity="many">%s يوم</item>
-        <item quantity="other">%s يوم</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="zero">%s شهر</item>
-        <item quantity="one">%s شهر</item>
-        <item quantity="two">%s شهر</item>
-        <item quantity="few">%s أشهر</item>
-        <item quantity="many">%s شهرًا</item>
-        <item quantity="other">%s شهر</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="zero">%s عام</item>
-        <item quantity="one">%s عام</item>
-        <item quantity="two">%s عام</item>
-        <item quantity="few">%s أعوام</item>
-        <item quantity="many">%s عامًا</item>
-        <item quantity="other">%s عام</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s ثانية</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&gt; %s</string>
     <string name="decks_rename_exists">هذه الرزمة موجودة بالفعل</string>
     <string name="decks_rename_filtered_nosubdecks">لا يمكن أن يكون لرزمة مفلترة رزم فرعية</string>
-    <string name="filtered_deck_name">رزمة مفلترة</string>
     <string name="reminder_title">لا تنسَ أن تدرس اليوم!</string>
     <plurals name="reminder_text">
         <item quantity="zero">%2$d بطاقة بانتظار المراجعة في %1$s</item>
@@ -323,14 +244,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">حدث خطأ أثناء مشاركة ملف apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">يتطلب هذا الملف إصدارًا أحدث من أنكي.</string>
     <string name="activity_start_failed">ليس للنظام تطبيق منصب يمكنه إجراء هذا.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[قد تكون صور الكاميرا كبيرة. قد ترغب في ضغط الصور وتغيير حجمها في مجلد الوسائط]]></string>
     <string name="no_browser_notification">تعذر العثور على متصفح، الرجاء زيارة صفحة الويب بواسطة حاسوب شخصي أو هاتف محمول: </string>
     <string name="web_page_error">خطأ في تحميل الصفحة: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">روابط الصفحات الخارجية في البطاقات غير مدعومة.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">تم استرجاع البطاقات</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">خلفية</string>
     <string name="choose_an_image">اختيار صورة</string>
@@ -357,7 +275,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">إطلاع</string>
     <string name="anki_js_error_code">(رمز الخطأ: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">تم النسخ إلى الحافظة</string>
     <string name="about_ankidroid_error_copy_debug_info">حدث خطأ عند نسخ معلومات التصحيح إلى الحافظة</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
@@ -365,6 +283,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
     <string name="search_decks">بحث في الرزم</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">إظهار تقدم النقل</string>
     <string name="ankidroid_init_failed_webview_title">خطأٌ فادح</string>
     <string name="ankidroid_init_failed_webview">يعتمد أنكيدرويد على عارض الويب الخاص بالنظام وهو غير متوفر. يمكن أن يحدث هذا إذا كان النظام ينصب تحديثات. الرجاء المحاولة مجددًا بعد بضع دقائق.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -377,7 +296,6 @@
     <string name="insert_heading">إضافة عنوان</string>
     <string name="format_font_size">تغيير لون الخط</string>
     <string name="insert_mathjax">إضافة معادلة MathJax</string>
-    <string name="insert_cloze">إضافة عبارة ملء فراغات</string>
     <string name="note_editor_toolbar_icon">نص الزر</string>
     <string name="before_text">HTML قبل التحديد</string>
     <string name="after_text">HTML بعد التحديد</string>
@@ -413,17 +331,18 @@
     <string name="deck_download_progress_message">تستطيع استخدام التطبيقات الأخرى أثناء استمرار التنزيل</string>
     <string name="check_network">تحقق من اتصالك بالشبكة</string>
     <string name="search_using_deck_name">ابحث باستخدام اسم الرزمة</string>
+    <string name="external_storage_unavailable">تم إلغاء التنزيل لأن التخزين الخارجي غير متوفر</string>
     <string name="home">الصفحة الرئيسية</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">تم دفن البطاقة</string>
     <plurals name="note_suspended">
-        <item quantity="zero">%d cards suspended.</item>
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="two">%d cards suspended.</item>
-        <item quantity="few">%d cards suspended.</item>
-        <item quantity="many">%d cards suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="zero">تم تعليق بطاقة %d.</item>
+        <item quantity="one">تم تعليق بطاقة واحدة.</item>
+        <item quantity="two">تم تعليق بطاقتين.</item>
+        <item quantity="few">تم تعليق %d بطاقات.</item>
+        <item quantity="many">تم تعليق %d بطاقات.</item>
+        <item quantity="other">تم تعليق %d بطاقة.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">تفعيل ثبات النص لـ %s</string>
@@ -433,9 +352,7 @@
     <string name="scoped_storage_postpone">تأجيل</string>
     <string name="scoped_storage_migrate">نقل</string>
     <string name="search_card_js_api_no_results">لم يجد البحث أي نتائج</string>
-    <string name="sync_impossible_during_migration">جاري المزامنة متبقي \n
-        %1$d</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">يحتاج أنكيدرويد إلى ترحيل وحدة التخزين الخاصة به للامتثال لسياسة أمان الأندرويد 10.\n\nسيؤدي هذا إلى تحسين أداء مزامنة الوسائط.&lt;br&gt;&lt;br&gt;أثناء الترحيل لن تتمكن من المزامنة وسيتم تعطيل بعض الإعدادات. ستحدث مزامنة الوسائط قبل أن تبدأ عملية الترحيل للحفاظ على البيانات الخاصة بك آمنة.&lt;br&gt;&lt;br&gt;من الآمن استخدام أنكيدرويد أو إغلاقها خلال هذه العملية.</string>
     <string name="start_migration_progress_message">OKey</string>
     <string name="migration_part_1_done_resume">تستطيع المواظبة باستخدام أنكيدرويد.\nستستمر عملية نقل البيانات في الخلفية.</string>
     <!--  JS Addons  -->
@@ -456,7 +373,6 @@
     <string name="intro_sync_from_ankiweb">مزامنة من أنكي ويب</string>
     <string name="already_logged_in">تم تسجيل الدخول مسبقًا</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">سلام </string>
     <string name="deck_created">كيفية </string>
     <string name="deck_renamed">Minato </string>
     <!-- Deck Deletion -->
@@ -468,9 +384,9 @@
     <string name="toggle_browser_mode_help">تبديل عرض البطاقات أو الملحوظات في المتصفح</string>
     <string name="truncate_content_help">حد ارتفاع كل صف من المتصفح لإظهار أول 3 سطور فقط</string>
     <string name="browser_options_dialog_heading">خيارات المتصفح</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        هذه الوظيفة غير متوفرة أثناء نقل وحدة التخزين
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">انقر لبدء نقل التخزين</string>
+    <string name="media_sync_required_title">مزامنة الوسائط مطلوبة</string>
+    <string name="media_sync_unavailable_message">مزامنة الوسائط معطلة في الإعدادات. الرجاء مزامنة النسخ الاحتياطي لأي وسائط لم تتم مزامنتها قبل المتابعة</string>
 </resources>

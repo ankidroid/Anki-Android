@@ -67,9 +67,12 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     }
 
     private fun sendKeyDownUp(activity: Activity, keyCode: Int) {
-        val inputConnection = BaseInputConnection(activity.currentFocus, true)
-        inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
-        inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, keyCode))
+        val focusedView = activity.currentFocus
+        if (focusedView != null) {
+            val inputConnection = BaseInputConnection(focusedView, true)
+            inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
+            inputConnection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, keyCode))
+        }
     }
 
     @Throws(Throwable::class)
@@ -89,6 +92,6 @@ class NoteEditorTabOrderTest : NoteEditorTest() {
     }
 
     private fun ensureCollectionLoaded() {
-        CollectionHelper.instance.getCol(targetContext)
+        CollectionHelper.instance.getColUnsafe(targetContext)
     }
 }

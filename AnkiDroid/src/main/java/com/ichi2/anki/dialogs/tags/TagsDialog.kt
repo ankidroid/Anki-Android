@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
@@ -192,6 +193,10 @@ class TagsDialog : AnalyticsDialogFragment {
         toolbar.inflateMenu(R.menu.tags_dialog_menu)
 
         val toolbarAddItem = toolbar.menu.findItem(R.id.tags_dialog_action_add)
+        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_add_white)
+        drawable?.setTint(requireContext().getColor(R.color.white))
+        toolbarAddItem.icon = drawable
+
         toolbarAddItem.setOnMenuItemClickListener {
             val query = mToolbarSearchView!!.query.toString()
             if (mToolbarSearchItem!!.isActionViewExpanded && query.isNotEmpty()) {
@@ -205,7 +210,7 @@ class TagsDialog : AnalyticsDialogFragment {
         mToolbarSearchItem = toolbar.menu.findItem(R.id.tags_dialog_action_filter)
         val toolbarSearchItem: MenuItem? = mToolbarSearchItem
         mToolbarSearchView = toolbarSearchItem?.actionView as SearchView
-        val queryET = mToolbarSearchView!!.findViewById<EditText>(R.id.search_src_text)
+        val queryET = mToolbarSearchView!!.findViewById<EditText>(com.google.android.material.R.id.search_src_text)
         queryET.filters = arrayOf(addTagFilter)
         mToolbarSearchView!!.queryHint = getString(R.string.filter_tags)
         mToolbarSearchView!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -264,6 +269,7 @@ class TagsDialog : AnalyticsDialogFragment {
             // utilize the addTagFilter to append '::' properly by appending a space to prefixTag
             inputET.setText("$prefixTag ")
         }
+        inputET.setSelection(inputET.text.length)
         addTagDialog.show()
     }
 

@@ -68,6 +68,8 @@ object AnalyticsConstantsTest {
         listOfConstantFields.add("Import APKG")
         listOfConstantFields.add("Import COLPKG")
         listOfConstantFields.add("Import CSV")
+        listOfConstantFields.add("Tapped setting")
+        listOfConstantFields.add("Changed setting")
     }
 
     internal val analyticsConstantFields

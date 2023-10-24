@@ -30,9 +30,9 @@ class CompatCopyFileTest : Test21And26() {
         val resourcePath = getFileResource("path-traversal.zip")
         val copy = File.createTempFile("testCopyFileToStream", ".zip")
         copy.deleteOnExit()
-        val outputStream = FileOutputStream(copy.canonicalPath)
-        CompatHelper.compat.copyFile(resourcePath, outputStream)
-        outputStream.close()
+        FileOutputStream(copy.canonicalPath).use { outputStream ->
+            CompatHelper.compat.copyFile(resourcePath, outputStream)
+        }
         Assert.assertEquals(TestUtils.getMD5(resourcePath), TestUtils.getMD5(copy.canonicalPath))
     }
 
@@ -63,8 +63,7 @@ class CompatCopyFileTest : Test21And26() {
 
         // Try copying to a closed stream
         try {
-            val outputStream = FileOutputStream(copy.canonicalPath)
-            outputStream.close()
+            val outputStream = FileOutputStream(copy.canonicalPath).apply { close() }
             CompatHelper.compat.copyFile(resourcePath, outputStream)
             Assert.fail("Should have caught an exception")
         } catch (e: IOException) {
@@ -73,8 +72,7 @@ class CompatCopyFileTest : Test21And26() {
 
         // Try copying from a closed stream
         try {
-            val source = URL(resourcePath).openStream()
-            source.close()
+            val source = URL(resourcePath).openStream().apply { close() }
             CompatHelper.compat.copyFile(source, copy.canonicalPath)
             Assert.fail("Should have caught an exception")
         } catch (e: IOException) {

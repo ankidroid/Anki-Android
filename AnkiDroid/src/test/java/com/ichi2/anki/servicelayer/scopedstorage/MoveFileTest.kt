@@ -80,7 +80,7 @@ class MoveFileTest(private val attemptRename: Boolean) : RobolectricTest(), Oper
         assertThat("destination file should exist", destinationFile.exists(), equalTo(true))
 
         assertThat("content should be copied", getContent(destinationFile), equalTo("hello-world"))
-        assertProgressReported(size)
+        assertThat(executionContext.progress, equalTo(listOf(size, 0L)))
     }
 
     @Test

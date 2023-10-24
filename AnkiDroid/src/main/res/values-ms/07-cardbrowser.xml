@@ -46,88 +46,62 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="other">%d cards shown</item>
+        <item quantity="other">%d kad ditunjuk</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="other">%d notes shown</item>
+        <item quantity="other">%d nota ditunjuk</item>
     </plurals>
-    <string name="card_browser_all_decks">Dek semua</string>
-    <string name="card_browser_delete_card">Delete notes</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
-    <string name="card_browser_change_deck">Change deck</string>
-    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-    <string name="card_browser_mark_card">Mark notes</string>
-    <string name="card_browser_unmark_card">Unmark notes</string>
-    <string name="delete_card_title">Hapuskan Nota?</string>
-    <string name="changed_deck_message">Moved to %s</string>
-    <string name="card_browser_show_marked">Filter ditandai</string>
-    <string name="card_browser_show_suspended">Penapis yang digantung</string>
-    <string name="card_browser_search_by_tag">Menapis dengan tag</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_all_decks">Semua dek</string>
+    <string name="card_browser_delete_card">Padam nota</string>
+    <string name="card_browser_suspend_card">Bekukan kad</string>
+    <string name="card_browser_change_deck">Tukar dek</string>
+    <string name="card_browser_unsuspend_card">Aktifkan kad</string>
+    <string name="card_browser_mark_card"> Cap kad</string>
+    <string name="card_browser_unmark_card">Buang cap nota</string>
+    <string name="delete_card_title">Padam Nota?</string>
+    <string name="card_browser_show_marked">Tapis dicap</string>
+    <string name="card_browser_show_suspended">Tapis dibekukan</string>
+    <string name="card_browser_search_by_tag">Tapis dengan tag</string>
+    <string name="card_browser_search_by_flag">Tapis dengan tanda</string>
     <string name="card_browser_list_my_searches">Carian saya</string>
-    <string name="card_browser_list_my_searches_save">Simpan pencarian</string>
-    <string name="card_browser_list_my_searches_title">Pilih satu yang disimpan carian</string>
-    <string name="card_browser_list_my_searches_new_name">Nama semasa carian</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Awda tidak boleh menyimpan carian tanpa nama</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">Nama wujud</string>
-    <string name="card_browser_list_my_searches_remove_content">Menghapuskan \"%1$s\"?</string>
-    <string name="card_browser_change_display_order">Perubahan susunan paparan</string>
-    <string name="card_browser_change_display_order_title">Perubahan susunan paparan</string>
-    <string name="card_browser_change_display_order_reverse">Pilih medan yang dua kali untuk menarik balik</string>
-    <string name="card_details_due" comment="Date at which a card will be due to review again.">Kena dibayar</string>
-    <string name="card_details_tags">Tags</string>
+    <string name="card_browser_list_my_searches_save">Simpan carian</string>
+    <string name="card_browser_list_my_searches_title">Pilih carian yang disimpan</string>
+    <string name="card_browser_list_my_searches_new_name">Nama carian ini</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Anda tidak boleh menyimpan carian tanpa nama</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">Nama sudah wujud</string>
+    <string name="card_browser_list_my_searches_remove_content">Padam “%1$s”?</string>
+    <string name="card_browser_change_display_order">Ubah susunan paparan</string>
+    <string name="card_browser_change_display_order_title">Pilih susunan paparan</string>
+    <string name="card_details_tags">Tag</string>
     <string-array name="card_browser_order_labels">
-        <item>Tiada pengasingan (lebih cepat)</item>
-        <item>Oleh bidang semacam</item>
-        <item>Diwujudkan pada masa</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
-        <item>Oleh kerana masa</item>
-        <item>Oleh selang</item>
-        <item>Dengan mudah</item>
-        <item>Dengan Ulasan</item>
-        <item>Oleh kelemahan</item>
+        <item>Tiada susunan (lebih pantas)</item>
+        <item>Ikut medan susunan</item>
+        <item>Ikut masa ciptaan</item>
+        <item>Ikut masa ubah nota</item>
+        <item>Ikut masa ubah kad</item>
+        <item>Ikut masa tunggakan</item>
+        <item>Ikut selang</item>
+        <item>Ikut longgaran</item>
+        <item>Ikut semakan</item>
+        <item>Ikut cuaian</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_select_all">Pilih semua</string>
+    <string name="card_browser_select_none">Pilih tiada</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(baru)</string>
+    <string name="card_browser_due_filtered_card">(ditapis)</string>
+    <string name="card_browser_interval_learning_card">(belajar)</string>
+    <string name="card_browser_no_cards_in_deck">Tiada kad ditemui dalam dek ‘%s’</string>
+    <string name="card_browser_search_all_decks">Cari semua dek</string>
+    <string name="card_browser_unknown_deck_name">Tidak diketahui</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Pendekkan kandungan</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="other">Export cards</item>
+        <item quantity="other">Eksport kad</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="other">Export notes</item>
+        <item quantity="other">Eksport nota</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="other">%d kad dipadam</item>
     </plurals>
     <!-- Card Info subscreen -->
-    <string name="card_info_added" comment="Label of the information showing at which date a card was added.">Added</string>
-    <string name="card_info_first_review">First Review</string>
-    <string name="card_info_latest_review">Latest Review</string>
-    <string name="card_info_interval">Interval</string>
-    <string name="card_info_ease">Ease</string>
-    <string name="card_info_reviews" comment="Number of times a card was reviewed">Reviews</string>
-    <string name="card_info_lapses" comment="Label indicating the number of lapses of a card.">Lapses</string>
-    <string name="card_info_average_time">Average Time</string>
-    <string name="card_info_total_time">Total Time</string>
-    <string name="card_info_card_type">Card Type</string>
-    <string name="card_info_note_type">Note Type</string>
-    <string name="card_info_deck_name">Deck Name</string>
-    <string name="card_info_card_id">Card Id</string>
-    <string name="card_info_note_id">Note Id</string>
-    <string name="card_info_revlog_time">Time</string>
-    <string name="card_info_revlog_date">Date</string>
-    <string name="card_info_revlog_rating">Rating</string>
-    <string name="card_info_revlog_type">Type</string>
-    <string name="card_info_revlog_learn" comment="Label indicating that a review in the log of a card occured while the card was in learning mode">Learn</string>
-    <string name="card_info_revlog_review">Review</string>
-    <string name="card_info_revlog_relearn" comment="Label of a log entry of a card, indicating that a review was done with a note in relearning mode">Relearn</string>
-    <string name="card_info_revlog_filtered">Filtered</string>
-    <string name="card_info_ease_not_applicable">N/A</string>
 </resources>

@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Offline-tilassa</string>
-    <string name="sync_even_if_offline">Try Anyway</string>
     <string name="sync_error">Synkronointivirhe</string>
     <string name="vague_error" comment="Network error dialog title">Virhe</string>
     <string name="retry">Yritä uudelleen</string>
@@ -63,55 +62,15 @@
     <string name="sign_up">Rekisteröidy</string>
     <string name="logged_as">Kirjauduttu nimellä</string>
     <string name="log_out">Kirjaudu ulos</string>
-    <string name="alert_logging_message">Kirjaudutaan&#8230;</string>
-    <string name="invalid_username_password">Virheellinen sähköpostiosoite tai salasana</string>
     <string name="reset_password">Nollaa salasanasi</string>
     <string name="lost_mail_instructions">Forgot Email?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Asetukset XXX:lle</string>
-    <string name="sync_prepare_syncing">Valmistellaan synkronointia&#8230;</string>
-    <string name="sync_preparing_full_sync_message">Valmistellaan koko synkronointiin...</string>
-    <string name="sync_uploading_message">Lähetetään...</string>
-    <string name="sync_downloading_message">Ladataan...</string>
     <string name="sync_title">Synkronointi</string>
     <string name="sync_log_uploading_message">Täysi synkronointi sijainnista</string>
-    <string name="sync_log_clocks_unsynchronized">Laitteesi kello on %1$d sekuntia%2$s väärässä. Varmista, että laitteesi päivämäärä, aika ja aikavyöhyke ovat oikeat, ja synkronoi sitten uudelleen.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, laitteen aikavyöhyke on ehkä väärä</string>
-    <string name="sync_log_clocks_unsynchronized_date">, laitteen päivämäärä on mahdollisesti väärä</string>
-    <string name="sync_no_changes_message">Muutoksia ei löytynyt.</string>
     <string name="sync_database_acknowledge">Kokoelma synkronoitu</string>
-    <string name="sync_log_error_specific">Synkronointivirhe, tyyppi: %1$s, viesti: %2$s</string>
     <string name="sync_corrupt_database">Tietokanta on vioittunut. Korjaa se, ennen kuin yrität synkronoida uudelleen.\n\nKatso %s saadaksesi lisätietoja tietokannan korjaamisesta.</string>
-    <string name="sync_too_busy">Palvelin on varattu. Yritä myöhemmin uudelleen.</string>
-    <string name="sync_remote_db_error">Lataamasi tietokanta oli vaurioitunut. Yritä uudelleen.</string>
-    <string name="sync_overwrite_error">Nykyistä kokoelmaa ei voitu korvata ladatulla tiedostolla</string>
-    <string name="sync_connection_error">Yhteys aikakatkaisiin. Joko internet-yhteydessäsi on ongelma, tai media-hakemistossa on hyvin suuri tiedosto.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">The Custom Sync Server in Advanced Settings is invalid (%s). Please enter a valid server, or disable the setting.</string>
-    <string name="sync_deletions_message">Synkronoidaan poistoja&#8230;</string>
-    <string name="sync_small_objects_message">Synkronoidaan pieniä objekteja&#8230;</string>
-    <string name="sync_finish_message">Viimeistellään synkronointi...</string>
-    <string name="sync_log_finish_error">Palvelimelle lähettämisen viimeistelyssä tapahtui virhe</string>
-    <string name="sync_writing_db">Tallennetaan muutokset tietokantaan&#8230;</string>
-    <string name="sync_download_chunk">Ladataan muutoksia&#8230;</string>
-    <string name="sync_upload_chunk">Lähetetään muutoksia&#8230;</string>
-    <string name="sync_up_down_size">Up: %1$d KB, down: %2$d KB</string>
-    <string name="sync_generic_error">Tapahtui virhe. Yritä myöhemmin uudelleen.</string>
-    <string name="sync_check_upload_file">Tiedostoa tarkistetaan ennen lähettämistä&#8230;</string>
-    <string name="sync_check_download_file">Tarkistetaan ladattua tiedostoa&#8230;</string>
-    <string name="sync_media_find">Etsitään vaihdettua mediaa&#8230;</string>
-    <string name="sync_media_no_changes">Mediatiedostoja ei ole muutettu</string>
-    <string name="sync_media_success">Media synkronoitu</string>
-    <string name="sync_media_partial_updated">Media sync partially completed:\n%1$d media files downloaded.\n%2$d media files uploaded.</string>
-    <string name="sync_media_changes_count">%d median muutosta lähetettävänä</string>
-    <string name="sync_media_downloaded_count">%d mediatiedostoa ladattu</string>
-    <string name="sync_sanity_failed">Kokoelma oli epäyhtenäisessä tilassa synkronoinnin jälkeen. AnkiDroid tekee täyden synkronoinnin ongelman korjaamiseksi. Valitse kumman puolen tiedot haluat pitää.</string>
-    <string name="sync_media_sanity_failed">Median synkronointi valmistui, mutta median lukumäärä ei vastaa serverillä olevaa arvoa. Seuraavalla kerralla tehdään täysi median synkronointi, jotta ongelma korjaantuisi.</string>
-    <string name="sync_media_db_error">Media sync failed because current database is corrupt. A media check is recommended.</string>
-    <string name="sync_media_error">Virhe median synkronoinnissa</string>
-    <string name="sync_media_error_check">Virhe mediaa synkronoitaessa. Median tarkistaminen on suositeltavaa.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Please run ‘%s’ before syncing</string>
     <string name="sync_sanity_local">Paikallinen</string>
     <string name="sync_sanity_remote">Etä</string>
     <string name="force_full_sync_title">Pakota täysi synkronointi</string>
@@ -119,15 +78,7 @@
     <string name="force_full_sync_confirmation">Forced full sync</string>
     <string name="full_sync_confirmation">Pyytämäsi muutos vaatii tietokannan täyden lähetyksen AnkiWebiin kun synkronoit kokoelmasi seuraavan kerran. Jos sinulla on kertauksia tai muita muutoksia odottamassa toisessa laitteessa, jota ei ole vielä synkronoitu tänne, nämä synkronoimattomat tiedot katoavat. Haluatko jatkaa?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroidin edellisessä versiossa olleen bugin takia, täydellinen syknronointi on suositeltavaa.</string>
-    <string name="sync_error_407_proxy_required">Välityspalvelimen todennus vaaditaan</string>
-    <string name="sync_error_409">Vain yksi asiakasohjelma voi käyttää AnkiWebiä kerrallaan. Jos edellinen synkronointi epäonnistui, yritä muutaman minuutin kuluttua uudelleen.</string>
-    <string name="sync_error_413_collection_size">Your collection or a media file is too large to sync.</string>
-    <string name="sync_error_500_unknown">AnkiWeb encountered an error. Please try again in a few minutes, and if the problem persists, please file a bug report.</string>
-    <string name="sync_error_501_upgrade_required">Päivitä AnkiDroid uusimpaan versioon</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is under maintenance. Please try again in a few minutes.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout error received.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Sync (full)</string>
     <string name="sync_menu_title_no_account">Sync (log in)</string>
-    <string name="sync_error_unknown_host_readable">Could not connect to AnkiWeb. Is your internet working?\n\n%s</string>
 </resources>

@@ -18,8 +18,8 @@ package com.ichi2.ui
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.Gesture
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.GestureMapper
 import java.util.function.Consumer
 
@@ -46,12 +46,27 @@ class OnGestureListener(
         consumer.accept(Gesture.LONG_TAP)
     }
 
-    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-        val dx = e2.x - e1.x
-        val dy = e2.y - e1.y
-        val gesture = gestureMapper.gesture(dx, dy, velocityX, velocityY, false, false, false)
-        if (gesture != null) {
-            consumer.accept(gesture)
+    override fun onFling(
+        e1: MotionEvent?,
+        e2: MotionEvent,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        if (e1 != null) {
+            val dx = e2.x - e1.x
+            val dy = e2.y - e1.y
+            val gesture = gestureMapper.gesture(
+                dx,
+                dy,
+                velocityX,
+                velocityY,
+                isSelecting = false,
+                isXScrolling = false,
+                isYScrolling = false
+            )
+            if (gesture != null) {
+                consumer.accept(gesture)
+            }
         }
         return true
     }
@@ -73,7 +88,7 @@ class OnGestureListener(
     companion object {
         fun createInstance(view: View, consumer: Consumer<Gesture>): OnGestureListener {
             val gestureMapper = GestureMapper()
-            gestureMapper.init(AnkiDroidApp.getSharedPrefs(view.context))
+            gestureMapper.init(view.context.sharedPrefs())
             return OnGestureListener(view, gestureMapper, consumer)
         }
     }

@@ -46,18 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">לבדוק את מסד הנתונים?</string>
     <string name="check_db_warning">פעולה זאת עלולה לארוך זמן רב</string>
-    <string name="check_db_acknowledge">מסד הנתונים נבדק.‏</string>
-    <string name="check_db_acknowledge_shrunk">מסד הנתונים בדוק ושופר.\nהוקטן ב־ %dmb.‏</string>
     <string name="contextmenu_deckpicker_delete_deck">מחיקת חפיסה</string>
-    <string name="delete_deck_default_deck">לא ניתן למחוק את חפיסת בררת המחדל</string>
     <string name="delete_deck_title">למחוק את החפיסה?‏</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה קלף אחד.</item>
-        <item quantity="two">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה שני קלפים.</item>
-        <item quantity="many">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה %2$d קלפים.</item>
-        <item quantity="other">למחוק את כל הקלפים בחפיסה %1$s? היא מכילה %2$d קלפים.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">שלח כל הקלפים ב־ %s חזרה לחפיסות המקוריות?‏</string>
     <string name="no_tts_available_message">אין שום שפת לכתוב-אל-דיבור זמין</string>
     <string name="initializing_tts">מאתחל מנוע כתוב-אל-דיבור...‏</string>
     <string name="tts_no_tts">אל תדבר.‏</string>
@@ -65,7 +55,7 @@
     <string name="preview_title" comment="Title of the window allowing to preview card(s)">תצוגה מקדימה</string>
     <string name="reposition_card_dialog_title">שינוי מיקום כרטיס חדש</string>
     <string name="reposition_card_dialog_message">מיקום התחלתי:</string>
-    <string name="reposition_card_not_new_error">ניתן לשנות מיקום לקלפים חדשים בלבד</string>
+    <string name="reposition_card_not_new_error">ניתן לשנות מיקום לכרטיסים חדשים בלבד</string>
     <plurals name="reposition_card_dialog_acknowledge">
         <item quantity="one">כרטיס %d הושם מחדש</item>
         <item quantity="two">%d כרטיסים הושמו מחדש</item>
@@ -73,12 +63,12 @@
         <item quantity="other">%d כרטיסים הושמו מחדש</item>
     </plurals>
     <string name="reset_card_dialog_title">איפוס התקדמות הקלף</string>
-    <string name="reset_card_dialog_message">קלף זה יוצב בסוף תור של הקלפים החדשים.</string>
+    <string name="reset_card_dialog_message">כרטיס זה יוצב בסוף תור של הכרטיסים החדשים.</string>
     <plurals name="reset_cards_dialog_acknowledge">
-        <item quantity="one">קלף אחד אופס</item>
-        <item quantity="two">%d קלפים אופסו</item>
-        <item quantity="many">%d קלפים אופסו</item>
-        <item quantity="other">%d קלפים אופסו</item>
+        <item quantity="one">כרטיס אחד אופס</item>
+        <item quantity="two">%d כרטיסים אופסו</item>
+        <item quantity="many">%d כרטיסים אופסו</item>
+        <item quantity="other">%d כרטיסים אופסו</item>
     </plurals>
     <!-- Reschedule Card Dialog -->
     <plurals name="reschedule_cards_dialog_title_new">
@@ -95,10 +85,10 @@
     </plurals>
     <string name="reschedule_card_dialog_message">תזמן לשינון מחדש בעוד x ימים</string>
     <plurals name="reschedule_cards_dialog_acknowledge">
-        <item quantity="one">%d קלף תוזמן מחדש</item>
-        <item quantity="two">%d קלפים תוזמנו מחדש</item>
-        <item quantity="many">%d קלפים תוזמנו מחדש</item>
-        <item quantity="other">%d קלפים תוזמנו מחדש</item>
+        <item quantity="one">%d כרטיס תוזמן מחדש</item>
+        <item quantity="two">%d כרטיסים תוזמנו מחדש</item>
+        <item quantity="many">%d כרטיסים תוזמנו מחדש</item>
+        <item quantity="other">%d כרטיסים תוזמנו מחדש</item>
     </plurals>
     <string name="reschedule_card_dialog_new_card_warning">כרטיס חדש מתוזמן מחדש. תזמון מחדש הופך גם כרטיסים חדשים לכרטיסי ביקורת. השתמש באפשרות \'מיקום כרטיס מחדש\' כדי לשנות את מיקומו של כרטיס חדש בתור החדש</string>
     <string name="reschedule_card_dialog_warning_ease_reset">תזמון מחדש מאפס גם את האופן שבו מתזמן מתייחס לכרטיס בעתיד (הקלות תוגדר ל-%d%%)</string>
@@ -106,31 +96,20 @@
     <string name="answering_error_title">שגיאת מסד נתונים</string>
     <string name="answering_error_message">כתיבה לאוסף נכשלה. מאגר המידע אולי שבור או שאין מספיק מקום בדיסק.\n\n אם זה קורה שוב ושוב, אפשר לבדוק את מאגר המידע, לתקן את האוסף או לשחזר אותו מגיבוי. לחץ \'אפשרויות\' עבור כך. \n כמו כן ייתכן שזוהי תקלה בAnkiDroid. נא לדווח את השגיאה כדי שנוכל לבדוק זאת.</string>
     <string name="answering_error_report">דיווח על שגיאה</string>
-    <string name="storage_full_message">There is not enough free storage space to open AnkiDroid. Free up some space to continue. </string>
+    <string name="storage_full_message">אין מספיק שטח אחסון פנוי כדי לפתוח את AnkiDroid.  פנה קצת מקום כדי להמשיך.</string>
     <string name="repair_deck_dialog">לתקן את המאגר?\n\n
 לפני תחילת ניסיון התיקון, יתבצע שמירת העתק בתקייה %s</string>
     <string name="intent_aedict_empty">הקטגוריה \'ברירת מחדל\' ריקה</string>
     <string name="intent_aedict_category">כדי להוסיף כרטיסים ל-AnkiDroid הסר את כל קטגוריות פנקס הרשימות או הוסף אחת בשם \"ברירת מחדל\"</string>
-    <string name="custom_study_new_total_new">קלפים חדשים בחפיסה: %d</string>
+    <string name="custom_study_new_total_new">כרטיסים חדשים בחפיסה: %d</string>
     <string name="custom_study_rev_total_rev">שינונים מועדים בחפיסות: %d</string>
     <string name="custom_study_new_extend">הוספה/הורדה(“-3”) הגבלת כרטיסים חדשים להיום ב</string>
     <string name="custom_study_rev_extend">הוספה/הורדה(“-3”) הגבלת חזרות להיום ב</string>
-    <string name="custom_study_forgotten">חזרה על קלפים נשכחים בx ימים האחרונים </string>
+    <string name="custom_study_forgotten">חזרה על כרטיסים נשכחים בx ימים האחרונים </string>
     <string name="custom_study_ahead">עבור כמה ימים ברצונך לשנן מראש?</string>
     <string name="custom_study_random">נא לבחור כמות מסוימת של קלפים מהחפיסה באקראי:</string>
-    <string name="custom_study_preview">צפייה ראשונית בקלפים חדשים שנוספו בx ימים האחרונים:</string>
+    <string name="custom_study_preview">צפייה ראשונית בכרטיסים חדשים שנוספו בx ימים האחרונים:</string>
     <string name="custom_study_rebuild_deck_corrupt">לא ניתן היה לבנות מחדש חפיסות לימוד מותאם אישית</string>
-    <string name="importing_collection">אוסף מיובא&#8230;</string>
-    <string name="import_media_count">מייבא קבצי מדיה %1$d%%...</string>
-    <string name="import_progress">• ייבוא הערות: %1$d%%\n• ייבוא כרטיסים: %2$d%%\n• עיבוד לאחר: %3$d%%</string>
-    <string name="import_update_details">עודכנו %1$d מתוך %2$d הערות קיימות.</string>
-    <string name="import_update_ignored">התעלמו מחלק מהעדכונים מכיוון שסוג הרשומה השתנה</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">כרטיסים מיובאים: %2$d</item>
-        <item quantity="two">קבצים שיובאו: %1$d\nסה\"כ כרטיסים שיובאו: %2$d</item>
-        <item quantity="many">קבצים שיובאו: %1$d\nסה\"כ כרטיסים שיובאו: %2$d</item>
-        <item quantity="other">קבצים שיובאו: %1$d\nסה\"כ כרטיסים שיובאו: %2$d</item>
-    </plurals>
     <string name="storage_full_title">האיחסון מלא</string>
     <string name="storage_almost_full_title">שטח האחסון כמעט מלא</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">אין מקום</string>
@@ -150,18 +129,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">השבתה</string>
     <string name="dialog_positive_overwrite">שכתוב</string>
-    <string name="dialog_positive_remove">הסרה</string>
     <string name="dialog_positive_repair">תיקון</string>
     <string name="dialog_positive_replace">החלפה</string>
-    <string name="dialog_positive_restore">שחזור</string>
-    <string name="dialog_positive_set">הגדרה</string>
     <string name="dialog_collection_path_not_dir">הנתיב שצוין אינו תיקייה תקנית</string>
     <!-- Media checking -->
     <string name="check_media_title">לבדוק את המדיה?</string>
     <string name="check_media_warning">ייתכן שפעולה זו תארך זמן אם מדובר באוסף גדול</string>
     <string name="check_media_message">קבצי המדיה בבדיקה&#8230;</string>
     <string name="check_media_acknowledge">קבצי המדיה נבדקו</string>
-    <string name="check_media_failed">בדיקת קבצי המדיה נכשלה</string>
     <string name="check_media_invalid">קבצים בקידוד תקול: %d</string>
     <string name="check_media_unused">קבצים שנמצאים בספריית המדיה אבל אינם בשימוש על ידי אף קלף: %d</string>
     <string name="check_media_nohave">קבצים בשימוש קלפים שאינם בתיקיית המדיה: %d</string>
@@ -177,15 +152,13 @@
         <item quantity="other">%d קבצים נמחקו</item>
     </plurals>
     <!-- Tags Dialog Options -->
-    <string name="tags_dialog_option_all_cards">כל הקלפים</string>
+    <string name="tags_dialog_option_all_cards">כל הכרטיסים</string>
     <string name="tags_dialog_option_new_cards">חדש</string>
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">מיועד</string>
     <!-- Empty cards -->
-    <string name="emtpy_cards_finding">מתבצע איתור קלפים ריקים&#8230;</string>
-    <string name="confirm_cancel">לבטל?</string>
-    <string name="empty_cards_none">אין קלפים ריקים</string>
-    <string name="empty_cards_count">קלפים למחיקה: %d</string>
-    <string name="empty_cards_deleted">קלפים נמחקו: %d</string>
+    <string name="emtpy_cards_finding">מתבצע איתור כרטיסים ריקים&#8230;</string>
+    <string name="empty_cards_count">כרטיסים למחיקה: %d</string>
+    <string name="empty_cards_deleted">כרטיסים נמחקו: %d</string>
     <!-- Multimedia - Edit Field Activity -->
     <string name="multimedia_editor_audio_permission_refused">לא מצליח לקבל הרשאת מיקרופון </string>
     <string name="multimedia_editor_camera_permission_refused">לא מצליח לקבל הרשאת מצלמה. פונקציונליות בוטלה.</string>
@@ -199,15 +172,10 @@
     <string name="integrity_check_continue_anyway">המשך בכל זאת</string>
     <string name="integrity_check_insufficient_space">״בדוק מסד נתונים״ משתמש בכמות גדולה של אחסון זמני.\n\nמומלץ מאוד שיהיה לך לפחות %s שטח פנוי במכשיר שלך לפני שתמשיך.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\n כרגע יש לך %s פנוי.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d קלפים עם חפיסות ביתיות שגויות שוחזרו. אנא עיין במדריך למידע נוסף.</string>
-    <string name="video_creation_error">לא ניתן להפעיל וידאו</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">לא ניתן להחליף חפיסה</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">תקלה בפענוח מידע מקלף</string>
-    <string name="undo_succeeded">\"%s\" בוטל</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">נכשל בעיבוד אפשרויות החפיסות: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">מסד הנתונים ננעל</string>
     <string name="database_locked_summary">מסד הנתונים של AnkiDroid נמצא בשימוש על ידי יישום אחר. אנא סגור את היישום השני ואז פתח מחדש את AnkiDroid.</string>
@@ -226,7 +194,7 @@
     <!-- Also used by Card Browser, not renaming to save translators effort -->
     <string name="intent_handler_failed_no_storage_permission">חסרה הרשאת אחסון נדרשת. אנא הענק הרשאת אחסון ולאחר מכן נסה שוב להפעיל.</string>
     <!-- Browser Appearance -->
-    <string name="card_template_editor_card_browser_appearance_failed">לא ניתן לטעון תצוגת דפדפן קלפים</string>
+    <string name="card_template_editor_card_browser_appearance_failed">לא ניתן לטעון תצוגת דפדפן כרטיסים</string>
     <!-- Boot Service -->
     <string name="boot_service_failed_to_schedule_notifications">לא ניתן היה לתזמן תזכורות</string>
     <string name="boot_service_too_many_notifications">תזמנו יותר מדי תזכורות. חלקם לא יופיעו</string>
@@ -267,28 +235,26 @@
         <item quantity="other">סינכרון אוטומטי עשוי להיות מופעל בעוד %d שניות</item>
     </plurals>
     <string name="metered_sync_warning">החיבור שלך נמדד. העברת נתונים עשויה לעלות כסף</string>
-    <string name="deck_picker_new">מספר הקלפים החדשים שניתן לראות היום בחפיסה זו.</string>
-    <string name="deck_picker_rev">מספר הקלפים ללימוד היום בחפיסה זו.</string>
-    <string name="deck_picker_lrn">מספר הקלפים בלמידה בחפיסה זו.</string>
+    <string name="deck_picker_new">מספר הכרטיסים החדשים שניתן לראות היום בחפיסה זו.</string>
+    <string name="deck_picker_rev">מספר הכרטיסים ללימוד היום בחפיסה זו.</string>
+    <string name="deck_picker_lrn">מספר הכרטיסים בלמידה בחפיסה זו.</string>
     <!-- This description is valid fos
     sched V2. For V1, it was counting the number of repetitions of cards in learning. This approximation is acceptable
     for the sake of simplicity and because V1 will leave.-->
-    <string name="deck_picker_counts">פתח את דף סקירת החפיסה המכיל את מספר הקלפים שניתן לראות היום.</string>
+    <string name="deck_picker_counts">פתח את דף סקירת החפיסה המכיל את מספר הכרטיסים שניתן לראות היום.</string>
     <string name="import_deck_package">חבילת חפיסות(.apkg)</string>
     <string name="import_collection_package">חבילת אוסף (.colpkg)</string>
     <string name="import_csv">קובץ טקסט (.txt, .csv)</string>
     <!-- Deck selection dialog -->
     <string name="cannot_create_subdeck_for_all_decks">לא ניתן ליצור תת-חפיסה עבור כל החפיסות</string>
     <!-- scoped storage -->
-    <string name="backup_your_collection">Backup your collection</string>
-    <string name="backup_collection_message">You haven\'t backed up your collection in a while. You should do this now to prevent data loss</string>
-    <string name="button_backup">Backup</string>
-    <string name="button_disable_reminder">Disable reminder</string>
-    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">Later</string>
-    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">Don\'t show again</string>
-    <string name="dismiss_backup_warning_title">Data loss warning</string>
-    <string name="dismiss_backup_warning_new_user">        Due to Android privacy changes, your data and automated backups will be deleted from your phone if the app is uninstalled
-    </string>
-    <string name="dismiss_backup_warning_upgrade">        Due to Android privacy changes, your data and automated backups will be inaccessible if the app is uninstalled
-    </string>
+    <string name="backup_your_collection">גבה את האוסף שלך</string>
+    <string name="backup_collection_message">לא גיבית את האוסף שלך זמן מה.  עליך לעשות זאת כעת כדי למנוע אובדן נתונים</string>
+    <string name="button_backup">גיבוי</string>
+    <string name="button_disable_reminder">בטל תזכורת</string>
+    <string name="button_backup_later" comment="dismiss the \'Backup\' dialog for around 2 weeks">מאוחר יותר</string>
+    <string name="button_do_not_show_again" comment="permanently dismisses a dialog">אל תציג שוב</string>
+    <string name="dismiss_backup_warning_title">אזהרת אובדן נתונים</string>
+    <string name="dismiss_backup_warning_new_user">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך יימחקו מהטלפון שלך אם האפליקציה תוסר</string>
+    <string name="dismiss_backup_warning_upgrade">עקב שינויים בפרטיות של Android, הנתונים והגיבויים האוטומטיים שלך לא יהיו נגישים אם האפליקציה תוסר</string>
 </resources>

@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Verificar a base de dados?</string>
     <string name="check_db_warning">Isto poderá demorar bastante tempo</string>
-    <string name="check_db_acknowledge">Base de dados verificada</string>
-    <string name="check_db_acknowledge_shrunk">Base de dados verificada e otimizada.\nComprimida em %d kB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Eliminar baralho</string>
-    <string name="delete_deck_default_deck">O baralho predefinido não pode ser eliminado.</string>
     <string name="delete_deck_title">Eliminar baralho?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Eliminar todas as fichas em %1$s? Contém %2$d ficha.</item>
-        <item quantity="other">Eliminar todas as fichas em %1$s? Contém %2$d fichas.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Enviar todas as fichas em %s para os seus baralhos originais?</string>
     <string name="no_tts_available_message">Nenhum idioma disponível para o texto para voz</string>
     <string name="initializing_tts">A inicializar TTS&#8230;</string>
     <string name="tts_no_tts">Não falar</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Selecionar aleatoriamente x fichas do baralho:</string>
     <string name="custom_study_preview">Pré-visualizar novas fichas adicionadas nos últimos x dias:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">A importar colecção&#8230;</string>
-    <string name="import_media_count">A importar os arquivos multimédia %1$d%%&#8230;</string>
-    <string name="import_progress">• A importar notas: %1$d%%\n• A importar fichas: %2$d%%\n• A pós-processar: %3$d%%</string>
-    <string name="import_update_details">Atualizada(s) %1$d de %2$d notas existentes.</string>
-    <string name="import_update_ignored">Algumas atualizações foram ignoradas porque o tipo de nota mudou</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Armazenamento cheio</string>
     <string name="storage_almost_full_title">Armazenamento quase cheio</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">Sem espaço</string>
@@ -135,18 +118,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Desativar</string>
     <string name="dialog_positive_overwrite">Substituir</string>
-    <string name="dialog_positive_remove">Remover</string>
     <string name="dialog_positive_repair">Reparar</string>
     <string name="dialog_positive_replace">Substituir</string>
-    <string name="dialog_positive_restore">Restaurar</string>
-    <string name="dialog_positive_set">Definir</string>
     <string name="dialog_collection_path_not_dir">O caminho especificado não era uma diretoria válida</string>
     <!-- Media checking -->
     <string name="check_media_title">Verificar multimédia?</string>
     <string name="check_media_warning">Isto pode demorar bastante tempo para coleções grandes de multimédia</string>
     <string name="check_media_message">A verificar multimédia&#8230;</string>
     <string name="check_media_acknowledge">Multimédia verificada</string>
-    <string name="check_media_failed">Verificação de multimédia falhou</string>
     <string name="check_media_invalid">Ficheiros com codificação inválida: %d</string>
     <string name="check_media_unused">Ficheiros na pasta de multimédia mas não usados por quaisquer fichas: %d</string>
     <string name="check_media_nohave">Ficheiros usados nas fichas, mas não presentes na pasta de multimédia: %d</string>
@@ -165,8 +144,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Pendentes</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">A encontrar fichas vazias&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">Sem fichas vazias</string>
     <string name="empty_cards_count">Fichas para apagar: %d</string>
     <string name="empty_cards_deleted">Fichas apagas: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +159,10 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>

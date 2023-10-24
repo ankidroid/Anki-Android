@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Запитувати мене</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Тільки позначки</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Нові картки у випадковому порядку</string>
-    <string name="new_order_order_added">Нові картки в порядку додавання</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Найстарші спочатку</string>
     <string name="cram_deck_conf_order_random">Випадковий порядок</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Використовувати поточну колоду</string>
     <string name="add_to_deck_decide_by_note_type">Вирішувати за типом записів</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Перемішувати нові і повторювані картки</string>
-    <string name="new_spread_new_after_review">Нові картки після повторюваних</string>
-    <string name="new_spread_new_before_review">Нові картки перед повторюваними</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Коли шрифт не визначений на навчальних картках</string>
-    <string name="override_font_always" comment="Option to always override font">Завжди</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Системна</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">Дуже великий</string>
     <string name="html_size_code_xx_large">Найбільший</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Кнопка відповіді 1</string>
-    <string name="gesture_answer_2">Кнопка відповіді 2</string>
-    <string name="gesture_answer_3">Кнопка відповіді 3</string>
-    <string name="gesture_answer_4">Кнопка відповіді 4</string>
-    <string name="gesture_answer_green">Рекомендована відповідь (зелена)</string>
-    <string name="gesture_answer_better_recommended">Краще, ніж рекомендована відповідь</string>
+    <string name="answer_again">Відповідь: знову</string>
+    <string name="answer_hard">Відповідь: важко</string>
+    <string name="answer_good">Відповідь: добре</string>
+    <string name="answer_easy">Відповідь: легко</string>
     <string name="gesture_play">Програти медіа</string>
     <string name="gesture_abort_learning">Перервати навчання</string>
     <string name="gesture_flag_red">Переключити червоний прапорець</string>

@@ -40,29 +40,17 @@ class AutomaticAnswerActionTest {
 
     @Test
     fun testExecute() {
-        assertExecuteReturns(BURY_CARD, 2, ViewerCommand.BURY_CARD)
+        assertExecuteReturns(BURY_CARD, ViewerCommand.BURY_CARD)
 
-        // easy and hard are mapped to "good" if they don't exist
-        assertExecuteReturns(ANSWER_AGAIN, 2, ViewerCommand.FLIP_OR_ANSWER_EASE1)
-        assertExecuteReturns(ANSWER_HARD, 2, ViewerCommand.FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_GOOD, 2, ViewerCommand.FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_EASY, 2, ViewerCommand.FLIP_OR_ANSWER_EASE2)
-
-        assertExecuteReturns(ANSWER_AGAIN, 3, ViewerCommand.FLIP_OR_ANSWER_EASE1)
-        assertExecuteReturns(ANSWER_HARD, 3, ViewerCommand.FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_GOOD, 3, ViewerCommand.FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_EASY, 3, ViewerCommand.FLIP_OR_ANSWER_EASE3)
-
-        assertExecuteReturns(ANSWER_AGAIN, 4, ViewerCommand.FLIP_OR_ANSWER_EASE1)
-        assertExecuteReturns(ANSWER_HARD, 4, ViewerCommand.FLIP_OR_ANSWER_EASE2)
-        assertExecuteReturns(ANSWER_GOOD, 4, ViewerCommand.FLIP_OR_ANSWER_EASE3)
-        assertExecuteReturns(ANSWER_EASY, 4, ViewerCommand.FLIP_OR_ANSWER_EASE4)
+        assertExecuteReturns(ANSWER_AGAIN, ViewerCommand.FLIP_OR_ANSWER_EASE1)
+        assertExecuteReturns(ANSWER_HARD, ViewerCommand.FLIP_OR_ANSWER_EASE2)
+        assertExecuteReturns(ANSWER_GOOD, ViewerCommand.FLIP_OR_ANSWER_EASE3)
+        assertExecuteReturns(ANSWER_EASY, ViewerCommand.FLIP_OR_ANSWER_EASE4)
     }
 
-    private fun assertExecuteReturns(action: AutomaticAnswerAction, numberOfButtons: Int, expectedCommand: ViewerCommand) {
+    private fun assertExecuteReturns(action: AutomaticAnswerAction, expectedCommand: ViewerCommand) {
         val captor = argumentCaptor<ViewerCommand>()
         val mock: Reviewer = mock {
-            on { buttonCount } doReturn numberOfButtons
             on { executeCommand(captor.capture()) } doReturn true
         }
 

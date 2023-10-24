@@ -23,10 +23,10 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.ui.AppCompatPreferenceActivity
 import timber.log.Timber
 
@@ -65,9 +65,9 @@ object Themes {
         // after the time when the theme should be set
         // TODO (#5019): always use the context as the parameter for getSharedPrefs
         val prefs = if (context is AppCompatPreferenceActivity<*>) {
-            AnkiDroidApp.getSharedPrefs(AnkiDroidApp.instance)
+            AnkiDroidApp.instance.sharedPrefs()
         } else {
-            AnkiDroidApp.getSharedPrefs(context)
+            context.sharedPrefs()
         }
 
         currentTheme = if (themeFollowsSystem(prefs)) {
@@ -115,7 +115,7 @@ object Themes {
     fun getColorFromAttr(context: Context, attrs: IntArray): IntArray {
         val ta = context.obtainStyledAttributes(attrs)
         for (i in attrs.indices) {
-            attrs[i] = ta.getColor(i, ContextCompat.getColor(context, R.color.white))
+            attrs[i] = ta.getColor(i, context.getColor(R.color.white))
         }
         ta.recycle()
         return attrs

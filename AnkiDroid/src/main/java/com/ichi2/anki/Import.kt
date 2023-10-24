@@ -24,12 +24,9 @@ import com.ichi2.anki.dialogs.ImportDialog
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.pages.CsvImporter
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.snackbar.showSnackbar
-import com.ichi2.async.TaskListenerWithContext
-import com.ichi2.libanki.importer.AnkiPackageImporter
-import com.ichi2.themes.StyledProgressDialog
-import com.ichi2.utils.Computation
 import com.ichi2.utils.ImportUtils
 import timber.log.Timber
 
@@ -78,7 +75,7 @@ fun DeckPicker.showImportDialog() {
 }
 
 fun DeckPicker.showImportDialog(options: ImportOptions) {
-    if (ScopedStorageService.userMigrationIsInProgress(this)) {
+    if (ScopedStorageService.mediaMigrationIsInProgress(this)) {
         showSnackbar(
             R.string.functionality_disabled_during_storage_migration,
             Snackbar.LENGTH_SHORT
@@ -91,7 +88,7 @@ fun DeckPicker.showImportDialog(options: ImportOptions) {
 class DatabaseRestorationListener(val deckPicker: DeckPicker, val newAnkiDroidDirectory: String) : ImportColpkgListener {
     override fun onImportColpkg(colpkgPath: String?) {
         Timber.i("Database restoration correct")
-        AnkiDroidApp.getSharedPrefs(deckPicker).edit {
+        deckPicker.sharedPrefs().edit {
             putString("deckPath", newAnkiDroidDirectory)
         }
         deckPicker.dismissAllDialogFragments()
@@ -99,111 +96,3 @@ class DatabaseRestorationListener(val deckPicker: DeckPicker, val newAnkiDroidDi
         CollectionHelper.ankiDroidDirectoryOverride = null
     }
 }
-
-/* Legacy Backend */
-
-fun DeckPicker.importReplaceListener(): TaskListenerWithContext<DeckPicker, String, Computation<*>?> {
-    return ImportReplaceListener(this)
-}
-
-private class ImportReplaceListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, Computation<*>?>(deckPicker) {
-    override fun actualOnPostExecute(context: DeckPicker, result: Computation<*>?) {
-        Timber.i("Import: Replace Task Completed")
-        if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-            context.mProgressDialog!!.dismiss()
-        }
-        val res = context.resources
-        if (result!!.succeeded()) {
-            context.onImportColpkg(colpkgPath = null)
-        } else {
-            context.showSimpleMessageDialog(res.getString(R.string.import_log_no_apkg), reload = true)
-        }
-    }
-
-    override fun actualOnPreExecute(context: DeckPicker) {
-        if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context,
-                context.resources.getString(R.string.import_title),
-                context.resources.getString(R.string.import_replacing),
-                false
-            )
-        }
-    }
-
-    /**
-     * @param value A message
-     */
-    override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-        @Suppress("Deprecation")
-        context.mProgressDialog!!.setMessage(value)
-    }
-}
-
-fun DeckPicker.importAddListener(): TaskListenerWithContext<DeckPicker, String, ImporterData?> =
-    ImportAddListener(this)
-
-private class ImportAddListener(deckPicker: DeckPicker) : TaskListenerWithContext<DeckPicker, String, ImporterData?>(deckPicker) {
-    override fun actualOnPostExecute(context: DeckPicker, result: ImporterData?) {
-        if (context.mProgressDialog != null && context.mProgressDialog!!.isShowing) {
-            context.mProgressDialog!!.dismiss()
-        }
-        // If result.errFlag and result are both set, we are signalling
-        // some files were imported successfully & some errors occurred.
-        // If result.impList is null & result.errList is set
-        // we are signalling all the files which were selected threw error
-        if (result!!.impList == null && result.errList != null) {
-            Timber.w("Import: Add Failed: %s", result.errList)
-            context.showSimpleMessageDialog(result.errList)
-        } else {
-            Timber.i("Import: Add succeeded")
-
-            var fileCount = 0
-            var totalCardCount = 0
-
-            var errorMsg = ""
-
-            for (data in result.impList!!) {
-                // Check if mLog is not null or empty
-                // If mLog is not null or empty that indicates an error has occurred.
-                if (data.log.isEmpty()) {
-                    fileCount += 1
-                    totalCardCount += data.cardCount
-                } else { errorMsg += data.fileName + "\n" + data.log[0] + "\n" }
-            }
-
-            var dialogMsg = context.resources.getQuantityString(R.plurals.import_complete_message, fileCount, fileCount, totalCardCount)
-            if (result.errList != null) {
-                errorMsg += result.errList
-            }
-            if (errorMsg.isNotEmpty()) {
-                dialogMsg += "\n\n" + context.resources.getString(R.string.import_stats_error, errorMsg)
-            }
-
-            context.showSimpleMessageDialog(dialogMsg)
-            context.updateDeckList()
-        }
-    }
-
-    override fun actualOnPreExecute(context: DeckPicker) {
-        if (context.mProgressDialog == null || !context.mProgressDialog!!.isShowing) {
-            context.mProgressDialog = StyledProgressDialog.show(
-                context,
-                context.resources.getString(R.string.import_title),
-                null,
-                false
-            )
-        }
-    }
-
-    override fun actualOnProgressUpdate(context: DeckPicker, value: String) {
-        @Suppress("Deprecation")
-        context.mProgressDialog!!.setMessage(value)
-    }
-}
-
-/**
- * @param impList: List of packages to import
- * @param errList: a string describing the errors. Null if no error.
- */
-data class ImporterData(val impList: List<AnkiPackageImporter>?, val errList: String?)

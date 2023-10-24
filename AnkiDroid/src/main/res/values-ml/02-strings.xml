@@ -61,6 +61,8 @@
     <string name="updated_version">%S പതിപ്പിലേക്ക് അപ്‌ഡേറ്റുചെയ്‌തു</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">വൈറ്റ്ബോർഡ് സംരക്ഷിക്കുക</string>
+    <string name="enable_stylus">Enable stylus writing</string>
+    <string name="disable_stylus">Disable stylus writing</string>
     <string name="enable_whiteboard">വൈറ്റ്ബോർഡ് പ്രവർത്തനക്ഷമമാക്കുക</string>
     <string name="disable_whiteboard">വൈറ്റ്ബോർഡ് അപ്രാപ്തമാക്കുക</string>
     <string name="show_whiteboard">വൈറ്റ്ബോർഡ് കാണിക്കുക</string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">ഓഡിയോ വീണ്ടും പ്ലേ ചെയ്യുക</string>
     <string name="leech_suspend_notification">കാർഡ് അട്ടയാണെന്ന് അടയാളപ്പെടുത്തി താൽക്കാലികമായി നിർത്തിവച്ചിരിക്കുന്നു</string>
     <string name="leech_notification">കാർഡ് അട്ടയാണെന്ന് അടയാളപ്പെടുത്തി</string>
-    <string name="corrupt_font">കേടായ ഫോണ്ട് ഫയൽ %s</string>
     <string name="webview_crash_unknown">അജ്ഞാത പിശക്</string>
     <string name="webview_crash_unknwon_detailed">വെബ്‌കാഴ്‌ചയിലെ ആന്തരിക പിശക് മൂലമാണ് ഇത് സംഭവിച്ചത്</string>
     <string name="webview_crash_oom">മെമ്മറി തീർന്നു</string>
@@ -123,9 +124,9 @@
     <string name="save">രക്ഷിക്കും</string>
     <string name="close">അടയ്‌ക്കുക</string>
     <string name="select">തിരഞ്ഞെടുക്കുക</string>
-    <string name="reordering_cards">കാർഡുകൾ പുന  ക്രമീകരിക്കുന്നു&#8230;</string>
     <string name="field_remapping">%1$s (“%2$s” ൽ നിന്ന്)</string>
     <string name="confirm_map_cards_to_nothing">ഒന്നുമില്ലാതെ മാപ്പുചെയ്ത ഏത് കാർഡുകളും ഇല്ലാതാക്കപ്പെടും. ഒരു കുറിപ്പിന് ശേഷിക്കുന്ന കാർഡുകളില്ലെങ്കിൽ, അത് നഷ്‌ടപ്പെടും. തുടരണമെന്ന് നിങ്ങൾക്ക് ഉറപ്പാണോ?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">ടൈംബോക്സ് എത്തി</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d കാർഡ്%2$s ൽ പഠിച്ചു</item>
@@ -143,17 +144,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">വീണ്ടും ഷെഡ്യൂൾ ചെയ്യുക</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">പ്രിവ്യൂ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
-    <string name="error_insufficient_memory">നിങ്ങളുടെ ഉപകരണത്തിലെ മെമ്മറി അപര്യാപ്തമായതിനാൽ പ്രവർത്തനം സാധ്യമല്ല</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">പേരുമാറ്റുക</string>
-    <string name="default_conf_delete_error">സ്ഥിരസ്ഥിതി ഓപ്ഷനുകൾ ഗ്രൂപ്പ് നീക്കംചെയ്യാൻ കഴിയില്ല</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">%d സിം കാർഡ് ചേർത്തു</item>
-        <item quantity="other">%d കാർഡുകൾ ചേർത്തു</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">ഡാറ്റാബേസ് പരിശോധിക്കുക</string>
     <string name="check_media">മീഡിയ പരിശോധിക്കുക</string>
     <string name="empty_cards">ശൂന്യമായ കാർഡുകൾ</string>
-    <string name="check_db_message">ഡാറ്റാബേസ് പരിശോധിക്കുന്നു&#8230;</string>
     <string name="empty_card_warning">ഈ കാർഡ് ശൂന്യമാണ്. ഡെക്ക് ലിസ്റ്റ് സ്ക്രീനിലെ മെനുവിൽ നിന്ന് “ശൂന്യ കാർഡുകൾ” ഓപ്ഷൻ ഉപയോഗിക്കുക.</string>
     <string name="unknown_type_field_warning">ഉത്തരം ടൈപ്പ് ചെയ്യുക: അജ്ഞാത ഫീൽഡ് %s</string>
     <string name="delete_deck">ഡെക്ക് ഇല്ലാതാക്കുന്നു&#8230;</string>
@@ -167,13 +162,6 @@
     </plurals>
     <string name="import_log_no_apkg">ഇതൊരു സാധുവായ അങ്കി പാക്കേജ് ഫയലല്ല</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
-    <string name="import_log_failed_unzip">apkg അൺ‌സിപ്പ് ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു:%s</string>
-    <string name="import_log_failed_copy_to">%s ലേക്ക് apkg പകർത്തുന്നതിൽ പരാജയപ്പെട്ടു</string>
-    <string name="import_log_failed_validate">apkg മൂല്യനിർണ്ണയം പരാജയപ്പെട്ടു</string>
-    <string name="import_log_insufficient_space_error">There is not enough space to import the package.\nNeeded - %1$s \nAvailable - %2$s.\n\nHaving Trouble? Try to free space on your phone if possible. Alternatively, sync uses less space than import. You may try importing the package with a device with more space (for example Anki Desktop) and then sync it to this device.</string>
-    <string name="import_log_file_cache_cleared">ഫയൽ ഇമ്പോർട്ടുചെയ്യുന്നതിൽ പിശക്, പ്രോസസ്സിംഗ് സമയത്ത് ഒരു കാഷെ വ്യക്തമാകും. Lease n വീണ്ടും ശ്രമിക്കുക</string>
-    <string name="import_succeeded_but_check_database">ഡാറ്റ ഇറക്കുമതി വിജയിച്ചു, പക്ഷേ ഇറക്കുമതിക്ക് ശേഷമുള്ള വൃത്തിയാക്കൽ പരാജയപ്പെട്ടു. ഡാറ്റാബേസ് പിന്നീട് പ്രവർത്തിപ്പിക്കുക. മൂല കാരണം:%s</string>
-    <string name="import_error_corrupt_zip">apkg ഫയൽ കേടാണ്. ദയവായി ഇത് ഇല്ലാതാക്കി വീണ്ടും ഡ download ൺ‌ലോഡുചെയ്യുക. \n\n റൂട്ട് കാരണം:%s</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
     <string name="import_error_not_apkg_extension">“%s” എന്ന ഫയലിന്റെ പേരിന് .apkg അല്ലെങ്കിൽ .colpkg വിപുലീകരണം ഇല്ല</string>
     <string name="import_error_load_imported_database">അങ്കി ഡാറ്റാബേസ് (.anki2) മാറ്റിസ്ഥാപിക്കൽ ഇതുവരെ പിന്തുണയ്‌ക്കുന്നില്ല. മാറ്റിസ്ഥാപിക്കാനുള്ള നിർദ്ദേശങ്ങൾക്കായി മാനുവൽ കാണുക.</string>
@@ -181,8 +169,6 @@
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
     <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
     <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
-    <string name="import_stats_error">Some errors occurred while importing the following files:\n%s</string>
-    <string name="import_replacing">ശേഖരം മാറ്റിസ്ഥാപിക്കുന്നു&#8230;</string>
     <string name="import_interrupted">ഇറക്കുമതി തടസ്സപ്പെട്ടു: അങ്കിഡ്രോയിഡ് അടച്ചു</string>
     <string name="export_include_schedule">ഷെഡ്യൂളിംഗ് ഉൾപ്പെടുത്തുക</string>
     <string name="export_include_media">മീഡിയ ഉൾപ്പെടുത്തുക</string>
@@ -196,12 +182,11 @@
         <item quantity="one">Export selected note as apkg file?</item>
         <item quantity="other">Export %d selected notes as apkg file?</item>
     </plurals>
-    <string name="export_in_progress">അങ്കി പാക്കേജ് ഫയൽ എക്‌സ്‌പോർട്ടുചെയ്യുന്നു&#8230;</string>
-    <string name="export_success_title">Collection exported successfully</string>
+    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
+    <string name="export_ready_title">Export ready</string>
     <string name="export_send_no_handlers">apkg കൈകാര്യം ചെയ്യാൻ അപ്ലിക്കേഷനുകളൊന്നും ലഭ്യമല്ല. സംരക്ഷിക്കുന്നത്...</string>
     <string name="export_save_apkg_successful">അങ്കി പാക്കേജ് വിജയകരമായി സംരക്ഷിച്ചു</string>
     <string name="export_save_apkg_unsuccessful">അങ്കി പാക്കേജ് സംരക്ഷിക്കുന്നത് പരാജയപ്പെട്ടു</string>
-    <string name="export_success_message">You may choose a file location to save it, or share it with another application.</string>
     <string name="export_share_title">Send Anki package using</string>
     <string name="export_email_subject">AnkiDroid എക്‌സ്‌പോർട്ടുചെയ്‌ത ഫ്ലാഷ് കാർഡുകൾ:%s</string>
     <string name="export_email_text"><![CDATA[        Hi!
@@ -211,8 +196,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_select_save_app">Select where to save file</string>
-    <string name="export_select_share_app">Select application for sharing</string>
+    <string name="export_choice_share">Share</string>
+    <string name="export_choice_save_to">Save to</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">ഓപ്ഷനുകൾ</string>
     <string name="menu__deck_options">ഡെക്ക് ഓപ്ഷനുകൾ</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">പഠന ഓപ്ഷനുകൾ</string>
@@ -222,47 +207,11 @@
     <string name="dyn_deck_desc">സാധാരണ ഷെഡ്യൂളിന് പുറത്ത് പഠിക്കുന്നതിനുള്ള ഒരു പ്രത്യേക ഡെക്കാണിത്. കാർഡുകൾ നിങ്ങൾ അവലോകനം ചെയ്ത ശേഷം അവയുടെ യഥാർത്ഥ ഡെക്കുകളിലേക്ക് സ്വപ്രേരിതമായി മടങ്ങും. ഡെക്ക് ലിസ്റ്റിൽ നിന്ന് ഈ ഡെക്ക് ഇല്ലാതാക്കുന്നത് ശേഷിക്കുന്ന എല്ലാ കാർഡുകളും അവയുടെ യഥാർത്ഥ ഡെക്കിലേക്ക് തിരികെ നൽകും.</string>
     <string name="steps_error">ഘട്ടങ്ങൾ 0 ൽ കൂടുതലുള്ള അക്കങ്ങളായിരിക്കണം</string>
     <string name="steps_min_error">കുറഞ്ഞത് ഒരു ഘട്ടമെങ്കിലും ആവശ്യമാണ്</string>
-    <string name="sched_end">(അവസാനിക്കുന്നു)</string>
-    <string name="sched_unbury_action">2അവ കാണുന്നതിന് ഇപ്പോൾ മെനുവിലെ “അൺബറി” ഇനം സ്പർശിക്കുക</string>
-    <string name="sched_has_buried">ബന്ധപ്പെട്ടതോ കുഴിച്ചിട്ടതോ ആയ ചില കാർഡുകൾ നാളെ വരെ വൈകി</string>
     <string name="tag_editor_add_feedback">“%1$s” ചേർക്കുന്നത് സ്ഥിരീകരിക്കുന്നതിന് “%2$s” സ്‌പർശിക്കുക.</string>
     <string name="tag_editor_add_feedback_existing">നിലവിലുള്ള ടാഗ് “%1$s” തിരഞ്ഞെടുത്തു</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s സെക്കൻഡ്</item>
-        <item quantity="other">%s നിമിഷങ്ങൾ</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s മിനിറ്റ്</item>
-        <item quantity="other">%s മിനിറ്റുകൾ</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">%s മണിക്കുറുകള്‍</item>
-        <item quantity="other">%s മണിക്കുറുകള്‍</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s ദിവസങ്ങള്‍</item>
-        <item quantity="other">%s ദിവസങ്ങള്‍</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">%s മാസം</item>
-        <item quantity="other">%s മാസം</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">%s വർഷം</item>
-        <item quantity="other">%s വർഷം</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s നിമിഷങ്ങൾ</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt;%s</string>
     <string name="decks_rename_exists">ആ ഡെക്ക് ഇതിനകം നിലവിലുണ്ട്</string>
     <string name="decks_rename_filtered_nosubdecks">ഫിൽ‌റ്റർ‌ ചെയ്‌ത ഡെക്കിന് സബ്‌ഡെക്കുകൾ‌ ഉണ്ടാകരുത്</string>
-    <string name="filtered_deck_name">ഫിൽട്ടർ ചെയ്ത ഡെക്ക്</string>
     <string name="reminder_title">ഇന്ന് പഠിക്കാൻ മറക്കരുത്!</string>
     <plurals name="reminder_text">
         <item quantity="one">%1$s ൽ അവലോകനം ചെയ്യുന്നതിന് %2$d കാർഡ്</item>
@@ -271,14 +220,11 @@
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">apkg ഫയൽ പങ്കിടുന്നതിൽ പിശക്</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">ഈ Anki അങ്കിയുടെ ഏറ്റവും പുതിയ പതിപ്പ് ആവശ്യമാണ്</string>
     <string name="activity_start_failed">ഈ പ്രവർത്തനം നടത്താൻ കഴിയുന്ന ഒരു അപ്ലിക്കേഷൻ സിസ്റ്റത്തിൽ ഇൻസ്റ്റാളുചെയ്‌തിട്ടില്ല.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[ക്യാമറ ഇമേജുകൾ വലുതായിരിക്കാം. മീഡിയ ഡയറക്ടറിയിലെ ഇമേജുകൾ കം‌പ്രസ്സുചെയ്യാനും വലുപ്പം മാറ്റാനും നിങ്ങൾ ആഗ്രഹിച്ചേക്കാം]]></string>
     <string name="no_browser_notification">browser സറൊന്നും കണ്ടെത്തിയില്ല p ദയവായി പിസി അല്ലെങ്കിൽ മൊബൈൽ വഴി വെബ് പേജ് സന്ദർശിക്കുക:</string>
     <string name="web_page_error">പേജ് ലോഡുചെയ്യുന്നതിൽ പിശക്:%s</string>
-    <string name="no_outgoing_link_in_cardbrowser">കാർഡിലെ ബാഹ്യ പേജ് ലിങ്ക് പിന്തുണയ്‌ക്കുന്നില്ല.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">വീണ്ടെടുത്ത കാർഡുകൾ</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">Background</string>
     <string name="choose_an_image">ഒരു ചിത്രം തിരഞ്ഞെടുക്കുക</string>
@@ -313,6 +259,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">ഡെക്ക് ‘%s’ ലോഡുചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="search_decks">തിരയൽ ഡെക്കുകൾ</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">മാരകമായ തെറ്റ്</string>
     <string name="ankidroid_init_failed_webview">ലഭ്യമല്ലാത്ത സിസ്റ്റം വെബ്‌വ്യൂവിനെ AnkiDroid ആശ്രയിക്കുന്നു. സിസ്റ്റം അപ്‌ഡേറ്റുകൾ‌ ഇൻ‌സ്റ്റാൾ‌ ചെയ്യുകയാണെങ്കിൽ‌ ഇത് സംഭവിക്കാം. കുറച്ച് മിനിറ്റിനുള്ളിൽ വീണ്ടും ശ്രമിക്കുക. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -325,7 +272,6 @@
     <string name="insert_heading">Insert Heading</string>
     <string name="format_font_size">Change Font Size</string>
     <string name="insert_mathjax">Insert MathJax Equation</string>
-    <string name="insert_cloze">Insert Cloze Deletion</string>
     <string name="note_editor_toolbar_icon">Button text</string>
     <string name="before_text">HTML Before Selection</string>
     <string name="after_text">HTML After Selection</string>
@@ -361,6 +307,7 @@
     <string name="deck_download_progress_message">You can use other apps while the download is running</string>
     <string name="check_network">Please check your network connection</string>
     <string name="search_using_deck_name">Search using deck name</string>
+    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
     <string name="home">Home</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
@@ -377,8 +324,6 @@
     <string name="scoped_storage_postpone">Postpone</string>
     <string name="scoped_storage_migrate">Migrate</string>
     <string name="search_card_js_api_no_results">Search returned no results</string>
-    <string name="sync_impossible_during_migration">Sync is disabled until the migration is done.\n
-        %1$d media files left to migrate.</string>
     <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
     <string name="start_migration_progress_message">Starting storage migration. You may resume using AnkiDroid shortly.</string>
     <string name="migration_part_1_done_resume">You may resume using AnkiDroid.
@@ -401,7 +346,6 @@
     <string name="intro_sync_from_ankiweb">Sync from AnkiWeb</string>
     <string name="already_logged_in">Already logged in</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">Deck exists</string>
     <string name="deck_created">Deck created</string>
     <string name="deck_renamed">Deck renamed</string>
     <!-- Deck Deletion -->

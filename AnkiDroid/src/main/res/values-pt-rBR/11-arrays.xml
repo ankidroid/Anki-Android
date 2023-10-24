@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Pergunte-me</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Por Tag somente em</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Novos cards em ordem aleatória</string>
-    <string name="new_order_order_added">Novos cards na ordem adicionada</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Mais antigos primeiro</string>
     <string name="cram_deck_conf_order_random">Aleatório</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Usar o baralho atual</string>
     <string name="add_to_deck_decide_by_note_type">Decidir pelo tipo de nota</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Misturar novos cards e revisões</string>
-    <string name="new_spread_new_after_review">Novos cartões após revisões</string>
-    <string name="new_spread_new_before_review">Novos cartões antes das revisões</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Quando não há fonte especificada nos cards</string>
-    <string name="override_font_always" comment="Option to always override font">Sempre</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Padrão do sistema</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">x-grande</string>
     <string name="html_size_code_xx_large">xx-grande</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Botão de resposta 1</string>
-    <string name="gesture_answer_2">Botão de resposta 2</string>
-    <string name="gesture_answer_3">Botão de resposta 3</string>
-    <string name="gesture_answer_4">Botão de resposta 4</string>
-    <string name="gesture_answer_green">Responder recomendada (verde)</string>
-    <string name="gesture_answer_better_recommended">Resposta melhor que recomendada</string>
+    <string name="answer_again">Answer again</string>
+    <string name="answer_hard">Answer hard</string>
+    <string name="answer_good">Answer good</string>
+    <string name="answer_easy">Answer easy</string>
     <string name="gesture_play">Reproduzir mídia</string>
     <string name="gesture_abort_learning">Interromper a aprendizagem</string>
     <string name="gesture_flag_red">Sinalizar como Vermelha</string>

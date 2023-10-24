@@ -51,7 +51,6 @@
     <string name="model_browser_delete">Izbriši vrsto zapiskov</string>
     <string name="model_browser_rename" comment="Rename a note type">Preimenuj</string>
     <string name="model_browser_template">Uredi kartice</string>
-    <string name="model_browser_add">Dodaj vrsto zapiskov</string>
     <!--Rename-->
     <string name="rename_model">Rename note type</string>
     <!--Language Hint-->
@@ -67,7 +66,6 @@
     <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
     <string name="model_field_editor_changing">Posodabljanje polj</string>
     <string name="model_field_editor_sort_field">Razvrsti po temu polju</string>
-    <string name="model_clone_suffix">kopija</string>
     <!--Warnings-->
     <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
     <string name="field_delete_warning">Ali res želite izbrisati to polje?</string>

@@ -48,10 +48,7 @@
     <string name="error_reporting_choice_ask_user">Kérdezzen rá</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
-    <string name="leech_action_tag_only">Csak címke</string>
     <!-- new_order_labels -->
-    <string name="new_order_random">Új kártyák véletlenszerűen</string>
-    <string name="new_order_order_added">Új kártyák hozzáadás sorrendjében</string>
     <!-- cram_deck_conf_order_labels -->
     <string name="cram_deck_conf_order_oldest_seen_first">Legrégebben látottat először</string>
     <string name="cram_deck_conf_order_random">Véletlenszerű</string>
@@ -65,13 +62,6 @@
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Jelenlegi pakli használata</string>
     <string name="add_to_deck_decide_by_note_type">Jegyzettípustól függ</string>
-    <!-- new_spread_labels -->
-    <string name="new_spread_mix_new_and_review">Új kártyák az ismétlendők közé</string>
-    <string name="new_spread_new_after_review">Új kártyák az ismétlendők után</string>
-    <string name="new_spread_new_before_review">Új kártyák az ismétlendők elé</string>
-    <!-- override_font_labels -->
-    <string name="override_font_if_missing">Ha a kártyára nincs megadva betűtípus</string>
-    <string name="override_font_always" comment="Option to always override font">Mindig</string>
     <!-- theme labels -->
     <string name="theme_follow_system">Rendszertéma követése</string>
     <!-- day_theme_labels -->
@@ -89,12 +79,10 @@
     <string name="html_size_code_x_large">XL nagy</string>
     <string name="html_size_code_xx_large">XXL nagy</string>
     <!-- gestures_labels -->
-    <string name="gesture_answer_1">Válasz gomb 1</string>
-    <string name="gesture_answer_2">Válasz gomb 2</string>
-    <string name="gesture_answer_3">Válasz gomb 3</string>
-    <string name="gesture_answer_4">Válasz gomb 4</string>
-    <string name="gesture_answer_green">Javasolt válasz (zöld)</string>
-    <string name="gesture_answer_better_recommended">Jobb válasz, mint a javasolt</string>
+    <string name="answer_again">Válasz: ismét</string>
+    <string name="answer_hard">Válasz: nehéz</string>
+    <string name="answer_good">Válasz: jó</string>
+    <string name="answer_easy">Válasz: könnyű</string>
     <string name="gesture_play">Média lejátszása</string>
     <string name="gesture_abort_learning">Tanulás befejezése</string>
     <string name="gesture_flag_red">Piros jelölő bekapcsolása</string>

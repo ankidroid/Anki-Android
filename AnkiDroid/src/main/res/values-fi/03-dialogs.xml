@@ -46,16 +46,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="check_db_title">Tarkista tietokanta?</string>
     <string name="check_db_warning">Tähän voi mennä vähän aikaa</string>
-    <string name="check_db_acknowledge">Tietokanta tarkistettu</string>
-    <string name="check_db_acknowledge_shrunk">Database checked and optimized.\nShrunk by %d MB.</string>
     <string name="contextmenu_deckpicker_delete_deck">Poista korttipakka</string>
-    <string name="delete_deck_default_deck">Oletuspakkaa ei voida poistaa</string>
     <string name="delete_deck_title">Poista korttipakka?</string>
-    <plurals name="delete_deck_message">
-        <item quantity="one">Poista kaikki kortit %1$s-pakassa? Se sisältää %2$d kortin.</item>
-        <item quantity="other">Poista kaikki kortit %1$s-pakassa? Se sisältää %2$d korttia.</item>
-    </plurals>
-    <string name="delete_cram_deck_message">Haluatko varmasti lähettää kaikki pakan %s kortit niiden alkuperäisiin pakkoihin?</string>
     <string name="no_tts_available_message">Yhtään puhesyntetisaattorin tukemaa kieltä ei ole käytettävissä</string>
     <string name="initializing_tts">Valmistellaan TTS:ää&#8230;</string>
     <string name="tts_no_tts">Älä puhu</string>
@@ -107,15 +99,6 @@
     <string name="custom_study_random">Valitse x korttia satunnaisesti pakasta:</string>
     <string name="custom_study_preview">Esikatsele viimeisinä x päivänä lisättyjä kortteja:</string>
     <string name="custom_study_rebuild_deck_corrupt">Could not rebuild custom study deck</string>
-    <string name="importing_collection">Tuodaan kokoelmaa.\nOdota&#8230;</string>
-    <string name="import_media_count">Tuodaan mediatiedostoja %1$d%%\nOdota&#8230;</string>
-    <string name="import_progress">• Tuodaan merkintöjä: %1$d%%\n• Tuodaan kortteja: %2$d%%\n• Jälkikäsittely: %3$d%%</string>
-    <string name="import_update_details">Päivitettiin %1$d %2$d :sta merkinnästä.</string>
-    <string name="import_update_ignored">Osa päivityksistä ohitettiin koska merkintätyyppi on muuttunut</string>
-    <plurals name="import_complete_message">
-        <item quantity="one">Cards imported: %2$d</item>
-        <item quantity="other">Files imported: %1$d\nTotal cards imported: %2$d</item>
-    </plurals>
     <string name="storage_full_title">Storage full</string>
     <string name="storage_almost_full_title">Storage almost full</string>
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">No space</string>
@@ -135,18 +118,14 @@
     <!-- Currently unsued, should be useful in the future -->
     <string name="dialog_positive_disable" tools:ignore="UnusedResources">Poista käytöstä</string>
     <string name="dialog_positive_overwrite">Korvaa</string>
-    <string name="dialog_positive_remove">Poista</string>
     <string name="dialog_positive_repair">Korjaa</string>
     <string name="dialog_positive_replace">Korvaa</string>
-    <string name="dialog_positive_restore">Palauta</string>
-    <string name="dialog_positive_set">Aseta</string>
     <string name="dialog_collection_path_not_dir">Annettu hakemistopolku ei ole pätevä</string>
     <!-- Media checking -->
     <string name="check_media_title">Tarkista media?</string>
     <string name="check_media_warning">Jos sinulla on suuri mediakokoelma, tämä voi kestää pitkään</string>
     <string name="check_media_message">Tarkistetaan mediaa&#8230;</string>
     <string name="check_media_acknowledge">Media tarkistettu</string>
-    <string name="check_media_failed">Median tarkistaminen epäonnistui</string>
     <string name="check_media_invalid">%d tiedostoa virheellisellä koodauksella</string>
     <string name="check_media_unused">%d käyttämätöntä tiedostoa mediakansiossa</string>
     <string name="check_media_nohave">%d tiedostoa, joita käytetään korteissa, mutta jotka eivät ole mediakansiossa</string>
@@ -165,8 +144,6 @@
     <string name="tags_dialog_option_due_cards" comment="Name of cards that are already been reviewed in the past, and that should be reviewed again">Erääntyy</string>
     <!-- Empty cards -->
     <string name="emtpy_cards_finding">Etsitään tyhjiä kortteja&#8230;</string>
-    <string name="confirm_cancel">Do you want to cancel?</string>
-    <string name="empty_cards_none">Ei tyhjiä kortteja</string>
     <string name="empty_cards_count">Poistettavat kortit: %d</string>
     <string name="empty_cards_deleted">Poistetut kortit: %d</string>
     <!-- Multimedia - Edit Field Activity -->
@@ -182,15 +159,10 @@
     <string name="integrity_check_continue_anyway">Continue Anyway</string>
     <string name="integrity_check_insufficient_space">Check Database uses a large amount of temporary storage.\n\nIt is strongly recommended that you have at least %s free space on your device before continuing.</string>
     <string name="integrity_check_insufficient_space_extra_content">\n\nYou currently have %s free.</string>
-    <string name="integrity_check_fixed_no_home_deck">%d cards with incorrect home decks were recovered. Please see the manual for more information.</string>
-    <string name="video_creation_error">Could not play video</string>
     <!-- Card Browser -->
-    <string name="card_browser_deck_change_error">Could not change deck</string>
     <!-- AbstractFlashCardViewer -->
     <string name="card_viewer_url_decode_error">Error decoding data from card</string>
-    <string name="undo_succeeded">Undone \"%s\"</string>
     <!-- Deck Options -->
-    <string name="deck_options_corrupt">Failed to process deck options: %s</string>
     <!-- Database Errors-->
     <string name="database_locked_title">Database Locked</string>
     <string name="database_locked_summary">The AnkiDroid database is in use by another application. Please close the other application then reopen AnkiDroid.</string>

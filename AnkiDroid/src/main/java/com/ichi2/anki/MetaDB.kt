@@ -5,15 +5,14 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
+import androidx.annotation.WorkerThread
 import com.ichi2.anki.model.WhiteboardPenColor
 import com.ichi2.anki.model.WhiteboardPenColor.Companion.default
 import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.utils.KotlinCleanup
+import com.ichi2.widget.SmallWidgetStatus
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.IllegalStateException
-import java.util.regex.Pattern
 
 /**
  * Used to store additional information besides what is stored in the deck itself.
@@ -28,35 +27,16 @@ import java.util.regex.Pattern
  */
 @KotlinCleanup("see about lateinit")
 @KotlinCleanup("IDE lint")
+@WorkerThread
 object MetaDB {
     /** The name of the file storing the meta-db.  */
     private const val DATABASE_NAME = "ankidroid.db"
 
     /** The Database Version, increase if you want updates to happen on next upgrade.  */
     private const val DATABASE_VERSION = 7
-    // Possible values for the qa column of the languages table.
-    /** The language refers to the question.  */
-    const val LANGUAGES_QA_QUESTION = 0
-
-    /** The language refers to the answer.  */
-    const val LANGUAGES_QA_ANSWER = 1
-
-    /** The language does not refer to either the question or answer.  */
-    const val LANGUAGES_QA_UNDEFINED = 2
-
-    /** The pattern used to remove quotes from file names.  */
-    private val quotePattern = Pattern.compile("[\"']")
 
     /** The database object used by the meta-db.  */
     private var mMetaDb: SQLiteDatabase? = null
-
-    /** Remove any pairs of quotes from the given text.  */
-    private fun stripQuotes(textParam: String): String {
-        var text = textParam
-        val matcher = quotePattern.matcher(text)
-        text = matcher.replaceAll("")
-        return text
-    }
 
     /** Open the meta-db  */
     @KotlinCleanup("scope function or lateinit db")
@@ -286,23 +266,6 @@ object MetaDB {
     }
 
     /**
-     * Resets all the language associates for a given deck.
-     *
-     * @return whether an error occurred while resetting the language for the deck
-     */
-    fun resetDeckLanguages(context: Context, did: DeckId): Boolean {
-        openDBIfClosed(context)
-        try {
-            mMetaDb!!.execSQL("DELETE FROM languages WHERE did = ?;", arrayOf(did))
-            Timber.i("MetaDB:: Resetting language assignment for deck %d", did)
-            return true
-        } catch (e: Exception) {
-            Timber.e(e, "Error resetting deck language")
-        }
-        return false
-    }
-
-    /**
      * Returns the state of the whiteboard for the given deck.
      *
      * @return 1 if the whiteboard should be shown, 0 otherwise
@@ -520,9 +483,8 @@ object MetaDB {
      */
     fun getWidgetSmallStatus(context: Context): IntArray {
         openDBIfClosed(context)
-        var cursor: Cursor? = null
         try {
-            cursor = mMetaDb!!.query(
+            mMetaDb!!.query(
                 "smallWidgetStatus",
                 arrayOf("due", "eta"),
                 null,
@@ -530,41 +492,33 @@ object MetaDB {
                 null,
                 null,
                 null
-            )
-            if (cursor.moveToNext()) {
-                return intArrayOf(cursor.getInt(0), cursor.getInt(1))
+            ).use { cursor ->
+                if (cursor.moveToNext()) {
+                    return intArrayOf(cursor.getInt(0), cursor.getInt(1))
+                }
             }
         } catch (e: SQLiteException) {
             Timber.e(e, "Error while querying widgetStatus")
-        } finally {
-            if (cursor != null && !cursor.isClosed) {
-                cursor.close()
-            }
         }
         return intArrayOf(0, 0)
     }
 
     fun getNotificationStatus(context: Context): Int {
         openDBIfClosed(context)
-        var cursor: Cursor? = null
         val due = 0
         try {
-            cursor =
-                mMetaDb!!.query("smallWidgetStatus", arrayOf("due"), null, null, null, null, null)
-            if (cursor.moveToFirst()) {
-                return cursor.getInt(0)
+            mMetaDb!!.query("smallWidgetStatus", arrayOf("due"), null, null, null, null, null).use { cursor ->
+                if (cursor.moveToFirst()) {
+                    return cursor.getInt(0)
+                }
             }
         } catch (e: SQLiteException) {
             Timber.e(e, "Error while querying widgetStatus")
-        } finally {
-            if (cursor != null && !cursor.isClosed) {
-                cursor.close()
-            }
         }
         return due
     }
 
-    fun storeSmallWidgetStatus(context: Context, status: Pair<Int, Int>) {
+    fun storeSmallWidgetStatus(context: Context, status: SmallWidgetStatus) {
         openDBIfClosed(context)
         try {
             val metaDb = mMetaDb!!
@@ -574,7 +528,7 @@ object MetaDB {
                 metaDb.execSQL("DELETE FROM smallWidgetStatus")
                 metaDb.execSQL(
                     "INSERT INTO smallWidgetStatus(due, eta) VALUES (?, ?)",
-                    arrayOf<Any>(status.first, status.second)
+                    arrayOf<Any>(status.due, status.eta)
                 )
                 metaDb.setTransactionSuccessful()
             } finally {
@@ -609,15 +563,10 @@ object MetaDB {
         }
 
         // API LEVEL
-        fun getTableColumnCount(metaDb: SQLiteDatabase, tableName: String): Int {
-            var c: Cursor? = null
-            return try {
-                c = metaDb.rawQuery("PRAGMA table_info($tableName)", null)
+        fun getTableColumnCount(metaDb: SQLiteDatabase, tableName: String) =
+            metaDb.rawQuery("PRAGMA table_info($tableName)", null).use { c ->
                 c.count
-            } finally {
-                c?.close()
             }
-        }
 
         fun getInteger(cur: Cursor, columnIndex: Int): Int? {
             return if (cur.isNull(columnIndex)) null else cur.getInt(columnIndex)

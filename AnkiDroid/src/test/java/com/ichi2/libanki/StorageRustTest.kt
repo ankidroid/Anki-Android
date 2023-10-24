@@ -17,7 +17,7 @@
 package com.ichi2.libanki
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.ichi2.anki.RobolectricTest
+import com.ichi2.testutils.JvmTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.Test
@@ -25,12 +25,12 @@ import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 
 @RunWith(AndroidJUnit4::class)
-class StorageRustTest : RobolectricTest() {
+class StorageRustTest : JvmTest() {
 
     @Test
     @Config(qualifiers = "en")
     fun testModelCount() {
-        val modelNames = col.models.all().map { x -> x.getString("name") }
+        val modelNames = col.notetypes.all().map { x -> x.getString("name") }
         MatcherAssert.assertThat(
             modelNames,
             Matchers.containsInAnyOrder(

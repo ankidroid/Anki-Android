@@ -19,20 +19,16 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Filter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
-import androidx.core.content.ContextCompat
 import com.ichi2.anki.dialogs.DeckSelectionDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck.Companion.fromCollection
-import com.ichi2.anki.servicelayer.DeckService.shouldShowDefaultDeck
 import com.ichi2.anki.widgets.DeckDropDownAdapter
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.utils.FragmentManagerSupplier
-import com.ichi2.utils.FunctionalInterfaces
 import com.ichi2.utils.asFragmentManagerSupplier
 import timber.log.Timber
 
@@ -66,7 +62,7 @@ class DeckSpinnerSelection(
 
     private val mFragmentManagerSupplier: FragmentManagerSupplier = context.asFragmentManagerSupplier()
 
-    lateinit var dropDownDecks: List<Deck>
+    lateinit var dropDownDecks: List<DeckNameId>
         private set
     private var mDeckDropDownAdapter: DeckDropDownAdapter? = null
 
@@ -74,10 +70,10 @@ class DeckSpinnerSelection(
         actionBar.setDisplayShowTitleEnabled(false)
 
         // Add drop-down menu to select deck to action bar.
-        dropDownDecks = computeDropDownDecks()
+        dropDownDecks = computeDropDownDecks(includeFiltered = showFilteredDecks)
         mAllDeckIds = ArrayList(dropDownDecks.size)
         for (d in dropDownDecks) {
-            val thisDid = d.getLong("id")
+            val thisDid = d.id
             mAllDeckIds.add(thisDid)
         }
         mDeckDropDownAdapter = DeckDropDownAdapter(context, dropDownDecks)
@@ -85,30 +81,14 @@ class DeckSpinnerSelection(
         setSpinnerListener()
     }
 
-    fun initializeNoteEditorDeckSpinner(currentEditedCard: Card?, addNote: Boolean) {
-        val col = collection
-        dropDownDecks = computeDropDownDecks()
+    fun initializeNoteEditorDeckSpinner() {
+        dropDownDecks = computeDropDownDecks(includeFiltered = false)
         val deckNames = ArrayList<String>(dropDownDecks.size)
         mAllDeckIds = ArrayList(dropDownDecks.size)
         for (d in dropDownDecks) {
-            // add current deck and all other non-filtered decks to deck list
-            val thisDid = d.getLong("id")
-            val currentName = d.getString("name")
-            val lineContent: String = if (d.isStd) {
-                currentName
-            } else {
-                // We do not allow cards to be moved to dynamic deck.
-                // That mean we do not list dynamic decks in the spinner, with one exception
-                if (!addNote && currentEditedCard != null && currentEditedCard.did == thisDid) {
-                    // If the current card is in a dynamic deck, it can stay there. Hence current deck is added
-                    // to the spinner, even if it is dynamic.
-                    context.applicationContext.getString(R.string.current_and_default_deck, currentName, col.decks.name(currentEditedCard.oDid))
-                } else {
-                    continue
-                }
-            }
-            mAllDeckIds.add(thisDid)
-            deckNames.add(lineContent)
+            val currentName = d.name
+            deckNames.add(currentName)
+            mAllDeckIds.add(d.id)
         }
         val noteDeckAdapter: ArrayAdapter<String?> = object : ArrayAdapter<String?>(context, R.layout.multiline_spinner_item, deckNames as List<String?>) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -117,8 +97,8 @@ class DeckSpinnerSelection(
 
                 // If this item is selected
                 if (position == spinner.selectedItemPosition) {
-                    tv.setBackgroundColor(ContextCompat.getColor(context, R.color.note_editor_selected_item_background))
-                    tv.setTextColor(ContextCompat.getColor(context, R.color.note_editor_selected_item_text))
+                    tv.setBackgroundColor(context.getColor(R.color.note_editor_selected_item_background))
+                    tv.setTextColor(context.getColor(R.color.note_editor_selected_item_text))
                 }
 
                 // Return the modified view
@@ -130,14 +110,10 @@ class DeckSpinnerSelection(
     }
 
     /**
-     * @return All decks, except maybe default if it should be hidden.
+     * @return All decks.
      */
-    fun computeDropDownDecks(): List<Deck> {
-        val sortedDecks = collection.decks.allSorted().toMutableList()
-        if (shouldHideDefaultDeck()) {
-            sortedDecks.removeIf { x: Deck -> x.getLong("id") == Consts.DEFAULT_DECK_ID }
-        }
-        return sortedDecks
+    fun computeDropDownDecks(includeFiltered: Boolean): List<DeckNameId> {
+        return collection.decks.allNamesAndIds(includeFiltered = includeFiltered)
     }
 
     fun setSpinnerListener() {
@@ -230,27 +206,12 @@ class DeckSpinnerSelection(
      * Displays a [DeckSelectionDialog]
      */
     fun displayDeckSelectionDialog(col: Collection?) {
-        val filter = FunctionalInterfaces.Filter { d: Deck -> showFilteredDecks || !Decks.isDynamic(d) }
-        val decks = fromCollection(col!!, filter).toMutableList()
+        val decks = fromCollection(col!!, includeFiltered = false).toMutableList()
         if (showAllDecks) {
             decks.add(SelectableDeck(ALL_DECKS_ID, context.resources.getString(R.string.card_browser_all_decks)))
         }
-        if (shouldHideDefaultDeck()) {
-            decks.removeIf { x: SelectableDeck -> x.deckId == Consts.DEFAULT_DECK_ID }
-        }
         val dialog = DeckSelectionDialog.newInstance(context.getString(R.string.search_deck), null, false, decks)
-        val did: DeckId? = (context as? Statistics)?.getCurrentDeckId()
-        if (did != null) {
-            dialog.requireArguments().putLong("currentDeckId", did)
-        }
         AnkiActivity.showDialogFragment(mFragmentManagerSupplier.getFragmentManager(), dialog)
-    }
-
-    /**
-     * @return Whether default deck should appear in the list of deck
-     */
-    private fun shouldHideDefaultDeck(): Boolean {
-        return !alwaysShowDefault && !shouldShowDefaultDeck(collection)
     }
 
     companion object {

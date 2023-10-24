@@ -35,12 +35,10 @@ import java.util.stream.Collectors
 /** Abstraction: Discuss moving many of these to 'Reviewer'  */
 enum class ViewerCommand(val resourceId: Int) {
     SHOW_ANSWER(R.string.show_answer),
-    FLIP_OR_ANSWER_EASE1(R.string.gesture_answer_1),
-    FLIP_OR_ANSWER_EASE2(R.string.gesture_answer_2),
-    FLIP_OR_ANSWER_EASE3(R.string.gesture_answer_3),
-    FLIP_OR_ANSWER_EASE4(R.string.gesture_answer_4),
-    FLIP_OR_ANSWER_RECOMMENDED(R.string.gesture_answer_green),
-    FLIP_OR_ANSWER_BETTER_THAN_RECOMMENDED(R.string.gesture_answer_better_recommended),
+    FLIP_OR_ANSWER_EASE1(R.string.answer_again),
+    FLIP_OR_ANSWER_EASE2(R.string.answer_hard),
+    FLIP_OR_ANSWER_EASE3(R.string.answer_good),
+    FLIP_OR_ANSWER_EASE4(R.string.answer_easy),
     UNDO(R.string.undo),
     EDIT(R.string.cardeditor_title_edit_card),
     MARK(R.string.menu_mark_note),
@@ -67,9 +65,12 @@ enum class ViewerCommand(val resourceId: Int) {
     RECORD_VOICE(R.string.record_voice),
     REPLAY_VOICE(R.string.replay_voice),
     TOGGLE_WHITEBOARD(R.string.gesture_toggle_whiteboard),
+    CLEAR_WHITEBOARD(R.string.clear_whiteboard),
+    CHANGE_WHITEBOARD_PEN_COLOR(R.string.title_whiteboard_editor),
     SHOW_HINT(R.string.gesture_show_hint),
     SHOW_ALL_HINTS(R.string.gesture_show_all_hints),
-    ADD_NOTE(R.string.menu_add_note);
+    ADD_NOTE(R.string.menu_add_note),
+    RESCHEDULE_NOTE(R.string.card_editor_reschedule_card);
 
     companion object {
         val allDefaultBindings: List<MappableBinding>
@@ -135,18 +136,16 @@ enum class ViewerCommand(val resourceId: Int) {
                 FLIP_OR_ANSWER_EASE3 -> from(
                     keyCode(KeyEvent.KEYCODE_BUTTON_B, CardSide.BOTH),
                     keyCode(KeyEvent.KEYCODE_3, CardSide.ANSWER),
-                    keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER)
+                    keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_DPAD_CENTER, CardSide.BOTH),
+                    keyCode(KeyEvent.KEYCODE_SPACE, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_ENTER, CardSide.ANSWER),
+                    keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.ANSWER)
                 )
                 FLIP_OR_ANSWER_EASE4 -> from(
                     keyCode(KeyEvent.KEYCODE_BUTTON_A, CardSide.BOTH),
                     keyCode(KeyEvent.KEYCODE_4, CardSide.ANSWER),
                     keyCode(KeyEvent.KEYCODE_NUMPAD_4, CardSide.ANSWER)
-                )
-                FLIP_OR_ANSWER_RECOMMENDED -> from(
-                    keyCode(KeyEvent.KEYCODE_DPAD_CENTER, CardSide.BOTH),
-                    keyCode(KeyEvent.KEYCODE_SPACE, CardSide.ANSWER),
-                    keyCode(KeyEvent.KEYCODE_ENTER, CardSide.ANSWER),
-                    keyCode(KeyEvent.KEYCODE_NUMPAD_ENTER, CardSide.ANSWER)
                 )
                 EDIT -> from(keyCode(KeyEvent.KEYCODE_E, CardSide.BOTH))
                 MARK -> from(unicode('*', CardSide.BOTH))

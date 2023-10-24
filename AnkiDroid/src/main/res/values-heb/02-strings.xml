@@ -47,7 +47,7 @@
     <!-- Navigation drawer strings -->
     <string name="drawer_open">פתיחת מגירה</string>
     <string name="drawer_close">סגירת מגירה</string>
-    <string name="CardEditorCardDeck">חפיסת קלפים:‏</string>
+    <string name="CardEditorCardDeck">חפיסת כרטיסים:‏</string>
     <string name="CardEditorNoteDeck">חפיסה:‏</string>
     <string name="CardEditorModel">סוג:</string>
     <string name="CardEditorTags">תגיות: %1$s</string>
@@ -61,6 +61,8 @@
     <string name="updated_version">עודקן לגירסה %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">שמור לוח</string>
+    <string name="enable_stylus">הפעל מצב סטיילוס</string>
+    <string name="disable_stylus">כבה מצב סטיילוס</string>
     <string name="enable_whiteboard">לאפשר ציור</string>
     <string name="disable_whiteboard">בטל הציור</string>
     <string name="show_whiteboard">הצג לוח ציור</string>
@@ -69,7 +71,6 @@
     <string name="replay_audio">החזר שמע</string>
     <string name="leech_suspend_notification">קלף מסומן כעלוקה ומושעה</string>
     <string name="leech_notification">קלף מסומן כעלוקה</string>
-    <string name="corrupt_font">קובץ גופן %s פגום</string>
     <string name="webview_crash_unknown">שגיאה לא מוכרת</string>
     <string name="webview_crash_unknwon_detailed">זה נגרם בגלל שגיאה פנימית בWebView</string>
     <string name="webview_crash_oom">אין זיכרון פנוי</string>
@@ -123,9 +124,9 @@
     <string name="save">שמירה</string>
     <string name="close">סגירה</string>
     <string name="select">בחירה</string>
-    <string name="reordering_cards">מסדר מחדש את הקלפים&#8230;</string>
     <string name="field_remapping">%1$s (מתוך \"%2$s\")</string>
     <string name="confirm_map_cards_to_nothing">קלף שממופה לכלום ימחק. אם לרשימה אין קלפים נותרים, היא תימחק. להמשיך?</string>
+    <!-- Timebox -->
     <string name="timebox_reached_title">קופסת הזמן הגיעה</string>
     <plurals name="timebox_reached">
         <item quantity="one">%1$d כרטסיה נלמדו ב%2$s</item>
@@ -147,19 +148,11 @@
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">תזמן מחדש</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">תצוגה מקדימה</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d מ-%2$d</string>
-    <string name="error_insufficient_memory">הפעולה אינה אפשרית עקב מחסור בזיכרון בהתקן</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">שינוי שם</string>
-    <string name="default_conf_delete_error">לא ניתן להסיר את קבוצת האפשרויות \'ברירת מחדל\'</string>
-    <plurals name="factadder_cards_added">
-        <item quantity="one">נוסף קלף אחד</item>
-        <item quantity="two">נוספו %d קלפים</item>
-        <item quantity="many">נוספו %d קלפים</item>
-        <item quantity="other">נוספו %d קלפים</item>
-    </plurals>
+    <string name="checks_action">Check</string>
     <string name="check_db">בדוק מסד הנתונים</string>
     <string name="check_media">בדוק מדיה</string>
     <string name="empty_cards">כרטסיות ריקות</string>
-    <string name="check_db_message">מסד הנתונים בתהליך בדיקה&#8230;</string>
     <string name="empty_card_warning">הקלף הזה ריק. יש להשתמש באפשרות „קלפים ריקים” מהתפריט במסך רשימת החפיסות.</string>
     <string name="unknown_type_field_warning">הקלד תשובה: שדה אינו מוכר %s</string>
     <string name="delete_deck">מוחק חפיסה&#8230;</string>
@@ -175,15 +168,6 @@
     </plurals>
     <string name="import_log_no_apkg">קובץ זה אינו קובץ חבילה תקין</string>
     <string name="import_title_error" comment="Title of error dialog">שגיאה</string>
-    <string name="import_log_failed_unzip">נכשל בפריסת החבילה: %s</string>
-    <string name="import_log_failed_copy_to">נכשל בהעתקת החבילה ל%s</string>
-    <string name="import_log_failed_validate">נכשל אימות החבילה</string>
-    <string name="import_log_insufficient_space_error">אין מספיק מקום לייבא את החבילה.\n
-צריך \n%1$s \n יש רק %2$s. \n \n
-נסו לפנות מקום בזיכרון המכשיר. לחילופין, סנכרון טופס פחות מקום מייבוא. ניתן לנסות לבצע את הייבוא במכשיר אחר, עם יותר נפח זיכרון, ולעשות סנכרון של המכשיר הנוכחי איתו.</string>
-    <string name="import_log_file_cache_cleared">שגיאה בייבוא קובץ, נראה שהמטמון נוקה באמצע התהליך.\nאנא נסה שנית</string>
-    <string name="import_succeeded_but_check_database">ייבוא הנתונים הצליח אבל תהליך הניקוי שלאחר הייבוא נכשל. יש להפעיל בדיקת מסד נתונים בהמשך. הגורם: %s</string>
-    <string name="import_error_corrupt_zip">קובץ ה־apkg פגום. נא למחוק ולהוריד אותו מחדש.\n\nגורם: %s</string>
     <string name="import_error_handle_exception">ייבוא הקובץ נכשל\n\n%s</string>
     <string name="import_error_not_apkg_extension">לשם הקובץ „%s” אין סיומת ‎.apkg או ‎.colpkg</string>
     <string name="import_error_load_imported_database">עדיין אין תמיכה בהחלפות של Anki Database (.anki2). אנא עיין במדריך להוראות החלפה.</string>
@@ -191,8 +175,6 @@
     <string name="import_error_copy_to_cache">לא הצליח לשמור את הקובץ במטמון (ייתכן ששטח האחסון נגמר)</string>
     <string name="import_error_multiple_colpkg">נבחרו קבצי colpkg מרובים.</string>
     <string name="import_error_colpkg_apkg">הן apkg &amp; וקבצי colpkg נבחרו בבת אחת.</string>
-    <string name="import_stats_error">ארעו כמה שגיאות במהלך ייבוא הקבצים הבאים:\n%s</string>
-    <string name="import_replacing">האוסף מוחלף&#8230;</string>
     <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
     <string name="export_include_schedule">כולל תזמון</string>
     <string name="export_include_media">כולל מדיה</string>
@@ -210,12 +192,11 @@
         <item quantity="many">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
         <item quantity="other">לייצא את %d הכרטיסים הנבחרים כקובץ apkg?</item>
     </plurals>
-    <string name="export_in_progress">קובץ חבילה של Anki מיוצא&#8230;</string>
-    <string name="export_success_title">הכרטיסים יוצאו בהצלחה</string>
+    <string name="export_preparation_in_progress">הכנה ליצוא...‏</string>
+    <string name="export_ready_title">הייצוא מוכן </string>
     <string name="export_send_no_handlers">לא נמצא יישום התומך ב- apkg. שומר...</string>
     <string name="export_save_apkg_successful">חבילת ה־Anki נשמרה בהצלחה</string>
     <string name="export_save_apkg_unsuccessful">שמירת חבילת Anki נכשלה</string>
-    <string name="export_success_message">ביכולתך לבחור מיקום קובץ כדי לשמור אותו, או לשתף אותו עם יישום אחר.</string>
     <string name="export_share_title">שלח חבילת אנקי באמצעות</string>
     <string name="export_email_subject">קלפי AnkiDroid שיוצאו: %s</string>
     <string name="export_email_text"><![CDATA[         היי!
@@ -225,8 +206,8 @@
          [1] %1$s<br/>
          [2] %2$s
          ]]></string>
-    <string name="export_select_save_app">בחר מיקום שמירת הקובץ</string>
-    <string name="export_select_share_app">בחר תוכנה לשיתוף</string>
+    <string name="export_choice_share">שתף</string>
+    <string name="export_choice_save_to">שמור אל</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">אפשרויות</string>
     <string name="menu__deck_options">אפשרויות חפיסה</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">אפשרויות למידה</string>
@@ -236,77 +217,26 @@
     <string name="dyn_deck_desc">חפיסה זאת הינה חפיסה מיוחדת ללמידה מחוץ ללו\"ז הרגיל. הכרטיסיות יוחזרו באופן אוטומטי לחפיסותיהם המקוריות לאחר סיום הלמידה. מחיקת החפיסה תחזיר את כל הכרטסיות שנותרו בה לחפיסותיהם המקוריות.</string>
     <string name="steps_error">שלבים חייב להיות מספר גדול יותר מ0</string>
     <string name="steps_min_error">לפחות שלב אחד נדרש</string>
-    <string name="sched_end">(סוף)</string>
-    <string name="sched_unbury_action">לצפייה בהם עכשיו לחץ “Unbury” בתפריט</string>
-    <string name="sched_has_buried">חלק מהכרטסיות הקשורות או הקבורות נדחו למחר</string>
     <string name="tag_editor_add_feedback">לחץ \"%2$s\" לאישור הוספת \"%1$s\"</string>
     <string name="tag_editor_add_feedback_existing">תגית קיימת \"%1$s\" נבחרה</string>
     <!-- Time spans -->
-    <plurals name="time_span_seconds">
-        <item quantity="one">%s שניה</item>
-        <item quantity="two">%s שניות</item>
-        <item quantity="many">%s שניות</item>
-        <item quantity="other">%s שניות</item>
-    </plurals>
-    <plurals name="time_span_minutes">
-        <item quantity="one">%s דקה</item>
-        <item quantity="two">%s דקות</item>
-        <item quantity="many">%s דקות</item>
-        <item quantity="other">%s דקות</item>
-    </plurals>
-    <plurals name="time_span_hours">
-        <item quantity="one">שעה</item>
-        <item quantity="two">שעתיים</item>
-        <item quantity="many">%s שעות</item>
-        <item quantity="other">%s שעות</item>
-    </plurals>
-    <plurals name="time_span_days">
-        <item quantity="one">%s יום</item>
-        <item quantity="two">יומיים</item>
-        <item quantity="many">%s ימים</item>
-        <item quantity="other">%s ימים</item>
-    </plurals>
-    <plurals name="time_span_months">
-        <item quantity="one">חודש</item>
-        <item quantity="two">חודשיים</item>
-        <item quantity="many">%s חודשים</item>
-        <item quantity="other">%s חודשים</item>
-    </plurals>
-    <plurals name="time_span_years">
-        <item quantity="one">שנה</item>
-        <item quantity="two">שנתיים</item>
-        <item quantity="many">%s שנים</item>
-        <item quantity="other">%s שנים</item>
-    </plurals>
-    <!-- A decimal number of seconds.
-    Please give this a best-effort translation and explain the requirements for
-    formatting decimals in your language in the CrowdIn comments -->
-    <string name="time_span_decimal_seconds">%s שניות</string>
-    <!-- The reason for making a simple “< x” translatable are RTL
-         languages which apparently use the other symbol to mean less
-         than. -->
-    <string name="less_than_time">&lt;%s</string>
     <string name="decks_rename_exists">החפיסה כבר קיימת</string>
     <string name="decks_rename_filtered_nosubdecks">חפיסה מסוננת אינה יכולה להחיל חפיסות משנה</string>
-    <string name="filtered_deck_name">חפיסה מסוננת</string>
     <string name="reminder_title">לא לשכוח ללמוד היום!</string>
     <plurals name="reminder_text">
-        <item quantity="one">קלף אחד לשינון בעוד %1$s</item>
-        <item quantity="two">%2$d קלפים לשינון בעוד %1$s</item>
-        <item quantity="many">%2$d קלפים לשינון בעוד %1$s</item>
-        <item quantity="other">%2$d קלפים לשינון בעוד %1$s</item>
+        <item quantity="one">כרטיס אחד לשינון בעוד %1$s</item>
+        <item quantity="two">%2$d כרטיסים לשינון בעוד %1$s</item>
+        <item quantity="many">%2$d כרטיסים לשינון בעוד %1$s</item>
+        <item quantity="other">%2$d כרטיסים לשינון בעוד %1$s</item>
     </plurals>
     <!-- Currently only used if exporting APKG fails -->
     <string name="apk_share_error">שגיאה בשיתוף קובץ apkg</string>
     <!-- Import and export v2 feedback -->
-    <string name="export_v2_dummy_note">קובץ זה דורש גרסה חדשה יותר של Anki.</string>
     <string name="activity_start_failed">במערכת לא מותקן יישומון שיכול לבצע את הפעולה הזאת.</string>
     <string name="multimedia_editor_image_compression_failed"><![CDATA[תמונות המצלמה גדולות מדי. אולי עדיף לך לדחוס ולשנות את גודל התמונות בתיקיית המדיה]]></string>
     <string name="no_browser_notification">לא נמצא דפדפן, נא לבקר באתר במחשב או בנייד: </string>
     <string name="web_page_error">טעינת העמוד נכשלה: %s</string>
-    <string name="no_outgoing_link_in_cardbrowser">אין תמיכה בקישור לעמוד חיצוני בקלף.</string>
     <!-- The name of the deck which corrupt cards will be moved to -->
-    <string name="check_integrity_recovered_deck_name">קלפים משוחזרים</string>
     <!-- Deckpicker Background -->
     <string name="background_image_title">רקע</string>
     <string name="choose_an_image">נא לבחור תמונה</string>
@@ -333,7 +263,7 @@
     <string name="reviewer_invalid_api_version_visit_documentation">תצוגה</string>
     <string name="anki_js_error_code">(קוד שגיאה: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">הועתק מהלוח</string>
     <string name="about_ankidroid_error_copy_debug_info">תקלה בהעתקת הודעת השגיאה</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">תקלה בתוכן הקלף: נכשל בטעינת %s</string>
@@ -341,6 +271,7 @@
     <!-- Deck Picker -->
     <string name="deck_picker_failed_deck_load">טעינת החפיסה %s נכשלה</string>
     <string name="search_decks">חיפוש בחפיסות</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">הצג התקדמות ההמרה</string>
     <string name="ankidroid_init_failed_webview_title">שגיאה מכרעת</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid משתמש בדפדפן המערכת שאינו זמין. זה קורה לפעמים אם המערכת מתקינה עדכונים. נא נסה שנית בעוד כמה דקות. \n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -353,7 +284,6 @@
     <string name="insert_heading">הוספת כותרת</string>
     <string name="format_font_size">שינוי גודל הגופן</string>
     <string name="insert_mathjax">הוספת משוואת MathJax</string>
-    <string name="insert_cloze">הכנס זיהוי Cloze</string>
     <string name="note_editor_toolbar_icon">טקסט הלחצן</string>
     <string name="before_text">HTML לפני הבחירה</string>
     <string name="after_text">HTML אחרי הבחירה</string>
@@ -389,15 +319,16 @@
     <string name="deck_download_progress_message">ניתן לעבור ליישומים אחרים בזמן ההורדה</string>
     <string name="check_network">נא בדוק את החיבור לרשת</string>
     <string name="search_using_deck_name">חיפוש באמצעות שם החפיסה</string>
+    <string name="external_storage_unavailable">ההורדה בוטלה, האחסון החיצוני אינו זמין</string>
     <string name="home">בית</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">הקלף נקבר</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="two">%d cards suspended.</item>
-        <item quantity="many">%d cards suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">כרטיס %d הושעה.</item>
+        <item quantity="two">%d כרטיסים הושעו.</item>
+        <item quantity="many">%d כרטיסים הושעו.</item>
+        <item quantity="other">%d כרטיסים הושעו.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">הפוך שדה %s לדביק</string>
@@ -407,9 +338,7 @@
     <string name="scoped_storage_postpone">לדחות</string>
     <string name="scoped_storage_migrate">הסבה</string>
     <string name="search_card_js_api_no_results">אין תוצאות לשאילתת החיפוש</string>
-    <string name="sync_impossible_during_migration">הסנכרון מושבת עד לסיום ההעברה.\n
-         נותרו %1$d קובצי מדיה להעברה.</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid צריך להעביר את האחסון שלו כדי לעמוד במדיניות האבטחה של Android 10.\n\nזה ישפר את ביצועי סנכרון המדיה.&lt;br&gt;&lt;br&gt;במהלך ההעברה לא תוכל לסנכרן וחלק מההגדרות יושבתו. סנכרון מדיה יתרחש לפני תחילת ההעברה כדי לשמור על בטיחות הנתונים שלך.&lt;br&gt;&lt;br&gt;זה בטוח להשתמש או לסגור את AnkiDroid במהלך תהליך זה.</string>
     <string name="start_migration_progress_message">התחלת העברת אחסון. תוכל להמשיך להשתמש ב-AnkiDroid בקרוב.</string>
     <string name="migration_part_1_done_resume">ביכולתך להמשיך להשתמש ב-AnkiDroid.
 \nהעברת אחסון תמשיך ברקע.</string>
@@ -426,12 +355,11 @@
     <!-- App Intro -->
     <string name="intro_ankidroid_tagline_one">למד פחות</string>
     <string name="intro_ankidroid_tagline_two">זכור יותי</string>
-    <string name="intro_short_ankidroid_explanation">מתזמן הקלפים של אנקי חוסך זמן על ידי חיזוק הזיכרונות החלשים ביותר שלך ושימור החזקים ביותר שלך</string>
+    <string name="intro_short_ankidroid_explanation">מתזמן הכרטיסים של אנקי חוסך זמן על ידי חיזוק הזיכרונות החלשים ביותר שלך ושימור החזקים ביותר שלך</string>
     <string name="intro_get_started" comment="Action to start AnkiDroid for the first time without syncing from AnkiWeb">התחל</string>
     <string name="intro_sync_from_ankiweb">סנכרון מ-AnkiWeb</string>
     <string name="already_logged_in">כבר מחובר</string>
     <!-- Deck Creation -->
-    <string name="validation_deck_already_exists">החבילה קיימת</string>
     <string name="deck_created">חבילה שנוצרה</string>
     <string name="deck_renamed">חבילה ששונה שמה</string>
     <!-- Deck Deletion -->
@@ -443,9 +371,8 @@
     <string name="toggle_browser_mode_help">החלף הצגת כרטיסים או פתקים בדפדפן</string>
     <string name="truncate_content_help">חתוך את הגובה של כל שורה בדפדפן כדי להציג רק 3 שורות תוכן ראשונות</string>
     <string name="browser_options_dialog_heading">אפשרויות דפדפן</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
-    </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">פונקציונליות זו אינה זמינה במהלך העברת אחסון</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">הקש כדי להתחיל העברת אחסון</string>
+    <string name="media_sync_required_title">דרוש סנכרון מדיה</string>
+    <string name="media_sync_unavailable_message">סנכרון מדיה מושבת בהגדרות. אנא סנכרן וגבה כל מדיה שלא סונכרנה לפני שתמשיך</string>
 </resources>

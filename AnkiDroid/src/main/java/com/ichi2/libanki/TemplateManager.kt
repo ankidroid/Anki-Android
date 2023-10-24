@@ -22,7 +22,8 @@
 
 package com.ichi2.libanki
 
-import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.av_tags_to_native
+import com.ichi2.libanki.Sound.Companion.SOUND_RE
+import com.ichi2.libanki.TemplateManager.PartiallyRenderedCard.Companion.avTagsToNative
 import com.ichi2.libanki.backend.BackendUtils
 import com.ichi2.libanki.backend.model.toBackendNote
 import com.ichi2.libanki.utils.append
@@ -30,11 +31,12 @@ import com.ichi2.libanki.utils.len
 import com.ichi2.utils.deepClone
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendTemplateException
+import org.intellij.lang.annotations.Language
 import org.json.JSONObject
 import timber.log.Timber
 
 private typealias Union<A, B> = Pair<A, B>
-private typealias TemplateReplacementList = MutableList<Union<str?, TemplateManager.TemplateReplacement?>>
+private typealias TemplateReplacementList = MutableList<Union<String?, TemplateManager.TemplateReplacement?>>
 
 /**
  * Template.py in python. Called TemplateManager for technical reasons (conflict with Kotlin typealias)
@@ -50,17 +52,17 @@ private typealias TemplateReplacementList = MutableList<Union<str?, TemplateMana
  * the filter is skipped.
  */
 class TemplateManager {
-    data class TemplateReplacement(val field_name: str, var current_text: str, val filters: List<str>)
+    data class TemplateReplacement(val field_name: String, var current_text: String, val filters: List<String>)
     data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
         companion object {
-            fun from_proto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
-                val qnodes = nodes_from_proto(out.questionNodesList)
-                val anodes = nodes_from_proto(out.answerNodesList)
+            fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
+                val qnodes = nodesFromProto(out.questionNodesList)
+                val anodes = nodesFromProto(out.answerNodesList)
 
                 return PartiallyRenderedCard(qnodes, anodes)
             }
 
-            fun nodes_from_proto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
+            fun nodesFromProto(nodes: List<anki.card_rendering.RenderedTemplateNode>): TemplateReplacementList {
                 val results: TemplateReplacementList = mutableListOf()
                 for (node in nodes) {
                     if (node.valueCase == anki.card_rendering.RenderedTemplateNode.ValueCase.TEXT) {
@@ -82,7 +84,7 @@ class TemplateManager {
                 return results
             }
 
-            fun av_tag_to_native(tag: anki.card_rendering.AVTag): AvTag {
+            fun avTagToNative(tag: anki.card_rendering.AVTag): AvTag {
                 val value = tag.valueCase
                 return if (value == anki.card_rendering.AVTag.ValueCase.SOUND_OR_VIDEO) {
                     SoundOrVideoTag(filename = tag.soundOrVideo)
@@ -97,8 +99,8 @@ class TemplateManager {
                 }
             }
 
-            fun av_tags_to_native(tags: List<anki.card_rendering.AVTag>): List<AvTag> {
-                return tags.map { av_tag_to_native(it) }.toList()
+            fun avTagsToNative(tags: List<anki.card_rendering.AVTag>): List<AvTag> {
+                return tags.map { avTagToNative(it) }.toList()
             }
         }
     }
@@ -112,10 +114,10 @@ class TemplateManager {
         col: Collection,
         card: Card,
         note: Note,
-        browser: bool = false,
-        notetype: NoteType? = null,
+        browser: Boolean = false,
+        notetype: NotetypeJson? = null,
         template: JSONObject? = null,
-        fill_empty: bool = false
+        fill_empty: Boolean = false
     ) {
 
         @RustCleanup("internal variables should be private, revert them once we're on V16")
@@ -123,29 +125,23 @@ class TemplateManager {
         internal val _col: Collection = col
         internal var _card: Card = card
         internal var _note: Note = note
-        internal var _browser: bool = browser
+        internal var _browser: Boolean = browser
         internal var _template: JSONObject? = template
-        internal var _fill_empty: bool = fill_empty
-        private var _fields: Dict<str, str>? = null
-        internal var _note_type: NoteType = notetype ?: note.model()
-
-        /**
-         * if you need to store extra state to share amongst rendering
-         * hooks, you can insert it into this dictionary
-         */
-        private var extra_state: HashMap<str, Any> = Dict()
+        internal var _fill_empty: Boolean = fill_empty
+        private var _fields: HashMap<String, String>? = null
+        internal var _note_type: NotetypeJson = notetype ?: note.model()
 
         companion object {
-            fun from_existing_card(card: Card, browser: bool): TemplateRenderContext {
+            fun fromExistingCard(card: Card, browser: Boolean): TemplateRenderContext {
                 return TemplateRenderContext(card.col, card, card.note(), browser)
             }
 
-            fun from_card_layout(
+            fun fromCardLayout(
                 note: Note,
                 card: Card,
-                notetype: NoteType,
+                notetype: NotetypeJson,
                 template: JSONObject,
-                fill_empty: bool
+                fillEmpty: Boolean
             ): TemplateRenderContext {
                 return TemplateRenderContext(
                     note.col,
@@ -153,14 +149,14 @@ class TemplateManager {
                     note,
                     notetype = notetype,
                     template = template,
-                    fill_empty = fill_empty
+                    fill_empty = fillEmpty
                 )
             }
         }
 
         fun col() = _col
 
-        fun fields(): Dict<str, str> {
+        fun fields(): HashMap<String, String> {
             Timber.w(".fields() is obsolete, use .note() or .card()")
             if (_fields == null) {
                 // fields from note
@@ -192,22 +188,22 @@ class TemplateManager {
         fun card() = _card
 
         fun note() = _note
-        fun note_type() = _note_type
+        fun noteType() = _note_type
 
         @RustCleanup("legacy")
-        fun qfmt(): str {
-            return templates_for_card(card(), _browser).first
+        fun qfmt(): String {
+            return templatesForCard(card(), _browser).first
         }
 
         @RustCleanup("legacy")
-        fun afmt(): str {
-            return templates_for_card(card(), _browser).second
+        fun afmt(): String {
+            return templatesForCard(card(), _browser).second
         }
 
         fun render(): TemplateRenderOutput {
             val partial: PartiallyRenderedCard
             try {
-                partial = _partially_render()
+                partial = partiallyRender()
             } catch (e: BackendTemplateException) {
                 return TemplateRenderOutput(
                     question_text = e.localizedMessage ?: e.toString(),
@@ -217,69 +213,93 @@ class TemplateManager {
                 )
             }
 
-            val qtext = apply_custom_filters(partial.qnodes, this, front_side = null)
-            val qout = col().backend.extractAVTags(text = qtext, questionSide = true)
+            /**
+             * NOT in libanki.
+             *
+             * The desktop version handles videos in an external player (mpv)
+             * because of old webview codecs in python, and to allow extending the video player.
+             * To simplify things and deliver a better result,
+             * we use the webview player, like AnkiMobile does
+             */
+            fun parseVideos(text: String): String {
+                return SOUND_RE.replace(text) { match ->
+                    val fileName = match.groupValues[1]
+                    val extension = fileName.substringAfterLast(".", "")
+                    if (extension in VIDEO_EXTENSIONS) {
+                        @Language("HTML")
+                        val result =
+                            """<video src="$fileName" controls controlsList="nodownload"></video>"""
+                        result
+                    } else {
+                        match.value
+                    }
+                }
+            }
+
+            val qtext = parseVideos(applyCustomFilters(partial.qnodes, this, front_side = null))
+            val qout = col().backend.extractAvTags(text = qtext, questionSide = true)
             var qoutText = qout.text
 
-            val atext = apply_custom_filters(partial.anodes, this, front_side = qout.text)
-            val aout = col().backend.extractAVTags(text = atext, questionSide = false)
+            val atext = parseVideos(applyCustomFilters(partial.anodes, this, front_side = qout.text))
+            val aout = col().backend.extractAvTags(text = atext, questionSide = false)
             var aoutText = aout.text
 
             if (!_browser) {
                 val svg = _note_type.optBoolean("latexsvg", false)
-                qoutText = LaTeX.mungeQA(qout.text, _col, svg)
-                aoutText = LaTeX.mungeQA(aout.text, _col, svg)
+                qoutText = LaTeX.mungeQA(qoutText, _col, svg)
+                aoutText = LaTeX.mungeQA(aoutText, _col, svg)
             }
 
             val output = TemplateRenderOutput(
                 question_text = qoutText,
                 answer_text = aoutText,
-                question_av_tags = av_tags_to_native(qout.avTagsList),
-                answer_av_tags = av_tags_to_native(aout.avTagsList),
-                css = note_type().getString("css")
+                question_av_tags = avTagsToNative(qout.avTagsList),
+                answer_av_tags = avTagsToNative(aout.avTagsList),
+                css = noteType().getString("css")
             )
 
             return output
         }
 
         @RustCleanup("Remove when DroidBackend supports named arguments")
-        fun _partially_render(): PartiallyRenderedCard {
-            val proto = col().newBackend.run {
+        fun partiallyRender(): PartiallyRenderedCard {
+            val proto = col().run {
                 if (_template != null) {
                     // card layout screen
                     backend.renderUncommittedCardLegacy(
                         _note.toBackendNote(),
                         _card.ord,
                         BackendUtils.to_json_bytes(_template!!.deepClone()),
-                        _fill_empty
+                        _fill_empty,
+                        true
                     )
                 } else {
                     // existing card (eg study mode)
-                    backend.renderExistingCard(_card.id, _browser)
+                    backend.renderExistingCard(_card.id, _browser, true)
                 }
             }
-            return PartiallyRenderedCard.from_proto(proto)
+            return PartiallyRenderedCard.fromProto(proto)
         }
 
         /** Stores the rendered templates and extracted AV tags. */
         data class TemplateRenderOutput(
             @get:JvmName("getQuestionText")
             @set:JvmName("setQuestionText")
-            var question_text: str,
+            var question_text: String,
             @get:JvmName("getAnswerText")
             @set:JvmName("setAnswerText")
-            var answer_text: str,
+            var answer_text: String,
             val question_av_tags: List<AvTag>,
             val answer_av_tags: List<AvTag>,
-            val css: str = ""
+            val css: String = ""
         ) {
 
-            fun question_and_style() = "<style>$css</style>$question_text"
-            fun answer_and_style() = "<style>$css</style>$answer_text"
+            fun questionAndStyle() = "<style>$css</style>$question_text"
+            fun answerAndStyle() = "<style>$css</style>$answer_text"
         }
 
         @RustCleanup("legacy")
-        fun templates_for_card(card: Card, browser: bool): Pair<str, str> {
+        fun templatesForCard(card: Card, browser: Boolean): Pair<String, String> {
             val template = card.template()
             var a: String? = null
             var q: String? = null
@@ -296,11 +316,11 @@ class TemplateManager {
         }
 
         /** Complete rendering by applying any pending custom filters. */
-        fun apply_custom_filters(
+        fun applyCustomFilters(
             rendered: TemplateReplacementList,
             @Suppress("unused_parameter") ctx: TemplateRenderContext,
-            front_side: str?
-        ): str {
+            front_side: String?
+        ): String {
             // template already fully rendered?
             if (len(rendered) == 1 && rendered[0].first != null) {
                 return rendered[0].first!!

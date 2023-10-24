@@ -15,22 +15,13 @@
  */
 package com.ichi2.utils
 
-import android.app.UiModeManager
 import android.content.Context
-import android.content.res.Configuration
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
 
 object AndroidUiUtils {
-    fun isRunningOnTv(context: Context?): Boolean {
-        val uiModeManager = ContextCompat.getSystemService(context!!, UiModeManager::class.java)
-            ?: return false
-        return uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION
-    }
-
     /**
      * This method is used for setting the focus on an EditText which is used in a dialog
      * and for opening the keyboard.

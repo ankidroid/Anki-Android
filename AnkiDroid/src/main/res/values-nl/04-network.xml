@@ -46,7 +46,6 @@
 -->
 <resources>
     <string name="youre_offline">Je bent offline</string>
-    <string name="sync_even_if_offline">Toch proberen</string>
     <string name="sync_error">Syncronisatiefout</string>
     <string name="vague_error" comment="Network error dialog title">Error</string>
     <string name="retry">Opnieuw proberen</string>
@@ -63,55 +62,15 @@
     <string name="sign_up">Meld je nu aan</string>
     <string name="logged_as">Ingelogd als</string>
     <string name="log_out">Uitloggen</string>
-    <string name="alert_logging_message">Inloggen, even geduld...</string>
-    <string name="invalid_username_password">Ongeldig e-mailadres of wachtwoord.</string>
     <string name="reset_password">Wachtwoord resetten</string>
     <string name="lost_mail_instructions">Email vergeten?</string>
     <!-- AndroidManifest.xml -->
     <string name="deckpreferences_title">Opties voor XXX</string>
-    <string name="sync_prepare_syncing">Synchronisatie wordt voorbereid...</string>
-    <string name="sync_preparing_full_sync_message">Volledige synchronisatie wordt voorbereid...</string>
-    <string name="sync_uploading_message">Uploaden...</string>
-    <string name="sync_downloading_message">Downloaden ...</string>
     <string name="sync_title">Synchronisatie</string>
     <string name="sync_log_uploading_message">Volledige synchronisatie vanaf lokale kant</string>
-    <string name="sync_log_clocks_unsynchronized">De klok op uw apparaat is %1$d seconden verkeerd%2$s; Synchronisatie vereist dat zowel uw klok als uw tijdszone correct ingesteld zijn om fouten te voorkomen. Gelieve ervoor te zorgen dat de datum, tijd en tijdszone op uw mobiel apparaat correct zijn ingesteld alvorens opnieuw te synchroniseren.</string>
-    <string name="sync_log_clocks_unsynchronized_tz">, de tijdzone van het apparaat is mogelijk verkeerd</string>
-    <string name="sync_log_clocks_unsynchronized_date">, de datum van het apparaat is mogelijk verkeerd ingesteld</string>
-    <string name="sync_no_changes_message">Geen wijzigingen gevonden.</string>
     <string name="sync_database_acknowledge">Collectie gesynchroniseerd</string>
-    <string name="sync_log_error_specific">Synchronisatiefout, type: %1$s, bericht: %2$s</string>
     <string name="sync_corrupt_database">Uw database is beschadigd. Corrigeer dit en probeer het opnieuw te synchroniseren.\n\nZie %s voor meer informatie over het herstellen van je database.</string>
-    <string name="sync_too_busy">Server overbezet. Probeer het later opnieuw.</string>
-    <string name="sync_remote_db_error">De gedownloade database was corrupt. Probeer het opnieuw.</string>
-    <string name="sync_overwrite_error">Je huidige collectie kan niet worden overschreven door het gedownloade bestand.</string>
-    <string name="sync_connection_error">Verbinding time-out. Je internetverbinding ondervindt problemen of je hebt een erg groot bestand in je mediamap.</string>
-    <string name="sync_write_access_error_on_storage">The downloaded file couldn’t be saved to your storage. Either the storage is read-only or there isn’t enough space.</string>
-    <string name="sync_error_invalid_sync_server">De aangepaste synchronisatieserver in geavanceerde instellingen is ongeldig (%s). Voer een geldige server in, of schakel de instelling uit.</string>
-    <string name="sync_deletions_message">Verwijderde objecten synchroniseren...</string>
-    <string name="sync_small_objects_message">Kleine objecten synchroniseren...</string>
-    <string name="sync_finish_message">Synchronisatie afsluiten...</string>
-    <string name="sync_log_finish_error">Fout bij het voltooien.</string>
-    <string name="sync_writing_db">Veranderingen schrijven naar de database...</string>
-    <string name="sync_download_chunk">Veranderingen downloaden...</string>
-    <string name="sync_upload_chunk">Veranderingen uploaden...</string>
-    <string name="sync_up_down_size">Omhoog: %1$d KB, omlaag: %2$d KB</string>
-    <string name="sync_generic_error">Er is een fout opgetreden. Probeer het later opnieuw.</string>
-    <string name="sync_check_upload_file">Bestandscontrole voor upload...</string>
-    <string name="sync_check_download_file">Controle van het gedownloade bestand...</string>
-    <string name="sync_media_find">Bezig met het opsporen van wijzigingen aan de media...</string>
-    <string name="sync_media_no_changes">Mediabestanden bleven ongewijzigd.</string>
-    <string name="sync_media_success">Media met succes gesynchroniseerd.</string>
-    <string name="sync_media_partial_updated">Media-synchronisatie gedeeltelijk voltooid:\n%1$d mediabestanden gedownload.\n%2$d mediabestanden geüpload.</string>
-    <string name="sync_media_changes_count">%d mediawijzigingen te uploaden</string>
-    <string name="sync_media_downloaded_count">%d mediabestanden gedownload</string>
-    <string name="sync_sanity_failed">Na synchronisatie was de collectie in een inconsistente staat. Om dit probleem op te lossen zal AnkiDroid een volledige synchronisatie uitvoeren. Gelieve te kiezen welke zijde u wenst te behouden, of de operatie te onderbreken indien u liever later synchroniseert.</string>
-    <string name="sync_media_sanity_failed">Synchronisatie van de media voltooid, maar het aantal mediabestanden komt niet overeen met dat op de server. De volgende keer zal een volledige synchronisatie van de media worden uitgevoerd om fouten te corrigeren.</string>
-    <string name="sync_media_db_error">Media-synchronisatie is mislukt omdat de huidige database beschadigd is. Een media-controle wordt aanbevolen.</string>
-    <string name="sync_media_error">Fout tijdens het synchroniseren van mediagegevens.</string>
-    <string name="sync_media_error_check">Fout tijdens het synchroniseren van media. Een controle van de media wordt aanbevolen.</string>
     <!-- Please run ‘Check database’ before syncing -->
-    <string name="sync_basic_check_failed">Gelieve \'%s\' uit te voeren voor het synchroniseren</string>
     <string name="sync_sanity_local">Lokaal</string>
     <string name="sync_sanity_remote">Server</string>
     <string name="force_full_sync_title">Forceer complete synchronisatie</string>
@@ -119,15 +78,7 @@
     <string name="force_full_sync_confirmation">Geforceerde volledige synchronisatie</string>
     <string name="full_sync_confirmation">De gevraagde wijziging vergt een volledige upload van de database wanneer u de volgende keer uw collectie synchroniseert. Indien u overhoringen of wijzigingen heeft op een ander apparaat dat nog niet is gesynchroniseerd, dan zullen zij verloren gaan. Wilt u verder gaan?</string>
     <string name="full_sync_confirmation_upgrade">Vanwege een fout in een vorige versie van AnkiDroid, is het aan te raden om een volledige synchronisatie uit te voeren.</string>
-    <string name="sync_error_407_proxy_required">Proxyverificatie vereist.</string>
-    <string name="sync_error_409">Slechts één client kan AnkiWeb tegelijk gebruiken. Als een vorige synchronisatie mislukt is, probeer het dan over een paar minuten opnieuw.</string>
-    <string name="sync_error_413_collection_size">Uw collectie of een mediabestand is te groot om te synchroniseren.</string>
-    <string name="sync_error_500_unknown">AnkiWeb is op een fout gestuit. Probeer het binnen enkele minuten opnieuw, en als het probleem zich blijft voordoen, gelieve een bugrapport in te dienen.</string>
-    <string name="sync_error_501_upgrade_required">Gelieve te actualiseren naar de meest recente versie van AnkiDroid</string>
-    <string name="sync_error_502_maintenance">AnkiWeb is momenteel in onderhoud. Probeer opnieuw binnen enkele minuten.</string>
-    <string name="sync_error_504_gateway_timeout">504 gateway timeout foutmelding ontvangen.</string>
     <!-- Deck Picker Sync Icon -->
     <string name="sync_menu_title_full_sync">Synchronisatie (volledig)</string>
     <string name="sync_menu_title_no_account">Synchroniseren (inloggen)</string>
-    <string name="sync_error_unknown_host_readable">Kon geen verbinding maken met AnkiWeb. Werkt uw internetverbinding?\n\n%s</string>
 </resources>

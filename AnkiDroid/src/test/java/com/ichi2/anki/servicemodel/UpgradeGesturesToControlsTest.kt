@@ -51,7 +51,13 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
         super.setUp()
         prefs = super.getPreferences()
         instance = UpgradeGesturesToControls()
-        prefs.registerOnSharedPreferenceChangeListener { _, key -> run { Timber.i("added key $key"); changedKeys.add(key) } }
+        prefs.registerOnSharedPreferenceChangeListener { _, key ->
+            run {
+                Timber.i("added key $key"); if (key != null) {
+                    changedKeys.add(key)
+                }
+            }
+        }
     }
 
     @Test

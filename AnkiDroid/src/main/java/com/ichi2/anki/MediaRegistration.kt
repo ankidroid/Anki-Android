@@ -163,7 +163,7 @@ class MediaRegistration(private val context: Context) {
         Timber.i("Adding media to collection: %s", imagePath)
         val f = File(imagePath)
         return try {
-            CollectionHelper.instance.getCol(context)!!.media.addFile(f)
+            CollectionHelper.instance.getColUnsafe(context)!!.media.addFile(f)
             true
         } catch (e: IOException) {
             Timber.w(e, "Failed to add file")

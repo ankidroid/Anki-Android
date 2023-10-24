@@ -18,7 +18,6 @@ package com.ichi2.utils
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.widget.Spinner
 
@@ -26,12 +25,6 @@ object UiUtil {
     fun makeBold(s: String): Spannable {
         val str = SpannableStringBuilder(s)
         str.setSpan(StyleSpan(Typeface.BOLD), 0, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        return str
-    }
-
-    fun makeColored(s: String, color: Int): Spannable {
-        val str = SpannableStringBuilder(s)
-        str.setSpan(ForegroundColorSpan(color), 0, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         return str
     }
 

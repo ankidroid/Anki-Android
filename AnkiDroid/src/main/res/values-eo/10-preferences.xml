@@ -43,21 +43,20 @@
 ~ You should have received a copy of the GNU General Public License along with
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">Malaktiva</string>
-    <string name="enabled">Aktiva</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">Neniuj rezultoj</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Ĝenerala</string>
+    <string name="pref_cat_studying" maxLength="41">Studado</string>
     <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
     <string name="pref_cat_reviewing" maxLength="41">Ripetado</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Samtempigo</string>
+    <string name="pref_cat_scheduling" maxLength="41">Planado</string>
     <string name="pref_cat_whiteboard" maxLength="41">Skribtabulo</string>
     <string name="pref_cat_appearance" maxLength="41">Aspekto</string>
     <string name="pref_cat_themes" maxLength="41">Etoso</string>
@@ -98,7 +97,7 @@
     <string name="gestures_corner_touch_summary">Ebligi gestojn en anguloj de la ekrano</string>
     <string name="gestures_full_screen_nav_drawer" maxLength="41">Naviga tirmenuo sur plenekrano</string>
     <string name="gestures_fullscreen_nav_drawer_summary">Malfermi navigan tirmenuon per ŝovumi dekstren sur la plenekrano</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_none" maxLength="41">Neniu</string>
     <string name="gestures_swipe_up" maxLength="41">Ŝovumi supren</string>
     <string name="gestures_swipe_down" maxLength="41">Ŝovumi suben</string>
     <string name="gestures_swipe_left" maxLength="41">Ŝovumi maldekstren</string>
@@ -114,8 +113,6 @@
     <string name="gestures_corner_tap_middle_center" maxLength="41">Frapeti centron</string>
     <string name="gestures_corner_tap_bottom_left" maxLength="41">Frapeti suban maldekstron</string>
     <string name="gestures_corner_tap_bottom_right" maxLength="41">Frapeti suban dekstron</string>
-    <string name="more_scrolling_buttons" maxLength="41">Elektronika legilo</string>
-    <string name="more_scrolling_buttons_summ">Ankaŭ uzi butonojn de kanji/katakana aŭ emoĝioj por rulumi</string>
     <string name="card_browser_enable_external_context_menu">Menuo “%s”</string>
     <string name="card_browser_enable_external_context_menu_summary">Aktivigi la kuntekstan menuon “%s” tutaplikaĵe</string>
     <string name="double_scrolling_gap" maxLength="41">Duobla rulumado</string>
@@ -129,18 +126,18 @@
     <string name="sync_account_summ_logged_out">Ne ensalutinta</string>
     <string name="automatic_sync_choice" maxLength="41">Aŭtomata samtempigado</string>
     <string name="automatic_sync_choice_summ">Aŭtomate sinkronigi je aplikaĵa starto/ĉeso nur se la antaŭa samtempigo okazis antaŭ pli ol 10 minutoj.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Ĉiam</string>
     <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
+    <string name="sync_media_never">Neniam</string>
     <string name="sync_status_badge" maxLength="41">Montri staton de samtempigo</string>
     <string name="sync_status_badge_summ">Ŝanĝi la emblemon de samtempigo kiam povas alŝuti ŝanĝojn</string>
     <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
     <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
+    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">Temo</string>
     <string name="day_theme" maxLength="41">Taga etoso</string>
     <string name="night_theme" maxLength="41">Nokta etoso</string>
-    <string name="default_font" maxLength="41">Implicita tiparo</string>
-    <string name="override_font" maxLength="41">Uzi implicitan tiparon</string>
     <string name="language" maxLength="41">Lingvo</string>
     <string name="language_system">Laŭ operaciumo</string>
     <string name="notification_pref" maxLength="41">Sciigoj</string>
@@ -154,7 +151,6 @@
     <string name="timeout_answer" maxLength="41">Respondo post elĉerpi tempon</string>
     <string name="timeout_answer_summ">Aŭtomate montri respondon sen enigo de uzanto. Prokrasto enhavas tempon por aŭtomate ludi sonaĵon.</string>
     <string name="timeout_answer_seconds" maxLength="41">Montri respondon post</string>
-    <string name="timeout_answer_seconds_summ" comment="The time to wait (in seconds) in the reviewer before automatically showing the next question or answer">XXX s</string>
     <string name="timeout_question_seconds" maxLength="41">Montri sekvan demandon post</string>
     <string name="select_locale_title">Elekti lingvon</string>
     <string name="software_render" maxLength="41">Malaktivigi aparataran bildigilon de kartoj</string>
@@ -166,9 +162,10 @@
     <string name="disable_extended_text_ui_summ">Montri la kuntekstan menuon “truteksta malpleno” kiam en horizontala orientiĝo.</string>
     <string name="vertical_centering" maxLength="41">Centrigi vertikale</string>
     <string name="vertical_centering_summ">Centrigi enhavon de kartoj vertikale</string>
-    <string name="pref_backup_max" maxLength="41">Maksimuma nombro da sekurkopioj</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Ignori duan frapeton antaŭ (milisekundoj)</string>
     <string name="pref_double_tap_time_interval_summary">La dua frapeto sur la butonoj de respondoj estos ignorita, se ĝi okazos antaŭ la agordita tempo Tio ĉi preventas de fari neatenditajn duoblaj frapetojn</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">Montri tempon ĉe butono</string>
     <string name="show_estimates_summ">Montri tempon de sekva ripeto ĉe butonoj de respondoj</string>
     <string name="show_large_answer_buttons" maxLength="41">Grandaj butonoj de respondo</string>
@@ -180,18 +177,13 @@
     <string name="show_eta" maxLength="41">Montri tempon</string>
     <string name="show_eta_summ">Montri plian tempon</string>
     <string name="use_current" maxLength="41">Kartaro por novaj kartoj</string>
-    <string name="new_spread" maxLength="41">Pozicio de nova karto</string>
     <string name="learn_cutoff" maxLength="41">Limigo de anticipa lernado</string>
     <string name="time_limit" maxLength="41">Limigo de lernada tempero (timebox)</string>
     <string name="new_timezone" maxLength="41">Pritraktado de nova horzono</string>
     <string name="day_offset_with_description" maxLength="41">Komenco de tago (0 estas la horo 00:00. 23 estas la horo 23:00)</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
-    <string name="xlabel_dayoffset_seekbar" maxLength="41">00:00</string>
-    <string name="ylabel_dayoffset_seekbar" maxLength="41">23:00</string>
+    <string name="day_offset_summary">%s horoj post noktmezo.</string>
     <string name="pref_keep_screen_on" maxLength="41">Teni ekranon ŝaltita</string>
     <string name="pref_keep_screen_on_summ">Ne malŝalti ekranon</string>
-    <string name="convert_fen_text" maxLength="41">Subteno por ŝaka skribsistemo</string>
-    <string name="convert_fen_text_summ">Bildigi ŝaktabulon laŭ Forsyth-Edwards-skribsistemo. La skribsistemo devas troviĝi ene etikedoj [fen][/fen].</string>
     <string name="enable_api_title" maxLength="41">Aktivigi AnkiDroid-API</string>
     <string name="enable_api_summary">Ebligi al aliaj aplikaĵoj konekti al AnkiDroid kaj legi/skribi datumojn sen via ago</string>
     <string name="custom_buttons" maxLength="41">Butonoj de aplikaĵa breto</string>
@@ -200,8 +192,8 @@
     <string name="custom_buttons_setting_if_room">Nur se spaco disponebla</string>
     <string name="custom_buttons_setting_menu_only">Nur en menuo</string>
     <string name="reset_custom_buttons" maxLength="41">Restarigi normojn</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Restarigi agordojn al implicita.</string>
+    <string name="reset">Restarigi</string>
     <string name="thirdparty_apps_title" maxLength="41">Eksteraj aplikaĵoj uzantaj API</string>
     <string name="thirdparty_apps_summary">Vidigi listojn de aplikaĵoj, kiuj uzas AnkiDroid API kiel vortaroj kaj iloj.</string>
     <string name="html_javascript_debugging" maxLength="41">Senerarigado de HTML / JavaScript</string>
@@ -217,20 +209,9 @@
     <!-- Allow all files in media imports -->
     <string name="media_import_allow_all_files" maxLength="41">Ĉiuj dosieroj dum enporti aŭdvidaĵojn</string>
     <string name="media_import_allow_all_files_summ">Se Android ne povas rekoni dosierojn de aŭdvidaĵojn</string>
-    <!-- Statistics settings -->
-    <string name="stats_default_deck_title" maxLength="41">Implicite montri statistikojn por</string>
-    <string name="stats_default_deck_current">la antaŭe malfermita kartaro</string>
-    <string name="stats_default_deck_all">ĉiuj kartaroj</string>
-    <!-- Advanced statistics settings -->
-    <string name="advanced_statistics_title" maxLength="41">Detala statistiko</string>
-    <string name="enable_advanced_statistics_title" maxLength="41">Vidigi detalan statistikon</string>
-    <string name="enable_advanced_statistics_summ">Montri prognozatan statistikon surbaze de komputado aŭ simulado de estontaj ripetoj (aktiva) aŭ surbaze de jam planitaj estontaj ripetoj (malaktiva).</string>
-    <string name="advanced_forecast_stats_compute_n_days_title" maxLength="41">Komputi por N unuaj tagoj, simili por pliaj</string>
-    <string name="advanced_forecast_stats_compute_precision_title" maxLength="41">Precizo de komputado</string>
-    <string name="advanced_forecast_stats_mc_n_iterations_title" maxLength="41">Nombro da ripetoj de simulado</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">Propra servilo por samtempigado</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Ne uzata</string>
     <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
         you may use your own server for synchronization.
         If not set, the default AnkiWeb server will be used instead.
@@ -238,69 +219,19 @@
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Samtempiga servilo</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Klavaro</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="controls_main_category" maxLength="41">Asigni al ordonoj</string>
+    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="card" maxLength="41">Card</string>
+    <string name="note" maxLength="41">Note</string>
+    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="media" maxLength="41">Media</string>
+    <string name="misc" maxLength="41">Misc</string>
     <!-- studyoptions -->
-    <string name="deck_conf_group_summ">Ŝanĝoj al grupaj agordoj de kartaroj aplikos al pluraj kartaroj. Se vi volas ŝanĝi nur la nunan kartaron, bonvolu unue aldoni novan grupon de agordoj</string>
     <string name="studyoptions_limit_select_tags">Elekti etikedojn</string>
     <!-- Deck configurations -->
-    <string name="deck_conf_deck_description" maxLength="41">Priskribo de kartaro (aplikas nur al nuna kartaro)</string>
-    <string name="deck_conf_group" maxLength="41">Grupo de agordoj</string>
-    <plurals name="deck_conf_group_summ">
-        <item quantity="one">%1$s\n%2$d kartaro uzas tiun ĉi grupon</item>
-        <item quantity="other">%1$s\n%2$d kartaroj uzas tiun ĉi grupon</item>
-    </plurals>
-    <string name="deck_conf_new_cards" maxLength="41">Novaj kartoj</string>
-    <string name="deck_conf_rev_cards" maxLength="41" comment="Name of the deck options submenu for configuring reviews of due cards.">Ripetoj</string>
-    <string name="deck_conf_lps_cards" maxLength="41" comment="Label of the submenu stating how lapses cards are treated.">Misrespondoj</string>
     <string name="deck_conf_general" maxLength="41" comment="Label of the submenu for the general options of new deck">Ĝeneralaj</string>
     <string name="deck_conf_reminders" maxLength="41">Memorigaĵoj</string>
-    <string name="deck_conf_steps" maxLength="41">Paŝoj (en minutoj)</string>
-    <string name="deck_conf_order" maxLength="41">Ordo</string>
-    <string name="deck_conf_new_cards_day" maxLength="41">Novaj kartoj en tago</string>
-    <string name="deck_conf_graduating_ivl" maxLength="41">Ripeti memoritan karton post</string>
-    <string name="deck_conf_days">XXX tago(j)</string>
-    <string name="deck_conf_easy_ivl" maxLength="41">Ripeti facilan karton post</string>
-    <string name="deck_conf_start_ease" maxLength="41">Komenca facileco</string>
-    <string name="deck_conf_max_rev" maxLength="41">Maksimumo da ripetoj en tago</string>
-    <string name="deck_conf_new_bury" maxLength="41">Kaŝi novajn rilatajn kartojn por tago</string>
-    <string name="deck_conf_new_bury_summ">Rilataj novaj kartoj estas prokrastataj ĝis la sekva tago</string>
-    <string name="deck_conf_rev_bury" maxLength="41">Kaŝi rilatajn ripetitajn kartojn por tago</string>
-    <string name="deck_conf_rev_bury_summ">Rilataj ripetitaj kartoj estas kaŝitaj ĝis la sekva tago</string>
-    <string name="deck_conf_use_general_timeout_settings" maxLength="41">Uzi ĝeneralajn agordojn</string>
-    <string name="deck_conf_use_general_timeout_settings_summ">Uzi ĝeneralajn agordojn pri “aŭtomate montri respondon” anstataŭ uzi agordojn por tiu ĉi grupo.</string>
-    <string name="deck_conf_easy_bonus" maxLength="41">Premio por facileco</string>
-    <string name="deck_conf_hard_factor" maxLength="41">Ripeti malfacilan karton post</string>
-    <string name="deck_conf_ivl_fct" maxLength="41">Obligi intertempon je</string>
-    <string name="deck_conf_max_ivl" maxLength="41">Maksimuma intertempo</string>
-    <string name="deck_conf_new_lps_ivl" maxLength="41">Nova intertempo</string>
-    <string name="deck_conf_min_ivl" maxLength="41">Minimuma intertempo</string>
-    <string name="deck_conf_leech_thres" maxLength="41">Marki karton kiel forgeseman post</string>
-    <string name="deck_conf_fails">XXX misrespondo(j)</string>
-    <string name="deck_conf_leech_action" maxLength="41">Ago pri forgesemaj kartoj</string>
-    <string name="deck_conf_max_time" maxLength="41">Maksimuma tempo de respondo</string>
-    <string name="deck_conf_seconds">XXX sekundoj</string>
-    <string name="deck_conf_timer" maxLength="41">Montri temp-mezurilon ĉe demando</string>
-    <string name="deck_conf_autoplay" maxLength="41">Aŭtomate ludi aŭdvidaĵojn</string>
-    <string name="deck_conf_replayq" maxLength="41">Reludi semandon</string>
-    <string name="deck_conf_replayq_summ">Kiam montri respondon, reludi kaj demandon kaj respondon</string>
-    <string name="deck_conf_manage" maxLength="41">Administri grupojn</string>
-    <string name="deck_conf_manage_summ">Aldoni/ŝanĝi grupojn de agordoj</string>
-    <string name="deck_conf_current_group" maxLength="41">Nuna grupo</string>
-    <string name="deck_conf_rename" maxLength="41" comment="Menu entry to rename a deck">Alinomi</string>
-    <string name="deck_conf_reset" maxLength="41">Restarigi normojn</string>
-    <string name="deck_conf_reset_message">Ĉu restarigi la nunan grupon de agordoj al implicitaj valoroj?</string>
-    <string name="deck_conf_add" maxLength="41" comment="Adding a new deck option group">Aldoni</string>
-    <string name="deck_conf_add_summ">Krei kopion de la nuna grupo de agordoj</string>
-    <string name="deck_conf_remove_message">Ĉu forigi la nunan grupon de agordoj?</string>
-    <string name="deck_conf_set_subdecks" maxLength="41">Agordi por ĉiuj subkartaroj</string>
-    <plurals name="deck_conf_set_subdecks_summ">
-        <item quantity="one">%s subkartaro uzos tiun ĉi grupon</item>
-        <item quantity="other">%s subkartaroj uzos tiun ĉi grupon</item>
-    </plurals>
-    <string name="deck_conf_set_subdecks_message">Ĉu agordi la nunan grupon de agordoj por ĉiuj subkartaroj de tiu ĉi kartaro?</string>
-    <string name="pref_browser_editor_font" maxLength="41">Tiparo de foliumilo kaj redaktilo</string>
     <string name="deck_conf_cram_filter" maxLength="41">Filtri</string>
     <string name="deck_conf_cram_search" maxLength="41">Serĉi</string>
     <string name="deck_conf_cram_limit" maxLength="41">Limigi al</string>
@@ -310,8 +241,6 @@
     <string name="deck_conf_cram_filter_2_check">Aktivigi duan filtrilon</string>
     <string name="deck_conf_cram_steps" maxLength="41">Propraj paŝoj (en minutoj)</string>
     <string name="deck_conf_cram_steps_summ" maxLength="41">Difini proprajn paŝojn</string>
-    <string name="deck_conf_reminders_enabled" maxLength="41">Aktivigi memorigajn sciigojn por kartaroj en tiu ĉi grupo de kartaroj</string>
-    <string name="deck_conf_reminders_time" maxLength="41">Rememori je</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Helpu, ke AnkiDroid fariĝos pli bona!</string>
     <string name="analytics_title" maxLength="41">Kunhavigi uzadon de eblaĵoj</string>
@@ -324,7 +253,7 @@
     <string name="type_in_answer_focus_summ">Aŭtomate marki la kampon “enigi respondon” dum ripetado</string>
     <!-- About -->
     <string name="open_changelog">Montri ŝanĝoprotokolon</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="pref_cat_about_title" maxLength="41">Pri</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">License</string>
@@ -348,12 +277,7 @@
     <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Forigi: “%s”</string>
     <string name="bindings_already_bound">Jam asignita al %s</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41">Experimental</string>
-    <string name="experimental_pref_confirmation" maxLength="41">Enable ‘%s’</string>
-    <string name="use_rust_backend_title" maxLength="41">Use the new backend</string>
-    <string name="use_rust_backend_summary">Enables newer Anki features, such as the v3 scheduler\nUNSTABLE. Do not use on a collection you care about. NOT reverted on app close</string>
-    <string name="use_rust_backend_warning">There is a chance this could corrupt your installation completely, requiring app uninstall and deletion of the AnkiDroid folder, and has a chance of propagating corruption via sync to AnkiWeb.\n\nWe welcome the testing, but please make sure you have a valid non-AnkiWeb backup.</string>
-    <string name="enable_v3_sched_title" maxLength="41">Use the v3 scheduler</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Eksperimenta</string>
     <!-- Developer options -->
     <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
     <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
@@ -363,7 +287,6 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backup_options__title" maxLength="41">Backup options</string>
     <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
         After backups are more than two days old,
         AnkiDroid will start removing some of them to free up disk space.
@@ -380,18 +303,17 @@
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Administri spacon</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Eraro</string>
     <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
         <item quantity="one">%1$d file\n%2$s</item>
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Forigi neuzatajn aŭdvidaĵojn</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__media_check_required__message">A media check is required to find unused media files</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
     <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
@@ -417,9 +339,9 @@
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Neniu kolekto</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Eraro</string>
     <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
     <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kolekto ne ekzistas</string>
 </resources>

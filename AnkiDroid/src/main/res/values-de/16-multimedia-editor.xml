@@ -46,15 +46,6 @@
     <string name="multimedia_editor_popup_audio">Ton aufnehmen</string>
     <string name="multimedia_editor_popup_text">Erweiterter Editor</string>
     <string name="multimedia_editor_popup_cloze">Auslassung erzeugen</string>
-    <string name="multimedia_editor_popup_clear_field">Feld leeren</string>
-    <!-- Pronunciation activity (Beolingus) -->
-    <string name="multimedia_editor_pron_load">Laden</string>
-    <string name="multimedia_editor_pron_looking_up">Schlage Aussprache nach</string>
-    <!-- in controller when fails -->
-    <string name="multimedia_editor_pron_pronunciation_failed">Aussprache fehlgeschlagen</string>
-    <string name="multimedia_editor_only_one_word">Nur ein Wort auf einmal ist unterstützt.</string>
-    <string name="multimedia_editor_word_search_try_lower_case">Versuchen Sie es nur mit Kleinbuchstaben</string>
-    <string name="multimedia_editor_poweredbeolingus">Powered by Beolingus</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Text</string>
@@ -64,11 +55,8 @@
     <string name="multimedia_editor_field_editing_done" comment="Label of a button to tell the app that the current action is \'Done\'.">Fertig</string>
     <!-- Text field editing -->
     <!-- buttons -->
-    <string name="multimedia_editor_text_field_editing_say">Aussprache</string>
     <string name="multimedia_editor_text_field_editing_clear">Zurücksetzen</string>
     <string name="multimedia_editor_text_field_editing_clone">Kopieren von</string>
-    <!-- message to user, when there is no text or many words, but the user tries something -->
-    <string name="multimedia_editor_text_field_editing_no_text">Zuerst etwas Text eingeben</string>
     <!-- message when cloning -->
     <string name="multimedia_editor_text_field_editing_clone_source">Übernehme von</string>
     <!-- Multimedia card editor activity -->
@@ -81,16 +69,6 @@
     <string name="multimedia_editor_import_audio">Audio</string>
     <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
-    <!-- message on the progress dialog for the user to wait, means process -->
-    <string name="multimedia_editor_general_downloading">Lade herunter</string>
-    <!-- when process finishes -->
-    <string name="multimedia_editor_general_done" comment="Message informing the user that the action is done">Fertig</string>
-    <!-- General word search and failures -->
-    <string name="multimedia_editor_error_word_not_found">Das Wort wurde nicht gefunden</string>
-    <!-- failure when contacting glosbe or similar -->
-    <string name="multimedia_editor_searching_word">Suche nach dem Wort</string>
-    <!-- General -->
-    <string name="multimedia_editor_progress_wait_title">Warten</string>
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Etwas ist schiefgelaufen</string>
     <string name="multimedia_editor_svg_preview">SVGs sind für die Vorschau nicht verfügbar</string>
@@ -104,8 +82,6 @@
     <string name="multimedia_editor_audio_view_create_failed">Aufnahme-Werkzeugleiste konnte nicht erstellt werden</string>
     <!-- Activity titles -->
     <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Bearbeite Feld</string>
-    <!-- Network failure -->
-    <string name="network_no_connection">Keine Verbindung.</string>
     <!-- Crop function-->
     <string name="crop_image">Wollen Sie dieses Bild zuschneiden?</string>
     <string name="crop_button">Bild zuschneiden</string>
