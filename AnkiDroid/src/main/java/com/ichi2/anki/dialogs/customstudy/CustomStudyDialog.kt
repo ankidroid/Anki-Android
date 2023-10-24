@@ -36,14 +36,15 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.list.listItems
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.*
-import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfiguration.*
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Consts.DYN_PRIORITY
@@ -440,7 +441,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             Timber.i("Found deck: '%s'", customStudyDeck)
             if (cur.isNormal) {
                 Timber.w("Deck: '%s' was non-dynamic", customStudyDeck)
-                showThemedToast(requireContext(), getString(R.string.custom_study_deck_exists), true)
+                showSnackbar(R.string.custom_study_deck_exists, Snackbar.LENGTH_SHORT)
                 return
             } else {
                 Timber.i("Emptying dynamic deck '%s' for custom study", customStudyDeck)
@@ -455,7 +456,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             dyn = try {
                 decks.get(decks.newDyn(customStudyDeck))!!
             } catch (ex: DeckRenameException) {
-                showThemedToast(requireActivity(), ex.asLocalizedMessage(requireContext()), true)
+                showSnackbar(ex.asLocalizedMessage(requireContext()), Snackbar.LENGTH_SHORT)
                 return
             }
         }
@@ -465,7 +466,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
             // issue
             Timber.w("Invalid Dynamic Deck: %s", dyn)
             CrashReportService.sendExceptionReport("Custom Study Deck had no terms", "CustomStudyDialog - createCustomStudySession")
-            showThemedToast(requireContext(), getString(R.string.custom_study_rebuild_deck_corrupt), false)
+            showSnackbar(R.string.custom_study_rebuild_deck_corrupt)
             return
         }
         // and then set various options
