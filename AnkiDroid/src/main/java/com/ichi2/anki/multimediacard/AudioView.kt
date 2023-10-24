@@ -26,9 +26,11 @@ import android.view.View.OnClickListener
 import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.AppCompatImageButton
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CrashReportService
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.utils.Permissions.canRecordAudio
 import timber.log.Timber
 import java.io.File
@@ -129,7 +131,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                 mAudioRecorder.stopRecording()
             } catch (e: RuntimeException) {
                 Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start")
-                showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true)
+                showSnackbar(R.string.multimedia_editor_audio_view_recording_failed, Snackbar.LENGTH_SHORT)
             }
             status = Status.IDLE
             if (mOnRecordingFinishEventListener != null) {
@@ -193,7 +195,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                         notifyPlay()
                     } catch (e: Exception) {
                         Timber.e(e)
-                        showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_playing_failed), true)
+                        showSnackbar(R.string.multimedia_editor_audio_view_playing_failed, Snackbar.LENGTH_SHORT)
                         status = Status.IDLE
                     }
                     Status.PAUSED -> {
@@ -277,11 +279,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                 // We can get to this screen without permissions through the "Pronunciation" feature.
                 if (!canRecordAudio(mContext)) {
                     Timber.w("Audio recording permission denied.")
-                    showThemedToast(
-                        mContext,
-                        resources.getString(R.string.multimedia_editor_audio_permission_denied),
-                        true
-                    )
+                    showSnackbar(R.string.multimedia_editor_audio_permission_denied, Snackbar.LENGTH_SHORT)
                     return
                 }
                 when (status) {
@@ -291,7 +289,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                         } catch (e: Exception) {
                             // either output file failed or codec didn't work, in any case fail out
                             Timber.e("RecordButton.onClick() :: error recording to %s\n%s", audioPath, e.message)
-                            showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true)
+                            showSnackbar(R.string.multimedia_editor_audio_view_recording_failed, Snackbar.LENGTH_SHORT)
                             status = Status.STOPPED
                         }
                         status = Status.RECORDING
