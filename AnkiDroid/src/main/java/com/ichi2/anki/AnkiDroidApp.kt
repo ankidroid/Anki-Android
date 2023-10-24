@@ -66,6 +66,9 @@ open class AnkiDroidApp : Application() {
 
     lateinit var activityAgnosticDialogs: ActivityAgnosticDialogs
 
+    /** Used to avoid showing extra progress dialogs when one already shown. */
+    var progressDialogShown = false
+
     @KotlinCleanup("analytics can be moved to attachBaseContext()")
     /**
      * On application creation.

@@ -954,7 +954,9 @@ open class DeckPicker :
         // As `loadDeckCounts` is cancelled in `migrate()`
         val message = dialogHandler.popMessage()
         super.onResume()
-        refreshState()
+        if (navDrawerIsReady()) {
+            refreshState()
+        }
         message?.let { dialogHandler.sendStoredMessage(it) }
     }
 
@@ -964,11 +966,8 @@ open class DeckPicker :
             Timber.i("Performing Sync on Resume")
             sync()
             mSyncOnResume = false
-        } else if (colIsOpenUnsafe()) {
+        } else {
             selectNavigationItem(R.id.nav_decks)
-            if (dueTree == null) {
-                updateDeckList()
-            }
             updateDeckList()
             title = resources.getString(R.string.app_name)
         }
@@ -1008,10 +1007,7 @@ open class DeckPicker :
 
     override fun onStop() {
         super.onStop()
-        if (colIsOpenUnsafe()) {
-            WidgetStatus.updateInBackground(this)
-            // Ignore the modification - a change in deck shouldn't trigger the icon for "pending changes".
-        }
+        WidgetStatus.updateInBackground(this@DeckPicker)
     }
 
     override fun onDestroy() {
@@ -1800,6 +1796,9 @@ open class DeckPicker :
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     @RustCleanup("backup with 5 minute timer, instead of deck list refresh")
     fun updateDeckList() {
+        if (CollectionHelper.lastOpenFailure != null) {
+            return
+        }
         if (Build.FINGERPRINT != "robolectric") {
             // uses user's desktop settings to determine whether a backup
             // actually happens
