@@ -80,19 +80,6 @@
         <item name="easyButtonRippleRef">@drawable/footer_button_easy_dark_ripple</item>
         <!-- Card Browser Colors -->
         <item name="cardBrowserDivider">@color/white</item>
-        <!-- Stats colors -->
-        <item name="stats_young">@color/material_light_green_A700</item>
-        <item name="stats_mature">@color/material_green_200</item>
-        <item name="stats_learn">@color/material_indigo_200</item>
-        <item name="stats_relearn">@color/material_red_200</item>
-        <item name="stats_cram">#ff0</item>
-        <item name="stats_interval">#077</item>
-        <item name="stats_hours">#ccc</item>
-        <item name="stats_counts">#E6000000</item>
-        <item name="stats_unseen">#000</item>
-        <item name="stats_suspended">#ff0</item>
-        <item name="stats_buried">#606264</item>
-        <item name="stats_cumulative">@color/stats_cumulative</item>
         <!-- Browser colors -->
         <item name="suspendedColor">@color/material_grey_700</item>
         <item name="markedColor">@color/material_deep_purple_400</item>
