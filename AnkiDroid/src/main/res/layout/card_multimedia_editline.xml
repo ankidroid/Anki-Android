@@ -24,11 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
-        android:background="?attr/toggleStickyImage"
+        android:background="@drawable/ic_baseline_push_pin_24"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@id/id_media_button"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@drawable/ic_baseline_push_pin_24"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
     <ImageButton
@@ -37,11 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end|center_vertical"
-        android:background="?attr/attachFileImage"
+        android:background="@drawable/ic_attachment"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@id/id_expand_button"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@drawable/ic_attachment_black"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/id_expand_button"

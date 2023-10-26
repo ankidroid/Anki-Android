@@ -118,12 +118,6 @@
         <item name="fab_item_background">@drawable/fab_label_background</item>
         <!-- Images -->
         <item name="navDrawerImage">@drawable/nav_drawer_logo_dark_theme</item>
-        <item name="attachFileImage">@drawable/ic_attachment_white</item>
-        <item name="toggleStickyImage">@drawable/ic_baseline_push_pin_24</item>
-        <item name="upDownImage">@drawable/ic_import_export_white</item>
-        <item name="dialogErrorIcon">@drawable/ic_warning_white</item>
-        <item name="dialogSyncErrorIcon">@drawable/ic_sync_problem_white</item>
-        <item name="dialogSendIcon">@drawable/ic_send_white</item>
         <!-- Dialog styles -->
         <item name="android:listPreferredItemHeight">56dip</item>
         <item name="md_color_button_text">@color/white</item>

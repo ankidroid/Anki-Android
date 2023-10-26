@@ -31,7 +31,6 @@ import com.ichi2.libanki.DeckId
 import com.ichi2.libanki.Sound.SoundSide
 import com.ichi2.libanki.TTSTag
 import com.ichi2.utils.HandlerUtils.postDelayedOnNewHandler
-import com.ichi2.utils.iconAttr
 import com.ichi2.utils.message
 import com.ichi2.utils.positiveButton
 import com.ichi2.utils.title
@@ -107,7 +106,7 @@ object ReadText {
         if (availableTtsLocales.isEmpty()) {
             Timber.w("ReadText.textToSpeech() no TTS languages available")
             dialog.message(R.string.no_tts_available_message)
-                .iconAttr(R.attr.dialogErrorIcon)
+                .setIcon(R.drawable.ic_warning)
                 .positiveButton(R.string.dialog_ok)
         } else {
             val localeMappings: List<Pair<String, CharSequence>> =

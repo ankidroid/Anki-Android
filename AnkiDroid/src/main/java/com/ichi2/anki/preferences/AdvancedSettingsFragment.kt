@@ -68,7 +68,7 @@ class AdvancedSettingsFragment : SettingsFragment() {
         requirePreference<Preference>(R.string.pref_reset_languages_key).setOnPreferenceClickListener {
             AlertDialog.Builder(requireContext()).show {
                 setTitle(R.string.reset_languages)
-                setIcon(R.drawable.ic_warning_black)
+                setIcon(R.drawable.ic_warning)
                 setMessage(R.string.reset_languages_question)
                 setPositiveButton(R.string.dialog_ok) { _, _ ->
                     if (MetaDB.resetLanguages(requireContext())) {
