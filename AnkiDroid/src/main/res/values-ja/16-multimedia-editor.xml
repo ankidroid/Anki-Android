@@ -56,9 +56,9 @@
     <!-- Text field editing -->
     <!-- buttons -->
     <string name="multimedia_editor_text_field_editing_clear">消去</string>
-    <string name="multimedia_editor_text_field_editing_clone">複製</string>
+    <string name="multimedia_editor_text_field_editing_clone">他フィールド引用</string>
     <!-- message when cloning -->
-    <string name="multimedia_editor_text_field_editing_clone_source">引用する</string>
+    <string name="multimedia_editor_text_field_editing_clone_source">引用元を選択</string>
     <!-- Multimedia card editor activity -->
     <!-- for buttons -->
     <!-- delete confirmation -->

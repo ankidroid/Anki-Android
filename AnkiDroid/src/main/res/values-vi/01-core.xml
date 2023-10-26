@@ -265,8 +265,8 @@
     <string name="create_new_collection">Tạo 1 bộ sưu tập mới</string>
     <string name="new_unsafe_collection">Bộ sưu tập mới sẽ bị xóa khỏi thiết bị của bạn khi bạn xóa AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid cần một số quyền để hoạt động</string>
+    <string name="storage_access_title">Truy cập bộ nhớ</string>
+    <string name="storage_access_summary">Lưu bộ sưu tập của bạn ở nơi an toàn sẽ không bị xóa nếu gỡ cài đặt ứng dụng</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Quyền truy cập vào mọi tệp</string>
 </resources>

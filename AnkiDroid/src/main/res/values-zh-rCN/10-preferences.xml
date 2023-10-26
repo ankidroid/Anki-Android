@@ -133,8 +133,8 @@
     <string name="sync_status_badge_summ">当更改可被上传时改变同步图标</string>
     <string name="metered_sync_title" maxLength="41">允许通过按流量计费连接同步</string>
     <string name="metered_sync_summary">禁用后，当您尝试通过流量进行同步时，将收到提醒</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">频率</string>
+    <string name="backup_limits_lifetime">无限期</string>
     <string name="app_theme" maxLength="41">主题</string>
     <string name="day_theme" maxLength="41">白天主题</string>
     <string name="night_theme" maxLength="41">夜间主题</string>

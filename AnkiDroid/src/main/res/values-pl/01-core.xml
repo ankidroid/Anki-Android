@@ -201,7 +201,7 @@
     <plurals name="card_template_editor_confirm_delete">
         <item quantity="one">Czy usunąć typ kart “%2$s” oraz jego %1$d kartę?</item>
         <item quantity="few">Czy usunąć typ kart “%2$s” oraz jego %1$d karty?</item>
-        <item quantity="many">Czy usunąć typ kart “%2$s” oraz %1$d kart tego rodzaju?</item>
+        <item quantity="many">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
         <item quantity="other">Czy usunąć typ kart “%2$s” oraz jego %1$d kart?</item>
     </plurals>
     <string name="invalid_template">Karta nie mogła zostać wygenerowana</string>
@@ -286,8 +286,8 @@
     <string name="create_new_collection">Utwórz nową kolekcję</string>
     <string name="new_unsafe_collection">Nowa kolekcja zostanie usunięta z telefonu, jeśli odinstalujesz AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid potrzebuje pewnych uprawnień, by działać</string>
+    <string name="storage_access_title">Dostęp do pamięci</string>
+    <string name="storage_access_summary">Zapisuje twoją kolekcję w bezpiecznym miejscu, żeby w przypadku odinstalowania aplikacji nie została usunięta</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Dostęp do wszystkich plików</string>
 </resources>

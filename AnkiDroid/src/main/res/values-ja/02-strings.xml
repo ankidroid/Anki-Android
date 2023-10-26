@@ -143,7 +143,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">プレビュー</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d / %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">名前を変更</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">チェック</string>
     <string name="check_db">データベースをチェック</string>
     <string name="check_media">メディアをチェック</string>
     <string name="empty_cards">白紙カードをチェック</string>
@@ -270,7 +270,7 @@
     <string name="before_text">選択文字列の前のHTML</string>
     <string name="after_text">選択文字列の後のHTML</string>
     <string name="add_toolbar_item">ツールバーアイテムを作成</string>
-    <string name="edit_toolbar_item">ツールバーアイテムを編集</string>
+    <string name="edit_toolbar_item">アイテムを編集</string>
     <string name="toolbar_item_explain_edit_or_remove">選択した文字列の前後に挿入するHTMLをそれぞれ入力してください\n\n作成したツールバーアイテムを編集または削除したい場合は、そのアイテムのボタンを長押ししてください</string>
     <string name="remove_toolbar_item">このツールバーアイテムを削除しますか？</string>
     <string name="note_editor_paste_too_large">画像が大きすぎるため貼り付けできません。手動で画像を挿入してください</string>

@@ -271,8 +271,8 @@ ou reconnecter le support amovible qui contient votre collection.
     <string name="create_new_collection">Créer une nouvelle collection</string>
     <string name="new_unsafe_collection">La nouvelle collection sera supprimée de votre appareil en cas de désinstallation de l\'appli</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid a besoin de certaines autorisations pour fonctionner</string>
+    <string name="storage_access_title">Autorisations de stockage</string>
+    <string name="storage_access_summary">Enregistre votre collection dans un endroit sûr qui ne sera pas supprimé si l\'application est désinstallée</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Accès à tous les fichiers</string>
 </resources>
