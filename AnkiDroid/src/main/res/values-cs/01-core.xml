@@ -286,8 +286,8 @@
     <string name="create_new_collection">Vytvořit novou kolekci</string>
     <string name="new_unsafe_collection">Nová kolekce bude odstraněna z vašeho telefonu, pokud odinstalujete AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">Aby AnkiDroid fungoval, potřebuje některá oprávnění</string>
+    <string name="storage_access_title">Přístup k úložišti</string>
+    <string name="storage_access_summary">Uloží vaši kolekci na bezpečné místo, které nebude odstraněno, pokud bude aplikace odinstalována</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Přístup ke všem souborům</string>
 </resources>

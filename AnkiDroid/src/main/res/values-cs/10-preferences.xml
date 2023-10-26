@@ -133,8 +133,8 @@
     <string name="sync_status_badge_summ">Změnit ikonu synchronizace, když lze nahrát změny</string>
     <string name="metered_sync_title" maxLength="41">Povolit synchronizaci na měřeném připojení</string>
     <string name="metered_sync_summary">Je-li zajázáno, budete varováni při pokusu o synchronizaci na připojení měřeném podle objemu dat</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Četnost</string>
+    <string name="backup_limits_lifetime">Doba</string>
     <string name="app_theme" maxLength="41">Motiv</string>
     <string name="day_theme" maxLength="41">Motivy vzhledu - den</string>
     <string name="night_theme" maxLength="41">Motivy vzhledu - noc</string>

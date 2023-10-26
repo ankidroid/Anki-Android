@@ -133,8 +133,8 @@
     <string name="sync_status_badge_summ">変更を行い、その変更をまだアップロードしていない場合、同期ボタンに目印を付けます</string>
     <string name="metered_sync_title" maxLength="41">Wi-Fi接続時以外の同期を許可</string>
     <string name="metered_sync_summary">この設定を無効にすると、Wi-Fi以外の方法でインターネットに接続しているときに同期しようとすると、確認メッセージが表示されます</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">頻度</string>
+    <string name="backup_limits_lifetime">保管期間</string>
     <string name="app_theme" maxLength="41">テーマ</string>
     <string name="day_theme" maxLength="41">ライトモードのテーマ</string>
     <string name="night_theme" maxLength="41">ダークモードのテーマ</string>
@@ -165,7 +165,7 @@
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔 (ミリ秒)</string>
     <string name="pref_double_tap_time_interval_summary">「解答を表示」ボタンをタップした後にこの時間が経過していない場合、回答ボタンのタップを無視します。これにより、意図せずに回答してしまう操作ミスを防ぎます</string>
     <string name="pref_show_answer_long_press" maxLength="41">「解答を表示」するための長押し時間 (ミリ秒)</string>
-    <string name="pref_show_answer_long_press_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とするボタン接触時間。この時間より短い（＝素早い）接触を無視します。揺れのある環境や手の震えなどで意図せず解答表示ボタンを押してしまいがちな場合に調整すると効果的です。デフォルトでは0ミリ秒（つまり、長押し不要）です</string>
+    <string name="pref_show_answer_long_press_summary">〈「解答を表示」ボタンが押された〉と判定するために必要とする、ボタンを押し続ける時間。この時間より短い（＝素早い）接触を無視します。揺れのある環境や手の震えなどで意図せず「解答を表示」ボタンを押してしまいがちな場合に調整すると効果的です。デフォルトでは0ミリ秒（つまり、長押し不要）です</string>
     <string name="show_estimates" maxLength="41">回答ボタンに学習間隔を表示</string>
     <string name="show_estimates_summ">次の学習までの時間の間隔を回答ボタンの中に表示します</string>
     <string name="show_large_answer_buttons" maxLength="41">回答ボタンを幅広に表示</string>
@@ -245,8 +245,8 @@
     <string name="analytics_dialog_title">機能向上のためご協力ください</string>
     <string name="analytics_title" maxLength="41">設定の情報提供を許可する</string>
     <string name="analytics_summ">各機能の使用傾向を開発チームが把握しやすくなり、AnkiDroidの機能向上に役立ちます</string>
-    <string name="note_editor_replace_newlines" maxLength="41">改行をHTMLに置き換え</string>
-    <string name="note_editor_replace_newlines_summ">ノートエディタでカードを編集するときに &lt;br&gt; を改行に変換します</string>
+    <string name="note_editor_replace_newlines" maxLength="41">改行タグを改行に置き換えて表示</string>
+    <string name="note_editor_replace_newlines_summ">「ノートを編集」画面のフィールドで、改行を表すHTMLタグ &lt;br&gt; を表示せず、実際に改行に置き換えた状態で表示します。新たに改行を行った場合も、その箇所に &lt;br&gt; タグを挿入しますが、そのタグは表示しません</string>
     <string name="no_code_formatting" maxLength="41">文字入力回答でシンプルなフォントを使用</string>
     <string name="no_code_formatting_summ">文字入力して解答する種類のカードで、解答結果に文字化け（‘􏿾’の表示）が起こる不具合を回避します</string>
     <string name="type_in_answer_focus" maxLength="41">文字入力欄にフォーカス</string>
@@ -287,14 +287,14 @@
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        Ankiは一定時間ごとにコレクションのバックアップを作成しています。
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroidは一定時間ごとにコレクションのバックアップを作成しています。
         各期間の代表として保管するバックアップ以外のバックアップは、
         ディスク領域を空けるために、作成から2日以上経過した後に削除していきます。
         <br><br>
         注意：メディアファイルはこの自動バックアップの対象外です。
-        万一に備え、AnkiWebとの同期やコレクションのエクスポートを、メディアを含めた状態で定期的に行うことを強くおすすめします。
+        万一に備え、コレクションのAnkiWebとの同期や、AnkiWeb以外のアプリ外部の場所へのコレクションのエクスポートを、メディアを含めた状態で定期的に行うことを強くおすすめします。
         <br><br>
-        バックアップからのコレクションの復元や、コレクションのエクスポートは、デッキリスト画面のメニューから行えます。
+        バックアップからのコレクションの復元や、コレクションのエクスポートは、デッキリスト画面右上のメニューから行えます。
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">自動バックアップの間隔（分）</string>
     <string name="pref__daily_backups_to_keep__title" maxLength="41">各日代表のバックアップ保管数（何日分）</string>

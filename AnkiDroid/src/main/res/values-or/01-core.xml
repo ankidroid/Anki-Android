@@ -220,8 +220,8 @@
     </plurals>
     <!-- Generic errors -->
     <string name="error__etc__cannot_write_to_or_create_file">%s ଫାଇଲ୍‌ରେ ଲେଖିହେଉନି କିମ୍ୱା ସୃଷ୍ଟି କରିହେଉନି</string>
-    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"Multiple errors, most recent: %s"</string>
-    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">Multiple consecutive errors without progress, most recent: %s</string>
+    <string name="error__etc__multiple_errors_most_recent" comment="Generic message for an error that has multiple causes, e.g.,         “Multiple errors, most recent: CPU hit by a cosmic ray particle”.">"ଏକାଧିକ ତ୍ରୁଟି, ଅତି ନିକଟରେ: %s"</string>
+    <string name="error__etc__multiple_consecutive_errors_without_progress_most_recent" comment="Generic message for an error that has multiple causes that happened in sequence, e.g.,         “Multiple consecutive errors without progress, most recent: CPU hit by a cosmic ray particle”.">ପ୍ରଗତି ବିନା ଏକାଧିକ କ୍ରମାଗତ ତ୍ରୁଟି, ଅତି ନିକଟରେ: %s</string>
     <!-- Scoped storage migration -->
     <string name="migration__migrating_database_files" comment="Notification title that is shown when copying essential database files.         As this is shown on the same line as the notification message, prefer shorter text.">Migrating database files</string>
     <string name="migration__copying" comment="Notification message that is shown when copying essential database files.         As this is shown on the same line as the notification title, prefer shorter text.">କପି ଚାଲିଛି&#8230;</string>
@@ -272,8 +272,8 @@
     <string name="create_new_collection">ଗୋଟେ ନୂଆ ସଂଗ୍ରହ ସୃଷ୍ଟି କରିବା</string>
     <string name="new_unsafe_collection">ଯଦି ଆପଣ AnkiDroid ଅନଇନଷ୍ଟଲ୍ କରନ୍ତି ତେବେ ନୂଆ ସଂଗ୍ରହଟି ଆପଣଙ୍କ ଫୋନ୍‌ରୁ ଵିଲୋପ ହୋଇଯିବ</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid କାମ କରିବା ପାଇଁ କିଛିଟା ଅନୁମତି ଲୋଡ଼େ</string>
+    <string name="storage_access_title">ଷ୍ଟୋରେଜ୍ ପ୍ରବେଶାଧିକାର</string>
+    <string name="storage_access_summary">ଆପଣଙ୍କର ସଂଗ୍ରହକୁ ଏକ ସୁରକ୍ଷିତ ସ୍ଥାନରେ ସଂରକ୍ଷଣ କରେ ଯାହା ଆପ୍ ଅନଇନଷ୍ଟଲ୍ ହେଲେ ବିଲୋପ ହେବ ନାହିଁ</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">ସମସ୍ତ ଫାଇଲ୍ ପ୍ରବେଶାଧିକାର</string>
 </resources>

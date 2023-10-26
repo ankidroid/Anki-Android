@@ -100,7 +100,7 @@
     <string name="gesture_show_hint">ヒントを表示</string>
     <string name="gesture_show_all_hints">すべてのヒントを表示</string>
     <string name="record_voice">音声を録音</string>
-    <string name="replay_voice">音声を再生</string>
+    <string name="replay_voice">録音した音声を再生</string>
     <string name="automatic_answer_option_2">難しい（選択できない場合は 正解）</string>
     <string name="automatic_answer_option_4">簡単（選択できない場合は 正解）</string>
 </resources>

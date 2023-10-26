@@ -265,8 +265,8 @@
     <string name="create_new_collection">创建新集合</string>
     <string name="new_unsafe_collection">如果您卸载 AnkiDroid，新集合将从您的手机中被删除</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid 需要一些权限才能工作</string>
+    <string name="storage_access_title">存储空间权限</string>
+    <string name="storage_access_summary">将牌组集合保存在一个即使卸载了应用也不会被删除的安全所在</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">所有文件访问权限</string>
 </resources>

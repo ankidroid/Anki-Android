@@ -205,7 +205,7 @@
     <string name="read_write_permission_description">acessar notas, cartões, modelos e baralhos existentes, bem como criar novos</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de Cartões</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Cartão do Anki</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">As coleções não podem ser combinadas\nQual coleção você quer manter?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -272,8 +272,8 @@
     <string name="create_new_collection">Criar uma coleção.</string>
     <string name="new_unsafe_collection">A nova coleção será excluída do seu telefone se você desinstalar o AnkiDroid.</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">O AnkiDroid precisa de algumas permissões para funcionar</string>
+    <string name="storage_access_title">Acesso ao armazenamento</string>
+    <string name="storage_access_summary">Salva sua coleção em um lugar seguro que não será excluído se o aplicativo for desinstalado</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acesso a todos os arquivos</string>
 </resources>

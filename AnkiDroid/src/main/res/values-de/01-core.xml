@@ -272,8 +272,8 @@
     <string name="create_new_collection">Neue Sammlung erstellen</string>
     <string name="new_unsafe_collection">Die neue Sammlung wird von deinem Telefon gelöscht, wenn du AnkiDroid deinstallierst.</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="permissions_screen_headline">AnkiDroid benötigt einige Berechtigungen, um zu funktionieren</string>
     <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
+    <string name="storage_access_summary">Speichert Ihre Sammlung an einem sicheren Ort, der nicht gelöscht wird, wenn die App deinstalliert wird</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
 </resources>
