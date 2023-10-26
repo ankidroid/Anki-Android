@@ -16,10 +16,12 @@
 
 package com.ichi2.anki
 
+import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.libanki.buildSearchString
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
@@ -62,6 +64,20 @@ suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
         undoableOp { importResponse }
         output
     }
+}
+
+/**
+ * Calls the native [CardBrowser] to display the results of the search query constructed from the
+ * input. This method will always return the received input.
+ */
+suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
+    val searchString = withCol { buildSearchString(input) }
+    val starterIntent = Intent(this, CardBrowser::class.java).apply {
+        putExtra("search_query", searchString)
+        putExtra("all_decks", true)
+    }
+    startActivity(starterIntent)
+    return input
 }
 
 private fun summarizeReport(tr: Translations, output: ImportResponse): String {
