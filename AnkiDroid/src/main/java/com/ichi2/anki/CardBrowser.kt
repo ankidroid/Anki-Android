@@ -450,6 +450,9 @@ open class CardBrowser :
         // for intent coming from search query js api
         intent.getStringExtra("search_query")?.let {
             mSearchTerms = it
+            if (intent.getBooleanExtra("all_decks", false)) {
+                onDeckSelected(SelectableDeck(ALL_DECKS_ID, getString(R.string.card_browser_all_decks)))
+            }
             searchCards()
         }
 
