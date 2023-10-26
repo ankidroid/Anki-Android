@@ -62,15 +62,6 @@
         <!--Dialog-->
         <item name="md_color_button_text">@color/black</item>
 
-        <!-- Filter Bottom sheet -->
-        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemePlain</item>
-        <item name="filterSheetBackground">@color/white</item>
-        <item name="filterItemBackground">@color/white</item>
-        <item name="filterItemBackgroundSelected">@color/theme_light_drawer_row_current</item>
-        <item name="filterItemTextColor">@color/theme_light_drawer_item</item>
-        <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
-        <item name="filterHeaderDivider">@color/black</item>
-
         <item name="snackbarButtonTextColor">#96bdce</item>
 
         <!-- Introduction -->
@@ -78,13 +69,5 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/white</item>
-    </style>
-
-    <!-- Filter Sheet Style -->
-    <style name="AppBottomSheetDialogThemePlain" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/white</item>
-        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
 </resources>

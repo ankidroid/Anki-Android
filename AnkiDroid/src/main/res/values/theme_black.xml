@@ -117,15 +117,6 @@
         <item name="editTextDisabled">@color/material_grey_700</item>
         <item name="android:navigationBarColor">@color/black</item>
 
-        <!-- Filter Bottom sheet -->
-        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogThemeBlack</item>
-        <item name="filterSheetBackground">@color/theme_black_primary</item>
-        <item name="filterItemBackground">@color/theme_black_primary_light</item>
-        <item name="filterItemBackgroundSelected">@color/theme_dark_drawer_row_current</item>
-        <item name="filterItemTextColor">@color/theme_dark_drawer_item</item>
-        <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
-        <item name="filterHeaderDivider">@color/white</item>
-
         <!-- Snackbar -->
         <item name="snackbarTextViewStyle">@style/SnackbarTextStyleBlack</item>
         <item name="snackbarBackgroundTintColor">#ff303030</item>
@@ -136,14 +127,6 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_black_primary</item>
-    </style>
-
-    <!-- Filter Sheet Style -->
-    <style name="AppBottomSheetDialogThemeBlack" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/black</item>
-        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
 
     <style name="SnackbarTextStyleBlack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">

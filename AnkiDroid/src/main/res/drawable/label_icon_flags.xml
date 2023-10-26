@@ -1,5 +1,0 @@
-<vector android:height="24dp" android:tint="?attr/toolbarIconColor"
-    android:viewportHeight="24" android:viewportWidth="24"
-    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="@android:color/white" android:pathData="M12.36,6l0.4,2H18v6h-3.36l-0.4,-2H7V6h5.36M14,4H5v17h2v-7h5.6l0.4,2h7V6h-5.6L14,4z"/>
-</vector>
