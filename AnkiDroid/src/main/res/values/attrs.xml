@@ -115,19 +115,6 @@
     <attr name="easyButtonTextColor" format="color"/>
     <!-- Card Browser Colors -->
     <attr name="cardBrowserDivider" format="color"/>
-    <!-- Stats colors -->
-    <attr name="stats_young" format="color"/>
-    <attr name="stats_mature" format="color"/>
-    <attr name="stats_learn" format="color"/>
-    <attr name="stats_relearn" format="color"/>
-    <attr name="stats_cram" format="color"/>
-    <attr name="stats_interval" format="color"/>
-    <attr name="stats_hours" format="color"/>
-    <attr name="stats_counts" format="color"/>
-    <attr name="stats_unseen" format="color"/>
-    <attr name="stats_suspended" format="color"/>
-    <attr name="stats_buried" format="color"/>
-    <attr name="stats_cumulative" format="color"/>
     <!-- Reviewer other colors -->
     <attr name="topBarColor" format="color"/>
     <attr name="maxTimerColor" format="color"/>
