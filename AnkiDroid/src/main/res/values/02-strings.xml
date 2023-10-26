@@ -79,8 +79,6 @@
         <item>Note Modified</item>
     </string-array>
 
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
     <string name="filter_by_flags">Flags</string>
 
     <!-- Custom study options -->

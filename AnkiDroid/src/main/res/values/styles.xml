@@ -211,11 +211,6 @@
         <item name="android:textSize">@dimen/md_message_textsize</item>
     </style>
 
-    <!-- Filter Bottom sheet -->
-    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/rounded_bottom_sheet</item>
-    </style>
-
     <!-- Snackbars -->
     <style name="SnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
         <item name="android:backgroundTint">?attr/snackbarBackgroundTintColor</item>

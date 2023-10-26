@@ -139,15 +139,6 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="editTextDisabled">@color/material_grey_500</item>
 
-        <!-- Filter Bottom sheet -->
-        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
-        <item name="filterSheetBackground">@color/white</item>
-        <item name="filterItemBackground">@color/white</item>
-        <item name="filterItemBackgroundSelected">@color/theme_light_drawer_row_current</item>
-        <item name="filterItemTextColor">@color/theme_light_drawer_item</item>
-        <item name="filterItemTextColorSelected">@color/material_light_blue_500</item>
-        <item name="filterHeaderDivider">@color/black</item>
-
         <!-- Snackbar. Attributes snackbarStyle, snackbarTextViewStyle and snackbarButtonStyle
              must be *all* present in a theme (or its parent) in order for the snackbar
              to pick up the proper layout that uses these attributes. -->
@@ -164,13 +155,5 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="colorSurface">@color/white</item>
 
         <item name="sliderLabelTextColor">@color/white</item>
-    </style>
-
-    <!-- Filter Sheet Style -->
-    <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@color/white</item>
-        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
     </style>
 </resources>
