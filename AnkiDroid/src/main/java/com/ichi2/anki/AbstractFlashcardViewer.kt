@@ -799,7 +799,7 @@ abstract class AbstractFlashcardViewer :
     protected fun showDeleteNoteDialog() {
         AlertDialog.Builder(this).show {
             title(R.string.delete_card_title)
-            iconAttr(R.attr.dialogErrorIcon)
+            setIcon(R.drawable.ic_warning)
             message(
                 text = resources.getString(
                     R.string.delete_note_message,

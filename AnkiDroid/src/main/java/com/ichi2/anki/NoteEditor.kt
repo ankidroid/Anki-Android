@@ -1286,15 +1286,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             newEditText.setCapitalize(prefs.getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true))
             val mediaButton = editLineView.mediaButton
             val toggleStickyButton = editLineView.toggleSticky
-            // Load icons from attributes
-            val icons = Themes.getResFromAttr(
-                this,
-                intArrayOf(R.attr.attachFileImage, R.attr.upDownImage, R.attr.toggleStickyImage)
-            )
             // Make the icon change between media icon and switch field icon depending on whether editing note type
             if (editModelMode && allowFieldRemapping()) {
                 // Allow remapping if originally more than two fields
-                mediaButton.setBackgroundResource(icons[1])
+                mediaButton.setBackgroundResource(R.drawable.ic_import_export)
                 setRemapButtonListener(mediaButton, i)
                 toggleStickyButton.setBackgroundResource(0)
             } else if (editModelMode && !allowFieldRemapping()) {
@@ -1302,11 +1297,11 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 toggleStickyButton.setBackgroundResource(0)
             } else {
                 // Use media editor button if not changing note type
-                mediaButton.setBackgroundResource(icons[0])
+                mediaButton.setBackgroundResource(R.drawable.ic_attachment)
                 setMMButtonListener(mediaButton, i)
                 if (addNote) {
                     // toggle sticky button
-                    toggleStickyButton.setBackgroundResource(icons[2])
+                    toggleStickyButton.setBackgroundResource(R.drawable.ic_baseline_push_pin_24)
                     setToggleStickyButtonListener(toggleStickyButton, i)
                 } else {
                     toggleStickyButton.setBackgroundResource(0)

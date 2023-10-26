@@ -138,7 +138,7 @@ class AboutFragment : Fragment() {
         fun showEnableDevOptionsDialog(context: Context) {
             AlertDialog.Builder(context).show {
                 setTitle(R.string.dev_options_enabled_pref)
-                setIcon(R.drawable.ic_warning_black)
+                setIcon(R.drawable.ic_warning)
                 setMessage(R.string.dev_options_warning)
                 setPositiveButton(R.string.dialog_ok) { _, _ -> enableDevOptions() }
                 setNegativeButton(R.string.dialog_cancel) { _, _ -> clickCount = 0 }

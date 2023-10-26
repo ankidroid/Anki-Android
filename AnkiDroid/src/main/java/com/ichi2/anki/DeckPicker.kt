@@ -2383,7 +2383,7 @@ open class DeckPicker :
             Timber.i("media sync disabled: displaying dialog")
             AlertDialog.Builder(this).show {
                 setTitle(R.string.media_sync_required_title)
-                iconAttr(R.attr.dialogErrorIcon)
+                setIcon(R.drawable.ic_warning)
                 setMessage(R.string.media_sync_unavailable_message)
                 setPositiveButton(getString(R.string.scoped_storage_migrate)) { _, _ ->
                     Timber.i("Performing unsafe storage migration")
