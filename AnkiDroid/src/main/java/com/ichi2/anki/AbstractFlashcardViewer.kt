@@ -175,7 +175,7 @@ abstract class AbstractFlashcardViewer :
     private var mCardFrame: FrameLayout? = null
     private var mTouchLayer: FrameLayout? = null
     protected var answerField: FixedEditText? = null
-    protected var flipCardLayout: LinearLayout? = null
+    protected var flipCardLayout: FrameLayout? = null
     private var easeButtonsLayout: LinearLayout? = null
 
     @KotlinCleanup("internal for AnkiDroidJsApi")
@@ -904,8 +904,7 @@ abstract class AbstractFlashcardViewer :
             easeButton3!!.hideNextReviewTime()
             easeButton4!!.hideNextReviewTime()
         }
-        val flipCard = findViewById<Button>(R.id.flip_card)
-        flipCardLayout = findViewById<LinearLayout>(R.id.flashcard_layout_flip)
+        flipCardLayout = findViewById(R.id.flashcard_layout_flip)
         flipCardLayout?.let { layout ->
             if (minimalClickSpeed == 0) {
                 layout.setOnClickListener(mFlipCardListener)
@@ -929,7 +928,7 @@ abstract class AbstractFlashcardViewer :
             }
         }
         if (animationEnabled()) {
-            flipCard.setBackgroundResource(getResFromAttr(this, R.attr.hardButtonRippleRef))
+            flipCardLayout?.setBackgroundResource(getResFromAttr(this, R.attr.hardButtonRippleRef))
         }
         if (!mButtonHeightSet && mRelativeButtonSize != 100) {
             val params = flipCardLayout!!.layoutParams

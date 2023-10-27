@@ -187,24 +187,22 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/flashcard_layout_flip"
             android:layout_width="match_parent"
             android:layout_height="@dimen/touch_target"
             android:orientation="vertical"
             android:focusable="true"
-            tools:visibility="gone">
+            android:background="?attr/hardButtonRef"
+            tools:visibility="visible">
 
-            <Button
-                style="@style/FooterButton"
-                android:duplicateParentState="true"
-                android:background="?attr/hardButtonRef"
-                android:id="@+id/flip_card"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="false"
+            <com.ichi2.ui.FixedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="?attr/answerButtonTextColor"
                 android:text="@string/show_answer"
-                android:textColor="?attr/answerButtonTextColor" />
-        </LinearLayout>
+                style="@style/FooterButton" />
+        </FrameLayout>
     </FrameLayout>
 </LinearLayout>

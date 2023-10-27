@@ -188,7 +188,7 @@ abstract class Onboarding<Feature>(
             CustomMaterialTapTargetPromptBuilder(activityContext, ReviewerOnboardingEnum.SHOW_ANSWER)
                 .createRectangleWithDimmedBackground()
                 .setDismissedListener { onCreate() }
-                .setTarget(R.id.flip_card)
+                // FIXME .setTarget(R.id.flip_card)
                 .setPrimaryText(R.string.see_answer)
                 .setSecondaryText(R.string.see_answer_desc)
                 .show()
