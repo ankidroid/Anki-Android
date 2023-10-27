@@ -219,7 +219,7 @@
         <item name="android:textColor">?attr/snackbarButtonTextColor</item>
     </style>
     <style name="SliderLabelStyle" parent="Widget.MaterialComponents.Tooltip">
-        <item name="android:textColor">?attr/sliderLabelTextColor</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="SliderStyle" parent="Widget.Material3.Slider">

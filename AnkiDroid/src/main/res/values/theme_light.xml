@@ -153,9 +153,7 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#99FFFFFF</item>
 
-        <!-- Browser Options Dialog-->
-        <item name="colorSurface">@color/white</item>
-
-        <item name="sliderLabelTextColor">@color/white</item>
+        <!-- Widget styles -->
+        <item name="sliderStyle">@style/SliderStyle</item>
     </style>
 </resources>

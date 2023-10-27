@@ -141,6 +141,6 @@
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_dark_primary</item>
 
-        <item name="sliderLabelTextColor">@color/black</item>
+        <item name="sliderStyle">@style/SliderStyle</item>
     </style>
 </resources>
