@@ -16,10 +16,10 @@ package com.ichi2.preferences
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.content.edit
 import androidx.preference.EditTextPreference
 import androidx.preference.PreferenceViewHolder
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.ichi2.anki.R
 
 /**
@@ -59,15 +59,13 @@ class VersatileTextWithASwitchPreference(context: Context, attrs: AttributeSet?)
     override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
 
-        val switch = holder.findViewById(R.id.switch_widget) as SwitchCompat
-
-        switch.isFocusable = canBeSwitchedOn
-        switch.isClickable = canBeSwitchedOn
-
-        switch.isChecked = preferences.getBoolean(switchKey, false)
-
-        switch.setOnCheckedChangeListener { _, checked ->
-            preferences.edit { putBoolean(switchKey, checked) }
+        with(holder.findViewById(R.id.switch_widget) as MaterialSwitch) {
+            isFocusable = canBeSwitchedOn
+            isClickable = canBeSwitchedOn
+            isChecked = preferences.getBoolean(switchKey, false)
+            setOnCheckedChangeListener { _, checked ->
+                preferences.edit { putBoolean(switchKey, checked) }
+            }
         }
     }
 
