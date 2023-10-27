@@ -262,7 +262,7 @@ class TemplateManager {
         /** Complete rendering by applying any pending custom filters. */
         fun applyCustomFilters(
             rendered: TemplateReplacementList,
-            @Suppress("unused_parameter") ctx: TemplateRenderContext,
+            ctx: TemplateRenderContext,
             front_side: String?
         ): String {
             // template already fully rendered?
@@ -281,27 +281,35 @@ class TemplateManager {
                         node.current_text = front_side
                     }
 
-                    val field_text = node.current_text
-
-                    // AnkiDroid: ignored hook-based code
-                    // for (filter_name in node.filters) {
-                    //     field_text = hooks.field_filter(field_text, node.field_name, filter_name, ctx
-                    //     )
-                    //     // legacy hook - the second and fifth argument are no longer used.
-                    //     field_text = anki.hooks.runFilter(
-                    //             "fmod_" + filter_name,
-                    //             field_text,
-                    //             "",
-                    //             ctx.note().items(),
-                    //             node.field_name,
-                    //             "",
-                    //     )
-                    // }
+                    var field_text = node.current_text
+                    for (filter_name in node.filters) {
+                        fieldFilters[filter_name]?.let {
+                            field_text = it.apply(field_text, node.field_name, filter_name, ctx)
+                        }
+                    }
 
                     res += field_text
                 }
             }
             return res
         }
+    }
+
+    /**
+     * Defines custom `{{filters:..}}`
+     *
+     * Custom filters can check `filterName` to decide whether it should modify
+     * `fieldText` or not before returning it
+     */
+    abstract class FieldFilter {
+        abstract fun apply(
+            fieldText: String,
+            fieldName: String,
+            filterName: String,
+            ctx: TemplateRenderContext
+        ): String
+    }
+    companion object {
+        val fieldFilters: MutableMap<String, FieldFilter> = mutableMapOf()
     }
 }
