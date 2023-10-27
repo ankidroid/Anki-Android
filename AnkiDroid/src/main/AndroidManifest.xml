@@ -336,7 +336,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
-            android:theme="@style/Theme.CrashReportDialog"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
             android:process=":acra"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"

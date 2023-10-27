@@ -14,8 +14,6 @@
     <style name="Theme_Dark_Compat.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
-    <!-- Theme for crash report dialog -->
-    <style name="Theme.CrashReportDialog" parent="@android:style/Theme.DeviceDefault.Dialog" />
 
     <style name="Animation.Translucent" parent="@android:style/Animation.Translucent">
         <item name="android:windowEnterAnimation">@null</item>
