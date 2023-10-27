@@ -1506,6 +1506,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                         // we only want to decorate when we lose focus
                         return@OnFocusChangeListener
                     }
+                    @SuppressLint("CheckResult")
                     val currentFieldStrings = currentFieldStrings
                     if (currentFieldStrings.size != 2 || currentFieldStrings[1]!!.isNotEmpty()) {
                         // we only decorate on 2-field cards while second field is still empty
