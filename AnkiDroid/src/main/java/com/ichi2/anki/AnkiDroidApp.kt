@@ -49,6 +49,9 @@ import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.Locale
@@ -225,6 +228,7 @@ open class AnkiDroidApp : Application() {
         })
 
         activityAgnosticDialogs = ActivityAgnosticDialogs.register(this)
+        TtsVoices.launchBuildLocalesJob()
     }
 
     /**
@@ -328,6 +332,22 @@ open class AnkiDroidApp : Application() {
     }
 
     companion object {
+
+        /**
+         * [CoroutineScope] tied to the [Application], allowing executing of tasks which should
+         * execute as long as the app is running
+         *
+         * This scope is bound by default to [Dispatchers.Main.immediate][kotlinx.coroutines.MainCoroutineDispatcher.immediate].
+         * Use an alternate dispatcher if the main thread is not required: [Dispatchers.Default] or [Dispatchers.IO]
+         *
+         * This scope will not be cancelled; exceptions are handled by [SupervisorJob]
+         *
+         * See: [Operations that shouldn't be cancelled in Coroutines](https://medium.com/androiddevelopers/coroutines-patterns-for-work-that-shouldnt-be-cancelled-e26c40f142ad#d425)
+         *
+         * This replicates the manner which `lifecycleScope`/`viewModelScope` is exposed in Android
+         */
+        val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
         /** Running under instrumentation. a "/androidTest" directory will be created which contains a test collection  */
         var INSTRUMENTATION_TESTING = false
         const val XML_CUSTOM_NAMESPACE = "http://arbitrary.app.namespace/com.ichi2.anki"

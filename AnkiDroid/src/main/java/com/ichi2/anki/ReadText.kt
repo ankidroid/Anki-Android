@@ -42,7 +42,6 @@ object ReadText {
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var textToSpeech: TextToSpeech? = null
         private set
-    private val availableTtsLocales = ArrayList<Locale>()
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var textToSpeak: String? = null
@@ -99,11 +98,7 @@ object ReadText {
         mOrd = ord
         val res = flashCardViewer.get()!!.resources
         val dialog = AlertDialog.Builder(flashCardViewer.get()!!)
-        // Build the language list if it's empty
-        if (availableTtsLocales.isEmpty()) {
-            buildAvailableLanguages()
-        }
-        if (availableTtsLocales.isEmpty()) {
+        if (availableLocales().isEmpty()) {
             Timber.w("ReadText.textToSpeech() no TTS languages available")
             dialog.message(R.string.no_tts_available_message)
                 .setIcon(R.drawable.ic_warning)
@@ -113,7 +108,7 @@ object ReadText {
                 mutableListOf<Pair<String, String>>().apply {
                     add(Pair(NO_TTS, res.getString(R.string.tts_no_tts))) // add option: "no tts"
                     addAll(
-                        availableTtsLocales
+                        availableLocales()
                             .sortedWith(compareBy { it.displayName })
                             .map { Pair(it.isO3Language, it.displayName) }
                     )
@@ -252,9 +247,7 @@ object ReadText {
         // Create new TTS object and setup its onInit Listener
         textToSpeech = TextToSpeech(context) { status: Int ->
             if (status == TextToSpeech.SUCCESS) {
-                // build list of available languages
-                buildAvailableLanguages()
-                if (!availableTtsLocales.isEmpty()) {
+                if (availableLocales().isNotEmpty()) {
                     // notify the reviewer that TTS has been initialized
                     Timber.d("TTS initialized and available languages found")
                     (context as AbstractFlashcardViewer).ttsInitialized()
@@ -296,24 +289,6 @@ object ReadText {
         activity!!.openUrl(helpUrl)
     }
 
-    fun buildAvailableLanguages() {
-        availableTtsLocales.clear()
-        val systemLocales = Locale.getAvailableLocales()
-        availableTtsLocales.ensureCapacity(systemLocales.size)
-        for (loc in systemLocales) {
-            try {
-                val retCode = textToSpeech!!.isLanguageAvailable(loc)
-                if (retCode >= TextToSpeech.LANG_COUNTRY_AVAILABLE) {
-                    availableTtsLocales.add(loc)
-                } else {
-                    Timber.v("ReadText.buildAvailableLanguages() :: %s  not available (error code %d)", loc.displayName, retCode)
-                }
-            } catch (e: IllegalArgumentException) {
-                Timber.w(e, "Error checking if language %s available", loc.displayName)
-            }
-        }
-    }
-
     /**
      * Request that TextToSpeech is stopped and shutdown after it it no longer being used
      * by the context that initialized it.
@@ -341,6 +316,9 @@ object ReadText {
         MetaDB.close()
         System.gc()
     }
+
+    @Suppress("DEPRECATION") // we'll be removing this functionality, little point in fixing
+    private fun availableLocales() = TtsVoices.availableLocalesBlocking()
 
     interface ReadTextListener {
         fun onDone(playedSide: SoundSide?)
