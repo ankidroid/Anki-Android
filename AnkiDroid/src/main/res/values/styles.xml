@@ -142,11 +142,6 @@
         <item name="android:tint">@color/black</item>
     </style>
 
-    <!-- increasing the size of Spinner in the Card Browser to 48dp to meet Accessibility criteria -->
-    <style name="card_browser_spinner_layout">
-        <item name="android:layout_height">48dp</item>
-    </style>
-
     <style name="reviewer_whiteboard_editor_button_style">
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">40dp</item>
