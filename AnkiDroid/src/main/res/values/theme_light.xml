@@ -22,12 +22,14 @@ APIs. It's visible when there aren't enough decks to fill the screen.
     <color name="theme_light_drawer_row_current">#E8E8E8</color>
     <color name="theme_light_drawer_item">#DE000000</color>
 
-    <!-- DarkActionBar needed for readable text in the menu opened by the hardware menu button -->
-    <style name="Theme_Light" parent="@style/Theme.MaterialComponents.Light.DarkActionBar.Bridge">
+    <style name="Theme_Light" parent="@style/Theme.Material3.Light.NoActionBar">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_light_primary</item>
         <item name="colorPrimaryDark">@color/theme_light_primary_dark</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
         <item name="colorAccent">@color/theme_light_accent</item>
+
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="android:colorBackground">@android:color/white</item>

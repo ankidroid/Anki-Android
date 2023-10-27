@@ -214,24 +214,15 @@
     <!-- Snackbars -->
     <style name="SnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
         <item name="android:backgroundTint">?attr/snackbarBackgroundTintColor</item>
-        <!-- Material snackbar sets button text color by layering its current text color, set with
-             android:textColor below, over surface color with the alpha set by this attribute.
-             Since the app doesn't use material theming, let's disable this color blending.
-             TODO Remove if the app moves to material theming. -->
-        <item name="actionTextColorAlpha">1.0</item>
     </style>
     <style name="SnackbarButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
         <item name="android:textColor">?attr/snackbarButtonTextColor</item>
-        <!-- Material buttons have some letter spacing added, but since no other components
-             in the app use material theming, let's remove it for the sake of consistency.
-             TODO Remove if the app moves to material theming. -->
-        <item name="android:letterSpacing">0</item>
     </style>
     <style name="SliderLabelStyle" parent="Widget.MaterialComponents.Tooltip">
         <item name="android:textColor">?attr/sliderLabelTextColor</item>
     </style>
 
-    <style name="SliderStyle" parent="Base.Widget.MaterialComponents.Slider">
+    <style name="SliderStyle" parent="Widget.Material3.Slider">
         <item name="trackColorActive">@color/slider_active_track_color</item>
         <item name="trackColorInactive">@color/slider_inactive_track_color</item>
         <item name="haloColor">@color/slider_halo_color</item>
