@@ -122,7 +122,7 @@ abstract class NavigationDrawerActivity :
         mDrawerLayout.setStatusBarBackgroundColor(
             Themes.getColorFromAttr(
                 this,
-                android.R.attr.colorPrimary
+                R.attr.appBarColor
             )
         )
         // Setup toolbar and hamburger

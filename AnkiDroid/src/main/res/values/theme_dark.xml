@@ -11,7 +11,7 @@
 
     <style name="Theme_Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <!-- Android colors -->
-        <item name="colorPrimary">@color/theme_dark_primary</item>
+        <item name="colorPrimary">@color/material_blue_400</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
         <item name="colorAccent">@color/material_blue_400</item>
@@ -34,6 +34,7 @@
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
         <item name="spinnerStyle">@style/SpinnerStyle</item>
         <!-- Action bar styles -->
+        <item name="appBarColor">@color/theme_dark_primary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>

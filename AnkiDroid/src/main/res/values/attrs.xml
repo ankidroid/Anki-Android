@@ -72,6 +72,7 @@
         <attr name="permissions" format="string"/>
     </declare-styleable>
 
+    <attr name="appBarColor" format="color"/>
     <attr name="widgetColorActivated" format="color"/>
     <!-- Deck list colors, divider, and expander -->
     <attr name="currentDeckBackground" format="reference"/>

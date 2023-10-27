@@ -1238,7 +1238,7 @@ open class Reviewer :
         // Show / hide the Action bar together with the status bar
         val prefs = a.sharedPrefs()
         val fullscreenMode = fromPreference(prefs)
-        a.window.statusBarColor = getColorFromAttr(a, android.R.attr.colorPrimary)
+        a.window.statusBarColor = getColorFromAttr(a, R.attr.appBarColor)
         val decorView = a.window.decorView
         decorView.setOnSystemUiVisibilityChangeListener { flags: Int ->
             val toolbar = a.findViewById<View>(R.id.toolbar)
