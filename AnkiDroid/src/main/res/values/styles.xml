@@ -39,10 +39,6 @@
         <item name="android:popupBackground">@drawable/bg_popup</item>
     </style>
 
-    <style name="TextStyleMedium">
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <!--  Material Design-style persistent footer button -->
     <style name="FooterButtonBase">
         <item name="android:layout_height">48dp</item>
@@ -102,12 +98,6 @@
         <item name="android:textColor">?attr/easyButtonTextColor</item>
     </style>
 
-    <!-- FAB menu items -->
-    <style name="menu_labels_style">
-        <item name="android:background">?attr/fab_item_background</item>
-        <item name="android:textColor">?attr/fab_labelsTextColor</item>
-    </style>
-
     <!-- Action bar. Currently all action bar text is white in every theme. -->
     <style name="ActionBarStyle" parent="Base.ThemeOverlay.AppCompat.ActionBar">
         <!-- Colors: hamburger, title text, overflow icon -->
@@ -153,14 +143,6 @@
         <item name="textAppearanceLabelLarge">@style/TextAppearance.Material3.LabelLarge</item>
     </style>
 
-    <style name="card_info_data">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">10dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:textIsSelectable">true</item>
-    </style>
-
     <!-- padding is hardcoded in Toolbar.java (32) to allow for fixing the scrollview -->
     <style name="note_editor_toolbar_button">
         <item name="android:layout_width">44dp</item>
@@ -188,11 +170,6 @@
         <item name="layout_constraintWidth_percent">0.125</item>
         <item name="layout_constraintHeight_percent">0.125</item>
         <item name="android:background">@drawable/ic_gesture_tap</item>
-    </style>
-
-    <style name="custom_material_dialog_content">
-        <!--<item name="android:textColor">?attr/md_content_color</item>-->
-        <item name="android:textSize">@dimen/md_message_textsize</item>
     </style>
 
     <!-- Snackbars -->
