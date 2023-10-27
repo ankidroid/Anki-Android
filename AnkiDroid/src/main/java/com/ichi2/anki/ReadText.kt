@@ -260,15 +260,35 @@ object ReadText {
                         listener.onDone(questionAnswer)
                     }
 
-                    @Deprecated("")
-                    override fun onError(utteranceId: String) {
-                        Timber.v("Android TTS failed. Check logcat for error. Indicates a problem with Android TTS engine.")
+                    fun errorToDeveloperString(errorCode: Int): String {
+                        return when (errorCode) {
+                            TextToSpeech.ERROR -> "Generic failure"
+                            TextToSpeech.ERROR_SYNTHESIS -> "TTS engine failed to synthesize input"
+                            TextToSpeech.ERROR_INVALID_REQUEST -> "Invalid request"
+                            TextToSpeech.ERROR_NETWORK -> "Network connectivity problem"
+                            TextToSpeech.ERROR_NETWORK_TIMEOUT -> "Network timeout"
+                            TextToSpeech.ERROR_NOT_INSTALLED_YET -> "Unfinished download of the voice data"
+                            TextToSpeech.ERROR_OUTPUT -> "Output error (audio device or a file)"
+                            TextToSpeech.ERROR_SERVICE -> "TTS service"
+                            else -> "Unhandled Error [$errorCode]"
+                        }
+                    }
+
+                    override fun onError(utteranceId: String?, errorCode: Int) {
+                        Timber.v("Android TTS failed: %s (%d). Check logcat for error. Indicates a problem with Android TTS engine.", errorToDeveloperString(errorCode), errorCode)
                         val helpUrl = Uri.parse(context.getString(R.string.link_faq_tts))
                         val ankiActivity = context as AnkiActivity
                         ankiActivity.mayOpenUrl(helpUrl)
+                        // TODO: We can do better in this UI now we have a reason for failure
                         ankiActivity.showSnackbar(R.string.no_tts_available_message) {
                             setAction(R.string.help) { openTtsHelpUrl(helpUrl) }
                         }
+                    }
+
+                    @Deprecated("")
+                    override fun onError(utteranceId: String) {
+                        // required for UtteranceProgressListener, but also deprecated
+                        Timber.e("onError(string) should not have been called")
                     }
 
                     override fun onStart(arg0: String) {
