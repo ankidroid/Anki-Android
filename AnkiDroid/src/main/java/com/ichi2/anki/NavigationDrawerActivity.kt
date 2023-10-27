@@ -38,6 +38,7 @@ import androidx.core.graphics.drawable.IconCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.ClosableDrawerLayout
 import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.navigation.NavigationView
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
 import com.ichi2.anki.dialogs.HelpDialog
@@ -46,7 +47,6 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.workarounds.FullDraggableContainerFix
 import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.CardId
-import com.ichi2.themes.Themes
 import com.ichi2.utils.HandlerUtils
 import com.ichi2.utils.KotlinCleanup
 import timber.log.Timber
@@ -120,9 +120,10 @@ abstract class NavigationDrawerActivity :
         // Force transparent status bar with primary dark color underlaid so that the drawer displays under status bar
         window.statusBarColor = getColor(R.color.transparent)
         mDrawerLayout.setStatusBarBackgroundColor(
-            Themes.getColorFromAttr(
+            MaterialColors.getColor(
                 this,
-                R.attr.appBarColor
+                R.attr.appBarColor,
+                0
             )
         )
         // Setup toolbar and hamburger

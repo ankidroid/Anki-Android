@@ -32,6 +32,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.color.MaterialColors
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -367,8 +368,8 @@ open class AnkiActivity : AppCompatActivity, SimpleMessageDialogListener {
             )
             return
         }
-        val toolbarColor = Themes.getColorFromAttr(this, R.attr.appBarColor)
-        val navBarColor = Themes.getColorFromAttr(this, R.attr.customTabNavBarColor)
+        val toolbarColor = MaterialColors.getColor(this, R.attr.appBarColor, 0)
+        val navBarColor = MaterialColors.getColor(this, R.attr.customTabNavBarColor, 0)
         val colorSchemeParams = CustomTabColorSchemeParams.Builder()
             .setToolbarColor(toolbarColor)
             .setNavigationBarColor(navBarColor)
