@@ -31,15 +31,6 @@
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
         <item name="spinnerStyle">@style/SpinnerStyle</item>
-        <!-- App buttons -->
-        <item name="largeButtonBackgroundColor">@color/material_light_blue_800</item>
-        <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
-        <item name="largeButtonBackgroundColorPressed">@color/material_light_blue_900</item>
-        <item name="largeButtonTextColor">@color/white</item>
-        <item name="largeButtonSecondaryBackgroundColor">@color/material_grey_800</item>
-        <item name="largeButtonSecondaryBackgroundColorFocused">@color/material_grey_700</item>
-        <item name="largeButtonSecondaryBackgroundColorPressed">@color/material_grey_600</item>
-        <item name="largeButtonSecondaryTextColor">@color/material_grey_500</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

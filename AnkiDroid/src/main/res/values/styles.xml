@@ -147,13 +147,6 @@
         <item name="colorOnSurfaceVariant">#cfff</item> <!-- Not selected text color -->
     </style>
 
-    <style name="LargeFilledButtonStyle" parent="@style/Widget.Material3.Button">
-        <item name="android:textAppearance">?android:textAppearanceMedium</item>
-        <item name="android:padding">12dp</item>
-        <item name="android:textColor">?attr/largeButtonTextColor</item>
-        <item name="backgroundTint">?attr/largeButtonBackgroundColor</item>
-    </style>
-
     <style name="BottomNavigationViewStyle" parent="@style/Widget.Material3.BottomNavigationView">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
         <item name="elevation">0dp</item> <!-- Prevent slight changes of surface color -->

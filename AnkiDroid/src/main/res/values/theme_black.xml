@@ -16,15 +16,6 @@
         <item name="android:colorBackground">@color/theme_black_primary</item>
         <item name="android:windowBackground">@color/theme_black_primary</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
-        <!-- App buttons -->
-        <item name="largeButtonBackgroundColor">#303030</item>
-        <item name="largeButtonBackgroundColorFocused">#444444</item>
-        <item name="largeButtonBackgroundColorPressed">#606060</item>
-        <item name="largeButtonTextColor">@color/theme_black_primary_text</item>
-        <item name="largeButtonSecondaryBackgroundColor">#202020</item>
-        <item name="largeButtonSecondaryBackgroundColorFocused">#303030</item>
-        <item name="largeButtonSecondaryBackgroundColorPressed">#3F3F3F</item>
-        <item name="largeButtonSecondaryTextColor">@color/material_grey_700</item>
         <!-- Action bar styles -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

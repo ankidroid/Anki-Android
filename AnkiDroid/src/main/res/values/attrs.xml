@@ -73,15 +73,6 @@
     </declare-styleable>
 
     <attr name="widgetColorActivated" format="color"/>
-    <!-- App buttons -->
-    <attr name="largeButtonBackgroundColor" format="color"/>
-    <attr name="largeButtonBackgroundColorFocused" format="color"/>
-    <attr name="largeButtonBackgroundColorPressed" format="color"/>
-    <attr name="largeButtonTextColor" format="color"/>
-    <attr name="largeButtonSecondaryBackgroundColor" format="color"/>
-    <attr name="largeButtonSecondaryBackgroundColorFocused" format="color"/>
-    <attr name="largeButtonSecondaryBackgroundColorPressed" format="color"/>
-    <attr name="largeButtonSecondaryTextColor" format="color"/>
     <!-- Deck list colors, divider, and expander -->
     <attr name="currentDeckBackground" format="reference"/>
     <attr name="currentDeckBackgroundColor" format="color"/>

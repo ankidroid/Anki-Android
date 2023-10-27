@@ -172,7 +172,6 @@
                         android:paddingRight="2dp"
                         android:paddingBottom="8dp"/>
                     <com.google.android.material.button.MaterialButton
-                        style="@style/LargeFilledButtonStyle"
                         android:id="@+id/studyoptions_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
