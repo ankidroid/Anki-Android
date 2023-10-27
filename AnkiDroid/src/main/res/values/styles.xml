@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources,DuplicateCrowdInStrings">
 
-    <!-- App themes
-        These compat themes are just copies of the parent themes here, but some attributes are
-        overridden as necessary in the API specific versions, for example in values-v21/styles.xml.
-        -->
-    <style name="Theme_Light_Compat" parent="Theme_Light"/>
-    <style name="Theme_Dark_Compat" parent="Theme_Dark"/>
-    <style name="Theme_Plain_Compat" parent="Theme_Light.Plain"/>
-    <style name="Theme_Black_Compat" parent="Theme_Dark.Black"/>
-
-
-    <style name="Theme_Dark_Compat.Launcher">
+    <style name="Theme_Dark.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
