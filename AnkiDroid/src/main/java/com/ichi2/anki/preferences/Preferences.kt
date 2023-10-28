@@ -32,7 +32,6 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.google.android.material.appbar.AppBarLayout
@@ -45,6 +44,7 @@ import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
 import java.util.*
+import kotlin.reflect.jvm.jvmName
 
 class Preferences :
     AnkiActivity(),
@@ -58,6 +58,7 @@ class Preferences :
     override fun onTitleChanged(title: CharSequence?, color: Int) {
         super.onTitleChanged(title, color)
         findViewById<CollapsingToolbarLayout>(R.id.collapsingToolbarLayout)?.title = title
+        supportActionBar?.title = title
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,9 +71,7 @@ class Preferences :
         if (savedInstanceState == null) {
             loadInitialFragment()
         }
-        updateAppBarTitle()
         supportFragmentManager.addOnBackStackChangedListener {
-            updateAppBarTitle()
             // Expand bar in new fragments if scrolled to top
             val fragment = supportFragmentManager.findFragmentById(R.id.settings_container)
                 as? PreferenceFragmentCompat ?: return@addOnBackStackChangedListener
@@ -116,28 +115,21 @@ class Preferences :
         caller: PreferenceFragmentCompat,
         pref: Preference
     ): Boolean {
+        // avoid reopening the same fragment if already active
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.settings_container)
+            ?: return true
+        if (pref.fragment == currentFragment::class.jvmName) return true
+
         val fragment = supportFragmentManager.fragmentFactory.instantiate(
             classLoader,
-            pref.fragment ?: return false
+            pref.fragment ?: return true
         )
         fragment.arguments = pref.extras
         supportFragmentManager.commit {
-            replace(R.id.settings_container, fragment)
+            replace(R.id.settings_container, fragment, fragment::class.jvmName)
             addToBackStack(null)
         }
         return true
-    }
-
-    private fun updateAppBarTitle() {
-        val fragment = supportFragmentManager.findFragmentById(R.id.settings_container)
-
-        if (fragment is SearchPreferenceFragment) return
-
-        title = when (fragment) {
-            is SettingsFragment -> fragment.preferenceScreen.title
-            is AboutFragment -> getString(R.string.pref_cat_about_title)
-            else -> null
-        } ?: getString(R.string.settings)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

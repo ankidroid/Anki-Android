@@ -103,6 +103,7 @@ abstract class SettingsFragment :
 
     override fun onStart() {
         super.onStart()
+        requireActivity().title = preferenceScreen.title
         PreferenceManager.getDefaultSharedPreferences(requireContext())
             .registerOnSharedPreferenceChangeListener(this)
     }

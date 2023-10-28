@@ -97,6 +97,11 @@ class AboutFragment : Fragment() {
         return layoutView
     }
 
+    override fun onStart() {
+        super.onStart()
+        requireActivity().setTitle(R.string.pref_cat_about_title)
+    }
+
     /**
      * Copies debug info (from [DebugInfoService.getDebugInfo]) to the clipboard
      */
