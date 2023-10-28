@@ -15,6 +15,7 @@
  */
 package com.ichi2.audio
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.media.MediaRecorder
@@ -30,9 +31,9 @@ import android.widget.TextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.R
-import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.fields.FieldControllerBase
 import com.ichi2.anki.multimediacard.fields.IFieldController
+import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.UiUtil
@@ -48,11 +49,13 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
     private lateinit var saveButton: MaterialButton
     private var isRecording = false
     private var isPaused = false
+    private var isCleared = false
     private lateinit var audioTimeView: TextView
     private lateinit var audioTimer: AudioTimer
     private lateinit var vibrator: Vibrator
     private lateinit var audioWaveform: AudioWaveform
     private lateinit var context: Context
+    private lateinit var cancelAudioRecordingButton: MaterialButton
 
     @Suppress("DEPRECATION")
     override fun createUI(context: Context, layout: LinearLayout) {
@@ -105,6 +108,7 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
         audioTimeView = layout.findViewById(R.id.audio_time_track)
         audioWaveform = layout.findViewById(R.id.audio_waveform_view)
         saveButton = layout.findViewById(R.id.action_save_recording)
+        cancelAudioRecordingButton = layout.findViewById(R.id.action_cancel_recording)
 
         audioTimer = AudioTimer(this)
         vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
@@ -112,6 +116,7 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
             when {
                 isPaused -> resumeRecording()
                 isRecording -> pauseRecorder()
+                isCleared -> startRecording(context, tempAudioPath!!)
                 else -> startRecording(context, tempAudioPath!!)
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -120,7 +125,13 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
         }
 
         saveButton.setOnClickListener {
-            onDone()
+            stopRecording()
+            (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
+        }
+
+        cancelAudioRecordingButton.setOnClickListener {
+            isCleared = true
+            clearRecording()
         }
     }
 
@@ -190,6 +201,7 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
         recordButton.setIconResource(R.drawable.round_pause_24)
         isRecording = true
         isPaused = false
+        isCleared = false
         audioTimer.start()
     }
 
@@ -199,18 +211,13 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
     }
 
     private fun stopRecording() {
-        if (this::audioRecorder.isInitialized) {
-            audioTimer.stop()
-            audioRecorder.apply {
-                this.stop()
-                this.release()
-            }
-            isPaused = false
-            isRecording = false
-            audioTimeView.text = context.resources.getString(R.string.audio_text)
-            audioWaveform.clear()
-            saveRecording()
-        }
+        audioTimer.stop()
+        audioRecorder.stop()
+        isPaused = false
+        isRecording = false
+        audioTimeView.text = context.resources.getString(R.string.audio_text)
+        audioWaveform.clear()
+        saveRecording()
     }
 
     fun release() {
@@ -227,6 +234,7 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
             audioRecorder.stop()
             isPaused = true
         }
+        saveRecording()
         recordButton.setIconResource(R.drawable.ic_record)
         audioTimer.pause()
     }
@@ -244,9 +252,21 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
     }
     // ***************** audio recorder ends ***************** //
 
+    private fun clearRecording() {
+        if (this::audioRecorder.isInitialized) {
+            audioTimer.stop()
+            audioRecorder.stop()
+        }
+        tempAudioPath = null
+        tempAudioPath = generateTempAudioFile(context)
+        audioTimeView.text = context.resources.getString(R.string.audio_text)
+        audioWaveform.clear()
+        isPaused = false
+        isRecording = false
+    }
+
     override fun onDone() {
-        UIUtils.showThemedToast(context, "Recording stopped", false)
-        stopRecording()
+        saveRecording()
     }
 
     override fun onFocusLost() {

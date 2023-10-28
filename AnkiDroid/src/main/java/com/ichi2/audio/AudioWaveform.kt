@@ -33,7 +33,7 @@ class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, att
     private var w = 9f
 
     private var sw = 0f
-    private var sh = 400f
+    private var sh = 300f
     private var d = 6f
     private var maxSpike = 0
 
@@ -44,7 +44,7 @@ class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, att
     }
 
     fun addAmplitude(amp: Float) {
-        val norm = Math.min(amp.toInt() / 7, 400).toFloat()
+        val norm = (amp.toInt() / 7).coerceAtMost(300).toFloat()
         amplitudes.add(norm)
         audioSpikes.clear()
         val amps = amplitudes.takeLast(maxSpike)
