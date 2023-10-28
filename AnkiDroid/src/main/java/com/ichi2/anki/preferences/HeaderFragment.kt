@@ -48,6 +48,11 @@ class HeaderFragment : PreferenceFragmentCompat() {
         )
     }
 
+    override fun onStart() {
+        super.onStart()
+        requireActivity().setTitle(R.string.settings)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // use the same fragment container to search in case there is a navigation container
