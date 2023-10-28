@@ -20,6 +20,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <com.bytehamster.lib.preferencesearch.SearchPreference
+        android:key="@string/search_preference_key"/>
+
     <!--  General Preferences -->
     <com.ichi2.preferences.HeaderPreference
         android:fragment="com.ichi2.anki.preferences.GeneralSettingsFragment"

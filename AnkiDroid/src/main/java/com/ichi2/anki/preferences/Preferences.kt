@@ -23,7 +23,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.VisibleForTesting
 import androidx.annotation.XmlRes
@@ -34,30 +33,22 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreferenceFragment
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.AdaptionUtil
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
 import java.util.*
 
-/**
- * Preferences dialog.
- */
 class Preferences :
     AnkiActivity(),
     PreferenceFragmentCompat.OnPreferenceStartFragmentCallback,
     SearchPreferenceResultListener {
-    val searchConfiguration: SearchConfiguration by lazy { configureSearchBar() }
-    lateinit var searchView: PreferencesSearchView
 
     // ----------------------------------------------------------------------------
     // Overridden methods
@@ -106,17 +97,6 @@ class Preferences :
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.preferences, menu)
-
-        val searchIcon = menu.findItem(R.id.preferences_search)
-        searchView = searchIcon.actionView as PreferencesSearchView
-        searchView.setActivity(this)
-        searchView.searchConfiguration = searchConfiguration
-
-        return super.onCreateOptionsMenu(menu)
-    }
-
     override fun onPreferenceStartFragment(
         caller: PreferenceFragmentCompat,
         pref: Preference
@@ -131,60 +111,6 @@ class Preferences :
             addToBackStack(null)
         }
         return true
-    }
-
-    /**
-     * @return the default [SearchConfiguration] for AnkiDroid settings
-     */
-    private fun configureSearchBar(): SearchConfiguration {
-        val searchConfig = SearchConfiguration(this).apply {
-            setFragmentContainerViewId(R.id.settings_container)
-            setBreadcrumbsEnabled(true)
-            setFuzzySearchEnabled(false)
-            setHistoryEnabled(true)
-            textNoResults = getString(R.string.pref_search_no_results)
-
-            index(R.xml.preferences_general)
-            index(R.xml.preferences_reviewing)
-            index(R.xml.preferences_sync)
-            index(R.xml.preferences_custom_sync_server)
-                .addBreadcrumb(R.string.pref_cat_sync)
-            index(R.xml.preferences_notifications)
-            index(R.xml.preferences_appearance)
-            index(R.xml.preferences_custom_buttons)
-                .addBreadcrumb(R.string.pref_cat_appearance)
-            index(R.xml.preferences_controls)
-            index(R.xml.preferences_accessibility)
-        }
-
-        // Some preferences and categories are only shown conditionally,
-        // so they should be searchable based on the same conditions
-
-        /** From [HeaderFragment.onCreatePreferences] */
-        if (DevOptionsFragment.isEnabled(this)) {
-            searchConfig.index(R.xml.preferences_dev_options)
-            /** From [DevOptionsFragment.initSubscreen] */
-            if (BuildConfig.DEBUG) {
-                searchConfig.ignorePreference(getString(R.string.dev_options_enabled_by_user_key))
-            }
-        }
-
-        /** From [HeaderFragment.onCreatePreferences] */
-        if (!AdaptionUtil.isXiaomiRestrictedLearningDevice) {
-            searchConfig.index(R.xml.preferences_advanced)
-        }
-
-        /** From [NotificationsSettingsFragment.initSubscreen] */
-        if (AdaptionUtil.isXiaomiRestrictedLearningDevice) {
-            searchConfig.ignorePreference(getString(R.string.pref_notifications_vibrate_key))
-            searchConfig.ignorePreference(getString(R.string.pref_notifications_blink_key))
-        }
-
-        /** From [AdvancedSettingsFragment.removeUnnecessaryAdvancedPrefs] */
-        if (!CompatHelper.hasScrollKeys()) {
-            searchConfig.ignorePreference(getString(R.string.double_scrolling_gap_key))
-        }
-        return searchConfig
     }
 
     private fun updateActionBarTitle(fragmentManager: FragmentManager, actionBar: ActionBar?) {
@@ -240,30 +166,16 @@ class Preferences :
     }
 
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
-        val resultFragment = getFragmentFromXmlRes(result.resourceFile)
-            ?: return
+        val fragment = getFragmentFromXmlRes(result.resourceFile) ?: return
 
-        val fragments = supportFragmentManager.fragments
-        // The last opened fragment is going to be
-        // the search fragment, so get the one before it
-        val currentFragment = fragments[fragments.lastIndex - 1]
-        // then clear the search fragment from the backstack
-        supportFragmentManager.popBackStack()
-
-        // If the clicked result is on the currently opened fragment,
-        // it isn't necessary to create it again
-        val fragmentToHighlight = if (currentFragment::class != resultFragment::class) {
-            supportFragmentManager.commit {
-                replace(R.id.settings_container, resultFragment, resultFragment.javaClass.name)
-                addToBackStack(resultFragment.javaClass.name)
-            }
-            resultFragment
-        } else {
-            currentFragment
+        supportFragmentManager.popBackStack() // clear the search fragment from the backstack
+        supportFragmentManager.commit {
+            replace(R.id.settings_container, fragment, fragment.javaClass.name)
+            addToBackStack(fragment.javaClass.name)
         }
 
-        Timber.i("Highlighting key '%s' on %s", result.key, fragmentToHighlight)
-        result.highlight(fragmentToHighlight as PreferenceFragmentCompat)
+        Timber.i("Highlighting key '%s' on %s", result.key, fragment)
+        result.highlight(fragment as PreferenceFragmentCompat)
     }
 
     companion object {
