@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.R
 import com.ichi2.libanki.DeckId
-import com.ichi2.libanki.sched.Counts
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.utils.KotlinCleanup
 import kotlinx.coroutines.runBlocking
@@ -271,12 +270,6 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         val collapsedDeck = deckTree?.find(did) ?: return 0
         val parent = collapsedDeck.parent?.get() ?: return 0
         return findDeckPosition(parent.did)
-    }
-
-    suspend fun eta(): Int? = if (mNumbersComputed) {
-        withCol { sched.eta(Counts(mNew, mLrn, mRev)) }
-    } else {
-        null
     }
 
     val due: Int?

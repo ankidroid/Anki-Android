@@ -99,7 +99,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.SECONDS_PER_DAY
-import com.ichi2.anki.utils.timeQuantityTopDeckPicker
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
@@ -1887,23 +1886,17 @@ open class DeckPicker :
         }
         mDeckListAdapter.buildDeckList(tree, currentFilter)
 
-        // Set the "x due in y minutes" subtitle
+        // Set the "x due" subtitle
         try {
-            val eta = mDeckListAdapter.eta()
             val due = mDeckListAdapter.due
             val res = resources
 
-            val time: String = if (eta != -1 && eta != null) {
-                timeQuantityTopDeckPicker(this, (eta * 60).toLong())
-            } else {
-                "-"
-            }
             if (due != null && supportActionBar != null) {
                 val cardCount = withCol { cardCount() }
                 val subTitle: String = if (due == 0) {
                     res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
                 } else {
-                    res.getQuantityString(R.plurals.deckpicker_title, due, due, time)
+                    res.getQuantityString(R.plurals.widget_cards_due, due, due)
                 }
                 supportActionBar!!.subtitle = subTitle
             }

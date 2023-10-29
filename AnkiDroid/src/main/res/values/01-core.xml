@@ -37,10 +37,6 @@
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
     <string name="study_more">Study more</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="other">%d minutes left</item>
