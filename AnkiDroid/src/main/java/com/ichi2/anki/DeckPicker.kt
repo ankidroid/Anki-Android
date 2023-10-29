@@ -1828,7 +1828,10 @@ open class DeckPicker :
         launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
         launchCatchingTask {
-            withCol { mReviewSummaryTextView.text = sched.studiedToday() }
+            withCol {
+                mReviewSummaryTextView.text = sched.studiedToday()
+                mReviewSummaryTextView.setSingleLine()
+            }
         }
         Timber.d("Startup - Deck List UI Completed")
     }
