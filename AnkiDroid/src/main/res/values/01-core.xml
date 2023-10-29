@@ -31,7 +31,6 @@
     <string name="studyoptions_due_today">Due today:</string>
     <string name="studyoptions_new_total">Total new cards:</string>
     <string name="studyoptions_total_cards">Total cards:</string>
-    <string name="studyoptions_eta">Estimated time (min):</string>
     <string name="studyoptions_start">Study</string>
 
     <!-- DeckPicker.kt -->
