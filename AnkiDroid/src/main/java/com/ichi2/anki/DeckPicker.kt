@@ -1827,10 +1827,10 @@ open class DeckPicker :
         dueTree = result
         launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
+        mReviewSummaryTextView.setSingleLine()
         launchCatchingTask {
             withCol {
                 mReviewSummaryTextView.text = sched.studiedToday()
-                mReviewSummaryTextView.setSingleLine()
             }
         }
         Timber.d("Startup - Deck List UI Completed")
