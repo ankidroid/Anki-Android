@@ -80,6 +80,7 @@ open class AnkiServer(
             "importCsv" -> activity.importCsvRaw(bytes)
             "importDone" -> bytes
             "searchInBrowser" -> activity.searchInBrowser(bytes)
+            "completeTag" -> withCol { completeTagRaw(bytes) }
             "getFieldNames" -> withCol { getFieldNamesRaw(bytes) }
             "cardStats" -> withCol { cardStatsRaw(bytes) }
             "getDeckConfig" -> withCol { getDeckConfigRaw(bytes) }
