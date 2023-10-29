@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+  ~  Copyright (c) 2023 Ashish Yadav <mailtoashish693@gmail.com>
+  ~
+  ~  This program is free software; you can redistribute it and/or modify it under
+  ~  the terms of the GNU General Public License as published by the Free Software
+  ~  Foundation; either version 3 of the License, or (at your option) any later
+  ~  version.
+  ~
+  ~  This program is distributed in the hope that it will be useful, but WITHOUT ANY
+  ~  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+  ~  PARTICULAR PURPOSE. See the GNU General Public License for more details.
+  ~
+  ~  You should have received a copy of the GNU General Public License along with
+  ~  this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/audioView"
+    android:orientation="vertical"
     tools:context="com.ichi2.audio.AudioRecordingController">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/audio_time_track"
@@ -43,7 +54,7 @@
                 android:layout_marginHorizontal="6dp"
                 android:layout_width="wrap_content"
                 app:iconSize="22dp"
-                app:backgroundTint="@color/material_blue_grey_200"
+                app:backgroundTint="@color/material_blue_500"
                 app:iconPadding="0dp"
                 android:layout_height="wrap_content" />
 
@@ -65,7 +76,7 @@
                 app:icon="@drawable/round_done_24"
                 android:background="@drawable/ripple_image_button"
                 android:layout_marginHorizontal="6dp"
-                app:backgroundTint="@color/material_blue_grey_200"
+                app:backgroundTint="@color/material_blue_500"
                 android:layout_width="wrap_content"
                 app:iconSize="22dp"
                 app:iconPadding="0dp"
@@ -73,6 +84,7 @@
 
         </LinearLayout>
 
-    </LinearLayout>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+</LinearLayout>

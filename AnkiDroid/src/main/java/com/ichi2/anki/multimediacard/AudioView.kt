@@ -43,7 +43,6 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
     protected var record: RecordButton? = null
     private var mAudioRecorder = AudioRecorder()
     private var mPlayer = AudioPlayer()
-    private var mOnRecordingFinishEventListener: OnRecordingFinishEventListener? = null
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
     var status = Status.IDLE
@@ -84,10 +83,6 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         this.gravity = Gravity.CENTER
         record = RecordButton(context)
         addView(record, LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT))
-    }
-
-    fun setOnRecordingFinishEventListener(listener: OnRecordingFinishEventListener?) {
-        mOnRecordingFinishEventListener = listener
     }
 
     fun notifyPlay() {
@@ -132,19 +127,12 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                 showThemedToast(mContext, gtxt(R.string.multimedia_editor_audio_view_recording_failed), true)
             }
             status = Status.IDLE
-            if (mOnRecordingFinishEventListener != null) {
-                mOnRecordingFinishEventListener!!.onRecordingFinish(this@AudioView)
-            }
         }
         playPause!!.update()
         stop!!.update()
         if (record != null) {
             record!!.update()
         }
-    }
-
-    fun notifyReleaseRecorder() {
-        mAudioRecorder.release()
     }
 
     /** Stops playing and records  */
@@ -321,10 +309,6 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         }
     }
 
-    interface OnRecordingFinishEventListener {
-        fun onRecordingFinish(v: View)
-    }
-
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun setRecorder(recorder: AudioRecorder) {
         mAudioRecorder = recorder
@@ -360,8 +344,7 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
         }
 
         fun generateTempAudioFile(context: Context): String? {
-            val tempAudioPath: String?
-            tempAudioPath = try {
+            val tempAudioPath: String? = try {
                 val storingDirectory = context.cacheDir
                 File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
             } catch (e: IOException) {

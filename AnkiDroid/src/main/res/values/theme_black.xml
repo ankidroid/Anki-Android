@@ -136,6 +136,8 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_black_primary</item>
+
+        <item name="rippleColor">@color/material_blue_grey_200</item>
     </style>
 
     <!-- Filter Sheet Style -->

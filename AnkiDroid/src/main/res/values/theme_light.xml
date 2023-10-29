@@ -183,6 +183,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="colorSurface">@color/white</item>
 
         <item name="sliderLabelTextColor">@color/white</item>
+
+        <item name="rippleColor">@color/material_blue_grey_200</item>
     </style>
 
     <!-- Filter Sheet Style -->

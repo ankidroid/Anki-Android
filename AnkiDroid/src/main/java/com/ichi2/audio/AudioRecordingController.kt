@@ -18,46 +18,48 @@ package com.ichi2.audio
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.media.MediaRecorder
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.content.res.Configuration
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.OrientationEventListener
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anki.R
+import com.ichi2.anki.multimediacard.AudioRecorder
 import com.ichi2.anki.multimediacard.fields.FieldControllerBase
 import com.ichi2.anki.multimediacard.fields.IFieldController
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.UiUtil
+import kotlinx.serialization.json.Json.Default.configuration
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
-class AudioRecordingController : FieldControllerBase(), IFieldController, AudioTimer.OnTimerTickListener {
-    private lateinit var audioRecorder: MediaRecorder
+class AudioRecordingController :
+    FieldControllerBase(),
+    IFieldController,
+    AudioTimer.OnTimerTickListener {
+    private var audioRecorder = AudioRecorder()
     private var tempAudioPath: String? = null
-    private var onRecordingInitialized: Runnable? = null
     private lateinit var recordButton: MaterialButton
     private lateinit var saveButton: MaterialButton
+    private lateinit var audioTimeView: TextView
+    private lateinit var audioTimer: AudioTimer
+    private lateinit var audioWaveform: AudioWaveform
+    private lateinit var context: Context
     private var isRecording = false
     private var isPaused = false
     private var isCleared = false
-    private lateinit var audioTimeView: TextView
-    private lateinit var audioTimer: AudioTimer
-    private lateinit var vibrator: Vibrator
-    private lateinit var audioWaveform: AudioWaveform
-    private lateinit var context: Context
     private lateinit var cancelAudioRecordingButton: MaterialButton
 
-    @Suppress("DEPRECATION")
+    // wave layout takes up a lot of screen in HORIZONTAL layout so we need to hide it
+    private var orientationEventListener: OrientationEventListener? = null
+
     override fun createUI(context: Context, layout: LinearLayout) {
         val origAudioPath = this.mField.audioPath
         var bExist = false
@@ -73,7 +75,8 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
         }
 
         val layoutInflater = LayoutInflater.from(context)
-        val inflatedLayout = layoutInflater.inflate(R.layout.activity_audio_recording, null) as CoordinatorLayout
+        val inflatedLayout =
+            layoutInflater.inflate(R.layout.activity_audio_recording, null) as LinearLayout
         layout.addView(inflatedLayout, LinearLayout.LayoutParams.MATCH_PARENT)
 
         context.apply {
@@ -109,9 +112,10 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
         audioWaveform = layout.findViewById(R.id.audio_waveform_view)
         saveButton = layout.findViewById(R.id.action_save_recording)
         cancelAudioRecordingButton = layout.findViewById(R.id.action_cancel_recording)
+        cancelAudioRecordingButton.isEnabled = false
+        saveButton.isEnabled = false
 
         audioTimer = AudioTimer(this)
-        vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         recordButton.setOnClickListener {
             when {
                 isPaused -> resumeRecording()
@@ -119,13 +123,12 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
                 isCleared -> startRecording(context, tempAudioPath!!)
                 else -> startRecording(context, tempAudioPath!!)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE))
-            }
+            CompatHelper.compat.vibrate(context, 50)
         }
 
         saveButton.setOnClickListener {
-            stopRecording()
+            stopAndSaveRecording()
+            recordButton.setIconResource(R.drawable.ic_record)
             (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
         }
 
@@ -133,6 +136,20 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
             isCleared = true
             clearRecording()
         }
+
+        orientationEventListener = object : OrientationEventListener(context) {
+            override fun onOrientationChanged(orientation: Int) {
+                when (context.resources.configuration.orientation) {
+                    Configuration.ORIENTATION_LANDSCAPE -> {
+                        audioWaveform.visibility = View.GONE
+                    }
+                    Configuration.ORIENTATION_PORTRAIT -> {
+                        audioWaveform.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+        orientationEventListener?.enable()
     }
 
     private fun generateTempAudioFile(context: Context): String? {
@@ -150,59 +167,15 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
         // do nothing
     }
 
-    // ***************** audio recorder starts ***************** //
-    private fun initMediaRecorder(context: Context, audioPath: String): MediaRecorder {
-        val mr = CompatHelper.compat.getMediaRecorder(context)
-        mr.setAudioSource(MediaRecorder.AudioSource.MIC)
-        mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-        onRecordingInitialized()
-        mr.setOutputFile(audioPath) // audioPath could change
-        return mr
-    }
-
-    private fun onRecordingInitialized() {
-        if (onRecordingInitialized != null) {
-            onRecordingInitialized!!.run()
-        }
-    }
-
     private fun startRecording(context: Context, audioPath: String) {
-        audioRecorder = CompatHelper.compat.getMediaRecorder(context)
-        var highSampling = false
-        try {
-            // try high quality AAC @ 44.1kHz / 192kbps first
-            // can throw IllegalArgumentException if codec isn't supported
-            audioRecorder = initMediaRecorder(context, audioPath)
-            audioRecorder.apply {
-                setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-                setAudioChannels(2)
-                setAudioSamplingRate(44100)
-                setAudioEncodingBitRate(192000)
-                // this can also throw IOException if output path is invalid
-                prepare()
-                start()
-                highSampling = true
-            }
-        } catch (e: Exception) {
-            Timber.w(e)
-            // in all cases, fall back to low sampling
-        }
-        if (!highSampling) {
-            // if we are here, either the codec didn't work or output file was invalid
-            // fall back on default
-            audioRecorder = initMediaRecorder(context, audioPath)
-            audioRecorder.apply {
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-                prepare()
-                start()
-            }
-        }
-
+        audioRecorder.startRecording(context, audioPath)
         recordButton.setIconResource(R.drawable.round_pause_24)
         isRecording = true
+        saveButton.isEnabled = true
         isPaused = false
         isCleared = false
         audioTimer.start()
+        cancelAudioRecordingButton.isEnabled = true
     }
 
     private fun saveRecording() {
@@ -210,77 +183,63 @@ class AudioRecordingController : FieldControllerBase(), IFieldController, AudioT
         mField.hasTemporaryMedia = true
     }
 
-    private fun stopRecording() {
+    private fun stopAndSaveRecording() {
         audioTimer.stop()
-        audioRecorder.stop()
+        audioRecorder.stopRecording()
         isPaused = false
         isRecording = false
+        saveButton.isEnabled = false
+        cancelAudioRecordingButton.isEnabled = false
         audioTimeView.text = context.resources.getString(R.string.audio_text)
         audioWaveform.clear()
         saveRecording()
     }
 
-    fun release() {
-        if (this::audioRecorder.isInitialized) {
-            audioRecorder.release()
-        }
-    }
-
     private fun pauseRecorder() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            audioRecorder.pause()
-            isPaused = true
-        } else {
-            audioRecorder.stop()
-            isPaused = true
-        }
+        audioRecorder.pause()
+        isPaused = true
         saveRecording()
         recordButton.setIconResource(R.drawable.ic_record)
         audioTimer.pause()
     }
 
     private fun resumeRecording() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            audioRecorder.resume()
-            isPaused = false
-        } else {
-            audioRecorder.start()
-            isPaused = false
-        }
+        audioRecorder.resume()
+        isPaused = false
         audioTimer.start()
         recordButton.setIconResource(R.drawable.round_pause_24)
     }
-    // ***************** audio recorder ends ***************** //
 
     private fun clearRecording() {
-        if (this::audioRecorder.isInitialized) {
-            audioTimer.stop()
-            audioRecorder.stop()
-        }
+        audioTimer.stop()
+        recordButton.setIconResource(R.drawable.ic_record)
+        cancelAudioRecordingButton.isEnabled = false
+        audioRecorder.stopRecording()
         tempAudioPath = null
         tempAudioPath = generateTempAudioFile(context)
         audioTimeView.text = context.resources.getString(R.string.audio_text)
         audioWaveform.clear()
         isPaused = false
         isRecording = false
+        saveButton.isEnabled = false
     }
 
     override fun onDone() {
-        saveRecording()
+        // do nothing
     }
 
     override fun onFocusLost() {
-        release()
+        audioRecorder.release()
     }
 
     override fun onDestroy() {
-        release()
+        audioRecorder.release()
     }
 
     override fun onTimerTick(duration: String) {
         audioTimeView.text = duration
         try {
-            val maxAmplitude = audioRecorder.maxAmplitude
+            val maxAmplitude = audioRecorder.maxAmplitude()
             audioWaveform.addAmplitude(maxAmplitude.toFloat())
         } catch (e: IllegalStateException) {
             Timber.d("Audio recorder interrupted")
