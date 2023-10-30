@@ -21,8 +21,7 @@ android {
 
     defaultConfig {
         minSdk = 16
-        //noinspection OldTargetApi
-        targetSdk = 32
+        targetSdk = 33
         buildConfigField(
             "String",
             "READ_WRITE_PERMISSION",
