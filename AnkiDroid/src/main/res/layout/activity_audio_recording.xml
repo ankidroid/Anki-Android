@@ -36,8 +36,17 @@
             android:id="@+id/audio_waveform_view"
             android:layout_width="match_parent"
             android:paddingVertical="6dp"
-            android:layout_marginVertical="4dp"
+            android:layout_marginVertical="2dp"
             android:layout_height="300px"/>
+
+    <SeekBar
+        android:id="@+id/audio_seekbar"
+        android:visibility="invisible"
+        android:progressTint="@color/material_blue_500"
+        android:thumbTint="@color/material_blue_500"
+        android:layout_marginVertical="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_marginVertical="8dp"
@@ -63,6 +72,19 @@
                 android:id="@+id/action_start_recording"
                 app:icon="@drawable/ic_record"
                 app:iconSize="38dp"
+                app:iconPadding="0dp"
+                android:background="@drawable/ripple_image_button"
+                android:layout_marginHorizontal="10dp"
+                app:backgroundTint="@color/flag_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:id="@+id/action_play_recording"
+                app:icon="@drawable/round_play_arrow_24"
+                app:iconSize="38dp"
+                android:visibility="gone"
                 app:iconPadding="0dp"
                 android:background="@drawable/ripple_image_button"
                 android:layout_marginHorizontal="10dp"

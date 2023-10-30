@@ -29,12 +29,12 @@ class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, att
     private var amplitudes = ArrayList<Float>()
     private var audioSpikes = ArrayList<RectF>()
 
-    private var radius = 6f
-    private var w = 9f
+    private var radius = 3f
+    private var w = 6f
 
     private var sw = 0f
     private var sh = 300f
-    private var d = 6f
+    private var d = 4f
     private var maxSpike = 0
 
     init {
