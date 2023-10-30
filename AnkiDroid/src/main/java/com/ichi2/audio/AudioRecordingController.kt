@@ -25,9 +25,9 @@ import android.view.OrientationEventListener
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ScrollView
-import android.widget.SeekBar
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.AudioRecorder
 import com.ichi2.anki.multimediacard.MediaPlayer
@@ -48,18 +48,23 @@ class AudioRecordingController :
     private var audioRecorder = AudioRecorder()
     private lateinit var mediaPlayer: MediaPlayer
     private var tempAudioPath: String? = null
+    private lateinit var recordAudioButtonLayout: LinearLayout
+    private lateinit var playAudioButtonLayout: LinearLayout
     private lateinit var recordButton: MaterialButton
     private lateinit var saveButton: MaterialButton
     private lateinit var audioTimeView: TextView
     private lateinit var audioTimer: AudioTimer
     private lateinit var playAudioButton: MaterialButton
+    private lateinit var forwardAudioButton: MaterialButton
+    private lateinit var rewindAudioButton: MaterialButton
     private lateinit var audioWaveform: AudioWaveform
-    private lateinit var audioSeekBar: SeekBar
+    private lateinit var audioProgressBar: LinearProgressIndicator
     private lateinit var context: Context
     private var isRecording = false
     private var isPaused = false
     private var isCleared = false
     private var isPlaying = false
+    private var jumpValue = 1000
     private lateinit var cancelAudioRecordingButton: MaterialButton
 
     // wave layout takes up a lot of screen in HORIZONTAL layout so we need to hide it
@@ -118,7 +123,11 @@ class AudioRecordingController :
         saveButton = layout.findViewById(R.id.action_save_recording)
         cancelAudioRecordingButton = layout.findViewById(R.id.action_cancel_recording)
         playAudioButton = layout.findViewById(R.id.action_play_recording)
-        audioSeekBar = layout.findViewById(R.id.audio_seekbar)
+        recordAudioButtonLayout = layout.findViewById(R.id.record_buttons_layout)
+        forwardAudioButton = layout.findViewById(R.id.action_forward)
+        rewindAudioButton = layout.findViewById(R.id.action_rewind)
+        playAudioButtonLayout = layout.findViewById(R.id.play_buttons_layout)
+        audioProgressBar = layout.findViewById(R.id.audio_progress_indicator)
         cancelAudioRecordingButton.isEnabled = false
         saveButton.isEnabled = false
         mediaPlayer = MediaPlayer()
@@ -135,15 +144,13 @@ class AudioRecordingController :
         }
 
         saveButton.setOnClickListener {
-            audioSeekBar.visibility = View.VISIBLE
             stopAndSaveRecording()
             recordButton.visibility = View.GONE
             playAudioButton.visibility = View.VISIBLE
+            playAudioButtonLayout.visibility = View.VISIBLE
+            recordAudioButtonLayout.visibility = View.GONE
             (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
-            mediaPlayer.apply {
-                setDataSource(tempAudioPath)
-                prepare()
-            }
+            prepareAudioPlayer()
         }
 
         playAudioButton.setOnClickListener {
@@ -170,12 +177,21 @@ class AudioRecordingController :
         orientationEventListener?.enable()
     }
 
+    private fun prepareAudioPlayer() {
+        mediaPlayer.apply {
+            setDataSource(tempAudioPath)
+            prepare()
+        }
+        audioTimeView.text = context.resources.getString(R.string.audio_text)
+    }
+
     private fun playPausePlayer() {
-        audioSeekBar.max = mediaPlayer.duration
+        val totalDuration = mediaPlayer.duration
+        audioProgressBar.max = totalDuration
         if (!mediaPlayer.isPlaying) {
-            audioTimer.start()
             isPlaying = true
             mediaPlayer.start()
+            audioTimer.start()
             playAudioButton.setIconResource(R.drawable.round_pause_24)
         } else {
             audioTimer.stop()
@@ -183,10 +199,21 @@ class AudioRecordingController :
             mediaPlayer.pause()
             playAudioButton.setIconResource(R.drawable.round_play_arrow_24)
         }
+        rewindAudioButton.setOnClickListener {
+            mediaPlayer.seekTo(mediaPlayer.currentPosition - jumpValue)
+            audioProgressBar.progress -= jumpValue
+            mediaPlayer.currentPosition
+            audioTimer.start(mediaPlayer.currentPosition.toLong())
+        }
+        forwardAudioButton.setOnClickListener {
+            audioTimer.start(mediaPlayer.currentPosition.toLong())
+            mediaPlayer.seekTo(mediaPlayer.currentPosition + jumpValue)
+            audioProgressBar.progress += jumpValue
+        }
 
         mediaPlayer.setOnCompletionListener {
             audioTimer.stop()
-            audioSeekBar.progress = 0
+            audioProgressBar.progress = 0
             playAudioButton.setIconResource(R.drawable.round_play_arrow_24)
             audioTimeView.text = context.resources.getString(R.string.audio_text)
         }
@@ -279,7 +306,9 @@ class AudioRecordingController :
     override fun onTimerTick(duration: String) {
         audioTimeView.text = duration
         if (isPlaying) {
-            audioSeekBar.progress = mediaPlayer.currentPosition
+            audioProgressBar.progress = mediaPlayer.currentPosition
+        } else {
+            audioProgressBar.progress = 0
         }
         try {
             val maxAmplitude = audioRecorder.maxAmplitude() / 10

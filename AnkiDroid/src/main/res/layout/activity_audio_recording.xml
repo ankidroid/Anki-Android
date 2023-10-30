@@ -32,21 +32,18 @@
             android:text="@string/audio_text"
             tools:ignore="HardcodedText" />
 
+    <LinearLayout
+        android:id="@+id/record_buttons_layout"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
         <com.ichi2.audio.AudioWaveform
             android:id="@+id/audio_waveform_view"
             android:layout_width="match_parent"
             android:paddingVertical="6dp"
-            android:layout_marginVertical="2dp"
+            android:layout_marginVertical="6dp"
             android:layout_height="300px"/>
-
-    <SeekBar
-        android:id="@+id/audio_seekbar"
-        android:visibility="invisible"
-        android:progressTint="@color/material_blue_500"
-        android:thumbTint="@color/material_blue_500"
-        android:layout_marginVertical="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:layout_marginVertical="8dp"
@@ -81,19 +78,6 @@
 
             <com.google.android.material.button.MaterialButton
                 style="@style/Widget.Material3.Button.IconButton.Filled"
-                android:id="@+id/action_play_recording"
-                app:icon="@drawable/round_play_arrow_24"
-                app:iconSize="38dp"
-                android:visibility="gone"
-                app:iconPadding="0dp"
-                android:background="@drawable/ripple_image_button"
-                android:layout_marginHorizontal="10dp"
-                app:backgroundTint="@color/flag_red"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.Material3.Button.IconButton.Filled"
                 android:id="@+id/action_save_recording"
                 app:icon="@drawable/round_done_24"
                 android:background="@drawable/ripple_image_button"
@@ -106,7 +90,82 @@
 
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/play_buttons_layout"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="match_parent"
+            android:src="@drawable/round_audio_file_24"
+            android:tint="@color/material_blue_500"
+            android:minHeight="300px"
+            android:paddingVertical="6dp"
+            android:layout_marginVertical="2dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:layout_width="match_parent"
+            android:progress="0"
+            android:id="@+id/audio_progress_indicator"
+            android:layout_marginHorizontal="12dp"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginVertical="8dp"
+            android:gravity="center"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:id="@+id/action_rewind"
+                app:icon="@drawable/baseline_replay_5_24"
+                android:background="@drawable/ripple_image_button"
+                android:layout_marginHorizontal="6dp"
+                android:layout_width="wrap_content"
+                app:iconSize="22dp"
+                app:backgroundTint="@color/material_blue_500"
+                app:iconPadding="0dp"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:id="@+id/action_play_recording"
+                app:icon="@drawable/round_play_arrow_24"
+                app:iconSize="38dp"
+                app:iconPadding="0dp"
+                android:background="@drawable/ripple_image_button"
+                android:layout_marginHorizontal="10dp"
+                app:backgroundTint="@color/flag_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:id="@+id/action_forward"
+                app:icon="@drawable/baseline_forward_5_24"
+                android:background="@drawable/ripple_image_button"
+                android:layout_marginHorizontal="6dp"
+                android:layout_width="wrap_content"
+                app:iconSize="22dp"
+                app:backgroundTint="@color/material_blue_500"
+                app:iconPadding="0dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
+            app:dividerThickness="2dp"
             android:layout_height="wrap_content"/>
 </LinearLayout>
