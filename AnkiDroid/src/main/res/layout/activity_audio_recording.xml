@@ -100,6 +100,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/audio_file_imageview"
             android:layout_width="match_parent"
             android:src="@drawable/round_audio_file_24"
             android:tint="@color/material_blue_500"

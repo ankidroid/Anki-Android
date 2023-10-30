@@ -27,6 +27,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.R
 import com.ichi2.anki.multimediacard.AudioRecorder
@@ -40,7 +41,8 @@ import com.ichi2.utils.UiUtil
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
-
+// TODO : stop audio time view flickering
+// TODO: forwards & rewind have 1000 jump time and UI shows 5 fix the UI
 class AudioRecordingController :
     FieldControllerBase(),
     IFieldController,
@@ -60,6 +62,7 @@ class AudioRecordingController :
     private lateinit var audioWaveform: AudioWaveform
     private lateinit var audioProgressBar: LinearProgressIndicator
     private lateinit var context: Context
+    private lateinit var audioFileView: ShapeableImageView
     private var isRecording = false
     private var isPaused = false
     private var isCleared = false
@@ -128,6 +131,7 @@ class AudioRecordingController :
         rewindAudioButton = layout.findViewById(R.id.action_rewind)
         playAudioButtonLayout = layout.findViewById(R.id.play_buttons_layout)
         audioProgressBar = layout.findViewById(R.id.audio_progress_indicator)
+        audioFileView = layout.findViewById(R.id.audio_file_imageview)
         cancelAudioRecordingButton.isEnabled = false
         saveButton.isEnabled = false
         mediaPlayer = MediaPlayer()
@@ -166,9 +170,11 @@ class AudioRecordingController :
             override fun onOrientationChanged(orientation: Int) {
                 when (context.resources.configuration.orientation) {
                     Configuration.ORIENTATION_LANDSCAPE -> {
+                        audioFileView.visibility = View.GONE
                         audioWaveform.visibility = View.GONE
                     }
                     Configuration.ORIENTATION_PORTRAIT -> {
+                        audioFileView.visibility = View.VISIBLE
                         audioWaveform.visibility = View.VISIBLE
                     }
                 }
