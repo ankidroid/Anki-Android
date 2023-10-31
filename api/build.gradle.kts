@@ -15,13 +15,20 @@ android {
     namespace = "com.ichi2.anki.api"
     compileSdk = 34
 
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        targetSdk = 33
+    }
+    lint {
+        targetSdk = 33
+    }
+
     buildFeatures {
         buildConfig = true
     }
 
     defaultConfig {
         minSdk = 16
-        targetSdk = 33
         buildConfigField(
             "String",
             "READ_WRITE_PERMISSION",
