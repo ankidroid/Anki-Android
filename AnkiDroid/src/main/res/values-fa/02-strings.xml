@@ -100,8 +100,6 @@
         <item>ساخته شده</item>
         <item>زمان ویرایش یادداشت</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">اعمال</string>
     <string name="filter_by_flags">پرچم ها</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعیین محدودیت برای کارت جدید امروز</string>

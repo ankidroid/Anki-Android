@@ -100,8 +100,6 @@
         <item>Ясалган</item>
         <item>Язу үзгәртелеше</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
     <string name="filter_by_flags">Байраклар</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Бугенге кәрт лимитын үзгәртү</string>

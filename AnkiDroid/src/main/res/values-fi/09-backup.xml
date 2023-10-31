@@ -44,26 +44,26 @@
 ~ this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="backup_deck_no_storage_left">Backup not saved. Not enough space left on your storage. Lower the backup depth or remove some other files.</string>
-    <string name="storage_warning">Less than %d MB space on your storage left.\nFree some space to avoid data loss.</string>
+    <string name="backup_deck_no_storage_left">Varmuuskopiota ei tallennettu. Tallennustilaa ei ole riittävästi. Pienennä varmuuskopioinnin laajuutta tai vapauta tilaa poistamalla muita tiedostoja.</string>
+    <string name="storage_warning">Tallennustilaa on jäljellä alle %d Mt.\nVapauta tilaa, jotta vältät tietojen menettämisen.</string>
     <string name="backup_restore">Palauta varmuuskopiosta</string>
     <string name="backup_new_collection">Uusi kokoelma</string>
     <string name="backup_del_collection">Poista kokoelma ja luo uusi</string>
     <string name="backup_del_collection_question">Haluatko varmasti poistaa kokoelman ja luoda uuden?
 Tämä nollaa edistymisesi ja poistaa kaikki kortit!</string>
     <string name="backup_full_sync_from_server">Täydellinen synkronointi palvelimelta</string>
-    <string name="backup_full_sync_from_server_question">Haluatko todella korvata kokoelmasi AnkiWebistä? Kaikki edellisen synkronoinnin jälkeen tapahtunyt opiskelu ja lisätyt tiedot unohdetaan!</string>
-    <string name="error_handling_title">Virheidenkäsittely</string>
+    <string name="backup_full_sync_from_server_question">Haluatko todella korvata kokoelmasi AnkiWebin kokoelmalla? Kaikki edellisen synkronoinnin jälkeen tapahtunyt opiskelu ja lisätyt tiedot unohdetaan!</string>
+    <string name="error_handling_title">Virheiden käsittely</string>
     <string name="error_handling_options" comment="In a warning message, the label of the suggested action that the user should take">Asetukset</string>
     <string name="backup_retry_opening">Yritä uudelleen avaamista</string>
     <string name="backup_error_menu_repair">Korjaa tietokanta</string>
     <!-- Collection used to be called deck. Name is kept for consistency with translation software -->
-    <string name="backup_repair_deck_progress">Korjataan tietokantaa.\nOdota hetki...</string>
+    <string name="backup_repair_deck_progress">Korjataan tietokantaa&#8230;</string>
     <string name="backup_invalid_file_error">Valittu varmuuskopio oli viallinen</string>
-    <string name="backup_restore_select_title">Valitse varmuuskopio palauttaaksesi</string>
+    <string name="backup_restore_select_title">Valitse palautettava varmuuskopio</string>
     <string name="backup_restore_no_backups">Ei varmuuskopioita käytettävissä tälle kokoelmalle tällä laitteella. Jos sinulla on varmuuskopioita pöytätietokoneella, kopioi ne manuaalisesti AnkiDroid-kansioon</string>
     <string name="open_collection_failed_title">Kokoelman avaus epäonnistui</string>
-    <string name="corrupt_db_message">Kokoelmasi on vioittunut.\n\n Valitse \"valinnat\" kokoelman palauttamiseksi varmuuskopiosta. Jos tämä ei toimi, katso ohjeet kokoelman korjaamiseksi:\n%1$s</string>
+    <string name="corrupt_db_message">Kokoelmasi on vioittunut.\n\n Valitse \"asetukset\" palauttaaksesi kokoelman varmuuskopiosta. Jos tämä ei toimi, katso ohjeet kokoelman korjaamiseksi:\n%1$s</string>
     <string name="access_collection_failed_message">Kokoelman hakemisessa tapahtui virhe. Syynä voi olla harmiton bugi tai kokoelmassa on ongelma. \n\n Kokeile tarkistaa tietokanta tai palauttaa kokoelma varmuuskopiosta, \"valinnat\" nappulan avulla. Jos virheilmoitus toistuu, raportoi bugista:\n%1$s . Kiitos.</string>
     <string name="deck_repair_error">Kokoelman korjaus epäonnistui</string>
 </resources>

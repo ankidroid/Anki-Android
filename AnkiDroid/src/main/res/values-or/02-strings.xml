@@ -100,8 +100,6 @@
         <item>ତିଆରି କରାଯାଇଅଛି</item>
         <item>ନୋଟ୍ ସଂଶୋଧିତ</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">ପ୍ରୟୋଗ କର</string>
     <string name="filter_by_flags">ପତାକା</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ଆଜିର ନୂଆ ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>

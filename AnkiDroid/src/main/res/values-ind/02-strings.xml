@@ -100,8 +100,6 @@
         <item>Dibuat</item>
         <item>Catatan diubah</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Terapkan</string>
     <string name="filter_by_flags">Bendera</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ubah batas kartu baru hari ini</string>

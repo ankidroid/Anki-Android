@@ -100,8 +100,6 @@
         <item>נוצר</item>
         <item>רשומה השתנתה</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">החל</string>
     <string name="filter_by_flags">דגלים</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">שינוי מגבלת קלפים חדשים להיום</string>

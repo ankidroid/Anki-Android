@@ -50,63 +50,63 @@
         <item quantity="other">%d korttia näytetään</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d muistiinpano näytetään</item>
+        <item quantity="other">%d muistiinpanoa näytetään</item>
     </plurals>
     <string name="card_browser_all_decks">Kaikki pakat</string>
-    <string name="card_browser_delete_card">Delete notes</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
+    <string name="card_browser_delete_card">Poista muistiinpanoja</string>
+    <string name="card_browser_suspend_card">Hyllytä kortteja</string>
     <string name="card_browser_change_deck">Vaihda pakkoja</string>
-    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-    <string name="card_browser_mark_card">Merkitse merkintä</string>
+    <string name="card_browser_unsuspend_card">Poista korttien hyllytyksiä</string>
+    <string name="card_browser_mark_card">Merkitse muistiinpanoja</string>
     <string name="card_browser_unmark_card">Poista merkinnät</string>
-    <string name="delete_card_title">Poista merkintä</string>
+    <string name="delete_card_title">Poistetaanko muistiinpano?</string>
     <string name="card_browser_show_marked">Suodata merkityt</string>
-    <string name="card_browser_show_suspended">Suodata jäädytetyt</string>
+    <string name="card_browser_show_suspended">Suodata hyllytetyt</string>
     <string name="card_browser_search_by_tag">Suodata kentän mukaan</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
-    <string name="card_browser_list_my_searches">Hakuni</string>
+    <string name="card_browser_search_by_flag">Suodata lipun mukaan</string>
+    <string name="card_browser_list_my_searches">Omat haut</string>
     <string name="card_browser_list_my_searches_save">Tallenna haku</string>
     <string name="card_browser_list_my_searches_title">Valitse tallennettu haku</string>
-    <string name="card_browser_list_my_searches_new_name">Nimi aktiiviselle haulle</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Et voi tallentaa hakua ilman nimeä</string>
+    <string name="card_browser_list_my_searches_new_name">Nimi nykyiselle haulle</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">Hakua ei voi tallentaa ilman nimeä.</string>
     <string name="card_browser_list_my_searches_new_search_error_dup">Nimi on jo olemassa</string>
-    <string name="card_browser_list_my_searches_remove_content">Poista ”%1$s”?</string>
-    <string name="card_browser_change_display_order">Muuta näytön järjestys</string>
-    <string name="card_browser_change_display_order_title">Valitse näytön järjestys</string>
+    <string name="card_browser_list_my_searches_remove_content">Poistetaanko ”%1$s”?</string>
+    <string name="card_browser_change_display_order">Muuta esitysjärjestystä</string>
+    <string name="card_browser_change_display_order_title">Valitse esitysjärjestys</string>
     <string name="card_details_tags">Tunnisteet</string>
     <string-array name="card_browser_order_labels">
         <item>Ei lajittelua (nopeampi)</item>
-        <item>By sort field</item>
+        <item>Lajittelukentän mukaan</item>
         <item>Luomisajan mukaan</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>Muistiinpanon muokkausajan mukaan</item>
+        <item>Kortin muokkausajan mukaan</item>
         <item>Eräpäivän mukaan</item>
-        <item>Aikaväleittäin</item>
-        <item>Helpotuksien mukaan</item>
+        <item>Kertausaikavälien mukaan</item>
+        <item>Helppouden mukaan</item>
         <item>Kertauksien mukaan</item>
-        <item>Unohduksien mukaan</item>
+        <item>Virheiden määrän mukaan</item>
     </string-array>
     <string name="card_browser_select_all">Valitse kaikki</string>
-    <string name="card_browser_select_none">Älä valitse mitään</string>
+    <string name="card_browser_select_none">Poista kaikki valinnat</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(uusi)</string>
     <string name="card_browser_due_filtered_card">(suodatettu)</string>
-    <string name="card_browser_interval_learning_card">(opiskelussa)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_interval_learning_card">(opittava)</string>
+    <string name="card_browser_no_cards_in_deck">Pakasta \"%s\" ei löytynyt kortteja</string>
+    <string name="card_browser_search_all_decks">Etsi kaikista pakoista</string>
+    <string name="card_browser_unknown_deck_name">Tuntematon</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">Katkaise sisältö</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">Vie kortti</item>
+        <item quantity="other">Vie kortteja</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">Vie muistiinpano</item>
+        <item quantity="other">Vie muistiinpanot</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d kortti poistettu</item>
+        <item quantity="other">%d korttia poistettu</item>
     </plurals>
     <!-- Card Info subscreen -->
 </resources>

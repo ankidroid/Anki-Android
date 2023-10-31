@@ -100,8 +100,6 @@
         <item>Created</item>
         <item>ترمیم شدہ نوٹ</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">درخواست دیں</string>
     <string name="filter_by_flags">جھنڈے</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modify today’s new card limit</string>

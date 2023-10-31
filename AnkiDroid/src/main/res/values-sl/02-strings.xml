@@ -100,8 +100,6 @@
         <item>Ustvarjeno</item>
         <item>Spremenjen zapisek</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Uporabi</string>
     <string name="filter_by_flags">Oznaka</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Povečaj omejitev novih kartic za danes</string>

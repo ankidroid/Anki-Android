@@ -100,8 +100,6 @@
         <item>സൃഷ്ടിച്ചു</item>
         <item>കുറിപ്പ് പരിഷ്‌ക്കരിച്ചു</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ഇന്നത്തെ പുതിയ കാർഡ് പരിധി പരിഷ്‌ക്കരിക്കുക</string>

@@ -100,8 +100,6 @@
         <item>Створено</item>
         <item>Запис змінено</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Застосувати</string>
     <string name="filter_by_flags">Прапори</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Змінити сьогоднішній ліміт нових карток</string>

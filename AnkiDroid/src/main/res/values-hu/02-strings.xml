@@ -100,8 +100,6 @@
         <item>Létrehozva</item>
         <item>A jegyzet módosítva lett</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Alkamaz</string>
     <string name="filter_by_flags">Zászlók</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Módosítsa a mai új kártyakorlátot</string>

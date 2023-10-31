@@ -100,8 +100,6 @@
         <item>बनाया गया</item>
         <item>नोट संशोधित किया गया</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">लागू करें</string>
     <string name="filter_by_flags">झंडे</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">आज की नई कार्ड सीमा को संशोधित करें</string>

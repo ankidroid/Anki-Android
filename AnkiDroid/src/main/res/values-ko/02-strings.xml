@@ -101,8 +101,6 @@
         <item>작성한 날짜</item>
         <item>노트 편집일</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">적용하기</string>
     <string name="filter_by_flags">플래그</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">오늘의 새로운 카드 학습량 늘리기</string>

@@ -45,10 +45,10 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Korttien määrä</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">Erääntyneet kortit</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid kortti erääntynyt</item>
-        <item quantity="other">%d Ankidroid korttia erääntynyt</item>
+        <item quantity="one">%d AnkiDroid-kortti erääntynyt</item>
+        <item quantity="other">%d AnkiDroid-korttia erääntynyt</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">Android pieni</string>
     <plurals name="widget_cards_due">
@@ -59,5 +59,5 @@
         <item quantity="one">%d minuutti jäljellä</item>
         <item quantity="other">%d minuuttia jäljellä</item>
     </plurals>
-    <string name="widget_add_note_button">Lisää uusi AnkiDroid merkintä</string>
+    <string name="widget_add_note_button">Lisää uusi AnkiDroid muistiinpano</string>
 </resources>

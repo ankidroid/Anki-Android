@@ -100,8 +100,6 @@
         <item>تاريخ الإنشاء</item>
         <item>تاريخ تعديل الملحوظة</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">تطبيق</string>
     <string name="filter_by_flags">أعلام</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">تعديل الحد اليومي للبطاقات الجديدة</string>
