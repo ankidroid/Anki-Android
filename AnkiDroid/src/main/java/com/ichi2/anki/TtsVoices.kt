@@ -26,6 +26,7 @@ import android.content.Context
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
 import com.ichi2.compat.CompatHelper
+import com.ichi2.libanki.TemplateManager
 import com.ichi2.libanki.TtsVoice
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -184,6 +185,32 @@ object TtsVoices {
                 }
             }
         }
+}
+
+/**
+ * `{{tts-voices:}}` A filter which lists all available TTS Voices for the current engine
+ */
+class TtsVoicesFieldFilter : TemplateManager.FieldFilter() {
+    // modified from libAnki: tts.py: on_tts_voices
+    override fun apply(
+        fieldText: String,
+        fieldName: String,
+        filterName: String,
+        ctx: TemplateManager.TemplateRenderContext
+    ): String {
+        if (filterName != "tts-voices") {
+            return fieldText
+        }
+        // This is not translated in Anki Desktop
+        return "<a href=\"tts-voices:\"/>Open TTS voices settings</a>"
+    }
+
+    companion object {
+        /** Enables the {{tts-voices}} filter */
+        fun ensureApplied() {
+            TemplateManager.fieldFilters.putIfAbsent("tts-voices", TtsVoicesFieldFilter())
+        }
+    }
 }
 
 /**
