@@ -454,10 +454,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        android.R.id.home -> {
-            onBackPressed()
-            true
-        }
         R.id.action_add_new_model -> {
             addFieldDialog()
             true
@@ -467,12 +463,6 @@ class ModelFieldEditor : AnkiActivity(), LocaleSelectionDialogHandler {
 
     private fun closeActivity() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
-    }
-
-    @Suppress("DEPRECATION", "Deprecated in API34+dependencies for predictive back feature")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        closeActivity()
     }
 
     fun handleAction(contextMenuAction: ModelEditorContextMenuAction) {
