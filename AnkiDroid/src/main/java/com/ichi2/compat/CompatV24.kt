@@ -17,7 +17,25 @@
 package com.ichi2.compat
 
 import android.annotation.TargetApi
+import android.icu.util.ULocale
+import com.ichi2.utils.isRobolectric
+import timber.log.Timber
+import java.util.Locale
 
 /** Implementation of [Compat] for SDK level 24 and higher. Check [Compat]'s for more detail.  */
 @TargetApi(24)
-open class CompatV24 : CompatV23(), Compat
+open class CompatV24 : CompatV23(), Compat {
+    override fun normalize(locale: Locale): Locale {
+        // ULocale isn't currently handled by Robolectric
+        if (isRobolectric) {
+            return super.normalize(locale)
+        }
+        return try {
+            val uLocale = ULocale(locale.language, locale.country, locale.variant)
+            Locale(uLocale.language, uLocale.country, uLocale.variant)
+        } catch (e: Exception) {
+            Timber.w("Failed to normalize locale %s", locale, e)
+            locale
+        }
+    }
+}
