@@ -18,35 +18,25 @@ package com.ichi2.anki
 
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
+import anki.collection.OpChangesOnly
 import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.buildSearchString
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
-import com.ichi2.libanki.importAnkiPackage
+import com.ichi2.libanki.importAnkiPackageRaw
 import com.ichi2.libanki.importCsvRaw
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import net.ankiweb.rsdroid.Translations
 
-fun AnkiActivity.importApkgs(apkgPaths: List<String>) {
-    launchCatchingTask {
-        for (apkgPath in apkgPaths) {
-            val report = withProgress(
-                extractProgress = {
-                    if (progress.hasImporting()) {
-                        text = progress.importing
-                    }
-                }
-            ) {
-                undoableOp {
-                    importAnkiPackage(apkgPath)
-                }
-            }
-            showSimpleMessageDialog(summarizeReport(getColUnsafe.tr, report))
-        }
+suspend fun importJsonFileRaw(input: ByteArray): ByteArray {
+    return withContext(Dispatchers.Main) {
+        val output = withCol { this.importAnkiPackageRaw(input) }
+        val changes = OpChangesOnly.parseFrom(output)
+        undoableOp { changes }
+        output
     }
 }
 
@@ -78,25 +68,6 @@ suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
     }
     startActivity(starterIntent)
     return input
-}
-
-private fun summarizeReport(tr: Translations, output: ImportResponse): String {
-    val log = output.log
-    val total = log.conflictingCount + log.updatedCount + log.newCount + log.duplicateCount
-    val msgs = mutableListOf(tr.importingNotesFoundInFile(total))
-    if (log.conflictingCount > 0) {
-        msgs.add(tr.importingNotesThatCouldNotBeImported(log.conflictingCount))
-    }
-    if (log.updatedCount > 0) {
-        msgs.add(tr.importingNotesUpdatedAsFileHadNewer(log.updatedCount))
-    }
-    if (log.newCount > 0) {
-        msgs.add(tr.importingNotesAddedFromFile(log.newCount))
-    }
-    if (log.duplicateCount > 0) {
-        msgs.add(tr.importingNotesSkippedAsTheyreAlreadyIn(log.duplicateCount))
-    }
-    return msgs.joinToString("\n")
 }
 
 suspend fun AnkiActivity.exportApkg(

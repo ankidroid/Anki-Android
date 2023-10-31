@@ -17,8 +17,6 @@
 package com.ichi2.libanki
 
 import anki.import_export.ExportLimit
-import anki.import_export.ImportResponse
-import anki.import_export.importAnkiPackageOptions
 import anki.search.SearchNode
 import net.ankiweb.rsdroid.Backend
 
@@ -93,11 +91,8 @@ fun Collection.exportCollectionPackage(
     reopen(afterFullSync = false)
 }
 
-/**
- * Import an .apkg file into the current collection.
- */
-fun Collection.importAnkiPackage(path: String): ImportResponse {
-    return backend.importAnkiPackage(packagePath = path, importAnkiPackageOptions { withScheduling = true })
+fun Collection.importAnkiPackageRaw(input: ByteArray): ByteArray {
+    return backend.importAnkiPackageRaw(input)
 }
 
 /**

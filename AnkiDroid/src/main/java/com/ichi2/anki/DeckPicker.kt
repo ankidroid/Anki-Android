@@ -86,6 +86,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.notetype.ManageNotetypes
+import com.ichi2.anki.pages.AnkiPackageImporterFragment
 import com.ichi2.anki.preferences.AdvancedSettingsFragment
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
@@ -1589,17 +1590,15 @@ open class DeckPicker :
     }
 
     // Callback to import a file -- adding it to existing collection
-    @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file")
-    override fun importAdd(importPath: List<String>) {
+    override fun importAdd(importPath: String) {
         Timber.d("importAdd() for file %s", importPath)
-        importApkgs(importPath)
+        startActivity(AnkiPackageImporterFragment.getIntent(this, importPath))
     }
 
     // Callback to import a file -- replacing the existing collection
-    @NeedsTest("Test 2 successful files & test 1 failure & 1 successful file")
-    override fun importReplace(importPath: List<String>) {
-        // multiple colpkg files is nonsensical
-        importColpkg(importPath[0])
+    override fun importReplace(importPath: String) {
+        Timber.d("importReplace() for file %s", importPath)
+        importColpkg(importPath)
     }
 
     /**
