@@ -4,11 +4,11 @@ on:
     workflow_dispatch:
         inputs:
             startDate:
-                description: "earliest date to consider- YYYY-MM-DD, example '2022-06-01'"
+                description: "earliest date to consider- YYYY-MM-DD, example '2023-06-01'"
                 required: true
                 type: string
             endDate:
-                description: "oldest date to consider. YYYY-MM-DD, example '2022-06-30'"
+                description: "oldest date to consider. YYYY-MM-DD, example '2023-06-30'"
                 required: true
                 type: string
     # and in the future schedule...
@@ -52,8 +52,6 @@ jobs:
                       https://github.com/ankidroid/Anki-Android/wiki/OpenCollective-Payment-Process#how-to-get-paid
 
                       We only post one comment per person per month to avoid spamming you, regardless of the number of PRs merged, but this note applies to all PRs merged for this month
-
-                      Please note that GSoC contributions are okay for this process. Our philosophy is that our users have donated to AnkiDroid for all contributions. The only PRs that will not go through the OpenCollective process are ones directly related to am accepted GSoC project from a selected participant, since those receive a stipend from GSoC itself.
 
                       Please understand that our monthly budget is never guaranteed to cover all claims - the cap on payments-per-person may be lower, but we try to make our process as fair and transparent as possible, we just need your understanding.
 
