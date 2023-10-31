@@ -92,7 +92,8 @@ def fileFilter = [
 ]
 
 // Our merge report task
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', 'connectedPlayDebugAndroidTest']) {
+tasks.register('jacocoTestReport', JacocoReport) {
+    dependsOn('testPlayDebugUnitTest', 'connectedPlayDebugAndroidTest')
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -116,7 +117,8 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', '
 }
 
 // A unit-test only report task
-task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest']) {
+tasks.register('jacocoUnitTestReport', JacocoReport) {
+    dependsOn['testPlayDebugUnitTest']
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -140,7 +142,8 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest
 }
 
 // A connected android tests only report task
-task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedPlayDebugAndroidTest']) {
+tasks.register('jacocoAndroidTestReport', JacocoReport) {
+    dependsOn['connectedPlayDebugAndroidTest']
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {

@@ -254,7 +254,8 @@ amazon {
 }
 
 // Install Git pre-commit hook for Ktlint
-task installGitHook(type: Copy) {
+def preBuild = tasks.named('preBuild');
+tasks.register('installGitHook', Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
     into { new File(rootProject.rootDir, '.git/hooks') }
     fileMode 0755
