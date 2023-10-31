@@ -26,6 +26,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -198,12 +199,20 @@ class AudioRecordingController :
             isPlaying = true
             mediaPlayer.start()
             audioTimer.start()
-            playAudioButton.setIconResource(R.drawable.round_pause_24)
+            playAudioButton.apply {
+                setIconResource(R.drawable.round_pause_24)
+                iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
+            }
         } else {
             audioTimer.stop()
             isPlaying = false
             mediaPlayer.pause()
-            playAudioButton.setIconResource(R.drawable.round_play_arrow_24)
+            playAudioButton.apply {
+                setIconResource(R.drawable.round_play_arrow_24)
+                iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
+            }
         }
         rewindAudioButton.setOnClickListener {
             mediaPlayer.seekTo(mediaPlayer.currentPosition - jumpValue)
@@ -220,7 +229,11 @@ class AudioRecordingController :
         mediaPlayer.setOnCompletionListener {
             audioTimer.stop()
             audioProgressBar.progress = 0
-            playAudioButton.setIconResource(R.drawable.round_play_arrow_24)
+            playAudioButton.apply {
+                iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
+                strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
+                setIconResource(R.drawable.round_play_arrow_24)
+            }
             audioTimeView.text = context.resources.getString(R.string.audio_text)
         }
     }
@@ -242,7 +255,11 @@ class AudioRecordingController :
 
     private fun startRecording(context: Context, audioPath: String) {
         audioRecorder.startRecording(context, audioPath)
-        recordButton.setIconResource(R.drawable.round_pause_24)
+        recordButton.apply {
+            iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
+            strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
+            setIconResource(R.drawable.round_pause_24)
+        }
         isRecording = true
         saveButton.isEnabled = true
         isPaused = false
@@ -285,7 +302,11 @@ class AudioRecordingController :
 
     private fun clearRecording() {
         audioTimer.stop()
-        recordButton.setIconResource(R.drawable.ic_record)
+        recordButton.apply {
+            iconTint = ContextCompat.getColorStateList(context, R.color.flag_red)
+            strokeColor = ContextCompat.getColorStateList(context, R.color.flag_red)
+            setIconResource(R.drawable.ic_record)
+        }
         cancelAudioRecordingButton.isEnabled = false
         audioRecorder.stopRecording()
         tempAudioPath = null

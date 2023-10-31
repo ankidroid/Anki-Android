@@ -78,8 +78,6 @@
 
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/white</item>
-
-        <item name="rippleColor">@color/material_blue_grey_200</item>
     </style>
 
     <!-- Filter Sheet Style -->
