@@ -156,7 +156,7 @@ android {
      * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
      * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
      */
-    flavorDimensions "appStore"
+    flavorDimensions += ("appStore")
     productFlavors {
         play {
             dimension "appStore"
