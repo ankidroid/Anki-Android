@@ -29,8 +29,9 @@ def robolectricAndroidSdkVersions = [
         [androidVersion: "10", frameworkSdkBuildVersion:  "5803371"],
         [androidVersion: "11", frameworkSdkBuildVersion:  "6757853"],
 //        [androidVersion: "12", frameworkSdkBuildVersion:  "7732740"],
-        [androidVersion: "12.1", frameworkSdkBuildVersion:  "8229987"],
+//        [androidVersion: "12.1", frameworkSdkBuildVersion:  "8229987"],
         [androidVersion: "13", frameworkSdkBuildVersion:  "9030017"],
+        [androidVersion: "14", frameworkSdkBuildVersion: "10818077"],
 ]
 
 // Base, public task - will be displayed in ./gradlew robolectricDownloader:tasks

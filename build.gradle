@@ -4,7 +4,7 @@ import org.gradle.internal.jvm.Jvm
 buildscript {
     // The version for the Kotlin plugin and dependencies
     // If changing this, make sure to update org.jetbrains.kotlin.plugin.serialization version too
-    ext.kotlin_version = '1.9.10'
+    ext.kotlin_version = '1.9.20'
     ext.lint_version = '31.1.1'
     ext.acra_version = '5.11.3'
     ext.ankidroid_backend_version = '0.1.26-anki23.10beta'
@@ -15,7 +15,7 @@ buildscript {
     ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
     ext.androidx_test_junit_version = '1.1.5'
-    ext.robolectric_version = '4.10.3'
+    ext.robolectric_version = '4.11'
     ext.android_gradle_plugin = "8.2.0-rc01"
     ext.dokka_version = "1.9.10" // not the same with kotlin version!
 
