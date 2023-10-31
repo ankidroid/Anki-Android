@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">ഇന്ന് അവസാന തീയതി:</string>
     <string name="studyoptions_new_total">ആകെ പുതിയ കാർഡുകൾ:</string>
     <string name="studyoptions_total_cards">ആകെ കാർഡുകൾ:</string>
-    <string name="studyoptions_eta">കണക്കാക്കിയ സമയം (മിനിറ്റ്):</string>
     <string name="studyoptions_start">പഠനം</string>
     <!-- DeckPicker.kt -->
     <string name="expand">വികസിപ്പിക്കുക</string>
     <string name="collapse">ചുരുക്കുക</string>
     <string name="study_more">കൂടുതൽ പഠിക്കുക</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d കാർഡ് നൽകേണ്ടതാണ് (%2$s)</item>
-        <item quantity="other">അടയ്‌ക്കേണ്ട %1$d കാർഡുകൾ (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
         <item quantity="other">%d മിനിറ്റ് ശേഷിക്കുന്നു</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">തുടരാൻ Ankidroid  ‘സംഭരണം’ അനുമതി നൽകുക</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d മിനുട്ട്</string>
-    <string name="time_quantity_hours_minutes">%1$d m. %2$d s</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d  %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
-    <string name="time_quantity_years">%.1f yr</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">ഫിൽട്ടർ ചെയ്ത ഡെക്ക് പുനർനിർമ്മിക്കുന്നു&#8230;</string>
     <string name="rebuild_cram_label">പുനർനിർമിക്കുക</string>
     <string name="empty_cram_label">ശൂന്യമാണ്</string>

@@ -55,18 +55,11 @@
     <string name="studyoptions_due_today">Dnes na preskúšanie:</string>
     <string name="studyoptions_new_total">Celkový počet nových kartičiek:</string>
     <string name="studyoptions_total_cards">Celkový počet kartičiek:</string>
-    <string name="studyoptions_eta">Odhadovaný čas (min):</string>
     <string name="studyoptions_start">Študovať teraz</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Rozbaliť</string>
     <string name="collapse">Zbaliť</string>
     <string name="study_more">Študovať viac</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d kartička na preskúšanie (%2$s)</item>
-        <item quantity="few">%1$d kartičky na preskúšanie (%2$s)</item>
-        <item quantity="many">%1$d kartičiek na preskúšanie (%2$s)</item>
-        <item quantity="other">%1$d kartičiek na preskúšanie (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">zostáva %d minúta</item>
         <item quantity="few">zostávajú %d minúty</item>
@@ -139,22 +132,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Pre pokračovanie, prosím, poskytnite Ankidroid povolenie na ukladanie dát</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mes</string>
-    <string name="time_quantity_years">%.1f r</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Obnovujem filtrovaný balíček...</string>
     <string name="rebuild_cram_label">Znovu zostaviť</string>
     <string name="empty_cram_label">Vyprázdniť</string>

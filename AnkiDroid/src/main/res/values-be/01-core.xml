@@ -55,18 +55,11 @@
     <string name="studyoptions_due_today">На сёння:</string>
     <string name="studyoptions_new_total">Усяго новых картак:</string>
     <string name="studyoptions_total_cards">Усяго картак:</string>
-    <string name="studyoptions_eta">Засталося часу (хвілін):</string>
     <string name="studyoptions_start">Вучыць</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Разгарнуць</string>
     <string name="collapse">Згарнуць</string>
     <string name="study_more">Вучыць яшчэ</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d картка для прагляду (%2$s)</item>
-        <item quantity="few">%1$d карткі для прагляду</item>
-        <item quantity="many">%1$d картак для прагляду (%2$s)</item>
-        <item quantity="other">%1$d картак для прагляду (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Засталася %d хвіліна</item>
         <item quantity="few">Засталося %d хвіліны</item>
@@ -139,22 +132,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Каб працягнуць, калі ласка, дазвольце AnkiDroid карыстацца сховішчам.</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d сек</string>
-    <string name="time_quantity_minutes">%d хв</string>
-    <string name="time_quantity_hours_minutes">%1$d гадз %2$d хв</string>
-    <string name="time_quantity_hours">%d гадз</string>
-    <string name="time_quantity_days">%d дз</string>
-    <string name="time_quantity_days_hours">%1$d дз %2$d гадз</string>
-    <string name="time_quantity_months">%.1f мес</string>
-    <string name="time_quantity_years">%.1f г</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Перабудова фільтраванай калоды&#8230;</string>
     <string name="rebuild_cram_label">Перабудаваць</string>
     <string name="empty_cram_label">Ачысціць</string>
