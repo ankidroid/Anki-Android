@@ -63,8 +63,7 @@ fun updateValuesFromDeck(
             counts.lrn,
             counts.rev,
             totalNewCount,
-            totalCount,
-            sched.eta(counts)
+            totalCount
         )
     } catch (e: RuntimeException) {
         Timber.e(e, "doInBackgroundUpdateValuesFromDeck - an error occurred")
