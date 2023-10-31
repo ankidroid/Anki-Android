@@ -25,6 +25,7 @@ import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncCollectionResponse
 import anki.sync.syncAuth
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
@@ -216,7 +217,7 @@ private suspend fun handleNormalSync(
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
             // scheduler version may have changed
             withCol { _loadScheduler() }
-            deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
+            deckPicker.syncSnackbar = deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
             deckPicker.refreshState()
             if (syncMedia) {
                 monitorMediaSync(deckPicker)
@@ -282,7 +283,7 @@ private suspend fun handleDownload(
     }
 
     Timber.i("Full Download Completed")
-    deckPicker.showSyncLogMessage(R.string.backup_full_sync_from_server, "")
+    deckPicker.syncSnackbar = deckPicker.showSyncLogMessage(R.string.backup_full_sync_from_server, "")
 }
 
 private suspend fun handleUpload(
@@ -308,7 +309,7 @@ private suspend fun handleUpload(
         }
     }
     Timber.i("Full Upload Completed")
-    deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")
+    deckPicker.syncSnackbar = deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")
 }
 
 // TODO: this needs a dedicated UI for media syncing, and needs to expose
@@ -396,7 +397,9 @@ class MigrateStorageOnSyncSuccess(res: Resources) : AsyncOperation() {
  * Show a simple snackbar message or notification if the activity is not in foreground
  * @param messageResource String resource for message
  */
-fun DeckPicker.showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?) {
+fun DeckPicker.showSyncLogMessage(@StringRes messageResource: Int, syncMessage: String?): Snackbar? {
+    var shownSnackbar: Snackbar? = null
+
     if (mActivityPaused) {
         val res = AnkiDroidApp.appResources
         showSimpleNotification(
@@ -406,12 +409,15 @@ fun DeckPicker.showSyncLogMessage(@StringRes messageResource: Int, syncMessage: 
         )
     } else {
         if (syncMessage.isNullOrEmpty()) {
-            showSnackbar(messageResource)
+            showSnackbar(messageResource) {
+                shownSnackbar = this
+            }
         } else {
             val res = AnkiDroidApp.appResources
             showSimpleMessageDialog(title = res.getString(messageResource), message = syncMessage)
         }
     }
+    return shownSnackbar
 }
 
 fun joinSyncMessages(dialogMessage: String?, syncMessage: String?): String? {

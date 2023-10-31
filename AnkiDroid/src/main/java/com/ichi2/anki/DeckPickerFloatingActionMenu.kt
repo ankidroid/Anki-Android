@@ -64,8 +64,9 @@ class DeckPickerFloatingActionMenu(
         mLinearLayout.alpha = 0.5f
         mStudyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
-        val shownDeckPickerSnackbar = deckPicker.shownSnackbar
-        if (shownDeckPickerSnackbar != null && shownDeckPickerSnackbar.isShown) shownDeckPickerSnackbar.dismiss()
+        if (deckPicker.shownSnackbar != null && deckPicker.shownSnackbar!!.isShown) deckPicker.shownSnackbar!!.dismiss()
+        if (deckPicker.syncSnackbar != null && deckPicker.syncSnackbar!!.isShown)deckPicker.syncSnackbar!!.dismiss()
+
         if (deckPicker.animationEnabled()) {
             // Show with animation
             mAddSharedLayout.visibility = View.VISIBLE

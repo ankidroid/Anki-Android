@@ -200,6 +200,7 @@ open class DeckPicker :
     private var mRecommendFullSync = false
 
     var shownSnackbar: Snackbar? = null
+    var syncSnackbar: Snackbar? = null
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
     }
