@@ -69,7 +69,6 @@ object ReadText {
             if (textToSpeech!!.isSpeaking && queueMode == TextToSpeech.QUEUE_FLUSH) {
                 Timber.d("tts engine appears to be busy... clearing queue")
                 stopTts()
-                // sTextQueue.add(new String[] { text, loc });
             }
             Timber.d("tts text '%s' to be played for locale (%s)", text, loc)
             textToSpeech!!.speak(textToSpeak, queueMode, mTtsParams, "stringId")
@@ -260,20 +259,6 @@ object ReadText {
                         listener.onDone(questionAnswer)
                     }
 
-                    fun errorToDeveloperString(errorCode: Int): String {
-                        return when (errorCode) {
-                            TextToSpeech.ERROR -> "Generic failure"
-                            TextToSpeech.ERROR_SYNTHESIS -> "TTS engine failed to synthesize input"
-                            TextToSpeech.ERROR_INVALID_REQUEST -> "Invalid request"
-                            TextToSpeech.ERROR_NETWORK -> "Network connectivity problem"
-                            TextToSpeech.ERROR_NETWORK_TIMEOUT -> "Network timeout"
-                            TextToSpeech.ERROR_NOT_INSTALLED_YET -> "Unfinished download of the voice data"
-                            TextToSpeech.ERROR_OUTPUT -> "Output error (audio device or a file)"
-                            TextToSpeech.ERROR_SERVICE -> "TTS service"
-                            else -> "Unhandled Error [$errorCode]"
-                        }
-                    }
-
                     override fun onError(utteranceId: String?, errorCode: Int) {
                         Timber.v("Android TTS failed: %s (%d). Check logcat for error. Indicates a problem with Android TTS engine.", errorToDeveloperString(errorCode), errorCode)
                         val helpUrl = Uri.parse(context.getString(R.string.link_faq_tts))
@@ -304,7 +289,21 @@ object ReadText {
         showThemedToast(context, context.getString(R.string.initializing_tts), false)
     }
 
-    private fun openTtsHelpUrl(helpUrl: Uri) {
+    fun errorToDeveloperString(errorCode: Int): String {
+        return when (errorCode) {
+            TextToSpeech.ERROR -> "Generic failure"
+            TextToSpeech.ERROR_SYNTHESIS -> "TTS engine failed to synthesize input"
+            TextToSpeech.ERROR_INVALID_REQUEST -> "Invalid request"
+            TextToSpeech.ERROR_NETWORK -> "Network connectivity problem"
+            TextToSpeech.ERROR_NETWORK_TIMEOUT -> "Network timeout"
+            TextToSpeech.ERROR_NOT_INSTALLED_YET -> "Unfinished download of the voice data"
+            TextToSpeech.ERROR_OUTPUT -> "Output error (audio device or a file)"
+            TextToSpeech.ERROR_SERVICE -> "TTS service"
+            else -> "Unhandled Error [$errorCode]"
+        }
+    }
+
+    fun openTtsHelpUrl(helpUrl: Uri) {
         val activity = flashCardViewer.get() as AnkiActivity?
         activity!!.openUrl(helpUrl)
     }

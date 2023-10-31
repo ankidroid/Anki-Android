@@ -22,7 +22,7 @@
 
 package com.ichi2.libanki
 
-data class TtsVoice(
+open class TtsVoice(
     val name: String,
     val lang: String
 ) {
@@ -35,7 +35,50 @@ data class TtsVoice(
         return out
     }
 
-    fun unavailable(): Boolean = false
+    open fun unavailable(): Boolean = false
 }
 
 data class TtsVoiceMatch(val voice: TtsVoice, val rank: Int)
+
+abstract class TtsPlayer {
+    open val default_rank = 0
+
+    @JvmField // stops a name conflict
+    var _available_voices: List<TtsVoice>? = null
+
+    abstract fun get_available_voices(): List<TtsVoice>
+    abstract suspend fun play(tag: AvTag)
+
+    fun voices(): List<TtsVoice> {
+        if (_available_voices == null) {
+            _available_voices = get_available_voices()
+        }
+        return _available_voices!!
+    }
+
+    fun voice_for_tag(tag: TTSTag): TtsVoiceMatch? {
+        val avail_voices = voices()
+
+        var rank = default_rank
+
+        // any requested voices match?
+        for (requested_voice in tag.voices) {
+            for (avail in avail_voices) {
+                if (avail.name == requested_voice && avail.lang == tag.lang) {
+                    return TtsVoiceMatch(voice = avail, rank = rank)
+                }
+            }
+        }
+
+        rank -= 1
+
+        // if no preferred voices match, we fall back on language
+        // with a rank of -100
+        for (avail in avail_voices) {
+            if (avail.lang == tag.lang) {
+                return TtsVoiceMatch(voice = avail, rank = -100)
+            }
+        }
+        return null
+    }
+}
