@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">இன்று காரணமாக</string>
     <string name="studyoptions_new_total">புதிய அட்டைகளின் எண்ணிக்கை</string>
     <string name="studyoptions_total_cards">மொத்த அட்டைகள்</string>
-    <string name="studyoptions_eta">கணிக்கப்பட்ட நேரம் (நிமிடங்கள்)</string>
     <string name="studyoptions_start">படி</string>
     <!-- DeckPicker.kt -->
     <string name="expand">விரிவாக்கு</string>
     <string name="collapse">சரிவு</string>
     <string name="study_more">இன்னும் படி</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d காரணமாக அட்டை (%2$s)</item>
-        <item quantity="other">%1$d காரணமாக அட்டை (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d நிமிடம் விட்டுவிட்டது</item>
         <item quantity="other">%d நிமிடம் விட்டுவிட்டது</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d ஸ் </string>
-    <string name="time_quantity_minutes">%d நிமிடம்</string>
-    <string name="time_quantity_hours_minutes">%1$d ம %2$d நி</string>
-    <string name="time_quantity_hours">%d ஹ </string>
-    <string name="time_quantity_days">%d டி</string>
-    <string name="time_quantity_days_hours">%1$d நாள் %2$d மணி</string>
-    <string name="time_quantity_months">%.1f மோ</string>
-    <string name="time_quantity_years">%.1f ஆண்டு</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">மீண்டும்</string>
     <string name="empty_cram_label">காலி</string>

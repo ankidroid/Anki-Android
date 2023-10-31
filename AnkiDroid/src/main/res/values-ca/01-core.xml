@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">Venç avui:</string>
     <string name="studyoptions_new_total">Total de noves fitxes:</string>
     <string name="studyoptions_total_cards">Total de fitxes:</string>
-    <string name="studyoptions_eta">Temps estimat (min.):</string>
     <string name="studyoptions_start">Estudiar</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Desplega</string>
     <string name="collapse">Replega</string>
     <string name="study_more">Estudia més</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d carta pendent (%2$s)</item>
-        <item quantity="other">%1$d cartes pendents (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Queda %d minut</item>
         <item quantity="other">Queden %d minuts</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Dóna-li a AnkiDroid el permís \'Storage\' per a continuar si us plau</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mes</string>
-    <string name="time_quantity_years">%.1f any</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Reconstruint paquet filtrat</string>
     <string name="rebuild_cram_label">Reconstrueix</string>
     <string name="empty_cram_label">Buit</string>

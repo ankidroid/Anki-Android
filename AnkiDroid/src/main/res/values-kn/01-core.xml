@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">ಈವತ್ತು ಕೊಡಬೇಕಿದೆ:</string>
     <string name="studyoptions_new_total">ಒಟ್ಟು ಹೊಸ ಕಾರ್ಡ್‌ಗಳು: </string>
     <string name="studyoptions_total_cards">ಒಟ್ಟು ಕಾರ್ಡ್‌ಗಳು:</string>
-    <string name="studyoptions_eta">ಅಂದಾಜು ಸಮಯ (ನಿಮಿಷ):</string>
     <string name="studyoptions_start">ಅಧ್ಯಯನ </string>
     <!-- DeckPicker.kt -->
     <string name="expand">ವಿಸ್ತರಿಸಿ </string>
     <string name="collapse">ಬೀಳಿಸಿ</string>
     <string name="study_more">ಹೆಚ್ಚು ಓದು </string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d ಕಾರ್ಡ್ ಬಾಕಿ (%2$s)</item>
-        <item quantity="other">%1$d ಕಾರ್ಡ್‌ಗಳು ಬಾಕಿ ಉಳಿದಿವೆ (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d ನಿಮಿಷ ಉಳಿದಿದೆ</item>
         <item quantity="other">%d ನಿಮಿಷಗಳು ಉಳಿದಿವೆ</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">ಮುಂದುವರೆಯಲು ದಯವಿಟ್ಟು ಆಂಕಿಡ್ರಾಯ್ಡ್‌ಗೆ ‘ಸಂಗ್ರಹ’ ಅನುಮತಿಯನ್ನು ನೀಡಿ</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d ಸೆಕೆಂಡ್ಸ್</string>
-    <string name="time_quantity_minutes">%d ನಿಮಿ</string>
-    <string name="time_quantity_hours_minutes">%1$d ಗಂ %2$d ನಿಮಿ</string>
-    <string name="time_quantity_hours">%d ಗಂ</string>
-    <string name="time_quantity_days">%d ದಿನಗಳು</string>
-    <string name="time_quantity_days_hours">%1$d ದಿನಗಳು %2$d ಗಂ</string>
-    <string name="time_quantity_months">%.1f ತಿಂಗಳು</string>
-    <string name="time_quantity_years">%.1f ವರ್ಷ</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">ಫಿಲ್ಟರ್ ಮಾಡಿದ ಸಂಗ್ರಹವನ್ನು ಪುನರ್ನಿರ್ಮಿಸಲಾಗುತ್ತಿದೆ &#8230;</string>
     <string name="rebuild_cram_label">ಪುನರ್ನಿರ್ಮಾಣ</string>
     <string name="empty_cram_label">ಖಾಲಿ</string>

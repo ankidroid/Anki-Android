@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">आज शेवटचा दिवस:</string>
     <string name="studyoptions_new_total">एकुण नविन कार्ड:</string>
     <string name="studyoptions_total_cards">एकुण कार्ड:</string>
-    <string name="studyoptions_eta">अदमासें वेळ(मिनिटांमधे):</string>
     <string name="studyoptions_start">अभ्यास शुरू करा</string>
     <!-- DeckPicker.kt -->
     <string name="expand">विस्तृत करा</string>
     <string name="collapse">कोसळणे</string>
     <string name="study_more">अधिक अभ्यास करा</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">कार्ड देय</item>
-        <item quantity="other">कार्ड देय</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d मिनिट शिल्लक आहे</item>
         <item quantity="other">%d मिनिटे शिल्लक आहेत</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">कृपया सुरू ठेवण्यासाठी अंकीड्रोइडला ‘स्टोरेज’ परवानगी द्या</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d एस</string>
-    <string name="time_quantity_minutes">%d मि</string>
-    <string name="time_quantity_hours_minutes">%1$d एच %2$d मी</string>
-    <string name="time_quantity_hours">%d एच</string>
-    <string name="time_quantity_days">%d डी</string>
-    <string name="time_quantity_days_hours">%1$d डी %2$d एच</string>
-    <string name="time_quantity_months">%.1f मो</string>
-    <string name="time_quantity_years">%.1f वर्ष</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">फिल्टर केलेले डेक पुन्हा तयार करीत आहे ...</string>
     <string name="rebuild_cram_label">पुन्हा तयार करा</string>
     <string name="empty_cram_label">रिक्त</string>

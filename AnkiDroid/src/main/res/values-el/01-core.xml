@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">Για σήμερα:</string>
     <string name="studyoptions_new_total">Σύνολο νέων καρτών:</string>
     <string name="studyoptions_total_cards">Σύνολο καρτών:</string>
-    <string name="studyoptions_eta">Εκτιμώμενη διάρκεια (λεπτά):</string>
     <string name="studyoptions_start">Μελέτη</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Ανάπτυξη</string>
     <string name="collapse">Σύμπτυξη</string>
     <string name="study_more">Περισσότερη μελέτη</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d κάρτα για επανάληψη(%2$s)</item>
-        <item quantity="other">%1$d κάρτες για επανάληψη(%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Απομένει %d λεπτό</item>
         <item quantity="other">Απομένουν %d λεπτά</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Παρακαλούμε παραχωρήστε στο Anki-Droid την άδεια \'Αποθήκευσης\' για να συνεχίσετε</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d δ.</string>
-    <string name="time_quantity_minutes">%d λ.</string>
-    <string name="time_quantity_hours_minutes">%1$d ώ %2$d λ</string>
-    <string name="time_quantity_hours">%d ώ.</string>
-    <string name="time_quantity_days">%d μέρ.</string>
-    <string name="time_quantity_days_hours">%1$d μερ %2$d ώ</string>
-    <string name="time_quantity_months">%.1f μήν.</string>
-    <string name="time_quantity_years">%.1f χρ.</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Αναδόμηση φιλτραρισμένης τράπουλας&#8230;</string>
     <string name="rebuild_cram_label">Αναδόμηση</string>
     <string name="empty_cram_label">Άδειασμα</string>

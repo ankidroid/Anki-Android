@@ -55,15 +55,11 @@
     <string name="studyoptions_due_today">Jatuh tempo hari ini:</string>
     <string name="studyoptions_new_total">Total kartu baru:</string>
     <string name="studyoptions_total_cards">Total kartu:</string>
-    <string name="studyoptions_eta">Estimasi waktu (mnt):</string>
     <string name="studyoptions_start">Belajar</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Perluas</string>
     <string name="collapse">Tutup</string>
     <string name="study_more">Belajar lagi</string>
-    <plurals name="deckpicker_title">
-        <item quantity="other">%1$d kartu jatuh tempo (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d menit lagi</item>
     </plurals>
@@ -127,22 +123,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Mohon beri AnkiDroid izin ‘Penyimpanan’ untuk melanjutkan</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d d</string>
-    <string name="time_quantity_minutes">%d mnt</string>
-    <string name="time_quantity_hours_minutes">%1$d j %2$d m </string>
-    <string name="time_quantity_hours">%d j</string>
-    <string name="time_quantity_days">%d hr</string>
-    <string name="time_quantity_days_hours">%1$d hr %2$d j</string>
-    <string name="time_quantity_months">%.1f bln</string>
-    <string name="time_quantity_years">%.1f th</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Sedang membuat dek yang telah difilter</string>
     <string name="rebuild_cram_label">Buat ulang</string>
     <string name="empty_cram_label">Kosong</string>

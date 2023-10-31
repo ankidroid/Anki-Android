@@ -55,17 +55,11 @@
     <string name="studyoptions_due_today">Paredzēts šodienai:</string>
     <string name="studyoptions_new_total">Kopskaits jauno kāršu:</string>
     <string name="studyoptions_total_cards">Kopskaits kāršu:</string>
-    <string name="studyoptions_eta">Aptuvenais laiks (min):</string>
     <string name="studyoptions_start">Mācīties</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Paplašināt</string>
     <string name="collapse">Sakļaut</string>
     <string name="study_more">Mācīties vairāk</string>
-    <plurals name="deckpicker_title">
-        <item quantity="zero">%1$d kārtis pārpalikumā (%2$s)</item>
-        <item quantity="one">%1$d kārts pārpalikusi (%2$s)</item>
-        <item quantity="other">%1$d kārtis pārpalikušas (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="zero">%d minūtes atlikušas</item>
         <item quantity="one">%d minūte atlikusi</item>
@@ -135,22 +129,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Lai turpinātu, dodiet AnkiDroid piekļuvi krātuvei</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d sek</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d st %2$d min</string>
-    <string name="time_quantity_hours">%d st</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d st</string>
-    <string name="time_quantity_months">%.1f mēn</string>
-    <string name="time_quantity_years">%.1f g</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Pārveido pielāgoto kavu&#8230;</string>
     <string name="rebuild_cram_label">Pārveidot</string>
     <string name="empty_cram_label">Tukšs</string>

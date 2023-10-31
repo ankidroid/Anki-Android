@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">Bugün vaxtı bitir:</string>
     <string name="studyoptions_new_total">Ümumi yeni kart:</string>
     <string name="studyoptions_total_cards">Ümumi kart:</string>
-    <string name="studyoptions_eta">Təxmini vaxt (dəq):</string>
     <string name="studyoptions_start">Öyrənməyə başla</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Genişləndir</string>
     <string name="collapse">Daralt</string>
     <string name="study_more">Daha çox öyrən</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="other">%1$d cards due (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d dəqiqə qaldı</item>
         <item quantity="other">%d dəqiqə qaldı</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">İrəliləmək üçün AnkiDroid-ə \"Yaddaş\" icazəsi verin</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d dəq</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d saat</string>
-    <string name="time_quantity_days">%d gün</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f ay</string>
-    <string name="time_quantity_years">%.1f il</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">filtrlənmiş dəstənin yenidən qurulması</string>
     <string name="rebuild_cram_label">Yenidən düzəlt</string>
     <string name="empty_cram_label">Boş</string>
