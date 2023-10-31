@@ -66,7 +66,7 @@ class DeckPickerFloatingActionMenu(
         isFABOpen = true
         if (deckPicker.shownSnackbar != null && deckPicker.shownSnackbar!!.isShown) deckPicker.shownSnackbar!!.dismiss()
         if (deckPicker.syncSnackbar != null && deckPicker.syncSnackbar!!.isShown)deckPicker.syncSnackbar!!.dismiss()
-
+        if (deckPicker.undoAllSnackbar != null && deckPicker.undoAllSnackbar!!.isShown)deckPicker.undoAllSnackbar!!.dismiss()
         if (deckPicker.animationEnabled()) {
             // Show with animation
             mAddSharedLayout.visibility = View.VISIBLE

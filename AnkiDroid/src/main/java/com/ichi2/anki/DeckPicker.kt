@@ -201,6 +201,7 @@ open class DeckPicker :
 
     var shownSnackbar: Snackbar? = null
     var syncSnackbar: Snackbar? = null
+    var undoAllSnackbar: Snackbar? = null
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
     }
@@ -1358,7 +1359,7 @@ open class DeckPicker :
 
     private fun undo() {
         launchCatchingTask {
-            undoAndShowSnackbar()
+            undoAllSnackbar = undoAndShowSnackbar()
         }
     }
 
