@@ -27,6 +27,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.ThemeUtils
 import com.google.android.material.button.MaterialButton
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -46,7 +47,7 @@ private const val CHANGE_LOG_URL = "https://docs.ankidroid.org/changelog.html"
  * Shows an about box, which is a small HTML page.
  */
 class Info : AnkiActivity() {
-    private var mWebView: WebView? = null
+    private lateinit var mWebView: WebView
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +68,7 @@ class Info : AnkiActivity() {
         findViewById<MaterialButton>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = "$appName v$pkgVersionName"
         mWebView = findViewById(R.id.info)
-        mWebView!!.webChromeClient = object : WebChromeClient() {
+        mWebView.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
                 // Hide the progress indicator when the page has finished loaded
                 if (progress == 100) {
@@ -88,7 +89,11 @@ class Info : AnkiActivity() {
                 visibility = View.GONE
             }
         }
-
+        val onBackPressedCallback = object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                if (mWebView.canGoBack()) mWebView.goBack()
+            }
+        }
         // Apply Theme colors
         val typedArray = theme.obtainStyledAttributes(intArrayOf(android.R.attr.colorBackground, android.R.attr.textColor))
         val backgroundColor = typedArray.getColor(0, -1)
@@ -97,9 +102,9 @@ class Info : AnkiActivity() {
         val anchorTextThemeColor = ThemeUtils.getThemeAttrColor(this, android.R.attr.colorAccent)
         val anchorTextColor = anchorTextThemeColor.toRGBHex()
 
-        mWebView!!.setBackgroundColor(backgroundColor)
-        mWebView!!.settings.allowFileAccess = true
-        mWebView!!.settings.allowContentAccess = true
+        mWebView.setBackgroundColor(backgroundColor)
+        mWebView.settings.allowFileAccess = true
+        mWebView.settings.allowContentAccess = true
         setRenderWorkaround(this)
         when (type) {
             TYPE_NEW_VERSION -> {
@@ -108,14 +113,14 @@ class Info : AnkiActivity() {
                     setOnClickListener { close() }
                 }
                 val background = backgroundColor.toRGBHex()
-                mWebView!!.loadUrl("/android_asset/changelog.html")
-                mWebView!!.settings.javaScriptEnabled = true
-                mWebView!!.webViewClient = object : WebViewClient() {
+                mWebView.loadUrl("/android_asset/changelog.html")
+                mWebView.settings.javaScriptEnabled = true
+                mWebView.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView, url: String) {
                         /* The order of below javascript code must not change (this order works both in debug and release mode)
                                  *  or else it will break in any one mode.
                                  */
-                        mWebView!!.loadUrl(
+                        mWebView.loadUrl(
                             "javascript:document.body.style.setProperty(\"color\", \"" + textColor + "\");" +
                                 "x=document.getElementsByTagName(\"a\"); for(i=0;i<x.length;i++){x[i].style.color=\"" + anchorTextColor + "\";}" +
                                 "document.getElementsByTagName(\"h1\")[0].style.color=\"" + textColor + "\";" +
@@ -146,10 +151,20 @@ class Info : AnkiActivity() {
                         }
                         return true
                     }
+
+                    override fun doUpdateVisitedHistory(
+                        view: WebView?,
+                        url: String?,
+                        isReload: Boolean
+                    ) {
+                        super.doUpdateVisitedHistory(view, url, isReload)
+                        onBackPressedCallback.isEnabled = view != null && view.canGoBack()
+                    }
                 }
             }
             else -> finish()
         }
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 
     private fun close() {
@@ -168,15 +183,6 @@ class Info : AnkiActivity() {
 
     private fun finishWithAnimation() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.START)
-    }
-
-    @Suppress("deprecation") // onBackPressed
-    override fun onBackPressed() {
-        if (mWebView!!.canGoBack()) {
-            mWebView!!.goBack()
-        } else {
-            super.onBackPressed()
-        }
     }
 
     companion object {
