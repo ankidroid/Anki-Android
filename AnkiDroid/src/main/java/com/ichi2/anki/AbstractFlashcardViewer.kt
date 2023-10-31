@@ -546,6 +546,7 @@ abstract class AbstractFlashcardViewer :
         mPreviousAnswerIndicator = PreviousAnswerIndicator(findViewById(R.id.chosen_answer))
         shortAnimDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
         mGestureDetectorImpl = LinkDetectingGestureDetector()
+        TtsVoicesFieldFilter.ensureApplied()
     }
 
     protected open fun getContentViewAttr(fullscreenMode: FullScreenMode): Int {
