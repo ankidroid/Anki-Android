@@ -133,8 +133,8 @@
     <string name="sync_status_badge_summ">Değişiklikler yüklenebildiğinde senkronizasyon simgesini değiştir</string>
     <string name="metered_sync_title" maxLength="41">Ölçülü bağlantılarda senkron. izin ver</string>
     <string name="metered_sync_summary">Kapatılırsa, ölçülü bir bağlantıda senkronizasyon yapmaya çalışırsanız uyarılırsınız</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Sıklık</string>
+    <string name="backup_limits_lifetime">Saklama süresi</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Gündüz teması</string>
     <string name="night_theme" maxLength="41">Gece teması</string>

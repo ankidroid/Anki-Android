@@ -100,8 +100,6 @@
         <item>রচিত</item>
         <item>নোট পরিবর্তিত</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">প্রয়োগ কর</string>
     <string name="filter_by_flags">নিশান</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">আজকের নতুন কার্ড সীমা বদল</string>

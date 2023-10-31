@@ -100,8 +100,6 @@
         <item>ᱛᱮᱭᱟᱨ ᱮᱱᱟ</item>
         <item>ᱠᱷᱟᱴᱚ ᱵᱤᱪᱟᱹᱨ ᱵᱚᱫᱚᱞᱮᱱᱟ</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">ᱮᱢ ᱪᱷᱚ</string>
     <string name="filter_by_flags">ᱯᱚᱛᱠᱟ ᱠᱚ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ᱛᱮᱦᱮᱧᱼᱟᱜ ᱱᱟᱶᱟ ᱠᱟᱰ ᱞᱤᱢᱤᱴ ᱵᱚᱫᱚᱞ ᱢᱮ</string>

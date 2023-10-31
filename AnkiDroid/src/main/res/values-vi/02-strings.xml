@@ -100,8 +100,6 @@
         <item>Đã tạo</item>
         <item>Ghi chú đã sửa đổi</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Áp dụng</string>
     <string name="filter_by_flags">Cờ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Sửa đổi giới hạn thẻ mới của ngày hôm nay</string>
