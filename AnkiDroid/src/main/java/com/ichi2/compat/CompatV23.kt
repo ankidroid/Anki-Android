@@ -43,6 +43,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.io.Serializable
+import java.util.Locale
 
 /** Baseline implementation of [Compat]. Check [Compat]'s for more detail.  */
 @KotlinCleanup("add extension method logging file.delete() failure" + "Fix Deprecation")
@@ -269,4 +270,38 @@ open class CompatV23 : Compat {
         key: String,
         clazz: Class<T>
     ): T? = bundle.getSerializable(key) as? T?
+
+    override fun normalize(locale: Locale): Locale {
+        // normalises to "spa_MEX"
+        val iso3Code = getIso3Code(locale) ?: return locale
+        // convert back from this key to a two-letter mapping
+        return twoLetterSystemLocaleMapping[iso3Code] ?: locale
+    }
+    companion object {
+        /**
+         * Maps from the ISO 3 code of a locale to the locale in
+         */
+        private val twoLetterSystemLocaleMapping: Map<String, Locale>
+
+        fun getIso3Code(locale: Locale): String? {
+            try {
+                if (locale.country.isBlank()) {
+                    return locale.isO3Language
+                }
+                return "${locale.isO3Language}_${locale.isO3Country}"
+            } catch (e: Exception) {
+                // MissingResourceException can be thrown, in which case return null
+                return null
+            }
+        }
+        init {
+            val locales = Locale.getAvailableLocales()
+            val validLocales = mutableMapOf<String, Locale>()
+            for (locale in locales) {
+                val code = getIso3Code(locale) ?: continue
+                validLocales.putIfAbsent(code, locale)
+            }
+            twoLetterSystemLocaleMapping = validLocales
+        }
+    }
 }
