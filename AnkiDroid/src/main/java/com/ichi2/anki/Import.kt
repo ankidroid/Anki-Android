@@ -56,12 +56,9 @@ fun DeckPicker.onSelectedCsvForImport(data: Intent) {
     startActivity(CsvImporter.getIntent(this, path))
 }
 
-fun DeckPicker.showImportDialog(id: Int, messageList: ArrayList<String>) {
+fun DeckPicker.showImportDialog(id: Int, importPath: String) {
     Timber.d("showImportDialog() delegating to ImportDialog")
-    if (messageList.isEmpty()) {
-        messageList.add("")
-    }
-    val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, messageList)
+    val newFragment: AsyncDialogFragment = ImportDialog.newInstance(id, importPath)
     showAsyncDialogFragment(newFragment)
 }
 fun DeckPicker.showImportDialog() {

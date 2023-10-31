@@ -25,7 +25,7 @@ import com.ichi2.anki.dialogs.HelpDialog.FunctionItem
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
-@NeedsTest("Selecting APKG allows multiple files")
+@NeedsTest("Selecting APKG does not allow multiple files")
 @NeedsTest("Selecting COLPKG does not allow multiple files")
 @NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment {
@@ -53,7 +53,7 @@ class ImportFileSelectionFragment {
                         R.string.import_deck_package,
                         R.drawable.ic_manual_black_24dp,
                         UsageAnalytics.Actions.IMPORT_APKG_FILE,
-                        OpenFilePicker(DeckPicker.PICK_APKG_FILE, true)
+                        OpenFilePicker(DeckPicker.PICK_APKG_FILE, false)
                     )
                 } else {
                     null
