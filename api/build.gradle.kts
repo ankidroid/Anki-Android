@@ -98,7 +98,7 @@ publishing {
         create("mavenJava", MavenPublication::class) {
             artifactId = "api"
 
-            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            artifact("$layout.buildDirectory/outputs/aar/${project.getName()}-release.aar")
             artifact(androidSourcesJar)
             artifact(dokkaJavadocJar)
 
@@ -142,16 +142,16 @@ publishing {
 
 val zipReleaseProvider = tasks.register("zipRelease", Zip::class) {
     from(layout.buildDirectory.dir("repos/releases"))
-    destinationDirectory = buildDir
-    archiveFileName = "$buildDir/release-${archiveVersion.get()}.zip"
+    destinationDirectory = layout.buildDirectory
+    archiveFileName = "$layout.buildDirectory/release-${archiveVersion.get()}.zip"
 }
 
 // Use this task to make a release you can send to someone
 // You may like `./gradlew :api:publishToMavenLocal for development
 val generateRelease: TaskProvider<Task> = tasks.register("generateRelease") {
     doLast {
-        println("Release $version can be found at $buildDir/repos/releases/")
-        println("Release $version zipped can be found $buildDir/release-$version.zip")
+        println("Release $version can be found at $layout.buildDirectory/repos/releases/")
+        println("Release $version zipped can be found $layout.buildDirectory/release-$version.zip")
     }
 }
 
