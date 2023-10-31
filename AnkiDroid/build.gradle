@@ -259,29 +259,7 @@ tasks.register('installGitHook', Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
     into { new File(rootProject.rootDir, '.git/hooks') }
     fileMode 0755
-}
-tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
-
-// Issue 11078 - some emulators run, but run zero tests, and still report success
-task assertNonzeroAndroidTests() {
-    doLast {
-        // androidTest currently creates one .xml file per emulator with aggregate results in this dir
-        File folder = file("./build/outputs/androidTest-results/connected/flavors/play")
-        File[] listOfFiles = folder.listFiles({ d, f -> f ==~ /.*.xml/ } as FilenameFilter)
-        for (File file : listOfFiles) {
-            // The aggregate results file currently contains a line with this pattern holding test count
-            String[] matches = file.readLines().findAll { it.contains('<testsuite') }
-            if (matches.length != 1) {
-                throw new GradleScriptException("Unable to determine count of tests executed for " + file.name + ". Regex pattern out of date?", null)
-            }
-            if (!(matches[0] ==~ /.* tests="\d+" .*/) || matches[0].contains('tests="0"')) {
-                throw new GradleScriptException("androidTest executed 0 tests for " + file.name + " - Probably a bug with the emulator. Try another image.", null)
-            }
-        }
-    }
-}
-afterEvaluate {
-    tasks.getByPath(':AnkiDroid:connectedPlayDebugAndroidTest').finalizedBy(assertNonzeroAndroidTests)
+    preBuild.get().dependsOn installGitHook
 }
 
 apply from: "./robolectricDownloader.gradle"

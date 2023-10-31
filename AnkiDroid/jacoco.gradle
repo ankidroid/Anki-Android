@@ -163,4 +163,22 @@ tasks.register('jacocoAndroidTestReport', JacocoReport) {
     executionData.from = fileTree(dir: layout.buildDirectory, includes: [
             '**/*.ec'
     ])
+
+    // Issue 11078 - some emulators run, but run zero tests, and still report success
+    doLast {
+        // androidTest currently creates one .xml file per emulator with aggregate results in this dir
+        File folder = file("$layout.buildDirectory/outputs/androidTest-results/connected/flavors/play")
+        File[] listOfFiles = folder.listFiles({ d, f -> f ==~ /.*.xml/ } as FilenameFilter)
+        for (File file : listOfFiles) {
+            // The aggregate results file currently contains a line with this pattern holding test count
+            String[] matches = file.readLines().findAll { it.contains('<testsuite') }
+            if (matches.length != 1) {
+                throw new GradleScriptException("Unable to determine count of tests executed for " + file.name + ". Regex pattern out of date?", null)
+            }
+            if (!(matches[0] ==~ /.* tests="\d+" .*/) || matches[0].contains('tests="0"')) {
+                throw new GradleScriptException("androidTest executed 0 tests for " + file.name + " - Probably a bug with the emulator. Try another image.", null)
+            }
+        }
+    }
+
 }
