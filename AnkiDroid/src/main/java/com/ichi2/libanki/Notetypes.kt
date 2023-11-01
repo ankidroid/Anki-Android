@@ -538,6 +538,7 @@ class Notetypes(val col: Collection) {
             } else {
                 convertLegacyMap(cmap, newModel.templatesNames.size)
             }
+        val isCloze = newModel.isCloze || m.isCloze
         col.backend.changeNotetype(
             noteIds = listOf(nid),
             newFields = fieldMap,
@@ -545,7 +546,8 @@ class Notetypes(val col: Collection) {
             oldNotetypeId = m.id,
             newNotetypeId = newModel.id,
             currentSchema = col.scm,
-            oldNotetypeName = m.name
+            oldNotetypeName = m.name,
+            isCloze = isCloze
         )
     }
 
