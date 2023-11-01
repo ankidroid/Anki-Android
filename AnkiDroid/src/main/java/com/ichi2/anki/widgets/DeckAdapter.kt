@@ -23,6 +23,7 @@ import android.view.View
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.recyclerview.widget.RecyclerView
 import com.ichi2.anki.CollectionManager.withCol
@@ -141,6 +142,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
         }
     }
 
+    @CheckResult
     fun getNodeByDid(did: DeckId): DeckNode {
         val pos = findDeckPosition(did)
         return deckList[pos]
