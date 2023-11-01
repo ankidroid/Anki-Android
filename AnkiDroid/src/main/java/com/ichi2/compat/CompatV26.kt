@@ -26,7 +26,6 @@ import android.os.Vibrator
 import android.view.View
 import androidx.annotation.VisibleForTesting
 import com.ichi2.anki.NotificationChannels
-import com.ichi2.utils.KotlinCleanup
 import java.io.*
 import java.nio.file.*
 
@@ -44,11 +43,9 @@ open class CompatV26 : CompatV24(), Compat {
     override fun setTooltipTextByContentDescription(view: View) { /* Nothing to do API26+ */
     }
 
-    @Suppress("DEPRECATION")
-    @KotlinCleanup("when solving the deprecation of Context.VIBRATOR_SERVICE fix the SENSELESS_COMPARISON warning")
+    @Suppress("DEPRECATION") // VIBRATOR_SERVICE => VIBRATOR_MANAGER_SERVICE handled in CompatV31
     override fun vibrate(context: Context, durationMillis: Long) {
-        val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        @Suppress("SENSELESS_COMPARISON")
+        val vibratorManager = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         if (vibratorManager != null) {
             val effect = VibrationEffect.createOneShot(durationMillis, VibrationEffect.DEFAULT_AMPLITUDE)
             vibratorManager.vibrate(effect)
