@@ -22,12 +22,16 @@ APIs. It's visible when there aren't enough decks to fill the screen.
     <color name="theme_light_drawer_row_current">#E8E8E8</color>
     <color name="theme_light_drawer_item">#DE000000</color>
 
-    <!-- DarkActionBar needed for readable text in the menu opened by the hardware menu button -->
-    <style name="Theme_Light" parent="@style/Theme.MaterialComponents.Light.DarkActionBar.Bridge">
+    <style name="Theme_Light" parent="@style/Theme.Material3.Light.NoActionBar">
         <!-- Android colors -->
         <item name="colorPrimary">@color/theme_light_primary</item>
         <item name="colorPrimaryDark">@color/theme_light_primary_dark</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
         <item name="colorAccent">@color/theme_light_accent</item>
+        <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
+        <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
+
         <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_light</item>
         <item name="android:colorBackground">@android:color/white</item>
@@ -36,8 +40,6 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="colorOnSurface">@color/black</item>
         <!-- Widget colors -->
         <item name="widgetColorActivated">?attr/colorPrimary</item>
-        <item name="trackTint">@color/switch_track_tint</item>
-        <item name="thumbTint">@color/switch_thumb_tint</item>
         <!-- Navigation drawer theme -->
         <item name="navDrawerItemColor">@color/drawer_item_text_light</item>
         <item name="navDrawerItemBackgroundColor">@drawable/drawer_item_background_light</item>
@@ -45,16 +47,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
         <item name="spinnerStyle">@style/SpinnerStyle</item>
-        <!-- App buttons -->
-        <item name="largeButtonBackgroundColor">@color/material_light_blue_800</item>
-        <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
-        <item name="largeButtonBackgroundColorPressed">@color/material_light_blue_900</item>
-        <item name="largeButtonTextColor">@color/white</item>
-        <item name="largeButtonSecondaryBackgroundColor">#FAFAFA</item>
-        <item name="largeButtonSecondaryBackgroundColorFocused">#F0F0F0</item>
-        <item name="largeButtonSecondaryBackgroundColorPressed">#EEEEEE</item>
-        <item name="largeButtonSecondaryTextColor">@color/material_grey_500</item>
         <!-- Action bar styles -->
+        <item name="appBarColor">?attr/colorPrimary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
@@ -151,9 +145,8 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#99FFFFFF</item>
 
-        <!-- Browser Options Dialog-->
-        <item name="colorSurface">@color/white</item>
-
-        <item name="sliderLabelTextColor">@color/white</item>
+        <!-- Widget styles -->
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Material3</item>
+        <item name="sliderStyle">@style/SliderStyle</item>
     </style>
 </resources>

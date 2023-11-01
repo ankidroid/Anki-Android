@@ -9,20 +9,22 @@
     <color name="theme_dark_drawer_row_current">#33999999</color>
     <color name="theme_dark_drawer_item">#DEFFFFFF</color>
 
-    <style name="Theme_Dark" parent="@style/Theme.MaterialComponents.Bridge">
+    <style name="Theme_Dark" parent="@style/Theme.Material3.Dark.NoActionBar">
         <!-- Android colors -->
-        <item name="colorPrimary">@color/theme_dark_primary</item>
+        <item name="colorPrimary">@color/material_blue_400</item>
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
         <item name="colorAccent">@color/material_blue_400</item>
         <item name="colorOnSurface">@color/white</item>
+        <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
+        <item name="colorOnPrimaryContainer">@color/white</item> <!-- FAB icons -->
+
         <item name="android:textColor">@color/text_color_dark</item>
         <item name="android:textColorSecondary">@color/text_color_secondary_dark</item>
         <item name="android:colorBackground">@color/material_theme_grey</item>
         <item name="android:windowBackground">@color/material_theme_grey</item>
         <!-- Widget colors -->
         <item name="widgetColorActivated">?attr/colorAccent</item>
-        <item name="trackTint">@color/switch_track_tint</item>
-        <item name="thumbTint">@color/switch_thumb_tint</item>
         <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
         <!-- Navigation drawer -->
         <item name="navDrawerItemColor">@color/drawer_item_text_dark</item>
@@ -31,16 +33,8 @@
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
         <item name="popupMenuStyle">@style/PopupMenuStyle</item>
         <item name="spinnerStyle">@style/SpinnerStyle</item>
-        <!-- App buttons -->
-        <item name="largeButtonBackgroundColor">@color/material_light_blue_800</item>
-        <item name="largeButtonBackgroundColorFocused">@color/material_light_blue_600</item>
-        <item name="largeButtonBackgroundColorPressed">@color/material_light_blue_900</item>
-        <item name="largeButtonTextColor">@color/white</item>
-        <item name="largeButtonSecondaryBackgroundColor">@color/material_grey_800</item>
-        <item name="largeButtonSecondaryBackgroundColorFocused">@color/material_grey_700</item>
-        <item name="largeButtonSecondaryBackgroundColorPressed">@color/material_grey_600</item>
-        <item name="largeButtonSecondaryTextColor">@color/material_grey_500</item>
         <!-- Action bar styles -->
+        <item name="appBarColor">@color/theme_dark_primary</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>
@@ -141,6 +135,8 @@
         <!-- Browser Options Dialog-->
         <item name="colorSurface">@color/theme_dark_primary</item>
 
-        <item name="sliderLabelTextColor">@color/black</item>
+        <!-- Widget styles -->
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Material3</item>
+        <item name="sliderStyle">@style/SliderStyle</item>
     </style>
 </resources>

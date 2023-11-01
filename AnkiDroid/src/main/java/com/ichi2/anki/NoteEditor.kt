@@ -45,6 +45,7 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import anki.config.ConfigKey
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.Direction.*
@@ -86,7 +87,6 @@ import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Note.DupeOrEmpty
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
 import com.ichi2.libanki.exception.ConfirmModSchemaException
-import com.ichi2.themes.Themes
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
@@ -260,12 +260,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
             // Sets the background and icon color of toolbar respectively.
             setBackgroundColor(
-                Themes.getColorFromAttr(
+                MaterialColors.getColor(
                     this@NoteEditor,
-                    R.attr.toolbarBackgroundColor
+                    R.attr.toolbarBackgroundColor,
+                    0
                 )
             )
-            setIconColor(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+            setIconColor(MaterialColors.getColor(this@NoteEditor, R.attr.toolbarIconColor, 0))
         }
         val mainView = findViewById<View>(android.R.id.content)
         // Enable toolbar
@@ -1522,9 +1523,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Sets the background color of disabled EditText.
         if (!enabled) {
             editText.setBackgroundColor(
-                Themes.getColorFromAttr(
+                MaterialColors.getColor(
                     this@NoteEditor,
-                    R.attr.editTextBackgroundColor
+                    R.attr.editTextBackgroundColor,
+                    0
                 )
             )
         }
@@ -1656,7 +1658,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun addClozeButton(@DrawableRes drawableRes: Int, description: String, type: AddClozeType) {
         val drawable = ResourcesCompat.getDrawable(resources, drawableRes, null)!!.apply {
-            setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+            setTint(MaterialColors.getColor(this@NoteEditor, R.attr.toolbarIconColor, 0))
         }
         val button = toolbar.insertItem(0, drawable) { insertCloze(type) }.apply {
             contentDescription = description
@@ -1718,7 +1720,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Let the user add more buttons (always at the end).
         // Sets the add custom tag icon color.
         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_add_toolbar_icon, null)
-        drawable!!.setTint(Themes.getColorFromAttr(this@NoteEditor, R.attr.toolbarIconColor))
+        drawable!!.setTint(MaterialColors.getColor(this@NoteEditor, R.attr.toolbarIconColor, 0))
         val addButton = toolbar.insertItem(0, drawable) { displayAddToolbarDialog() }
         addButton.contentDescription = resources.getString(R.string.add_toolbar_item)
         TooltipCompat.setTooltipText(addButton, resources.getString(R.string.add_toolbar_item))

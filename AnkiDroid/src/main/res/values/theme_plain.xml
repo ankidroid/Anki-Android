@@ -16,10 +16,6 @@
         <item name="preferenceCategoryTitleTextColor">?attr/colorAccent</item>
         <!-- Widget colors -->
         <item name="widgetColorActivated">?attr/colorAccent</item>
-        <!-- App buttons -->
-        <item name="largeButtonBackgroundColor">#607D8B</item>
-        <item name="largeButtonBackgroundColorFocused">#587180</item>
-        <item name="largeButtonBackgroundColorPressed">#475C66</item>
         <!-- Action bar styles -->
         <item name="actionBarPopupTextColor">@color/theme_plain_primary_text</item>
         <item name="actionModeBackground">@color/theme_plain_primary</item>

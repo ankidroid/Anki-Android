@@ -21,9 +21,9 @@ import android.os.SystemClock
 import android.view.View
 import android.widget.Chronometer
 import androidx.annotation.VisibleForTesting
+import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.R
 import com.ichi2.libanki.Card
-import com.ichi2.themes.Themes.getColorFromAttr
 
 /**
  * Responsible for pause/resume of the card timer and the UI element displaying the amount of time to answer a card
@@ -75,7 +75,7 @@ class AnswerTimer(private val cardTimer: Chronometer) {
 
     private fun resetTimerUI(newCard: Card) {
         // Set normal timer color
-        cardTimer.setTextColor(getColorFromAttr(context, android.R.attr.textColor))
+        cardTimer.setTextColor(MaterialColors.getColor(context, android.R.attr.textColor, 0))
 
         cardTimer.base = elapsedRealTime
         cardTimer.start()
@@ -85,7 +85,7 @@ class AnswerTimer(private val cardTimer: Chronometer) {
         cardTimer.setOnChronometerTickListener { chronometer: Chronometer ->
             val elapsed: Long = elapsedRealTime - chronometer.base
             if (elapsed >= limit) {
-                chronometer.setTextColor(getColorFromAttr(context, R.attr.maxTimerColor))
+                chronometer.setTextColor(MaterialColors.getColor(context, R.attr.maxTimerColor, 0))
                 chronometer.stop()
             }
         }

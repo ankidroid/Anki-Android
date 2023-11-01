@@ -40,7 +40,8 @@
                 android:id="@+id/note_edit_cards"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?attr/borderlessButtonStyle"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:textColor="?attr/colorAccent"
                 android:text="@string/model_browser_template"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -49,22 +50,24 @@
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintHorizontal_bias="0.0" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/note_rename"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?attr/borderlessButtonStyle"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:textColor="?attr/colorAccent"
                 android:text="@string/model_browser_rename"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/note_edit_cards"
                 app:layout_constraintEnd_toStartOf="@id/note_delete" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/note_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?attr/borderlessButtonStyle"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:textColor="?attr/colorAccent"
                 android:text="@string/dialog_positive_delete"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

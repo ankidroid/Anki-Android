@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:background="?android:attr/colorBackground"
             android:orientation="horizontal"
-            style="@style/card_browser_spinner_layout">
+            android:layout_height="?attr/listPreferredItemHeight">
 
             <Spinner
                 android:id="@+id/browser_column1_spinner"
