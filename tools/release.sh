@@ -124,7 +124,7 @@ git push
 git push --tags
 
 # Build the full set of release APKs for all flavors, with universals
-UCFLAVORS='Full Amazon Play'
+UCFLAVORS='Full Play'
 for UCFLAVOR in $UCFLAVORS; do
   ./gradlew --stop
   echo Running assemble"$UCFLAVOR"Release target with universal APK flag
@@ -142,7 +142,7 @@ for ABI in $ABIS; do
 done
 
 # Copy universal APKs for all flavors to cwd
-FLAVORS='full amazon play'
+FLAVORS='full play'
 for FLAVOR in $FLAVORS; do
   cp AnkiDroid/build/outputs/apk/"$FLAVOR"/release/AnkiDroid-"$FLAVOR"-universal-release.apk AnkiDroid-"$VERSION"-"$FLAVOR"-universal.apk
 done
@@ -169,7 +169,7 @@ This will be arm64-v8a for most phones from the last few years but [here is a gu
 <br/>\
 **For testers and multiple profiles users:**<br/>\
 <br/>\
-The builds with 'full', 'play' or 'amazon' are useful for testing our builds for different app stores.<br/>\
+The builds with 'full', 'play' are useful for testing our builds for different app stores.<br/>\
 <br/>\
 The builds with letter codes below (A, B, etc) are universal parallel builds. They will install side-by-side with the main APK for testing, or to connect to a different AnkiWeb account in combination with changing the storage directory in preferences" $PRE_RELEASE
 

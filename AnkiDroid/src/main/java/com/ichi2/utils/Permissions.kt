@@ -128,7 +128,6 @@ object Permissions {
      * Intention is to be used when a permissions may be changed by build flavours
      *
      * Example:
-     * * Amazon => no camera
      * * Play => no 'manage external storage'
      *
      * @param permissions One or more permission strings, typically defined in [Manifest.permission]

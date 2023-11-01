@@ -2,7 +2,7 @@ plugins {
     // Gradle plugin portal
     id 'com.github.triplet.play' version '3.8.4'
     id 'com.android.application'
-    id 'app.brant.amazonappstorepublisher'
+    // TODO #14161 id 'app.brant.amazonappstorepublisher'
     id 'idea'
     id 'kotlin-android'
     id 'kotlin-parcelize'
@@ -150,17 +150,10 @@ android {
         }
     }
 
-    /**
-     * Product Flavors are used for Amazon App Store and Google Play Store.
-     * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
-     * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
-     */
+
     flavorDimensions "appStore"
     productFlavors {
         play {
-            dimension "appStore"
-        }
-        amazon {
             dimension "appStore"
         }
         // A 'full' build has no restrictions on storage/camera. Distributed on GitHub/F-Droid
@@ -245,12 +238,13 @@ play {
     track.set('alpha')
 }
 
-amazon {
-    securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")
-    applicationId = "amzn1.devportal.mobileapp.524a424d314931494c55383833305539"
-    pathToApks = [ file("./build/outputs/apk/amazon/release/AnkiDroid-amazon-universal-release.apk") ]
-    replaceEdit = true
-}
+// TODO #14161
+// amazon {
+//    securityProfile = file("${homePath}/src/AnkiDroid-Amazon-Publish-Security-Profile.json")
+//    applicationId = "amzn1.devportal.mobileapp.524a424d314931494c55383833305539"
+//    pathToApks = [ file("./build/outputs/apk/amazon/release/AnkiDroid-amazon-universal-release.apk") ]
+//    replaceEdit = true
+//}
 
 // Install Git pre-commit hook for Ktlint
 task installGitHook(type: Copy) {
