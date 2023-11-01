@@ -1642,11 +1642,6 @@ open class CardBrowser :
     private fun filterByTags(selectedTags: List<String>, option: Int) {
         // TODO: Duplication between here and CustomStudyDialog:onSelectedTags
         mSearchView!!.setQuery("", false)
-        val tags = selectedTags.toString()
-        mSearchView!!.queryHint = resources.getString(
-            R.string.CardEditorTags,
-            tags.substring(1, tags.length - 1)
-        )
 
         val sb = StringBuilder()
         sb.append(
@@ -1662,7 +1657,7 @@ open class CardBrowser :
             sb.append("($tagsConcat)") // Only if we added anything to the tag list
         }
         mSearchTerms = sb.toString()
-        searchCards()
+        searchWithFilterQuery(mSearchTerms)
     }
 
     /** Updates search terms to only show cards with selected flag.  */
