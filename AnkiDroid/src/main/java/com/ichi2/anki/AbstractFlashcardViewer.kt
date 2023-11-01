@@ -77,7 +77,6 @@ import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.CompatHelper.Companion.compat
 import com.ichi2.compat.CompatHelper.Companion.resolveActivityCompat
 import com.ichi2.compat.ResolveInfoFlagsCompat
 import com.ichi2.libanki.*
@@ -257,11 +256,6 @@ abstract class AbstractFlashcardViewer :
     // LISTENERS
     // ----------------------------------------------------------------------------
     private val mLongClickHandler = newHandler()
-    private val mLongClickTestRunnable = Runnable {
-        Timber.i("AbstractFlashcardViewer:: onEmulatedLongClick")
-        compat.vibrate(AnkiDroidApp.instance.applicationContext, 50)
-        mLongClickHandler.postDelayed(mStartLongClickAction, 300)
-    }
     private val mStartLongClickAction = Runnable { mGestureProcessor.onLongTap() }
 
     // Handler for the "show answer" button
@@ -571,7 +565,6 @@ abstract class AbstractFlashcardViewer :
     override fun onPause() {
         super.onPause()
         automaticAnswer.disable()
-        mLongClickHandler.removeCallbacks(mLongClickTestRunnable)
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
         if (this::mSoundPlayer.isInitialized) {
             mSoundPlayer.stopSounds()
@@ -1834,7 +1827,6 @@ abstract class AbstractFlashcardViewer :
     protected open fun closeReviewer(result: Int) {
         automaticAnswer.disable()
         mPreviousAnswerIndicator!!.stopAutomaticHide()
-        mLongClickHandler.removeCallbacks(mLongClickTestRunnable)
         mLongClickHandler.removeCallbacks(mStartLongClickAction)
         this@AbstractFlashcardViewer.setResult(result)
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
@@ -1940,7 +1932,6 @@ abstract class AbstractFlashcardViewer :
 
         override fun onSingleTapUp(e: MotionEvent): Boolean {
             if (mTouchStarted) {
-                mLongClickHandler.removeCallbacks(mLongClickTestRunnable)
                 mTouchStarted = false
             }
             return false
