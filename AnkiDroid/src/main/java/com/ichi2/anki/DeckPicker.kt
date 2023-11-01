@@ -265,33 +265,15 @@ open class DeckPicker :
     private fun onDeckClick(v: View, selectionType: DeckSelectionType) {
         val deckId = v.tag as Long
         Timber.i("DeckPicker:: Selected deck with id %d", deckId)
-        var collectionIsOpen = false
         launchCatchingTask {
-            try {
-                collectionIsOpen = colIsOpenUnsafe()
-                handleDeckSelection(deckId, selectionType)
-                if (fragmented) {
-                    // Calling notifyDataSetChanged() will update the color of the selected deck.
-                    // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
-                    mDeckListAdapter.notifyDataSetChanged()
-                    updateDeckList()
-                }
-            } catch (e: Exception) {
-                // Maybe later don't report if collectionIsOpen is false?
-                Timber.w(e)
-                val info = "$deckId colOpen:$collectionIsOpen"
-                CrashReportService.sendExceptionReport(e, "deckPicker::onDeckClick", info)
-                displayFailedToOpenDeck(deckId)
+            handleDeckSelection(deckId, selectionType)
+            if (fragmented) {
+                // Calling notifyDataSetChanged() will update the color of the selected deck.
+                // This interferes with the ripple effect, so we don't do it if lollipop and not tablet view
+                mDeckListAdapter.notifyDataSetChanged()
+                updateDeckList()
             }
         }
-    }
-
-    private fun displayFailedToOpenDeck(deckId: DeckId) {
-        // #6208 - if the click is accepted before the sync completes, we get a failure.
-        // We use the Deck ID as the deck likely doesn't exist any more.
-        val message = getString(R.string.deck_picker_failed_deck_load, deckId.toString())
-        showThemedToast(this, message, false)
-        Timber.w(message)
     }
 
     private val mDeckLongClickListener = OnLongClickListener { v ->
