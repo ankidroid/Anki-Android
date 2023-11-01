@@ -316,7 +316,7 @@ object CollectionManager {
                     }
                     true
                 }.first()
-                Timber.e("blocked main thread for %dms:\n%s", elapsed, caller)
+                Timber.w("blocked main thread for %dms:\n%s", elapsed, caller)
             }
         }
     }
