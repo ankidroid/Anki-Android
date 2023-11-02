@@ -67,7 +67,7 @@ class ContentResolverUtilTest {
 
         whenever(mock.getType(any())).thenReturn("image/gif")
         // required for Robolectric
-        Shadows.shadowOf(MimeTypeMap.getSingleton()).addExtensionMimeTypMapping("gif", "image/gif")
+        Shadows.shadowOf(MimeTypeMap.getSingleton()).addExtensionMimeTypeMapping("gif", "image/gif")
 
         val filename = getFileName(mock, uri)
 

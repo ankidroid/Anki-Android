@@ -19,7 +19,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ActionBarStyle"
             android:layout_alignParentTop="true"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/appBarColor"
             app:popupTheme="@style/ActionBar.Popup"
             app:navigationContentDescription="@string/abc_action_bar_up_description"
             app:navigationIcon="?attr/homeAsUpIndicator"/>
@@ -145,22 +145,6 @@
                                         android:layout_height="wrap_content"
                                         android:gravity="end" />
                                 </TableRow>
-
-                                <TableRow>
-
-                                    <com.ichi2.ui.FixedTextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:paddingStart="0dip"
-                                        android:paddingEnd="5dip"
-                                        android:text="@string/studyoptions_eta" />
-
-                                    <com.ichi2.ui.FixedTextView
-                                        android:id="@+id/studyoptions_eta"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="end" />
-                                </TableRow>
                             </TableLayout>
                         <com.ichi2.ui.FixedTextView
                             android:id="@+id/studyoptions_deck_description"
@@ -188,7 +172,6 @@
                         android:paddingRight="2dp"
                         android:paddingBottom="8dp"/>
                     <com.google.android.material.button.MaterialButton
-                        style="@style/LargeFilledButtonStyle"
                         android:id="@+id/studyoptions_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

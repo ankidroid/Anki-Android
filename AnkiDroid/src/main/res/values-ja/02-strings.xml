@@ -100,8 +100,6 @@
         <item>作成日</item>
         <item>ノート編集日</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">適用</string>
     <string name="filter_by_flags">フラグ</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">今日の新規カード上限を変更</string>
@@ -169,8 +167,8 @@
     <string name="import_interrupted">インポートが中断されました: AnkiDroidが閉じられました</string>
     <string name="export_include_schedule">スケジュール情報を含める</string>
     <string name="export_include_media">メディアファイルを含める</string>
-    <string name="confirm_apkg_export">コレクションのバックアップ（Ankiパッケージファイル）を作成しますか？</string>
-    <string name="confirm_apkg_export_deck">デッキ \"%s\" のAnkiパッケージファイル（*.apkg）を作成します。よろしいですか？</string>
+    <string name="confirm_apkg_export">コレクションのバックアップをアプリ外部に保存するため、パッケージファイル（*.colpkg）を作成します。よろしいですか？</string>
+    <string name="confirm_apkg_export_deck">デッキ \"%s\" のバックアップをアプリ外部に保存するため、パッケージファイル（*.apkg）を作成します。よろしいですか？</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="other">選択した%d枚のカードをapkgファイルとしてエクスポートしますか？</item>
     </plurals>
@@ -180,8 +178,8 @@
     <string name="export_preparation_in_progress">エクスポートの準備中...</string>
     <string name="export_ready_title">エクスポートの準備完了</string>
     <string name="export_send_no_handlers">Ankiパッケージに対応する他のアプリがありません。ファイルを保存します...</string>
-    <string name="export_save_apkg_successful">Ankiパッケージを保存しました</string>
-    <string name="export_save_apkg_unsuccessful">Ankiパッケージの保存に失敗しました</string>
+    <string name="export_save_apkg_successful">パッケージファイルを保存しました</string>
+    <string name="export_save_apkg_unsuccessful">パッケージファイルの保存に失敗しました</string>
     <string name="export_share_title">Ankiパッケージを送信:</string>
     <string name="export_email_subject">[AnkiDroid] %s</string>
     <string name="export_email_text"><![CDATA[        こんにちは！

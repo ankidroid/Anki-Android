@@ -100,8 +100,6 @@
         <item>Criado</item>
         <item>Nota modificada</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Aplicar</string>
     <string name="filter_by_flags">Bandeiras</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modificar o limite de novos cards para hoje</string>

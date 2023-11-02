@@ -19,6 +19,7 @@ package com.ichi2.libanki
 import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
 import anki.import_export.importAnkiPackageOptions
+import anki.search.SearchNode
 import net.ankiweb.rsdroid.Backend
 
 /**
@@ -120,4 +121,8 @@ fun Collection.getCsvMetadataRaw(input: ByteArray): ByteArray {
 
 fun Collection.importCsvRaw(input: ByteArray): ByteArray {
     return backend.importCsvRaw(input)
+}
+
+fun Collection.buildSearchString(input: ByteArray): String {
+    return backend.buildSearchString(SearchNode.parseFrom(input))
 }

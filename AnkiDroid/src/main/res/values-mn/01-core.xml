@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">Өнөөдрийн дотор:</string>
     <string name="studyoptions_new_total">Нийт шинэ картнуудын тоо:</string>
     <string name="studyoptions_total_cards">Нийт картнууд:</string>
-    <string name="studyoptions_eta">Хийж дуусгах таамагласан хугацаа (минутаар):</string>
     <string name="studyoptions_start">Эхлэх</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Дэд цуглуулгуудыг харах</string>
     <string name="collapse">Дэд цуглуулгуудыг нуух</string>
     <string name="study_more">Илүү карт сурах</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d ширхэг карт (%2$s) хугацааны дотор судлах</item>
-        <item quantity="other">%1$d ширхэг карт (%2$s) хугацааны дотор хийх</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d минут үлдлээ</item>
         <item quantity="other">%d минут үлдлээ</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Анкидройдод \"Storage\" ашиглах эрхийг өгч байж үргэлжлүүлэн ашиглаж болно.</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d сек</string>
-    <string name="time_quantity_minutes">%d мин</string>
-    <string name="time_quantity_hours_minutes">%1$d цаг %2$d мин</string>
-    <string name="time_quantity_hours">%d цаг</string>
-    <string name="time_quantity_days">%d өдөр</string>
-    <string name="time_quantity_days_hours">%1$d өдөр %2$d цаг</string>
-    <string name="time_quantity_months">%.1f сар</string>
-    <string name="time_quantity_years">%.1f  жил</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Ангилсан багцыг дахин үүсгэж байна&#8230;</string>
     <string name="rebuild_cram_label">Дахин угсрах</string>
     <string name="empty_cram_label">Хоослох</string>

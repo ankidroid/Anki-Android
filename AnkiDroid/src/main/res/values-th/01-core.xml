@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">ภายในวันนี้:</string>
     <string name="studyoptions_new_total">การ์ดใหม่ทั้งหมด:</string>
     <string name="studyoptions_total_cards">การ์ดทั้งหมด:</string>
-    <string name="studyoptions_eta">เวลาโดยประมาณ (นาที) :</string>
     <string name="studyoptions_start">เริ่มเรียน</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ขยาย</string>
     <string name="collapse">ซ่อน</string>
     <string name="study_more">เรียนเพิ่ม</string>
-    <plurals name="deckpicker_title">
-        <item quantity="other">%1$d การ์ด ภายใน (%2$s)
-%1$d การ์ด ภายใน (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="other">เหลืออีก %d นาที</item>
     </plurals>
@@ -128,22 +123,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mo</string>
-    <string name="time_quantity_years">%.1f yr</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Rebuild</string>
     <string name="empty_cram_label">Empty</string>

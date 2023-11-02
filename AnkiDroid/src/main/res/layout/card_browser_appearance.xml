@@ -41,7 +41,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/card_template_browser_appearance_question_format">
+                android:hint="@string/card_template_browser_appearance_question_format"
+                android:layout_margin="@dimen/content_vertical_padding">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/question_format"
@@ -49,14 +50,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="start|top"
                     android:lines="3"
-                    android:inputType="textNoSuggestions|textMultiLine"
-                    android:layout_margin="@dimen/content_vertical_padding"/>
+                    android:inputType="textNoSuggestions|textMultiLine" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/card_template_browser_appearance_answer_format">
+                android:hint="@string/card_template_browser_appearance_answer_format"
+                android:layout_margin="@dimen/content_vertical_padding">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/answer_format"
@@ -65,7 +66,7 @@
                     android:gravity="start|top"
                     android:lines="3"
                     android:inputType="textNoSuggestions|textMultiLine"
-                    android:layout_margin="@dimen/content_vertical_padding"/>
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.ichi2.ui.FixedTextView

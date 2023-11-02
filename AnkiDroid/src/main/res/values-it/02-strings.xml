@@ -100,8 +100,6 @@
         <item>Creato</item>
         <item>Nota modificata</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Applica</string>
     <string name="filter_by_flags">Contrassegni</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifica il limite odierno di nuove carte</string>

@@ -16,20 +16,17 @@
 
 package com.ichi2.anki
 
-import androidx.appcompat.app.AlertDialog
+import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
-import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.libanki.buildSearchString
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackage
 import com.ichi2.libanki.importCsvRaw
 import com.ichi2.libanki.undoableOp
-import com.ichi2.utils.message
-import com.ichi2.utils.positiveButton
-import com.ichi2.utils.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Translations
@@ -53,7 +50,6 @@ fun AnkiActivity.importApkgs(apkgPaths: List<String>) {
     }
 }
 
-@Suppress("BlockingMethodInNonBlockingContext") // ImportResponse.parseFrom
 suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
     return withContext(Dispatchers.Main) {
         val output = withProgress(
@@ -66,14 +62,22 @@ suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
         )
         val importResponse = ImportResponse.parseFrom(output)
         undoableOp { importResponse }
-        AlertDialog.Builder(this@importCsvRaw).show {
-            message(text = summarizeReport(TR, importResponse))
-            positiveButton(R.string.dialog_ok) {
-                this@importCsvRaw.finish()
-            }
-        }
         output
     }
+}
+
+/**
+ * Calls the native [CardBrowser] to display the results of the search query constructed from the
+ * input. This method will always return the received input.
+ */
+suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
+    val searchString = withCol { buildSearchString(input) }
+    val starterIntent = Intent(this, CardBrowser::class.java).apply {
+        putExtra("search_query", searchString)
+        putExtra("all_decks", true)
+    }
+    startActivity(starterIntent)
+    return input
 }
 
 private fun summarizeReport(tr: Translations, output: ImportResponse): String {

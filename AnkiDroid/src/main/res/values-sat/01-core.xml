@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">ᱛᱮᱦᱮᱸᱧ-ᱟᱜ ᱥᱟᱨᱮᱡ</string>
     <string name="studyoptions_new_total">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚᱣᱟᱜ ᱜᱩᱴ:</string>
     <string name="studyoptions_total_cards">ᱱᱟᱶᱟ ᱠᱟᱰ ᱠᱚᱺ</string>
-    <string name="studyoptions_eta">ᱚᱱᱩᱢᱟᱱ ᱥᱚᱢᱚᱭ (ᱴᱤᱯᱤᱡ)ᱺ</string>
     <string name="studyoptions_start">ᱯᱟᱲᱦᱟᱣ</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ᱣᱤᱥᱛᱟᱨ ᱢᱮ</string>
     <string name="collapse">ᱦᱚᱯᱚᱱ ᱢᱮ</string>
     <string name="study_more">ᱟᱨᱦᱚᱸ ᱯᱟᱰᱦᱣ ᱢᱮ</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ (%2$s)</item>
-        <item quantity="other">%1$d ᱠᱟᱰ ᱥᱟᱨᱮᱡ ᱟᱠᱟᱱᱟ (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
         <item quantity="other">%d ᱴᱤᱯᱤᱡ ᱥᱟᱨᱟᱡ ᱟᱠᱟᱱᱟ</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">ᱫᱚᱭᱟᱠᱟᱛᱮ Ankidroid ᱞᱮᱛᱟᱲ ᱞᱟᱹᱜᱤᱫ \'ᱫᱚᱦᱚ ᱡᱟᱭᱜᱟ\' ᱮᱢᱚᱜᱽᱢᱮ</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d ᱴᱤᱡ</string>
-    <string name="time_quantity_minutes">%d ᱴᱤᱯᱤᱡ</string>
-    <string name="time_quantity_hours_minutes">%1$d ᱴᱟᱲ. %2$d ᱴᱤᱯ.</string>
-    <string name="time_quantity_hours">%d ᱴᱟᱲᱟᱝ</string>
-    <string name="time_quantity_days">%d ᱫᱤᱱ</string>
-    <string name="time_quantity_days_hours">%1$d ᱫᱤᱱ %2$d ᱴᱟᱲ.</string>
-    <string name="time_quantity_months">%.1f ᱪᱟᱸᱫᱚ</string>
-    <string name="time_quantity_years">%.1f ᱥᱮᱨᱢᱟ</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">ᱯᱷᱤᱞᱴᱚᱨ ᱰᱮᱠ ᱫᱩᱦᱲᱟᱹ ᱛᱮᱭᱟ&#8230;</string>
     <string name="rebuild_cram_label">ᱯᱩᱱᱚᱨᱼᱛᱮᱭᱟᱨ</string>
     <string name="empty_cram_label">ᱵᱟ.ᱱᱩᱜᱼᱟ</string>

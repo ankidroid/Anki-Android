@@ -100,8 +100,6 @@
         <item>卡片创建时间</item>
         <item>笔记修改时间</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">应用</string>
     <string name="filter_by_flags">旗标</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今天的新卡片数量限制</string>

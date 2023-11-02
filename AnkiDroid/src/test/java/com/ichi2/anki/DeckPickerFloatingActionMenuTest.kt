@@ -87,7 +87,7 @@ class DeckPickerFloatingActionMenuTest {
     @Before
     fun before() {
         val ankiActivity = Robolectric.buildActivity(AnkiActivity::class.java, Intent()).get()
-        ankiActivity.setTheme(R.style.Theme_Light_Compat)
+        ankiActivity.setTheme(R.style.Theme_Light)
         mFabMain = spy(FloatingActionButton(ankiActivity))
 
         // TODO: Figure out a nicer way of mocking

@@ -48,21 +48,21 @@
     <string name="disabled">Ei käytössä</string>
     <string name="pref_summary_seconds">%s s</string>
     <string name="pref_summary_minutes">%s min</string>
-    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
+    <string name="pref_search_no_results">Ei tuloksia</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">Yleiset</string>
+    <string name="pref_cat_studying" maxLength="41">Opiskelu</string>
+    <string name="pref_cat_system_wide" maxLength="41">Järjestelmäasetukset</string>
     <string name="pref_cat_reviewing" maxLength="41">Läpikäynti</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Synkronointi</string>
+    <string name="pref_cat_scheduling" maxLength="41">Aikataulutus</string>
     <string name="pref_cat_whiteboard" maxLength="41">Valkotaulu</string>
     <string name="pref_cat_appearance" maxLength="41">Ulkoasu</string>
     <string name="pref_cat_themes" maxLength="41">Teemat</string>
     <string name="pref_cat_fonts" maxLength="41">Fontit</string>
     <string name="pref_cat_gestures" maxLength="41">Eleet</string>
-    <string name="pref_cat_controls" maxLength="41">Controls</string>
+    <string name="pref_cat_controls" maxLength="41">Ohjauskomennot</string>
     <string name="pref_cat_advanced" maxLength="41">Lisäasetukset</string>
     <string name="pref_cat_workarounds" maxLength="41">Korjaukset</string>
     <string name="pref_cat_plugins" maxLength="41">Lisäosat</string>
@@ -78,8 +78,8 @@
     <string name="image_zoom" maxLength="41">Kuvan tarkennus</string>
     <string name="button_size" maxLength="41">Vastauspainikkeen koko</string>
     <string name="card_browser_font_size" maxLength="41">Korttiselaimen kirjasimien skaalaus</string>
-    <string name="card_browser_hide_media" maxLength="41">Display filenames in card browser</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media" maxLength="41">Näytä tiedostonimet korttiselaimessa</string>
+    <string name="card_browser_hide_media_summary">Näytä median tiedostonimet korttiselaimen kysymys-/vastaus-kentissä</string>
     <string name="col_path" maxLength="41">AnkiDroid-hakemisto</string>
     <string name="fullscreen_review" maxLength="41">Koko näytön tila</string>
     <string name="full_screen_off">Pois päältä</string>
@@ -89,32 +89,32 @@
     <string-array name="answer_buttons_position_labels">
         <item>Ylhäällä</item>
         <item>Alhaalla</item>
-        <item>None</item>
+        <item>Ei missään</item>
     </string-array>
     <string name="gestures" maxLength="41">Ota eleet käyttöön</string>
     <string name="gestures_summ">Liitä eleitä toimintoihin, kuten vastaamiseen ja korttien muokkaamiseen.</string>
-    <string name="gestures_corner_touch" maxLength="41">9-point touch</string>
-    <string name="gestures_corner_touch_summary">Allow touch gestures in screen corners</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_corner_touch" maxLength="41">9 pisteen kosketus</string>
+    <string name="gestures_corner_touch_summary">Käytä kosketuseleitä näytön kulmissa</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">Koko näytön navigointivalikko</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">Avaa navigointivalikko pyyhkäisemällä oikealle mistä tahansa näytöllä</string>
+    <string name="gestures_none" maxLength="41">Ei mitään</string>
     <string name="gestures_swipe_up" maxLength="41">Pyyhkäisy ylös</string>
     <string name="gestures_swipe_down" maxLength="41">Pyyhkäisy alas</string>
     <string name="gestures_swipe_left" maxLength="41">Pyyhkäisy vasemmalle</string>
     <string name="gestures_swipe_right" maxLength="41">Pyyhkäisy oikealle</string>
     <string name="gestures_double_tap" maxLength="41">Kaksoiskosketus</string>
-    <string name="gestures_long_tap" maxLength="41">Long touch</string>
+    <string name="gestures_long_tap" maxLength="41">Pitkä kosketus</string>
     <string name="gestures_tap_top" maxLength="41">Kosketus ylös</string>
     <string name="gestures_tap_left" maxLength="41">Kosketus vasemmalle</string>
     <string name="gestures_tap_right" maxLength="41">Kosketus oikealle</string>
     <string name="gestures_tap_bottom" maxLength="41">Kosketus alas</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
-    <string name="card_browser_enable_external_context_menu">‘%s’ Menu</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">Kosketa ylävasemmalle</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">Kosketa yläoikealle</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">Kosketa ylös keskelle</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">Kosketa alavasemmalle</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">Kosketa alaoikealle</string>
+    <string name="card_browser_enable_external_context_menu">\"%s\" -valikko</string>
+    <string name="card_browser_enable_external_context_menu_summary">Ota \"%s\" -valikko käyttöön koko sovelluksessa</string>
     <string name="double_scrolling_gap" maxLength="41">Kaksoisvieritys</string>
     <string name="double_scrolling_gap_summ">Kaksinkertaista vieritysaskeleen koko eReaderin kanssa</string>
     <string name="swipe_sensitivity" maxLength="41">Pyyhkäisyjen herkkyys</string>
@@ -126,16 +126,16 @@
     <string name="sync_account_summ_logged_out">Ei kirjautuneena</string>
     <string name="automatic_sync_choice" maxLength="41">Automaattinen synkronointi</string>
     <string name="automatic_sync_choice_summ">Synkronoi automaattisesti sovelluksen auetessa tai suljetessam, jos viimeistä synkronoinnista on enemmän kuin 10         minuuttia.</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">Aina</string>
+    <string name="sync_media_only_unmetered">Vain yhteyksillä, joita ei laskuteta käytön mukaan</string>
+    <string name="sync_media_never">Ei koskaan</string>
+    <string name="sync_status_badge" maxLength="41">Näytä synkronoinnin tila</string>
+    <string name="sync_status_badge_summ">Muuttaa synkronointikuvaketta, kun muutoksia voidaan lähettää</string>
+    <string name="metered_sync_title" maxLength="41">Salli synkronointi käytön mukaan laskutettavilla yhteyksillä</string>
+    <string name="metered_sync_summary">Jos pois käytöstä, sinua varoitetaan, jos yrität synkronoida käytön mukaan laskutettavalla yhteydellä</string>
+    <string name="backup_limits_frequency">Aikaväli</string>
+    <string name="backup_limits_lifetime">Säilytysaika</string>
+    <string name="app_theme" maxLength="41">Teema</string>
     <string name="day_theme" maxLength="41">Päiväteema</string>
     <string name="night_theme" maxLength="41">Yöteema</string>
     <string name="language" maxLength="41">Kieli</string>
@@ -148,40 +148,40 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">Värinä</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">Vilkkuvalo</string>
     <string name="timeout_answer_text" maxLength="41">Näytä vastaukset automaattisesti</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">Vastauksen aikakatkaisu</string>
     <string name="timeout_answer_summ">Näytä vastaus automaattisesti ilman käyttäjän komentoa. Viive sisältää ajan automaattisesti toistetaville äänitiedostoille.</string>
     <string name="timeout_answer_seconds" maxLength="41">Aika ennen vastauksen näyttämistä</string>
     <string name="timeout_question_seconds" maxLength="41">Aika ennen seuraavan kysymyksen näyttämistä</string>
     <string name="select_locale_title">Valitse kieli</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">Poista korttien laitteistokiihdytetty renderöinti käytöstä</string>
+    <string name="software_render_summ">Laitteistokiihdytetty renderöinti on nopeampaa, mutta siinä voi esiintyä ongelmia, erityisesti Android 8/8.1 -käyttöjärjestelmässä. Jos et näe korttien kertauskäyttöliittymää kokonaan, kokeile tätä asetusta.</string>
     <string name="safe_display" maxLength="41">Turvallinen näyttötila</string>
-    <string name="safe_display_summ">Poista kaikki animaatiot käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-muste laitteet voivat vaatia tätä.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="safe_display_summ">Poista kaikki animaatiot käytöstä ja käytä turvallisempaa menetelmää korttien piirtämiseen. E-ink-laitteet saattavat vaatia tätä.</string>
+    <string name="disable_extended_text_ui" maxLength="41">Poista yhden kentän muokkaustila käytöstä</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
+    <string name="disable_extended_text_ui_summ">Sallii \"Aukkotehtävä\" -valikon käytön, kun näyttö on vaakatilassa.</string>
     <string name="vertical_centering" maxLength="41">Tasaa keskelle</string>
     <string name="vertical_centering_summ">Keskitä korttien sisältö pystysuunnassa</string>
-    <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
-    <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_double_tap_time_interval" maxLength="41">Kaksoisnapautuksen aikaväli (millisekuntia)</string>
+    <string name="pref_double_tap_time_interval_summary">Toista vastauspainikkeiden napauttamista ei oteta huomioon, jos näin kauan ei ole kulunut. Tämä estää vahingossa tapahtuvat kaksoisnapautukset</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Näytä vastaus: pitkän painalluksen aika (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Minimi pitkän painalluksen aika, ennen kuin näytä vastaus -painike rekisteröi kosketuksen. Voi vähentää vahingossa tapahtuvien ylimääräisten painallusten mahdollisuutta. Oletusarvo on 0 ms</string>
     <string name="show_estimates" maxLength="41">Näytä aika painikkeissa</string>
     <string name="show_estimates_summ">Näytä seuraava kertausaika vastauspainikkeissa</string>
-    <string name="show_large_answer_buttons" maxLength="41">Show large answer buttons</string>
-    <string name="show_large_answer_buttons_summ">Show answer button in 2 rows</string>
-    <string name="show_top_bar" maxLength="41">Show top bar</string>
-    <string name="show_top_bar_summ">Show card counts, flag and mark in top bar</string>
+    <string name="show_large_answer_buttons" maxLength="41">Näytä suuret vastauspainikkeet</string>
+    <string name="show_large_answer_buttons_summ">Näytä vastauspainikkeet kahdella rivillä</string>
+    <string name="show_top_bar" maxLength="41">Näytä yläpalkki</string>
+    <string name="show_top_bar_summ">Näytä korttien lukumäärät, liput ja merkinnät yläpalkissa</string>
     <string name="show_progress" maxLength="41">Näytä jäljelläoleva</string>
     <string name="show_progress_summ">Näytä jäljelläolevien korttien määrä</string>
     <string name="show_eta" maxLength="41">Näytä ETA</string>
     <string name="show_eta_summ">Näytä jäljellä oleva aika</string>
     <string name="use_current" maxLength="41">Pakka uusille korteille</string>
-    <string name="learn_cutoff" maxLength="41">Kertauksen etukäteisaikaraja</string>
-    <string name="time_limit" maxLength="41">Aikaraja</string>
-    <string name="new_timezone" maxLength="41">New timezone handling</string>
-    <string name="day_offset_with_description" maxLength="41">Start of next day</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="learn_cutoff" maxLength="41">Ennalta oppimisen aikaraja</string>
+    <string name="time_limit" maxLength="41">Edistymisen näyttämisen aikaväli</string>
+    <string name="new_timezone" maxLength="41">Uusi aikavyöhykkeiden käsittely</string>
+    <string name="day_offset_with_description" maxLength="41">Seuraava päivä alkaa</string>
+    <string name="day_offset_summary">%s tuntia keskiyön jälkeen</string>
     <string name="pref_keep_screen_on" maxLength="41">Pidä näyttö päällä</string>
     <string name="pref_keep_screen_on_summ">Poista näytön aikakatkaisu</string>
     <string name="enable_api_title" maxLength="41">Ota käyttöön AnkiDroid-rajapinta</string>
@@ -192,41 +192,41 @@
     <string name="custom_buttons_setting_if_room">Näytä, jos tilaa</string>
     <string name="custom_buttons_setting_menu_only">Vain valikossa</string>
     <string name="reset_custom_buttons" maxLength="41">Palauta oletukset</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">Palauta oletusasetukset</string>
+    <string name="reset">Palauta</string>
     <string name="thirdparty_apps_title" maxLength="41">Kolmannen osapuolen API-sovellukset</string>
     <string name="thirdparty_apps_summary">Listaa sovellukset jotka käyttävät AnkiDroid API:ta, kuten kansioita ja työkaluja.</string>
-    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
-    <string name="html_javascript_debugging_summ">Salli WebView-etäyhteydet ja tallenna kortti HTML AnkiDroid kansioon</string>
+    <string name="html_javascript_debugging" maxLength="41">HTML / Javascript vianmääritys</string>
+    <string name="html_javascript_debugging_summ">Salli WebView-etäyhteydet ja tallenna kortin HTML AnkiDroid-hakemistoon</string>
     <!-- Appearance settings -->
-    <string name="pref_cat_reviewer" maxLength="41">Reviewer</string>
-    <string name="accessibility" maxLength="41">Accessibility</string>
+    <string name="pref_cat_reviewer" maxLength="41">Kertaaminen</string>
+    <string name="accessibility" maxLength="41">Esteettömyys</string>
     <!-- Paste clipboard image as png option -->
-    <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
-    <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
-    <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
+    <string name="paste_as_png" maxLength="41">Liitä leikepöydän kuvat PNG:nä</string>
+    <string name="paste_as_png_summary">Oletusarvoisesti Anki liittää kuvat leikepöydältä JPG-tiedostoina levytilan säästämiseksi. Tämän vaihtoehdon avulla voit sen sijaan käyttää PNG-kuvia.</string>
+    <string name="exit_via_double_tap_back" maxLength="41">Takaisin/poistu painamalla \"takaisin\" kahdesti</string>
+    <string name="exit_via_double_tap_back_summ">Vältä poistumasta vahingossa kertausnäkymästä tai sovelluksesta </string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
-    <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
+    <string name="media_import_allow_all_files" maxLength="41">Salli kaikki tiedostot mediaa tuotaessa</string>
+    <string name="media_import_allow_all_files_summ">Jos Android ei tunnista mediatiedostoja</string>
     <!-- Custom sync server settings -->
-    <string name="custom_sync_server_title" maxLength="41">Mukautettu synkronointiserveri</string>
-    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Not used</string>
-    <string name="custom_sync_server_help2"><![CDATA[        As an alternative to synchronizing with AnkiWeb,
-        you may use your own server for synchronization.
-        If not set, the default AnkiWeb server will be used instead.
-        <a href="%s">Learn more</a>
+    <string name="custom_sync_server_title" maxLength="41">Oma synkronointipalvelin</string>
+    <string name="custom_sync_server_summary_none_of_the_two_servers_used" comment="This summary is shown when neither of the two custom sync servers are used,         which is the default.">Ei käytössä</string>
+    <string name="custom_sync_server_help2"><![CDATA[        Voit käyttää omaa palvelintasi synkronointiin
+        vaihtoehtona AnkiWebin synkronoinnille.
+        Jos tämä jätetään tyhjäksi, AnkiWebin palvelinta käytetään.
+        <a href="%s">Lue lisää</a>
         ]]></string>
     <string name="custom_sync_server_base_url_title" maxLength="41">Synkronointiosoite</string>
     <!-- Key Bindings -->
-    <string name="keyboard">Keyboard</string>
+    <string name="keyboard">Näppäimistö</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
+    <string name="answer_buttons" maxLength="41">Vastauspainikkeet</string>
+    <string name="card" maxLength="41">Kortit</string>
+    <string name="note" maxLength="41">Muistiinpanot</string>
+    <string name="navigation" maxLength="41">Liikkuminen</string>
     <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="misc" maxLength="41">Sekalaiset</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Valitse tunnisteet</string>
     <!-- Deck configurations -->
@@ -235,113 +235,113 @@
     <string name="deck_conf_cram_filter" maxLength="41">Suodatin</string>
     <string name="deck_conf_cram_search" maxLength="41">Haku</string>
     <string name="deck_conf_cram_limit" maxLength="41">Rajoita</string>
-    <string name="deck_conf_cram_order" maxLength="41">korttia valittu</string>
-    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Ajoita uudelleen</string>
-    <string name="deck_conf_cram_reschedule_summ">Ajoita kortit tämän pakan vastausten perusteella</string>
-    <string name="deck_conf_cram_filter_2_check">Enable second filter</string>
-    <string name="deck_conf_cram_steps" maxLength="41">Muokatut vaiheet (minuuteissa)</string>
-    <string name="deck_conf_cram_steps_summ" maxLength="41">Määritä muokatut vaiheet</string>
+    <string name="deck_conf_cram_order" maxLength="41">korttiin, jotka valitaan käyttäen sääntöä</string>
+    <string name="deck_conf_cram_reschedule" maxLength="41" comment="Title of the box labelled by deck_conf_cram_reschedule_summ">Aikatauluta uudelleen</string>
+    <string name="deck_conf_cram_reschedule_summ">Aikatauluta kortit tämän pakan vastausten perusteella</string>
+    <string name="deck_conf_cram_filter_2_check">Ota käyttöön toinen suodatin</string>
+    <string name="deck_conf_cram_steps" maxLength="41">Muokatut oppimisaskeleet (minuuteissa)</string>
+    <string name="deck_conf_cram_steps_summ" maxLength="41">Määritä mukautetut oppimisaskeleet</string>
     <!-- analytics options -->
     <string name="analytics_dialog_title">Auta parantamaan AnkiDroidia!</string>
-    <string name="analytics_title" maxLength="41">Jaa sovelluskäyttötietojasi</string>
-    <string name="analytics_summ">Voit kehittää AnkiDroidia auttamalla kehitystiimiä näkemään mitä ominaisuuksia käytät</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
-    <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
-    <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
-    <string name="no_code_formatting_summ">Fixes ‘􏿾’ appearing in typed answer results</string>
-    <string name="type_in_answer_focus" maxLength="41">Focus ‘type in answer’</string>
-    <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
+    <string name="analytics_title" maxLength="41">Jaa tietoja käyttämistäsi ominaisuuksista</string>
+    <string name="analytics_summ">Voit auttaa AnkiDroidin kehitystiimiä ymmärtämään, mitä sovelluksen ominaisuuksia oikeasti käytetään</string>
+    <string name="note_editor_replace_newlines" maxLength="41">Korvaa rivinvaihdot HTML:llä</string>
+    <string name="note_editor_replace_newlines_summ">Muunna muistiinpanoeditorissa kaikki &lt;br&gt; -merkit rivinvaihdoiksi korttia muokattaessa.</string>
+    <string name="no_code_formatting" maxLength="41">Yksinkertainen kirjoitettavien vastausten muotoilu</string>
+    <string name="no_code_formatting_summ">Korjaa ongelman, jossa \"􏿾\" näkyy kirjoitettujen vastausten tuloksissa</string>
+    <string name="type_in_answer_focus" maxLength="41">Kohdista \"kirjoita vastaus\" -kenttään</string>
+    <string name="type_in_answer_focus_summ">Siirtää kohdistuksen automaattisesti \"kirjoita vastaus\" -kenttään kerrattaessa</string>
     <!-- About -->
-    <string name="open_changelog">Open Changelog</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
-    <string name="contributors_title">Contributors</string>
-    <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
-    <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
-    <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
+    <string name="open_changelog">Avaa muutosloki</string>
+    <string name="pref_cat_about_title" maxLength="41">Tietoja</string>
+    <string name="contributors_title">Kehittäjät ja avustajat</string>
+    <string name="about_contributors_description"><![CDATA[Tässä ovat upeat  <a href=\"%1$s\">kehittäjämme ja avustajamme</a>. Sinäkin voit auttaa AnkiDroidia ohjelmoimalla, kääntämällä, lahjoittamalla ja <a href=\"%2$s\">monin muin tavoin</a>!]]></string>
+    <string name="license">Lisenssi</string>
+    <string name="license_description"><![CDATA[AnkiDroid julkaistaan <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a>  -lisensseillä, ja lähdekoodi on saatavilla <a href=\"%3$s\">GitHubissa</a>]]></string>
+    <string name="donate_description"><![CDATA[Voit tukea AnkiDroid\:n kehitystä <a href=\"%1$s\">lahjoittamalla</a>. Mikä tahansa summa on erittäin tervetullut.]]></string>
     <!-- Controls -->
-    <string name="binding_add_gesture">Add gesture</string>
-    <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="binding_add_gesture">Lisää kosketusele</string>
+    <string name="binding_replace_gesture">Korvaa kosketusele</string>
+    <string name="binding_add_key">Lisää näppäin</string>
+    <string name="binding_replace_key">Korvaa näppäin</string>
+    <string name="key_picker_default_press_key">Paina näppäintä</string>
     <!-- Select card side -->
-    <string name="card_side_selection_title">Select card side</string>
-    <string name="card_side_question">Question</string>
-    <string name="card_side_answer">Answer</string>
-    <string name="card_side_both">Question &amp; Answer</string>
-    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">Q: %s</string>
-    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">A: %s</string>
+    <string name="card_side_selection_title">Valitse kortin puoli</string>
+    <string name="card_side_question">Kysymys</string>
+    <string name="card_side_answer">Vastaus</string>
+    <string name="card_side_both">Kysymys ja vastaus</string>
+    <string name="display_binding_card_side_question" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the question">K: %s</string>
+    <string name="display_binding_card_side_answer" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to the answer">V: %s</string>
     <string name="display_binding_card_side_both" comment="When displaying a key bind on a preference this formatter is used if the bind only applies to both the question and the answer">%s</string>
     <!-- Binding Preference -->
-    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Remove ‘%s’</string>
-    <string name="bindings_already_bound">Already bound to ‘%s’</string>
+    <string name="binding_remove_binding" comment="The parameter is the name of the key/gesture.     Keys cannot be translated yet.">Poista ”%s”</string>
+    <string name="bindings_already_bound">Jo käytössä kohteessa \"%s\"</string>
     <!-- Advanced -->
-    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
+    <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Kokeellinen</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
-    <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
+    <string name="pref_cat_dev_options" maxLength="41">Kehittäjän asetukset</string>
+    <string name="dev_options_enabled_pref" maxLength="41">Ota kehittäjän asetukset käyttöön</string>
+    <string name="disable_dev_options">Poista kehittäjän asetukset käytöstä</string>
+    <string name="dev_options_warning">        Ymmärrä mitä olet tekemässä, ennen kuin otat kehittäjän asetukset käyttöön. Nämä asetukset ovat vaarallisia ja voivat rikkoa sovelluksen tai vahingoittaa kokoelmaasi.\n\nHuomaa, että nämä asetukset eivät sovellu useimmille käyttäjille, ja siksi niitä ei ole käännetty, joten ne ovat englanniksi.
     </string>
     <!-- #######################################################################################
          #################################### Backup options ###################################
          ####################################################################################### -->
-    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid periodically backs up your collection.
-        After backups are more than two days old,
-        AnkiDroid will start removing some of them to free up disk space.
+    <string name="pref__backups_help__summary"><![CDATA[        AnkiDroid varmuuskopioi kokoelmasi säännöllisesti.
+        Kun varmuuskopiot ovat yli kaksi päivää vanhoja,
+        AnkiDroid alkaa poistaa joitakin niistä vapauttaakseen levytilaa.
         <br><br>
-        Note that media files are not backed up.
-        To be safe, please periodically synchronize your collection, or back up exports of it.
+        Huomaa, että mediatiedostoja ei varmuuskopioida.
+        Varmuuden vuoksi synkronoi kokoelmasi säännöllisesti tai varmuuskopioi ulos viedyt kopiot.
         <br><br>
-        You can restore from a backup and export your collection in the deck list menu.
+        Voit palauttaa varmuuskopion ja viedä kokoelmasi pakkaluettelon valikosta.
     ]]></string>
-    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Automaattisten varmuuskopioiden aikaväli, minuutteja</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">Säilytettävien päivittäisten varmuuskopioiden määrä</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Säilytettävien viikottaisten varmuuskopioiden määrä</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Säilytettävien kuukausittaisten varmuuskopioiden määrä</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
-    <string name="pref__manage_space__screen_title">Manage space</string>
+    <string name="pref__manage_space__screen_title">Hallitse tallennustilaa</string>
     <!-- TextWidgetPreference widget text -->
-    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Error</string>
-    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Calcu-\nlating&#8230;</string>
+    <string name="pref__widget_text__error" comment="Text in a small box on the end of a preference, indicating a generic error.         Must be VERY short. Can be one or two lines.">Virhe</string>
+    <string name="pref__widget_text__calculating" comment="Text in a small box on the end of a preference,         indicating that the value, such as folder size on disk, is being calculated.         Must be VERY short. Can be one or two lines.">Hetki...</string>
     <plurals name="pref__widget_text__n_files_n_bytes" comment="Text in a small box on the end of a preference,         showing some statistics about a folder on disk if a form of “12 files\n26 MB”.         Must be VERY short. Can be one or two lines.">
-        <item quantity="one">%1$d file\n%2$s</item>
-        <item quantity="other">%1$d files\n%2$s</item>
+        <item quantity="one">%1$d tiedosto\n%2$s</item>
+        <item quantity="other">%1$d tiedostoa\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
-    <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
-    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Poista käyttämättömät mediatiedostot</string>
+    <string name="pref__delete_unused_media_files__summary">Poista kuvat ja muut mediatiedostot, joiden nimi ei ala merkillä _ ja jotka eivät ole käytössä missään muistiinpanossa.</string>
+    <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Poista käyttämättömät mediatiedostot</string>
     <!-- Delete backups -->
-    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Delete backups</string>
-    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
-    <string name="progress__deleting_backups">Deleting backups&#8230;</string>
+    <string name="pref__delete_backups__title" maxLength="41" comment="Preference title">Poista varmuuskopioita</string>
+    <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Poista varmuuskopioita</string>
+    <string name="progress__deleting_backups">Poistetaan varmuuskopioita&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
-    <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
-    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
-    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Poista kokoelma</string>
+    <string name="pref__delete_collection__summary">Poista kokoelma, mediatiedostot ja varmuuskopiot. Sovellusasetuksia ei poisteta</string>
+    <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Poista kokoelma</string>
+    <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Haluatko varmasti poistaa kokoelman, mediatiedostot ja varmuuskopiot?\n\nHuomautus: tämä toiminto sulkee ikkunan.</string>
+    <string name="progress__deleting_collection">Poistetaan kokoelmaa...</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
-    <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
-    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
-    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Poista kaikki</string>
+    <string name="pref__delete_everything__summary">Poista kokoelma, mediatiedostot, varmuuskopiot ja asetukset</string>
+    <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Poista kaikki</string>
+    <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Haluatko varmasti poistaa kaikki tiedot? Tämä sisältää kokoelmasi, mediatiedostot, varmuuskopiot ja asetukset.\n\Huomautus: tämä toiminto sulkee ikkunan.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
-    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
-    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Poista sovelluksen tiedot</string>
+    <string name="pref__delete_app_data__summary">Poista asetukset ja muut sovelluksen tiedot</string>
+    <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Poista sovelluksen tiedot</string>
+    <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Haluatko varmasti poistaa sovelluksen tiedot? Tämä sisältää asetukset ja muut sovelluksen tiedot.\n\nHuomautus: tämä toiminto sulkee ikkunan.</string>
     <!-- #######################################################################################
          ##### Generic preference summaries & snackbars that are shown on preference click #####
          ####################################################################################### -->
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
-    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
-    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">Ei kokoelmaa</string>
+    <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Virhe</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Haetaan&#8230;</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Lasketaan&#8230;</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Kokoelmaa ei ole olemassa</string>
 </resources>

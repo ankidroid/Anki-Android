@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">Aktuella idag:</string>
     <string name="studyoptions_new_total">Totalt antal nya kort:</string>
     <string name="studyoptions_total_cards">Totalt antal kort:</string>
-    <string name="studyoptions_eta">Uppskattad tid (min):</string>
     <string name="studyoptions_start">Plugga nu</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Expandera</string>
     <string name="collapse">Minimera</string>
     <string name="study_more">Studera mer</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d kort i kö (%2$s)</item>
-        <item quantity="other">%1$d kort i kö (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minut kvar</item>
         <item quantity="other">%d minuter kvar</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Vänligen ge AnkiDroid behörigheten \'Lagring\' för att fortsätta</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f må</string>
-    <string name="time_quantity_years">%.1f år</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Bygger om filtrerad kortlek...</string>
     <string name="rebuild_cram_label">Bygg om</string>
     <string name="empty_cram_label">Töm</string>

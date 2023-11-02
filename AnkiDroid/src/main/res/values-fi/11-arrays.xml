@@ -44,26 +44,26 @@
     Now arrays are defined in constants.xml, and the strings are here -->
     <!-- error_reporting_choice_labels -->
     <string name="error_reporting_choice_always_report">Raportoi aina</string>
-    <string name="error_reporting_choice_never_report">Älä raportoi koskaan</string>
-    <string name="error_reporting_choice_ask_user">Kysy</string>
+    <string name="error_reporting_choice_never_report">Älä koskaan raportoi</string>
+    <string name="error_reporting_choice_ask_user">Kysy joka kerta</string>
     <!-- leech_action_labels -->
     <!-- 01-core:menu_suspend_card -->
     <!-- new_order_labels -->
     <!-- cram_deck_conf_order_labels -->
-    <string name="cram_deck_conf_order_oldest_seen_first">Vanhimmat nähdyt ensin</string>
+    <string name="cram_deck_conf_order_oldest_seen_first">Oppimispäivämäärän mukaan, vanhin ensin</string>
     <string name="cram_deck_conf_order_random">Satunnainen</string>
-    <string name="cram_deck_conf_order_increasing_intervals">Kasvavin välein</string>
-    <string name="cram_deck_conf_order_decreasing_intervals">Vähentyvin välein</string>
-    <string name="cram_deck_conf_order_most_lapsed">Eniten unohdetut</string>
-    <string name="cram_deck_conf_order_order_added">Lisäysjärjestyksessä</string>
-    <string name="cram_deck_conf_order_order_due">Näyttöjärjestyksessä</string>
-    <string name="cram_deck_conf_order_latest_added_first">Viimeisimmät lisätyt ensin</string>
+    <string name="cram_deck_conf_order_increasing_intervals">Kertausvälien mukaan kasvavassa järjestyksessä</string>
+    <string name="cram_deck_conf_order_decreasing_intervals">Kertausvälien mukaan laskevassa järjestyksessä</string>
+    <string name="cram_deck_conf_order_most_lapsed">Eniten virheitä</string>
+    <string name="cram_deck_conf_order_order_added">Lisäysjärjestyksen mukaan</string>
+    <string name="cram_deck_conf_order_order_due">Erääntymisjärjestyksen mukaan</string>
+    <string name="cram_deck_conf_order_latest_added_first">Lisäyspäivämäärän mukaan, uusin ensin</string>
     <string name="cram_deck_conf_order_relative_overdueness">Suhteellinen erääntyneisyys</string>
     <!-- add_to_cur_labels -->
     <string name="add_to_deck_use_current_deck">Käytä tätä pakkaa</string>
-    <string name="add_to_deck_decide_by_note_type">Valitse korttityyppi</string>
+    <string name="add_to_deck_decide_by_note_type">Päätä muistiinpanotyypin perusteella</string>
     <!-- theme labels -->
-    <string name="theme_follow_system">Follow system</string>
+    <string name="theme_follow_system">Järjestelmän teeman mukainen</string>
     <!-- day_theme_labels -->
     <string name="day_theme_light">Vaalea</string>
     <string name="day_theme_plain">Pelkistetty</string>
@@ -79,28 +79,28 @@
     <string name="html_size_code_x_large">x-large</string>
     <string name="html_size_code_xx_large">xx-large</string>
     <!-- gestures_labels -->
-    <string name="answer_again">Answer again</string>
-    <string name="answer_hard">Answer hard</string>
-    <string name="answer_good">Answer good</string>
-    <string name="answer_easy">Answer easy</string>
-    <string name="gesture_play">Play media</string>
-    <string name="gesture_abort_learning">Abort learning</string>
-    <string name="gesture_flag_red">Toggle Red Flag</string>
-    <string name="gesture_flag_orange">Toggle Orange Flag</string>
-    <string name="gesture_flag_green">Toggle Green Flag</string>
-    <string name="gesture_flag_blue">Toggle Blue Flag</string>
-    <string name="gesture_flag_pink">Toggle Pink Flag</string>
-    <string name="gesture_flag_turquoise">Toggle Turquoise Flag</string>
-    <string name="gesture_flag_purple">Toggle Purple Flag</string>
-    <string name="gesture_flag_remove">Remove Flag</string>
-    <string name="gesture_page_up">Page Up</string>
-    <string name="gesture_page_down">Page Down</string>
-    <string name="gesture_abort_sync">Abort Learning and Sync</string>
-    <string name="gesture_toggle_whiteboard">Toggle Whiteboard</string>
-    <string name="gesture_show_hint">Show Hint</string>
-    <string name="gesture_show_all_hints">Show All Hints</string>
-    <string name="record_voice">Record Voice</string>
-    <string name="replay_voice">Replay Voice</string>
-    <string name="automatic_answer_option_2">Hard (Good if unavailable)</string>
-    <string name="automatic_answer_option_4">Easy (Good if unavailable)</string>
+    <string name="answer_again">Vastaa uudelleen</string>
+    <string name="answer_hard">Vastaa \"vaikea\"</string>
+    <string name="answer_good">Vastaa \"hyvä\"</string>
+    <string name="answer_easy">Vastaa \"helppo\"</string>
+    <string name="gesture_play">Toista media</string>
+    <string name="gesture_abort_learning">Keskeytä oppiminen</string>
+    <string name="gesture_flag_red">Punainen lippu päälle/pois</string>
+    <string name="gesture_flag_orange">Oranssi lippu päälle/pois</string>
+    <string name="gesture_flag_green">Vihreä lippu päälle/pois</string>
+    <string name="gesture_flag_blue">Sininen lippu päälle/pois</string>
+    <string name="gesture_flag_pink">Pinkki lippu päälle/pois</string>
+    <string name="gesture_flag_turquoise">Turkoosi lippu päälle/pois</string>
+    <string name="gesture_flag_purple">Violetti lippu päälle/pois</string>
+    <string name="gesture_flag_remove">Poista lippu</string>
+    <string name="gesture_page_up">Sivu ylös</string>
+    <string name="gesture_page_down">Sivu alas</string>
+    <string name="gesture_abort_sync">Keskeytä oppiminen ja synkronoi</string>
+    <string name="gesture_toggle_whiteboard">Kirjoitustaulu käyttöön/pois käytöstä</string>
+    <string name="gesture_show_hint">Näytä vihje</string>
+    <string name="gesture_show_all_hints">Näytä kaikki vihjeet</string>
+    <string name="record_voice">Nauhoita ääntä</string>
+    <string name="replay_voice">Toista ääni uudelleen</string>
+    <string name="automatic_answer_option_2">Vaikea (Hyvä, jos ei saatavilla</string>
+    <string name="automatic_answer_option_4">Helppo (Hyvä, jos ei saatavilla)</string>
 </resources>

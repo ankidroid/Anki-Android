@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">Iscadint oe:</string>
     <string name="studyoptions_new_total">Cartas noas totales:</string>
     <string name="studyoptions_total_cards">Cartas totales:</string>
-    <string name="studyoptions_eta">Tempus previstu (min):</string>
     <string name="studyoptions_start">Istùdia</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Ismànnia</string>
     <string name="collapse">Mìnima</string>
     <string name="study_more">Istùdia de prus</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d carta de revisionare (%2$s)</item>
-        <item quantity="other">%1$d cartas de revisionare (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Mancat %d minutu</item>
         <item quantity="other">Mancant %d minutos</item>
@@ -133,22 +128,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Dae a AnkiDroid su permissu de Archiviatzione pro sighire</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d o %2$d m</string>
-    <string name="time_quantity_hours">%d o</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d o</string>
-    <string name="time_quantity_months">%.1f me</string>
-    <string name="time_quantity_years">%.1f a</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Torrende a fraigare su matzu filtradu&#8230;</string>
     <string name="rebuild_cram_label">Torra a fraigare</string>
     <string name="empty_cram_label">Isbòida</string>

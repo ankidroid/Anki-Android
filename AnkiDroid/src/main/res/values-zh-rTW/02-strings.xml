@@ -100,8 +100,6 @@
         <item>已建立 </item>
         <item>已修改筆記</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">套用</string>
     <string name="filter_by_flags">標籤</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">修改今日新卡片上限</string>

@@ -100,8 +100,6 @@
         <item>Создано</item>
         <item>Запись изменена</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Применить</string>
     <string name="filter_by_flags">Флажки</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Увеличить лимит новых</string>

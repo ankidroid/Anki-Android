@@ -55,15 +55,11 @@
     <string name="studyoptions_due_today">오늘 학습할 카드:</string>
     <string name="studyoptions_new_total">전체 새 카드:</string>
     <string name="studyoptions_total_cards">전체 카드:</string>
-    <string name="studyoptions_eta">예상 소요 시간 (분):</string>
     <string name="studyoptions_start">학습</string>
     <!-- DeckPicker.kt -->
     <string name="expand">확장</string>
     <string name="collapse">감추기</string>
     <string name="study_more">더 학습하기</string>
-    <plurals name="deckpicker_title">
-        <item quantity="other">%1$d개의 카드 예정 (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d분 남음</item>
     </plurals>
@@ -127,22 +123,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">계속하기 위해서는 AnkiDroid에 \'저장소\'권한이 필요합니다.</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d 초</string>
-    <string name="time_quantity_minutes">%d 분</string>
-    <string name="time_quantity_hours_minutes">%1$d시간 %2$d분</string>
-    <string name="time_quantity_hours">%d 시</string>
-    <string name="time_quantity_days">%d 일</string>
-    <string name="time_quantity_days_hours">%1$d일 %2$d시간</string>
-    <string name="time_quantity_months">%.1f 월</string>
-    <string name="time_quantity_years">%.1f 년</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">필터링된 뭉치를 재구성하는 중...</string>
     <string name="rebuild_cram_label">재생성</string>
     <string name="empty_cram_label">비우기</string>

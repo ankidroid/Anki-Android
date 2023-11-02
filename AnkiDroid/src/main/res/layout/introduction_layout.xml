@@ -94,7 +94,6 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/get_started"
-        style="@style/LargeFilledButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
@@ -107,7 +106,6 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sync_profile"
-        style="@style/LargeFilledButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="62dp"

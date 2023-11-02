@@ -70,7 +70,6 @@
         android:layout_marginTop="10dp">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/get_started"
-            style="@style/LargeFilledButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/material_blue_500"
@@ -81,7 +80,6 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sync_profile"
-            style="@style/LargeFilledButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/material_blue_500"

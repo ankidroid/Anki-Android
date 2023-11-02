@@ -100,8 +100,6 @@
         <item>Vytvorené</item>
         <item>Poznámka modifikovaná</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Použiť</string>
     <string name="filter_by_flags">Vlajky</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Modifikovať dnešný limit nových kartičiek</string>

@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">ଆଜି ବାକି:</string>
     <string name="studyoptions_new_total">ସମୁଦାୟ ନୂତନ ପତ୍ର:</string>
     <string name="studyoptions_total_cards">ସମୁଦାୟ ପତ୍ର:</string>
-    <string name="studyoptions_eta">ଆନୁମାନିକ ସମୟ (ମିନିଟ୍):</string>
     <string name="studyoptions_start">ଅଧ୍ୟୟନ</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ପ୍ରସାରଣ</string>
     <string name="collapse">ସଙ୍କୋଚନ</string>
     <string name="study_more">ଆହୁରି ଅଧ୍ୟୟନ କରିବେ</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$dଟିଏ ପତ୍ର ବାକି (%2$s)</item>
-        <item quantity="other">%1$dଟି ପତ୍ର ବାକି (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d ମିନିଟ୍ ବାକି ଅଛି</item>
         <item quantity="other">%d ମିନିଟ୍ ବାକି ଅଛି</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">ଜାରି ରଖିବାକୁ ଦୟାକରି AnkiDroid କୁ ‘ଷ୍ଟୋରେଜ୍’ ଅନୁମତି ଦିଅନ୍ତୁ</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d ସେ</string>
-    <string name="time_quantity_minutes">%d ମି</string>
-    <string name="time_quantity_hours_minutes">%1$d ଘ %2$d ମି</string>
-    <string name="time_quantity_hours">%d ଘ</string>
-    <string name="time_quantity_days">%d ଦି</string>
-    <string name="time_quantity_days_hours">%1$d ଦି %2$d ଘ</string>
-    <string name="time_quantity_months">%.1f ମା</string>
-    <string name="time_quantity_years">%.1f ଵର୍ଷ</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">ଶୋଧିତ ତାସଖଣ୍ଡର ପୁନଃନିର୍ମାଣ&#8230;</string>
     <string name="rebuild_cram_label">ପୁନଃନିର୍ମାଣ</string>
     <string name="empty_cram_label">ଖାଲି</string>

@@ -55,19 +55,11 @@
     <string name="studyoptions_due_today">Athbhreithnigh inniu:</string>
     <string name="studyoptions_new_total">Cártaí nua iomlán:</string>
     <string name="studyoptions_total_cards">Cártaí iomlán:</string>
-    <string name="studyoptions_eta">Am meastar (noim):</string>
     <string name="studyoptions_start">Staidéar</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Méadaigh</string>
     <string name="collapse">Cuir i gceilt</string>
     <string name="study_more">Breis staidéir</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card due (%2$s)</item>
-        <item quantity="two">%1$d cards due (%2$s)</item>
-        <item quantity="few">%1$d cards due (%2$s)</item>
-        <item quantity="many">%1$d cards due (%2$s)</item>
-        <item quantity="other">%1$d (g)cinn de chártaí le hathbhreithniú (%2$s) </item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minute left</item>
         <item quantity="two">%d minutes left</item>
@@ -143,22 +135,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d noim</string>
-    <string name="time_quantity_hours_minutes">%1$d u %2$d n</string>
-    <string name="time_quantity_hours">%d u</string>
-    <string name="time_quantity_days">%d l</string>
-    <string name="time_quantity_days_hours">%1$d l %2$d u</string>
-    <string name="time_quantity_months">%.1f mí</string>
-    <string name="time_quantity_years">%.1f bl</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Tóg arís </string>
     <string name="empty_cram_label">Folamh</string>

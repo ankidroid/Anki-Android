@@ -55,17 +55,11 @@
     <string name="studyoptions_due_today">Potrebno dovršiti danas:</string>
     <string name="studyoptions_new_total">Ukupan broj novih kartica:</string>
     <string name="studyoptions_total_cards">Ukupan broj kartica:</string>
-    <string name="studyoptions_eta">Približno vrijeme (minute):</string>
     <string name="studyoptions_start">Uči</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Proširi</string>
     <string name="collapse">Sažmi</string>
     <string name="study_more">Uči više</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">Potrebno dovršiti %1$d karticu (%2$s)</item>
-        <item quantity="few">Potrebno dovršiti %1$d kartice (%2$s)</item>
-        <item quantity="other">Potrebno dovršiti %1$d kartica (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuta preostala</item>
         <item quantity="few">%d minute preostale</item>
@@ -135,22 +129,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Kako biste nastavili molim Vas dajte dozvolu AnkiDroid-u  za pristup \'Pohrani\'</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mj</string>
-    <string name="time_quantity_years">%.1f god</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Obnovi</string>
     <string name="empty_cram_label">Isprazni</string>

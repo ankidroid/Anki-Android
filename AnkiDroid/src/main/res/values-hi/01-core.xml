@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">आज बाकी:</string>
     <string name="studyoptions_new_total">कुल नए कार्ड:</string>
     <string name="studyoptions_total_cards">कुल कार्ड:</string>
-    <string name="studyoptions_eta">अनुमानित समय (मिनट):</string>
     <string name="studyoptions_start">पढ़ाई करें</string>
     <!-- DeckPicker.kt -->
     <string name="expand">विस्तार करें</string>
     <string name="collapse">संक्षिप्त करें</string>
     <string name="study_more">अधिक अध्ययन करें</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d कार्ड बाकी (%2$s)</item>
-        <item quantity="other">%1$d कार्ड बाकी (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d मिनट शेष</item>
         <item quantity="other">%d मिनट बचे हैं</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">जारी रखने के लिए कृपया AnkiDroid को \'स्टोरेज\' की अनुमति दें</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d एस</string>
-    <string name="time_quantity_minutes">%d मिनट</string>
-    <string name="time_quantity_hours_minutes">%1$d घंटा %2$d मिनट</string>
-    <string name="time_quantity_hours">%d घंटे</string>
-    <string name="time_quantity_days">%d दिन</string>
-    <string name="time_quantity_days_hours">%1$d दिन %2$d घंटा</string>
-    <string name="time_quantity_months">%.1f महीना</string>
-    <string name="time_quantity_years">%.1f साल</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">फ़िल्टर किए गए डेक का पुनर्निर्माण ...</string>
     <string name="rebuild_cram_label">पुनर्निर्माण</string>
     <string name="empty_cram_label">खाली</string>

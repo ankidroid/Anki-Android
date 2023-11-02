@@ -100,8 +100,6 @@
         <item>Skapad</item>
         <item>Anteckning ändrad</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Verkställ</string>
     <string name="filter_by_flags">Flaggor</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ändra dagens gräns för nya kort</string>

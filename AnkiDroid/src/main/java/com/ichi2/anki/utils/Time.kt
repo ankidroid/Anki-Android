@@ -21,7 +21,6 @@ import com.ichi2.libanki.utils.Time
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.math.abs
-import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.roundToInt
 
@@ -39,86 +38,6 @@ private const val TIME_HOUR = 60.0 * TIME_MINUTE
 private const val TIME_DAY = 24.0 * TIME_HOUR
 private const val TIME_MONTH = 30.0 * TIME_DAY
 private const val TIME_YEAR = 12.0 * TIME_MONTH
-
-/**
- * Return a string representing a time quantity
- *
- * Equivalent to Anki's anki/utils.py's shortTimeFmt, applied to a number.
- * I.e. equivalent to Anki's anki/utils.py's fmtTimeSpan, with the parameter short=True.
- *
- * @param context The application's environment.
- * @param time_s The time to format, in seconds
- * @return The time quantity string. Something like "3 s" or "1.7
- * yr". Only months and year have a number after the decimal.
- */
-fun timeQuantityTopDeckPicker(context: Context, time_s: Long): String {
-    val res = context.resources
-    // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
-    // hard-coded. See also 01-core.xml
-    return if (abs(time_s) < TIME_MINUTE) {
-        res.getString(R.string.time_quantity_seconds, time_s)
-    } else if (abs(time_s) < TIME_HOUR) {
-        res.getString(
-            R.string.time_quantity_minutes,
-            (time_s / TIME_MINUTE).roundToInt()
-        )
-    } else if (abs(time_s) < TIME_DAY) {
-        res.getString(
-            R.string.time_quantity_hours_minutes,
-            floor(time_s / TIME_HOUR).toInt(),
-            (time_s % TIME_HOUR / TIME_MINUTE).roundToInt()
-        )
-    } else if (abs(time_s) < TIME_MONTH) {
-        res.getString(
-            R.string.time_quantity_days_hours,
-            floor(time_s / TIME_DAY).toInt(),
-            (time_s % TIME_DAY / TIME_HOUR).roundToInt()
-        )
-    } else if (abs(time_s) < TIME_YEAR) {
-        res.getString(R.string.time_quantity_months, time_s / TIME_MONTH)
-    } else {
-        res.getString(R.string.time_quantity_years, time_s / TIME_YEAR)
-    }
-}
-
-/**
- * Return a string representing a time quantity
- *
- * Equivalent to Anki's anki/utils.py's shortTimeFmt, applied to a number.
- * I.e. equivalent to Anki's anki/utils.py's fmtTimeSpan, with the parameter short=True.
- *
- * @param context The application's environment.
- * @param time_s The time to format, in seconds
- * @return The time quantity string. Something like "3 s" or "1.7
- * yr". Only months and year have a number after the decimal.
- */
-fun timeQuantityNextIvl(context: Context, time_s: Long): String {
-    val res = context.resources
-    // N.B.: the integer s, min, h, d and (one decimal, rounded by format) double for month, year is
-    // hard-coded. See also 01-core.xml
-    return if (abs(time_s) < TIME_MINUTE) {
-        res.getString(R.string.time_quantity_seconds, time_s)
-    } else if (abs(time_s) < TIME_HOUR) {
-        res.getString(
-            R.string.time_quantity_minutes,
-            (time_s / TIME_MINUTE).roundToInt()
-        )
-    } else if (abs(time_s) < TIME_DAY) {
-        res.getString(
-            R.string.time_quantity_hours,
-            (time_s / TIME_HOUR).roundToInt()
-        )
-    } else if (abs(time_s) < TIME_MONTH) {
-        res.getString(
-            R.string.time_quantity_days,
-            (time_s / TIME_DAY).roundToInt()
-        )
-    } else if (abs(time_s) < TIME_YEAR) {
-        res.getString(R.string.time_quantity_months, time_s / TIME_MONTH)
-    } else {
-        res.getString(R.string.time_quantity_years, time_s / TIME_YEAR)
-    }
-}
 
 /**
  * Return a string representing how much time remains

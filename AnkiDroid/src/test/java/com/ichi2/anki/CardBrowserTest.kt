@@ -629,6 +629,20 @@ class CardBrowserTest : RobolectricTest() {
         assertThat("Result should contain one card", cardBrowser.cardCount, equalTo(1))
     }
 
+    @Test
+    fun `'notes-only mode' returns one card from each note`() = runTest {
+        // #14623: The functionality was broken
+        addNoteUsingBasicAndReversedModel("Hello", "World")
+        addNoteUsingBasicAndReversedModel("Hello", "Anki")
+
+        browserWithNoNewCards.apply {
+            searchAllDecks()
+            assertThat("Result should contain 4 cards", cardCount, equalTo(4))
+            switchCardOrNote(newCardsMode = false)
+            assertThat("Result should contain 2 cards (one per note)", cardCount, equalTo(2))
+        }
+    }
+
     private fun assertUndoDoesNotContain(browser: CardBrowser, @StringRes resId: Int) {
         val shadowActivity = shadowOf(browser)
         val item = shadowActivity.optionsMenu.findItem(R.id.action_undo)

@@ -55,15 +55,11 @@
     <string name="studyoptions_due_today">တစ်နေ့တာလေ့လာမှုပမာဏ</string>
     <string name="studyoptions_new_total">ကတ်အသစ်စုစုပေါင်း</string>
     <string name="studyoptions_total_cards">ကတ်စုစုပေါင်း</string>
-    <string name="studyoptions_eta">ခန့်မှန်းကြာချိန်</string>
     <string name="studyoptions_start">လေ့လာ</string>
     <!-- DeckPicker.kt -->
     <string name="expand">တိုးချဲ့ပါ</string>
     <string name="collapse">ဖျက်</string>
     <string name="study_more">ထပ်လေ့လာ</string>
-    <plurals name="deckpicker_title">
-        <item quantity="other">%1$d cards due (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d မိနစ်ကျန်သေးသည်</item>
     </plurals>
@@ -131,22 +127,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">ဆက်လုပ်ဆောင်နိုင်ဖို့AnkiDroidအတွက်နေရာချပေးပါ</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d ကြာချိန်</string>
-    <string name="time_quantity_minutes">%d မိနစ်</string>
-    <string name="time_quantity_hours_minutes">%1$d နာရီ %2$d မိနစ်</string>
-    <string name="time_quantity_hours">%d ကြာချိန်</string>
-    <string name="time_quantity_days">%d ရက်</string>
-    <string name="time_quantity_days_hours">%1$d နာရီ %2$d မိနစ်</string>
-    <string name="time_quantity_months">%.1f ကြာချိန်</string>
-    <string name="time_quantity_years">%.1f ကြာချိန်</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">ထပ်ဆင့်လုပ်ငန်းပြန်တည်ဆောက်</string>
     <string name="rebuild_cram_label">ပြန်လည်တည်ဆောက်</string>
     <string name="empty_cram_label">ဗလာ (သို့မဟုတ်)
