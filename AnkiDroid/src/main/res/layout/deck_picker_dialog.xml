@@ -29,7 +29,7 @@
         android:minHeight="?attr/actionBarSize"
         android:layout_alignParentTop="true"
         android:theme="@style/ActionBarStyle"
-        android:background="?attr/colorPrimary"
+        android:background="?attr/appBarColor"
         app:popupTheme="@style/ActionBar.Popup"
         tools:title="@string/search_deck"
         tools:menu="@menu/deck_picker_dialog_menu">
