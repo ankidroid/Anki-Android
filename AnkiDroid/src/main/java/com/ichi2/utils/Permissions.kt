@@ -34,23 +34,10 @@ import java.lang.Exception
 object Permissions {
     const val MANAGE_EXTERNAL_STORAGE = "android.permission.MANAGE_EXTERNAL_STORAGE"
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val tiramisuPhotosAndVideosPermissions = listOf(
-        Manifest.permission.READ_MEDIA_IMAGES,
-        Manifest.permission.READ_MEDIA_VIDEO
-    )
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    val tiramisuAudioPermission = Manifest.permission.READ_MEDIA_AUDIO
-
     val legacyStorageAccessPermissions = listOf(
         Manifest.permission.READ_EXTERNAL_STORAGE,
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
-
-    fun canUseCamera(context: Context): Boolean {
-        return hasPermission(context, Manifest.permission.CAMERA)
-    }
 
     fun canRecordAudio(context: Context): Boolean {
         return hasPermission(context, Manifest.permission.RECORD_AUDIO)
