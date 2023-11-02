@@ -59,9 +59,9 @@ class AudioTimer(listener: OnTimerTickListener) {
         val m = (duration / (1000 * 60)) % 60
         val h = (duration / (1000 * 60 * 60)) % 60
         return if (h > 0) {
-            "%02d:%02d:%02d:%02d".format(h, m, s, ms / 10)
+            "%02d:%02d:%02d.%02d".format(h, m, s, ms / 10)
         } else {
-            "%02d:%02d:%02d".format(m, s, ms / 10)
+            "%02d:%02d.%02d".format(m, s, ms / 10)
         }
     }
 
