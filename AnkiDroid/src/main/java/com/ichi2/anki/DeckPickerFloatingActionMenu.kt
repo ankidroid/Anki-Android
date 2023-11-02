@@ -25,6 +25,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.dialogs.CreateDeckDialog
 import com.ichi2.anki.ui.DoubleTapListener
 import timber.log.Timber
@@ -43,6 +44,7 @@ class DeckPickerFloatingActionMenu(
         view.findViewById(R.id.deckpicker_view) // Layout deck_picker.xml is attached here
     private val mStudyOptionsFrame: View? = view.findViewById(R.id.studyoptions_fragment)
     private val addNoteLabel: TextView = view.findViewById(R.id.add_note_label)
+    private var createDeckSnackbar: Snackbar? = null
 
     // Colors values obtained from attributes
     private val fabNormalColor = MaterialColors.getColor(mFabMain, R.attr.fab_normal)
@@ -67,6 +69,8 @@ class DeckPickerFloatingActionMenu(
         if (deckPicker.shownSnackbar != null && deckPicker.shownSnackbar!!.isShown) deckPicker.shownSnackbar!!.dismiss()
         if (deckPicker.syncSnackbar != null && deckPicker.syncSnackbar!!.isShown)deckPicker.syncSnackbar!!.dismiss()
         if (deckPicker.undoAllSnackbar != null && deckPicker.undoAllSnackbar!!.isShown)deckPicker.undoAllSnackbar!!.dismiss()
+        if (createDeckSnackbar != null && createDeckSnackbar!!.isShown)createDeckSnackbar!!.dismiss()
+
         if (deckPicker.animationEnabled()) {
             // Show with animation
             mAddSharedLayout.visibility = View.VISIBLE
@@ -348,7 +352,9 @@ class DeckPickerFloatingActionMenu(
                     null
                 )
                 createDeckDialog.setOnNewDeckCreated { deckPicker.updateDeckList() }
-                createDeckDialog.showDialog()
+                createDeckDialog.showDialog().positiveButton {
+                    createDeckSnackbar = createDeckDialog.createDeckSnack
+                }
             }
         }
         addDeckButton.setOnClickListener(addDeckListener)

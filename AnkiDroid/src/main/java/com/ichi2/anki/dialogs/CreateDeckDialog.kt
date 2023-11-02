@@ -27,6 +27,7 @@ import com.afollestad.materialdialogs.input.input
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.snackbar.showSnackbar
@@ -48,6 +49,7 @@ class CreateDeckDialog(
     private val deckDialogType: DeckDialogType,
     private val parentId: Long?
 ) {
+    var createDeckSnack: Snackbar? = null
     private var mPreviousDeckName: String? = null
     private var mOnNewDeckCreated: Consumer<Long>? = null
     private var mInitialDeckName = ""
@@ -203,7 +205,11 @@ class CreateDeckDialog(
 
     private fun displayFeedback(message: String, duration: Int = Snackbar.LENGTH_SHORT) {
         if (context is Activity) {
-            context.showSnackbar(message, duration)
+            context.showSnackbar(message, duration) {
+                if (context is DeckPicker) {
+                    createDeckSnack = this
+                }
+            }
         } else {
             showThemedToast(context, message, duration == Snackbar.LENGTH_SHORT)
         }
