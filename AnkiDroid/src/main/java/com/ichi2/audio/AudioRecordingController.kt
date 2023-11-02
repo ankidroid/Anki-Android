@@ -145,10 +145,11 @@ class AudioRecordingController :
                 isCleared -> startRecording(context, tempAudioPath!!)
                 else -> startRecording(context, tempAudioPath!!)
             }
-            CompatHelper.compat.vibrate(context, 50)
+            CompatHelper.compat.vibrate(context, 20)
         }
 
         saveButton.setOnClickListener {
+            CompatHelper.compat.vibrate(context, 20)
             stopAndSaveRecording()
             recordButton.visibility = View.GONE
             playAudioButton.visibility = View.VISIBLE
@@ -163,6 +164,7 @@ class AudioRecordingController :
         }
 
         cancelAudioRecordingButton.setOnClickListener {
+            CompatHelper.compat.vibrate(context, 20)
             isCleared = true
             clearRecording()
         }

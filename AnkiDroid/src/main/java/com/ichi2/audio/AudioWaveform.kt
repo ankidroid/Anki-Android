@@ -26,6 +26,8 @@ import android.view.View
 class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private var paint = Paint()
+    private var linePaint = Paint()
+    private var bgPaint = Paint()
     private var amplitudes = ArrayList<Float>()
     private var audioSpikes = ArrayList<RectF>()
 
@@ -39,7 +41,7 @@ class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, att
 
     init {
         paint.color = Color.rgb(244, 81, 30)
-        sw = resources.displayMetrics.widthPixels.toFloat()
+        sw = (resources.displayMetrics.widthPixels / 2).toFloat()
         maxSpike = (sw / (w + d)).toInt()
     }
 
@@ -49,7 +51,7 @@ class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, att
         audioSpikes.clear()
         val amps = amplitudes.takeLast(maxSpike)
         for (a in amps.indices) {
-            val left = sw - a * (w + d)
+            val left = a * (w + d)
             val top = sh / 2 - amps[a] / 2
             val right = left + w
             val bottom = top + amps[a]
@@ -68,8 +70,22 @@ class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, att
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        val backgroundPaint = bgPaint.apply {
+            color = Color.argb(20, 229, 228, 226)
+        }
+        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
+
         audioSpikes.forEach {
             canvas.drawRoundRect(it, radius, radius, paint)
         }
+        val centerX = width / 2f
+        val startY = 0f
+        val endY = height.toFloat()
+        val ml = linePaint.apply {
+            color = Color.rgb(33, 150, 243)
+            style = Paint.Style.STROKE
+            strokeWidth = 5f
+        }
+        canvas.drawLine(centerX, startY, centerX, endY, ml)
     }
 }

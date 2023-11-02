@@ -109,10 +109,12 @@ class AudioRecorder {
     }
 
     fun resume() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mRecorder.resume()
-        } else {
-            mRecorder.start()
+        if (this::mRecorder.isInitialized) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mRecorder.resume()
+            } else {
+                mRecorder.start()
+            }
         }
     }
 }
