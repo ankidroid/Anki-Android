@@ -46,7 +46,8 @@ class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, att
     }
 
     fun addAmplitude(amp: Float) {
-        val norm = (amp.toInt() / 7).coerceAtMost(300).toFloat()
+        // minimum height 6 is assigned by default to avoid blank spikes, making the UI consistent
+        val norm = (amp.toInt() / 7).coerceAtMost(300).coerceAtLeast(6).toFloat()
         amplitudes.add(norm)
         audioSpikes.clear()
         val amps = amplitudes.takeLast(maxSpike)
@@ -81,11 +82,11 @@ class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, att
         val centerX = width / 2f
         val startY = 0f
         val endY = height.toFloat()
-        val ml = linePaint.apply {
+        val verticalLine = linePaint.apply {
             color = Color.rgb(33, 150, 243)
             style = Paint.Style.STROKE
             strokeWidth = 5f
         }
-        canvas.drawLine(centerX, startY, centerX, endY, ml)
+        canvas.drawLine(centerX, startY, centerX, endY, verticalLine)
     }
 }

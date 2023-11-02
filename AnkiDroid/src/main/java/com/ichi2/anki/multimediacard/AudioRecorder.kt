@@ -30,6 +30,7 @@ import java.io.IOException
 class AudioRecorder {
     private lateinit var mRecorder: MediaRecorder
     private var mOnRecordingInitialized: Runnable? = null
+    private var previousNonZeroAmplitude = 0
     private fun initMediaRecorder(context: Context, audioPath: String): MediaRecorder {
         val mr = CompatHelper.compat.getMediaRecorder(context)
         mr.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -89,10 +90,16 @@ class AudioRecorder {
     }
 
     fun maxAmplitude(): Int {
-        return if (this::mRecorder.isInitialized) {
+        val currentAmplitude = if (this::mRecorder.isInitialized) {
             mRecorder.maxAmplitude
         } else {
             0
+        }
+        return if (currentAmplitude == 0) {
+            previousNonZeroAmplitude
+        } else {
+            previousNonZeroAmplitude = currentAmplitude
+            currentAmplitude
         }
     }
 

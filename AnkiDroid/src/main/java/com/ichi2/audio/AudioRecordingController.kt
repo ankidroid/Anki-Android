@@ -23,6 +23,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.OrientationEventListener
 import android.view.View
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -92,6 +93,7 @@ class AudioRecordingController :
         val inflatedLayout =
             layoutInflater.inflate(R.layout.activity_audio_recording, null) as LinearLayout
         layout.addView(inflatedLayout, LinearLayout.LayoutParams.MATCH_PARENT)
+        (context as Activity).window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         context.apply {
             // add preview of the field data to provide context to the user
@@ -155,7 +157,7 @@ class AudioRecordingController :
             playAudioButton.visibility = View.VISIBLE
             playAudioButtonLayout.visibility = View.VISIBLE
             recordAudioButtonLayout.visibility = View.GONE
-            (context as Activity).showSnackbar(context.resources.getString(R.string.audio_saved))
+            context.showSnackbar(context.resources.getString(R.string.audio_saved))
             prepareAudioPlayer()
         }
 
