@@ -19,7 +19,7 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ActionBarStyle"
             android:layout_alignParentTop="true"
-            android:background="?attr/colorPrimary"
+            android:background="?attr/appBarColor"
             app:popupTheme="@style/ActionBar.Popup"
             app:navigationContentDescription="@string/abc_action_bar_up_description"
             app:navigationIcon="?attr/homeAsUpIndicator"/>
