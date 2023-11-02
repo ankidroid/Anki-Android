@@ -75,7 +75,7 @@
                 app:backgroundTint="@color/material_grey_100"
                 app:icon="@drawable/ic_record"
                 app:iconPadding="0dp"
-                app:iconSize="40dp"
+                app:iconSize="50dp"
                 app:iconTint="@color/flag_red"
                 app:strokeColor="@color/flag_red"
                 app:strokeWidth="4dp" />
@@ -156,7 +156,7 @@
                 app:backgroundTint="@color/material_grey_100"
                 app:icon="@drawable/round_play_arrow_24"
                 app:iconPadding="0dp"
-                app:iconSize="40dp"
+                app:iconSize="50dp"
                 app:iconTint="@color/flag_red"
                 app:strokeColor="@color/flag_red"
                 app:strokeWidth="4dp" />

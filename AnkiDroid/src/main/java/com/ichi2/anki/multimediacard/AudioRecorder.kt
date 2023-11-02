@@ -40,9 +40,7 @@ class AudioRecorder {
     }
 
     private fun onRecordingInitialized() {
-        if (mOnRecordingInitialized != null) {
-            mOnRecordingInitialized?.run()
-        }
+        mOnRecordingInitialized?.run()
     }
 
     @Throws(IOException::class)

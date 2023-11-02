@@ -23,7 +23,7 @@ class AudioTimer(listener: OnTimerTickListener) {
     private var runnable: Runnable
 
     private var duration = 0L
-    private var delay = 100L
+    private var delay = 50L
     init {
         runnable = object : Runnable {
             override fun run() {
@@ -58,18 +58,6 @@ class AudioTimer(listener: OnTimerTickListener) {
         val s = (duration / 1000) % 60
         val m = (duration / (1000 * 60)) % 60
         val h = (duration / (1000 * 60 * 60)) % 60
-        return if (h > 0) {
-            "%02d:%02d:%02d:%02d".format(h, m, s, ms / 10)
-        } else {
-            "%02d:%02d:%02d".format(m, s, ms / 10)
-        }
-    }
-
-    fun formatTime(time: Long): String {
-        val ms = time % 1000
-        val s = (time / 1000) % 60
-        val m = (time / (1000 * 60)) % 60
-        val h = (time / (1000 * 60 * 60)) % 60
         return if (h > 0) {
             "%02d:%02d:%02d:%02d".format(h, m, s, ms / 10)
         } else {
