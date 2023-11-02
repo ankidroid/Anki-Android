@@ -22,7 +22,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
-
+// TODO : Middle blue line should move left->mid https://github.com/ankidroid/Anki-Android/pull/14591#issuecomment-1791037102
 class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
     private var paint = Paint()
