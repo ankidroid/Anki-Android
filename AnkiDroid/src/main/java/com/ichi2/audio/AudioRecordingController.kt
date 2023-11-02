@@ -193,7 +193,7 @@ class AudioRecordingController :
             setDataSource(tempAudioPath)
             prepare()
         }
-        audioTimeView.text = "00:00:00"
+        audioTimeView.text = "00:00.00"
     }
 
     private fun playPausePlayer() {
@@ -238,7 +238,7 @@ class AudioRecordingController :
                 strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
                 setIconResource(R.drawable.round_play_arrow_24)
             }
-            audioTimeView.text = "00:00:00"
+            audioTimeView.text = "00:00.00"
         }
     }
 
@@ -273,7 +273,7 @@ class AudioRecordingController :
         isRecording = false
         saveButton.isEnabled = false
         cancelAudioRecordingButton.isEnabled = false
-        audioTimeView.text = "00:00:00"
+        audioTimeView.text = "00:00.00"
         audioWaveform.clear()
         saveRecording()
     }
@@ -303,7 +303,7 @@ class AudioRecordingController :
         cancelAudioRecordingButton.isEnabled = false
         audioRecorder.stopRecording()
         tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
-        audioTimeView.text = "00:00:00"
+        audioTimeView.text = "00:00.00"
         audioWaveform.clear()
         isPaused = false
         isRecording = false
