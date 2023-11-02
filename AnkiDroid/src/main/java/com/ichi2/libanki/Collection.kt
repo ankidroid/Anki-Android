@@ -418,8 +418,24 @@ open class Collection(
 
     /** Return a list of card ids  */
     @RustCleanup("Remove in V16.") // Not in libAnki
-    fun findOneCardByNote(query: String): List<Long> {
-        return findNotes(query, SortOrder.NoOrdering())
+    fun findOneCardByNote(query: String): List<CardId> {
+        // This function shouldn't exist and CardBrowser should be modified to use Notes,
+        // so not much effort was expended here
+
+        val noteIds = findNotes(query, SortOrder.NoOrdering())
+        // select the card with the lowest `ord` to show
+        return db.queryLongList(
+            """
+SELECT c.id
+FROM (
+  SELECT nid, MIN(ord) AS ord
+  FROM cards
+  WHERE nid IN ${Utils.ids2str(noteIds)} 
+  GROUP BY nid
+) AS card_with_min_ord
+JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.ord;
+            """.trimMargin()
+        )
     }
 
     @RustCleanup("Calling code should handle returned OpChanges")
