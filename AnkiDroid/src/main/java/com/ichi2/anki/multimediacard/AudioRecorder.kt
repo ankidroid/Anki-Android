@@ -28,7 +28,7 @@ import timber.log.Timber
 import java.io.IOException
 
 class AudioRecorder {
-    private lateinit var mediaRecorder: MediaRecorder
+    private lateinit var mRecorder: MediaRecorder
     private var mOnRecordingInitialized: Runnable? = null
     private fun initMediaRecorder(context: Context, audioPath: String): MediaRecorder {
         val mr = CompatHelper.compat.getMediaRecorder(context)
@@ -41,7 +41,7 @@ class AudioRecorder {
 
     private fun onRecordingInitialized() {
         if (mOnRecordingInitialized != null) {
-            mOnRecordingInitialized!!.run()
+            mOnRecordingInitialized?.run()
         }
     }
 
@@ -51,14 +51,14 @@ class AudioRecorder {
         try {
             // try high quality AAC @ 44.1kHz / 192kbps first
             // can throw IllegalArgumentException if codec isn't supported
-            mediaRecorder = initMediaRecorder(context, audioPath)
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-            mediaRecorder.setAudioChannels(2)
-            mediaRecorder.setAudioSamplingRate(44100)
-            mediaRecorder.setAudioEncodingBitRate(192000)
+            mRecorder = initMediaRecorder(context, audioPath)
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            mRecorder.setAudioChannels(2)
+            mRecorder.setAudioSamplingRate(44100)
+            mRecorder.setAudioEncodingBitRate(192000)
             // this can also throw IOException if output path is invalid
-            mediaRecorder.prepare()
-            mediaRecorder.start()
+            mRecorder.prepare()
+            mRecorder.start()
             highSampling = true
         } catch (e: Exception) {
             Timber.w(e)
@@ -67,16 +67,16 @@ class AudioRecorder {
         if (!highSampling) {
             // if we are here, either the codec didn't work or output file was invalid
             // fall back on default
-            mediaRecorder = initMediaRecorder(context, audioPath)
-            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-            mediaRecorder.prepare()
-            mediaRecorder.start()
+            mRecorder = initMediaRecorder(context, audioPath)
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            mRecorder.prepare()
+            mRecorder.start()
         }
     }
 
     fun stopRecording() {
-        if (this::mediaRecorder.isInitialized) {
-            mediaRecorder.stop()
+        if (this::mRecorder.isInitialized) {
+            mRecorder.stop()
         }
     }
 
@@ -85,32 +85,34 @@ class AudioRecorder {
     }
 
     fun release() {
-        if (this::mediaRecorder.isInitialized) {
-            mediaRecorder.release()
+        if (this::mRecorder.isInitialized) {
+            mRecorder.release()
         }
     }
 
     fun maxAmplitude(): Int {
-        return if (this::mediaRecorder.isInitialized) {
-            mediaRecorder.maxAmplitude
+        return if (this::mRecorder.isInitialized) {
+            mRecorder.maxAmplitude
         } else {
             0
         }
     }
 
     fun pause() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mediaRecorder.pause()
-        } else {
-            mediaRecorder.stop()
+        if (this::mRecorder.isInitialized) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mRecorder.pause()
+            } else {
+                mRecorder.stop()
+            }
         }
     }
 
     fun resume() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            mediaRecorder.resume()
+            mRecorder.resume()
         } else {
-            mediaRecorder.start()
+            mRecorder.start()
         }
     }
 }

@@ -31,8 +31,6 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.utils.Permissions.canRecordAudio
 import timber.log.Timber
-import java.io.File
-import java.io.IOException
 
 // Not designed for visual editing
 @SuppressLint("ViewConstructor")
@@ -341,17 +339,6 @@ class AudioView private constructor(context: Context, resPlay: Int, resPause: In
                 )
                 null
             }
-        }
-
-        fun generateTempAudioFile(context: Context): String? {
-            val tempAudioPath: String? = try {
-                val storingDirectory = context.cacheDir
-                File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
-            } catch (e: IOException) {
-                Timber.e(e, "Could not create temporary audio file.")
-                null
-            }
-            return tempAudioPath
         }
     }
 

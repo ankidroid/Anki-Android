@@ -27,6 +27,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import com.ichi2.anki.AnkiActivity
@@ -87,7 +88,16 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         mFieldIndex = extras.first
         mField = extras.second
         mNote = extras.third
+        onBack()
         recreateEditingUi(ChangeUIRequest.init(mField), controllerBundle)
+    }
+
+    // in case media is saved by view button then allows it to be inserted into the filed
+    private fun onBack() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        toolbar.setNavigationOnClickListener {
+            done()
+        }
     }
 
     private fun finishCancel() {

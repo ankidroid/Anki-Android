@@ -238,17 +238,6 @@ class AudioRecordingController :
         }
     }
 
-    private fun generateTempAudioFile(context: Context): String? {
-        val tempAudioPath: String? = try {
-            val storingDirectory = context.cacheDir
-            File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
-        } catch (e: IOException) {
-            Timber.e(e, "Could not create temporary audio file.")
-            null
-        }
-        return tempAudioPath
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // do nothing
     }
@@ -309,8 +298,7 @@ class AudioRecordingController :
         }
         cancelAudioRecordingButton.isEnabled = false
         audioRecorder.stopRecording()
-        tempAudioPath = null
-        tempAudioPath = generateTempAudioFile(context)
+        tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
         audioTimeView.text = context.resources.getString(R.string.audio_text)
         audioWaveform.clear()
         isPaused = false
@@ -342,6 +330,20 @@ class AudioRecordingController :
             audioWaveform.addAmplitude(maxAmplitude.toFloat())
         } catch (e: IllegalStateException) {
             Timber.d("Audio recorder interrupted")
+        }
+    }
+
+    companion object {
+
+        fun generateTempAudioFile(context: Context): String? {
+            val tempAudioPath: String? = try {
+                val storingDirectory = context.cacheDir
+                File.createTempFile("ankidroid_audiorec", ".3gp", storingDirectory).absolutePath
+            } catch (e: IOException) {
+                Timber.e(e, "Could not create temporary audio file.")
+                null
+            }
+            return tempAudioPath
         }
     }
 }
