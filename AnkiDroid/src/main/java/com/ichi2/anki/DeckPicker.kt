@@ -99,7 +99,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.dialogs.storageMigrationFailedDialogIsShownOrPending
 import com.ichi2.anki.ui.windows.permissions.PermissionsActivity
 import com.ichi2.anki.utils.SECONDS_PER_DAY
-import com.ichi2.anki.utils.timeQuantityTopDeckPicker
 import com.ichi2.anki.widgets.DeckAdapter
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
@@ -266,9 +265,7 @@ open class DeckPicker :
     private fun onDeckClick(v: View, selectionType: DeckSelectionType) {
         val deckId = v.tag as Long
         Timber.i("DeckPicker:: Selected deck with id %d", deckId)
-        var collectionIsOpen = false
-        try {
-            collectionIsOpen = colIsOpenUnsafe()
+        launchCatchingTask {
             handleDeckSelection(deckId, selectionType)
             if (fragmented) {
                 // Calling notifyDataSetChanged() will update the color of the selected deck.
@@ -276,21 +273,7 @@ open class DeckPicker :
                 mDeckListAdapter.notifyDataSetChanged()
                 updateDeckList()
             }
-        } catch (e: Exception) {
-            // Maybe later don't report if collectionIsOpen is false?
-            Timber.w(e)
-            val info = "$deckId colOpen:$collectionIsOpen"
-            CrashReportService.sendExceptionReport(e, "deckPicker::onDeckClick", info)
-            displayFailedToOpenDeck(deckId)
         }
-    }
-
-    private fun displayFailedToOpenDeck(deckId: DeckId) {
-        // #6208 - if the click is accepted before the sync completes, we get a failure.
-        // We use the Deck ID as the deck likely doesn't exist any more.
-        val message = getString(R.string.deck_picker_failed_deck_load, deckId.toString())
-        showThemedToast(this, message, false)
-        Timber.w(message)
     }
 
     private val mDeckLongClickListener = OnLongClickListener { v ->
@@ -1094,7 +1077,9 @@ open class DeckPicker :
             }
             KeyEvent.KEYCODE_SLASH, KeyEvent.KEYCODE_S -> {
                 Timber.i("Study from keypress")
-                handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
+                launchCatchingTask {
+                    handleDeckSelection(getColUnsafe.decks.selected(), DeckSelectionType.SKIP_STUDY_OPTIONS)
+                }
             }
             else -> {}
         }
@@ -1690,88 +1675,89 @@ open class DeckPicker :
         }
     }
 
-    private fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
-        if ((getColUnsafe.config.get("schedVer") ?: 1L) == 1L) {
-            promptUserToUpdateScheduler()
-            return
-        }
-        // Select the deck
-        getColUnsafe.decks.select(did)
-        // Also forget the last deck used by the Browser
-        CardBrowser.clearLastDeckId()
-        // Reset the schedule so that we get the counts for the currently selected deck
-        mFocusedDeck = did
-        // Get some info about the deck to handle special cases
-        val deckDueTreeNode = mDeckListAdapter.getNodeByDid(did)
-        if (deckDueTreeNode.knownToHaveRep()) {
-            // If we don't yet have numbers, we trust the user that they knows what they opens, tries to open it.
-            // If there is nothing to review, it'll come back to deck picker.
-            openReviewerOrStudyOptions(selectionType)
-            return
-        }
-        // There are numbers
-        // Figure out what action to take
-        if (getColUnsafe.sched.hasCardsTodayAfterStudyAheadLimit()) {
-            // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
-            openStudyOptions(false)
-        } else if (getColUnsafe.sched.newDue() || getColUnsafe.sched.revDue()) {
-            // If there are no cards to review because of the daily study limit then give "Study more" option
+    @NeedsTest("14608: Ensure that the deck options refer to the selected deck")
+    private suspend fun handleDeckSelection(did: DeckId, selectionType: DeckSelectionType) {
+        fun showStudyMoreSnackbar(did: DeckId) =
             showSnackbar(R.string.studyoptions_limit_reached) {
                 addCallback(mSnackbarShowHideCallback)
                 setAction(R.string.study_more) {
                     val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.ContextMenuConfiguration.LIMITS,
-                        getColUnsafe.decks.selected(),
+                        did,
                         true
                     )
                     showDialogFragment(d)
                 }
             }
 
-            // Check if we need to update the fragment or update the deck list. The same checks
-            // are required for all snackbars below.
+        fun showEmptyDeckSnackbar() = showSnackbar(R.string.empty_deck) {
+            addCallback(mSnackbarShowHideCallback)
+            setAction(R.string.menu_add) { addNote() }
+        }
+
+        fun showCustomStudySnackbar() = showSnackbar(R.string.studyoptions_empty_schedule) {
+            addCallback(mSnackbarShowHideCallback)
+            setAction(R.string.custom_study) {
+                val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
+                    CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
+                    did,
+                    true
+                )
+                showDialogFragment(d)
+            }
+        }
+
+        /** Check if we need to update the fragment or update the deck list */
+        fun updateUi() {
             if (fragmented) {
                 // Tablets must always show the study options that corresponds to the current deck,
                 // regardless of whether the deck is currently reviewable or not.
-                openStudyOptions(false)
+                openStudyOptions(withDeckOptions = false)
             } else {
                 // On phones, we update the deck list to ensure the currently selected deck is
                 // highlighted correctly.
                 updateDeckList()
             }
-        } else if (getColUnsafe.decks.isDyn(did)) {
-            // Go to the study options screen if filtered deck with no cards to study
-            openStudyOptions(false)
-        } else if (deckDueTreeNode.children.isEmpty() && getColUnsafe.isEmptyDeck(did)) {
-            // If the deck is empty and has no children then show a message saying it's empty
-            showSnackbar(R.string.empty_deck) {
-                addCallback(mSnackbarShowHideCallback)
-                setAction(R.string.menu_add) { addNote() }
-            }
+        }
 
-            if (fragmented) {
-                openStudyOptions(false)
-            } else {
-                updateDeckList()
-            }
-        } else {
-            // Otherwise say there are no cards scheduled to study, and give option to do custom study
-            showSnackbar(R.string.studyoptions_empty_schedule) {
-                addCallback(mSnackbarShowHideCallback)
-                setAction(R.string.custom_study) {
-                    val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
-                        CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
-                        getColUnsafe.decks.selected(),
-                        true
-                    )
-                    showDialogFragment(d)
-                }
-            }
+        if (withCol { ((config.get("schedVer") ?: 1L) == 1L) }) {
+            promptUserToUpdateScheduler()
+            return
+        }
 
-            if (fragmented) {
-                openStudyOptions(false)
-            } else {
-                updateDeckList()
+        withCol { decks.select(did) }
+        // Also forget the last deck used by the Browser
+        CardBrowser.clearLastDeckId()
+        mFocusedDeck = did
+        val deck = mDeckListAdapter.getNodeByDid(did)
+        if (deck.hasCardsReadyToStudy()) {
+            openReviewerOrStudyOptions(selectionType)
+            return
+        }
+
+        when (queryCompletedDeckCustomStudyAction(did)) {
+            CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED -> {
+                // If there are cards due that can't be studied yet (due to the learn ahead limit) then go to study options
+                openStudyOptions(withDeckOptions = false)
+            }
+            CompletedDeckStatus.DAILY_STUDY_LIMIT_REACHED -> {
+                // If there are no cards to review because of the daily study limit then give "Study more" option
+                showStudyMoreSnackbar(did)
+                updateUi()
+            }
+            CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED -> {
+                // Go to the study options screen if filtered deck with no cards to study
+                openStudyOptions(withDeckOptions = false)
+            }
+            CompletedDeckStatus.EMPTY_REGULAR_DECK -> {
+                // If the deck is empty (& has no children) then show a message saying it's empty
+                showEmptyDeckSnackbar()
+                updateUi()
+            }
+            CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY -> {
+                // Otherwise say there are no cards scheduled to study, and give option to do custom study
+                showCustomStudySnackbar()
+                updateUi()
             }
         }
     }
@@ -1827,8 +1813,11 @@ open class DeckPicker :
         dueTree = result
         launchCatchingTask { renderPage(collectionIsEmpty) }
         // Update the mini statistics bar as well
+        mReviewSummaryTextView.setSingleLine()
         launchCatchingTask {
-            withCol { sched.studiedToday() }
+            mReviewSummaryTextView.text = withCol {
+                sched.studiedToday()
+            }
         }
         Timber.d("Startup - Deck List UI Completed")
     }
@@ -1887,23 +1876,17 @@ open class DeckPicker :
         }
         mDeckListAdapter.buildDeckList(tree, currentFilter)
 
-        // Set the "x due in y minutes" subtitle
+        // Set the "x due" subtitle
         try {
-            val eta = mDeckListAdapter.eta()
             val due = mDeckListAdapter.due
             val res = resources
 
-            val time: String = if (eta != -1 && eta != null) {
-                timeQuantityTopDeckPicker(this, (eta * 60).toLong())
-            } else {
-                "-"
-            }
             if (due != null && supportActionBar != null) {
                 val cardCount = withCol { cardCount() }
                 val subTitle: String = if (due == 0) {
                     res.getQuantityString(R.plurals.deckpicker_title_zero_due, cardCount, cardCount)
                 } else {
-                    res.getQuantityString(R.plurals.deckpicker_title, due, due, time)
+                    res.getQuantityString(R.plurals.widget_cards_due, due, due)
                 }
                 supportActionBar!!.subtitle = subTitle
             }
@@ -2382,7 +2365,7 @@ open class DeckPicker :
             Timber.i("media sync disabled: displaying dialog")
             AlertDialog.Builder(this).show {
                 setTitle(R.string.media_sync_required_title)
-                iconAttr(R.attr.dialogErrorIcon)
+                setIcon(R.drawable.ic_warning)
                 setMessage(R.string.media_sync_unavailable_message)
                 setPositiveButton(getString(R.string.scoped_storage_migrate)) { _, _ ->
                     Timber.i("Performing unsafe storage migration")
@@ -2417,6 +2400,41 @@ open class DeckPicker :
         if (migrateStorageAfterMediaSyncCompleted) {
             migrate()
         }
+    }
+
+    /**
+     * Returns how a user can 'custom study' a deck with no more pending cards
+     *
+     * @param did The id of a deck with no pending cards to review
+     */
+    private suspend fun queryCompletedDeckCustomStudyAction(
+        did: DeckId
+    ): CompletedDeckStatus = withCol {
+        when {
+            sched.hasCardsTodayAfterStudyAheadLimit() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
+            sched.newDue() || sched.revDue() -> CompletedDeckStatus.LEARN_AHEAD_LIMIT_REACHED
+            decks.isDyn(did) -> CompletedDeckStatus.DYNAMIC_DECK_NO_LIMITS_REACHED
+            mDeckListAdapter.getNodeByDid(did).children.isEmpty() && isEmptyDeck(did) -> CompletedDeckStatus.EMPTY_REGULAR_DECK
+            else -> CompletedDeckStatus.REGULAR_DECK_NO_MORE_CARDS_TODAY
+        }
+    }
+
+    /** Status for a deck with no current cards to review */
+    enum class CompletedDeckStatus {
+        /** No cards for today, but there would be if the user waited */
+        LEARN_AHEAD_LIMIT_REACHED,
+
+        /** No cards for today, but either the 'new' or 'review' limit was reached */
+        DAILY_STUDY_LIMIT_REACHED,
+
+        /** No cards are available, but the deck was dynamic */
+        DYNAMIC_DECK_NO_LIMITS_REACHED,
+
+        /** The deck contained no cards and had no child decks */
+        EMPTY_REGULAR_DECK,
+
+        /** The user has completed their studying for today, and there are future reviews */
+        REGULAR_DECK_NO_MORE_CARDS_TODAY
     }
 }
 

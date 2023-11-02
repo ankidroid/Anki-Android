@@ -145,7 +145,7 @@ class Toolbar : FrameLayout {
     fun insertItem(@IdRes id: Int, @DrawableRes drawable: Int, block: () -> Unit): AppCompatImageButton {
         // we use the light theme here to ensure the tint is black on both
         // A null theme can be passed after colorControlNormal is defined (API 25)
-        val themeContext: Context = ContextThemeWrapper(context, R.style.Theme_Light_Compat)
+        val themeContext: Context = ContextThemeWrapper(context, R.style.Theme_Light)
         val d = VectorDrawableCompat.create(context.resources, drawable, themeContext.theme)
         return insertItem(id, d, block)
     }

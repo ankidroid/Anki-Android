@@ -19,6 +19,7 @@ import androidx.annotation.StringRes
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
 
+// TODO remove this file. Only used in tests.
 @Suppress("FunctionName") // `_new` was a name in libAnki
 class StdModels(
     /**
@@ -154,12 +155,16 @@ class StdModels(
             },
             R.string.cloze_model_name
         )
+
+        private val IMAGE_OCCLUSION_MODEL = StdModels({ _, _ -> NotetypeJson() }, 0)
+
         val STD_MODELS = arrayOf(
             BASIC_MODEL,
             BASIC_TYPING_MODEL,
             FORWARD_REVERSE_MODEL,
             FORWARD_OPTIONAL_REVERSE_MODEL,
-            CLOZE_MODEL
+            CLOZE_MODEL,
+            IMAGE_OCCLUSION_MODEL
         )
     }
 }

@@ -100,8 +100,6 @@
         <item>ರಚಿಸಲಾಗಿದೆ</item>
         <item>ಟಿಪ್ಪಣಿ ಮಾರ್ಪಡಿಸಲಾಗಿದೆ</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ಇಂದಿನ ಹೊಸ ಕಾರ್ಡ್ ಮಿತಿಯನ್ನು ಮಾರ್ಪಡಿಸಿ</string>

@@ -100,8 +100,6 @@
         <item>Nilikha</item>
         <item>Binago ang Tala</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">I-apply</string>
     <string name="filter_by_flags">Mga Watawat</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Baguhin ang limitasyon sa bagong card ngayong araw</string>

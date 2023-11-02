@@ -76,7 +76,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     cancelable(false)
                     contentNullable(message)
-                    iconAttr(R.attr.dialogErrorIcon)
+                    icon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -92,7 +92,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     cancelable(false)
                     contentNullable(message)
-                    iconAttr(R.attr.dialogErrorIcon)
+                    icon(R.drawable.ic_warning)
                     positiveButton(R.string.error_handling_options) {
                         (activity as DeckPicker?)
                             ?.showDatabaseErrorDialog(DIALOG_ERROR_HANDLING)
@@ -146,7 +146,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                     i++
                 }
                 dialog.show {
-                    iconAttr(R.attr.dialogErrorIcon)
+                    icon(R.drawable.ic_warning)
                     negativeButton(R.string.dialog_cancel)
                     listItems(items = titles.toList().map { it as CharSequence }) { _: MaterialDialog, index: Int, _: CharSequence ->
                         when (mRepairValues[index]) {
@@ -183,7 +183,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 // Allow user to run BackupManager.repairCollection()
                 dialog.show {
                     contentNullable(message)
-                    iconAttr(R.attr.dialogErrorIcon)
+                    icon(R.drawable.ic_warning)
                     positiveButton(R.string.dialog_positive_repair) {
                         (activity as DeckPicker).repairCollection()
                         dismissAllDialogFragments()
@@ -318,7 +318,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
                 dialog.show {
                     cancelable(false)
                     contentNullable(message)
-                    iconAttr(R.attr.dialogErrorIcon)
+                    icon(R.drawable.ic_warning)
                     positiveButton(R.string.close) {
                         exit()
                     }
@@ -429,7 +429,7 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
             fun displayResetToNewDirectoryDialog(context: DeckPicker) {
                 AlertDialog.Builder(context).show {
                     title(R.string.backup_new_collection)
-                    iconAttr(R.attr.dialogErrorIcon)
+                    setIcon(R.drawable.ic_warning)
                     message(R.string.new_unsafe_collection)
                     positiveButton(R.string.dialog_positive_create) {
                         Timber.w("Creating new collection")

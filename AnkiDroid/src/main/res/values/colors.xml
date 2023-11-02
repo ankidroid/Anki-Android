@@ -16,18 +16,6 @@
 
     <color name="wb_fg_color">#B00000FF</color>
     <color name="wb_fg_color_inv">#0099FF</color>
-    <color name="stats_young">#7c7</color>
-    <color name="stats_mature">#070</color>
-    <color name="stats_learn">#00F</color>
-    <color name="stats_relearn">#c00</color>
-    <color name="stats_cram">#ff0</color>
-    <color name="stats_interval">#077</color>
-    <color name="stats_hours">#ccc</color>
-    <color name="stats_counts">#E6000000</color>
-    <color name="stats_unseen">#000</color>
-    <color name="stats_suspended">#ff0</color>
-    <color name="stats_buried">#606264</color>
-    <color name="stats_cumulative">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

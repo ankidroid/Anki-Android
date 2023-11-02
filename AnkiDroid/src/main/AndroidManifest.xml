@@ -200,7 +200,7 @@
         </activity>
         <activity
             android:name="com.ichi2.anki.DeckPicker"
-            android:theme="@style/Theme_Dark_Compat.Launcher"
+            android:theme="@style/Theme_Dark.Launcher"
             android:exported="false"
             android:configChanges="keyboardHidden|orientation|screenSize"
             />
@@ -230,7 +230,7 @@
         <activity
             android:name="com.ichi2.anki.CardBrowser"
             android:label="@string/card_browser"
-            android:theme="@style/Theme_Dark_Compat.Launcher"
+            android:theme="@style/Theme_Dark.Launcher"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".DeckPicker"
@@ -261,7 +261,7 @@
         <activity
             android:name="com.ichi2.anki.Reviewer"
             android:exported="true"
-            android:theme="@style/Theme_Dark_Compat.Launcher"
+            android:theme="@style/Theme_Dark.Launcher"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".DeckPicker">
@@ -315,7 +315,7 @@
         <activity
             android:name="com.ichi2.anki.NoteEditor"
             android:label="@string/fact_adder_intent_title"
-            android:theme="@style/Theme_Dark_Compat.Launcher"
+            android:theme="@style/Theme_Dark.Launcher"
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|screenSize"
             >
@@ -336,7 +336,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name="com.ichi2.anki.analytics.AnkiDroidCrashReportDialog"
-            android:theme="@style/Theme.CrashReportDialog"
+            android:theme="@android:style/Theme.DeviceDefault.Dialog"
             android:process=":acra"
             android:launchMode="singleInstance"
             android:excludeFromRecents="true"

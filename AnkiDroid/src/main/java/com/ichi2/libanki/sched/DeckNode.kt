@@ -67,7 +67,7 @@ data class DeckNode(
         )
     }
 
-    fun knownToHaveRep(): Boolean {
+    fun hasCardsReadyToStudy(): Boolean {
         return revCount > 0 || newCount > 0 || lrnCount > 0
     }
 

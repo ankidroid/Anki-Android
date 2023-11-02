@@ -70,7 +70,7 @@
                 android:saveEnabled="false"
                 android:stepSize="1"
                 app:thumbRadius="8dp"
-                style="@style/SliderStyle"/>
+            />
 
             <TextView
                 android:id="@+id/valueDisplay"

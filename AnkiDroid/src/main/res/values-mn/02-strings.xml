@@ -100,8 +100,6 @@
         <item>Үүсгэснээр нь</item>
         <item>Өөрчилсөн тэмдэглэл</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Ашиглах</string>
     <string name="filter_by_flags">Дарцагнууд </string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Өнөөдрийн судлах картны тоог өөрчлөх</string>

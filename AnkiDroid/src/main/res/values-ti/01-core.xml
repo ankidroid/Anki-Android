@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">ናይ ሎሚ ዕማም</string>
     <string name="studyoptions_new_total">ጠቅላላ ሓደስቲ ካርድታት:</string>
     <string name="studyoptions_total_cards">ጠቅላላ ካርድታት:</string>
-    <string name="studyoptions_eta">ዝተገመተ ግዜ:</string>
     <string name="studyoptions_start">መጽናዕቲ</string>
     <!-- DeckPicker.kt -->
     <string name="expand">ዘርግሕ</string>
     <string name="collapse">ኣብ ሓደ ኣኪብ</string>
     <string name="study_more">መጽናዕቲ ወስኽ</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d ዝግባኣካ ካርድ (%2$s)%1$d</item>
-        <item quantity="other">%1$d ዝግባኣካ ካርድታት (%2$s)%1$d</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">ተሪፉካ ዘሎ ደቒቕ %d</item>
         <item quantity="other">%d ተሪፊካ ዘሎ ደቓይቕ</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d ደቂቅ</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d ሰዓት</string>
-    <string name="time_quantity_days">%d መዓልቲ</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f ወርሒ</string>
-    <string name="time_quantity_years">%.1f ዓመት</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">ከምባሓዱሽ ህነጽ</string>
     <string name="empty_cram_label">ባዶ ቦታ</string>

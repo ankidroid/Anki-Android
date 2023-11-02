@@ -77,7 +77,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private lateinit var textTodayRev: TextView
     private lateinit var textNewTotal: TextView
     private lateinit var textTotal: TextView
-    private lateinit var textETA: TextView
     private lateinit var textCongratsMessage: TextView
     private var mToolbar: Toolbar? = null
 
@@ -215,7 +214,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         textTodayRev = studyOptionsView.findViewById(R.id.studyoptions_rev)
         textNewTotal = studyOptionsView.findViewById(R.id.studyoptions_total_new)
         textTotal = studyOptionsView.findViewById(R.id.studyoptions_total)
-        textETA = studyOptionsView.findViewById(R.id.studyoptions_eta)
         buttonStart.setOnClickListener(mButtonClickListener)
     }
 
@@ -483,11 +481,7 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         /**
          * Number of cards in this decks and its subdecks.
          */
-        val numberOfCardsInDeck: Int,
-        /**
-         * Expected time spent today to review all due cards in this deck.
-         */
-        val eta: Int
+        val numberOfCardsInDeck: Int
     )
 
     /** Open cram deck option if deck is opened for the first time
@@ -646,12 +640,6 @@ class StudyOptionsFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
             // Set total number of cards
             textTotal.text = result.numberOfCardsInDeck.toString()
-            // Set estimated time remaining
-            if (result.eta != -1) {
-                textETA.text = result.eta.toString()
-            } else {
-                textETA.text = "-"
-            }
             // Rebuild the options menu
             configureToolbar()
         }

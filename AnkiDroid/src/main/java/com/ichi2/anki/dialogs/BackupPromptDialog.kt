@@ -212,7 +212,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
             AlertDialog.Builder(context).show {
                 title(R.string.dismiss_backup_warning_title)
                 message(message)
-                iconAttr(R.attr.dialogErrorIcon)
+                setIcon(R.drawable.ic_warning)
                 positiveButton(R.string.dialog_cancel) { onCancel() }
                 negativeButton(R.string.button_disable_reminder) { onDisableReminder() }
             }

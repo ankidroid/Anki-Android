@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">سر رسید امروز:</string>
     <string name="studyoptions_new_total">کل کارت های جدید:</string>
     <string name="studyoptions_total_cards">کل کارتها:</string>
-    <string name="studyoptions_eta">زمان برآورد شده (دقیقه):</string>
     <string name="studyoptions_start">مرور کردن</string>
     <!-- DeckPicker.kt -->
     <string name="expand">گسترش</string>
     <string name="collapse">بستن</string>
     <string name="study_more">بیشتر بخوانید</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">موعد مرور %1$d کارت (%2$s)</item>
-        <item quantity="other">موعد مرور %1$d کارت (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d دقیقه باقیمانده</item>
         <item quantity="other">%d دقیقه باقیمانده</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">برای ادامه لطفاً به آنکی‌دروید دسترسی حافظه را بدهید</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d ثانیه</string>
-    <string name="time_quantity_minutes">%d دقیقه</string>
-    <string name="time_quantity_hours_minutes">%1$d  ساعت و %2$d  دقیقه</string>
-    <string name="time_quantity_hours">%d ساعت</string>
-    <string name="time_quantity_days">%d روز</string>
-    <string name="time_quantity_days_hours">%1$d روز و %2$d ساعت</string>
-    <string name="time_quantity_months">%.1f ماه</string>
-    <string name="time_quantity_years">%.1f سال</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">درحال بازسازی دسته‌ی کارت انتخاب شده...</string>
     <string name="rebuild_cram_label">بازسازی</string>
     <string name="empty_cram_label">خالی</string>

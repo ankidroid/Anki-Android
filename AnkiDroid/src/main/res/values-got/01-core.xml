@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">Nauh himma daga:</string>
     <string name="studyoptions_new_total">Allos niujos kartos:</string>
     <string name="studyoptions_total_cards">Allos kartos:</string>
-    <string name="studyoptions_eta">Beidanda ƕeila (min):</string>
     <string name="studyoptions_start">Laiseins</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
     <string name="study_more">Laisei mais</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">nauh %1$d karta (%2$s)</item>
-        <item quantity="other">nauh %1$d kartos (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Nauh %d minutus</item>
         <item quantity="other">Nauh %d minutjus</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Please grant AnkiDroid the ‘Storage’ permission to continue</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d hv</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f men</string>
-    <string name="time_quantity_years">%.1f jer</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">Gatimrei aftra</string>
     <string name="empty_cram_label">Laus</string>

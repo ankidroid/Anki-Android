@@ -55,15 +55,11 @@
     <string name="studyoptions_due_today">Бүгенгә:</string>
     <string name="studyoptions_new_total">Барлыгы яңа кәртләр:</string>
     <string name="studyoptions_total_cards">Барлыгы кәртләр:</string>
-    <string name="studyoptions_eta">Чамалы вакыт (мин.):</string>
     <string name="studyoptions_start">Өйрәнергә</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Тулысынча күрсәтү</string>
     <string name="collapse">Борып ябу</string>
     <string name="study_more">Тагын укырга</string>
-    <plurals name="deckpicker_title">
-        <item quantity="other">%1$d кәрт калды (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="other">%d минут калды</item>
     </plurals>
@@ -127,22 +123,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Зинһар, AnkiDroid өчен \"Storage\" рөхсәтен бирегез</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d с</string>
-    <string name="time_quantity_minutes">%d мин.</string>
-    <string name="time_quantity_hours_minutes">%1$d с. %2$d мин.</string>
-    <string name="time_quantity_hours">%d с.</string>
-    <string name="time_quantity_days">%d көн</string>
-    <string name="time_quantity_days_hours">%1$d көн %2$d сәг.</string>
-    <string name="time_quantity_months">%.1f ай</string>
-    <string name="time_quantity_years">%.1f ел</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Фильтрлы колода үзгәртелә...</string>
     <string name="rebuild_cram_label">Яңадан тезү</string>
     <string name="empty_cram_label">Бушату</string>

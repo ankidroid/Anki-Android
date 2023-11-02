@@ -42,10 +42,10 @@
     <!-- Main editor popup menu items -->
     <string name="multimedia_editor_popup_image">Lisää kuva</string>
     <string name="multimedia_editor_popup_audio_clip">Lisää äänileike</string>
-    <string name="multimedia_editor_popup_video_clip">Add video clip</string>
+    <string name="multimedia_editor_popup_video_clip">Lisää videoleike</string>
     <string name="multimedia_editor_popup_audio">Tallenna ääntä</string>
     <string name="multimedia_editor_popup_text">Kehittyneempi editori</string>
-    <string name="multimedia_editor_popup_cloze">Täydennystehtävä</string>
+    <string name="multimedia_editor_popup_cloze">Aukkotehtävä</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">Teksti</string>
@@ -66,27 +66,27 @@
     <!-- for buttons -->
     <string name="multimedia_editor_image_field_editing_galery">Galleria</string>
     <string name="multimedia_editor_image_field_editing_photo">Kamera</string>
-    <string name="multimedia_editor_import_audio">Audio</string>
+    <string name="multimedia_editor_import_audio">Ääni</string>
     <string name="multimedia_editor_import_video">Video</string>
     <!-- General -->
     <!-- not a good message, when an unexpected error happens -->
     <string name="multimedia_editor_something_wrong">Jokin meni pieleen</string>
-    <string name="multimedia_editor_svg_preview">SVGs are not available for preview</string>
-    <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
+    <string name="multimedia_editor_svg_preview">SVG:t eivät ole käytettävissä esikatseluun</string>
+    <string name="multimedia_editor_png_paste_error">Virhe muunnettaessa leikepöydän kuvaa png:ksi: %s</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Liitä multimediasisältöä %1$s-kenttään</string>
     <string name="multimedia_editor_attach_media">Liitä mediaa</string>
     <!-- Audio view -->
     <!-- Message when recording fails -->
     <string name="multimedia_editor_audio_view_recording_failed">Äänittäminen epäonnistui</string>
     <string name="multimedia_editor_audio_view_playing_failed">Toisto epäonnistui</string>
-    <string name="multimedia_editor_audio_view_create_failed">Unable to create recorder tool bar</string>
+    <string name="multimedia_editor_audio_view_create_failed">Ääninauhurin työkalupalkin luominen epäonnistui</string>
     <!-- Activity titles -->
-    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Muokkauskenttä</string>
+    <string name="title_activity_edit_text" comment="Name of the window allowing to edit field. This text can not be seen in AnkiDroid directly.">Kentän muokkaus</string>
     <!-- Crop function-->
     <string name="crop_image">Haluatko rajata kuvan?</string>
     <string name="crop_button">Rajaa kuva</string>
-    <string name="save_dialog_content">Current image size is %sMB. Default image size limit is 1MB. Do you want to crop it?</string>
-    <string name="select_image_failed">"Select image failed, Please retry"</string>
-    <string name="activity_result_unexpected">App returned an unexpected value. You may need to use a different app</string>
-    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Field Contents</string>
+    <string name="save_dialog_content">Kuvan nykyinen koko on %s Mt. Kuvan kokorajoitus on oletusarvoisesti 1 Mt. Haluatko rajata kuvan?</string>
+    <string name="select_image_failed">"Kuvan valitseminen epäonnistui – yritä uudelleen"</string>
+    <string name="activity_result_unexpected">Sovellus palautti odottamattoman arvon. Sinun on ehkä käytettävä toista sovellusta</string>
+    <string name="audio_recording_field_list" comment="Displays a list of the field data in the note editor while audio recording is taking place">Kentän sisältö</string>
 </resources>

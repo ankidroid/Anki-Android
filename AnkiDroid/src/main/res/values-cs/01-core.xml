@@ -55,18 +55,11 @@
     <string name="studyoptions_due_today">Dnes ke zkoušení:</string>
     <string name="studyoptions_new_total">Celkem nových karet:</string>
     <string name="studyoptions_total_cards">Celkem karet:</string>
-    <string name="studyoptions_eta">Odhadovaný čas (min):</string>
     <string name="studyoptions_start">Studovat</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Rozbalit</string>
     <string name="collapse">Sbalit</string>
     <string name="study_more">Studovat více</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d karta ke zkoušení (%2$s)</item>
-        <item quantity="few">%1$d karty ke zkoušení (%2$s)</item>
-        <item quantity="many">%1$d karty ke zkoušení (%2$s)</item>
-        <item quantity="other">%1$d karet ke zkoušení (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">Zbývá %d minuta</item>
         <item quantity="few">Zbývají %d minuty</item>
@@ -139,22 +132,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Abyste mohli pokračovat, prosím udělte AnkiDroid oprávnění k „úložišti“</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d min</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d dní</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f měsíců</string>
-    <string name="time_quantity_years">%.1f roků</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Obnovuje se filtrovaný balíček&#8230;</string>
     <string name="rebuild_cram_label">Znovu sestavit</string>
     <string name="empty_cram_label">Vyprázdnit</string>
@@ -286,8 +263,8 @@
     <string name="create_new_collection">Vytvořit novou kolekci</string>
     <string name="new_unsafe_collection">Nová kolekce bude odstraněna z vašeho telefonu, pokud odinstalujete AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">Aby AnkiDroid fungoval, potřebuje některá oprávnění</string>
+    <string name="storage_access_title">Přístup k úložišti</string>
+    <string name="storage_access_summary">Uloží vaši kolekci na bezpečné místo, které nebude odstraněno, pokud bude aplikace odinstalována</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Přístup ke všem souborům</string>
 </resources>

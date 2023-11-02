@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">Programados para hoje:</string>
     <string name="studyoptions_new_total">Total de cartões novos:</string>
     <string name="studyoptions_total_cards">Total de cartões:</string>
-    <string name="studyoptions_eta">Tempo estimado (min):</string>
     <string name="studyoptions_start">Estudar</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Expandir</string>
     <string name="collapse">Fechar</string>
     <string name="study_more">Estudar mais</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d cartão programado (%2$s)</item>
-        <item quantity="other">%1$d cartões programados (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d minuto restante</item>
         <item quantity="other">%d minutos restantes</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Por favor, conceda ao AnkiDroid a permissão de \'Armazenamento\' para continuar</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d h %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d d %2$d h</string>
-    <string name="time_quantity_months">%.1f mês</string>
-    <string name="time_quantity_years">%.1f ano</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Recriando baralho filtrado&#8230;</string>
     <string name="rebuild_cram_label">Reconstruir</string>
     <string name="empty_cram_label">Esvaziar</string>
@@ -205,7 +184,7 @@
     <string name="read_write_permission_description">acessar notas, cartões, modelos e baralhos existentes, bem como criar novos</string>
     <!-- Context Menu -->
     <string name="card_browser_context_menu" comment="The value which appears in the system context menu. Note the casing difference">Navegador de Cartões</string>
-    <string name="context_menu_anki_card_label">Anki Card</string>
+    <string name="context_menu_anki_card_label">Cartão do Anki</string>
     <!-- Sync conflict -->
     <string name="sync_conflict_message_new">As coleções não podem ser combinadas\nQual coleção você quer manter?</string>
     <string name="sync_conflict_keep_local_new" comment="Select AnkiDroid files to keep while syncing">AnkiDroid</string>
@@ -272,8 +251,8 @@
     <string name="create_new_collection">Criar uma coleção.</string>
     <string name="new_unsafe_collection">A nova coleção será excluída do seu telefone se você desinstalar o AnkiDroid.</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">O AnkiDroid precisa de algumas permissões para funcionar</string>
+    <string name="storage_access_title">Acesso ao armazenamento</string>
+    <string name="storage_access_summary">Salva sua coleção em um lugar seguro que não será excluído se o aplicativo for desinstalado</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acesso a todos os arquivos</string>
 </resources>

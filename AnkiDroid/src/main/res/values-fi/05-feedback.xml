@@ -48,12 +48,12 @@
     <string name="empty_string"></string>
     <string name="error_reporting_choice">Virheraportointitila</string>
     <string name="feedback_disclaimer">Huomio: Emme kerää mitään henkilökohtaisia tietojasi, kuten sähköpostiosoitettasi, puhelinnumeroasi tai puhelimesi IMEI-koodia. Keräämme tietoja laitteestasi, kuten valmistajan, mallin ja Android-version, samoin kuten virheraporttien luonteen ja toimet, jotka johtivat niiden syntymiseen.</string>
-    <string name="feedback_title">AnkiDroid-palaute</string>
-    <string name="feedback_default_text">Ana palautetta tai anna yleistietoa virheistä josta ilmoitat.</string>
-    <string name="feedback_auto_toast_text">AnkiDroid on havainnut virheen; Raporttia lähetetään kehittäjille&#8230;</string>
-    <string name="feedback_for_manual_toast_text">An error report is being prepared for the developers&#8230;</string>
-    <string name="feedback_copy_debug">Kopioi virheenkorjaustiedot</string>
-    <string name="feedback_report">Ilmoita</string>
-    <string name="feedback_report_automatically">Lähetä virheraportteja automaattisesti</string>
-    <string name="feedback_no_suitable_app_found">Sopivia sovelluksia ei löytynyt.</string>
+    <string name="feedback_title">Palautetta AnkiDroidista</string>
+    <string name="feedback_default_text">Anna palautetta tai tietoja raportoimiesi virheiden luonteesta.</string>
+    <string name="feedback_auto_toast_text">AnkiDroid on kohdannut ongelman; tästä lähetetään raportti kehittäjille...</string>
+    <string name="feedback_for_manual_toast_text">Laaditaan virheraporttia kehittäjille...</string>
+    <string name="feedback_copy_debug">Kopioi vianmääritystiedot</string>
+    <string name="feedback_report">Lähetä raportti</string>
+    <string name="feedback_report_automatically">Lähetä virheraportit automaattisesti</string>
+    <string name="feedback_no_suitable_app_found">Sopivaa sovellusta ei löytynyt</string>
 </resources>

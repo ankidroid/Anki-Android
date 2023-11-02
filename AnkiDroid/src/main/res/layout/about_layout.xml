@@ -108,27 +108,27 @@
         android:layout_marginTop="32dp"
         android:orientation="vertical"
         android:gravity="center">
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/about_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/info_rate"
-            style="@style/NoBackgroundButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:textColor="?attr/colorAccent" />
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/about_open_changelog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/open_changelog"
-            style="@style/NoBackgroundButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:textColor="?attr/colorAccent"/>
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/about_copy_debug"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/feedback_copy_debug"
             android:textColor="?attr/colorAccent"
-            style="@style/NoBackgroundButton"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_marginBottom="16dp"/>
     </LinearLayout>
 </LinearLayout>

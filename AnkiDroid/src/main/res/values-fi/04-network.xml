@@ -60,14 +60,14 @@
     <string name="sign_up_description">Eikö sinulla ole AnkiWeb-tiliä? Se on ilmainen!</string>
     <string name="sign_up_not_affiliated">Huomatus: AnkiWeb ei ole sidoksissa AnkiDroidiin</string>
     <string name="sign_up">Rekisteröidy</string>
-    <string name="logged_as">Kirjauduttu nimellä</string>
+    <string name="logged_as">Olet kirjautunut tilille</string>
     <string name="log_out">Kirjaudu ulos</string>
     <string name="reset_password">Nollaa salasanasi</string>
-    <string name="lost_mail_instructions">Forgot Email?</string>
+    <string name="lost_mail_instructions">Unohditko sähköpostiosoitteesi?</string>
     <!-- AndroidManifest.xml -->
-    <string name="deckpreferences_title">Asetukset XXX:lle</string>
+    <string name="deckpreferences_title">Kohteen XXX asetukset</string>
     <string name="sync_title">Synkronointi</string>
-    <string name="sync_log_uploading_message">Täysi synkronointi sijainnista</string>
+    <string name="sync_log_uploading_message">Täysi synkronointi tästä laitteesta</string>
     <string name="sync_database_acknowledge">Kokoelma synkronoitu</string>
     <string name="sync_corrupt_database">Tietokanta on vioittunut. Korjaa se, ennen kuin yrität synkronoida uudelleen.\n\nKatso %s saadaksesi lisätietoja tietokannan korjaamisesta.</string>
     <!-- Please run ‘Check database’ before syncing -->
@@ -75,10 +75,10 @@
     <string name="sync_sanity_remote">Etä</string>
     <string name="force_full_sync_title">Pakota täysi synkronointi</string>
     <string name="force_full_sync_summary">Pakota muutokset yhteen suuntaan seuraavan synkronoinnin yhteydessä</string>
-    <string name="force_full_sync_confirmation">Forced full sync</string>
+    <string name="force_full_sync_confirmation">Pakotettu täysi synkronointi</string>
     <string name="full_sync_confirmation">Pyytämäsi muutos vaatii tietokannan täyden lähetyksen AnkiWebiin kun synkronoit kokoelmasi seuraavan kerran. Jos sinulla on kertauksia tai muita muutoksia odottamassa toisessa laitteessa, jota ei ole vielä synkronoitu tänne, nämä synkronoimattomat tiedot katoavat. Haluatko jatkaa?</string>
     <string name="full_sync_confirmation_upgrade">AnkiDroidin edellisessä versiossa olleen bugin takia, täydellinen syknronointi on suositeltavaa.</string>
     <!-- Deck Picker Sync Icon -->
-    <string name="sync_menu_title_full_sync">Sync (full)</string>
-    <string name="sync_menu_title_no_account">Sync (log in)</string>
+    <string name="sync_menu_title_full_sync">Synkronointi (täysi)</string>
+    <string name="sync_menu_title_no_account">Synkronointi (vaatii kirjautumisen)</string>
 </resources>

@@ -32,6 +32,7 @@ import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.CheckResult
 import java.io.*
 import java.util.*
 
@@ -198,6 +199,13 @@ interface Compat {
      */
     @Throws(IOException::class)
     fun contentOfDirectory(directory: File): FileStream
+
+    /**
+     * Converts a locale to a 'two letter' code (ISO-639-1 + ISO 3166-1 alpha-2)
+     * Locale("spa", "MEX", "001") => Locale("es", "MX", "001")
+     */
+    @CheckResult
+    fun normalize(locale: Locale): Locale
 
     companion object {
         /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */

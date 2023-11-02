@@ -1,7 +1,0 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle" android:tint="?attr/filterSheetBackground">
-    <solid android:color="@color/white" />
-    <corners
-        android:topLeftRadius="20dp"
-        android:topRightRadius="20dp" />
-</shape>

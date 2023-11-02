@@ -55,20 +55,11 @@
     <string name="studyoptions_due_today">المستحق اليوم:</string>
     <string name="studyoptions_new_total">مجموع البطاقات الجديدة:</string>
     <string name="studyoptions_total_cards">مجموع البطاقات:</string>
-    <string name="studyoptions_eta">الوقت المقدر (دقيقة):</string>
     <string name="studyoptions_start">دراسة</string>
     <!-- DeckPicker.kt -->
     <string name="expand">إسدال</string>
     <string name="collapse">إخفاء</string>
     <string name="study_more">ادرس أكثر</string>
-    <plurals name="deckpicker_title">
-        <item quantity="zero">%1$d بطاقة مستحقة (%2$s)</item>
-        <item quantity="one">%1$d بطاقة مستحقة (%2$s)</item>
-        <item quantity="two">%1$d بطاقة مستحقة (%2$s)</item>
-        <item quantity="few">%1$d بطاقات مستحقة (%2$s)</item>
-        <item quantity="many">%1$d بطاقة مستحقة (%2$s)</item>
-        <item quantity="other">%1$d بطاقة مستحقة (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="zero">%d دقيقة متبقية</item>
         <item quantity="one">دقيقة واحدة متبقية</item>
@@ -147,22 +138,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">الرجاء منح آنكيدرويد إذن «التخزين» للاستمرار</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d ث</string>
-    <string name="time_quantity_minutes">%d د</string>
-    <string name="time_quantity_hours_minutes">%1$d س %2$d د</string>
-    <string name="time_quantity_hours">%d س</string>
-    <string name="time_quantity_days">%d ي</string>
-    <string name="time_quantity_days_hours">%1$d ي %2$d س</string>
-    <string name="time_quantity_months">%.1f ش</string>
-    <string name="time_quantity_years">%.1f ع</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">إعادة إنشاء الرزمة المفلترة&#8230;</string>
     <string name="rebuild_cram_label">إعادة إنشاء</string>
     <string name="empty_cram_label">إفراغ</string>

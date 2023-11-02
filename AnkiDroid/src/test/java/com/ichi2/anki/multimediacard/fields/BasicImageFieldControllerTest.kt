@@ -15,6 +15,7 @@
  */
 package com.ichi2.anki.multimediacard.fields
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import androidx.activity.result.ActivityResultRegistry
@@ -40,6 +41,7 @@ import kotlin.test.fail
 open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase() {
     @Test
     fun constructionWithoutDataGivesNoError() {
+        @SuppressLint("CheckResult")
         val controller: IFieldController = validControllerNoImage
         assertThat("construction of image field without data should not give an error", controller, instanceOf(BasicImageFieldController::class.java))
     }
@@ -52,6 +54,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
 
     @Test
     fun nonExistingFileDoesNotDisplayPreview() {
+        @SuppressLint("CheckResult")
         val controller = validControllerNoImage
         assertThat(controller.isShowingPreview, equalTo(false))
         val f = mock(File::class.java)
@@ -66,6 +69,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
 
     @Test
     fun erroringFileDoesNotDisplayPreview() {
+        @SuppressLint("CheckResult")
         val controller = validControllerNoImage
         assertThat(controller.isShowingPreview, equalTo(false))
         val f = mock(File::class.java)
@@ -80,6 +84,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
 
     @Test
     fun fileSelectedOnSVG() {
+        @SuppressLint("CheckResult")
         val controller = validControllerNoImage
         val f = File("test.svg")
         controller.setImagePreview(f, 100)
@@ -96,6 +101,7 @@ open class BasicImageFieldControllerTest : MultimediaEditFieldActivityTestBase()
         // TODO: This started failing after API 30:
         //  showThemedToast threw an NPE. Diagnose the underlying issue.
 
+        @SuppressLint("CheckResult")
         val controller = validControllerNoImage
         controller.registryToUse = object : ActivityResultRegistry() {
             override fun <I, O> onLaunch(

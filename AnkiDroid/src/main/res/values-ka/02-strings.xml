@@ -100,8 +100,6 @@
         <item>შექმნილია</item>
         <item>შენიშვნის მოდიფიკაცია</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">მისადაგება</string>
     <string name="filter_by_flags">დროშები</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">დღეის ახალი ბარათების ლიმიტის შეცვლა</string>

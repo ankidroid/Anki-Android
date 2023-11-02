@@ -32,17 +32,6 @@ static def gitCommitHash() {
     "git rev-parse HEAD".execute().text.trim()
 }
 
-/**
- * Set this to true to create five separate APKs instead of one:
- *   - 2 APKs that only work on ARM/ARM64 devices
- *   - 2 APKs that only works on x86/x86_64 devices
- *   - a universal APK that works on all devices
- * The advantage is the size of most APKs is reduced by about 2.5MB.
- * Upload all the APKs to the Play Store and people will download
- * the correct one based on the CPU architecture of their device.
- */
-def enableSeparateBuildPerCPUArchitecture = true
-
 android {
     namespace "com.ichi2.anki"
 
@@ -84,8 +73,8 @@ android {
         //
         // This ensures the correct ordering between the various types of releases (dev < alpha < beta < release) which is
         // needed for upgrades to be offered correctly.
-        versionCode=21700101
-        versionName="2.17alpha1"
+        versionCode=21700103
+        versionName="2.17alpha3"
         minSdk 23
         // After #13695: change .tests_emulator.yml
         targetSdk 33 // change api/build.gradle.kts and update ../robolectricDownloader.gradle at same time
@@ -106,7 +95,7 @@ android {
             versionNameSuffix "-debug"
             debuggable true
             applicationIdSuffix ".debug"
-            enableSeparateBuildPerCPUArchitecture = false // Build one universal APK for debug always
+            splits.abi.universalApk = true // Build universal APK for debug always
             // Check Crash Reports page on developer wiki for info on ACRA testing
             // buildConfigField "String", "ACRA_URL", '"https://918f7f55-f238-436c-b34f-c8b5f1331fe5-bluemix.cloudant.com/acra-ankidroid/_design/acra-storage/_update/report"'
             if (project.rootProject.file('local.properties').exists()) {
@@ -179,6 +168,17 @@ android {
             dimension "appStore"
         }
     }
+
+    /**
+     * Set this to true to create five separate APKs instead of one:
+     *   - 2 APKs that only work on ARM/ARM64 devices
+     *   - 2 APKs that only works on x86/x86_64 devices
+     *   - a universal APK that works on all devices
+     * The advantage is the size of most APKs is reduced by about 2.5MB.
+     * Upload all the APKs to the Play Store and people will download
+     * the correct one based on the CPU architecture of their device.
+     */
+    def enableSeparateBuildPerCPUArchitecture = true
 
     splits {
         abi {
@@ -315,9 +315,7 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.webkit:webkit:1.8.0'
-    // Note: the design support library can be quite buggy, so test everything thoroughly before updating it
-    // Changing the version from 1.8.0 to 1.7.0 because the item in navigation drawer is getting bold unnecessarily
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0"
@@ -349,12 +347,12 @@ dependencies {
     // noinspection GradleDependency - commons-compress 1.12 - later versions use `File.toPath`; API26 can remove?
     implementation 'org.apache.commons:commons-compress:1.12'
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
-    implementation 'commons-io:commons-io:2.14.0' // FileUtils.contentEquals
+    implementation 'commons-io:commons-io:2.15.0' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation 'com.arcao:slf4j-timber:3.1'
     implementation 'com.jakewharton.timber:timber:5.0.1'
-    implementation 'org.jsoup:jsoup:1.16.1'
+    implementation 'org.jsoup:jsoup:1.16.2'
     implementation "com.github.zafarkhaja:java-semver:0.9.0" // For AnkiDroid JS API Versioning
     implementation 'com.drakeet.drawer:drawer:1.0.3'
     implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'

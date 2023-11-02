@@ -103,3 +103,7 @@ class Tags(private val col: Collection) {
         return tags.map { it.lowercase() }.contains(tag.lowercase())
     }
 }
+
+fun Collection.completeTagRaw(input: ByteArray): ByteArray {
+    return backend.completeTagRaw(input)
+}

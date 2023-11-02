@@ -100,8 +100,6 @@
         <item>Създадено</item>
         <item>променена бележка</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Прилагане</string>
     <string name="filter_by_flags">Флагове</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Модифициране на днешното ограничение за нови карти</string>

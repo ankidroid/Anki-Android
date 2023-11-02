@@ -100,8 +100,6 @@
         <item>ତିଆରି କରାଯାଇଅଛି</item>
         <item>ନୋଟ୍ ସଂଶୋଧିତ</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">ପ୍ରୟୋଗ କର</string>
     <string name="filter_by_flags">ପତାକା</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">ଆଜିର ନୂଆ ପତ୍ରସଂଖ୍ୟା ସୀମା ସଂଶୋଧନ</string>
@@ -145,7 +143,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">ପୂର୍ଵାଵଲୋକନ</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%2$d ର %1$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">ନାମ ବଦଳାନ୍ତୁ</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">ଯାଞ୍ଚ କରିବା</string>
     <string name="check_db">ଡାଟାବେସ୍ ଯାଞ୍ଚ</string>
     <string name="check_media">ମିଡ଼ିଆ ଯାଞ୍ଚ</string>
     <string name="empty_cards">ଖାଲି ପତ୍ର</string>

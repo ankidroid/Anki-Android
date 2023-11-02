@@ -29,7 +29,7 @@
     <string name="model_browser_label" comment="Label of the browser of note types. The text can\'t be found in AnkiDroid directly.">Hallinnoi merkintöjen malleja</string>
     <string name="model_editor_label" comment="Label of the window to edit the fields of a note type. This text can\'t be found in Ankidroid directly">Hallinnoi kenttiä</string>
     <!--Toasts-->
-    <string name="toast_last_model">You cannot delete your last note type</string>
+    <string name="toast_last_model">Viimeistä muistiinpanotyyppiä ei voi poistaa</string>
     <string name="toast_last_field">Malleissa on oltava vähintään yksi kenttä</string>
     <string name="toast_empty_name">Sinun tulee syöttää nimi</string>
     <string name="toast_duplicate_field">Kentän nimi on jo käytössä</string>
@@ -48,38 +48,38 @@
     <string name="model_browser_rename" comment="Rename a note type">Uudelleennimeä</string>
     <string name="model_browser_template">Muokkaa kortteja</string>
     <!--Rename-->
-    <string name="rename_model">Rename note type</string>
+    <string name="rename_model">Nimeä muistiinpanotyyppi uudelleen</string>
     <!--Language Hint-->
-    <string name="model_field_editor_language_hint_dialog_success_result">Set language hint to %s</string>
+    <string name="model_field_editor_language_hint_dialog_success_result">Aseta kielen vihjeeksi %s</string>
     <!--Field Editing-->
     <string name="model_field_editor_title">Muokkaa kenttiä</string>
     <string name="model_field_editor_add">Lisää kenttä</string>
     <string name="model_field_editor_delete">Poista kenttä</string>
     <string name="model_field_editor_rename">Uudelleennimeä kenttä</string>
-    <string name="model_field_editor_language_hint">Set keyboard language hint</string>
+    <string name="model_field_editor_language_hint">Aseta näppäimistön kielen vihje</string>
     <string name="model_field_editor_reposition_menu">Uudelleensijoita kenttä</string>
     <string name="model_field_editor_reposition">Uudelleensijoita kenttä (syötä arvo %1$d-%2$d)</string>
-    <string name="model_field_editor_toggle_sticky">Remember last input when adding</string>
+    <string name="model_field_editor_toggle_sticky">Muista aiempi syöte lisättäessä</string>
     <string name="model_field_editor_changing">Päivitetään kenttiä</string>
     <string name="model_field_editor_sort_field">Järjestä tämän kentän mukaan</string>
     <!--Warnings-->
-    <string name="model_delete_warning">Are you sure you wish to delete this note type?</string>
+    <string name="model_delete_warning">Haluatko varmasti poistaa tämän muistiinpanotyypin?</string>
     <string name="field_delete_warning">Oletko varma, että haluat poistaa tämän kentän?</string>
     <!--Model Add Suffixes-->
     <string name="model_browser_add_add">Lisää: %1$s </string>
     <!--This prefix is used for standard note types-->
     <string name="model_browser_add_clone">Monista:%1$s </string>
     <!--Browser Appearance-->
-    <string name="card_template_browser_appearance_summary">Enter the template that the card browser will use to display your cards. Use this to display a more concise answer.\n\nA front template of\n“The capital of {{Country}} is:”\ncould be compressed in the card browser to\n“Capital: {{Country}}”</string>
-    <string name="card_template_browser_appearance_question_format">Question Format</string>
-    <string name="card_template_browser_appearance_answer_format">Answer Format</string>
-    <string name="card_template_browser_appearance_restore_default_dialog">Restore Default Values?</string>
-    <string name="card_template_browser_appearance_saving_note">These changes are applied when the card template is saved</string>
+    <string name="card_template_browser_appearance_summary">Anna malli, jota korttiselain käyttää korttien näyttämiseen. Käytä tätä, jos haluat näyttää tiiviimmän vastauksen.\n\nEtupuolen malli\n \"Maan {{Maa}} pääkaupunki on:\"\nvoitaisiin tiivistää korttiselaimessa muotoon\n \"Pääkaupunki: {{Maa}}\"</string>
+    <string name="card_template_browser_appearance_question_format">Kysymyksen muoto</string>
+    <string name="card_template_browser_appearance_answer_format">Vastauksen muoto</string>
+    <string name="card_template_browser_appearance_restore_default_dialog">Palautetaanko oletusarvot?</string>
+    <string name="card_template_browser_appearance_saving_note">Nämä muutokset otetaan käyttöön, kun korttimalli tallennetaan</string>
     <!-- Deck Override -->
-    <string name="card_template_editor_deck_override_on">Deck override (on)</string>
-    <string name="card_template_editor_deck_override_off">Deck override (off)</string>
-    <string name="model_manager_deck_override_added_message">Set ‘%1$s’ default deck to ‘%2$s’</string>
-    <string name="model_manager_deck_override_removed_message">Removed default deck for ‘%s’</string>
-    <string name="deck_override_explanation">Select deck to place new ‘%s’ cards into</string>
-    <string name="deck_picker_dialog_filter_decks">Filter decks</string>
+    <string name="card_template_editor_deck_override_on">Pakan ohitus (päällä)</string>
+    <string name="card_template_editor_deck_override_off">Pakan ohitus (pois)</string>
+    <string name="model_manager_deck_override_added_message">Aseta kohteen \"%1$s\" oletuspakaksi \"%2$s\"</string>
+    <string name="model_manager_deck_override_removed_message">Poistettu kohteen \"%s\" oletuspakka</string>
+    <string name="deck_override_explanation">Valitse pakka, johon uudet \"%s\"-kortit sijoitetaan.</string>
+    <string name="deck_picker_dialog_filter_decks">Suodata pakkoja</string>
 </resources>

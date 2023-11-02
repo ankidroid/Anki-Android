@@ -55,15 +55,11 @@
     <string name="studyoptions_due_today">Tới hạn hôm nay:</string>
     <string name="studyoptions_new_total">Tổng số thẻ mới:</string>
     <string name="studyoptions_total_cards">Tổng số thẻ:</string>
-    <string name="studyoptions_eta">Thời gian ước tính (phút):</string>
     <string name="studyoptions_start">Bắt đầu học</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Mở rộng</string>
     <string name="collapse">Thu gọn</string>
     <string name="study_more">Học thêm</string>
-    <plurals name="deckpicker_title">
-        <item quantity="other">%1$d thẻ tới hạn (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="other">còn %d phút</item>
     </plurals>
@@ -127,22 +123,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Cấp quyền \"Lưu trữ\" cho AnkiDroid để có thể tiếp tục</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d giây</string>
-    <string name="time_quantity_minutes">%d phút</string>
-    <string name="time_quantity_hours_minutes">%1$d giờ %2$d phút</string>
-    <string name="time_quantity_hours">%d giờ</string>
-    <string name="time_quantity_days">%d ngày</string>
-    <string name="time_quantity_days_hours">%1$d ngày %2$d giờ</string>
-    <string name="time_quantity_months">%.1f tháng</string>
-    <string name="time_quantity_years">%.1f năm</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Đang xây dựng lại bộ thẻ đã lọc</string>
     <string name="rebuild_cram_label">Dựng lại</string>
     <string name="empty_cram_label">Dọn trống</string>
@@ -265,8 +245,8 @@
     <string name="create_new_collection">Tạo 1 bộ sưu tập mới</string>
     <string name="new_unsafe_collection">Bộ sưu tập mới sẽ bị xóa khỏi thiết bị của bạn khi bạn xóa AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid cần một số quyền để hoạt động</string>
+    <string name="storage_access_title">Truy cập bộ nhớ</string>
+    <string name="storage_access_summary">Lưu bộ sưu tập của bạn ở nơi an toàn sẽ không bị xóa nếu gỡ cài đặt ứng dụng</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Quyền truy cập vào mọi tệp</string>
 </resources>

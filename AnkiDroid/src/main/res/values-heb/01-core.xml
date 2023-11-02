@@ -55,18 +55,11 @@
     <string name="studyoptions_due_today">להיום:</string>
     <string name="studyoptions_new_total">סך כל הקלפים החדשים:</string>
     <string name="studyoptions_total_cards">סך כל הקלפים:</string>
-    <string name="studyoptions_eta">זמן משוער (דקות):</string>
     <string name="studyoptions_start">לימוד</string>
     <!-- DeckPicker.kt -->
     <string name="expand">הרחב</string>
     <string name="collapse">צמצם</string>
     <string name="study_more">למידה נוספת</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">כרטיס אחד נותר (%2$s)</item>
-        <item quantity="two">%1$d קלפים נותרים (%2$s)</item>
-        <item quantity="many">%1$d קלפים נותרים (%2$s)</item>
-        <item quantity="other">%1$d קלפים נותרים (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">נותרה דקה %d</item>
         <item quantity="two">נותרו %d דקות</item>
@@ -140,22 +133,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">אנא אפשר לAnkiDroid גישה לאחסון בכדי להמשיך</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d שנ׳</string>
-    <string name="time_quantity_minutes">%d ד׳</string>
-    <string name="time_quantity_hours_minutes">%1$d ש\' %2$d ד\'</string>
-    <string name="time_quantity_hours">%d ש׳</string>
-    <string name="time_quantity_days">%d י׳</string>
-    <string name="time_quantity_days_hours">%1$d י\' %2$d ש\'</string>
-    <string name="time_quantity_months">%.1f חודשים</string>
-    <string name="time_quantity_years">%.1f שנים</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">בונה מחדש חפיסה מסוננת...</string>
     <string name="rebuild_cram_label">בניה מחדש</string>
     <string name="empty_cram_label">ריקון</string>

@@ -72,16 +72,8 @@
         <attr name="permissions" format="string"/>
     </declare-styleable>
 
+    <attr name="appBarColor" format="color"/>
     <attr name="widgetColorActivated" format="color"/>
-    <!-- App buttons -->
-    <attr name="largeButtonBackgroundColor" format="color"/>
-    <attr name="largeButtonBackgroundColorFocused" format="color"/>
-    <attr name="largeButtonBackgroundColorPressed" format="color"/>
-    <attr name="largeButtonTextColor" format="color"/>
-    <attr name="largeButtonSecondaryBackgroundColor" format="color"/>
-    <attr name="largeButtonSecondaryBackgroundColorFocused" format="color"/>
-    <attr name="largeButtonSecondaryBackgroundColorPressed" format="color"/>
-    <attr name="largeButtonSecondaryTextColor" format="color"/>
     <!-- Deck list colors, divider, and expander -->
     <attr name="currentDeckBackground" format="reference"/>
     <attr name="currentDeckBackgroundColor" format="color"/>
@@ -115,19 +107,6 @@
     <attr name="easyButtonTextColor" format="color"/>
     <!-- Card Browser Colors -->
     <attr name="cardBrowserDivider" format="color"/>
-    <!-- Stats colors -->
-    <attr name="stats_young" format="color"/>
-    <attr name="stats_mature" format="color"/>
-    <attr name="stats_learn" format="color"/>
-    <attr name="stats_relearn" format="color"/>
-    <attr name="stats_cram" format="color"/>
-    <attr name="stats_interval" format="color"/>
-    <attr name="stats_hours" format="color"/>
-    <attr name="stats_counts" format="color"/>
-    <attr name="stats_unseen" format="color"/>
-    <attr name="stats_suspended" format="color"/>
-    <attr name="stats_buried" format="color"/>
-    <attr name="stats_cumulative" format="color"/>
     <!-- Reviewer other colors -->
     <attr name="topBarColor" format="color"/>
     <attr name="maxTimerColor" format="color"/>
@@ -152,20 +131,6 @@
     <attr name="buttonForegroundColor" format="color"/>
     <!-- Images -->
     <attr name="navDrawerImage" format="integer"/>
-    <attr name="attachFileImage" format="integer"/>
-    <attr name="toggleStickyImage" format="integer"/>
-    <attr name="upDownImage" format="integer"/>
-    <attr name="dialogErrorIcon" format="integer"/>
-    <attr name="dialogSyncErrorIcon" format="integer"/>
-    <attr name="dialogSendIcon" format="integer"/>
-
-    <!-- Filter Bottom Sheet -->
-    <attr name="filterSheetBackground" format="color"/>
-    <attr name="filterItemBackground" format="color"/>
-    <attr name="filterItemBackgroundSelected" format="color"/>
-    <attr name="filterItemTextColor" format="color"/>
-    <attr name="filterItemTextColorSelected" format="color"/>
-    <attr name="filterHeaderDivider" format="color"/>
 
     <!-- Introduction -->
     <attr name="introductionLogoTransparent" format="color"/>
@@ -185,8 +150,6 @@
 
     <attr name="snackbarBackgroundTintColor" format="color"/>
     <attr name="snackbarButtonTextColor" format="color"/>
-
-    <attr name="sliderLabelTextColor" format="color"/>
 
     <declare-styleable name="CheckBoxTriStates">
         <attr name="cycle_checked_to_indeterminate" format="boolean" />

@@ -41,10 +41,13 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
             }
             if (uri.startsWith("/assets/")) {
                 val mime = getMimeFromUri(uri)
-                val stream = if (uri == "/assets/reviewer_extras_bundle.js") {
-                    this.javaClass.classLoader!!.getResourceAsStream("web/reviewer_extras_bundle.js")
-                } else {
-                    this.javaClass.classLoader!!.getResourceAsStream(uri.substring(1))
+                val stream = when (uri) {
+                    "/assets/reviewer_extras_bundle.js" ->
+                        this.javaClass.classLoader!!.getResourceAsStream("web/reviewer_extras_bundle.js")
+                    "/assets/reviewer_extras.css" ->
+                        this.javaClass.classLoader!!.getResourceAsStream("web/reviewer_extras.css")
+                    else ->
+                        this.javaClass.classLoader!!.getResourceAsStream(uri.substring(1))
                 }
                 if (stream != null) {
                     return newChunkedResponse(Response.Status.OK, mime, stream)

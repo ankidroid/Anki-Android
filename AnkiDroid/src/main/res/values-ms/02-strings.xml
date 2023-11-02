@@ -100,8 +100,6 @@
         <item>Dicipta</item>
         <item>Nota diubah</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Terap</string>
     <string name="filter_by_flags">Tanda</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Ubah had kad baru hari ini</string>

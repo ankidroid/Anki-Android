@@ -100,8 +100,6 @@
         <item>तयार केले</item>
         <item>टीप सुधारित</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
     <string name="filter_by_flags">Flags</string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">आजची नवीन कार्ड मर्यादा सुधारित करा</string>

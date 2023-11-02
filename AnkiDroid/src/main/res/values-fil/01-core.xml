@@ -55,16 +55,11 @@
     <string name="studyoptions_due_today">Nakatakda ngayon:</string>
     <string name="studyoptions_new_total">Kabuuang mga bagong card:</string>
     <string name="studyoptions_total_cards">Kabuuang mga card:</string>
-    <string name="studyoptions_eta">Tinatayang oras (min):</string>
     <string name="studyoptions_start">Pag-aaral</string>
     <!-- DeckPicker.kt -->
     <string name="expand">Palawakin</string>
     <string name="collapse">Itiklop</string>
     <string name="study_more">Pag-aralan ang iba pa</string>
-    <plurals name="deckpicker_title">
-        <item quantity="one">%1$d card na nakatakda (%2$s)</item>
-        <item quantity="other">%1$d mga nakatakdang card (%2$s)</item>
-    </plurals>
     <plurals name="reviewer_window_title">
         <item quantity="one">%d natitirang minuto</item>
         <item quantity="other">%d mga natitirang minuto</item>
@@ -131,22 +126,6 @@
     grant AnkiDroid the \'Storage\' permission. This needs to be a fairly generic message as implementations
     of the permissions/app info screen will differ between devices. -->
     <string name="startup_no_storage_permission">Mangyaring bigyan muna ng pahintulot sa \'Storage\' ang AnkiDroid upang makapagpatuloy</string>
-    <!--
-        The time_quantities are units of time. They are used without
-        plurals or dots.
-        s, min, h, d, are standard (ISO 31-1) units and should usually
-        not be translated, at least not for languages using the Latin
-        alphabet.
-    -->
-    <string name="time_quantity_seconds">%d s</string>
-    <string name="time_quantity_minutes">%d min</string>
-    <string name="time_quantity_hours_minutes">%1$d o %2$d m</string>
-    <string name="time_quantity_hours">%d h</string>
-    <string name="time_quantity_days">%d d</string>
-    <string name="time_quantity_days_hours">%1$d a %2$d o</string>
-    <string name="time_quantity_months">%.1f mo</string>
-    <string name="time_quantity_years">%.1f yr</string>
-    <!-- or "%.1f a" -->
     <string name="rebuild_filtered_deck">Iniaayos muli ang nafilter na deck&#8230;</string>
     <string name="rebuild_cram_label">Muling iayos</string>
     <string name="empty_cram_label">Walang laman</string>

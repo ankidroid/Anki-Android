@@ -100,8 +100,6 @@
         <item>Stworzona</item>
         <item>Zmodyfikowano notatkę</item>
     </string-array>
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Zastosuj</string>
     <string name="filter_by_flags">Flagi </string>
     <!-- Custom study options -->
     <string name="custom_study_increase_new_limit">Zmień dzisiejszy limit nowych kart</string>
@@ -149,7 +147,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Podgląd</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d z %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Zmień nazwę</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Sprawdź</string>
     <string name="check_db">Sprawdź bazę danych</string>
     <string name="check_media">Sprawdź media</string>
     <string name="empty_cards">Puste karty</string>
@@ -319,7 +317,7 @@
     <string name="deck_download_progress_message">Możesz używać innych aplikacji podczas pobierania</string>
     <string name="check_network">Sprawdź swoje połączenie internetowe</string>
     <string name="search_using_deck_name">Szukaj używając nazwy talii</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">Pobieranie przerwane, pamięć zewnętrzna nie jest dostępna</string>
     <string name="home">Strona główna</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->

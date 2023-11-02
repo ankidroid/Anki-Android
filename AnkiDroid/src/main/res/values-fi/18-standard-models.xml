@@ -29,14 +29,14 @@
     <string name="front_field_name">Etupuoli</string>
     <string name="back_field_name">Kääntöpuoli</string>
     <string name="text_field_name" comment="Field\'s name in Cloze Note type">Teksti</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="extra_field_name_new">Kääntöpuolen lisäteksti</string>
+    <string name="field_to_ask_front_name">Lisää käänteinen</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">Kortti %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_model_name">Perusmalli</string>
+    <string name="cloze_model_name">Aukkotehtävä</string>
+    <string name="basic_typing_model_name">Perusmalli (kirjoita vastaus)</string>
+    <string name="forward_reverse_model_name">malli (ja käänteinen kortti)</string>
+    <string name="forward_optional_reverse_model_name">Perusmalli (valinnainen käänteinen kortti)</string>
 </resources>

@@ -79,8 +79,6 @@
         <item>Note Modified</item>
     </string-array>
 
-    <!-- Filter Sheet -->
-    <string name="apply_filter">Apply</string>
     <string name="filter_by_flags">Flags</string>
 
     <!-- Custom study options -->
@@ -259,7 +257,6 @@
     <string name="card_viewer_media_relative_protocol">Card Content Error: Media update required</string>
 
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Failed to load deck ‘%s’</string>
     <string name="search_decks">Search decks</string>
     <string name="show_migration_progress"
         comment="Title for a button in deck picker's toolbar that shows ongoing migration progress.

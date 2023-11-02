@@ -33,7 +33,7 @@ class DeckPickerConfirmDeleteDeckDialog : AnalyticsDialogFragment() {
         return AlertDialog.Builder(requireActivity())
             .setTitle(R.string.delete_deck_title)
             .setMessage(requireArguments().getString("dialogMessage"))
-            .setIconAttribute(R.attr.dialogErrorIcon)
+            .setIcon(R.drawable.ic_warning)
             .setPositiveButton(R.string.dialog_positive_delete) { _, _ ->
                 (activity as DeckPicker).deleteDeck(deckId)
                 (activity as DeckPicker).dismissAllDialogFragments()
