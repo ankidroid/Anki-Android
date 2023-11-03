@@ -416,6 +416,13 @@ open class RobolectricTest : AndroidTest {
         return name
     }
 
+    /** Adds a note with Text to Speech functionality */
+    @Suppress("SameParameterValue")
+    protected fun addNoteUsingTextToSpeechNoteType(front: String, back: String) {
+        addNonClozeModel("TTS", arrayOf("Front", "Back"), "{{Front}}{{tts en_GB:Front}}", "{{tts en_GB:Front}}<br>{{Back}}")
+        addNoteUsingModelName("TTS", front, back)
+    }
+
     private fun addField(notetype: NotetypeJson, name: String) {
         val models = col.notetypes
         try {

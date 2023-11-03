@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.IntentCompat
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import anki.config.ConfigKey
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_1
 import com.ichi2.anki.AbstractFlashcardViewer.WebViewSignalParserUtils.ANSWER_ORDINAL_2
@@ -257,6 +258,51 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
         assertEquals(getResourceString(R.string.studyoptions_congrats_finished), ShadowToast.getTextOfLatestToast())
+    }
+
+    @Test
+    fun `Show audio play buttons preference handling - sound`() = runTest {
+        addNoteUsingBasicTypedModel("SOUND [sound:android_audiorec.3gp]", "back")
+        getViewerContent().let { content ->
+            assertThat("show audio preference default value: enabled", content, containsString("playsound:q:0"))
+            assertThat("show audio preference default value: enabled", content, containsString("SOUND"))
+        }
+        setHidePlayAudioButtons(true)
+        getViewerContent().let { content ->
+            assertThat("show audio preference disabled", content, not(containsString("playsound:q:0")))
+            assertThat("show audio preference disabled", content, containsString("SOUND"))
+        }
+        setHidePlayAudioButtons(false)
+        getViewerContent().let { content ->
+            assertThat("show audio preference enabled explicitly", content, containsString("playsound:q:0"))
+            assertThat("show audio preference enabled explicitly", content, containsString("SOUND"))
+        }
+    }
+
+    @Test
+    fun `Show audio play buttons preference handling - tts`() = runTest {
+        addNoteUsingTextToSpeechNoteType("TTS", "BACK")
+        getViewerContent().let { content ->
+            assertThat("show audio preference default value: enabled", content, containsString("playsound:q:0"))
+            assertThat("show audio preference default value: enabled", content, containsString("TTS"))
+        }
+        setHidePlayAudioButtons(true)
+        getViewerContent().let { content ->
+            assertThat("show audio preference disabled", content, not(containsString("playsound:q:0")))
+            assertThat("show audio preference disabled", content, containsString("TTS"))
+        }
+        setHidePlayAudioButtons(false)
+        getViewerContent().let { content ->
+            assertThat("show audio preference enabled explicitly", content, containsString("playsound:q:0"))
+            assertThat("show audio preference enabled explicitly", content, containsString("TTS"))
+        }
+    }
+
+    private fun setHidePlayAudioButtons(value: Boolean) = col.config.setBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS, value)
+
+    private fun getViewerContent(): String? {
+        // PERF: Optimise this to not create a new viewer each time
+        return getViewer(addCard = false).cardContent
     }
 
     private fun showNextCard(viewer: NonAbstractFlashcardViewer) {
