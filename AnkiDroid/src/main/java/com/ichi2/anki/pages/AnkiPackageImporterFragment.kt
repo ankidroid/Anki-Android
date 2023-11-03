@@ -21,6 +21,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.anki.hideShowButtonCss
 
 class AnkiPackageImporterFragment : PageFragment() {
     override val title: Int
@@ -61,7 +62,7 @@ class AnkiPackageImporterFragment : PageFragment() {
         override fun onPageFinished(view: WebView?, url: String?) {
             val params = """{ type: "json_file", path: "$path"}"""
             // https://github.com/ankitects/anki/blob/main/ts/import-page/index.ts
-            view!!.evaluateJavascript("anki.setupImportPage($params);") {
+            view!!.evaluateJavascript("anki.setupImportPage($params);$hideShowButtonCss;") {
                 super.onPageFinished(view, url)
             }
         }

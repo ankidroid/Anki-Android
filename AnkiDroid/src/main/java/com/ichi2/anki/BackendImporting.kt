@@ -57,6 +57,25 @@ suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
 }
 
 /**
+ * Css to hide the "Show" button from the final backend import page. As the user could import a lot
+ * of notes, on pressing "Show" the native CardBrowser would be called with a search query
+ * comprising of all the notes ids. This would result in a crash or very slow behavior in the
+ * CardBrowser.
+ *
+ * NOTE: this should be used only with [android.webkit.WebView.evaluateJavascript].
+ */
+val hideShowButtonCss = """
+    javascript:(
+        function() {
+            var hideShowButtonStyle = '.desktop-only { display: none !important; }';
+            var newStyle = document.createElement('style');                    
+            newStyle.appendChild(document.createTextNode(hideShowButtonStyle));
+            document.head.appendChild(newStyle);       
+        }
+    )()
+""".trimIndent()
+
+/**
  * Calls the native [CardBrowser] to display the results of the search query constructed from the
  * input. This method will always return the received input.
  */
