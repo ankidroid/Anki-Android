@@ -104,12 +104,13 @@ class AudioRecorder {
     }
 
     fun pause() {
-        if (this::mRecorder.isInitialized) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                mRecorder.pause()
-            } else {
-                mRecorder.stop()
-            }
+        if (!this::mRecorder.isInitialized) {
+            return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mRecorder.pause()
+        } else {
+            mRecorder.stop()
         }
     }
 

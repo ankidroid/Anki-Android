@@ -44,7 +44,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.IOException
 // TODO : stop audio time view flickering
-// TODO: forwards & rewind have 1000 jump time and UI shows 5 fix the UI
 class AudioRecordingController :
     FieldControllerBase(),
     IFieldController,
@@ -69,7 +68,7 @@ class AudioRecordingController :
     private var isPaused = false
     private var isCleared = false
     private var isPlaying = false
-    private var jumpValue = 1000
+    private var jumpValue = 5000
     private lateinit var cancelAudioRecordingButton: MaterialButton
 
     // wave layout takes up a lot of screen in HORIZONTAL layout so we need to hide it
