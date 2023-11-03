@@ -61,8 +61,8 @@
     <string name="updated_version">Atualizadu a sa versione %s</string>
     <!-- Reviewer.kt -->
     <string name="save_whiteboard">Sarva sa lavagna</string>
-    <string name="enable_stylus">Enable stylus writing</string>
-    <string name="disable_stylus">Disable stylus writing</string>
+    <string name="enable_stylus">Abìlita sa modalidade penninu</string>
+    <string name="disable_stylus">Disabìlita sa modalidade penninu</string>
     <string name="enable_whiteboard">Abìlita sa lavagna</string>
     <string name="disable_whiteboard">Disabìlita sa lavagna</string>
     <string name="show_whiteboard">Ammustra sa lavagna</string>
@@ -145,7 +145,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Antiprima</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d de %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Muda de nùmene</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Verìfica</string>
     <string name="check_db">Verìfica sa base de datos</string>
     <string name="check_media">Verìfica sos documentos multimediales</string>
     <string name="empty_cards">Cartas bòidas</string>
@@ -183,8 +183,8 @@
         <item quantity="one">Esportare sa nota seletzionada comente archìviu apkg?</item>
         <item quantity="other">Esportare sas %d notas seletzionadas comente archìviu apkg?</item>
     </plurals>
-    <string name="export_preparation_in_progress">Preparing export&#8230;</string>
-    <string name="export_ready_title">Export ready</string>
+    <string name="export_preparation_in_progress">Ammaniende s\'esportatzione&#8230;</string>
+    <string name="export_ready_title">Esportatzione pronta</string>
     <string name="export_send_no_handlers">Peruna aplicatzione a disponimentu pro gestire apkg. Sarvende…</string>
     <string name="export_save_apkg_successful">Pachete de Anki sarvadu in manera curreta</string>
     <string name="export_save_apkg_unsuccessful">Sarvamentu de su pachete de Anki fallidu</string>
@@ -197,8 +197,8 @@
         [1] %1$s<br/>
         [2] %2$s
         ]]></string>
-    <string name="export_choice_share">Share</string>
-    <string name="export_choice_save_to">Save to</string>
+    <string name="export_choice_share">Cumpartzi</string>
+    <string name="export_choice_save_to">Sarva in</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">Optziones</string>
     <string name="menu__deck_options">Optziones de sos matzos</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">Optziones de istùdiu</string>
@@ -252,15 +252,14 @@
     <string name="reviewer_invalid_api_version_visit_documentation">Pòmpia</string>
     <string name="anki_js_error_code">(Còdighe de errore: %d)</string>
     <!-- About AnkiDroid screen -->
-    <string name="about_ankidroid_successfully_copied_debug_info">Copied to clipboard</string>
+    <string name="about_ankidroid_successfully_copied_debug_info">Copiadu in punta de billete</string>
     <string name="about_ankidroid_error_copy_debug_info">B\'at àpidu una faddina copiende sas informatziones de depuratzione in punta de billete</string>
     <!-- Card Viewer -->
     <string name="card_viewer_could_not_find_image">Errore de cuntenutu de sa carta: carrigamentu de ‘%s’ fallidu</string>
     <string name="card_viewer_media_relative_protocol">Errore de cuntenutu de sa carta: atualizatzione multimediale netzessària</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Carrigamentu de su matzu ‘%s’ fallidu</string>
     <string name="search_decks">Chirca matzos</string>
-    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
+    <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Ammustra su protzessu de tramudòngiu</string>
     <string name="ankidroid_init_failed_webview_title">Faddina fatale</string>
     <string name="ankidroid_init_failed_webview">AnkiDroid si basat in subrade sa WebView de sistema chi no est a disponimentu. Custu podet acontèssere si su sistema est installende atualizatziones. Torra a proare a pustis de una paja de minutos.\n\n%s</string>
     <!-- A Menu item to change the Font Size (currently in the Note Editor) -->
@@ -308,14 +307,14 @@
     <string name="deck_download_progress_message">Podes impreare àteras aplicatziones in su mentres chi s\'iscarrigamentu est in cursu</string>
     <string name="check_network">Verìfica sa connessione de retze tua</string>
     <string name="search_using_deck_name">Chirca impreende su nùmene de su matzu</string>
-    <string name="external_storage_unavailable">Download aborted, the external storage is not available</string>
+    <string name="external_storage_unavailable">Iscarrigamentu annulladu, sa memòria esterna no est a disponimentu</string>
     <string name="home">Pàgina printzipale</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
-    <string name="card_buried">Card buried.</string>
+    <string name="card_buried">Carta interrada.</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
-        <item quantity="other">%d cards suspended.</item>
+        <item quantity="one">%d carta suspèndida.</item>
+        <item quantity="other">%d cartas suspèndidas.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
     <string name="note_editor_toggle_sticky">Fissa su campu %s</string>
@@ -325,7 +324,7 @@
     <string name="scoped_storage_postpone">Postìtzipa</string>
     <string name="scoped_storage_migrate">Tràmuda</string>
     <string name="search_card_js_api_no_results">Sa chirca no at frunidu resurtados</string>
-    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid needs to migrate its storage to comply with Android 10 security policy.\n\nThis will improve media sync performance.&lt;br&gt;&lt;br&gt;During the migration you will be unable to sync and some settings will be disabled. A media sync will occur before the migration starts to keep your data safe.&lt;br&gt;&lt;br&gt;It is safe to use or close AnkiDroid during this process.</string>
+    <string name="migration_update_request_requires_media_sync" commnet="use HTML linebreaks in this string">AnkiDroid tenet bisòngiu de tramudare sa memòria sua pro rispetare sa polìtica de riservadesa de Android 10.\n\nCustu at a megiorare su rendimentu de sa sincronizatzione.&lt;br&gt;&lt;br&gt;Durante su tramudòngiu no as a pòdere sincronizare e unas cantas impostatziones ant a èssere disabilitadas. Una sincronizatzione de sos documentos multimediales s\'at a fàghere in antis de su tramudòngiu pro mantènnere seguros sos datos tuos.&lt;br&gt;&lt;br&gt;Est seguru a impreare o serrare AnkiDroid durante custu protzessu.</string>
     <string name="start_migration_progress_message">Incumintzende sa tràmuda de sa memòria. As a pòdere sighire a impreare AnkiDroid luego.</string>
     <string name="migration_part_1_done_resume">Podes sighire a impreare AnkiDroid.
 \nSa tràmuda de sa memòria at a sighire in s\'isfundu.</string>
@@ -350,7 +349,7 @@
     <string name="deck_created">Matzu creadu</string>
     <string name="deck_renamed">Matzu mudadu de nùmene</string>
     <!-- Deck Deletion -->
-    <string name="deck_shortcut_doesnt_exist">Deck deleted. Please remove the shortcut</string>
+    <string name="deck_shortcut_doesnt_exist">Matzu iscantzelladu. Pro praghere iscantzella s\'incurtzadura</string>
     <!-- Browser Options Dialog -->
     <string name="show_cards" comment="Label for toggle cards button in BrowserOptionsDialog">Cartas</string>
     <string name="show_notes" comment="Label for toggle notes button in BrowserOptionsDialog">Notas</string>
@@ -358,9 +357,9 @@
     <string name="toggle_browser_mode_help">Cola a sa visualizatzione de cartas o notas in su navigadore</string>
     <string name="truncate_content_help">Mutza s\'artària de cada riga de su navigadore pro ammustrare petzi sas primas 3 rigas de cuntenutu</string>
     <string name="browser_options_dialog_heading">Optziones de su navigadore</string>
-    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        This functionality is unavailable during a storage migration
+    <string name="functionality_disabled_during_storage_migration" comment="Displayed when trying to access functionality which cannot be run while storage is being moved to a new location">        Custa funtzionalidade no est a disponimentu durante unu tramudòngiu de memòria
     </string>
-    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tap to start storage migration</string>
-    <string name="media_sync_required_title">Media Sync Required</string>
-    <string name="media_sync_unavailable_message">Media sync is disabled in the settings. Please sync and backup any media which hasn\'t been synced before continuing</string>
+    <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toca pro incumintzare sa tràmuda de memòria</string>
+    <string name="media_sync_required_title">Sincronizatzione de sos mèdios netzessària</string>
+    <string name="media_sync_unavailable_message">Sa sincronizatzione multimediale est disabilitada in sas impostatziones. Pro praghere sincroniza e faghe una còpia de seguresa de cale si siat mèdiu chi non siat istadu sincronizadu in antis de sighire</string>
 </resources>

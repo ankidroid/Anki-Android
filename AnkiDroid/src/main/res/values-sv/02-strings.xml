@@ -255,7 +255,6 @@
     <string name="card_viewer_could_not_find_image">Kortet innehållsfel: Det gick inte att läsa in ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Kort innehållsfel: Medierapportering krävs</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Det gick inte att läsa in kortleken ‘%s’</string>
     <string name="search_decks">Sök kortlekar</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">Kritiskt fel</string>

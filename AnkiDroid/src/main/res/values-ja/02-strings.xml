@@ -249,7 +249,6 @@
     <string name="card_viewer_could_not_find_image">カードコンテンツエラー: ’%s’ の読み込みに失敗しました</string>
     <string name="card_viewer_media_relative_protocol">カードコンテンツエラー: メディアの更新が必要です</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">デッキ \'%s\' の読み込みに失敗しました</string>
     <string name="search_decks">デッキ名を検索</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">移行の進行状況を表示</string>
     <string name="ankidroid_init_failed_webview_title">重大なエラー</string>

@@ -143,7 +143,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Előnézet</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d ennyiből %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Átnevezés</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Ellenőrzés</string>
     <string name="check_db">Adatbázis ellenőrzése</string>
     <string name="check_media">Média ellenőrzése</string>
     <string name="empty_cards">Üres kártyák listája</string>
@@ -255,7 +255,6 @@
     <string name="card_viewer_could_not_find_image">Hibás kártya tartalom: \"%s\" betöltése sikertelen</string>
     <string name="card_viewer_media_relative_protocol">Hiba a kártya tartalmában: a média frissítése szükséges</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">A(z) \'%s\' pakli betöltése nem sikerült</string>
     <string name="search_decks">Keresés a paklikban</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Áttelepítés állapota</string>
     <string name="ankidroid_init_failed_webview_title">Végzetes hiba</string>

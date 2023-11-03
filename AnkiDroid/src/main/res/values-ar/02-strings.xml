@@ -279,7 +279,6 @@
     <string name="card_viewer_could_not_find_image">فشل تحميل ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">خطأ في محتوى البطاقة: تحديث الوسائط مطلوب</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">فشل تحميل رزمة ‘%s’</string>
     <string name="search_decks">بحث في الرزم</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">إظهار تقدم النقل</string>
     <string name="ankidroid_init_failed_webview_title">خطأٌ فادح</string>

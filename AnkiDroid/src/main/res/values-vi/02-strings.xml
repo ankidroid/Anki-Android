@@ -249,7 +249,6 @@
     <string name="card_viewer_could_not_find_image">Lỗi hiện thị nội dung thẻ: Không thể mở ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Lỗi hiện thị nội dung thẻ: Cần cập nhật media</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Không thể mở bộ thẻ ‘%s’</string>
     <string name="search_decks">Tìm kiếm bộ thẻ</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Hiển thị tiến trình di chuyển</string>
     <string name="ankidroid_init_failed_webview_title">Lỗi nghiêm trọng</string>

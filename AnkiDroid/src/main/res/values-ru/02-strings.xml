@@ -267,7 +267,6 @@
     <string name="card_viewer_could_not_find_image">Не удалось загрузить «%s»</string>
     <string name="card_viewer_media_relative_protocol">Ошибка в содержимом карточки: требуется обновление медиафайлов</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Не удалось загрузить колоду «%s»</string>
     <string name="search_decks">Найти колоду</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Показать прогресс переноса файлов</string>
     <string name="ankidroid_init_failed_webview_title">Критическая ошибка</string>

@@ -255,7 +255,6 @@
     <string name="card_viewer_could_not_find_image">കാർഡ് ഉള്ളടക്ക പിശക്: ‘%s’ ലോഡുചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="card_viewer_media_relative_protocol">കാർഡ് ഉള്ളടക്ക പിശക്: മീഡിയ അപ്‌ഡേറ്റ് ആവശ്യമാണ്</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">ഡെക്ക് ‘%s’ ലോഡുചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു</string>
     <string name="search_decks">തിരയൽ ഡെക്കുകൾ</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">മാരകമായ തെറ്റ്</string>

@@ -134,8 +134,8 @@
     <string name="sync_status_badge_summ">Значок синхронізації зміниться, коли буде можна відвантажити зміни</string>
     <string name="metered_sync_title" maxLength="41">Дозволити синхронізацію на вимірюваному Інтернет-підключенні</string>
     <string name="metered_sync_summary">Якщо вимкнено, то вас буде попереджено коли ви спробуєте синхронізувати при вимірюваному Інтернет підключенні</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Частота</string>
+    <string name="backup_limits_lifetime">Довічно</string>
     <string name="app_theme" maxLength="41">Тема</string>
     <string name="day_theme" maxLength="41">Денна тема</string>
     <string name="night_theme" maxLength="41">Нічна тема</string>
