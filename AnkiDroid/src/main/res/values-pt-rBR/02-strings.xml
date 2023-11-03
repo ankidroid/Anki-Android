@@ -255,7 +255,6 @@
     <string name="card_viewer_could_not_find_image">Erro de Conteúdo do Card: Falha ao carregar ‘%s\'</string>
     <string name="card_viewer_media_relative_protocol">Erro de conteúdo do card: Atualização de mídia necessária</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Falha ao carregar o baralho ‘%s\'</string>
     <string name="search_decks">Pesquisar baralhos</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Mostrar progresso da migração</string>
     <string name="ankidroid_init_failed_webview_title">Erro Fatal</string>

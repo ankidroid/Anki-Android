@@ -250,8 +250,8 @@
     <string name="create_new_collection">Új gyűjtemény létrehozása</string>
     <string name="new_unsafe_collection">Az új gyűjtemény törlődik a telefonról, ha eltávolítja az AnkiDroid alkalmazást.</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">Az AnkiDroid működéséhez bizonyos engedélyekre van szüksége</string>
+    <string name="storage_access_title">Tárolási hozzáférés</string>
+    <string name="storage_access_summary">Biztonságos helyre menti a gyűjteményed, amely nem törlődik, ha az alkalmazást eltávolítják.</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Hozzáférés minden fájlhoz</string>
 </resources>

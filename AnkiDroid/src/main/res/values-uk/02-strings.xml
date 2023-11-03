@@ -147,7 +147,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Попередній перегляд</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d з %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Перейменувати</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Перевірити</string>
     <string name="check_db">Перевірити базу даних</string>
     <string name="check_media">Перевірити медіафайли</string>
     <string name="empty_cards">Порожні картки</string>
@@ -160,8 +160,8 @@
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
     <plurals name="import_files_message_add_confirm">
         <item quantity="one">Додати \"%s\" до колекції? Це може зайняти багато часу</item>
-        <item quantity="few">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
-        <item quantity="many">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
+        <item quantity="few">Ви хочете імпортувати такі файли:\n%s\nЦе може зайняти багато часу</item>
+        <item quantity="many">Ви хочете імпортувати такі файли:\n%s\nЦе може зайняти багато часу</item>
         <item quantity="other">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
     </plurals>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
@@ -267,7 +267,6 @@
     <string name="card_viewer_could_not_find_image">Не вдалося завантажити «\'%s»</string>
     <string name="card_viewer_media_relative_protocol">Помилка вмісту картки: необхідне оновлення медіа</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Не вдалося завантажити колоду «%s»</string>
     <string name="search_decks">Шукати колоди</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Показати прогрес перенесення даних</string>
     <string name="ankidroid_init_failed_webview_title">Критична помилка</string>

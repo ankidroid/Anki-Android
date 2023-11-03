@@ -252,7 +252,6 @@ Context | Request Context    [1]</string>
     <string name="card_viewer_could_not_find_image">카드 내용 오류: \'%s\' 읽기 실패</string>
     <string name="card_viewer_media_relative_protocol">카드 내용 오류: 미디어 업데이트 요청</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">\'%s\' 뭉치를 가져오는데 실패했습니다.</string>
     <string name="search_decks">덱 검색</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Show migration progress</string>
     <string name="ankidroid_init_failed_webview_title">심각한 오류</string>

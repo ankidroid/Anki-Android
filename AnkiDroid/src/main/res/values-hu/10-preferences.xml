@@ -134,8 +134,8 @@
     <string name="sync_status_badge_summ">A szinkronizálás ikonjának módosítása, amikor a változások feltölthetők</string>
     <string name="metered_sync_title" maxLength="41">Szinkronizálás forgalmi díjas kapcsolaton</string>
     <string name="metered_sync_summary">Ha letiltva, figyelmeztet, ha szinkronizálni próbál mért kapcsolaton.</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Gyakoriság</string>
+    <string name="backup_limits_lifetime">Időköz</string>
     <string name="app_theme" maxLength="41">Sablon</string>
     <string name="day_theme" maxLength="41">Nappali téma</string>
     <string name="night_theme" maxLength="41">Éjszakai téma</string>

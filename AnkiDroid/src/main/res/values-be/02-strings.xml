@@ -267,7 +267,6 @@
     <string name="card_viewer_could_not_find_image">Памылка змесціва карткі: немагчыма загрузіць ‘%s’</string>
     <string name="card_viewer_media_relative_protocol">Памылка змесціва карткі: неабходна абнаўленне медыяфайлаў</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">Памылка загрузкі калоды ‘%s’</string>
     <string name="search_decks">Пошук калод</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">Паказаць ход выканання пераносу</string>
     <string name="ankidroid_init_failed_webview_title">Крытычная памылка</string>

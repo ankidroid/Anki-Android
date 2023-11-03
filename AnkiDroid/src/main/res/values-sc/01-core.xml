@@ -219,44 +219,44 @@
         Assegura·ti chi sos datos tuos siant seguros sincronizende o esportende còpias de seguresa in manera regulare.
     </string>
     <string name="migration__failed__title" comment="A title for a dialog, or a short message shown in a notification,         when storage migration fails">Tramudòngiu fallidu</string>
-    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Copying database files failed with the error: %1$s.
+    <string name="migration__failed__changes_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes rolled back"><![CDATA[        Còpia de sos archìvios de sa base de datos fallida cun s\'errore: %1$s.
         <br><br>
-        The changes were reverted.
+        Sas modìficas sunt istadas annulladas.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Proa a torrare a esecutare sa tràmuda.
+        Pro risòlvere su problema dias pòdere dèpere liberare unu pagu de ispàtziu de discu,
+        o torrare a connètere sa memòria rimovìbile chi tenet sa colletzione tua.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Impara de prus e retzi agiudu</a>
     ]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Su movimentu de documentos multimediales est in pàusa a pustis de su fallimentu cun s\'errore: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        Sas modìficas <i>non</i> sunt istadas annulladas.
+        Dae chi perunu datu i diat dèpere èssere pèrdidu,
+        Sos documentos multimediales diant pòdere èssere partzidos intre sa cartella betza e sa noa.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Proa a torrare a fàghere su tramudòngiu.
+        Pro risòlvere su problema dias pòdere dèpere liberare unu pagu de ispàtziu in su discu,
+        o torrare a connètere sa memòria rimovìbile in ue tenes sa colletzione tua.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Impara de prus e retzi agiudu</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Storage migration is paused after failing with the error: %1$s.
+    <string name="migration__resume_after_failed_dialog__message"><![CDATA[        Su tramudòngiu de sa memòria est in pàusa a pustis de su fallimentu cun s\'errore: %1$s.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
+        <a href="%2$s">Impara de prus e retzi agiudu</a>
     ]]></string>
-    <string name="migration__resume_after_failed_dialog__button_positive">Resume migration</string>
-    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Inaccessible collection</string>
-    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">We are unable to access your collection after AnkiDroid is uninstalled due to a change in Play Store Policy\n\nYour data is safe and can be restored. It is located at\n%s\n\nSelect an option below to restore:</string>
-    <string name="restore_data_from_ankiweb">Restore from AnkiWeb (recommended)</string>
-    <string name="install_non_play_store_ankidroid_recommended">Restore folder access (recommended)</string>
-    <string name="install_non_play_store_ankidroid">Restore folder access (advanced)</string>
-    <string name="restore_data_from_backup">Restore from .colpkg backup (advanced)</string>
-    <string name="create_new_collection">Create a new collection</string>
-    <string name="new_unsafe_collection">The new collection will be deleted from your phone if you uninstall AnkiDroid</string>
+    <string name="migration__resume_after_failed_dialog__button_positive">Sighi cun su tramudòngiu</string>
+    <string name="directory_inaccessible_after_uninstall" comment="Dialog title if AnkiDroid can\'t access the collection once the app is installed">Non faghet a atzèdere a sa colletzione</string>
+    <string name="directory_inaccessible_after_uninstall_summary" comment="the parameter is the path to the AnkiDroid folder. Typically /storage/emulated/0/AnkiDroid">Non semus in gradu de atzèdere a sa colletzione tua a pustis de sa disinstallatzione de AnkiDroid pro neghe de una modìfica in sa polìtica de su Play Store\n\nSos datos tuos sunt seguros e si podent ripristinare. Sunt postos in\n%s\n\nSeletziona un\'optzione in suta pro ripristinare:</string>
+    <string name="restore_data_from_ankiweb">Riprìstina dae AnkiWeb (cussigiadu)</string>
+    <string name="install_non_play_store_ankidroid_recommended">Riprìstina s\'atzessu a sa cartella (cussigiadu)</string>
+    <string name="install_non_play_store_ankidroid">Riprìstina s\'atzessu a sa cartella (avantzadu)</string>
+    <string name="restore_data_from_backup">Riprìstina dae una còpia de seguresa .colpkg (avantzadu)</string>
+    <string name="create_new_collection">Crea una colletzione noa</string>
+    <string name="new_unsafe_collection">Sa colletzione noa s\'at a iscantzellare dae su telèfonu tuo si as a disinstallare AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid tenet bisòngiu de unos cantos permissos pro funtzionare</string>
+    <string name="storage_access_title">Atzessu a sa memòria</string>
+    <string name="storage_access_summary">Sarvat sa colletzione tua in unu logu seguru chi non s\'at a iscantzellare si as a disinstallare s\'aplicatzione</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Atzessu a totu sos archìvios</string>
 </resources>

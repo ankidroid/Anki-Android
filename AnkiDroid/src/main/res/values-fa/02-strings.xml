@@ -253,7 +253,6 @@
     <string name="card_viewer_could_not_find_image">خطا در محتویات کارت:‌ بارگیری \'%s\' ناموفق بود</string>
     <string name="card_viewer_media_relative_protocol">خطا در محتویات کارت:‌ نیازمند به‌روز‌رسانی رسانه‌ها</string>
     <!-- Deck Picker -->
-    <string name="deck_picker_failed_deck_load">خطا در بارگیری دسته \'%s\'</string>
     <string name="search_decks">جستجو در تمام دسته‌ها</string>
     <string name="show_migration_progress" comment="Title for a button in deck picker\'s toolbar that shows ongoing migration progress.         Usually shown as a tooltip. The button opens a dialog with a more detailed progress information.">نمایش فرآیند مهاجرت</string>
     <string name="ankidroid_init_failed_webview_title">خطای مخرب</string>

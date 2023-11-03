@@ -46,9 +46,9 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d картку показано</item>
-        <item quantity="few">%d картки показано</item>
-        <item quantity="many">%d картки показано</item>
+        <item quantity="one">%d картки/ок показано</item>
+        <item quantity="few">%d картки/ок показано</item>
+        <item quantity="many">%d картки/ок показано</item>
         <item quantity="other">%d карт показано</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
