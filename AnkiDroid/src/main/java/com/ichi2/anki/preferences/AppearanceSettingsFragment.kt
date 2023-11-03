@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
+import anki.config.ConfigKey
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.snackbar.showSnackbar
@@ -139,6 +140,16 @@ class AppearanceSettingsFragment : SettingsFragment() {
                 val newDueCountsValueBool = newDueCountsValue as? Boolean ?: return@setOnPreferenceChangeListener false
                 launchCatchingTask { withCol { config.set("dueCounts", newDueCountsValueBool) } }
                 true
+            }
+        }
+
+        // Show play buttons on cards with audio
+        // Note: Stored inverted in the collection as HIDE_AUDIO_PLAY_BUTTONS
+        requirePreference<SwitchPreferenceCompat>(R.string.show_audio_play_buttons_key).apply {
+            title = CollectionManager.TR.preferencesShowPlayButtonsOnCardsWith()
+            launchCatchingTask { isChecked = withCol { !config.getBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS) } }
+            setOnPreferenceChangeListener { newValue ->
+                launchCatchingTask { withCol { config.setBool(ConfigKey.Bool.HIDE_AUDIO_PLAY_BUTTONS, !(newValue as Boolean)) } }
             }
         }
     }
