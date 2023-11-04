@@ -220,6 +220,12 @@ class Decks(private val col: Collection) {
     /** Select a new branch. */
     fun select(did: DeckId) {
         col.backend.setCurrentDeck(did)
+        val selectedDeckName = name(did)
+        val childrenDids =
+            allNamesAndIds(skipEmptyDefault = true, includeFiltered = false)
+                .filter { it.name.startsWith("$selectedDeckName::") }
+                .map { it.id }
+        col.config.set(ACTIVE_DECKS, listOf(did) + childrenDids)
     }
 
     /*
