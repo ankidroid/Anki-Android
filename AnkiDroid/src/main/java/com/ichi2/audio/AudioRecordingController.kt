@@ -52,7 +52,6 @@ class AudioRecordingController :
     private lateinit var mediaPlayer: MediaPlayer
     private var tempAudioPath: String? = null
 
-    private lateinit var playAudioButtonLayout: LinearLayout
     private lateinit var recordButton: MaterialButton
     private lateinit var saveButton: MaterialButton
     private lateinit var audioTimeView: TextView
@@ -63,12 +62,10 @@ class AudioRecordingController :
     private lateinit var audioWaveform: AudioWaveform
     private lateinit var audioProgressBar: LinearProgressIndicator
     private lateinit var context: Context
-    private lateinit var audioFileView: ShapeableImageView
     private var isRecording = false
     private var isPaused = false
     private var isCleared = false
     private var isPlaying = false
-    private val jumpValue = 5000
     private lateinit var cancelAudioRecordingButton: MaterialButton
 
     // wave layout takes up a lot of screen in HORIZONTAL layout so we need to hide it
@@ -131,9 +128,9 @@ class AudioRecordingController :
         playAudioButton = layout.findViewById(R.id.action_play_recording)
         forwardAudioButton = layout.findViewById(R.id.action_forward)
         rewindAudioButton = layout.findViewById(R.id.action_rewind)
-        playAudioButtonLayout = layout.findViewById(R.id.play_buttons_layout)
+        val playAudioButtonLayout = layout.findViewById<LinearLayout>(R.id.play_buttons_layout)
         audioProgressBar = layout.findViewById(R.id.audio_progress_indicator)
-        audioFileView = layout.findViewById(R.id.audio_file_imageview)
+        val audioFileView = layout.findViewById<ShapeableImageView>(R.id.audio_file_imageview)
         cancelAudioRecordingButton.isEnabled = false
         saveButton.isEnabled = false
         mediaPlayer = MediaPlayer()
@@ -220,15 +217,15 @@ class AudioRecordingController :
             }
         }
         rewindAudioButton.setOnClickListener {
-            mediaPlayer.seekTo(mediaPlayer.currentPosition - jumpValue)
-            audioProgressBar.progress -= jumpValue
+            mediaPlayer.seekTo(mediaPlayer.currentPosition - JUMP_VALUE)
+            audioProgressBar.progress -= JUMP_VALUE
             mediaPlayer.currentPosition
             audioTimer.start(mediaPlayer.currentPosition.toLong())
         }
         forwardAudioButton.setOnClickListener {
             audioTimer.start(mediaPlayer.currentPosition.toLong())
-            mediaPlayer.seekTo(mediaPlayer.currentPosition + jumpValue)
-            audioProgressBar.progress += jumpValue
+            mediaPlayer.seekTo(mediaPlayer.currentPosition + JUMP_VALUE)
+            audioProgressBar.progress += JUMP_VALUE
         }
 
         mediaPlayer.setOnCompletionListener {
@@ -340,6 +337,7 @@ class AudioRecordingController :
 
     companion object {
         const val DEFAULT_TIME = "00:00.0"
+        const val JUMP_VALUE = 500
         fun generateTempAudioFile(context: Context): String? {
             val tempAudioPath: String? = try {
                 val storingDirectory = context.cacheDir
