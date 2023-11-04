@@ -5,10 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/listPreferredItemHeight"
-    android:paddingStart="?attr/listPreferredItemPaddingStart"
     android:paddingTop="16dp"
-    android:paddingEnd="8dp"
-    android:paddingBottom="16dp"
+    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     tools:context=".ui.windows.permissions.PermissionItem">
 
     <ImageView
