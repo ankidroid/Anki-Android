@@ -48,10 +48,10 @@ class AudioRecordingController :
     FieldControllerBase(),
     IFieldController,
     AudioTimer.OnTimerTickListener {
-    private var audioRecorder = AudioRecorder()
+    private val audioRecorder = AudioRecorder()
     private lateinit var mediaPlayer: MediaPlayer
     private var tempAudioPath: String? = null
-    private lateinit var recordAudioButtonLayout: LinearLayout
+
     private lateinit var playAudioButtonLayout: LinearLayout
     private lateinit var recordButton: MaterialButton
     private lateinit var saveButton: MaterialButton
@@ -68,7 +68,7 @@ class AudioRecordingController :
     private var isPaused = false
     private var isCleared = false
     private var isPlaying = false
-    private var jumpValue = 5000
+    private val jumpValue = 5000
     private lateinit var cancelAudioRecordingButton: MaterialButton
 
     // wave layout takes up a lot of screen in HORIZONTAL layout so we need to hide it
@@ -93,6 +93,7 @@ class AudioRecordingController :
             layoutInflater.inflate(R.layout.activity_audio_recording, null) as LinearLayout
         layout.addView(inflatedLayout, LinearLayout.LayoutParams.MATCH_PARENT)
         (context as Activity).window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        val recordAudioButtonLayout: LinearLayout = layout.findViewById(R.id.record_buttons_layout)
 
         context.apply {
             // add preview of the field data to provide context to the user
@@ -128,7 +129,6 @@ class AudioRecordingController :
         saveButton = layout.findViewById(R.id.action_save_recording)
         cancelAudioRecordingButton = layout.findViewById(R.id.action_cancel_recording)
         playAudioButton = layout.findViewById(R.id.action_play_recording)
-        recordAudioButtonLayout = layout.findViewById(R.id.record_buttons_layout)
         forwardAudioButton = layout.findViewById(R.id.action_forward)
         rewindAudioButton = layout.findViewById(R.id.action_rewind)
         playAudioButtonLayout = layout.findViewById(R.id.play_buttons_layout)
@@ -190,9 +190,11 @@ class AudioRecordingController :
     private fun prepareAudioPlayer() {
         mediaPlayer.apply {
             setDataSource(tempAudioPath)
-            prepare()
+            setOnPreparedListener {
+                audioTimeView.text = DEFAULT_TIME
+            }
+            prepareAsync()
         }
-        audioTimeView.text = "00:00.00"
     }
 
     private fun playPausePlayer() {
@@ -237,7 +239,7 @@ class AudioRecordingController :
                 strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
                 setIconResource(R.drawable.round_play_arrow_24)
             }
-            audioTimeView.text = "00:00.00"
+            audioTimeView.text = DEFAULT_TIME
         }
     }
 
@@ -272,7 +274,7 @@ class AudioRecordingController :
         isRecording = false
         saveButton.isEnabled = false
         cancelAudioRecordingButton.isEnabled = false
-        audioTimeView.text = "00:00.00"
+        audioTimeView.text = DEFAULT_TIME
         audioWaveform.clear()
         saveRecording()
     }
@@ -302,7 +304,7 @@ class AudioRecordingController :
         cancelAudioRecordingButton.isEnabled = false
         audioRecorder.stopRecording()
         tempAudioPath = generateTempAudioFile(context).also { tempAudioPath = it }
-        audioTimeView.text = "00:00.00"
+        audioTimeView.text = DEFAULT_TIME
         audioWaveform.clear()
         isPaused = false
         isRecording = false
@@ -337,7 +339,7 @@ class AudioRecordingController :
     }
 
     companion object {
-
+        const val DEFAULT_TIME = "00:00.0"
         fun generateTempAudioFile(context: Context): String? {
             val tempAudioPath: String? = try {
                 val storingDirectory = context.cacheDir

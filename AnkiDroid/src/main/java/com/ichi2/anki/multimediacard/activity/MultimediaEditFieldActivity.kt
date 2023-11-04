@@ -94,9 +94,8 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
 
     // in case media is saved by view button then allows it to be inserted into the filed
     private fun onBack() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        toolbar.setNavigationOnClickListener {
-            done()
+        findViewById<Toolbar>(R.id.toolbar).apply {
+            setNavigationOnClickListener { done() }
         }
     }
 

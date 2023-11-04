@@ -18,6 +18,14 @@ package com.ichi2.audio
 import android.os.Handler
 import android.os.Looper
 
+/**
+ * AudioTimer class is a utility for managing timing operations when playing audio.
+ * It includes a Handler for scheduling tasks, and a Runnable for incrementing the duration and
+ * triggering a callback to a listener at regular intervals. The [formatTime] function formats the
+ * current duration into a readable time format and returns it in the form of a string.
+ * The [OnTimerTickListener] interface defines a callback method [onTimerTick] for notifying external
+ * components about the timer's progress.
+ **/
 class AudioTimer(listener: OnTimerTickListener) {
     private var handler = Handler(Looper.getMainLooper())
     private var runnable: Runnable

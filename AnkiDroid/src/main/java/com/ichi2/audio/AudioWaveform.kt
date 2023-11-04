@@ -23,24 +23,34 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 // TODO : Middle blue line should move left->mid https://github.com/ankidroid/Anki-Android/pull/14591#issuecomment-1791037102
-class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+/**This class represents a custom View used for creating audio waveforms when recording audio.
+ * It loops over each spike and add it on the screen and the height of the spike is determined by the
+ * amplitude that is returned by the audio recorder while recording audio. **/
+class AudioWaveform(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
 
-    private var paint = Paint()
+    private var spikePaint = Paint()
     private var linePaint = Paint()
     private var bgPaint = Paint()
     private var amplitudes = ArrayList<Float>()
     private var audioSpikes = ArrayList<RectF>()
 
     private var radius = 3f
+
+    /** Width of the audio spike **/
     private var w = 6f
 
+    /** Screen width, it's updated according to the actual screen width **/
     private var sw = 0f
+
+    /** Screen height **/
     private var sh = 300f
+
+    /** Gap between each spike **/
     private var d = 4f
     private var maxSpike = 0
 
     init {
-        paint.color = Color.rgb(244, 81, 30)
+        spikePaint.color = Color.rgb(244, 81, 30)
         sw = (resources.displayMetrics.widthPixels / 2).toFloat()
         maxSpike = (sw / (w + d)).toInt()
     }
@@ -77,8 +87,9 @@ class AudioWaveform(context: Context?, attrs: AttributeSet?) : View(context, att
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backgroundPaint)
 
         audioSpikes.forEach {
-            canvas.drawRoundRect(it, radius, radius, paint)
+            canvas.drawRoundRect(it, radius, radius, spikePaint)
         }
+        // mid blue vertical line
         val centerX = width / 2f
         val startY = 0f
         val endY = height.toFloat()
