@@ -217,7 +217,7 @@ private suspend fun handleNormalSync(
         SyncCollectionResponse.ChangesRequired.NO_CHANGES -> {
             // scheduler version may have changed
             withCol { _loadScheduler() }
-            deckPicker.syncSnackbar = deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
+            deckPicker.baseSnackBar = deckPicker.showSyncLogMessage(R.string.sync_database_acknowledge, output.serverMessage)
             deckPicker.refreshState()
             if (syncMedia) {
                 monitorMediaSync(deckPicker)
@@ -283,7 +283,7 @@ private suspend fun handleDownload(
     }
 
     Timber.i("Full Download Completed")
-    deckPicker.syncSnackbar = deckPicker.showSyncLogMessage(R.string.backup_full_sync_from_server, "")
+    deckPicker.baseSnackBar = deckPicker.showSyncLogMessage(R.string.backup_full_sync_from_server, "")
 }
 
 private suspend fun handleUpload(
@@ -309,7 +309,7 @@ private suspend fun handleUpload(
         }
     }
     Timber.i("Full Upload Completed")
-    deckPicker.syncSnackbar = deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")
+    deckPicker.baseSnackBar = deckPicker.showSyncLogMessage(R.string.sync_log_uploading_message, "")
 }
 
 // TODO: this needs a dedicated UI for media syncing, and needs to expose

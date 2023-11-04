@@ -198,9 +198,7 @@ open class DeckPicker :
     // flag asking user to do a full sync which is used in upgrade path
     private var mRecommendFullSync = false
 
-    var allDeckpickerSnackbar: Snackbar? = null
-    var syncSnackbar: Snackbar? = null
-    var undoAllSnackbar: Snackbar? = null
+    var baseSnackBar: Snackbar? = null
     override val baseSnackbarBuilder: SnackbarBuilder = {
         anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
     }
@@ -916,11 +914,11 @@ open class DeckPicker :
                 // Show a message when reviewing has finished
                 if (getColUnsafe.sched.totalCount() == 0) {
                     showSnackbar(R.string.studyoptions_congrats_finished) {
-                        allDeckpickerSnackbar = this
+                        baseSnackBar = this
                     }
                 } else {
                     showSnackbar(R.string.studyoptions_no_cards_due) {
-                        allDeckpickerSnackbar = this
+                        baseSnackBar = this
                     }
                 }
             } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
@@ -1051,7 +1049,7 @@ open class DeckPicker :
                     finishWithAnimation()
                 } else {
                     showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT) {
-                        allDeckpickerSnackbar
+                        baseSnackBar = this
                     }
                 }
                 mBackButtonPressedToExit = true
@@ -1241,7 +1239,7 @@ open class DeckPicker :
             if (current < upgradeDbVersion) {
                 Timber.e("Invalid value for CHECK_DB_AT_VERSION")
                 showSnackbar("Invalid value for CHECK_DB_AT_VERSION") {
-                    allDeckpickerSnackbar = this
+                    baseSnackBar = this
                 }
                 onFinishedStartup()
                 return
@@ -1297,7 +1295,7 @@ open class DeckPicker :
                 InitialActivity.setUpgradedToLatestVersion(preferences)
                 val ver = resources.getString(R.string.updated_version, VersionUtils.pkgVersionName)
                 showSnackbar(ver, Snackbar.LENGTH_SHORT) {
-                    allDeckpickerSnackbar = this
+                    baseSnackBar = this
                 }
                 showStartupScreensAndDialogs(preferences, 2)
             }
@@ -1344,7 +1342,7 @@ open class DeckPicker :
 
     private fun undo() {
         launchCatchingTask {
-            undoAllSnackbar = undoAndShowSnackbar()
+            baseSnackBar = undoAndShowSnackbar()
         }
     }
 
@@ -1352,7 +1350,7 @@ open class DeckPicker :
     open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
         if (errorDialogType == DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK && mediaMigrationIsInProgress(this)) {
             showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT) {
-                allDeckpickerSnackbar = this
+                baseSnackBar = this
             }
             return
         }
@@ -1363,7 +1361,7 @@ open class DeckPicker :
     override fun showMediaCheckDialog(dialogType: Int) {
         if (dialogType == MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK && mediaMigrationIsInProgress(this)) {
             showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT) {
-                allDeckpickerSnackbar = this
+                baseSnackBar = this
             }
             return
         }
@@ -1427,7 +1425,7 @@ open class DeckPicker :
         if (mediaMigrationIsInProgress(this)) {
             // The only path which can still display this is a sync error, which shouldn't be possible
             showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT) {
-                allDeckpickerSnackbar = this
+                baseSnackBar = this
             }
             return
         }
@@ -1699,7 +1697,7 @@ open class DeckPicker :
         fun showStudyMoreSnackbar(did: DeckId) =
             showSnackbar(R.string.studyoptions_limit_reached) {
                 addCallback(mSnackbarShowHideCallback)
-                allDeckpickerSnackbar = this
+                baseSnackBar = this
                 setAction(R.string.study_more) {
                     val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.ContextMenuConfiguration.LIMITS,
@@ -1712,13 +1710,13 @@ open class DeckPicker :
 
         fun showEmptyDeckSnackbar() = showSnackbar(R.string.empty_deck) {
             addCallback(mSnackbarShowHideCallback)
-            allDeckpickerSnackbar = this
+            baseSnackBar = this
             setAction(R.string.menu_add) { addNote() }
         }
 
         fun showCustomStudySnackbar() = showSnackbar(R.string.studyoptions_empty_schedule) {
             addCallback(mSnackbarShowHideCallback)
-            allDeckpickerSnackbar = this
+            baseSnackBar = this
             setAction(R.string.custom_study) {
                 val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                     CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
@@ -2016,7 +2014,7 @@ open class DeckPicker :
                 }
             }
             showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT) {
-                allDeckpickerSnackbar = this
+                baseSnackBar = this
             }
         }
     }
@@ -2101,7 +2099,7 @@ open class DeckPicker :
                             }
                         }
                         showSnackbar(getString(R.string.empty_cards_deleted, emptyCids.size)) {
-                            allDeckpickerSnackbar = this
+                            baseSnackBar = this
                         }
                     }
                     setNegativeButton(R.string.dialog_cancel) { _, _ -> }
@@ -2252,7 +2250,7 @@ open class DeckPicker :
 
             if (progress is MigrationService.Progress.MovingMediaFiles && duration > 800.milliseconds) {
                 showSnackbar(R.string.migration_part_1_done_resume) {
-                    allDeckpickerSnackbar = this
+                    baseSnackBar = this
                 }
             }
 

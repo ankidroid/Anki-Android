@@ -66,9 +66,7 @@ class DeckPickerFloatingActionMenu(
         mLinearLayout.alpha = 0.5f
         mStudyOptionsFrame?.let { it.alpha = 0.5f }
         isFABOpen = true
-        if (deckPicker.syncSnackbar != null && deckPicker.syncSnackbar?.isShown == true)deckPicker.syncSnackbar?.dismiss()
-        if (deckPicker.undoAllSnackbar != null && deckPicker.undoAllSnackbar?.isShown == true)deckPicker.undoAllSnackbar?.dismiss()
-        if (deckPicker.allDeckpickerSnackbar != null && deckPicker.allDeckpickerSnackbar?.isShown == true)deckPicker.allDeckpickerSnackbar?.dismiss()
+        if (deckPicker.baseSnackBar != null && deckPicker.baseSnackBar?.isShown == true)deckPicker.baseSnackBar?.dismiss()
         if (createDeckSnackBar != null && createDeckSnackBar?.isShown == true)createDeckSnackBar?.dismiss()
 
         if (deckPicker.animationEnabled()) {
