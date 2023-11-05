@@ -22,6 +22,7 @@ package com.ichi2.anki.multimediacard
 
 import android.content.Context
 import android.media.MediaRecorder
+import android.os.Build
 import com.ichi2.compat.CompatHelper
 import timber.log.Timber
 import java.io.IOException
@@ -29,6 +30,7 @@ import java.io.IOException
 class AudioRecorder {
     private lateinit var mRecorder: MediaRecorder
     private var mOnRecordingInitialized: Runnable? = null
+    private var previousNonZeroAmplitude = 0
     private fun initMediaRecorder(context: Context, audioPath: String): MediaRecorder {
         val mr = CompatHelper.compat.getMediaRecorder(context)
         mr.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -39,9 +41,7 @@ class AudioRecorder {
     }
 
     private fun onRecordingInitialized() {
-        if (mOnRecordingInitialized != null) {
-            mOnRecordingInitialized!!.run()
-        }
+        mOnRecordingInitialized?.run()
     }
 
     @Throws(IOException::class)
@@ -86,6 +86,41 @@ class AudioRecorder {
     fun release() {
         if (this::mRecorder.isInitialized) {
             mRecorder.release()
+        }
+    }
+
+    fun maxAmplitude(): Int {
+        val currentAmplitude = if (this::mRecorder.isInitialized) {
+            mRecorder.maxAmplitude
+        } else {
+            0
+        }
+        return if (currentAmplitude == 0) {
+            previousNonZeroAmplitude
+        } else {
+            previousNonZeroAmplitude = currentAmplitude
+            currentAmplitude
+        }
+    }
+
+    fun pause() {
+        if (!this::mRecorder.isInitialized) {
+            return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            mRecorder.pause()
+        } else {
+            mRecorder.stop()
+        }
+    }
+
+    fun resume() {
+        if (this::mRecorder.isInitialized) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                mRecorder.resume()
+            } else {
+                mRecorder.start()
+            }
         }
     }
 }

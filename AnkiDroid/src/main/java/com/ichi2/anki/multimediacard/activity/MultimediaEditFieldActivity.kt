@@ -27,6 +27,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import com.ichi2.anki.AnkiActivity
@@ -34,6 +35,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
+import com.ichi2.audio.AudioRecordingController
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.Permissions
@@ -86,7 +88,15 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         mFieldIndex = extras.first
         mField = extras.second
         mNote = extras.third
+        onBack()
         recreateEditingUi(ChangeUIRequest.init(mField), controllerBundle)
+    }
+
+    // in case media is saved by view button then allows it to be inserted into the filed
+    private fun onBack() {
+        findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
+            done()
+        }
     }
 
     private fun finishCancel() {
@@ -429,7 +439,7 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         return when (field.type) {
             EFieldType.TEXT -> BasicTextFieldController()
             EFieldType.IMAGE -> BasicImageFieldController()
-            EFieldType.AUDIO_RECORDING -> BasicAudioRecordingFieldController()
+            EFieldType.AUDIO_RECORDING -> AudioRecordingController()
             EFieldType.MEDIA_CLIP -> BasicMediaClipFieldController()
         }
     }

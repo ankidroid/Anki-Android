@@ -60,7 +60,6 @@ import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
 import com.ichi2.anki.multimediacard.AudioView
 import com.ichi2.anki.multimediacard.AudioView.Companion.createRecorderInstance
-import com.ichi2.anki.multimediacard.AudioView.Companion.generateTempAudioFile
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
@@ -76,6 +75,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.utils.remainingTime
 import com.ichi2.anki.workarounds.FirefoxSnackbarWorkaround.handledLaunchFromWebBrowser
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.audio.AudioRecordingController.Companion.generateTempAudioFile
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
