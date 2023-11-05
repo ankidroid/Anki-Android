@@ -673,6 +673,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     }
 
     @VisibleForTesting
+    @NeedsTest("14664: 'first field must not be empty' no longer applies after saving the note")
     suspend fun saveNote() {
         val res = resources
         if (mSelectedTags == null) {
