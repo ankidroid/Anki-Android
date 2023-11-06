@@ -81,7 +81,6 @@ abstract class SettingsFragment :
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         UsageAnalytics.sendAnalyticsScreenView(analyticsScreenNameConstant)
         addPreferencesFromResource(preferenceResource)
-        allPreferences().forEach { it.isSingleLineTitle = false }
         initSubscreen()
     }
 

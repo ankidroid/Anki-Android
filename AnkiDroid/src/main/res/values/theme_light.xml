@@ -148,5 +148,6 @@ APIs. It's visible when there aren't enough decks to fill the screen.
         <!-- Widget styles -->
         <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Material3</item>
         <item name="sliderStyle">@style/SliderStyle</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.AnkiDroid</item>
     </style>
 </resources>

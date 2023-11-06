@@ -182,4 +182,8 @@
         <item name="labelStyle">@style/SliderLabelStyle</item>
         <item name="tickVisible">false</item>
     </style>
+
+    <style name="PreferenceThemeOverlay.AnkiDroid">
+        <item name="singleLineTitle">false</item>
+    </style>
 </resources>
