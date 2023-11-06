@@ -25,8 +25,8 @@ import com.ichi2.libanki.undo
 import com.ichi2.libanki.undoableOp
 
 /** If there's an action pending in the review queue, undo it and show a snackbar */
-suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT): Snackbar? {
-    var snackbar: Snackbar? = null
+suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) {
+//    var snackbar: Snackbar? = null
     withProgress {
         val changes = undoableOp {
             if (!undoAvailable()) {
@@ -41,8 +41,8 @@ suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH
             TR.undoActionUndone(changes.operation)
         }
         showSnackbar(message, duration) {
-            snackbar = this
+//            snackbar = this
         }
     }
-    return snackbar
+//    return snackbar
 }

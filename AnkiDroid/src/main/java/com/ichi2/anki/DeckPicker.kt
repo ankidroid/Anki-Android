@@ -200,6 +200,7 @@ open class DeckPicker :
 
     var baseSnackBar: Snackbar? = null
     override val baseSnackbarBuilder: SnackbarBuilder = {
+        baseSnackBar = this
         anchorView = findViewById<FloatingActionButton>(R.id.fab_main)
     }
 
@@ -913,13 +914,9 @@ open class DeckPicker :
             if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
                 // Show a message when reviewing has finished
                 if (getColUnsafe.sched.totalCount() == 0) {
-                    showSnackbar(R.string.studyoptions_congrats_finished) {
-                        baseSnackBar = this
-                    }
+                    showSnackbar(R.string.studyoptions_congrats_finished)
                 } else {
-                    showSnackbar(R.string.studyoptions_no_cards_due) {
-                        baseSnackBar = this
-                    }
+                    showSnackbar(R.string.studyoptions_no_cards_due)
                 }
             } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
                 Timber.i("Obtained Abort and Sync result")
@@ -1048,9 +1045,7 @@ open class DeckPicker :
                     automaticSync()
                     finishWithAnimation()
                 } else {
-                    showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT) {
-                        baseSnackBar = this
-                    }
+                    showSnackbar(R.string.back_pressed_once, Snackbar.LENGTH_SHORT)
                 }
                 mBackButtonPressedToExit = true
                 HandlerUtils.executeFunctionWithDelay(Consts.SHORT_TOAST_DURATION) {
@@ -1238,9 +1233,7 @@ open class DeckPicker :
             // Specifying a checkpoint in the future is not supported, please don't do it!
             if (current < upgradeDbVersion) {
                 Timber.e("Invalid value for CHECK_DB_AT_VERSION")
-                showSnackbar("Invalid value for CHECK_DB_AT_VERSION") {
-                    baseSnackBar = this
-                }
+                showSnackbar("Invalid value for CHECK_DB_AT_VERSION")
                 onFinishedStartup()
                 return
             }
@@ -1294,9 +1287,7 @@ open class DeckPicker :
                 // Don't show new features dialog for development builds
                 InitialActivity.setUpgradedToLatestVersion(preferences)
                 val ver = resources.getString(R.string.updated_version, VersionUtils.pkgVersionName)
-                showSnackbar(ver, Snackbar.LENGTH_SHORT) {
-                    baseSnackBar = this
-                }
+                showSnackbar(ver, Snackbar.LENGTH_SHORT)
                 showStartupScreensAndDialogs(preferences, 2)
             }
         } else {
@@ -1342,16 +1333,14 @@ open class DeckPicker :
 
     private fun undo() {
         launchCatchingTask {
-            baseSnackBar = undoAndShowSnackbar()
+            undoAndShowSnackbar()
         }
     }
 
     // Show dialogs to deal with database loading issues etc
     open fun showDatabaseErrorDialog(errorDialogType: DatabaseErrorDialogType) {
         if (errorDialogType == DatabaseErrorDialogType.DIALOG_CONFIRM_DATABASE_CHECK && mediaMigrationIsInProgress(this)) {
-            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT) {
-                baseSnackBar = this
-            }
+            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
         }
         val newFragment: AsyncDialogFragment = DatabaseErrorDialog.newInstance(errorDialogType)
@@ -1360,9 +1349,7 @@ open class DeckPicker :
 
     override fun showMediaCheckDialog(dialogType: Int) {
         if (dialogType == MediaCheckDialog.DIALOG_CONFIRM_MEDIA_CHECK && mediaMigrationIsInProgress(this)) {
-            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT) {
-                baseSnackBar = this
-            }
+            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
         }
         showAsyncDialogFragment(MediaCheckDialog.newInstance(dialogType))
@@ -1424,9 +1411,7 @@ open class DeckPicker :
     override fun integrityCheck() {
         if (mediaMigrationIsInProgress(this)) {
             // The only path which can still display this is a sync error, which shouldn't be possible
-            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT) {
-                baseSnackBar = this
-            }
+            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
             return
         }
 
@@ -1697,7 +1682,6 @@ open class DeckPicker :
         fun showStudyMoreSnackbar(did: DeckId) =
             showSnackbar(R.string.studyoptions_limit_reached) {
                 addCallback(mSnackbarShowHideCallback)
-                baseSnackBar = this
                 setAction(R.string.study_more) {
                     val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                         CustomStudyDialog.ContextMenuConfiguration.LIMITS,
@@ -1710,13 +1694,11 @@ open class DeckPicker :
 
         fun showEmptyDeckSnackbar() = showSnackbar(R.string.empty_deck) {
             addCallback(mSnackbarShowHideCallback)
-            baseSnackBar = this
             setAction(R.string.menu_add) { addNote() }
         }
 
         fun showCustomStudySnackbar() = showSnackbar(R.string.studyoptions_empty_schedule) {
             addCallback(mSnackbarShowHideCallback)
-            baseSnackBar = this
             setAction(R.string.custom_study) {
                 val d = mCustomStudyDialogFactory.newCustomStudyDialog().withArguments(
                     CustomStudyDialog.ContextMenuConfiguration.EMPTY_SCHEDULE,
@@ -2013,9 +1995,7 @@ open class DeckPicker :
                     decks.removeDecks(listOf(did))
                 }
             }
-            showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT) {
-                baseSnackBar = this
-            }
+            showSnackbar(TR.browsingCardsDeleted(changes.count), Snackbar.LENGTH_SHORT)
         }
     }
 
@@ -2098,9 +2078,7 @@ open class DeckPicker :
                                 withCol { removeCardsAndOrphanedNotes(emptyCids) }
                             }
                         }
-                        showSnackbar(getString(R.string.empty_cards_deleted, emptyCids.size)) {
-                            baseSnackBar = this
-                        }
+                        showSnackbar(getString(R.string.empty_cards_deleted, emptyCids.size))
                     }
                     setNegativeButton(R.string.dialog_cancel) { _, _ -> }
                 }
@@ -2249,9 +2227,7 @@ open class DeckPicker :
             }
 
             if (progress is MigrationService.Progress.MovingMediaFiles && duration > 800.milliseconds) {
-                showSnackbar(R.string.migration_part_1_done_resume) {
-                    baseSnackBar = this
-                }
+                showSnackbar(R.string.migration_part_1_done_resume)
             }
 
             refreshState()
