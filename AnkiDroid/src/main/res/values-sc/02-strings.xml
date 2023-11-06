@@ -362,4 +362,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toca pro incumintzare sa tràmuda de memòria</string>
     <string name="media_sync_required_title">Sincronizatzione de sos mèdios netzessària</string>
     <string name="media_sync_unavailable_message">Sa sincronizatzione multimediale est disabilitada in sas impostatziones. Pro praghere sincroniza e faghe una còpia de seguresa de cale si siat mèdiu chi non siat istadu sincronizadu in antis de sighire</string>
+    <string name="audio_saved">Recording saved</string>
 </resources>

@@ -133,8 +133,8 @@
     <string name="sync_status_badge_summ">Synchronisationssymbol ändern, wenn Änderungen hochgeladen werden können</string>
     <string name="metered_sync_title" maxLength="41">Synchronisierung über Mobilfunk zulassen</string>
     <string name="metered_sync_summary">Wenn deaktiviert werden Sie gewarnt, falls Sie versuchen, über eine getaktete Verbindung zu synchronisieren</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Frequenz</string>
+    <string name="backup_limits_lifetime">Lebensdauer</string>
     <string name="app_theme" maxLength="41">Design</string>
     <string name="day_theme" maxLength="41">Design Tag</string>
     <string name="night_theme" maxLength="41">Design Nacht</string>

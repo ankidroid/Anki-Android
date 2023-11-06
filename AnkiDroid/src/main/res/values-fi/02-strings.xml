@@ -359,4 +359,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Napauta aloittaaksesi tallennustilan siirto</string>
     <string name="media_sync_required_title">Median synkronointi vaaditaan</string>
     <string name="media_sync_unavailable_message">Median synkronointi on poistettu käytöstä asetuksissa. Synkronoi ja varmuuskopioi kaikki synkronoimattomat mediatiedostot ennen kuin jatkat.</string>
+    <string name="audio_saved">Recording saved</string>
 </resources>
