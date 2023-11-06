@@ -352,4 +352,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">轻按开始存储迁移</string>
     <string name="media_sync_required_title">需要进行媒体同步</string>
     <string name="media_sync_unavailable_message">媒体同步在设置中被禁用。请同步并备份任何尚未同步的媒体，然后继续</string>
+    <string name="audio_saved">Recording saved</string>
 </resources>

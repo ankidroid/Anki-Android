@@ -223,18 +223,18 @@
 . Para resolver el problema, puede que necesites liberar espacio en el disco o re-inserte la memoria extraíble.
 <br><br>
 <a href="%2$s">Obtenga más información y ayuda</a>]]></string>
-    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        Moving media files is paused after having failed with the error: %1$s.
+    <string name="migration__failed__changes_not_rolled_back__message" comment="A more detailed message shown when storage migration fails, with the changes not rolled back"><![CDATA[        El traslado de archivos multimedia se detiene después de haber fallado con el error: %1$s.
         <br><br>
-        The changes were <i>not</i> reverted.
-        While no data should’ve been lost,
-        the media files might be split between the old and the new folder.
+        Los cambios <i>no</i> fueron revertidos.
+        Aunque no debería haberse perdido ningún dato, 
+        los archivos multimedia podrían estar divididos entre la carpeta antigua y la nueva.
         <br><br>
-        Please try re-running the migration.
-        To resolve the problem, you may need to free up some disk space,
-        or reconnect the removable storage that holds your collection.
+        Por favor, intente volver a ejecutar la migración.
+        Para resolver el problema, puede que necesites liberar algo de espacio en disco,
+        o volver a conectar el almacenamiento extraíble que contiene tu colección.
         <br><br>
-        <a href="%2$s">Learn more and get help</a>
-    ]]></string>
+        <a href="%2$s">Aprende más y consigue ayuda</a>
+            ]]></string>
     <string name="migration__resume_after_failed_dialog__message"><![CDATA[        La migración del almacenamiento ha sido pausada debido al error: %1$s.
         <br><br>
         <a href="%2$s">Más información y ayuda</a>]]></string>
@@ -248,8 +248,8 @@
     <string name="create_new_collection">Crear una nueva colección</string>
     <string name="new_unsafe_collection">La nueva colección se eliminará de tu teléfono si desinstalas AnkiDroid</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
-    <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
-    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
+    <string name="permissions_screen_headline">AnkiDroid necesita algunos permisos para funcionar</string>
+    <string name="storage_access_title">Acceso al almacenamiento</string>
+    <string name="storage_access_summary">Guarda tu colección en un lugar seguro que no se borrará si se desinstala la aplicación</string>
+    <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">Acceso a todos los archivos</string>
 </resources>

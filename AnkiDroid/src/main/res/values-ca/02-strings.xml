@@ -359,4 +359,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Toqueu per iniciar la migració d\'emmagatzematge</string>
     <string name="media_sync_required_title">Cal sincronitzar els mitjans</string>
     <string name="media_sync_unavailable_message">La sincronització multimèdia està desactivada als paràmetres. Si us plau, abans de continuar, sincronitzeu i feu una còpia de seguretat de qualsevol mitjà que no s\'hagi sincronitzat</string>
+    <string name="audio_saved">Recording saved</string>
 </resources>

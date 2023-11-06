@@ -133,8 +133,8 @@
     <string name="sync_status_badge_summ">Cambiar el icono de sincronización cuando se pueden subir los cambios</string>
     <string name="metered_sync_title" maxLength="41">Permitir sincronización en conexiones medidas</string>
     <string name="metered_sync_summary">Si está deshabilitado, serás avisado si intentas sincronizar con una conexión medida</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Frecuencia</string>
+    <string name="backup_limits_lifetime">Tiempo de vida</string>
     <string name="app_theme" maxLength="41">Tema</string>
     <string name="day_theme" maxLength="41">Tema del día</string>
     <string name="night_theme" maxLength="41">Tema nocturno</string>
@@ -164,8 +164,8 @@
     <string name="vertical_centering_summ">Centra verticalmente el contenido de las tarjetas</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Intervalo de tiempo de doble toque (ms)</string>
     <string name="pref_double_tap_time_interval_summary">Un segundo toque de los botones de respuesta será ignorado si este tiempo no ha transcurrido. Esto previene doble toque accidental.</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">Mostrar respuesta - pulsación larga (ms)</string>
+    <string name="pref_show_answer_long_press_summary">Tiempo mínimo de pulsación prolongada antes de que el botón Mostrar respuesta registre una pulsación. Puede reducir la posibilidad de pulsaciones adicionales accidentales. Por defecto es 0ms</string>
     <string name="show_estimates" maxLength="41">Mostrar botón tiempo</string>
     <string name="show_estimates_summ">Mostrar el próximo repaso en los botones de respuesta</string>
     <string name="show_large_answer_buttons" maxLength="41">Mostrar botones de respuestas grandes</string>
@@ -221,12 +221,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">Teclado</string>
     <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">Botones de respuesta</string>
+    <string name="card" maxLength="41">Tarjeta</string>
+    <string name="note" maxLength="41">Nota</string>
+    <string name="navigation" maxLength="41">Navegación</string>
+    <string name="media" maxLength="41">Multimedia</string>
+    <string name="misc" maxLength="41">Varios</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">Seleccionar etiquetas</string>
     <!-- Deck configurations -->

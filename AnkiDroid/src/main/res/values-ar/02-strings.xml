@@ -386,4 +386,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">انقر لبدء نقل التخزين</string>
     <string name="media_sync_required_title">مزامنة الوسائط مطلوبة</string>
     <string name="media_sync_unavailable_message">مزامنة الوسائط معطلة في الإعدادات. الرجاء مزامنة النسخ الاحتياطي لأي وسائط لم تتم مزامنتها قبل المتابعة</string>
+    <string name="audio_saved">Recording saved</string>
 </resources>
