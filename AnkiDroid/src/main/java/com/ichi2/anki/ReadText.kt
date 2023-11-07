@@ -244,6 +244,7 @@ object ReadText {
         // Store weak reference to Activity to prevent memory leak
         flashCardViewer = WeakReference(context)
         mCompletionListener = listener
+        val ankiActivityContext = context as? AnkiActivity
         // Create new TTS object and setup its onInit Listener
         textToSpeech = TextToSpeech(context) { status: Int ->
             if (status == TextToSpeech.SUCCESS) {
@@ -252,7 +253,9 @@ object ReadText {
                     Timber.d("TTS initialized and available languages found")
                     (context as AbstractFlashcardViewer).ttsInitialized()
                 } else {
-                    showThemedToast(context, context.getString(R.string.no_tts_available_message), false)
+                    if (ankiActivityContext != null) {
+                        ankiActivityContext.showSnackbar(R.string.no_tts_available_message)
+                    }
                     Timber.w("TTS initialized but no available languages found")
                 }
                 textToSpeech!!.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
@@ -301,7 +304,9 @@ object ReadText {
             }
         }
         // Show toast that it's getting initialized, as it can take a while before the sound plays the first time
-        showThemedToast(context, context.getString(R.string.initializing_tts), false)
+        if (ankiActivityContext != null) {
+            ankiActivityContext.showSnackbar(R.string.initializing_tts)
+        }
     }
 
     private fun openTtsHelpUrl(helpUrl: Uri) {
