@@ -50,30 +50,31 @@
 
         <LinearLayout
             android:id="@+id/info_buttons"
-            android:layout_marginHorizontal="12dp"
-            android:paddingTop="6dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:paddingTop="6dp">
 
             <com.google.android.material.button.MaterialButton
-                android:layout_marginHorizontal="4dp"
                 android:id="@+id/left_button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="4dp"
                 android:layout_weight="1" />
 
             <com.google.android.material.button.MaterialButton
-                android:layout_marginHorizontal="4dp"
                 android:id="@+id/right_button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginHorizontal="4dp"
                 android:layout_weight="1" />
         </LinearLayout>
+
         <com.google.android.material.button.MaterialButton
-            android:layout_marginHorizontal="12dp"
             android:id="@+id/info_donate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
             android:text="@string/help_item_support_opencollective_donate" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
