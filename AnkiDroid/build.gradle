@@ -1,6 +1,6 @@
 plugins {
     // Gradle plugin portal
-    id 'com.github.triplet.play' version '3.8.4'
+    id 'com.github.triplet.play' version '3.8.5'
     id 'com.android.application'
     id 'app.brant.amazonappstorepublisher'
     id 'idea'
