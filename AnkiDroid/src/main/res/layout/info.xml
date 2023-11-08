@@ -58,15 +58,14 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/left_button"
                 android:layout_width="0dp"
+                android:layout_marginEnd="8dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="4dp"
                 android:layout_weight="1" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/right_button"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="4dp"
                 android:layout_weight="1" />
         </LinearLayout>
 
