@@ -9,14 +9,14 @@ buildscript {
     ext.acra_version = '5.11.3'
     ext.ankidroid_backend_version = '0.1.27-anki23.10'
     ext.hamcrest_version = '2.2'
-    ext.junit_version = '5.10.0'
+    ext.junit_version = '5.10.1'
     ext.coroutines_version = '1.7.3'
-    ext.fragments_version = "1.6.1"
+    ext.fragments_version = "1.6.2"
     ext.espresso_version = '3.5.1'
     ext.androidx_test_version = '1.5.0'
     ext.androidx_test_junit_version = '1.1.5'
-    ext.robolectric_version = '4.11'
-    ext.android_gradle_plugin = "8.2.0-rc01"
+    ext.robolectric_version = '4.11.1'
+    ext.android_gradle_plugin = "8.1.3"
     ext.dokka_version = "1.9.10" // not the same with kotlin version!
 
     configurations.all {

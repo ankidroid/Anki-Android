@@ -1,6 +1,6 @@
 plugins {
     // Gradle plugin portal
-    id 'com.github.triplet.play' version '3.8.4'
+    id 'com.github.triplet.play' version '3.8.5'
     id 'com.android.application'
     id 'app.brant.amazonappstorepublisher'
     id 'idea'
@@ -294,7 +294,7 @@ dependencies {
     }
     api project(":api")
     lintChecks project(":lint-rules")
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
     compileOnly 'org.jetbrains:annotations:24.0.1'
     compileOnly "com.google.auto.service:auto-service-annotations:1.1.1"
@@ -322,7 +322,7 @@ dependencies {
 
     // Backend libraries
 
-    implementation 'com.google.protobuf:protobuf-kotlin-lite:3.24.4' // This is required when loading from a file
+    implementation 'com.google.protobuf:protobuf-kotlin-lite:3.25.0' // This is required when loading from a file
 
     Properties localProperties = new Properties()
     if (project.rootProject.file('local.properties').exists()) {
