@@ -27,8 +27,8 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Button
 import androidx.appcompat.widget.ThemeUtils
+import com.google.android.material.button.MaterialButton
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.utils.AdaptionUtil
@@ -64,7 +64,7 @@ class Info : AnkiActivity() {
         setContentView(R.layout.info)
         val mainView = findViewById<View>(android.R.id.content)
         enableToolbar(mainView)
-        findViewById<View>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
+        findViewById<MaterialButton>(R.id.info_donate).setOnClickListener { openUrl(Uri.parse(getString(R.string.link_opencollective_donate))) }
         title = "$appName v$pkgVersionName"
         mWebView = findViewById(R.id.info)
         mWebView!!.webChromeClient = object : WebChromeClient() {
@@ -75,7 +75,7 @@ class Info : AnkiActivity() {
                 }
             }
         }
-        findViewById<Button>(R.id.left_button).run {
+        findViewById<MaterialButton>(R.id.left_button).run {
             if (canOpenMarketUri()) {
                 setText(R.string.info_rate)
                 setOnClickListener {
@@ -103,7 +103,7 @@ class Info : AnkiActivity() {
         setRenderWorkaround(this)
         when (type) {
             TYPE_NEW_VERSION -> {
-                findViewById<Button>(R.id.right_button).run {
+                findViewById<MaterialButton>(R.id.right_button).run {
                     text = res.getString(R.string.dialog_continue)
                     setOnClickListener { close() }
                 }

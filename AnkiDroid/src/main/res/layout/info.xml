@@ -33,7 +33,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="4dip"
             android:layout_weight="1"
             android:fadingEdge="vertical"
             android:gravity="center">
@@ -45,27 +44,36 @@
             <include layout="@layout/progress_bar" />
         </RelativeLayout>
 
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <LinearLayout
             android:id="@+id/info_buttons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:paddingTop="6dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/left_button"
-                android:layout_width="0dip"
+                android:layout_width="0dp"
+                android:layout_marginEnd="8dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/right_button"
-                android:layout_width="0dip"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/info_donate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
             android:text="@string/help_item_support_opencollective_donate" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
