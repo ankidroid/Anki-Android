@@ -35,7 +35,7 @@
             android:valueTo="23"
             android:title="@string/day_offset_with_description"
             app1:persistent="false"
-            app1:summaryFormat="@string/day_offset_summary"/>
+            app1:summaryFormat="@plurals/day_offset_summ"/>
         <com.ichi2.preferences.NumberRangePreferenceCompat
             android:key="@string/learn_cutoff_preference"
             android:title="@string/learn_cutoff"
