@@ -26,6 +26,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.slider.Slider
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.getFormattedStringOrPlurals
 
 /**
  * Similar to [androidx.preference.SeekBarPreference],
@@ -43,7 +44,7 @@ import com.ichi2.anki.R
  *       If not set, the `valueFrom` value is going to be used.
  *       It must be between `valueFrom` and `valueTo`
  * * app:summaryFormat (*optional*):
- *       Format string to be used as template to display the value in the preference summary.
+ *       Format `string` or `plurals` to be used as template to display the value in the preference summary.
  *       There must be ONLY ONE placeholder, which will be replaced by the preference value.
  * * app:displayValue (*optional*): whether to show the current preference value on a TextView
  *       by the end of the slider
@@ -57,7 +58,7 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
     private var valueTo: Int = 0
     private var stepSize: Float = 1F
 
-    private var summaryFormat: String? = null
+    private var summaryFormatResource: Int? = null
     private var displayValue: Boolean = false
     private var displayFormat: String? = null
 
@@ -70,7 +71,6 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
                 throw IllegalArgumentException("value $value should be between the min of $valueFrom and max of $valueTo")
             }
             field = value
-            summaryFormat?.let { summary = String.format(it, value) }
             persistInt(value)
             notifyChanged()
         }
@@ -85,7 +85,8 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
         }
 
         context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
-            summaryFormat = getString(R.styleable.CustomPreference_summaryFormat)
+            summaryFormatResource = getResourceId(R.styleable.CustomPreference_summaryFormat, 0)
+                .takeIf { it != 0 }
         }
 
         context.withStyledAttributes(attrs, R.styleable.SliderPreference) {
@@ -125,8 +126,8 @@ class SliderPreference(context: Context, attrs: AttributeSet? = null) : Preferen
         )
 
         val summaryView = holder.findViewById(android.R.id.summary) as TextView
-        summaryFormat?.let {
-            summaryView.text = String.format(it, slider.value.toInt())
+        summaryFormatResource?.let {
+            summaryView.text = context.getFormattedStringOrPlurals(it, slider.value.toInt())
             summaryView.visibility = View.VISIBLE
         }
 
