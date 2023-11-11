@@ -44,7 +44,7 @@ import java.util.Locale
 object AssetHelper {
     /**
      Returns the extension of [path].
-     It uses [MimeTypeMap.getFileExtensionFromURL], with the path transformed into a Uri.
+     It uses [MimeTypeMap.getFileExtensionFromUrl], with the path transformed into a Uri.
      */
     fun getFileExtensionFromFilePath(path: String): String {
         return MimeTypeMap.getFileExtensionFromUrl(
