@@ -35,7 +35,7 @@ open class Media(private val col: Collection) {
     val dir = getCollectionMediaPath(col.path)
 
     init {
-        Timber.e("dir %s", dir)
+        Timber.v("dir %s", dir)
         val file = File(dir)
         if (!file.exists()) {
             file.mkdirs()
@@ -51,7 +51,7 @@ open class Media(private val col: Collection) {
         if (oFile == null || oFile.length() == 0L) {
             throw EmptyMediaException()
         }
-        Timber.e("dir now %s", dir)
+        Timber.v("dir now %s", dir)
         return col.backend.addMediaFile(oFile.name, oFile.readBytes().toByteString())
     }
 
