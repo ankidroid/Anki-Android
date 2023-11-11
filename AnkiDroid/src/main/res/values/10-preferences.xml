@@ -160,7 +160,11 @@
     <string name="time_limit" maxLength="41">Timebox time limit</string>
     <string name="new_timezone" maxLength="41">New timezone handling</string>
     <string name="day_offset_with_description" maxLength="41">Start of next day</string>
-    <string name="day_offset_summary">%s hours past midnight</string>
+    <string name="day_offset_summary_zero">0 hour past midnight</string> <!-- specifically for handling "0" -->
+    <plurals name="day_offset_summary">
+        <item quantity="one">1 hour past midnight</item>
+        <item quantity="other">%s hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Keep screen on</string>
     <string name="pref_keep_screen_on_summ">Disable screen timeout</string>
     <string name="enable_api_title" maxLength="41">Enable AnkiDroid API</string>
