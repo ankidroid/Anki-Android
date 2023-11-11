@@ -143,7 +143,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Vorschau</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d von %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Umbenennen</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Prüfen</string>
     <string name="check_db">Datenbank überprüfen</string>
     <string name="check_media">Medien überprüfen</string>
     <string name="empty_cards">Leere Karten</string>
@@ -358,5 +358,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Tippen, um die Speichermigration zu starten</string>
     <string name="media_sync_required_title">Medien-Synchronisation erforderlich</string>
     <string name="media_sync_unavailable_message">Die Medien-Synchronisation ist in den Einstellungen deaktiviert. Bitte synchronisieren und sichern Sie alle Medien, die nicht synchronisiert wurden, bevor Sie fortfahren</string>
-    <string name="audio_saved">Recording saved</string>
+    <string name="audio_saved">Aufnahme gespeichert</string>
 </resources>
