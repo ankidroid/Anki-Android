@@ -23,7 +23,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Message
 import android.provider.OpenableColumns
-import android.webkit.MimeTypeMap
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
@@ -41,7 +40,6 @@ import java.io.InputStream
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
-import kotlin.collections.ArrayList
 
 object ImportUtils {
     /* A filename should be shortened if over this threshold */
@@ -245,7 +243,7 @@ object ImportUtils {
         @CheckResult
         private fun getExtension(fileName: String): String {
             val file = Uri.fromFile(File(fileName))
-            return MimeTypeMap.getFileExtensionFromUrl(file.toString())
+            return AssetHelper.getFileExtensionFromFilePath(file.toString())
         }
 
         protected open fun getFileNameFromContentProvider(context: Context, data: Uri): String? {
