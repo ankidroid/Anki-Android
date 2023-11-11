@@ -1541,7 +1541,7 @@ abstract class AbstractFlashcardViewer :
             server?.reviewerHtml = content
             if (card != null) {
                 card.settings.mediaPlaybackRequiresUserGesture = !mCardSoundConfig!!.autoplay
-                Timber.e("*** set server %s content to %s", server, content)
+                Timber.v("*** set server %s content to %s", server, content)
                 card.loadUrl(server?.baseUrl() + "reviewer.html")
             }
         }
