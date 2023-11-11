@@ -343,5 +343,18 @@ class Preferences :
                 }
             }
         }
+
+        /** Sets the day offset summary based on the "hour" */
+        fun setDayOffsetSummary(value: Int, context: Context): String {
+            val summary = when (value) {
+                0 -> context.resources.getString(R.string.day_offset_summary_zero)
+                else -> context.resources.getQuantityString(
+                    R.plurals.day_offset_summary,
+                    value,
+                    value
+                )
+            }
+            return summary
+        }
     }
 }

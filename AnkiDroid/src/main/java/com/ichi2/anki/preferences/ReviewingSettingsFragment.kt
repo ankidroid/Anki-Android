@@ -22,6 +22,7 @@ import com.ichi2.anki.R
 import com.ichi2.anki.launchCatchingTask
 import com.ichi2.anki.preferences.Preferences.Companion.getDayOffset
 import com.ichi2.anki.preferences.Preferences.Companion.setDayOffset
+import com.ichi2.anki.preferences.Preferences.Companion.setDayOffsetSummary
 import com.ichi2.anki.reviewer.AutomaticAnswerAction
 import com.ichi2.preferences.NumberRangePreferenceCompat
 import com.ichi2.preferences.SliderPreference
@@ -57,9 +58,13 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // Represents the collection pref "rollover"
         // in sched v2, and crt in sched v1. I.e. at which time of the day does the scheduler reset
         requirePreference<SliderPreference>(R.string.day_offset_preference).apply {
-            launchCatchingTask { value = getDayOffset() }
+            launchCatchingTask {
+                value = getDayOffset()
+                this@apply.summary = setDayOffsetSummary(getDayOffset(), requireContext())
+            }
             setOnPreferenceChangeListener { newValue ->
                 launchCatchingTask { setDayOffset(requireContext(), newValue as Int) }
+                this.summary = setDayOffsetSummary(newValue as Int, requireContext())
             }
         }
 
