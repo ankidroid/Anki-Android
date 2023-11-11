@@ -50,6 +50,7 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
                         this.javaClass.classLoader!!.getResourceAsStream(uri.substring(1))
                 }
                 if (stream != null) {
+                    Timber.v("OK: $uri")
                     return newChunkedResponse(Response.Status.OK, mime, stream)
                 }
             }
@@ -59,6 +60,7 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
             if (file.exists()) {
                 val inputStream = FileInputStream(file)
                 val mimeType = AssetHelper.guessMimeType(uri)
+                Timber.v("OK: $uri")
                 return newChunkedResponse(Response.Status.OK, mimeType, inputStream)
                 // probably don't need this anymore
                 // resp.addHeader("Access-Control-Allow-Origin", "*")
@@ -72,7 +74,7 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
             }
         }
 
-        Timber.d("not found: $uri")
+        Timber.e("not found: $uri")
         return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "")
     }
 
