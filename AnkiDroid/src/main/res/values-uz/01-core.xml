@@ -130,7 +130,7 @@
     <string name="rebuild_cram_label">Qayta qurish</string>
     <string name="empty_cram_label">Bo\'sh</string>
     <string name="create_subdeck">Palubani o‘rnini bosuvchi narsa yaratish</string>
-    <string name="empty_filtered_deck">I</string>
+    <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">Qo\'shimcha shug\'ullanish</string>
     <string name="custom_study_deck_exists">Avval qo\'shimcha shug\'ullanish to\'plamini qayta nomlang</string>
     <string name="empty_deck">Bu to\'plam bo\'sh</string>
