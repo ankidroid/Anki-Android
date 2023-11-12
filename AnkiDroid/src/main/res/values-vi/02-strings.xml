@@ -139,7 +139,7 @@
     <string name="card_editor_reset_card">Thiết lập lại quá trình học</string>
     <string name="card_editor_reschedule_card" comment="Action to reschedule a card">Lên lịch lại</string>
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Xem trước</string>
-    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d of %2$d</string>
+    <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d của %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Đổi tên</string>
     <string name="checks_action">Kiểm tra</string>
     <string name="check_db">Kiểm tra CSDL</string>
@@ -241,7 +241,7 @@
     <string name="valid_js_api_version">Phiên bản API AnkiDroid JS không hợp lệ. Liên hệ với nhà phát triển %s hoặc xem wiki</string>
     <string name="update_js_api_version">Đã có bản cập nhật AnkiDroid JS API. Liên hệ với nhà phát triển %s hoặc xem wiki</string>
     <string name="reviewer_invalid_api_version_visit_documentation">Hiển thị</string>
-    <string name="anki_js_error_code">(Error Code: %d)</string>
+    <string name="anki_js_error_code">(Mã lỗi: %d)</string>
     <!-- About AnkiDroid screen -->
     <string name="about_ankidroid_successfully_copied_debug_info">Đã sao chép vào bộ nhớ tạm</string>
     <string name="about_ankidroid_error_copy_debug_info">Không thể sao chép thông tin debug.</string>
@@ -260,7 +260,7 @@
     <string name="format_insert_italic">In nghiêng</string>
     <string name="format_insert_underline">Gạch chân</string>
     <string name="insert_horizontal_line">Chèn đường ngang</string>
-    <string name="insert_heading">Trèn đề mục</string>
+    <string name="insert_heading">Chèn tiêu đề</string>
     <string name="format_font_size">Thay đổi cỡ chữ</string>
     <string name="insert_mathjax">Chèn công thức toán</string>
     <string name="note_editor_toolbar_icon">Chữ trên nút</string>
@@ -283,7 +283,7 @@
     <!-- Used for credential empty warning message -->
     <string name="email_id_empty">Bắt buộc có địa chỉ email</string>
     <string name="password_empty">Bắt buộc có mật khẩu</string>
-    <string name="back_pressed_once">Nhấn trở lại lần nữa để thoát ứng dụng</string>
+    <string name="back_pressed_once">Bấm trở lại một lần nữa để thoát</string>
     <string name="back_pressed_once_reviewer">Nhấn lại lần nữa để quay lại</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
@@ -293,13 +293,13 @@
     <string name="cancel_download_question_title">Hủy tải xuống?</string>
     <string name="downloading_file">Đang tải xuống %s</string>
     <string name="import_deck">Nhập bộ thẻ</string>
-    <string name="something_wrong">Something went wrong, please try again</string>
-    <string name="download_failed">Download failed</string>
+    <string name="something_wrong">Đã xảy ra lỗi, vui lòng thử lại</string>
+    <string name="download_failed">Tải xuống thất bại</string>
     <string name="deck_download_progress_message">Bạn được phép sử dụng những ứng dụng khác khi đang tải.</string>
-    <string name="check_network">Please check your network connection</string>
-    <string name="search_using_deck_name">Search using deck name</string>
+    <string name="check_network">Vui lòng kiểm tra kết nối mạng của bạn</string>
+    <string name="search_using_deck_name">Tìm kiếm theo tên bộ thẻ</string>
     <string name="external_storage_unavailable">Tải xuống bị hủy, bộ nhớ ngoài không khả dụng</string>
-    <string name="home">Home</string>
+    <string name="home">Trang chủ</string>
     <!-- Reviewer actions 
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">Các thẻ bị chôn</string>
@@ -307,7 +307,7 @@
         <item quantity="other">%d thẻ bị khóa.</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
-    <string name="note_editor_toggle_sticky">Make field %s sticky</string>
+    <string name="note_editor_toggle_sticky">Làm cho trường %s cố định</string>
     <!-- Scoped Storage Migration -->
     <string name="scoped_storage_title">Storage migration</string>
     <string name="scoped_storage_learn_more">Tìm hiểu thêm</string>

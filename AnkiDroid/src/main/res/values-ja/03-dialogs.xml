@@ -99,7 +99,7 @@
     <string name="no_space_to_downgrade_title" tools:ignore="UnusedResources">空き容量不足</string>
     <string name="no_space_to_downgrade_content" tools:ignore="UnusedResources">AnkiDroidを続行するには%sの空き容量が必要です。容量を空けてください</string>
     <string name="restore_backup_title">バックアップから復元しますか？</string>
-    <string name="restore_backup">現在のコレクションが、以前バックアップとして作成したコレクションに置き換えられます。バックアップ後に変更した内容は全て失われます。</string>
+    <string name="restore_backup">現在のコレクションが、以前バックアップとして作成したコレクションに置き換えられます。バックアップ後に変更した内容はすべて失われます。</string>
     <string name="restore_backup_choose_another">他を選択</string>
     <string name="dialog_cancel">キャンセル</string>
     <string name="dialog_ok">OK</string>
