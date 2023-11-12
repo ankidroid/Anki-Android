@@ -181,7 +181,9 @@
     <string name="time_limit" maxLength="41">時間盒的時間上限</string>
     <string name="new_timezone" maxLength="41">時區變更處理</string>
     <string name="day_offset_with_description" maxLength="41">下一天開始的時間</string>
-    <string name="day_offset_summary">午夜過後%s小時</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">保持螢幕開啟</string>
     <string name="pref_keep_screen_on_summ">關閉螢幕逾時</string>
     <string name="enable_api_title" maxLength="41">開啟 AnkiDroid API</string>

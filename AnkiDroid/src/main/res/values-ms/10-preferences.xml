@@ -182,7 +182,9 @@
     <string name="time_limit" maxLength="41">Had kotak masa</string>
     <string name="new_timezone" maxLength="41">Pengendalian zon masa baru</string>
     <string name="day_offset_with_description" maxLength="41">Mula hari esok</string>
-    <string name="day_offset_summary">%s jam selapas tengah malam</string>
+    <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
+        <item quantity="other">%d hours past midnight</item>
+    </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Terus hidupkan skrin</string>
     <string name="pref_keep_screen_on_summ">Lumpuhkan skrin tamat masa</string>
     <string name="enable_api_title" maxLength="41">Dayakan API AnkiDroid</string>
