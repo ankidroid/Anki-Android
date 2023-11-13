@@ -182,7 +182,7 @@
     <string name="new_timezone" maxLength="41">新时区处理</string>
     <string name="day_offset_with_description" maxLength="41">次日开始时间（0 为午夜，23 为晚上 11 点)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="other">午夜过后 %d 小时</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">保持屏幕常亮</string>
     <string name="pref_keep_screen_on_summ">禁用屏幕超时</string>

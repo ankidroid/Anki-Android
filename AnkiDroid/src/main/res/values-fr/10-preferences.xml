@@ -133,8 +133,8 @@
     <string name="sync_status_badge_summ">Changer l\'icône de synchronisation quand des changements peuvent être téléversés</string>
     <string name="metered_sync_title" maxLength="41">Autoriser la synchronisation sur les connexions limitées</string>
     <string name="metered_sync_summary">Si ceci est désactivé, vous serez averti(e) si vous essayez de synchroniser sur une connexion limitée</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Fréquence</string>
+    <string name="backup_limits_lifetime">Durée de vie</string>
     <string name="app_theme" maxLength="41">Thème</string>
     <string name="day_theme" maxLength="41">Thème de jour</string>
     <string name="night_theme" maxLength="41">Thème de nuit</string>
@@ -182,8 +182,8 @@
     <string name="new_timezone" maxLength="41">Nouvelle gestion du fuseau horaire</string>
     <string name="day_offset_with_description" maxLength="41">Début du jour suivant (0 est minuit, 23 est 23 h)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d heure après minuit</item>
+        <item quantity="other">%d heures après minuit</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Garder l’écran allumé</string>
     <string name="pref_keep_screen_on_summ">Désactiver l’extinction automatique de l’écran</string>

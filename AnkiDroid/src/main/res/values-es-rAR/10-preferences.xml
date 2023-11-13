@@ -182,8 +182,8 @@
     <string name="new_timezone" maxLength="41">Nuevo manejo de zona horaria</string>
     <string name="day_offset_with_description" maxLength="41">Comienzo del día siguiente (0 es medianoche, 23 es 11PM)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d hora después de medianoche</item>
+        <item quantity="other">%d horas después de medianoche</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Mantener la pantalla encendida</string>
     <string name="pref_keep_screen_on_summ">Desactivar el tiempo de espera de pantalla</string>
