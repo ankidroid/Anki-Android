@@ -34,6 +34,7 @@ import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup.MarginLayoutParams
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import androidx.activity.addCallback
 import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
@@ -273,6 +274,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         enableToolbar(mainView)
         startLoadingCollection()
         mOnboarding.onCreate()
+        // TODO this callback doesn't handle predictive back navigation!
+        // see #14678, added to temporarily fix for a bug
+        onBackPressedDispatcher.addCallback(this) {
+            Timber.i("NoteEditor:: onBackPressed()")
+            closeCardEditorWithCheck()
+        }
     }
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
@@ -814,13 +821,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         mEditorNote!!.load()
         // close note editor
         closeNoteEditor()
-    }
-
-    @Suppress("DEPRECATION", "Deprecated in API34+dependencies for predictive back feature")
-    override fun onBackPressed() {
-        Timber.i("NoteEditor:: onBackPressed()")
-        super.onBackPressed()
-        closeCardEditorWithCheck()
     }
 
     override fun onDestroy() {
