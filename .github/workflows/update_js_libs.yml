@@ -37,7 +37,7 @@ jobs:
           echo ::set-output name=mathjax_ver::"$mathjax_ver"
 
       - name: 'Create pull request'
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             try {

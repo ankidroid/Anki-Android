@@ -67,7 +67,7 @@ jobs:
 
       - name: Create PR for strings changes if needed
         if: ${{ steps.tr_check.outputs.HAS_CHANGES }}
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             const now = new Date();
