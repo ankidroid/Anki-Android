@@ -29,7 +29,6 @@ import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
@@ -242,8 +241,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("#14717: This is a real test failure - there should be two cards")
-    fun clozeFromEditorHasMultipleCards() {
+    fun `Note Editor Cloze preview displays multiple cards - Issue 14717`() {
         val fields: MutableList<NoteService.NoteField?> = ArrayList()
         fields.add(Field(0, "{{c1::Hello}} {{c3::World}}"))
         fields.add(Field(1, "World"))
@@ -262,7 +260,13 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
+        assertThat("card 1 has content", testCardTemplatePreviewer.cardContent, containsString("World"))
+
         assertTwoCards(testCardTemplatePreviewer)
+
+        // ensure that template 2 is valid
+        testCardTemplatePreviewer.onNextTemplate()
+        assertThat("card 2 has content", testCardTemplatePreviewer.cardContent, containsString("Hello"))
     }
 
     @Test
