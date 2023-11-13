@@ -34,7 +34,6 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@Ignore("needs updating to new backend")
 @RunWith(RobolectricTestRunner::class)
 class CardTemplatePreviewerTest : RobolectricTest() {
 
@@ -240,6 +239,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
     }
 
     @Test
+    @Ignore("#14717: This is a real test failure - there should be two cards")
     fun clozeFromEditorHasMultipleCards() {
         val fields: MutableList<NoteService.NoteField?> = ArrayList()
         fields.add(Field(0, "{{c1::Hello}} {{c3::World}}"))
@@ -283,7 +283,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
     }
 
     @Test
-    fun cardTemplatePreviewerNoCards_issue9687() {
+    fun `Previewing an empty note should not crash`() {
         val fields: MutableList<NoteService.NoteField?> = ArrayList()
         fields.add(Field(0, ""))
         fields.add(Field(1, ""))
@@ -302,7 +302,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
-        assertThat("Activity should be finishing - no cards to show", testCardTemplatePreviewer.isFinishing, equalTo(true))
+        assertThat("A blank card can be previewed", testCardTemplatePreviewer.cardContent, containsString("The front of this card is blank"))
     }
 
     private fun getFieldsAsBundleForPreview(fields: List<NoteService.NoteField?>?): Bundle {
@@ -340,10 +340,9 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         for (i in fieldNames.indices) {
             n.setField(i, fieldNames[i])
         }
-        n.flush()
+        col.addNote(n)
         print(ordinal)
-        throw Exception("not implemented")
-//        return col.getNewLinkedCard(Card(col), n, model.getJSONArray("tmpls").getJSONObject(ordinal), 1, 1, true)
+        return n.cards()[0]
     }
 
     @KotlinCleanup("Override fieldText in constructor and remove text")
