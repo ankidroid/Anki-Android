@@ -208,7 +208,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -232,7 +231,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -256,7 +254,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -299,7 +296,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -324,7 +320,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
                 "noteEditorBundle",
                 bundleOf(
                     "editFields" to getFieldsAsBundleForPreview(fields),
-                    "ordinal" to 0,
                     "did" to 1L
                 )
             )
