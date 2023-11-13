@@ -48,8 +48,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="14dp"
         tools:text="2.x" />
+
+    <TextView
+        android:id="@+id/about_build_date"
+        style="?android:textAppearanceSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        tools:text="13 Apr 2023" />
 
     <TextView
         android:id="@+id/about_contributors_title"

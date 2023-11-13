@@ -18,6 +18,7 @@ package com.ichi2.anki.preferences
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,9 @@ import com.ichi2.utils.IntentUtil
 import com.ichi2.utils.VersionUtils.pkgVersionName
 import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.show
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AboutFragment : Fragment() {
     override fun onCreateView(
@@ -45,8 +49,14 @@ class AboutFragment : Fragment() {
     ): View? {
         val layoutView = inflater.inflate(R.layout.about_layout, container, false)
 
+        // Version date
+        val apkBuildDate = SimpleDateFormat(DateFormat.getBestDateTimePattern(Locale.getDefault(), "d MMM yyyy"))
+            .format(Date(BuildConfig.BUILD_TIME))
+        layoutView.findViewById<TextView>(R.id.about_build_date).text = apkBuildDate
+
         // Version text
-        layoutView.findViewById<TextView>(R.id.about_version).text = pkgVersionName
+        layoutView.findViewById<TextView>(R.id.about_version).text =
+            pkgVersionName
 
         // Logo secret
         layoutView.findViewById<ImageView>(R.id.about_app_logo)
