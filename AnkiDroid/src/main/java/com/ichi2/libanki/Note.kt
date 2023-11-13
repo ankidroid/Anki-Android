@@ -38,7 +38,7 @@ class Note : Cloneable {
     @get:VisibleForTesting
     var guId: String? = null
         private set
-    private lateinit var notetype: NotetypeJson
+    lateinit var notetype: NotetypeJson
 
     var mid: Long = 0
         private set
