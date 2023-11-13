@@ -1467,7 +1467,8 @@ abstract class AbstractFlashcardViewer :
         }
     }
 
-    private fun readCardTts(side: SingleSoundSide) {
+    @VisibleForTesting
+    fun readCardTts(side: SingleSoundSide) {
         val tags = legacyGetTtsTags(currentCard!!, side, this)
         mTTS.readCardText(tags, currentCard!!, side.toSoundSide())
     }

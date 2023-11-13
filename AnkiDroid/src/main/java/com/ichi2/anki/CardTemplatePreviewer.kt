@@ -40,7 +40,6 @@ import java.io.IOException
  * buttons will be shown).
  */
 @NeedsTest("after switch to new schema as default, add test to confirm audio tags rendered")
-@NeedsTest("14692: 'Read Text' being enabled, and previewing a card from the note editor")
 open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private var mEditedModelFileName: String? = null
     private var mEditedNotetype: NotetypeJson? = null
