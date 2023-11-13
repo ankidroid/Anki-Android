@@ -50,6 +50,8 @@ Thumbs.db
 # Keep dictionaries to have less false positives in spellcheck inspection.
 # Each user gets their own dictionary and these dictionaries are merged
 !.idea/dictionaries
+# IDEA/Android Studio project icon
+!/.idea/icon.svg
 
 # Crowdin files
 ankidroid.zip
