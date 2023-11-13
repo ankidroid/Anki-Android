@@ -232,7 +232,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                mTemplateCount = toPreview.note().notetype.templatesNames.size
+                mTemplateCount = toPreview.note().numberOfCardsEphemeral()
                 if (mTemplateCount >= 2) {
                     previewLayout!!.showNavigationButtons()
                 }
@@ -424,16 +424,16 @@ private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
         return this.renderOutput!!
     }
     companion object {
-        fun fromNote(n: Note, col: Collection, ord: Int = 0): EphemeralCard {
+        fun fromNote(n: Note, col: Collection, templateIndex: Int = 0): EphemeralCard {
             val card = EphemeralCard(col, null)
             card.did = 1
-            card.ord = ord
+            card.ord = n.templateIndexToOrd(templateIndex)
 
             val nt = n.notetype
             val templateIdx = if (nt.type == Consts.MODEL_CLOZE) {
                 0
             } else {
-                ord
+                templateIndex
             }
             val template = nt.tmpls[templateIdx] as JSONObject
             template.put("ord", card.ord)
@@ -449,5 +449,25 @@ private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
             card.setNote(n)
             return card
         }
+    }
+}
+
+/** returns the number of cards from a note which has not had data saved in the database */
+private fun Note.numberOfCardsEphemeral(): Int {
+    // We can't use note.numberOfCards() as this uses the database value
+    return when {
+        this.notetype.isCloze -> col.clozeNumbersInNote(this).size
+        else -> notetype.templatesNames.size
+    }
+}
+
+/**
+ * Given a template index, returns the 'ord' of the card
+ */
+private fun Note.templateIndexToOrd(index: Int): Int {
+    // We can't use note.numberOfCards() as this uses the database value
+    return when {
+        this.notetype.isCloze -> col.clozeNumbersInNote(this)[index] - 1
+        else -> index
     }
 }
