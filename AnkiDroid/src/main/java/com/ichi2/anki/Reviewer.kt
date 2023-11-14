@@ -58,7 +58,6 @@ import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
-import com.ichi2.anki.multimediacard.AudioView
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
@@ -78,7 +77,6 @@ import com.ichi2.audio.AudioRecordingController
 import com.ichi2.audio.AudioRecordingController.Companion.context
 import com.ichi2.audio.AudioRecordingController.Companion.generateTempAudioFile
 import com.ichi2.audio.AudioRecordingController.Companion.setReviewerStatus
-import com.ichi2.audio.AudioRecordingController.Companion.tempAudioPath
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Counts
@@ -119,7 +117,9 @@ open class Reviewer :
     private var mPrefHideDueCount = false
     private var isMicToolBarVisible = false
 
-    private lateinit var audioRecordingController: AudioRecordingController
+    var audioRecordingController: AudioRecordingController? = null
+    private var isAudioUIInitialized = false
+    private lateinit var micToolBarLayer: LinearLayout
 
     // Whiteboard
     var prefWhiteboard = false
@@ -131,9 +131,6 @@ open class Reviewer :
 
     // Record Audio
     /** File of the temporary mic record  */
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    var audioView: AudioView? = null
-        protected set
     private var tempAudioPath: String? = null
 
     // ETA
@@ -168,6 +165,7 @@ open class Reviewer :
         mTextBarLearn = findViewById(R.id.learn_number)
         mTextBarReview = findViewById(R.id.review_number)
         mToolbar = findViewById(R.id.toolbar)
+        micToolBarLayer = findViewById(R.id.mic_tool_bar_layer)
 
         startLoadingCollection()
     }
@@ -500,14 +498,14 @@ open class Reviewer :
         }
 
         // COULD_BE_BETTER: this shows "Failed" if nothing was recorded
-        audioView!!.togglePlay()
+        audioRecordingController?.playPausePlayer()
     }
 
     override fun recordVoice() {
         if (!openMicToolbar()) {
             return
         }
-        audioView!!.toggleRecord()
+        audioRecordingController?.toggleRecord()
     }
 
     override fun updateForNewCard() {
@@ -533,7 +531,7 @@ open class Reviewer :
 
     override fun closeReviewer(result: Int) {
         // Stop the mic recording if still pending
-        audioView?.notifyStopRecord()
+        audioRecordingController?.toggleStopOnly()
 
         // Remove the temporary audio file
         tempAudioPath?.let {
@@ -551,10 +549,10 @@ open class Reviewer :
      */
     @VisibleForTesting
     fun openMicToolbar(): Boolean {
-        if (audioView == null || audioView!!.visibility != View.VISIBLE) {
+        if (micToolBarLayer.visibility != View.VISIBLE || audioRecordingController == null) {
             openOrToggleMicToolbar()
         }
-        return audioView != null
+        return true
     }
 
     private fun openOrToggleMicToolbar() {
@@ -569,21 +567,17 @@ open class Reviewer :
         }
     }
 
-    private var isUIInitialized = false
-
     private fun toggleMicToolBar() {
-        val micToolBarLayer = findViewById<LinearLayout>(R.id.mic_tool_bar_layer)
-
         if (isMicToolBarVisible) {
             micToolBarLayer.visibility = View.GONE
         } else {
             setReviewerStatus(false)
-            if (!isUIInitialized) {
+            if (!isAudioUIInitialized) {
                 context = this
                 audioRecordingController = AudioRecordingController()
                 AudioRecordingController.tempAudioPath = generateTempAudioFile(this)
-                audioRecordingController.createUI(this, micToolBarLayer)
-                isUIInitialized = true
+                audioRecordingController?.createUI(this, micToolBarLayer)
+                isAudioUIInitialized = true
             }
             micToolBarLayer.visibility = View.VISIBLE
         }

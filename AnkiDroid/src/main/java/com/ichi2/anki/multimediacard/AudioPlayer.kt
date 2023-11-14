@@ -25,22 +25,22 @@ import timber.log.Timber
 import java.io.IOException
 
 class AudioPlayer {
-    private var mPlayer: MediaPlayer? = null
+    private var mediaPlayer: MediaPlayer? = null
 
     var onStoppingListener: (() -> Unit)? = null
     var onStoppedListener: (() -> Unit)? = null
 
     @Throws(IOException::class)
     fun play(audioPath: String?) {
-        mPlayer = MediaPlayer()
-        mPlayer!!.setDataSource(audioPath)
-        mPlayer!!.setOnCompletionListener {
+        mediaPlayer = MediaPlayer()
+        mediaPlayer!!.setDataSource(audioPath)
+        mediaPlayer!!.setOnCompletionListener {
             onStopping()
-            mPlayer!!.stop()
+            mediaPlayer!!.stop()
             onStopped()
         }
-        mPlayer!!.prepare()
-        mPlayer!!.start()
+        mediaPlayer!!.prepare()
+        mediaPlayer!!.start()
     }
 
     private fun onStopped() {
@@ -52,27 +52,27 @@ class AudioPlayer {
     }
 
     fun start() {
-        if (arrayOf(INITIALIZED, STOPPED).contains(mPlayer!!.state)) {
-            mPlayer!!.prepare()
+        if (arrayOf(INITIALIZED, STOPPED).contains(mediaPlayer!!.state)) {
+            mediaPlayer!!.prepare()
         }
-        mPlayer!!.start()
+        mediaPlayer!!.start()
     }
 
     fun stop() {
         try {
-            mPlayer!!.stop()
+            mediaPlayer!!.stop()
         } catch (e: Exception) {
             Timber.e(e)
         }
     }
 
     fun pause() {
-        mPlayer!!.pause()
+        mediaPlayer!!.pause()
     }
 
     fun prepareAudioPlayer(audioPath: String, onPrepared: (String) -> Unit, onCompletion: () -> Unit) {
-        mPlayer = MediaPlayer()
-        mPlayer!!.apply {
+        mediaPlayer = MediaPlayer()
+        mediaPlayer!!.apply {
             setDataSource(audioPath)
             setOnPreparedListener {
                 onPrepared.invoke(DEFAULT_TIME)
@@ -85,26 +85,22 @@ class AudioPlayer {
     }
 
     fun isAudioPlaying(): Boolean {
-        return mPlayer!!.isPlaying
+        return mediaPlayer!!.isPlaying
     }
 
     fun duration(): Int {
-        return mPlayer!!.duration
+        return mediaPlayer!!.duration
     }
 
     fun startPlayer() {
-        mPlayer!!.start()
+        mediaPlayer!!.start()
     }
 
     fun audioSeekTo(sec: Int) {
-        mPlayer!!.seekTo(sec)
+        mediaPlayer!!.seekTo(sec)
     }
 
     fun currentPosition(): Int {
-        return mPlayer!!.currentPosition
+        return mediaPlayer!!.currentPosition
     }
-}
-
-interface OnAudioCompletionListener {
-    fun onCompletion()
 }

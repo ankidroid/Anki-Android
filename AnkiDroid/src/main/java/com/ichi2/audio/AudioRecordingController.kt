@@ -32,6 +32,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.ichi2.anki.R
+import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.AudioPlayer
 import com.ichi2.anki.multimediacard.AudioRecorder
 import com.ichi2.anki.multimediacard.fields.FieldControllerBase
@@ -39,6 +40,7 @@ import com.ichi2.anki.multimediacard.fields.IFieldController
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
+import com.ichi2.utils.Permissions
 import com.ichi2.utils.UiUtil
 import timber.log.Timber
 import java.io.File
@@ -139,6 +141,16 @@ class AudioRecordingController :
 
         audioTimer = AudioTimer(this)
         recordButton.setOnClickListener {
+            // We can get to this screen without permissions through the "Pronunciation" feature.
+            if (!Permissions.canRecordAudio(context)) {
+                Timber.w("Audio recording permission denied.")
+                UIUtils.showThemedToast(
+                    context,
+                    context.resources.getString(R.string.multimedia_editor_audio_permission_denied),
+                    true
+                )
+                return@setOnClickListener
+            }
             when {
                 isPaused -> resumeRecording()
                 isRecording -> pauseRecorder()
@@ -216,7 +228,7 @@ class AudioRecordingController :
         })
     }
 
-    private fun playPausePlayer() {
+    fun playPausePlayer() {
         val totalDuration = audioPlayer.duration()
         audioProgressBar.max = totalDuration
         if (!audioPlayer.isAudioPlaying()) {
@@ -256,7 +268,14 @@ class AudioRecordingController :
     }
 
     private fun startRecording(context: Context, audioPath: String) {
-        audioRecorder.startRecording(context, audioPath)
+        try {
+            audioRecorder.startRecording(context, audioPath)
+        } catch (e: Exception) {
+            // either output file failed or codec didn't work, in any case fail out
+            Timber.e("RecordButton.onClick() :: error recording to %s\n%s", audioPath, e.message)
+            (context as Activity).showSnackbar(R.string.multimedia_editor_audio_view_recording_failed)
+        }
+
         recordButton.apply {
             iconTint = ContextCompat.getColorStateList(context, R.color.flag_green)
             strokeColor = ContextCompat.getColorStateList(context, R.color.flag_green)
@@ -276,8 +295,13 @@ class AudioRecordingController :
     }
 
     private fun stopAndSaveRecording() {
-        audioTimer.stop()
-        audioRecorder.stopRecording()
+        try {
+            audioTimer.stop()
+            audioRecorder.stopRecording()
+        } catch (e: RuntimeException) {
+            Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start")
+            (context as Activity).showSnackbar(R.string.multimedia_editor_audio_view_recording_failed)
+        }
         isPaused = false
         isRecording = false
         saveButton.isEnabled = false
@@ -285,6 +309,26 @@ class AudioRecordingController :
         audioTimeView.text = DEFAULT_TIME
         audioWaveform.clear()
         if (inEditField) saveRecording()
+    }
+
+    fun toggleRecord() {
+        startRecording(context, tempAudioPath!!)
+    }
+
+    fun toggleStopOnly() {
+        try {
+            audioRecorder.stopRecording()
+        } catch (e: RuntimeException) {
+            Timber.i(e, "Recording stop failed, this happens if stop was hit immediately after start")
+            (context as Activity).showSnackbar(R.string.multimedia_editor_audio_view_recording_failed)
+        }
+        audioRecorder.stopRecording()
+        isPaused = false
+        isRecording = false
+        saveButton.isEnabled = false
+        cancelAudioRecordingButton.isEnabled = false
+        audioTimeView.text = DEFAULT_TIME
+        audioWaveform.clear()
     }
 
     private fun pauseRecorder() {
