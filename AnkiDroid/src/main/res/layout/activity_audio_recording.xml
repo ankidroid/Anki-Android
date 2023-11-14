@@ -124,7 +124,7 @@
             app:indicatorColor="@color/material_blue_500"
             app:trackColor="@color/material_light_blue_100" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
@@ -143,7 +143,10 @@
                 app:backgroundTint="@color/material_blue_500"
                 app:icon="@drawable/baseline_replay_5_24"
                 app:iconPadding="0dp"
-                app:iconSize="22dp" />
+                app:iconSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/action_play_recording"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/action_play_recording"
@@ -159,6 +162,10 @@
                 app:iconPadding="0dp"
                 app:iconSize="50dp"
                 app:iconTint="@color/flag_red"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:strokeColor="@color/flag_red"
                 app:strokeWidth="4dp" />
 
@@ -173,9 +180,26 @@
                 app:backgroundTint="@color/material_blue_500"
                 app:icon="@drawable/baseline_forward_5_24"
                 app:iconPadding="0dp"
-                app:iconSize="22dp" />
+                app:iconSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/action_play_recording"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/action_discard_recording"
+                style="@style/Widget.Material3.Button.IconButton.Filled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="6dp"
+                app:backgroundTint="@color/material_blue_500"
+                app:icon="@drawable/ic_delete"
+                app:iconPadding="0dp"
+                app:iconSize="22dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/action_forward"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

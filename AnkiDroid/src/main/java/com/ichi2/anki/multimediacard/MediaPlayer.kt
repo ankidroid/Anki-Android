@@ -169,7 +169,7 @@ class MediaPlayer :
     override fun start() {
         super.start()
         when (state) {
-            PREPARED, STARTED, PAUSED, PLAYBACK_COMPLETE -> state = STARTED
+            PREPARED, STARTED, PAUSED, PLAYBACK_COMPLETE, PREPARING -> state = STARTED
             else -> throw IllegalStateException("Invalid MediaPlayerState $state")
         }
     }

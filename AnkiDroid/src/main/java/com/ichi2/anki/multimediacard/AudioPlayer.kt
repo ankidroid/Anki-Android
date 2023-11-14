@@ -20,6 +20,7 @@
 package com.ichi2.anki.multimediacard
 
 import com.ichi2.anki.multimediacard.MediaPlayer.MediaPlayerState.*
+import com.ichi2.audio.AudioRecordingController.Companion.DEFAULT_TIME
 import timber.log.Timber
 import java.io.IOException
 
@@ -68,4 +69,42 @@ class AudioPlayer {
     fun pause() {
         mPlayer!!.pause()
     }
+
+    fun prepareAudioPlayer(audioPath: String, onPrepared: (String) -> Unit, onCompletion: () -> Unit) {
+        mPlayer = MediaPlayer()
+        mPlayer!!.apply {
+            setDataSource(audioPath)
+            setOnPreparedListener {
+                onPrepared.invoke(DEFAULT_TIME)
+            }
+            setOnCompletionListener {
+                onCompletion.invoke()
+            }
+            prepareAsync()
+        }
+    }
+
+    fun isAudioPlaying(): Boolean {
+        return mPlayer!!.isPlaying
+    }
+
+    fun duration(): Int {
+        return mPlayer!!.duration
+    }
+
+    fun startPlayer() {
+        mPlayer!!.start()
+    }
+
+    fun audioSeekTo(sec: Int) {
+        mPlayer!!.seekTo(sec)
+    }
+
+    fun currentPosition(): Int {
+        return mPlayer!!.currentPosition
+    }
+}
+
+interface OnAudioCompletionListener {
+    fun onCompletion()
 }
