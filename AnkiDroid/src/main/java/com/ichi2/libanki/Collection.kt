@@ -703,4 +703,13 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
     fun notesOfCards(cids: Iterable<CardId>): List<NoteId> {
         return db.queryLongList("select distinct nid from cards where id in ${ids2str(cids)}")
     }
+
+    /**
+     * returns the list of cloze ordinals in a note
+     *
+     * `"{{c1::A}} {{c3::B}}" => [0, 2]`
+     */
+    fun clozeNumbersInNote(n: Note): List<Int> {
+        return backend.clozeNumbersInNote(n.toBackendNote())
+    }
 }
