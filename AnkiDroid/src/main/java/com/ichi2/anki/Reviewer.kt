@@ -93,6 +93,7 @@ import java.io.File
 import java.util.function.Consumer
 
 @KotlinCleanup("too many to count")
+@NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
 open class Reviewer :
     AbstractFlashcardViewer(),
     ReviewerUi {
@@ -294,7 +295,10 @@ open class Reviewer :
             toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
             whiteboard!!.toggleStylus = toggleStylus
         }
-        launchCatchingTask { updateCardAndRedraw() }
+        launchCatchingTask {
+            withCol { startTimebox() }
+            updateCardAndRedraw()
+        }
         disableDrawerSwipeOnConflicts()
 
         // Set full screen/immersive mode if needed
