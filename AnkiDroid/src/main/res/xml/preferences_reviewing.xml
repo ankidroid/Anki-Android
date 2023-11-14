@@ -41,13 +41,13 @@
             android:title="@string/learn_cutoff"
             app:max="999"
             app:min="0"
-            app1:summaryFormat="@string/pref_summary_minutes"/>
+            app1:summaryFormat="@plurals/pref_summ_minutes"/>
         <com.ichi2.preferences.NumberRangePreferenceCompat
             android:key="@string/time_limit_preference"
             android:title="@string/time_limit"
             app:max="9999"
             app:min="0"
-            app1:summaryFormat="@string/pref_summary_minutes"/>
+            app1:summaryFormat="@plurals/pref_summ_minutes"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/timeout_answer_text" >
         <SwitchPreferenceCompat

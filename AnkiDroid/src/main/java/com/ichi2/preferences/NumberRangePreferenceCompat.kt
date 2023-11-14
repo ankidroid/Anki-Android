@@ -28,6 +28,7 @@ import androidx.preference.EditTextPreference
 import androidx.preference.EditTextPreferenceDialogFragmentCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
+import com.ichi2.anki.utils.getFormattedStringOrPlurals
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
@@ -53,12 +54,15 @@ constructor(
         defaultValue = attrs?.getAttributeValue("http://schemas.android.com/apk/res/android", "defaultValue")
 
         context.withStyledAttributes(attrs, R.styleable.CustomPreference) {
-            val summaryFormat = this.getString(R.styleable.CustomPreference_summaryFormat)
-            if (summaryFormat != null) {
-                setSummaryProvider {
-                    String.format(summaryFormat, text)
+            getResourceId(R.styleable.CustomPreference_summaryFormat, 0)
+                .takeIf { it != 0 }?.let { redId ->
+                    setSummaryProvider {
+                        if (text == null) {
+                            return@setSummaryProvider ""
+                        }
+                        context.getFormattedStringOrPlurals(redId, text!!.toInt())
+                    }
                 }
-            }
         }
     }
 
