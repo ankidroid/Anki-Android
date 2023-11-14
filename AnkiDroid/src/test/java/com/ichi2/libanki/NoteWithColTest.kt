@@ -31,6 +31,6 @@ class NoteWithColTest : JvmTest() {
     @Config(qualifiers = "en")
     fun newNoteTest() {
         val note = col.newNote()
-        assertThat(note.model()["name"], equalTo("Basic"))
+        assertThat(note.notetype["name"], equalTo("Basic"))
     }
 }

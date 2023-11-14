@@ -327,7 +327,7 @@ class ReviewerTest : RobolectricTest() {
 
         val newNote = col.newNote()
         newNote.setField(0, "Hello")
-        assertThat(newNote.model()["name"], equalTo("Three"))
+        assertThat(newNote.notetype["name"], equalTo("Three"))
 
         assertThat(col.addNote(newNote), equalTo(3))
     }

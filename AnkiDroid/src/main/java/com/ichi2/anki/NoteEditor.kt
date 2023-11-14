@@ -370,7 +370,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         // Deck Selector
         val deckTextView = findViewById<TextView>(R.id.CardEditorDeckText)
         // If edit mode and more than one card template distinguish between "Deck" and "Card deck"
-        if (!addNote && mEditorNote!!.model().getJSONArray("tmpls").length() > 1) {
+        if (!addNote && mEditorNote!!.notetype.getJSONArray("tmpls").length() > 1) {
             deckTextView.setText(R.string.CardEditorCardDeck)
         }
         mDeckSpinnerSelection =
@@ -706,7 +706,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 updateField(f)
             }
             // Save deck to model
-            mEditorNote!!.model().put("did", deckId)
+            mEditorNote!!.notetype.put("did", deckId)
             // Save tags to model
             mEditorNote!!.setTagsFromStr(tagsAsString(mSelectedTags!!))
             val tags = JSONArray()
@@ -990,7 +990,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
         previewer.putExtra(
             CardTemplateNotetype.INTENT_MODEL_FILENAME,
-            CardTemplateNotetype.saveTempModel(this, mEditorNote!!.model())
+            CardTemplateNotetype.saveTempModel(this, mEditorNote!!.notetype)
         )
 
         // Send the previewer all our current editing information
@@ -1190,7 +1190,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     Timber.d("onActivityResult() template edit return - current card exists")
                     // reload current card - the template ordinals are possibly different post-edit
                     mCurrentEditedCard = getColUnsafe.getCard(mCurrentEditedCard!!.id)
-                    updateCards(mEditorNote!!.model())
+                    updateCards(mEditorNote!!.notetype)
                 }
             }
         }
@@ -1220,14 +1220,14 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
      */
     @KotlinCleanup("fix the requireNoNulls")
     private fun getCurrentMultimediaEditableNote(col: Collection): MultimediaEditableNote {
-        val note = NoteService.createEmptyNote(mEditorNote!!.model())
+        val note = NoteService.createEmptyNote(mEditorNote!!.notetype)
         val fields = currentFieldStrings.requireNoNulls()
         NoteService.updateMultimediaNoteFromFields(col, fields, mEditorNote!!.mid, note!!)
         return note
     }
 
     val currentFields: JSONArray
-        get() = mEditorNote!!.model().getJSONArray("flds")
+        get() = mEditorNote!!.notetype.getJSONArray("flds")
 
     @get:CheckResult
     val currentFieldStrings: Array<String?>
@@ -1646,7 +1646,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         setNoteTypePosition()
         setDid(note)
         updateTags()
-        updateCards(mEditorNote!!.model())
+        updateCards(mEditorNote!!.notetype)
         updateToolbar()
         populateEditFields(changeType, false)
         updateFieldsFromStickyText()
@@ -1681,7 +1681,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             toolbar.visibility = View.VISIBLE
         }
         toolbar.clearCustomItems()
-        if (mEditorNote!!.model().isCloze) {
+        if (mEditorNote!!.notetype.isCloze) {
             addClozeButton(
                 drawableRes = R.drawable.ic_cloze_new_card,
                 description = TR.editingClozeDeletion(),
@@ -1836,7 +1836,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     private fun setNoteTypePosition() {
         // Set current note type and deck positions in spinners
-        val position = mAllModelIds!!.indexOf(mEditorNote!!.model().getLong("id"))
+        val position = mAllModelIds!!.indexOf(mEditorNote!!.notetype.getLong("id"))
         // set selection without firing selectionChanged event
         mNoteTypeSpinner!!.setSelection(position, false)
     }
@@ -1861,7 +1861,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         for (i in 0 until tmpls.length()) {
             var name = tmpls.getJSONObject(i).optString("name")
             // If more than one card, and we have an existing card, underline existing card
-            if (!addNote && tmpls.length() > 1 && model === mEditorNote!!.model() && mCurrentEditedCard != null && mCurrentEditedCard!!.template()
+            if (!addNote && tmpls.length() > 1 && model === mEditorNote!!.notetype && mCurrentEditedCard != null && mCurrentEditedCard!!.template()
                 .optString("name") == name
             ) {
                 name = "<u>$name</u>"
@@ -1872,7 +1872,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             }
         }
         // Make cards list red if the number of cards is being reduced
-        if (!addNote && tmpls.length() < mEditorNote!!.model().getJSONArray("tmpls").length()) {
+        if (!addNote && tmpls.length() < mEditorNote!!.notetype.getJSONArray("tmpls").length()) {
             cardsList = StringBuilder("<font color='red'>$cardsList</font>")
         }
         mCardsButton!!.text = HtmlCompat.fromHtml(

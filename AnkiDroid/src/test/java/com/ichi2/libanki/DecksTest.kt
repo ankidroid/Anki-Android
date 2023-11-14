@@ -39,7 +39,7 @@ class DecksTest : JvmTest() {
         val deck1 = addDeck("deck1")
         val note = col.newNote()
         note.setItem("Front", "1")
-        note.model().put("did", deck1)
+        note.notetype.put("did", deck1)
         col.addNote(note)
         val c = note.cards()[0]
         assertEquals(deck1, c.did)
