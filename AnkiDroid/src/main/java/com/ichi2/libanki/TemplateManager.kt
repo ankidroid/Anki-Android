@@ -127,7 +127,7 @@ class TemplateManager {
         private var _fill_empty: Boolean = fill_empty
 
 //      private var _fields: HashMap<String, String>? = null
-        private var _note_type: NotetypeJson = notetype ?: note.model()
+        private var _note_type: NotetypeJson = notetype ?: note.notetype
 
         companion object {
             fun fromExistingCard(card: Card, browser: Boolean): TemplateRenderContext {

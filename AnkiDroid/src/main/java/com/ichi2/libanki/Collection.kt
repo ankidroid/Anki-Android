@@ -526,7 +526,7 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
     /** allowEmpty is ignored in the new schema */
     @RustCleanup("Remove this in favour of addNote() above; call addNote() inside undoableOp()")
     fun addNote(note: Note): Int {
-        addNote(note, note.model().did)
+        addNote(note, note.notetype.did)
         return note.numberOfCards()
     }
 

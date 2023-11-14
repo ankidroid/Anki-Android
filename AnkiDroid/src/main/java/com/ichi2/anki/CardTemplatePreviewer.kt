@@ -232,7 +232,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                mTemplateCount = toPreview.note().model().templatesNames.size
+                mTemplateCount = toPreview.note().notetype.templatesNames.size
                 if (mTemplateCount >= 2) {
                     previewLayout!!.showNavigationButtons()
                 }

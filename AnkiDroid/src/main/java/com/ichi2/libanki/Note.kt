@@ -140,11 +140,6 @@ class Note : Cloneable {
         )
     }
 
-    @KotlinCleanup("replace with variable")
-    fun model(): NotetypeJson {
-        return notetype
-    }
-
     /**
      * Dict interface
      * ***********************************************************

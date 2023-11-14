@@ -265,7 +265,7 @@ open class Card : Cloneable {
 
     // not in upstream
     open fun model(): NotetypeJson {
-        return note().model()
+        return note().notetype
     }
 
     fun template(): JSONObject {

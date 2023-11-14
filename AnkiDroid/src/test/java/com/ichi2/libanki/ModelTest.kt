@@ -331,7 +331,7 @@ class NotetypeTest : JvmTest() {
         val col = col
         col.notetypes.setCurrent(col.notetypes.byName("Cloze")!!)
         var note = col.newNote()
-        assertEquals("Cloze", note.model().getString("name"))
+        assertEquals("Cloze", note.notetype.getString("name"))
         // a cloze model with no clozes is not empty
         note.setItem("Text", "nothing")
         assertEquals(1, col.addNote(note))
