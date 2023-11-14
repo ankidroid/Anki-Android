@@ -56,13 +56,18 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     private var mShowingAnswer = false
 
     /**
-     * The number of valid templates for the note
+     * The number of valid cards for the note
      * Only used if mNoteEditorBundle != null
      *
      * If launched from the Template Editor, only one the selected card template is selectable
      */
-    private var mTemplateCount = 0
-    var templateIndex = 0
+    private var cardCount = 0
+
+    /**
+     * The index of the selected card in the previewer. Used for forward/back
+     * For cloze note types, this may not be the same as `ord`: `{{c1::A}} {{c3::B}}`
+     */
+    var cardIndex = 0
         private set
     private var mAllFieldsNull = true
     private var mCardType: String? = null
@@ -138,8 +143,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         findViewById<View>(R.id.answer_options_layout).visibility = View.GONE
         findViewById<View>(R.id.bottom_area_layout).visibility = View.VISIBLE
         previewLayout = createAndDisplay(this, mToggleAnswerHandler)
-        previewLayout!!.setOnPreviousCard { onPreviousTemplate() }
-        previewLayout!!.setOnNextCard { onNextTemplate() }
+        previewLayout!!.setOnPreviousCard { onPreviousCard() }
+        previewLayout!!.setOnNextCard { onNextCard() }
         previewLayout!!.hideNavigationButtons()
         previewLayout!!.setPrevButtonEnabled(false)
     }
@@ -176,43 +181,43 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     /** When the next template is requested  */
-    fun onNextTemplate() {
-        var index = templateIndex
+    fun onNextCard() {
+        var index = cardIndex
         if (!isNextBtnEnabled(index)) {
             return
         }
-        templateIndex = ++index
-        onTemplateIndexChanged()
+        cardIndex = ++index
+        onCardIndexChanged()
     }
 
     /** When the previous template is requested  */
-    fun onPreviousTemplate() {
-        var index = templateIndex
+    fun onPreviousCard() {
+        var index = cardIndex
         if (!isPrevBtnEnabled(index)) {
             return
         }
-        templateIndex = --index
-        onTemplateIndexChanged()
+        cardIndex = --index
+        onCardIndexChanged()
     }
 
     /**
-     * Loads the next card after the current template index has been changed
+     * Loads the next card after the current card index has been changed
      */
-    private fun onTemplateIndexChanged() {
-        val prevBtnEnabled = isPrevBtnEnabled(templateIndex)
-        val nextBtnEnabled = isNextBtnEnabled(templateIndex)
+    private fun onCardIndexChanged() {
+        val prevBtnEnabled = isPrevBtnEnabled(cardIndex)
+        val nextBtnEnabled = isNextBtnEnabled(cardIndex)
         previewLayout!!.setPrevButtonEnabled(prevBtnEnabled)
         previewLayout!!.setNextButtonEnabled(nextBtnEnabled)
         setCurrentCardFromNoteEditorBundle(getColUnsafe)
         displayCardQuestion()
     }
 
-    private fun isPrevBtnEnabled(templateIndex: Int): Boolean {
-        return templateIndex > 0
+    private fun isPrevBtnEnabled(cardIndex: Int): Boolean {
+        return cardIndex > 0
     }
 
-    private fun isNextBtnEnabled(newTemplateIndex: Int): Boolean {
-        return newTemplateIndex < mTemplateCount - 1
+    private fun isNextBtnEnabled(cardIndex: Int): Boolean {
+        return cardIndex < cardCount - 1
     }
 
     public override fun onSaveInstanceState(outState: Bundle) {
@@ -232,8 +237,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
-                mTemplateCount = toPreview.note().numberOfCardsEphemeral()
-                if (mTemplateCount >= 2) {
+                cardCount = toPreview.note().numberOfCardsEphemeral()
+                if (cardCount >= 2) {
                     previewLayout!!.showNavigationButtons()
                 }
             }
@@ -270,7 +275,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     private fun setCurrentCardFromNoteEditorBundle(col: Collection): Card? {
         assert(mNoteEditorBundle != null)
-        currentCard = getDummyCard(mEditedNotetype, templateIndex, getBundleEditFields(mNoteEditorBundle))
+        currentCard = getDummyCard(mEditedNotetype, cardIndex, getBundleEditFields(mNoteEditorBundle))
         // example: a basic card with no fields provided
         if (currentCard == null) {
             return null
@@ -334,10 +339,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
 
     /**
      * This method generates a note from a sample model, or fails if invalid
-     * @param index The index in the templates for the model. NOT `ord`
+     * @param cardIndex The index in the templates for the model. NOT `ord`
      */
-    private fun getDummyCard(notetype: NotetypeJson?, index: Int, fieldValues: MutableList<String>): Card? {
-        Timber.d("getDummyCard() Creating dummy note for index %s", index)
+    private fun getDummyCard(notetype: NotetypeJson?, cardIndex: Int, fieldValues: MutableList<String>): Card? {
+        Timber.d("getDummyCard() Creating dummy note for index %s", cardIndex)
         if (notetype == null) {
             return null
         }
@@ -361,7 +366,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             i++
         }
         try {
-            return EphemeralCard.fromNote(n, getColUnsafe, index)
+            return EphemeralCard.fromNote(n, getColUnsafe, cardIndex)
         } catch (e: Exception) {
             // Calling code handles null return, so we can log this for developer's interest but move on
             Timber.d(e, "getDummyCard() unable to create card")
@@ -424,16 +429,16 @@ private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
         return this.renderOutput!!
     }
     companion object {
-        fun fromNote(n: Note, col: Collection, templateIndex: Int = 0): EphemeralCard {
+        fun fromNote(n: Note, col: Collection, cardIndex: Int = 0): EphemeralCard {
             val card = EphemeralCard(col, null)
             card.did = 1
-            card.ord = n.templateIndexToOrd(templateIndex)
+            card.ord = n.cardIndexToOrd(cardIndex)
 
             val nt = n.notetype
             val templateIdx = if (nt.type == Consts.MODEL_CLOZE) {
                 0
             } else {
-                templateIndex
+                cardIndex
             }
             val template = nt.tmpls[templateIdx] as JSONObject
             template.put("ord", card.ord)
@@ -462,9 +467,9 @@ private fun Note.numberOfCardsEphemeral(): Int {
 }
 
 /**
- * Given a template index, returns the 'ord' of the card
+ * Given a card index, returns the 'ord' of the card
  */
-private fun Note.templateIndexToOrd(index: Int): Int {
+private fun Note.cardIndexToOrd(index: Int): Int {
     // We can't use note.numberOfCards() as this uses the database value
     return when {
         this.notetype.isCloze -> col.clozeNumbersInNote(this)[index] - 1

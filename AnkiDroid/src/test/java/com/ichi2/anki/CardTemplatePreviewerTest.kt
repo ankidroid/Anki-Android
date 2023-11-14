@@ -265,7 +265,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         assertTwoCards(testCardTemplatePreviewer)
 
         // ensure that template 2 is valid
-        testCardTemplatePreviewer.onNextTemplate()
+        testCardTemplatePreviewer.onNextCard()
         assertThat("card 2 has content", testCardTemplatePreviewer.cardContent, containsString("Hello"))
     }
 
@@ -351,23 +351,23 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         assertThat("prev should not be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
         assertThat("next should be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
 
-        testCardTemplatePreviewer.onNextTemplate()
+        testCardTemplatePreviewer.onNextCard()
 
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertThat("index is changed", testCardTemplatePreviewer.cardIndex, equalTo(1))
         assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(true))
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(false))
 
-        testCardTemplatePreviewer.onNextTemplate()
+        testCardTemplatePreviewer.onNextCard()
 
         // no effect
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertThat("index is changed", testCardTemplatePreviewer.cardIndex, equalTo(1))
         assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(true))
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(false))
 
-        testCardTemplatePreviewer.onPreviousTemplate()
+        testCardTemplatePreviewer.onPreviousCard()
 
         // previous
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(0))
+        assertThat("index is changed", testCardTemplatePreviewer.cardIndex, equalTo(0))
         assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
     }
