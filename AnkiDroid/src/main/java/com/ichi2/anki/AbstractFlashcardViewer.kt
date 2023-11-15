@@ -63,6 +63,7 @@ import com.ichi2.anki.cardviewer.HtmlGenerator.Companion.createInstance
 import com.ichi2.anki.cardviewer.SoundPlayer.CardSoundConfig
 import com.ichi2.anki.cardviewer.SoundPlayer.CardSoundConfig.Companion.create
 import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
+import com.ichi2.anki.dialogs.TtsVoicesDialogFragment
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
@@ -2261,6 +2262,10 @@ abstract class AbstractFlashcardViewer :
                 launchCatchingTask {
                     controlSound(url)
                 }
+                return true
+            }
+            if (url.startsWith("tts-voices:")) {
+                showDialogFragment(TtsVoicesDialogFragment())
                 return true
             }
             if (url.startsWith("file") || url.startsWith("data:")) {

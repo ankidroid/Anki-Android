@@ -22,6 +22,8 @@
 
 package com.ichi2.libanki
 
+import java.io.Closeable
+
 open class TtsVoice(
     val name: String,
     val lang: String
@@ -40,14 +42,24 @@ open class TtsVoice(
 
 data class TtsVoiceMatch(val voice: TtsVoice, val rank: Int)
 
-abstract class TtsPlayer {
+abstract class TtsPlayer : Closeable {
     open val default_rank = 0
 
     @JvmField // stops a name conflict
     var _available_voices: List<TtsVoice>? = null
 
     abstract fun get_available_voices(): List<TtsVoice>
-    abstract suspend fun play(tag: AvTag)
+
+    abstract class TtsError
+
+    data class TtsCompletionStatus(val success: Boolean, val error: TtsError? = null) {
+        companion object {
+            fun success() = TtsCompletionStatus(success = true)
+            fun failure(errorCode: TtsError) = TtsCompletionStatus(success = false, errorCode)
+        }
+    }
+
+    abstract suspend fun play(tag: AvTag): TtsCompletionStatus
 
     fun voices(): List<TtsVoice> {
         if (_available_voices == null) {
