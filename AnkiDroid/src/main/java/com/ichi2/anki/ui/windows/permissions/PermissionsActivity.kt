@@ -27,6 +27,7 @@ import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.PermissionSet
 import com.ichi2.anki.R
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.themes.setTransparentStatusBar
 
 /**
  * Screen responsible for getting permissions from the user.
@@ -47,6 +48,7 @@ class PermissionsActivity : AnkiActivity() {
         }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.permissions_activity)
+        setTransparentStatusBar()
 
         findViewById<AppCompatButton>(R.id.continue_button).setOnClickListener {
             finish()
