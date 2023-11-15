@@ -40,6 +40,10 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.compat.CompatHelper
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.UiUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -184,13 +188,18 @@ class AudioRecordingController :
         orientationEventListener?.enable()
     }
 
+    // The prepareAsync() method doesn't update the state after being prepared so handling the thread manually
     private fun prepareAudioPlayer() {
-        mediaPlayer.apply {
-            setDataSource(tempAudioPath)
-            prepareAsync()
-            onPrepared(mediaPlayer)
-            setOnPreparedListener {
-                audioTimeView.text = DEFAULT_TIME
+        val coroutineScope = CoroutineScope(Dispatchers.Main)
+        coroutineScope.launch {
+            withContext(Dispatchers.IO) {
+                mediaPlayer.apply {
+                    setDataSource(tempAudioPath)
+                    prepare()
+                    setOnPreparedListener {
+                        audioTimeView.text = DEFAULT_TIME
+                    }
+                }
             }
         }
     }
