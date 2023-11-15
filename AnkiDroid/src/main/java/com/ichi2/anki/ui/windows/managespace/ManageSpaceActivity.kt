@@ -20,6 +20,7 @@ package com.ichi2.anki.ui.windows.managespace
 import android.os.Bundle
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
+import com.ichi2.themes.setTransparentStatusBar
 
 class ManageSpaceActivity : AnkiActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,11 +30,8 @@ class ManageSpaceActivity : AnkiActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_space)
+        setTransparentStatusBar()
 
-        enableToolbar().apply {
-            setHomeButtonEnabled(true)
-            setDisplayHomeAsUpEnabled(true)
-            setTitle(R.string.pref__manage_space__screen_title)
-        }
+        enableToolbar().setDisplayHomeAsUpEnabled(true)
     }
 }
