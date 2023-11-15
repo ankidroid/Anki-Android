@@ -497,6 +497,15 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
         return status.undo != null
     }
 
+    fun redoLabel(): String? {
+        val action = undoStatus().redo
+        return action?.let { tr.undoRedoAction(it) }
+    }
+
+    fun redoAvailable(): Boolean {
+        return undoStatus().redo != null
+    }
+
     open fun onCreate() {
         sched.useNewTimezoneCode()
         config.set("schedVer", 2)

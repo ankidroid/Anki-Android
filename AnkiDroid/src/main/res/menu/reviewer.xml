@@ -10,6 +10,12 @@
         ankidroid:actionProviderClass="com.ichi2.ui.RtlCompliantActionProvider"
         ankidroid:showAsAction="always"/>
     <item
+        android:id="@+id/action_redo"
+        android:enabled="false"
+        android:icon="@drawable/ic_redo"
+        android:title="@string/redo"
+        ankidroid:showAsAction="always"/>
+    <item
         android:id="@+id/action_clear_whiteboard"
         android:title="@string/clear_whiteboard"
         android:icon="@drawable/ic_clear_white"

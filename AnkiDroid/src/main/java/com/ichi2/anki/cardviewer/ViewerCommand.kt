@@ -40,6 +40,7 @@ enum class ViewerCommand(val resourceId: Int) {
     FLIP_OR_ANSWER_EASE3(R.string.answer_good),
     FLIP_OR_ANSWER_EASE4(R.string.answer_easy),
     UNDO(R.string.undo),
+    REDO(R.string.redo),
     EDIT(R.string.cardeditor_title_edit_card),
     MARK(R.string.menu_mark_note),
     BURY_CARD(R.string.menu_bury_card),
@@ -157,6 +158,7 @@ enum class ViewerCommand(val resourceId: Int) {
                 REPLAY_VOICE -> from(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH))
                 RECORD_VOICE -> from(keyCode(KeyEvent.KEYCODE_V, CardSide.BOTH, shift()))
                 UNDO -> from(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH))
+                REDO -> from(keyCode(KeyEvent.KEYCODE_Z, CardSide.BOTH, ModifierKeys(shift = true, ctrl = true, alt = false)))
                 TOGGLE_FLAG_RED -> from(keyCode(KeyEvent.KEYCODE_1, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_1, CardSide.BOTH, ctrl()))
                 TOGGLE_FLAG_ORANGE -> from(keyCode(KeyEvent.KEYCODE_2, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_2, CardSide.BOTH, ctrl()))
                 TOGGLE_FLAG_GREEN -> from(keyCode(KeyEvent.KEYCODE_3, CardSide.BOTH, ctrl()), keyCode(KeyEvent.KEYCODE_NUMPAD_3, CardSide.BOTH, ctrl()))
