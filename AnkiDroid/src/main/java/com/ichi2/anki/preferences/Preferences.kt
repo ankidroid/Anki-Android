@@ -41,6 +41,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
+import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.getInstanceFromClassName
 import timber.log.Timber
 import java.util.*
@@ -64,6 +65,7 @@ class Preferences :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preferences)
+        setTransparentStatusBar()
 
         enableToolbar().setDisplayHomeAsUpEnabled(true)
 

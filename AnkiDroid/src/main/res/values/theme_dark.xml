@@ -14,6 +14,7 @@
         <item name="colorPrimary">@color/material_blue_400</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/theme_dark_primary_dark</item>
+        <item name="colorSurface">?android:colorBackground</item>
         <item name="colorAccent">@color/material_blue_400</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="colorPrimaryContainer">@color/white</item> <!-- Switch thumb color when disabled and being pressed -->
@@ -131,9 +132,6 @@
 
         <!-- Introduction -->
         <item name="introductionLogoTransparent">#883d3d3d</item>
-
-        <!-- Browser Options Dialog-->
-        <item name="colorSurface">@color/theme_dark_primary</item>
 
         <!-- Widget styles -->
         <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.Material3</item>

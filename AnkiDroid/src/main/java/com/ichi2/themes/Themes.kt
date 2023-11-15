@@ -21,9 +21,12 @@ package com.ichi2.themes
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.graphics.Color
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.color.MaterialColors
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.R
@@ -134,4 +137,10 @@ object Themes {
         return context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK ==
             Configuration.UI_MODE_NIGHT_YES
     }
+}
+
+fun FragmentActivity.setTransparentStatusBar() {
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
+        !Themes.currentTheme.isNightMode
+    window.statusBarColor = Color.TRANSPARENT
 }
