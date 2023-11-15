@@ -58,7 +58,7 @@ import java.util.function.Supplier
  * @param collectionSupplier a predicate that supplies a collection instance
 */
 class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportDialogListener, ExportReadyDialogListener {
-    private val mDialogsFactory: ExportDialogsFactory
+    val mDialogsFactory: ExportDialogsFactory
     private val mSaveFileLauncher: ActivityResultLauncher<Intent>
     private lateinit var mExportFileName: String
 

@@ -116,6 +116,7 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
                 WhichDialogHandler.MSG_SHOW_FORCE_FULL_SYNC_DIALOG -> ForceFullSyncDialog.fromMessage(message)
                 WhichDialogHandler.MSG_DO_SYNC -> IntentHandler.Companion.DoSync()
                 WhichDialogHandler.MSG_MIGRATE_ON_SYNC_SUCCESS -> MigrateStorageOnSyncSuccess.MigrateOnSyncSuccessHandler()
+                WhichDialogHandler.MSG_EXPORT_READY -> ExportReadyDialog.ExportReadyDialogMessage.fromMessage(message)
             }
         }
     }
@@ -131,7 +132,8 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
         MSG_SHOW_DATABASE_ERROR_DIALOG(6),
         MSG_SHOW_FORCE_FULL_SYNC_DIALOG(7),
         MSG_DO_SYNC(8),
-        MSG_MIGRATE_ON_SYNC_SUCCESS(9)
+        MSG_MIGRATE_ON_SYNC_SUCCESS(9),
+        MSG_EXPORT_READY(10)
         ;
         companion object {
             fun fromInt(value: Int) = WhichDialogHandler.values().first { it.what == value }
