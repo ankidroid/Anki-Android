@@ -46,7 +46,6 @@ class RtlCompliantActionProvider(context: Context) : ActionProviderCompat(contex
             it.isAutoMirrored = true
             actionView.setImageDrawable(it)
         }
-        actionView.id = R.id.action_undo
         actionView.setOnClickListener {
             if (!forItem.isEnabled) {
                 return@setOnClickListener
