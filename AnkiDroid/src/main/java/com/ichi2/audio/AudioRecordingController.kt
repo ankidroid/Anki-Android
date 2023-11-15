@@ -187,10 +187,11 @@ class AudioRecordingController :
     private fun prepareAudioPlayer() {
         mediaPlayer.apply {
             setDataSource(tempAudioPath)
+            prepareAsync()
+            onPrepared(mediaPlayer)
             setOnPreparedListener {
                 audioTimeView.text = DEFAULT_TIME
             }
-            prepareAsync()
         }
     }
 
