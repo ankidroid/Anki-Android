@@ -361,7 +361,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
     implementation 'com.github.ByteHamster:SearchPreference:2.4.0'
-    implementation 'com.github.AppIntro:AppIntro:6.3.1'
 
     // Cannot use debugImplementation since classes need to be imported in AnkiDroidApp
     // and there's no no-op version for release build. Usage has been disabled for release

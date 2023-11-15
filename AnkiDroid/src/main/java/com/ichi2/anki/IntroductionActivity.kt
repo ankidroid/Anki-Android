@@ -21,20 +21,11 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
-import androidx.fragment.app.Fragment
-import com.github.appintro.AppIntro
-import com.github.appintro.AppIntroPageTransformerType
-import com.ichi2.anki.InitialActivity.StartupFailure
-import com.ichi2.anki.introduction.SetupCollectionFragment
 import com.ichi2.anki.introduction.SetupCollectionFragment.*
 import com.ichi2.anki.introduction.SetupCollectionFragment.Companion.handleCollectionSetupOption
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.workarounds.AppLoadedFromBackupWorkaround.showedActivityFailedScreen
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.themes.Themes
-import com.ichi2.utils.*
 import timber.log.Timber
 
 /**
@@ -42,7 +33,7 @@ import timber.log.Timber
  * TODO: Background of introduction_layout does not display on API 25 emulator: https://github.com/ankidroid/Anki-Android/pull/12033#issuecomment-1228429130
  */
 @NeedsTest("Ensure that we can get here on first run without an exception dialog shown")
-class IntroductionActivity : AppIntro() {
+class IntroductionActivity : AnkiActivity() {
 
     private val onLoginResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
@@ -56,21 +47,8 @@ class IntroductionActivity : AppIntro() {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
-
         super.onCreate(savedInstanceState)
-
-        // Check for WebView related error
-        val startupFailure = InitialActivity.getStartupFailureType(this)
-        startupFailure?.let {
-            handleStartupFailure(it)
-        }
-        Themes.setTheme(this)
-
-        showStatusBar(true)
-
-        setTransformer(AppIntroPageTransformerType.Zoom)
-
-        addSlide(SetupCollectionFragment())
+        setContentView(R.layout.introduction_activity)
 
         handleCollectionSetupOption { option ->
             when (option) {
@@ -78,23 +56,10 @@ class IntroductionActivity : AppIntro() {
                 CollectionSetupOption.SyncFromExistingAccount -> openLoginDialog()
             }
         }
-
-        this.showSeparator(false)
-        isButtonsEnabled = false
     }
 
     private fun openLoginDialog() {
         onLoginResult.launch(Intent(this, LoginActivity::class.java))
-    }
-
-    override fun onSkipPressed(currentFragment: Fragment?) {
-        super.onSkipPressed(currentFragment)
-        startDeckPicker(RESULT_START_NEW)
-    }
-
-    override fun onDonePressed(currentFragment: Fragment?) {
-        super.onDonePressed(currentFragment)
-        startDeckPicker(RESULT_START_NEW)
     }
 
     private fun startDeckPicker(result: Int = RESULT_START_NEW) {
@@ -108,29 +73,6 @@ class IntroductionActivity : AppIntro() {
         startActivity(deckPicker)
         finish()
     }
-
-    /**
-     * When WebView is not available on a device, then error message indicating
-     * the same needs to be shown.
-     * @param startupFailure Type of error on startup
-     */
-    // TODO: Factor this into the AppLoadedFromBackupWorkaround class
-    private fun handleStartupFailure(startupFailure: StartupFailure) {
-        if (startupFailure == StartupFailure.WEBVIEW_FAILED) {
-            AlertDialog.Builder(this).show {
-                title(R.string.ankidroid_init_failed_webview_title)
-                message(text = getString(R.string.ankidroid_init_failed_webview, AnkiDroidApp.webViewErrorMessage))
-                positiveButton(R.string.close) { finish() }
-                cancelable(false)
-            }
-        }
-    }
-
-    private fun showedActivityFailedScreen(savedInstanceState: Bundle?) =
-        showedActivityFailedScreen(
-            savedInstanceState = savedInstanceState,
-            activitySuperOnCreate = { state -> super.onCreate(state) }
-        )
 
     companion object {
         const val RESULT_START_NEW = 1
