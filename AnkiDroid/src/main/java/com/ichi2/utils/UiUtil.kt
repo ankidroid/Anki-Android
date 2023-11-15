@@ -15,10 +15,12 @@
  */
 package com.ichi2.utils
 
+import android.app.Dialog
 import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
+import android.view.ViewGroup
 import android.widget.Spinner
 
 object UiUtil {
@@ -34,5 +36,11 @@ object UiUtil {
             this.setSelection(position)
             return
         }
+    }
+    fun Dialog.makeFullscreen() {
+        window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
     }
 }
