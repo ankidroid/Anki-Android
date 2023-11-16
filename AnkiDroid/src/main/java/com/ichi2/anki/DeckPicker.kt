@@ -247,6 +247,10 @@ open class DeckPicker :
         processReviewResults(it.resultCode)
     }
 
+    private val showNewVersionInfoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
+    }
+
     private var migrateStorageAfterMediaSyncCompleted = false
 
     // stored for testing purposes
@@ -908,9 +912,7 @@ open class DeckPicker :
             handleDbError()
             return
         }
-        if (requestCode == SHOW_INFO_NEW_VERSION) {
-            showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
-        } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
+        if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             mSyncOnResume = true
         } else if (requestCode == REQUEST_PATH_UPDATE) {
             // The collection path was inaccessible on startup so just close the activity and let user restart
@@ -1282,7 +1284,7 @@ open class DeckPicker :
                 val infoIntent = Intent(this, Info::class.java)
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
                 if (skip != 0) {
-                    startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION, START)
+                    launchActivityForResultWithAnimation(infoIntent, showNewVersionInfoLauncher, START)
                 } else {
                     startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION)
                 }
