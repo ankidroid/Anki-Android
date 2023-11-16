@@ -46,17 +46,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">비활성화됨</string>
-    <string name="pref_summary_seconds">%s s</string>
-    <string name="pref_summary_minutes">%s min</string>
+    <string name="pref_summary_seconds">%s 초</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
-    <string name="pref_search_no_results">No results</string>
+    <string name="pref_search_no_results">검색 결과 없음</string>
     <!-- preferences.xml categories-->
-    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">General</string>
-    <string name="pref_cat_studying" maxLength="41">Studying</string>
-    <string name="pref_cat_system_wide" maxLength="41">System-wide</string>
+    <string name="pref_cat_general" comment="name of the general preference category" maxLength="41">일반</string>
+    <string name="pref_cat_studying" maxLength="41">학습</string>
+    <string name="pref_cat_system_wide" maxLength="41">시스템 전역 설정</string>
     <string name="pref_cat_reviewing" maxLength="41">복습</string>
-    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">Sync</string>
-    <string name="pref_cat_scheduling" maxLength="41">Scheduling</string>
+    <string name="pref_cat_sync" comment="title of the sync preferences category" maxLength="41">동기화</string>
+    <string name="pref_cat_scheduling" maxLength="41">스케줄링</string>
     <string name="pref_cat_whiteboard" maxLength="41">화이트보드</string>
     <string name="pref_cat_appearance" maxLength="41">외관</string>
     <string name="pref_cat_themes" maxLength="41">테마</string>
@@ -79,7 +81,7 @@
     <string name="button_size" maxLength="41">정답 버튼 크기</string>
     <string name="card_browser_font_size" maxLength="41">카드 탐색기 글꼴 크기 조정</string>
     <string name="card_browser_hide_media" maxLength="41">카드 탐색기에서 파일명 보기</string>
-    <string name="card_browser_hide_media_summary">Display media filenames in the card browser question/answer fields</string>
+    <string name="card_browser_hide_media_summary">카드 탐색기의 질문/답변 필드에 미디어 파일 이름을 표시합니다.</string>
     <string name="col_path" maxLength="41">AnkiDroid 디렉토리</string>
     <string name="fullscreen_review" maxLength="41">전체 화면 모드</string>
     <string name="full_screen_off">끔</string>
@@ -89,15 +91,15 @@
     <string-array name="answer_buttons_position_labels">
         <item>상단</item>
         <item>하단</item>
-        <item>None</item>
+        <item>없음</item>
     </string-array>
     <string name="gestures" maxLength="41">제스처 사용</string>
     <string name="gestures_summ">응답 및 카드 편집 등의 작업에 제스쳐 할당</string>
     <string name="gestures_corner_touch" maxLength="41">9점 터치</string>
     <string name="gestures_corner_touch_summary">화면 모서리의 터치 제스쳐 허용</string>
-    <string name="gestures_full_screen_nav_drawer" maxLength="41">Full screen navigation drawer</string>
-    <string name="gestures_fullscreen_nav_drawer_summary">Open navigation drawer when swiped right from anywhere on the screen</string>
-    <string name="gestures_none" maxLength="41">None</string>
+    <string name="gestures_full_screen_nav_drawer" maxLength="41">전체화면 탐색 서랍</string>
+    <string name="gestures_fullscreen_nav_drawer_summary">화면 어디에서나 오른쪽으로 스와이프하여 탐색 서랍 열기</string>
+    <string name="gestures_none" maxLength="41">없음</string>
     <string name="gestures_swipe_up" maxLength="41">위로 밀기</string>
     <string name="gestures_swipe_down" maxLength="41">아래로 밀기</string>
     <string name="gestures_swipe_left" maxLength="41">왼쪽 밀기</string>
@@ -108,13 +110,13 @@
     <string name="gestures_tap_left" maxLength="41">왼쪽 탭하기</string>
     <string name="gestures_tap_right" maxLength="41">오른쪽 탭하기</string>
     <string name="gestures_tap_bottom" maxLength="41">아래쪽 탭하기</string>
-    <string name="gestures_corner_tap_top_left" maxLength="41">Touch top left</string>
-    <string name="gestures_corner_tap_top_right" maxLength="41">Touch top right</string>
-    <string name="gestures_corner_tap_middle_center" maxLength="41">Touch middle center</string>
-    <string name="gestures_corner_tap_bottom_left" maxLength="41">Touch bottom left</string>
-    <string name="gestures_corner_tap_bottom_right" maxLength="41">Touch bottom right</string>
+    <string name="gestures_corner_tap_top_left" maxLength="41">왼쪽 상단 터치</string>
+    <string name="gestures_corner_tap_top_right" maxLength="41">오른쪽 상단 터치</string>
+    <string name="gestures_corner_tap_middle_center" maxLength="41">가운데 중앙 터치</string>
+    <string name="gestures_corner_tap_bottom_left" maxLength="41">왼쪽 하단 터치</string>
+    <string name="gestures_corner_tap_bottom_right" maxLength="41">오른쪽 하단 터치</string>
     <string name="card_browser_enable_external_context_menu">\"%s\" 메뉴</string>
-    <string name="card_browser_enable_external_context_menu_summary">Enables the ‘%s’ context menu globally</string>
+    <string name="card_browser_enable_external_context_menu_summary">시스템 전역에서 글자를 길게 눌렀을 때 \'%s\' 컨텍스트 메뉴를 보입니다.</string>
     <string name="double_scrolling_gap" maxLength="41">이중 스크롤</string>
     <string name="double_scrolling_gap_summ">eReader 사용시 스크롤 간격 두배로 늘리기</string>
     <string name="swipe_sensitivity" maxLength="41">밀기 동작 민감도</string>
@@ -126,16 +128,16 @@
     <string name="sync_account_summ_logged_out">로그인 하지 않음</string>
     <string name="automatic_sync_choice" maxLength="41">자동 동기화</string>
     <string name="automatic_sync_choice_summ">마지막 동기화로부터 10분이 넘었을 경우 앱 시작 및 종료시 자동으로 동기화</string>
-    <string name="sync_media_always" comment="Option to always fetch media when syncing">Always</string>
-    <string name="sync_media_only_unmetered">Only on unmetered connections</string>
-    <string name="sync_media_never">Never</string>
-    <string name="sync_status_badge" maxLength="41">Display synchronization status</string>
-    <string name="sync_status_badge_summ">Change the sync icon when changes can be uploaded</string>
-    <string name="metered_sync_title" maxLength="41">Allow sync on metered connections</string>
-    <string name="metered_sync_summary">If disabled, you will be warned if you try to sync on a metered connection</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
-    <string name="app_theme" maxLength="41">Theme</string>
+    <string name="sync_media_always" comment="Option to always fetch media when syncing">항상</string>
+    <string name="sync_media_only_unmetered">무과금 연결에서만</string>
+    <string name="sync_media_never">안함</string>
+    <string name="sync_status_badge" maxLength="41">동기화 상태 표시</string>
+    <string name="sync_status_badge_summ">변경 사항을 업로드할 수 있는 경우 동기화 아이콘 변경</string>
+    <string name="metered_sync_title" maxLength="41">과금 연결에서 동기화 허용</string>
+    <string name="metered_sync_summary">비활성화하면 과금 인터넷에서 동기화를 시도할 때 경고가 표시됩니다.</string>
+    <string name="backup_limits_frequency">빈도</string>
+    <string name="backup_limits_lifetime">보관기간 </string>
+    <string name="app_theme" maxLength="41">테마</string>
     <string name="day_theme" maxLength="41">주간 테마</string>
     <string name="night_theme" maxLength="41">야간 테마</string>
     <string name="language" maxLength="41">언어</string>
@@ -148,16 +150,16 @@
     <string name="notification_minimum_cards_due_vibrate" maxLength="41">진동</string>
     <string name="notification_minimum_cards_due_blink" maxLength="41">LED 깜빡이기</string>
     <string name="timeout_answer_text" maxLength="41">자동으로 정답 표시</string>
-    <string name="timeout_answer" maxLength="41">Timeout answer</string>
+    <string name="timeout_answer" maxLength="41">시간 초과시 답변</string>
     <string name="timeout_answer_summ">사용자 입력 없이 자동으로 답변을 표시합니다. 지연에는 자동으로 재생되는 오디오 파일의 시간이 포함됩니다.</string>
     <string name="timeout_answer_seconds" maxLength="41">정답을 표시할 시간</string>
     <string name="timeout_question_seconds" maxLength="41">다음 문제를 표시할 시간</string>
     <string name="select_locale_title">언어 선택</string>
-    <string name="software_render" maxLength="41">Disable card hardware render</string>
-    <string name="software_render_summ">Hardware render is faster but may have problems, specifically on Android 8/8.1. If you cannot see parts of the card review user interface, try this setting.</string>
+    <string name="software_render" maxLength="41">카드 하드웨어 랜더링 비활성화</string>
+    <string name="software_render_summ">하드웨어 렌더링은 더 빠르지만 특히 Android 8/8.1에서 문제가 있을 수 있습니다.  카드 리뷰시 사용자 인터페이스의 일부가 표시되지 않으면 이 설정을 시도해 보십시오.</string>
     <string name="safe_display" maxLength="41">안전한 디스플레이 모드</string>
     <string name="safe_display_summ">모든 애니메이션을 비활성화하고 더 안전한 그리기 방법을 사용합니다. 전자 잉크 기기에는 이 기능이 필요할 수 있습니다.</string>
-    <string name="disable_extended_text_ui" maxLength="41">Disable Single-Field Edit Mode</string>
+    <string name="disable_extended_text_ui" maxLength="41">단일 필드 편집 모드 비활성화</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
     <string name="disable_extended_text_ui_summ">Allows \'Cloze Deletion\' context menu when in landscape mode.</string>
     <string name="vertical_centering" maxLength="41">가운데 정렬</string>

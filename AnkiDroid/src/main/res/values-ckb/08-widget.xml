@@ -45,19 +45,19 @@
 -->
 <resources>
     <!-- Widget -->
-    <string name="widget_minimum_cards_due_notification_ticker_title">Cards due</string>
+    <string name="widget_minimum_cards_due_notification_ticker_title">کارت بۆ پێداچوونەوە</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d کارت ماوە بۆ پێداچوونەوە</item>
+        <item quantity="other">%d کارت ماوە بۆ پێداچوونەوە</item>
     </plurals>
-    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid small</string>
+    <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid بچووک</string>
     <plurals name="widget_cards_due">
-        <item quantity="one">%d card due</item>
-        <item quantity="other">%d cards due</item>
+        <item quantity="one">%d کارت ماوە بۆ پێداچوونەوە</item>
+        <item quantity="other">%d کارت ماوە</item>
     </plurals>
     <plurals name="widget_eta">
-        <item quantity="one">%d minute remaining</item>
-        <item quantity="other">%d minutes remaining</item>
+        <item quantity="one">%d خولەک ماوە</item>
+        <item quantity="other">%d خولەک ماوە</item>
     </plurals>
-    <string name="widget_add_note_button">Add new AnkiDroid note</string>
+    <string name="widget_add_note_button">کارتی نوێی ئانکی زیادبکە</string>
 </resources>
