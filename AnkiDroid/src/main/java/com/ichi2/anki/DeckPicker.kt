@@ -243,6 +243,10 @@ open class DeckPicker :
         ActivityCompat.recreate(this)
     }
 
+    private val reviewerScreenLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        processReviewerScreenResult(it.resultCode)
+    }
+
     private var migrateStorageAfterMediaSyncCompleted = false
 
     // stored for testing purposes
@@ -908,7 +912,7 @@ open class DeckPicker :
             showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             mSyncOnResume = true
-        } else if (requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS) {
+        } else if (requestCode == SHOW_STUDYOPTIONS) {
             if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
                 // Show a message when reviewing has finished
                 if (getColUnsafe.sched.totalCount() == 0) {
@@ -927,6 +931,20 @@ open class DeckPicker :
             onSelectedPackageToImport(data!!)
         } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
             onSelectedCsvForImport(data!!)
+        }
+    }
+
+    private fun processReviewerScreenResult(resultCode: Int) {
+        if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
+            // Show a message when reviewing has finished
+            if (getColUnsafe.sched.totalCount() == 0) {
+                showSnackbar(R.string.studyoptions_congrats_finished)
+            } else {
+                showSnackbar(R.string.studyoptions_no_cards_due)
+            }
+        } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
+            Timber.i("Obtained Abort and Sync result")
+            sync()
         }
     }
 
@@ -2041,7 +2059,7 @@ open class DeckPicker :
 
     private fun openReviewer() {
         val reviewer = Intent(this, Reviewer::class.java)
-        startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, START)
+        launchActivityForResultWithAnimation(reviewer, reviewerScreenLauncher, START)
     }
 
     override fun onCreateCustomStudySession() {
