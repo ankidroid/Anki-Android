@@ -78,46 +78,46 @@
     <!-- flashcard_portrait.xml -->
     <string name="type_answer_hint">جواب لکھیں</string>
     <string name="show_answer">جواب دکھائیے</string>
-    <string name="hide_answer">Hide answer</string>
+    <string name="hide_answer">جواب چھپائیں۔</string>
     <string name="ease_button_again">دوبارہ</string>
     <string name="ease_button_hard">مشکل</string>
     <string name="ease_button_good">عمدہ</string>
     <string name="ease_button_easy">آسان</string>
     <string name="menu_import">درآمد کریں</string>
     <string name="undo">کالعدم کریں</string>
-    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Undo stroke</string>
-    <string name="move_all_to_deck">Move all to deck</string>
+    <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">اسٹروک کو کالعدم کریں۔</string>
+    <string name="move_all_to_deck">سب کو ڈیک پر منتقل کریں۔</string>
     <string name="unbury">Unbury</string>
     <string name="rename_deck">ڈیک کو نیا نام دیں</string>
-    <string name="create_shortcut">Create shortcut</string>
-    <string name="browse_cards">Browse cards</string>
+    <string name="create_shortcut">شارٹ کٹ بنائیں</string>
+    <string name="browse_cards">کارڈز کو براؤز کریں۔</string>
     <string name="menu_add" comment="A generic add button. Please inform us if you need more specific strings">شامل کریں</string>
     <string name="menu_add_note">نوٹ شامل کریں</string>
-    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">Sync account</string>
+    <string name="menu_my_account" comment="Label of the window in which the user should enter their account. This text can\'t be found in AnkiDroid directly.">اکاؤنٹس کی مطابقت پذیری</string>
     <string name="menu_dismiss_note">چھپائیں / حذف کریں</string>
     <string name="menu_bury_card">Bury card</string>
     <string name="menu_bury_note">Bury note</string>
     <string name="menu_suspend_card">کارڈ معطل کریں</string>
     <string name="menu_suspend_note">نوٹ معطل کریں</string>
-    <string name="menu_bury">Bury</string>
-    <string name="menu_suspend">Suspend</string>
+    <string name="menu_bury">دفن</string>
+    <string name="menu_suspend">معطل</string>
     <string name="menu_delete_note">نوٹ حذف کریں</string>
-    <string name="menu_flag">Flag</string>
-    <string name="menu_flag_card">Flag card</string>
-    <string name="menu_flag_card_zero">No flag</string>
-    <string name="menu_flag_card_one">Red flag</string>
-    <string name="menu_flag_card_two">Orange flag</string>
-    <string name="menu_flag_card_three">Green flag</string>
-    <string name="menu_flag_card_four">Blue flag</string>
-    <string name="menu_flag_card_five">Pink flag</string>
-    <string name="menu_flag_card_six">Turquoise flag</string>
-    <string name="menu_flag_card_seven">Purple flag</string>
-    <string name="menu_edit_tags">Edit tags</string>
+    <string name="menu_flag">فلیگ</string>
+    <string name="menu_flag_card">پرچم کارڈ</string>
+    <string name="menu_flag_card_zero">کوئی جھنڈا نہیں</string>
+    <string name="menu_flag_card_one">لال جھنڈا</string>
+    <string name="menu_flag_card_two">نارنجی جھنڈا</string>
+    <string name="menu_flag_card_three">سبز جھنڈا</string>
+    <string name="menu_flag_card_four">نیلا جھنڈا</string>
+    <string name="menu_flag_card_five">گلابی جھنڈا</string>
+    <string name="menu_flag_card_six">فیروزی جھنڈا</string>
+    <string name="menu_flag_card_seven">جامنی جھنڈا</string>
+    <string name="menu_edit_tags">کارڈز میں ترمیم کریں</string>
     <string name="delete_note_message">واقعی یہ نوٹ اور اس کے تمام کارڈز حذف کریں؟ \n%s</string>
     <string name="menu_search">%1$s میں تلاش کریں</string>
     <string name="menu_mark_note">نوٹ کو نشان زد کریں</string>
     <string name="menu_unmark_note">نوٹ بے نشان کریں</string>
-    <string name="menu_toggle_mic_tool_bar">Check pronunciation</string>
+    <string name="menu_toggle_mic_tool_bar">تلفظ چیک کریں</string>
     <string name="new_deck">ڈیک بنائیں</string>
     <string name="new_dynamic_deck">فلٹر شدہ ڈیک بنائیں</string>
     <string name="directory_inaccessible">آنکی ڈیرائڈ ڈائریکٹری ناقابل رسائی ہے</string>
@@ -129,22 +129,22 @@
     <string name="rebuild_filtered_deck">Rebuilding filtered deck&#8230;</string>
     <string name="rebuild_cram_label">تعمیر نو</string>
     <string name="empty_cram_label">خالى</string>
-    <string name="create_subdeck">Create subdeck</string>
+    <string name="create_subdeck">سب ڈیک بنائیں</string>
     <string name="empty_filtered_deck">Emptying filtered deck&#8230;</string>
     <string name="custom_study_deck_name">اپنی مرضی کے مطابق تعلیمی سیشن</string>
     <string name="custom_study_deck_exists">پہلے موجودہ مخصوص مطالعہ ڈیک کو نیا نام دیں</string>
     <string name="empty_deck">یہ ڈیک خالی ہے</string>
-    <string name="search_deck" comment="Deck search for selecting it">Deck Search</string>
-    <string name="search_for_download_deck" comment="Deck search value for downloading deck">Deck Search</string>
-    <string name="invalid_deck_name">Invalid deck name</string>
+    <string name="search_deck" comment="Deck search for selecting it">ڈیک تلاش</string>
+    <string name="search_for_download_deck" comment="Deck search value for downloading deck">ڈیک تلاش</string>
+    <string name="invalid_deck_name">ڈیک کا نام غلط ہے</string>
     <string name="studyoptions_empty">یہ ڈیک خالی ہے ۔ + کے بٹن کو دبا کر نیا مواد ڈالیں.</string>
     <string name="studyoptions_limit_reached">روزانہ مطالعہ کی حد تک پہنچ گئے ہیں</string>
     <string name="studyoptions_empty_schedule">No cards scheduled to study</string>
     <string name="studyoptions_congrats_finished">مبارک ہو! آپ فی الحال کے لیے کام ختم کر چکے ہیں.</string>
-    <string name="studyoptions_no_cards_due">No cards are due yet</string>
-    <string name="sd_card_not_mounted">Device storage not mounted</string>
-    <string name="button_sync" comment="Text of the sync button">Sync</string>
-    <string name="button_upgrade" comment="Text of the sync button">Migrate to scoped storage</string>
+    <string name="studyoptions_no_cards_due">ابھی تک کوئی کارڈ باقی نہیں ہے</string>
+    <string name="sd_card_not_mounted">ڈیوائس اسٹوریج نصب نہیں ہے</string>
+    <string name="button_sync" comment="Text of the sync button">ہم وقت سازی</string>
+    <string name="button_upgrade" comment="Text of the sync button">اسکوپڈ اسٹوریج میں منتقل کریں</string>
     <string name="cancel_sync_confirm" tools:ignore="UnusedResources">Do you want to cancel the sync?</string>
     <string name="continue_sync" tools:ignore="UnusedResources">Continue sync</string>
     <string name="sync_cancelled" tools:ignore="UnusedResources">Sync cancelled</string>

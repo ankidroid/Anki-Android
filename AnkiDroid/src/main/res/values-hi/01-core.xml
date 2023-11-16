@@ -254,8 +254,8 @@ Back - बैक</string>
     <string name="create_new_collection">एक नया संग्रह बनाएँ</string>
     <string name="new_unsafe_collection">यदि आप AnkiDroid की स्थापना रद्द करते हैं तो नया संग्रह आपके फ़ोन से हटा दिया जाएगा</string>
     <!-- Permissions screen -->
-    <string name="permissions_screen_headline">AnkiDroid needs some permissions to work</string>
+    <string name="permissions_screen_headline">अंकीड्रॉइड को काम करने के लिए कुछ अनुमतियों की आवश्यकता है</string>
     <string name="storage_access_title">Storage access</string>
-    <string name="storage_access_summary">Saves your collection in a safe place that will not be deleted if the app is uninstalled</string>
+    <string name="storage_access_summary">आपके संग्रह को एक सुरक्षित स्थान पर संग्रहीत करता है जिसे ऐप अनइंस्टॉल होने पर हटाया नहीं जाएगा</string>
     <string name="all_files_access_title" comment="Name of the “All files access” permission from Android 10 and after">All files access</string>
 </resources>
