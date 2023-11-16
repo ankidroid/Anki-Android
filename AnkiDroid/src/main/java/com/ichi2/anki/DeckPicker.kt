@@ -2149,7 +2149,6 @@ open class DeckPicker :
         private const val LOG_IN_FOR_SYNC = 6
         private const val SHOW_INFO_NEW_VERSION = 9
         const val SHOW_STUDYOPTIONS = 11
-        private const val ADD_NOTE = 12
         const val PICK_APKG_FILE = 13
         const val PICK_CSV_FILE = 14
 
