@@ -853,7 +853,7 @@ open class DeckPicker :
                 val manageNoteTypesTarget =
                     ManageNotetypes::class.java
                 val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
-                startActivityForResultWithAnimation(noteTypeBrowser, 0, START)
+                startActivityWithAnimation(noteTypeBrowser, START)
                 return true
             }
             R.id.action_restore_backup -> {
