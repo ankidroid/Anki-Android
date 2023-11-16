@@ -243,8 +243,8 @@ open class DeckPicker :
         ActivityCompat.recreate(this)
     }
 
-    private val reviewerScreenLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        processReviewerScreenResult(it.resultCode)
+    private val reviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        processReviewResults(it.resultCode)
     }
 
     private var migrateStorageAfterMediaSyncCompleted = false
@@ -912,18 +912,6 @@ open class DeckPicker :
             showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
         } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
             mSyncOnResume = true
-        } else if (requestCode == SHOW_STUDYOPTIONS) {
-            if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-                // Show a message when reviewing has finished
-                if (getColUnsafe.sched.totalCount() == 0) {
-                    showSnackbar(R.string.studyoptions_congrats_finished)
-                } else {
-                    showSnackbar(R.string.studyoptions_no_cards_due)
-                }
-            } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
-                Timber.i("Obtained Abort and Sync result")
-                sync()
-            }
         } else if (requestCode == REQUEST_PATH_UPDATE) {
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finish()
@@ -934,7 +922,7 @@ open class DeckPicker :
         }
     }
 
-    private fun processReviewerScreenResult(resultCode: Int) {
+    private fun processReviewResults(resultCode: Int) {
         if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
             // Show a message when reviewing has finished
             if (getColUnsafe.sched.totalCount() == 0) {
@@ -1645,7 +1633,7 @@ open class DeckPicker :
             val intent = Intent()
             intent.putExtra("withDeckOptions", withDeckOptions)
             intent.setClass(this, StudyOptionsActivity::class.java)
-            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, START)
+            launchActivityForResultWithAnimation(intent, reviewLauncher, START)
         }
     }
 
@@ -2059,7 +2047,7 @@ open class DeckPicker :
 
     private fun openReviewer() {
         val reviewer = Intent(this, Reviewer::class.java)
-        launchActivityForResultWithAnimation(reviewer, reviewerScreenLauncher, START)
+        launchActivityForResultWithAnimation(reviewer, reviewLauncher, START)
     }
 
     override fun onCreateCustomStudySession() {
@@ -2166,7 +2154,6 @@ open class DeckPicker :
         private const val REQUEST_PATH_UPDATE = 1
         private const val LOG_IN_FOR_SYNC = 6
         private const val SHOW_INFO_NEW_VERSION = 9
-        const val SHOW_STUDYOPTIONS = 11
         const val PICK_APKG_FILE = 13
         const val PICK_CSV_FILE = 14
 
