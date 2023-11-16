@@ -500,6 +500,7 @@ object UsageAnalytics {
         "binding_FLIP_OR_ANSWER_EASE3",
         "binding_FLIP_OR_ANSWER_EASE4",
         "binding_UNDO",
+        "binding_REDO",
         "binding_EDIT",
         "binding_MARK",
         "binding_BURY_CARD",
@@ -553,6 +554,7 @@ object UsageAnalytics {
         // App bar buttons
         "reset_custom_buttons",
         "customButtonUndo",
+        "customButtonRedo",
         "customButtonScheduleCard",
         "customButtonFlag",
         "customButtonEditCard",

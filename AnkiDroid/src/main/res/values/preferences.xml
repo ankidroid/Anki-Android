@@ -51,6 +51,7 @@
     <string name="pref_app_bar_buttons_screen_key">appBarButtonsScreen</string>
     <string name="reset_custom_buttons_key">reset_custom_buttons</string>
     <string name="custom_button_undo_key">customButtonUndo</string>
+    <string name="custom_button_redo_key">customButtonRedo</string>
     <string name="custom_button_schedule_card_key">customButtonScheduleCard</string>
     <string name="custom_button_flag_key">customButtonFlag</string>
     <string name="custom_button_edit_card_key">customButtonEditCard</string>
@@ -83,6 +84,7 @@
     <string name="answer_good_command_key">binding_FLIP_OR_ANSWER_EASE3</string>
     <string name="answer_easy_command_key">binding_FLIP_OR_ANSWER_EASE4</string>
     <string name="undo_command_key">binding_UNDO</string>
+    <string name="redo_command_key">binding_REDO</string>
     <string name="edit_command_key">binding_EDIT</string>
     <string name="mark_command_key">binding_MARK</string>
     <string name="bury_card_command_key">binding_BURY_CARD</string>

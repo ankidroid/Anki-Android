@@ -41,6 +41,13 @@ TODO: Add a unit test
             android:title="@string/undo"
             app:useSimpleSummaryProvider="true"/>
         <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/custom_button_labels"
+            android:entryValues="@array/custom_button_values"
+            android:key="@string/custom_button_redo_key"
+            android:title="@string/redo"
+            app:useSimpleSummaryProvider="true"/>
+        <ListPreference
             android:defaultValue="0"
             android:entries="@array/custom_button_labels"
             android:entryValues="@array/custom_button_values"

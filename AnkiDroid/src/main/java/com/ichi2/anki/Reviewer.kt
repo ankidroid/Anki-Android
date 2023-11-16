@@ -304,6 +304,10 @@ open class Reviewer :
         setRenderWorkaround(this)
     }
 
+    fun redo() {
+        launchCatchingTask { redoAndShowSnackbar(ACTION_SNACKBAR_TIME) }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // 100ms was not enough on my device (Honor 9 Lite -  Android Pie)
         delayedHide(1000)
@@ -322,6 +326,10 @@ open class Reviewer :
                 } else {
                     undo()
                 }
+            }
+            R.id.action_redo -> {
+                Timber.i("Reviewer:: Redo button pressed")
+                redo()
             }
             R.id.action_reset_card_progress -> {
                 Timber.i("Reviewer:: Reset progress button pressed")
@@ -717,6 +725,17 @@ open class Reviewer :
                 // so in some languages such as Japanese, which have pre/post-positional particle with the object,
                 // we need to use the string for just "Undo" instead of the string for "Undo %s".
                 undoIcon.title = resources.getString(R.string.undo)
+            }
+            menu.findItem(R.id.action_redo)?.apply {
+                if (getColUnsafe.redoAvailable()) {
+                    title = getColUnsafe.redoLabel()
+                    iconAlpha = Themes.ALPHA_ICON_ENABLED_LIGHT
+                    isEnabled = true
+                } else {
+                    setTitle(R.string.redo)
+                    iconAlpha = Themes.ALPHA_ICON_DISABLED_LIGHT
+                    isEnabled = false
+                }
             }
         }
         if (undoEnabled) {
@@ -1142,6 +1161,10 @@ open class Reviewer :
             }
             ViewerCommand.MARK -> {
                 onMark(currentCard)
+                return true
+            }
+            ViewerCommand.REDO -> {
+                redo()
                 return true
             }
             ViewerCommand.ADD_NOTE -> {

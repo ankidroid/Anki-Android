@@ -237,6 +237,11 @@
             android:icon="@drawable/ic_undo_white"
             />
         <com.ichi2.preferences.ControlPreference
+            android:key="@string/redo_command_key"
+            android:title="@string/redo"
+            android:icon="@drawable/ic_redo"
+            />
+        <com.ichi2.preferences.ControlPreference
             android:key="@string/show_hint_command_key"
             android:title="@string/gesture_show_hint"
             />

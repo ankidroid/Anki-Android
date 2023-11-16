@@ -34,6 +34,7 @@ class ActionButtonStatus(private val reviewerUi: ReviewerUi) {
     fun setup(preferences: SharedPreferences) {
         // NOTE: the default values below should be in sync with preferences_custom_buttons.xml and reviewer.xml
         setupButton(preferences, R.id.action_undo, "customButtonUndo", SHOW_AS_ACTION_ALWAYS)
+        setupButton(preferences, R.id.action_redo, "customButtonRedo", SHOW_AS_ACTION_IF_ROOM)
         setupButton(preferences, R.id.action_schedule, "customButtonScheduleCard", SHOW_AS_ACTION_NEVER)
         setupButton(preferences, R.id.action_flag, "customButtonFlag", SHOW_AS_ACTION_ALWAYS)
         setupButton(preferences, R.id.action_tag, "customButtonTags", SHOW_AS_ACTION_NEVER)
