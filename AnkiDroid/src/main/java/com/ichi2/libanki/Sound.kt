@@ -254,18 +254,10 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
 }
 
 open class SoundPlayer {
-    val currentAudioUri: String?
-        get() = mCurrentAudioUri?.toString()
-
-    val isCurrentAudioFinished: Boolean
-        get() = mMediaPlayer == null
-
     /**
      * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
      */
     private var mMediaPlayer: MediaPlayer? = null
-
-    private var mCurrentAudioUri: Uri? = null
 
     /**
      * AudioManager to request/release audio focus
@@ -303,8 +295,6 @@ open class SoundPlayer {
     ) {
         Timber.d("Playing %s", soundPath)
         val soundUri = Uri.parse(soundPath)
-        mCurrentAudioUri = soundUri
-
         val context = AnkiDroidApp.instance.applicationContext
 
         // Play media
@@ -417,16 +407,6 @@ open class SoundPlayer {
             // TODO: Inefficient. Determine whether we want to release or stop, don't do both
             // Ensure `currentAudioUri` etc... still work when we do this
             releaseSound()
-        }
-    }
-
-    fun playOrPauseSound() {
-        mMediaPlayer?.let {
-            if (it.isPlaying) {
-                it.pause()
-            } else {
-                it.start()
-            }
         }
     }
 
