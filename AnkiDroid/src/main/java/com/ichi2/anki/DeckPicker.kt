@@ -251,6 +251,12 @@ open class DeckPicker :
         showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
     }
 
+    private val loginForSyncLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            mSyncOnResume = true
+        }
+    }
+
     private var migrateStorageAfterMediaSyncCompleted = false
 
     // stored for testing purposes
@@ -912,9 +918,7 @@ open class DeckPicker :
             handleDbError()
             return
         }
-        if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
-            mSyncOnResume = true
-        } else if (requestCode == REQUEST_PATH_UPDATE) {
+        if (requestCode == REQUEST_PATH_UPDATE) {
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finish()
         } else if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
@@ -1555,7 +1559,7 @@ open class DeckPicker :
     override fun loginToSyncServer() {
         val myAccount = Intent(this, MyAccount::class.java)
         myAccount.putExtra("notLoggedIn", true)
-        startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_SYNC, FADE)
+        launchActivityForResultWithAnimation(myAccount, loginForSyncLauncher, FADE)
     }
 
     // Callback to import a file -- adding it to existing collection
