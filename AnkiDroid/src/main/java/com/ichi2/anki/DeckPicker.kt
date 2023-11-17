@@ -257,6 +257,11 @@ open class DeckPicker :
         }
     }
 
+    private val requestPathUpdateLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        // The collection path was inaccessible on startup so just close the activity and let user restart
+        finish()
+    }
+
     private var migrateStorageAfterMediaSyncCompleted = false
 
     // stored for testing purposes
@@ -515,7 +520,7 @@ open class DeckPicker :
                     showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL)
                 } else {
                     val i = AdvancedSettingsFragment.getSubscreenIntent(this)
-                    startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE)
+                    launchActivityForResultWithAnimation(i, requestPathUpdateLauncher, NONE)
                     showThemedToast(this, R.string.directory_inaccessible, false)
                 }
             }
@@ -918,10 +923,7 @@ open class DeckPicker :
             handleDbError()
             return
         }
-        if (requestCode == REQUEST_PATH_UPDATE) {
-            // The collection path was inaccessible on startup so just close the activity and let user restart
-            finish()
-        } else if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
+        if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
             onSelectedPackageToImport(data!!)
         } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
             onSelectedCsvForImport(data!!)
@@ -2154,7 +2156,6 @@ open class DeckPicker :
          */
         @VisibleForTesting
         const val REQUEST_STORAGE_PERMISSION = 0
-        private const val REQUEST_PATH_UPDATE = 1
         const val PICK_APKG_FILE = 13
         const val PICK_CSV_FILE = 14
 
