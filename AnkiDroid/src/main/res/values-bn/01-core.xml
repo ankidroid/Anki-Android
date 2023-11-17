@@ -85,6 +85,7 @@
     <string name="ease_button_easy">সহজ</string>
     <string name="menu_import">আমদানি করুন</string>
     <string name="undo">বাতিল করুন</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">স্ট্রোক ফিরত নাও</string>
     <string name="move_all_to_deck">সবগুলো ডেক এ সড়াও</string>
     <string name="unbury">অদাফন</string>

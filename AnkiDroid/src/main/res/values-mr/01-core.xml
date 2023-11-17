@@ -85,6 +85,7 @@
     <string name="ease_button_easy">सोपे</string>
     <string name="menu_import">आयात करा</string>
     <string name="undo">पूर्ववत् करा</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">स्ट्रोक पूर्ववत करा</string>
     <string name="move_all_to_deck">सर्व डेकम्धे पाठवा</string>
     <string name="unbury">अनबरी</string>

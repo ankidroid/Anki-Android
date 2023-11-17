@@ -82,6 +82,7 @@
     <string name="ease_button_easy">Dễ</string>
     <string name="menu_import">Nhập</string>
     <string name="undo">Hoàn tác</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Hoàn tác</string>
     <string name="move_all_to_deck">Di chuyển tất cả đến bộ thẻ</string>
     <string name="unbury">Bỏ tạm ẩn</string>

@@ -85,6 +85,7 @@
     <string name="ease_button_easy">Lätt</string>
     <string name="menu_import">Importera</string>
     <string name="undo">Ångra</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Ångra penseldrag</string>
     <string name="move_all_to_deck">Flytta alla till kortlek</string>
     <string name="unbury">Sluta dölja</string>
