@@ -53,12 +53,12 @@
         <item quantity="one">%d note shown</item>
         <item quantity="other">%d notes shown</item>
     </plurals>
-    <string name="card_browser_all_decks">All decks</string>
-    <string name="card_browser_delete_card">Delete notes</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
-    <string name="card_browser_change_deck">Change deck</string>
-    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-    <string name="card_browser_mark_card">Mark notes</string>
+    <string name="card_browser_all_decks">گشت دەستەکان</string>
+    <string name="card_browser_delete_card">یاداشتەکان ڕەشبکەوە</string>
+    <string name="card_browser_suspend_card">کارتەکان ڕابگرە</string>
+    <string name="card_browser_change_deck">دەستە بگۆڕە</string>
+    <string name="card_browser_unsuspend_card">کاراکردنەوەی کارتەکان</string>
+    <string name="card_browser_mark_card">یاداشتەکان نیشانبکە</string>
     <string name="card_browser_unmark_card">Unmark notes</string>
     <string name="delete_card_title">Delete note?</string>
     <string name="card_browser_show_marked">Filter marked</string>
@@ -78,24 +78,24 @@
     <string-array name="card_browser_order_labels">
         <item>No sorting (faster)</item>
         <item>By sort field</item>
-        <item>By created time</item>
-        <item>By note modification time</item>
-        <item>By card modification time</item>
+        <item>بەپێی کاتی دروستکردن</item>
+        <item>بەپێی کاتی دەستکاری یاداشت</item>
+        <item>بەپێی کاتی دەستکاری کارت</item>
         <item>By due time</item>
         <item>By interval</item>
         <item>Li gorî hêsaniyê</item>
         <item>Li gorî dubarekirinan</item>
         <item>By lapses</item>
     </string-array>
-    <string name="card_browser_select_all">Select all</string>
-    <string name="card_browser_select_none">Select none</string>
-    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(new)</string>
-    <string name="card_browser_due_filtered_card">(filtered)</string>
-    <string name="card_browser_interval_learning_card">(learning)</string>
+    <string name="card_browser_select_all">گشت دیاریبکە</string>
+    <string name="card_browser_select_none">هیچ دیاریمەکە</string>
+    <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(نوێ)</string>
+    <string name="card_browser_due_filtered_card">(پاڵێوراو)</string>
+    <string name="card_browser_interval_learning_card">(لە باری فێربوون)</string>
     <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
     <string name="card_browser_search_all_decks">Search all decks</string>
-    <string name="card_browser_unknown_deck_name">Unknown</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_unknown_deck_name">نەزانراو</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">کورتکردنەوەی ناوەڕۆک</string>
     <plurals name="card_browser_export_cards">
         <item quantity="one">Export card</item>
         <item quantity="other">Export cards</item>

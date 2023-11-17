@@ -206,10 +206,4 @@ interface Compat {
      */
     @CheckResult
     fun normalize(locale: Locale): Locale
-
-    companion object {
-        /* Mock the Intent PROCESS_TEXT constants introduced in API 23. */
-        const val ACTION_PROCESS_TEXT = "android.intent.action.PROCESS_TEXT"
-        const val EXTRA_PROCESS_TEXT = "android.intent.extra.PROCESS_TEXT"
-    }
 }

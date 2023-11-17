@@ -186,7 +186,7 @@ open class DeckPicker :
     private lateinit var mRecyclerViewLayoutManager: LinearLayoutManager
     private lateinit var mDeckListAdapter: DeckAdapter
     private val mSnackbarShowHideCallback = Snackbar.Callback()
-    private lateinit var mExportingDelegate: ActivityExportingDelegate
+    lateinit var mExportingDelegate: ActivityExportingDelegate
     private lateinit var mNoDecksPlaceholder: LinearLayout
     lateinit var mPullToSyncWrapper: SwipeRefreshLayout
         private set

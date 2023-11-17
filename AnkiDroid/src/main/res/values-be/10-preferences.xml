@@ -47,7 +47,12 @@
     <!-- generic strings -->
     <string name="disabled">Адключана</string>
     <string name="pref_summary_seconds">%s сек</string>
-    <string name="pref_summary_minutes">%s хв</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="one">%d хв</item>
+        <item quantity="few">%d хв</item>
+        <item quantity="many">%d хвл</item>
+        <item quantity="other">%d хвл</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">Вынікі адсутнічаюць</string>
     <!-- preferences.xml categories-->
@@ -134,8 +139,8 @@
     <string name="sync_status_badge_summ">Значок сінхранізацыі зменіцца, калі можна будзе загрузіць змены</string>
     <string name="metered_sync_title" maxLength="41">Дазволіць сінхранізацыю пры тарыфікацыі злучэння</string>
     <string name="metered_sync_summary">Калі адключана, то вы атрымаеце папярэджанне, што адбудзецца сінхранізацыя праз тарыфікаванае злучэнне.</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">Частата</string>
+    <string name="backup_limits_lifetime">Працягласць</string>
     <string name="app_theme" maxLength="41">Тэма</string>
     <string name="day_theme" maxLength="41">Дзённая тэма</string>
     <string name="night_theme" maxLength="41">Начная тэма</string>
@@ -183,10 +188,10 @@
     <string name="new_timezone" maxLength="41">Апрацоўка новага часавога пояса</string>
     <string name="day_offset_with_description" maxLength="41">Пачатак наступнага дня</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d гадзіна пасля поўначы</item>
+        <item quantity="few">%d гадзін пасля поўначы</item>
+        <item quantity="many">%d гадзін пасля поўначы</item>
+        <item quantity="other">%d гадзін пасля поўначы</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Не выключаць экран</string>
     <string name="pref_keep_screen_on_summ">Адключыць час чакання экрана</string>

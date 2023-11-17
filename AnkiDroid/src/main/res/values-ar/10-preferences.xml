@@ -47,7 +47,14 @@
     <!-- generic strings -->
     <string name="disabled">معطل</string>
     <string name="pref_summary_seconds">%s ث</string>
-    <string name="pref_summary_minutes">%s د</string>
+    <plurals name="pref_summ_minutes">
+        <item quantity="zero">%d mins</item>
+        <item quantity="one">%d min</item>
+        <item quantity="two">%d mins</item>
+        <item quantity="few">%d mins</item>
+        <item quantity="many">%d mins</item>
+        <item quantity="other">%d mins</item>
+    </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">لا نتائج</string>
     <!-- preferences.xml categories-->
@@ -133,8 +140,8 @@
     <string name="sync_status_badge_summ">تغيير زر المزامنة المعروض عندما يكون من الممكن رفع التغييرات</string>
     <string name="metered_sync_title" maxLength="41">السماح بالمزامنة على الاتصالات المحدودة</string>
     <string name="metered_sync_summary">إذا كان معطلًا، سيتم إنذارك إذا حاولت المزامنة باتصال محدود</string>
-    <string name="backup_limits_frequency">Frequency</string>
-    <string name="backup_limits_lifetime">Lifetime</string>
+    <string name="backup_limits_frequency">الوتيرة</string>
+    <string name="backup_limits_lifetime">مدة الحفظ</string>
     <string name="app_theme" maxLength="41">السمة</string>
     <string name="day_theme" maxLength="41">سمة النهار</string>
     <string name="night_theme" maxLength="41">سمة الليل</string>
@@ -164,8 +171,8 @@
     <string name="vertical_centering_summ">محاذاة محتوى البطاقات إلى الوسط عموديًا</string>
     <string name="pref_double_tap_time_interval" maxLength="41">الفاصل الزمني للنقر المزدوج (مللي ثانية)</string>
     <string name="pref_double_tap_time_interval_summary">سيتم تجاهل نقرة ثانية على أزرار الإجابة إذا لم يمر الوقت. يمنع هذا النقر المزدوج غير المقصود</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
-    <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
+    <string name="pref_show_answer_long_press" maxLength="41">إظهار الجواب عند الضغط المطول (ملي ثانية)</string>
+    <string name="pref_show_answer_long_press_summary">حد الوقت الأدنى قبل أن يتم تسجيل زر إظهار الجواب. قد يقلل هذا من الضغطات الإضافية غير المقصودة. القيمة الافتراضية هي 0</string>
     <string name="show_estimates" maxLength="41">إظهار وقت الأزرار</string>
     <string name="show_estimates_summ">إظهار وقت المراجعة التالية على أزرار الإجابة</string>
     <string name="show_large_answer_buttons" maxLength="41">إظهار أزرار إجابة كبيرة</string>
@@ -182,12 +189,12 @@
     <string name="new_timezone" maxLength="41">طريقة المعالجة الجديدة للمناطق الزمنية</string>
     <string name="day_offset_with_description" maxLength="41">بداية اليوم التالي (0 يعني منتصف الليل، 23 يعني الساعة 11 مساءً)</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="zero">%d hours past midnight</item>
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="two">%d hours past midnight</item>
+        <item quantity="zero">%d ساعة بعد منتصف الليل</item>
+        <item quantity="one">%d ساعة بعد منتصف الليل</item>
+        <item quantity="two">%d ساعة بعد منتصف الليل</item>
         <item quantity="few">%d hours past midnight</item>
         <item quantity="many">%d hours past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="other">%d ساعات بعد منتصف الليل</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">إبقاء الشاشة مضيئة</string>
     <string name="pref_keep_screen_on_summ">تعطيل مهلة الشاشة</string>
@@ -228,12 +235,12 @@
     <!-- Key Bindings -->
     <string name="keyboard">لوحة المفاتيح</string>
     <string name="bluetooth">بلوتوث</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
-    <string name="card" maxLength="41">Card</string>
-    <string name="note" maxLength="41">Note</string>
-    <string name="navigation" maxLength="41">Navigation</string>
-    <string name="media" maxLength="41">Media</string>
-    <string name="misc" maxLength="41">Misc</string>
+    <string name="answer_buttons" maxLength="41">أزرار الإجابة</string>
+    <string name="card" maxLength="41">بطاقة</string>
+    <string name="note" maxLength="41">ملحوظة</string>
+    <string name="navigation" maxLength="41">التنقل</string>
+    <string name="media" maxLength="41">الوسائط</string>
+    <string name="misc" maxLength="41">منوع</string>
     <!-- studyoptions -->
     <string name="studyoptions_limit_select_tags">اختيار وسوم</string>
     <!-- Deck configurations -->

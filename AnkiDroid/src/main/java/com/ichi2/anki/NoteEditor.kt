@@ -80,7 +80,6 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
-import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
@@ -247,7 +246,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             caller = intent.getIntExtra(EXTRA_CALLER, CALLER_NO_CALLER)
             if (caller == CALLER_NO_CALLER) {
                 val action = intent.action
-                if (ACTION_CREATE_FLASHCARD == action || ACTION_CREATE_FLASHCARD_SEND == action || Compat.ACTION_PROCESS_TEXT == action) {
+                if (ACTION_CREATE_FLASHCARD == action || ACTION_CREATE_FLASHCARD_SEND == action || Intent.ACTION_PROCESS_TEXT == action) {
                     caller = CALLER_NOTEEDITOR_INTENT_ADD
                 }
             }
@@ -550,9 +549,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun fetchIntentInformation(intent: Intent) {
         val extras = intent.extras ?: return
         sourceText = arrayOfNulls(2)
-        if (Compat.ACTION_PROCESS_TEXT == intent.action) {
-            val stringExtra = intent.getStringExtra(Compat.EXTRA_PROCESS_TEXT)
-            Timber.d("Obtained %s from intent: %s", stringExtra, Compat.EXTRA_PROCESS_TEXT)
+        if (Intent.ACTION_PROCESS_TEXT == intent.action) {
+            val stringExtra = intent.getStringExtra(Intent.EXTRA_PROCESS_TEXT)
+            Timber.d("Obtained %s from intent: %s", stringExtra, Intent.EXTRA_PROCESS_TEXT)
             sourceText!![0] = stringExtra ?: ""
             sourceText!![1] = ""
         } else if (ACTION_CREATE_FLASHCARD == intent.action) {

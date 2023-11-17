@@ -29,7 +29,6 @@ import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
@@ -242,8 +241,7 @@ class CardTemplatePreviewerTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("#14717: This is a real test failure - there should be two cards")
-    fun clozeFromEditorHasMultipleCards() {
+    fun `Note Editor Cloze preview displays multiple cards - Issue 14717`() {
         val fields: MutableList<NoteService.NoteField?> = ArrayList()
         fields.add(Field(0, "{{c1::Hello}} {{c3::World}}"))
         fields.add(Field(1, "World"))
@@ -262,7 +260,13 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
+        assertThat("card 1 has content", testCardTemplatePreviewer.cardContent, containsString("World"))
+
         assertTwoCards(testCardTemplatePreviewer)
+
+        // ensure that template 2 is valid
+        testCardTemplatePreviewer.onNextCard()
+        assertThat("card 2 has content", testCardTemplatePreviewer.cardContent, containsString("Hello"))
     }
 
     @Test
@@ -347,23 +351,23 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         assertThat("prev should not be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
         assertThat("next should be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
 
-        testCardTemplatePreviewer.onNextTemplate()
+        testCardTemplatePreviewer.onNextCard()
 
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertThat("index is changed", testCardTemplatePreviewer.cardIndex, equalTo(1))
         assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(true))
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(false))
 
-        testCardTemplatePreviewer.onNextTemplate()
+        testCardTemplatePreviewer.onNextCard()
 
         // no effect
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(1))
+        assertThat("index is changed", testCardTemplatePreviewer.cardIndex, equalTo(1))
         assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(true))
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(false))
 
-        testCardTemplatePreviewer.onPreviousTemplate()
+        testCardTemplatePreviewer.onPreviousCard()
 
         // previous
-        assertThat("index is changed", testCardTemplatePreviewer.templateIndex, equalTo(0))
+        assertThat("index is changed", testCardTemplatePreviewer.cardIndex, equalTo(0))
         assertThat("prev should be enabled", testCardTemplatePreviewer.previousButtonEnabled(), equalTo(false))
         assertThat("next should not be enabled", testCardTemplatePreviewer.nextButtonEnabled(), equalTo(true))
     }

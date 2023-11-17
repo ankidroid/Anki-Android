@@ -18,8 +18,11 @@ package com.ichi2.anki.dialogs
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Message
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.BundleCompat
 import androidx.core.os.bundleOf
+import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
 import com.ichi2.utils.*
 
@@ -52,4 +55,31 @@ class ExportReadyDialog(private val listener: ExportReadyDialogListener) : Async
         get() = res().getString(R.string.export_ready_title)
 
     override val notificationMessage: String? = null
+
+    override val dialogHandlerMessage: DialogHandlerMessage
+        get() = ExportReadyDialogMessage(exportPath)
+
+    /** Export ready dialog message*/
+    class ExportReadyDialogMessage(private val exportPath: String) : DialogHandlerMessage(
+        which = WhichDialogHandler.MSG_EXPORT_READY,
+        analyticName = "ExportReadyDialog"
+    ) {
+        override fun handleAsyncMessage(deckPicker: DeckPicker) {
+            deckPicker.showDialogFragment(
+                deckPicker.mExportingDelegate.mDialogsFactory.newExportReadyDialog().withArguments(exportPath)
+            )
+        }
+
+        override fun toMessage(): Message = Message.obtain().apply {
+            what = this@ExportReadyDialogMessage.what
+            data = bundleOf("exportPath" to exportPath)
+        }
+
+        companion object {
+            fun fromMessage(message: Message): ExportReadyDialogMessage {
+                val exportPath = BundleCompat.getParcelable(message.data, "exportPath", String::class.java)!!
+                return ExportReadyDialogMessage(exportPath)
+            }
+        }
+    }
 }

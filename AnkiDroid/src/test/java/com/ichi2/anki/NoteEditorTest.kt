@@ -26,8 +26,6 @@ import com.ichi2.anki.AbstractFlashcardViewer.Companion.editorCard
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
-import com.ichi2.compat.Compat.Companion.ACTION_PROCESS_TEXT
-import com.ichi2.compat.Compat.Companion.EXTRA_PROCESS_TEXT
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note
@@ -238,8 +236,8 @@ class NoteEditorTest : RobolectricTest() {
     fun processTextIntentShouldCopyFirstField() {
         ensureCollectionLoadIsSynchronous()
 
-        val i = Intent(ACTION_PROCESS_TEXT)
-        i.putExtra(EXTRA_PROCESS_TEXT, "hello\nworld")
+        val i = Intent(Intent.ACTION_PROCESS_TEXT)
+        i.putExtra(Intent.EXTRA_PROCESS_TEXT, "hello\nworld")
         val editor = startActivityNormallyOpenCollectionWithIntent(NoteEditor::class.java, i)
         val actual = editor.currentFieldStrings.toList()
 

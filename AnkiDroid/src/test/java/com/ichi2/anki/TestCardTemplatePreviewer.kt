@@ -48,10 +48,10 @@ class TestCardTemplatePreviewer : CardTemplatePreviewer() {
     }
 
     fun previousButtonEnabled(): Boolean {
-        return previewLayout!!.prevCard.isEnabled
+        return previewLayout!!.prevCard.isEnabled && previewLayout!!.prevCard.visibility == View.VISIBLE
     }
 
     fun nextButtonEnabled(): Boolean {
-        return previewLayout!!.nextCard.isEnabled
+        return previewLayout!!.nextCard.isEnabled && previewLayout!!.nextCard.visibility == View.VISIBLE
     }
 }

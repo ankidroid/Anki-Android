@@ -21,6 +21,7 @@ import anki.collection.OpChangesAfterUndo
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.libanki.redo
 import com.ichi2.libanki.undo
 import com.ichi2.libanki.undoableOp
 
@@ -38,6 +39,24 @@ suspend fun FragmentActivity.undoAndShowSnackbar(duration: Int = Snackbar.LENGTH
             TR.actionsNothingToUndo()
         } else {
             TR.undoActionUndone(changes.operation)
+        }
+        showSnackbar(message, duration)
+    }
+}
+
+suspend fun FragmentActivity.redoAndShowSnackbar(duration: Int = Snackbar.LENGTH_SHORT) {
+    withProgress {
+        val changes = undoableOp {
+            if (redoAvailable()) {
+                redo()
+            } else {
+                OpChangesAfterUndo.getDefaultInstance()
+            }
+        }
+        val message = if (changes.operation.isEmpty()) {
+            TR.actionsNothingToRedo()
+        } else {
+            TR.undoActionRedone(changes.operation)
         }
         showSnackbar(message, duration)
     }

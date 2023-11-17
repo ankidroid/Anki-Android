@@ -23,7 +23,7 @@ import com.ichi2.anki.dialogs.ExportReadyDialog
 import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
 import com.ichi2.utils.ExtendedFragmentFactory
 
-internal class ExportDialogsFactory(
+class ExportDialogsFactory(
     private val ExportReadyDialogListener: ExportReadyDialogListener,
     private val exportDialogListener: ExportDialogListener
 ) : ExtendedFragmentFactory() {
