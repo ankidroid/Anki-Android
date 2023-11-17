@@ -20,10 +20,10 @@ import com.ichi2.anki.*
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
-import com.ichi2.libanki.exception.WrongId
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
+import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
 import timber.log.Timber
 import java.util.*
 
@@ -89,8 +89,7 @@ suspend fun renderBrowserQA(
         if (i < 0 || i >= cards.size()) {
             continue
         }
-        var card: CardBrowser.CardCache
-        card = try {
+        val card: CardBrowser.CardCache = try {
             cards[i]
         } catch (e: IndexOutOfBoundsException) {
             // even though we test against card.size() above, there's still a race condition
@@ -106,7 +105,7 @@ suspend fun renderBrowserQA(
         try {
             // Ensure that card still exists.
             card.card
-        } catch (e: WrongId) {
+        } catch (e: BackendNotFoundException) {
             // #5891 - card can be inconsistent between the deck browser screen and the collection.
             // Realistically, we can skip any exception as it's a rendering task which should not kill the
             // process
