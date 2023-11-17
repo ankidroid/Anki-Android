@@ -685,7 +685,7 @@ abstract class AbstractFlashcardViewer :
         /* Reset the schedule and reload the latest card off the top of the stack if required.
            The card could have been rescheduled, the deck could have changed, or a change of
            note type could have lead to the card being deleted */
-        val reloadRequired = data?.getBooleanExtra("reloadRequired", false) == true
+        val reloadRequired = data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true
         if (reloadRequired) {
             performReload()
         }
