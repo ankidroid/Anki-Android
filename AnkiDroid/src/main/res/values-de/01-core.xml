@@ -85,6 +85,7 @@
     <string name="ease_button_easy">Einfach</string>
     <string name="menu_import">Importieren</string>
     <string name="undo">Rückgängig</string>
+    <string name="redo">Redo</string>
     <string name="undo_action_whiteboard_last_stroke" comment="One of the display patterns of \'Undo\' item on the action menu in Reviewer. It is shown as the title of the item when the whiteboard (handwriting) feature is enabled and visible and has any strokes (handwritten lines)">Strich rückgängig machen</string>
     <string name="move_all_to_deck">Alle diesem Stapel hinzufügen</string>
     <string name="unbury">Nicht mehr aufschieben</string>
