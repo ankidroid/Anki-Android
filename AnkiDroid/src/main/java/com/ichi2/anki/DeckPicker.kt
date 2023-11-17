@@ -36,6 +36,8 @@ import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
 import android.widget.*
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
@@ -243,23 +245,48 @@ open class DeckPicker :
         ActivityCompat.recreate(this)
     }
 
-    private val reviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        processReviewResults(it.resultCode)
-    }
-
-    private val showNewVersionInfoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
-    }
-
-    private val loginForSyncLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            mSyncOnResume = true
+    private val reviewLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            processReviewResults(it.resultCode)
         }
-    }
+    )
 
-    private val requestPathUpdateLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        // The collection path was inaccessible on startup so just close the activity and let user restart
-        finish()
+    private val showNewVersionInfoLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
+        }
+    )
+
+    private val loginForSyncLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            if (it.resultCode == RESULT_OK) {
+                mSyncOnResume = true
+            }
+        }
+    )
+
+    private val requestPathUpdateLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            // The collection path was inaccessible on startup so just close the activity and let user restart
+            finish()
+        }
+    )
+
+    private inner class DeckPickerActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) : ActivityResultCallback<ActivityResult> {
+        override fun onActivityResult(result: ActivityResult) {
+            if (result.resultCode == RESULT_MEDIA_EJECTED) {
+                onSdCardNotMounted()
+                return
+            } else if (result.resultCode == RESULT_DB_ERROR) {
+                handleDbError()
+                return
+            }
+            callback(result)
+        }
     }
 
     private var migrateStorageAfterMediaSyncCompleted = false
