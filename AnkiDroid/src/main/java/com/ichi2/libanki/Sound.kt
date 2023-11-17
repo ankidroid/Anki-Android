@@ -262,7 +262,8 @@ open class SoundPlayer {
     /**
      * AudioManager to request/release audio focus
      */
-    private var mAudioManager: AudioManager? = null
+    private var audioManager: AudioManager =
+        AnkiDroidApp.instance.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     private val audioFocusRequest: AudioFocusRequest? by lazy {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -317,8 +318,6 @@ open class SoundPlayer {
                     mMediaPlayer!!.reset()
                 }
                 val mediaPlayer = mMediaPlayer!!
-                mAudioManager =
-                    mAudioManager ?: context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
                 mediaPlayer.setOnErrorListener { mp: MediaPlayer?, which: Int, extra: Int ->
                     val errorHandling = errorHandler.onError(
@@ -356,7 +355,7 @@ open class SoundPlayer {
                 Timber.d("Requesting audio focus")
 
                 CompatHelper.compat.requestAudioFocus(
-                    mAudioManager!!,
+                    audioManager,
                     audioFocusChangeListener,
                     audioFocusRequest
                 )
@@ -395,11 +394,7 @@ open class SoundPlayer {
             it.release()
             mMediaPlayer = null
         }
-        mAudioManager?.let {
-            // mAudioFocusRequest was initialised for API 26 and above in playSoundInternal().
-            CompatHelper.compat.abandonAudioFocus(it, audioFocusChangeListener, audioFocusRequest)
-            mAudioManager = null
-        }
+        CompatHelper.compat.abandonAudioFocus(audioManager, audioFocusChangeListener, audioFocusRequest)
     }
 
     open fun stopSounds() {
