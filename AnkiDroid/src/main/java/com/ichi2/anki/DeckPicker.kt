@@ -1287,11 +1287,8 @@ open class DeckPicker :
                 Timber.i("Displaying new features")
                 val infoIntent = Intent(this, Info::class.java)
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-                if (skip != 0) {
-                    launchActivityForResultWithAnimation(infoIntent, showNewVersionInfoLauncher, START)
-                } else {
-                    startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION)
-                }
+                val transition = if (skip != 0) START else NONE
+                launchActivityForResultWithAnimation(infoIntent, showNewVersionInfoLauncher, transition)
             } else {
                 Timber.i("Dev Build - not showing 'new features'")
                 // Don't show new features dialog for development builds
@@ -2158,8 +2155,6 @@ open class DeckPicker :
         @VisibleForTesting
         const val REQUEST_STORAGE_PERMISSION = 0
         private const val REQUEST_PATH_UPDATE = 1
-        private const val LOG_IN_FOR_SYNC = 6
-        private const val SHOW_INFO_NEW_VERSION = 9
         const val PICK_APKG_FILE = 13
         const val PICK_CSV_FILE = 14
 
