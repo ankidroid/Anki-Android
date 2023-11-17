@@ -181,7 +181,7 @@ open class CardBrowser :
         }
         val data = result.data
         if (data != null &&
-            (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))
+            (data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) || data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false))
         ) {
             Timber.d("Reloading Card Browser due to activity result")
             // if reloadRequired or noteChanged flag was sent from note editor then reload card list
@@ -217,7 +217,7 @@ open class CardBrowser :
         // Previewing can now perform an "edit", so it can pass on a reloadRequired
         val data = result.data
         if (data != null &&
-            (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))
+            (data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) || data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false))
         ) {
             searchCards()
             if (reviewerCardId == mCurrentCardId) {
@@ -766,7 +766,7 @@ open class CardBrowser :
                 Timber.i("Back key pressed")
                 val data = Intent()
                 // Add reload flag to result intent so that schedule reset when returning to note editor
-                data.putExtra("reloadRequired", mReloadRequired)
+                data.putExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, mReloadRequired)
                 closeCardBrowser(RESULT_OK, data)
             }
         }
