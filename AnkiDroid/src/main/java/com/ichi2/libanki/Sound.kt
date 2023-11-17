@@ -264,7 +264,15 @@ open class SoundPlayer {
      */
     private var mAudioManager: AudioManager? = null
 
-    private var mAudioFocusRequest: AudioFocusRequest? = null
+    private val audioFocusRequest: AudioFocusRequest? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                .setOnAudioFocusChangeListener(audioFocusChangeListener)
+                .build()
+        } else {
+            null
+        }
+    }
 
     /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
@@ -347,17 +355,10 @@ open class SoundPlayer {
                 mediaPlayer.prepareAsync()
                 Timber.d("Requesting audio focus")
 
-                // Set mAudioFocusRequest for API 26 and above.
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    mAudioFocusRequest =
-                        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-                            .setOnAudioFocusChangeListener(audioFocusChangeListener)
-                            .build()
-                }
                 CompatHelper.compat.requestAudioFocus(
                     mAudioManager!!,
                     audioFocusChangeListener,
-                    mAudioFocusRequest
+                    audioFocusRequest
                 )
             } catch (e: Exception) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath)
@@ -396,7 +397,7 @@ open class SoundPlayer {
         }
         mAudioManager?.let {
             // mAudioFocusRequest was initialised for API 26 and above in playSoundInternal().
-            CompatHelper.compat.abandonAudioFocus(it, audioFocusChangeListener, mAudioFocusRequest)
+            CompatHelper.compat.abandonAudioFocus(it, audioFocusChangeListener, audioFocusRequest)
             mAudioManager = null
         }
     }
