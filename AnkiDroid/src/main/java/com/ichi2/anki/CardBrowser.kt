@@ -68,7 +68,6 @@ import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
-import com.ichi2.compat.Compat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.SortOrder.NoOrdering
 import com.ichi2.libanki.SortOrder.UseCollectionOrdering
@@ -856,8 +855,8 @@ open class CardBrowser :
 
         // Maybe we were called from ACTION_PROCESS_TEXT.
         // In that case we already fill in the search.
-        if (Compat.ACTION_PROCESS_TEXT == intent.action) {
-            val search = intent.getCharSequenceExtra(Compat.EXTRA_PROCESS_TEXT)
+        if (Intent.ACTION_PROCESS_TEXT == intent.action) {
+            val search = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
             if (!search.isNullOrEmpty()) {
                 Timber.i("CardBrowser :: Called with search intent: %s", search.toString())
                 mSearchView!!.setQuery(search, true)
