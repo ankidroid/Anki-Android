@@ -1724,7 +1724,7 @@ open class CardBrowser :
         }
         withProgress {
             undoableOp {
-                val wantSuspend = getCard(cardIds.first()).queue >= 0
+                val wantSuspend = getCard(cardIds.first()).queue != Consts.QUEUE_TYPE_SUSPENDED
                 if (wantSuspend) {
                     sched.suspendCards(cardIds).changes
                 } else {
