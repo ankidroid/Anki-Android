@@ -142,6 +142,7 @@ open class Reviewer :
 
     // Preferences from the collection
     private var mShowRemainingCardCount = false
+    private var stopTimerOnAnswer = false
     private val mActionButtons = ActionButtons(this)
     private lateinit var mToolbar: Toolbar
 
@@ -1067,6 +1068,9 @@ open class Reviewer :
     @VisibleForTesting
     override fun displayCardAnswer() {
         delayedHide(100)
+        if (stopTimerOnAnswer) {
+            answerTimer.pause()
+        }
         super.displayCardAnswer()
     }
 
@@ -1202,6 +1206,7 @@ open class Reviewer :
     override fun restoreCollectionPreferences(col: Collection) {
         super.restoreCollectionPreferences(col)
         mShowRemainingCardCount = col.config.get("dueCounts") ?: true
+        stopTimerOnAnswer = col.decks.confForDid(col.decks.current().id).getBoolean("stopTimerOnAnswer")
     }
 
     override fun onSingleTap(): Boolean {
