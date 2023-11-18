@@ -20,11 +20,11 @@ import android.app.Notification
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.PowerManager
 import android.text.format.Formatter
 import androidx.core.app.NotificationCompat
 import androidx.core.app.PendingIntentCompat
+import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
@@ -215,12 +215,10 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
                     startForeground(2, makeMigrationProgressNotification(progress))
 
                     if (progress is Progress.Done) {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                            @Suppress("DEPRECATION")
-                            stopForeground(false)
-                        } else {
-                            stopForeground(STOP_FOREGROUND_DETACH)
-                        }
+                        ServiceCompat.stopForeground(
+                            this@MigrationService,
+                            ServiceCompat.STOP_FOREGROUND_DETACH
+                        )
 
                         stopSelf()
 
