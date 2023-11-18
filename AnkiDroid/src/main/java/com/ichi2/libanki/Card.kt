@@ -211,37 +211,6 @@ open class Card : Cloneable {
         return builder.build()
     }
 
-    fun flush(changeModUsn: Boolean = true) {
-        if (changeModUsn) {
-            mod = TimeManager.time.intTime()
-            usn = col.usn()
-        }
-        assert(due < "4294967296".toLong())
-        col.db.execute(
-            "insert or replace into cards values " +
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            this.id,
-            nid,
-            did,
-            ord,
-            mod,
-            usn,
-            this.type,
-            queue,
-            due,
-            ivl,
-            factor,
-            reps,
-            lapses,
-            left,
-            oDue,
-            oDid,
-            flags,
-            ""
-        )
-        col.log(this)
-    }
-
     fun question(reload: Boolean = false, browser: Boolean = false): String {
         return renderOutput(reload, browser).questionAndStyle()
     }

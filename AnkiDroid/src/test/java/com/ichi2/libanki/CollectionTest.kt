@@ -36,7 +36,7 @@ class CollectionTest : JvmTest() {
         val did = addDeck("Testing")
         for (c in n.cards()) {
             c.did = did
-            c.flush()
+            c.col.updateCard(c, skipUndoEntry = true)
         }
         assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
 
