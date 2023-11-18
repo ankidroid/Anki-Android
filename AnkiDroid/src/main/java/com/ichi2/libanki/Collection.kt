@@ -272,6 +272,14 @@ open class Collection(
         return Card(this, id)
     }
 
+    fun updateCards(cards: Iterable<Card>, skipUndoEntry: Boolean = false): OpChanges {
+        return backend.updateCards(cards.map { it.toBackendCard() }, skipUndoEntry)
+    }
+
+    fun updateCard(card: Card, skipUndoEntry: Boolean = false): OpChanges {
+        return updateCards(listOf(card), skipUndoEntry)
+    }
+
     fun getNote(id: Long): Note {
         return Note(this, id)
     }
