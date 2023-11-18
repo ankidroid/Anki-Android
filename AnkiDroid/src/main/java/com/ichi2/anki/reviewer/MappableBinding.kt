@@ -206,7 +206,7 @@ class MappableBinding(val binding: Binding, private val screen: Screen) {
 
         @CheckResult
         fun allMappings(prefs: SharedPreferences): MutableList<Pair<ViewerCommand, MutableList<MappableBinding>>> {
-            return ViewerCommand.values().map {
+            return ViewerCommand.entries.map {
                 Pair(it, fromPreference(prefs, it))
             }.toMutableList()
         }

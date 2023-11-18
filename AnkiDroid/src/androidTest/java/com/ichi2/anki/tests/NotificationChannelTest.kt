@@ -72,7 +72,7 @@ class NotificationChannelTest : InstrumentedTest() {
         for (i in channels.indices) {
             Timber.d("Found channel with id %s", channels[i].id)
         }
-        var expectedChannels = Channel.values().size
+        var expectedChannels = Channel.entries.size
         // If we have channels but have *targeted* pre-26, there is a "miscellaneous" channel auto-defined
         if (mTargetAPI < 26) {
             expectedChannels += 1
@@ -89,7 +89,7 @@ class NotificationChannelTest : InstrumentedTest() {
             expectedChannels,
             greaterThanOrEqualTo(channels.size)
         )
-        for (channel in Channel.values()) {
+        for (channel in Channel.entries) {
             assertNotNull(
                 "There should be a reminder channel",
                 mManager!!.getNotificationChannel(channel.id)

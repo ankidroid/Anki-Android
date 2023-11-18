@@ -119,7 +119,7 @@ class TagsDialog : AnalyticsDialogFragment {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         resizeWhenSoftInputShown(requireActivity().window)
-        mType = DialogType.values()[requireArguments().getInt(DIALOG_TYPE_KEY)]
+        mType = DialogType.entries[requireArguments().getInt(DIALOG_TYPE_KEY)]
         mTags = TagsList(
             requireArguments().getStringArrayList(ALL_TAGS_KEY)!!,
             requireArguments().getStringArrayList(CHECKED_TAGS_KEY)!!,

@@ -30,7 +30,7 @@ class ControlsSettingsFragment : SettingsFragment() {
     @NeedsTest("Keys and titles in the XML layout are the same of the ViewerCommands")
     override fun initSubscreen() {
         val commands = HashMap<String, ViewerCommand>()
-        ViewerCommand.values().forEach { commands[it.preferenceKey] = it }
+        ViewerCommand.entries.forEach { commands[it.preferenceKey] = it }
         // set defaultValue in the prefs creation.
         // if a preference is empty, it has a value like "1/"
         allPreferences()

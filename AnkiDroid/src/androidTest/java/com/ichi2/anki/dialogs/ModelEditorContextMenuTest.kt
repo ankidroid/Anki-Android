@@ -41,7 +41,7 @@ class ModelEditorContextMenuTest {
             themeResId = R.style.Theme_Light
         ) { MockModelEditorContextMenu(isAtLeastAtN = true) }
         onView(withText(testDialogTitle)).check(matches(isDisplayed()))
-        ModelEditorContextMenuAction.values().forEach {
+        ModelEditorContextMenuAction.entries.forEach {
             onView(withText(it.actionTextId)).check(matches(isDisplayed()))
         }
     }
@@ -59,7 +59,7 @@ class ModelEditorContextMenuTest {
             doesNotExist()
         )
         // make sure we aren't losing other items besides ModelEditorContextMenuAction.AddLanguageHint
-        ModelEditorContextMenuAction.values()
+        ModelEditorContextMenuAction.entries
             .filterNot { it == ModelEditorContextMenuAction.AddLanguageHint }.forEach {
                 onView(withText(it.actionTextId)).check(matches(isDisplayed()))
             }

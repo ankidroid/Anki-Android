@@ -179,7 +179,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
 
         constructor(superState: Parcelable?) : super(superState) {}
         private constructor(source: Parcel) : super(source) {
-            state = State.values()[source.readInt()]
+            state = State.entries[source.readInt()]
             cycleCheckedToIndeterminate = source.readInt() != 0
             cycleIndeterminateToChecked = source.readInt() != 0
         }

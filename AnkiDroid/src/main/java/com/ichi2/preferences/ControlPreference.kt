@@ -200,7 +200,7 @@ class ControlPreference : ListPreference {
      * Remove binding from all control preferences other than this one
      */
     private fun clearBinding(binding: MappableBinding) {
-        for (command in ViewerCommand.values()) {
+        for (command in ViewerCommand.entries) {
             val commandPreference = preferenceManager.findPreference<ControlPreference>(command.preferenceKey)
                 ?: continue
             val bindings = MappableBinding.fromPreferenceString(commandPreference.value)

@@ -37,7 +37,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
     }
 
     fun setup(preferences: SharedPreferences) {
-        for (command in ViewerCommand.values()) {
+        for (command in ViewerCommand.entries) {
             add(command, preferences)
         }
         mHasSetup = true

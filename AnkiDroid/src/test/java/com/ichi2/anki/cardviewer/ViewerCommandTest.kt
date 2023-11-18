@@ -24,7 +24,7 @@ class ViewerCommandTest {
 
     @Test
     fun preference_keys_are_not_changed() {
-        val names = Joiner.on(", ").join(ViewerCommand.values().map { x -> x.preferenceKey })
+        val names = Joiner.on(", ").join(ViewerCommand.entries.map { x -> x.preferenceKey })
 
         // NONE OF THESE SHOULD BE CHANGED OR A USER WILL LOSE THE ASSOCIATED PREFERENCES
         // Adds are acceptable
