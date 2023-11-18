@@ -164,7 +164,7 @@ class ManageNotetypes : AnkiActivity() {
     private suspend fun addNewNotetype() {
         val optionsToDisplay = withProgress {
             withCol {
-                val standardNotetypesModels = StockNotetype.Kind.values()
+                val standardNotetypesModels = StockNotetype.Kind.entries
                     .filter { it != StockNotetype.Kind.UNRECOGNIZED }
                     .map {
                         val stockNotetype = from_json_bytes(getStockNotetypeLegacy(it))

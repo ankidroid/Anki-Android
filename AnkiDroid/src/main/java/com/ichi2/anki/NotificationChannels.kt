@@ -44,7 +44,7 @@ object NotificationChannels {
     @TargetApi(26)
     fun setup(context: Context) {
         val res = context.resources
-        for (channel in Channel.values()) {
+        for (channel in Channel.entries) {
             val id = channel.id
             val name = channel.getName(res)
             val importance = channel.importance()

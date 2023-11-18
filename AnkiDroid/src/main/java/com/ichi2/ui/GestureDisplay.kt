@@ -72,7 +72,7 @@ constructor(context: Context, attributeSet: AttributeSet? = null, defStyleAttr: 
     }
 
     /** Lists all selectable gestures from this view (excludes null) */
-    fun availableValues(): List<Gesture> = Gesture.values().filter {
+    fun availableValues(): List<Gesture> = entries.filter {
         (mTapGestureMode == TapGestureMode.NINE_POINT || !NINE_POINT_TAP_GESTURES.contains(it))
     }
 

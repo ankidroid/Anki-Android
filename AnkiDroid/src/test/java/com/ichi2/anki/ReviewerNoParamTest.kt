@@ -284,7 +284,7 @@ class ReviewerNoParamTest : RobolectricTest() {
 
     private fun disableGestures(vararg gestures: Gesture) {
         val prefs = targetContext.sharedPrefs()
-        for (command in ViewerCommand.values()) {
+        for (command in ViewerCommand.entries) {
             for (mappableBinding in MappableBinding.fromPreference(prefs, command)) {
                 if (mappableBinding.binding.gesture in gestures) {
                     command.removeBinding(prefs, mappableBinding)

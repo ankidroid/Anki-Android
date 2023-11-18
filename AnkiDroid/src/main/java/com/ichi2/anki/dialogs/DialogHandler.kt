@@ -136,7 +136,7 @@ abstract class DialogHandlerMessage protected constructor(val which: WhichDialog
         MSG_EXPORT_READY(10)
         ;
         companion object {
-            fun fromInt(value: Int) = WhichDialogHandler.values().first { it.what == value }
+            fun fromInt(value: Int) = entries.first { it.what == value }
         }
     }
 }
