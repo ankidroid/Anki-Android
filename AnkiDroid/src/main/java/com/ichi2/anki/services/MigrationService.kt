@@ -216,7 +216,9 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
 
                     if (progress is Progress.Done) {
                         ServiceCompat.stopForeground(
-                            this@MigrationService, ServiceCompat.STOP_FOREGROUND_DETACH)
+                            this@MigrationService,
+                            ServiceCompat.STOP_FOREGROUND_DETACH
+                        )
 
                         stopSelf()
 
