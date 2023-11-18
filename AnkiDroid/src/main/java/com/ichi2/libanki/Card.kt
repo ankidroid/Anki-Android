@@ -189,6 +189,28 @@ open class Card : Cloneable {
         customData = card.customData
     }
 
+    fun toBackendCard(): anki.cards.Card {
+        val builder = anki.cards.Card.newBuilder()
+            .setId(id)
+            .setNoteId(nid)
+            .setDeckId(did)
+            .setTemplateIdx(ord)
+            .setCtype(type)
+            .setQueue(queue)
+            .setDue(due.toInt())
+            .setInterval(ivl)
+            .setEaseFactor(factor)
+            .setReps(reps)
+            .setLapses(lapses)
+            .setRemainingSteps(left)
+            .setOriginalDue(oDue.toInt())
+            .setOriginalDeckId(oDid)
+            .setFlags(flags)
+            .setCustomData(customData)
+        originalPosition?.let { builder.setOriginalPosition(it) }
+        return builder.build()
+    }
+
     fun flush(changeModUsn: Boolean = true) {
         if (changeModUsn) {
             mod = TimeManager.time.intTime()
