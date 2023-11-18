@@ -49,14 +49,22 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun verifyStartupNoCollection() {
         enableNullCollection()
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.getColUnsafe } } }
+        ActivityScenario.launch(Reviewer::class.java)
+            .use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.getColUnsafe } } }
     }
 
     @Ignore("flaky")
     @Test
     @RunInBackground
     fun verifyNormalStartup() {
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNotNull("Collection should be non-null", reviewer.getColUnsafe) } }
+        ActivityScenario.launch(Reviewer::class.java).use { scenario ->
+            scenario.onActivity { reviewer: Reviewer ->
+                assertNotNull(
+                    "Collection should be non-null",
+                    reviewer.getColUnsafe
+                )
+            }
+        }
     }
 
     @Ignore("flaky")
@@ -95,7 +103,11 @@ class ReviewerTest : RobolectricTest() {
 
         val visibleButtons: List<String> = reviewer.getVisibleButtonNames()
 
-        assertThat("No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons", visibleButtons, empty())
+        assertThat(
+            "No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons",
+            visibleButtons,
+            empty()
+        )
     }
 
     @Test
@@ -108,7 +120,11 @@ class ReviewerTest : RobolectricTest() {
 
         val visibleButtons = reviewer.getVisibleButtonNamesExcept(R.id.action_toggle_whiteboard)
 
-        assertThat("No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons", visibleButtons, empty())
+        assertThat(
+            "No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons",
+            visibleButtons,
+            empty()
+        )
     }
 
     @Test
@@ -178,7 +194,10 @@ class ReviewerTest : RobolectricTest() {
         time.addM(2)
         reviewer.answerCard(Consts.BUTTON_THREE)
         advanceRobolectricLooperWithSleep()
-        equalFirstField(cards[0], reviewer.currentCard!!) // This failed in #6898 because this card was not in the queue
+        equalFirstField(
+            cards[0],
+            reviewer.currentCard!!
+        ) // This failed in #6898 because this card was not in the queue
     }
 
     @Test
@@ -296,7 +315,10 @@ class ReviewerTest : RobolectricTest() {
             revCount
         )
 
-        assertThat(countList.toString(), equalTo(expected.toString())) // We use toString as hamcrest does not print the whole array and stops at [0].
+        assertThat(
+            countList.toString(),
+            equalTo(expected.toString())
+        ) // We use toString as hamcrest does not print the whole array and stops at [0].
     }
 
     private fun answerCardOrdinalAsGood(r: Reviewer, i: Int) {
@@ -359,7 +381,7 @@ class ReviewerTest : RobolectricTest() {
         reviewCard.queue = Consts.QUEUE_TYPE_REV
         reviewCard.type = Consts.CARD_TYPE_REV
         reviewCard.due = 0
-        reviewCard.flush()
+        reviewCard.col.updateCard(reviewCard, skipUndoEntry = true)
     }
 
     private class ReviewerForMenuItems : Reviewer() {

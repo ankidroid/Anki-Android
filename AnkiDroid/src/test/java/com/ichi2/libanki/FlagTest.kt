@@ -37,7 +37,7 @@ class FlagTest : JvmTest() {
         // make sure higher bits are preserved
         val origBits = 0b101 shl 3
         c.setFlag(origBits)
-        c.flush()
+        c.col.updateCard(c, skipUndoEntry = true)
         // no flags to start with
         assertEquals(0, c.userFlag())
         assertEquals(1, col.findCards("flag:0").size)

@@ -155,10 +155,26 @@ class CardBrowserTest : RobolectricTest() {
         browser.rerenderAllCards()
         // ASSERT
         assertThat(browser.cardCount(), equalTo(6L))
-        assertThat("A checked card should have been removed", browser.checkedCardCount(), equalTo(3))
-        assertThat("Checked card before should not have changed", browser.hasCheckedCardAtPosition(1), equalTo(true))
-        assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(3), equalTo(true))
-        assertThat("Checked card after should have changed by 2 places", browser.hasCheckedCardAtPosition(4), equalTo(true))
+        assertThat(
+            "A checked card should have been removed",
+            browser.checkedCardCount(),
+            equalTo(3)
+        )
+        assertThat(
+            "Checked card before should not have changed",
+            browser.hasCheckedCardAtPosition(1),
+            equalTo(true)
+        )
+        assertThat(
+            "Checked card after should have changed by 2 places",
+            browser.hasCheckedCardAtPosition(3),
+            equalTo(true)
+        )
+        assertThat(
+            "Checked card after should have changed by 2 places",
+            browser.hasCheckedCardAtPosition(4),
+            equalTo(true)
+        )
     }
 
     @Test
@@ -218,7 +234,11 @@ class CardBrowserTest : RobolectricTest() {
         val cardIds = b.checkedCardIds
 
         for (cardId in cardIds) {
-            assertThat("Deck should have been changed yet", col.getCard(cardId).did, not(deckIdToChangeTo))
+            assertThat(
+                "Deck should have been changed yet",
+                col.getCard(cardId).did,
+                not(deckIdToChangeTo)
+            )
         }
 
         // act
@@ -269,19 +289,30 @@ class CardBrowserTest : RobolectricTest() {
         val cardPosition = random.nextInt(numberOfNotes)
         assumeThat("card position to select is 60", cardPosition, equalTo(60))
         cardBrowser.checkCardsAtPositions(cardPosition)
-        assumeTrue("card at position 60 is selected", cardBrowser.hasCheckedCardAtPosition(cardPosition))
+        assumeTrue(
+            "card at position 60 is selected",
+            cardBrowser.hasCheckedCardAtPosition(cardPosition)
+        )
 
         // flag the selected card with flag = 1
         val flag = 1
         cardBrowser.updateSelectedCardsFlag(flag)
         // check if card flag turned to flag = 1
-        assertThat("Card should be flagged", getCheckedCard(cardBrowser).card.userFlag(), equalTo(flag))
+        assertThat(
+            "Card should be flagged",
+            getCheckedCard(cardBrowser).card.userFlag(),
+            equalTo(flag)
+        )
 
         // unflag the selected card with flag = 0
         val unflagFlag = 0
         cardBrowser.updateSelectedCardsFlag(unflagFlag)
         // check if card flag actually changed from flag = 1
-        assertThat("Card flag should be removed", getCheckedCard(cardBrowser).card.userFlag(), not(flag))
+        assertThat(
+            "Card flag should be removed",
+            getCheckedCard(cardBrowser).card.userFlag(),
+            not(flag)
+        )
 
         // deselect and select all cards
         cardBrowser.onSelectNone()
@@ -321,7 +352,8 @@ class CardBrowserTest : RobolectricTest() {
         withNoWritePermission {
             val inputIntent = Intent("android.intent.action.PROCESS_TEXT")
 
-            val browserController = Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
+            val browserController =
+                Robolectric.buildActivity(CardBrowser::class.java, inputIntent).create()
             val cardBrowser = browserController.get()
             saveControllerForCleanup(browserController)
 
@@ -329,9 +361,17 @@ class CardBrowserTest : RobolectricTest() {
             val outputIntent = shadowActivity.nextStartedActivity
             val component = assertNotNull(outputIntent.component)
 
-            assertThat("Deck Picker currently handles permissions, so should be called", component.className, equalTo("com.ichi2.anki.DeckPicker"))
+            assertThat(
+                "Deck Picker currently handles permissions, so should be called",
+                component.className,
+                equalTo("com.ichi2.anki.DeckPicker")
+            )
             assertThat("Activity should be finishing", cardBrowser.isFinishing)
-            assertThat("Activity should be cancelled as it did nothing", shadowActivity.resultCode, equalTo(Activity.RESULT_CANCELED))
+            assertThat(
+                "Activity should be cancelled as it did nothing",
+                shadowActivity.resultCode,
+                equalTo(Activity.RESULT_CANCELED)
+            )
         }
     }
 
@@ -379,7 +419,11 @@ class CardBrowserTest : RobolectricTest() {
         b.checkCardsAtPositions(0)
         val previewIntent = b.previewIntent
         assertThat("before: index", previewIntent.getIntExtra("index", -100), equalTo(0))
-        assertThat("before: cards", previewIntent.getLongArrayExtra("cardList"), equalTo(longArrayOf(cid1, cid2)))
+        assertThat(
+            "before: cards",
+            previewIntent.getLongArrayExtra("cardList"),
+            equalTo(longArrayOf(cid1, cid2))
+        )
 
         // reverse
         b.changeCardOrder(1)
@@ -390,7 +434,11 @@ class CardBrowserTest : RobolectricTest() {
         b.replaceSelectionWith(intArrayOf(0))
         val intentAfterReverse = b.previewIntent
         assertThat("after: index", intentAfterReverse.getIntExtra("index", -100), equalTo(0))
-        assertThat("after: cards", intentAfterReverse.getLongArrayExtra("cardList"), equalTo(longArrayOf(cid2, cid1)))
+        assertThat(
+            "after: cards",
+            intentAfterReverse.getLongArrayExtra("cardList"),
+            equalTo(longArrayOf(cid2, cid1))
+        )
     }
 
     /** 7420  */
@@ -418,7 +466,11 @@ class CardBrowserTest : RobolectricTest() {
 
         val b = browserWithNoNewCards
 
-        assertThat("The target deck should not yet be selected", b.lastDeckId, not(equalTo(targetDid)))
+        assertThat(
+            "The target deck should not yet be selected",
+            b.lastDeckId,
+            not(equalTo(targetDid))
+        )
 
         b.selectDeckAndSave(targetDid)
 
@@ -453,13 +505,21 @@ class CardBrowserTest : RobolectricTest() {
 
         val card = getCheckedCard(b)
 
-        assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("1"))
+        assertThat(
+            "Initial position of checked card",
+            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            equalTo("1")
+        )
 
         b.repositionCardsNoValidation(listOf(card.id), 2)
 
         card.reload()
 
-        assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("2"))
+        assertThat(
+            "Position of checked card after reposition",
+            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            equalTo("2")
+        )
     }
 
     @Test
@@ -469,7 +529,7 @@ class CardBrowserTest : RobolectricTest() {
             due = 5
             queue = Consts.QUEUE_TYPE_REV
             type = Consts.CARD_TYPE_REV
-            flush()
+            col.updateCard(this, skipUndoEntry = true)
         }
 
         val b = browserWithNoNewCards
@@ -478,13 +538,21 @@ class CardBrowserTest : RobolectricTest() {
 
         val card = getCheckedCard(b)
 
-        assertThat("Initial due of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("8/12/20"))
+        assertThat(
+            "Initial due of checked card",
+            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            equalTo("8/12/20")
+        )
 
         b.resetProgressNoConfirm(listOf(card.id))
 
         card.reload()
 
-        assertThat("Position of checked card after reset", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("2"))
+        assertThat(
+            "Position of checked card after reset",
+            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            equalTo("2")
+        )
     }
 
     @Test
@@ -497,7 +565,11 @@ class CardBrowserTest : RobolectricTest() {
 
         val card = getCheckedCard(b)
 
-        assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("1"))
+        assertThat(
+            "Initial position of checked card",
+            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            equalTo("1")
+        )
 
         b.rescheduleWithoutValidation(listOf(card.id), 5)
 
@@ -515,15 +587,27 @@ class CardBrowserTest : RobolectricTest() {
 
         val card = getCheckedCard(b)
 
-        assertThat("Initial position of checked card", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("1"))
+        assertThat(
+            "Initial position of checked card",
+            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            equalTo("1")
+        )
 
         b.repositionCardsNoValidation(listOf(card.id), 2)
 
-        assertThat("Position of checked card after reposition", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("2"))
+        assertThat(
+            "Position of checked card after reposition",
+            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            equalTo("2")
+        )
 
         b.onUndo()
 
-        assertThat("Position of checked card after undo should be reset", card.getColumnHeaderText(CardBrowser.Column.DUE), equalTo("1"))
+        assertThat(
+            "Position of checked card after undo should be reset",
+            card.getColumnHeaderText(CardBrowser.Column.DUE),
+            equalTo("1")
+        )
     }
 
     @Test
@@ -564,13 +648,21 @@ class CardBrowserTest : RobolectricTest() {
         col.decks.select(deck)
         val c2 = addNoteUsingBasicModel("New", "world").firstCard()
         c2.did = deck
-        c2.flush()
+        c2.col.updateCard(c2, skipUndoEntry = true)
 
         val cardBrowser = browserWithNoNewCards
         cardBrowser.searchCards("world or hello")
 
-        assertThat("Cardbrowser has Deck 1 as selected deck", cardBrowser.selectedDeckNameForUi, equalTo("Deck 1"))
-        assertThat("Results should only be from the selected deck", cardBrowser.cardCount, equalTo(1))
+        assertThat(
+            "Cardbrowser has Deck 1 as selected deck",
+            cardBrowser.selectedDeckNameForUi,
+            equalTo("Deck 1")
+        )
+        assertThat(
+            "Results should only be from the selected deck",
+            cardBrowser.cardCount,
+            equalTo(1)
+        )
     }
 
     /** PR #8553  */
@@ -583,7 +675,11 @@ class CardBrowserTest : RobolectricTest() {
         saveControllerForCleanup(cardBrowserController)
 
         // Make sure card has default value in sortType field
-        assertThat("Initially Card Browser has order = noteFld", col.config.get<String>("sortType"), equalTo("noteFld"))
+        assertThat(
+            "Initially Card Browser has order = noteFld",
+            col.config.get<String>("sortType"),
+            equalTo("noteFld")
+        )
 
         // Change the display order of the card browser
         cardBrowserController.get().changeCardOrder(7) // order no. 7 corresponds to "cardEase"
@@ -592,13 +688,19 @@ class CardBrowserTest : RobolectricTest() {
         val outBundle = Bundle()
         cardBrowserController.saveInstanceState(outBundle)
         cardBrowserController.pause().stop().destroy()
-        cardBrowserController = Robolectric.buildActivity(CardBrowser::class.java).create(outBundle).start().resume().visible()
+        cardBrowserController =
+            Robolectric.buildActivity(CardBrowser::class.java).create(outBundle).start().resume()
+                .visible()
         saveControllerForCleanup(cardBrowserController)
 
         // Find the current (after database has been changed) Mod time
 
         val updatedMod = col.mod
-        assertThat("Card Browser has the new sortType field", col.config.get<String>("sortType"), equalTo("cardEase"))
+        assertThat(
+            "Card Browser has the new sortType field",
+            col.config.get<String>("sortType"),
+            equalTo("cardEase")
+        )
         assertNotEquals(0, updatedMod)
     }
 
@@ -618,11 +720,15 @@ class CardBrowserTest : RobolectricTest() {
         col.decks.select(deck)
         val c2 = addNoteUsingBasicModel("Front", "Back").firstCard()
         c2.did = deck
-        c2.flush()
+        c2.col.updateCard(c2, skipUndoEntry = true)
 
         val cardBrowser = browserWithNoNewCards
         cardBrowser.searchCards("Hello")
-        assertThat("Card browser should have Test Deck as the selected deck", cardBrowser.selectedDeckNameForUi, equalTo("Test Deck"))
+        assertThat(
+            "Card browser should have Test Deck as the selected deck",
+            cardBrowser.selectedDeckNameForUi,
+            equalTo("Test Deck")
+        )
         assertThat("Result should be empty", cardBrowser.cardCount, equalTo(0))
 
         cardBrowser.searchAllDecks()
@@ -647,7 +753,10 @@ class CardBrowserTest : RobolectricTest() {
         val shadowActivity = shadowOf(browser)
         val item = shadowActivity.optionsMenu.findItem(R.id.action_undo)
         val expected = browser.getString(resId)
-        assertThat(item.title.toString(), not(containsString(expected.lowercase(Locale.getDefault()))))
+        assertThat(
+            item.title.toString(),
+            not(containsString(expected.lowercase(Locale.getDefault())))
+        )
     }
 
     private fun assertUndoContains(browser: CardBrowser, @StringRes resId: Int) {
@@ -666,7 +775,7 @@ class CardBrowserTest : RobolectricTest() {
     private fun flagCardForNote(n: Note, flag: Int) {
         val c = n.firstCard()
         c.setUserFlag(flag)
-        c.flush()
+        c.col.updateCard(c, skipUndoEntry = true)
     }
 
     private fun selectDefaultDeck() {
