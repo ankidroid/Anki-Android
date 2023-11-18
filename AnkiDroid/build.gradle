@@ -290,14 +290,15 @@ apply from: "../lint.gradle"
 dependencies {
     configurations.all {
         resolutionStrategy {
-            force 'org.jetbrains:annotations:24.0.1'
+            // Timber has this as a dependency but they are not up to date. We want to force our version.
+            force 'org.jetbrains:annotations:24.1.0'
         }
     }
     api project(":api")
     lintChecks project(":lint-rules")
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
-    compileOnly 'org.jetbrains:annotations:24.0.1'
+    compileOnly 'org.jetbrains:annotations:24.1.0'
     compileOnly "com.google.auto.service:auto-service-annotations:1.1.1"
     annotationProcessor "com.google.auto.service:auto-service:1.1.1"
 
