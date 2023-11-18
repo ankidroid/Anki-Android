@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.cardviewer
 
-import com.google.common.base.Joiner
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -24,7 +23,7 @@ class ViewerCommandTest {
 
     @Test
     fun preference_keys_are_not_changed() {
-        val names = Joiner.on(", ").join(ViewerCommand.entries.map { x -> x.preferenceKey })
+        val names = ViewerCommand.entries.joinToString(", ") { x -> x.preferenceKey }
 
         // NONE OF THESE SHOULD BE CHANGED OR A USER WILL LOSE THE ASSOCIATED PREFERENCES
         // Adds are acceptable
