@@ -717,9 +717,10 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
     /**
      * returns the list of cloze ordinals in a note
      *
-     * `"{{c1::A}} {{c3::B}}" => [0, 2]`
+     * `"{{c1::A}} {{c3::B}}" => [1, 3]`
      */
     fun clozeNumbersInNote(n: Note): List<Int> {
+        // the call appears to be non-deterministic. Sort ascending
         return backend.clozeNumbersInNote(n.toBackendNote())
     }
 }
