@@ -721,5 +721,6 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
     fun clozeNumbersInNote(n: Note): List<Int> {
         // the call appears to be non-deterministic. Sort ascending
         return backend.clozeNumbersInNote(n.toBackendNote())
+            .sorted()
     }
 }

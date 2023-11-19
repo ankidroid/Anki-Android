@@ -29,7 +29,6 @@ import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
@@ -340,7 +339,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
     }
 
     @Test
-    @Ignore("Issue 14694")
     fun `The ordinal provided is used (standard) - Issue 14694`() {
         val fields: MutableList<NoteService.NoteField?> = arrayListOf(
             Field(0, "Hello"),
@@ -363,12 +361,11 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
-        assertThat("Front is not displayed", testCardTemplatePreviewer.cardContent, not(containsString("Hello")))
-        assertThat("Back is displayed", testCardTemplatePreviewer.cardContent, containsString("World"))
+        assertThat("Front is not displayed", testCardTemplatePreviewer.cardContent, not(containsString(">Hello<")))
+        assertThat("Back is displayed", testCardTemplatePreviewer.cardContent, containsString(">World<"))
     }
 
     @Test
-    @Ignore("Issue 14694")
     fun `The ordinal provided is used (cloze)- Issue 14694`() {
         val fields: MutableList<NoteService.NoteField?> = arrayListOf(
             Field(0, "{{c1::Hello}} {{c3::World}}"),
@@ -392,8 +389,9 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
 
-        assertThat("Front is not displayed", testCardTemplatePreviewer.cardContent, containsString("Hello"))
-        assertThat("Back is displayed", testCardTemplatePreviewer.cardContent, not(containsString("World")))
+        // data-cloze contains the string, even if the cloze is hidden, so search for >term<
+        assertThat("ord 1 is displayed", testCardTemplatePreviewer.cardContent, containsString(">Hello<"))
+        assertThat("ord 1 is hidden", testCardTemplatePreviewer.cardContent, not(containsString(">World<")))
     }
 
     private fun getFieldsAsBundleForPreview(fields: List<NoteService.NoteField?>?): Bundle {
