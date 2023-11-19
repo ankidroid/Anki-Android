@@ -44,7 +44,7 @@ import java.io.File
 import kotlin.system.exitProcess
 
 sealed interface Size {
-    object Calculating : Size
+    data object Calculating : Size
     class Bytes(val totalSize: Long) : Size
     class FilesAndBytes(val files: Collection<File>, val totalSize: Long) : Size
     class Error(
