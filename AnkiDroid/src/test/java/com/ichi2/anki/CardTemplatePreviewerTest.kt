@@ -29,6 +29,7 @@ import com.ichi2.utils.stringIterable
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Assert
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.runner.RunWith
@@ -207,7 +208,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -231,7 +231,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -254,7 +253,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -303,7 +301,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
 
         val noteEditorBundle = Bundle()
         noteEditorBundle.putBundle("editFields", getFieldsAsBundleForPreview(fields))
-        noteEditorBundle.putInt("ordinal", 0)
         noteEditorBundle.putLong("did", 1)
         intent.putExtra("noteEditorBundle", noteEditorBundle)
 
@@ -328,7 +325,6 @@ class CardTemplatePreviewerTest : RobolectricTest() {
                 "noteEditorBundle",
                 bundleOf(
                     "editFields" to getFieldsAsBundleForPreview(fields),
-                    "ordinal" to 0,
                     "did" to 1L
                 )
             )
@@ -341,6 +337,63 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         assertThrows<UninitializedPropertyAccessException> {
             testCardTemplatePreviewer.readCardTts(Sound.SingleSoundSide.QUESTION)
         }
+    }
+
+    @Test
+    @Ignore("Issue 14694")
+    fun `The ordinal provided is used (standard) - Issue 14694`() {
+        val fields: MutableList<NoteService.NoteField?> = arrayListOf(
+            Field(0, "Hello"),
+            Field(1, "World")
+        )
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            val basicModel = getCurrentDatabaseModelCopy("Basic (and reversed card)")
+            val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, basicModel)
+            putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+            putExtra(
+                "noteEditorBundle",
+                bundleOf(
+                    "editFields" to getFieldsAsBundleForPreview(fields),
+                    "did" to 1L
+                )
+            )
+            putExtra("ordinal", 1)
+        }
+
+        val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
+
+        assertThat("Front is not displayed", testCardTemplatePreviewer.cardContent, not(containsString("Hello")))
+        assertThat("Back is displayed", testCardTemplatePreviewer.cardContent, containsString("World"))
+    }
+
+    @Test
+    @Ignore("Issue 14694")
+    fun `The ordinal provided is used (cloze)- Issue 14694`() {
+        val fields: MutableList<NoteService.NoteField?> = arrayListOf(
+            Field(0, "{{c1::Hello}} {{c3::World}}"),
+            Field(1, "Extra")
+        )
+        val ordinalOfSecondCard = 2
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            val clozeModel = getCurrentDatabaseModelCopy("Cloze")
+            val tempModelPath = CardTemplateNotetype.saveTempModel(targetContext, clozeModel)
+            putExtra(CardTemplateNotetype.INTENT_MODEL_FILENAME, tempModelPath)
+            putExtra(
+                "noteEditorBundle",
+                bundleOf(
+                    "editFields" to getFieldsAsBundleForPreview(fields),
+                    "did" to 1L
+                )
+            )
+            putExtra("ordinal", ordinalOfSecondCard)
+        }
+
+        val testCardTemplatePreviewer = super.startActivityNormallyOpenCollectionWithIntent(TestCardTemplatePreviewer::class.java, intent)
+
+        assertThat("Front is not displayed", testCardTemplatePreviewer.cardContent, containsString("Hello"))
+        assertThat("Back is displayed", testCardTemplatePreviewer.cardContent, not(containsString("World")))
     }
 
     private fun getFieldsAsBundleForPreview(fields: List<NoteService.NoteField?>?): Bundle {
