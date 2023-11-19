@@ -608,10 +608,10 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
     }
 
     private fun _openLog() {
-        Timber.i("Opening Collection Log")
         if (!debugLog) {
             return
         }
+        Timber.i("Opening Collection Log")
         try {
             val lpath = File(path.replaceFirst("\\.anki2$".toRegex(), ".log"))
             if (lpath.exists() && lpath.length() > 10 * 1024 * 1024) {
@@ -630,6 +630,7 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
     }
 
     private fun _closeLog() {
+        if (!debugLog) return
         Timber.i("Closing Collection Log")
         mLogHnd?.close()
         mLogHnd = null
