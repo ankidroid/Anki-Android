@@ -120,17 +120,17 @@ class MigrationService : ServiceWithALifecycleScope(), ServiceWithASimpleBinder<
         sealed interface Running : Progress
         sealed interface Done : Progress
 
-        object CopyingEssentialFiles : Running
+        data object CopyingEssentialFiles : Running
 
         sealed interface MovingMediaFiles : Running {
-            object CalculatingNumberOfBytesToMove : MovingMediaFiles
+            data object CalculatingNumberOfBytesToMove : MovingMediaFiles
 
             data class MovingFiles(val movedBytes: Long, val totalBytes: Long) : MovingMediaFiles {
                 val ratio get() = if (totalBytes == 0L) 1f else movedBytes.toFloat() / totalBytes
             }
         }
 
-        object Succeeded : Done
+        data object Succeeded : Done
 
         data class Failed(val exception: Exception, val changesRolledBack: Boolean) : Done
     }
@@ -412,14 +412,14 @@ fun <O> O.migrationServiceWhileStartedOrNull(): ReadOnlyProperty<Any?, Migration
 sealed interface MediaMigrationState {
     sealed interface NotOngoing : MediaMigrationState {
         sealed interface NotNeeded : NotOngoing {
-            object CollectionIsInAppPrivateFolder : NotNeeded
-            object CollectionIsInPublicFolderButWillRemainAccessible : NotNeeded
+            data object CollectionIsInAppPrivateFolder : NotNeeded
+            data object CollectionIsInPublicFolderButWillRemainAccessible : NotNeeded
         }
-        object Needed : NotOngoing
+        data object Needed : NotOngoing
     }
 
     sealed interface Ongoing : MediaMigrationState {
-        object NotPaused : Ongoing
+        data object NotPaused : Ongoing
         class PausedDueToError(val errorText: String) : Ongoing
     }
 }
