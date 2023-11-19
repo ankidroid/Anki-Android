@@ -50,6 +50,9 @@ class ScopedStorageMigrationIntegrationTest : RobolectricTest() {
 
     override fun useInMemoryDatabase() = false
 
+    // we want collection.log to be tested
+    override val disableCollectionLogFile: Boolean = false
+
     @After
     override fun tearDown() {
         try {

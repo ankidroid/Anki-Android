@@ -82,6 +82,8 @@ open class RobolectricTest : AndroidTest {
         return true
     }
 
+    open val disableCollectionLogFile = true
+
     @get:Rule
     val mTaskScheduler = TaskSchedulerRule()
 
@@ -101,6 +103,8 @@ open class RobolectricTest : AndroidTest {
 
         maybeSetupBackend()
 
+        // disable the collection log file for a speed boost & reduce log output
+        CollectionManager.disableLogFile = disableCollectionLogFile
         // See the Android logging (from Timber)
         ShadowLog.stream = System.out
             // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible

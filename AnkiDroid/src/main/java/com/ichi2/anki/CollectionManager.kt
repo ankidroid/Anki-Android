@@ -59,6 +59,10 @@ object CollectionManager {
     @VisibleForTesting
     var emulateOpenFailure = false
 
+    /** A speed optimisation to remove the logging function of the collection */
+    @VisibleForTesting
+    var disableLogFile: Boolean = false
+
     /**
      * Execute the provided block on a serial background queue, to ensure
      * concurrent access does not happen.
@@ -227,7 +231,7 @@ object CollectionManager {
         if (collection == null || collection!!.dbClosed) {
             val path = collectionPathInValidFolder()
             collection =
-                collection(path, log = true, backend)
+                collection(path, log = !disableLogFile, backend)
         }
     }
 
