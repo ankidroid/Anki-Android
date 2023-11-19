@@ -455,11 +455,10 @@ open class AnkiDroidApp : Application() {
     class RobolectricDebugTree : DebugTree() {
         override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
             // This is noisy in test environments
-            if (tag == "Backend\$checkMainThreadOp") {
-                return
-            }
-            if (tag == "Media" && priority == Log.VERBOSE && message.startsWith("dir")) {
-                return
+            when (tag) {
+                "Backend\$checkMainThreadOp" -> return
+                "Media" -> if (priority == Log.VERBOSE && message.startsWith("dir")) return
+                "CollectionManager" -> if (message.startsWith("blocked main thread")) return
             }
             super.log(priority, tag, message, t)
         }
