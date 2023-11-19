@@ -55,10 +55,9 @@ class DialogHandler(activity: AnkiActivity) : Handler(getDefaultLooper()) {
      * Read and handle Message which was stored via [storeMessage]
      */
     fun executeMessage() {
+        if (sStoredMessage == null) return
         Timber.d("Reading persistent message")
-        if (sStoredMessage != null) {
-            sendStoredMessage(sStoredMessage!!)
-        }
+        sendStoredMessage(sStoredMessage!!)
         sStoredMessage = null
     }
 
