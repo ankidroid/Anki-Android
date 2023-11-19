@@ -325,7 +325,7 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
         val arr: MutableList<String?> = ArrayList(selectedTags.size)
         if (selectedTags.isNotEmpty()) {
             for (tag in selectedTags) {
-                arr.add("tag:'$tag'")
+                arr.add("tag:\"$tag\"")
             }
             sb.append("(").append(arr.joinToString(" or ")).append(")")
         }
