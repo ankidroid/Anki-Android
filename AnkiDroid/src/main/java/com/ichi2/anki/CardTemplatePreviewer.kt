@@ -234,6 +234,8 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         super.onCollectionLoaded(col)
         if (mNoteEditorBundle != null) {
             mAllFieldsNull = false
+            cardIndex = indexFromOrdinal(col, mNoteEditorBundle!!, mOrdinal)
+            Timber.d("ord %d => idx %d", mOrdinal, cardIndex)
             // loading from the note editor
             val toPreview = setCurrentCardFromNoteEditorBundle(col)
             if (toPreview != null) {
@@ -327,6 +329,21 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
             ret[fieldOrd.toInt()] = noteFields.getString(fieldOrd)!!
         }
         return mutableListOf(*ret)
+    }
+
+    private fun indexFromOrdinal(col: Collection, fieldsBundle: Bundle, ordinal: Int): Int {
+        return when (mEditedNotetype?.isCloze) {
+            true -> {
+                val note = col.newNote(mEditedNotetype!!).apply {
+                    for ((index, field) in getBundleEditFields(fieldsBundle).withIndex()) {
+                        this.setField(index, field)
+                    }
+                }
+                val clozeNumber = mOrdinal + 1
+                col.clozeNumbersInNote(note).indexOf(clozeNumber)
+            }
+            else -> ordinal
+        }
     }
 
     /**
@@ -433,6 +450,7 @@ private class EphemeralCard(col: Collection, id: Long?) : Card(col, id) {
             val card = EphemeralCard(col, null)
             card.did = 1
             card.ord = n.cardIndexToOrd(cardIndex)
+            Timber.v("Generating ephemeral note, idx %d ord %d", cardIndex, card.ord)
 
             val nt = n.notetype
             val templateIdx = if (nt.type == Consts.MODEL_CLOZE) {
