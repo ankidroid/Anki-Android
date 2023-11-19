@@ -30,10 +30,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
-import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.R
-import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.UIUtils
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.fields.*
@@ -300,7 +298,11 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
         }
         if (requestCode == REQUEST_CAMERA_PERMISSION && permissions.size == 1) {
             if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                showSnackbar(resources.getString(R.string.multimedia_editor_camera_permission_refused), Snackbar.LENGTH_SHORT)
+                UIUtils.showThemedToast(
+                    this,
+                    resources.getString(R.string.multimedia_editor_camera_permission_refused),
+                    true
+                )
             }
 
             // We check permissions to set visibility on the camera button, just recreate
