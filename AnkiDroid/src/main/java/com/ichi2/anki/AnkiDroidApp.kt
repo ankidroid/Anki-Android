@@ -458,6 +458,9 @@ open class AnkiDroidApp : Application() {
             if (tag == "Backend\$checkMainThreadOp") {
                 return
             }
+            if (tag == "Media" && priority == Log.VERBOSE && message.startsWith("dir")) {
+                return
+            }
             super.log(priority, tag, message, t)
         }
     }
