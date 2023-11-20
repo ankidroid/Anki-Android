@@ -82,6 +82,8 @@ open class RobolectricTest : AndroidTest {
         return true
     }
 
+    open val disableCollectionLogFile = true
+
     @get:Rule
     val mTaskScheduler = TaskSchedulerRule()
 
@@ -101,8 +103,13 @@ open class RobolectricTest : AndroidTest {
 
         maybeSetupBackend()
 
-        // If you want to see the Android logging (from Timber), you need to set it up here
+        // disable the collection log file for a speed boost & reduce log output
+        CollectionManager.disableLogFile = disableCollectionLogFile
+        // See the Android logging (from Timber)
         ShadowLog.stream = System.out
+            // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
+            // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
+            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$") // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
 
         Storage.setUseInMemory(useInMemoryDatabase())
 
