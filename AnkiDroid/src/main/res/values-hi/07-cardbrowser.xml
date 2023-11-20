@@ -50,8 +50,8 @@
         <item quantity="other">%d पत्ते दिखाए गए</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d नोट दिखाए जा रहे हैं</item>
+        <item quantity="other">%d नोट्स दिखाए जा रहे हैं</item>
     </plurals>
     <string name="card_browser_all_decks">सरे डेक</string>
     <string name="card_browser_delete_card">नोट मिटाएँ</string>
@@ -64,7 +64,7 @@
     <string name="card_browser_show_marked">चिह्नित नोटों को छानें</string>
     <string name="card_browser_show_suspended">निलंबित पत्तों को छानें</string>
     <string name="card_browser_search_by_tag">टैग से छानें</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
+    <string name="card_browser_search_by_flag">ध्वज द्वारा फ़िल्टर करें</string>
     <string name="card_browser_list_my_searches">मेरे खोज</string>
     <string name="card_browser_list_my_searches_save">खोज सहेजें</string>
     <string name="card_browser_list_my_searches_title">कोई सहेजी गई खोज चुने</string>
@@ -95,14 +95,14 @@
     <string name="card_browser_no_cards_in_deck">‘%s’ डेक में कोई पत्ता नहीं मिला</string>
     <string name="card_browser_search_all_decks">सभी डेक में खोजें</string>
     <string name="card_browser_unknown_deck_name">अज्ञात</string>
-    <string name="card_browser_truncate" comment="allows users to show less of a field value">Truncate content</string>
+    <string name="card_browser_truncate" comment="allows users to show less of a field value">सामग्री को छोटा करें</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">कार्ड निर्यात करें</item>
+        <item quantity="other">कार्ड निर्यात करें</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">नोट निर्यात करें</item>
+        <item quantity="other">नोट्स निर्यात करें</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
         <item quantity="one">%d कार्ड हटाया गया</item>

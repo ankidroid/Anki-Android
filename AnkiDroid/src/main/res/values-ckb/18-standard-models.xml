@@ -26,17 +26,17 @@
  
 <resources>
     <!--Fields-->
-    <string name="front_field_name">Front</string>
-    <string name="back_field_name">Back</string>
-    <string name="text_field_name" comment="Field\'s name in Cloze Note type">Text</string>
-    <string name="extra_field_name_new">Back Extra</string>
-    <string name="field_to_ask_front_name">Add Reverse</string>
+    <string name="front_field_name">پێشەوە</string>
+    <string name="back_field_name">پشتەوە</string>
+    <string name="text_field_name" comment="Field\'s name in Cloze Note type">نوسین</string>
+    <string name="extra_field_name_new">زیادی پشتەوە</string>
+    <string name="field_to_ask_front_name">پێچەوانە زیادبکە</string>
     <!--Card type-->
-    <string name="card_n_name">Card %d</string>
+    <string name="card_n_name">کارتی %d</string>
     <!--Note type-->
-    <string name="basic_model_name">Basic</string>
-    <string name="cloze_model_name">Cloze</string>
-    <string name="basic_typing_model_name">Basic (type in the answer)</string>
-    <string name="forward_reverse_model_name">Basic (and reversed card)</string>
-    <string name="forward_optional_reverse_model_name">Basic (optional reversed card)</string>
+    <string name="basic_model_name">بنچینەیی</string>
+    <string name="cloze_model_name">کلۆز (cloze)</string>
+    <string name="basic_typing_model_name">بنچینەیی (وەڵامەکە تایپ بکە)</string>
+    <string name="forward_reverse_model_name">بنچینەیی (و کارتی پێچەوانە)</string>
+    <string name="forward_optional_reverse_model_name">بنچینەیی (کارتی پێچەوانە ئارەزوومەندانەیە)</string>
 </resources>

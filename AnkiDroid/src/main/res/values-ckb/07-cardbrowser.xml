@@ -46,12 +46,12 @@
 <resources>
     <!-- CardBrowser -->
     <plurals name="card_browser_subtitle">
-        <item quantity="one">%d card shown</item>
-        <item quantity="other">%d cards shown</item>
+        <item quantity="one">%d کارت نیشاندراوە</item>
+        <item quantity="other">%d کارت نیشاندراوە</item>
     </plurals>
     <plurals name="card_browser_subtitle_notes_mode">
-        <item quantity="one">%d note shown</item>
-        <item quantity="other">%d notes shown</item>
+        <item quantity="one">%d یاداشت نیشاندراوە</item>
+        <item quantity="other">%d یاداشت نیشاندراوە</item>
     </plurals>
     <string name="card_browser_all_decks">گشت دەستەکان</string>
     <string name="card_browser_delete_card">یاداشتەکان ڕەشبکەوە</string>
@@ -59,54 +59,54 @@
     <string name="card_browser_change_deck">دەستە بگۆڕە</string>
     <string name="card_browser_unsuspend_card">کاراکردنەوەی کارتەکان</string>
     <string name="card_browser_mark_card">یاداشتەکان نیشانبکە</string>
-    <string name="card_browser_unmark_card">Unmark notes</string>
-    <string name="delete_card_title">Delete note?</string>
-    <string name="card_browser_show_marked">Filter marked</string>
-    <string name="card_browser_show_suspended">Filter suspended</string>
-    <string name="card_browser_search_by_tag">Filter by tag</string>
-    <string name="card_browser_search_by_flag">Filter by flag</string>
-    <string name="card_browser_list_my_searches">Lêgerînên min</string>
-    <string name="card_browser_list_my_searches_save">Lêgerînê tomar bike</string>
-    <string name="card_browser_list_my_searches_title">Lêgerîneka tomarkirî hilbijêre</string>
-    <string name="card_browser_list_my_searches_new_name">Navê bo lêgerîna niha</string>
-    <string name="card_browser_list_my_searches_new_search_error_empty_name">Hûn nikarin lêgerîneke bênas tomar bikin</string>
-    <string name="card_browser_list_my_searches_new_search_error_dup">!Ev nav heye</string>
-    <string name="card_browser_list_my_searches_remove_content">\?Bila \"%s$s\" bê jêbirin</string>
-    <string name="card_browser_change_display_order">Change display order</string>
-    <string name="card_browser_change_display_order_title">Choose display order</string>
-    <string name="card_details_tags">Tags</string>
+    <string name="card_browser_unmark_card">نیشانی یاداشتەکان لابدە</string>
+    <string name="delete_card_title">یاداشت ڕەشبکرێتەوە؟</string>
+    <string name="card_browser_show_marked">تاگکراوەکان بپاڵێوە</string>
+    <string name="card_browser_show_suspended">ڕاگیراوەکان بپاڵێوە</string>
+    <string name="card_browser_search_by_tag">بەپێی تاگ بپاڵێوە</string>
+    <string name="card_browser_search_by_flag">بەپێی ئاڵا بپاڵێوە</string>
+    <string name="card_browser_list_my_searches">گەڕانەکانم</string>
+    <string name="card_browser_list_my_searches_save">گەڕان تۆماربکە</string>
+    <string name="card_browser_list_my_searches_title">گەڕانێکی تۆمارکراو هەڵبژێرە</string>
+    <string name="card_browser_list_my_searches_new_name">ناو بۆ گەڕانی ئێستا</string>
+    <string name="card_browser_list_my_searches_new_search_error_empty_name">ناتوانیت گەڕانێک بەبێ ناو تۆماربکەیت</string>
+    <string name="card_browser_list_my_searches_new_search_error_dup">ناوەکە پێشتر بوونی هەیە</string>
+    <string name="card_browser_list_my_searches_remove_content">\"%1$s\" بسڕێتەوە؟</string>
+    <string name="card_browser_change_display_order">ڕیزی نواندن بگۆڕە</string>
+    <string name="card_browser_change_display_order_title">ڕیزی نواندن هەڵبژێرە</string>
+    <string name="card_details_tags">تاگەکان</string>
     <string-array name="card_browser_order_labels">
-        <item>No sorting (faster)</item>
-        <item>By sort field</item>
+        <item>بێ ڕیزکردن (خێراترە)</item>
+        <item>بەپێی بواری ڕیزکردن</item>
         <item>بەپێی کاتی دروستکردن</item>
         <item>بەپێی کاتی دەستکاری یاداشت</item>
         <item>بەپێی کاتی دەستکاری کارت</item>
-        <item>By due time</item>
-        <item>By interval</item>
-        <item>Li gorî hêsaniyê</item>
-        <item>Li gorî dubarekirinan</item>
-        <item>By lapses</item>
+        <item>بەپێی وادەی پێداچوونەوە</item>
+        <item>بەپێی ماوە</item>
+        <item>بەپێی ئاسانی</item>
+        <item>بەپێی دووبارەکردن</item>
+        <item>بەپێی هەڵەکان</item>
     </string-array>
     <string name="card_browser_select_all">گشت دیاریبکە</string>
     <string name="card_browser_select_none">هیچ دیاریمەکە</string>
     <string name="card_browser_interval_new_card" comment="Message indicating that a card is currently new, and so has no interval/ease.">(نوێ)</string>
     <string name="card_browser_due_filtered_card">(پاڵێوراو)</string>
     <string name="card_browser_interval_learning_card">(لە باری فێربوون)</string>
-    <string name="card_browser_no_cards_in_deck">No cards found in deck ‘%s’</string>
-    <string name="card_browser_search_all_decks">Search all decks</string>
+    <string name="card_browser_no_cards_in_deck">هیچ کارتێک نەدۆزرایەوە لە دەستەی \'%s\'</string>
+    <string name="card_browser_search_all_decks">لە گشت دەستەکاندا بگەڕێ</string>
     <string name="card_browser_unknown_deck_name">نەزانراو</string>
     <string name="card_browser_truncate" comment="allows users to show less of a field value">کورتکردنەوەی ناوەڕۆک</string>
     <plurals name="card_browser_export_cards">
-        <item quantity="one">Export card</item>
-        <item quantity="other">Export cards</item>
+        <item quantity="one">کارت هەناردە بکە</item>
+        <item quantity="other">کارتەکان هەناردە بکە</item>
     </plurals>
     <plurals name="card_browser_export_notes">
-        <item quantity="one">Export note</item>
-        <item quantity="other">Export notes</item>
+        <item quantity="one">یاداشت هەناردە بکە</item>
+        <item quantity="other">یاداشتەکان هەناردە بکە</item>
     </plurals>
     <plurals name="card_browser_cards_deleted">
-        <item quantity="one">%d card deleted</item>
-        <item quantity="other">%d cards deleted</item>
+        <item quantity="one">%d کارت سڕاوە</item>
+        <item quantity="other">%d کارت سڕاوە</item>
     </plurals>
     <!-- Card Info subscreen -->
 </resources>
