@@ -53,7 +53,7 @@ class NotetypeJson : JSONObject {
      * Creates a model object form json string
      */
     @KotlinCleanup("non-null")
-    constructor(json: String?) : super(json!!) {}
+    constructor(json: String?) : super(json!!)
 
     @CheckResult
     fun deepClone(): NotetypeJson {

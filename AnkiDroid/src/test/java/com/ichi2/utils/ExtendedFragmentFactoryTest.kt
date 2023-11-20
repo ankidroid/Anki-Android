@@ -29,11 +29,9 @@ import org.mockito.kotlin.whenever
 class ExtendedFragmentFactoryTest {
 
     internal class TestFragmentFactoryTest : ExtendedFragmentFactory {
-        constructor() {
-        }
+        constructor()
 
-        constructor(baseFactory: FragmentFactory) : super(baseFactory) {
-        }
+        constructor(baseFactory: FragmentFactory) : super(baseFactory)
     }
 
     @Test
