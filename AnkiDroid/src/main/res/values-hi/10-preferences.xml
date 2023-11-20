@@ -259,7 +259,7 @@
     <string name="type_in_answer_focus_summ">Automatically focus the ‘type in answer’ field in the reviewer</string>
     <!-- About -->
     <string name="open_changelog">परिवर्तन लॉग खोलें</string>
-    <string name="pref_cat_about_title" maxLength="41">About</string>
+    <string name="pref_cat_about_title" maxLength="41">इसके बारे में</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
     <string name="license">License</string>
@@ -268,8 +268,8 @@
     <!-- Controls -->
     <string name="binding_add_gesture">इशारा जोड़ें</string>
     <string name="binding_replace_gesture">Replace gesture</string>
-    <string name="binding_add_key">Add key</string>
-    <string name="binding_replace_key">Replace key</string>
+    <string name="binding_add_key">कुंजी जोड़ें</string>
+    <string name="binding_replace_key">कुंजी बदलें</string>
     <string name="key_picker_default_press_key">Press a key</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">कार्ड साइड चुनें</string>
@@ -285,9 +285,9 @@
     <!-- Advanced -->
     <string name="pref_cat_experimental" maxLength="41" tools:ignore="UnusedResources">Experimental</string>
     <!-- Developer options -->
-    <string name="pref_cat_dev_options" maxLength="41">Developer options</string>
-    <string name="dev_options_enabled_pref" maxLength="41">Enable developer options</string>
-    <string name="disable_dev_options">Disable developer options</string>
+    <string name="pref_cat_dev_options" maxLength="41">डेवलपर विकल्प</string>
+    <string name="dev_options_enabled_pref" maxLength="41">डेवलपर विकल्प सक्षम करें</string>
+    <string name="disable_dev_options">डेवलपर विकल्प अक्षम करें</string>
     <string name="dev_options_warning">        Please be sure before enabling developer options. These options are dangerous and could break the app or corrupt your collection.\n\nNote that these options are not suited for most users and therefore are not translated, so they are in English.
     </string>
     <!-- #######################################################################################

@@ -47,8 +47,8 @@
     <!-- Widget -->
     <string name="widget_minimum_cards_due_notification_ticker_title">पत्ते बाकी</string>
     <plurals name="widget_minimum_cards_due_notification_ticker_text">
-        <item quantity="one">%d AnkiDroid card due</item>
-        <item quantity="other">%d AnkiDroid cards due</item>
+        <item quantity="one">%d अंकीड्रॉइड  कार्ड बाकी है</item>
+        <item quantity="other">%d अंकीड्रॉइड  कार्ड्स बाकी है</item>
     </plurals>
     <string name="widget_small" comment="Label of the small ankidroid widget. This text can\'t be found directly in AnkiDroid">AnkiDroid छोटा</string>
     <plurals name="widget_cards_due">
