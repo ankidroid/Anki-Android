@@ -143,7 +143,7 @@ sealed class AnkiDroidFolder(val permissionSet: PermissionSet) {
      * No permission dialog is required.
      * Google will not allow [android.Manifest.permission.MANAGE_EXTERNAL_STORAGE], so this is default on the Play Store.
      */
-    object AppPrivateFolder : AnkiDroidFolder(PermissionSet.APP_PRIVATE)
+    data object AppPrivateFolder : AnkiDroidFolder(PermissionSet.APP_PRIVATE)
 
     fun hasRequiredPermissions(context: Context): Boolean {
         return Permissions.hasAllPermissions(context, permissionSet.permissions)

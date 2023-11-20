@@ -56,7 +56,7 @@ object Aapt2Util {
      */
     sealed class FormatData {
         /** Format string representing a date */
-        object DateFormatData : FormatData()
+        data object DateFormatData : FormatData()
 
         /**
          * Data regarding a string which will be passed into getString or getQuantityString

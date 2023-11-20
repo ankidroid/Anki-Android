@@ -27,5 +27,5 @@ sealed interface ExportType {
     class ExportNotes(val nodeIds: List<NoteId>) : ExportType
     class ExportCards(val cardIds: List<CardId>) : ExportType
     class ExportDeck(val deckId: DeckId) : ExportType
-    object ExportCollection : ExportType
+    data object ExportCollection : ExportType
 }
