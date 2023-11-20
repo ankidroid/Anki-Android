@@ -672,7 +672,7 @@ abstract class AbstractFlashcardViewer :
         performReload()
     }
 
-    @Suppress("deprecation") // super.onActivityResult
+    // super.onActivityResult
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
