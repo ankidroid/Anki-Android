@@ -1939,7 +1939,6 @@ open class CardBrowser :
             return v
         }
 
-        @Suppress("UNCHECKED_CAST")
         @KotlinCleanup("Unchecked cast")
         private fun bindView(position: Int, v: View) {
             // Draw the content in the columns

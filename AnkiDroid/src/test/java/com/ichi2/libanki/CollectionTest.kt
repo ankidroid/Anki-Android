@@ -41,7 +41,7 @@ class CollectionTest : JvmTest() {
         assertThat("two cloze notes should be generated", n.numberOfCards(), equalTo(2))
 
         // create card 3
-        n.setField(0, n.fields[0].toString() + "{{c3::third}}")
+        n.setField(0, n.fields[0] + "{{c3::third}}")
         n.flush()
         assertThat("A new card should be generated", n.numberOfCards(), equalTo(3))
         assertThat("The new card should have the same did as the previous cards", n.cards()[2].did, equalTo(did))

@@ -14,7 +14,7 @@
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-@file:Suppress("deprecation") // BuiltinSortKind - is a valid choice
+// BuiltinSortKind - is a valid choice
 
 package com.ichi2.libanki.backend.model
 

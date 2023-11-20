@@ -151,7 +151,7 @@ open class MigrateUserData protected constructor(val source: Directory, val dest
      * If the number of retries was exceeded when resolving a file conflict via moving it to the
      * /conflict/ folder.
      */
-    class FileConflictResolutionFailedException(val sourceFile: DiskFile, val attemptedDestination: File) : MigrationException("Failed to move $sourceFile to $attemptedDestination")
+    class FileConflictResolutionFailedException(val sourceFile: DiskFile, attemptedDestination: File) : MigrationException("Failed to move $sourceFile to $attemptedDestination")
 
     /**
      * Context for an [Operation], allowing a change of execution behavior and

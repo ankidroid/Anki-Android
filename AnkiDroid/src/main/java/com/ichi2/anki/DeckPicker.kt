@@ -940,7 +940,7 @@ open class DeckPicker :
     }
 
     @Deprecated("Deprecated in Java")
-    @Suppress("deprecation") // onActivityResult
+    // onActivityResult
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_MEDIA_EJECTED) {
@@ -1065,7 +1065,7 @@ open class DeckPicker :
         }
     }
 
-    @Suppress("DEPRECATION") // onBackPressed
+    // onBackPressed
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val preferences = baseContext.sharedPrefs()
@@ -1705,7 +1705,6 @@ open class DeckPicker :
             }
             negativeButton(R.string.dialog_cancel)
             if (AdaptionUtil.hasWebBrowser(this@DeckPicker)) {
-                @Suppress("DEPRECATION")
                 neutralButton(text = getColUnsafe.tr.schedulingUpdateMoreInfoButton()) {
                     this@DeckPicker.openUrl(Uri.parse("https://faqs.ankiweb.net/the-anki-2.1-scheduler.html#updating"))
                 }

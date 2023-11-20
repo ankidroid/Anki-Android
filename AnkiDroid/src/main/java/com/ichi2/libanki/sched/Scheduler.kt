@@ -504,7 +504,7 @@ open class Scheduler(val col: Collection) {
 
     /* internal */
     fun _timingToday(): SchedTimingTodayResponse {
-        return if (true) { // (BackendFactory.defaultLegacySchema) {
+        return run { // (BackendFactory.defaultLegacySchema) {
             val request = schedTimingTodayLegacyRequest {
                 createdSecs = col.crt
                 col.config.get<Int?>("creationOffset")?.let {
@@ -515,10 +515,6 @@ open class Scheduler(val col: Collection) {
                 rolloverHour = _rolloverHour()
             }
             return col.backend.schedTimingTodayLegacy(request)
-        } else {
-            // this currently breaks a bunch of unit tests that assume a mocked time,
-            // as it uses the real time to calculate daysElapsed
-            col.backend.schedTimingToday()
         }
     }
 

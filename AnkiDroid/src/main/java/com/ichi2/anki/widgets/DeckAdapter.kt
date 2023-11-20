@@ -234,7 +234,7 @@ class DeckAdapter(private val layoutInflater: LayoutInflater, context: Context) 
     }
 
     @RustCleanup("non suspend")
-    private suspend fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: DeckNode) {
+    private fun setDeckExpander(expander: ImageButton, indent: ImageButton, node: DeckNode) {
         // Apply the correct expand/collapse drawable
         if (node.children.isNotEmpty()) {
             expander.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES

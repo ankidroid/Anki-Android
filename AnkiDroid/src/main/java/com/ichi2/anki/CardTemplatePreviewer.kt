@@ -120,7 +120,7 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
         finishWithAnimation(ActivityTransitionAnimation.Direction.END)
     }
 
-    @Suppress("DEPRECATION", "Deprecated in API34+dependencies for predictive back feature")
+    @Suppress("Deprecated in API34+dependencies for predictive back feature")
     override fun onBackPressed() {
         Timber.i("CardTemplatePreviewer:: onBackPressed()")
         super.onBackPressed()
