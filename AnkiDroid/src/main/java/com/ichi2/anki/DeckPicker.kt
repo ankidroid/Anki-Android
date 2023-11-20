@@ -36,6 +36,8 @@ import android.util.TypedValue
 import android.view.*
 import android.view.View.OnLongClickListener
 import android.widget.*
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
@@ -241,6 +243,50 @@ open class DeckPicker :
 
     private val permissionScreenLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         ActivityCompat.recreate(this)
+    }
+
+    private val reviewLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            processReviewResults(it.resultCode)
+        }
+    )
+
+    private val showNewVersionInfoLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
+        }
+    )
+
+    private val loginForSyncLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            if (it.resultCode == RESULT_OK) {
+                mSyncOnResume = true
+            }
+        }
+    )
+
+    private val requestPathUpdateLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            // The collection path was inaccessible on startup so just close the activity and let user restart
+            finish()
+        }
+    )
+
+    private inner class DeckPickerActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) : ActivityResultCallback<ActivityResult> {
+        override fun onActivityResult(result: ActivityResult) {
+            if (result.resultCode == RESULT_MEDIA_EJECTED) {
+                onSdCardNotMounted()
+                return
+            } else if (result.resultCode == RESULT_DB_ERROR) {
+                handleDbError()
+                return
+            }
+            callback(result)
+        }
     }
 
     private var migrateStorageAfterMediaSyncCompleted = false
@@ -501,7 +547,7 @@ open class DeckPicker :
                     showDatabaseErrorDialog(DatabaseErrorDialogType.DIALOG_STORAGE_UNAVAILABLE_AFTER_UNINSTALL)
                 } else {
                     val i = AdvancedSettingsFragment.getSubscreenIntent(this)
-                    startActivityForResultWithoutAnimation(i, REQUEST_PATH_UPDATE)
+                    launchActivityForResultWithAnimation(i, requestPathUpdateLauncher, NONE)
                     showThemedToast(this, R.string.directory_inaccessible, false)
                 }
             }
@@ -853,7 +899,7 @@ open class DeckPicker :
                 val manageNoteTypesTarget =
                     ManageNotetypes::class.java
                 val noteTypeBrowser = Intent(this, manageNoteTypesTarget)
-                startActivityForResultWithAnimation(noteTypeBrowser, 0, START)
+                startActivityWithAnimation(noteTypeBrowser, START)
                 return true
             }
             R.id.action_restore_backup -> {
@@ -904,29 +950,24 @@ open class DeckPicker :
             handleDbError()
             return
         }
-        if (requestCode == SHOW_INFO_NEW_VERSION) {
-            showStartupScreensAndDialogs(baseContext.sharedPrefs(), 3)
-        } else if (requestCode == LOG_IN_FOR_SYNC && resultCode == RESULT_OK) {
-            mSyncOnResume = true
-        } else if (requestCode == REQUEST_REVIEW || requestCode == SHOW_STUDYOPTIONS) {
-            if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
-                // Show a message when reviewing has finished
-                if (getColUnsafe.sched.totalCount() == 0) {
-                    showSnackbar(R.string.studyoptions_congrats_finished)
-                } else {
-                    showSnackbar(R.string.studyoptions_no_cards_due)
-                }
-            } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
-                Timber.i("Obtained Abort and Sync result")
-                sync()
-            }
-        } else if (requestCode == REQUEST_PATH_UPDATE) {
-            // The collection path was inaccessible on startup so just close the activity and let user restart
-            finish()
-        } else if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
+        if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
             onSelectedPackageToImport(data!!)
         } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
             onSelectedCsvForImport(data!!)
+        }
+    }
+
+    private fun processReviewResults(resultCode: Int) {
+        if (resultCode == AbstractFlashcardViewer.RESULT_NO_MORE_CARDS) {
+            // Show a message when reviewing has finished
+            if (getColUnsafe.sched.totalCount() == 0) {
+                showSnackbar(R.string.studyoptions_congrats_finished)
+            } else {
+                showSnackbar(R.string.studyoptions_no_cards_due)
+            }
+        } else if (resultCode == AbstractFlashcardViewer.RESULT_ABORT_AND_SYNC) {
+            Timber.i("Obtained Abort and Sync result")
+            sync()
         }
     }
 
@@ -1147,7 +1188,7 @@ open class DeckPicker :
     fun addNote() {
         val intent = Intent(this@DeckPicker, NoteEditor::class.java)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_DECKPICKER)
-        startActivityForResultWithAnimation(intent, ADD_NOTE, START)
+        startActivityWithAnimation(intent, START)
     }
 
     private fun showStartupScreensAndDialogs(preferences: SharedPreferences, skip: Int) {
@@ -1275,11 +1316,8 @@ open class DeckPicker :
                 Timber.i("Displaying new features")
                 val infoIntent = Intent(this, Info::class.java)
                 infoIntent.putExtra(Info.TYPE_EXTRA, Info.TYPE_NEW_VERSION)
-                if (skip != 0) {
-                    startActivityForResultWithAnimation(infoIntent, SHOW_INFO_NEW_VERSION, START)
-                } else {
-                    startActivityForResultWithoutAnimation(infoIntent, SHOW_INFO_NEW_VERSION)
-                }
+                val transition = if (skip != 0) START else NONE
+                launchActivityForResultWithAnimation(infoIntent, showNewVersionInfoLauncher, transition)
             } else {
                 Timber.i("Dev Build - not showing 'new features'")
                 // Don't show new features dialog for development builds
@@ -1547,7 +1585,7 @@ open class DeckPicker :
     override fun loginToSyncServer() {
         val myAccount = Intent(this, MyAccount::class.java)
         myAccount.putExtra("notLoggedIn", true)
-        startActivityForResultWithAnimation(myAccount, LOG_IN_FOR_SYNC, FADE)
+        launchActivityForResultWithAnimation(myAccount, loginForSyncLauncher, FADE)
     }
 
     // Callback to import a file -- adding it to existing collection
@@ -1627,7 +1665,7 @@ open class DeckPicker :
             val intent = Intent()
             intent.putExtra("withDeckOptions", withDeckOptions)
             intent.setClass(this, StudyOptionsActivity::class.java)
-            startActivityForResultWithAnimation(intent, SHOW_STUDYOPTIONS, START)
+            launchActivityForResultWithAnimation(intent, reviewLauncher, START)
         }
     }
 
@@ -2041,7 +2079,7 @@ open class DeckPicker :
 
     private fun openReviewer() {
         val reviewer = Intent(this, Reviewer::class.java)
-        startActivityForResultWithAnimation(reviewer, REQUEST_REVIEW, START)
+        launchActivityForResultWithAnimation(reviewer, reviewLauncher, START)
     }
 
     override fun onCreateCustomStudySession() {
@@ -2145,11 +2183,6 @@ open class DeckPicker :
          */
         @VisibleForTesting
         const val REQUEST_STORAGE_PERMISSION = 0
-        private const val REQUEST_PATH_UPDATE = 1
-        private const val LOG_IN_FOR_SYNC = 6
-        private const val SHOW_INFO_NEW_VERSION = 9
-        const val SHOW_STUDYOPTIONS = 11
-        private const val ADD_NOTE = 12
         const val PICK_APKG_FILE = 13
         const val PICK_CSV_FILE = 14
 
