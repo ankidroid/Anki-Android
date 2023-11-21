@@ -1,6 +1,10 @@
 # We want control over the SDK used to build since we need newer JDKs
 before_install:
     - sdk update
-    - sdk list
+    - sdk list java
     - sdk install java 17.0.9-tem
     - sdk use java 17.0.9-tem
+
+# We can do the absolute minimum to build the API module, no need to build AnkiDroid module
+install:
+    - ./gradlew :api:publishToMavenLocal
