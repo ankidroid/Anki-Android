@@ -38,6 +38,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
@@ -1323,7 +1324,7 @@ open class CardBrowser :
         }
 
     private fun getPreviewIntent(index: Int, selectedCardIds: LongArray): Intent {
-        return Previewer.getPreviewIntent(this@CardBrowser, index, selectedCardIds)
+        return PreviewDestination(index, selectedCardIds).toIntent(this)
     }
 
     private fun rescheduleSelectedCards() {

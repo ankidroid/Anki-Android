@@ -18,6 +18,7 @@ package com.ichi2.anki
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.libanki.Card
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
@@ -143,17 +144,17 @@ class PreviewerTest : RobolectricTest() {
         card.flush()
     }
 
-    private fun getPreviewerPreviewingList(arr: LongArray, c: Array<Card?>): Previewer {
-        val previewIntent = Previewer.getPreviewIntent(targetContext, 0, arr)
+    private fun getPreviewerPreviewingList(cardIds: LongArray, c: Array<Card?>): Previewer {
+        val previewIntent = PreviewDestination(index = 0, cardIds).toIntent(targetContext)
         val previewer = super.startActivityNormallyOpenCollectionWithIntent(Previewer::class.java, previewIntent)
-        for (i in arr.indices) {
+        for (i in cardIds.indices) {
             AbstractFlashcardViewer.editorCard = c[i]
         }
         return previewer
     }
 
     private fun getPreviewerPreviewing(usableCard: Card): Previewer {
-        val previewIntent = Previewer.getPreviewIntent(targetContext, 0, longArrayOf(usableCard.id))
+        val previewIntent = PreviewDestination(index = 0, longArrayOf(usableCard.id)).toIntent(targetContext)
         val previewer = super.startActivityNormallyOpenCollectionWithIntent(Previewer::class.java, previewIntent)
         AbstractFlashcardViewer.editorCard = usableCard
         return previewer
