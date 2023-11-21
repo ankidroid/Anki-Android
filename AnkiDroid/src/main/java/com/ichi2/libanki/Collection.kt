@@ -199,7 +199,7 @@ open class Collection(
                 backend.setConfigBool(ConfigKey.Bool.SCHED_2021, true, undoable = false)
             }
             sched = Scheduler(this)
-            config.set("localOffset", sched._current_timezone_offset())
+            config.set("localOffset", sched.currentTimezoneOffset())
         }
     }
 

@@ -93,23 +93,23 @@ open class SchedulerTest : JvmTest() {
         val sched = col.sched
         MatcherAssert.assertThat(
             "new timezone should be enabled by default",
-            sched._new_timezone_enabled(),
+            sched.newTimezoneEnabled(),
             Matchers.equalTo(true)
         )
 
         // a second call should be fine
-        sched.set_creation_offset()
+        sched.setCreationOffset()
         MatcherAssert.assertThat(
             "new timezone should still be enabled",
-            sched._new_timezone_enabled(),
+            sched.newTimezoneEnabled(),
             Matchers.equalTo(true)
         )
         // we can obtain the offset from "crt" without an issue - do not test the return as it depends on the local timezone
-        sched._current_timezone_offset()
-        sched.clear_creation_offset()
+        sched.currentTimezoneOffset()
+        sched.clearCreationOffset()
         MatcherAssert.assertThat(
             "new timezone should be disabled after clear",
-            sched._new_timezone_enabled(),
+            sched.newTimezoneEnabled(),
             Matchers.equalTo(false)
         )
     }
@@ -210,7 +210,7 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "one")
         col.addNote(note)
         val c = col.sched.card!!
-        val conf = col.sched._cardConf(c)
+        val conf = col.sched.cardConf(c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 2.0, 3.0, 4.0, 5.0)))
         col.decks.save(conf)
         col.sched.answerCard(c, BUTTON_TWO)
@@ -241,7 +241,7 @@ open class SchedulerTest : JvmTest() {
         // sched.getCard should return it, since it's due in the past
         val c = col.sched.card!!
         assertNotNull(c)
-        val conf = col.sched._cardConf(c)
+        val conf = col.sched.cardConf(c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(0.5, 3.0, 10.0)))
         col.decks.save(conf)
         // fail it
@@ -396,7 +396,7 @@ open class SchedulerTest : JvmTest() {
         note.setItem("Front", "one")
         col.addNote(note)
         var c = col.sched.card!!
-        var conf = col.sched._cardConf(c)
+        var conf = col.sched.cardConf(c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 10.0, 1440.0, 2880.0)))
         col.decks.save(conf)
         // pass it
@@ -437,7 +437,7 @@ open class SchedulerTest : JvmTest() {
         c.due = 0
         c.flush()
         Assert.assertEquals(Counts(0, 0, 1), col.sched.counts())
-        conf = col.sched._cardConf(c)
+        conf = col.sched.cardConf(c)
         conf.getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf(1440.0)))
         col.decks.save(conf)
         c = col.sched.card!!
@@ -896,7 +896,7 @@ open class SchedulerTest : JvmTest() {
 
         // fail the card outside filtered deck
         val c = col.sched.card!!
-        val conf = col.sched._cardConf(c)
+        val conf = col.sched.cardConf(c)
         conf.getJSONObject("new").put("delays", JSONArray(doubleArrayOf(1.0, 10.0, 61.0)))
         col.decks.save(conf)
         col.sched.answerCard(c, BUTTON_ONE)
@@ -1345,7 +1345,7 @@ open class SchedulerTest : JvmTest() {
         c.startTimer()
         c.flush()
         col.sched.answerCard(c, BUTTON_ONE)
-        col.sched._cardConf(c).getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
+        col.sched.cardConf(c).getJSONObject("lapse").put("delays", JSONArray(doubleArrayOf()))
         col.sched.answerCard(c, BUTTON_ONE)
     }
 
@@ -1367,7 +1367,7 @@ open class SchedulerTest : JvmTest() {
         c.lapses = 1
         c.startTimer()
         c.flush()
-        val conf = col.sched._cardConf(c)
+        val conf = col.sched.cardConf(c)
         conf.getJSONObject("lapse").put("mult", 0.5)
         col.decks.save(conf)
         c = col.sched.card!!
