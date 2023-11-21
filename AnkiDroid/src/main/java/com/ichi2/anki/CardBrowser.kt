@@ -54,6 +54,8 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.pages.CardInfo.Companion.toIntent
+import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.CardService.selectedNoteIds
@@ -1182,7 +1184,7 @@ open class CardBrowser :
                 val selectedCardIds = selectedCardIds
                 if (selectedCardIds.isNotEmpty()) {
                     val cardId = selectedCardIds[0]
-                    val intent = com.ichi2.anki.pages.CardInfo.getIntent(this, cardId)
+                    val intent = CardInfoDestination(cardId).toIntent(this)
                     startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.FADE)
                 }
                 return true
