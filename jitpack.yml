@@ -1,0 +1,6 @@
+# We want control over the SDK used to build since we need newer JDKs
+before_install:
+    - sdk update
+    - sdk list
+    - sdk install java 17.0.9-tem
+    - sdk use java 17.0.9-tem
