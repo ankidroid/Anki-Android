@@ -154,10 +154,7 @@
     <string name="import_title">Importation en cours</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ajouter</string>
     <string name="import_message_replace_confirm">Ceci va supprimer votre collection existante et la remplacer par les données du fichier %s. Êtes-vous d\'accord ?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Ajouter « %s » à la collection ? Ceci peut prendre beaucoup de temps</item>
-        <item quantity="other">Voulez-vous importer ces fichiers : \n%s\nCeci peut prendre beaucoup de temps</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Ceci n\'est pas un fichier Anki valide</string>
     <string name="import_title_error" comment="Title of error dialog">Erreur</string>
     <string name="import_error_handle_exception">Impossible d\'importer le fichier\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Les remplacements de la base de données Anki (.anki2) ne sont pas pris en charge. Veuillez voir le guide d’utilisation pour les instructions de remplacement.</string>
     <string name="import_error_content_provider">Le fichier sélectionné n’a pas pu être importé automatiquement par AnkiDroid. Veuillez consulter le manuel de l’utilisateur pour savoir comment importer manuellement des fichiers de Anki : \n %s</string>
     <string name="import_error_copy_to_cache">Échec de la mise en cache du fichier (éventuellement à court d\'espace de stockage)</string>
-    <string name="import_error_multiple_colpkg">Plusieurs fichiers colpkg étaient sélectionnés.</string>
-    <string name="import_error_colpkg_apkg">Des fichiers apkg &amp; colpkg étaient sélectionnés à la fois.</string>
     <string name="import_interrupted">Importation interrompue : AnkiDroid a fermé</string>
     <string name="export_include_schedule">Inclure la planification</string>
     <string name="export_include_media">Inclure les médias</string>

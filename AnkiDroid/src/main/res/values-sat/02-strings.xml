@@ -154,10 +154,7 @@
     <string name="import_title">ᱟᱹᱜᱩᱭᱮᱛ ᱟ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ᱥᱮᱞᱮᱫ</string>
     <string name="import_message_replace_confirm">ᱱᱚᱶᱟ ᱫᱚ ᱴᱩᱢᱟᱞ ᱜᱮᱫ ᱜᱤᱰᱤᱟᱭ ᱟᱨ ᱚᱱᱟ ᱵᱚᱫᱚᱞ ᱛᱮ ᱚᱱᱟ ᱨᱮᱛ ᱨᱮ ᱥᱟᱹᱠᱷᱤᱭᱟᱹᱛ ᱚᱞᱟᱭ  %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">“%s” ᱴᱩᱢᱟᱹᱞ ᱛᱮ ᱥᱮᱞᱮᱫ ᱟᱢ ᱥᱮ ? ᱱᱚᱶᱟ ᱡᱟᱹᱥᱛᱤ ᱥᱚᱢᱚᱭ ᱤᱫᱤ ᱫᱟᱲᱮᱭᱟᱜᱼᱟᱭ</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ᱱᱚᱶᱟ ᱫᱚ ᱵᱦᱮᱞᱤᱰ Anki ᱯᱮᱠ ᱵᱟᱝ ᱠᱟᱱᱟ</string>
     <string name="import_title_error" comment="Title of error dialog">ᱵᱷᱩᱞ</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) ᱵᱚᱫᱚᱞ ᱥᱟᱹᱯᱚᱴ ᱵᱟᱹᱱᱩᱜᱼᱟ ᱾ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ</string>
     <string name="import_error_content_provider">ᱵᱟᱪᱷᱟᱣᱟᱠᱟᱱ ᱨᱮᱫ AnkiDroid ᱛᱮ ᱵᱟᱭ ᱞᱟᱫᱮᱜ ᱠᱟᱱᱟ ᱾ ᱫᱚᱭᱟᱠᱟᱛᱮ ᱨᱤᱯᱞᱮᱥᱢᱮᱴ ᱞᱟᱹᱜᱤᱫ ᱢᱮᱱᱩᱟᱞ ᱧᱮᱞᱯᱮ anki ᱨᱮᱫ: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_interrupted">ᱨᱮᱫ ᱟᱠᱚᱴ ᱮᱱᱟ</string>
     <string name="export_include_schedule">ᱥᱮᱰᱤᱭᱩᱞ ᱨᱮ ᱢᱮᱥᱟᱭ ᱯᱮ</string>
     <string name="export_include_media">ᱢᱮᱰᱤᱭᱟ ᱢᱮᱥᱟᱭ ᱯᱮ</string>

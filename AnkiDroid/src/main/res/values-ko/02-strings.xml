@@ -153,9 +153,7 @@
     <string name="import_title">가져오는 중</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">추가</string>
     <string name="import_message_replace_confirm">기존의 컬렉션을 삭제하고 파일 %s의 데이터로 덮어씁니다. 확실합니까?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">다음을 컬렉션에 추가합니까?\n%s\n시간이 걸릴 수도 있습니다.</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">이것은 유효한 Anki package 파일이 아닙니다。</string>
     <string name="import_title_error" comment="Title of error dialog">오류</string>
     <string name="import_error_handle_exception">패키지를 가져오는데 실패했습니다.\n\n%s</string>
@@ -163,8 +161,6 @@
     <string name="import_error_load_imported_database">Anki 데이터베이스 (.anki2)의 덮어쓰기는 아직 지원되지 않습니다. 덮어쓰려면 설명서를 참조해주십시오.</string>
     <string name="import_error_content_provider">선택된 파일은 AnkiDroid가 자동적으로 가져올 수 없습니다. anki 파일을 수동으로 가져오는 방법은 사용자 설명서를 참조하세요. \n %s</string>
     <string name="import_error_copy_to_cache">파일 캐시 실패 (저장 공간이 부족하기 때문일 수 있습니다)</string>
-    <string name="import_error_multiple_colpkg">여러 colpkg 파일이 선택되었습니다.</string>
-    <string name="import_error_colpkg_apkg">apkg 랑 colpkg 파일이 동시에 선택되었습니다.</string>
     <string name="import_interrupted">불러오기 중단됨: AnkiDroid가 닫힘</string>
     <string name="export_include_schedule">일정 포함</string>
     <string name="export_include_media">미디어 포함</string>

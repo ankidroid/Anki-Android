@@ -152,9 +152,7 @@
     <string name="import_title">正在导入…</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">添加</string>
     <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">您想要导入以下文件吗？\n%s\n 这可能需要很长的时间</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">这不是一个有效的 apkg 文件</string>
     <string name="import_title_error" comment="Title of error dialog">错误</string>
     <string name="import_error_handle_exception">导入文件\n\n%s 失败</string>
@@ -162,8 +160,6 @@
     <string name="import_error_load_imported_database">尚不支持替换 Anki 数据库（.anki2）。请参阅手册以获取替换说明。</string>
     <string name="import_error_content_provider">AnkiDroid 不能导入所选择的文件。请参阅用户手册以查看如何导入Anki记忆库：\n%s</string>
     <string name="import_error_copy_to_cache">缓存文件失败（可能超出存储空间）</string>
-    <string name="import_error_multiple_colpkg">选择了多个 colpkg 文件。</string>
-    <string name="import_error_colpkg_apkg">同时选择了 apkg &amp; colpkg 文件。</string>
     <string name="import_interrupted">导入中断</string>
     <string name="export_include_schedule">包括学习进度</string>
     <string name="export_include_media">包括媒体文件</string>

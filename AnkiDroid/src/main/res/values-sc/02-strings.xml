@@ -156,10 +156,7 @@
     <string name="import_title">Importende</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Annanghe</string>
     <string name="import_message_replace_confirm">Custu at a iscantzellare sa colletzione atuale tua e l\'at a remplasare cun sos datos de su documentu %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Annànghere “%s” a sa colletzione? Bi diat pòdere chèrrere tempus meda</item>
-        <item quantity="other">Cheres importare custos archìvios:\n%s\nBi diat pòdere bòlere tempus meda</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Custu no est unu documentu de pachete de Anki vàlidu</string>
     <string name="import_title_error" comment="Title of error dialog">Faddina</string>
     <string name="import_error_handle_exception">Fallimentu de s\'mportatzione de s\'archìviu\n\n%s</string>
@@ -168,8 +165,6 @@
     <string name="import_error_content_provider">Su documentu ischertadu non podet èssere importadu in manera automàtica dae AnkiDroid. Pòmpia·ti su manuale pro imparare comente importare sos documentos de Anki in automàticu: \n
                               %s</string>
     <string name="import_error_copy_to_cache">Sarvamentu de s\'archìviu in sa memòria temporànea fallidu (probabilmente ca non b\'at logu in sa memòria)</string>
-    <string name="import_error_multiple_colpkg">Sunt istados seletzionados documentos colpkg mùltiplos.</string>
-    <string name="import_error_colpkg_apkg">Siat sos archìvios apkg siat cussos colpkg sunt istados seletzionados paris.</string>
     <string name="import_interrupted">Importatzione firmada: AnkiDroid est istadu serradu</string>
     <string name="export_include_schedule">Include sa pranificatzione</string>
     <string name="export_include_media">Include sos mèdios</string>

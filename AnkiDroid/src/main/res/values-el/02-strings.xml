@@ -154,10 +154,7 @@
     <string name="import_title">Εισαγωγή</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Προσθήκη</string>
     <string name="import_message_replace_confirm">Αυτό θα διαγράψει την υπάρχουσα συλλογή σας και θα την αντικαταστήσει με τα δεδομένα του αρχείου %s. Είστε σίγουροι?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Προσθήκη \"%s\" στη συλλογή; Μπορεί να διαρκέσει πολύ χρόνο</item>
-        <item quantity="other">Θες να εισάγεις το ακόλουθο αρχείο :\n%s\n ; Αυτό μπορεί να διαρκέσει πολύ χρόνο.</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">This isn’t a valid Anki package file</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">The selected file couldn’t be imported automatically by AnkiDroid. Please see the user manual for how to manually import anki files: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Include scheduling</string>
     <string name="export_include_media">Include media</string>

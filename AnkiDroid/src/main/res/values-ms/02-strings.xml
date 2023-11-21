@@ -152,9 +152,7 @@
     <string name="import_title">Mengimport</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
     <string name="import_message_replace_confirm">Ini akan membuang koleksi sedia ada anda dan menggantikannya dengan data fail %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Adakah anda mahu import fail ini:\n%s\nMungkin ambil masa lama</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Bukan fail pakej Anki yang sah</string>
     <string name="import_title_error" comment="Title of error dialog">Ralat</string>
     <string name="import_error_handle_exception">Gagal mengimport fail\n\n%s</string>
@@ -162,8 +160,6 @@
     <string name="import_error_load_imported_database">Penggantian pangkalan data Anki (.anki2) belum disokong lagi. Sila lihat panduan bagi langkah penggantian.</string>
     <string name="import_error_content_provider">AnkiDroid tidak boleh mengimport fail pilihan secara automatik. Sila lihat manual pengguna bagi cara import fail anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache">Gagal memcachekan fail (kemungkinan kehabisan ruang storan)</string>
-    <string name="import_error_multiple_colpkg">Pelbagai fail colpkg telah dipilih.</string>
-    <string name="import_error_colpkg_apkg">Kedua-dua fail apkg &amp; colpkg telah dipilih serentak.</string>
     <string name="import_interrupted">Import tergendala: AnkiDroid telah ditutup</string>
     <string name="export_include_schedule">Termasuk penjadualan</string>
     <string name="export_include_media">Termasuk media</string>
