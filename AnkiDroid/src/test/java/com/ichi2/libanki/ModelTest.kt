@@ -563,7 +563,7 @@ class NotetypeTest : JvmTest() {
         assertEquals("getDid() should return the model did", expected, basic.did)
 
         // Check if returns default deck id (1) when did is null
-        basic.put("did", null)
+        basic.put("did", null as Int?)
         val expected2 = 1L
         assertEquals(
             "getDid() should return 1 (default deck id) if model did is null",

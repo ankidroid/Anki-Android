@@ -386,7 +386,8 @@ dependencies {
     testImplementation "io.mockk:mockk:1.13.8"
     testImplementation 'org.apache.commons:commons-exec:1.3' // obtaining the OS
     testImplementation("androidx.fragment:fragment-testing:$fragments_version")
-
+    // in a JvmTest we need org.json.JSONObject to not be mocked
+    testImplementation 'org.json:json:20220924'
     // May need a resolution strategy for support libs to our versions
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$espresso_version") {
