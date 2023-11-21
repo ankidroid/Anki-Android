@@ -19,7 +19,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
+import androidx.core.os.bundleOf
 import com.ichi2.anki.R
+import com.ichi2.libanki.CardId
 
 class CardInfo : PageFragment() {
     override val title = R.string.card_info_title
@@ -47,11 +49,9 @@ class CardInfo : PageFragment() {
     companion object {
         private const val ARG_CARD_ID = "cardId"
 
-        fun getIntent(context: Context, cardId: Long): Intent {
-            val arguments = Bundle().apply {
-                putLong(ARG_CARD_ID, cardId)
-            }
-            return PagesActivity.getIntent(context, CardInfo::class, arguments)
-        }
+        fun CardInfoDestination.toIntent(context: Context): Intent =
+            PagesActivity.getIntent(context, CardInfo::class, bundleOf(ARG_CARD_ID to cardId))
     }
 }
+
+data class CardInfoDestination(val cardId: CardId)
