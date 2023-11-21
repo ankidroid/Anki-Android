@@ -46,10 +46,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- generic strings -->
     <string name="disabled">अक्षम</string>
-    <string name="pref_summary_seconds">%s s</string>
+    <string name="pref_summary_seconds">%s एस</string>
     <plurals name="pref_summ_minutes">
-        <item quantity="one">%d min</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="one">%d मिनट</item>
+        <item quantity="other">%d मिनट</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s\%%</string>
     <string name="pref_search_no_results">कोई परिणाम नहीं </string>
@@ -136,7 +136,7 @@
     <string name="sync_status_badge_summ">जब बदलाव अपलोड किए जा सकें तो सिंक आइकन बदलें</string>
     <string name="metered_sync_title" maxLength="41">मीटर वाले कनेक्शनों पर समन्वयन की अनुमति दें</string>
     <string name="metered_sync_summary">यदि अक्षम है, तो मीटर वाले कनेक्शन पर सिंक करने का प्रयास करने पर आपको चेतावनी दी जाएगी</string>
-    <string name="backup_limits_frequency">Frequency</string>
+    <string name="backup_limits_frequency">फ्रीक्वेंसी</string>
     <string name="backup_limits_lifetime">Lifetime</string>
     <string name="app_theme" maxLength="41">थीम </string>
     <string name="day_theme" maxLength="41">दिवस थीम</string>
@@ -167,7 +167,7 @@
     <string name="vertical_centering_summ">कार्ड की सामग्री को अनुलंब रूप से केंद्रित करना</string>
     <string name="pref_double_tap_time_interval" maxLength="41">Double tap time interval (milliseconds)</string>
     <string name="pref_double_tap_time_interval_summary">A second tap of the answer buttons will be ignored if this time has not elapsed. This prevents accidental double taps</string>
-    <string name="pref_show_answer_long_press" maxLength="41">Show answer long-press time (ms)</string>
+    <string name="pref_show_answer_long_press" maxLength="41">उत्तर देखने  के लिए देर तक दबाने का समय (एमएस))</string>
     <string name="pref_show_answer_long_press_summary">Minimum long-press time before the show answer button will register a touch. May reduce the chance of accidental extra button presses. Default is 0ms</string>
     <string name="show_estimates" maxLength="41">बटन समय दिखाएं</string>
     <string name="show_estimates_summ">उत्तर बटंस पर अगली समीक्षा समय दिखाएं</string>
@@ -198,8 +198,8 @@
     <string name="custom_buttons_setting_if_room">यदि कक्ष दिखाएं</string>
     <string name="custom_buttons_setting_menu_only">केवल मेनू</string>
     <string name="reset_custom_buttons" maxLength="41">डिफ़ॉल्ट पर रीसेट करें</string>
-    <string name="reset_settings_to_default">Reset settings to default</string>
-    <string name="reset">Reset</string>
+    <string name="reset_settings_to_default">सेटिंग्स को डिफ़ॉल्ट पर रीसेट करें</string>
+    <string name="reset">रीसेट</string>
     <string name="thirdparty_apps_title" maxLength="41">तृतीय-पक्ष API ऐप्स</string>
     <string name="thirdparty_apps_summary">See a list of applications which make use of the AnkiDroid API such as dictionaries, utilities.</string>
     <string name="html_javascript_debugging" maxLength="41">HTML / Javascript Debugging</string>
@@ -210,10 +210,10 @@
     <!-- Paste clipboard image as png option -->
     <string name="paste_as_png" maxLength="41">Paste clipboard images as PNG</string>
     <string name="paste_as_png_summary">By default Anki pastes images on the clipboard as JPG files to save disk space. You can use this option to paste as PNG images instead.</string>
-    <string name="exit_via_double_tap_back" maxLength="41">Press back twice to go back/exit</string>
+    <string name="exit_via_double_tap_back" maxLength="41">वापस जाने/बाहर निकलने के लिए दो बार बैक दबाएँ</string>
     <string name="exit_via_double_tap_back_summ">To avoid accidentally leaving the reviewer or the app</string>
     <!-- Allow all files in media imports -->
-    <string name="media_import_allow_all_files" maxLength="41">Allow all files in media imports</string>
+    <string name="media_import_allow_all_files" maxLength="41">मीडिया आयात में सभी फ़ाइलो को अनुमति दें</string>
     <string name="media_import_allow_all_files_summ">If Android doesn’t recognize a media file</string>
     <!-- Custom sync server settings -->
     <string name="custom_sync_server_title" maxLength="41">कस्टम सिंक्रनाइज़ेशन सर्वर</string>
@@ -226,8 +226,8 @@
     <string name="custom_sync_server_base_url_title" maxLength="41">सिंक्रनाइज़ेशन url</string>
     <!-- Key Bindings -->
     <string name="keyboard">Keyboard</string>
-    <string name="bluetooth">Bluetooth</string>
-    <string name="answer_buttons" maxLength="41">Answer buttons</string>
+    <string name="bluetooth">ब्लूटूथ</string>
+    <string name="answer_buttons" maxLength="41">उत्तर बटन</string>
     <string name="card" maxLength="41">Card</string>
     <string name="note" maxLength="41">Note</string>
     <string name="navigation" maxLength="41">Navigation</string>
@@ -251,7 +251,7 @@
     <string name="analytics_dialog_title">AnkiDroid को बेहतर बनाने में मदद करें!</string>
     <string name="analytics_title" maxLength="41">सुविधा उपयोग साझा करें</string>
     <string name="analytics_summ">आप AnkiDroid में योगदान कर सकते हैं, आप AnkiDroid Team को यह देखने में मदद कर सकते हैं कि लोग किन सुविधाओं का उपयोग करते हैं</string>
-    <string name="note_editor_replace_newlines" maxLength="41">Replace newlines with HTML</string>
+    <string name="note_editor_replace_newlines" maxLength="41">न्यूलाइन को हटम्ल से बदलें</string>
     <string name="note_editor_replace_newlines_summ">In the Note Editor, convert any instances of &lt;br&gt; to newlines when editing a card.</string>
     <string name="no_code_formatting" maxLength="41">Simple typed answer formatting</string>
     <string name="no_code_formatting_summ">टाइप किए गए उत्तर परिणामों में प्रदर्शित होने वाले ‘􏿾’ को ठीक करता है</string>
@@ -262,7 +262,7 @@
     <string name="pref_cat_about_title" maxLength="41">इसके बारे में</string>
     <string name="contributors_title">Contributors</string>
     <string name="about_contributors_description"><![CDATA[These are our awesome <a href=\"%1$s\">contributors</a>. You can help AnkiDroid too by programming, translating, donating and <a href=\"%2$s\">more</a>!]]></string>
-    <string name="license">License</string>
+    <string name="license">लाइसेंस</string>
     <string name="license_description"><![CDATA[AnkiDroid is released under the <a href=\"%1$s\">GPL-3.0</a> and <a href=\"%2$s\">AGPL-3.0</a> licenses, with the source code available <a href=\"%3$s\">on GitHub</a>]]></string>
     <string name="donate_description"><![CDATA[You can support AnkiDroid\'s development by <a href=\"%1$s\">donating</a>. Any amount is deeply appreciated.]]></string>
     <!-- Controls -->
@@ -270,7 +270,7 @@
     <string name="binding_replace_gesture">Replace gesture</string>
     <string name="binding_add_key">कुंजी जोड़ें</string>
     <string name="binding_replace_key">कुंजी बदलें</string>
-    <string name="key_picker_default_press_key">Press a key</string>
+    <string name="key_picker_default_press_key">कोई कुंजी दबाएं</string>
     <!-- Select card side -->
     <string name="card_side_selection_title">कार्ड साइड चुनें</string>
     <string name="card_side_question">प्रश्न</string>
@@ -303,9 +303,9 @@
         You can restore from a backup and export your collection in the deck list menu.
     ]]></string>
     <string name="pref__minutes_between_automatic_backups__title" maxLength="41">Minutes between automatic backups</string>
-    <string name="pref__daily_backups_to_keep__title" maxLength="41">Daily backups to keep</string>
-    <string name="pref__weekly_backups_to_keep__title" maxLength="41">Weekly backups to keep</string>
-    <string name="pref__monthly_backups_to_keep__title" maxLength="41">Monthly backups to keep</string>
+    <string name="pref__daily_backups_to_keep__title" maxLength="41">प्रतिदिन में कितने बैकअप रखे जायेंगे</string>
+    <string name="pref__weekly_backups_to_keep__title" maxLength="41">साप्ताहिक में कितने बैकअप रखे जायेंगे</string>
+    <string name="pref__monthly_backups_to_keep__title" maxLength="41">मासिक में कितने बैकअप रखे जायेंगे</string>
     <!-- #######################################################################################
          ################################# Manage space activity ###############################
          ####################################################################################### -->
@@ -318,7 +318,7 @@
         <item quantity="other">%1$d files\n%2$s</item>
     </plurals>
     <!-- Delete unused media -->
-    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">Delete unused media files</string>
+    <string name="pref__delete_unused_media_files__title" maxLength="41" comment="Preference title">अनावश्यक मीडिया फ़ाइलें हटाएँ</string>
     <string name="pref__delete_unused_media_files__summary">Delete images and other media that are not prefixed with _ and are not referenced by any notes</string>
     <string name="dialog__delete_unused_media_files__title" comment="Title for a dialog where you can select unused media files to delete">Delete unused media files</string>
     <!-- Delete backups -->
@@ -326,19 +326,19 @@
     <string name="dialog__delete_backups__title" comment="Title for a dialog where you can choose backups to delete">Delete backups</string>
     <string name="progress__deleting_backups">Deleting backups&#8230;</string>
     <!-- Delete collection -->
-    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">Delete collection</string>
+    <string name="pref__delete_collection__title" maxLength="41" comment="Preference title">संग्रह को हटाएँ</string>
     <string name="pref__delete_collection__summary">Delete collection, media, and backups. App settings are not deleted</string>
     <string name="dialog__delete_collection__title" comment="Confirmation dialog title">Delete collection</string>
     <string name="dialog__delete_collection__message" comment="“Close the window” here refers to the activity that the user is currently seeing.        When the collection is deleted, we exit the process, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete your collection, media, and backups?\n\nNote: this action will close the window.</string>
-    <string name="progress__deleting_collection">Deleting collection&#8230;</string>
+    <string name="progress__deleting_collection">संग्रह  को हटाया जा रहा है...</string>
     <!-- Delete everything -->
-    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">Delete everything</string>
+    <string name="pref__delete_everything__title" maxLength="41" comment="Preference title">सब कुछ मिटा दो</string>
     <string name="pref__delete_everything__summary">Delete collection, media, backups, and settings</string>
     <string name="dialog__delete_everything__title" comment="Confirmation dialog title">Delete everything</string>
     <string name="dialog__delete_everything__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete all data? This includes your collection, media, backups and preferences.\n\nNote: this action will close the window.</string>
     <!-- Delete app data -->
-    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">Delete app data</string>
-    <string name="pref__delete_app_data__summary">Delete settings and other app data</string>
+    <string name="pref__delete_app_data__title" maxLength="41" comment="Preference title">ऐप डेटा को हटाएं</string>
+    <string name="pref__delete_app_data__summary">सेटिंग्स और अन्य ऐप डेटा को हटाएं</string>
     <string name="dialog__delete_app_data__title" comment="Confirmation dialog title">Delete app data</string>
     <string name="dialog__delete_app_data__message" comment="“Close the window” here refers to the activity that the user is currently seeing.         Deleting app data forcibly closes AnkiDroid, which closes the activity without animation.         On some devices the entire settings app may be closed.         User might not realize that this activity comes directly from AnkiDroid,         so it might be wise to avoid words such as “AnkiDroid or “app”.">Are you sure you want to delete app data? This includes settings and other app data.\n\nNote: this action will close the window.</string>
     <!-- #######################################################################################
@@ -347,7 +347,7 @@
     <string name="pref__etc__summary__fetching" comment="Generic preference summary to be shown when the value is being fetched">&#8230;</string>
     <string name="pref__etc__summary__no_collection" comment="Generic preference summary to be shown when a preference is not usable         because the collection does not exist">No collection</string>
     <string name="pref__etc__summary__error" comment="Generic preference summary to be shown when there was an error fetching the value.         For example, this is shown when the permission to access collection is lacking">Error</string>
-    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">Fetching&#8230;</string>
-    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">Calculating&#8230;</string>
-    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">Collection does not exist</string>
+    <string name="pref__etc__snackbar__fetching" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which is being fetched">जानकारी प्राप्त हो रही है...</string>
+    <string name="pref__etc__snackbar__calculating" comment="Generic snackbar message to be shown when user taps on a preference,         the value of which, such as folder size on disk, is being calculated">गणना हो रही है...</string>
+    <string name="pref__etc__snackbar__no_collection" comment="Generic snackbar message to be shown when user taps on a preference         that is not usable because the collection does not exist">संग्रह मौजूद नहीं है</string>
 </resources>
