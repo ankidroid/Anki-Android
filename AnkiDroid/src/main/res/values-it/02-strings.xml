@@ -154,10 +154,7 @@
     <string name="import_title">Importazione in corso</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aggiungi</string>
     <string name="import_message_replace_confirm">La tua collezione esistente verrà eliminata e sostituita con i dati del file %s. Sei sicuro?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Aggiungere “%s” alla collezione? Questo potrebbe richiedere molto tempo</item>
-        <item quantity="other">Vuoi importare i seguenti file:\n%s\nQuesto potrebbe richiedere molto tempo</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Questo non è un file di pacchetto Anki valido</string>
     <string name="import_title_error" comment="Title of error dialog">Errore</string>
     <string name="import_error_handle_exception">Impossibile importare il file\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Le sostituzioni di Anki Database (.anki2) non sono ancora supportate. Consultare il manuale per le istruzioni di sostituzione.</string>
     <string name="import_error_content_provider">Il file selezionato non ha potuto essere importato automaticamente da AnkiDroid. Consulta il manuale utente per importare manualmente i file anki: \n %s</string>
     <string name="import_error_copy_to_cache">Impossibile cache del file (forse fuori dallo spazio di archiviazione)</string>
-    <string name="import_error_multiple_colpkg">Sono stati selezionati più file colpkg.</string>
-    <string name="import_error_colpkg_apkg">Entrambi i file apkg &amp; colpkg sono stati selezionati contemporaneamente.</string>
     <string name="import_interrupted">Importazione interrotta</string>
     <string name="export_include_schedule">Includi schedulazione</string>
     <string name="export_include_media">Includi Media</string>

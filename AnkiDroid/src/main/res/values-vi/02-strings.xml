@@ -152,9 +152,7 @@
     <string name="import_title">Đang nhập</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Thêm</string>
     <string name="import_message_replace_confirm">Thao tác này sẽ xoá tất cả bộ sưu tập hiện hữu và thay nó bằng dữ liệu của tệp %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Thêm \"%s\" vào bộ sưu tập? Quá trình này có thể mất 1 chút thời gian</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Đây không phải là gói tệp tin Anki hợp lệ</string>
     <string name="import_title_error" comment="Title of error dialog">Lỗi</string>
     <string name="import_error_handle_exception">Không thể nhập tệp\n\n%s</string>
@@ -162,8 +160,6 @@
     <string name="import_error_load_imported_database">Cơ sở dữ liệu Anki (.anki2) thay thế chưa được hỗ trợ. Vui lòng xem sách hướng dẫn để biết hướng dẫn thay thế.</string>
     <string name="import_error_content_provider">Tệp đã chọn không thể được nhập tự động bởi AnkiDroid. Xin xem hướng dẫn sử dụng để biết cách nhập thủ công tệp anki: \n%s</string>
     <string name="import_error_copy_to_cache">Không thể lưu tệp vào bộ nhớ đệm (có thể hết dùng lượng lưu trữ)</string>
-    <string name="import_error_multiple_colpkg">Nhiều tệp colpkg đã được chọn.</string>
-    <string name="import_error_colpkg_apkg">Cả hai tệp apkg &amp; colpkg đã được chọn cùng một lúc.</string>
     <string name="import_interrupted">Nhập dữ liệu bị gián đoạn: AnkiDroid đã bị đóng</string>
     <string name="export_include_schedule">Gồm cả việc lên lịch</string>
     <string name="export_include_media">Gồm cả các tệp đa phương tiện</string>

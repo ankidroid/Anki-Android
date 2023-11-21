@@ -158,12 +158,7 @@
     <string name="import_title">Importuje sa</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Pridať</string>
     <string name="import_message_replace_confirm">Týmto vymažete vašu existujúcu zbierku a nahradíte ju dátami zo súboru %s. Ste si istý?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="many">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Toto nie je platný Anki balík</string>
     <string name="import_title_error" comment="Title of error dialog">Chyba</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
@@ -171,8 +166,6 @@
     <string name="import_error_load_imported_database">Náhrady anki databázy (.anki2) ešte nie sú podporované. Pozrite si, prosím, manuál pre náhrady.</string>
     <string name="import_error_content_provider">Zvolený súbor nemohol byť importovaný automaticky AnkiDroidom. Pozrite si, prosím, používateľský manuál ako manuálne importovať anki súbory: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_interrupted">Import prerušený</string>
     <string name="export_include_schedule">Zahrnúť plánovanie</string>
     <string name="export_include_media">Zahrnúť multimédia</string>

@@ -154,10 +154,7 @@
     <string name="import_title">Importeren</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Toevoegen</string>
     <string name="import_message_replace_confirm">Deze actie zal uw bestaande collectie verwijderen en vervangen door de data van bestand %s. Bent u zeker?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">“%s” aan de collectie toevoegen? Dit kan lang duren</item>
-        <item quantity="other">Wilt u de volgende bestanden importeren:\n%s\nDit kan lang duren</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Dit is geen geldig Anki-pakketbestand</string>
     <string name="import_title_error" comment="Title of error dialog">Fout</string>
     <string name="import_error_handle_exception">Importeren van bestand\n\n%s mislukt</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) vervangingen worden nog niet ondersteund. Zie alstublieft de handleiding voor vervangende instructies.</string>
     <string name="import_error_content_provider">Het selecteerde bestand kon niet automatisch geïmporteerd worden door AnkiDroid. Bekijk de gebruikershandleiding om te zien hoe je anki bestanden handmatig importeert: \n%s</string>
     <string name="import_error_copy_to_cache">Het cachen van het bestand is mislukt (mogelijk gebrek aan opslagruimte)</string>
-    <string name="import_error_multiple_colpkg">Er zijn meerdere colpkg bestanden geselecteerd.</string>
-    <string name="import_error_colpkg_apkg">Zowel apkg als colpkg bestanden werden in een keer geselecteerd.</string>
     <string name="import_interrupted">Importeren onderbroken</string>
     <string name="export_include_schedule">Inclusief de planning</string>
     <string name="export_include_media">Inclusief media</string>

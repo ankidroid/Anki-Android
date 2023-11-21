@@ -154,10 +154,7 @@
     <string name="import_title">იმპორტირება</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">დამატება</string>
     <string name="import_message_replace_confirm">არსებული კოლექცია წაიშლება და ჩანაცვლდება არჩეული ფაილის მონაცემებით %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">\"%s\" დაემატოს კოლექციას? ამას შეიძლება გარკვეული დრო დასჭირდეს</item>
-        <item quantity="other">გსურთ ჩამოთვლილი ფაილების  იმპორტირება:\n%s\nამას შეიძლება გარკვეული დრო დასჭირდეს</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ეს არ არის მოქმედი Anki-პაკეტის ფაილი</string>
     <string name="import_title_error" comment="Title of error dialog">შეცდომა</string>
     <string name="import_error_handle_exception">ფაილის იმპორტირება ვერ მოხერხდა\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Anki მონაცემთა ბაზის შემცვლელი ფაილები (.anki2)  ჯერ არ არის მხარდაჭერილი. იხილეთ ინსტრუქცია შესაბამისი მითითებებისთვის</string>
     <string name="import_error_content_provider">მონიშნული ფაილის ავტომატური იმპორტირება ვერ მოხერხდა. იხილეთ ინსტრუქცია Anki-ფაილების არაავტომატური იმპორტირების მეთოდისთვის: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">მრავალი COLPKG ფაილი მოინიშნა.</string>
-    <string name="import_error_colpkg_apkg">apkg და colpkg ფაილები ერთბაშად მოინიშნა</string>
     <string name="import_interrupted">იმპორტი შეჩერდა: AnkiDroid გამოირთო</string>
     <string name="export_include_schedule">სწავლის განრიგის თან გათვალისწინება</string>
     <string name="export_include_media">მედიაფაილების მოცვა</string>

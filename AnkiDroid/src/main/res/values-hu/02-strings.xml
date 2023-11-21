@@ -154,10 +154,7 @@
     <string name="import_title">Importálás</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hozzáadás</string>
     <string name="import_message_replace_confirm">Ez a művelet törölni fogja a már meglévő gyűjteményed és lecseréli a %s fájl tartalmával. Biztos vagy benne?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">\"%s\"-t felvenni a gyűjteménybe hosszú ideig tarthat</item>
-        <item quantity="other">A következő fájlokat tényleg importálni akarod:\n%s ?\n Hosszú ideig tarthat</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Ez nem egy érvényes Anki csomag fájl</string>
     <string name="import_title_error" comment="Title of error dialog">Hiba</string>
     <string name="import_error_handle_exception">Nem sikerült importálni a fájlt\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Az Anki Adatbázis (.anki2) csere még nem támogatott. Kérjük olvassa el az útmutatót az instrukciókhoz.</string>
     <string name="import_error_content_provider">A kiválasztott fájl nem importálható automatikusan. Olvasd el a felhasználói kézikönyvet, hogy megtudd, hogyan importálhatsz manuálisan anki fájlokat:\n%s</string>
     <string name="import_error_copy_to_cache">Nem sikerült gyorsítótárba helyezni a fájlt (valószínűleg elfogyott a tárhely)</string>
-    <string name="import_error_multiple_colpkg">Több colpkg fájl lett kiválasztva.</string>
-    <string name="import_error_colpkg_apkg">Az apkg &amp; colpkg fájlok egyszerre lettek kiválasztva.</string>
     <string name="import_interrupted">Importálás megszakítva</string>
     <string name="export_include_schedule">Ütemezéssel együtt</string>
     <string name="export_include_media">Médiával együtt</string>

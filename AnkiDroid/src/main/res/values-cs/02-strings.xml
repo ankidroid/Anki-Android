@@ -158,12 +158,7 @@
     <string name="import_title">Importuje se</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Přidat</string>
     <string name="import_message_replace_confirm">To odstraní vaši stávající kolekci a nahradí ji daty ze souboru %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Přidat „%s“ do kolekce? To může trvat dlouhou dobu</item>
-        <item quantity="few">Chcete importovat následující soubory:\n%s\nTo může trvat dlouhou dobu</item>
-        <item quantity="many">Chcete importovat následující soubory:\n%s\nTo může trvat dlouhou dobu</item>
-        <item quantity="other">Chcete importovat následující soubory:\n%s\nTo může trvat dlouhou dobu</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Toto není platný Anki balíček</string>
     <string name="import_title_error" comment="Title of error dialog">Chyba</string>
     <string name="import_error_handle_exception">Nepodařilo se importovat soubor\n\n%s</string>
@@ -171,8 +166,6 @@
     <string name="import_error_load_imported_database">Náhrady Anki databáze (.anki2) ještě nejsou podporovány. Pokyny k náhradě naleznete v příručce.</string>
     <string name="import_error_content_provider">Vybraný soubor nelze automaticky importovat pomocí AnkiDroid. V uživatelské příručce naleznete, jak provést ruční import souborů anki: \n %s</string>
     <string name="import_error_copy_to_cache">Nepodařilo se uložit soubor do mezipaměti (možná nedostatek místa v úložišti)</string>
-    <string name="import_error_multiple_colpkg">Bylo vybráno více colpkg souborů.</string>
-    <string name="import_error_colpkg_apkg">Soubory apkg &amp; colpkg byly vybrány najednou.</string>
     <string name="import_interrupted">Import přerušen: AnkiDroid se zavřel</string>
     <string name="export_include_schedule">Zahrnout plánování</string>
     <string name="export_include_media">Zahrnout multimédia</string>

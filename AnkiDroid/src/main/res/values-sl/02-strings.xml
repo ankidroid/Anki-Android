@@ -158,12 +158,7 @@
     <string name="import_title">Uvažanje</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">To bo izbrisalo vašo obstoječo zbirko in jo nadomestilo s podatki datoteke %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Dodaj %s  zbirki? To lahko vzame veliko časa.</item>
-        <item quantity="two">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="few">Do you want to import the following files:\n%s\nThis may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">To ni veljavna datoteka Anki package.</string>
     <string name="import_title_error" comment="Title of error dialog">Napaka</string>
     <string name="import_error_handle_exception">Napaka pri uvažanju datoteke\n\n%s</string>
@@ -171,8 +166,6 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Izbrane datoteke AnkiDroid ni mogel samodejno uvoziti. Oglejte si uporabniški priročnik o načinu ročnega uvoza datotek anki: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Več colpkg datotek je bilo izbranih.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Vključi urnik</string>
     <string name="export_include_media">Vključi predstavnost</string>

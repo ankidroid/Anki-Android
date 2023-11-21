@@ -154,10 +154,7 @@
     <string name="import_title">ଆମଦାନି ଚାଲିଛି</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ଯୋଡ଼ନ୍ତୁ</string>
     <string name="import_message_replace_confirm">ଏହା ଆପଣଙ୍କର ଵିଦ୍ୟମାନ ସଂଗ୍ରହକୁ ଵିଲୋପ କରିଦେଇ ଏହାକୁ %s ଫାଇଲର ତଥ୍ୟ ସହିତ ପ୍ରତିସ୍ଥାପିତ କରିବ</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">ସଂଗ୍ରହରେ “%s” କୁ ଯୋଡ଼ିବେ ତ? ଏହା ବହୁତ ସମୟ ନେଇପାରେ</item>
-        <item quantity="other">ଆପଣ ନିମ୍ନଲିଖିତ ଫାଇଲଗୁଡ଼ିକୁ ଆମଦାନି କରିବାକୁ ଚାହୁଁଛନ୍ତି ତ:\n%s\nଏହା ବହୁତ ସମୟ ନେଇପାରେ</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ଏହା ଏକ ବୈଧ Anki package ଫାଇଲ୍ ନୁହେଁ</string>
     <string name="import_title_error" comment="Title of error dialog">ତ୍ରୁଟି</string>
     <string name="import_error_handle_exception">ଫାଇଲ୍ ଆମଦାନି କରିବାରେ ବିଫଳ\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Anki ଡାଟାବେସ୍ (.anki2) ପ୍ରତିସ୍ଥାପନ ଗୁଡ଼ିକ ଏପର୍ଯ୍ୟନ୍ତ ସମର୍ଥିତ ନୁହେଁ। ପ୍ରତିସ୍ଥାପନ ନିର୍ଦ୍ଦେଶାବଳୀ ପାଇଁ ଦୟାକରି ମାନୁଆଲ୍ ଦେଖନ୍ତୁ।</string>
     <string name="import_error_content_provider">ମନୋନୀତ ଫାଇଲ୍ AnkiDroid ଦ୍ୱାରା ସ୍ୱଚାଳିତ ଭାଵେ ଆମଦାନୀ ହୋଇପାରିବ ନାହିଁ। Anki ଫାଇଲଗୁଡ଼ିକୁ କିପରି ହସ୍ତକୃତ ଭାଵେ ଆମଦାନୀ କରିବେ ଜାଣିବା ପାଇଁ ଦୟାକରି ଉପଭୋକ୍ତା ମାନୁଆଲ୍ ଦେଖନ୍ତୁ: \n%s</string>
     <string name="import_error_copy_to_cache">ଫାଇଲ୍ ଦ୍ରୁତିକା କରି ସାଇତିବାରେ ବିଫଳ (ସମ୍ଭବତଃ ଆଉ ଷ୍ଟୋରେଜ୍ ନାହିଁ)</string>
-    <string name="import_error_multiple_colpkg">ଏକାଧିକ colpkg ଫାଇଲ୍ ଚୟନ କରାଯାଇଥିଲା।</string>
-    <string name="import_error_colpkg_apkg">ଉଭୟ apkg ଏବଂ colpkg ଫାଇଲଗୁଡ଼ିକ ଏକାସାଙ୍ଗରେ ଚୟନ କରାଯାଇଥିଲା।</string>
     <string name="import_interrupted">ଆମଦାନୀ ବାଧାପ୍ରାପ୍ତ: AnkiDroid ବନ୍ଦ ହୋଇଯାଇଥିଲା</string>
     <string name="export_include_schedule">ଅନୁସୂଚୀ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
     <string name="export_include_media">ମିଡ଼ିଆ ଅନ୍ତର୍ଭୂକ୍ତ କରନ୍ତୁ</string>
