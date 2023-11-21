@@ -22,6 +22,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
@@ -361,6 +362,23 @@ open class AnkiDroidApp : Application() {
          */
         lateinit var instance: AnkiDroidApp
             private set
+
+        /**
+         * An override for Shared Preferences to use for unit tests
+         *
+         * This does not depend on an instance of AnkiDroidApp and therefore has no Android
+         * implementations
+         */
+        @VisibleForTesting
+        var sharedPreferencesTestingOverride: SharedPreferences? = null
+
+        /**
+         * A test-friendly accessor to Shared Preferences.
+         *
+         * In tests, this can avoid an instance of `AnkiDroidApp`, which is slow
+         * This was added to avoid code churn
+         */
+        fun sharedPrefs() = sharedPreferencesTestingOverride ?: instance.sharedPrefs()
 
         /**
          * The latest package version number that included important changes to the database integrity check routine. All

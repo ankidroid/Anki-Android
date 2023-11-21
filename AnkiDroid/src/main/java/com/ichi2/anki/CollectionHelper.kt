@@ -17,6 +17,7 @@
 package com.ichi2.anki
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.database.sqlite.SQLiteFullException
 import android.os.Environment
 import android.text.format.Formatter
@@ -477,12 +478,23 @@ open class CollectionHelper {
          * @return the absolute path to the AnkiDroid directory.
          */
         fun getCurrentAnkiDroidDirectory(context: Context): String {
-            val preferences = context.sharedPrefs()
+            return getCurrentAnkiDroidDirectoryOptionalContext(context.sharedPrefs()) { context }
+        }
+
+        /**
+         * An accessor which makes [Context] optional in the case that [PREF_COLLECTION_PATH] is set
+         *
+         * @return the absolute path to the AnkiDroid directory.
+         */
+        // This uses a lambda as we typically depends on the `lateinit` AnkiDroidApp.instance
+        // If we remove all Android references, we get a significant unit test speedup
+        @VisibleForTesting(otherwise = VisibleForTesting.NONE)
+        internal fun getCurrentAnkiDroidDirectoryOptionalContext(preferences: SharedPreferences, context: () -> Context): String {
             return if (AnkiDroidApp.INSTRUMENTATION_TESTING) {
                 // create an "androidTest" directory inside the current collection directory which contains the test data
                 // "/AnkiDroid/androidTest" would be a new collection path
                 val currentCollectionDirectory = preferences.getOrSetString(PREF_COLLECTION_PATH) {
-                    getDefaultAnkiDroidDirectory(context)
+                    getDefaultAnkiDroidDirectory(context())
                 }
                 File(
                     currentCollectionDirectory,
@@ -493,7 +505,7 @@ open class CollectionHelper {
             } else {
                 preferences.getOrSetString(PREF_COLLECTION_PATH) {
                     getDefaultAnkiDroidDirectory(
-                        context
+                        context()
                     )
                 }
             }

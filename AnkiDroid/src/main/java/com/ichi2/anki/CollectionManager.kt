@@ -243,7 +243,8 @@ object CollectionManager {
     }
 
     fun getCollectionDirectory() =
-        File(CollectionHelper.getCurrentAnkiDroidDirectory(AnkiDroidApp.instance))
+        // Allow execution if AnkiDroidApp.instance is not initialized
+        File(CollectionHelper.getCurrentAnkiDroidDirectoryOptionalContext(AnkiDroidApp.sharedPrefs()) { AnkiDroidApp.instance })
 
     /** Ensures the AnkiDroid directory is created, then returns the path to the collection file
      * inside it. */
