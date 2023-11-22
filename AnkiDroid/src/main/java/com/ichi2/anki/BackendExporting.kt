@@ -15,38 +15,109 @@ package com.ichi2.anki
 
 import anki.import_export.ExportLimit
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.export.ExportDialogsFactoryProvider
 import com.ichi2.libanki.exportAnkiPackage
+import com.ichi2.libanki.exportCardsCsv
 import com.ichi2.libanki.exportCollectionPackage
+import com.ichi2.libanki.exportNotesCsv
 
-suspend fun AnkiActivity.exportApkg(
-    apkgPath: String,
+fun AnkiActivity.exportApkgPackage(
+    exportPath: String,
     withScheduling: Boolean,
     withMedia: Boolean,
     limit: ExportLimit
 ) {
-    withProgress(
-        extractProgress = {
+    launchCatchingTask {
+        val onProgress: ProgressContext.() -> Unit = {
             if (progress.hasExporting()) {
                 text = getString(R.string.export_preparation_in_progress)
             }
         }
-    ) {
-        withCol {
-            exportAnkiPackage(apkgPath, withScheduling, withMedia, limit)
+        withProgress(extractProgress = onProgress) {
+            withCol { exportAnkiPackage(exportPath, withScheduling, withMedia, limit) }
         }
+        val factory =
+            (this@exportApkgPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
+        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
+        showAsyncDialogFragment(dialog)
     }
 }
 
 suspend fun AnkiActivity.exportColpkg(colpkgPath: String, withMedia: Boolean) {
-    withProgress(
-        extractProgress = {
+    val onProgress: ProgressContext.() -> Unit = {
+        if (progress.hasExporting()) {
+            text = getString(R.string.export_preparation_in_progress)
+        }
+    }
+    withProgress(extractProgress = onProgress) {
+        withCol { exportCollectionPackage(colpkgPath, withMedia, true) }
+    }
+}
+
+fun AnkiActivity.exportCollectionPackage(exportPath: String, withMedia: Boolean) {
+    launchCatchingTask {
+        exportColpkg(exportPath, withMedia)
+        val factory =
+            (this@exportCollectionPackage as ExportDialogsFactoryProvider).exportDialogsFactory()
+        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
+        showAsyncDialogFragment(dialog)
+    }
+}
+
+fun AnkiActivity.exportSelectedNotes(
+    exportPath: String,
+    withHtml: Boolean,
+    withTags: Boolean,
+    withDeck: Boolean,
+    withNotetype: Boolean,
+    withGuid: Boolean,
+    limit: ExportLimit
+) {
+    launchCatchingTask {
+        val onProgress: ProgressContext.() -> Unit = {
             if (progress.hasExporting()) {
                 text = getString(R.string.export_preparation_in_progress)
             }
         }
-    ) {
-        withCol {
-            exportCollectionPackage(colpkgPath, withMedia, true)
+        withProgress(extractProgress = onProgress) {
+            withCol {
+                exportNotesCsv(
+                    exportPath,
+                    withHtml,
+                    withTags,
+                    withDeck,
+                    withNotetype,
+                    withGuid,
+                    limit
+                )
+            }
         }
+        val factory =
+            (this@exportSelectedNotes as ExportDialogsFactoryProvider).exportDialogsFactory()
+        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
+        showAsyncDialogFragment(dialog)
+    }
+}
+
+fun AnkiActivity.exportSelectedCards(
+    exportPath: String,
+    withHtml: Boolean,
+    limit: ExportLimit
+) {
+    launchCatchingTask {
+        val onProgress: ProgressContext.() -> Unit = {
+            if (progress.hasExporting()) {
+                text = getString(R.string.export_preparation_in_progress)
+            }
+        }
+        withProgress(extractProgress = onProgress) {
+            withCol {
+                exportCardsCsv(exportPath, withHtml, limit)
+            }
+        }
+        val factory =
+            (this@exportSelectedCards as ExportDialogsFactoryProvider).exportDialogsFactory()
+        val dialog = factory.newExportReadyDialog().withArguments(exportPath)
+        showAsyncDialogFragment(dialog)
     }
 }

@@ -16,7 +16,6 @@
 
 package com.ichi2.anki.browser
 
-import android.content.res.Resources
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -28,9 +27,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.DeckSpinnerSelection.Companion.ALL_DECKS_ID
 import com.ichi2.anki.Flag
 import com.ichi2.anki.PreviewDestination
-import com.ichi2.anki.R
-import com.ichi2.anki.dialogs.ExportDialogParams
-import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.export.ExportDialogFragment
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
@@ -348,32 +345,14 @@ class CardBrowserViewModel(
         }
     }
 
-    /** @return an [ExportDialogParams] based on the current screen state */
-    suspend fun getExportDialogParams(resources: Resources): ExportDialogParams? {
+    suspend fun getSelectionExportData(): Pair<ExportDialogFragment.ExportType, List<Long>>? {
         if (!isInMultiSelectMode) return null
         return when (cardsOrNotes) {
-            CARDS -> {
-                val selectedCardIds = selectedCardIds
-                ExportDialogParams(
-                    message = resources.getQuantityString(
-                        R.plurals.confirm_apkg_export_selected_cards,
-                        selectedCardIds.size,
-                        selectedCardIds.size
-                    ),
-                    exportType = ExportType.ExportCards(selectedCardIds)
-                )
-            }
-            NOTES -> {
-                val selectedNoteIds = withCol { CardService.selectedNoteIds(selectedCardIds, this) }
-                ExportDialogParams(
-                    message = resources.getQuantityString(
-                        R.plurals.confirm_apkg_export_selected_notes,
-                        selectedNoteIds.size,
-                        selectedNoteIds.size
-                    ),
-                    exportType = ExportType.ExportNotes(selectedNoteIds)
-                )
-            }
+            CARDS -> Pair(ExportDialogFragment.ExportType.Cards, selectedCardIds)
+            NOTES -> Pair(
+                ExportDialogFragment.ExportType.Notes,
+                withCol { CardService.selectedNoteIds(selectedCardIds, this) }
+            )
         }
     }
 

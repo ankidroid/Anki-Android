@@ -150,7 +150,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
                     if (isLoggedIn) {
                         deckPicker.sync(conflict = null)
                     } else {
-                        deckPicker.exportCollection(includeMedia = true)
+                        deckPicker.exportCollection()
                     }
                 }
                 materialDialog.show()

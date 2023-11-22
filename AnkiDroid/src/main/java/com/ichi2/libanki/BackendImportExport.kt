@@ -110,6 +110,22 @@ fun Collection.exportAnkiPackage(
     backend.exportAnkiPackage(outPath, withScheduling, withMedia, legacy, limit)
 }
 
+fun Collection.exportNotesCsv(
+    outPath: String,
+    withHtml: Boolean,
+    withTags: Boolean,
+    withDeck: Boolean,
+    withNotetype: Boolean,
+    withGuid: Boolean,
+    limit: ExportLimit
+) {
+    backend.exportNoteCsv(outPath, withHtml, withTags, withDeck, withNotetype, withGuid, limit)
+}
+
+fun Collection.exportCardsCsv(outPath: String, withHtml: Boolean, limit: ExportLimit) {
+    backend.exportCardCsv(outPath, withHtml, limit)
+}
+
 fun Collection.getCsvMetadataRaw(input: ByteArray): ByteArray {
     return backend.getCsvMetadataRaw(input)
 }

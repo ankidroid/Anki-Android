@@ -87,7 +87,9 @@ import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.anki.export.ActivityExportingDelegate
-import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.export.ExportDialogFragment
+import com.ichi2.anki.export.ExportDialogsFactory
+import com.ichi2.anki.export.ExportDialogsFactoryProvider
 import com.ichi2.anki.introduction.CollectionPermissionScreenLauncher
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.notetype.ManageNotetypes
@@ -180,7 +182,8 @@ open class DeckPicker :
     BaseSnackbarBuilderProvider,
     ApkgImportResultLauncherProvider,
     CsvImportResultLauncherProvider,
-    CollectionPermissionScreenLauncher {
+    CollectionPermissionScreenLauncher,
+    ExportDialogsFactoryProvider {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
@@ -658,6 +661,7 @@ open class DeckPicker :
         Timber.d("onCreateOptionsMenu()")
         mFloatingActionMenu.closeFloatingActionMenu(applyRiseAndShrinkAnimation = false)
         menuInflater.inflate(R.menu.deck_picker, menu)
+        menu.findItem(R.id.action_export)?.title = TR.exportingExport()
         setupSearchIcon(menu.findItem(R.id.deck_picker_action_filter))
         mToolbarSearchView = menu.findItem(R.id.deck_picker_action_filter).actionView as SearchView
         // redraw menu synchronously to avoid flicker
@@ -953,8 +957,12 @@ open class DeckPicker :
                 return true
             }
             R.id.action_export -> {
-                Timber.i("DeckPicker:: Export collection button pressed")
-                exportCollection(includeMedia = false)
+                Timber.i("DeckPicker:: Export menu item selected")
+                if (mediaMigrationIsInProgress(this)) {
+                    showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
+                    return true
+                }
+                ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -974,14 +982,14 @@ open class DeckPicker :
         }
     }
 
-    fun exportCollection(includeMedia: Boolean) {
-        mExportingDelegate.showExportDialog(
-            ExportDialogParams(
-                message = resources.getString(R.string.confirm_apkg_export),
-                exportType = ExportType.ExportCollection,
-                includeMedia = includeMedia
-            )
-        )
+    override fun exportDialogsFactory(): ExportDialogsFactory = mExportingDelegate.mDialogsFactory
+
+    fun exportCollection() {
+        if (mediaMigrationIsInProgress(this)) {
+            showSnackbar(R.string.functionality_disabled_during_storage_migration, Snackbar.LENGTH_SHORT)
+            return
+        }
+        ExportDialogFragment.newInstance().show(supportFragmentManager, "exportDialog")
     }
 
     private fun processReviewResults(resultCode: Int) {
@@ -1933,12 +1941,7 @@ open class DeckPicker :
     }
 
     fun exportDeck(did: DeckId) {
-        mExportingDelegate.showExportDialog(
-            ExportDialogParams(
-                message = resources.getString(R.string.confirm_apkg_export_deck, getColUnsafe.decks.name(did)),
-                exportType = ExportType.ExportDeck(did)
-            )
-        )
+        ExportDialogFragment.newInstance(did).show(supportFragmentManager, "exportOptions")
     }
 
     fun createIcon(context: Context, did: DeckId) {
