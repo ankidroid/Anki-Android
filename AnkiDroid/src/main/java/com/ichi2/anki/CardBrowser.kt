@@ -146,8 +146,6 @@ open class CardBrowser :
 
     private var renderBrowserQAJob: Job? = null
 
-    private var checkSelectedCardsJob: Job? = null
-
     private lateinit var mExportingDelegate: ActivityExportingDelegate
 
     /**
@@ -911,10 +909,13 @@ open class CardBrowser :
             return
         }
         if (mCheckedCards.isNotEmpty()) {
-            checkSelectedCardsJob?.cancel()
-            checkSelectedCardsJob = launchCatchingTask {
-                val result = withProgress { checkCardSelection(mCheckedCards) }
-                onSelectedCardsChecked(result)
+            mActionBarMenu!!.findItem(R.id.action_suspend_card).apply {
+                title = TR.browsingToggleSuspend()
+                setIcon(R.drawable.ic_pause_circle_outline)
+            }
+            mActionBarMenu!!.findItem(R.id.action_mark_card).apply {
+                title = TR.browsingToggleMark()
+                setIcon(R.drawable.ic_star_border_white)
             }
         }
         mActionBarMenu!!.findItem(R.id.action_export_selected).apply {
@@ -922,6 +923,13 @@ open class CardBrowser :
                 resources.getQuantityString(R.plurals.card_browser_export_cards, checkedCardCount())
             } else {
                 resources.getQuantityString(R.plurals.card_browser_export_notes, checkedCardCount())
+            }
+        }
+        mActionBarMenu!!.findItem(R.id.action_delete_card).apply {
+            this.title = if (inCardsMode) {
+                resources.getQuantityString(R.plurals.card_browser_delete_cards, checkedCardCount())
+            } else {
+                resources.getQuantityString(R.plurals.card_browser_delete_notes, checkedCardCount())
             }
         }
         mActionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
@@ -1479,7 +1487,6 @@ open class CardBrowser :
     }
 
     private fun invalidate() {
-        checkSelectedCardsJob?.cancel()
         renderBrowserQAJob?.cancel()
         mCards.clear()
         mCheckedCards.clear()
@@ -1894,24 +1901,6 @@ open class CardBrowser :
             cardsAdapter.notifyDataSetChanged()
         }
         onPostExecuteRenderBrowserQA(result)
-    }
-
-    private fun onSelectedCardsChecked(result: Pair<Boolean, Boolean>) {
-        mActionBarMenu?.let { actionBarMenu ->
-            val (hasUnsuspended, hasUnmarked) = result
-            val suspendTitle = if (hasUnsuspended) R.string.card_browser_suspend_card else R.string.card_browser_unsuspend_card
-            val suspendIcon = if (hasUnsuspended) R.drawable.ic_pause_circle_outline else R.drawable.ic_pause_circle_filled
-            actionBarMenu.findItem(R.id.action_suspend_card).apply {
-                title = getString(suspendTitle)
-                setIcon(suspendIcon)
-            }
-            val markTitle = if (hasUnmarked) R.string.card_browser_mark_card else R.string.card_browser_unmark_card
-            val markIcon = if (hasUnmarked) R.drawable.ic_star_border_white else R.drawable.ic_star_white
-            actionBarMenu.findItem(R.id.action_mark_card).apply {
-                title = getString(markTitle)
-                setIcon(markIcon)
-            }
-        }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
