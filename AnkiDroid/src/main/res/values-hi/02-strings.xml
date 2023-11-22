@@ -154,10 +154,7 @@
     <string name="import_title">आयात</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">जोड़ें</string>
     <string name="import_message_replace_confirm">यह अपने मौजूदा संग्रह को हटाने और यह फ़ाइल %s का डेटा के साथ बदलना होगा। क्या आपको यकीन है?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">\"%s\" को संग्रह में जोड़ें? यह एक लंबा समय लग सकता है</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">यह एक मान्य Anki पैकेज फ़ाइल नहीं है</string>
     <string name="import_title_error" comment="Title of error dialog">त्रुटि</string>
     <string name="import_error_handle_exception">फ़ाइल आयात करने में विफल\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_error_copy_to_cache">फ़ाइल कैश करने में विफल (संभवतः भंडारण स्थान से बाहर)</string>
-    <string name="import_error_multiple_colpkg">एकाधिक colpkg फ़ाइलें चुनी गईं</string>
-    <string name="import_error_colpkg_apkg">akpg &amp; colpkg दोनों फाइलों को एक साथ सेलेक्ट किया गया</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
     <string name="export_include_schedule">शेड्यूलिंग शामिल करें</string>
     <string name="export_include_media">मीडिया शामिल करें</string>

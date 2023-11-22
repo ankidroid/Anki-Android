@@ -38,6 +38,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
+import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
@@ -53,6 +54,8 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.pages.CardInfo.Companion.toIntent
+import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.CardService.selectedNoteIds
@@ -178,7 +181,7 @@ open class CardBrowser :
         }
         val data = result.data
         if (data != null &&
-            (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))
+            (data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) || data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false))
         ) {
             Timber.d("Reloading Card Browser due to activity result")
             // if reloadRequired or noteChanged flag was sent from note editor then reload card list
@@ -214,7 +217,7 @@ open class CardBrowser :
         // Previewing can now perform an "edit", so it can pass on a reloadRequired
         val data = result.data
         if (data != null &&
-            (data.getBooleanExtra("reloadRequired", false) || data.getBooleanExtra("noteChanged", false))
+            (data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) || data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false))
         ) {
             searchCards()
             if (reviewerCardId == mCurrentCardId) {
@@ -763,7 +766,7 @@ open class CardBrowser :
                 Timber.i("Back key pressed")
                 val data = Intent()
                 // Add reload flag to result intent so that schedule reset when returning to note editor
-                data.putExtra("reloadRequired", mReloadRequired)
+                data.putExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, mReloadRequired)
                 closeCardBrowser(RESULT_OK, data)
             }
         }
@@ -1181,7 +1184,7 @@ open class CardBrowser :
                 val selectedCardIds = selectedCardIds
                 if (selectedCardIds.isNotEmpty()) {
                     val cardId = selectedCardIds[0]
-                    val intent = com.ichi2.anki.pages.CardInfo.getIntent(this, cardId)
+                    val intent = CardInfoDestination(cardId).toIntent(this)
                     startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.FADE)
                 }
                 return true
@@ -1323,7 +1326,7 @@ open class CardBrowser :
         }
 
     private fun getPreviewIntent(index: Int, selectedCardIds: LongArray): Intent {
-        return Previewer.getPreviewIntent(this@CardBrowser, index, selectedCardIds)
+        return PreviewDestination(index, selectedCardIds).toIntent(this)
     }
 
     private fun rescheduleSelectedCards() {

@@ -28,14 +28,15 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.CustomStudyListener
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialogFactory
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.sched.Scheduler
-import com.ichi2.testutils.JsonUtils.toOrderedString
 import com.ichi2.testutils.ParametersUtils
+import com.ichi2.testutils.isJsonEqual
 import com.ichi2.testutils.items
 import com.ichi2.utils.KotlinCleanup
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.hamcrest.core.IsNull
+import org.json.JSONObject
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -94,7 +95,7 @@ class CustomStudyDialogTest : RobolectricTest() {
             "\"timeToday\":[0,0]," +
             "\"usn\":-1" +
             "}"
-        MatcherAssert.assertThat(customStudy.toOrderedString(), Matchers.equalTo(expected))
+        MatcherAssert.assertThat(customStudy, isJsonEqual(JSONObject(expected)))
     }
 
     @Test

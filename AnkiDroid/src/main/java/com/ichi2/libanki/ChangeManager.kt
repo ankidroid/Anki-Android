@@ -30,6 +30,7 @@ package com.ichi2.libanki
 import androidx.annotation.VisibleForTesting
 import anki.collection.OpChanges
 import anki.collection.OpChangesAfterUndo
+import anki.collection.OpChangesOnly
 import anki.collection.OpChangesWithCount
 import anki.collection.OpChangesWithId
 import anki.import_export.ImportResponse
@@ -80,6 +81,7 @@ object ChangeManager {
             is OpChangesWithCount -> changes.changes
             is OpChangesWithId -> changes.changes
             is OpChangesAfterUndo -> changes.changes
+            is OpChangesOnly -> changes.changes
             is ImportResponse -> changes.changes
             else -> TODO("unhandled change type")
         }

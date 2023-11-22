@@ -18,35 +18,25 @@ package com.ichi2.anki
 
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
+import anki.collection.OpChangesOnly
 import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.buildSearchString
 import com.ichi2.libanki.exportAnkiPackage
 import com.ichi2.libanki.exportCollectionPackage
-import com.ichi2.libanki.importAnkiPackage
+import com.ichi2.libanki.importAnkiPackageRaw
 import com.ichi2.libanki.importCsvRaw
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import net.ankiweb.rsdroid.Translations
 
-fun AnkiActivity.importApkgs(apkgPaths: List<String>) {
-    launchCatchingTask {
-        for (apkgPath in apkgPaths) {
-            val report = withProgress(
-                extractProgress = {
-                    if (progress.hasImporting()) {
-                        text = progress.importing
-                    }
-                }
-            ) {
-                undoableOp {
-                    importAnkiPackage(apkgPath)
-                }
-            }
-            showSimpleMessageDialog(summarizeReport(getColUnsafe.tr, report))
-        }
+suspend fun importJsonFileRaw(input: ByteArray): ByteArray {
+    return withContext(Dispatchers.Main) {
+        val output = withCol { this.importAnkiPackageRaw(input) }
+        val changes = OpChangesOnly.parseFrom(output)
+        undoableOp { changes }
+        output
     }
 }
 
@@ -67,6 +57,25 @@ suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
 }
 
 /**
+ * Css to hide the "Show" button from the final backend import page. As the user could import a lot
+ * of notes, on pressing "Show" the native CardBrowser would be called with a search query
+ * comprising of all the notes ids. This would result in a crash or very slow behavior in the
+ * CardBrowser.
+ *
+ * NOTE: this should be used only with [android.webkit.WebView.evaluateJavascript].
+ */
+val hideShowButtonCss = """
+    javascript:(
+        function() {
+            var hideShowButtonStyle = '.desktop-only { display: none !important; }';
+            var newStyle = document.createElement('style');                    
+            newStyle.appendChild(document.createTextNode(hideShowButtonStyle));
+            document.head.appendChild(newStyle);       
+        }
+    )()
+""".trimIndent()
+
+/**
  * Calls the native [CardBrowser] to display the results of the search query constructed from the
  * input. This method will always return the received input.
  */
@@ -78,25 +87,6 @@ suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
     }
     startActivity(starterIntent)
     return input
-}
-
-private fun summarizeReport(tr: Translations, output: ImportResponse): String {
-    val log = output.log
-    val total = log.conflictingCount + log.updatedCount + log.newCount + log.duplicateCount
-    val msgs = mutableListOf(tr.importingNotesFoundInFile(total))
-    if (log.conflictingCount > 0) {
-        msgs.add(tr.importingNotesThatCouldNotBeImported(log.conflictingCount))
-    }
-    if (log.updatedCount > 0) {
-        msgs.add(tr.importingNotesUpdatedAsFileHadNewer(log.updatedCount))
-    }
-    if (log.newCount > 0) {
-        msgs.add(tr.importingNotesAddedFromFile(log.newCount))
-    }
-    if (log.duplicateCount > 0) {
-        msgs.add(tr.importingNotesSkippedAsTheyreAlreadyIn(log.duplicateCount))
-    }
-    return msgs.joinToString("\n")
 }
 
 suspend fun AnkiActivity.exportApkg(

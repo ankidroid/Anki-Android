@@ -158,12 +158,7 @@
     <string name="import_title">Importowanie</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Dodaj</string>
     <string name="import_message_replace_confirm">Istniejąca kolekcja zostanie usunięta i zastąpiona danymi z pliku %s. Czy na pewno?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Dodać \"%s\" do kolekcji? Może to zająć dużo czasu</item>
-        <item quantity="few">Dodać \"%s\" do kolekcji? Może to zająć dużo czasu</item>
-        <item quantity="many">Dodać \"%s\" do kolekcji? Może to zająć dużo czasu</item>
-        <item quantity="other">Czy chcesz zaimportować następujące pliki: \n%s\nMoże to zająć dużo czasu</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">To nie jest prawidłowy plik pakietu Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Błąd</string>
     <string name="import_error_handle_exception">Nie udało się zaimportować pliku \n\n%s</string>
@@ -171,8 +166,6 @@
     <string name="import_error_load_imported_database">Pliki bazy danych Anki (.anki2) nie są jeszcze obsługiwane. W podręczniku możesz przeczytać o alternatywnych możliwościach importu</string>
     <string name="import_error_content_provider">Wybrany plik nie mógł zostać automatycznie zaimportowany przez AnkiDroid. Zapoznaj się z podręcznikiem użytkownika na temat ręcznego importowania plików anki: \n%s</string>
     <string name="import_error_copy_to_cache">Błąd copyFileToCache() (prawdopodobnie brak miejsca)</string>
-    <string name="import_error_multiple_colpkg">Wybrano wiele plików colpkg.</string>
-    <string name="import_error_colpkg_apkg">Pliki apkg &amp; colpkg zostały wybrane jednocześnie.</string>
     <string name="import_interrupted">Import przerwany</string>
     <string name="export_include_schedule">Włącznie z zaplanowanymi powtórkami</string>
     <string name="export_include_media">Włącznie z plikami mediów</string>

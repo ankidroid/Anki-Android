@@ -152,9 +152,7 @@
     <string name="import_title">正在匯入……</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
     <string name="import_message_replace_confirm">這將會刪除你現有的集合並以%s的內容取代，你確定嗎？</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">確定要匯入「%s」？可能會花很久的時間</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">這不是有效的 Anki 套件檔案</string>
     <string name="import_title_error" comment="Title of error dialog">錯誤</string>
     <string name="import_error_handle_exception">無法匯入檔案\n\n%s</string>
@@ -162,8 +160,6 @@
     <string name="import_error_load_imported_database">Anki 資料庫 (.anki2) 替換還不受支援。請見用戶手冊以查找替換指引。</string>
     <string name="import_error_content_provider">所選的檔案無法被 AnkiDroid 自動匯入。請參考用戶手冊瞭解如何手動匯入 anki 檔案：\n%s</string>
     <string name="import_error_copy_to_cache">無法快取檔案 (可能是儲存空間不夠)</string>
-    <string name="import_error_multiple_colpkg">已選擇多個 colpkg 檔案。</string>
-    <string name="import_error_colpkg_apkg">無法同時選擇 apkg &amp; 和 colpkg 檔。</string>
     <string name="import_interrupted">匯入中斷</string>
     <string name="export_include_schedule">包含進度</string>
     <string name="export_include_media">包含媒體</string>

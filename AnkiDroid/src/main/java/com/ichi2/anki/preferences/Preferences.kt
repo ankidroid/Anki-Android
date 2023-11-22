@@ -39,7 +39,6 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.ichi2.anki.*
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.services.BootService.Companion.scheduleNotification
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.setTransparentStatusBar
 import com.ichi2.utils.getInstanceFromClassName
@@ -192,24 +191,12 @@ class Preferences :
         /* Only enable AnkiDroid notifications unrelated to due reminders */
         const val PENDING_NOTIFICATIONS_ONLY = 1000000
 
-        const val DEFAULT_ROLLOVER_VALUE: Int = 4
-
         /**
          * The number of cards that should be due today in a deck to justify adding a notification.
          */
         const val MINIMUM_CARDS_DUE_FOR_NOTIFICATION = "minimumCardsDueForNotification"
 
         const val INITIAL_FRAGMENT_EXTRA = "initial_fragment"
-
-        /** Returns the hour that the collection rolls over to the next day  */
-
-        private fun getSchedVer(col: Collection): Int {
-            val ver = col.schedVer()
-            if (ver < 1 || ver > 2) {
-                Timber.w("Unknown scheduler version: %d", ver)
-            }
-            return ver
-        }
 
         /**
          * @return the [SettingsFragment] which uses the given [screen] resource.
@@ -241,28 +228,12 @@ class Preferences :
         @VisibleForTesting
         suspend fun setDayOffset(context: Context, hours: Int) {
             withCol {
-                when (getSchedVer(this)) {
-                    2 -> {
-                        config.set("rollover", hours)
-                    }
-                    else -> { // typically "1"
-                        val date: Calendar = crtGregorianCalendar()
-                        date[Calendar.HOUR_OF_DAY] = hours
-                        crt = date.timeInMillis / 1000
-                    }
-                }
+                config.set("rollover", hours)
+                scheduleNotification(TimeManager.time, context)
             }
-            scheduleNotification(TimeManager.time, context)
         }
-
         suspend fun getDayOffset(): Int {
-            return withCol {
-                when (schedVer()) {
-                    2 -> config.get("rollover") ?: DEFAULT_ROLLOVER_VALUE
-                    // 1, or otherwise:
-                    else -> crtGregorianCalendar()[Calendar.HOUR_OF_DAY]
-                }
-            }
+            return withCol { config.get("rollover") ?: 4 }
         }
     }
 }

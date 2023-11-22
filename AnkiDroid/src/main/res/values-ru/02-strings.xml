@@ -158,12 +158,7 @@
     <string name="import_title">Импорт</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добавить</string>
     <string name="import_message_replace_confirm">Ваша коллекция будет удалена, и её заменят данные из файла %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Добавить «%s» в коллекцию? Это может занять много времени</item>
-        <item quantity="few">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
-        <item quantity="many">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
-        <item quantity="other">Вы хотите импортировать следующие файлы:\n%s?\nЭто может занять много времени</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Это недопустимый пакет Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Ошибка</string>
     <string name="import_error_handle_exception">Не удалось импортировать файл\n\n%s</string>
@@ -171,8 +166,6 @@
     <string name="import_error_load_imported_database">Замена базы данных Anki (.anki2) пока не поддерживается. Смотрите руководство для инструкций по замене.</string>
     <string name="import_error_content_provider">Этот файл не получится импортировать автоматически. См. руководство, чтобы импортировать Anki-файлы вручную: \n %s</string>
     <string name="import_error_copy_to_cache">Не удалось кэшировать файл (возможно, не хватает места)</string>
-    <string name="import_error_multiple_colpkg">Было выбрано несколько файлов colpkg.</string>
-    <string name="import_error_colpkg_apkg">Были выбраны одновременно файлы apkg и colpkg</string>
     <string name="import_interrupted">Импорт прерван</string>
     <string name="export_include_schedule">Вместе с расписанием</string>
     <string name="export_include_media">Вместе с медиафайлами</string>

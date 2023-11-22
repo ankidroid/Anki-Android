@@ -672,7 +672,7 @@ abstract class AbstractFlashcardViewer :
         performReload()
     }
 
-    @Suppress("deprecation") // super.onActivityResult
+    // super.onActivityResult
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -685,7 +685,7 @@ abstract class AbstractFlashcardViewer :
         /* Reset the schedule and reload the latest card off the top of the stack if required.
            The card could have been rescheduled, the deck could have changed, or a change of
            note type could have lead to the card being deleted */
-        val reloadRequired = data?.getBooleanExtra("reloadRequired", false) == true
+        val reloadRequired = data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true
         if (reloadRequired) {
             performReload()
         }
@@ -796,7 +796,7 @@ abstract class AbstractFlashcardViewer :
             message(
                 text = resources.getString(
                     R.string.delete_note_message,
-                    Utils.stripHTML(currentCard!!.q(true))
+                    Utils.stripHTML(currentCard!!.question(true))
                 )
             )
             positiveButton(R.string.dialog_positive_delete) {

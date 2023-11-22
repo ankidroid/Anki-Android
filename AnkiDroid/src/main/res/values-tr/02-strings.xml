@@ -154,10 +154,7 @@
     <string name="import_title">İçeri Aktarılıyor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ekle</string>
     <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silecek ve şu dosyanın verileriyle değiştirecek: %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir</item>
-        <item quantity="other">Aşağıdaki dosyaları içeri aktarmak istiyor musunuz:\n%s\nBu uzun sürebilir</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Bu geçerli bir Anki paketi dosyası değil</string>
     <string name="import_title_error" comment="Title of error dialog">Hata</string>
     <string name="import_error_handle_exception">Dosya içeri aktarılamadı\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Anki Veritabanı (.anki2) değiştirmeleri henüz desteklenmiyor. Lütfen değiştirme yönergeleri için kılavuza bakın.</string>
     <string name="import_error_content_provider">Seçilen dosya AnkiDroid tarafından otomatik olarak içeri aktarılamadı. Lütfen anki dosyalarının nasıl elle içeri aktarıldığı hakkında kullanıcı kılavuzuna bakın:\n %s</string>
     <string name="import_error_copy_to_cache">Dosya belleğe alınamadı (depolama alanı bitmiş olabilir)</string>
-    <string name="import_error_multiple_colpkg">Birden fazla colpkg dosyası seçilmiş.</string>
-    <string name="import_error_colpkg_apkg">Aynı zamanda hem apkg hem colpkg dosyaları seçilmiş.</string>
     <string name="import_interrupted">Aktarım yarıda kesildi: AnkiDroid kapatıldı</string>
     <string name="export_include_schedule">Zamanlamayı dahil et</string>
     <string name="export_include_media">Medyayı dahil et</string>

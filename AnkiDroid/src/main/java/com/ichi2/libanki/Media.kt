@@ -78,8 +78,7 @@ open class Media(private val col: Collection) {
         return check().unusedFileNames.map { File(dir, it) }
     }
 
-    @KotlinCleanup("fix 'string' as var")
-    fun escapeImages(string: String, unescape: Boolean = false): String {
+    fun escapeMediaFilenames(string: String, unescape: Boolean = false): String {
         return if (unescape) {
             col.backend.decodeIriPaths(string)
         } else {

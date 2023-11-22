@@ -65,7 +65,7 @@ enum class SyncStatus {
 
         private val isDisabled: Boolean
             get() {
-                val preferences = AnkiDroidApp.instance.sharedPrefs()
+                val preferences = AnkiDroidApp.sharedPrefs()
                 return !preferences.getBoolean("showSyncStatusBadge", true)
             }
 
@@ -75,7 +75,7 @@ enum class SyncStatus {
                 return
             }
             sMarkedInMemory = true
-            AnkiDroidApp.instance.sharedPrefs().edit { putBoolean("changesSinceLastSync", true) }
+            AnkiDroidApp.sharedPrefs().edit { putBoolean("changesSinceLastSync", true) }
         }
 
         /** Whether a change in data has been detected - used as a heuristic to stop slow operations  */

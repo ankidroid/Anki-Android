@@ -177,7 +177,7 @@ class CheckBoxTriStates : AppCompatCheckBox {
         var cycleCheckedToIndeterminate = false
         var cycleIndeterminateToChecked = false
 
-        constructor(superState: Parcelable?) : super(superState) {}
+        constructor(superState: Parcelable?) : super(superState)
         private constructor(source: Parcel) : super(source) {
             state = State.entries[source.readInt()]
             cycleCheckedToIndeterminate = source.readInt() != 0

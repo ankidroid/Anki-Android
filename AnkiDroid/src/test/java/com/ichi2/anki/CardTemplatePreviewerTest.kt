@@ -55,8 +55,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         var testCardTemplatePreviewer = previewerController.get()
         Assert.assertTrue(
             "model change did not show up?",
-            testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.q().contains("PREVIEWER_TEST") &&
-                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.a().contains("PREVIEWER_TEST")
+            testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.question().contains("PREVIEWER_TEST") &&
+                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.answer().contains("PREVIEWER_TEST")
         )
 
         // Take it through a destroy/re-create lifecycle in order to test instance state persistence
@@ -68,8 +68,8 @@ class CardTemplatePreviewerTest : RobolectricTest() {
         testCardTemplatePreviewer = previewerController.get()
         Assert.assertTrue(
             "model change not preserved in lifecycle??",
-            testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.q().contains("PREVIEWER_TEST") &&
-                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.a().contains("PREVIEWER_TEST")
+            testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.question().contains("PREVIEWER_TEST") &&
+                testCardTemplatePreviewer.getDummyCard(collectionBasicModelOriginal, 0)!!.answer().contains("PREVIEWER_TEST")
         )
 
         // Make sure we can click

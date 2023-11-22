@@ -39,7 +39,7 @@ abstract class ExtendedFragmentFactory : FragmentFactory {
     /**
      * Create a factory with no base, you can assign a base factory later using [.setBaseFactory]
      */
-    constructor() {}
+    constructor()
 
     /**
      * Typically you want to return the result of a super call as the last result, so if the passed class couldn't be
