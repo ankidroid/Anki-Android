@@ -63,6 +63,9 @@ import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
+import com.ichi2.anki.export.ExportDialogFragment
+import com.ichi2.anki.export.ExportDialogsFactory
+import com.ichi2.anki.export.ExportDialogsFactoryProvider
 import com.ichi2.anki.introduction.hasCollectionStoragePermissions
 import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.CardsOrNotes
@@ -111,7 +114,8 @@ open class CardBrowser :
     SubtitleListener,
     DeckSelectionListener,
     TagsDialogListener,
-    ChangeManager.Subscriber {
+    ChangeManager.Subscriber,
+    ExportDialogsFactoryProvider {
     override fun onDeckSelected(deck: SelectableDeck?) {
         deck?.let {
             val deckId = deck.deckId
@@ -1140,9 +1144,11 @@ open class CardBrowser :
         return super.onOptionsItemSelected(item)
     }
 
+    override fun exportDialogsFactory(): ExportDialogsFactory = mExportingDelegate.mDialogsFactory
+
     private fun exportSelected() = launchCatchingTask {
-        val exportDialogParameters = viewModel.getExportDialogParams(resources) ?: return@launchCatchingTask
-        mExportingDelegate.showExportDialog(exportDialogParameters)
+        val (type, selectedIds) = viewModel.getSelectionExportData() ?: return@launchCatchingTask
+        ExportDialogFragment.newInstance(type, selectedIds).show(supportFragmentManager, "exportDialog")
     }
 
     private fun deleteSelectedNotes() = launchCatchingTask {
