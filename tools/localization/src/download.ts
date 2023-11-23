@@ -32,8 +32,8 @@ export async function buildAndDownload() {
         console.log("Building ZIP on server...");
         const buildId = await translationsApi.buildProject(PROJECT_ID);
 
-        // runt it for every 10 seconds
-        let buildProgress = setInterval(async () => {
+        // run it for every 10 seconds
+        const buildProgress = setInterval(async () => {
             const progress = await translationsApi.checkBuildStatus(
                 PROJECT_ID,
                 buildId.data.id,
