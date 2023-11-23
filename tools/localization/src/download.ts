@@ -34,21 +34,24 @@ export async function buildAndDownload() {
 
         // runt it for every 10 seconds
         let buildProgress = setInterval(async () => {
-            const progress = await translationsApi.checkBuildStatus(PROJECT_ID, buildId.data.id)
+            const progress = await translationsApi.checkBuildStatus(
+                PROJECT_ID,
+                buildId.data.id,
+            );
             console.log("Build progress ", progress.data.progress);
 
             // if project is built, then clear the interval and download the built project files
-            if (progress.data.progress === 100 && progress.data.status === 'finished') {
-                clearInterval(buildProgress)
-                console.log("ZIP Built.")
-                
+            if (progress.data.progress === 100 && progress.data.status === "finished") {
+                clearInterval(buildProgress);
+                console.log("ZIP Built.");
+
                 // download
                 console.log("Downloading Crowdin file");
                 const downloadLink = await translationsApi.downloadTranslations(
                     PROJECT_ID,
                     buildId.data.id,
                 );
-                
+
                 axios({
                     method: "get",
                     url: downloadLink.data.url,
@@ -58,7 +61,6 @@ export async function buildAndDownload() {
                 });
             }
         }, 10000);
-
     } catch (error) {
         console.error(error);
     }
