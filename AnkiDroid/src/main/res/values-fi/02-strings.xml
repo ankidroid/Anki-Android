@@ -154,7 +154,7 @@
     <string name="import_title">Tuodaan</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lisää</string>
     <string name="import_message_replace_confirm">Poistetaan nykyinen kokoelma ja korvataan se tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Lisää “%s” kokoelmaan? Tässä voi kestää kauan</string>
     <string name="import_log_no_apkg">Tämä ei ole salittu Anki-tiedosto</string>
     <string name="import_title_error" comment="Title of error dialog">Virhe</string>
     <string name="import_error_handle_exception">Tiedoston tuonti epäonnistui\n\n%s</string>

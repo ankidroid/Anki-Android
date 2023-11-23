@@ -114,9 +114,9 @@
     <string name="discard_unsaved_changes">閉じて現在の入力を破棄しますか？</string>
     <string name="note_editor_no_cards_created">カードが作成されていません。他のフィールドにも入力してください。</string>
     <string name="note_editor_no_first_field">最初のフィールドが空です</string>
-    <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め箇所が含まれている必要があります</string>
+    <string name="note_editor_no_cloze_delations">このノートタイプには穴埋め問題の箇所が含まれている必要があります</string>
     <string name="note_editor_no_cards_created_all_fields">現在のノートタイプではカードを生成できませんでした。\n別のノートタイプを選択するか、「カード」をタップしてフィールドを挿入してください。</string>
-    <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め箇所を示す文字列は、穴埋め型のノートタイプでのみ機能します</string>
+    <string name="note_editor_insert_cloze_no_cloze_note_type">穴埋め問題箇所を示す文字列は、穴埋め問題型のノートタイプでのみ機能します</string>
     <string name="saving_facts">ノートを保存しています</string>
     <string name="saving_model">ノートタイプを保存しています</string>
     <string name="save">保存</string>
@@ -152,7 +152,7 @@
     <string name="import_title">インポート</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">追加</string>
     <string name="import_message_replace_confirm">現在のコレクションはすべて削除され、ファイル \"%s\" のデータによって上書きされます。よろしいですか？</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">\"%s\" をコレクションに追加しますか？　長い時間がかかる場合があります</string>
     <string name="import_log_no_apkg">これは読み込み可能なAnkiパッケージファイル（*.apkg）ではありません</string>
     <string name="import_title_error" comment="Title of error dialog">エラー</string>
     <string name="import_error_handle_exception">ファイル\n\n%s\n\nのインポートに失敗しました</string>
