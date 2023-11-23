@@ -38,12 +38,14 @@ export async function uploadI18nFiles() {
             let I18N_FILE_TARGET_NAME = `${file}.xml`;
             let I18N_FILE_SOURCE_NAME = `${I18N_FILES_DIR}${I18N_FILE_TARGET_NAME}`;
 
+            // special case, the title is just the name as one line, it is ephemeral so create it
             if (file == "15-markettitle") {
                 I18N_FILE_TARGET_NAME = "15-markettitle.txt";
                 I18N_FILE_SOURCE_NAME = path.join(TEMP_DIR, "15-markettitle.txt");
                 fs.writeFileSync(I18N_FILE_SOURCE_NAME, TITLE_STR);
             }
 
+            // special case, the market description is a txt file from different location
             if (file == "14-marketdescription") {
                 I18N_FILE_TARGET_NAME = "14-marketdescription.txt";
                 I18N_FILE_SOURCE_NAME = MARKET_DESC_FILE;
