@@ -21,7 +21,7 @@ export const credentialsConst: Credentials = {
     token: CROWDIN_APIv2_PAT,
 };
 
-export const PROJECT_ID = 520224;
+export const PROJECT_ID = 720;
 export const TITLE_STR = "AnkiDroid Flashcards";
 
 const RES_DIR = "../../../AnkiDroid/src/main/res";
