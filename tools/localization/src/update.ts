@@ -162,6 +162,10 @@ async function update(
  * Update translated I18n files in res/value dir
  */
 export async function updateI18nFiles() {
+    // Create new / empty marketing title file to populate
+    fs.truncateSync(TITLE_FILE);
+    fs.appendFileSync(TITLE_FILE, TITLE_STR);
+
     for (const language of LANGUAGES) {
         // Regional files need a marker in Android
         // https://developer.android.com/guide/topics/resources/providing-resources#AlternativeResources -
