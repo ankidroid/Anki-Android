@@ -23,6 +23,7 @@ jobs:
       - name: Credential Prep
         run: |
           echo "CROWDIN_API_KEY=${{ secrets.CROWDIN_API_KEY }}" >> $GITHUB_ENV
+          echo "${{ secrets.CROWDIN_API_KEY }}" > ./tools/localization/.env
         shell: bash
 
       - name: GIT Setup
@@ -31,11 +32,6 @@ jobs:
           git config --global user.email 'ankidroid@ankidroid.org'
           git checkout -b i18n_sync
           git reset --hard origin/main
-        shell: bash
-
-      - name: Credential Prep
-        run: |
-          echo "${{ secrets.CROWDIN_API_KEY }}" > ./tools/localization/.env
         shell: bash
 
       - uses: actions/setup-node@v3
