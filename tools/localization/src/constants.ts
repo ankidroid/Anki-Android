@@ -69,16 +69,18 @@ export const I18N_FILES = [
     "18-standard-models",
 ];
 
-// languages which are localized for more than one region
-export const LOCALIZED_REGIONS = ["es", "pt", "zh"];
-
+// Below is the list of official AnkiDroid localizations.
+//
 // The rules for making changes here:
 // 1) Add a language if 01-core.xml is translated
 // 2) Do not remove languages.
-// 3) When you add a language, please also add it to APP_LANGUAGES in LanguageUtil.java
+// 3) When you add a language, please also add it to APP_LANGUAGES in LanguageUtil.kt
+//    BACKEND_LANGS in LanguageUtil is informational and not used for anything, so it's not imperative
+//    to keep it up to date.
 // 4) If you add a language with a regional variant (anything with a hyphen) and a different variant
 //    with the same root exists, you must add the root to 'localizedRegions'
 //    e.g., 'ga-IE' exists with no other 'ga-' entries yet, to add 'ga-EN', also add ga to localizedRegions
+// 5) Update MissingDefaultResource in lint-release.xml
 export const LANGUAGES = [
     "af",
     "am",
@@ -173,6 +175,9 @@ export const LANGUAGES = [
     "zh-TW",
     "zu",
 ];
+
+// languages which are localized for more than one region
+export const LOCALIZED_REGIONS = ["es", "pt", "zh"];
 
 export const XML_LICENSE_HEADER = `<?xml version="1.0" encoding="utf-8"?> 
  <!--
