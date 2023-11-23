@@ -114,6 +114,12 @@ async function update(
     fileExt: string,
     language = "",
 ): Promise<boolean> {
+    // we want to upload this, so it's in the constants, but we don't update it after download
+    if (f == "12-dont-translate") {
+        return true;
+    }
+
+    // These are pulled into a special file
     if (f == "14-marketdescription") {
         const newfile = path.join(MARKET_DESC_LANG + language + fileExt);
 
@@ -134,18 +140,22 @@ async function update(
             "File marketdescription is not translated into language " + language,
         );
         return true;
-    } else if (f == "15-markettitle") {
+    }
+
+    // these are appended to a special file
+    if (f == "15-markettitle") {
         const translatedTitle = translatedContent.split("\n")[0];
 
         if (TITLE_STR != translatedTitle) {
             fs.appendFileSync(TITLE_FILE, "\n" + language + ": " + translatedTitle);
         }
         return true;
-    } else {
-        const newfile = valuesDirectory + f + ".xml";
-        fs.writeFileSync(newfile, translatedContent);
-        return replacechars(newfile);
     }
+
+    // Everything else is a regular file to translate into Android resources
+    const newfile = valuesDirectory + f + ".xml";
+    fs.writeFileSync(newfile, translatedContent);
+    return replacechars(newfile);
 }
 
 /**
