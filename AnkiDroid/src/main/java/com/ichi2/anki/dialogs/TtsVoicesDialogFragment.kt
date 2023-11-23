@@ -202,6 +202,11 @@ class TtsVoicesDialogFragment : DialogFragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.waitForRefresh()
+    }
+
     /**
      * Helper function to observe a flow while the current lifecycle is active
      */

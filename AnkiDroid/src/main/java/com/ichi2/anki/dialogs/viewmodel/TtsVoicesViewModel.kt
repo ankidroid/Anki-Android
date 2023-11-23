@@ -28,11 +28,14 @@ import com.ichi2.libanki.TtsPlayer
 import com.ichi2.libanki.TtsVoice
 import com.ichi2.utils.copyToClipboard
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * @see [com.ichi2.anki.dialogs.TtsVoicesDialogFragment]
@@ -136,6 +139,22 @@ class TtsVoicesViewModel : ViewModel() {
                 AndroidTtsPlayer.createInstance(context = AnkiDroidApp.instance, viewModelScope)
             ttsEngineStatus.emit(TtsEngineStatus.Success(player))
         }
+        viewModelScope.launch(Dispatchers.IO) {
+            while (true) {
+                TtsVoices.refresh()
+                val voices = TtsVoices.allTtsVoices()
+                    .sortedWith(
+                        compareBy<AndroidTtsVoice> { it.normalizedLocale.displayName }
+                            .thenBy { it.tryDisplayLocalizedName() }
+                    )
+
+                // COULD_BE_BETTER: Handle the changes in DiffUtils in the adapter
+                // and don't perform updates when no changes occur
+                Timber.v("voice list refreshed")
+                ttsVoiceListStatus.emit(LoadVoiceStatus.Success(voices))
+                delay(2_000)
+            }
+        }
         addCloseable {
             val currentState = ttsEngineStatus.value
             if (currentState !is TtsEngineStatus.Success) {
@@ -173,6 +192,9 @@ class TtsVoicesViewModel : ViewModel() {
             }
         }
     }
+
+    /** Waits until the next refresh of [ttsVoiceListStatus] occurs */
+    fun waitForRefresh() = ttsVoiceListStatus.update { LoadVoiceStatus.Calculating }
 
     sealed interface LoadVoiceStatus {
         data object Calculating : LoadVoiceStatus
