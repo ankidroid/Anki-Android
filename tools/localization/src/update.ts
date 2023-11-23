@@ -68,7 +68,7 @@ async function replacechars(fileName: string): Promise<boolean> {
 
     fs.rename(newfilename, fileName, function (err) {
         if (err) throw err;
-        console.log(`File ${fileName} successfully copied`);
+        process.stdout.write(".");
     });
 
     return true;
@@ -124,7 +124,7 @@ async function update(
 
         for (let i = 0; i < oldContent.length; i++) {
             if (oldContent[i] != newContent[i]) {
-                console.log("File " + newfile + " successfully copied");
+                process.stdout.write(".");
                 return true;
             }
         }
@@ -139,9 +139,6 @@ async function update(
 
         if (TITLE_STR != translatedTitle) {
             fs.appendFileSync(TITLE_FILE, "\n" + language + ": " + translatedTitle);
-            console.log("Added translated title");
-        } else {
-            console.log("Title not translated");
         }
         return true;
     } else {
