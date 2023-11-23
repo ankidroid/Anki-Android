@@ -22,8 +22,7 @@ jobs:
 
       - name: Credential Prep
         run: |
-          echo "CROWDIN_API_KEY=${{ secrets.CROWDIN_API_KEY }}" >> $GITHUB_ENV
-          echo "${{ secrets.CROWDIN_API_KEY }}" > ./tools/localization/.env
+          echo "CROWDIN_APIv2_PAT=${{ secrets.CROWDIN_APIv2_PAT }}" >> $GITHUB_ENV
         shell: bash
 
       - name: GIT Setup

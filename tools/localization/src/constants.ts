@@ -14,11 +14,11 @@ import { createDirIfNotExisting } from "./update";
 import dotenv from "dotenv";
 dotenv.config({ path: path.join(__dirname, "../.env") });
 
-const CROWDIN_API_KEY = process.env.CROWDIN_API_KEY ?? "";
+const CROWDIN_APIv2_PAT = process.env.CROWDIN_APIv2_PAT ?? "";
 
 // credentials
 export const credentialsConst: Credentials = {
-    token: CROWDIN_API_KEY,
+    token: CROWDIN_APIv2_PAT,
 };
 
 export const PROJECT_ID = 520224;
