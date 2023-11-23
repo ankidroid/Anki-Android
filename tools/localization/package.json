@@ -6,7 +6,7 @@
     "scripts": {
         "build": "tsc",
         "start": "node ./dist/index.js",
-        "dev": "ts-node ./src/index.ts",
+        "dev": "tsc --watch",
         "format": "npx prettier --write .",
         "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx --max-warnings=0",
         "test": "jest --passWithNoTests"
