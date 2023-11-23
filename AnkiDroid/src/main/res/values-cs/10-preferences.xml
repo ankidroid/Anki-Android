@@ -49,9 +49,9 @@
     <string name="pref_summary_seconds">%s s</string>
     <plurals name="pref_summ_minutes">
         <item quantity="one">%d min</item>
-        <item quantity="few">%d mins</item>
-        <item quantity="many">%d mins</item>
-        <item quantity="other">%d mins</item>
+        <item quantity="few">%d min</item>
+        <item quantity="many">%d min</item>
+        <item quantity="other">%d min</item>
     </plurals>
     <string comment="Percentage value of a preference. %s represents the number to be replaced. Use \%% to represent a single percent sign (%)" name="pref_summary_percentage">%s \%%</string>
     <string name="pref_search_no_results">Žádné výsledky</string>
@@ -187,10 +187,10 @@
     <string name="new_timezone" maxLength="41">Nové zpracování časového pásma</string>
     <string name="day_offset_with_description" maxLength="41">Začátek příštího dne</string>
     <plurals name="day_offset_summ" comment="%d is going to be replaced with the number of hours past midnight. It can be replaced if something else suits better the translation">
-        <item quantity="one">%d hour past midnight</item>
-        <item quantity="few">%d hours past midnight</item>
-        <item quantity="many">%d hours past midnight</item>
-        <item quantity="other">%d hours past midnight</item>
+        <item quantity="one">%d hodina po půlnoci</item>
+        <item quantity="few">%d hodiny po půlnoci</item>
+        <item quantity="many">%d hodiny po půlnoci</item>
+        <item quantity="other">%d hodin po půlnoci</item>
     </plurals>
     <string name="pref_keep_screen_on" maxLength="41">Nevypínat obrazovku</string>
     <string name="pref_keep_screen_on_summ">Nepovolit zhasnutí displeje</string>

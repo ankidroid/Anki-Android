@@ -45,7 +45,7 @@
     <string name="multimedia_editor_popup_video_clip">動画ファイルを追加</string>
     <string name="multimedia_editor_popup_audio">録音</string>
     <string name="multimedia_editor_popup_text">高度な編集</string>
-    <string name="multimedia_editor_popup_cloze">穴埋め箇所</string>
+    <string name="multimedia_editor_popup_cloze">穴埋め問題箇所</string>
     <!-- Field editing general -->
     <!-- these are button names to convert field type -->
     <string name="multimedia_editor_field_editing_text" comment="Select the field\'s type to Text.">テキスト</string>

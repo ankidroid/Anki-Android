@@ -161,7 +161,7 @@
     <string name="safe_display_summ">アニメーションを無効にし、より不具合が起こりくい方法でカードを表示します。電子ペーパー端末ではこの設定が必要となる場合があります</string>
     <string name="disable_extended_text_ui" maxLength="41">単一フィールド編集モードを無効にする</string>
     <!--See: multimedia_editor_popup_cloze. We can\'t use format strings as this is auto-generated-->
-    <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め箇所」のコンテキストメニューを許可します</string>
+    <string name="disable_extended_text_ui_summ">ランドスケープモード時に「穴埋め問題箇所」のコンテキストメニューを許可します</string>
     <string name="vertical_centering" maxLength="41">上下中央揃え</string>
     <string name="vertical_centering_summ">コンテンツを上下方向に中央揃えします</string>
     <string name="pref_double_tap_time_interval" maxLength="41">ダブルタップの間隔 (ミリ秒)</string>
