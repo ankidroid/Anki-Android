@@ -81,6 +81,12 @@ object TtsVoices {
         return this.availableLocaleData
     }
 
+    suspend fun refresh() {
+        launchBuildLocalesJob()
+        buildLocalesJob?.join()
+        loadTtsVoicesData()
+    }
+
     /**
      * Returns the list of available locales for use in TTS
      *
