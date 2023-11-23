@@ -182,6 +182,11 @@ export const XML_LICENSE_HEADER = `<?xml version="1.0" encoding="utf-8"?>
  ~    Instructions for this are available here: https://github.com/ankidroid/Anki-Android/wiki/Translating-AnkiDroid. 
  ~    You may also find the documentation on contributing to Anki useful: https://github.com/ankidroid/Anki-Android/wiki/Contributing   
  ~ 
+ ~ Copyright (c) 2009 Andrew <andrewdubya@gmail> 
+ ~ Copyright (c) 2009 Edu Zamora <edu.zasu@gmail.com> 
+ ~ Copyright (c) 2009 Daniel Svaerd <daniel.svard@gmail.com> 
+ ~ Copyright (c) 2009 Nicolas Raoul <nicolas.raoul@gmail.com> 
+ ~ Copyright (c) 2010 Norbert Nagold <norbert.nagold@gmail.com> 
  ~ This program is free software; you can redistribute it and/or modify it under 
  ~ the terms of the GNU General Public License as published by the Free Software 
  ~ Foundation; either version 3 of the License, or (at your option) any later 
@@ -194,4 +199,4 @@ export const XML_LICENSE_HEADER = `<?xml version="1.0" encoding="utf-8"?>
  ~ You should have received a copy of the GNU General Public License along with 
  ~ this program.  If not, see <http://www.gnu.org/licenses/>. 
  -->
-`;
+ `;
