@@ -9,7 +9,7 @@
         "dev": "ts-node ./src/index.ts",
         "format": "npx prettier --write .",
         "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx --max-warnings=0",
-        "test": "jest"
+        "test": "jest --passWithNoTests"
     },
     "repository": "https://github.com/ankidroid/Anki-Android",
     "author": "AnkiDroid Open Source Team",

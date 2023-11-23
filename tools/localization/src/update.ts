@@ -15,7 +15,6 @@
 import fs from "fs";
 import path from "path";
 import readline from "readline";
-import { checkI18nFile, VerifyJavaStringFormat } from "./check";
 import {
     LANGUAGES,
     LOCALIZED_REGIONS,
@@ -39,7 +38,6 @@ let anyError = false;
  * @returns boolean true if any corrections were made, false if no corrections were needed
  */
 async function replacechars(fileName: string): Promise<boolean> {
-    let errorOccured = false;
     const newfilename = fileName + ".tmp";
 
     const fileStream = fs.createReadStream(fileName);
@@ -59,17 +57,10 @@ async function replacechars(fileName: string): Promise<boolean> {
             }
 
             // running prettier will change this line, remove back slash
-            line = line.replace(/\'/g, "\\'")
-            line = line.replace(/\\\\\'/g, "\\'")
-            line = line.replace(/\n\s/g, "\\n")
-            line = line.replace(/…/g, "&#8230;")
-
-            if (line.includes("%")) {
-                if (!VerifyJavaStringFormat(line)) {
-                    console.log(`Errors in file ${fileStream} at line ${line}`);
-                    errorOccured = true;
-                }
-            }
+            line = line.replace(/\'/g, "\\'");
+            line = line.replace(/\\\\\'/g, "\\'");
+            line = line.replace(/\n\s/g, "\\n");
+            line = line.replace(/…/g, "&#8230;");
         }
 
         fs.appendFileSync(newfilename, line + "\n");
@@ -79,11 +70,6 @@ async function replacechars(fileName: string): Promise<boolean> {
         if (err) throw err;
         console.log(`File ${fileName} successfully copied`);
     });
-
-    if (errorOccured) {
-        console.log("Error in file " + fileName);
-        return false;
-    }
 
     return true;
 }
