@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies and build
         run: |
           cd ./tools/localization
-          yarn install
+          yarn
           yarn build
 
       - name: Push translation sources to crowdin
