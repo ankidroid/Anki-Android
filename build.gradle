@@ -4,7 +4,7 @@ import org.gradle.internal.jvm.Jvm
 buildscript {
     // The version for the Kotlin plugin and dependencies
     // If changing this, make sure to update org.jetbrains.kotlin.plugin.serialization version too
-    ext.kotlin_version = '1.9.20'
+    ext.kotlin_version = '1.9.21'
     ext.lint_version = '31.1.1'
     ext.acra_version = '5.11.3'
     ext.ankidroid_backend_version = '0.1.29-anki23.10.1'
