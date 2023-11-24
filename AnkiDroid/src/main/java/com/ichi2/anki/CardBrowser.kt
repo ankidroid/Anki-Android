@@ -54,6 +54,8 @@ import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
 import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.pages.CardInfoDestination
@@ -149,7 +151,7 @@ open class CardBrowser :
      * True by default.
      * */
     @get:VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    var inCardsMode: Boolean = true
+    var cardsOrNotes = CARDS
 
     // card that was clicked (not marked)
     private var mCurrentCardId: CardId = 0
@@ -580,7 +582,7 @@ open class CardBrowser :
             alwaysShowDefault = false,
             showFilteredDecks = true
         )
-        inCardsMode = this.sharedPrefs().getBoolean("inCardsMode", true)
+        cardsOrNotes = CardsOrNotes.fromCollection(col)
         isTruncated = this.sharedPrefs().getBoolean("isTruncated", false)
         deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
@@ -902,14 +904,14 @@ open class CardBrowser :
             }
         }
         mActionBarMenu!!.findItem(R.id.action_export_selected).apply {
-            this.title = if (inCardsMode) {
+            this.title = if (cardsOrNotes == CARDS) {
                 resources.getQuantityString(R.plurals.card_browser_export_cards, checkedCardCount())
             } else {
                 resources.getQuantityString(R.plurals.card_browser_export_notes, checkedCardCount())
             }
         }
         mActionBarMenu!!.findItem(R.id.action_delete_card).apply {
-            this.title = if (inCardsMode) {
+            this.title = if (cardsOrNotes == CARDS) {
                 resources.getQuantityString(R.plurals.card_browser_delete_cards, checkedCardCount())
             } else {
                 resources.getQuantityString(R.plurals.card_browser_delete_notes, checkedCardCount())
@@ -1193,16 +1195,12 @@ open class CardBrowser :
         return super.onOptionsItemSelected(item)
     }
 
-    fun switchCardOrNote(newCardsMode: Boolean) {
-        val sharedPrefs = this.sharedPrefs()
-
-        sharedPrefs.edit {
-            this.putBoolean("inCardsMode", newCardsMode)
-            this.apply()
+    fun switchCardOrNote(newCardsMode: CardsOrNotes) {
+        launchCatchingTask {
+            withCol { newCardsMode.saveToCollection(this) }
+            cardsOrNotes = newCardsMode
+            searchCards()
         }
-
-        inCardsMode = newCardsMode
-        searchCards()
     }
 
     fun onTruncate(newTruncateValue: Boolean) {
@@ -1221,7 +1219,7 @@ open class CardBrowser :
             return
         }
 
-        if (inCardsMode) {
+        if (cardsOrNotes == CARDS) {
             mExportingDelegate.showExportDialog(
                 ExportDialogParams(
                     message = resources.getQuantityString(R.plurals.confirm_apkg_export_selected_cards, selectedCardIds.size, selectedCardIds.size),
@@ -1437,7 +1435,7 @@ open class CardBrowser :
     }
 
     private fun showOptionsDialog() {
-        val dialog = BrowserOptionsDialog(inCardsMode, isTruncated)
+        val dialog = BrowserOptionsDialog(cardsOrNotes, isTruncated)
         dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
@@ -1451,7 +1449,6 @@ open class CardBrowser :
         savedInstanceState.putInt("mLastSelectedPosition", mLastSelectedPosition)
         savedInstanceState.putBoolean("mInMultiSelectMode", isInMultiSelectMode)
         savedInstanceState.putBoolean("mIsTruncated", isTruncated)
-        savedInstanceState.putBoolean("inCardsMode", inCardsMode)
         super.onSaveInstanceState(savedInstanceState)
     }
 
@@ -1465,7 +1462,6 @@ open class CardBrowser :
         mLastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
         isInMultiSelectMode = savedInstanceState.getBoolean("mInMultiSelectMode")
         isTruncated = savedInstanceState.getBoolean("mIsTruncated")
-        inCardsMode = savedInstanceState.getBoolean("inCardsMode")
         searchCards()
     }
 
@@ -1501,7 +1497,7 @@ open class CardBrowser :
         val order = mOrder.toSortOrder()
         launchCatchingTask {
             Timber.d("performing search")
-            val cards = withProgress { searchForCards(query, order, inCardsMode) }
+            val cards = withProgress { searchForCards(query, order, cardsOrNotes) }
             Timber.d("Search returned %d cards", cards.size)
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
@@ -1580,7 +1576,7 @@ open class CardBrowser :
         get() {
             val count = cardCount
 
-            @androidx.annotation.StringRes val subtitleId = if (inCardsMode) {
+            @androidx.annotation.StringRes val subtitleId = if (cardsOrNotes == CARDS) {
                 R.plurals.card_browser_subtitle
             } else {
                 R.plurals.card_browser_subtitle_notes_mode
@@ -2085,9 +2081,9 @@ open class CardBrowser :
         override var position: Int
 
         private val inCardMode: Boolean
-        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int, inCardMode: Boolean) : super(col, id) {
+        constructor(id: Long, col: com.ichi2.libanki.Collection, position: Int, cardsOrNotes: CardsOrNotes) : super(col, id) {
             this.position = position
-            this.inCardMode = inCardMode
+            this.inCardMode = cardsOrNotes == CARDS
         }
 
         constructor(cache: CardCache, position: Int) : super(cache) {
@@ -2506,15 +2502,15 @@ open class CardBrowser :
 suspend fun searchForCards(
     query: String,
     order: SortOrder,
-    inCardsMode: Boolean
+    cardsOrNotes: CardsOrNotes
 ): MutableList<CardBrowser.CardCache> {
     return withCol {
-        (if (inCardsMode) findCards(query, order) else findOneCardByNote(query)).asSequence()
-            .toCardCache(this, inCardsMode)
+        (if (cardsOrNotes == CARDS) findCards(query, order) else findOneCardByNote(query)).asSequence()
+            .toCardCache(this, cardsOrNotes)
             .toMutableList()
     }
 }
 
-private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: Boolean): Sequence<CardBrowser.CardCache> {
+private fun Sequence<CardId>.toCardCache(col: com.ichi2.libanki.Collection, isInCardMode: CardsOrNotes): Sequence<CardBrowser.CardCache> {
     return this.mapIndexed { idx, cid -> CardBrowser.CardCache(cid, col, idx, isInCardMode) }
 }
