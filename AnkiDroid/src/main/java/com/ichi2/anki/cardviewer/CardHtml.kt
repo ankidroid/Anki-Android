@@ -42,7 +42,7 @@ class CardHtml(
     /** The side that [beforeSoundTemplateExpansion] was generated from */
     private val side: Side,
     @RustCleanup("Slow function, only used with legacy code")
-    private val getAnswerContentWithoutFrontSide_slow: (() -> String),
+    private val getAnswerContentWithoutFrontSideSlow: (() -> String),
     @RustCleanup("too many variables, combine once we move away from backend")
     private var questionSound: List<SoundOrVideoTag>? = null,
     private var answerSound: List<SoundOrVideoTag>? = null
@@ -54,7 +54,7 @@ class CardHtml(
 
         if (sideFor == Side.BACK && side == Side.FRONT) {
             if (answerSound == null) {
-                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSideSlow())
             }
             return answerSound!!
         }
@@ -77,7 +77,7 @@ class CardHtml(
             questionSound!!
         } else {
             if (answerSound == null) {
-                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSideSlow())
             }
             return answerSound!!
         }

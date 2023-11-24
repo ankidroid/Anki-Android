@@ -124,10 +124,10 @@ class TemplateManager {
         private var _note: Note = note
         private var _browser: Boolean = browser
         private var _template: JSONObject? = template
-        private var _fill_empty: Boolean = fill_empty
+        private var fillEmpty: Boolean = fill_empty
 
 //      private var _fields: HashMap<String, String>? = null
-        private var _note_type: NotetypeJson = notetype ?: note.notetype
+        private var noteType: NotetypeJson = notetype ?: note.notetype
 
         companion object {
             fun fromExistingCard(card: Card, browser: Boolean): TemplateRenderContext {
@@ -162,7 +162,7 @@ class TemplateManager {
         fun card() = _card
 
         fun note() = _note
-        fun noteType() = _note_type
+        fun noteType() = noteType
 
         fun render(): TemplateRenderOutput {
             val partial: PartiallyRenderedCard
@@ -210,7 +210,7 @@ class TemplateManager {
             var aoutText = aout.text
 
             if (!_browser) {
-                val svg = _note_type.optBoolean("latexsvg", false)
+                val svg = noteType.optBoolean("latexsvg", false)
                 qoutText = LaTeX.mungeQA(qoutText, _col, svg)
                 aoutText = LaTeX.mungeQA(aoutText, _col, svg)
             }
@@ -235,7 +235,7 @@ class TemplateManager {
                         _note.toBackendNote(),
                         _card.ord,
                         BackendUtils.to_json_bytes(_template!!.deepClone()),
-                        _fill_empty,
+                        fillEmpty,
                         true
                     )
                 } else {
