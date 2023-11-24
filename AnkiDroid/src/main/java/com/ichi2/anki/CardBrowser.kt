@@ -43,7 +43,6 @@ import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
-import com.ichi2.anki.dialogs.CardBrowserOrderDialog
 import com.ichi2.anki.dialogs.DeckSelectionDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.DeckSelectionDialog.DeckSelectionListener
 import com.ichi2.anki.dialogs.DeckSelectionDialog.SelectableDeck
@@ -54,6 +53,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.sharedPrefs
@@ -72,8 +72,6 @@ import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.async.*
 import com.ichi2.libanki.*
-import com.ichi2.libanki.SortOrder.NoOrdering
-import com.ichi2.libanki.SortOrder.UseCollectionOrdering
 import com.ichi2.ui.CardBrowserSearchView
 import com.ichi2.ui.FixedTextView
 import com.ichi2.utils.*
@@ -84,12 +82,8 @@ import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
-import java.lang.IllegalStateException
-import java.lang.StringBuilder
 import java.util.*
 import java.util.function.Consumer
-import kotlin.Exception
-import kotlin.collections.ArrayList
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.max
@@ -158,7 +152,7 @@ open class CardBrowser :
 
     // card that was clicked (not marked)
     private var mCurrentCardId: CardId = 0
-    private var mOrder = 0
+    private var mOrder = SortType.NO_SORTING
     private var mOrderAsc = false
     private var mColumn1Index = 0
     private var mColumn2Index = 0
@@ -250,7 +244,7 @@ open class CardBrowser :
     private val orderSingleChoiceDialogListener: DialogInterface.OnClickListener =
         DialogInterface.OnClickListener { dialog: DialogInterface, which: Int ->
             dialog.dismiss()
-            changeCardOrder(which)
+            changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
         }
 
     init {
@@ -258,25 +252,14 @@ open class CardBrowser :
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    fun changeCardOrder(which: Int) {
+    fun changeCardOrder(which: SortType) {
         if (which != mOrder) {
             mOrder = which
             mOrderAsc = false
-            if (mOrder == 0) {
-                // if the sort value in the card browser was changed, then perform a new search
-                getColUnsafe.config.set("sortType", fSortTypes[1])
-                baseContext.sharedPrefs().edit {
-                    putBoolean("cardBrowserNoSorting", true)
-                }
-            } else {
-                getColUnsafe.config.set("sortType", fSortTypes[mOrder])
-                baseContext.sharedPrefs().edit {
-                    putBoolean("cardBrowserNoSorting", false)
-                }
-            }
+            which.save(getColUnsafe.config, baseContext.sharedPrefs())
             getColUnsafe.config.set("sortBackwards", mOrderAsc)
             searchCards()
-        } else if (which != CARD_ORDER_NONE) {
+        } else if (which != SortType.NO_SORTING) {
             // if the same element is selected again, reverse the order
             mOrderAsc = !mOrderAsc
             getColUnsafe.config.set("sortBackwards", mOrderAsc)
@@ -481,11 +464,7 @@ open class CardBrowser :
         registerExternalStorageListener()
         val preferences = baseContext.sharedPrefs()
 
-        val colOrder = col.config.get<String>("sortType")
-        mOrder = fSortTypes.indexOf(colOrder).let { i -> if (i == -1) CARD_ORDER_NONE else i }
-        if (mOrder == 1 && preferences.getBoolean("cardBrowserNoSorting", false)) {
-            mOrder = 0
-        }
+        mOrder = SortType.fromCol(col.config, preferences)
         mOrderAsc = col.config.get("sortBackwards") ?: false
         mCards.reset()
         // Create a spinner for column 1
@@ -1515,7 +1494,7 @@ open class CardBrowser :
         mCards.reset()
         cardsAdapter.notifyDataSetChanged()
         val query = searchText!!
-        val order = if (mOrder == CARD_ORDER_NONE) NoOrdering() else UseCollectionOrdering()
+        val order = mOrder.toSortOrder()
         launchCatchingTask {
             Timber.d("performing search")
             val cards = withProgress { searchForCards(query, order, inCardsMode) }
@@ -2474,20 +2453,6 @@ open class CardBrowser :
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
         const val LINES_VISIBLE_WHEN_COLLAPSED = 3
 
-        // Should match order of R.array.card_browser_order_labels
-        const val CARD_ORDER_NONE = 0
-        private val fSortTypes = arrayOf(
-            "",
-            "noteFld",
-            "noteCrt",
-            "noteMod",
-            "cardMod",
-            "cardDue",
-            "cardIvl",
-            "cardEase",
-            "cardReps",
-            "cardLapses"
-        )
         private val COLUMN1_KEYS = arrayOf(Column.QUESTION, Column.SFLD)
 
         // list of available keys in mCards corresponding to the column names in R.array.browser_column2_headings.

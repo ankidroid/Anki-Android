@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
+import com.ichi2.anki.model.SortType
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
@@ -426,7 +427,7 @@ class CardBrowserTest : RobolectricTest() {
         )
 
         // reverse
-        b.changeCardOrder(1)
+        b.changeCardOrder(SortType.SORT_FIELD)
 
         assertThat(b.getPropertiesForCardId(cid1).position, equalTo(1))
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(0))
@@ -682,7 +683,7 @@ class CardBrowserTest : RobolectricTest() {
         )
 
         // Change the display order of the card browser
-        cardBrowserController.get().changeCardOrder(7) // order no. 7 corresponds to "cardEase"
+        cardBrowserController.get().changeCardOrder(SortType.EASE)
 
         // Kill and restart the activity and ensure that display order is preserved
         val outBundle = Bundle()
