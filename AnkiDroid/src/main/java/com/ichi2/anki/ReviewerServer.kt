@@ -74,7 +74,7 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
             }
         }
 
-        Timber.e("not found: $uri")
+        Timber.w("not found: $uri")
         return newFixedLengthResponse(Response.Status.NOT_FOUND, "text/plain", "")
     }
 
