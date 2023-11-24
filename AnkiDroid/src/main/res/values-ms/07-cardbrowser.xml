@@ -52,12 +52,13 @@
         <item quantity="other">%d nota ditunjuk</item>
     </plurals>
     <string name="card_browser_all_decks">Semua dek</string>
-    <string name="card_browser_delete_card">Padam nota</string>
-    <string name="card_browser_suspend_card">Bekukan kad</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Tukar dek</string>
-    <string name="card_browser_unsuspend_card">Aktifkan kad</string>
-    <string name="card_browser_mark_card"> Cap kad</string>
-    <string name="card_browser_unmark_card">Buang cap nota</string>
     <string name="delete_card_title">Padam Nota?</string>
     <string name="card_browser_show_marked">Tapis dicap</string>
     <string name="card_browser_show_suspended">Tapis dibekukan</string>
@@ -103,5 +104,4 @@
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d kad dipadam</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

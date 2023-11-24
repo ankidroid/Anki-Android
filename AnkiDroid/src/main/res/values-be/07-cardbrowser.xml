@@ -58,12 +58,19 @@
         <item quantity="other">Паказана %d нататак</item>
     </plurals>
     <string name="card_browser_all_decks">Усе калоды</string>
-    <string name="card_browser_delete_card">Выдаліць нататкі</string>
-    <string name="card_browser_suspend_card">Прыпыніць карткі</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="few">Delete cards</item>
+        <item quantity="many">Delete cards</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="few">Delete notes</item>
+        <item quantity="many">Delete notes</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Змяніць калоду</string>
-    <string name="card_browser_unsuspend_card">Аднавіць прыпыненыя карткі</string>
-    <string name="card_browser_mark_card">Адзначыць нататкі</string>
-    <string name="card_browser_unmark_card">Зняць пазнакі з нататак</string>
     <string name="delete_card_title">Выдаліць нататку?</string>
     <string name="card_browser_show_marked">Фільтраваць пазначаныя</string>
     <string name="card_browser_show_suspended">Фільтраваць прыпыненыя</string>
@@ -118,5 +125,4 @@
         <item quantity="many">Выдалены %d картак</item>
         <item quantity="other">Выдалены %d картак</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

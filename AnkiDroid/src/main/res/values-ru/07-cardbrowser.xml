@@ -58,12 +58,19 @@
         <item quantity="other">%d записей показано</item>
     </plurals>
     <string name="card_browser_all_decks">Все колоды</string>
-    <string name="card_browser_delete_card">Удалить записи</string>
-    <string name="card_browser_suspend_card">Исключить карточки</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="few">Delete cards</item>
+        <item quantity="many">Delete cards</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="few">Delete notes</item>
+        <item quantity="many">Delete notes</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Сменить колоду</string>
-    <string name="card_browser_unsuspend_card">Включить карточки</string>
-    <string name="card_browser_mark_card">Отметить записи</string>
-    <string name="card_browser_unmark_card">Снять отметку</string>
     <string name="delete_card_title">Удалить запись?</string>
     <string name="card_browser_show_marked">Отфильтровать отмеченные</string>
     <string name="card_browser_show_suspended">Отфильтровать исключённые</string>
@@ -118,5 +125,4 @@
         <item quantity="many">%d карточек удалены</item>
         <item quantity="other">%d карточек удалено</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

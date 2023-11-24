@@ -58,12 +58,19 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">Všetky balíčky</string>
-    <string name="card_browser_delete_card">Odstrániť poznámky</string>
-    <string name="card_browser_suspend_card">Pozastaviť kartičku</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="few">Delete cards</item>
+        <item quantity="many">Delete cards</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="few">Delete notes</item>
+        <item quantity="many">Delete notes</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Zmeniť balíček</string>
-    <string name="card_browser_unsuspend_card">Nepozastaviť kartičky</string>
-    <string name="card_browser_mark_card">Označiť poznámky</string>
-    <string name="card_browser_unmark_card">Odznačiť poznámky</string>
     <string name="delete_card_title">Vymazať poznámku?</string>
     <string name="card_browser_show_marked">Filtrovať označené</string>
     <string name="card_browser_show_suspended">Filtrovať pozastavené</string>
@@ -118,5 +125,4 @@
         <item quantity="many">%d vymazaných kartičiek</item>
         <item quantity="other">%d vymazaných kartičiek</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

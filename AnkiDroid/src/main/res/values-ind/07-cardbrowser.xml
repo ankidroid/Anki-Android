@@ -52,12 +52,13 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">Semua dek</string>
-    <string name="card_browser_delete_card">Hapus catatan</string>
-    <string name="card_browser_suspend_card">Tangguhkan kartu</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Ganti dek</string>
-    <string name="card_browser_unsuspend_card">Batal tangguhkan kartu</string>
-    <string name="card_browser_mark_card">Tandai catatan</string>
-    <string name="card_browser_unmark_card">Batal tandai catatan</string>
     <string name="delete_card_title">Hapus catatan?</string>
     <string name="card_browser_show_marked">Filter ditandai</string>
     <string name="card_browser_show_suspended">Filter ditangguhkan</string>
@@ -103,5 +104,4 @@
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d kartu telah dihapus</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>
