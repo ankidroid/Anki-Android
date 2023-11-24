@@ -177,7 +177,7 @@
     </plurals>
     <string name="export_preparation_in_progress">ექსპორტის გამზადება&#8230;</string>
     <string name="export_ready_title">ექსპორტი მზადაა</string>
-    <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება…</string>
+    <string name="export_send_no_handlers">არაა სხვა აპლიკაციები APKG-ფაილების გასახსნელად. ინახება&#8230;</string>
     <string name="export_save_apkg_successful">Anki-პაკეტი წარმატებით შეინახა</string>
     <string name="export_save_apkg_unsuccessful">Anki-პაკეტი ვერ შეინახა</string>
     <string name="export_share_title">Anki-პაკეტის გაგზავნა:</string>

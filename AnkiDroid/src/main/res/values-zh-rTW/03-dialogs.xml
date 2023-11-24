@@ -107,7 +107,7 @@
     <string name="dialog_no">否</string>
     <string name="dialog_yes">是</string>
     <string name="dialog_continue">繼續</string>
-    <string name="dialog_processing">處理中…</string>
+    <string name="dialog_processing">處理中&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">新增</string>
     <string name="dialog_positive_delete">刪除</string>
     <!-- Currently unsued, should be useful in the future -->
