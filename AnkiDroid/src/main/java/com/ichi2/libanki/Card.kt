@@ -225,11 +225,11 @@ open class Card : Cloneable {
     }
 
     fun questionAvTags(): List<AvTag> {
-        return renderOutput().question_av_tags
+        return renderOutput().questionAvTags
     }
 
     fun answerAvTags(): List<AvTag> {
-        return renderOutput().answer_av_tags
+        return renderOutput().answerAvTags
     }
 
     /**
@@ -294,7 +294,7 @@ open class Card : Cloneable {
      * ***********************************************************
      */
     fun qSimple(): String {
-        return renderOutput(false).question_text
+        return renderOutput(false).questionText
     }
 
     /*
@@ -302,7 +302,7 @@ open class Card : Cloneable {
      */
     val pureAnswer: String
         get() {
-            val s = renderOutput(false).answer_text
+            val s = renderOutput(false).answerText
             for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
                 val pos = s.indexOf(target)
                 if (pos == -1) continue

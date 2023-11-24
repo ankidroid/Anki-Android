@@ -51,7 +51,7 @@ private typealias TemplateReplacementList = MutableList<Union<String?, TemplateM
  * the filter is skipped.
  */
 class TemplateManager {
-    data class TemplateReplacement(val field_name: String, var current_text: String, val filters: List<String>)
+    data class TemplateReplacement(val fieldName: String, var currentText: String, val filters: List<String>)
     data class PartiallyRenderedCard(val qnodes: TemplateReplacementList, val anodes: TemplateReplacementList) {
         companion object {
             fun fromProto(out: anki.card_rendering.RenderCardResponse): PartiallyRenderedCard {
@@ -71,8 +71,8 @@ class TemplateManager {
                             Pair(
                                 null,
                                 TemplateReplacement(
-                                    field_name = node.replacement.fieldName,
-                                    current_text = node.replacement.currentText,
+                                    fieldName = node.replacement.fieldName,
+                                    currentText = node.replacement.currentText,
                                     filters = node.replacement.filtersList
                                 )
                             )
@@ -170,10 +170,10 @@ class TemplateManager {
                 partial = partiallyRender()
             } catch (e: BackendTemplateException) {
                 return TemplateRenderOutput(
-                    question_text = e.localizedMessage ?: e.toString(),
-                    answer_text = e.localizedMessage ?: e.toString(),
-                    question_av_tags = emptyList(),
-                    answer_av_tags = emptyList()
+                    questionText = e.localizedMessage ?: e.toString(),
+                    answerText = e.localizedMessage ?: e.toString(),
+                    questionAvTags = emptyList(),
+                    answerAvTags = emptyList()
                 )
             }
 
@@ -216,10 +216,10 @@ class TemplateManager {
             }
 
             val output = TemplateRenderOutput(
-                question_text = qoutText,
-                answer_text = aoutText,
-                question_av_tags = avTagsToNative(qout.avTagsList),
-                answer_av_tags = avTagsToNative(aout.avTagsList),
+                questionText = qoutText,
+                answerText = aoutText,
+                questionAvTags = avTagsToNative(qout.avTagsList),
+                answerAvTags = avTagsToNative(aout.avTagsList),
                 css = noteType().getString("css")
             )
 
@@ -248,15 +248,15 @@ class TemplateManager {
 
         /** Stores the rendered templates and extracted AV tags. */
         data class TemplateRenderOutput(
-            var question_text: String,
-            var answer_text: String,
-            val question_av_tags: List<AvTag>,
-            val answer_av_tags: List<AvTag>,
+            var questionText: String,
+            var answerText: String,
+            val questionAvTags: List<AvTag>,
+            val answerAvTags: List<AvTag>,
             val css: String = ""
         ) {
 
-            fun questionAndStyle() = "<style>$css</style>$question_text"
-            fun answerAndStyle() = "<style>$css</style>$answer_text"
+            fun questionAndStyle() = "<style>$css</style>$questionText"
+            fun answerAndStyle() = "<style>$css</style>$answerText"
         }
 
         /** Complete rendering by applying any pending custom filters. */
@@ -277,14 +277,14 @@ class TemplateManager {
                 } else {
                     val node = union.second!!
                     // do we need to inject in FrontSide?
-                    if (node.field_name == "FrontSide" && front_side != null) {
-                        node.current_text = front_side
+                    if (node.fieldName == "FrontSide" && front_side != null) {
+                        node.currentText = front_side
                     }
 
-                    var field_text = node.current_text
+                    var field_text = node.currentText
                     for (filter_name in node.filters) {
                         fieldFilters[filter_name]?.let {
-                            field_text = it.apply(field_text, node.field_name, filter_name, ctx)
+                            field_text = it.apply(field_text, node.fieldName, filter_name, ctx)
                         }
                     }
 

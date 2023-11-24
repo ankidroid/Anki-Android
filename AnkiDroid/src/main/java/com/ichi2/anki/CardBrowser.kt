@@ -2258,21 +2258,21 @@ open class CardBrowser :
             // render question and answer
             val qa = card.renderOutput(reload = true, browser = true)
             // Render full question / answer if the bafmt (i.e. "browser appearance") setting forced blank result
-            if (qa.question_text.isEmpty() || qa.answer_text.isEmpty()) {
+            if (qa.questionText.isEmpty() || qa.answerText.isEmpty()) {
                 val (question_text, answer_text) = card.renderOutput(
                     reload = true,
                     browser = false
                 )
-                if (qa.question_text.isEmpty()) {
-                    qa.question_text = question_text
+                if (qa.questionText.isEmpty()) {
+                    qa.questionText = question_text
                 }
-                if (qa.answer_text.isEmpty()) {
-                    qa.answer_text = answer_text
+                if (qa.answerText.isEmpty()) {
+                    qa.answerText = answer_text
                 }
             }
             // update the original hash map to include rendered question & answer
-            var q = qa.question_text
-            var a = qa.answer_text
+            var q = qa.questionText
+            var a = qa.answerText
             // remove the question from the start of the answer if it exists
             if (a.startsWith(q)) {
                 a = a.substring(q.length)
