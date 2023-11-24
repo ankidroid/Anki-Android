@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
+import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
@@ -745,7 +746,7 @@ class CardBrowserTest : RobolectricTest() {
         browserWithNoNewCards.apply {
             searchAllDecks()
             assertThat("Result should contain 4 cards", cardCount, equalTo(4))
-            switchCardOrNote(newCardsMode = false)
+            switchCardOrNote(newCardsMode = NOTES)
             assertThat("Result should contain 2 cards (one per note)", cardCount, equalTo(2))
         }
     }
@@ -909,16 +910,14 @@ class CardBrowserTest : RobolectricTest() {
     fun checkCardsNotesMode() = runTest {
         val cardBrowser = getBrowserWithNotes(3, true)
 
-        // set browser to be in cards mode
-        cardBrowser.inCardsMode = true
+        cardBrowser.cardsOrNotes = CARDS
         cardBrowser.searchCards()
 
         advanceRobolectricUiLooper()
         // check if we get both cards of each note
         assertThat(cardBrowser.mCards.size(), equalTo(6))
 
-        // set browser to be in notes mode
-        cardBrowser.inCardsMode = false
+        cardBrowser.cardsOrNotes = NOTES
         cardBrowser.searchCards()
 
         // check if we get one card per note
