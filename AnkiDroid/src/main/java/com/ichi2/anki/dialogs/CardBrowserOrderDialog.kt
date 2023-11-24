@@ -20,9 +20,9 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.model.SortType
 
 class CardBrowserOrderDialog : AnalyticsDialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -30,7 +30,7 @@ class CardBrowserOrderDialog : AnalyticsDialogFragment() {
         val items = resources.getStringArray(R.array.card_browser_order_labels)
         // Set sort order arrow
         for (i in items.indices) {
-            if (i != CardBrowser.CARD_ORDER_NONE && i == requireArguments().getInt("order")) {
+            if (i != CARD_ORDER_NONE && i == requireArguments().getInt("order")) {
                 if (requireArguments().getBoolean("isOrderAsc")) {
                     items[i] = items[i].toString() + " (\u25b2)"
                 } else {
@@ -48,14 +48,17 @@ class CardBrowserOrderDialog : AnalyticsDialogFragment() {
     companion object {
         private var orderSingleChoiceDialogListener: DialogInterface.OnClickListener? = null
 
+        // SortType.NO_SORTING.cardBrowserLabelIndex
+        private const val CARD_ORDER_NONE = 0
+
         fun newInstance(
-            order: Int,
+            order: SortType,
             isOrderAsc: Boolean,
             orderSingleChoiceDialogListener: DialogInterface.OnClickListener
         ): CardBrowserOrderDialog {
             val f = CardBrowserOrderDialog()
             val args = Bundle()
-            args.putInt("order", order)
+            args.putInt("order", order.cardBrowserLabelIndex)
             args.putBoolean("isOrderAsc", isOrderAsc)
             this.orderSingleChoiceDialogListener = orderSingleChoiceDialogListener
             f.arguments = args
