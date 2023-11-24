@@ -52,12 +52,13 @@
         <item quantity="other">顯示了 %d 條筆記</item>
     </plurals>
     <string name="card_browser_all_decks">所有牌組</string>
-    <string name="card_browser_delete_card">刪除筆記</string>
-    <string name="card_browser_suspend_card">擱置卡片</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">變更牌組</string>
-    <string name="card_browser_unsuspend_card">取消擱置卡片</string>
-    <string name="card_browser_mark_card">標記筆記</string>
-    <string name="card_browser_unmark_card">取消標記筆記</string>
     <string name="delete_card_title">刪除筆記？</string>
     <string name="card_browser_show_marked">篩選有標記的卡片</string>
     <string name="card_browser_show_suspended">篩選出擱置的卡片</string>
@@ -103,5 +104,4 @@
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d 卡片已刪除</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

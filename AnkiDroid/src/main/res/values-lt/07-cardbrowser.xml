@@ -58,12 +58,19 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">Visi rinkiniai</string>
-    <string name="card_browser_delete_card">Ištrinti užrašus</string>
-    <string name="card_browser_suspend_card">Atidėti korteles</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="few">Delete cards</item>
+        <item quantity="many">Delete cards</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="few">Delete notes</item>
+        <item quantity="many">Delete notes</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Keisti rinkinį</string>
-    <string name="card_browser_unsuspend_card">Neatidėti kortelių</string>
-    <string name="card_browser_mark_card">Pažymėti užrašus</string>
-    <string name="card_browser_unmark_card">Nežymėti užrašų</string>
     <string name="delete_card_title">Ar norite užrašą ištrinti?</string>
     <string name="card_browser_show_marked">Rodyti pažymėtas</string>
     <string name="card_browser_show_suspended">Rodyti atidėtas</string>
@@ -118,5 +125,4 @@
         <item quantity="many">%d cards deleted</item>
         <item quantity="other">%d cards deleted</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>
