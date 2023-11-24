@@ -31,11 +31,11 @@ export async function buildAndDownload() {
         // build
         console.log("Sending project build request...");
         const buildId = await translationsApi.buildProject(PROJECT_ID);
-        console.log('Build request sent.')
+        console.log("Build request sent.");
 
         // run it for every 10 seconds
         const buildProgress = setInterval(async () => {
-            console.log('Fetching build status...')
+            console.log("Fetching build status...");
             const progress = await translationsApi.checkBuildStatus(
                 PROJECT_ID,
                 buildId.data.id,
@@ -62,7 +62,7 @@ export async function buildAndDownload() {
                     response.data.pipe(fs.createWriteStream("ankidroid.zip"));
                 });
             }
-        }, 10000);
+        }, 10_000);
     } catch (error) {
         console.error(error);
     }

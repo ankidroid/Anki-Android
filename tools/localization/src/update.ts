@@ -167,15 +167,23 @@ export async function updateI18nFiles() {
     fs.appendFileSync(TITLE_FILE, TITLE_STR);
 
     for (const language of LANGUAGES) {
-        // Regional files need a marker in Android
+        // Language tags are 2- or 3-letters, and regional files need a marker in Android where subtag starts with "r"
+        // Note the documentation does not describe what works in practice:
         // https://developer.android.com/guide/topics/resources/providing-resources#AlternativeResources -
-        // The language is defined by a two-letter ISO 639-1 language code, optionally followed by a two letter ISO 3166-1-alpha-2 region code (preceded by lowercase r).
+        // "The language is defined by a two-letter ISO 639-1 language code, optionally followed by a two letter ISO 3166-1-alpha-2 region code (preceded by lowercase r)."
+        //
+        // In practice - contrary to the official Android documentation above, 3-letter codes as defined by ISO 639-2 definitely work,
+        // for example code "fil", which is not found in ISO 639-1 but is in 639-2 https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes
+        //
+        // It appears that Android will load the correct BCP47 (that is: 2- or 3-letter code) language even if not in a directory with
+        // language code preceded by "b-". We should potentially move to formal BCP47 "b-<langtag>" values directories in the future,
+        // but this comment hopefully clarifies for the reader that BCP47 / ISO-639-2 3-letter language tags do work in practice.
         //
         // The codes are not case-sensitive; the r prefix is used to distinguish the region portion. You cannot specify a region alone.
         let androidLanguage = "";
         const languageCode = language.split("-", 1)[0];
         if (LOCALIZED_REGIONS.includes(languageCode)) {
-            androidLanguage = language.replace("-", "-r"); // zh-CW becomes zh-rCW
+            androidLanguage = language.replace("-", "-r"); // zh-CN becomes zh-rCN
         } else {
             androidLanguage = language.split("-", 1)[0]; // Example: es-ES becomes es
         }

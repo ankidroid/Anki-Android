@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "Extract localization for AnkiDroid using Crowdin JS client api",
     "main": "index.ts",
+    "private": true,
     "scripts": {
         "build": "tsc",
         "start": "node ./dist/index.js",
