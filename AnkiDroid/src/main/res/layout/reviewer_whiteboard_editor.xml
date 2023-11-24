@@ -8,32 +8,32 @@
 
     <Button
         android:id="@+id/pen_color_white"
-        android:background="@color/white"
+        android:backgroundTint="@color/white"
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
     <Button
         android:id="@+id/pen_color_black"
-        android:background="@color/black"
+        android:backgroundTint="@color/black"
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
     <Button
         android:id="@+id/pen_color_red"
-        android:background="@color/material_red_500"
+        android:backgroundTint="@color/material_red_500"
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
     <Button
         android:id="@+id/pen_color_green"
-        android:background="@color/material_green_500"
+        android:backgroundTint="@color/material_green_500"
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
     <Button
         android:id="@+id/pen_color_blue"
-        android:background="@color/material_blue_500"
+        android:backgroundTint="@color/material_blue_500"
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
     <Button
         android:id="@+id/pen_color_yellow"
-        android:background="@color/material_yellow_500"
+        android:backgroundTint="@color/material_yellow_500"
         style="@style/reviewer_whiteboard_editor_button_style"/>
 
     <Button
