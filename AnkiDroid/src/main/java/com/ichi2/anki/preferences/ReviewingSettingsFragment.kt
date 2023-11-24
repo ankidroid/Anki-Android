@@ -80,14 +80,14 @@ class ReviewingSettingsFragment : SettingsFragment() {
         // New timezone handling
         requirePreference<SwitchPreferenceCompat>(R.string.new_timezone_handling_preference).apply {
             launchCatchingTask {
-                isChecked = withCol { sched._new_timezone_enabled() }
+                isChecked = withCol { sched.newTimezoneEnabled() }
                 isEnabled = withCol { schedVer() > 1 }
             }
             setOnPreferenceChangeListener { newValue ->
                 if (newValue == true) {
-                    launchCatchingTask { withCol { sched.set_creation_offset() } }
+                    launchCatchingTask { withCol { sched.setCreationOffset() } }
                 } else {
-                    launchCatchingTask { withCol { sched.clear_creation_offset() } }
+                    launchCatchingTask { withCol { sched.clearCreationOffset() } }
                 }
             }
         }
