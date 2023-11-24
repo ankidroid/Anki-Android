@@ -1779,7 +1779,7 @@ open class CardBrowser :
             getString(R.string.card_browser_unknown_deck_name)
         }
 
-    private fun onPostExecuteRenderBrowserQA(result: Pair<CardCollection<CardCache>, List<Long>>) {
+    private fun onPostExecuteRenderBrowserQA(result: Pair<List<CardCache>, List<Long>>) {
         val cardsIdsToHide = result.second
         try {
             if (cardsIdsToHide.isNotEmpty()) {
@@ -1842,7 +1842,7 @@ open class CardBrowser :
                 if (currentTime - mLastRenderStart > 300 || lastVisibleItem + 1 >= totalItemCount) {
                     mLastRenderStart = currentTime
                     renderBrowserQAJob?.cancel()
-                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards) }
+                    launchCatchingTask { renderBrowserQAParams(firstVisibleItem, visibleItemCount, cards.toList()) }
                 }
             }
         }
@@ -1856,13 +1856,13 @@ open class CardBrowser :
             if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                 val startIdx = listView.firstVisiblePosition
                 val numVisible = listView.lastVisiblePosition - startIdx
-                launchCatchingTask { renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, mCards) }
+                launchCatchingTask { renderBrowserQAParams(startIdx - 5, 2 * numVisible + 5, mCards.toList()) }
             }
         }
     }
 
     // TODO: Improve progress bar handling in places where this function is used
-    protected suspend fun renderBrowserQAParams(firstVisibleItem: Int, visibleItemCount: Int, cards: CardCollection<CardCache>) {
+    protected suspend fun renderBrowserQAParams(firstVisibleItem: Int, visibleItemCount: Int, cards: List<CardCache>) {
         Timber.d("Starting Q&A background rendering")
         val result = renderBrowserQA(
             cards,
@@ -2359,7 +2359,7 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     suspend fun rerenderAllCards() {
-        renderBrowserQAParams(0, mCards.size() - 1, mCards)
+        renderBrowserQAParams(0, mCards.size() - 1, mCards.toList())
     }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
