@@ -122,7 +122,7 @@
     <string name="dialog_no">Ні</string>
     <string name="dialog_yes">Так</string>
     <string name="dialog_continue">Продовжити</string>
-    <string name="dialog_processing">Обробка…</string>
+    <string name="dialog_processing">Обробка&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Створити</string>
     <string name="dialog_positive_delete">Видалити</string>
     <!-- Currently unsued, should be useful in the future -->

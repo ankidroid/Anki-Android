@@ -177,7 +177,7 @@
     </plurals>
     <string name="export_preparation_in_progress">Export wird vorbereitet&#8230;</string>
     <string name="export_ready_title">Export bereit</string>
-    <string name="export_send_no_handlers">Keine Anwendungen zum Öffnen von APKG-Dateien verfügbar. Wird gespeichert …</string>
+    <string name="export_send_no_handlers">Keine Anwendungen zum Öffnen von APKG-Dateien verfügbar. Wird gespeichert &#8230;</string>
     <string name="export_save_apkg_successful">Anki-Paket erfolgreich gespeichert</string>
     <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
     <string name="export_share_title">Anki-Paket senden mit</string>
