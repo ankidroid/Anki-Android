@@ -72,13 +72,13 @@ fun updateValuesFromDeck(
 }
 
 suspend fun renderBrowserQA(
-    cards: CardBrowser.CardCollection<CardBrowser.CardCache>,
+    cards: List<CardBrowser.CardCache>,
     startPos: Int,
     n: Int,
     column1Index: Int,
     column2Index: Int,
     onProgressUpdate: (Int) -> Unit
-): Pair<CardBrowser.CardCollection<CardBrowser.CardCache>, MutableList<Long>> = withContext(Dispatchers.IO) {
+): Pair<List<CardBrowser.CardCache>, MutableList<Long>> = withContext(Dispatchers.IO) {
     Timber.d("doInBackgroundRenderBrowserQA")
     val invalidCardIds: MutableList<Long> = ArrayList()
     // for each specified card in the browser list
@@ -86,7 +86,7 @@ suspend fun renderBrowserQA(
         // Stop if cancelled, throw cancellationException
         ensureActive()
 
-        if (i < 0 || i >= cards.size()) {
+        if (i < 0 || i >= cards.size) {
             continue
         }
         val card: CardBrowser.CardCache = try {
