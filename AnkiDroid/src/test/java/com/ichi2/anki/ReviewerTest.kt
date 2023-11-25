@@ -281,6 +281,17 @@ class ReviewerTest : RobolectricTest() {
         }
     }
 
+    @Test
+    fun `Marking a card is undone by marking again`() = runTest {
+        startReviewer(withCards = 1).apply {
+            assertThat("card is not marked before action", !isDisplayingMark)
+            executeCommand(MARK)
+            assertThat("card is marked after action", isDisplayingMark)
+            executeCommand(MARK)
+            assertThat("marking a card twice disables the mark", !isDisplayingMark)
+        }
+    }
+
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {
         reviewer.toggleWhiteboard()
 
@@ -441,3 +452,5 @@ class ReviewerTest : RobolectricTest() {
         }
     }
 }
+
+val Reviewer.isDisplayingMark: Boolean get() = this.mCardMarker!!.isDisplayingMark
