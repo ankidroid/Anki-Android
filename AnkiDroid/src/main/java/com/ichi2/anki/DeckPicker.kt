@@ -816,6 +816,8 @@ open class DeckPicker :
             val searchIcon = decks.count() >= 10
             val undoLabel = undoLabel()
             val syncIcon = fetchSyncStatus(this)
+            Triple(searchIcon, undoLabel, syncIcon)
+        }?.let { (searchIcon, undoLabel, syncIcon) ->
             val mediaMigrationState = getMediaMigrationState()
             val shouldShowStartMigrationButton = shouldOfferToMigrate() ||
                 mediaMigrationState is MediaMigrationState.Ongoing.PausedDueToError
