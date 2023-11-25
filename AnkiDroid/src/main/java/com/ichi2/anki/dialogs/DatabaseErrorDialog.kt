@@ -35,6 +35,7 @@ import com.afollestad.materialdialogs.list.listItems
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.ichi2.anki.*
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType.*
+import com.ichi2.anki.dialogs.ImportFileSelectionFragment.FileImportResultLauncherHolder
 import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ImportOptions
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.libanki.Consts
@@ -210,7 +211,11 @@ class DatabaseErrorDialog : AsyncDialogFragment() {
 
                     dialog.title(R.string.backup_restore_select_title)
                         .positiveButton(R.string.restore_backup_choose_another) {
-                            ImportFileSelectionFragment.openImportFilePicker(activity as AnkiActivity, DeckPicker.PICK_APKG_FILE)
+                            (activity as AnkiActivity?)?.let {
+                                if (it is FileImportResultLauncherHolder) {
+                                    ImportFileSelectionFragment.openImportFilePicker(it, ImportFileSelectionFragment.ImportFileType.APKG)
+                                }
+                            }
                         }
                         .negativeButton(R.string.dialog_cancel)
                         .listItemsSingleChoice(items = dates.toTypedArray().toList(), waitForPositiveButton = false) { _: MaterialDialog, index: Int, _: CharSequence ->
