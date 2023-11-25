@@ -216,7 +216,7 @@ open class Reviewer :
             return
         }
         launchCatchingTask {
-            toggleMark(card.note())
+            toggleMark(card.note(), handler = this@Reviewer)
             refreshActionBar()
             onMarkChanged()
         }

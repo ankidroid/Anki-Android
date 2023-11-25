@@ -22,6 +22,8 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
+import com.ichi2.anki.cardviewer.ViewerCommand.MARK
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
@@ -269,6 +271,16 @@ class ReviewerTest : RobolectricTest() {
         )
     }
 
+    @Test
+    fun `A card is not flipped after 'mark' Issue 14656`() = runTest {
+        startReviewer(withCards = 1).apply {
+            executeCommand(FLIP_OR_ANSWER_EASE1)
+            assertThat("card is showing answer", isDisplayingAnswer)
+            executeCommand(MARK)
+            assertThat("card is showing answer after mark", isDisplayingAnswer)
+        }
+    }
+
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {
         reviewer.toggleWhiteboard()
 
@@ -369,7 +381,10 @@ class ReviewerTest : RobolectricTest() {
         notetypes.addTemplate(m, newTemplate)
     }
 
-    private fun startReviewer(): Reviewer {
+    private fun startReviewer(withCards: Int = 0): Reviewer {
+        for (i in 0 until withCards) {
+            addNoteUsingBasicModel()
+        }
         return startReviewer(this)
     }
 
