@@ -25,6 +25,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.editorCard
 import com.ichi2.anki.NoteEditorTest.FromScreen.DECK_LIST
 import com.ichi2.anki.NoteEditorTest.FromScreen.REVIEWER
+import com.ichi2.anki.api.AddContentApi.Companion.DEFAULT_DECK_ID
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
@@ -347,6 +348,14 @@ class NoteEditorTest : RobolectricTest() {
         assertEquals("012345text", field.fieldText)
         assertEquals(10, field.selectionStart)
         assertEquals(10, field.selectionEnd)
+    }
+
+    @Test
+    fun `can open with corrupt current deck - Issue 14096`() {
+        col.config.set(CURRENT_DECK, '"' + "1688546411954" + '"')
+        getNoteEditorAddingNote(DECK_LIST, NoteEditor::class.java).apply {
+            assertThat("current deck is default after corruption", deckId, equalTo(DEFAULT_DECK_ID))
+        }
     }
 
     private fun getCopyNoteIntent(editor: NoteEditor): Intent {
