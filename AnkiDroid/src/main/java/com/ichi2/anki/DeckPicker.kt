@@ -111,7 +111,6 @@ import com.ichi2.async.*
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.utils.TimeManager
@@ -838,9 +837,9 @@ open class DeckPicker :
         optionsMenuState = withOpenColOrNull {
             val searchIcon = decks.count() >= 10
             val undoLabel = undoLabel()
-            val syncIcon = fetchSyncStatus(this)
-            Triple(searchIcon, undoLabel, syncIcon)
-        }?.let { (searchIcon, undoLabel, syncIcon) ->
+            Pair(searchIcon, undoLabel)
+        }?.let { (searchIcon, undoLabel) ->
+            val syncIcon = fetchSyncStatus()
             val mediaMigrationState = getMediaMigrationState()
             val shouldShowStartMigrationButton = shouldOfferToMigrate() ||
                 mediaMigrationState is MediaMigrationState.Ongoing.PausedDueToError
@@ -861,10 +860,10 @@ open class DeckPicker :
             MigrationService.flowOfProgress.value !is MigrationService.Progress.Running
     }
 
-    private fun fetchSyncStatus(col: Collection): SyncIconState {
+    private suspend fun fetchSyncStatus(): SyncIconState {
         val auth = syncAuth()
-        return when (SyncStatus.getSyncStatus(col, this, auth)) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES -> SyncIconState.Normal
+        return when (SyncStatus.getSyncStatus(this, auth)) {
+            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
             SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
             SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
             SyncStatus.FULL_SYNC -> SyncIconState.FullSync

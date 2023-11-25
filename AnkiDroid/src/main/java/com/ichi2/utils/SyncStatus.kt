@@ -21,20 +21,23 @@ import androidx.core.content.edit
 import anki.sync.SyncAuth
 import anki.sync.SyncStatusResponse
 import com.ichi2.anki.AnkiDroidApp
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.SyncPreferences
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.libanki.Collection
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.exceptions.BackendNetworkException
+import timber.log.Timber
 
 // TODO Remove BADGE_DISABLED from this enum, it doesn't belong here
 enum class SyncStatus {
-    NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED;
+    NO_ACCOUNT, NO_CHANGES, HAS_CHANGES, FULL_SYNC, BADGE_DISABLED, ERROR;
 
     companion object {
         private var sPauseCheckingDatabase = false
         private var sMarkedInMemory = false
 
-        fun getSyncStatus(col: Collection, context: Context, auth: SyncAuth?): SyncStatus {
+        suspend fun getSyncStatus(context: Context, auth: SyncAuth?): SyncStatus {
             if (isDisabled) {
                 return BADGE_DISABLED
             }
@@ -42,7 +45,9 @@ enum class SyncStatus {
                 return NO_ACCOUNT
             }
             return try {
-                val output = col.syncStatus(auth)
+                // Use CollectionManager to ensure that this doesn't block 'deck count' tasks
+                // throws if a .colpkg import or similar occurs just before this call
+                val output = withContext(Dispatchers.IO) { CollectionManager.getBackend().syncStatus(auth) }
                 if (output.hasNewEndpoint()) {
                     context.sharedPrefs().edit {
                         putString(SyncPreferences.CURRENT_SYNC_URI, output.newEndpoint)
@@ -51,6 +56,9 @@ enum class SyncStatus {
                 syncStatusFromRequired(output.required)
             } catch (_: BackendNetworkException) {
                 NO_CHANGES
+            } catch (e: Exception) {
+                Timber.d("error obtaining sync status: collection likely closed", e)
+                ERROR
             }
         }
 
