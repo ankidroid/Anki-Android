@@ -138,7 +138,8 @@ open class Reviewer :
     private var mPrefShowETA = false
 
     /** Handle Mark/Flag state of cards  */
-    private var mCardMarker: CardMarker? = null
+    @VisibleForTesting
+    internal var mCardMarker: CardMarker? = null
 
     // Preferences from the collection
     private var mShowRemainingCardCount = false
