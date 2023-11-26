@@ -45,6 +45,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
@@ -1429,7 +1430,13 @@ abstract class AbstractFlashcardViewer :
      * @param doAudioReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
      * pressing the keyboard shortcut R on the desktop
      */
+    @NeedsTest("audio is not played if opExecuted occurs when viewer is in the background")
     protected open fun playSounds(doAudioReplay: Boolean) {
+        // this can occur due to OpChanges when the viewer is on another screen
+        if (!this.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            Timber.w("sounds are not played as the activity is inactive")
+            return
+        }
         val replayQuestion = mCardSoundConfig!!.replayQuestion
         if (mCardSoundConfig!!.autoplay || doAudioReplay) {
             // Use TTS if TTS preference enabled and no other sound source
