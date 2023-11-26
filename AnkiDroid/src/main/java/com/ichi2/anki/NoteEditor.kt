@@ -59,6 +59,7 @@ import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityExtra
@@ -1094,7 +1095,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        option: Int
+        stateFilter: CardStateFilter
     ) {
         if (mSelectedTags != selectedTags) {
             isTagsEdited = true

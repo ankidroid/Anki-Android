@@ -25,10 +25,12 @@ import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.ichi2.anki.R
 import com.ichi2.anki.analytics.AnalyticsDialogFragment
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.utils.DisplayUtils.resizeWhenSoftInputShown
 import com.ichi2.utils.TagsUtil
+import timber.log.Timber
 
 class TagsDialog : AnalyticsDialogFragment {
     /**
@@ -56,13 +58,14 @@ class TagsDialog : AnalyticsDialogFragment {
     private var mPositiveText: String? = null
     private var mDialogTitle: String? = null
     private var mTagsArrayAdapter: TagsArrayAdapter? = null
-    private var mSelectedOption = -1
     private var mToolbarSearchView: SearchView? = null
     private var mToolbarSearchItem: MenuItem? = null
     private var mNoTagsTextView: TextView? = null
     private var mTagsListRecyclerView: RecyclerView? = null
     private var mDialog: MaterialDialog? = null
     private val mListener: TagsDialogListener?
+
+    private lateinit var selectedOption: CardStateFilter
 
     /**
      * Constructs a new [TagsDialog] that will communicate the results using the provided listener.
@@ -156,8 +159,8 @@ class TagsDialog : AnalyticsDialogFragment {
             optionsGroup.getChildAt(i).id = i
         }
         optionsGroup.check(0)
-        mSelectedOption = optionsGroup.checkedRadioButtonId
-        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> mSelectedOption = checkedId }
+        selectedOption = radioButtonIdToCardState(optionsGroup.checkedRadioButtonId)
+        optionsGroup.setOnCheckedChangeListener { _: RadioGroup?, checkedId: Int -> selectedOption = radioButtonIdToCardState(checkedId) }
         if (mType == DialogType.EDIT_TAGS) {
             mDialogTitle = resources.getString(R.string.card_details_tags)
             optionsGroup.visibility = View.GONE
@@ -177,7 +180,7 @@ class TagsDialog : AnalyticsDialogFragment {
                 tagsDialogListener.onSelectedTags(
                     mTags!!.copyOfCheckedTagList(),
                     mTags!!.copyOfIndeterminateTagList(),
-                    mSelectedOption
+                    selectedOption
                 )
             }
             .negativeButton(R.string.dialog_cancel)
@@ -186,6 +189,17 @@ class TagsDialog : AnalyticsDialogFragment {
         resizeWhenSoftInputShown(dialog?.window!!)
         return dialog
     }
+
+    private fun radioButtonIdToCardState(id: Int) =
+        when (id) {
+            0 -> CardStateFilter.ALL_CARDS
+            1 -> CardStateFilter.NEW
+            2 -> CardStateFilter.DUE
+            else -> {
+                Timber.w("unexpected value: %d", id)
+                CardStateFilter.ALL_CARDS
+            }
+        }
 
     private fun adjustToolbar(tagsDialogView: View) {
         val toolbar: Toolbar = tagsDialogView.findViewById(R.id.tags_dialog_toolbar)
