@@ -78,7 +78,8 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
-import com.ichi2.anki.dialogs.ImportFileSelectionFragment.FileImportResultLauncherHolder
+import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
+import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
 import com.ichi2.anki.dialogs.MediaCheckDialog.MediaCheckDialogListener
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
@@ -176,7 +177,8 @@ open class DeckPicker :
     SyncCompletionListener,
     ImportColpkgListener,
     BaseSnackbarBuilderProvider,
-    FileImportResultLauncherHolder {
+    ApkgImportResultLauncherProvider,
+    CsvImportResultLauncherProvider {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false

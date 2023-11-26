@@ -37,26 +37,12 @@ class ImportFileSelectionFragment {
         APKG, COLPKG, CSV
     }
 
-    interface ApkgFileImportResultLauncherHolder {
+    interface ApkgImportResultLauncherProvider {
         fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent?>
     }
 
-    interface CsvFileImportResultLauncherHolder {
+    interface CsvImportResultLauncherProvider {
         fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent?>
-    }
-
-    interface FileImportResultLauncherHolder : ApkgFileImportResultLauncherHolder, CsvFileImportResultLauncherHolder {
-
-        fun getResultLauncher(importFileType: ImportFileType): ActivityResultLauncher<Intent?> {
-            return when (importFileType) {
-                ImportFileType.APKG, ImportFileType.COLPKG -> {
-                    getApkgFileImportResultLauncher()
-                }
-                ImportFileType.CSV -> {
-                    getCsvFileImportResultLauncher()
-                }
-            }
-        }
     }
 
     companion object {
@@ -81,7 +67,7 @@ class ImportFileSelectionFragment {
                         R.string.import_deck_package,
                         R.drawable.ic_manual_black_24dp,
                         UsageAnalytics.Actions.IMPORT_APKG_FILE,
-                        OpenFilePicker(ImportFileType.APKG, true)
+                        OpenFilePicker(ImportFileType.APKG, false)
                     )
                 } else {
                     null
@@ -133,10 +119,12 @@ class ImportFileSelectionFragment {
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple)
             extraMimes?.let { intent.putExtra(Intent.EXTRA_MIME_TYPES, it) }
 
-            if ((fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) && activity is ApkgFileImportResultLauncherHolder) {
+            if ((fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) && activity is ApkgImportResultLauncherProvider) {
                 activity.launchActivityForResultWithAnimation(intent, activity.getApkgFileImportResultLauncher(), ActivityTransitionAnimation.Direction.NONE)
-            } else if (fileType == ImportFileType.CSV && activity is CsvFileImportResultLauncherHolder) {
+            } else if (fileType == ImportFileType.CSV && activity is CsvImportResultLauncherProvider) {
                 activity.launchActivityForResultWithAnimation(intent, activity.getCsvFileImportResultLauncher(), ActivityTransitionAnimation.Direction.NONE)
+            } else {
+                Timber.w("Activity($activity) can't handle requested import: $fileType")
             }
         }
     }
