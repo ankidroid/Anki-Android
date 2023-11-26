@@ -45,7 +45,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.core.view.children
 import androidx.core.view.isVisible
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.State.RESUMED
 import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
@@ -274,6 +274,13 @@ abstract class AbstractFlashcardViewer :
 
     private val migrationService by migrationServiceWhileStartedOrNull()
 
+    /**
+     * Changes which were received when the viewer was in the background
+     * which should be executed once the viewer is visible again
+     * @see opExecuted
+     * @see refreshIfRequired
+     */
+    private var refreshRequired: ViewerRefresh? = null
     init {
         ChangeManager.subscribe(this)
     }
@@ -446,6 +453,8 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal suspend fun updateCardAndRedraw() {
+        refreshRequired = null // this method is called on refresh
+
         updateCurrentCard()
 
         if (currentCard == null) {
@@ -581,6 +590,30 @@ abstract class AbstractFlashcardViewer :
         // Reset the activity title
         updateActionBar()
         selectNavigationItem(-1)
+        refreshIfRequired(isResuming = true)
+    }
+
+    /**
+     * If the activity is [RESUMED], or is called from [onResume] then execute the pending
+     * operations in [refreshRequired].
+     *
+     * If the activity is NOT [RESUMED], wait until [onResume]
+     */
+    @NeedsTest("if opExecuted is called while activity is in the background, audio plays onResume")
+    private fun refreshIfRequired(isResuming: Boolean = false) {
+        // Defer the execution of `opExecuted` until the user is looking at the screen.
+        // This ensures that audio/timers are not accidentally started
+        if (isResuming || lifecycle.currentState.isAtLeast(RESUMED)) {
+            refreshRequired?.let {
+                Timber.d("refreshIfRequired: redraw")
+                // if changing code, re-evaluate `refreshRequired = null` in `updateCardAndRedraw`
+                launchCatchingTask { updateCardAndRedraw() }
+                refreshRequired = null
+            }
+        } else if (refreshRequired != null) {
+            // onResume() will execute this method
+            Timber.d("deferred refresh as activity was not STARTED")
+        }
     }
 
     override fun onDestroy() {
@@ -1434,7 +1467,7 @@ abstract class AbstractFlashcardViewer :
     @NeedsTest("audio is not played if opExecuted occurs when viewer is in the background")
     protected open fun playSounds(doAudioReplay: Boolean) {
         // this can occur due to OpChanges when the viewer is on another screen
-        if (!this.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+        if (!this.lifecycle.currentState.isAtLeast(RESUMED)) {
             Timber.w("sounds are not played as the activity is inactive")
             return
         }
@@ -2527,10 +2560,9 @@ abstract class AbstractFlashcardViewer :
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
-        if ((changes.studyQueues || changes.noteText || changes.card) && handler !== this) {
-            Timber.d("opExecuted: redraw")
-            launchCatchingTask { updateCardAndRedraw() }
-        }
+        if (handler === this) return
+        refreshRequired = ViewerRefresh.updateState(refreshRequired, changes)
+        refreshIfRequired()
     }
 
     companion object {
