@@ -53,6 +53,7 @@ import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.export.ActivityExportingDelegate
 import com.ichi2.anki.export.ExportType
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
 import com.ichi2.anki.pages.CardInfoDestination
@@ -1597,9 +1598,9 @@ open class CardBrowser :
         get() = deckSpinnerSelection!!.computeDropDownDecks(includeFiltered = false)
 
     @RustCleanup("this isn't how Desktop Anki does it")
-    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
+    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
         when (mTagsDialogListenerAction) {
-            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, option)
+            TagsDialogListenerAction.FILTER -> filterByTags(selectedTags, stateFilter)
             TagsDialogListenerAction.EDIT_TAGS -> launchCatchingTask {
                 editSelectedCardsTags(selectedTags, indeterminateTags)
             }
@@ -1627,18 +1628,10 @@ open class CardBrowser :
         }
     }
 
-    private fun filterByTags(selectedTags: List<String>, option: Int) {
-        // TODO: Duplication between here and CustomStudyDialog:onSelectedTags
+    private fun filterByTags(selectedTags: List<String>, cardState: CardStateFilter) {
         mSearchView!!.setQuery("", false)
 
-        val sb = StringBuilder()
-        sb.append(
-            when (option) {
-                1 -> "is:new "
-                2 -> "is:due "
-                else -> ""
-            }
-        )
+        val sb = StringBuilder(cardState.toSearch)
         // join selectedTags as "tag:$tag" with " or " between them
         val tagsConcat = selectedTags.joinToString(" or ") { tag -> "\"tag:$tag\"" }
         if (selectedTags.isNotEmpty()) {
@@ -2405,8 +2398,8 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun filterByTag(vararg tags: String) {
         mTagsDialogListenerAction = TagsDialogListenerAction.FILTER
-        onSelectedTags(tags.toList(), emptyList(), 0)
-        filterByTags(tags.toList(), 0)
+        onSelectedTags(tags.toList(), emptyList(), CardStateFilter.ALL_CARDS)
+        filterByTags(tags.toList(), CardStateFilter.ALL_CARDS)
     }
 
     @VisibleForTesting
