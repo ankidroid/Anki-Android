@@ -674,8 +674,11 @@ open class CardBrowser :
         val cardIds = selectedCardIds
         withProgress {
             undoableOp {
-                val wantMark = !getCard(selectedCardIds.first()).note().hasTag("marked")
                 val noteIds = notesOfCards(cardIds)
+                // if all notes are marked, remove the mark
+                // if no notes are marked, add the mark
+                // if there is a mix, enable the mark on all
+                val wantMark = !noteIds.all { getNote(it).hasTag("marked") }
                 if (wantMark) {
                     tags.bulkAdd(noteIds, "marked")
                 } else {
