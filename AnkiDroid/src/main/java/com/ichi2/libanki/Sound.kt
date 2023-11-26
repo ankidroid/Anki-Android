@@ -42,7 +42,7 @@ private typealias SoundPath = String
  * Parses, loads and plays sound & video files
  * Called `Sound` Anki uses `[sound:]` for both audio and video
  */
-class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) : SoundPlayer() {
+class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) {
     /**
      * @param soundDir base path to the media files
      */
@@ -109,12 +109,20 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
         soundPathCollection.addAll(paths)
     }
 
+    fun playSound(
+        replacedUrl: String,
+        onCompletionListener: OnCompletionListener?,
+        soundErrorListener: OnErrorListener
+    ) {
+        soundPlayer.playSound(replacedUrl, onCompletionListener, soundErrorListener)
+    }
+
     /** Plays all the sounds for the indicated side(s)  */
     fun playSounds(side: SoundSide, errorListener: OnErrorListener?) {
         // If there are sounds to play for the current card, start with the first one
         val soundPaths = getSounds(side) ?: return
         Timber.d("playSounds: playing $side")
-        this.playSound(
+        this.soundPlayer.playSound(
             soundPaths[0],
             PlayAllCompletionListener(side, errorListener),
             errorListener
@@ -156,7 +164,7 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
             // If there are still more sounds to play for the current card, play the next one
             if (nextIndexToPlay < paths.size) {
                 Timber.i("Play all: Playing next sound")
-                playSound(paths[nextIndexToPlay++], this, errorListener)
+                soundPlayer.playSound(paths[nextIndexToPlay++], this, errorListener)
             } else {
                 Timber.i("Play all: Completed - releasing sound")
                 soundPlayer.stopSounds()
@@ -164,7 +172,8 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
         }
     }
 
-    override fun stopSounds() {
+    fun stopSounds() {
+        Timber.d("stopping sounds")
         soundPlayer.stopSounds()
         ReadText.stopTts() // TODO: Reconsider design
     }
