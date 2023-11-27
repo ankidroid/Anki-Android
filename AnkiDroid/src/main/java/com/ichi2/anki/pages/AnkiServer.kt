@@ -87,7 +87,7 @@ open class AnkiServer(
             "getNotetypeNames" -> withCol { getNotetypeNamesRaw(bytes) }
             "getDeckNames" -> withCol { getDeckNamesRaw(bytes) }
             "getCsvMetadata" -> withCol { getCsvMetadataRaw(bytes) }
-            "importCsv" -> activity.importCsvRaw(bytes)
+            "importCsv" -> importCsvRaw(bytes)
             "importJsonFile" -> importJsonFileRaw(bytes)
             "importDone" -> bytes
             "searchInBrowser" -> activity.searchInBrowser(bytes)

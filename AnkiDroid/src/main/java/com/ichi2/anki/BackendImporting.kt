@@ -19,7 +19,6 @@ package com.ichi2.anki
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesOnly
-import anki.import_export.ImportResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.buildSearchString
 import com.ichi2.libanki.importAnkiPackageRaw
@@ -37,18 +36,11 @@ suspend fun importJsonFileRaw(input: ByteArray): ByteArray {
     }
 }
 
-suspend fun FragmentActivity.importCsvRaw(input: ByteArray): ByteArray {
+suspend fun importCsvRaw(input: ByteArray): ByteArray {
     return withContext(Dispatchers.Main) {
-        val output = withProgress(
-            extractProgress = {
-                if (progress.hasImporting()) {
-                    text = progress.importing
-                }
-            },
-            op = { withCol { importCsvRaw(input) } }
-        )
-        val importResponse = ImportResponse.parseFrom(output)
-        undoableOp { importResponse }
+        val output = withCol { importCsvRaw(input) }
+        val changes = OpChangesOnly.parseFrom(output)
+        undoableOp { changes }
         output
     }
 }
