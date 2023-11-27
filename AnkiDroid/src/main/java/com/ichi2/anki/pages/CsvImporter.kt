@@ -19,7 +19,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
+import androidx.activity.OnBackPressedCallback
+import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.R
+import com.ichi2.anki.hideShowButtonCss
 
 /**
  * Anki page used to import text/csv files
@@ -33,16 +36,48 @@ class CsvImporter : PageFragment() {
     override var webChromeClient = PageChromeClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // the back callback is only enabled when import is running and showing progress
+        val backCallback = object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
+                CollectionManager.getBackend().setWantsAbort()
+                // once triggered the callback is not needed as the import process can't be resumed
+                remove()
+            }
+        }
         val path = arguments?.getString(ARG_KEY_PATH) ?: throw Exception("missing path")
-        webViewClient = CsvImporterWebViewClient(path)
+        webViewClient = CsvImporterWebViewClient(path, backCallback)
         super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(this, backCallback)
     }
 
-    class CsvImporterWebViewClient(val path: String) : PageWebViewClient() {
+    class CsvImporterWebViewClient(
+        val path: String,
+        private val backCallback: OnBackPressedCallback
+    ) : PageWebViewClient() {
+        /**
+         * Ideally, to handle the state of the back callback, we would just need to check for
+         * `/latestProgress` calls followed by one `/importDone` call. However there are some extra
+         * calls to `/latestProgress` AFTER `/importDone` and this property keeps track of this.
+         */
+        private var isDone = false
+
         override fun onPageFinished(view: WebView?, url: String?) {
             // from upstream: https://github.com/ankitects/anki/blob/678c354fed4d98c0a8ef84fb7981ee085bd744a7/qt/aqt/import_export/import_csv_dialog.py#L49
-            view!!.evaluateJavascript("anki.setupImportCsvPage('$path');") {
+            view!!.evaluateJavascript("anki.setupImportCsvPage('$path');$hideShowButtonCss") {
                 super.onPageFinished(view, url)
+            }
+        }
+
+        override fun onLoadResource(view: WebView?, url: String?) {
+            super.onLoadResource(view, url)
+            backCallback.isEnabled = when {
+                url == null -> false
+                url.endsWith("latestProgress") && !isDone -> true
+                url.endsWith("importDone") -> {
+                    isDone = true // import was done so disable any back callback changes after this call
+                    false
+                }
+                else -> false
             }
         }
     }
