@@ -64,9 +64,9 @@
     </string-array>
     <string-array name="browser_column2_headings">
         <item>Answer</item>
-        <item>Card</item>
+        <item>Card type</item>
         <item>Deck</item>
-        <item>Note</item>
+        <item>Note type</item>
         <item>Question</item>
         <item>Tags</item>
         <item>Lapses</item>
@@ -74,9 +74,9 @@
         <item>Interval</item>
         <item>Ease</item>
         <item>Due</item>
-        <item>Card Modified</item>
+        <item>Card modified</item>
         <item>Created</item>
-        <item>Note Modified</item>
+        <item>Note modified</item>
     </string-array>
 
     <string name="filter_by_flags">Flags</string>
