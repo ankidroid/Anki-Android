@@ -154,10 +154,7 @@
     <string name="import_title">Enporti</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Aldoni</string>
     <string name="import_message_replace_confirm">Tio ĉi forigos vian ekzistan kolekton kaj anstataŭigos ĝin per datumoj de dosiero %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Tio ĉi ne estas valida dosiero Anki-pakaĵo</string>
     <string name="import_title_error" comment="Title of error dialog">Eraro</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Anstataŭigoj de Anki-datumbazo (.anki2) ankoraŭ ne estas subtenataj. Legu la manlibron por instrukciojn pri anstataŭigo.</string>
     <string name="import_error_content_provider">Ne povas aŭtomate enporti elektitan dosieron al AnkiDroid. Bonvolu legi la manlibron de uzanto por sciiĝi pri kiel permane enporti anki-dosierojn:\n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_interrupted">Enportado interrompita</string>
     <string name="export_include_schedule">Inkluzivi lern-planon</string>
     <string name="export_include_media">Inkluzivi aŭdvidaĵojn</string>
@@ -182,7 +177,7 @@
     </plurals>
     <string name="export_preparation_in_progress">Preparing export&#8230;</string>
     <string name="export_ready_title">Export ready</string>
-    <string name="export_send_no_handlers">Neniu aplikaĵo por pritrakti apkg. Konservado…</string>
+    <string name="export_send_no_handlers">Neniu aplikaĵo por pritrakti apkg. Konservado&#8230;</string>
     <string name="export_save_apkg_successful">Sukcese savis Anki-pakaĵon</string>
     <string name="export_save_apkg_unsuccessful">Savi la Anki-pakaĵon malsukcesis</string>
     <string name="export_share_title">Send Anki package using</string>

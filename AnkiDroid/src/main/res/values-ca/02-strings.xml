@@ -154,10 +154,7 @@
     <string name="import_title">S\'està important</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Afegeix</string>
     <string name="import_message_replace_confirm">Això suprimirà la vostra col·lecció actual i la reemplaçarà amb les dades del fitxer %s. Esteu segur que ho voleu?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Voleu afegir \"%s\" a la col·lecció? Això pot trigar força</item>
-        <item quantity="other">Voleu importar \"%s\" a la col·lecció? Això pot trigar força</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Aquest no és un fitxer de paquet Anki vàlid</string>
     <string name="import_title_error" comment="Title of error dialog">S\'ha produït un error</string>
     <string name="import_error_handle_exception">No ha estat possible importar el paquet\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Les substitucions a la base de dades Anki (.anki2) encara no són suportades. Consulteu el manual per obtenir instruccions de substitució.</string>
     <string name="import_error_content_provider">El fitxer seleccionat no s\'ha importat automàticament per AnkiDroid. Consulteu el manual d\'usuari per com importar arxius anki manualment: \n%s</string>
     <string name="import_error_copy_to_cache">No ha estat possible copiar el fitxer a la memòria cau (segurament falta espai)</string>
-    <string name="import_error_multiple_colpkg">Heu triat diversos fitxers colpkg.</string>
-    <string name="import_error_colpkg_apkg">Heu triat els fitxers  apkg &amp; i colpkg alhora.</string>
     <string name="import_interrupted">Importació interrompuda: AnkiDroid s\'ha tancat</string>
     <string name="export_include_schedule">Incloueu la planificació</string>
     <string name="export_include_media">Incloure multimèdia</string>

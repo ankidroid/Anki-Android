@@ -22,6 +22,8 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
+import com.ichi2.anki.cardviewer.ViewerCommand.MARK
 import com.ichi2.anki.preferences.PreferenceTestUtils
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.ActionButtonStatus
@@ -49,14 +51,22 @@ class ReviewerTest : RobolectricTest() {
     @Test
     fun verifyStartupNoCollection() {
         enableNullCollection()
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.getColUnsafe } } }
+        ActivityScenario.launch(Reviewer::class.java)
+            .use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertFailsWith<Exception> { reviewer.getColUnsafe } } }
     }
 
     @Ignore("flaky")
     @Test
     @RunInBackground
     fun verifyNormalStartup() {
-        ActivityScenario.launch(Reviewer::class.java).use { scenario -> scenario.onActivity { reviewer: Reviewer -> assertNotNull("Collection should be non-null", reviewer.getColUnsafe) } }
+        ActivityScenario.launch(Reviewer::class.java).use { scenario ->
+            scenario.onActivity { reviewer: Reviewer ->
+                assertNotNull(
+                    "Collection should be non-null",
+                    reviewer.getColUnsafe
+                )
+            }
+        }
     }
 
     @Ignore("flaky")
@@ -95,7 +105,11 @@ class ReviewerTest : RobolectricTest() {
 
         val visibleButtons: List<String> = reviewer.getVisibleButtonNames()
 
-        assertThat("No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons", visibleButtons, empty())
+        assertThat(
+            "No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons",
+            visibleButtons,
+            empty()
+        )
     }
 
     @Test
@@ -108,7 +122,11 @@ class ReviewerTest : RobolectricTest() {
 
         val visibleButtons = reviewer.getVisibleButtonNamesExcept(R.id.action_toggle_whiteboard)
 
-        assertThat("No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons", visibleButtons, empty())
+        assertThat(
+            "No menu items should be visible if all are disabled in Settings - Reviewer - App Bar Buttons",
+            visibleButtons,
+            empty()
+        )
     }
 
     @Test
@@ -178,7 +196,10 @@ class ReviewerTest : RobolectricTest() {
         time.addM(2)
         reviewer.answerCard(Consts.BUTTON_THREE)
         advanceRobolectricLooperWithSleep()
-        equalFirstField(cards[0], reviewer.currentCard!!) // This failed in #6898 because this card was not in the queue
+        equalFirstField(
+            cards[0],
+            reviewer.currentCard!!
+        ) // This failed in #6898 because this card was not in the queue
     }
 
     @Test
@@ -250,6 +271,27 @@ class ReviewerTest : RobolectricTest() {
         )
     }
 
+    @Test
+    fun `A card is not flipped after 'mark' Issue 14656`() = runTest {
+        startReviewer(withCards = 1).apply {
+            executeCommand(FLIP_OR_ANSWER_EASE1)
+            assertThat("card is showing answer", isDisplayingAnswer)
+            executeCommand(MARK)
+            assertThat("card is showing answer after mark", isDisplayingAnswer)
+        }
+    }
+
+    @Test
+    fun `Marking a card is undone by marking again`() = runTest {
+        startReviewer(withCards = 1).apply {
+            assertThat("card is not marked before action", !isDisplayingMark)
+            executeCommand(MARK)
+            assertThat("card is marked after action", isDisplayingMark)
+            executeCommand(MARK)
+            assertThat("marking a card twice disables the mark", !isDisplayingMark)
+        }
+    }
+
     private fun toggleWhiteboard(reviewer: ReviewerForMenuItems) {
         reviewer.toggleWhiteboard()
 
@@ -296,7 +338,10 @@ class ReviewerTest : RobolectricTest() {
             revCount
         )
 
-        assertThat(countList.toString(), equalTo(expected.toString())) // We use toString as hamcrest does not print the whole array and stops at [0].
+        assertThat(
+            countList.toString(),
+            equalTo(expected.toString())
+        ) // We use toString as hamcrest does not print the whole array and stops at [0].
     }
 
     private fun answerCardOrdinalAsGood(r: Reviewer, i: Int) {
@@ -347,7 +392,10 @@ class ReviewerTest : RobolectricTest() {
         notetypes.addTemplate(m, newTemplate)
     }
 
-    private fun startReviewer(): Reviewer {
+    private fun startReviewer(withCards: Int = 0): Reviewer {
+        for (i in 0 until withCards) {
+            addNoteUsingBasicModel()
+        }
         return startReviewer(this)
     }
 
@@ -359,7 +407,7 @@ class ReviewerTest : RobolectricTest() {
         reviewCard.queue = Consts.QUEUE_TYPE_REV
         reviewCard.type = Consts.CARD_TYPE_REV
         reviewCard.due = 0
-        reviewCard.flush()
+        reviewCard.col.updateCard(reviewCard, skipUndoEntry = true)
     }
 
     private class ReviewerForMenuItems : Reviewer() {
@@ -404,3 +452,5 @@ class ReviewerTest : RobolectricTest() {
         }
     }
 }
+
+val Reviewer.isDisplayingMark: Boolean get() = this.mCardMarker!!.isDisplayingMark

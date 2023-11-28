@@ -154,10 +154,7 @@
     <string name="import_title">ಆಮದು ಮಾಡಲಾಗುತ್ತಿದೆ</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ಸೇರಿಸಿ</string>
     <string name="import_message_replace_confirm">ಇದು ನಿಮ್ಮ ಅಸ್ತಿತ್ವದಲ್ಲಿರುವ ಸಂಗ್ರಹವನ್ನು ಅಳಿಸುತ್ತದೆ ಮತ್ತು ಅದನ್ನು%s ಫೈಲ್‌ನ ಡೇಟಾದೊಂದಿಗೆ ಬದಲಾಯಿಸುತ್ತದೆ</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ಇದು ಮಾನ್ಯ ಅಂಕಿ ಪ್ಯಾಕೇಜ್ ಫೈಲ್ ಅಲ್ಲ</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">ಅಂಕಿ ಡೇಟಾಬೇಸ್ (.anki2) ಬದಲಿಗಳನ್ನು ಇನ್ನೂ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ. ಬದಲಿ ಸೂಚನೆಗಳಿಗಾಗಿ ದಯವಿಟ್ಟು ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ.</string>
     <string name="import_error_content_provider">ಆಯ್ದ ಫೈಲ್ ಅನ್ನು ಆಂಕಿಡ್ರಾಯ್ಡ್ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡಲಾಗುವುದಿಲ್ಲ. ಆಂಕಿ ಫೈಲ್‌ಗಳನ್ನು ಹಸ್ತಚಾಲಿತವಾಗಿ ಆಮದು ಮಾಡುವುದು ಹೇಗೆ ಎಂದು ದಯವಿಟ್ಟು ಬಳಕೆದಾರರ ಕೈಪಿಡಿಯನ್ನು ನೋಡಿ: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_interrupted">ಆಮದು ಅಡ್ಡಿಪಡಿಸಲಾಗಿದೆ: ಆಂಕಿಡ್ರಾಯ್ಡ್ ಅನ್ನು ಮುಚ್ಚಲಾಗಿದೆ</string>
     <string name="export_include_schedule">ವೇಳಾಪಟ್ಟಿ ಸೇರಿಸಿ</string>
     <string name="export_include_media">ಮಾಧ್ಯಮವನ್ನು ಸೇರಿಸಿ</string>

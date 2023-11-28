@@ -54,12 +54,15 @@
         <item quantity="other">%d یادداشت نمایش داده شده</item>
     </plurals>
     <string name="card_browser_all_decks">همه دسته ها</string>
-    <string name="card_browser_delete_card">حذف یادداشت‌ها</string>
-    <string name="card_browser_suspend_card">کارت‌های معلق</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">تغییر دسته</string>
-    <string name="card_browser_unsuspend_card">کارت‌های غیر معلق</string>
-    <string name="card_browser_mark_card">علامت گذاری یادداشت</string>
-    <string name="card_browser_unmark_card">برداشتن علامت گذاری یادداشت</string>
     <string name="delete_card_title">حذف یادداشت</string>
     <string name="card_browser_show_marked">فیلتر علامتگذاری شد</string>
     <string name="card_browser_show_suspended">فیلتر معلق شد</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d کارت حذف شده</item>
         <item quantity="other">%d کارت حذف شده.</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

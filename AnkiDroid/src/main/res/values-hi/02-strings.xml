@@ -154,10 +154,7 @@
     <string name="import_title">आयात</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">जोड़ें</string>
     <string name="import_message_replace_confirm">यह अपने मौजूदा संग्रह को हटाने और यह फ़ाइल %s का डेटा के साथ बदलना होगा। क्या आपको यकीन है?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">\"%s\" को संग्रह में जोड़ें? यह एक लंबा समय लग सकता है</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">संग्रह में \"%s\" को जोड़ें? इसमें काफी समय लग सकता है</string>
     <string name="import_log_no_apkg">यह एक मान्य Anki पैकेज फ़ाइल नहीं है</string>
     <string name="import_title_error" comment="Title of error dialog">त्रुटि</string>
     <string name="import_error_handle_exception">फ़ाइल आयात करने में विफल\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">अन्कि डाटाबेस (.anki2) प्रतिस्थापन अभीतक सहारा नहीं दिया जाता हैं । कृपया पुस्तिका प्रतिस्थापन के शिक्षण के लिये देखिये ।</string>
     <string name="import_error_content_provider">चयनित फ़ाइल AnkiDroid द्वारा स्वचालित रूप से आयात नहीं की जा सकी । कृपया अंकि फ़ाइलों को मैंयुअल रूप से आयात करने के लिए उपयोगकर्ता मैंयुअल देखें: \n%s</string>
     <string name="import_error_copy_to_cache">फ़ाइल कैश करने में विफल (संभवतः भंडारण स्थान से बाहर)</string>
-    <string name="import_error_multiple_colpkg">एकाधिक colpkg फ़ाइलें चुनी गईं</string>
-    <string name="import_error_colpkg_apkg">akpg &amp; colpkg दोनों फाइलों को एक साथ सेलेक्ट किया गया</string>
     <string name="import_interrupted">आयात बाधित हुआ</string>
     <string name="export_include_schedule">शेड्यूलिंग शामिल करें</string>
     <string name="export_include_media">मीडिया शामिल करें</string>
@@ -174,7 +169,7 @@
     <string name="confirm_apkg_export_deck">निर्यात \"%s\" apkg फ़ाइल के रूप में?</string>
     <plurals name="confirm_apkg_export_selected_cards">
         <item quantity="one">चयनित कार्ड को एपीकेजी फ़ाइल के रूप में निर्यात करें?</item>
-        <item quantity="other">Export %d selected cards as apkg file?</item>
+        <item quantity="other">चयनित कार्ड्स को एपीकेजी फ़ाइल के रूप में निर्यात करें?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
         <item quantity="one">चयनित नोट को apkg फ़ाइल के रूप में निर्यात करें?</item>
@@ -228,8 +223,8 @@
     <string name="choose_an_image">चित्र चुनें</string>
     <!-- Card Template Browser Appearance -->
     <string name="restore_default">पहले जैसा कर देना</string>
-    <string name="cloze_sample_text">This is a {{%1$s::sample}} cloze deletion.</string>
-    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">exomple</string>
+    <string name="cloze_sample_text">यह एक {{%1$s::sample}} क्लोज़ विलोपन है।</string>
+    <string name="basic_answer_sample_text_user" comment="has a typo, so that user sees a highlighted difference in basic answer model     ">एक दाहरण</string>
     <string name="basic_answer_sample_text">एक उदाहरण</string>
     <string name="reviewer_tts_cloze_spoken_replacement">रिक्त</string>
     <!-- in options menu & Navigation Drawer -->
@@ -290,7 +285,7 @@
     <string name="email_id_empty">ई-मेल पते की आवश्यकता है</string>
     <string name="password_empty">पासवर्ड की आवश्यकता है</string>
     <string name="back_pressed_once">बाहर निकलने के लिए फिर से दबाएं</string>
-    <string name="back_pressed_once_reviewer">Press back again to return</string>
+    <string name="back_pressed_once_reviewer">वापस जाने के लिए फिर से \"वापस\" पर क्लिक करें</string>
     <!-- %% is required to display % symbol. Reference: https://stackoverflow.com/a/16834358 -->
     <string name="percentage">%s%%</string>
     <string name="download_deck">डेक डाउनलोड करें</string>
@@ -310,7 +305,7 @@
     Each of these strings ends with a period, following the notation of Anki Desktop -->
     <string name="card_buried">कार्ड दफन।</string>
     <plurals name="note_suspended">
-        <item quantity="one">%d card suspended.</item>
+        <item quantity="one">%d कार्ड निलंबित।</item>
         <item quantity="other">%d कार्ड निलंबित।</item>
     </plurals>
     <!--  Note Editor Toggle Sticky  -->
@@ -328,7 +323,7 @@
     <!--  JS Addons  -->
     <string name="not_valid_js_addon">%s एक वैध जावास्क्रिप्ट एडऑन पैकेज नहीं है</string>
     <string name="could_not_create_dir">निर्देशिका नहीं बन सका %s</string>
-    <string name="malicious_archive_entry_outside">Malicious archive. Contains entry outside of the target dir: %s</string>
+    <string name="malicious_archive_entry_outside">दुर्भावनापूर्ण संग्रह. लक्ष्य निर्देशिका के बाहर प्रविष्टि शामिल है: %s</string>
     <string name="malicious_archive_exceeds_limit">Malicious archive. Size exceeds %1$s or contains more than %2$d files</string>
     <string name="file_extract_exceeds_storage_space">फ़ाइल एक्सट्रेक्ट स्टोरेज स्पेस को पार कर गया है</string>
     <!--  Hierarchical Tags  -->

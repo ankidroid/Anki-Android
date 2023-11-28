@@ -162,14 +162,7 @@
     <string name="import_title">استيراد</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">إضافة</string>
     <string name="import_message_replace_confirm">سيحذف هذا مجموعتك الحالية ويستبدلها ببيانات الملف %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="zero">إضافة \"%s\" إلى المجموعة؟ قد يستغرق ذلك وقتاً طويلاً</item>
-        <item quantity="one">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
-        <item quantity="two">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
-        <item quantity="few">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
-        <item quantity="many">هل تريد إضافة \"%s\" إلى المجموعة؟ قد يستغرق هذا وقتًا طويلًا.</item>
-        <item quantity="other">هل تريد استيراد الملفات التالية:\n%s\nقد يستغرق هذا وقتًا طويلًا.</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ملف حزمة أنكي غير صالح</string>
     <string name="import_title_error" comment="Title of error dialog">خطأ</string>
     <string name="import_error_handle_exception">فشل استيراد الملف\n\n%s</string>
@@ -177,8 +170,6 @@
     <string name="import_error_load_imported_database">استبدالات قاعدة بيانات أنكي (.anki2) غير مدعومة. الرجاء الاطلاع على الدليل لتعليمات الاستبدال.</string>
     <string name="import_error_content_provider">لا يمكن استيراد الملف المحدد تلقائيًا بواسطة أنكيدرويد. الرجاء الاطلاع على دليل المستخدم لكيفية استيراد ملفات أنكي يدويًا: \n%s</string>
     <string name="import_error_copy_to_cache">فشل تخزين الملف مؤقتًا (ربما بسبب نفاذ مساحة التخزين)</string>
-    <string name="import_error_multiple_colpkg">تم تحديد العديد من ملفات colpkg.</string>
-    <string name="import_error_colpkg_apkg">تم تحديد كل من ملفات apkg &amp; colpkg في وقت واحد.</string>
     <string name="import_interrupted">تمت مقاطعة الاستيراد</string>
     <string name="export_include_schedule">تضمين معلومات الجدولة</string>
     <string name="export_include_media">تضمين الوسائط</string>

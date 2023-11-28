@@ -154,10 +154,7 @@
     <string name="import_title">Āyāta karīta āhē</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Jōḍā</string>
     <string name="import_message_replace_confirm">Hē āpalē vidyamāna saṅkalana haṭavēla āṇi phā\'ilacyā ḍēṭāśī punarsthita karēla%s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ही वैध अंकी पॅकेज फाइल नाही</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">अंकी डेटाबेस (.anki2) बदली अद्याप समर्थित नाहीत. कृपया बदलीच्या सूचनांसाठी मॅन्युअल पहा.</string>
     <string name="import_error_content_provider">Nivaḍalēlī phā\'ila AnkiDroid dvārē svayan̄calitapaṇē āyāta karaṇē śakya navhatē. Kr̥payā ēnkī phā\'ilsa svahastē kaśī āyāta karāvī yābaddala vāparakartā mĕn\'yu\'ala pahā: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_interrupted">आयात व्यत्यय: अंकीड्रोइड बंद होता</string>
     <string name="export_include_schedule">Śēḍyūliṅga samāviṣṭa karā</string>
     <string name="export_include_media">Mādhyama samāviṣṭa karā</string>

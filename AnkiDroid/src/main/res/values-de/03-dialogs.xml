@@ -112,7 +112,7 @@
     <string name="dialog_no">Nein</string>
     <string name="dialog_yes">Ja</string>
     <string name="dialog_continue">Weiter</string>
-    <string name="dialog_processing">Wird verarbeitet …</string>
+    <string name="dialog_processing">Wird verarbeitet &#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Erstellen</string>
     <string name="dialog_positive_delete">Löschen</string>
     <!-- Currently unsued, should be useful in the future -->

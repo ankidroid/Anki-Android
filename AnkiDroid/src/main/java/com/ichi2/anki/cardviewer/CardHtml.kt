@@ -143,7 +143,7 @@ class CardHtml(
             val answerSound: List<SoundOrVideoTag> = answerAv.filterIsInstance(SoundOrVideoTag::class.java)
 
             // legacy (slow) function to return the answer without the front side
-            fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.a())
+            fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.answer())
 
             return CardHtml(content, card.ord, nightModeInversion, context, side, ::getAnswerWithoutFrontSideLegacy, questionSound, answerSound)
         }
@@ -155,8 +155,8 @@ class CardHtml(
          * TODO: This is no longer entirely true as more post-processing occurs
          */
         private fun displayString(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
-            var content: String = if (side == Side.FRONT) card.q(reload) else card.a()
-            content = card.col.media.escapeImages(content)
+            var content: String = if (side == Side.FRONT) card.question(reload) else card.answer()
+            content = card.col.media.escapeMediaFilenames(content)
             content = context.filterTypeAnswer(content, side)
             Timber.v("question: '%s'", content)
             return enrichWithQADiv(content)
@@ -212,7 +212,7 @@ class CardHtml(
 
         fun legacyGetTtsTags(card: Card, cardSide: SingleSoundSide, context: Context): List<TTSTag> {
             val cardSideContent: String = when (cardSide) {
-                QUESTION -> card.q(true)
+                QUESTION -> card.question(true)
                 ANSWER -> card.pureAnswer
             }
             return TtsParser.getTextsToRead(cardSideContent, context.getString(R.string.reviewer_tts_cloze_spoken_replacement))

@@ -152,9 +152,7 @@
     <string name="import_title">Mengimpor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksimu yang ada dan menggantinya dengan data dari berkas %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="other">Apakah anda ingin mengimpor file berikut:\n%s\nIni dapat memakan banyak waktu</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Ini bukan paket Anki yang valid</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_error_handle_exception">Gagal mengimpor file\n\n%s</string>
@@ -162,8 +160,6 @@
     <string name="import_error_load_imported_database">Pengganti basisdata Anki (.anki2) belum didukung. Harap lihat panduan untuk langkah penggantian</string>
     <string name="import_error_content_provider">Berkas yang dipilih tidak dapat diimpor secara otomatis oleh AnkiDroid. Silakan lihat panduan pengguna tentang cara mengimpor berkas anki secara manual: \n%s</string>
     <string name="import_error_copy_to_cache">Gagal cache file (mungkin kehabisan ruang penyimpanan)</string>
-    <string name="import_error_multiple_colpkg">Beberapa file colpkg dipilih.</string>
-    <string name="import_error_colpkg_apkg">Kedua file apkg &amp; colpkg dipilih bersamaan.</string>
     <string name="import_interrupted">Impor terganggu</string>
     <string name="export_include_schedule">Sertakan penjadwalan</string>
     <string name="export_include_media">Sertakan media</string>

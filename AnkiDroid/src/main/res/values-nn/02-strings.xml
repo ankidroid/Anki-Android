@@ -154,10 +154,7 @@
     <string name="import_title">Importerer</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Legg til</string>
     <string name="import_message_replace_confirm">This will delete your existing collection and replace it with the data of file %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Dette er ikke en gyldig Anki pakke fil</string>
     <string name="import_title_error" comment="Title of error dialog">Feil</string>
     <string name="import_error_handle_exception">Klarte ikkje å importere fil\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Anki Database (.anki2) replacements are not yet supported. Please see the manual for replacement instructions.</string>
     <string name="import_error_content_provider">Den valgte filen kunne ikke importeres automatisk av AnkiDroid. Vennligst referer til brukermanualen for å finne ut hvordan man importerer anki-filer manuelt: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Include scheduling</string>
     <string name="export_include_media">Inkluder media</string>

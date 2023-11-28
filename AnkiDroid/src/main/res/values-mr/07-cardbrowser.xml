@@ -54,12 +54,15 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">सर्व डेक</string>
-    <string name="card_browser_delete_card">नोट्स हटवा</string>
-    <string name="card_browser_suspend_card">कार्डे निलंबित करा</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">डेक बदला</string>
-    <string name="card_browser_unsuspend_card">निलंबित कार्ड</string>
-    <string name="card_browser_mark_card">नोट्स चिन्हांकित करा</string>
-    <string name="card_browser_unmark_card">नोट्स अचिन्हांकित करा</string>
     <string name="delete_card_title">टीप हटवायची?</string>
     <string name="card_browser_show_marked">फिल्टर चिन्हांकित</string>
     <string name="card_browser_show_suspended">फिल्टर निलंबित</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d कार्ड हटविले</item>
         <item quantity="other">%d कार्डे हटविली</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

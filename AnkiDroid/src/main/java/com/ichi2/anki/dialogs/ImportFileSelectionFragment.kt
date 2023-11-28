@@ -17,6 +17,8 @@
 package com.ichi2.anki.dialogs
 
 import android.content.Intent
+import androidx.activity.result.ActivityResultLauncher
+import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anki.AnkiActivity
 import com.ichi2.anki.DeckPicker
 import com.ichi2.anki.R
@@ -25,11 +27,23 @@ import com.ichi2.anki.dialogs.HelpDialog.FunctionItem
 import com.ichi2.annotations.NeedsTest
 import timber.log.Timber
 
-@NeedsTest("Selecting APKG allows multiple files")
+@NeedsTest("Selecting APKG does not allow multiple files")
 @NeedsTest("Selecting COLPKG does not allow multiple files")
 @NeedsTest("Restore backup dialog does not allow multiple files")
 class ImportFileSelectionFragment {
     data class ImportOptions(val importColpkg: Boolean, val importApkg: Boolean, val importTextFile: Boolean)
+
+    enum class ImportFileType {
+        APKG, COLPKG, CSV
+    }
+
+    interface ApkgImportResultLauncherProvider {
+        fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent?>
+    }
+
+    interface CsvImportResultLauncherProvider {
+        fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent?>
+    }
 
     companion object {
         fun createInstance(@Suppress("UNUSED_PARAMETER") context: DeckPicker, options: ImportOptions): RecursivePictureMenu {
@@ -37,13 +51,13 @@ class ImportFileSelectionFragment {
 
             // This is required for serialization of the lambda
             class OpenFilePicker(
-                val requestCode: Int,
+                val importFileType: ImportFileType,
                 var multiple: Boolean = false,
                 val mimeType: String = "*/*",
                 val extraMimes: Array<String>? = null
             ) : FunctionItem.ActivityConsumer {
                 override fun consume(activity: AnkiActivity) {
-                    openImportFilePicker(activity, requestCode, multiple, mimeType, extraMimes)
+                    openImportFilePicker(activity, importFileType, multiple, mimeType, extraMimes)
                 }
             }
 
@@ -53,7 +67,7 @@ class ImportFileSelectionFragment {
                         R.string.import_deck_package,
                         R.drawable.ic_manual_black_24dp,
                         UsageAnalytics.Actions.IMPORT_APKG_FILE,
-                        OpenFilePicker(DeckPicker.PICK_APKG_FILE, true)
+                        OpenFilePicker(ImportFileType.APKG, false)
                     )
                 } else {
                     null
@@ -63,7 +77,7 @@ class ImportFileSelectionFragment {
                         R.string.import_collection_package,
                         R.drawable.ic_manual_black_24dp,
                         UsageAnalytics.Actions.IMPORT_COLPKG_FILE,
-                        OpenFilePicker(DeckPicker.PICK_APKG_FILE)
+                        OpenFilePicker(ImportFileType.COLPKG)
                     )
                 } else {
                     null
@@ -74,7 +88,7 @@ class ImportFileSelectionFragment {
                         R.drawable.ic_baseline_description_24,
                         UsageAnalytics.Actions.IMPORT_CSV_FILE,
                         OpenFilePicker(
-                            DeckPicker.PICK_CSV_FILE,
+                            ImportFileType.CSV,
                             multiple = false,
                             mimeType = "*/*",
                             extraMimes = arrayOf("text/plain", "text/comma-separated-values", "text/csv", "text/tab-separated-values")
@@ -90,7 +104,7 @@ class ImportFileSelectionFragment {
         // needs to be static for serialization
         fun openImportFilePicker(
             activity: AnkiActivity,
-            requestCode: Int,
+            fileType: ImportFileType,
             multiple: Boolean = false,
             mimeType: String = "*/*",
             extraMimes: Array<String>? = null
@@ -104,7 +118,14 @@ class ImportFileSelectionFragment {
             intent.putExtra("android.content.extra.SHOW_FILESIZE", true)
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, multiple)
             extraMimes?.let { intent.putExtra(Intent.EXTRA_MIME_TYPES, it) }
-            activity.startActivityForResultWithoutAnimation(intent, requestCode)
+
+            if ((fileType == ImportFileType.APKG || fileType == ImportFileType.COLPKG) && activity is ApkgImportResultLauncherProvider) {
+                activity.launchActivityForResultWithAnimation(intent, activity.getApkgFileImportResultLauncher(), ActivityTransitionAnimation.Direction.NONE)
+            } else if (fileType == ImportFileType.CSV && activity is CsvImportResultLauncherProvider) {
+                activity.launchActivityForResultWithAnimation(intent, activity.getCsvFileImportResultLauncher(), ActivityTransitionAnimation.Direction.NONE)
+            } else {
+                Timber.w("Activity($activity) can't handle requested import: $fileType")
+            }
         }
     }
 }

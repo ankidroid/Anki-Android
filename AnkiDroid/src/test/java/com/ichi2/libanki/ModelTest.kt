@@ -51,7 +51,7 @@ class NotetypeTest : JvmTest() {
         note.setItem("Front", "helloworld")
         col.addNote(note)
         val card = note.firstCard()
-        val q = card.q()
+        val q = card.question()
         assertThat(
             "field should be at the end of the template - empty string for front",
             q,
@@ -82,7 +82,7 @@ class NotetypeTest : JvmTest() {
         note.setItem("FrontSide2", "2")
         col.addNote(note)
         val card = note.firstCard()
-        val q = card.q()
+        val q = card.question()
         assertThat(
             "FrontSide should be an empty string, even though it was set",
             q,
@@ -267,7 +267,7 @@ class NotetypeTest : JvmTest() {
         // and should have updated the other cards' ordinals
         c = note.cards()[0]
         assertEquals(0, c.ord)
-        assertEquals("1", stripHTML(c.q()))
+        assertEquals("1", stripHTML(c.question()))
         // it shouldn't be possible to orphan notes by removing templates
         t = Notetypes.newTemplate("template name")
         t.put("qfmt", "{{Front}}1")
@@ -319,7 +319,7 @@ class NotetypeTest : JvmTest() {
         val note = col.newNote()
         note.setItem("Front", "hello<b>world")
         col.addNote(note)
-        assertThat(note.cards()[0].q(), containsString("helloworld"))
+        assertThat(note.cards()[0].question(), containsString("helloworld"))
     }
 
     @Test
@@ -360,14 +360,14 @@ class NotetypeTest : JvmTest() {
         )
         assertNotEquals(0, col.addNote(note))
         assertEquals(5, note.numberOfCards())
-        assertThat(note.cards()[0].q(), containsString(clozeClass()))
-        assertThat(note.cards()[1].q(), containsString(clozeClass()))
+        assertThat(note.cards()[0].question(), containsString(clozeClass()))
+        assertThat(note.cards()[1].question(), containsString(clozeClass()))
         assertThat(
-            note.cards()[2].q(),
+            note.cards()[2].question(),
             not(containsString(clozeClass()))
         )
-        assertThat(note.cards()[3].q(), containsString(clozeClass()))
-        assertThat(note.cards()[4].q(), containsString(clozeClass()))
+        assertThat(note.cards()[3].question(), containsString(clozeClass()))
+        assertThat(note.cards()[4].question(), containsString(clozeClass()))
 
         note = col.newNote()
         note.setItem("Text", "\\(a\\) {{c1::b}} \\[ {{c1::c}} \\]")
@@ -386,7 +386,7 @@ class NotetypeTest : JvmTest() {
         note.setItem("Text", "hello {{c1::world}}")
         col.addNote(note)
         assertThat(
-            note.cards()[0].q(),
+            note.cards()[0].question(),
             containsString("[[type:cloze:Text]]")
         )
     }
@@ -414,7 +414,7 @@ class NotetypeTest : JvmTest() {
         val a2 = "<i>chained</i>"
         note.setItem("Text", "This {{c1::$q1::$a1}} demonstrates {{c1::$q2::$a2}} clozes.")
         assertEquals(1, col.addNote(note))
-        note.cards()[0].q()
+        note.cards()[0].question()
         /* TODO: chained modifier
         assertThat("Question «"+question+"» does not contain the expected string", question, containsString("This <span class=cloze>[sentence]</span> demonstrates <span class=cloze>[chained]</span> clozes.")
                    );
@@ -453,16 +453,16 @@ class NotetypeTest : JvmTest() {
         // switch cards
         val c0 = note.cards()[0]
         val c1 = note.cards()[1]
-        assertThat(c0.q(), containsString("b123"))
-        assertThat(c1.q(), containsString("note"))
+        assertThat(c0.question(), containsString("b123"))
+        assertThat(c1.question(), containsString("note"))
         assertEquals(0, c0.ord)
         assertEquals(1, c1.ord)
         col.notetypes.change(basic, note.id, basic, noOp, map)
         note.load()
         c0.load()
         c1.load()
-        assertThat(c0.q(), containsString("note"))
-        assertThat(c1.q(), containsString("b123"))
+        assertThat(c0.question(), containsString("note"))
+        assertThat(c1.question(), containsString("b123"))
         assertEquals(1, c0.ord)
         assertEquals(0, c1.ord)
         // .cards() returns cards in order
@@ -563,7 +563,7 @@ class NotetypeTest : JvmTest() {
         assertEquals("getDid() should return the model did", expected, basic.did)
 
         // Check if returns default deck id (1) when did is null
-        basic.put("did", null)
+        basic.put("did", null as Int?)
         val expected2 = 1L
         assertEquals(
             "getDid() should return 1 (default deck id) if model did is null",

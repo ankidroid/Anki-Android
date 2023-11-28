@@ -54,12 +54,15 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">تمام ڈیک</string>
-    <string name="card_browser_delete_card">نوٹ حذف کریں</string>
-    <string name="card_browser_suspend_card">کارڈ معطل کریں</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">ڈیک کو تبدیل کریں</string>
-    <string name="card_browser_unsuspend_card">غیر معطل ڈیک</string>
-    <string name="card_browser_mark_card">نوٹوں کو نشان زد کریں</string>
-    <string name="card_browser_unmark_card">نوٹوں کو غیر نشان زد کریں۔</string>
     <string name="delete_card_title">نوٹ حذف کریں?</string>
     <string name="card_browser_show_marked">فلٹر نشان زد</string>
     <string name="card_browser_show_suspended">فلٹر معطل</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d card deleted</item>
         <item quantity="other">%d cards deleted</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

@@ -154,10 +154,7 @@
     <string name="import_title">Nag-aangkat</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Magdagdag</string>
     <string name="import_message_replace_confirm">Buburahin nito ang iyong umiiral na tipon at papalitan nito ng data mula sa file na %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Idagdag ang \"%s\" sa tipon? Maaaring matagalan ito</item>
-        <item quantity="other">Gusto mo bang i-angkat ang mga sumusunod na file:\n%s\nMaaaring matagal ito</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Hindi ito isang wastong Anki package file</string>
     <string name="import_title_error" comment="Title of error dialog">Kamalian</string>
     <string name="import_error_handle_exception">Bigo sa pag-import sa file\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Hindi pa suportado ang mga pamalit na Anki Database (.anki2). Mangyaring tingnan ang manual para sa tagubilin sa pagpapalit.</string>
     <string name="import_error_content_provider">Ang napiling file ay hindi awtomatikong ma-import ng AnkiDroid. Pakitingnan ang user manwal kung paano ang manwal na pag-import ng mga anki file: \n%s</string>
     <string name="import_error_copy_to_cache">Bigo sa pag-cache sa file (posibleng naubusan na ng storage)</string>
-    <string name="import_error_multiple_colpkg">Maraming colpkg na file ang pinili.</string>
-    <string name="import_error_colpkg_apkg">Sabay na pinili ang parehong apkg &amp; colpkg na mga file.</string>
     <string name="import_interrupted">Naudlot ang pag-angkat: Nasara ang AnkiDroid</string>
     <string name="export_include_schedule">Isama ang pag-iiskedyul</string>
     <string name="export_include_media">Isama ang media</string>

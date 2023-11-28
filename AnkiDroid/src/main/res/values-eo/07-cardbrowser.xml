@@ -54,12 +54,15 @@
         <item quantity="other">%d notoj montrita</item>
     </plurals>
     <string name="card_browser_all_decks">Ĉiuj kartaroj</string>
-    <string name="card_browser_delete_card">Forigi notojn</string>
-    <string name="card_browser_suspend_card">Kaŝi karton daŭre</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Ŝanĝi kartaron</string>
-    <string name="card_browser_unsuspend_card">Malkaŝi kartojn</string>
-    <string name="card_browser_mark_card">Marki notojn</string>
-    <string name="card_browser_unmark_card">Malmarki notojn</string>
     <string name="delete_card_title">Ĉu forigi noton?</string>
     <string name="card_browser_show_marked">Filtri markitajn</string>
     <string name="card_browser_show_suspended">Filtri daŭre kaŝitajn</string>
@@ -108,5 +111,4 @@
         <item quantity="one">Forigis %d karton</item>
         <item quantity="other">Forigis %d kartojn</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

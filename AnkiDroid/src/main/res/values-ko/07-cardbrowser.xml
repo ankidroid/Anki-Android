@@ -52,12 +52,13 @@
         <item quantity="other">%d 카드 표시됨</item>
     </plurals>
     <string name="card_browser_all_decks">모든 카드 덱</string>
-    <string name="card_browser_delete_card">노트 삭제</string>
-    <string name="card_browser_suspend_card">카드 비활성화</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">카드 덱</string>
-    <string name="card_browser_unsuspend_card">카드 활성화</string>
-    <string name="card_browser_mark_card">노트 마크하기</string>
-    <string name="card_browser_unmark_card">노트 마크 해제하기</string>
     <string name="delete_card_title">노트를 삭제할까요?</string>
     <string name="card_browser_show_marked">표시된 카드 필터링</string>
     <string name="card_browser_show_suspended">비활성화된 카드 필터링</string>
@@ -103,5 +104,4 @@
     <plurals name="card_browser_cards_deleted">
         <item quantity="other">%d cards deleted</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

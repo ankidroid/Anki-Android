@@ -154,10 +154,7 @@
     <string name="import_title">ഇറക്കുമതി ചെയ്യുന്നു</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">ചേർക്കുക</string>
     <string name="import_message_replace_confirm">ഇത് നിങ്ങളുടെ നിലവിലുള്ള ശേഖരം ഇല്ലാതാക്കുകയും %s ഫയലിന്റെ ഡാറ്റ ഉപയോഗിച്ച് മാറ്റിസ്ഥാപിക്കുകയും ചെയ്യും</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Do you want to import the following files:\n%s\nThis may take a long time</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">ഇതൊരു സാധുവായ അങ്കി പാക്കേജ് ഫയലല്ല</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_error_handle_exception">Failed to import file\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">അങ്കി ഡാറ്റാബേസ് (.anki2) മാറ്റിസ്ഥാപിക്കൽ ഇതുവരെ പിന്തുണയ്‌ക്കുന്നില്ല. മാറ്റിസ്ഥാപിക്കാനുള്ള നിർദ്ദേശങ്ങൾക്കായി മാനുവൽ കാണുക.</string>
     <string name="import_error_content_provider">തിരഞ്ഞെടുത്ത ഫയൽ AnkiDroid സ്വപ്രേരിതമായി ഇറക്കുമതി ചെയ്യാൻ കഴിയില്ല. അങ്കി ഫയലുകൾ എങ്ങനെ സ്വമേധയാ ഇറക്കുമതി ചെയ്യാമെന്നതിനുള്ള ഉപയോക്തൃ മാനുവൽ കാണുക: \n%s</string>
     <string name="import_error_copy_to_cache">Failed to cache file (possibly out of storage space)</string>
-    <string name="import_error_multiple_colpkg">Multiple colpkg files were selected.</string>
-    <string name="import_error_colpkg_apkg">Both apkg &amp; colpkg files were selected at once.</string>
     <string name="import_interrupted">ഇറക്കുമതി തടസ്സപ്പെട്ടു: അങ്കിഡ്രോയിഡ് അടച്ചു</string>
     <string name="export_include_schedule">ഷെഡ്യൂളിംഗ് ഉൾപ്പെടുത്തുക</string>
     <string name="export_include_media">മീഡിയ ഉൾപ്പെടുത്തുക</string>

@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentActivity
 import com.ichi2.anki.CollectionManager
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.importCsvRaw
+import com.ichi2.anki.importJsonFileRaw
 import com.ichi2.anki.searchInBrowser
 import com.ichi2.libanki.*
 import com.ichi2.libanki.sched.computeFsrsWeightsRaw
@@ -78,6 +79,7 @@ open class AnkiServer(
             "getDeckNames" -> withCol { getDeckNamesRaw(bytes) }
             "getCsvMetadata" -> withCol { getCsvMetadataRaw(bytes) }
             "importCsv" -> activity.importCsvRaw(bytes)
+            "importJsonFile" -> importJsonFileRaw(bytes)
             "importDone" -> bytes
             "searchInBrowser" -> activity.searchInBrowser(bytes)
             "completeTag" -> withCol { completeTagRaw(bytes) }

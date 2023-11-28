@@ -26,6 +26,7 @@ import android.webkit.JavascriptInterface
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Card
@@ -462,7 +463,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     fun ankiSearchCardWithCallback(query: String) {
         val cards = try {
             runBlocking {
-                searchForCards(query, SortOrder.UseCollectionOrdering(), true)
+                searchForCards(query, SortOrder.UseCollectionOrdering(), CardsOrNotes.CARDS)
             }
         } catch (exc: Exception) {
             activity.webView!!.evaluateJavascript(

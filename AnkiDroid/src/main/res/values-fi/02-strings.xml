@@ -154,10 +154,7 @@
     <string name="import_title">Tuodaan</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Lisää</string>
     <string name="import_message_replace_confirm">Poistetaan nykyinen kokoelma ja korvataan se tiedoston %s tiedoilla. Haluatko varmasti jatkaa?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Lisätäänkö \"%s\" kokoelmaan? Tämä voi kestää kauan</item>
-        <item quantity="other">Haluatko tuoda seuraavat tiedostot:\n%s\nTämä voi kestää kauan</item>
-    </plurals>
+    <string name="import_dialog_message_add">Lisää “%s” kokoelmaan? Tässä voi kestää kauan</string>
     <string name="import_log_no_apkg">Tämä ei ole salittu Anki-tiedosto</string>
     <string name="import_title_error" comment="Title of error dialog">Virhe</string>
     <string name="import_error_handle_exception">Tiedoston tuonti epäonnistui\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Ankin tietokannan (.anki2) korvaamista ei vielä tueta. Katso korvausohjeet käyttöoppaasta.</string>
     <string name="import_error_content_provider">Valittua tiedostoa ei voitu tuoda automaattisesti AnkiDroidiin. Katso käyttöohjeesta, kuinka tuoda manuaalisesti anki-tiedostoja: \n%s</string>
     <string name="import_error_copy_to_cache">Tiedoston tallentaminen välimuistiin epäonnistui (tallennustila on mahdollisesti loppunut).</string>
-    <string name="import_error_multiple_colpkg">Valittiin useita colpkg-tiedostoja.</string>
-    <string name="import_error_colpkg_apkg">Sekä apkg että colpkg tiedostoja valittiin samaan aikaan.</string>
     <string name="import_interrupted">Tuonti keskeytyi: AnkiDroid suljettiin</string>
     <string name="export_include_schedule">Myös ajoitukset</string>
     <string name="export_include_media">Myös media</string>

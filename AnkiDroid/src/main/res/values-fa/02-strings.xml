@@ -154,10 +154,7 @@
     <string name="import_title">درحال وارد کردن</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">اضافه کردن</string>
     <string name="import_message_replace_confirm">با این کار مجموعه کنونی شما پاک شده و با داده های پرونده%sجایگزین خواهد شد. آیا مطمئنید؟</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">آیا میخواهید \"%s\" را به مجموعه اضافه کنید؟ ممکن است زمان زیادی طول بکشد</item>
-        <item quantity="other">آیا میخواهید این فایل ها را وارد کنید:\n%s\nممکن است زمان زیادی طول بکشد</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">این یک فایل معتبر آنکی نیست</string>
     <string name="import_title_error" comment="Title of error dialog">خطا</string>
     <string name="import_error_handle_exception">خطا در ورود بسته\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">جایگزین دیتابیس آنکی (.anki2) هنوز پشتیبانی نشده است. لطفاً برای راهنمایی در مورد جایگزینی راهنما را بخوانید.</string>
     <string name="import_error_content_provider">فایل انتخاب شده به صورت خودکار توسط ankidroid نمی تواند وارد شود. لطفا راهنمای کاربر را ببینید که چگونه به صورت دستی بتوان فایل anki را وارد کرد:\n%s</string>
     <string name="import_error_copy_to_cache">copyFileToCache() با مشکل مواجه شد (احتمالاً به دلیل کمبود حافظه)</string>
-    <string name="import_error_multiple_colpkg">چندین فایل colpkg انتخاب شده.</string>
-    <string name="import_error_colpkg_apkg">هر دو apkg و colpkg فایل ها هم‌زمان انتخاب شده اند</string>
     <string name="import_interrupted">در فرایند ورود اختلال ایجاد شد</string>
     <string name="export_include_schedule">به همراه زمانبندی</string>
     <string name="export_include_media">به همراه رسانه</string>

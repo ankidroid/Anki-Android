@@ -158,12 +158,7 @@
     <string name="import_title">מתבצע ייבוא</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">הוספה</string>
     <string name="import_message_replace_confirm">אפשרות זאת תמחק את האוסף הנוכחי שלך ותחליפו במידע מקובץ %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">האם להוסיף \"%s\" לאוסף? זה עשוי להימשך זמן רב</item>
-        <item quantity="two">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
-        <item quantity="many">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
-        <item quantity="other">האם ברצונך לייבא את הקבצים הבאים:\n%s\nדבר זה עשוי להימשך זמן רב</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">קובץ זה אינו קובץ חבילה תקין</string>
     <string name="import_title_error" comment="Title of error dialog">שגיאה</string>
     <string name="import_error_handle_exception">ייבוא הקובץ נכשל\n\n%s</string>
@@ -171,8 +166,6 @@
     <string name="import_error_load_imported_database">עדיין אין תמיכה בהחלפות של Anki Database (.anki2). אנא עיין במדריך להוראות החלפה.</string>
     <string name="import_error_content_provider">הקובץ שנבחר לא יובא בהצלחה על ידי אנקידרוייד. נא עיין במדריך למשתמש לקבלת הסבר על יבוא ידיני של קבצי אנקי: \n%s</string>
     <string name="import_error_copy_to_cache">לא הצליח לשמור את הקובץ במטמון (ייתכן ששטח האחסון נגמר)</string>
-    <string name="import_error_multiple_colpkg">נבחרו קבצי colpkg מרובים.</string>
-    <string name="import_error_colpkg_apkg">הן apkg &amp; וקבצי colpkg נבחרו בבת אחת.</string>
     <string name="import_interrupted">הייבוא נפסק: AnkiDroid נסגר</string>
     <string name="export_include_schedule">כולל תזמון</string>
     <string name="export_include_media">כולל מדיה</string>

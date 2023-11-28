@@ -117,16 +117,16 @@ open class Collection(
     private var mStartTime: Long
     private var mStartReps: Int
 
-    var mod: Long = 0
+    val mod: Long
         get() = db.queryLongScalar("select mod from col")
 
-    var crt: Long = 0
+    val crt: Long
         get() = db.queryLongScalar("select crt from col")
 
-    var scm: Long = 0
+    val scm: Long
         get() = db.queryLongScalar("select scm from col")
 
-    var lastSync: Long = 0
+    private val lastSync: Long
         get() = db.queryLongScalar("select ls from col")
 
     fun usn(): Int {
@@ -139,36 +139,19 @@ open class Collection(
     private var mLogHnd: PrintWriter? = null
 
     init {
-        media = initMedia()
-        tags = initTags()
+        media = Media(this)
+        tags = Tags(this)
         val created = reopen()
         log(path, VersionUtils.pkgVersionName)
         mStartReps = 0
         mStartTime = 0
         _loadScheduler()
         if (created) {
-            onCreate()
+            sched.useNewTimezoneCode()
+            config.set("schedVer", 2)
+            // we need to reload the scheduler: this was previously loaded as V1
+            _loadScheduler()
         }
-    }
-
-    protected open fun initMedia(): Media {
-        return Media(this)
-    }
-
-    protected open fun initDecks(): Decks {
-        return Decks(this)
-    }
-
-    protected open fun initConf(): Config {
-        return Config(backend)
-    }
-
-    protected open fun initTags(): Tags {
-        return Tags(this)
-    }
-
-    protected open fun initModels(): Notetypes {
-        return Notetypes(this)
     }
 
     fun name(): String {
@@ -199,7 +182,7 @@ open class Collection(
                 backend.setConfigBool(ConfigKey.Bool.SCHED_2021, true, undoable = false)
             }
             sched = Scheduler(this)
-            config.set("localOffset", sched._current_timezone_offset())
+            config.set("localOffset", sched.currentTimezoneOffset())
         }
     }
 
@@ -238,9 +221,9 @@ open class Collection(
     }
 
     fun load() {
-        notetypes = initModels()
-        decks = initDecks()
-        config = initConf()
+        notetypes = Notetypes(this)
+        decks = Decks(this)
+        config = Config(backend)
     }
 
     /** Note: not in libanki.  Mark schema modified to force a full
@@ -287,6 +270,14 @@ open class Collection(
      */
     fun getCard(id: Long): Card {
         return Card(this, id)
+    }
+
+    fun updateCards(cards: Iterable<Card>, skipUndoEntry: Boolean = false): OpChanges {
+        return backend.updateCards(cards.map { it.toBackendCard() }, skipUndoEntry)
+    }
+
+    fun updateCard(card: Card, skipUndoEntry: Boolean = false): OpChanges {
+        return updateCards(listOf(card), skipUndoEntry)
     }
 
     fun getNote(id: Long): Note {
@@ -504,13 +495,6 @@ JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.o
 
     fun redoAvailable(): Boolean {
         return undoStatus().redo != null
-    }
-
-    open fun onCreate() {
-        sched.useNewTimezoneCode()
-        config.set("schedVer", 2)
-        // we need to reload the scheduler: this was previously loaded as V1
-        _loadScheduler()
     }
 
     @RustCleanup("switch to removeNotes")

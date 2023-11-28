@@ -141,7 +141,7 @@
     <string name="studyoptions_empty">Ce paquet est vide. Appuyez sur le bouton + pour ajouter du contenu.</string>
     <string name="studyoptions_limit_reached">Vous avez révisé toutes vos cartes d\'aujourd\'hui</string>
     <string name="studyoptions_empty_schedule">Aucune carte à réviser actuellement</string>
-    <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé… pour l’instant !</string>
+    <string name="studyoptions_congrats_finished">Félicitations ! Vous avez terminé&#8230; pour l’instant !</string>
     <string name="studyoptions_no_cards_due">Aucune carte due actuellement</string>
     <string name="sd_card_not_mounted">Aucune carte SD</string>
     <string name="button_sync" comment="Text of the sync button">Synchroniser</string>

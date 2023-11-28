@@ -54,12 +54,15 @@
         <item quantity="other">%d notes shown</item>
     </plurals>
     <string name="card_browser_all_decks">Todos os baralhos</string>
-    <string name="card_browser_delete_card">Delete notes</string>
-    <string name="card_browser_suspend_card">Suspend cards</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Change deck</string>
-    <string name="card_browser_unsuspend_card">Unsuspend cards</string>
-    <string name="card_browser_mark_card">Mark notes</string>
-    <string name="card_browser_unmark_card">Unmark notes</string>
     <string name="delete_card_title">Apagar nota?</string>
     <string name="card_browser_show_marked">Filtro marcado</string>
     <string name="card_browser_show_suspended">Filtro suspenso</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d card deleted</item>
         <item quantity="other">%d cards deleted</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

@@ -154,10 +154,7 @@
     <string name="import_title">Внасяне</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Добави</string>
     <string name="import_message_replace_confirm">Това ще изтрие вашата съществуваща колекция и ще я замени с данните от файла %s</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Add “%s” to collection? This may take a long time</item>
-        <item quantity="other">Искате ли да импортирате следващите файли:\n%s?\nТова може да отнеме много време</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Това не е валиден Anki package файл</string>
     <string name="import_title_error" comment="Title of error dialog">Грешка</string>
     <string name="import_error_handle_exception">Неуспешно внасяне на файл\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Замената на базата данни Anki (.anki2) все още не се поддържат. Моля, вижте инструкцията за замена.</string>
     <string name="import_error_content_provider">Избраният файл не можа да бъде импортиран автоматично от AnkiDroid. Моля, вижте ръководството на потребителя за как да ръчно да импортирате anki файлове: \n%s</string>
     <string name="import_error_copy_to_cache">Пропадна кеширането на файла (възможна е липса на място за съхранение)</string>
-    <string name="import_error_multiple_colpkg">Били са избрани множество файлове colpkg.</string>
-    <string name="import_error_colpkg_apkg">Били са едновременно избрани файловете apkg и colpkg.</string>
     <string name="import_interrupted">Import interrupted: AnkiDroid was closed</string>
     <string name="export_include_schedule">Включване на планирането</string>
     <string name="export_include_media">Включване на медия</string>

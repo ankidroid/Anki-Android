@@ -154,10 +154,7 @@
     <string name="import_title">Importieren</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Hinzufügen</string>
     <string name="import_message_replace_confirm">Ihre bestehende Sammlung wird gelöscht und durch die aus der Datei %s ersetzt</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">\"%s\" zu Ihrer Sammlung hinzufügen? Das könnte etwas Zeit beanspruchen.</item>
-        <item quantity="other">Möchten Sie die folgenden Dateien importieren:\n%s\nDies kann lange dauern</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Dies ist keine gültige Anki-Paketdatei</string>
     <string name="import_title_error" comment="Title of error dialog">Fehler</string>
     <string name="import_error_handle_exception">Fehler beim Importieren der Datei\n\n%s</string>
@@ -165,8 +162,6 @@
     <string name="import_error_load_imported_database">Anki-Datenbank-Platzhalter (.anki2) werden noch nicht unterstützt. Bitte lesen Sie das Handbuch für entsprechende Anweisungen.</string>
     <string name="import_error_content_provider">Die ausgewählte Datei konnte nicht automatisch importiert werden. Lesen Sie im Handbuch, wie Sie Anki-Dateien manuell importieren können: \n %s</string>
     <string name="import_error_copy_to_cache">Fehler beim Zwischenspeichern (evtl. mangelnder Speicherplatz)</string>
-    <string name="import_error_multiple_colpkg">Mehrere KOLPKG-Dateien wurden ausgewählt.</string>
-    <string name="import_error_colpkg_apkg">Beide apkg &amp; colpkg Dateien wurden auf einmal ausgewählt.</string>
     <string name="import_interrupted">Import unterbrochen</string>
     <string name="export_include_schedule">Zeitabstände einbeziehen</string>
     <string name="export_include_media">Medien einbeziehen</string>
@@ -182,7 +177,7 @@
     </plurals>
     <string name="export_preparation_in_progress">Export wird vorbereitet&#8230;</string>
     <string name="export_ready_title">Export bereit</string>
-    <string name="export_send_no_handlers">Keine Anwendungen zum Öffnen von APKG-Dateien verfügbar. Wird gespeichert …</string>
+    <string name="export_send_no_handlers">Keine Anwendungen zum Öffnen von APKG-Dateien verfügbar. Wird gespeichert &#8230;</string>
     <string name="export_save_apkg_successful">Anki-Paket erfolgreich gespeichert</string>
     <string name="export_save_apkg_unsuccessful">Anki-Paket konnte nicht gespeichert werden</string>
     <string name="export_share_title">Anki-Paket senden mit</string>

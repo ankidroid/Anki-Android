@@ -17,7 +17,6 @@
 package com.ichi2.libanki.sched
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
@@ -437,11 +436,11 @@ open class Scheduler(val col: Collection) {
         sb.append(col.tr.schedulingCongratulationsFinished())
         val boldSpan = StyleSpan(Typeface.BOLD)
         sb.setSpan(boldSpan, 0, sb.length, 0)
-        sb.append(_nextDueMsg())
+        sb.append(nextDueMsg())
         return sb
     }
 
-    fun _nextDueMsg(): String {
+    fun nextDueMsg(): String {
         val sb = StringBuilder()
         if (revDue()) {
             sb.append("\n\n")
@@ -462,7 +461,7 @@ open class Scheduler(val col: Collection) {
         return sb.toString()
     }
 
-    fun _deckLimit(): String {
+    fun deckLimit(): String {
         return Utils.ids2str(col.decks.active())
     }
 
@@ -471,7 +470,7 @@ open class Scheduler(val col: Collection) {
      */
     fun totalNewForCurrentDeck(): Int {
         return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
             REPORT_LIMIT
         )
     }
@@ -480,7 +479,7 @@ open class Scheduler(val col: Collection) {
      */
     fun totalRevForCurrentDeck(): Int {
         return col.db.queryScalar(
-            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + _deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
+            "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
             today,
             REPORT_LIMIT
         )
@@ -494,16 +493,16 @@ open class Scheduler(val col: Collection) {
      * @return Number of days since creation of the collection.
      */
     open val today: Int
-        get() = _timingToday().daysElapsed
+        get() = timingToday().daysElapsed
 
     /**
      * @return Timestamp of when the day ends. Takes into account hour at which day change for anki and timezone
      */
     open val dayCutoff: Long
-        get() = _timingToday().nextDayAt
+        get() = timingToday().nextDayAt
 
     /* internal */
-    fun _timingToday(): SchedTimingTodayResponse {
+    fun timingToday(): SchedTimingTodayResponse {
         return if (true) { // (BackendFactory.defaultLegacySchema) {
             val request = schedTimingTodayLegacyRequest {
                 createdSecs = col.crt
@@ -511,8 +510,8 @@ open class Scheduler(val col: Collection) {
                     createdMinsWest = it
                 }
                 nowSecs = time.intTime()
-                nowMinsWest = _current_timezone_offset()
-                rolloverHour = _rolloverHour()
+                nowMinsWest = currentTimezoneOffset()
+                rolloverHour = rolloverHour()
             }
             return col.backend.schedTimingTodayLegacy(request)
         } else {
@@ -522,11 +521,11 @@ open class Scheduler(val col: Collection) {
         }
     }
 
-    fun _rolloverHour(): Int {
+    fun rolloverHour(): Int {
         return col.config.get("rollover") ?: 4
     }
 
-    open fun _current_timezone_offset(): Int {
+    open fun currentTimezoneOffset(): Int {
         return localMinutesWest(time.intTime())
     }
 
@@ -547,7 +546,7 @@ open class Scheduler(val col: Collection) {
      * Save the UTC west offset at the time of creation into the DB.
      * Once stored, this activates the new timezone handling code.
      */
-    fun set_creation_offset() {
+    fun setCreationOffset() {
         val minsWest = localMinutesWest(col.crt)
         col.config.set("creationOffset", minsWest)
     }
@@ -555,15 +554,15 @@ open class Scheduler(val col: Collection) {
     // New timezone handling
     // ////////////////////////////////////////////////////////////////////////
 
-    fun _new_timezone_enabled(): Boolean {
+    fun newTimezoneEnabled(): Boolean {
         return col.config.get<Int?>("creationOffset") != null
     }
 
     fun useNewTimezoneCode() {
-        set_creation_offset()
+        setCreationOffset()
     }
 
-    fun clear_creation_offset() {
+    fun clearCreationOffset() {
         col.config.remove("creationOffset")
     }
 
@@ -571,7 +570,7 @@ open class Scheduler(val col: Collection) {
     open fun revDue(): Boolean {
         return col.db
             .queryScalar(
-                "SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
+                "SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ?" +
                     " LIMIT 1",
                 today
             ) != 0
@@ -579,13 +578,13 @@ open class Scheduler(val col: Collection) {
 
     /** true if there are any new cards due.  */
     open fun newDue(): Boolean {
-        return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + _deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0
+        return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0
     }
 
     /** @return Number of cards in the current deck and its descendants.
      */
     fun cardCount(): Int {
-        val dids = _deckLimit()
+        val dids = deckLimit()
         return col.db.queryScalar("SELECT count() FROM cards WHERE did IN $dids")
     }
 
@@ -696,7 +695,7 @@ open class Scheduler(val col: Collection) {
      * @param card A random card
      * @return The conf of the deck of the card.
      */
-    fun _cardConf(card: Card): DeckConfig {
+    fun cardConf(card: Card): DeckConfig {
         return col.decks.confForDid(card.did)
     }
 

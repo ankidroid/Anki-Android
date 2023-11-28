@@ -158,12 +158,7 @@
     <string name="import_title">Імпортування</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Додати</string>
     <string name="import_message_replace_confirm">Дана операція видалить вміст колеції і замінить її даними з файлу %s. Продовжити?</string>
-    <plurals name="import_files_message_add_confirm">
-        <item quantity="one">Додати \"%s\" до колекції? Це може зайняти багато часу</item>
-        <item quantity="few">Ви хочете імпортувати такі файли:\n%s\nЦе може зайняти багато часу</item>
-        <item quantity="many">Ви хочете імпортувати такі файли:\n%s\nЦе може зайняти багато часу</item>
-        <item quantity="other">Ви хочете імпортувати наступні файли:\n%s\nЦе може зайняти багато часу</item>
-    </plurals>
+    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
     <string name="import_log_no_apkg">Це не файл пакету Anki</string>
     <string name="import_title_error" comment="Title of error dialog">Помилка</string>
     <string name="import_error_handle_exception">Не вдалося імпортувати пакет\n\n%s</string>
@@ -171,8 +166,6 @@
     <string name="import_error_load_imported_database">Заміна Anki Database (.anki2) ще не підтримується. Перегляньте у посібнику інструкцію по заміні.</string>
     <string name="import_error_content_provider">Вибраний файл не вдалося імпортувати автоматично до AnkiDroid. Будь ласка, перегляньте посібник користувача для того аби вручну імпортувати anki файли: \n%s</string>
     <string name="import_error_copy_to_cache">Не вдалося зберегти файл в кеш (можливо закінчується пам\'ять на пристрої)</string>
-    <string name="import_error_multiple_colpkg">Було вибрано декілька файлів colpkl.</string>
-    <string name="import_error_colpkg_apkg">Файли apkg &amp; colpkg були вибрані одночасно</string>
     <string name="import_interrupted">Імпортування перервано</string>
     <string name="export_include_schedule">Додати планування</string>
     <string name="export_include_media">Додати медіа</string>

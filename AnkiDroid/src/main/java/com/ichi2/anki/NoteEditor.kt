@@ -59,6 +59,7 @@ import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityExtra
@@ -236,12 +237,12 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             addNote = savedInstanceState.getBoolean("addNote")
             deckId = savedInstanceState.getLong("did")
             mSelectedTags = savedInstanceState.getStringArrayList("tags")
-            mReloadRequired = savedInstanceState.getBoolean("reloadRequired")
+            mReloadRequired = savedInstanceState.getBoolean(RELOAD_REQUIRED_EXTRA_KEY)
             mPastedImageCache =
                 savedInstanceState.getSerializable("imageCache") as HashMap<String, String>
             mToggleStickyText =
                 savedInstanceState.getSerializable("toggleSticky") as HashMap<Int, String?>
-            changed = savedInstanceState.getBoolean("changed")
+            changed = savedInstanceState.getBoolean(NOTE_CHANGED_EXTRA_KEY)
         } else {
             caller = intent.getIntExtra(EXTRA_CALLER, CALLER_NO_CALLER)
             if (caller == CALLER_NO_CALLER) {
@@ -291,8 +292,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         savedInstanceState.putInt("caller", caller)
         savedInstanceState.putBoolean("addNote", addNote)
         savedInstanceState.putLong("did", deckId)
-        savedInstanceState.putBoolean("changed", changed)
-        savedInstanceState.putBoolean("reloadRequired", mReloadRequired)
+        savedInstanceState.putBoolean(NOTE_CHANGED_EXTRA_KEY, changed)
+        savedInstanceState.putBoolean(RELOAD_REQUIRED_EXTRA_KEY, mReloadRequired)
         savedInstanceState.putIntegerArrayList("customViewIds", mCustomViewIds)
         savedInstanceState.putSerializable("imageCache", mPastedImageCache)
         savedInstanceState.putSerializable("toggleSticky", mToggleStickyText)
@@ -1045,10 +1046,10 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             RESULT_CANCELED
         }
         if (mReloadRequired) {
-            intent.putExtra("reloadRequired", true)
+            intent.putExtra(RELOAD_REQUIRED_EXTRA_KEY, true)
         }
         if (changed) {
-            intent.putExtra("noteChanged", true)
+            intent.putExtra(NOTE_CHANGED_EXTRA_KEY, true)
         }
         closeNoteEditor(result, intent)
     }
@@ -1094,7 +1095,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        option: Int
+        stateFilter: CardStateFilter
     ) {
         if (mSelectedTags != selectedTags) {
             isTagsEdited = true
@@ -2171,6 +2172,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val EXTRA_TEXT_FROM_SEARCH_VIEW = "SEARCH"
         private const val ACTION_CREATE_FLASHCARD = "org.openintents.action.CREATE_FLASHCARD"
         private const val ACTION_CREATE_FLASHCARD_SEND = "android.intent.action.SEND"
+        const val NOTE_CHANGED_EXTRA_KEY = "noteChanged"
+        const val RELOAD_REQUIRED_EXTRA_KEY = "reloadRequired"
 
         // calling activity
         const val CALLER_NO_CALLER = 0

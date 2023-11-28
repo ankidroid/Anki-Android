@@ -376,7 +376,7 @@ open class RobolectricTest : AndroidTest {
         return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
     }
 
-    protected fun addNoteUsingBasicModel(front: String, back: String): Note {
+    protected fun addNoteUsingBasicModel(front: String = "Front", back: String = "Back"): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
 

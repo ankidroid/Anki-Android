@@ -60,6 +60,8 @@ import com.ichi2.anki.dialogs.ConfirmationDialog
 import com.ichi2.anki.dialogs.RescheduleDialog.Companion.rescheduleSingleCard
 import com.ichi2.anki.multimediacard.AudioView
 import com.ichi2.anki.multimediacard.AudioView.Companion.createRecorderInstance
+import com.ichi2.anki.pages.CardInfo.Companion.toIntent
+import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.reviewer.*
 import com.ichi2.anki.reviewer.AnswerButtons.Companion.getBackgroundColors
@@ -93,6 +95,7 @@ import java.io.File
 import java.util.function.Consumer
 
 @KotlinCleanup("too many to count")
+@NeedsTest("#14709: Timebox shouldn't appear instantly when the Reviewer is opened")
 open class Reviewer :
     AbstractFlashcardViewer(),
     ReviewerUi {
@@ -135,10 +138,12 @@ open class Reviewer :
     private var mPrefShowETA = false
 
     /** Handle Mark/Flag state of cards  */
-    private var mCardMarker: CardMarker? = null
+    @VisibleForTesting
+    internal var mCardMarker: CardMarker? = null
 
     // Preferences from the collection
     private var mShowRemainingCardCount = false
+    private var stopTimerOnAnswer = false
     private val mActionButtons = ActionButtons(this)
     private lateinit var mToolbar: Toolbar
 
@@ -212,7 +217,7 @@ open class Reviewer :
             return
         }
         launchCatchingTask {
-            toggleMark(card.note())
+            toggleMark(card.note(), handler = this@Reviewer)
             refreshActionBar()
             onMarkChanged()
         }
@@ -294,7 +299,10 @@ open class Reviewer :
             toggleStylus = MetaDB.getWhiteboardStylusState(this, parentDid)
             whiteboard!!.toggleStylus = toggleStylus
         }
-        launchCatchingTask { updateCardAndRedraw() }
+        launchCatchingTask {
+            withCol { startTimebox() }
+            updateCardAndRedraw()
+        }
         disableDrawerSwipeOnConflicts()
 
         // Set full screen/immersive mode if needed
@@ -658,7 +666,7 @@ open class Reviewer :
             showSnackbar(getString(R.string.multimedia_editor_something_wrong), Snackbar.LENGTH_SHORT)
             return
         }
-        val intent = com.ichi2.anki.pages.CardInfo.getIntent(this, currentCard!!.id)
+        val intent = CardInfoDestination(currentCard!!.id).toIntent(this)
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         startActivityWithAnimation(intent, animation)
@@ -1061,6 +1069,9 @@ open class Reviewer :
     @VisibleForTesting
     override fun displayCardAnswer() {
         delayedHide(100)
+        if (stopTimerOnAnswer) {
+            answerTimer.pause()
+        }
         super.displayCardAnswer()
     }
 
@@ -1196,6 +1207,7 @@ open class Reviewer :
     override fun restoreCollectionPreferences(col: Collection) {
         super.restoreCollectionPreferences(col)
         mShowRemainingCardCount = col.config.get("dueCounts") ?: true
+        stopTimerOnAnswer = col.decks.confForDid(col.decks.current().id).getBoolean("stopTimerOnAnswer")
     }
 
     override fun onSingleTap(): Boolean {

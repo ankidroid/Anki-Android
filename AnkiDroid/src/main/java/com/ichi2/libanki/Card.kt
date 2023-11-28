@@ -25,7 +25,6 @@ import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.libanki.Consts.CARD_QUEUE
 import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.TemplateManager.TemplateRenderContext.TemplateRenderOutput
-import com.ichi2.libanki.exception.WrongId
 import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.utils.Assert
 import com.ichi2.utils.LanguageUtil
@@ -96,8 +95,9 @@ open class Card : Cloneable {
     var left = 0
     var oDue: Long = 0
     var oDid: DeckId = 0
+    private var customData: String = ""
+    private var originalPosition: Int? = null
     private var flags = 0
-    private lateinit var data: String
 
     // END SQL table entries
     var renderOutput: TemplateRenderOutput?
@@ -121,7 +121,6 @@ open class Card : Cloneable {
         oDue = 0
         oDid = 0
         flags = 0
-        data = ""
     }
 
     /** Construct an instance from a backend Card */
@@ -145,7 +144,6 @@ open class Card : Cloneable {
         oDue = card.originalDue.toLong()
         oDid = card.originalDeckId
         flags = card.flags
-        data = ""
     }
 
     constructor(col: Collection, id: Long?) {
@@ -163,69 +161,61 @@ open class Card : Cloneable {
     }
 
     fun load() {
-        col.db.query("SELECT * FROM cards WHERE id = ?", this.id).use { cursor ->
-            if (!cursor.moveToFirst()) {
-                throw WrongId(this.id, "card")
-            }
-            this.id = cursor.getLong(0)
-            nid = cursor.getLong(1)
-            did = cursor.getLong(2)
-            ord = cursor.getInt(3)
-            mod = cursor.getLong(4)
-            usn = cursor.getInt(5)
-            this.type = cursor.getInt(6)
-            queue = cursor.getInt(7)
-            due = cursor.getInt(8).toLong()
-            ivl = cursor.getInt(9)
-            factor = cursor.getInt(10)
-            reps = cursor.getInt(11)
-            lapses = cursor.getInt(12)
-            left = cursor.getInt(13)
-            oDue = cursor.getLong(14)
-            oDid = cursor.getLong(15)
-            flags = cursor.getInt(16)
-            data = cursor.getString(17)
-        }
+        val card = col.backend.getCard(id)
+        loadFromBackendCard(card)
+    }
+
+    private fun loadFromBackendCard(card: anki.cards.Card) {
         renderOutput = null
         note = null
+        id = card.id
+        nid = card.noteId
+        did = card.deckId
+        ord = card.templateIdx
+        mod = card.mtimeSecs
+        usn = card.usn
+        type = card.ctype
+        queue = card.queue
+        due = card.due.toLong() // TODO due should be an int
+        ivl = card.interval
+        factor = card.easeFactor
+        reps = card.reps
+        lapses = card.lapses
+        left = card.remainingSteps
+        oDue = card.originalDue.toLong() // TODO due should be an int
+        oDid = card.originalDeckId
+        flags = card.flags
+        originalPosition = if (card.hasOriginalPosition()) card.originalPosition else null
+        customData = card.customData
     }
 
-    fun flush(changeModUsn: Boolean = true) {
-        if (changeModUsn) {
-            mod = TimeManager.time.intTime()
-            usn = col.usn()
-        }
-        assert(due < "4294967296".toLong())
-        col.db.execute(
-            "insert or replace into cards values " +
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            this.id,
-            nid,
-            did,
-            ord,
-            mod,
-            usn,
-            this.type,
-            queue,
-            due,
-            ivl,
-            factor,
-            reps,
-            lapses,
-            left,
-            oDue,
-            oDid,
-            flags,
-            data
-        )
-        col.log(this)
+    fun toBackendCard(): anki.cards.Card {
+        val builder = anki.cards.Card.newBuilder()
+            .setId(id)
+            .setNoteId(nid)
+            .setDeckId(did)
+            .setTemplateIdx(ord)
+            .setCtype(type)
+            .setQueue(queue)
+            .setDue(due.toInt())
+            .setInterval(ivl)
+            .setEaseFactor(factor)
+            .setReps(reps)
+            .setLapses(lapses)
+            .setRemainingSteps(left)
+            .setOriginalDue(oDue.toInt())
+            .setOriginalDeckId(oDid)
+            .setFlags(flags)
+            .setCustomData(customData)
+        originalPosition?.let { builder.setOriginalPosition(it) }
+        return builder.build()
     }
 
-    fun q(reload: Boolean = false, browser: Boolean = false): String {
+    fun question(reload: Boolean = false, browser: Boolean = false): String {
         return renderOutput(reload, browser).questionAndStyle()
     }
 
-    fun a(): String {
+    fun answer(): String {
         return renderOutput().answerAndStyle()
     }
 

@@ -42,7 +42,7 @@ private typealias SoundPath = String
  * Parses, loads and plays sound & video files
  * Called `Sound` Anki uses `[sound:]` for both audio and video
  */
-class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) : SoundPlayer() {
+class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) {
     /**
      * @param soundDir base path to the media files
      */
@@ -109,12 +109,20 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
         soundPathCollection.addAll(paths)
     }
 
+    fun playSound(
+        replacedUrl: String,
+        onCompletionListener: OnCompletionListener?,
+        soundErrorListener: OnErrorListener
+    ) {
+        soundPlayer.playSound(replacedUrl, onCompletionListener, soundErrorListener)
+    }
+
     /** Plays all the sounds for the indicated side(s)  */
     fun playSounds(side: SoundSide, errorListener: OnErrorListener?) {
         // If there are sounds to play for the current card, start with the first one
         val soundPaths = getSounds(side) ?: return
         Timber.d("playSounds: playing $side")
-        this.playSound(
+        this.soundPlayer.playSound(
             soundPaths[0],
             PlayAllCompletionListener(side, errorListener),
             errorListener
@@ -156,7 +164,7 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
             // If there are still more sounds to play for the current card, play the next one
             if (nextIndexToPlay < paths.size) {
                 Timber.i("Play all: Playing next sound")
-                playSound(paths[nextIndexToPlay++], this, errorListener)
+                soundPlayer.playSound(paths[nextIndexToPlay++], this, errorListener)
             } else {
                 Timber.i("Play all: Completed - releasing sound")
                 soundPlayer.stopSounds()
@@ -164,7 +172,8 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
         }
     }
 
-    override fun stopSounds() {
+    fun stopSounds() {
+        Timber.d("stopping sounds")
         soundPlayer.stopSounds()
         ReadText.stopTts() // TODO: Reconsider design
     }
@@ -254,25 +263,26 @@ class Sound(private val soundPlayer: SoundPlayer, private val soundDir: String) 
 }
 
 open class SoundPlayer {
-    val currentAudioUri: String?
-        get() = mCurrentAudioUri?.toString()
-
-    val isCurrentAudioFinished: Boolean
-        get() = mMediaPlayer == null
-
     /**
      * Media player used to play the sounds. It's Nullable and that it is set only if a sound is playing or paused, otherwise it is null.
      */
     private var mMediaPlayer: MediaPlayer? = null
 
-    private var mCurrentAudioUri: Uri? = null
-
     /**
      * AudioManager to request/release audio focus
      */
-    private var mAudioManager: AudioManager? = null
+    private var audioManager: AudioManager =
+        AnkiDroidApp.instance.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
-    private var mAudioFocusRequest: AudioFocusRequest? = null
+    private val audioFocusRequest: AudioFocusRequest? by lazy {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                .setOnAudioFocusChangeListener(audioFocusChangeListener)
+                .build()
+        } else {
+            null
+        }
+    }
 
     /**
      * Plays the given sound or video and sets playAllListener if available on media player to start next media.
@@ -303,8 +313,6 @@ open class SoundPlayer {
     ) {
         Timber.d("Playing %s", soundPath)
         val soundUri = Uri.parse(soundPath)
-        mCurrentAudioUri = soundUri
-
         val context = AnkiDroidApp.instance.applicationContext
 
         // Play media
@@ -319,8 +327,6 @@ open class SoundPlayer {
                     mMediaPlayer!!.reset()
                 }
                 val mediaPlayer = mMediaPlayer!!
-                mAudioManager =
-                    mAudioManager ?: context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
                 mediaPlayer.setOnErrorListener { mp: MediaPlayer?, which: Int, extra: Int ->
                     val errorHandling = errorHandler.onError(
@@ -357,17 +363,10 @@ open class SoundPlayer {
                 mediaPlayer.prepareAsync()
                 Timber.d("Requesting audio focus")
 
-                // Set mAudioFocusRequest for API 26 and above.
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    mAudioFocusRequest =
-                        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-                            .setOnAudioFocusChangeListener(audioFocusChangeListener)
-                            .build()
-                }
                 CompatHelper.compat.requestAudioFocus(
-                    mAudioManager!!,
+                    audioManager,
                     audioFocusChangeListener,
-                    mAudioFocusRequest
+                    audioFocusRequest
                 )
             } catch (e: Exception) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath)
@@ -404,11 +403,7 @@ open class SoundPlayer {
             it.release()
             mMediaPlayer = null
         }
-        mAudioManager?.let {
-            // mAudioFocusRequest was initialised for API 26 and above in playSoundInternal().
-            CompatHelper.compat.abandonAudioFocus(it, audioFocusChangeListener, mAudioFocusRequest)
-            mAudioManager = null
-        }
+        CompatHelper.compat.abandonAudioFocus(audioManager, audioFocusChangeListener, audioFocusRequest)
     }
 
     open fun stopSounds() {
@@ -417,16 +412,6 @@ open class SoundPlayer {
             // TODO: Inefficient. Determine whether we want to release or stop, don't do both
             // Ensure `currentAudioUri` etc... still work when we do this
             releaseSound()
-        }
-    }
-
-    fun playOrPauseSound() {
-        mMediaPlayer?.let {
-            if (it.isPlaying) {
-                it.pause()
-            } else {
-                it.start()
-            }
         }
     }
 
