@@ -53,10 +53,10 @@
     </plurals>
     <string name="card_browser_all_decks">所有牌组</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="other">Delete cards</item>
+        <item quantity="other">删除卡片</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="other">Delete notes</item>
+        <item quantity="other">删除笔记</item>
     </plurals>
     <string name="card_browser_change_deck">更换牌组</string>
     <string name="delete_card_title">确认删除笔记？</string>
