@@ -35,3 +35,9 @@ object StringUtil {
 fun String.trimToLength(maxLength: Int): String {
     return this.substring(0, min(this.length, maxLength))
 }
+
+fun String.lastIndexOfOrNull(c: Char): Int? =
+    when (val index = this.lastIndexOf(c)) {
+        -1 -> null
+        else -> index
+    }
