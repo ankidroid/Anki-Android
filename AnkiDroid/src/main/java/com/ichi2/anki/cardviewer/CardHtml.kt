@@ -42,7 +42,7 @@ class CardHtml(
     /** The side that [beforeSoundTemplateExpansion] was generated from */
     private val side: Side,
     @RustCleanup("Slow function, only used with legacy code")
-    private val getAnswerContentWithoutFrontSide_slow: (() -> String),
+    private val getAnswerContentWithoutFrontSideSlow: (() -> String),
     @RustCleanup("too many variables, combine once we move away from backend")
     private var questionSound: List<SoundOrVideoTag>? = null,
     private var answerSound: List<SoundOrVideoTag>? = null
@@ -54,7 +54,7 @@ class CardHtml(
 
         if (sideFor == Side.BACK && side == Side.FRONT) {
             if (answerSound == null) {
-                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSideSlow())
             }
             return answerSound!!
         }
@@ -77,7 +77,7 @@ class CardHtml(
             questionSound!!
         } else {
             if (answerSound == null) {
-                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSide_slow())
+                answerSound = Sound.extractTagsFromLegacyContent(getAnswerContentWithoutFrontSideSlow())
             }
             return answerSound!!
         }
@@ -136,8 +136,8 @@ class CardHtml(
             val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
 
             val renderOutput = card.renderOutput()
-            val questionAv = renderOutput.question_av_tags
-            val answerAv = renderOutput.answer_av_tags
+            val questionAv = renderOutput.questionAvTags
+            val answerAv = renderOutput.answerAvTags
             val questionSound: List<SoundOrVideoTag> =
                 questionAv.filterIsInstance(SoundOrVideoTag::class.java)
             val answerSound: List<SoundOrVideoTag> = answerAv.filterIsInstance(SoundOrVideoTag::class.java)
@@ -200,7 +200,7 @@ class CardHtml(
             val answerFormat = getAnswerFormat(card)
             var newAnswerContent = answerContent
             if (answerFormat.contains("{{FrontSide}}")) { // possible audio removal necessary
-                val frontSideFormat = card.renderOutput(false).question_text
+                val frontSideFormat = card.renderOutput(false).questionText
                 val audioReferences = Sound.SOUND_PATTERN.matcher(frontSideFormat)
                 // remove the first instance of audio contained in "{{FrontSide}}"
                 while (audioReferences.find()) {
