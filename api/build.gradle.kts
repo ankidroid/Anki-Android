@@ -82,6 +82,7 @@ afterEvaluate {
                 groupId = group.toString()
                 artifactId = "api"
 
+<<<<<<< Updated upstream
                 pom {
                     name = "AnkiDroid API"
                     description = "A programmatic API exported by AnkiDroid"
@@ -96,6 +97,45 @@ afterEvaluate {
                     scm {
                         connection = "scm:git:git://github.com/ankidroid/Anki-Android.git"
                         url = "https://github.com/ankidroid/Anki-Android"
+=======
+val dokkaJavadocJar = tasks.register("dokkaJavadocJar", Jar::class) {
+    val dokkaJavadocProvider: TaskProvider<DokkaTask> = tasks.named<DokkaTask>("dokkaJavadoc")
+    dependsOn(dokkaJavadocProvider)
+    from(dokkaJavadocProvider)
+    archiveClassifier.set("javadoc")
+    doLast {
+        println("API javadocs output directory: ${dokkaJavadocProvider.get().outputDirectory.get()}")
+        println("API javadocs jar output directory: ${destinationDirectory.get()}")
+    }
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication::class) {
+            artifactId = "api"
+
+            artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+            artifact(androidSourcesJar)
+            artifact(dokkaJavadocJar)
+
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = "AnkiDroid API"
+                description = "A programmatic API exported by AnkiDroid"
+                url = "https://github.com/ankidroid/Anki-Android/tree/main/api"
+                licenses {
+                    license {
+                        name = "GNU LESSER GENERAL PUBLIC LICENSE, v3"
+                        url =
+                            "https://github.com/ankidroid/Anki-Android/blob/main/api/COPYING.LESSER"
+>>>>>>> Stashed changes
                     }
                 }
 

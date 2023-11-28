@@ -229,7 +229,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @Test
     fun automaticAnswerDisabledProperty() {
-        val controller = getViewerController(true, false)
+        val controller = getViewerController(addCard = true, startedWithShortcut = false)
         val viewer = controller.get()
         assertThat("not disabled initially", viewer.automaticAnswer.isDisabled, equalTo(false))
         controller.pause()
@@ -240,7 +240,7 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @Test
     fun noAutomaticAnswerAfterRenderProcessGoneAndPaused_issue9632() {
-        val controller = getViewerController(true, false)
+        val controller = getViewerController(addCard = true, startedWithShortcut = false)
         val viewer = controller.get()
         viewer.automaticAnswer = AutomaticAnswer(viewer, AutomaticAnswerSettings(AutomaticAnswerAction.BURY_CARD, true, 5, 5))
         viewer.executeCommand(ViewerCommand.SHOW_ANSWER)
@@ -254,7 +254,10 @@ class AbstractFlashcardViewerTest : RobolectricTest() {
 
     @Test
     fun shortcutShowsToastOnFinish() = runTest {
-        val viewer: NonAbstractFlashcardViewer = getViewer(true, true)
+        val viewer: NonAbstractFlashcardViewer = getViewer(
+            addCard = true,
+            startedWithShortcut = true
+        )
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
         viewer.executeCommand(ViewerCommand.FLIP_OR_ANSWER_EASE4)
         assertEquals(getResourceString(R.string.studyoptions_congrats_finished), ShadowToast.getTextOfLatestToast())

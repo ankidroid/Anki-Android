@@ -392,10 +392,10 @@ open class CardTemplatePreviewer : AbstractFlashcardViewer() {
     }
 
     /** Override certain aspects of Card behavior so we may display unsaved data  */
-    inner class PreviewerCard : Card {
+    inner class PreviewerCard(col: Collection, id: Long) : Card(col, id) {
         private val mNote: Note?
 
-        constructor(col: Collection, id: Long) : super(col, id) {
+        init {
             mNote = null
         }
 

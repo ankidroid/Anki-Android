@@ -71,9 +71,7 @@ open class JvmTest {
                     return
                 }
                 System.out.println(tag + ": " + message)
-                if (t != null) {
-                    t.printStackTrace()
-                }
+                t?.printStackTrace()
             }
         })
 

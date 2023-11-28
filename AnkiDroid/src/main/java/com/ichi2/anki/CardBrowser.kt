@@ -1283,7 +1283,7 @@ open class CardBrowser :
         launchCatchingTask {
             val changes = withProgress {
                 undoableOp {
-                    sched.sortCards(cardIds, position, 1, false, true)
+                    sched.sortCards(cardIds, position, 1, shuffle = false, shift = true)
                 }
             }
             val count = changes.count

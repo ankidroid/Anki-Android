@@ -92,7 +92,7 @@ class BindingTest {
         const val keyPrefix = '\u2328'
         const val unicodePrefix = '\u2705'
 
-        fun allModifierKeys() = Binding.ModifierKeys(true, true, true)
+        fun allModifierKeys() = Binding.ModifierKeys(shift = true, ctrl = true, alt = true)
 
         fun unicodeCharacter(c: Char): Binding {
             val mock = mock<KeyEvent> {

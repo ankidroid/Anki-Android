@@ -89,7 +89,11 @@ suspend fun renderBrowserQA(
         if (i < 0 || i >= cards.size) {
             continue
         }
+<<<<<<< Updated upstream
         val card: CardBrowser.CardCache = try {
+=======
+        var card: CardBrowser.CardCache = try {
+>>>>>>> Stashed changes
             cards[i]
         } catch (e: IndexOutOfBoundsException) {
             // even though we test against card.size() above, there's still a race condition
