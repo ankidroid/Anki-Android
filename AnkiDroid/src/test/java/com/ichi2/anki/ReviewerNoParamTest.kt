@@ -28,6 +28,7 @@ import com.ichi2.anki.cardviewer.GestureProcessor
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.WhiteboardPenColor
 import com.ichi2.anki.preferences.sharedPrefs
+import com.ichi2.anki.reviewer.Binding
 import com.ichi2.anki.reviewer.FullScreenMode
 import com.ichi2.anki.reviewer.FullScreenMode.Companion.setPreference
 import com.ichi2.anki.reviewer.MappableBinding
@@ -286,7 +287,8 @@ class ReviewerNoParamTest : RobolectricTest() {
         val prefs = targetContext.sharedPrefs()
         for (command in ViewerCommand.entries) {
             for (mappableBinding in MappableBinding.fromPreference(prefs, command)) {
-                if (mappableBinding.binding.gesture in gestures) {
+                val gestureBinding = mappableBinding.binding as? Binding.GestureInput? ?: continue
+                if (gestureBinding.gesture in gestures) {
                     command.removeBinding(prefs, mappableBinding)
                 }
             }

@@ -21,7 +21,7 @@ import android.view.KeyEvent
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.preferences.sharedPrefs
-import com.ichi2.anki.reviewer.Binding.Companion.key
+import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
 import com.ichi2.anki.reviewer.CardSide.Companion.fromAnswer
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
 import java.util.HashMap
@@ -72,7 +72,7 @@ class PeripheralKeymap(reviewerUi: ReviewerUi, commandProcessor: ViewerCommand.C
         @Suppress("UNUSED_PARAMETER")
         fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
             var ret = false
-            val bindings = key(event!!)
+            val bindings = possibleKeyBindings(event!!)
             val side = fromAnswer(reviewerUI.isDisplayingAnswer)
             for (b in bindings) {
                 val binding = MappableBinding(b, MappableBinding.Screen.Reviewer(side))
