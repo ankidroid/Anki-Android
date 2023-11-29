@@ -37,6 +37,8 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.*
 import android.webkit.WebView.HitTestResult
 import android.widget.*
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.CheckResult
 import androidx.annotation.IdRes
@@ -281,6 +283,42 @@ abstract class AbstractFlashcardViewer :
      * @see refreshIfRequired
      */
     private var refreshRequired: ViewerRefresh? = null
+
+    private val editCurrentCardLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        FlashCardViewerResultCallback { result, reloadRequired ->
+            if (result.resultCode == RESULT_OK) {
+                // content of note was changed so update the note and current card
+                Timber.i("AbstractFlashcardViewer:: Saving card...")
+                launchCatchingTask { saveEditedCard() }
+                onEditedNoteChanged()
+            } else if (result.resultCode == RESULT_CANCELED && !reloadRequired) {
+                // nothing was changed by the note editor so just redraw the card
+                redrawCard()
+            }
+        }
+    )
+    protected inner class FlashCardViewerResultCallback(private val callback: (result: ActivityResult, reloadRequired: Boolean) -> Unit = { _, _ -> }) : ActivityResultCallback<ActivityResult> {
+        override fun onActivityResult(result: ActivityResult) {
+            if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
+                closeReviewer(DeckPicker.RESULT_DB_ERROR)
+            }
+            if (result.resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
+                finishNoStorageAvailable()
+            }
+
+            /* Reset the schedule and reload the latest card off the top of the stack if required.
+               The card could have been rescheduled, the deck could have changed, or a change of
+               note type could have lead to the card being deleted */
+            val reloadRequired = result.data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true
+            if (reloadRequired) {
+                performReload()
+            }
+
+            callback(result, reloadRequired)
+        }
+    }
+
     init {
         ChangeManager.subscribe(this)
     }
@@ -707,36 +745,6 @@ abstract class AbstractFlashcardViewer :
         performReload()
     }
 
-    // super.onActivityResult
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == DeckPicker.RESULT_DB_ERROR) {
-            closeReviewer(DeckPicker.RESULT_DB_ERROR)
-        }
-        if (resultCode == DeckPicker.RESULT_MEDIA_EJECTED) {
-            finishNoStorageAvailable()
-        }
-
-        /* Reset the schedule and reload the latest card off the top of the stack if required.
-           The card could have been rescheduled, the deck could have changed, or a change of
-           note type could have lead to the card being deleted */
-        val reloadRequired = data?.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) == true
-        if (reloadRequired) {
-            performReload()
-        }
-        if (requestCode == EDIT_CURRENT_CARD) {
-            if (resultCode == RESULT_OK) {
-                // content of note was changed so update the note and current card
-                Timber.i("AbstractFlashcardViewer:: Saving card...")
-                launchCatchingTask { saveEditedCard() }
-                onEditedNoteChanged()
-            } else if (resultCode == RESULT_CANCELED && !reloadRequired) {
-                // nothing was changed by the note editor so just redraw the card
-                redrawCard()
-            }
-        }
-    }
-
     /**
      * Whether the class should use collection.getSched() when performing tasks.
      * The aim of this method is to completely distinguish FlashcardViewer from Reviewer
@@ -816,7 +824,7 @@ abstract class AbstractFlashcardViewer :
         editCard.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_EDIT)
         editCard.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
         editorCard = currentCard
-        startActivityForResultWithAnimation(editCard, EDIT_CURRENT_CARD, animation)
+        launchActivityForResultWithAnimation(editCard, editCurrentCardLauncher, animation)
     }
 
     fun generateQuestionSoundList() {
@@ -2576,7 +2584,6 @@ abstract class AbstractFlashcardViewer :
         /**
          * Available options performed by other activities.
          */
-        const val EDIT_CURRENT_CARD = 0
         const val EASE_1 = 1
         const val EASE_2 = 2
         const val EASE_3 = 3
