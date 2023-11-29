@@ -150,6 +150,7 @@ class CardContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         // Initialize content provider on startup.
         Timber.d("CardContentProvider: onCreate")
+        AnkiDroidApp.makeBackendUsable(context!!)
         return true
     }
 

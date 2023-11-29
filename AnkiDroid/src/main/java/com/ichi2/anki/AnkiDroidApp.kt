@@ -48,6 +48,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
 import com.ichi2.anki.ui.dialogs.ActivityAgnosticDialogs
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.compat.CompatHelper
 import com.ichi2.utils.*
 import kotlinx.coroutines.CoroutineScope
@@ -156,12 +157,7 @@ open class AnkiDroidApp : Application() {
         )
         CompatHelper.compat.setupNotificationChannel(applicationContext)
 
-        if (Build.FINGERPRINT != "robolectric") {
-            // Prevent sqlite throwing error 6410 due to the lack of /tmp on Android
-            Os.setenv("TMPDIR", cacheDir.path, false)
-            // Load backend library
-            System.loadLibrary("rsdroid")
-        }
+        makeBackendUsable(this)
 
         // Configure WebView to allow file scheme pages to access cookies.
         if (!acceptFileSchemeCookies()) {
@@ -412,6 +408,23 @@ open class AnkiDroidApp : Application() {
             with(field) {
                 isAccessible = true
                 set(field, value)
+            }
+        }
+
+        /** Load the libraries to allow access to Anki-Android-Backend */
+        @NeedsTest("Not calling this in the ContentProvider should have failed a test")
+        fun makeBackendUsable(context: Context) {
+            // Robolectric uses RustBackendLoader.ensureSetup()
+            if (Build.FINGERPRINT == "robolectric") return
+
+            try {
+                // Prevent sqlite throwing error 6410 due to the lack of /tmp on Android
+                Os.setenv("TMPDIR", context.cacheDir.path, false)
+                // Load backend library
+                System.loadLibrary("rsdroid")
+            } catch (e: Error) {
+                // this routine /may/ be called more than once: we'll know if/when it occurs
+                Timber.e("Failed to open usable backend", e)
             }
         }
 
