@@ -417,15 +417,10 @@ open class AnkiDroidApp : Application() {
             // Robolectric uses RustBackendLoader.ensureSetup()
             if (Build.FINGERPRINT == "robolectric") return
 
-            try {
-                // Prevent sqlite throwing error 6410 due to the lack of /tmp on Android
-                Os.setenv("TMPDIR", context.cacheDir.path, false)
-                // Load backend library
-                System.loadLibrary("rsdroid")
-            } catch (e: Error) {
-                // this routine /may/ be called more than once: we'll know if/when it occurs
-                Timber.e("Failed to open usable backend", e)
-            }
+            // Prevent sqlite throwing error 6410 due to the lack of /tmp on Android
+            Os.setenv("TMPDIR", context.cacheDir.path, false)
+            // Load backend library
+            System.loadLibrary("rsdroid")
         }
 
         val appResources: Resources
