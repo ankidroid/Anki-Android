@@ -1709,11 +1709,14 @@ open class CardBrowser :
         }
         withProgress {
             undoableOp {
-                val wantSuspend = getCard(cardIds.first()).queue != Consts.QUEUE_TYPE_SUSPENDED
-                if (wantSuspend) {
-                    sched.suspendCards(cardIds).changes
-                } else {
+                // if all cards are suspended, unsuspend all
+                // if no cards are suspended, suspend all
+                // if there is a mix, suspend all
+                val wantUnsuspend = cardIds.all { getCard(it).queue == Consts.QUEUE_TYPE_SUSPENDED }
+                if (wantUnsuspend) {
                     sched.unsuspendCards(cardIds)
+                } else {
+                    sched.suspendCards(cardIds).changes
                 }
             }
         }
