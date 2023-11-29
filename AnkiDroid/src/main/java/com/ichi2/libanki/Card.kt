@@ -77,7 +77,7 @@ open class Card : Cloneable {
     var did: DeckId = 0
     var ord = 0
     var mod: Long = 0
-    var usn = 0
+    private var usn = 0
 
     @get:CARD_TYPE
     @CARD_TYPE

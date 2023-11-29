@@ -150,6 +150,6 @@ class AbstractFlashcardViewerSoundRenderTest : RobolectricTest() {
     }
 
     fun Reviewer.a() = mSoundPlayer.getSounds(Sound.SoundSide.ANSWER)
-    fun Reviewer.q() = mSoundPlayer.getSounds(Sound.SoundSide.QUESTION)
-    fun Reviewer.qa() = mSoundPlayer.getSounds(Sound.SoundSide.QUESTION_AND_ANSWER)
+    private fun Reviewer.q() = mSoundPlayer.getSounds(Sound.SoundSide.QUESTION)
+    private fun Reviewer.qa() = mSoundPlayer.getSounds(Sound.SoundSide.QUESTION_AND_ANSWER)
 }

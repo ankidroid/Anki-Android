@@ -248,7 +248,7 @@ open class AnkiDroidApp : Application() {
     }
 
     @Suppress("deprecation") // 7109: setAcceptFileSchemeCookies
-    protected fun acceptFileSchemeCookies(): Boolean {
+    private fun acceptFileSchemeCookies(): Boolean {
         return try {
             CookieManager.setAcceptFileSchemeCookies(true)
             true
@@ -281,7 +281,7 @@ open class AnkiDroidApp : Application() {
          *
          * Note: This will not be called if an API with a manual tag was called with a non-null tag
          */
-        fun createStackElementTag(element: StackTraceElement): String {
+        private fun createStackElementTag(element: StackTraceElement): String {
             val m = ANONYMOUS_CLASS.matcher(element.className)
             val tag = if (m.find()) m.replaceAll("") else element.className
             return tag.substring(tag.lastIndexOf('.') + 1)

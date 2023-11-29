@@ -426,7 +426,7 @@ public class AddContentApi(context: Context) {
      * Get a map of all model ids and names
      * @return map of (id, name) pairs
      */
-    public val modelList: Map<Long, String>?
+    private val modelList: Map<Long, String>?
         get() = getModelList(1)
 
     /**
@@ -434,7 +434,7 @@ public class AddContentApi(context: Context) {
      * @param minNumFields minimum number of fields to consider the model for inclusion
      * @return map of (id, name) pairs or null if there was a problem
      */
-    public fun getModelList(minNumFields: Int): Map<Long, String>? {
+    private fun getModelList(minNumFields: Int): Map<Long, String>? {
         // Get the current model
         val allModelsQuery =
             mResolver.query(Model.CONTENT_URI, null, null, null, null)
@@ -504,7 +504,7 @@ public class AddContentApi(context: Context) {
      * Get a list of all the deck id / name pairs
      * @return Map of (id, name) pairs, or null if there was a problem
      */
-    public val deckList: Map<Long, String>?
+    private val deckList: Map<Long, String>?
         get() {
             // Get the current model
             val allDecksQuery =

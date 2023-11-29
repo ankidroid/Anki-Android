@@ -36,7 +36,7 @@ import org.robolectric.annotation.Config
 @RunWith(AndroidJUnit4::class)
 @Config(application = EmptyApplication::class)
 class AnswerTimerTest {
-    lateinit var chronometer: Chronometer
+    private lateinit var chronometer: Chronometer
 
     @Before
     fun init() {

@@ -242,7 +242,7 @@ class AutomaticAnswerSettings(
          * @return null if the deck is dynamic (use global settings),
          * or if "useGeneralTimeoutSettings" is set
          */
-        fun queryDeckSpecificOptions(
+        private fun queryDeckSpecificOptions(
             action: AutomaticAnswerAction,
             col: Collection,
             selectedDid: DeckId
@@ -266,7 +266,7 @@ class AutomaticAnswerSettings(
             return AutomaticAnswerSettings(action, useTimer, waitQuestionSecond, waitAnswerSecond)
         }
 
-        fun queryFromPreferences(preferences: SharedPreferences, action: AutomaticAnswerAction): AutomaticAnswerSettings {
+        private fun queryFromPreferences(preferences: SharedPreferences, action: AutomaticAnswerAction): AutomaticAnswerSettings {
             val prefUseTimer: Boolean = preferences.getBoolean("timeoutAnswer", false)
             val prefWaitQuestionSecond: Int = preferences.getInt("timeoutQuestionSeconds", 60)
             val prefWaitAnswerSecond: Int = preferences.getInt("timeoutAnswerSeconds", 20)

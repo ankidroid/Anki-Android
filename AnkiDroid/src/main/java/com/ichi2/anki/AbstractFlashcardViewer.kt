@@ -127,7 +127,7 @@ abstract class AbstractFlashcardViewer :
     var server: ReviewerServer? = null
 
     /** Can be used to wait until async calls in onCreate() have finished. */
-    var asyncCreateJob: Job? = null
+    private var asyncCreateJob: Job? = null
 
     /**
      * Broadcast that informs us when the sd card is about to be unmounted
