@@ -92,7 +92,7 @@ android {
         }
     }
     buildTypes {
-        debug {
+        named('debug') {
             versionNameSuffix "-debug"
             debuggable true
             applicationIdSuffix ".debug"
@@ -128,7 +128,7 @@ android {
             resValue 'color', 'anki_foreground_icon_color_1', "#FFFF0000"
             resValue "string", "applicationId", "${defaultConfig.applicationId}${applicationIdSuffix}"
         }
-        release {
+        named('release') {
             minifyEnabled true
             splits.abi.universalApk = universalApkEnabled // Build universal APK for release with `-Duniversal-apk=true`
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -156,16 +156,16 @@ android {
      * This is because we cannot use Camera Permissions in Amazon App Store (for FireTv etc...)
      * Therefore, different AndroidManifest for Camera Permissions is used in Amazon flavor.
      */
-    flavorDimensions "appStore"
+    flavorDimensions += "appStore"
     productFlavors {
-        play {
+        create('play') {
             dimension "appStore"
         }
-        amazon {
+        create('amazon') {
             dimension "appStore"
         }
         // A 'full' build has no restrictions on storage/camera. Distributed on GitHub/F-Droid
-        full {
+        create('full') {
             dimension "appStore"
         }
     }
