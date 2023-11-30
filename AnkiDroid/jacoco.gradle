@@ -104,12 +104,12 @@ def testReport = tasks.register('jacocoTestReport', JacocoReport) {
         html.destination htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir('tmp/kotlin-classes/playDebug'), excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
     classDirectories.from = files([kotlinClasses])
-    executionData.from = fileTree(dir: project.buildDir, includes: [
+    executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
             '**/*.exec',
             '**/*.ec'
     ])
@@ -132,12 +132,12 @@ def unitTestReport = tasks.register('jacocoUnitTestReport', JacocoReport) {
         html.destination htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir('tmp/kotlin-classes/playDebug'), excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
     classDirectories.from = files([kotlinClasses])
-    executionData.from = fileTree(dir: project.buildDir, includes: [
+    executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
             '**/*.exec'
 
     ])
@@ -157,12 +157,12 @@ def androidTestReport = tasks.register('jacocoAndroidTestReport', JacocoReport) 
         html.destination htmlOutDir
     }
 
-    def kotlinClasses = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/playDebug", excludes: fileFilter)
+    def kotlinClasses = fileTree(dir: project.layout.buildDirectory.dir('tmp/kotlin-classes/playDebug'), excludes: fileFilter)
     def mainSrc = "$project.projectDir/src/main/java"
 
     sourceDirectories.from = files([mainSrc])
     classDirectories.from = files([kotlinClasses])
-    executionData.from = fileTree(dir: project.buildDir, includes: [
+    executionData.from = fileTree(dir: project.layout.buildDirectory, includes: [
             '**/*.ec'
     ])
 }
