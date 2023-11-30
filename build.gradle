@@ -1,4 +1,6 @@
 import org.gradle.internal.jvm.Jvm
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
@@ -90,7 +92,7 @@ subprojects {
             result in a warning but we treat warnings as errors.
             (see https://youtrack.jetbrains.com/issue/KT-28777/Using-experimental-coroutines-api-causes-unresolved-dependency)
         */
-        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        tasks.withType(KotlinCompile).configureEach {
             kotlinOptions {
                 allWarningsAsErrors = fatalWarnings
                 def compilerArgs = ['-Xjvm-default=all']
@@ -141,8 +143,8 @@ ext {
         // the CI machines don't have enough RAM to do that without going in to swap quite a bit
         // so for CI machines only - to improve reliability despite compilation speed hit, compile kotlin in process
         println "CI build detected: setting compiler execution strategy to IN_PROCESS"
-        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-            compilerExecutionStrategy.set(org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy.IN_PROCESS)
+        tasks.withType(KotlinCompile).configureEach {
+            compilerExecutionStrategy.set(KotlinCompilerExecutionStrategy.IN_PROCESS)
         }
     } else {
         // Use 50% of cores to account for SMT which doesn't help this workload
