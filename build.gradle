@@ -93,7 +93,7 @@ subprojects {
             (see https://youtrack.jetbrains.com/issue/KT-28777/Using-experimental-coroutines-api-causes-unresolved-dependency)
         */
         tasks.withType(KotlinCompile).configureEach {
-            kotlinOptions {
+            compilerOptions {
                 allWarningsAsErrors = fatalWarnings
                 def compilerArgs = ['-Xjvm-default=all']
                 if (project.name != "api") {
