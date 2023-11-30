@@ -254,15 +254,15 @@ amazon {
 }
 
 // Install Git pre-commit hook for Ktlint
-task installGitHook(type: Copy) {
+tasks.register('installGitHook', Copy) {
     from new File(rootProject.rootDir, 'pre-commit')
     into { new File(rootProject.rootDir, '.git/hooks') }
     fileMode 0755
 }
-tasks.getByPath(':AnkiDroid:preBuild').dependsOn installGitHook
+tasks.named('preBuild').configure { dependsOn('installGitHook') }
 
 // Issue 11078 - some emulators run, but run zero tests, and still report success
-task assertNonzeroAndroidTests() {
+tasks.register('assertNonzeroAndroidTests') {
     doLast {
         // androidTest currently creates one .xml file per emulator with aggregate results in this dir
         File folder = file("./build/outputs/androidTest-results/connected/flavors/play")
@@ -278,11 +278,10 @@ task assertNonzeroAndroidTests() {
             }
         }
     }
-    tasks.named('connectedPlayDebugAndroidTest').finalizedBy
 }
-//afterEvaluate {
-//    tasks.named('connectedPlayDebugAndroidTest').finalizedBy(assertNonzeroAndroidTests)
-//}
+afterEvaluate {
+    tasks.named('connectedPlayDebugAndroidTest').configure { finalizedBy('assertNonzeroAndroidTests') }
+}
 
 apply from: "./robolectricDownloader.gradle"
 apply from: "./jacoco.gradle"
