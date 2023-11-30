@@ -348,7 +348,7 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
     implementation 'org.apache.commons:commons-compress:1.25.0'
     implementation 'org.apache.commons:commons-collections4:4.4' // SetUniqueList
-    implementation 'commons-io:commons-io:2.15.0' // FileUtils.contentEquals
+    implementation 'commons-io:commons-io:2.15.1' // FileUtils.contentEquals
     implementation 'net.mikehardy:google-analytics-java7:2.0.13'
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation 'com.arcao:slf4j-timber:3.1'
