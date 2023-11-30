@@ -19,7 +19,7 @@ buildscript {
     ext.android_gradle_plugin = "8.1.4"
     ext.dokka_version = "1.9.10" // not the same with kotlin version!
 
-    configurations.all {
+    configurations.configureEach {
         resolutionStrategy.eachDependency { details ->
             if (details.requested.group == 'org.jetbrains.kotlinx'
                     && details.requested.name.contains('kotlinx-serialization-runtime')
@@ -90,7 +90,7 @@ subprojects {
             result in a warning but we treat warnings as errors.
             (see https://youtrack.jetbrains.com/issue/KT-28777/Using-experimental-coroutines-api-causes-unresolved-dependency)
         */
-        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
             kotlinOptions {
                 allWarningsAsErrors = fatalWarnings
                 def compilerArgs = ['-Xjvm-default=all']

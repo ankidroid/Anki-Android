@@ -190,10 +190,10 @@ android {
         }
     }
     // applicationVariants are e.g. debug, release
-    applicationVariants.all { variant ->
+    applicationVariants.configureEach { variant ->
         // We want the same version stream for all ABIs in debug but for release we can split them
         if (variant.buildType.name == 'release') {
-            variant.outputs.all { output ->
+            variant.outputs.configureEach { output ->
 
                 // For each separate APK per architecture, set a unique version code as described here:
                 // https://developer.android.com/studio/build/configure-apk-splits.html
@@ -278,17 +278,18 @@ task assertNonzeroAndroidTests() {
             }
         }
     }
+    tasks.named('connectedPlayDebugAndroidTest').finalizedBy
 }
-afterEvaluate {
-    tasks.getByPath(':AnkiDroid:connectedPlayDebugAndroidTest').finalizedBy(assertNonzeroAndroidTests)
-}
+//afterEvaluate {
+//    tasks.named('connectedPlayDebugAndroidTest').finalizedBy(assertNonzeroAndroidTests)
+//}
 
 apply from: "./robolectricDownloader.gradle"
 apply from: "./jacoco.gradle"
 apply from: "../lint.gradle"
 
 dependencies {
-    configurations.all {
+    configurations.configureEach {
         resolutionStrategy {
             // Timber has this as a dependency but they are not up to date. We want to force our version.
             force 'org.jetbrains:annotations:24.1.0'
