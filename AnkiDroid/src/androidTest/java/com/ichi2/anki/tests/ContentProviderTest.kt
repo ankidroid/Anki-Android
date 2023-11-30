@@ -230,6 +230,26 @@ class ContentProviderTest : InstrumentedTest() {
     }
 
     /**
+     * Check that inserting a note with an invalid modelId returns a reasonable exception
+     */
+    @Test
+    @KotlinCleanup("assertThrows")
+    fun testInsertNoteWithBadModelId() {
+        val invalidModelId = 12
+        val values = ContentValues().apply {
+            put(FlashCardsContract.Note.MID, invalidModelId)
+            put(FlashCardsContract.Note.FLDS, Utils.joinFields(TEST_NOTE_FIELDS))
+            put(FlashCardsContract.Note.TAGS, TEST_TAG)
+        }
+        try {
+            contentResolver.insert(FlashCardsContract.Note.CONTENT_URI, values)
+            fail()
+        } catch (e: IllegalArgumentException) {
+            assertThat(e.message, equalTo("Invalid modelId: 12"))
+        }
+    }
+
+    /**
      * Check that inserting and removing a note into default deck works as expected
      */
     @Test
