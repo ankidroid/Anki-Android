@@ -1383,11 +1383,6 @@ open class CardBrowser :
         launchActivityForResultWithAnimation(addNoteIntent, onAddNoteActivityResult, ActivityTransitionAnimation.Direction.START)
     }
 
-    // We spawn CollectionTasks that may create memory pressure, this transmits it so polling isCancelled sees the pressure
-    override fun onTrimMemory(pressureLevel: Int) {
-        super.onTrimMemory(pressureLevel)
-    }
-
     private val reviewerCardId: CardId
         get() = intent.getLongExtra("currentCard", -1)
 
