@@ -133,9 +133,9 @@ ext {
         // macOS reports hardware cores. This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
         gradleTestMaxParallelForks = "sysctl -n hw.physicalcpu".execute().text.toInteger()
     } else if (ciBuild) {
-        // GitHub Actions (Standard_DS2_v2) are 1:1 on Linux/Windows with two vCPU cores
-        // Sources:
-        // Standard_DS2_v2 https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#cloud-hosts-for-github-hosted-runners
+        // GitHub Actions run on Standard_DS2_v2 Azure Compute Units. They are 1:1 vCPU to CPU on Linux/Windows with two vCPU cores
+        // Sources to determine the correct Azure Compute Unit (and get CPU count) to tune this:
+        // Standard_DS2_v2 https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
         // Which is 1:1 https://docs.microsoft.com/en-gb/azure/virtual-machines/acu : DS1_v2 - DS15_v2 | 1:1
         gradleTestMaxParallelForks = 2
 
