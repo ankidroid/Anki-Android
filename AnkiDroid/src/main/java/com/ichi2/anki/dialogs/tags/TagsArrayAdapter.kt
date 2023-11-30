@@ -33,7 +33,7 @@ import java.util.Stack
 import java.util.TreeSet
 
 /**
- * @param tags A reference to the {@link TagsList} passed.
+ * @param tags A reference to the [TagsList]
  */
 class TagsArrayAdapter(private val tags: TagsList, private val resources: Resources) : RecyclerView.Adapter<TagsArrayAdapter.ViewHolder>(), Filterable {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -51,10 +51,10 @@ import java.util.function.Supplier
 /**
  * A delegate class used in any [AnkiActivity] where the exporting feature is required.
  *
- * Must be constructed before calling {@link AnkiActivity#onCreate(Bundle, PersistableBundle)}, this is to fragment
- * factory {@link #mDialogsFactory} is set correctly.
+ * Must be constructed before calling [AnkiActivity.onCreate(Bundle, PersistableBundle)][AnkiActivity.onCreate],
+ * to ensure the fragment factory ([mDialogsFactory]) is set correctly.
  *
- * @param activity the calling activity (must implement {@link ExportReadyDialogListener})
+ * @param activity the calling activity (must implement [ExportReadyDialogListener])
  * @param collectionSupplier a predicate that supplies a collection instance
 */
 class ActivityExportingDelegate(private val activity: AnkiActivity, private val collectionSupplier: Supplier<Collection>) : ExportDialogListener, ExportReadyDialogListener {

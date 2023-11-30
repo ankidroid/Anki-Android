@@ -22,6 +22,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.ichi2.libanki.NotetypeJson
+import com.ichi2.libanki.Notetypes
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -120,10 +121,10 @@ class ModelFieldEditorTest(private val forbiddenCharacter: String) : Robolectric
     }
 
     /**
-     * Finds the model with specified name in {@link Models#getModels()} and returns its key
+     * Finds the model with specified name in [Notetypes.getModels] and returns its key
      *
      * @param modelName Name of the model
-     * @return Key in {@link Models#getModels()} HashMap for the model
+     * @return Key in [Notetypes.getModels] HashMap for the model
      */
     @Suppress("SameParameterValue")
     private fun findModelIdByName(modelName: String): Long {
