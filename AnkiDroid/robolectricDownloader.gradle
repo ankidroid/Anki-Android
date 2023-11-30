@@ -35,7 +35,7 @@ def robolectricAndroidSdkVersions = [
 ]
 
 // Base, public task - will be displayed in ./gradlew robolectricDownloader:tasks
-task robolectricSdkDownload {
+tasks.register('robolectricSdkDownload') {
     group = "Dependencies"
     description = "Downloads all robolectric SDK dependencies into mavenLocal, for use with offline robolectric"
 }
@@ -52,7 +52,7 @@ robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
     def mavenLocalFile = new File(this.repositories.mavenLocal().url)
     def mavenRobolectric = new File(mavenLocalFile, "org/robolectric/android-all-instrumented/${version}")
     // Copying all files downloaded for the created configuration into maven local.
-    task "robolectricSdkDownload-${version}"(type: Copy) {
+    tasks.register("robolectricSdkDownload-${version}", Copy) {
         from sdkConfig
         into mavenRobolectric
 
@@ -75,6 +75,6 @@ robolectricAndroidSdkVersions.forEach { robolectricSdkVersion ->
             }
         }
     }
-    robolectricSdkDownload.dependsOn "robolectricSdkDownload-${version}"
+    robolectricSdkDownload.configure { dependsOn "robolectricSdkDownload-${version}" }
 }
 

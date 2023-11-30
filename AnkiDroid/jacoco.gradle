@@ -92,8 +92,8 @@ def fileFilter = [
 ]
 
 // Our merge report task
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', 'connectedPlayDebugAndroidTest']) {
-    def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
+def testReport = tasks.register('jacocoTestReport', JacocoReport) {
+    def htmlOutDir = project.layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
         openReport htmlOutDir
@@ -114,9 +114,13 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest', '
             '**/*.ec'
     ])
 }
+testReport.configure {
+    dependsOn('testPlayDebugUnitTest')
+    dependsOn('connectedPlayDebugAndroidTest')
+}
 
 // A unit-test only report task
-task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest']) {
+def unitTestReport = tasks.register('jacocoUnitTestReport', JacocoReport) {
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -138,9 +142,10 @@ task jacocoUnitTestReport(type: JacocoReport, dependsOn: ['testPlayDebugUnitTest
 
     ])
 }
+unitTestReport.configure { dependsOn('testPlayDebugUnitTest') }
 
 // A connected android tests only report task
-task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedPlayDebugAndroidTest']) {
+def androidTestReport = tasks.register('jacocoAndroidTestReport', JacocoReport) {
     def htmlOutDir = layout.buildDirectory.dir("reports/jacoco/$name/html").get().asFile
 
     doLast {
@@ -161,3 +166,4 @@ task jacocoAndroidTestReport(type: JacocoReport, dependsOn: ['connectedPlayDebug
             '**/*.ec'
     ])
 }
+androidTestReport.configure { dependsOn('connectedPlayDebugAndroidTest') }
