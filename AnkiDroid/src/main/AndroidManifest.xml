@@ -114,7 +114,7 @@
         <activity
             android:name="com.ichi2.anki.IntentHandler"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:theme="@style/Theme_Dark.Launcher"
             android:exported="true"
             >
             <intent-filter>
