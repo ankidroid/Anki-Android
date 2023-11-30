@@ -759,7 +759,8 @@ class CardContentProvider : ContentProvider() {
                 val tags = values.getAsString(FlashCardsContract.Note.TAGS)
 //                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
-                val newNote = Note(col, col.notetypes.get(modelId)!!)
+                val model = requireNotNull(col.notetypes.get(modelId)) { "Invalid modelId: $modelId" }
+                val newNote = Note(col, model)
                 // Set fields
                 val fldsArray = Utils.splitFields(flds)
                 // Check that correct number of flds specified
