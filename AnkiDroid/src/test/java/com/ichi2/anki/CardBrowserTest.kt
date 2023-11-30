@@ -23,12 +23,12 @@ import android.widget.ListView
 import android.widget.Spinner
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
@@ -39,6 +39,7 @@ import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.OS
+import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
 import kotlinx.coroutines.runBlocking
@@ -931,22 +932,20 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun `column spinner positions are set to 0 if no preferences exist`() = runBlocking {
         // GIVEN: No shared preferences exist for display column selections
-        val sharedPrefs = targetContext.sharedPrefs()
-        sharedPrefs.edit().apply {
+        getSharedPrefs().edit {
             remove(CardBrowser.DISPLAY_COLUMN_1_KEY)
             remove(CardBrowser.DISPLAY_COLUMN_2_KEY)
-            apply()
         }
 
         // WHEN: CardBrowser is created
         val cardBrowser: CardBrowser = getBrowserWithNotes(5)
 
+        // THEN: Display column selections should default to position 0
         val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
         val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
         val column1SpinnerPosition = column1Spinner.selectedItemPosition
         val column2SpinnerPosition = column2Spinner.selectedItemPosition
 
-        // THEN: Display column selections should default to position 0
         assertThat(column1SpinnerPosition, equalTo(0))
         assertThat(column2SpinnerPosition, equalTo(0))
     }
@@ -954,25 +953,23 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun `column spinner positions are initially set from existing preferences`() = runTest {
         // GIVEN: Shared preferences exists for display column selections
-        val sharedPrefs = targetContext.sharedPrefs()
         val index1 = 1
         val index2 = 5
 
-        sharedPrefs.edit().apply {
+        getSharedPrefs().edit {
             putInt(CardBrowser.DISPLAY_COLUMN_1_KEY, index1)
             putInt(CardBrowser.DISPLAY_COLUMN_2_KEY, index2)
-            apply()
         }
 
         // WHEN: CardBrowser is created
         val cardBrowser: CardBrowser = getBrowserWithNotes(7)
 
+        // THEN: The display column selections should match the shared preferences values
         val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
         val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
         val column1SpinnerPosition = column1Spinner.selectedItemPosition
         val column2SpinnerPosition = column2Spinner.selectedItemPosition
 
-        // THEN: The display column selections should match the shared preferences values
         assertThat(column1SpinnerPosition, equalTo(index1))
         assertThat(column2SpinnerPosition, equalTo(index2))
     }
