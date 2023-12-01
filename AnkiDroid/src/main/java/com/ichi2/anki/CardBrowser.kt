@@ -381,7 +381,6 @@ open class CardBrowser :
         }
     }
 
-    @NeedsTest("ensure mColumn[1/2]Index are used as default columns")
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
@@ -406,9 +405,9 @@ open class CardBrowser :
         mActionBarTitle = findViewById(R.id.toolbar_title)
         cardsListView = findViewById(R.id.card_browser_list)
         val preferences = baseContext.sharedPrefs()
-        mColumn1Index = preferences.getInt("cardBrowserColumn1", 0)
+        mColumn1Index = preferences.getInt(DISPLAY_COLUMN_1_KEY, 0)
         // Load default value for column2 selection
-        mColumn2Index = preferences.getInt("cardBrowserColumn2", 0)
+        mColumn2Index = preferences.getInt(DISPLAY_COLUMN_2_KEY, 0)
         // get the font and font size from the preferences
         val sflRelativeFontSize =
             preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
@@ -485,7 +484,7 @@ open class CardBrowser :
                 if (pos != mColumn1Index) {
                     mColumn1Index = pos
                     AnkiDroidApp.instance.baseContext.sharedPrefs().edit {
-                        putInt("cardBrowserColumn1", mColumn1Index)
+                        putInt(DISPLAY_COLUMN_1_KEY, mColumn1Index)
                     }
                     val fromMap = cardsAdapter.fromMapping
                     fromMap[0] = COLUMN1_KEYS[mColumn1Index]
@@ -514,7 +513,7 @@ open class CardBrowser :
                 if (pos != mColumn2Index) {
                     mColumn2Index = pos
                     AnkiDroidApp.instance.baseContext.sharedPrefs().edit {
-                        putInt("cardBrowserColumn2", mColumn2Index)
+                        putInt(DISPLAY_COLUMN_2_KEY, mColumn2Index)
                     }
                     val fromMap = cardsAdapter.fromMapping
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index]
@@ -2454,6 +2453,8 @@ open class CardBrowser :
         private const val PERSISTENT_STATE_FILE = "DeckPickerState"
         private const val LAST_DECK_ID_KEY = "lastDeckId"
         const val CARD_NOT_AVAILABLE = -1
+        const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
+        const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
 
         fun clearLastDeckId() {
             val context: Context = AnkiDroidApp.instance
