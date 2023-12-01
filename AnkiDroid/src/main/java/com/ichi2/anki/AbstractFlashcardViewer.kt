@@ -298,7 +298,9 @@ abstract class AbstractFlashcardViewer :
             }
         }
     )
-    protected inner class FlashCardViewerResultCallback(private val callback: (result: ActivityResult, reloadRequired: Boolean) -> Unit = { _, _ -> }) : ActivityResultCallback<ActivityResult> {
+    protected inner class FlashCardViewerResultCallback(
+        private val callback: (result: ActivityResult, reloadRequired: Boolean) -> Unit = { _, _ -> }
+    ) : ActivityResultCallback<ActivityResult> {
         override fun onActivityResult(result: ActivityResult) {
             if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
                 closeReviewer(DeckPicker.RESULT_DB_ERROR)
