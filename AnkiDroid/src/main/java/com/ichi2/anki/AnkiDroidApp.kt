@@ -44,6 +44,7 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.contextmenu.AnkiCardContextMenu
 import com.ichi2.anki.contextmenu.CardBrowserContextMenu
 import com.ichi2.anki.exception.StorageAccessException
+import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.services.BootService
 import com.ichi2.anki.services.NotificationService
@@ -64,7 +65,7 @@ import java.util.regex.Pattern
  */
 @KotlinCleanup("lots to do")
 @KotlinCleanup("IDE Lint")
-open class AnkiDroidApp : Application() {
+open class AnkiDroidApp : Application(), SharedPreferencesProvider {
     /** An exception if the WebView subsystem fails to load  */
     private var mWebViewError: Throwable? = null
     private val mNotifications = MutableLiveData<Void?>()
@@ -554,4 +555,6 @@ open class AnkiDroidApp : Application() {
             Timber.i("${activity::class.simpleName}::${f::class.simpleName}::onDetach")
         }
     }
+
+    override fun sharedPrefs(): SharedPreferences = (this as Context).sharedPrefs()
 }
