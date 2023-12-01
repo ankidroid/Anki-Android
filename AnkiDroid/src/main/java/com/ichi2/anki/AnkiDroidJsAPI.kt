@@ -86,6 +86,14 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         mJsApiListMap = AnkiDroidJsAPIConstants.initApiMap()
     }
 
+    /**
+     * The method parse json data and check for api version, developer contact
+     * and extract card supplied data if api version and developer contact
+     * provided then enable js api otherwise disable js api.
+     * @param byteArray
+     * @return card supplied data, it may be empty, or specific to js api,
+     * in case of tts api it contains json string of text and queueMode which parsed in speak tts api
+     */
     open fun checkJsApiContract(byteArray: ByteArray): String {
         val data = JSONObject(byteArray.decodeToString())
         cardSuppliedApiVersion = data.optString("version", "")
