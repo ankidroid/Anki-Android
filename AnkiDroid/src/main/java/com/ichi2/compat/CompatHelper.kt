@@ -17,6 +17,7 @@ package com.ichi2.compat
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.CATEGORY_DEFAULT
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.PackageManager.NameNotFoundException
@@ -112,7 +113,7 @@ class CompatHelper private constructor() {
          * @param intent An intent containing all of the desired specification
          *            (action, data, type, category, and/or component).
          * @param flags Additional option flags to modify the data returned.
-         * @return Returns a ResolveInfo object containing the final service intent
+         * @return Returns a [ResolveInfo] object containing the final service intent
          *         that was determined to be the best action. Returns null if no
          *         matching service was found.
          */
@@ -123,17 +124,14 @@ class CompatHelper private constructor() {
         /**
          * Retrieve all activities that can be performed for the given intent.
          *
-         * @param intent The desired intent as per resolveActivity().
-         * @param flags Additional option flags to modify the data returned. The
-         *            most important is [MATCH_DEFAULT_ONLY], to limit the
-         *            resolution to only those activities that support the
-         *            [CATEGORY_DEFAULT]. Or, set
-         *            [MATCH_ALL] to prevent any filtering of the results.
+         * @param intent The desired intent as per [resolveActivityCompat].
+         * @param flags Additional option flags to modify the data returned. The most important is
+         *  [MATCH_DEFAULT_ONLY], to limit the resolution to only those activities that support the
+         *  [CATEGORY_DEFAULT]. Or, set [MATCH_ALL] to prevent any filtering of the results.
          * @return Returns a List of ResolveInfo objects containing one entry for
-         *         each matching activity, ordered from best to worst. In other
-         *         words, the first item is what would be returned by
-         *         {@link #resolveActivity}. If there are no matching activities, an
-         *         empty list is returned.
+         *  each matching activity, ordered from best to worst. In other words, the first item
+         *  is what would be returned by [resolveActivityCompat].
+         *  If there are no matching activities, an empty list is returned.
          */
         fun PackageManager.queryIntentActivitiesCompat(intent: Intent, flags: ResolveInfoFlagsCompat): List<ResolveInfo> {
             return compat.queryIntentActivities(this, intent, flags)
@@ -144,25 +142,23 @@ class CompatHelper private constructor() {
          * resolveActivity finds an activity if a class has not been
          * explicitly specified.
          *
-         * Note: if using an implicit Intent (without an explicit
+         * Note: if using an implicit [Intent] (without an explicit
          * ComponentName specified), be sure to consider whether to set the
-         * MATCH_DEFAULT_ONLY only flag. You need to do so to resolve the
+         * [MATCH_DEFAULT_ONLY] only flag. You need to do so to resolve the
          * activity in the same way that
-         * android.content.Context#startActivity(Intent) and
-         * android.content.Intent#resolveActivity(PackageManager)
-         * Intent.resolveActivity(PackageManager) do.
+         * [Context.startActivity] and [Intent.resolveActivity] do.
          *
          * @param intent An intent containing all of the desired specification
-         *            (action, data, type, category, and/or component).
+         *  (action, data, type, category, and/or component).
          * @param flags Additional option flags to modify the data returned. The
-         *            most important is MATCH_DEFAULT_ONLY, to limit the
-         *            resolution to only those activities that support the
-         *            android.content.Intent#CATEGORY_DEFAULT.
+         *  most important is [MATCH_DEFAULT_ONLY], to limit the
+         *  resolution to only those activities that support the
+         *  [CATEGORY_DEFAULT].
          * @return Returns a ResolveInfo object containing the final activity intent
-         *         that was determined to be the best action. Returns null if no
-         *         matching activity was found. If multiple matching activities are
-         *         found and there is no default set, returns a ResolveInfo object
-         *         containing something else, such as the activity resolver.
+         *  that was determined to be the best action. Returns `null` if no
+         *  matching activity was found. If multiple matching activities are
+         *  found and there is no default set, returns a [ResolveInfo] object
+         *  containing something else, such as the activity resolver.
          */
         fun PackageManager.resolveActivityCompat(intent: Intent, flags: ResolveInfoFlagsCompat): ResolveInfo? {
             return compat.resolveActivity(this, intent, flags)

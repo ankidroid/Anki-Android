@@ -93,7 +93,7 @@ interface Compat {
      * Returns the value associated with the given key, or `null` if:
      * * No mapping of the desired type exists for the given key.
      * * A `null` value is explicitly associated with the key.
-     * * The object is not of type {@code clazz}.
+     * * The object is not of type `clazz`.
      *
      * @param key a String, or `null`
      * @param clazz The expected class of the returned type

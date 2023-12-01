@@ -18,7 +18,7 @@ class DeckRenameException(val errorCode: Int) : Exception() {
         const val ALREADY_EXISTS = 0
         const val FILTERED_NOSUBDECKS = 1
 
-        /** Generates a {@link com.ichi2.libanki.backend.exception.DeckRenameException} with additional information in the message */
+        /** Generates a [DeckRenameException] with additional information in the message */
         fun filteredAncestor(
             deckName: String?,
             filteredAncestorName: String?

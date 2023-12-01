@@ -32,7 +32,9 @@ import org.acra.dialog.CrashReportDialogHelper
 
 /**
  * This file will appear to have static type errors because BaseCrashReportDialog extends android.support.XXX
- * instead of androidx.XXX . Details at {@see https://github.com/ankidroid/Anki-Android/wiki/Crash-Reports}
+ * instead of androidx.XXX.
+ *
+ * See [AnkiDroid Wiki: Crash-Reports](https://github.com/ankidroid/Anki-Android/wiki/Crash-Reports)
  */
 @SuppressLint("Registered") // we are sufficiently registered in this special case
 class AnkiDroidCrashReportDialog : CrashReportDialog(), DialogInterface.OnClickListener, DialogInterface.OnDismissListener {

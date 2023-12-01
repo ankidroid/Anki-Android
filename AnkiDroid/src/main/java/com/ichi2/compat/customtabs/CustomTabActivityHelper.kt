@@ -85,7 +85,7 @@ class CustomTabActivityHelper : ServiceConnectionCallback {
     }
 
     /**
-     * @see {@link CustomTabsSession#mayLaunchUrl(Uri, Bundle, List)}.
+     * @see CustomTabsSession.mayLaunchUrl
      * @return true if call to mayLaunchUrl was accepted.
      */
     fun mayLaunchUrl(uri: Uri?, extras: Bundle?, otherLikelyBundles: List<Bundle?>?): Boolean {
