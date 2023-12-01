@@ -931,7 +931,7 @@ open class CardBrowser :
         return checkedCardCount() >= cardCount // must handle 0.
     }
 
-    private fun flagTask(flag: Int) {
+    private fun updateFlagForSelectedRows(flag: Int) {
         launchCatchingTask { updateSelectedCardsFlag(flag) }
     }
 
@@ -1035,35 +1035,35 @@ open class CardBrowser :
                 return true
             }
             R.id.action_flag_zero -> {
-                flagTask(0)
+                updateFlagForSelectedRows(0)
                 return true
             }
             R.id.action_flag_one -> {
-                flagTask(1)
+                updateFlagForSelectedRows(1)
                 return true
             }
             R.id.action_flag_two -> {
-                flagTask(2)
+                updateFlagForSelectedRows(2)
                 return true
             }
             R.id.action_flag_three -> {
-                flagTask(3)
+                updateFlagForSelectedRows(3)
                 return true
             }
             R.id.action_flag_four -> {
-                flagTask(4)
+                updateFlagForSelectedRows(4)
                 return true
             }
             R.id.action_flag_five -> {
-                flagTask(5)
+                updateFlagForSelectedRows(5)
                 return true
             }
             R.id.action_flag_six -> {
-                flagTask(6)
+                updateFlagForSelectedRows(6)
                 return true
             }
             R.id.action_flag_seven -> {
-                flagTask(7)
+                updateFlagForSelectedRows(7)
                 return true
             }
             R.id.action_select_flag_zero -> {
