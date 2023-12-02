@@ -125,7 +125,7 @@ open class CardBrowser :
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    val mCards = CardCollection<CardCache>()
+    val mCards get() = viewModel.cards
     var deckSpinnerSelection: DeckSpinnerSelection? = null
 
     @VisibleForTesting
@@ -135,9 +135,15 @@ open class CardBrowser :
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     lateinit var cardsAdapter: MultiColumnListAdapter
 
-    private var mSearchTerms: String = ""
-    private var mRestrictOnDeck: String = ""
-    private var mCurrentFlag = 0
+    private var mSearchTerms
+        get() = viewModel.searchTerms
+        set(value) { viewModel.searchTerms = value }
+    private var mRestrictOnDeck
+        get() = viewModel.restrictOnDeck
+        set(value) { viewModel.restrictOnDeck = value }
+    private var mCurrentFlag
+        get() = viewModel.currentFlag
+        set(value) { viewModel.currentFlag = value }
     private lateinit var mTagsDialogFactory: TagsDialogFactory
     private var mSearchItem: MenuItem? = null
     private var mSaveSearchItem: MenuItem? = null
@@ -155,20 +161,35 @@ open class CardBrowser :
      * True by default.
      * */
     @get:VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    var cardsOrNotes = CARDS
+    var cardsOrNotes
+        get() = viewModel.cardsOrNotes
+        set(value) { viewModel.cardsOrNotes = value }
 
     // card that was clicked (not marked)
-    private var mCurrentCardId: CardId = 0
-    private var mOrder = SortType.NO_SORTING
-    private var mOrderAsc = false
-    private var mColumn1Index = 0
-    private var mColumn2Index = 0
+    private var mCurrentCardId
+        get() = viewModel.currentCardId
+        set(value) { viewModel.currentCardId = value }
+    private var mOrder
+        get() = viewModel.order
+        set(value) { viewModel.order = value }
+    private var mOrderAsc
+        get() = viewModel.orderAsc
+        set(value) { viewModel.orderAsc = value }
+    private var mColumn1Index
+        get() = viewModel.column1Index
+        set(value) { viewModel.column1Index = value }
+    private var mColumn2Index
+        get() = viewModel.column2Index
+        set(value) { viewModel.column2Index = value }
 
     // DEFECT: Doesn't need to be a local
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
-    private var mTempSearchQuery: String? = null
+    private var mTempSearchQuery: String?
+        get() = viewModel.tempSearchQuery
+        set(value) { viewModel.tempSearchQuery = value }
+
     private var onEditCardActivityResult = registerForActivityResult(StartActivityForResult()) { result: ActivityResult ->
         Timber.d("onEditCardActivityResult: resultCode=%d", result.resultCode)
         if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
@@ -230,13 +251,18 @@ open class CardBrowser :
     private var mReloadRequired = false
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    var isInMultiSelectMode = false
-        private set
+    var isInMultiSelectMode
+        get() = viewModel.isInMultiSelectMode
+        private set(value) { viewModel.isInMultiSelectMode = value }
 
     @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    var isTruncated = false
-    private val mCheckedCards = Collections.synchronizedSet(LinkedHashSet<CardCache>())
-    private var mLastSelectedPosition = 0
+    var isTruncated
+        get() = viewModel.isTruncated
+        set(value) { viewModel.isTruncated = value }
+    private val mCheckedCards get() = viewModel.checkedCards
+    private var mLastSelectedPosition
+        get() = viewModel.lastSelectedPosition
+        set(value) { viewModel.lastSelectedPosition = value }
     private var mActionBarMenu: Menu? = null
     private var mOldCardId: CardId = 0
     private var mOldCardTopOffset = 0
