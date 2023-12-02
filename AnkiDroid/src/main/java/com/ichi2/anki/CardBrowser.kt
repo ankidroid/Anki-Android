@@ -34,6 +34,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.edit
 import anki.collection.OpChanges
+import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -679,7 +680,7 @@ open class CardBrowser :
             }
             KeyEvent.KEYCODE_FORWARD_DEL -> {
                 Timber.i("Delete pressed - Delete Selected Note")
-                launchCatchingTask { deleteSelectedNote() }
+                deleteSelectedNotes()
                 return true
             }
             KeyEvent.KEYCODE_F -> {
@@ -1109,7 +1110,7 @@ open class CardBrowser :
                 return true
             }
             R.id.action_delete_card -> {
-                launchCatchingTask { deleteSelectedNote() }
+                deleteSelectedNotes()
                 return true
             }
             R.id.action_mark_card -> {
@@ -1246,17 +1247,13 @@ open class CardBrowser :
         }
     }
 
-    protected suspend fun deleteSelectedNote() {
-        if (!isInMultiSelectMode) {
-            return
+    private fun deleteSelectedNotes() = launchCatchingTask {
+        withProgress("Deleting selected notes") {
+            viewModel.deleteSelectedNotes()
+        }.ifNotZero { noteCount ->
+            val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
+            showUndoSnackbar(deletedMessage)
         }
-
-        val noteCount = withProgress("Deleting selected notes") {
-            val selectedIds = selectedCardIds
-            undoableOp { removeNotes(cids = selectedIds) }.count
-        }
-        val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
-        showUndoSnackbar(deletedMessage)
     }
 
     @VisibleForTesting
