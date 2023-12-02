@@ -414,25 +414,35 @@ open class Collection(
         // so not much effort was expended here
 
         val noteIds = findNotes(query, order)
-        val cardIds = findCards(query, order)
+
         // select the card with the lowest `ord` to show
-        return db.queryLongList(
+        val cursor = db.query(
             """
-SELECT c.id
-FROM (
-  SELECT nid, MIN(ord) AS ord
-  FROM cards
-  WHERE nid IN ${Utils.ids2str(noteIds)} 
-  GROUP BY nid
-) AS card_with_min_ord
-JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.ord
-ORDER BY 
-        CASE
-            ${cardIds.joinToString(" "){ "WHEN c.id = $it THEN ${cardIds.indexOf(it)}" }} 
-            ELSE ${cardIds.size} 
-        END;
+    SELECT c.id, card_with_min_ord.nid
+    FROM (
+      SELECT nid, MIN(ord) AS ord
+      FROM cards
+      WHERE nid IN ${Utils.ids2str(noteIds)} 
+      GROUP BY nid
+    ) AS card_with_min_ord
+    JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.ord
             """.trimMargin()
         )
+        val resultList = mutableListOf<Pair<Long, Long>>()
+
+        cursor.use { cur ->
+            while (cur.moveToNext()) {
+                val id = cur.getLong(cur.getColumnIndex("id"))
+                val nid = cur.getLong(cur.getColumnIndex("nid"))
+                resultList.add(Pair(id, nid))
+            }
+        }
+
+        // sort resultList by nid
+        val sortedResultList = resultList.sortedBy { noteIds.indexOf(it.second) }
+
+        // Extract ids from sortedResultList
+        return sortedResultList.map { it.first }
     }
 
     @RustCleanup("Calling code should handle returned OpChanges")
