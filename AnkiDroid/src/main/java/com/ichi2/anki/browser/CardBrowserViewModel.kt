@@ -80,4 +80,11 @@ class CardBrowserViewModel : ViewModel() {
             }
         }
     }
+
+    /**
+     * Deletes the selected notes,
+     * @return the number of deleted notes
+     */
+    suspend fun deleteSelectedNotes(): Int =
+        undoableOp { removeNotes(cids = selectedCardIds) }.count
 }
