@@ -25,7 +25,6 @@ import java.util.Collections
 import java.util.LinkedHashSet
 
 class CardBrowserViewModel : ViewModel() {
-
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
 
     var searchTerms: String = ""
@@ -50,4 +49,6 @@ class CardBrowserViewModel : ViewModel() {
 
     val checkedCards: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
     var lastSelectedPosition = 0
+
+    fun hasSelectedCards(): Boolean = checkedCards.isNotEmpty()
 }
