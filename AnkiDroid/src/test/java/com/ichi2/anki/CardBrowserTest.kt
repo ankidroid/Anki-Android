@@ -872,8 +872,7 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun truncateAndExpand() {
         val cardBrowser = getBrowserWithNotes(3)
-        // "isTruncated" variable set to true
-        cardBrowser.isTruncated = true
+        cardBrowser.viewModel.setTruncated(true)
 
         // Testing whether each card is truncated and ellipsized
         for (i in 0 until (cardBrowser.cardsListView.childCount)) {
@@ -890,8 +889,7 @@ class CardBrowserTest : RobolectricTest() {
             assertThat(column2.ellipsize, equalTo(TextUtils.TruncateAt.END))
         }
 
-        // "isTruncate" variable set to false
-        cardBrowser.isTruncated = false
+        cardBrowser.viewModel.setTruncated(false)
 
         // Testing whether each card is expanded and not ellipsized
         for (i in 0 until (cardBrowser.cardsListView.childCount)) {

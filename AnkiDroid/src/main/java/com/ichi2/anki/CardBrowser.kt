@@ -32,7 +32,10 @@ import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.edit
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.google.android.material.color.MaterialColors
@@ -85,6 +88,8 @@ import com.ichi2.utils.Permissions.hasStorageAccessPermission
 import com.ichi2.utils.TagsUtil.getUpdatedTags
 import com.ichi2.widget.WidgetStatus.updateInBackground
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import net.ankiweb.rsdroid.RustCleanup
 import timber.log.Timber
 import java.util.*
@@ -255,10 +260,6 @@ open class CardBrowser :
         get() = viewModel.isInMultiSelectMode
         private set(value) { viewModel.isInMultiSelectMode = value }
 
-    @get:VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    var isTruncated
-        get() = viewModel.isTruncated
-        set(value) { viewModel.isTruncated = value }
     private val mCheckedCards get() = viewModel.checkedCards
     private var mLastSelectedPosition
         get() = viewModel.lastSelectedPosition
@@ -484,6 +485,11 @@ open class CardBrowser :
             }
         }
         mOnboarding.onCreate()
+
+        viewModel.isTruncatedFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { cardsAdapter.notifyDataSetChanged() }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
@@ -615,7 +621,6 @@ open class CardBrowser :
             showFilteredDecks = true
         )
         cardsOrNotes = CardsOrNotes.fromCollection(col)
-        isTruncated = this.sharedPrefs().getBoolean("isTruncated", false)
         deckSpinnerSelection!!.initializeActionBarDeckSpinner(this.supportActionBar!!)
         selectDeckAndSave(deckId)
 
@@ -1216,17 +1221,6 @@ open class CardBrowser :
         }
     }
 
-    fun onTruncate(newTruncateValue: Boolean) {
-        val sharedPrefs = this.sharedPrefs()
-
-        sharedPrefs.edit {
-            putBoolean("isTruncated", newTruncateValue)
-        }
-
-        isTruncated = newTruncateValue
-        cardsAdapter.notifyDataSetChanged()
-    }
-
     fun exportSelected() {
         if (!isInMultiSelectMode) {
             return
@@ -1439,7 +1433,7 @@ open class CardBrowser :
     }
 
     private fun showOptionsDialog() {
-        val dialog = BrowserOptionsDialog(cardsOrNotes, isTruncated)
+        val dialog = BrowserOptionsDialog(cardsOrNotes, viewModel.isTruncated)
         dialog.show(supportFragmentManager, "browserOptionsDialog")
     }
 
@@ -1452,7 +1446,6 @@ open class CardBrowser :
         savedInstanceState.putBoolean("mPostAutoScroll", mPostAutoScroll)
         savedInstanceState.putInt("mLastSelectedPosition", mLastSelectedPosition)
         savedInstanceState.putBoolean("mInMultiSelectMode", isInMultiSelectMode)
-        savedInstanceState.putBoolean("mIsTruncated", isTruncated)
         super.onSaveInstanceState(savedInstanceState)
     }
 
@@ -1465,7 +1458,6 @@ open class CardBrowser :
         mPostAutoScroll = savedInstanceState.getBoolean("mPostAutoScroll")
         mLastSelectedPosition = savedInstanceState.getInt("mLastSelectedPosition")
         isInMultiSelectMode = savedInstanceState.getBoolean("mInMultiSelectMode")
-        isTruncated = savedInstanceState.getBoolean("mIsTruncated")
         searchCards()
     }
 
@@ -1940,7 +1932,7 @@ open class CardBrowser :
             val column1 = v.findViewById<FixedTextView>(R.id.card_sfld)
             val column2 = v.findViewById<FixedTextView>(R.id.card_column2)
 
-            if (isTruncated) {
+            if (viewModel.isTruncated) {
                 column1.maxLines = LINES_VISIBLE_WHEN_COLLAPSED
                 column2.maxLines = LINES_VISIBLE_WHEN_COLLAPSED
                 column1.ellipsize = TextUtils.TruncateAt.END
