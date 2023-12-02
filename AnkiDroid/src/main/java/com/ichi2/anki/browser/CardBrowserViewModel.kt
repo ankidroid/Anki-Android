@@ -50,6 +50,8 @@ class CardBrowserViewModel : ViewModel() {
     var isTruncated = false
 
     val checkedCards: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
+    val selectedCardIds: List<Long>
+        get() = checkedCards.map { c -> c.id }
     var lastSelectedPosition = 0
 
     fun hasSelectedCards(): Boolean = checkedCards.isNotEmpty()
