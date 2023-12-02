@@ -666,7 +666,7 @@ open class CardBrowser :
             KeyEvent.KEYCODE_K -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+K: Toggle Mark")
-                    launchCatchingTask { toggleMark() }
+                    toggleMark()
                     return true
                 }
             }
@@ -697,26 +697,8 @@ open class CardBrowser :
      * If one or more card is unmarked, all will be marked,
      * otherwise, they will be unmarked  */
     @NeedsTest("Test that the mark get toggled as expected for a list of selected cards")
-    private suspend fun toggleMark() {
-        if (!hasSelectedCards()) {
-            Timber.i("Not marking cards - nothing selected")
-            return
-        }
-        val cardIds = selectedCardIds
-        withProgress {
-            undoableOp {
-                val noteIds = notesOfCards(cardIds)
-                // if all notes are marked, remove the mark
-                // if no notes are marked, add the mark
-                // if there is a mix, enable the mark on all
-                val wantMark = !noteIds.all { getNote(it).hasTag("marked") }
-                if (wantMark) {
-                    tags.bulkAdd(noteIds, "marked")
-                } else {
-                    tags.bulkRemove(noteIds, "marked")
-                }
-            }
-        }
+    private fun toggleMark() {
+        launchCatchingTask { withProgress { viewModel.toggleMark(selectedCardIds) } }
     }
 
     @VisibleForTesting

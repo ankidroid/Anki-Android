@@ -21,6 +21,8 @@ import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
 import com.ichi2.libanki.CardId
+import com.ichi2.libanki.undoableOp
+import timber.log.Timber
 import java.util.Collections
 import java.util.LinkedHashSet
 
@@ -51,4 +53,29 @@ class CardBrowserViewModel : ViewModel() {
     var lastSelectedPosition = 0
 
     fun hasSelectedCards(): Boolean = checkedCards.isNotEmpty()
+
+    /**
+     * All the notes of the selected cards will be marked
+     * If one or more card is unmarked, all will be marked,
+     * otherwise, they will be unmarked
+     */
+    suspend fun toggleMark(cardIds: List<CardId>) {
+        if (!hasSelectedCards()) {
+            Timber.i("Not marking cards - nothing selected")
+            return
+        }
+        undoableOp {
+            val noteIds = notesOfCards(cardIds)
+            // if all notes are marked, remove the mark
+            // if no notes are marked, add the mark
+            // if there is a mix, enable the mark on all
+            val wantMark = !noteIds.all { getNote(it).hasTag("marked") }
+            Timber.i("setting mark = %b for %d notes", wantMark, noteIds.size)
+            if (wantMark) {
+                tags.bulkAdd(noteIds, "marked")
+            } else {
+                tags.bulkRemove(noteIds, "marked")
+            }
+        }
+    }
 }
