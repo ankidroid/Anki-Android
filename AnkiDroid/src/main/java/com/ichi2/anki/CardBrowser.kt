@@ -28,11 +28,11 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
-import androidx.activity.viewModels
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.edit
+import androidx.lifecycle.ViewModelProvider
 import anki.collection.OpChanges
 import com.afollestad.materialdialogs.utils.MDUtil.ifNotZero
 import com.google.android.material.color.MaterialColors
@@ -120,7 +120,7 @@ open class CardBrowser :
         FILTER, EDIT_TAGS
     }
 
-    val viewModel: CardBrowserViewModel by viewModels()
+    lateinit var viewModel: CardBrowserViewModel
 
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
@@ -415,6 +415,9 @@ open class CardBrowser :
         if (showedActivityFailedScreen(savedInstanceState)) {
             return
         }
+        // must be called after showedActivityFailedScreen
+        viewModel = createViewModel()
+
         mTagsDialogFactory = TagsDialogFactory(this).attachToActivity<TagsDialogFactory>(this)
         mExportingDelegate = ActivityExportingDelegate(this) { getColUnsafe }
         super.onCreate(savedInstanceState)
@@ -745,7 +748,10 @@ open class CardBrowser :
     }
 
     override fun onDestroy() {
-        invalidate()
+        // TODO: Most of this should be handled in viewModel.onCleared
+        if (this::viewModel.isInitialized) {
+            invalidate()
+        }
         super.onDestroy()
         if (mUnmountReceiver != null) {
             unregisterReceiver(mUnmountReceiver)
@@ -2031,6 +2037,18 @@ open class CardBrowser :
             }
         }
     }
+
+    /**
+     * Implementation of `by viewModels()` for use in [onCreate]
+     *
+     * @see showedActivityFailedScreen - we may not have AnkiDroidApp.instance and therefore can't
+     * create the ViewModel
+     */
+    private fun createViewModel() = ViewModelProvider(
+        viewModelStore,
+        CardBrowserViewModel.factory(),
+        defaultViewModelCreationExtras
+    )[CardBrowserViewModel::class.java]
 
     private val allCardIds: LongArray
         get() = mCards.map { c -> c.id }.toLongArray()

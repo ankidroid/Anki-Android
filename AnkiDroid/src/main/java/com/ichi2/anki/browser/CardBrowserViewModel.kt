@@ -17,17 +17,23 @@
 package com.ichi2.anki.browser
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
+import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoableOp
 import timber.log.Timber
 import java.util.Collections
 import java.util.LinkedHashSet
 
-class CardBrowserViewModel : ViewModel() {
+class CardBrowserViewModel(
+    preferences: SharedPreferencesProvider
+) : ViewModel(), SharedPreferencesProvider by preferences {
     val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
 
     var searchTerms: String = ""
@@ -94,4 +100,12 @@ class CardBrowserViewModel : ViewModel() {
      */
     suspend fun deleteSelectedNotes(): Int =
         undoableOp { removeNotes(cids = selectedCardIds) }.count
+
+    companion object {
+        fun factory(preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
+            initializer {
+                CardBrowserViewModel(preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider)
+            }
+        }
+    }
 }
