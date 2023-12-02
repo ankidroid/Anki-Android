@@ -953,9 +953,7 @@ open class CardBrowser :
         mActionBarMenu!!.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
 
-    private fun hasSelectedCards(): Boolean {
-        return mCheckedCards.isNotEmpty()
-    }
+    private fun hasSelectedCards(): Boolean = viewModel.hasSelectedCards()
 
     private fun hasSelectedAllCards(): Boolean {
         return checkedCardCount() >= cardCount // must handle 0.
