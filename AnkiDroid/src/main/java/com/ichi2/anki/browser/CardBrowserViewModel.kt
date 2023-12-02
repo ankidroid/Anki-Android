@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModel
 import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
+import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoableOp
 import timber.log.Timber
@@ -53,6 +54,12 @@ class CardBrowserViewModel : ViewModel() {
     val selectedCardIds: List<Long>
         get() = checkedCards.map { c -> c.id }
     var lastSelectedPosition = 0
+
+    val cardInfoDestination: CardInfoDestination?
+        get() {
+            val firstSelectedCard = selectedCardIds.firstOrNull() ?: return null
+            return CardInfoDestination(firstSelectedCard)
+        }
 
     fun hasSelectedCards(): Boolean = checkedCards.isNotEmpty()
 
