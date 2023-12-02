@@ -368,7 +368,7 @@ open class CardBrowser :
     }
 
     private val selectedCardIds: List<Long>
-        get() = mCheckedCards.map { c -> c.id }
+        get() = viewModel.selectedCardIds
 
     private fun canPerformCardInfo(): Boolean {
         return checkedCardCount() == 1
