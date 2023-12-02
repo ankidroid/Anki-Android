@@ -16,7 +16,9 @@
 
 package com.ichi2.anki.browser
 
+import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ichi2.anki.AnkiDroidApp
@@ -27,6 +29,8 @@ import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoableOp
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Collections
 import java.util.LinkedHashSet
@@ -54,7 +58,9 @@ class CardBrowserViewModel(
 
     var isInMultiSelectMode = false
 
-    var isTruncated = false
+    val isTruncatedFlow: MutableStateFlow<Boolean> =
+        MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
+    val isTruncated get() = isTruncatedFlow.value
 
     val checkedCards: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
     val selectedCardIds: List<Long>
@@ -100,6 +106,15 @@ class CardBrowserViewModel(
      */
     suspend fun deleteSelectedNotes(): Int =
         undoableOp { removeNotes(cids = selectedCardIds) }.count
+
+    fun setTruncated(value: Boolean) {
+        viewModelScope.launch {
+            isTruncatedFlow.emit(value)
+        }
+        sharedPrefs().edit {
+            putBoolean("isTruncated", value)
+        }
+    }
 
     companion object {
         fun factory(preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
