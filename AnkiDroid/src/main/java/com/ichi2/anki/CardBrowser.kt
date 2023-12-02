@@ -61,7 +61,6 @@ import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfo.Companion.toIntent
-import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.CardService.selectedNoteIds
@@ -1184,10 +1183,8 @@ open class CardBrowser :
                 return super.onOptionsItemSelected(item)
             }
             R.id.action_view_card_info -> {
-                val selectedCardIds = selectedCardIds
-                if (selectedCardIds.isNotEmpty()) {
-                    val cardId = selectedCardIds[0]
-                    val intent = CardInfoDestination(cardId).toIntent(this)
+                viewModel.cardInfoDestination?.let { destination ->
+                    val intent: Intent = destination.toIntent(this)
                     startActivityWithAnimation(intent, ActivityTransitionAnimation.Direction.FADE)
                 }
                 return true
