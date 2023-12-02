@@ -267,21 +267,25 @@ open class CardBrowser :
             if (mOrder == 0) {
                 // if the sort value in the card browser was changed, then perform a new search
                 getColUnsafe.config.set("sortType", fSortTypes[1])
+                getColUnsafe.config.set("noteSortType", fSortTypes[1])
                 baseContext.sharedPrefs().edit {
                     putBoolean("cardBrowserNoSorting", true)
                 }
             } else {
                 getColUnsafe.config.set("sortType", fSortTypes[mOrder])
+                getColUnsafe.config.set("noteSortType", fSortTypes[mOrder])
                 baseContext.sharedPrefs().edit {
                     putBoolean("cardBrowserNoSorting", false)
                 }
             }
             getColUnsafe.config.set("sortBackwards", mOrderAsc)
+            getColUnsafe.config.set("browserNoteSortBackwards", mOrderAsc)
             searchCards()
         } else if (which != CARD_ORDER_NONE) {
             // if the same element is selected again, reverse the order
             mOrderAsc = !mOrderAsc
             getColUnsafe.config.set("sortBackwards", mOrderAsc)
+            getColUnsafe.config.set("browserNoteSortBackwards", mOrderAsc)
             mCards.reverse()
             updateList()
         }
