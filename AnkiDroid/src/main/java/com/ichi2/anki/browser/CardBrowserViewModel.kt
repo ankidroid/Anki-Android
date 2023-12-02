@@ -17,5 +17,37 @@
 package com.ichi2.anki.browser
 
 import androidx.lifecycle.ViewModel
+import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.SortType
+import com.ichi2.libanki.CardId
+import java.util.Collections
+import java.util.LinkedHashSet
 
-class CardBrowserViewModel : ViewModel()
+class CardBrowserViewModel : ViewModel() {
+
+    val cards = CardBrowser.CardCollection<CardBrowser.CardCache>()
+
+    var searchTerms: String = ""
+    var restrictOnDeck: String = ""
+    var currentFlag = 0
+
+    var cardsOrNotes = CardsOrNotes.CARDS
+
+    // card that was clicked (not marked)
+    var currentCardId: CardId = 0
+    var order = SortType.NO_SORTING
+    var orderAsc = false
+    var column1Index = 0
+    var column2Index = 0
+
+    /** The query which is currently in the search box, potentially null. Only set when search box was open  */
+    var tempSearchQuery: String? = null
+
+    var isInMultiSelectMode = false
+
+    var isTruncated = false
+
+    val checkedCards: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
+    var lastSelectedPosition = 0
+}
