@@ -28,6 +28,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.activity.viewModels
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.SearchView
@@ -40,6 +41,7 @@ import com.ichi2.anki.CollectionManager.TR
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
+import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.MySearchesDialogListener
@@ -117,6 +119,8 @@ open class CardBrowser :
     private enum class TagsDialogListenerAction {
         FILTER, EDIT_TAGS
     }
+
+    val viewModel: CardBrowserViewModel by viewModels()
 
     /** List of cards in the browser.
      * When the list is changed, the position member of its elements should get changed. */
