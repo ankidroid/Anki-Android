@@ -1565,41 +1565,73 @@ open class Reviewer :
     }
 
     inner class ReviewerJavaScriptFunction(activity: AbstractFlashcardViewer) : AnkiDroidJsAPI(activity) {
-        override suspend fun ankiGetNewCardCount(): ByteArray = withContext(Dispatchers.Main) {
+        override suspend fun ankiGetNewCardCount(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+            val data = checkJsApiContract(byteArray)
+            if (!data.first) {
+                return@withContext convertToByteArray(-1)
+            }
             convertToByteArray(mNewCount.toString())
         }
 
-        override suspend fun ankiGetLrnCardCount(): ByteArray = withContext(Dispatchers.Main) {
+        override suspend fun ankiGetLrnCardCount(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+            val data = checkJsApiContract(byteArray)
+            if (!data.first) {
+                return@withContext convertToByteArray(-1)
+            }
             convertToByteArray(mLrnCount.toString())
         }
 
-        override suspend fun ankiGetRevCardCount(): ByteArray = withContext(Dispatchers.Main) {
+        override suspend fun ankiGetRevCardCount(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+            val data = checkJsApiContract(byteArray)
+            if (!data.first) {
+                return@withContext convertToByteArray(-1)
+            }
             convertToByteArray(mRevCount.toString())
         }
 
-        override suspend fun ankiGetETA(): ByteArray = withContext(Dispatchers.Main) {
+        override suspend fun ankiGetETA(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+            val data = checkJsApiContract(byteArray)
+            if (!data.first) {
+                return@withContext convertToByteArray(-1)
+            }
             convertToByteArray(mEta)
         }
 
-        override suspend fun ankiGetNextTime1(): ByteArray = withContext(Dispatchers.Main) {
+        override suspend fun ankiGetNextTime1(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+            val data = checkJsApiContract(byteArray)
+            if (!data.first) {
+                return@withContext convertToByteArray(-1)
+            }
             convertToByteArray(easeButton1!!.nextTime)
         }
 
-        override suspend fun ankiGetNextTime2(): ByteArray = withContext(Dispatchers.Main) {
+        override suspend fun ankiGetNextTime2(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+            val data = checkJsApiContract(byteArray)
+            if (!data.first) {
+                return@withContext convertToByteArray(-1)
+            }
             convertToByteArray(easeButton2!!.nextTime)
         }
 
-        override suspend fun ankiGetNextTime3(): ByteArray = withContext(Dispatchers.Main) {
+        override suspend fun ankiGetNextTime3(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+            val data = checkJsApiContract(byteArray)
+            if (!data.first) {
+                return@withContext convertToByteArray(-1)
+            }
             convertToByteArray(easeButton3!!.nextTime)
         }
 
-        override suspend fun ankiGetNextTime4(): ByteArray = withContext(Dispatchers.Main) {
+        override suspend fun ankiGetNextTime4(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+            val data = checkJsApiContract(byteArray)
+            if (!data.first) {
+                return@withContext convertToByteArray(-1)
+            }
             convertToByteArray(easeButton4!!.nextTime)
         }
 
         override suspend fun ankiSetCardDue(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val days = checkJsApiContract(byteArray)
-            val daysInt = days.toInt()
+            val data = checkJsApiContract(byteArray)
+            val daysInt = data.second.toInt()
             val apiList = getJsApiListMap()
             if (!apiList[SET_CARD_DUE]!!) {
                 showDeveloperContact(ankiJsErrorCodeDefault)
@@ -1645,7 +1677,7 @@ open class Reviewer :
         }
 
         override suspend fun ankiToggleFlag(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val flag = checkJsApiContract(byteArray)
+            val flag = checkJsApiContract(byteArray).second
             // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
             val apiList = getJsApiListMap()
             if (!apiList[TOGGLE_FLAG]!!) {
