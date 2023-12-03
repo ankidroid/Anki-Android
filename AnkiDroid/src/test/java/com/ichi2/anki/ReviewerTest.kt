@@ -21,6 +21,7 @@ import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
 import com.ichi2.anki.cardviewer.ViewerCommand.MARK
@@ -238,7 +239,7 @@ class ReviewerTest : RobolectricTest() {
         val javaScriptFunction = reviewer.javaScriptFunction()
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.ankiGetDeckName().decodeToString(), equalTo("B"))
+        assertThat(javaScriptFunction.ankiGetDeckName(jsApiContract()).decodeToString(), equalTo("B"))
     }
 
     @Ignore("needs update for v3")
@@ -327,9 +328,9 @@ class ReviewerTest : RobolectricTest() {
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) = runTest {
         val jsApi = r.javaScriptFunction()
         val countList = listOf(
-            jsApi.ankiGetNewCardCount().decodeToString().toInt(),
-            jsApi.ankiGetLrnCardCount().decodeToString().toInt(),
-            jsApi.ankiGetRevCardCount().decodeToString().toInt()
+            jsApi.ankiGetNewCardCount(jsApiContract()).decodeToString().toInt(),
+            jsApi.ankiGetLrnCardCount(jsApiContract()).decodeToString().toInt(),
+            jsApi.ankiGetRevCardCount(jsApiContract()).decodeToString().toInt()
         )
 
         val expected = listOf(
