@@ -312,12 +312,10 @@
                 <objectAnimator
                     android:propertyName="rotation"
                     android:startOffset="2500"
-                    android:duration="2000"
+                    android:duration="3000"
                     android:valueFrom="0"
                     android:valueTo="720"
                     android:valueType="floatType"
-                    android:repeatMode="restart"
-                    android:repeatCount="infinite"
                     android:interpolator="@android:anim/accelerate_decelerate_interpolator"/>
                 <objectAnimator
                     android:propertyName="translateX"

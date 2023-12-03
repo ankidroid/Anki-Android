@@ -19,7 +19,10 @@ package com.ichi2.anki
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.Message
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
@@ -31,6 +34,7 @@ import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.servicelayer.ScopedStorageService
 import com.ichi2.anki.services.ReminderService
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.libanki.utils.TimeManager
 import com.ichi2.themes.Themes
 import com.ichi2.themes.Themes.disableXiaomiForceDarkMode
 import com.ichi2.utils.FileUtil
@@ -44,6 +48,8 @@ import com.ichi2.utils.copyToClipboard
 import com.ichi2.utils.trimToLength
 import timber.log.Timber
 import java.io.File
+import java.time.Duration
+import java.time.Instant
 import java.util.function.Consumer
 import kotlin.math.max
 import kotlin.math.min
@@ -56,32 +62,61 @@ import kotlin.math.min
  */
 class IntentHandler : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
-        super.onCreate(savedInstanceState)
-        Themes.setTheme(this)
-        disableXiaomiForceDarkMode(this)
-        setContentView(R.layout.progress_bar)
-        val intent = intent
-        Timber.v(intent.toString())
-        val reloadIntent = Intent(this, DeckPicker::class.java)
-        reloadIntent.setDataAndType(getIntent().data, getIntent().type)
-        val action = intent.action
-        // #6157 - We want to block actions that need permissions we don't have, but not the default case
-        // as this requires nothing
-        val runIfStoragePermissions = Consumer { runnable: Runnable -> performActionIfStorageAccessible(runnable, reloadIntent, action) }
-        when (getLaunchType(intent)) {
-            LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
-            LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
-            LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })
-            LaunchType.DEFAULT_START_APP_IF_NEW -> {
-                Timber.d("onCreate() performing default action")
-                launchDeckPickerIfNoOtherTasks(reloadIntent)
-            }
-            LaunchType.COPY_DEBUG_INFO -> {
-                copyDebugInfoToClipboard(intent)
-                finish()
-            }
+        val init = {
+//            setContentView(R.layout.progress_bar)
         }
+        val handleScreen = { delay: Long ->
+            Handler(Looper.getMainLooper()).postDelayed({
+                Themes.setTheme(this)
+                disableXiaomiForceDarkMode(this)
+                val intent = intent
+                Timber.v(intent.toString())
+                val reloadIntent = Intent(this, DeckPicker::class.java)
+                reloadIntent.setDataAndType(getIntent().data, getIntent().type)
+                val action = intent.action
+                // #6157 - We want to block actions that need permissions we don't have, but not the default case
+                // as this requires nothing
+                val runIfStoragePermissions = Consumer { runnable: Runnable ->
+                    performActionIfStorageAccessible(runnable, reloadIntent, action)
+                }
+                when (getLaunchType(intent)) {
+                    LaunchType.FILE_IMPORT -> runIfStoragePermissions.accept(Runnable { handleFileImport(intent, reloadIntent, action) })
+                    LaunchType.SYNC -> runIfStoragePermissions.accept(Runnable { handleSyncIntent(reloadIntent, action) })
+                    LaunchType.REVIEW -> runIfStoragePermissions.accept(Runnable { handleReviewIntent(intent) })
+                    LaunchType.DEFAULT_START_APP_IF_NEW -> {
+                        Timber.d("onCreate() performing default action")
+                        launchDeckPickerIfNoOtherTasks(reloadIntent)
+                    }
+                    LaunchType.COPY_DEBUG_INFO -> {
+                        copyDebugInfoToClipboard(intent)
+                        finish()
+                    }
+                }
+            }, delay)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            splashScreen.setOnExitAnimationListener { splashScreenView ->
+                val animationDuration = splashScreenView.iconAnimationDuration
+                val animationStart = splashScreenView.iconAnimationStart
+
+                Timber.v("duration :${animationDuration?.toMillis()} start $animationStart")
+                val remainingDuration = if (animationDuration != null && animationStart != null) {
+                    (animationDuration - Duration.between(animationStart, Instant.ofEpochMilli(TimeManager.time.intTimeMS())))
+                        .toMillis()
+                        .coerceAtLeast(0L)
+                } else {
+                    0L
+                }
+                Timber.v("remainDuration :$remainingDuration")
+                handleScreen(remainingDuration)
+            }
+            init()
+            super.onCreate(savedInstanceState)
+        } else {
+            handleScreen(1000L)
+            super.onCreate(savedInstanceState)
+        }
+        // Note: This is our entry point from the launcher with intent: android.intent.action.MAIN
     }
 
     private fun copyDebugInfoToClipboard(intent: Intent) {
