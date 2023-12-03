@@ -19,12 +19,9 @@ package com.ichi2.anki
 import android.content.Intent
 import androidx.fragment.app.FragmentActivity
 import anki.collection.OpChangesOnly
-import anki.import_export.ExportLimit
 import anki.import_export.ImportResponse
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.libanki.buildSearchString
-import com.ichi2.libanki.exportAnkiPackage
-import com.ichi2.libanki.exportCollectionPackage
 import com.ichi2.libanki.importAnkiPackageRaw
 import com.ichi2.libanki.importCsvRaw
 import com.ichi2.libanki.undoableOp
@@ -87,40 +84,4 @@ suspend fun FragmentActivity.searchInBrowser(input: ByteArray): ByteArray {
     }
     startActivity(starterIntent)
     return input
-}
-
-suspend fun AnkiActivity.exportApkg(
-    apkgPath: String,
-    withScheduling: Boolean,
-    withMedia: Boolean,
-    limit: ExportLimit
-) {
-    withProgress(
-        extractProgress = {
-            if (progress.hasExporting()) {
-                text = getString(R.string.export_preparation_in_progress)
-            }
-        }
-    ) {
-        withCol {
-            exportAnkiPackage(apkgPath, withScheduling, withMedia, limit)
-        }
-    }
-}
-
-suspend fun AnkiActivity.exportColpkg(
-    colpkgPath: String,
-    withMedia: Boolean
-) {
-    withProgress(
-        extractProgress = {
-            if (progress.hasExporting()) {
-                text = getString(R.string.export_preparation_in_progress)
-            }
-        }
-    ) {
-        withCol {
-            exportCollectionPackage(colpkgPath, withMedia, true)
-        }
-    }
 }
