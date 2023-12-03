@@ -761,11 +761,10 @@ class CardBrowserTest : RobolectricTest() {
         // Change the display order of the card browser
         cardBrowserController.get().changeCardOrder(7) // order no. 7 corresponds to "cardEase"
         cardBrowserController.get().changeCardOrder(7) // reverse the list
-        val cardBrowser = getBrowserWithNotes(3, true)
 
         // set browser to be in notes mode
-        cardBrowser.inCardsMode = false
-        cardBrowser.searchCards()
+        cardBrowserController.get().inCardsMode = false
+        cardBrowserController.get().searchCards()
 
         assertThat(
             "Card Browser has the new noteSortType field",
