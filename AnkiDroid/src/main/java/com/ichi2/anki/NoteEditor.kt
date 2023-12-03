@@ -84,6 +84,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
@@ -178,7 +179,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         }
     )
 
-    @Suppress("DEPRECATION")
     private val requestMultiMediaEditLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult(),
         @NeedsTest("test to guard against changes in the REQUEST_MULTIMEDIA_EDIT clause preventing text fields to be updated")
@@ -187,7 +187,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 val col = getColUnsafe
                 val extras = result.data!!.extras ?: return@NoteEditorActivityResultCallback
                 val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
-                val field = extras[MultimediaEditFieldActivity.EXTRA_RESULT_FIELD] as IField? ?: return@NoteEditorActivityResultCallback
+                val field = extras.getSerializableCompat<IField>(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD) ?: return@NoteEditorActivityResultCallback
                 if (field.type != EFieldType.TEXT && (field.imagePath == null && field.audioPath == null)) {
                     Timber.i("field imagePath and audioPath are both null")
                     return@NoteEditorActivityResultCallback
