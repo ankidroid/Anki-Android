@@ -41,8 +41,8 @@ class HtmlGenerator(
 ) {
 
     @CheckResult
-    fun generateHtml(card: Card, reload: Boolean, side: Side): CardHtml {
-        return CardHtml.createInstance(card, reload, side, this)
+    fun generateHtml(card: Card, side: Side): CardHtml {
+        return CardHtml.createInstance(card, side, this)
     }
 
     fun filterTypeAnswer(content: String, side: Side): String {
