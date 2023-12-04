@@ -130,20 +130,7 @@ open class Card : Cloneable {
         renderOutput = null
         note = null
         id = card.id
-        nid = card.noteId
-        did = card.deckId
-        ord = card.templateIdx
-        due = card.due.toLong()
-        this.type = card.ctype
-        queue = card.queue
-        ivl = card.interval
-        factor = card.easeFactor
-        reps = card.reps
-        lapses = card.lapses
-        left = card.remainingSteps
-        oDue = card.originalDue.toLong()
-        oDid = card.originalDeckId
-        flags = card.flags
+        loadFromBackendCard(card)
     }
 
     constructor(col: Collection, id: Long?) {

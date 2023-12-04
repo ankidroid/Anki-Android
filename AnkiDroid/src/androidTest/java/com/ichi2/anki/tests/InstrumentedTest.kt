@@ -22,7 +22,11 @@ import android.os.Build
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.utils.EnsureAllFilesAccessRule
+import com.ichi2.annotations.DuplicatedCode
+import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
+import com.ichi2.libanki.Consts
+import com.ichi2.libanki.Note
 import org.junit.Rule
 import java.io.File
 import java.io.IOException
@@ -74,5 +78,32 @@ abstract class InstrumentedTest {
                     Build.PRODUCT.contains("simulator")
                 )
         }
+    }
+
+    @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
+    protected fun Card.moveToReviewQueue() {
+        this.queue = Consts.QUEUE_TYPE_REV
+        this.type = Consts.CARD_TYPE_REV
+        this.due = 0
+        this.col.updateCard(this, true)
+    }
+
+    @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
+    protected fun addNoteUsingBasicModel(front: String, back: String): Note {
+        return addNoteUsingModelName("Basic", front, back)
+    }
+
+    @DuplicatedCode("This is copied from RobolectricTest. This will be refactored into a shared library later")
+    private fun addNoteUsingModelName(name: String, vararg fields: String): Note {
+        val model = col.notetypes.byName(name)
+            ?: throw IllegalArgumentException("Could not find model '$name'")
+        // PERF: if we modify newNote(), we can return the card and return a Pair<Note, Card> here.
+        // Saves a database trip afterwards.
+        val n = col.newNote(model)
+        for ((i, field) in fields.withIndex()) {
+            n.setField(i, field)
+        }
+        check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
+        return n
     }
 }
