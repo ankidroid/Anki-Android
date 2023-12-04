@@ -94,7 +94,15 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
 
     private fun getSchedulingStatesWithContext(): ByteArray {
         val state = reviewer().queueState ?: return ByteArray(0)
-        return state.schedulingStatesWithContext().toByteArray()
+        return state.schedulingStatesWithContext().toBuilder()
+            .mergeStates(
+                state.states.toBuilder().mergeCurrent(
+                    state.states.current.toBuilder()
+                        .setCustomData(state.topCard.toBackendCard().customData).build()
+                ).build()
+            )
+            .build()
+            .toByteArray()
     }
 
     private fun setSchedulingStates(bytes: ByteArray): ByteArray {
