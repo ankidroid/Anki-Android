@@ -392,7 +392,8 @@ class TagsListTest {
     @Test
     fun test_uncheck_indeterminate_tags_list() {
         assertTrue(
-            "Attempting to uncheck tag 'programming' should return true, as 'programming' is found in all tags and it have indeterminate state",
+            "Attempting to uncheck tag 'programming' should return true, as 'programming' " +
+                "is found in all tags and it have indeterminate state",
             tagsListWithIndeterminate.uncheck("programming")
         )
         assertEquals(

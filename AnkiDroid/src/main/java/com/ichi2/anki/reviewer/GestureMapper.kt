@@ -99,8 +99,13 @@ class GestureMapper {
     }
 
     companion object {
+        @Suppress("ktlint:standard:property-naming")
         private var VIEW_CONFIGURATION: ViewConfiguration? = null
+
+        @Suppress("ktlint:standard:property-naming")
         private var DEFAULT_SWIPE_MIN_DISTANCE = 0
+
+        @Suppress("ktlint:standard:property-naming")
         private var DEFAULT_SWIPE_THRESHOLD_VELOCITY = 0
         private fun fromTap(height: Int, width: Int, posX: Float, posY: Float): Gesture {
             val gestureIsRight = posY > height * (1 - posX / width)

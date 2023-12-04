@@ -50,19 +50,31 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
         private const val PREFERENCES_TITLE_MAX_LENGTH = 41
         private const val MENU_TITLE_MAX_LENGTH = 28
 
-        private const val PREFERENCES_DESCRIPTION_TITLE_LENGTH = "Preference titles should be less than $PREFERENCES_TITLE_MAX_LENGTH characters"
-        private const val MENU_DESCRIPTION_TITLE_LENGTH = "Preference titles should be less than $MENU_TITLE_MAX_LENGTH characters"
+        private const val PREFERENCES_DESCRIPTION_TITLE_LENGTH =
+            "Preference titles should be less than $PREFERENCES_TITLE_MAX_LENGTH characters"
+        private const val MENU_DESCRIPTION_TITLE_LENGTH =
+            "Preference titles should be less than $MENU_TITLE_MAX_LENGTH characters"
 
-        private const val PREFERENCES_DESCRIPTION_MAX_LENGTH = """Preference titles should contain maxLength="$PREFERENCES_TITLE_MAX_LENGTH" attribute"""
-        private const val MENU_DESCRIPTION_MAX_LENGTH = """Preference titles should contain maxLength="$MENU_TITLE_MAX_LENGTH" attribute"""
+        private const val PREFERENCES_DESCRIPTION_MAX_LENGTH =
+            "Preference titles should contain maxLength=\"$PREFERENCES_TITLE_MAX_LENGTH\" attribute"
+        private const val MENU_DESCRIPTION_MAX_LENGTH =
+            """Preference titles should contain maxLength="$MENU_TITLE_MAX_LENGTH" attribute"""
 
         // Around 42 (resp. 29) characters is a hard max on emulators in preferences (resp. menu), likely smaller in reality, so use a buffer
-        private const val PREFERENCES_EXPLANATION_TITLE_LENGTH = "A preference title with more than $PREFERENCES_TITLE_MAX_LENGTH characters may fail to display on smaller screens"
-        private const val MENU_EXPLANATION_TITLE_LENGTH = "A menu title with more than $MENU_TITLE_MAX_LENGTH characters may fail to display on smaller screens"
+        private const val PREFERENCES_EXPLANATION_TITLE_LENGTH =
+            "A preference title with more than $PREFERENCES_TITLE_MAX_LENGTH characters " +
+                "may fail to display on smaller screens"
+        private const val MENU_EXPLANATION_TITLE_LENGTH =
+            "A menu title with more than $MENU_TITLE_MAX_LENGTH characters " +
+                "may fail to display on smaller screens"
 
         // Read More: https://support.crowdin.com/file-formats/android-xml/
-        private const val PREFERENCES_EXPLANATION_MAX_LENGTH = "Preference Title should contain maxLength attribute because it fixes translated string length"
-        private const val MENU_EXPLANATION_MAX_LENGTH = "Preference Title should contain maxLength attribute because it fixes translated string length"
+        private const val PREFERENCES_EXPLANATION_MAX_LENGTH =
+            "Preference Title should contain maxLength attribute because " +
+                "it fixes translated string length"
+        private const val MENU_EXPLANATION_MAX_LENGTH =
+            "Preference Title should contain maxLength attribute because " +
+                "it fixes translated string length"
 
         private val implementation = Implementation(FixedPreferencesTitleLength::class.java, Scope.RESOURCE_FILE_SCOPE)
         val PREFERENCES_ISSUE_TITLE_LENGTH: Issue = Issue.create(
@@ -142,8 +154,9 @@ class FixedPreferencesTitleLength : ResourceXmlDetector(), XmlScanner {
                     "menu" -> titlesOfMenuScreens
                     else -> return
                 }
-            /* Add the `android:title`'s resource name (without "@string/") to [stringResources] if the element has this attribute and the file belongs to src/main/res/xml.
-             */
+            // Add the `android:title`'s resource name (without "@string/") to `stringResources`
+            // if the element has this attribute and the file belongs to src/main/res/xml.
+
             // Removing the "@string/" part.
             val titleAttribute = element.getAttribute(ATTR_TITLE)
             val stringName = titleAttribute.substringAfter("@string/", "").ifEmpty { return }

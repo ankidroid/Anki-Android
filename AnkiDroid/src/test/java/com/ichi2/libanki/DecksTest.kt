@@ -62,13 +62,14 @@ class DecksTest : JvmTest() {
         assertTrue(names.contains("foo::bar"))
         assertFalse(names.contains("hello::world"))
         // create another col
-        /* TODO: do we want to follow upstream here ?
+
+        /* TODO: do we want to follow upstream here ?
          // automatically adjusted if a duplicate name
          decks.rename(decks.get(id), "FOO");
          names =  decks.allSortedNames();
          assertThat(names, containsString("FOO+"));
-
           */
+
         // when renaming, the children should be renamed too
         addDeck("one::two::three")
         id = addDeck("one")
@@ -210,17 +211,5 @@ class DecksTest : JvmTest() {
         assertThat("filtered deck", decks.cardCount(filteredDeck, includeSubdecks = false), equalTo(1))
 
         assertThat("filtered and home deck", decks.cardCount(deckWithNoChildren, filteredDeck, includeSubdecks = false), equalTo(3))
-    }
-
-    companion object {
-        // Used in other class to populate decks.
-        @Suppress("SpellCheckingInspection")
-        val TEST_DECKS = arrayOf(
-            "scxipjiyozczaaczoawo",
-            "cmxieunwoogyxsctnjmv::abcdefgh::ZYXW",
-            "cmxieunwoogyxsctnjmv::INSBGDS",
-            "::foobar", // Addition test for issue #11026
-            "A::"
-        )
     }
 }

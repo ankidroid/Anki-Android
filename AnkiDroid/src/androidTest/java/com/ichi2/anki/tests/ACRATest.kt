@@ -244,7 +244,11 @@ class ACRATest : InstrumentedTest() {
         assertThat("Second handler is AnalyticsLoggingExceptionHandler", secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler)
         UsageAnalytics.unInstallDefaultExceptionHandler()
         var thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-        assertThat("Third handler is neither Analytics nor ThrowableFilter", thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler && thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler)
+        assertThat(
+            "Third handler is neither Analytics nor ThrowableFilter",
+            thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler &&
+                thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler
+        )
 
         // chain them again
         UsageAnalytics.installDefaultExceptionHandler()
@@ -260,7 +264,11 @@ class ACRATest : InstrumentedTest() {
         assertThat("Second handler is AnalyticsLoggingExceptionHandler", secondExceptionHandler is UsageAnalytics.AnalyticsLoggingExceptionHandler)
         UsageAnalytics.unInstallDefaultExceptionHandler()
         thirdExceptionHandler = Thread.getDefaultUncaughtExceptionHandler()
-        assertThat("Third handler is neither Analytics nor ThrowableFilter", thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler && thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler)
+        assertThat(
+            "Third handler is neither Analytics nor ThrowableFilter",
+            thirdExceptionHandler !is UsageAnalytics.AnalyticsLoggingExceptionHandler &&
+                thirdExceptionHandler !is ThrowableFilterService.FilteringExceptionHandler
+        )
     }
 
     private fun setAcraReportingMode(feedbackReportAlways: String) {

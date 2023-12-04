@@ -218,7 +218,10 @@ open class CardBrowser :
         }
         val data = result.data
         if (data != null &&
-            (data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) || data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false))
+            (
+                data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) ||
+                    data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false)
+                )
         ) {
             Timber.d("Reloading Card Browser due to activity result")
             // if reloadRequired or noteChanged flag was sent from note editor then reload card list
@@ -249,7 +252,10 @@ open class CardBrowser :
         // Previewing can now perform an "edit", so it can pass on a reloadRequired
         val data = result.data
         if (data != null &&
-            (data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) || data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false))
+            (
+                data.getBooleanExtra(NoteEditor.RELOAD_REQUIRED_EXTRA_KEY, false) ||
+                    data.getBooleanExtra(NoteEditor.NOTE_CHANGED_EXTRA_KEY, false)
+                )
         ) {
             forceRefreshSearch()
             if (reviewerCardId == currentCardId) {
@@ -1886,8 +1892,11 @@ open class CardBrowser :
                 // can delete some elements from the cache for example, since nothing is displayed.
 
                 // It would be interesting to know how often it occurs, but it is not a bug.
-                // CrashReportService.sendExceptionReport("CardBrowser Scroll Issue 8821", "In a search result of $size cards, with totalItemCount = $totalItemCount, somehow we got $visibleItemCount elements to display.")
-                Timber.w("CardBrowser Scroll Issue 15441/8821: In a search result of $size cards, with totalItemCount = $totalItemCount, somehow we got $visibleItemCount elements to display.")
+                Timber.w(
+                    "CardBrowser Scroll Issue 15441/8821: In a search result of $size " +
+                        "cards, with totalItemCount = $totalItemCount, " +
+                        "somehow we got $visibleItemCount elements to display."
+                )
             }
             // In all of those cases, there is nothing to do:
             if (size <= 0 || firstVisibleItem >= size || lastVisibleItem >= size || visibleItemCount <= 0) {
@@ -2489,7 +2498,10 @@ open class CardBrowser :
                 due.toLong()
             } else if (card.queue == Consts.QUEUE_TYPE_NEW || card.type == Consts.CARD_TYPE_NEW) {
                 return due.toString()
-            } else if (card.queue == Consts.QUEUE_TYPE_REV || card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN || card.type == Consts.CARD_TYPE_REV && card.queue < 0) {
+            } else if (card.queue == Consts.QUEUE_TYPE_REV ||
+                card.queue == Consts.QUEUE_TYPE_DAY_LEARN_RELEARN ||
+                card.type == Consts.CARD_TYPE_REV && card.queue < 0
+            ) {
                 val time = TimeManager.time.intTime()
                 val nbDaySinceCreation = due - col.sched.today
                 time + nbDaySinceCreation * SECONDS_PER_DAY

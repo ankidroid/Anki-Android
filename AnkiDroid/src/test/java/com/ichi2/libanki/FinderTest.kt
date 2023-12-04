@@ -261,6 +261,7 @@ class FinderTest : JvmTest() {
            assertNotEquals(firstCardId,
            col.findCards("", BuiltinSortKind.CARD_DUE, reverse=true).get(0));
         */
+
         // model
         assertEquals(3, col.findCards("note:basic").size)
         assertEquals(2, col.findCards("-note:basic").size)

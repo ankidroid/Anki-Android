@@ -38,7 +38,8 @@ class PreferencesAnalyticsTest : RobolectricTest() {
 
     /** Keys of preferences that shouldn't be reported */
     private val excludedPrefs = setOf(
-        "analytics_opt_in", // Share feature usage: analytics are only reported if this is enabled :)
+        // Share feature usage: analytics are only reported if this is enabled :)
+        "analytics_opt_in",
         // Screens: don't have a value
         "generalScreen",
         "reviewingScreen",
@@ -59,13 +60,18 @@ class PreferencesAnalyticsTest : RobolectricTest() {
         // Preferences that only click: don't have a value
         "tts",
         "resetLanguages",
-        "custom_buttons_link", // Opens App Bar buttons fragment
-        "custom_sync_server_link", // Opens Custom sync server fragment
+        // Opens App Bar buttons fragment
+        "custom_buttons_link",
+        // Opens Custom sync server fragment
+        "custom_sync_server_link",
         "thirdpartyapps_link",
         // will be reworked in the future
-        "minimumCardsDueForNotification", // Notify when
-        "widgetVibrate", // Vibrate
-        "widgetBlink", // Blink light
+        // Notify when
+        "minimumCardsDueForNotification",
+        // Vibrate
+        "widgetVibrate",
+        // Blink light
+        "widgetBlink",
         // potential personal data
         "syncAccount",
         "syncBaseUrl",

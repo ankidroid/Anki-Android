@@ -385,7 +385,7 @@ class UniqueArrayListTest {
         val uniqueList = UniqueArrayList.from(longs)
 
         assertNotEquals(-1, uniqueList.indexOf(1L).toLong())
-        uniqueList.removeAt(0 /*index of 1L*/)
+        uniqueList.removeAt(0) // 0 is the index of 1L
         assertEquals(-1, uniqueList.indexOf(1L).toLong())
         uniqueList[10] = 1L
         assertEquals(10, uniqueList.indexOf(1L).toLong())

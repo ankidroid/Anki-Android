@@ -62,29 +62,27 @@ value class CrowdinLanguageTag(private val tag: String) {
 
     companion object {
         private val customMappings = mapOf(
-            /* from tools/localization/src/update.ts */
+            // ** from tools/localization/src/update.ts **
             "yue" to "yu",
             "heb" to "he",
             "iw" to "he",
             "ind" to "id",
             "tgl" to "tl",
 
-            /* Other weirdness */
+            // ** Other weirdness **
 
-            /* Malayalam */
+            // Malayalam
             "ml" to "mlin",
-            /* Punjabi */
+            // Punjabi
             "pa" to "pain",
             // Norwegian Nynorsk
             "nn" to "nnno",
-
-            /* Tatar (Russia) */
+            // Tatar (Russia)
             "tt" to "ttru",
-
-            /* Urdu (Pakistan) */
+            // Urdu (Pakistan)
             "ur" to "urpk",
 
-            // Crowdin does not handle 'Spanish (Spain)' as 'eses', it needs 'es'
+            // ** Crowdin does not handle 'Spanish (Spain)' as 'eses', it needs 'es' **
             "eses" to "es",
             "ptpt" to "pt"
         )

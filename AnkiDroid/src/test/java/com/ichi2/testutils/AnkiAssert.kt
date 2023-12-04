@@ -39,8 +39,9 @@ object AnkiAssert {
         }
     }
 
-    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
     // suspend variant of [assertDoesNotThrow]
+
+    /** Helper to sort out "JUnit tests should include assert() or fail()" quality check  */
     suspend fun assertDoesNotThrowSuspend(block: suspend () -> Unit) {
         try {
             block()
