@@ -22,6 +22,7 @@ import org.junit.Test
 
 internal class VariableNamingDetectorTest {
     @Test
+    @Suppress("ktlint:standard:max-line-length")
     fun reportsErrorTest() {
         lint()
             .allowMissingSdk()

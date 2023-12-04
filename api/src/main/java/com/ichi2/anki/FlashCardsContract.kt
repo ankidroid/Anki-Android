@@ -225,7 +225,7 @@ public object FlashCardsContract {
          * used for accessing the data of a note using the URI
          * "content://com.ichi2.anki.flashcards/notes/<ID>/data
          */
-        @Suppress("ObjectPropertyName")
+        @Suppress("ObjectPropertyName", "ktlint:standard:property-naming")
         public const val _ID: String = "_id"
 
         // field is part of the default projection available to the clients
@@ -360,7 +360,7 @@ public object FlashCardsContract {
          * used for accessing the data of the model using the URI
          * `content://com.ichi2.anki.flashcards/models/<ID>`
          */
-        @Suppress("ObjectPropertyName")
+        @Suppress("ObjectPropertyName", "ktlint:standard:property-naming")
         public const val _ID: String = "_id"
         public const val NAME: String = "name"
         public const val FIELD_NAME: String = "field_name"
@@ -425,7 +425,7 @@ public object FlashCardsContract {
          * reliably over subsequent queries. Especially if the number of cards or fields changes,
          * the _ID will change too.
          */
-        @Suppress("ObjectPropertyName")
+        @Suppress("ObjectPropertyName", "ktlint:standard:property-naming")
         public const val _ID: String = "_id"
 
         /**

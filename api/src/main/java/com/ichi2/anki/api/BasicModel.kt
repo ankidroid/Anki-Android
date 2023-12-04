@@ -7,6 +7,7 @@ package com.ichi2.anki.api
 internal class BasicModel {
     companion object {
         @JvmField // required for API
+        @Suppress("ktlint:standard:property-naming")
         var FIELDS = arrayOf("Front", "Back")
 
         // List of card names that will be used in AnkiDroid (one for each direction of learning)

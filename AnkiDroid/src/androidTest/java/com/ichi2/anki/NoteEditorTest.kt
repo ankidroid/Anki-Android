@@ -61,8 +61,6 @@ abstract class NoteEditorTest protected constructor() {
 
     private val invalidSdksImpl: List<Int>
         get() {
-            // TODO: Look into these assumptions and see if they can be diagnosed - both work on my emulators.
-            // If we fix them, we might be able to use instrumentation.sendKeyDownUpSync
             /*
              java.lang.AssertionError: Activity never becomes requested state "[DESTROYED]" (last lifecycle transition = "PAUSED")
              at androidx.test.core.app.ActivityScenario.waitForActivityToBecomeAnyOf(ActivityScenario.java:301)

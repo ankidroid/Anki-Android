@@ -134,7 +134,9 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
                     firstLocation = location
                 } else {
                     prevLocation.secondary = location
-                    location.message = "Duplicates value in `${names[0]}`. Add a `comment` attribute on both strings to explain this duplication"
+                    location.message =
+                        "Duplicates value in `${names[0]}`. " +
+                        "Add a `comment` attribute on both strings to explain this duplication"
                     location.setSelfExplanatory(false)
                     if (string != prevString) {
                         caseVaries = true
@@ -169,18 +171,20 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
         /**
          * Whether there are any duplicate strings, including capitalization adjustments.
          */
-        var ISSUE: Issue = Issue.create(
-            ID,
-            "Duplicate Strings (CrowdIn)",
-            "Duplicate strings are ambiguous for translators." +
-                "This lint check looks for duplicate strings, including differences for strings" +
-                "where the only difference is in capitalization. Title casing and all uppercase can" +
-                "all be adjusted in the layout or in code. Any duplicate strings should have a comment" +
-                "attribute added if they are intentional and required for translations.",
-            Constants.ANKI_CROWDIN_CATEGORY,
-            Constants.ANKI_CROWDIN_PRIORITY,
-            Constants.ANKI_CROWDIN_SEVERITY,
-            IMPLEMENTATION_XML
-        )
+        @Suppress("ktlint:standard:property-naming")
+        var ISSUE: Issue =
+            Issue.create(
+                ID,
+                "Duplicate Strings (CrowdIn)",
+                "Duplicate strings are ambiguous for translators." +
+                    "This lint check looks for duplicate strings, including differences for strings" +
+                    "where the only difference is in capitalization. Title casing and all uppercase can" +
+                    "all be adjusted in the layout or in code. Any duplicate strings should have a comment" +
+                    "attribute added if they are intentional and required for translations.",
+                Constants.ANKI_CROWDIN_CATEGORY,
+                Constants.ANKI_CROWDIN_PRIORITY,
+                Constants.ANKI_CROWDIN_SEVERITY,
+                IMPLEMENTATION_XML,
+            )
     }
 }
