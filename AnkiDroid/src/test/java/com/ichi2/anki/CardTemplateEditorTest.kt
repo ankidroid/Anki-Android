@@ -271,7 +271,13 @@ class CardTemplateEditorTest : RobolectricTest() {
         )
         clickAlertDialogButton(DialogInterface.BUTTON_POSITIVE, true)
         advanceRobolectricLooperWithSleep()
-        assertNull("Can delete used template?", col.notetypes.getCardIdsForModel(collectionBasicModelOriginal.getLong("id"), intArrayOf(0)))
+        assertNull(
+            "Can delete used template?",
+            col.notetypes.getCardIdsForModel(
+                collectionBasicModelOriginal.getLong("id"),
+                intArrayOf(0)
+            )
+        )
         assertEquals("Change already in database?", collectionBasicModelOriginal.toString().trim { it <= ' ' }, getCurrentDatabaseModelCopy(modelName).toString().trim { it <= ' ' })
         assertFalse("Ordinal pending add?", CardTemplateNotetype.isOrdinalPendingAdd(testEditor.tempModel!!, 0))
         assertEquals("Change incorrectly added to list?", 0, testEditor.tempModel?.templateChanges?.size)
@@ -358,7 +364,8 @@ class CardTemplateEditorTest : RobolectricTest() {
         advanceRobolectricLooperWithSleep()
         assertFalse("Model should now be unchanged", testEditor.modelHasChanged())
         assertEquals("card generation should result in three cards", 3, getModelCardCount(collectionBasicModelOriginal))
-        collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName) // reload the model for future comparison after saving the edit
+        // reload the model for future comparison after saving the edit
+        collectionBasicModelOriginal = getCurrentDatabaseModelCopy(modelName)
 
         // Start the CardTemplateEditor back up after saving (which closes the thing...)
         intent = Intent(Intent.ACTION_VIEW)

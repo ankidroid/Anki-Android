@@ -193,6 +193,11 @@ class UpgradeGesturesToControlsTest(private val testData: TestData) : Robolectri
                 arrayOf(TestData(PREF_KEY_VOLUME_DOWN, KEYCODE_VOLUME_DOWN, PREF_KEY_VOLUME_UP, volume_down_binding))
             ).toList()
         }
-        data class TestData(val affectedPreferenceKey: String, val keyCode: Int, val unaffectedPreferenceKey: String, val binding: MappableBinding)
+        data class TestData(
+            val affectedPreferenceKey: String,
+            val keyCode: Int,
+            val unaffectedPreferenceKey: String,
+            val binding: MappableBinding
+        )
     }
 }

@@ -497,6 +497,7 @@ open class Scheduler(val col: Collection) {
     /**
      * @return Number of new card in current deck and its descendants. Capped at [REPORT_LIMIT]
      */
+    @Suppress("ktlint:standard:max-line-length")
     fun totalNewForCurrentDeck(): Int {
         return col.db.queryScalar(
             "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT ?)",
@@ -506,6 +507,7 @@ open class Scheduler(val col: Collection) {
 
     /** @return Number of review cards in current deck.
      */
+    @Suppress("ktlint:standard:max-line-length")
     fun totalRevForCurrentDeck(): Int {
         return col.db.queryScalar(
             "SELECT count() FROM cards WHERE id IN (SELECT id FROM cards WHERE did IN " + deckLimit() + "  AND queue = " + Consts.QUEUE_TYPE_REV + " AND due <= ? LIMIT ?)",
@@ -535,6 +537,7 @@ open class Scheduler(val col: Collection) {
     }
 
     /** true if there are any rev cards due.  */
+    @Suppress("ktlint:standard:max-line-length")
     open fun revDue(): Boolean {
         return col.db
             .queryScalar(
@@ -545,6 +548,7 @@ open class Scheduler(val col: Collection) {
     }
 
     /** true if there are any new cards due.  */
+    @Suppress("ktlint:standard:max-line-length")
     open fun newDue(): Boolean {
         return col.db.queryScalar("SELECT 1 FROM cards WHERE did IN " + deckLimit() + " AND queue = " + Consts.QUEUE_TYPE_NEW + " LIMIT 1") != 0
     }
@@ -568,6 +572,7 @@ open class Scheduler(val col: Collection) {
      * @param counts An array of [new, lrn, rev] counts from the scheduler's counts() method.
      * @param reload Force rebuild of estimator rates using the revlog.
      */
+    @Suppress("ktlint:standard:max-line-length")
     fun eta(counts: Counts, reload: Boolean = true): Int {
         var newRate: Double
         var newTime: Double

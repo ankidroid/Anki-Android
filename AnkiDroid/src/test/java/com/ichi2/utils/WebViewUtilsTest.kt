@@ -22,6 +22,7 @@ import org.junit.Test
 class WebViewUtilsTest {
 
     @Test
+    @Suppress("ktlint:standard:max-line-length")
     fun testWebviewVersionCodes() {
         assertThat(
             "Known old webview determined correctly",

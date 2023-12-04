@@ -1,4 +1,4 @@
-/****************************************************************************************
+/* **************************************************************************************
  * Copyright (c) 2011 Kostas Spyropoulos <inigo.aldana@gmail.com>                       *
  * Copyright (c) 2014 Bruno Romero de Azevedo <brunodea@inf.ufsm.br>                    *
  * Copyright (c) 2014–15 Roland Sieker <ospalh@gmail.com>                               *
@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU General Public License along with         *
  * this program.  If not, see <http://www.gnu.org/licenses/>.                           *
  ****************************************************************************************/
+
 // TODO: implement own menu? http://www.codeproject.com/Articles/173121/Android-Menus-My-Way
 package com.ichi2.anki
 
@@ -277,8 +278,9 @@ abstract class AbstractFlashcardViewer :
      */
     protected val gestureProcessor = GestureProcessor(this)
 
-    /** Handle joysticks/pedals */
     // needs to be lateinit due to a reliance on Context
+
+    /** Handle joysticks/pedals */
     protected lateinit var motionEventHandler: MotionEventHandler
 
     val server = AnkiServer(this).also { it.start() }

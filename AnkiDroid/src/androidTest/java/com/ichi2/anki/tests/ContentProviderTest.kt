@@ -789,15 +789,17 @@ class ContentProviderTest : InstrumentedTest() {
     fun testUnsupportedOperations() {
         val cr = contentResolver
         val dummyValues = ContentValues()
-        val updateUris = arrayOf( // Can't update most tables in bulk -- only via ID
-            FlashCardsContract.Note.CONTENT_URI,
-            FlashCardsContract.Model.CONTENT_URI,
-            FlashCardsContract.Deck.CONTENT_ALL_URI,
-            FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                .appendPath("1234")
-                .appendPath("cards")
-                .build()
-        )
+        // Can't update most tables in bulk -- only via ID
+        val updateUris =
+            arrayOf(
+                FlashCardsContract.Note.CONTENT_URI,
+                FlashCardsContract.Model.CONTENT_URI,
+                FlashCardsContract.Deck.CONTENT_ALL_URI,
+                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                    .appendPath("1234")
+                    .appendPath("cards")
+                    .build()
+            )
         for (uri in updateUris) {
             try {
                 cr.update(uri, dummyValues, null, null)
@@ -808,22 +810,24 @@ class ContentProviderTest : InstrumentedTest() {
                 // ... or this.
             }
         }
-        val deleteUris = arrayOf(
-            FlashCardsContract.Note.CONTENT_URI, // Only note/<id> is supported
-            FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                .appendPath("1234")
-                .appendPath("cards")
-                .build(),
-            FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                .appendPath("1234")
-                .appendPath("cards")
-                .appendPath("2345")
-                .build(),
-            FlashCardsContract.Model.CONTENT_URI,
-            FlashCardsContract.Model.CONTENT_URI.buildUpon()
-                .appendPath("1234")
-                .build()
-        )
+        // Only note/<id> is supported
+        val deleteUris =
+            arrayOf(
+                FlashCardsContract.Note.CONTENT_URI,
+                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                    .appendPath("1234")
+                    .appendPath("cards")
+                    .build(),
+                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                    .appendPath("1234")
+                    .appendPath("cards")
+                    .appendPath("2345")
+                    .build(),
+                FlashCardsContract.Model.CONTENT_URI,
+                FlashCardsContract.Model.CONTENT_URI.buildUpon()
+                    .appendPath("1234")
+                    .build()
+            )
         for (uri in deleteUris) {
             try {
                 cr.delete(uri, null, null)
@@ -832,23 +836,25 @@ class ContentProviderTest : InstrumentedTest() {
                 // This was expected
             }
         }
-        val insertUris = arrayOf( // Can't do an insert with specific ID on the following tables
-            FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                .appendPath("1234")
-                .build(),
-            FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                .appendPath("1234")
-                .appendPath("cards")
-                .build(),
-            FlashCardsContract.Note.CONTENT_URI.buildUpon()
-                .appendPath("1234")
-                .appendPath("cards")
-                .appendPath("2345")
-                .build(),
-            FlashCardsContract.Model.CONTENT_URI.buildUpon()
-                .appendPath("1234")
-                .build()
-        )
+        // Can't do an insert with specific ID on the following tables
+        val insertUris =
+            arrayOf(
+                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                    .appendPath("1234")
+                    .build(),
+                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                    .appendPath("1234")
+                    .appendPath("cards")
+                    .build(),
+                FlashCardsContract.Note.CONTENT_URI.buildUpon()
+                    .appendPath("1234")
+                    .appendPath("cards")
+                    .appendPath("2345")
+                    .build(),
+                FlashCardsContract.Model.CONTENT_URI.buildUpon()
+                    .appendPath("1234")
+                    .build()
+            )
         for (uri in insertUris) {
             try {
                 cr.insert(uri, dummyValues)
@@ -1273,10 +1279,14 @@ class ContentProviderTest : InstrumentedTest() {
 
         contentResolver.query(
             specificCardUri,
-            arrayOf(FlashCardsContract.Card.QUESTION, FlashCardsContract.Card.ANSWER), // projection
-            null, // selection is ignored for this URI
-            null, // selectionArgs is ignored for this URI
-            null // sortOrder is ignored for this URI
+            // projection
+            arrayOf(FlashCardsContract.Card.QUESTION, FlashCardsContract.Card.ANSWER),
+            // selection is ignored for this URI
+            null,
+            // selectionArgs is ignored for this URI
+            null,
+            // sortOrder is ignored for this URI
+            null
         )?.let { cursor ->
             if (!cursor.moveToFirst()) {
                 fail("no rows in cursor")

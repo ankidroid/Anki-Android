@@ -144,7 +144,9 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
                     firstLocation = location
                 } else {
                     prevLocation.secondary = location
-                    location.message = "Duplicates value in `${names[0]}`. Add a `comment` attribute on both strings to explain this duplication"
+                    location.message =
+                        "Duplicates value in `${names[0]}`. " +
+                        "Add a `comment` attribute on both strings to explain this duplication"
                     location.setSelfExplanatory(false)
                     if (string != prevString) {
                         caseVaries = true
@@ -179,6 +181,7 @@ class DuplicateCrowdInStrings : ResourceXmlDetector() {
         /**
          * Whether there are any duplicate strings, including capitalization adjustments.
          */
+        @Suppress("ktlint:standard:property-naming")
         var ISSUE: Issue = Issue.create(
             ID,
             "Duplicate Strings (CrowdIn)",

@@ -3,3 +3,14 @@ end_of_line = lf
 
 [*.bat]
 end_of_line = crlf
+
+# These can be removed once we upgrade to ktlint 1.5.0
+# These are added in preparation for the move to gradle.ktlint 12.1.1
+
+# Rule 'standard:no-unused-imports' throws exception in file 'CardBrowser.kt' at position (1228:9)
+[*CardBrowser.kt]
+ktlint_standard_no-unused-imports = disabled
+
+# Rule 'standard:parameter-list-wrapping' throws exception in file 'DeckConfig.kt' at position (0:0)
+[*DeckConfig.kt]
+ktlint_standard_parameter-list-wrapping = disabled

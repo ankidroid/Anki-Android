@@ -32,7 +32,9 @@ class ActivityStartupMetaTest : RobolectricTest() {
         // if this fails, you may need to add the missing activity to ActivityList.allActivitiesAndIntents()
 
         // we can't access this in a static context
-        val packageInfo = targetContext.getPackageInfoCompat(targetContext.packageName, PackageInfoFlagsCompat.of(PackageManager.GET_ACTIVITIES.toLong())) ?: throw IllegalStateException("getPackageInfo failed")
+        val flags = PackageInfoFlagsCompat.of(PackageManager.GET_ACTIVITIES.toLong())
+        val packageInfo = targetContext.getPackageInfoCompat(targetContext.packageName, flags)
+            ?: throw IllegalStateException("getPackageInfo failed")
         val manifestActivities = packageInfo.activities ?: throw IllegalStateException("activity list")
         val testedActivityClassNames = ActivityList.allActivitiesAndIntents().map { it.className }.toSet()
         val manifestActivityNames = manifestActivities

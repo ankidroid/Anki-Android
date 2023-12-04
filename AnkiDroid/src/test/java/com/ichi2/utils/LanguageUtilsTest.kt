@@ -74,11 +74,16 @@ class LanguageUtilsTest {
 
         /** Languages which were removed for good reason  */
         private val previousLanguageExclusions = Sets.newHashSet(
-            "pt_PT", // pt-PT
-            "pt_BR", // pt-BR
-            "sv", // sv-SE
-            "zh_CN", // zh-CN
-            "zh_TW" // zh-TW
+            // pt-PT
+            "pt_PT",
+            // pt-BR
+            "pt_BR",
+            // sv-SE
+            "sv",
+            // zh-CN
+            "zh_CN",
+            // zh-TW
+            "zh_TW"
         )
     }
 }

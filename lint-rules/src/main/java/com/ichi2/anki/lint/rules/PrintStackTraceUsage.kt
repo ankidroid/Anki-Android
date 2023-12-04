@@ -37,7 +37,9 @@ class PrintStackTraceUsage : Detector(), SourceCodeScanner {
 
         @VisibleForTesting
         val DESCRIPTION = "Use Timber to log exceptions (typically Timber.w if non-fatal)"
-        private const val EXPLANATION = "AnkiDroid exclusively uses Timber for logging exceptions. See: https://github.com/ankidroid/Anki-Android/wiki/Code-style#logging"
+        private const val EXPLANATION =
+            "AnkiDroid exclusively uses Timber for logging exceptions. " +
+                "See: https://github.com/ankidroid/Anki-Android/wiki/Code-style#logging"
         private val implementation = Implementation(PrintStackTraceUsage::class.java, Scope.JAVA_FILE_SCOPE)
         val ISSUE: Issue = Issue.create(
             ID,

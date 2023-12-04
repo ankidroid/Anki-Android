@@ -117,7 +117,8 @@ open class RobolectricTest : AndroidTest {
         ShadowLog.stream = System.out
             // Filters for non-Timber sources. Prefer filtering in RobolectricDebugTree if possible
             // LifecycleMonitor: not needed as we already use registerActivityLifecycleCallbacks for logs
-            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$") // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
+            // W/ShadowLegacyPath: android.graphics.Path#op() not supported yet.
+            .filter("^(?!(W/ShadowLegacyPath|D/LifecycleMonitor)).*$")
 
         ChangeManager.clearSubscribers()
 

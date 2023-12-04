@@ -207,7 +207,8 @@ inline fun <reified F : Fragment, T : Any> AnkiFragmentScenario<F>.withFragment(
  * @see ActivityScenario a scenario API for Activity
  */
 class AnkiFragmentScenario<F : Fragment> private constructor(
-    @Suppress("MemberVisibilityCanBePrivate") /* synthetic access */
+    // MemberVisibilityCanBePrivate: synthetic access
+    @Suppress("MemberVisibilityCanBePrivate")
     val fragmentClass: Class<F>,
     private val activityScenario: ActivityScenario<EmptyAnkiActivity>
 ) : Closeable by activityScenario {
@@ -335,7 +336,7 @@ class AnkiFragmentScenario<F : Fragment> private constructor(
             fragmentArgs,
             initialState,
             factory,
-            0 /*containerViewId=*/
+            0
         )
 
         /**

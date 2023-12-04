@@ -35,6 +35,7 @@ class LaTeXTest : JvmTest() {
     }
 
     @Test
+    @Suppress("ktlint:standard:max-line-length")
     fun imgLinkTest() {
         val m: Media = MockMedia(col)
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
@@ -69,6 +70,7 @@ class LaTeXTest : JvmTest() {
     }
 
     @Test
+    @Suppress("ktlint:standard:max-line-length")
     fun mathMatchTest() {
         val media: Media = MockMedia(col)
         // The hashing function should never change, as it would broke link. So hard coding the expected hash value is valid
@@ -86,6 +88,7 @@ class LaTeXTest : JvmTest() {
     }
 
     @Test
+    @Suppress("ktlint:standard:max-line-length")
     fun mungeQATest() {
         val m: Media = MockMedia(col)
 

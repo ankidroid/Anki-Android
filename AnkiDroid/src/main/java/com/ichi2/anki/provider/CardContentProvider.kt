@@ -318,7 +318,11 @@ class CardContentProvider : ContentProvider() {
                         val keyAndValue = arg.split("=").toTypedArray() // split arguments into key ("limit") and value ("?")
                         try {
                             // check if value is a placeholder ("?"), if so replace with the next value of selectionArgs
-                            val value = if ("?" == keyAndValue[1].trim { it <= ' ' }) selectionArgs!![selectionArgIndex++] else keyAndValue[1]
+                            val value = if ("?" == keyAndValue[1].trim { it <= ' ' }) {
+                                selectionArgs!![selectionArgIndex++]
+                            } else {
+                                keyAndValue[1]
+                            }
                             if ("limit" == keyAndValue[0].trim { it <= ' ' }) {
                                 limit = value.toInt()
                             } else if ("deckID" == keyAndValue[0].trim { it <= ' ' }) {
@@ -980,8 +984,10 @@ class CardContentProvider : ContentProvider() {
             val tempFile: File
             try {
                 tempFile = File.createTempFile(
-                    preferredName + "_", // the beginning of the filename.
-                    ".$fileMimeType", // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
+                    // the beginning of the filename.
+                    preferredName + "_",
+                    // this is the extension, if null, '.tmp' is used, need to get the extension from MIME type?
+                    ".$fileMimeType",
                     File(tempMediaDir)
                 )
                 tempFile.deleteOnExit()

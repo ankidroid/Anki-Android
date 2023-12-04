@@ -523,6 +523,7 @@ open class SchedulerTest : JvmTest() {
     @Ignore("Disabled upstream")
     fun test_overdue_lapseV2() {
         // disabled in commit 3069729776990980f34c25be66410e947e9d51a2
+
         /* Upstream does not execute it
            Collection col = getColV2()  // pylint: disable=unreachable
            // add a note
@@ -739,9 +740,10 @@ open class SchedulerTest : JvmTest() {
         val did = addDynamicDeck("Cram")
         col.sched.rebuildDyn(did)
         // should appear as normal in the deck list
-        /* todo sort
-           assertEquals(1, sorted(col.getSched().deckDueTree().getChildren())[0].review_count);
-        */
+
+        // TODO: sort
+        // Assert.assertEquals(1, sorted(col.sched.deckDueTree().getChildren())[0].review_count);
+
         // and should appear in the counts
         Assert.assertEquals(Counts(0, 0, 1), col.sched.counts())
         // grab it and check estimates

@@ -422,9 +422,9 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
             val parsed = Uri.parse(uri)
             return Intent(Intent.ACTION_VIEW, parsed)
         } // TODO actually this can be done by translating "link_help" string for each language when the App is
-        // properly translated
+
         /**
-         * Get the url for the feedback page
+         * Get the url for the properly translated feedback page
          * @return
          */
         val feedbackUrl: String
@@ -436,9 +436,9 @@ open class AnkiDroidApp : Application(), Configuration.Provider, ChangeManager.S
                     "ar" -> appResources.getString(R.string.link_help_ar)
                     else -> appResources.getString(R.string.link_help)
                 } // TODO actually this can be done by translating "link_manual" string for each language when the App is
-        // properly translated
+
         /**
-         * Get the url for the manual
+         * Get the url for the properly translated manual
          * @return
          */
         val manualUrl: String
