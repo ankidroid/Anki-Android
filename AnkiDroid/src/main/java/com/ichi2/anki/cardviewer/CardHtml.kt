@@ -130,8 +130,8 @@ class CardHtml(
     }
 
     companion object {
-        fun createInstance(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
-            val content = displayString(card, reload, side, context)
+        fun createInstance(card: Card, side: Side, context: HtmlGenerator): CardHtml {
+            val content = displayString(card, side, context)
 
             val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
 
@@ -154,8 +154,8 @@ class CardHtml(
          * Or warning if required
          * TODO: This is no longer entirely true as more post-processing occurs
          */
-        private fun displayString(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): String {
-            var content: String = if (side == Side.FRONT) card.question(reload) else card.answer()
+        private fun displayString(card: Card, side: Side, context: HtmlGenerator): String {
+            var content: String = if (side == Side.FRONT) card.question() else card.answer()
             content = card.col.media.escapeMediaFilenames(content)
             content = context.filterTypeAnswer(content, side)
             Timber.v("question: '%s'", content)
