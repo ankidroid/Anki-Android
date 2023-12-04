@@ -1,13 +1,15 @@
 import org.gradle.internal.jvm.Jvm
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     // The version for the Kotlin plugin and dependencies
     // If changing this, make sure to update org.jetbrains.kotlin.plugin.serialization version too
-    ext.kotlin_version = '1.9.20'
+    ext.kotlin_version = '1.9.21'
     ext.lint_version = '31.1.1'
     ext.acra_version = '5.11.3'
-    ext.ankidroid_backend_version = '0.1.29-anki23.10.1'
+    ext.ankidroid_backend_version = '0.1.30-anki23.10.1'
     ext.hamcrest_version = '2.2'
     ext.junit_version = '5.10.1'
     ext.coroutines_version = '1.7.3'
@@ -19,7 +21,7 @@ buildscript {
     ext.android_gradle_plugin = "8.1.4"
     ext.dokka_version = "1.9.10" // not the same with kotlin version!
 
-    configurations.all {
+    configurations.configureEach {
         resolutionStrategy.eachDependency { details ->
             if (details.requested.group == 'org.jetbrains.kotlinx'
                     && details.requested.name.contains('kotlinx-serialization-runtime')
@@ -90,8 +92,8 @@ subprojects {
             result in a warning but we treat warnings as errors.
             (see https://youtrack.jetbrains.com/issue/KT-28777/Using-experimental-coroutines-api-causes-unresolved-dependency)
         */
-        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-            kotlinOptions {
+        tasks.withType(KotlinCompile).configureEach {
+            compilerOptions {
                 allWarningsAsErrors = fatalWarnings
                 def compilerArgs = ['-Xjvm-default=all']
                 if (project.name != "api") {
@@ -106,16 +108,16 @@ subprojects {
 ext {
 
     jvmVersion = Jvm.current().javaVersion.majorVersion
-    if (jvmVersion != "17" && jvmVersion != "18") {
+    if (jvmVersion != "17" && jvmVersion != "21") {
         println "\n\n\n"
         println "**************************************************************************************************************"
         println "\n\n\n"
-        println "ERROR: AnkiDroid builds with JVM version 17 or 18."
+        println "ERROR: AnkiDroid builds with JVM version 17 or 21."
         println "  Incompatible major version detected: '" + jvmVersion + "'"
         println "\n\n\n"
         println "  If you receive this error because you want to use a newer JDK, we may accept PRs to support new versions."
         println "  Edit the main build.gradle file, find this message in the file, and add support for the new version."
-        println "  Please make sure the `jacocoTestReport` target works on an emulator with our minSdkVersion (currently 21)."
+        println "  Please make sure the `jacocoTestReport` target works on an emulator with our minSdkVersion (currently 23)."
         println "\n\n\n"
         println "**************************************************************************************************************"
         println "\n\n\n"
@@ -131,9 +133,9 @@ ext {
         // macOS reports hardware cores. This is accurate for CI, Intel (halved due to SMT) and Apple Silicon
         gradleTestMaxParallelForks = "sysctl -n hw.physicalcpu".execute().text.toInteger()
     } else if (ciBuild) {
-        // GitHub Actions (Standard_DS2_v2) are 1:1 on Linux/Windows with two vCPU cores
-        // Sources:
-        // Standard_DS2_v2 https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#cloud-hosts-for-github-hosted-runners
+        // GitHub Actions run on Standard_DS2_v2 Azure Compute Units. They are 1:1 vCPU to CPU on Linux/Windows with two vCPU cores
+        // Sources to determine the correct Azure Compute Unit (and get CPU count) to tune this:
+        // Standard_DS2_v2 https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
         // Which is 1:1 https://docs.microsoft.com/en-gb/azure/virtual-machines/acu : DS1_v2 - DS15_v2 | 1:1
         gradleTestMaxParallelForks = 2
 
@@ -141,8 +143,8 @@ ext {
         // the CI machines don't have enough RAM to do that without going in to swap quite a bit
         // so for CI machines only - to improve reliability despite compilation speed hit, compile kotlin in process
         println "CI build detected: setting compiler execution strategy to IN_PROCESS"
-        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-            compilerExecutionStrategy.set(org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy.IN_PROCESS)
+        tasks.withType(KotlinCompile).configureEach {
+            compilerExecutionStrategy.set(KotlinCompilerExecutionStrategy.IN_PROCESS)
         }
     } else {
         // Use 50% of cores to account for SMT which doesn't help this workload

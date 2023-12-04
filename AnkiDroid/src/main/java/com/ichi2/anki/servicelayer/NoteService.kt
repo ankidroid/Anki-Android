@@ -181,14 +181,14 @@ object NoteService {
         }
     }
 
-    suspend fun toggleMark(note: Note) {
+    suspend fun toggleMark(note: Note, handler: Any? = null) {
         if (isMarked(note)) {
             note.delTag("marked")
         } else {
             note.addTag("marked")
         }
 
-        undoableOp {
+        undoableOp(handler) {
             updateNote(note)
         }
     }

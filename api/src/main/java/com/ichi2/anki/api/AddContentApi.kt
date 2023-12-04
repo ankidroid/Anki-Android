@@ -100,7 +100,7 @@ public class AddContentApi(context: Context) {
      * @param deckId id for the deck the cards should be stored in (use #DEFAULT_DECK_ID for default deck)
      * @param fieldsList List of fields arrays (one per note). Array lengths should be same as number of fields in model
      * @param tagsList List of tags (one per note) (may be null)
-     * @return The number of notes added (&lt;0 means there was a problem)
+     * @return The number of notes added (< 0 means there was a problem)
      */
     public fun addNotes(
         modelId: Long,
@@ -319,7 +319,7 @@ public class AddContentApi(context: Context) {
 
     /**
      * Insert a new basic front/back model with two fields and TWO cards
-     * The first card goes from front-&gt;back, and the second goes from back-&gt;front
+     * The first card goes from front->back, and the second goes from back->front
      * @param name name of the model
      * @return the mid of the model which was created, or null if it could not be created
      */
@@ -389,7 +389,7 @@ public class AddContentApi(context: Context) {
 
     /**
      * Get the ID for the note type / model which is currently in use
-     * @return id for current model, or &lt;0 if there was a problem
+     * @return id for current model, or < 0 if there was a problem
      */
     public val currentModelId: Long
         get() {

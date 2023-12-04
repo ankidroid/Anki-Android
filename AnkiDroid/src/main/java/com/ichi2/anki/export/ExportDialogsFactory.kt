@@ -24,7 +24,7 @@ import com.ichi2.anki.dialogs.ExportReadyDialog.ExportReadyDialogListener
 import com.ichi2.utils.ExtendedFragmentFactory
 
 class ExportDialogsFactory(
-    private val ExportReadyDialogListener: ExportReadyDialogListener,
+    private val exportReadyDialogListener: ExportReadyDialogListener,
     private val exportDialogListener: ExportDialogListener
 ) : ExtendedFragmentFactory() {
     override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
@@ -44,6 +44,6 @@ class ExportDialogsFactory(
     }
 
     fun newExportReadyDialog(): ExportReadyDialog {
-        return ExportReadyDialog(ExportReadyDialogListener)
+        return ExportReadyDialog(exportReadyDialogListener)
     }
 }

@@ -35,6 +35,9 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
 import androidx.activity.addCallback
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
@@ -59,6 +62,7 @@ import com.ichi2.anki.dialogs.IntegerDialog
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.multimediacard.IMultimediaEditableNote
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivity
 import com.ichi2.anki.multimediacard.activity.MultimediaEditFieldActivityExtra
@@ -80,6 +84,7 @@ import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.anki.ui.setupNoteTypeSpinner
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
 import com.ichi2.annotations.NeedsTest
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
@@ -164,6 +169,86 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     // save field index as key and text as value when toggle sticky clicked in Field Edit Text
     private var mToggleStickyText: HashMap<Int, String?> = HashMap()
     private val mOnboarding = Onboarding.NoteEditor(this)
+
+    private val requestAddLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        NoteEditorActivityResultCallback {
+            if (it.resultCode != RESULT_CANCELED) {
+                changed = true
+            }
+        }
+    )
+
+    private val requestMultiMediaEditLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        @NeedsTest("test to guard against changes in the REQUEST_MULTIMEDIA_EDIT clause preventing text fields to be updated")
+        NoteEditorActivityResultCallback { result ->
+            if (result.resultCode != RESULT_CANCELED) {
+                val col = getColUnsafe
+                val extras = result.data!!.extras ?: return@NoteEditorActivityResultCallback
+                val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
+                val field = extras.getSerializableCompat<IField>(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD) ?: return@NoteEditorActivityResultCallback
+                if (field.type != EFieldType.TEXT && (field.imagePath == null && field.audioPath == null)) {
+                    Timber.i("field imagePath and audioPath are both null")
+                    return@NoteEditorActivityResultCallback
+                }
+                val note = getCurrentMultimediaEditableNote(col)
+                note.setField(index, field)
+                val fieldEditText = mEditFields!![index]
+                // Import field media
+                // This goes before setting formattedValue to update
+                // media paths with the checksum when they have the same name
+                NoteService.importMediaToDirectory(col, field)
+                // Completely replace text for text fields (because current text was passed in)
+                val formattedValue = field.formattedValue
+                if (field.type === EFieldType.TEXT) {
+                    fieldEditText!!.setText(formattedValue)
+                } else if (fieldEditText!!.text != null) {
+                    insertStringInField(fieldEditText, formattedValue)
+                }
+                changed = true
+            }
+        }
+    )
+
+    private val requestTemplateEditLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        NoteEditorActivityResultCallback {
+            // Model can change regardless of exit type - update ourselves and CardBrowser
+            mReloadRequired = true
+            mEditorNote!!.reloadModel()
+            if (mCurrentEditedCard == null || !mEditorNote!!.cids()
+                .contains(mCurrentEditedCard!!.id)
+            ) {
+                if (!addNote) {
+                /* This can occur, for example, if the
+                     * card type was deleted or if the note
+                     * type was changed without moving this
+                     * card to another type. */
+                    Timber.d("onActivityResult() template edit return - current card is gone, close note editor")
+                    showSnackbar(getString(R.string.template_for_current_card_deleted))
+                    closeNoteEditor()
+                } else {
+                    Timber.d("onActivityResult() template edit return, in add mode, just re-display")
+                }
+            } else {
+                Timber.d("onActivityResult() template edit return - current card exists")
+                // reload current card - the template ordinals are possibly different post-edit
+                mCurrentEditedCard = getColUnsafe.getCard(mCurrentEditedCard!!.id)
+                updateCards(mEditorNote!!.notetype)
+            }
+        }
+    )
+
+    private inner class NoteEditorActivityResultCallback(private val callback: (result: ActivityResult) -> Unit) : ActivityResultCallback<ActivityResult> {
+        override fun onActivityResult(result: ActivityResult) {
+            Timber.d("onActivityResult() with result: %s", result.resultCode)
+            if (result.resultCode == DeckPicker.RESULT_DB_ERROR) {
+                closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null)
+            }
+            callback(result)
+        }
+    }
 
     override fun onDeckSelected(deck: SelectableDeck?) {
         if (deck == null) {
@@ -971,11 +1056,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         intent.putExtra(EXTRA_DID, deckId)
         // mutate event with additional properties
         intentEnricher.accept(intent)
-        startActivityForResultWithAnimation(
-            intent,
-            REQUEST_ADD,
-            START
-        )
+        launchActivityForResultWithAnimation(intent, requestAddLauncher, START)
     }
 
     // ----------------------------------------------------------------------------
@@ -1094,7 +1175,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     override fun onSelectedTags(
         selectedTags: List<String>,
         indeterminateTags: List<String>,
-        option: Int
+        stateFilter: CardStateFilter
     ) {
         if (mSelectedTags != selectedTags) {
             isTagsEdited = true
@@ -1118,81 +1199,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
             intent.putExtra("ordId", mCurrentEditedCard!!.ord)
             Timber.d("showCardTemplateEditor() with ord %s", mCurrentEditedCard!!.ord)
         }
-        startActivityForResultWithAnimation(
-            intent,
-            REQUEST_TEMPLATE_EDIT,
-            START
-        )
-    }
-
-    @Suppress("deprecation") // onActivityResult
-    @Deprecated("Use Activity Result API")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Timber.d("onActivityResult() with request/result: %s/%s", requestCode, resultCode)
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == DeckPicker.RESULT_DB_ERROR) {
-            closeNoteEditor(DeckPicker.RESULT_DB_ERROR, null)
-        }
-        when (requestCode) {
-            REQUEST_ADD -> {
-                if (resultCode != RESULT_CANCELED) {
-                    changed = true
-                }
-            }
-            @NeedsTest("test to guard against changes in the REQUEST_MULTIMEDIA_EDIT clause preventing text fields to be updated")
-            REQUEST_MULTIMEDIA_EDIT -> {
-                if (resultCode != RESULT_CANCELED) {
-                    val col = getColUnsafe
-                    val extras = data!!.extras ?: return
-                    val index = extras.getInt(MultimediaEditFieldActivity.EXTRA_RESULT_FIELD_INDEX)
-                    val field = extras[MultimediaEditFieldActivity.EXTRA_RESULT_FIELD] as IField? ?: return
-                    if (field.type != EFieldType.TEXT && (field.imagePath == null && field.audioPath == null)) {
-                        Timber.i("field imagePath and audioPath are both null")
-                        return
-                    }
-                    val note = getCurrentMultimediaEditableNote(col)
-                    note.setField(index, field)
-                    val fieldEditText = mEditFields!![index]
-                    // Import field media
-                    // This goes before setting formattedValue to update
-                    // media paths with the checksum when they have the same name
-                    NoteService.importMediaToDirectory(col, field)
-                    // Completely replace text for text fields (because current text was passed in)
-                    val formattedValue = field.formattedValue
-                    if (field.type === EFieldType.TEXT) {
-                        fieldEditText!!.setText(formattedValue)
-                    } else if (fieldEditText!!.text != null) {
-                        insertStringInField(fieldEditText, formattedValue)
-                    }
-                    changed = true
-                }
-            }
-            REQUEST_TEMPLATE_EDIT -> {
-                // Model can change regardless of exit type - update ourselves and CardBrowser
-                mReloadRequired = true
-                mEditorNote!!.reloadModel()
-                if (mCurrentEditedCard == null || !mEditorNote!!.cids()
-                    .contains(mCurrentEditedCard!!.id)
-                ) {
-                    if (!addNote) {
-                        /* This can occur, for example, if the
-                             * card type was deleted or if the note
-                             * type was changed without moving this
-                             * card to another type. */
-                        Timber.d("onActivityResult() template edit return - current card is gone, close note editor")
-                        showSnackbar(getString(R.string.template_for_current_card_deleted))
-                        closeNoteEditor()
-                    } else {
-                        Timber.d("onActivityResult() template edit return, in add mode, just re-display")
-                    }
-                } else {
-                    Timber.d("onActivityResult() template edit return - current card exists")
-                    // reload current card - the template ordinals are possibly different post-edit
-                    mCurrentEditedCard = getColUnsafe.getCard(mCurrentEditedCard!!.id)
-                    updateCards(mEditorNote!!.notetype)
-                }
-            }
-        }
+        launchActivityForResultWithAnimation(intent, requestTemplateEditLauncher, START)
     }
 
     /** Appends a string at the selection point, or appends to the end if not in focus  */
@@ -1484,7 +1491,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val field = note!!.getField(index)!!
         val editCard = Intent(this@NoteEditor, MultimediaEditFieldActivity::class.java)
         editCard.putExtra(MultimediaEditFieldActivity.EXTRA_MULTIMEDIA_EDIT_FIELD_ACTIVITY, MultimediaEditFieldActivityExtra(index, field, note))
-        startActivityForResultWithoutAnimation(editCard, REQUEST_MULTIMEDIA_EDIT)
+        launchActivityForResultWithAnimation(editCard, requestMultiMediaEditLauncher, NONE)
     }
 
     private fun initFieldEditText(editText: FieldEditText?, index: Int, enabled: Boolean) {
@@ -2184,9 +2191,6 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         const val CALLER_CARDBROWSER_ADD = 7
         const val CALLER_NOTEEDITOR = 8
         const val CALLER_NOTEEDITOR_INTENT_ADD = 10
-        const val REQUEST_ADD = 0
-        const val REQUEST_MULTIMEDIA_EDIT = 2
-        const val REQUEST_TEMPLATE_EDIT = 3
 
         // preferences keys
         const val PREF_NOTE_EDITOR_SCROLL_TOOLBAR = "noteEditorScrollToolbar"

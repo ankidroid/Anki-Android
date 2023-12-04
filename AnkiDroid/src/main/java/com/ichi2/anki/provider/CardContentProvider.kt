@@ -150,6 +150,7 @@ class CardContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
         // Initialize content provider on startup.
         Timber.d("CardContentProvider: onCreate")
+        AnkiDroidApp.makeBackendUsable(context!!)
         return true
     }
 
@@ -758,7 +759,8 @@ class CardContentProvider : ContentProvider() {
                 val tags = values.getAsString(FlashCardsContract.Note.TAGS)
 //                val allowEmpty = AllowEmpty.fromBoolean(values.getAsBoolean(FlashCardsContract.Note.ALLOW_EMPTY))
                 // Create empty note
-                val newNote = Note(col, col.notetypes.get(modelId)!!)
+                val model = requireNotNull(col.notetypes.get(modelId)) { "Invalid modelId: $modelId" }
+                val newNote = Note(col, model)
                 // Set fields
                 val fldsArray = Utils.splitFields(flds)
                 // Check that correct number of flds specified
@@ -1051,7 +1053,7 @@ class CardContentProvider : ContentProvider() {
                 FlashCardsContract.Card.QUESTION -> rb.add(question)
                 FlashCardsContract.Card.ANSWER -> rb.add(answer)
                 FlashCardsContract.Card.QUESTION_SIMPLE -> rb.add(currentCard.qSimple())
-                FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(false).answer_text)
+                FlashCardsContract.Card.ANSWER_SIMPLE -> rb.add(currentCard.renderOutput(false).answerText)
                 FlashCardsContract.Card.ANSWER_PURE -> rb.add(currentCard.pureAnswer)
                 else -> throw UnsupportedOperationException("Queue \"$column\" is unknown")
             }

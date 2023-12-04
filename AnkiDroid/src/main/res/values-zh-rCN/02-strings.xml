@@ -149,7 +149,7 @@
     <string name="unknown_type_field_warning">输入答案：未知字段 %s</string>
     <string name="delete_deck">删除牌组\n请稍等&#8230;&#8230;</string>
     <string name="info_rate">给 AnkiDroid 评分</string>
-    <string name="import_title">正在导入…</string>
+    <string name="import_title">正在导入&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">添加</string>
     <string name="import_message_replace_confirm">这将删除你当前的所有记忆库，并用文件%s中的内容加以替换。你确定吗？</string>
     <string name="import_dialog_message_add">将“%s”添加到牌组集合吗？这可能需要很长的时间。</string>

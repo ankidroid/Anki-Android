@@ -54,12 +54,15 @@
         <item quantity="other">%d notes affichées</item>
     </plurals>
     <string name="card_browser_all_decks">Tous les jeux de cartes</string>
-    <string name="card_browser_delete_card">Supprimer les notes</string>
-    <string name="card_browser_suspend_card">Suspendre des cartes</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Changer de paquet</string>
-    <string name="card_browser_unsuspend_card">Reprendre les cartes</string>
-    <string name="card_browser_mark_card">Marquer les notes</string>
-    <string name="card_browser_unmark_card">Démarquer les notes</string>
     <string name="delete_card_title">Supprimer la note ?</string>
     <string name="card_browser_show_marked">Filtrer les notes marquées</string>
     <string name="card_browser_show_suspended">Filtrer les cartes suspendues</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d carte supprimée</item>
         <item quantity="other">%d cartes supprimées</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

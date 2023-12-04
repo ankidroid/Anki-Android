@@ -45,6 +45,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toFile
 import androidx.core.view.children
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle.State.RESUMED
 import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
@@ -63,6 +64,7 @@ import com.ichi2.anki.cardviewer.TypeAnswer.Companion.createInstance
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.reviewer.*
@@ -272,6 +274,13 @@ abstract class AbstractFlashcardViewer :
 
     private val migrationService by migrationServiceWhileStartedOrNull()
 
+    /**
+     * Changes which were received when the viewer was in the background
+     * which should be executed once the viewer is visible again
+     * @see opExecuted
+     * @see refreshIfRequired
+     */
+    private var refreshRequired: ViewerRefresh? = null
     init {
         ChangeManager.subscribe(this)
     }
@@ -444,6 +453,8 @@ abstract class AbstractFlashcardViewer :
     }
 
     internal suspend fun updateCardAndRedraw() {
+        refreshRequired = null // this method is called on refresh
+
         updateCurrentCard()
 
         if (currentCard == null) {
@@ -579,6 +590,30 @@ abstract class AbstractFlashcardViewer :
         // Reset the activity title
         updateActionBar()
         selectNavigationItem(-1)
+        refreshIfRequired(isResuming = true)
+    }
+
+    /**
+     * If the activity is [RESUMED], or is called from [onResume] then execute the pending
+     * operations in [refreshRequired].
+     *
+     * If the activity is NOT [RESUMED], wait until [onResume]
+     */
+    @NeedsTest("if opExecuted is called while activity is in the background, audio plays onResume")
+    private fun refreshIfRequired(isResuming: Boolean = false) {
+        // Defer the execution of `opExecuted` until the user is looking at the screen.
+        // This ensures that audio/timers are not accidentally started
+        if (isResuming || lifecycle.currentState.isAtLeast(RESUMED)) {
+            refreshRequired?.let {
+                Timber.d("refreshIfRequired: redraw")
+                // if changing code, re-evaluate `refreshRequired = null` in `updateCardAndRedraw`
+                launchCatchingTask { updateCardAndRedraw() }
+                refreshRequired = null
+            }
+        } else if (refreshRequired != null) {
+            // onResume() will execute this method
+            Timber.d("deferred refresh as activity was not STARTED")
+        }
     }
 
     override fun onDestroy() {
@@ -1429,7 +1464,13 @@ abstract class AbstractFlashcardViewer :
      * @param doAudioReplay indicates an anki desktop-like replay call is desired, whose behavior is identical to
      * pressing the keyboard shortcut R on the desktop
      */
+    @NeedsTest("audio is not played if opExecuted occurs when viewer is in the background")
     protected open fun playSounds(doAudioReplay: Boolean) {
+        // this can occur due to OpChanges when the viewer is on another screen
+        if (!this.lifecycle.currentState.isAtLeast(RESUMED)) {
+            Timber.w("sounds are not played as the activity is inactive")
+            return
+        }
         val replayQuestion = mCardSoundConfig!!.replayQuestion
         if (mCardSoundConfig!!.autoplay || doAudioReplay) {
             // Use TTS if TTS preference enabled and no other sound source
@@ -2503,7 +2544,7 @@ abstract class AbstractFlashcardViewer :
         showDialogFragment(dialog)
     }
 
-    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
+    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
         if (currentCard!!.note().tags != selectedTags) {
             val tagString = selectedTags.joinToString(" ")
             val note = currentCard!!.note()
@@ -2519,10 +2560,9 @@ abstract class AbstractFlashcardViewer :
     }
 
     override fun opExecuted(changes: OpChanges, handler: Any?) {
-        if ((changes.studyQueues || changes.noteText || changes.card) && handler !== this) {
-            Timber.d("opExecuted: redraw")
-            launchCatchingTask { updateCardAndRedraw() }
-        }
+        if (handler === this) return
+        refreshRequired = ViewerRefresh.updateState(refreshRequired, changes)
+        refreshIfRequired()
     }
 
     companion object {

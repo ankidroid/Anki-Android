@@ -30,6 +30,8 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.ichi2.anki.R
+import com.ichi2.anki.model.CardStateFilter
+import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.testutils.ParametersUtils
 import com.ichi2.testutils.RecyclerViewUtils
 import com.ichi2.ui.CheckBoxTriStates
@@ -42,7 +44,6 @@ import org.junit.runner.RunWith
 import org.mockito.Mockito
 import org.mockito.kotlin.whenever
 import java.util.*
-import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(AndroidJUnit4::class)
@@ -64,8 +65,8 @@ class TagsDialogTest {
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
             Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
-            val expectedOption = 1
-            optionsGroup.getChildAt(expectedOption).performClick()
+            val expectedOption = CardStateFilter.NEW
+            optionsGroup.getChildAt(1).performClick()
             dialog.getActionButton(WhichButton.POSITIVE).callOnClick()
             Mockito.verify(mockListener, Mockito.times(1)).onSelectedTags(ArrayList(), ArrayList(), expectedOption)
         }
@@ -84,23 +85,23 @@ class TagsDialogTest {
             val dialog = f.dialog as MaterialDialog?
             MatcherAssert.assertThat(dialog, IsNull.notNullValue())
             val returnedList = AtomicReference<List<String>?>()
-            val returnedOption = AtomicInteger()
+            val returnedOption = AtomicReference<CardStateFilter>()
             f.parentFragmentManager.setFragmentResultListener(
                 TagsDialogListener.ON_SELECTED_TAGS_KEY,
                 mockLifecycleOwner(),
                 { _: String?, bundle: Bundle ->
                     returnedList.set(bundle.getStringArrayList(TagsDialogListener.ON_SELECTED_TAGS__SELECTED_TAGS))
-                    returnedOption.set(bundle.getInt(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
+                    returnedOption.set(bundle.getSerializableCompat<CardStateFilter>(TagsDialogListener.ON_SELECTED_TAGS__OPTION))
                 }
             )
             val body = dialog!!.getCustomView()
             val optionsGroup = body.findViewById<RadioGroup>(R.id.tags_dialog_options_radiogroup)
             Assert.assertEquals(optionsGroup.visibility.toLong(), View.VISIBLE.toLong())
-            val expectedOption = 2
-            optionsGroup.getChildAt(expectedOption).performClick()
+            val expectedOption = CardStateFilter.DUE
+            optionsGroup.getChildAt(2).performClick()
             dialog.getActionButton(WhichButton.POSITIVE).callOnClick()
             ListUtil.assertListEquals(ArrayList(), returnedList.get())
-            Assert.assertEquals(expectedOption.toLong(), returnedOption.get().toLong())
+            Assert.assertEquals(expectedOption, returnedOption.get())
         }
     }
 

@@ -154,7 +154,7 @@
     <string name="import_title">İçeri Aktarılıyor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Ekle</string>
     <string name="import_message_replace_confirm">Bu, varolan koleksiyonu silecek ve şu dosyanın verileriyle değiştirecek: %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">\"%s\" koleksiyona eklensin mi? Bu uzun sürebilir</string>
     <string name="import_log_no_apkg">Bu geçerli bir Anki paketi dosyası değil</string>
     <string name="import_title_error" comment="Title of error dialog">Hata</string>
     <string name="import_error_handle_exception">Dosya içeri aktarılamadı\n\n%s</string>
@@ -354,5 +354,5 @@
     <string name="storage_migration_sync_notification" comment="Appears on a notification after the user has opted into a storage migration and provided consent to sync         and AnkiDroid was minimised when the sync completed">Depolama taşımayı başlatmak için dokunun</string>
     <string name="media_sync_required_title">Medya Senkronizasyonu Gerekiyor</string>
     <string name="media_sync_unavailable_message">Medya senkronizasyonu ayarlardan kapalı. Lütfen devam etmeden önce senkronize edilmemiş medyayı senkronize edin ve yedekleyin.</string>
-    <string name="audio_saved">Recording saved</string>
+    <string name="audio_saved">Alınan kayıtlar kaydedildi. </string>
 </resources>

@@ -92,6 +92,7 @@ object PreferenceUpgradeService {
                 yield(RemoveScrollingButtons())
                 yield(RemoveAnswerRecommended())
                 yield(RemoveBackupMax())
+                yield(RemoveInCardsMode())
             }
 
             /** Returns a list of preference upgrade classes which have not been applied */
@@ -441,6 +442,15 @@ object PreferenceUpgradeService {
                     putInt("daily_backups_to_keep", legacyValue)
                     putInt("weekly_backups_to_keep", legacyValue)
                     putInt("monthly_backups_to_keep", legacyValue)
+                }
+            }
+        }
+
+        /** We should have used [anki.config.ConfigKey.Bool.BROWSER_TABLE_SHOW_NOTES_MODE] */
+        internal class RemoveInCardsMode : PreferenceUpgrade(14) {
+            override fun upgrade(preferences: SharedPreferences) {
+                preferences.edit {
+                    remove("inCardsMode")
                 }
             }
         }

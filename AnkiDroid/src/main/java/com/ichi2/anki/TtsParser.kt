@@ -16,9 +16,9 @@ object TtsParser {
      * using the Android text-to-speech engine, together with the languages they are in.
      *
      *
-     * Each returned LocalisedText object contains the text extracted from a &lt;tts&gt; element
+     * Each returned LocalisedText object contains the text extracted from a `<tts>` element
      * whose 'service' attribute is set to 'android', and the localeCode taken from the 'voice'
-     * attribute of that element. This holds unless the HTML fragment contains no such &lt;tts&gt;
+     * attribute of that element. This holds unless the HTML fragment contains no such `<tts>`
      * elements; in that case the function returns a single LocalisedText object containing the
      * text extracted from the whole HTML fragment, with the localeCode set to an empty string.
      */

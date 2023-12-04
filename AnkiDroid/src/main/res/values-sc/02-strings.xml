@@ -180,7 +180,7 @@
     </plurals>
     <string name="export_preparation_in_progress">Ammaniende s\'esportatzione&#8230;</string>
     <string name="export_ready_title">Esportatzione pronta</string>
-    <string name="export_send_no_handlers">Peruna aplicatzione a disponimentu pro gestire apkg. Sarvende…</string>
+    <string name="export_send_no_handlers">Peruna aplicatzione a disponimentu pro gestire apkg. Sarvende&#8230;</string>
     <string name="export_save_apkg_successful">Pachete de Anki sarvadu in manera curreta</string>
     <string name="export_save_apkg_unsuccessful">Sarvamentu de su pachete de Anki fallidu</string>
     <string name="export_share_title">Imbia su pachete de Anki impreende</string>

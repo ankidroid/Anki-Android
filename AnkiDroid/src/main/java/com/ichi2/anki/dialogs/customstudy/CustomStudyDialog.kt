@@ -43,6 +43,7 @@ import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuConfigura
 import com.ichi2.anki.dialogs.customstudy.CustomStudyDialog.ContextMenuOption.*
 import com.ichi2.anki.dialogs.tags.TagsDialog
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
+import com.ichi2.anki.model.CardStateFilter
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Collection
@@ -318,12 +319,8 @@ class CustomStudyDialog(private val collection: Collection, private val customSt
      * Generates the search screen for the custom study deck.
      */
     @NeedsTest("14537: limit to particular tags")
-    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, option: Int) {
-        val sb = StringBuilder()
-        when (option) {
-            1 -> sb.append("is:new ")
-            2 -> sb.append("is:due ")
-        }
+    override fun onSelectedTags(selectedTags: List<String>, indeterminateTags: List<String>, stateFilter: CardStateFilter) {
+        val sb = StringBuilder(stateFilter.toSearch)
         val arr: MutableList<String?> = ArrayList(selectedTags.size)
         if (selectedTags.isNotEmpty()) {
             for (tag in selectedTags) {

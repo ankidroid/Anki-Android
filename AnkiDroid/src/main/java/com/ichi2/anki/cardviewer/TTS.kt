@@ -94,7 +94,7 @@ class TTS {
      * Request that TextToSpeech is stopped and shutdown after it it no longer being used
      * by the context that initialized it.
      * No-op if the current instance of TextToSpeech was initialized by another Context
-     * @param context The context used during {@link #initializeTts(Context, ReadTextListener)}
+     * @param context The context used during [ReadText.initializeTts]
      */
     fun releaseTts(context: Context) {
         if (!enabled) {

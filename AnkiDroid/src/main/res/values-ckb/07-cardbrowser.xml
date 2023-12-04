@@ -54,12 +54,15 @@
         <item quantity="other">%d یاداشت نیشاندراوە</item>
     </plurals>
     <string name="card_browser_all_decks">گشت دەستەکان</string>
-    <string name="card_browser_delete_card">یاداشتەکان ڕەشبکەوە</string>
-    <string name="card_browser_suspend_card">کارتەکان ڕابگرە</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">دەستە بگۆڕە</string>
-    <string name="card_browser_unsuspend_card">کاراکردنەوەی کارتەکان</string>
-    <string name="card_browser_mark_card">یاداشتەکان نیشانبکە</string>
-    <string name="card_browser_unmark_card">نیشانی یاداشتەکان لابدە</string>
     <string name="delete_card_title">یاداشت ڕەشبکرێتەوە؟</string>
     <string name="card_browser_show_marked">تاگکراوەکان بپاڵێوە</string>
     <string name="card_browser_show_suspended">ڕاگیراوەکان بپاڵێوە</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d کارت سڕاوە</item>
         <item quantity="other">%d کارت سڕاوە</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

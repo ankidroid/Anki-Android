@@ -31,7 +31,7 @@ object DebugInfoService {
         return """
                AnkiDroid Version = $pkgVersionName (${BuildConfig.GIT_COMMIT_HASH})
                
-               Android Version = ${Build.VERSION.RELEASE}
+               Android Version = ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
                
                ProductFlavor = ${BuildConfig.FLAVOR}
                

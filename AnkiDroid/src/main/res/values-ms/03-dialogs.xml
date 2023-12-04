@@ -107,7 +107,7 @@
     <string name="dialog_no">Tidak</string>
     <string name="dialog_yes">Ya</string>
     <string name="dialog_continue">Teruskan</string>
-    <string name="dialog_processing">Memproses…</string>
+    <string name="dialog_processing">Memproses&#8230;</string>
     <string name="dialog_positive_create" comment="Create a new collection, probably erasing the previous one, may be necessary in case of error.">Cipta</string>
     <string name="dialog_positive_delete">Padam</string>
     <!-- Currently unsued, should be useful in the future -->

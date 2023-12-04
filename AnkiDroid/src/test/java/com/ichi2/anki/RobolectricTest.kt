@@ -376,7 +376,7 @@ open class RobolectricTest : AndroidTest {
         return startActivityNormallyOpenCollectionWithIntent(T::class.java, i)
     }
 
-    protected fun addNoteUsingBasicModel(front: String, back: String): Note {
+    protected fun addNoteUsingBasicModel(front: String = "Front", back: String = "Back"): Note {
         return addNoteUsingModelName("Basic", front, back)
     }
 
@@ -475,16 +475,16 @@ open class RobolectricTest : AndroidTest {
      * Call to assume that <code>actual</code> satisfies the condition specified by <code>matcher</code>.
      * If not, the test halts and is ignored.
      * Example:
-     * <pre>:
-     *   assumeThat(1, is(1)); // passes
-     *   foo(); // will execute
-     *   assumeThat(0, is(1)); // assumption failure! test halts
-     *   int x = 1 / 0; // will never execute
-     * </pre>
+     * ```kotlin
+     *   assumeThat(1, is(1));  // passes
+     *   foo();                 // will execute
+     *   assumeThat(0, is(1));  // assumption failure! test halts
+     *   int x = 1 / 0;         // will never execute
+     * ```
      *
-     * @param <T> the static type accepted by the matcher (this can flag obvious compile-time problems such as {@code assumeThat(1, is("a"))}
+     * @param <T> the static type accepted by the matcher (this can flag obvious compile-time problems such as `assumeThat(1, equalTo("a"))`)
      * @param actual the computed value being compared
-     * @param matcher an expression, built of {@link Matcher}s, specifying allowed values
+     * @param matcher an expression, built from [Matchers][Matcher], specifying allowed values
      * @see org.hamcrest.CoreMatchers
      * @see org.junit.matchers.JUnitMatchers
      */
@@ -494,19 +494,19 @@ open class RobolectricTest : AndroidTest {
     }
 
     /**
-     * Call to assume that <code>actual</code> satisfies the condition specified by <code>matcher</code>.
+     * Call to assume that `actual` satisfies the condition specified by <code>matcher</code>.
      * If not, the test halts and is ignored.
      * Example:
-     * <pre>:
-     *   assumeThat("alwaysPasses", 1, is(1)); // passes
-     *   foo(); // will execute
-     *   assumeThat("alwaysFails", 0, is(1)); // assumption failure! test halts
-     *   int x = 1 / 0; // will never execute
-     * </pre>
+     * ```kotlin
+     *   assumeThat("alwaysPasses", 1, equalTo(1)); // passes
+     *   foo();                                     // will execute
+     *   assumeThat("alwaysFails", 0, equalTo(1));  // assumption failure! test halts
+     *   int x = 1 / 0;                             // will never execute
+     * ```
      *
-     * @param <T> the static type accepted by the matcher (this can flag obvious compile-time problems such as {@code assumeThat(1, is("a"))}
+     * @param <T> the static type accepted by the matcher (this can flag obvious compile-time problems such as `assumeThat(1, equalTo("a"))`
      * @param actual the computed value being compared
-     * @param matcher an expression, built of {@link Matcher}s, specifying allowed values
+     * @param matcher an expression, built from [Matchers][Matcher], specifying allowed values
      * @see org.hamcrest.CoreMatchers
      * @see org.junit.matchers.JUnitMatchers
      */
@@ -516,11 +516,11 @@ open class RobolectricTest : AndroidTest {
     }
 
     /**
-     * If called with an expression evaluating to {@code false}, the test will halt and be ignored.
+     * If called with an expression evaluating to `false`, the test will halt and be ignored.
      *
-     * @param b If <code>false</code>, the method will attempt to stop the test and ignore it by
-     * throwing {@link AssumptionViolatedException}.
-     * @param message A message to pass to {@link AssumptionViolatedException}.
+     * @param b If `false`, the method will attempt to stop the test and ignore it by
+     * throwing [AssumptionViolatedException]
+     * @param message A message to pass to [AssumptionViolatedException]
      */
     fun assumeTrue(message: String?, b: Boolean) {
         advanceRobolectricLooperWithSleep()

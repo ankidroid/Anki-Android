@@ -20,11 +20,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.ListView
+import android.widget.Spinner
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
+import com.ichi2.anki.model.CardsOrNotes.*
+import com.ichi2.anki.model.SortType
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
@@ -35,8 +39,10 @@ import com.ichi2.testutils.AnkiAssert.assertDoesNotThrowSuspend
 import com.ichi2.testutils.Flaky
 import com.ichi2.testutils.IntentAssert
 import com.ichi2.testutils.OS
+import com.ichi2.testutils.getSharedPrefs
 import com.ichi2.testutils.withNoWritePermission
 import com.ichi2.ui.FixedTextView
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.*
 import org.junit.Ignore
@@ -426,7 +432,7 @@ class CardBrowserTest : RobolectricTest() {
         )
 
         // reverse
-        b.changeCardOrder(1)
+        b.changeCardOrder(SortType.SORT_FIELD)
 
         assertThat(b.getPropertiesForCardId(cid1).position, equalTo(1))
         assertThat(b.getPropertiesForCardId(cid2).position, equalTo(0))
@@ -682,7 +688,7 @@ class CardBrowserTest : RobolectricTest() {
         )
 
         // Change the display order of the card browser
-        cardBrowserController.get().changeCardOrder(7) // order no. 7 corresponds to "cardEase"
+        cardBrowserController.get().changeCardOrder(SortType.EASE)
 
         // Kill and restart the activity and ensure that display order is preserved
         val outBundle = Bundle()
@@ -744,7 +750,7 @@ class CardBrowserTest : RobolectricTest() {
         browserWithNoNewCards.apply {
             searchAllDecks()
             assertThat("Result should contain 4 cards", cardCount, equalTo(4))
-            switchCardOrNote(newCardsMode = false)
+            switchCardOrNote(newCardsMode = NOTES)
             assertThat("Result should contain 2 cards (one per note)", cardCount, equalTo(2))
         }
     }
@@ -753,10 +759,10 @@ class CardBrowserTest : RobolectricTest() {
     @Test
     fun checkDisplayOrderAfterTogglingCardsToNotes() {
         browserWithNoNewCards.apply {
-            changeCardOrder(7) // order no. 7 corresponds to "cardEase"
-            changeCardOrder(7) // reverse the list
+            changeCardOrder(SortType.EASE) // order no. 7 corresponds to "cardEase"
+            changeCardOrder(SortType.EASE) // reverse the list
 
-            inCardsMode = false
+            cardsOrNotes == NOTES
             searchCards()
 
             assertThat(
@@ -931,20 +937,63 @@ class CardBrowserTest : RobolectricTest() {
     fun checkCardsNotesMode() = runTest {
         val cardBrowser = getBrowserWithNotes(3, true)
 
-        // set browser to be in cards mode
-        cardBrowser.inCardsMode = true
+        cardBrowser.cardsOrNotes = CARDS
         cardBrowser.searchCards()
 
         advanceRobolectricUiLooper()
         // check if we get both cards of each note
         assertThat(cardBrowser.mCards.size(), equalTo(6))
 
-        // set browser to be in notes mode
-        cardBrowser.inCardsMode = false
+        cardBrowser.cardsOrNotes = NOTES
         cardBrowser.searchCards()
 
         // check if we get one card per note
         advanceRobolectricUiLooper()
         assertThat(cardBrowser.mCards.size(), equalTo(3))
+    }
+
+    @Test
+    fun `column spinner positions are set to 0 if no preferences exist`() = runBlocking {
+        // GIVEN: No shared preferences exist for display column selections
+        getSharedPrefs().edit {
+            remove(CardBrowser.DISPLAY_COLUMN_1_KEY)
+            remove(CardBrowser.DISPLAY_COLUMN_2_KEY)
+        }
+
+        // WHEN: CardBrowser is created
+        val cardBrowser: CardBrowser = getBrowserWithNotes(5)
+
+        // THEN: Display column selections should default to position 0
+        val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
+        val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
+        val column1SpinnerPosition = column1Spinner.selectedItemPosition
+        val column2SpinnerPosition = column2Spinner.selectedItemPosition
+
+        assertThat(column1SpinnerPosition, equalTo(0))
+        assertThat(column2SpinnerPosition, equalTo(0))
+    }
+
+    @Test
+    fun `column spinner positions are initially set from existing preferences`() = runTest {
+        // GIVEN: Shared preferences exists for display column selections
+        val index1 = 1
+        val index2 = 5
+
+        getSharedPrefs().edit {
+            putInt(CardBrowser.DISPLAY_COLUMN_1_KEY, index1)
+            putInt(CardBrowser.DISPLAY_COLUMN_2_KEY, index2)
+        }
+
+        // WHEN: CardBrowser is created
+        val cardBrowser: CardBrowser = getBrowserWithNotes(7)
+
+        // THEN: The display column selections should match the shared preferences values
+        val column1Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column1_spinner)
+        val column2Spinner = cardBrowser.findViewById<Spinner>(R.id.browser_column2_spinner)
+        val column1SpinnerPosition = column1Spinner.selectedItemPosition
+        val column2SpinnerPosition = column2Spinner.selectedItemPosition
+
+        assertThat(column1SpinnerPosition, equalTo(index1))
+        assertThat(column2SpinnerPosition, equalTo(index2))
     }
 }

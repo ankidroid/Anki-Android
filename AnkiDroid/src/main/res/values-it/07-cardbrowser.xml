@@ -54,12 +54,15 @@
         <item quantity="other">%d note mostrate</item>
     </plurals>
     <string name="card_browser_all_decks">Tutti i mazzi</string>
-    <string name="card_browser_delete_card">Elimina note</string>
-    <string name="card_browser_suspend_card">Sospendi carte</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">Cambia mazzo</string>
-    <string name="card_browser_unsuspend_card">Riattiva carte</string>
-    <string name="card_browser_mark_card">Contrassegna note</string>
-    <string name="card_browser_unmark_card">Togli contrassegno note</string>
     <string name="delete_card_title">Elimina nota</string>
     <string name="card_browser_show_marked">Filtra contrassegnate</string>
     <string name="card_browser_show_suspended">Filtra sospese</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d scheda eliminata</item>
         <item quantity="other">%d schede eliminate</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

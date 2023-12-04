@@ -54,12 +54,15 @@
         <item quantity="other">%d টি নোট দেখাচ্ছি</item>
     </plurals>
     <string name="card_browser_all_decks">সকল ডেক</string>
-    <string name="card_browser_delete_card">নোট মুছো</string>
-    <string name="card_browser_suspend_card">কার্ড স্থগিত কর</string>
+    <plurals name="card_browser_delete_cards">
+        <item quantity="one">Delete card</item>
+        <item quantity="other">Delete cards</item>
+    </plurals>
+    <plurals name="card_browser_delete_notes">
+        <item quantity="one">Delete note</item>
+        <item quantity="other">Delete notes</item>
+    </plurals>
     <string name="card_browser_change_deck">ডেক বদলাও</string>
-    <string name="card_browser_unsuspend_card">না-স্থগিত কার্ড</string>
-    <string name="card_browser_mark_card">নোট চিহ্নিত কর</string>
-    <string name="card_browser_unmark_card">নোট না-চিহ্নিত কর</string>
     <string name="delete_card_title">নোট মুছব?</string>
     <string name="card_browser_show_marked">চিহ্নিতগুলো বাছো</string>
     <string name="card_browser_show_suspended">চিহ্নিতগুলো স্থগিত কর</string>
@@ -108,5 +111,4 @@
         <item quantity="one">%d টি কার্ড মুছেছি</item>
         <item quantity="other">%d টি কার্ড মুছেছি</item>
     </plurals>
-    <!-- Card Info subscreen -->
 </resources>

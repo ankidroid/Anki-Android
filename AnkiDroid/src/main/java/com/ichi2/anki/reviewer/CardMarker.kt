@@ -38,6 +38,10 @@ class CardMarker(private val markView: ImageView, private val flagView: ImageVie
         }
     }
 
+    /** Whether the mark icon is visible on the toolbar */
+    val isDisplayingMark: Boolean
+        get() = markView.visibility == View.VISIBLE
+
     /** Sets the flag icon on the card  */
     fun displayFlag(@FlagDef flagStatus: Int) {
         when (flagStatus) {

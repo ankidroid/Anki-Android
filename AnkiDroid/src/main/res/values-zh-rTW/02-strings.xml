@@ -149,7 +149,7 @@
     <string name="unknown_type_field_warning">輸入答案：未知的欄位 %s</string>
     <string name="delete_deck">刪除牌組中...\n請稍候</string>
     <string name="info_rate">評價 AnkiDroid</string>
-    <string name="import_title">正在匯入……</string>
+    <string name="import_title">正在匯入&#8230;&#8230;</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">新增</string>
     <string name="import_message_replace_confirm">這將會刪除你現有的集合並以%s的內容取代，你確定嗎？</string>
     <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
@@ -173,7 +173,7 @@
     </plurals>
     <string name="export_preparation_in_progress">準備匯出&#8230;</string>
     <string name="export_ready_title">已準備好要匯出</string>
-    <string name="export_send_no_handlers">無應用程式可用於處理 apkg。儲存中…</string>
+    <string name="export_send_no_handlers">無應用程式可用於處理 apkg。儲存中&#8230;</string>
     <string name="export_save_apkg_successful">成功儲存 Anki 套件</string>
     <string name="export_save_apkg_unsuccessful">儲存 Anki 套件失敗</string>
     <string name="export_share_title">以...傳送Anki牌組包</string>
@@ -186,7 +186,7 @@
         [2]%2$s
         ]]></string>
     <string name="export_choice_share">分享</string>
-    <string name="export_choice_save_to">儲存到…</string>
+    <string name="export_choice_save_to">儲存到&#8230;</string>
     <string name="study_options" comment="Name for a preference category in Filtered deck (aka Cram deck, aka Custom study) options">選項</string>
     <string name="menu__deck_options">牌組選項</string>
     <string name="menu__study_options" comment="Menu item that opens options for a Filtered deck (aka Cram deck, aka Custom study)">學習選項</string>

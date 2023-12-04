@@ -38,6 +38,7 @@ import android.view.View.OnLongClickListener
 import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.annotation.VisibleForTesting
@@ -77,6 +78,8 @@ import com.ichi2.anki.analytics.UsageAnalytics
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.DatabaseErrorDialog.DatabaseErrorDialogType
 import com.ichi2.anki.dialogs.ImportDialog.ImportDialogListener
+import com.ichi2.anki.dialogs.ImportFileSelectionFragment.ApkgImportResultLauncherProvider
+import com.ichi2.anki.dialogs.ImportFileSelectionFragment.CsvImportResultLauncherProvider
 import com.ichi2.anki.dialogs.MediaCheckDialog.MediaCheckDialogListener
 import com.ichi2.anki.dialogs.SyncErrorDialog.Companion.newInstance
 import com.ichi2.anki.dialogs.SyncErrorDialog.SyncErrorDialogListener
@@ -108,7 +111,6 @@ import com.ichi2.async.*
 import com.ichi2.compat.CompatHelper.Companion.getSerializableCompat
 import com.ichi2.compat.CompatHelper.Companion.sdkVersion
 import com.ichi2.libanki.*
-import com.ichi2.libanki.Collection
 import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.sched.DeckNode
 import com.ichi2.libanki.utils.TimeManager
@@ -173,7 +175,9 @@ open class DeckPicker :
     ChangeManager.Subscriber,
     SyncCompletionListener,
     ImportColpkgListener,
-    BaseSnackbarBuilderProvider {
+    BaseSnackbarBuilderProvider,
+    ApkgImportResultLauncherProvider,
+    CsvImportResultLauncherProvider {
     // Short animation duration from system
     private var mShortAnimDuration = 0
     private var mBackButtonPressedToExit = false
@@ -274,6 +278,24 @@ open class DeckPicker :
         DeckPickerActivityResultCallback {
             // The collection path was inaccessible on startup so just close the activity and let user restart
             finish()
+        }
+    )
+
+    private val apkgFileImportResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            if (it.resultCode == RESULT_OK) {
+                onSelectedPackageToImport(it.data!!)
+            }
+        }
+    )
+
+    private val csvImportResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        DeckPickerActivityResultCallback {
+            if (it.resultCode == RESULT_OK) {
+                onSelectedCsvForImport(it.data!!)
+            }
         }
     )
 
@@ -815,7 +837,9 @@ open class DeckPicker :
         optionsMenuState = withOpenColOrNull {
             val searchIcon = decks.count() >= 10
             val undoLabel = undoLabel()
-            val syncIcon = fetchSyncStatus(this)
+            Pair(searchIcon, undoLabel)
+        }?.let { (searchIcon, undoLabel) ->
+            val syncIcon = fetchSyncStatus()
             val mediaMigrationState = getMediaMigrationState()
             val shouldShowStartMigrationButton = shouldOfferToMigrate() ||
                 mediaMigrationState is MediaMigrationState.Ongoing.PausedDueToError
@@ -836,10 +860,10 @@ open class DeckPicker :
             MigrationService.flowOfProgress.value !is MigrationService.Progress.Running
     }
 
-    private fun fetchSyncStatus(col: Collection): SyncIconState {
+    private suspend fun fetchSyncStatus(): SyncIconState {
         val auth = syncAuth()
-        return when (SyncStatus.getSyncStatus(col, this, auth)) {
-            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES -> SyncIconState.Normal
+        return when (SyncStatus.getSyncStatus(this, auth)) {
+            SyncStatus.BADGE_DISABLED, SyncStatus.NO_CHANGES, SyncStatus.ERROR -> SyncIconState.Normal
             SyncStatus.HAS_CHANGES -> SyncIconState.PendingChanges
             SyncStatus.NO_ACCOUNT -> SyncIconState.NotLoggedIn
             SyncStatus.FULL_SYNC -> SyncIconState.FullSync
@@ -938,24 +962,6 @@ open class DeckPicker :
                 includeMedia = includeMedia
             )
         )
-    }
-
-    @Deprecated("Deprecated in Java")
-    @Suppress("deprecation") // onActivityResult
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_MEDIA_EJECTED) {
-            onSdCardNotMounted()
-            return
-        } else if (resultCode == RESULT_DB_ERROR) {
-            handleDbError()
-            return
-        }
-        if (requestCode == PICK_APKG_FILE && resultCode == RESULT_OK) {
-            onSelectedPackageToImport(data!!)
-        } else if (requestCode == PICK_CSV_FILE && resultCode == RESULT_OK) {
-            onSelectedCsvForImport(data!!)
-        }
     }
 
     private fun processReviewResults(resultCode: Int) {
@@ -2182,8 +2188,6 @@ open class DeckPicker :
          */
         @VisibleForTesting
         const val REQUEST_STORAGE_PERMISSION = 0
-        const val PICK_APKG_FILE = 13
-        const val PICK_CSV_FILE = 14
 
         // For automatic syncing
         // 10 minutes in milliseconds..
@@ -2467,6 +2471,14 @@ open class DeckPicker :
 
         /** The user has completed their studying for today, and there are future reviews */
         REGULAR_DECK_NO_MORE_CARDS_TODAY
+    }
+
+    override fun getApkgFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
+        return apkgFileImportResultLauncher
+    }
+
+    override fun getCsvFileImportResultLauncher(): ActivityResultLauncher<Intent?> {
+        return csvImportResultLauncher
     }
 }
 
