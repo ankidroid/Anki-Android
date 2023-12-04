@@ -22,12 +22,12 @@ import android.media.*
 import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaPlayer.OnCompletionListener
 import android.net.Uri
-import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.media.AudioFocusRequestCompat
+import androidx.media.AudioManagerCompat
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.ReadText
-import com.ichi2.compat.CompatHelper
 import com.ichi2.libanki.Sound.OnErrorListener.ErrorHandling.CONTINUE_AUDIO
 import com.ichi2.libanki.Sound.SoundSide.*
 import timber.log.Timber
@@ -274,14 +274,10 @@ open class SoundPlayer {
     private var audioManager: AudioManager =
         AnkiDroidApp.instance.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
-    private val audioFocusRequest: AudioFocusRequest? by lazy {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-                .setOnAudioFocusChangeListener(audioFocusChangeListener)
-                .build()
-        } else {
-            null
-        }
+    private val audioFocusRequest: AudioFocusRequestCompat by lazy {
+        AudioFocusRequestCompat.Builder(AudioManagerCompat.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+            .setOnAudioFocusChangeListener(audioFocusChangeListener)
+            .build()
     }
 
     /**
@@ -363,11 +359,7 @@ open class SoundPlayer {
                 mediaPlayer.prepareAsync()
                 Timber.d("Requesting audio focus")
 
-                CompatHelper.compat.requestAudioFocus(
-                    audioManager,
-                    audioFocusChangeListener,
-                    audioFocusRequest
-                )
+                AudioManagerCompat.requestAudioFocus(audioManager, audioFocusRequest)
             } catch (e: Exception) {
                 Timber.e(e, "playSounds - Error reproducing sound %s", soundPath)
                 when (
@@ -403,7 +395,7 @@ open class SoundPlayer {
             it.release()
             mMediaPlayer = null
         }
-        CompatHelper.compat.abandonAudioFocus(audioManager, audioFocusChangeListener, audioFocusRequest)
+        AudioManagerCompat.abandonAudioFocusRequest(audioManager, audioFocusRequest)
     }
 
     open fun stopSounds() {

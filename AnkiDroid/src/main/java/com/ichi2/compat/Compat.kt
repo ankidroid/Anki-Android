@@ -25,9 +25,6 @@ import android.content.pm.PackageManager.NameNotFoundException
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
-import android.media.AudioFocusRequest
-import android.media.AudioManager
-import android.media.AudioManager.OnAudioFocusChangeListener
 import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
@@ -165,8 +162,6 @@ interface Compat {
     @Throws(IOException::class)
     fun createDirectories(directory: File)
     fun hasVideoThumbnail(path: String): Boolean
-    fun requestAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
-    fun abandonAudioFocus(audioManager: AudioManager, audioFocusChangeListener: OnAudioFocusChangeListener, audioFocusRequest: AudioFocusRequest?)
 
     /**
      * Writes an image represented by bitmap to the Pictures/AnkiDroid directory under the primary
