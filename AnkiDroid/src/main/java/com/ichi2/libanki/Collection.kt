@@ -407,6 +407,8 @@ open class Collection(
         return findCards(search, SortOrder.NoOrdering())
     }
 
+    data class CardIdToNoteId(val id: Long, val nid: Long)
+
     /** Return a list of card ids  */
     @RustCleanup("Remove in V16.") // Not in libAnki
     fun findOneCardByNote(query: String, order: SortOrder): List<CardId> {
@@ -428,21 +430,21 @@ open class Collection(
     JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.ord
             """.trimMargin()
         )
-        val resultList = mutableListOf<Pair<Long, Long>>()
+        val resultList = mutableListOf<CardIdToNoteId>()
 
         cursor.use { cur ->
             while (cur.moveToNext()) {
                 val id = cur.getLong(cur.getColumnIndex("id"))
                 val nid = cur.getLong(cur.getColumnIndex("nid"))
-                resultList.add(Pair(id, nid))
+                resultList.add(CardIdToNoteId(id, nid))
             }
         }
 
         // sort resultList by nid
-        val sortedResultList = resultList.sortedBy { noteIds.indexOf(it.second) }
-
+        val noteIdMap = noteIds.mapIndexed { index, id -> id to index }.toMap()
+        val sortedResultList = resultList.sortedBy { noteIdMap[it.nid] }
         // Extract ids from sortedResultList
-        return sortedResultList.map { it.first }
+        return sortedResultList.map { it.id }
     }
 
     @RustCleanup("Calling code should handle returned OpChanges")

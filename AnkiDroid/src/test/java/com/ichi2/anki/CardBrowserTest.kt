@@ -752,30 +752,24 @@ class CardBrowserTest : RobolectricTest() {
     /** PR #14859  */
     @Test
     fun checkDisplayOrderAfterTogglingCardsToNotes() {
-        // Start the Card Browser with Basic Model
-        ensureCollectionLoadIsSynchronous()
-        var cardBrowserController = Robolectric.buildActivity(CardBrowser::class.java, Intent())
-            .create().start().resume().visible()
-        saveControllerForCleanup(cardBrowserController)
+        browserWithNoNewCards.apply {
+            changeCardOrder(7) // order no. 7 corresponds to "cardEase"
+            changeCardOrder(7) // reverse the list
 
-        // Change the display order of the card browser
-        cardBrowserController.get().changeCardOrder(7) // order no. 7 corresponds to "cardEase"
-        cardBrowserController.get().changeCardOrder(7) // reverse the list
+            inCardsMode = false
+            searchCards()
 
-        // set browser to be in notes mode
-        cardBrowserController.get().inCardsMode = false
-        cardBrowserController.get().searchCards()
-
-        assertThat(
-            "Card Browser has the new noteSortType field",
-            col.config.get<String>("noteSortType"),
-            equalTo("cardEase")
-        )
-        assertThat(
-            "Card Browser has the new browserNoteSortBackwards field",
-            col.config.get<Boolean>("browserNoteSortBackwards"),
-            equalTo(true)
-        )
+            assertThat(
+                "Card Browser has the new noteSortType field",
+                col.config.get<String>("noteSortType"),
+                equalTo("cardEase")
+            )
+            assertThat(
+                "Card Browser has the new browserNoteSortBackwards field",
+                col.config.get<Boolean>("browserNoteSortBackwards"),
+                equalTo(true)
+            )
+        }
     }
 
     private fun assertUndoDoesNotContain(browser: CardBrowser, @StringRes resId: Int) {
