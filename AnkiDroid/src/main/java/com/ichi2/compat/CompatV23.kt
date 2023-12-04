@@ -22,8 +22,6 @@ import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
-import android.media.AudioFocusRequest
-import android.media.AudioManager
 import android.media.MediaRecorder
 import android.media.ThumbnailUtils
 import android.net.Uri
@@ -149,15 +147,6 @@ open class CompatV23 : Compat {
     }
 
     // Until API 26
-    override fun abandonAudioFocus(
-        audioManager: AudioManager,
-        audioFocusChangeListener: AudioManager.OnAudioFocusChangeListener,
-        audioFocusRequest: AudioFocusRequest?
-    ) {
-        audioManager.abandonAudioFocus(audioFocusChangeListener)
-    }
-
-    // Until API 26
     @Throws(IOException::class)
     override fun deleteFile(file: File) {
         if (!file.delete()) {
@@ -180,19 +169,6 @@ open class CompatV23 : Compat {
         if (!directory.mkdirs()) {
             throw IOException("Failed to create $directory")
         }
-    }
-
-    // Until API 26
-    override fun requestAudioFocus(
-        audioManager: AudioManager,
-        audioFocusChangeListener: AudioManager.OnAudioFocusChangeListener,
-        audioFocusRequest: AudioFocusRequest?
-    ) {
-        audioManager.requestAudioFocus(
-            audioFocusChangeListener,
-            AudioManager.STREAM_MUSIC,
-            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
-        )
     }
 
     // Until API 29
