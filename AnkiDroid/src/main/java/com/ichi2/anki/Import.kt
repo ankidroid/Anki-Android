@@ -79,7 +79,7 @@ fun DeckPicker.showImportDialog(options: ImportOptions) {
         )
         return
     }
-    showDialogFragment(ImportFileSelectionFragment.createInstance(this, options))
+    showDialogFragment(ImportFileSelectionFragment.newInstance(options))
 }
 
 class DatabaseRestorationListener(val deckPicker: DeckPicker, val newAnkiDroidDirectory: String) : ImportColpkgListener {
