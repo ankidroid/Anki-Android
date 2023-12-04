@@ -398,6 +398,8 @@
 
     <string name="audio_saved">Recording saved</string>
 
+    <string name="deleting_selected_notes">Deleting selected notes</string>
+
     <string name="tts_voices_default_text" comment="The default text to speak when selecting
     Text to speech voices"
         >

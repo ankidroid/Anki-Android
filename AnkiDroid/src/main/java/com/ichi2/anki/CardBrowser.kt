@@ -1248,7 +1248,7 @@ open class CardBrowser :
     }
 
     private fun deleteSelectedNotes() = launchCatchingTask {
-        withProgress("Deleting selected notes") {
+        withProgress(R.string.deleting_selected_notes) {
             viewModel.deleteSelectedNotes()
         }.ifNotZero { noteCount ->
             val deletedMessage = resources.getQuantityString(R.plurals.card_browser_cards_deleted, noteCount, noteCount)
