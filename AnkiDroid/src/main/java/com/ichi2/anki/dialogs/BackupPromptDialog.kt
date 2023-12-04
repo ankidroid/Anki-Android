@@ -140,10 +140,13 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
         /** @return Whether the dialog was shown */
         suspend fun showIfAvailable(deckPicker: DeckPicker): Boolean {
             val backupPrompt = BackupPromptDialog(deckPicker)
+            val isDisabledPermanently = deckPicker.sharedPrefs().getBoolean("backupPromptDisabled", false)
             if (!backupPrompt.shouldShowDialog()) {
                 return false
             }
-
+            if (isDisabledPermanently) {
+                return false
+            }
             val isLoggedIn = isLoggedIn()
             backupPrompt.apply {
                 build(isLoggedIn) {
@@ -205,7 +208,7 @@ class BackupPromptDialog private constructor(private val windowContext: Context)
             val message = getPermanentlyDismissDialogMessageOrImmediatelyDismiss(context)
             if (message == null) {
                 Timber.i("permanently disabling 'Backup Prompt' reminder - no confirmation")
-                onDisableReminder()
+                onCancel()
                 return
             }
 
