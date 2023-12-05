@@ -126,7 +126,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         if (isAnkiApiNull(apiName)) {
             showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
             return false
-        } else if (!getJsApiListMap()[apiName]!!) {
+        } else if (!mJsApiListMap[apiName]!!) {
             // see 02-string.xml
             showDeveloperContact(apiErrorCode)
             return false
@@ -200,10 +200,6 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         }
     }
 
-    private fun getJsApiListMap(): HashMap<String, Boolean> {
-        return mJsApiListMap
-    }
-
     fun init(byteArray: ByteArray): ByteArray {
         var apiStatusJson = ""
         try {
@@ -246,13 +242,13 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             "nextTime3" -> convertToByteArray(cardDataForJsAPI.nextTime3)
             "nextTime4" -> convertToByteArray(cardDataForJsAPI.nextTime4)
             "toggleFlag" -> ankiToggleFlag(bytes)
-            "markCard" -> ankiMarkCard(bytes)
+            "markCard" -> ankiMarkCard()
             "buryCard" -> ankiBuryCard()
             "buryNote" -> ankiBuryNote()
             "suspendCard" -> ankiSuspendCard()
             "suspendNote" -> ankiSuspendNote()
             "setCardDue" -> ankiSetCardDue(bytes)
-            "resetProgress" -> ankiResetProgress(bytes)
+            "resetProgress" -> ankiResetProgress()
             "cardMark" -> convertToByteArray(currentCard.note().hasTag("marked"))
             "cardFlag" -> convertToByteArray(currentCard.userFlag())
             "cardReps" -> convertToByteArray(currentCard.reps)
@@ -410,8 +406,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private suspend fun ankiSetCardDue(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
         val data = checkJsApiContract(byteArray)
         val daysInt = data.second.toInt()
-        val apiList = getJsApiListMap()
-        if (!apiList[AnkiDroidJsAPIConstants.SET_CARD_DUE]!!) {
+        if (!mJsApiListMap[AnkiDroidJsAPIConstants.SET_CARD_DUE]!!) {
             showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
             return@withContext convertToByteArray(false)
         }
@@ -428,10 +423,8 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         convertToByteArray(true)
     }
 
-    private suspend fun ankiResetProgress(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        checkJsApiContract(byteArray)
-        val apiList = getJsApiListMap()
-        if (!apiList[AnkiDroidJsAPIConstants.RESET_PROGRESS]!!) {
+    private suspend fun ankiResetProgress(): ByteArray = withContext(Dispatchers.Main) {
+        if (!mJsApiListMap[AnkiDroidJsAPIConstants.RESET_PROGRESS]!!) {
             showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
             return@withContext convertToByteArray(false)
         }
@@ -442,10 +435,8 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         convertToByteArray(true)
     }
 
-    private suspend fun ankiMarkCard(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        checkJsApiContract(byteArray)
-        val apiList = getJsApiListMap()
-        if (!apiList[AnkiDroidJsAPIConstants.MARK_CARD]!!) {
+    private suspend fun ankiMarkCard(): ByteArray = withContext(Dispatchers.Main) {
+        if (!mJsApiListMap[AnkiDroidJsAPIConstants.MARK_CARD]!!) {
             showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
             return@withContext convertToByteArray(false)
         }
@@ -457,8 +448,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private suspend fun ankiToggleFlag(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
         val flag = checkJsApiContract(byteArray).second
         // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
-        val apiList = getJsApiListMap()
-        if (!apiList[AnkiDroidJsAPIConstants.TOGGLE_FLAG]!!) {
+        if (!mJsApiListMap[AnkiDroidJsAPIConstants.TOGGLE_FLAG]!!) {
             showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
             return@withContext convertToByteArray(false)
         }
