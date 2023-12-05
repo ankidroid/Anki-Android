@@ -176,6 +176,7 @@ jobs:
           script: |
             touch adb-log.txt
             $ANDROID_HOME/platform-tools/adb logcat '*:D' >> adb-log.txt &
+            adb emu screenrecord start --time-limit 1800 video.webm
             sleep 5
             ./gradlew uninstallAll jacocoAndroidTestReport --daemon
 
@@ -190,6 +191,13 @@ jobs:
         with:
           name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_logs
           path: adb-log.txt.gz
+
+      - name: Upload Emulator Screen Record
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: ${{ matrix.api-level }}-${{ matrix.arch }}-${{matrix.target}}-${{matrix.first-boot-delay}}-${{matrix.iteration}}-adb_video
+          path: video.webm
 
       - uses: codecov/codecov-action@v3
         with:
