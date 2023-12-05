@@ -25,12 +25,13 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.R
 import com.ichi2.anki.dialogs.ModelEditorContextMenu.ModelEditorContextMenuAction
+import com.ichi2.anki.tests.InstrumentedTest
 import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class ModelEditorContextMenuTest {
+class ModelEditorContextMenuTest : InstrumentedTest() {
     private val testDialogTitle = "test editor title"
 
     @Test
