@@ -54,6 +54,9 @@ private suspend fun createBackup(force: Boolean) {
             force,
             waitForCompletion = false
         )
-        awaitBackupCompletion()
+    }
+    // move this outside 'withCol' to avoid blocking
+    withContext(Dispatchers.IO) {
+        CollectionManager.getBackend().awaitBackupCompletion()
     }
 }
