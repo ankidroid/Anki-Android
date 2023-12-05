@@ -19,6 +19,7 @@ import android.view.KeyEvent
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.cardviewer.Gesture
 import com.ichi2.anki.cardviewer.ViewerCommand
+import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.MockReviewerUi
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -26,7 +27,7 @@ import org.hamcrest.Matchers.hasSize
 import org.junit.Test
 import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
-class PeripheralKeymapTest {
+class PeripheralKeymapTest : InstrumentedTest() {
     @Test
     fun testNumpadAction() {
         // #7736 Ensures that a numpad key is passed through (mostly testing num lock)
