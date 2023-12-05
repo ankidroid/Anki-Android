@@ -20,6 +20,8 @@ package com.ichi2.anki.tests
 import android.content.Context
 import android.os.Build
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiSelector
 import com.ichi2.anki.CollectionHelper
 import com.ichi2.anki.utils.EnsureAllFilesAccessRule
 import com.ichi2.annotations.DuplicatedCode
@@ -27,6 +29,7 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
+import org.junit.Before
 import org.junit.Rule
 import java.io.File
 import java.io.IOException
@@ -77,6 +80,25 @@ abstract class InstrumentedTest {
                     Build.PRODUCT.contains("emulator") ||
                     Build.PRODUCT.contains("simulator")
                 )
+        }
+    }
+
+    @Before
+    fun runBeforeEachTest() {
+        closeAndroidNotRespondingDialog()
+    }
+
+    // Instrumented tests can fail if there's a "App not responding"
+    // System dialog blocking our test from proceeding
+    //
+    // See: https://stackoverflow.com/questions/39457305/android-testing-waited-for-the-root-of-the-view-hierarchy-to-have-window-focus/54203607#54203607
+    private fun closeAndroidNotRespondingDialog() {
+        val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+        var waitButton = device.findObject(UiSelector().textContains("Wait"))
+        // There may be multiple dialogs
+        while (waitButton.exists()) {
+            waitButton.click()
+            waitButton = device.findObject(UiSelector().textContains("Wait"))
         }
     }
 
