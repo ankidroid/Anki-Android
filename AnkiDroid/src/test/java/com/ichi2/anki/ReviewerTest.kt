@@ -239,7 +239,11 @@ class ReviewerTest : RobolectricTest() {
         val javaScriptFunction = reviewer.javaScriptFunction()
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.ankiGetDeckName(jsApiContract()).decodeToString(), equalTo("B"))
+        assertThat(
+            javaScriptFunction.handleJsApiRequest("deckName", jsApiContract(), true)
+                .decodeToString(),
+            equalTo("B")
+        )
     }
 
     @Ignore("needs update for v3")
@@ -328,9 +332,12 @@ class ReviewerTest : RobolectricTest() {
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) = runTest {
         val jsApi = r.javaScriptFunction()
         val countList = listOf(
-            jsApi.ankiGetNewCardCount(jsApiContract()).decodeToString().toInt(),
-            jsApi.ankiGetLrnCardCount(jsApiContract()).decodeToString().toInt(),
-            jsApi.ankiGetRevCardCount(jsApiContract()).decodeToString().toInt()
+            jsApi.handleJsApiRequest("newCardCount", jsApiContract(), true)
+                .decodeToString().toInt(),
+            jsApi.handleJsApiRequest("lrnCardCount", jsApiContract(), true)
+                .decodeToString().toInt(),
+            jsApi.handleJsApiRequest("revCardCount", jsApiContract(), true)
+                .decodeToString().toInt()
         )
 
         val expected = listOf(

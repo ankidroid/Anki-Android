@@ -26,7 +26,7 @@ import java.io.FileInputStream
 
 class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiServer(activity) {
     var reviewerHtml: String = ""
-    val jsApi = if (activity is Reviewer) {
+    private val jsApi = if (activity is Reviewer) {
         reviewer().javaScriptFunction()
     } else {
         cardTemplatePreviewer().javaScriptFunction()
@@ -79,7 +79,7 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
             }
             if (uri.startsWith(ANKIDROID_JS_PREFIX)) {
                 return buildResponse {
-                    handleJsApiPostRequest(uri.substring(ANKIDROID_JS_PREFIX.length), inputBytes)
+                    jsApi.handleJsApiRequest(uri.substring(ANKIDROID_JS_PREFIX.length), inputBytes, activity is Reviewer)
                 }
             }
         }
@@ -92,65 +92,6 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
         return when (methodName) {
             "getSchedulingStatesWithContext" -> getSchedulingStatesWithContext()
             "setSchedulingStates" -> setSchedulingStates(bytes)
-            else -> {
-                throw Exception("unhandled request: $methodName")
-            }
-        }
-    }
-
-    private suspend fun handleJsApiPostRequest(methodName: String, bytes: ByteArray): ByteArray {
-        return when (methodName) {
-            "init" -> jsApi.init(bytes)
-            "newCardCount" -> jsApi.ankiGetNewCardCount(bytes)
-            "lrnCardCount" -> jsApi.ankiGetLrnCardCount(bytes)
-            "revCardCount" -> jsApi.ankiGetRevCardCount(bytes)
-            "eta" -> jsApi.ankiGetETA(bytes)
-            "cardMark" -> jsApi.ankiGetCardMark(bytes)
-            "cardFlag" -> jsApi.ankiGetCardFlag(bytes)
-            "cardReps" -> jsApi.ankiGetCardReps(bytes)
-            "cardInterval" -> jsApi.ankiGetCardInterval(bytes)
-            "cardFactor" -> jsApi.ankiGetCardFactor(bytes)
-            "cardMod" -> jsApi.ankiGetCardMod(bytes)
-            "cardId" -> jsApi.ankiGetCardId(bytes)
-            "cardNid" -> jsApi.ankiGetCardNid(bytes)
-            "cardType" -> jsApi.ankiGetCardType(bytes)
-            "cardDid" -> jsApi.ankiGetCardDid(bytes)
-            "cardLeft" -> jsApi.ankiGetCardLeft(bytes)
-            "cardODid" -> jsApi.ankiGetCardODid(bytes)
-            "cardODue" -> jsApi.ankiGetCardODue(bytes)
-            "cardQueue" -> jsApi.ankiGetCardQueue(bytes)
-            "cardLapses" -> jsApi.ankiGetCardLapses(bytes)
-            "cardDue" -> jsApi.ankiGetCardDue(bytes)
-            "deckName" -> jsApi.ankiGetDeckName(bytes)
-            "isActiveNetworkMetered" -> jsApi.ankiIsActiveNetworkMetered(bytes)
-            "ttsSetLanguage" -> jsApi.ankiTtsSetLanguage(bytes)
-            "ttsSpeak" -> jsApi.ankiTtsSpeak(bytes)
-            "ttsIsSpeaking" -> jsApi.ankiTtsIsSpeaking(bytes)
-            "ttsSetPitch" -> jsApi.ankiTtsSetPitch(bytes)
-            "ttsSetSpeechRate" -> jsApi.ankiTtsSetSpeechRate(bytes)
-            "ttsFieldModifierIsAvailable" -> jsApi.ankiTtsFieldModifierIsAvailable(bytes)
-            "ttsStop" -> jsApi.ankiTtsStop(bytes)
-            "nextTime1" -> jsApi.ankiGetNextTime1(bytes)
-            "nextTime2" -> jsApi.ankiGetNextTime2(bytes)
-            "nextTime3" -> jsApi.ankiGetNextTime3(bytes)
-            "nextTime4" -> jsApi.ankiGetNextTime4(bytes)
-            "searchCard" -> jsApi.ankiSearchCard(bytes)
-            "searchCardWithCallback" -> jsApi.ankiSearchCardWithCallback(bytes)
-            "buryCard" -> jsApi.ankiBuryCard(bytes)
-            "buryNote" -> jsApi.ankiBuryNote(bytes)
-            "suspendCard" -> jsApi.ankiSuspendCard(bytes)
-            "suspendNote" -> jsApi.ankiSuspendNote(bytes)
-            "setCardDue" -> jsApi.ankiSetCardDue(bytes)
-            "resetProgress" -> jsApi.ankiResetProgress(bytes)
-            "isDisplayingAnswer" -> jsApi.ankiIsDisplayingAnswer(bytes)
-            "addTagToCard" -> jsApi.ankiAddTagToCard(bytes)
-            "isInFullscreen" -> jsApi.ankiIsInFullscreen(bytes)
-            "isTopbarShown" -> jsApi.ankiIsTopbarShown(bytes)
-            "isInNightMode" -> jsApi.ankiIsInNightMode(bytes)
-            "enableHorizontalScrollbar" -> jsApi.ankiEnableHorizontalScrollbar(bytes)
-            "enableVerticalScrollbar" -> jsApi.ankiEnableVerticalScrollbar(bytes)
-            "toggleFlag" -> jsApi.ankiToggleFlag(bytes)
-            "markCard" -> jsApi.ankiMarkCard(bytes)
             else -> {
                 throw Exception("unhandled request: $methodName")
             }

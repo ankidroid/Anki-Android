@@ -2512,6 +2512,10 @@ abstract class AbstractFlashcardViewer :
         refreshIfRequired()
     }
 
+    open fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
+        return AnkiDroidJsAPI.CardDataForJsApi()
+    }
+
     companion object {
         /**
          * Result codes that are returned when this activity finishes.

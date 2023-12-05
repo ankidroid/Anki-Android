@@ -26,6 +26,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -52,7 +53,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
             "{\"setCardDue\":true,\"suspendNote\":true,\"markCard\":true,\"suspendCard\":true,\"buryCard\":true,\"toggleFlag\":true,\"buryNote\":true}"
 
         waitForAsyncTasksToComplete()
-        assertThat(javaScriptFunction.init(Companion.jsApiContract()).decodeToString(), equalTo(expected))
+        assertThat(
+            javaScriptFunction.handleJsApiRequest("init", jsApiContract(), true)
+                .decodeToString(),
+            equalTo(expected)
+        )
     }
 
     @Test
@@ -66,26 +71,26 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val javaScriptFunction = reviewer.javaScriptFunction()
+        val jsapi = reviewer.javaScriptFunction()
 
         reviewer.displayCardAnswer()
 
         waitForAsyncTasksToComplete()
 
         assertThat(
-            javaScriptFunction.ankiGetNextTime1(Companion.jsApiContract()).decodeToString().withoutUnicodeIsolation(),
+            getDataFromRequest("nextTime1", jsapi).withoutUnicodeIsolation(),
             equalTo("<1m")
         )
         assertThat(
-            javaScriptFunction.ankiGetNextTime2(Companion.jsApiContract()).decodeToString().withoutUnicodeIsolation(),
+            getDataFromRequest("nextTime2", jsapi).withoutUnicodeIsolation(),
             equalTo("<6m")
         )
         assertThat(
-            javaScriptFunction.ankiGetNextTime3(Companion.jsApiContract()).decodeToString().withoutUnicodeIsolation(),
+            getDataFromRequest("nextTime3", jsapi).withoutUnicodeIsolation(),
             equalTo("<10m")
         )
         assertThat(
-            javaScriptFunction.ankiGetNextTime4(Companion.jsApiContract()).decodeToString().withoutUnicodeIsolation(),
+            getDataFromRequest("nextTime4", jsapi).withoutUnicodeIsolation(),
             equalTo("4d")
         )
     }
@@ -101,7 +106,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val javaScriptFunction = reviewer.javaScriptFunction()
+        val jsapi = reviewer.javaScriptFunction()
         reviewer.displayCardAnswer()
 
         waitForAsyncTasksToComplete()
@@ -109,88 +114,43 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val currentCard = reviewer.currentCard!!
 
         // Card Did
-        assertThat(
-            javaScriptFunction.ankiGetCardDid(Companion.jsApiContract()).decodeToString().toLong(),
-            equalTo(currentCard.did)
-        )
+        assertThat(getDataFromRequest("cardDid", jsapi).toLong(), equalTo(currentCard.did))
         // Card Id
-        assertThat(
-            javaScriptFunction.ankiGetCardId(Companion.jsApiContract()).decodeToString().toLong(),
-            equalTo(currentCard.id)
-        )
+        assertThat(getDataFromRequest("cardId", jsapi).toLong(), equalTo(currentCard.id))
         // Card Nid
-        assertThat(
-            javaScriptFunction.ankiGetCardNid(Companion.jsApiContract()).decodeToString().toLong(),
-            equalTo(currentCard.nid)
-        )
+        assertThat(getDataFromRequest("cardNid", jsapi).toLong(), equalTo(currentCard.nid))
         // Card ODid
-        assertThat(
-            javaScriptFunction.ankiGetCardODid(Companion.jsApiContract()).decodeToString().toLong(),
-            equalTo(currentCard.oDid)
-        )
+        assertThat(getDataFromRequest("cardODid", jsapi).toLong(), equalTo(currentCard.oDid))
         // Card Type
-        assertThat(
-            javaScriptFunction.ankiGetCardType(Companion.jsApiContract()).decodeToString().toInt(),
-            equalTo(currentCard.type)
-        )
+        assertThat(getDataFromRequest("cardType", jsapi).toInt(), equalTo(currentCard.type))
         // Card ODue
-        assertThat(
-            javaScriptFunction.ankiGetCardODue(Companion.jsApiContract()).decodeToString().toLong(),
-            equalTo(currentCard.oDue)
-        )
+        assertThat(getDataFromRequest("cardODue", jsapi).toLong(), equalTo(currentCard.oDue))
         // Card Due
-        assertThat(
-            javaScriptFunction.ankiGetCardDue(Companion.jsApiContract()).decodeToString().toLong(),
-            equalTo(currentCard.due)
-        )
+        assertThat(getDataFromRequest("cardDue", jsapi).toLong(), equalTo(currentCard.due))
         // Card Factor
-        assertThat(
-            javaScriptFunction.ankiGetCardFactor(Companion.jsApiContract()).decodeToString().toInt(),
-            equalTo(currentCard.factor)
-        )
+        assertThat(getDataFromRequest("cardFactor", jsapi).toInt(), equalTo(currentCard.factor))
         // Card Lapses
-        assertThat(
-            javaScriptFunction.ankiGetCardLapses(Companion.jsApiContract()).decodeToString().toInt(),
-            equalTo(currentCard.lapses)
-        )
+        assertThat(getDataFromRequest("cardLapses", jsapi).toInt(), equalTo(currentCard.lapses))
         // Card Ivl
-        assertThat(
-            javaScriptFunction.ankiGetCardInterval(Companion.jsApiContract()).decodeToString().toInt(),
-            equalTo(currentCard.ivl)
-        )
+        assertThat(getDataFromRequest("cardInterval", jsapi).toInt(), equalTo(currentCard.ivl))
         // Card mod
-        assertThat(
-            javaScriptFunction.ankiGetCardMod(Companion.jsApiContract()).decodeToString().toLong(),
-            equalTo(currentCard.mod)
-        )
+        assertThat(getDataFromRequest("cardMod", jsapi).toLong(), equalTo(currentCard.mod))
         // Card Queue
-        assertThat(
-            javaScriptFunction.ankiGetCardQueue(Companion.jsApiContract()).decodeToString().toInt(),
-            equalTo(currentCard.queue)
-        )
+        assertThat(getDataFromRequest("cardQueue", jsapi).toInt(), equalTo(currentCard.queue))
         // Card Reps
-        assertThat(
-            javaScriptFunction.ankiGetCardReps(Companion.jsApiContract()).decodeToString().toInt(),
-            equalTo(currentCard.reps)
-        )
+        assertThat(getDataFromRequest("cardReps", jsapi).toInt(), equalTo(currentCard.reps))
         // Card left
-        assertThat(
-            javaScriptFunction.ankiGetCardLeft(Companion.jsApiContract()).decodeToString().toInt(),
-            equalTo(currentCard.left)
-        )
+        assertThat(getDataFromRequest("cardLeft", jsapi).toInt(), equalTo(currentCard.left))
 
         // Card Flag
-        assertThat(javaScriptFunction.ankiGetCardFlag(Companion.jsApiContract()).decodeToString().toInt(), equalTo(0))
+        assertThat(getDataFromRequest("cardFlag", jsapi).toInt(), equalTo(0))
         reviewer.currentCard!!.setFlag(1)
-        assertThat(javaScriptFunction.ankiGetCardFlag(Companion.jsApiContract()).decodeToString().toInt(), equalTo(1))
+        assertThat(getDataFromRequest("cardFlag", jsapi).toInt(), equalTo(1))
 
         // Card Mark
-        assertThat(
-            javaScriptFunction.ankiGetCardMark(Companion.jsApiContract()).decodeToString().toBoolean(),
-            equalTo(false)
-        )
+        assertThat(getDataFromRequest("cardMark", jsapi).toBoolean(), equalTo(false))
         reviewer.currentCard!!.note().addTag("marked")
-        assertThat(javaScriptFunction.ankiGetCardMark(Companion.jsApiContract()).decodeToString().toBoolean(), equalTo(true))
+        assertThat(getDataFromRequest("cardMark", jsapi).toBoolean(), equalTo(true))
     }
 
     @Test
@@ -204,34 +164,34 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val javaScriptFunction = reviewer.javaScriptFunction()
+        val jsapi = reviewer.javaScriptFunction()
 
         waitForAsyncTasksToComplete()
 
         // Displaying question
         assertThat(
-            javaScriptFunction.ankiIsDisplayingAnswer(Companion.jsApiContract()).decodeToString().toBoolean(),
+            getDataFromRequest("isDisplayingAnswer", jsapi).toBoolean(),
             equalTo(reviewer.isDisplayingAnswer)
         )
         reviewer.displayCardAnswer()
         assertThat(
-            javaScriptFunction.ankiIsDisplayingAnswer(Companion.jsApiContract()).decodeToString().toBoolean(),
+            getDataFromRequest("isDisplayingAnswer", jsapi).toBoolean(),
             equalTo(reviewer.isDisplayingAnswer)
         )
 
         // Full Screen
         assertThat(
-            javaScriptFunction.ankiIsInFullscreen(Companion.jsApiContract()).decodeToString().toBoolean(),
+            getDataFromRequest("isInFullscreen", jsapi).toBoolean(),
             equalTo(reviewer.isFullscreen)
         )
         // Top bar
         assertThat(
-            javaScriptFunction.ankiIsTopbarShown(Companion.jsApiContract()).decodeToString().toBoolean(),
+            getDataFromRequest("isTopbarShown", jsapi).toBoolean(),
             equalTo(reviewer.prefShowTopbar)
         )
         // Night Mode
         assertThat(
-            javaScriptFunction.ankiIsInNightMode(Companion.jsApiContract()).decodeToString().toBoolean(),
+            getDataFromRequest("isInNightMode", jsapi).toBoolean(),
             equalTo(reviewer.isInNightMode)
         )
     }
@@ -248,7 +208,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val javaScriptFunction = reviewer.javaScriptFunction()
+        val jsapi = reviewer.javaScriptFunction()
 
         waitForAsyncTasksToComplete()
 
@@ -256,24 +216,38 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Card mark test
         // ---------------
         // Before marking card
-        assertThat(
-            javaScriptFunction.ankiGetCardMark(Companion.jsApiContract()).decodeToString().toBoolean(),
-            equalTo(false)
-        )
+        assertFalse(getDataFromRequest("cardMark", jsapi).toBoolean())
 
-        // get card mark status for test
-        javaScriptFunction.ankiMarkCard(Companion.jsApiContract())
-        assertThat(javaScriptFunction.ankiGetCardMark(Companion.jsApiContract()).decodeToString().toBoolean(), equalTo(true))
+        // Mark card
+        assertTrue(
+            jsapi.handleJsApiRequest("markCard", jsApiContract("true"), true)
+                .decodeToString().toBoolean()
+        )
+        // After marking card
+        assertTrue(getDataFromRequest("cardMark", jsapi).toBoolean())
 
         // ---------------
         // Card flag test
         // ---------------
         // before toggling flag
-        assertThat(javaScriptFunction.ankiGetCardFlag(Companion.jsApiContract()).decodeToString().toInt(), equalTo(0))
+        assertThat(
+            jsapi.handleJsApiRequest("cardFlag", jsApiContract(), true)
+                .decodeToString().toInt(),
+            equalTo(0)
+        )
 
-        // call javascript function defined in card.js to toggle flag
-        javaScriptFunction.ankiToggleFlag(Companion.jsApiContract("red"))
-        assertThat(javaScriptFunction.ankiGetCardFlag(Companion.jsApiContract()).decodeToString().toInt(), equalTo(1))
+        // call javascript function to toggle flag
+        assertThat(
+            jsapi.handleJsApiRequest("toggleFlag", jsApiContract("red"), true)
+                .decodeToString().toBoolean(),
+            equalTo(true)
+        )
+        // after toggling flag
+        assertThat(
+            jsapi.handleJsApiRequest("cardFlag", jsApiContract(), true)
+                .decodeToString().toInt(),
+            equalTo(1)
+        )
     }
 
     // TODO - update test
@@ -295,17 +269,16 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         decks.select(didA)
 
         val reviewer: Reviewer = startReviewer()
-        val javaScriptFunction = reviewer.javaScriptFunction()
+        val jsapi = reviewer.javaScriptFunction()
         // init js api
-        javaScriptFunction.init(Companion.jsApiContract())
+        jsapi.init(jsApiContract())
         waitForAsyncTasksToComplete()
 
         // ----------
         // Bury Card
         // ----------
         // call script to bury current card
-        javaScriptFunction.ankiBuryCard(Companion.jsApiContract())
-        waitForAsyncTasksToComplete()
+        assertTrue(getDataFromRequest("buryCard", jsapi).toBoolean())
 
         // count number of notes
         val sched = reviewer.getColUnsafe
@@ -315,7 +288,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Bury Note
         // ----------
         // call script to bury current note
-        javaScriptFunction.ankiBuryNote(Companion.jsApiContract())
+        assertTrue(getDataFromRequest("buryNote", jsapi).toBoolean())
 
         // count number of notes
         assertThat(sched.cardCount(), equalTo(3))
@@ -324,7 +297,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Suspend Card
         // -------------
         // call script to suspend current card
-        javaScriptFunction.ankiSuspendCard(Companion.jsApiContract())
+        assertTrue(getDataFromRequest("suspendCard", jsapi).toBoolean())
 
         // count number of notes
         assertThat(sched.cardCount(), equalTo(2))
@@ -333,7 +306,7 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         // Suspend Note
         // -------------
         // call script to suspend current note
-        javaScriptFunction.ankiSuspendNote(Companion.jsApiContract())
+        assertTrue(getDataFromRequest("suspendNote", jsapi).toBoolean())
 
         // count number of notes
         assertThat(sched.cardCount(), equalTo(1))
@@ -358,16 +331,17 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()
 
-        val javaScriptFunction = reviewer.javaScriptFunction()
+        val jsapi = reviewer.javaScriptFunction()
         // init js api
-        javaScriptFunction.init(Companion.jsApiContract())
+        jsapi.init(jsApiContract())
         // get card id for testing due
-        val cardId = javaScriptFunction.ankiGetCardId(Companion.jsApiContract()).decodeToString().toLong()
+        val cardId = getDataFromRequest("cardId", jsapi).toLong()
 
         // test that card rescheduled for 15 days interval and returned true
         assertTrue(
             "Card rescheduled, so returns true",
-            javaScriptFunction.ankiSetCardDue(Companion.jsApiContract("15")).decodeToString().toBoolean()
+            jsapi.handleJsApiRequest("setCardDue", jsApiContract("15"), true)
+                .decodeToString().toBoolean()
         )
         waitForAsyncTasksToComplete()
 
@@ -397,17 +371,14 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         val reviewer: Reviewer = startReviewer()
         waitForAsyncTasksToComplete()
 
-        val javaScriptFunction = reviewer.javaScriptFunction()
+        val jsapi = reviewer.javaScriptFunction()
         // init js api
-        javaScriptFunction.init(Companion.jsApiContract())
+        jsapi.init(jsApiContract())
         // get card id for testing due
-        val cardId = javaScriptFunction.ankiGetCardId(Companion.jsApiContract()).decodeToString().toLong()
+        val cardId = getDataFromRequest("cardId", jsapi).toLong()
 
         // test that card reset
-        assertTrue(
-            "Card progress reset",
-            javaScriptFunction.ankiResetProgress(Companion.jsApiContract()).decodeToString().toBoolean()
-        )
+        assertTrue("Card progress reset", getDataFromRequest("resetProgress", jsapi).toBoolean())
         waitForAsyncTasksToComplete()
 
         // verify that card progress reset
@@ -416,6 +387,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         assertEquals("Card due after reset", 2, cardAfterReset.due)
         assertEquals("Card interval after reset", 0, cardAfterReset.ivl)
         assertEquals("Card type after reset", Consts.CARD_TYPE_NEW, cardAfterReset.type)
+    }
+
+    private suspend fun getDataFromRequest(methodName: String, jsAPI: AnkiDroidJsAPI): String {
+        return jsAPI.handleJsApiRequest(methodName, jsApiContract(), true)
+            .decodeToString()
     }
 
     companion object {

@@ -25,13 +25,14 @@ import android.net.Uri
 import com.github.zafarkhaja.semver.Version
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
+import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.servicelayer.rescheduleCards
+import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.snackbar.setMaxLines
 import com.ichi2.anki.snackbar.showSnackbar
 import com.ichi2.libanki.Card
 import com.ichi2.libanki.CardId
-import com.ichi2.libanki.Consts.CARD_QUEUE
-import com.ichi2.libanki.Consts.CARD_TYPE
 import com.ichi2.libanki.Decks
 import com.ichi2.libanki.SortOrder
 import com.ichi2.utils.NetworkUtils
@@ -141,7 +142,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      *
      * show developer contact if js api used in card is deprecated
      */
-    fun showDeveloperContact(errorCode: Int) {
+    private fun showDeveloperContact(errorCode: Int) {
         val errorMsg: String = context.getString(R.string.anki_js_error_code, errorCode)
         val snackbarMsg: String = context.getString(R.string.api_version_developer_contact, cardSuppliedDeveloperContact, errorMsg)
 
@@ -199,11 +200,11 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         }
     }
 
-    protected fun getJsApiListMap(): HashMap<String, Boolean> {
+    private fun getJsApiListMap(): HashMap<String, Boolean> {
         return mJsApiListMap
     }
 
-    suspend fun init(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+    fun init(byteArray: ByteArray): ByteArray {
         var apiStatusJson = ""
         try {
             checkJsApiContract(byteArray)
@@ -214,284 +215,133 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
                 activity.showSnackbar(context.getString(R.string.invalid_json_data, j.localizedMessage))
             }
         }
-        convertToByteArray(apiStatusJson)
+        return convertToByteArray(apiStatusJson)
     }
 
-    // This method and the one belows return "default" values when there is no count nor ETA.
-    // Javascript may expect ETA and Counts to be set, this ensure it does not bug too much by providing a value of correct type
-    // but with a clearly incorrect value.
-    // It's overridden in the Reviewer, where those values are actually defined.
-    open suspend fun ankiGetNewCardCount(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        convertToByteArray(-1)
-    }
-
-    open suspend fun ankiGetLrnCardCount(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        convertToByteArray(-1)
-    }
-
-    open suspend fun ankiGetRevCardCount(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        convertToByteArray(-1)
-    }
-
-    open suspend fun ankiGetETA(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        convertToByteArray(-1)
-    }
-
-    suspend fun ankiGetCardMark(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
+    /**
+     * Handle js api request,
+     * some of the methods are overriden in Reviewer.kt and default values are returned.
+     * @param methodName
+     * @param bytes
+     * @return
+     */
+    open suspend fun handleJsApiRequest(methodName: String, bytes: ByteArray, isReviewer: Boolean) = withContext(Dispatchers.Main) {
+        val data = checkJsApiContract(bytes)
+        // if api not init or is api not called from reviewer then return default -1
+        // also other action will not be modified
+        if (!data.first or !isReviewer) {
+            return@withContext convertToByteArray(-1)
         }
-        convertToByteArray(currentCard.note().hasTag("marked"))
-    }
 
-    suspend fun ankiGetCardFlag(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
+        val cardDataForJsAPI = activity.getCardDataForJsApi()
+
+        return@withContext when (methodName) {
+            "init" -> init(bytes)
+            "newCardCount" -> convertToByteArray(cardDataForJsAPI.newCardCount)
+            "lrnCardCount" -> convertToByteArray(cardDataForJsAPI.lrnCardCount)
+            "revCardCount" -> convertToByteArray(cardDataForJsAPI.revCardCount)
+            "eta" -> convertToByteArray(cardDataForJsAPI.eta)
+            "nextTime1" -> convertToByteArray(cardDataForJsAPI.nextTime1)
+            "nextTime2" -> convertToByteArray(cardDataForJsAPI.nextTime2)
+            "nextTime3" -> convertToByteArray(cardDataForJsAPI.nextTime3)
+            "nextTime4" -> convertToByteArray(cardDataForJsAPI.nextTime4)
+            "toggleFlag" -> ankiToggleFlag(bytes)
+            "markCard" -> ankiMarkCard(bytes)
+            "buryCard" -> ankiBuryCard()
+            "buryNote" -> ankiBuryNote()
+            "suspendCard" -> ankiSuspendCard()
+            "suspendNote" -> ankiSuspendNote()
+            "setCardDue" -> ankiSetCardDue(bytes)
+            "resetProgress" -> ankiResetProgress(bytes)
+            "cardMark" -> convertToByteArray(currentCard.note().hasTag("marked"))
+            "cardFlag" -> convertToByteArray(currentCard.userFlag())
+            "cardReps" -> convertToByteArray(currentCard.reps)
+            "cardInterval" -> convertToByteArray(currentCard.ivl)
+            "cardFactor" -> convertToByteArray(currentCard.factor)
+            "cardMod" -> convertToByteArray(currentCard.mod)
+            "cardId" -> convertToByteArray(currentCard.id)
+            "cardNid" -> convertToByteArray(currentCard.nid)
+            "cardType" -> convertToByteArray(currentCard.type)
+            "cardDid" -> convertToByteArray(currentCard.did)
+            "cardLeft" -> convertToByteArray(currentCard.left)
+            "cardODid" -> convertToByteArray(currentCard.oDid)
+            "cardODue" -> convertToByteArray(currentCard.oDue)
+            "cardQueue" -> convertToByteArray(currentCard.queue)
+            "cardLapses" -> convertToByteArray(currentCard.lapses)
+            "cardDue" -> convertToByteArray(currentCard.due)
+            "deckName" -> convertToByteArray(Decks.basename(activity.getColUnsafe.decks.name(currentCard.did)))
+            "isActiveNetworkMetered" -> convertToByteArray(NetworkUtils.isActiveNetworkMetered())
+            "ttsSetLanguage" -> convertToByteArray(mTalker.setLanguage(data.second))
+            "ttsSpeak" -> ankiTtsSpeak(bytes)
+            "ttsIsSpeaking" -> convertToByteArray(mTalker.isSpeaking)
+            "ttsSetPitch" -> convertToByteArray(mTalker.setPitch(data.second.toFloat()))
+            "ttsSetSpeechRate" -> convertToByteArray(mTalker.setSpeechRate(data.second.toFloat()))
+            "ttsFieldModifierIsAvailable" ->
+                // Know if {{tts}} is supported - issue #10443
+                // Return false for now
+                convertToByteArray(false)
+            "ttsStop" -> convertToByteArray(mTalker.stop())
+            "searchCard" -> ankiSearchCard(bytes)
+            "searchCardWithCallback" -> ankiSearchCardWithCallback(bytes)
+            "isDisplayingAnswer" -> convertToByteArray(activity.isDisplayingAnswer)
+            "addTagToCard" -> {
+                activity.runOnUiThread { activity.showTagsDialog() }
+                convertToByteArray(true)
+            }
+            "isInFullscreen" -> convertToByteArray(activity.isFullscreen)
+            "isTopbarShown" -> convertToByteArray(activity.prefShowTopbar)
+            "isInNightMode" -> convertToByteArray(activity.isInNightMode)
+            "enableHorizontalScrollbar" -> {
+                activity.webView!!.isHorizontalScrollBarEnabled = data.second.toBoolean()
+                convertToByteArray(true)
+            }
+            "enableVerticalScrollbar" -> {
+                activity.webView!!.isVerticalScrollBarEnabled = data.second.toBoolean()
+                convertToByteArray(true)
+            }
+            else -> {
+                throw Exception("unhandled request: $methodName")
+            }
         }
-        convertToByteArray(currentCard.userFlag())
     }
 
-    // behavior change ankiGetNextTime1...4
-    open suspend fun ankiGetNextTime1(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(activity.easeButton1!!.nextTime)
-    }
-
-    open suspend fun ankiGetNextTime2(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(activity.easeButton2!!.nextTime)
-    }
-
-    open suspend fun ankiGetNextTime3(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(activity.easeButton3!!.nextTime)
-    }
-
-    open suspend fun ankiGetNextTime4(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(activity.easeButton4!!.nextTime)
-    }
-
-    suspend fun ankiGetCardReps(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.reps)
-    }
-
-    suspend fun ankiGetCardInterval(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.ivl)
-    }
-
-    /** Returns the ease as an int (percentage * 10). Default: 2500 (250%). Minimum: 1300 (130%)  */
-    suspend fun ankiGetCardFactor(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.factor)
-    }
-
-    /** Returns the last modified time as a Unix timestamp in seconds. Example: 1477384099  */
-    suspend fun ankiGetCardMod(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.mod)
-    }
-
-    /** Returns the ID of the card. Example: 1477380543053  */
-    suspend fun ankiGetCardId(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.id)
-    }
-
-    /** Returns the ID of the note which generated the card. Example: 1590418157630  */
-    suspend fun ankiGetCardNid(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.nid)
-    }
-
-    @CARD_TYPE
-    suspend fun ankiGetCardType(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.type)
-    }
-
-    /** Returns the ID of the deck which contains the card. Example: 1595967594978  */
-    suspend fun ankiGetCardDid(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.did)
-    }
-
-    suspend fun ankiGetCardLeft(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.left)
-    }
-
-    /** Returns the ID of the home deck for the card if it is filtered, or 0 if not filtered. Example: 1595967594978  */
-    suspend fun ankiGetCardODid(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.oDid)
-    }
-
-    suspend fun ankiGetCardODue(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.oDue)
-    }
-
-    @CARD_QUEUE
-    suspend fun ankiGetCardQueue(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.queue)
-    }
-
-    suspend fun ankiGetCardLapses(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.lapses)
-    }
-
-    suspend fun ankiGetCardDue(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(currentCard.due)
-    }
-
-    suspend fun ankiIsInFullscreen(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(activity.isFullscreen)
-    }
-
-    suspend fun ankiIsTopbarShown(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(activity.prefShowTopbar)
-    }
-
-    suspend fun ankiIsInNightMode(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(activity.isInNightMode)
-    }
-
-    suspend fun ankiIsDisplayingAnswer(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(activity.isDisplayingAnswer)
-    }
-
-    suspend fun ankiGetDeckName(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(Decks.basename(activity.getColUnsafe.decks.name(currentCard.did)))
-    }
-
-    suspend fun ankiBuryCard(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        checkJsApiContract(byteArray)
-        if (!isInit(AnkiDroidJsAPIConstants.BURY_CARD, AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryCard)) {
+    private suspend fun ankiBuryCard(): ByteArray = withContext(Dispatchers.Main) {
+        if (!mJsApiListMap[AnkiDroidJsAPIConstants.BURY_CARD]!!) {
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryCard)
             return@withContext convertToByteArray(false)
         }
 
         convertToByteArray(activity.buryCard())
     }
 
-    suspend fun ankiBuryNote(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        checkJsApiContract(byteArray)
-        if (!isInit(AnkiDroidJsAPIConstants.BURY_NOTE, AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryNote)) {
+    private suspend fun ankiBuryNote(): ByteArray = withContext(Dispatchers.Main) {
+        if (!mJsApiListMap[AnkiDroidJsAPIConstants.BURY_NOTE]!!) {
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeBuryNote)
             return@withContext convertToByteArray(false)
         }
 
         convertToByteArray(activity.buryNote())
     }
 
-    suspend fun ankiSuspendCard(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        checkJsApiContract(byteArray)
-        if (!isInit(AnkiDroidJsAPIConstants.SUSPEND_CARD, AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendCard)) {
+    private suspend fun ankiSuspendCard(): ByteArray = withContext(Dispatchers.Main) {
+        if (!mJsApiListMap[AnkiDroidJsAPIConstants.SUSPEND_CARD]!!) {
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendCard)
             return@withContext convertToByteArray(false)
         }
 
         convertToByteArray(activity.suspendCard())
     }
 
-    suspend fun ankiSuspendNote(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        checkJsApiContract(byteArray)
-        if (!isInit(AnkiDroidJsAPIConstants.SUSPEND_NOTE, AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendNote)) {
+    private suspend fun ankiSuspendNote(): ByteArray = withContext(Dispatchers.Main) {
+        if (!mJsApiListMap[AnkiDroidJsAPIConstants.SUSPEND_NOTE]!!) {
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeSuspendNote)
             return@withContext convertToByteArray(false)
         }
 
         convertToByteArray(activity.suspendNote())
     }
 
-    suspend fun ankiAddTagToCard(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        activity.runOnUiThread { activity.showTagsDialog() }
-        convertToByteArray(true)
-    }
-
-    suspend fun ankiSearchCard(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+    private suspend fun ankiSearchCard(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
         val data = checkJsApiContract(byteArray)
         if (!data.first) {
             return@withContext convertToByteArray(false)
@@ -504,25 +354,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         convertToByteArray(true)
     }
 
-    suspend fun ankiIsActiveNetworkMetered(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(NetworkUtils.isActiveNetworkMetered())
-    }
-
-    // Know if {{tts}} is supported - issue #10443
-    // Return false for now
-    suspend fun ankiTtsFieldModifierIsAvailable(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(false)
-    }
-
-    suspend fun ankiTtsSpeak(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+    private suspend fun ankiTtsSpeak(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
         val data = checkJsApiContract(byteArray)
         if (!data.first) {
             return@withContext convertToByteArray(-1)
@@ -533,65 +365,7 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         convertToByteArray(mTalker.speak(text, queueMode))
     }
 
-    suspend fun ankiTtsSetLanguage(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(-1)
-        }
-        convertToByteArray(mTalker.setLanguage(data.second))
-    }
-
-    suspend fun ankiTtsSetPitch(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(-1)
-        }
-        convertToByteArray(mTalker.setPitch(data.second.toFloat()))
-    }
-
-    suspend fun ankiTtsSetSpeechRate(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(-1)
-        }
-        convertToByteArray(mTalker.setSpeechRate(data.second.toFloat()))
-    }
-
-    suspend fun ankiTtsIsSpeaking(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(mTalker.isSpeaking)
-    }
-
-    suspend fun ankiTtsStop(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        convertToByteArray(mTalker.stop())
-    }
-
-    suspend fun ankiEnableHorizontalScrollbar(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        activity.webView!!.isHorizontalScrollBarEnabled = data.second.toBoolean()
-        convertToByteArray(true)
-    }
-
-    suspend fun ankiEnableVerticalScrollbar(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(byteArray)
-        if (!data.first) {
-            return@withContext convertToByteArray(false)
-        }
-        activity.webView!!.isVerticalScrollBarEnabled = data.second.toBoolean()
-        convertToByteArray(true)
-    }
-
-    suspend fun ankiSearchCardWithCallback(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+    private suspend fun ankiSearchCardWithCallback(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
         val data = checkJsApiContract(byteArray)
         if (!data.first) {
             return@withContext convertToByteArray(false)
@@ -633,27 +407,103 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         convertToByteArray(true)
     }
 
-    open suspend fun ankiSetCardDue(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        // the function is overridden in Reviewer.kt
-        // it may be called in previewer so just return true value here
+    private suspend fun ankiSetCardDue(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+        val data = checkJsApiContract(byteArray)
+        val daysInt = data.second.toInt()
+        val apiList = getJsApiListMap()
+        if (!apiList[AnkiDroidJsAPIConstants.SET_CARD_DUE]!!) {
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
+            return@withContext convertToByteArray(false)
+        }
+
+        if (daysInt < 0 || daysInt > 9999) {
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue)
+            convertToByteArray(false)
+        }
+
+        val cardIds = listOf(currentCard.id)
+        activity.launchCatchingTask {
+            activity.rescheduleCards(cardIds, daysInt)
+        }
         convertToByteArray(true)
     }
 
-    open suspend fun ankiResetProgress(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        // the function is overridden in Reviewer.kt
-        // it may be called in previewer so just return true value here
+    private suspend fun ankiResetProgress(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+        checkJsApiContract(byteArray)
+        val apiList = getJsApiListMap()
+        if (!apiList[AnkiDroidJsAPIConstants.RESET_PROGRESS]!!) {
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
+            return@withContext convertToByteArray(false)
+        }
+        val cardIds = listOf(currentCard.id)
+        activity.launchCatchingTask {
+            activity.resetCards(cardIds)
+        }
         convertToByteArray(true)
     }
 
-    open suspend fun ankiMarkCard(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        // the function is overridden in Reviewer.kt
-        // it may be called in previewer so just return true value here
+    private suspend fun ankiMarkCard(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+        checkJsApiContract(byteArray)
+        val apiList = getJsApiListMap()
+        if (!apiList[AnkiDroidJsAPIConstants.MARK_CARD]!!) {
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
+            return@withContext convertToByteArray(false)
+        }
+
+        activity.executeCommand(ViewerCommand.MARK)
         convertToByteArray(true)
     }
 
-    open suspend fun ankiToggleFlag(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-        // the function is overridden in Reviewer.kt
-        // it may be called in previewer so just return true value here
+    private suspend fun ankiToggleFlag(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
+        val flag = checkJsApiContract(byteArray).second
+        // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
+        val apiList = getJsApiListMap()
+        if (!apiList[AnkiDroidJsAPIConstants.TOGGLE_FLAG]!!) {
+            showDeveloperContact(AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault)
+            return@withContext convertToByteArray(false)
+        }
+
+        when (flag) {
+            "none" -> {
+                activity.executeCommand(ViewerCommand.UNSET_FLAG)
+            }
+            "red" -> {
+                activity.executeCommand(ViewerCommand.TOGGLE_FLAG_RED)
+            }
+            "orange" -> {
+                activity.executeCommand(ViewerCommand.TOGGLE_FLAG_ORANGE)
+            }
+            "green" -> {
+                activity.executeCommand(ViewerCommand.TOGGLE_FLAG_GREEN)
+            }
+            "blue" -> {
+                activity.executeCommand(ViewerCommand.TOGGLE_FLAG_BLUE)
+            }
+            "pink" -> {
+                activity.executeCommand(ViewerCommand.TOGGLE_FLAG_PINK)
+            }
+            "turquoise" -> {
+                activity.executeCommand(ViewerCommand.TOGGLE_FLAG_TURQUOISE)
+            }
+            "purple" -> {
+                activity.executeCommand(ViewerCommand.TOGGLE_FLAG_PURPLE)
+            }
+            else -> {
+                Timber.d("No such Flag found.")
+                convertToByteArray(false)
+            }
+        }
         convertToByteArray(true)
+    }
+
+    open class CardDataForJsApi {
+        var newCardCount = ""
+        var lrnCardCount = ""
+        var revCardCount = ""
+        var eta = -1
+        var nextTime1 = ""
+        var nextTime2 = ""
+        var nextTime3 = ""
+        var nextTime4 = ""
     }
 }

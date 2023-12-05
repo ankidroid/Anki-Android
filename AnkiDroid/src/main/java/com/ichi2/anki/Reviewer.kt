@@ -46,12 +46,6 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
 import com.ichi2.anim.ActivityTransitionAnimation.getInverseTransition
-import com.ichi2.anki.AnkiDroidJsAPIConstants.MARK_CARD
-import com.ichi2.anki.AnkiDroidJsAPIConstants.RESET_PROGRESS
-import com.ichi2.anki.AnkiDroidJsAPIConstants.SET_CARD_DUE
-import com.ichi2.anki.AnkiDroidJsAPIConstants.TOGGLE_FLAG
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeDefault
-import com.ichi2.anki.AnkiDroidJsAPIConstants.ankiJsErrorCodeSetDue
 import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Whiteboard.Companion.createInstance
 import com.ichi2.anki.Whiteboard.OnPaintColorChangeListener
@@ -91,8 +85,6 @@ import com.ichi2.utils.HandlerUtils.getDefaultLooper
 import com.ichi2.utils.Permissions.canRecordAudio
 import com.ichi2.utils.ViewGroupUtils.setRenderWorkaround
 import com.ichi2.widget.WidgetStatus.updateInBackground
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
 import java.util.function.Consumer
@@ -1561,162 +1553,20 @@ open class Reviewer :
     }
 
     override fun javaScriptFunction(): AnkiDroidJsAPI {
-        return ReviewerJavaScriptFunction(this)
+        return AnkiDroidJsAPI(this)
     }
 
-    inner class ReviewerJavaScriptFunction(activity: AbstractFlashcardViewer) : AnkiDroidJsAPI(activity) {
-        override suspend fun ankiGetNewCardCount(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val data = checkJsApiContract(byteArray)
-            if (!data.first) {
-                return@withContext convertToByteArray(-1)
-            }
-            convertToByteArray(mNewCount.toString())
-        }
-
-        override suspend fun ankiGetLrnCardCount(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val data = checkJsApiContract(byteArray)
-            if (!data.first) {
-                return@withContext convertToByteArray(-1)
-            }
-            convertToByteArray(mLrnCount.toString())
-        }
-
-        override suspend fun ankiGetRevCardCount(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val data = checkJsApiContract(byteArray)
-            if (!data.first) {
-                return@withContext convertToByteArray(-1)
-            }
-            convertToByteArray(mRevCount.toString())
-        }
-
-        override suspend fun ankiGetETA(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val data = checkJsApiContract(byteArray)
-            if (!data.first) {
-                return@withContext convertToByteArray(-1)
-            }
-            convertToByteArray(mEta)
-        }
-
-        override suspend fun ankiGetNextTime1(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val data = checkJsApiContract(byteArray)
-            if (!data.first) {
-                return@withContext convertToByteArray(-1)
-            }
-            convertToByteArray(easeButton1!!.nextTime)
-        }
-
-        override suspend fun ankiGetNextTime2(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val data = checkJsApiContract(byteArray)
-            if (!data.first) {
-                return@withContext convertToByteArray(-1)
-            }
-            convertToByteArray(easeButton2!!.nextTime)
-        }
-
-        override suspend fun ankiGetNextTime3(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val data = checkJsApiContract(byteArray)
-            if (!data.first) {
-                return@withContext convertToByteArray(-1)
-            }
-            convertToByteArray(easeButton3!!.nextTime)
-        }
-
-        override suspend fun ankiGetNextTime4(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val data = checkJsApiContract(byteArray)
-            if (!data.first) {
-                return@withContext convertToByteArray(-1)
-            }
-            convertToByteArray(easeButton4!!.nextTime)
-        }
-
-        override suspend fun ankiSetCardDue(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val data = checkJsApiContract(byteArray)
-            val daysInt = data.second.toInt()
-            val apiList = getJsApiListMap()
-            if (!apiList[SET_CARD_DUE]!!) {
-                showDeveloperContact(ankiJsErrorCodeDefault)
-                return@withContext convertToByteArray(false)
-            }
-
-            if (daysInt < 0 || daysInt > 9999) {
-                showDeveloperContact(ankiJsErrorCodeSetDue)
-                convertToByteArray(false)
-            }
-
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                rescheduleCards(cardIds, daysInt)
-            }
-            convertToByteArray(true)
-        }
-
-        override suspend fun ankiResetProgress(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            checkJsApiContract(byteArray)
-            val apiList = getJsApiListMap()
-            if (!apiList[RESET_PROGRESS]!!) {
-                showDeveloperContact(ankiJsErrorCodeDefault)
-                return@withContext convertToByteArray(false)
-            }
-            val cardIds = listOf(currentCard!!.id)
-            launchCatchingTask {
-                resetCards(cardIds)
-            }
-            convertToByteArray(true)
-        }
-
-        override suspend fun ankiMarkCard(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            checkJsApiContract(byteArray)
-            val apiList = getJsApiListMap()
-            if (!apiList[MARK_CARD]!!) {
-                showDeveloperContact(ankiJsErrorCodeDefault)
-                return@withContext convertToByteArray(false)
-            }
-
-            executeCommand(ViewerCommand.MARK)
-            convertToByteArray(true)
-        }
-
-        override suspend fun ankiToggleFlag(byteArray: ByteArray): ByteArray = withContext(Dispatchers.Main) {
-            val flag = checkJsApiContract(byteArray).second
-            // flag card (blue, green, orange, red) using javascript from AnkiDroid webview
-            val apiList = getJsApiListMap()
-            if (!apiList[TOGGLE_FLAG]!!) {
-                showDeveloperContact(ankiJsErrorCodeDefault)
-                return@withContext convertToByteArray(false)
-            }
-
-            when (flag) {
-                "none" -> {
-                    executeCommand(ViewerCommand.UNSET_FLAG)
-                }
-                "red" -> {
-                    executeCommand(ViewerCommand.TOGGLE_FLAG_RED)
-                }
-                "orange" -> {
-                    executeCommand(ViewerCommand.TOGGLE_FLAG_ORANGE)
-                }
-                "green" -> {
-                    executeCommand(ViewerCommand.TOGGLE_FLAG_GREEN)
-                }
-                "blue" -> {
-                    executeCommand(ViewerCommand.TOGGLE_FLAG_BLUE)
-                }
-                "pink" -> {
-                    executeCommand(ViewerCommand.TOGGLE_FLAG_PINK)
-                }
-                "turquoise" -> {
-                    executeCommand(ViewerCommand.TOGGLE_FLAG_TURQUOISE)
-                }
-                "purple" -> {
-                    executeCommand(ViewerCommand.TOGGLE_FLAG_PURPLE)
-                }
-                else -> {
-                    Timber.d("No such Flag found.")
-                    convertToByteArray(false)
-                }
-            }
-            convertToByteArray(true)
-        }
+    override fun getCardDataForJsApi(): AnkiDroidJsAPI.CardDataForJsApi {
+        val cardDataForJsAPI = AnkiDroidJsAPI.CardDataForJsApi()
+        cardDataForJsAPI.newCardCount = mNewCount.toString()
+        cardDataForJsAPI.lrnCardCount = mLrnCount.toString()
+        cardDataForJsAPI.revCardCount = mRevCount.toString()
+        cardDataForJsAPI.nextTime1 = easeButton1!!.nextTime
+        cardDataForJsAPI.nextTime2 = easeButton2!!.nextTime
+        cardDataForJsAPI.nextTime3 = easeButton3!!.nextTime
+        cardDataForJsAPI.nextTime4 = easeButton4!!.nextTime
+        cardDataForJsAPI.eta = mEta
+        return cardDataForJsAPI
     }
 
     companion object {
