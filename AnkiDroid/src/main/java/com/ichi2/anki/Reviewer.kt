@@ -177,7 +177,10 @@ open class Reviewer :
     }
 
     override fun onResume() {
-        answerTimer.resume()
+        when {
+            stopTimerOnAnswer && isDisplayingAnswer -> {}
+            else -> answerTimer.resume()
+        }
         super.onResume()
         if (answerField != null) {
             answerField!!.focusWithKeyboard()
