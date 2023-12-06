@@ -534,7 +534,6 @@ class Notetypes(val col: Collection) {
         fmap: Map<Int, Int?>,
         cmap: Map<Int, Int?>
     ) {
-        col.modSchema()
         val fieldMap = convertLegacyMap(fmap, newModel.fieldsNames.size)
         val templateMap =
             if (cmap.isEmpty() || m.type == MODEL_CLOZE || newModel.type == MODEL_CLOZE) {
