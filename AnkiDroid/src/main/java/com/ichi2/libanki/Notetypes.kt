@@ -48,7 +48,6 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.utils.*
 import com.ichi2.utils.Assert
 import com.ichi2.utils.HashUtil
-import com.ichi2.utils.KotlinCleanup
 import com.ichi2.utils.jsonObjectIterable
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendNotFoundException
@@ -637,11 +636,8 @@ class Notetypes(val col: Collection) {
     companion object {
         const val NOT_FOUND_NOTE_TYPE = -1L
 
-        @KotlinCleanup("direct return and use scope function")
-        fun newTemplate(name: String?): JSONObject {
-            val t = JSONObject(defaultTemplate)
-            t.put("name", name)
-            return t
+        fun newTemplate(name: String): JSONObject = JSONObject(defaultTemplate).also {
+            it.put("name", name)
         }
 
         private const val defaultTemplate =
