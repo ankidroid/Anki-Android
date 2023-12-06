@@ -869,27 +869,9 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /**
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
      */
-    private fun changeNoteTypeWithErrorHandling(oldNotetype: NotetypeJson?, newNotetype: NotetypeJson?) {
-        val res = resources
-        try {
+    private fun changeNoteTypeWithErrorHandling(oldNotetype: NotetypeJson?, newNotetype: NotetypeJson?) = launchCatchingTask {
+        if (userAcceptsSchemaChange()) {
             changeNoteType(oldNotetype, newNotetype)
-        } catch (e: ConfirmModSchemaException) {
-            e.log()
-            // Libanki has determined we should ask the user to confirm first
-            val dialog = ConfirmationDialog()
-            dialog.setArgs(res.getString(R.string.full_sync_confirmation))
-            val confirm = Runnable {
-                // Bypass the check once the user confirms
-                getColUnsafe.modSchemaNoCheck()
-                try {
-                    changeNoteType(oldNotetype, newNotetype)
-                } catch (e2: ConfirmModSchemaException) {
-                    // This should never be reached as we explicitly called modSchemaNoCheck()
-                    throw RuntimeException(e2)
-                }
-            }
-            dialog.setConfirm(confirm)
-            showDialogFragment(dialog)
         }
     }
 
