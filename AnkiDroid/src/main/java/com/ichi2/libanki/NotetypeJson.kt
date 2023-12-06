@@ -44,7 +44,6 @@ class NotetypeJson : JSONObject {
      *
      * @see NotetypeJson.from
      */
-    @KotlinCleanup("non-null")
     constructor(json: JSONObject) : super() {
         json.deepClonedInto(this)
     }
@@ -52,8 +51,7 @@ class NotetypeJson : JSONObject {
     /**
      * Creates a model object form json string
      */
-    @KotlinCleanup("non-null")
-    constructor(json: String?) : super(json!!)
+    constructor(json: String) : super(json)
 
     @CheckResult
     fun deepClone(): NotetypeJson {
