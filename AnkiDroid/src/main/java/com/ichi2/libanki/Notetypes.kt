@@ -39,6 +39,7 @@ import anki.notetypes.NotetypeNameIdUseCount
 import anki.notetypes.StockNotetype
 import com.google.protobuf.ByteString
 import com.ichi2.anki.CrashReportService
+import com.ichi2.annotations.NeedsTest
 import com.ichi2.libanki.Consts.MODEL_CLOZE
 import com.ichi2.libanki.Utils.checksum
 import com.ichi2.libanki.backend.BackendUtils
@@ -114,6 +115,9 @@ class Notetypes(val col: Collection) {
     private fun _get_cached(ntid: int): NotetypeJson? {
         return _cache.get(ntid)
     }
+
+    @NeedsTest("14827: styles are updated after syncing style changes")
+    fun _clear_cache() = _cache.clear()
 
     /*
     # Listing note types
