@@ -53,7 +53,6 @@ import kotlin.test.junit.JUnitAsserter.assertNotNull
  *
  * These tests should cover all supported operations for each URI.
  */
-@KotlinCleanup("is -> equalTo")
 class ContentProviderTest : InstrumentedTest() {
     @get:Rule
     var runtimePermissionRule = grantPermissions(storagePermission, FlashCardsContract.READ_WRITE_PERMISSION)
@@ -184,8 +183,8 @@ class ContentProviderTest : InstrumentedTest() {
         // Note: We duplicated the code as it did not appear to be accessible via reflection
         val initialPosition = cursor.position
         cursorFillWindow(cursor, 0, window)
-        assertThat("position should not change", cursor.position, `is`(initialPosition))
-        assertThat("Count should be copied", window.numRows, `is`(cursor.count))
+        assertThat("position should not change", cursor.position, equalTo(initialPosition))
+        assertThat("Count should be copied", window.numRows, equalTo(cursor.count))
     }
 
     /**
@@ -567,7 +566,7 @@ class ContentProviderTest : InstrumentedTest() {
             cv.put(FlashCardsContract.Model.CSS, TEST_MODEL_CSS)
             assertThat(
                 cr.update(modelUri, cv, null, null),
-                `is`(greaterThan(0))
+                greaterThan(0)
             )
             col = reopenCol()
             model = col.notetypes.get(mid)
@@ -589,9 +588,7 @@ class ContentProviderTest : InstrumentedTest() {
                 assertThat(
                     "Update rows",
                     cr.update(tmplUri, cv, null, null),
-                    `is`(
-                        greaterThan(0)
-                    )
+                    greaterThan(0)
                 )
                 col = reopenCol()
                 model = col.notetypes.get(mid)
@@ -633,7 +630,7 @@ class ContentProviderTest : InstrumentedTest() {
             assertThat(
                 "Check that there is at least one result",
                 allModels.count,
-                `is`(greaterThan(0))
+                greaterThan(0)
             )
             while (allModels.moveToNext()) {
                 val modelId =
@@ -665,18 +662,14 @@ class ContentProviderTest : InstrumentedTest() {
                     assertThat(
                         "Check that valid number of fields",
                         Utils.splitFields(flds).size,
-                        `is`(
-                            greaterThanOrEqualTo(1)
-                        )
+                        greaterThanOrEqualTo(1)
                     )
                     val numCards =
                         allModels.getInt(allModels.getColumnIndex(FlashCardsContract.Model.NUM_CARDS))
                     assertThat(
                         "Check that valid number of cards",
                         numCards,
-                        `is`(
-                            greaterThanOrEqualTo(1)
-                        )
+                        greaterThanOrEqualTo(1)
                     )
                 }
             }
@@ -716,9 +709,7 @@ class ContentProviderTest : InstrumentedTest() {
                     assertThat(
                         "Check that there is at least one result for cards",
                         cardsCursor!!.count,
-                        `is`(
-                            greaterThan(0)
-                        )
+                        greaterThan(0)
                     )
                     while (cardsCursor.moveToNext()) {
                         val targetDid = mTestDeckIds[0]
@@ -1295,9 +1286,7 @@ class ContentProviderTest : InstrumentedTest() {
             assertThat(
                 "At least one card added for note",
                 col.addNote(newNote),
-                `is`(
-                    greaterThanOrEqualTo(1)
-                )
+                greaterThanOrEqualTo(1)
             )
             for (c in newNote.cards()) {
                 c.did = did

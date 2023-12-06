@@ -29,7 +29,6 @@ import kotlin.test.assertNotNull
 
 // Note: These tests can't be run individually but can from the class-level
 // gradlew AnkiDroid:testDebug --tests "com.ichi2.libanki.AbstractSchedTest.*"
-@KotlinCleanup("is -> equalTo")
 @KotlinCleanup("reduce newlines in asserts")
 @KotlinCleanup("improve increaseAndAssertNewCountsIs")
 @RunWith(AndroidJUnit4::class)
@@ -47,15 +46,15 @@ class AbstractSchedTest : JvmTest() {
             note.setField(0, "a")
             col.addNote(note)
         }
-        assertThat(col.cardCount(), `is`(20))
-        assertThat(sched.newCount(), `is`(10))
+        assertThat(col.cardCount(), equalTo(20))
+        assertThat(sched.newCount(), equalTo(10))
         val card = sched.card
-        assertThat(sched.newCount(), `is`(10))
-        assertThat(sched.counts().new, `is`(10))
+        assertThat(sched.newCount(), equalTo(10))
+        assertThat(sched.counts().new, equalTo(10))
         sched.answerCard(card!!, 3)
         sched.card
         col.undo()
-        assertThat(sched.newCount(), `is`(10))
+        assertThat(sched.newCount(), equalTo(10))
     }
 
     @Test
