@@ -274,7 +274,7 @@ class ReviewerTest : RobolectricTest() {
         assertThat(
             "Counts after an undo should be the same as before an undo",
             countsAfterUndo,
-            `is`(countsBeforeUndo)
+            equalTo(countsBeforeUndo)
         )
     }
 
