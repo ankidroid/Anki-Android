@@ -28,7 +28,6 @@
     <string name="CardEditorModel">Type:</string>
     <string name="CardEditorTags">Tags: %1$s</string>
     <string name="CardEditorCards">Cards: %1$s</string>
-    <string name="select_image">Select Image</string>
     <string name="edit_occlusions">Edit Occlusions</string>
     <string name="image_occlusion">Image Occlusion</string>
 

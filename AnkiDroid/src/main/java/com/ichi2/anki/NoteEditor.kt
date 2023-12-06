@@ -465,13 +465,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
         val imageOcclusionButton: Button = findViewById(R.id.ImageOcclusionButton)
         if (addNote) {
-            imageOcclusionButton.setText(R.string.select_image)
+            imageOcclusionButton.setText(R.string.choose_an_image)
             imageOcclusionButton.setOnClickListener {
                 val i = Intent()
                 i.type = "image/*"
                 i.action = Intent.ACTION_GET_CONTENT
                 i.addCategory(Intent.CATEGORY_OPENABLE)
-                launchActivityForResultWithAnimation(Intent.createChooser(i, resources.getString(R.string.select_image)), requestIOEditorLauncher, START)
+                launchActivityForResultWithAnimation(Intent.createChooser(i, resources.getString(R.string.choose_an_image)), requestIOEditorLauncher, START)
             }
         } else {
             imageOcclusionButton.setText(R.string.edit_occlusions)
