@@ -509,7 +509,10 @@ class Notetypes(val col: Collection) {
     # - newModel should be same as m if model is not changing
      */
 
-    /** A compatibility wrapper that converts legacy-style arguments and
+    /**
+     * Modifies the backend schema. Ask the user to confirm schema changes before calling
+     *
+     * A compatibility wrapper that converts legacy-style arguments and
      * feeds them into a backend request, so that AnkiDroid's editor-bound
      * notetype changing can be used. Changing the notetype via the editor is
      * not ideal: it doesn't let users re-order fields in a 2 element note,
@@ -529,7 +532,7 @@ class Notetypes(val col: Collection) {
         newModel: NotetypeJson,
         fmap: Map<Int, Int?>,
         cmap: Map<Int, Int?>
-    ) {
+    ): OpChanges {
         val fieldMap = convertLegacyMap(fmap, newModel.fieldsNames.size)
         val templateMap =
             if (cmap.isEmpty() || m.type == MODEL_CLOZE || newModel.type == MODEL_CLOZE) {
@@ -538,7 +541,7 @@ class Notetypes(val col: Collection) {
                 convertLegacyMap(cmap, newModel.templatesNames.size)
             }
         val isCloze = newModel.isCloze || m.isCloze
-        col.backend.changeNotetype(
+        return col.backend.changeNotetype(
             noteIds = listOf(nid),
             newFields = fieldMap,
             newTemplates = templateMap,
