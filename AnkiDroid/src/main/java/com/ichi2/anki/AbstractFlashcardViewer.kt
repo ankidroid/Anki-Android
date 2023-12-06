@@ -48,6 +48,7 @@ import androidx.core.net.toFile
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle.State.RESUMED
+import androidx.test.espresso.idling.CountingIdlingResource
 import androidx.webkit.WebViewAssetLoader
 import anki.collection.OpChanges
 import com.drakeet.drawer.FullDraggableContainer
@@ -276,6 +277,13 @@ abstract class AbstractFlashcardViewer :
     }
 
     private val migrationService by migrationServiceWhileStartedOrNull()
+
+    // We need to wait for the card to fully load to allow enough time for
+    // the messages to be passed in and out of the WebView when evaluating
+    // the custom JS scheduler code. The card on the review screen takes
+    // some time to load, especially on an emulator
+    @VisibleForTesting
+    var customSchedulerIdlingResource: CountingIdlingResource = CountingIdlingResource("CustomSchedulerIdlingResource")
 
     /**
      * Changes which were received when the viewer was in the background

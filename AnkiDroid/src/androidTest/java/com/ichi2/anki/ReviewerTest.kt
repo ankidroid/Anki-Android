@@ -15,27 +15,30 @@
  */
 package com.ichi2.anki
 
+import android.app.Instrumentation.ActivityMonitor
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.onIdle
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import androidx.test.espresso.web.assertion.WebViewAssertions.webContent
-import androidx.test.espresso.web.matcher.DomMatchers.containingTextInBody
-import androidx.test.espresso.web.sugar.Web.onWebView
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.ichi2.anki.tests.InstrumentedTest
 import com.ichi2.anki.testutil.GrantStoragePermission.storagePermission
 import com.ichi2.anki.testutil.grantPermissions
 import com.ichi2.anki.testutil.notificationPermission
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class ReviewerTest : InstrumentedTest() {
@@ -52,6 +55,14 @@ class ReviewerTest : InstrumentedTest() {
 
     @get:Rule
     val runtimePermissionRule = grantPermissions(storagePermission, notificationPermission)
+
+    private lateinit var activityMonitor: ActivityMonitor
+
+    @Before
+    fun setup() {
+        activityMonitor = InstrumentationRegistry.getInstrumentation()
+            .addMonitor(Reviewer::class.java.name, null, false)
+    }
 
     @Test
     fun testCustomSchedulerWithCustomData() {
@@ -83,8 +94,7 @@ class ReviewerTest : InstrumentedTest() {
         assertThat(cardFromDb.interval, equalTo(card.ivl))
         assertThat(cardFromDb.customData, equalTo("""{"c":1}"""))
 
-        waitForCardToLoadWithText(note.fields.first())
-        clickShowAnswerAndAnswerGood()
+        waitForReviewerActivity { clickShowAnswerAndAnswerGood() }
 
         cardFromDb = col.getCard(card.id).toBackendCard()
         assertThat(cardFromDb.easeFactor, equalTo(3000))
@@ -129,15 +139,31 @@ class ReviewerTest : InstrumentedTest() {
     }
 
     private fun clickShowAnswerAndAnswerGood() {
+        onIdle()
         onView(withId(R.id.flashcard_layout_flip)).perform(click())
         onView(withId(R.id.flashcard_layout_ease3)).perform(click())
     }
 
-    private fun waitForCardToLoadWithText(text: String) {
-        // We need to wait for the card to fully load to allow enough time for
-        // the messages to be passed in and out of the WebView when evaluating
-        // the custom JS scheduler code. The card on the review screen takes
-        // some time to load, especially on an emulator
-        onWebView().check(webContent(containingTextInBody(text)))
+    /**
+     * Waits for the [Reviewer] activity and performs the specified [action],
+     * providing the ability to call [onIdle] to wait for the system to be in
+     * an idle state
+     *
+     * This method should be called any time a new [Reviewer] activity has been
+     * created. If this is not done, then [onIdle] calls will not work because
+     * the previous [Reviewer] activity has already been destroyed
+     *
+     * @param action The action to be performed after the [Reviewer] activity is
+     * available
+     *
+     * @throws NullPointerException if the [Reviewer] activity is not available
+     * within the specified timeout.
+     */
+    private fun waitForReviewerActivity(action: () -> Unit) {
+        val activity =
+            (activityMonitor.waitForActivityWithTimeout(TimeUnit.SECONDS.toMillis(10)) as Reviewer?)!!
+        IdlingRegistry.getInstance().register(activity.customSchedulerIdlingResource)
+        action()
+        IdlingRegistry.getInstance().unregister(activity.customSchedulerIdlingResource)
     }
 }

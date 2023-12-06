@@ -112,6 +112,7 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
         if (req.key == reviewer.customSchedulingKey) {
             state.states = req.states
         }
+        reviewer.customSchedulerIdlingResource.decrement()
         return ByteArray(0)
     }
 }

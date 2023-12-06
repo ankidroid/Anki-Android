@@ -1069,6 +1069,7 @@ open class Reviewer :
     }
 
     override fun displayCardQuestion() {
+        customSchedulerIdlingResource.increment()
         // show timer, if activated in the deck's preferences
         answerTimer.setupForCard(currentCard!!)
         delayedHide(100)

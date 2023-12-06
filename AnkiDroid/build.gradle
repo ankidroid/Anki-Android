@@ -318,6 +318,7 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.webkit:webkit:1.9.0'
+    implementation "androidx.test.espresso:espresso-idling-resource:$espresso_version"
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'com.vanniktech:android-image-cropper:4.5.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
@@ -394,7 +395,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-contrib:$espresso_version") {
         exclude module: "protobuf-lite"
     }
-    androidTestImplementation "androidx.test.espresso:espresso-web:$espresso_version"
     androidTestImplementation "androidx.test:core:$androidx_test_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_test_junit_version"
     androidTestImplementation "androidx.test:rules:$androidx_test_version"
