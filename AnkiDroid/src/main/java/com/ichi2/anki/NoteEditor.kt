@@ -49,6 +49,7 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.text.HtmlCompat
 import anki.config.ConfigKey
+import anki.notetypes.StockNotetype
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import com.ichi2.anim.ActivityTransitionAnimation
@@ -74,6 +75,7 @@ import com.ichi2.anki.noteeditor.FieldState.FieldChangeType
 import com.ichi2.anki.noteeditor.Toolbar
 import com.ichi2.anki.noteeditor.Toolbar.TextFormatListener
 import com.ichi2.anki.noteeditor.Toolbar.TextWrapper
+import com.ichi2.anki.pages.ImageOcclusion
 import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.anki.receiver.SdCardReceiver
 import com.ichi2.anki.servicelayer.LanguageHintService
@@ -95,6 +97,7 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
@@ -236,6 +239,17 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 // reload current card - the template ordinals are possibly different post-edit
                 mCurrentEditedCard = getColUnsafe.getCard(mCurrentEditedCard!!.id)
                 updateCards(mEditorNote!!.notetype)
+            }
+        }
+    )
+
+    private val requestIOEditorLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        NoteEditorActivityResultCallback { result ->
+            if (result.resultCode != RESULT_CANCELED) {
+                ImportUtils.getFileCachedCopy(this@NoteEditor, result.data!!)?.let { path ->
+                    setupImageOcclusionEditor(path)
+                }
             }
         }
     )
@@ -445,6 +459,25 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                 addNote = true
             }
             else -> {}
+        }
+
+        col.backend.addImageOcclusionNotetype()
+
+        val imageOcclusionButton: Button = findViewById(R.id.ImageOcclusionButton)
+        if (addNote) {
+            imageOcclusionButton.setText(R.string.select_image)
+            imageOcclusionButton.setOnClickListener {
+                val i = Intent()
+                i.type = "image/*"
+                i.action = Intent.ACTION_GET_CONTENT
+                i.addCategory(Intent.CATEGORY_OPENABLE)
+                launchActivityForResultWithAnimation(Intent.createChooser(i, resources.getString(R.string.select_image)), requestIOEditorLauncher, START)
+            }
+        } else {
+            imageOcclusionButton.setText(R.string.edit_occlusions)
+            imageOcclusionButton.setOnClickListener {
+                setupImageOcclusionEditor()
+            }
         }
 
         // Note type Selector
@@ -1252,6 +1285,15 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         val editLines = mFieldState.loadFieldEditLines(type)
         mFieldsLayoutContainer!!.removeAllViews()
         mCustomViewIds.clear()
+        if (currentNotetypeIsImageOcclusion()) {
+            setImageOcclusionButton()
+            return
+        } else {
+            val imageOcclusionButton: Button = findViewById(R.id.ImageOcclusionButton)
+            imageOcclusionButton.visibility = View.GONE
+            mFieldsLayoutContainer?.visibility = View.VISIBLE
+        }
+
         mEditFields = LinkedList()
 
         var previous: FieldEditLine? = null
@@ -1925,6 +1967,35 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     @KotlinCleanup("remove 'requireNoNulls")
     val fieldsFromSelectedNote: Array<Array<String>>
         get() = mEditorNote!!.items().map { it.requireNoNulls() }.toTypedArray()
+
+    private fun currentNotetypeIsImageOcclusion(): Boolean {
+        println("currentNotetypeIsImageOcclusion: ${currentlySelectedNotetype?.fieldsNames}")
+        try {
+            return currentlySelectedNotetype?.getInt("originalStockKind") == StockNotetype.OriginalStockKind.ORIGINAL_STOCK_KIND_IMAGE_OCCLUSION_VALUE
+        } catch (j: JSONException) {
+            return false
+        }
+    }
+
+    private fun setImageOcclusionButton() {
+        val imageOcclusionButton: Button = findViewById(R.id.ImageOcclusionButton)
+        imageOcclusionButton.visibility = View.VISIBLE
+        mFieldsLayoutContainer?.visibility = View.GONE
+    }
+
+    private fun setupImageOcclusionEditor(imagePath: String = "") {
+        val kind: String
+        val id: Long
+        if (addNote) {
+            kind = "add"
+            id = 0
+        } else {
+            kind = "edit"
+            id = mEditorNote?.id!!
+        }
+        val intent = ImageOcclusion.getIntent(this@NoteEditor, kind, id, imagePath)
+        startActivity(intent)
+    }
 
     // ----------------------------------------------------------------------------
     // INNER CLASSES

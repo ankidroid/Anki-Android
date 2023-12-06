@@ -93,6 +93,11 @@ open class AnkiServer(
             "setWantsAbort" -> CollectionManager.getBackend().setWantsAbortRaw(bytes)
             "evaluateWeights" -> withCol { evaluateWeightsRaw(bytes) }
             "latestProgress" -> CollectionManager.getBackend().latestProgressRaw(bytes)
+            "getImageForOcclusion" -> CollectionManager.getBackend().getImageForOcclusionRaw(bytes)
+            "getImageOcclusionNote" -> CollectionManager.getBackend().getImageOcclusionNoteRaw(bytes)
+            "getImageForOcclusionFields" -> CollectionManager.getBackend().getImageOcclusionFieldsRaw(bytes)
+            "addImageOcclusionNote" -> CollectionManager.getBackend().addImageOcclusionNoteRaw(bytes)
+            "updateImageOcclusionNote" -> CollectionManager.getBackend().updateImageOcclusionNoteRaw(bytes)
             else -> { throw Exception("unhandled request: $methodName") }
         }
     }
