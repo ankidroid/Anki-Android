@@ -82,13 +82,13 @@ fun Collection.exportCollectionPackage(
     includeMedia: Boolean,
     legacy: Boolean = true
 ) {
-    close(downgrade = false, forFullSync = true)
+    close(forFullSync = true)
     backend.exportCollectionPackage(
         outPath = outPath,
         includeMedia = includeMedia,
         legacy = legacy
     )
-    reopen(afterFullSync = false)
+    reopen()
 }
 
 fun Collection.importAnkiPackageRaw(input: ByteArray): ByteArray {

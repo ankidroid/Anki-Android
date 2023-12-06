@@ -541,7 +541,6 @@ public class AddContentApi(context: Context) {
      *
      * @return the spec version number or -1 if AnkiDroid is not installed.
      */
-    @Suppress("deprecation") // API33 symbol required until minSdkVersion >= 33
     public val apiHostSpecVersion: Int
         get() {
             // PackageManager#resolveContentProvider docs suggest flags should be 0 (but that gives null metadata)
@@ -767,7 +766,6 @@ public class AddContentApi(context: Context) {
          * @param context a Context that can be used to get the PackageManager
          * @return packageId of AnkiDroid if a supported version is not installed, otherwise null
          */
-        @Suppress("deprecation") // deprecated symbol until minSdkVersion >= 33
         @JvmStatic // required for API
         public fun getAnkiDroidPackageName(context: Context): String? {
             val manager = context.packageManager

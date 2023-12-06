@@ -423,8 +423,6 @@ class MultimediaEditFieldActivity : AnkiActivity(), OnRequestPermissionsResultCa
     }
 
     private fun createControllerForField(field: IField): IFieldController {
-        @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
-        // the return of field.type is non nullable
         return when (field.type) {
             EFieldType.TEXT -> BasicTextFieldController()
             EFieldType.IMAGE -> BasicImageFieldController()

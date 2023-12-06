@@ -170,6 +170,6 @@ fun saveModel(
     // required for Rust: the modified time can't go backwards, and we updated the model by adding fields
     // This could be done better
     notetype.put("mod", oldModel!!.getLong("mod"))
-    col.notetypes.save(notetype, true)
+    col.notetypes.save(notetype)
     col.notetypes.update(notetype)
 }

@@ -25,7 +25,6 @@ import com.ichi2.anki.reviewer.Binding.Companion.possibleKeyBindings
 import com.ichi2.anki.reviewer.CardSide.Companion.fromAnswer
 import com.ichi2.anki.reviewer.MappableBinding.*
 import com.ichi2.anki.reviewer.MappableBinding.Companion.fromPreference
-import java.util.HashMap
 
 /** Accepts peripheral input, mapping via various keybinding strategies,
  * and converting them to commands for the Reviewer.  */

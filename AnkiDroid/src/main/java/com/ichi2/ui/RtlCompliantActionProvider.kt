@@ -21,7 +21,6 @@ import android.widget.ImageButton
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.widget.TooltipCompat
 import com.ichi2.anki.ActionProviderCompat
-import com.ichi2.anki.R
 
 /**
  * An Rtl version of a normal action view, where the drawable is mirrored

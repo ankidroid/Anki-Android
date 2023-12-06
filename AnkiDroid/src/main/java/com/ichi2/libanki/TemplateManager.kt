@@ -223,15 +223,13 @@ class TemplateManager {
                 aoutText = LaTeX.mungeQA(aoutText, _col, svg)
             }
 
-            val output = TemplateRenderOutput(
+            return TemplateRenderOutput(
                 questionText = qoutText,
                 answerText = aoutText,
                 questionAvTags = avTagsToNative(qout.avTagsList),
                 answerAvTags = avTagsToNative(aout.avTagsList),
                 css = noteType().getString("css")
             )
-
-            return output
         }
 
         fun partiallyRender(): PartiallyRenderedCard {

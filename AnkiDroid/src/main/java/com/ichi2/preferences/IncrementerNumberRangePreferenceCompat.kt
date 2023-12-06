@@ -41,7 +41,7 @@ class IncrementerNumberRangePreferenceCompat : NumberRangePreferenceCompat, Dial
     @Suppress("unused")
     constructor(context: Context) : super(context)
 
-    class IncrementerNumberRangeDialogFragmentCompat : NumberRangePreferenceCompat.NumberRangeDialogFragmentCompat() {
+    class IncrementerNumberRangeDialogFragmentCompat : NumberRangeDialogFragmentCompat() {
         private var mLastValidEntry = 0
 
         /**

@@ -37,8 +37,7 @@ import timber.log.Timber
  * Current use is via [com.ichi2.anki.dialogs.GestureSelectionDialogBuilder]
  */
 // This class exists as elements resized when adding in the spinner to GestureDisplay.kt
-class GesturePicker
-constructor(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
+class GesturePicker(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int = 0) :
     ConstraintLayout(ctx, attributeSet, defStyleAttr) {
 
     private val mGestureSpinner: Spinner
@@ -97,9 +96,7 @@ constructor(ctx: Context, attributeSet: AttributeSet? = null, defStyleAttr: Int 
 
             other as GestureWrapper
 
-            if (gesture != other.gesture) return false
-
-            return true
+            return gesture == other.gesture
         }
 
         override fun hashCode() = gesture?.hashCode() ?: 0

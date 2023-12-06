@@ -59,7 +59,7 @@ class IntroductionActivity : AnkiActivity() {
 
         handleCollectionSetupOption { option ->
             when (option) {
-                CollectionSetupOption.DeckPickerWithNewCollection -> startDeckPicker(RESULT_START_NEW)
+                CollectionSetupOption.DeckPickerWithNewCollection -> startDeckPicker()
                 CollectionSetupOption.SyncFromExistingAccount -> openLoginDialog()
             }
         }
