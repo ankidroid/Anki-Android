@@ -177,7 +177,10 @@ open class Reviewer :
     }
 
     override fun onResume() {
-        if (!stopTimerOnAnswer) answerTimer.resume()
+        when {
+            stopTimerOnAnswer && isDisplayingAnswer -> {}
+            else -> answerTimer.resume()
+        }
         super.onResume()
         if (answerField != null) {
             answerField!!.focusWithKeyboard()
@@ -1062,7 +1065,6 @@ open class Reviewer :
     override fun displayCardQuestion() {
         // show timer, if activated in the deck's preferences
         answerTimer.setupForCard(currentCard!!)
-        stopTimerOnAnswer = false
         delayedHide(100)
         super.displayCardQuestion()
     }
@@ -1070,7 +1072,6 @@ open class Reviewer :
     @VisibleForTesting
     override fun displayCardAnswer() {
         delayedHide(100)
-        stopTimerOnAnswer = true
         if (stopTimerOnAnswer) {
             answerTimer.pause()
         }
