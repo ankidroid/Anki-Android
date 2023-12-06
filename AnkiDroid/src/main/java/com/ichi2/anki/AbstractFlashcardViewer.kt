@@ -1312,9 +1312,6 @@ abstract class AbstractFlashcardViewer :
 
     open fun displayCardQuestion() {
         displayCardQuestion(false)
-
-        // js api initialisation / reset
-        mAnkiDroidJsAPI!!.init()
     }
 
     private fun displayCardQuestion(reload: Boolean) {

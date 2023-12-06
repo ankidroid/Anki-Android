@@ -35,32 +35,6 @@ import org.junit.runner.RunWith
 class AnkiDroidJsAPITest : RobolectricTest() {
 
     @Test
-    fun initTest() = runTest {
-        val models = col.notetypes
-        val decks = col.decks
-        val didA = addDeck("Test")
-        val basic = models.byName(AnkiDroidApp.appResources.getString(R.string.basic_model_name))
-        basic!!.put("did", didA)
-        addNoteUsingBasicModel("foo", "bar")
-        decks.select(didA)
-
-        val reviewer: Reviewer = startReviewer()
-        val javaScriptFunction = reviewer.javaScriptFunction()
-
-        // this will be changed when new api added
-        // TODO - make this test to auto add api from list
-        val expected =
-            "{\"setCardDue\":true,\"suspendNote\":true,\"markCard\":true,\"suspendCard\":true,\"buryCard\":true,\"toggleFlag\":true,\"buryNote\":true}"
-
-        waitForAsyncTasksToComplete()
-        assertThat(
-            javaScriptFunction.handleJsApiRequest("init", jsApiContract(), true)
-                .decodeToString(),
-            equalTo(expected)
-        )
-    }
-
-    @Test
     fun ankiGetNextTimeTest() = runTest {
         val models = col.notetypes
         val decks = col.decks
@@ -270,9 +244,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
         val reviewer: Reviewer = startReviewer()
         val jsapi = reviewer.javaScriptFunction()
-        // init js api
-        jsapi.init(jsApiContract())
-        waitForAsyncTasksToComplete()
 
         // ----------
         // Bury Card
@@ -332,8 +303,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         waitForAsyncTasksToComplete()
 
         val jsapi = reviewer.javaScriptFunction()
-        // init js api
-        jsapi.init(jsApiContract())
         // get card id for testing due
         val cardId = getDataFromRequest("cardId", jsapi).toLong()
 
@@ -372,8 +341,6 @@ class AnkiDroidJsAPITest : RobolectricTest() {
         waitForAsyncTasksToComplete()
 
         val jsapi = reviewer.javaScriptFunction()
-        // init js api
-        jsapi.init(jsApiContract())
         // get card id for testing due
         val cardId = getDataFromRequest("cardId", jsapi).toLong()
 

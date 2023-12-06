@@ -18,8 +18,11 @@
 
 package com.ichi2.anki
 
+import com.ichi2.anki.cardviewer.ViewerCommand
+
 object AnkiDroidJsAPIConstants {
     // JS API ERROR CODE
+    const val ankiJsErrorCodeError: Int = -1
     const val ankiJsErrorCodeDefault: Int = 0
     const val ankiJsErrorCodeMarkCard: Int = 1
     const val ankiJsErrorCodeFlagCard: Int = 2
@@ -29,33 +32,20 @@ object AnkiDroidJsAPIConstants {
     const val ankiJsErrorCodeBuryNote: Int = 5
     const val ankiJsErrorCodeSuspendNote: Int = 6
     const val ankiJsErrorCodeSetDue: Int = 7
+    const val ankiJsErrorCodeSearchCard: Int = 8
 
     // js api developer contact
     const val sCurrentJsApiVersion = "0.0.2"
     const val sMinimumJsApiVersion = "0.0.2"
 
-    const val MARK_CARD = "markCard"
-    const val TOGGLE_FLAG = "toggleFlag"
-
-    const val BURY_CARD = "buryCard"
-    const val BURY_NOTE = "buryNote"
-    const val SUSPEND_CARD = "suspendCard"
-    const val SUSPEND_NOTE = "suspendNote"
-    const val SET_CARD_DUE = "setCardDue"
-    const val RESET_PROGRESS = "setCardDue"
-
-    fun initApiMap(): HashMap<String, Boolean> {
-        val jsApiListMap = HashMap<String, Boolean>()
-        jsApiListMap[MARK_CARD] = false
-        jsApiListMap[TOGGLE_FLAG] = false
-
-        jsApiListMap[BURY_CARD] = false
-        jsApiListMap[BURY_NOTE] = false
-        jsApiListMap[SUSPEND_CARD] = false
-        jsApiListMap[SUSPEND_NOTE] = false
-        jsApiListMap[SET_CARD_DUE] = false
-        jsApiListMap[RESET_PROGRESS] = false
-
-        return jsApiListMap
-    }
+    val flagCommands = mapOf(
+        "none" to ViewerCommand.UNSET_FLAG,
+        "red" to ViewerCommand.TOGGLE_FLAG_RED,
+        "orange" to ViewerCommand.TOGGLE_FLAG_ORANGE,
+        "green" to ViewerCommand.TOGGLE_FLAG_GREEN,
+        "blue" to ViewerCommand.TOGGLE_FLAG_BLUE,
+        "pink" to ViewerCommand.TOGGLE_FLAG_PINK,
+        "turquoise" to ViewerCommand.TOGGLE_FLAG_TURQUOISE,
+        "purple" to ViewerCommand.TOGGLE_FLAG_PURPLE
+    )
 }

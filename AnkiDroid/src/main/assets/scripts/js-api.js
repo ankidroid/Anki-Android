@@ -66,15 +66,11 @@ class AnkiDroidJS {
     constructor({ developer, version }) {
         this.developer = developer;
         this.version = version;
-        this.initJSRequest();
+        this.handleRequest(`init`);
     }
 
     static init({ developer, version }) {
         return new AnkiDroidJS({ developer, version });
-    }
-
-    async initJSRequest() {
-        return await this.handleRequest(`init`);
     }
 
     handleRequest = async (endpoint, data) => {
