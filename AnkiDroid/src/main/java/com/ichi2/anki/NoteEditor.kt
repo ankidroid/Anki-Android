@@ -1305,7 +1305,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     private fun setMMButtonListener(mediaButton: ImageButton, index: Int) {
         mediaButton.setOnClickListener { v: View ->
             Timber.i("NoteEditor:: Multimedia button pressed for field %d", index)
-            if (mEditorNote!!.items()[index][1]!!.isNotEmpty()) {
+            if (mEditorNote!!.items()[index][1].isNotEmpty()) {
                 val col = CollectionHelper.instance.getColUnsafe(this@NoteEditor)!!
                 // If the field already exists then we start the field editor, which figures out the type
                 // automatically
@@ -1897,9 +1897,8 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
         return mEditorNote!!.items().size > 2
     }
 
-    @KotlinCleanup("remove 'requireNoNulls")
     val fieldsFromSelectedNote: Array<Array<String>>
-        get() = mEditorNote!!.items().map { it.requireNoNulls() }.toTypedArray()
+        get() = mEditorNote!!.items()
 
     // ----------------------------------------------------------------------------
     // INNER CLASSES
