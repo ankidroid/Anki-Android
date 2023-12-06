@@ -64,24 +64,25 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
     private var cardSuppliedDeveloperContact = ""
     private var cardSuppliedApiVersion = ""
     private var cardSuppliedData = ""
+    private var isValidVersion = false
 
     // Text to speech
     private val mTalker = JavaScriptTTS()
 
     open fun convertToByteArray(boolean: Boolean): ByteArray {
-        return boolean.toString().toByteArray()
+        return ApiResult(isValidVersion, boolean.toString()).toString().toByteArray()
     }
 
     open fun convertToByteArray(int: Int): ByteArray {
-        return int.toString().toByteArray()
+        return ApiResult(isValidVersion, int.toString()).toString().toByteArray()
     }
 
     open fun convertToByteArray(long: Long): ByteArray {
-        return long.toString().toByteArray()
+        return ApiResult(isValidVersion, long.toString()).toString().toByteArray()
     }
 
     open fun convertToByteArray(string: String): ByteArray {
-        return string.toByteArray()
+        return ApiResult(isValidVersion, string).toString().toByteArray()
     }
 
     /**
@@ -92,14 +93,14 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      * @return card supplied data, it may be empty, or specific to js api,
      * in case of tts api it contains json string of text and queueMode which parsed in speak tts api
      */
-    private fun checkJsApiContract(byteArray: ByteArray): Pair<Boolean, String> {
+    private fun checkJsApiContract(byteArray: ByteArray) {
         try {
             val data = JSONObject(byteArray.decodeToString())
             cardSuppliedApiVersion = data.optString("version", "")
             cardSuppliedDeveloperContact = data.optString("developer", "")
             cardSuppliedData = data.optString("data", "")
-            val isValidVersion = requireApiVersion(cardSuppliedApiVersion, cardSuppliedDeveloperContact)
-            return Pair(isValidVersion, cardSuppliedData)
+            isValidVersion = requireApiVersion(cardSuppliedApiVersion, cardSuppliedDeveloperContact)
+            return
         } catch (j: JSONException) {
             Timber.w(j)
             activity.runOnUiThread {
@@ -112,7 +113,6 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
             }
         }
         showDeveloperContact(ankiJsErrorCodeDefault)
-        return Pair(false, cardSuppliedData)
     }
 
     /*
@@ -182,18 +182,19 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
      * @return
      */
     open suspend fun handleJsApiRequest(methodName: String, bytes: ByteArray, isReviewer: Boolean) = withContext(Dispatchers.Main) {
-        val data = checkJsApiContract(bytes)
+        // the method will call to set the card supplied data and is valid version for each api request
+        checkJsApiContract(bytes)
         // if api not init or is api not called from reviewer then return default -1
         // also other action will not be modified
-        if (!data.first or !isReviewer) {
+        if (!isValidVersion or !isReviewer) {
             return@withContext convertToByteArray(-1)
         }
 
         val cardDataForJsAPI = activity.getCardDataForJsApi()
-        val apiParams = data.second
+        val apiParams = cardSuppliedData
 
         return@withContext when (methodName) {
-            "init" -> convertToByteArray(data.first)
+            "init" -> convertToByteArray(isValidVersion)
             "newCardCount" -> convertToByteArray(cardDataForJsAPI.newCardCount)
             "lrnCardCount" -> convertToByteArray(cardDataForJsAPI.lrnCardCount)
             "revCardCount" -> convertToByteArray(cardDataForJsAPI.revCardCount)
@@ -355,5 +356,14 @@ open class AnkiDroidJsAPI(private val activity: AbstractFlashcardViewer) {
         var nextTime2 = ""
         var nextTime3 = ""
         var nextTime4 = ""
+    }
+
+    class ApiResult(private val status: Boolean, private val value: String) {
+        override fun toString(): String {
+            return JSONObject().apply {
+                put("success", status)
+                put("value", value)
+            }.toString()
+        }
     }
 }

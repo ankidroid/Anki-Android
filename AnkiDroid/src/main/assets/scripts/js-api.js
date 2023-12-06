@@ -74,10 +74,6 @@ class AnkiDroidJS {
     }
 
     handleRequest = async (endpoint, data) => {
-        if (!this.developer || !this.version) {
-            throw new Error("You must initialize API before using other JS API");
-        }
-
         const url = `/jsapi/${endpoint}`;
         try {
             const response = await fetch(url, {
@@ -111,9 +107,6 @@ class AnkiDroidJS {
 Object.keys(jsApiList).forEach(method => {
     if (method === "ankiTtsSpeak") {
         AnkiDroidJS.prototype[method] = async function (text, queueMode = 0) {
-            if (this.version < "0.0.2") {
-                throw new Error("You must update AnkiDroid JS API version.");
-            }
             const endpoint = jsApiList[method];
             const data = JSON.stringify({ text, queueMode });
             return await this.handleRequest(endpoint, data);
@@ -121,9 +114,6 @@ Object.keys(jsApiList).forEach(method => {
         return;
     }
     AnkiDroidJS.prototype[method] = async function (data) {
-        if (this.version < "0.0.2") {
-            throw new Error("You must update AnkiDroid JS API version.");
-        }
         const endpoint = jsApiList[method];
         return await this.handleRequest(endpoint, data);
     };

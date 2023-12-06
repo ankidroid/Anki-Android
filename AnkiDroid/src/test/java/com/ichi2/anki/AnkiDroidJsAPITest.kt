@@ -363,11 +363,11 @@ class AnkiDroidJsAPITest : RobolectricTest() {
 
     companion object {
         fun jsApiContract(data: String = ""): ByteArray {
-            val jsonObject = JSONObject()
-            jsonObject.put("version", "0.0.2")
-            jsonObject.put("developer", "test@example.com")
-            jsonObject.put("data", data)
-            return jsonObject.toString().toByteArray()
+            return JSONObject().apply {
+                put("version", "0.0.2")
+                put("developer", "test@example.com")
+                put("data", data)
+            }.toString().toByteArray()
         }
     }
 }
