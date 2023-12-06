@@ -86,9 +86,9 @@ class CreateDeckDialog(
             negativeButton(R.string.dialog_cancel)
             input(prefill = mInitialDeckName, waitForPositiveButton = false) { dialog, text ->
                 // we need the fully-qualified name for subdecks
-                val fullyQualifiedDeckName = fullyQualifyDeckName(dialogText = text)
+                val maybeDeckName = fullyQualifyDeckName(dialogText = text)
                 // if the name is empty, it seems distracting to show an error
-                if (!Decks.isValidDeckName(fullyQualifiedDeckName)) {
+                if (maybeDeckName == null || !Decks.isValidDeckName(maybeDeckName)) {
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, false)
                     return@input
                 }

@@ -300,10 +300,7 @@ class Decks(private val col: Collection) {
     * The methods below are not in LibAnki.
     * ***********************************************************
     */
-        @KotlinCleanup("nullability")
-        fun isValidDeckName(deckName: String?): Boolean {
-            return deckName != null && deckName.trim { it <= ' ' }.isNotEmpty()
-        }
+        fun isValidDeckName(deckName: String): Boolean = deckName.trim { it <= ' ' }.isNotEmpty()
     }
 }
 
