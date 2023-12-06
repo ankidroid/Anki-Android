@@ -41,3 +41,5 @@ fun String.lastIndexOfOrNull(c: Char): Int? =
         -1 -> null
         else -> index
     }
+
+fun emptyStringArray(size: Int): Array<String> = Array(size) { "" }
