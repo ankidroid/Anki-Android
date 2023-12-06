@@ -91,7 +91,6 @@ import com.ichi2.libanki.Decks.Companion.CURRENT_DECK
 import com.ichi2.libanki.Note.ClozeUtils
 import com.ichi2.libanki.Note.DupeOrEmpty
 import com.ichi2.libanki.Notetypes.Companion.NOT_FOUND_NOTE_TYPE
-import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.utils.*
 import com.ichi2.widget.WidgetStatus
 import org.json.JSONArray
@@ -765,6 +764,7 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
 
     @VisibleForTesting
     @NeedsTest("14664: 'first field must not be empty' no longer applies after saving the note")
+    @KotlinCleanup("fix !! on oldModel/newModel")
     suspend fun saveNote() {
         val res = resources
         if (mSelectedTags == null) {
@@ -824,13 +824,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
                     dialog.setArgs(res.getString(R.string.confirm_map_cards_to_nothing))
                     val confirm = Runnable {
                         // Bypass the check once the user confirms
-                        changeNoteTypeWithErrorHandling(oldModel, newModel)
+                        changeNoteType(oldModel!!, newModel!!)
                     }
                     dialog.setConfirm(confirm)
                     showDialogFragment(dialog)
                 } else {
                     // Otherwise go straight to changing note type
-                    changeNoteTypeWithErrorHandling(oldModel, newModel)
+                    changeNoteType(oldModel!!, newModel!!)
                 }
                 return
             }
@@ -869,20 +869,13 @@ class NoteEditor : AnkiActivity(), DeckSelectionListener, SubtitleListener, Tags
     /**
      * Change the note type from oldModel to newModel, handling the case where a full sync will be required
      */
-    private fun changeNoteTypeWithErrorHandling(oldNotetype: NotetypeJson?, newNotetype: NotetypeJson?) = launchCatchingTask {
-        if (userAcceptsSchemaChange()) {
-            changeNoteType(oldNotetype, newNotetype)
-        }
-    }
+    private fun changeNoteType(oldNotetype: NotetypeJson, newNotetype: NotetypeJson) = launchCatchingTask {
+        if (!userAcceptsSchemaChange()) return@launchCatchingTask
 
-    /**
-     * Change the note type from oldModel to newModel
-     * @throws ConfirmModSchemaException If a full sync will be required
-     */
-    @Throws(ConfirmModSchemaException::class)
-    private fun changeNoteType(oldNotetype: NotetypeJson?, newNotetype: NotetypeJson?) {
         val noteId = mEditorNote!!.id
-        getColUnsafe.notetypes.change(oldNotetype!!, noteId, newNotetype!!, mModelChangeFieldMap!!, mModelChangeCardMap!!)
+        undoableOp {
+            notetypes.change(oldNotetype, noteId, newNotetype, mModelChangeFieldMap!!, mModelChangeCardMap!!)
+        }
         // refresh the note object to reflect the database changes
         mEditorNote!!.load()
         // close note editor
