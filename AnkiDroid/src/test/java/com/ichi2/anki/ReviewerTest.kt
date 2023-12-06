@@ -21,6 +21,8 @@ import androidx.core.content.edit
 import androidx.test.core.app.ActivityScenario
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.AbstractFlashcardViewer.Companion.RESULT_DEFAULT
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.formatApiResult
+import com.ichi2.anki.AnkiDroidJsAPITest.Companion.getDataFromRequest
 import com.ichi2.anki.AnkiDroidJsAPITest.Companion.jsApiContract
 import com.ichi2.anki.cardviewer.ViewerCommand
 import com.ichi2.anki.cardviewer.ViewerCommand.FLIP_OR_ANSWER_EASE1
@@ -242,7 +244,7 @@ class ReviewerTest : RobolectricTest() {
         assertThat(
             javaScriptFunction.handleJsApiRequest("deckName", jsApiContract(), true)
                 .decodeToString(),
-            equalTo("B")
+            equalTo(formatApiResult("B"))
         )
     }
 
@@ -332,20 +334,15 @@ class ReviewerTest : RobolectricTest() {
     private fun assertCounts(r: Reviewer, newCount: Int, stepCount: Int, revCount: Int) = runTest {
         val jsApi = r.javaScriptFunction()
         val countList = listOf(
-            jsApi.handleJsApiRequest("newCardCount", jsApiContract(), true)
-                .decodeToString().toInt(),
-            jsApi.handleJsApiRequest("lrnCardCount", jsApiContract(), true)
-                .decodeToString().toInt(),
-            jsApi.handleJsApiRequest("revCardCount", jsApiContract(), true)
-                .decodeToString().toInt()
+            getDataFromRequest("newCardCount", jsApi),
+            getDataFromRequest("lrnCardCount", jsApi),
+            getDataFromRequest("revCardCount", jsApi)
         )
-
         val expected = listOf(
-            newCount,
-            stepCount,
-            revCount
+            formatApiResult(newCount),
+            formatApiResult(stepCount),
+            formatApiResult(revCount)
         )
-
         assertThat(
             countList.toString(),
             equalTo(expected.toString())
