@@ -52,9 +52,7 @@ import java.util.*
 // tracked, so unused tags can only be removed from the list with a DB check.
 //
 // This module manages the tag cache and tags for notes.
-@KotlinCleanup("TextUtils -> Kotlin isNotEmpty()")
 @KotlinCleanup("inline function in init { } so we don't need to init `crt` etc... at the definition")
-@KotlinCleanup("ids.size != 0")
 @WorkerThread
 open class Collection(
     /**
@@ -104,10 +102,6 @@ open class Collection(
 
     val tags: Tags
 
-    @KotlinCleanup(
-        "move accessor methods here, maybe reconsider return type." +
-            "See variable: conf"
-    )
     lateinit var config: Config
 
     @KotlinCleanup("see if we can inline a function inside init {} and make this `val`")
