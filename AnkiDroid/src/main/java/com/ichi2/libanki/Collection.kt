@@ -355,10 +355,14 @@ open class Collection(
         return backend.buildSearchString(node)
     }
 
+    /**
+     * Return a list of card ids
+     * @throws InvalidSearchException
+     */
     fun findCards(
         search: String,
-        order: SortOrder
-    ): List<Long> {
+        order: SortOrder = SortOrder.NoOrdering()
+    ): List<CardId> {
         val adjustedOrder = if (order is SortOrder.UseCollectionOrdering) {
             SortOrder.BuiltinSortKind(
                 config.get("sortType") ?: "noteFld",
@@ -367,12 +371,11 @@ open class Collection(
         } else {
             order
         }
-        val cardIdsList = try {
+        return try {
             backend.searchCards(search, adjustedOrder.toProtoBuf())
         } catch (e: BackendInvalidInputException) {
             throw InvalidSearchException(e)
         }
-        return cardIdsList
     }
 
     fun findNotes(
@@ -393,12 +396,6 @@ open class Collection(
             throw InvalidSearchException(e)
         }
         return noteIDsList
-    }
-
-    /** Return a list of card ids  */
-    @KotlinCleanup("set reasonable defaults")
-    fun findCards(search: String): List<Long> {
-        return findCards(search, SortOrder.NoOrdering())
     }
 
     data class CardIdToNoteId(val id: Long, val nid: Long)
