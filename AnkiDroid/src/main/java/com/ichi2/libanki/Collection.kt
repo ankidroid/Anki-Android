@@ -37,9 +37,9 @@ import com.ichi2.libanki.exception.ConfirmModSchemaException
 import com.ichi2.libanki.exception.InvalidSearchException
 import com.ichi2.libanki.sched.DummyScheduler
 import com.ichi2.libanki.sched.Scheduler
-import com.ichi2.libanki.utils.Time
 import com.ichi2.libanki.utils.TimeManager
-import com.ichi2.utils.*
+import com.ichi2.utils.KotlinCleanup
+import com.ichi2.utils.VersionUtils
 import net.ankiweb.rsdroid.Backend
 import net.ankiweb.rsdroid.RustCleanup
 import net.ankiweb.rsdroid.exceptions.BackendInvalidInputException
@@ -56,7 +56,7 @@ import java.util.*
 @WorkerThread
 open class Collection(
     /**
-     *  @param Path The path to the collection.anki2 database. Must be unicode and openable with [File].
+     *  The path to the collection.anki2 database. Must be unicode and openable with [File].
      */
     val path: String,
     private var debugLog: Boolean, // Not in libAnki.
@@ -316,7 +316,7 @@ open class Collection(
 
     // NOT IN LIBANKI //
     fun cardCount(vararg dids: Long): Int {
-        return db.queryScalar("SELECT count() FROM cards WHERE did IN " + Utils.ids2str(dids))
+        return db.queryScalar("SELECT count() FROM cards WHERE did IN " + ids2str(dids))
     }
 
     fun isEmptyDeck(vararg dids: Long): Boolean {
@@ -351,6 +351,7 @@ open class Collection(
             val text = col.buildSearchString(node)
         }
     */
+    @Suppress("unused")
     fun buildSearchString(node: SearchNode): String {
         return backend.buildSearchString(node)
     }
@@ -415,7 +416,7 @@ open class Collection(
     FROM (
       SELECT nid, MIN(ord) AS ord
       FROM cards
-      WHERE nid IN ${Utils.ids2str(noteIds)} 
+      WHERE nid IN ${ids2str(noteIds)} 
       GROUP BY nid
     ) AS card_with_min_ord
     JOIN cards AS c ON card_with_min_ord.nid = c.nid AND card_with_min_ord.ord = c.ord
@@ -546,7 +547,7 @@ open class Collection(
         }
         val badNotes = db.queryScalar(
             "select 1 from notes where id not in (select distinct nid from cards) " +
-                "or mid not in " + Utils.ids2str(notetypes.ids()) + " limit 1"
+                "or mid not in " + ids2str(notetypes.ids()) + " limit 1"
         ) > 0
         // notes without cards or models
         if (badNotes) {
@@ -635,7 +636,7 @@ open class Collection(
     fun setUserFlag(flag: Int, cids: List<Long>) {
         assert(flag in (0..7))
         db.execute(
-            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + Utils.ids2str(
+            "update cards set flags = (flags & ~?) | ?, usn=?, mod=? where id in " + ids2str(
                 cids
             ),
             7,
@@ -650,14 +651,10 @@ open class Collection(
 
     //endregion
 
-    fun crtGregorianCalendar(): GregorianCalendar {
-        return Time.gregorianCalendar((crt * 1000))
-    }
-
     /** Not in libAnki  */
     @CheckResult
     fun filterToValidCards(cards: LongArray?): List<Long> {
-        return db.queryLongList("select id from cards where id in " + Utils.ids2str(cards))
+        return db.queryLongList("select id from cards where id in " + ids2str(cards))
     }
 
     fun setDeck(cids: Iterable<CardId>, did: DeckId): OpChangesWithCount {
@@ -693,6 +690,7 @@ open class Collection(
         return backend.getEmptyCards()
     }
 
+    @Suppress("unused")
     fun syncStatus(auth: SyncAuth): SyncStatusResponse {
         return backend.syncStatus(input = auth)
     }
