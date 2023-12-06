@@ -34,6 +34,7 @@ import android.text.style.UnderlineSpan
 import android.view.*
 import android.webkit.JavascriptInterface
 import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.view.menu.MenuBuilder
@@ -150,6 +151,11 @@ open class Reviewer :
     @VisibleForTesting
     protected val mProcessor = PeripheralKeymap(this, this)
     private val mOnboarding = Onboarding.Reviewer(this)
+
+    private val addNoteLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult(),
+        FlashCardViewerResultCallback()
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         if (showedActivityFailedScreen(savedInstanceState)) {
@@ -660,7 +666,7 @@ open class Reviewer :
         val animation = getAnimationTransitionFromGesture(fromGesture)
         intent.putExtra(NoteEditor.EXTRA_CALLER, NoteEditor.CALLER_REVIEWER_ADD)
         intent.putExtra(FINISH_ANIMATION_EXTRA, getInverseTransition(animation) as Parcelable)
-        startActivityForResultWithAnimation(intent, ADD_NOTE, animation)
+        launchActivityForResultWithAnimation(intent, addNoteLauncher, animation)
     }
 
     @NeedsTest("Starting animation from swipe is inverse to the finishing one")
@@ -1641,7 +1647,6 @@ open class Reviewer :
     }
 
     companion object {
-        private const val ADD_NOTE = 12
         private const val REQUEST_AUDIO_PERMISSION = 0
         private const val ANIMATION_DURATION = 200
         private const val TRANSPARENCY = 0.90f
