@@ -33,7 +33,7 @@ import java.util.*
  * @param checkedTags a list containing the currently selected tags. Any duplicates will be ignored.
  * @param uncheckedTags a list containing the currently unselected tags. Any duplicates will be ignored.
  */
-class TagsList constructor(
+class TagsList(
     allTags: List<String>,
     checkedTags: List<String>,
     uncheckedTags: List<String>? = null

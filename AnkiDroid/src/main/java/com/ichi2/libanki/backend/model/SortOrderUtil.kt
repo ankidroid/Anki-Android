@@ -13,9 +13,6 @@
  *  You should have received a copy of the GNU General Public License along with
  *  this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-@file:Suppress("deprecation") // BuiltinSortKind - is a valid choice
-
 package com.ichi2.libanki.backend.model
 
 import com.ichi2.libanki.SortOrder

@@ -59,7 +59,7 @@ class ButtonItemAdapter(
 
     override fun getItemCount() = items.size
 
-    inner class ButtonVH constructor(itemView: View, private val adapter: ButtonItemAdapter) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ButtonVH(itemView: View, private val adapter: ButtonItemAdapter) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val title: TextView = itemView.findViewById(R.id.card_browser_my_search_name_textview)
         val button: ImageButton = itemView.findViewById<ImageButton?>(R.id.card_browser_my_search_remove_button).apply {
             setOnClickListener(this@ButtonVH)

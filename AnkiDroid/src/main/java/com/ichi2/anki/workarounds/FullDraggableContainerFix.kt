@@ -56,7 +56,7 @@ import com.drakeet.drawer.FullDraggableContainer
  * and finger travel distance is usually much higher than the usual threshold of about 8 dp.)
  */
 
-class FullDraggableContainerFix constructor(context: Context, attrs: AttributeSet? = null) :
+class FullDraggableContainerFix(context: Context, attrs: AttributeSet? = null) :
     FullDraggableContainer(context, attrs) {
 
     private var childRequestedNoTouchInterception = false

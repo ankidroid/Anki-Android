@@ -32,7 +32,7 @@ import java.net.HttpCookie
  *    because android doesn't have a non-private getter for its MediaPlayer state
  */
 class MediaPlayer :
-    android.media.MediaPlayer(),
+    MediaPlayer(),
     OnPreparedListener,
     MediaPlayer.OnErrorListener,
     MediaPlayer.OnCompletionListener {

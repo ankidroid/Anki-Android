@@ -20,8 +20,7 @@ package com.ichi2.libanki
 import androidx.annotation.WorkerThread
 import anki.collection.OpChangesWithCount
 import com.ichi2.libanki.utils.join
-import com.ichi2.libanki.utils.set
-import java.util.*
+import java.util.AbstractSet
 
 /**
  * Anki maintains a cache of used tags so it can quickly present a list of tags
@@ -93,7 +92,7 @@ class Tags(private val col: Collection) {
     /** {@inheritDoc}  */
 
     // this is now a no-op - the tags are canonified when the note is saved
-    fun canonify(tagList: List<String>): java.util.AbstractSet<String> {
+    fun canonify(tagList: List<String>): AbstractSet<String> {
         // libAnki difference: tagList was returned directly
         return HashSet(tagList)
     }

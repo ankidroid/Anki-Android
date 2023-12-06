@@ -281,7 +281,7 @@ open class Card : Cloneable {
      * ***********************************************************
      */
     fun qSimple(): String {
-        return renderOutput(false).questionText
+        return renderOutput().questionText
     }
 
     /*
@@ -289,7 +289,7 @@ open class Card : Cloneable {
      */
     val pureAnswer: String
         get() {
-            val s = renderOutput(false).answerText
+            val s = renderOutput().answerText
             for (target in arrayOf("<hr id=answer>", "<hr id=\"answer\">")) {
                 val pos = s.indexOf(target)
                 if (pos == -1) continue
