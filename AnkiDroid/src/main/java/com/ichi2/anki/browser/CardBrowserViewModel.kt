@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
@@ -85,13 +86,14 @@ class CardBrowserViewModel(
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = isTruncatedFlow.value
 
-    private val selectedRowsPrivateFlow: MutableStateFlow<MutableSet<CardBrowser.CardCache>> =
-        MutableStateFlow(Collections.synchronizedSet(LinkedHashSet()))
-    val selectedRows: MutableSet<CardBrowser.CardCache> get() = selectedRowsPrivateFlow.value
+    private val _selectedRows: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
+
+    // immutable accessor for _selectedRows
+    val selectedRows: Set<CardBrowser.CardCache> get() = _selectedRows
 
     private val refreshSelectedRowsFlow = MutableSharedFlow<Unit>()
-    val selectedRowsFlow: Flow<MutableSet<CardBrowser.CardCache>> =
-        selectedRowsPrivateFlow.combine(refreshSelectedRowsFlow) { row, _ -> row }
+    val selectedRowsFlow: Flow<Set<CardBrowser.CardCache>> =
+        flowOf(selectedRows).combine(refreshSelectedRowsFlow) { row, _ -> row }
 
     val selectedCardIds: List<Long>
         get() = selectedRows.map { c -> c.id }
@@ -171,29 +173,29 @@ class CardBrowserViewModel(
     }
 
     fun selectAll() {
-        if (selectedRows.addAll(cards.wrapped)) {
+        if (_selectedRows.addAll(cards.wrapped)) {
             refreshSelectedRowsFlow()
         }
     }
 
     fun selectNone() {
-        if (selectedRows.isEmpty()) return
-        selectedRows.clear()
+        if (_selectedRows.isEmpty()) return
+        _selectedRows.clear()
         refreshSelectedRowsFlow()
     }
 
     fun toggleRowSelectionAtPosition(position: Int) {
         val card = cards[position]
-        if (selectedRows.contains(card)) {
-            selectedRows.remove(card)
+        if (_selectedRows.contains(card)) {
+            _selectedRows.remove(card)
         } else {
-            selectedRows.add(card)
+            _selectedRows.add(card)
         }
         refreshSelectedRowsFlow()
     }
 
     fun selectRowAtPosition(pos: Int) {
-        if (selectedRows.add(cards[pos])) {
+        if (_selectedRows.add(cards[pos])) {
             refreshSelectedRowsFlow()
         }
     }
@@ -203,7 +205,7 @@ class CardBrowserViewModel(
      */
     fun selectRowsBetweenPositions(startPos: Int, endPos: Int) {
         val cards = (min(startPos, endPos)..max(startPos, endPos)).map { cards[it] }
-        if (selectedRows.addAll(cards)) {
+        if (_selectedRows.addAll(cards)) {
             refreshSelectedRowsFlow()
         }
     }
