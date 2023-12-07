@@ -45,6 +45,7 @@ import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.Previewer.Companion.toIntent
 import com.ichi2.anki.UIUtils.showThemedToast
 import com.ichi2.anki.browser.CardBrowserViewModel
+import com.ichi2.anki.browser.CardBrowserViewModel.*
 import com.ichi2.anki.browser.SaveSearchResult
 import com.ichi2.anki.dialogs.*
 import com.ichi2.anki.dialogs.CardBrowserMySearchesDialog.Companion.newInstance
@@ -160,12 +161,10 @@ open class CardBrowser :
     private var mCurrentCardId
         get() = viewModel.currentCardId
         set(value) { viewModel.currentCardId = value }
-    private var mOrder
+    private val mOrder
         get() = viewModel.order
-        set(value) { viewModel.order = value }
-    private var mOrderAsc
+    private val mOrderAsc
         get() = viewModel.orderAsc
-        set(value) { viewModel.orderAsc = value }
 
     // DEFECT: Doesn't need to be a local
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
@@ -266,20 +265,13 @@ open class CardBrowser :
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun changeCardOrder(which: SortType) {
-        if (which != mOrder) {
-            mOrder = which
-            mOrderAsc = false
-            which.save(getColUnsafe.config, baseContext.sharedPrefs())
-            getColUnsafe.config.set("sortBackwards", mOrderAsc)
-            getColUnsafe.config.set("browserNoteSortBackwards", mOrderAsc)
-            searchCards()
-        } else if (which != SortType.NO_SORTING) {
-            // if the same element is selected again, reverse the order
-            mOrderAsc = !mOrderAsc
-            getColUnsafe.config.set("sortBackwards", mOrderAsc)
-            getColUnsafe.config.set("browserNoteSortBackwards", mOrderAsc)
-            mCards.reverse()
-            updateList()
+        when (viewModel.changeCardOrder(which)) {
+            ChangeCardOrderResult.OrderChange -> { searchCards() }
+            ChangeCardOrderResult.DirectionChange -> {
+                mCards.reverse()
+                updateList()
+            }
+            null -> {}
         }
     }
 
@@ -498,10 +490,6 @@ open class CardBrowser :
         super.onCollectionLoaded(col)
         Timber.d("onCollectionLoaded()")
         registerExternalStorageListener()
-        val preferences = baseContext.sharedPrefs()
-
-        mOrder = SortType.fromCol(col.config, preferences)
-        mOrderAsc = col.config.get("sortBackwards") ?: false
         mCards.reset()
         // Create a spinner for column 1
         findViewById<Spinner>(R.id.browser_column1_spinner).apply {

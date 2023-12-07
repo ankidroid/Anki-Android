@@ -74,8 +74,12 @@ class CardBrowserViewModel(
 
     // card that was clicked (not marked)
     var currentCardId: CardId = 0
-    var order = SortType.NO_SORTING
-    var orderAsc = false
+
+    private val sortTypeFlow = MutableStateFlow(SortType.NO_SORTING)
+    val order get() = sortTypeFlow.value
+
+    private val reverseDirectionFlow = MutableStateFlow(ReverseDirection(orderAsc = false))
+    val orderAsc get() = reverseDirectionFlow.value.orderAsc
 
     val column1IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_1_KEY, 0))
     val column2IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_2_KEY, 0))
@@ -122,7 +126,20 @@ class CardBrowserViewModel(
         viewModelScope.launch {
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this) }
             cardsOrNotesFlow.update { cardsOrNotes }
+
+            withCol {
+                sortTypeFlow.update { SortType.fromCol(config, sharedPrefs()) }
+                reverseDirectionFlow.update { ReverseDirection.fromConfig(config) }
+            }
         }
+
+        reverseDirectionFlow
+            .onEach { newValue -> withCol { newValue.updateConfig(config) } }
+            .launchIn(viewModelScope)
+
+        sortTypeFlow
+            .onEach { sortType -> withCol { sortType.save(config, sharedPrefs()) } }
+            .launchIn(viewModelScope)
     }
 
     /** Whether any rows are selected */
@@ -222,6 +239,21 @@ class CardBrowserViewModel(
     }
 
     fun selectedRowCount(): Int = selectedRows.size
+
+    fun changeCardOrder(which: SortType): ChangeCardOrderResult? {
+        if (which != order) {
+            Timber.i("updating order to %s", which)
+            sortTypeFlow.update { which }
+            reverseDirectionFlow.update { ReverseDirection(orderAsc = false) }
+            return ChangeCardOrderResult.OrderChange
+        } else if (which != SortType.NO_SORTING) {
+            Timber.i("reversing search order")
+            // if the same element is selected again, reverse the order
+            reverseDirectionFlow.update { ReverseDirection(orderAsc = !orderAsc) }
+            return ChangeCardOrderResult.DirectionChange
+        }
+        return null
+    }
 
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
 
@@ -347,6 +379,12 @@ class CardBrowserViewModel(
                 CardBrowserViewModel(preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider)
             }
         }
+    }
+
+    /** temporary result class for [changeCardOrder] */
+    enum class ChangeCardOrderResult {
+        OrderChange,
+        DirectionChange
     }
 }
 
