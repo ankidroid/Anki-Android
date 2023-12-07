@@ -25,7 +25,6 @@ import android.text.TextUtils
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.annotation.CheckResult
@@ -74,6 +73,7 @@ import com.ichi2.anki.servicelayer.resetCards
 import com.ichi2.anki.servicelayer.totalLapsesOfNote
 import com.ichi2.anki.servicelayer.totalReviewsForNote
 import com.ichi2.anki.snackbar.showSnackbar
+import com.ichi2.anki.ui.BasicItemSelectedListener
 import com.ichi2.anki.utils.SECONDS_PER_DAY
 import com.ichi2.anki.utils.roundedTimeSpanUnformatted
 import com.ichi2.anki.widgets.DeckDropDownAdapter.SubtitleListener
@@ -170,12 +170,6 @@ open class CardBrowser :
     private var mOrderAsc
         get() = viewModel.orderAsc
         set(value) { viewModel.orderAsc = value }
-    private var mColumn1Index
-        get() = viewModel.column1Index
-        set(value) { viewModel.column1Index = value }
-    private var mColumn2Index
-        get() = viewModel.column2Index
-        set(value) { viewModel.column2Index = value }
 
     // DEFECT: Doesn't need to be a local
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
@@ -431,13 +425,13 @@ open class CardBrowser :
         mActionBarTitle = findViewById(R.id.toolbar_title)
         cardsListView = findViewById(R.id.card_browser_list)
         val preferences = baseContext.sharedPrefs()
-        mColumn1Index = preferences.getInt(DISPLAY_COLUMN_1_KEY, 0)
-        // Load default value for column2 selection
-        mColumn2Index = preferences.getInt(DISPLAY_COLUMN_2_KEY, 0)
         // get the font and font size from the preferences
         val sflRelativeFontSize =
             preferences.getInt("relativeCardBrowserFontSize", DEFAULT_FONT_SIZE_RATIO)
-        val columnsContent = arrayOf(COLUMN1_KEYS[mColumn1Index], COLUMN2_KEYS[mColumn2Index])
+        val columnsContent = arrayOf(
+            COLUMN1_KEYS[viewModel.column1Index],
+            COLUMN2_KEYS[viewModel.column2Index]
+        )
         // make a new list adapter mapping the data in mCards to column1 and column2 of R.layout.card_item_browser
         cardsAdapter = MultiColumnListAdapter(
             this,
@@ -487,6 +481,16 @@ open class CardBrowser :
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { runOnUiThread { searchCards() } }
             .launchIn(lifecycleScope)
+
+        viewModel.column1IndexFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
+            .launchIn(lifecycleScope)
+
+        viewModel.column2IndexFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
@@ -506,64 +510,36 @@ open class CardBrowser :
         mOrderAsc = col.config.get("sortBackwards") ?: false
         mCards.reset()
         // Create a spinner for column 1
-        val cardsColumn1Spinner = findViewById<Spinner>(R.id.browser_column1_spinner)
-        val column1Adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.browser_column1_headings,
-            android.R.layout.simple_spinner_item
-        )
-        column1Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
-        cardsColumn1Spinner.adapter = column1Adapter
-        cardsColumn1Spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                // If a new column was selected then change the key used to map from mCards to the column TextView
-                if (pos != mColumn1Index) {
-                    mColumn1Index = pos
-                    AnkiDroidApp.instance.baseContext.sharedPrefs().edit {
-                        putInt(DISPLAY_COLUMN_1_KEY, mColumn1Index)
-                    }
-                    val fromMap = cardsAdapter.fromMapping
-                    fromMap[0] = COLUMN1_KEYS[mColumn1Index]
-                    cardsAdapter.fromMapping = fromMap
-                }
+        findViewById<Spinner>(R.id.browser_column1_spinner).apply {
+            adapter = ArrayAdapter.createFromResource(
+                this@CardBrowser,
+                R.array.browser_column1_headings,
+                android.R.layout.simple_spinner_item
+            ).apply {
+                setDropDownViewResource(R.layout.spinner_custom_layout)
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do Nothing
+            onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+                viewModel.setColumn1Index(pos)
             }
+            setSelection(viewModel.column1Index)
         }
         // Setup the column 2 heading as a spinner so that users can easily change the column type
-        val cardsColumn2Spinner = findViewById<Spinner>(R.id.browser_column2_spinner)
-        val column2Adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.browser_column2_headings,
-            android.R.layout.simple_spinner_item
-        )
-        // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
-        column2Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
-        cardsColumn2Spinner.adapter = column2Adapter
-        // Create a new list adapter with updated column map any time the user changes the column
-        cardsColumn2Spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                // If a new column was selected then change the key used to map from mCards to the column TextView
-                if (pos != mColumn2Index) {
-                    mColumn2Index = pos
-                    AnkiDroidApp.instance.baseContext.sharedPrefs().edit {
-                        putInt(DISPLAY_COLUMN_2_KEY, mColumn2Index)
-                    }
-                    val fromMap = cardsAdapter.fromMapping
-                    fromMap[1] = COLUMN2_KEYS[mColumn2Index]
-                    cardsAdapter.fromMapping = fromMap
-                }
+        findViewById<Spinner>(R.id.browser_column2_spinner).apply {
+            adapter = ArrayAdapter.createFromResource(
+                this@CardBrowser,
+                R.array.browser_column2_headings,
+                android.R.layout.simple_spinner_item
+            ).apply {
+                // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
+                setDropDownViewResource(R.layout.spinner_custom_layout)
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do Nothing
+            // Create a new list adapter with updated column map any time the user changes the column
+            onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+                viewModel.setColumn2Index(pos)
             }
+            setSelection(viewModel.column2Index)
         }
-        // set the spinner index
-        cardsColumn1Spinner.setSelection(mColumn1Index)
-        cardsColumn2Spinner.setSelection(mColumn2Index)
+
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (isInMultiSelectMode) {
                 // click on whole cell triggers select
@@ -1485,7 +1461,7 @@ open class CardBrowser :
             Timber.d("Search returned %d cards", cards.size)
             // Render the first few items
             for (i in 0 until Math.min(numCardsToRender(), cards.size)) {
-                cards[i].load(false, mColumn1Index, mColumn2Index)
+                cards[i].load(false, viewModel.column1Index, viewModel.column2Index)
             }
             redrawAfterSearch(cards)
         }
@@ -1645,7 +1621,7 @@ open class CardBrowser :
         cards
             .mapNotNull { c -> idToPos[c.id] }
             .filterNot { pos -> pos >= cardCount }
-            .forEach { pos -> mCards[pos].load(true, mColumn1Index, mColumn2Index) }
+            .forEach { pos -> mCards[pos].load(true, viewModel.column1Index, viewModel.column2Index) }
         updateList()
     }
 
@@ -1851,8 +1827,8 @@ open class CardBrowser :
             cards,
             firstVisibleItem,
             visibleItemCount,
-            mColumn1Index,
-            mColumn2Index
+            viewModel.column1Index,
+            viewModel.column2Index
         ) {
             // Note: This is called every time a card is rendered.
             // It blocks the long-click callback while the task is running, so usage of the task should be minimized
@@ -1944,12 +1920,19 @@ open class CardBrowser :
             }
         }
 
-        var fromMapping: Array<Column>
+        private var fromMapping: Array<Column>
             get() = fromKeys
             set(from) {
                 fromKeys = from
                 notifyDataSetChanged()
             }
+
+        fun updateMapping(fn: (Array<Column>) -> Unit) {
+            val fromMap = fromMapping
+            fn(fromMap)
+            // this doesn't need to be run on the UI thread: this calls notifyDataSetChanged()
+            fromMapping = fromMap
+        }
 
         override fun getCount(): Int {
             return cardCount
@@ -2455,8 +2438,6 @@ open class CardBrowser :
         private const val PERSISTENT_STATE_FILE = "DeckPickerState"
         private const val LAST_DECK_ID_KEY = "lastDeckId"
         const val CARD_NOT_AVAILABLE = -1
-        const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
-        const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
 
         fun clearLastDeckId() {
             val context: Context = AnkiDroidApp.instance

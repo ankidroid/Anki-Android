@@ -32,6 +32,8 @@ import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -58,8 +60,11 @@ class CardBrowserViewModel(
     var currentCardId: CardId = 0
     var order = SortType.NO_SORTING
     var orderAsc = false
-    var column1Index = 0
-    var column2Index = 0
+
+    val column1IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_1_KEY, 0))
+    val column2IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_2_KEY, 0))
+    val column1Index get() = column1IndexFlow.value
+    val column2Index get() = column2IndexFlow.value
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
     var tempSearchQuery: String? = null
@@ -82,6 +87,14 @@ class CardBrowserViewModel(
         }
 
     init {
+        column1IndexFlow
+            .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_1_KEY, index) } }
+            .launchIn(viewModelScope)
+
+        column2IndexFlow
+            .onEach { index -> sharedPrefs().edit { putInt(DISPLAY_COLUMN_2_KEY, index) } }
+            .launchIn(viewModelScope)
+
         viewModelScope.launch {
             val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this) }
             cardsOrNotesFlow.update { cardsOrNotes }
@@ -139,7 +152,13 @@ class CardBrowserViewModel(
         }
     }
 
+    fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
+
+    fun setColumn2Index(value: Int) = column2IndexFlow.update { value }
+
     companion object {
+        const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
+        const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
         fun factory(preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
             initializer {
                 CardBrowserViewModel(preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider)

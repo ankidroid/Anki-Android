@@ -27,6 +27,8 @@ import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.ichi2.anki.CardBrowser.CardCache
+import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_1_KEY
+import com.ichi2.anki.browser.CardBrowserViewModel.Companion.DISPLAY_COLUMN_2_KEY
 import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.libanki.CardId
@@ -954,8 +956,8 @@ class CardBrowserTest : RobolectricTest() {
     fun `column spinner positions are set to 0 if no preferences exist`() = runBlocking {
         // GIVEN: No shared preferences exist for display column selections
         getSharedPrefs().edit {
-            remove(CardBrowser.DISPLAY_COLUMN_1_KEY)
-            remove(CardBrowser.DISPLAY_COLUMN_2_KEY)
+            remove(DISPLAY_COLUMN_1_KEY)
+            remove(DISPLAY_COLUMN_2_KEY)
         }
 
         // WHEN: CardBrowser is created
@@ -978,8 +980,8 @@ class CardBrowserTest : RobolectricTest() {
         val index2 = 5
 
         getSharedPrefs().edit {
-            putInt(CardBrowser.DISPLAY_COLUMN_1_KEY, index1)
-            putInt(CardBrowser.DISPLAY_COLUMN_2_KEY, index2)
+            putInt(DISPLAY_COLUMN_1_KEY, index1)
+            putInt(DISPLAY_COLUMN_2_KEY, index2)
         }
 
         // WHEN: CardBrowser is created
