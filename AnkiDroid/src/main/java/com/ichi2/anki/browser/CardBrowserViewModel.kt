@@ -158,6 +158,10 @@ class CardBrowserViewModel(
         }
     }
 
+    fun selectAll() = checkedCards.addAll(cards.wrapped)
+
+    fun selectNone() = checkedCards.clear()
+
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
 
     fun setColumn2Index(value: Int) = column2IndexFlow.update { value }

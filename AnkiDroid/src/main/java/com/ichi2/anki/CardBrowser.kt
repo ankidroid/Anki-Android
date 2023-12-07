@@ -1920,13 +1920,13 @@ open class CardBrowser :
 
     @VisibleForTesting
     fun onSelectAll() {
-        mCheckedCards.addAll(mCards.wrapped)
+        viewModel.selectAll()
         onSelectionChanged()
     }
 
     @VisibleForTesting
     fun onSelectNone() {
-        mCheckedCards.clear()
+        viewModel.selectNone()
         onSelectionChanged()
     }
 
