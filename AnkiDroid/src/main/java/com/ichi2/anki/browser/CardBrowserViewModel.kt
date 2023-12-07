@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.model.CardsOrNotes
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
@@ -106,6 +107,14 @@ class CardBrowserViewModel(
      */
     suspend fun deleteSelectedNotes(): Int =
         undoableOp { removeNotes(cids = selectedCardIds) }.count
+
+    fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
+        withCol {
+            // Change this to only change the preference on a state change
+            newValue.saveToCollection(this)
+        }
+        cardsOrNotes = newValue
+    }
 
     fun setTruncated(value: Boolean) {
         viewModelScope.launch {

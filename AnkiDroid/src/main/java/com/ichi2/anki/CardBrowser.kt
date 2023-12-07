@@ -1215,8 +1215,7 @@ open class CardBrowser :
 
     fun switchCardOrNote(newCardsMode: CardsOrNotes) {
         launchCatchingTask {
-            withCol { newCardsMode.saveToCollection(this) }
-            cardsOrNotes = newCardsMode
+            viewModel.setCardsOrNotes(newCardsMode)
             searchCards()
         }
     }
