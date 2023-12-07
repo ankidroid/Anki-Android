@@ -876,7 +876,7 @@ open class CardBrowser :
         if (mActionBarMenu == null || mActionBarMenu!!.findItem(R.id.action_suspend_card) == null) {
             return
         }
-        if (mCheckedCards.isNotEmpty()) {
+        if (viewModel.hasSelectedCards()) {
             mActionBarMenu!!.findItem(R.id.action_suspend_card).apply {
                 title = TR.browsingToggleSuspend()
                 setIcon(R.drawable.ic_pause_circle_outline)
@@ -1241,7 +1241,7 @@ open class CardBrowser :
             getPreviewIntent(0, selectedCardIds.toLongArray())
         } else {
             // Preview all cards, starting from the one that is currently selected
-            val startIndex = if (mCheckedCards.isEmpty()) 0 else mCheckedCards.iterator().next().position
+            val startIndex = viewModel.selectedCards.firstOrNull()?.position ?: 0
             getPreviewIntent(startIndex, allCardIds)
         }
 
@@ -1901,10 +1901,10 @@ open class CardBrowser :
     private fun onSelectionChanged() {
         Timber.d("onSelectionChanged()")
         try {
-            if (!isInMultiSelectMode && mCheckedCards.isNotEmpty()) {
+            if (!isInMultiSelectMode && viewModel.hasSelectedCards()) {
                 // If we have selected cards, load multiselect
                 loadMultiSelectMode()
-            } else if (isInMultiSelectMode && mCheckedCards.isEmpty()) {
+            } else if (isInMultiSelectMode && !viewModel.hasSelectedCards()) {
                 // If we don't have cards, unload multiselect
                 endMultiSelectMode()
             }
