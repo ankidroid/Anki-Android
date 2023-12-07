@@ -118,7 +118,8 @@ class CardBrowserViewModel(
         }
     }
 
-    fun hasSelectedCards(): Boolean = selectedCards.isNotEmpty()
+    /** Whether any rows are selected */
+    fun hasSelectedAnyRows(): Boolean = selectedCards.isNotEmpty()
 
     /**
      * All the notes of the selected cards will be marked
@@ -126,7 +127,7 @@ class CardBrowserViewModel(
      * otherwise, they will be unmarked
      */
     suspend fun toggleMark(cardIds: List<CardId>) {
-        if (!hasSelectedCards()) {
+        if (!hasSelectedAnyRows()) {
             Timber.i("Not marking cards - nothing selected")
             return
         }

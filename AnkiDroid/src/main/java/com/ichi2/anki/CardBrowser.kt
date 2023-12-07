@@ -875,7 +875,7 @@ open class CardBrowser :
         if (mActionBarMenu == null || mActionBarMenu!!.findItem(R.id.action_suspend_card) == null) {
             return
         }
-        if (viewModel.hasSelectedCards()) {
+        if (viewModel.hasSelectedAnyRows()) {
             mActionBarMenu!!.findItem(R.id.action_suspend_card).apply {
                 title = TR.browsingToggleSuspend()
                 setIcon(R.drawable.ic_pause_circle_outline)
@@ -887,26 +887,37 @@ open class CardBrowser :
         }
         mActionBarMenu!!.findItem(R.id.action_export_selected).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
-                resources.getQuantityString(R.plurals.card_browser_export_cards, viewModel.selectedRowCount())
+                resources.getQuantityString(
+                    R.plurals.card_browser_export_cards,
+                    viewModel.selectedRowCount()
+                )
             } else {
-                resources.getQuantityString(R.plurals.card_browser_export_notes, viewModel.selectedRowCount())
+                resources.getQuantityString(
+                    R.plurals.card_browser_export_notes,
+                    viewModel.selectedRowCount()
+                )
             }
         }
         mActionBarMenu!!.findItem(R.id.action_delete_card).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
-                resources.getQuantityString(R.plurals.card_browser_delete_cards, viewModel.selectedRowCount())
+                resources.getQuantityString(
+                    R.plurals.card_browser_delete_cards,
+                    viewModel.selectedRowCount()
+                )
             } else {
-                resources.getQuantityString(R.plurals.card_browser_delete_notes, viewModel.selectedRowCount())
+                resources.getQuantityString(
+                    R.plurals.card_browser_delete_notes,
+                    viewModel.selectedRowCount()
+                )
             }
         }
         mActionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
         // Note: Theoretically should not happen, as this should kick us back to the menu
-        mActionBarMenu!!.findItem(R.id.action_select_none).isVisible = hasSelectedCards()
+        mActionBarMenu!!.findItem(R.id.action_select_none).isVisible =
+            viewModel.hasSelectedAnyRows()
         mActionBarMenu!!.findItem(R.id.action_edit_note).isVisible = canPerformMultiSelectEditNote()
         mActionBarMenu!!.findItem(R.id.action_view_card_info).isVisible = canPerformCardInfo()
     }
-
-    private fun hasSelectedCards(): Boolean = viewModel.hasSelectedCards()
 
     private fun hasSelectedAllCards(): Boolean {
         return viewModel.selectedRowCount() >= cardCount // must handle 0.
@@ -1249,7 +1260,7 @@ open class CardBrowser :
     }
 
     private fun rescheduleSelectedCards() {
-        if (!hasSelectedCards()) {
+        if (!viewModel.hasSelectedAnyRows()) {
             Timber.i("Attempted reschedule - no cards selected")
             return
         }
@@ -1287,7 +1298,7 @@ open class CardBrowser :
     }
 
     private fun showChangeDeckDialog() {
-        if (!hasSelectedCards()) {
+        if (!viewModel.hasSelectedAnyRows()) {
             Timber.i("Not showing Change Deck - No Cards")
             return
         }
@@ -1900,10 +1911,10 @@ open class CardBrowser :
     fun onSelectionChanged() {
         Timber.d("onSelectionChanged()")
         try {
-            if (!isInMultiSelectMode && viewModel.hasSelectedCards()) {
+            if (!isInMultiSelectMode && viewModel.hasSelectedAnyRows()) {
                 // If we have selected cards, load multiselect
                 loadMultiSelectMode()
-            } else if (isInMultiSelectMode && !viewModel.hasSelectedCards()) {
+            } else if (isInMultiSelectMode && !viewModel.hasSelectedAnyRows()) {
                 // If we don't have cards, unload multiselect
                 endMultiSelectMode()
             }
