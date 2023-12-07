@@ -8,30 +8,7 @@ on:
         required: false
         type: string
   pull_request:
-    branches:
-      - '**'
-    paths:
-      - '.github/workflows/**'
-      - 'AnkiDroid/**'
-      - 'api/**'
-      - 'lint-rules/**'
-      - 'annotations/**'
-      - '**/*.gradle'
-      - 'gradle/**'
   push:
-    branches:
-      - main
-      - i18n_sync
-      - dependency-updates
-      - 'release**'
-    paths:
-      - '.github/workflows/**'
-      - 'AnkiDroid/**'
-      - 'api/**'
-      - 'lint-rules/**'
-      - 'annotations/**'
-      - '**/*.gradle'
-      - 'gradle/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
