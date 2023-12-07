@@ -19,6 +19,8 @@ package com.ichi2.anki.tests
 
 import android.content.Context
 import android.os.Build
+import androidx.test.espresso.ViewAssertion
+import androidx.test.espresso.ViewInteraction
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
@@ -29,10 +31,13 @@ import com.ichi2.libanki.Card
 import com.ichi2.libanki.Collection
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.Note
+import com.ichi2.libanki.utils.TimeManager
 import org.junit.Before
 import org.junit.Rule
 import java.io.File
 import java.io.IOException
+import java.util.concurrent.TimeUnit
+import kotlin.test.fail
 
 abstract class InstrumentedTest {
     protected val col: Collection
@@ -127,5 +132,24 @@ abstract class InstrumentedTest {
         }
         check(col.addNote(n) != 0) { "Could not add note: {${fields.joinToString(separator = ", ")}}" }
         return n
+    }
+
+    protected fun ViewInteraction.checkWithTimeout(
+        viewAssertion: ViewAssertion,
+        retryWaitTimeInMilliseconds: Long = 100,
+        maxWaitTimeInMilliseconds: Long = TimeUnit.SECONDS.toMillis(10)
+    ) {
+        val startTime = TimeManager.time.intTimeMS()
+
+        while (TimeManager.time.intTimeMS() - startTime < maxWaitTimeInMilliseconds) {
+            try {
+                check(viewAssertion)
+                return
+            } catch (e: Throwable) {
+                Thread.sleep(retryWaitTimeInMilliseconds)
+            }
+        }
+
+        fail("View assertion was not true within $maxWaitTimeInMilliseconds milliseconds")
     }
 }

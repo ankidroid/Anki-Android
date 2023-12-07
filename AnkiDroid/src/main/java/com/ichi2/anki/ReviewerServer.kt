@@ -121,11 +121,16 @@ class ReviewerServer(activity: FragmentActivity, val mediaDir: String) : AnkiSer
 
     private fun setSchedulingStates(bytes: ByteArray): ByteArray {
         val reviewer = reviewer()
-        val state = reviewer.queueState ?: return ByteArray(0)
+        val state = reviewer.queueState
+        if (state == null) {
+            reviewer.statesMutated = true
+            return ByteArray(0)
+        }
         val req = SetSchedulingStatesRequest.parseFrom(bytes)
         if (req.key == reviewer.customSchedulingKey) {
             state.states = req.states
         }
+        reviewer.statesMutated = true
         return ByteArray(0)
     }
 }
