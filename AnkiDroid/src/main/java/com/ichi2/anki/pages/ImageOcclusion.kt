@@ -19,12 +19,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.WebView
-import com.ichi2.anki.R
+import com.ichi2.anki.CollectionManager.TR
 import org.json.JSONObject
 
 class ImageOcclusion : PageFragment() {
 
-    override val title = R.string.image_occlusion
+    override val title: String
+        get() = TR.notetypesImageOcclusionName()
     override val pageName = "image-occlusion"
     override lateinit var webViewClient: PageWebViewClient
     override var webChromeClient = PageChromeClient()

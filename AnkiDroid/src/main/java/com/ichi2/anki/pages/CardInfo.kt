@@ -24,7 +24,9 @@ import com.ichi2.anki.R
 import com.ichi2.libanki.CardId
 
 class CardInfo : PageFragment() {
-    override val title = R.string.card_info_title
+    override val title: String
+        get() = resources.getString(R.string.card_info_title)
+
     override val pageName = "card-info"
     override lateinit var webViewClient: PageWebViewClient
     override var webChromeClient = PageChromeClient()

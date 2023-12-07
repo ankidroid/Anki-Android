@@ -20,7 +20,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import com.ichi2.anki.R
 import com.ichi2.themes.Themes
@@ -30,9 +29,7 @@ import timber.log.Timber
  * Base class for displaying Anki HTML pages
  */
 abstract class PageFragment : Fragment() {
-    @get:StringRes
-    /** Title string resource of the page */
-    abstract val title: Int
+    abstract val title: String
     abstract val pageName: String
     abstract var webViewClient: PageWebViewClient
     abstract var webChromeClient: PageChromeClient

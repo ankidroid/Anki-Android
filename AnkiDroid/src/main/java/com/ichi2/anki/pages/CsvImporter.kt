@@ -25,7 +25,9 @@ import com.ichi2.anki.R
  * Anki page used to import text/csv files
  */
 class CsvImporter : PageFragment() {
-    override val title = R.string.menu_import
+    override val title: String
+        get() = resources.getString(R.string.menu_import)
+
     override val pageName = "import-csv"
     override lateinit var webViewClient: PageWebViewClient
     override var webChromeClient = PageChromeClient()

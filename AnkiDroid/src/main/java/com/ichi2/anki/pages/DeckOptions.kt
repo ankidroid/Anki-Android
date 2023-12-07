@@ -29,7 +29,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class DeckOptions : PageFragment() {
-    override val title = R.string.menu__deck_options
+    override val title: String
+        get() = resources.getString(R.string.menu__deck_options)
     override val pageName = "deck-options"
     override lateinit var webViewClient: PageWebViewClient
     override var webChromeClient = PageChromeClient()
