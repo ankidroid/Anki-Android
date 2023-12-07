@@ -55,11 +55,11 @@
     </plurals>
     <string name="card_browser_all_decks">सरे डेक</string>
     <plurals name="card_browser_delete_cards">
-        <item quantity="one">Delete card</item>
-        <item quantity="other">Delete cards</item>
+        <item quantity="one">कार्ड हटाएं</item>
+        <item quantity="other">कार्ड्स को हटाएं</item>
     </plurals>
     <plurals name="card_browser_delete_notes">
-        <item quantity="one">Delete note</item>
+        <item quantity="one">नोट को हटाएँ</item>
         <item quantity="other">Delete notes</item>
     </plurals>
     <string name="card_browser_change_deck">डेक बदलें</string>

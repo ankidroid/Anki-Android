@@ -86,7 +86,7 @@
     </string-array>
     <string-array name="browser_column2_headings">
         <item>解答</item>
-        <item>カード</item>
+        <item>カードタイプ</item>
         <item>デッキ</item>
         <item>ノートタイプ</item>
         <item>質問</item>
