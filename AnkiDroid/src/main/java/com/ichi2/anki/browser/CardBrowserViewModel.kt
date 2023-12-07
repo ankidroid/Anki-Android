@@ -59,8 +59,8 @@ class CardBrowserViewModel(
     var order = SortType.NO_SORTING
     var orderAsc = false
 
-    val column1IndexFlow = MutableStateFlow(sharedPrefs().getInt(CardBrowser.DISPLAY_COLUMN_1_KEY, 0))
-    val column2IndexFlow = MutableStateFlow(sharedPrefs().getInt(CardBrowser.DISPLAY_COLUMN_2_KEY, 0))
+    val column1IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_1_KEY, 0))
+    val column2IndexFlow = MutableStateFlow(sharedPrefs().getInt(DISPLAY_COLUMN_2_KEY, 0))
     val column1Index get() = column1IndexFlow.value
     val column2Index get() = column2IndexFlow.value
 
@@ -146,7 +146,7 @@ class CardBrowserViewModel(
         if (column1Index == value) return
         column1IndexFlow.update { value }
         sharedPrefs().edit {
-            putInt(CardBrowser.DISPLAY_COLUMN_1_KEY, value)
+            putInt(DISPLAY_COLUMN_1_KEY, value)
         }
     }
 
@@ -154,11 +154,13 @@ class CardBrowserViewModel(
         if (column2Index == value) return
         column2IndexFlow.update { value }
         sharedPrefs().edit {
-            putInt(CardBrowser.DISPLAY_COLUMN_2_KEY, value)
+            putInt(DISPLAY_COLUMN_2_KEY, value)
         }
     }
 
     companion object {
+        const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
+        const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
         fun factory(preferencesProvider: SharedPreferencesProvider? = null) = viewModelFactory {
             initializer {
                 CardBrowserViewModel(preferencesProvider ?: AnkiDroidApp.sharedPreferencesProvider)

@@ -2438,8 +2438,6 @@ open class CardBrowser :
         private const val PERSISTENT_STATE_FILE = "DeckPickerState"
         private const val LAST_DECK_ID_KEY = "lastDeckId"
         const val CARD_NOT_AVAILABLE = -1
-        const val DISPLAY_COLUMN_1_KEY = "cardBrowserColumn1"
-        const val DISPLAY_COLUMN_2_KEY = "cardBrowserColumn2"
 
         fun clearLastDeckId() {
             val context: Context = AnkiDroidApp.instance
