@@ -18,7 +18,6 @@ package com.ichi2.anki.cardviewer
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.ichi2.anki.reviewer.ReviewerCustomFonts
-import com.ichi2.libanki.Card
 import com.ichi2.themes.Theme
 import com.ichi2.themes.Themes.currentTheme
 
@@ -86,13 +85,6 @@ class CardAppearance(private val customFonts: ReviewerCustomFonts, private val c
             // In order to display the bold style correctly, we have to change
             // font-weight to 700
             return content.replace("font-weight:600;", "font-weight:700;")
-        }
-
-        /**
-         * hasUserDefinedNightMode finds out if the user has included class .night_mode in card's stylesheet
-         */
-        fun hasUserDefinedNightMode(card: Card): Boolean {
-            return card.css().contains(nightModeClassRegex)
         }
     }
 }

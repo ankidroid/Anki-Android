@@ -19,14 +19,11 @@ package com.ichi2.anki.cardviewer
 import android.content.Context
 import com.ichi2.anki.R
 import com.ichi2.anki.TtsParser
-import com.ichi2.anki.cardviewer.CardAppearance.Companion.hasUserDefinedNightMode
 import com.ichi2.libanki.*
 import com.ichi2.libanki.Sound.SingleSoundSide
 import com.ichi2.libanki.Sound.SingleSoundSide.ANSWER
 import com.ichi2.libanki.Sound.SingleSoundSide.QUESTION
 import com.ichi2.libanki.template.MathJax
-import com.ichi2.themes.HtmlColors
-import com.ichi2.themes.Themes.currentTheme
 import net.ankiweb.rsdroid.RustCleanup
 import org.json.JSONObject
 import timber.log.Timber
@@ -37,7 +34,6 @@ class CardHtml(
     @RustCleanup("legacy")
     private val beforeSoundTemplateExpansion: String,
     private val ord: Int,
-    private val nightModeInversion: Boolean,
     private val context: HtmlGenerator,
     /** The side that [beforeSoundTemplateExpansion] was generated from */
     private val side: Side,
@@ -101,9 +97,6 @@ class CardHtml(
     private fun getContent(): String {
         var content = context.expandSounds(beforeSoundTemplateExpansion)
         content = CardAppearance.fixBoldStyle(content)
-        if (nightModeInversion) {
-            return HtmlColors.invertColors(content)
-        }
         return content
     }
 
@@ -133,8 +126,6 @@ class CardHtml(
         fun createInstance(card: Card, reload: Boolean, side: Side, context: HtmlGenerator): CardHtml {
             val content = displayString(card, reload, side, context)
 
-            val nightModeInversion = currentTheme.isNightMode && !hasUserDefinedNightMode(card)
-
             val renderOutput = card.renderOutput()
             val questionAv = renderOutput.questionAvTags
             val answerAv = renderOutput.answerAvTags
@@ -145,7 +136,7 @@ class CardHtml(
             // legacy (slow) function to return the answer without the front side
             fun getAnswerWithoutFrontSideLegacy(): String = removeFrontSideAudio(card, card.answer())
 
-            return CardHtml(content, card.ord, nightModeInversion, context, side, ::getAnswerWithoutFrontSideLegacy, questionSound, answerSound)
+            return CardHtml(content, card.ord, context, side, ::getAnswerWithoutFrontSideLegacy, questionSound, answerSound)
         }
 
         /**
