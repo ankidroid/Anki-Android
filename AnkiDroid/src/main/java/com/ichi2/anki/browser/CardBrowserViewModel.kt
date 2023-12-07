@@ -29,6 +29,7 @@ import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
+import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -136,6 +137,20 @@ class CardBrowserViewModel(
         }
         sharedPrefs().edit {
             putBoolean("isTruncated", value)
+        }
+    }
+
+    fun setColumn1Index(pos: Int) {
+        column1Index = pos
+        sharedPrefs().edit {
+            putInt(CardBrowser.DISPLAY_COLUMN_1_KEY, pos)
+        }
+    }
+
+    fun setColumn2Index(pos: Int) {
+        column2Index = pos
+        sharedPrefs().edit {
+            putInt(CardBrowser.DISPLAY_COLUMN_2_KEY, pos)
         }
     }
 

@@ -170,12 +170,10 @@ open class CardBrowser :
     private var mOrderAsc
         get() = viewModel.orderAsc
         set(value) { viewModel.orderAsc = value }
-    private var mColumn1Index
+    private val mColumn1Index
         get() = viewModel.column1Index
-        set(value) { viewModel.column1Index = value }
-    private var mColumn2Index
+    private val mColumn2Index
         get() = viewModel.column2Index
-        set(value) { viewModel.column2Index = value }
 
     // DEFECT: Doesn't need to be a local
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
@@ -515,10 +513,7 @@ open class CardBrowser :
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn1Index) {
-                    mColumn1Index = pos
-                    AnkiDroidApp.instance.baseContext.sharedPrefs().edit {
-                        putInt(DISPLAY_COLUMN_1_KEY, mColumn1Index)
-                    }
+                    viewModel.setColumn1Index(pos)
                     val fromMap = cardsAdapter.fromMapping
                     fromMap[0] = COLUMN1_KEYS[mColumn1Index]
                     cardsAdapter.fromMapping = fromMap
@@ -544,10 +539,7 @@ open class CardBrowser :
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
                 // If a new column was selected then change the key used to map from mCards to the column TextView
                 if (pos != mColumn2Index) {
-                    mColumn2Index = pos
-                    AnkiDroidApp.instance.baseContext.sharedPrefs().edit {
-                        putInt(DISPLAY_COLUMN_2_KEY, mColumn2Index)
-                    }
+                    viewModel.setColumn2Index(pos)
                     val fromMap = cardsAdapter.fromMapping
                     fromMap[1] = COLUMN2_KEYS[mColumn2Index]
                     cardsAdapter.fromMapping = fromMap
