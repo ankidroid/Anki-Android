@@ -29,7 +29,6 @@ import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
-import com.ichi2.anki.preferences.sharedPrefs
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -59,8 +58,11 @@ class CardBrowserViewModel(
     var currentCardId: CardId = 0
     var order = SortType.NO_SORTING
     var orderAsc = false
-    var column1Index = sharedPrefs().getInt(CardBrowser.DISPLAY_COLUMN_1_KEY, 0)
-    var column2Index = sharedPrefs().getInt(CardBrowser.DISPLAY_COLUMN_2_KEY, 0)
+
+    val column1IndexFlow = MutableStateFlow(sharedPrefs().getInt(CardBrowser.DISPLAY_COLUMN_1_KEY, 0))
+    val column2IndexFlow = MutableStateFlow(sharedPrefs().getInt(CardBrowser.DISPLAY_COLUMN_2_KEY, 0))
+    val column1Index get() = column1IndexFlow.value
+    val column2Index get() = column2IndexFlow.value
 
     /** The query which is currently in the search box, potentially null. Only set when search box was open  */
     var tempSearchQuery: String? = null
@@ -140,17 +142,19 @@ class CardBrowserViewModel(
         }
     }
 
-    fun setColumn1Index(pos: Int) {
-        column1Index = pos
+    fun setColumn1Index(value: Int) {
+        if (column1Index == value) return
+        column1IndexFlow.update { value }
         sharedPrefs().edit {
-            putInt(CardBrowser.DISPLAY_COLUMN_1_KEY, pos)
+            putInt(CardBrowser.DISPLAY_COLUMN_1_KEY, value)
         }
     }
 
-    fun setColumn2Index(pos: Int) {
-        column2Index = pos
+    fun setColumn2Index(value: Int) {
+        if (column2Index == value) return
+        column2IndexFlow.update { value }
         sharedPrefs().edit {
-            putInt(CardBrowser.DISPLAY_COLUMN_2_KEY, pos)
+            putInt(CardBrowser.DISPLAY_COLUMN_2_KEY, value)
         }
     }
 

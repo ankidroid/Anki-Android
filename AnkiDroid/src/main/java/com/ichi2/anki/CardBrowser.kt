@@ -482,6 +482,16 @@ open class CardBrowser :
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { runOnUiThread { searchCards() } }
             .launchIn(lifecycleScope)
+
+        viewModel.column1IndexFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
+            .launchIn(lifecycleScope)
+
+        viewModel.column2IndexFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { index -> cardsAdapter.updateMapping { it[1] = COLUMN2_KEYS[index] } }
+            .launchIn(lifecycleScope)
     }
 
     fun searchWithFilterQuery(filterQuery: String) {
@@ -511,13 +521,7 @@ open class CardBrowser :
         cardsColumn1Spinner.adapter = column1Adapter
         cardsColumn1Spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                // If a new column was selected then change the key used to map from mCards to the column TextView
-                if (pos != mColumn1Index) {
-                    viewModel.setColumn1Index(pos)
-                    val fromMap = cardsAdapter.fromMapping
-                    fromMap[0] = COLUMN1_KEYS[mColumn1Index]
-                    cardsAdapter.fromMapping = fromMap
-                }
+                viewModel.setColumn1Index(pos)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -537,13 +541,7 @@ open class CardBrowser :
         // Create a new list adapter with updated column map any time the user changes the column
         cardsColumn2Spinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                // If a new column was selected then change the key used to map from mCards to the column TextView
-                if (pos != mColumn2Index) {
-                    viewModel.setColumn2Index(pos)
-                    val fromMap = cardsAdapter.fromMapping
-                    fromMap[1] = COLUMN2_KEYS[mColumn2Index]
-                    cardsAdapter.fromMapping = fromMap
-                }
+                viewModel.setColumn2Index(pos)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -1933,12 +1931,19 @@ open class CardBrowser :
             }
         }
 
-        var fromMapping: Array<Column>
+        private var fromMapping: Array<Column>
             get() = fromKeys
             set(from) {
                 fromKeys = from
                 notifyDataSetChanged()
             }
+
+        fun updateMapping(fn: (Array<Column>) -> Unit) {
+            val fromMap = fromMapping
+            fn(fromMap)
+            // this doesn't need to be run on the UI thread: this calls notifyDataSetChanged()
+            fromMapping = fromMap
+        }
 
         override fun getCount(): Int {
             return cardCount
