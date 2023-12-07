@@ -212,6 +212,8 @@ class CardBrowserViewModel(
         refreshSelectedRowsFlow.emit(Unit)
     }
 
+    fun selectedRowCount(): Int = selectedCards.size
+
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }
 
     fun setColumn2Index(value: Int) = column2IndexFlow.update { value }

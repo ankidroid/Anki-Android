@@ -354,12 +354,12 @@ open class CardBrowser :
         get() = viewModel.selectedCardIds
 
     private fun canPerformCardInfo(): Boolean {
-        return checkedCardCount() == 1
+        return viewModel.selectedRowCount() == 1
     }
 
     private fun canPerformMultiSelectEditNote(): Boolean {
         // The noteId is not currently available. Only allow if a single card is selected for now.
-        return checkedCardCount() == 1
+        return viewModel.selectedRowCount() == 1
     }
 
     /**
@@ -888,16 +888,16 @@ open class CardBrowser :
         }
         mActionBarMenu!!.findItem(R.id.action_export_selected).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
-                resources.getQuantityString(R.plurals.card_browser_export_cards, checkedCardCount())
+                resources.getQuantityString(R.plurals.card_browser_export_cards, viewModel.selectedRowCount())
             } else {
-                resources.getQuantityString(R.plurals.card_browser_export_notes, checkedCardCount())
+                resources.getQuantityString(R.plurals.card_browser_export_notes, viewModel.selectedRowCount())
             }
         }
         mActionBarMenu!!.findItem(R.id.action_delete_card).apply {
             this.title = if (viewModel.cardsOrNotes == CARDS) {
-                resources.getQuantityString(R.plurals.card_browser_delete_cards, checkedCardCount())
+                resources.getQuantityString(R.plurals.card_browser_delete_cards, viewModel.selectedRowCount())
             } else {
-                resources.getQuantityString(R.plurals.card_browser_delete_notes, checkedCardCount())
+                resources.getQuantityString(R.plurals.card_browser_delete_notes, viewModel.selectedRowCount())
             }
         }
         mActionBarMenu!!.findItem(R.id.action_select_all).isVisible = !hasSelectedAllCards()
@@ -910,7 +910,7 @@ open class CardBrowser :
     private fun hasSelectedCards(): Boolean = viewModel.hasSelectedCards()
 
     private fun hasSelectedAllCards(): Boolean {
-        return checkedCardCount() >= cardCount // must handle 0.
+        return viewModel.selectedRowCount() >= cardCount // must handle 0.
     }
 
     private fun updateFlagForSelectedRows(flag: Int) {
@@ -1236,7 +1236,7 @@ open class CardBrowser :
     // Multiple cards have been explicitly selected, so preview only those cards
     @get:VisibleForTesting
     val previewIntent: Intent
-        get() = if (isInMultiSelectMode && checkedCardCount() > 1) {
+        get() = if (isInMultiSelectMode && viewModel.selectedRowCount() > 1) {
             // Multiple cards have been explicitly selected, so preview only those cards
             getPreviewIntent(0, selectedCardIds.toLongArray())
         } else {
@@ -1917,7 +1917,7 @@ open class CardBrowser :
                 return
             }
             updateMultiselectMenu()
-            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", checkedCardCount())
+            mActionBarTitle.text = String.format(LanguageUtil.getLocaleCompat(resources), "%d", viewModel.selectedRowCount())
         } finally {
             if (colIsOpenUnsafe()) {
                 cardsAdapter.notifyDataSetChanged()
@@ -2212,7 +2212,7 @@ open class CardBrowser :
         isInMultiSelectMode = true
         // show title and hide spinner
         mActionBarTitle.visibility = View.VISIBLE
-        mActionBarTitle.text = checkedCardCount().toString()
+        mActionBarTitle.text = viewModel.selectedRowCount().toString()
         deckSpinnerSelection!!.setSpinnerVisibility(View.GONE)
         // reload the actionbar using the multi-select mode actionbar
         invalidateOptionsMenu()
@@ -2234,11 +2234,6 @@ open class CardBrowser :
         invalidateOptionsMenu()
         deckSpinnerSelection!!.setSpinnerVisibility(View.VISIBLE)
         mActionBarTitle.visibility = View.GONE
-    }
-
-    @VisibleForTesting
-    fun checkedCardCount(): Int {
-        return mCheckedCards.size
     }
 
     @VisibleForTesting

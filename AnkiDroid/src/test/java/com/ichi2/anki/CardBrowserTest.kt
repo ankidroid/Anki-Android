@@ -165,7 +165,7 @@ class CardBrowserTest : RobolectricTest() {
         assertThat(browser.cardCount(), equalTo(6L))
         assertThat(
             "A checked card should have been removed",
-            browser.checkedCardCount(),
+            browser.viewModel.selectedRowCount(),
             equalTo(3)
         )
         assertThat(
@@ -718,7 +718,7 @@ class CardBrowserTest : RobolectricTest() {
         val browser = getBrowserWithNotes(25)
         selectOneOfManyCards(browser, 7) // HACK: Fix a bug in tests by choosing a value < 8
         selectOneOfManyCards(browser, 24)
-        assertThat(browser.checkedCardCount(), equalTo(18))
+        assertThat(browser.viewModel.selectedRowCount(), equalTo(18))
     }
 
     @Test
