@@ -240,7 +240,6 @@ open class CardBrowser :
         get() = viewModel.isInMultiSelectMode
         private set(value) { viewModel.isInMultiSelectMode = value }
 
-    private val mCheckedCards: Set<CardCache> get() = viewModel.selectedCards
     private var mLastSelectedPosition
         get() = viewModel.lastSelectedPosition
         set(value) { viewModel.lastSelectedPosition = value }
@@ -1830,7 +1829,7 @@ open class CardBrowser :
             // if in multi-select mode, be sure to show the checkboxes
             if (isInMultiSelectMode) {
                 checkBox.visibility = View.VISIBLE
-                checkBox.isChecked = mCheckedCards.contains(card)
+                checkBox.isChecked = viewModel.selectedCards.contains(card)
                 // this prevents checkboxes from showing an animation from selected -> unselected when
                 // checkbox was selected, then selection mode was ended and now restarted
                 checkBox.jumpDrawablesToCurrentState()
