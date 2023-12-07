@@ -37,14 +37,16 @@ import com.ichi2.anki.servicelayer.CardService
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.Consts
 import com.ichi2.libanki.undoableOp
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Collections
-import java.util.LinkedHashSet
 import kotlin.math.max
 import kotlin.math.min
 
@@ -83,7 +85,14 @@ class CardBrowserViewModel(
         MutableStateFlow(sharedPrefs().getBoolean("isTruncated", false))
     val isTruncated get() = isTruncatedFlow.value
 
-    val checkedCards: MutableSet<CardBrowser.CardCache> = Collections.synchronizedSet(LinkedHashSet())
+    private val selectedRowsPrivateFlow: MutableStateFlow<MutableSet<CardBrowser.CardCache>> =
+        MutableStateFlow(Collections.synchronizedSet(LinkedHashSet()))
+    val checkedCards: MutableSet<CardBrowser.CardCache> get() = selectedRowsPrivateFlow.value
+
+    private val refreshSelectedRowsFlow = MutableSharedFlow<Unit>()
+    val selectedRowsFlow: Flow<MutableSet<CardBrowser.CardCache>> =
+        selectedRowsPrivateFlow.combine(refreshSelectedRowsFlow) { row, _ -> row }
+
     val selectedCardIds: List<Long>
         get() = checkedCards.map { c -> c.id }
     var lastSelectedPosition = 0
@@ -160,9 +169,17 @@ class CardBrowserViewModel(
         }
     }
 
-    fun selectAll() = checkedCards.addAll(cards.wrapped)
+    fun selectAll() {
+        if (checkedCards.addAll(cards.wrapped)) {
+            refreshSelectedRowsFlow()
+        }
+    }
 
-    fun selectNone() = checkedCards.clear()
+    fun selectNone() {
+        if (checkedCards.isEmpty()) return
+        checkedCards.clear()
+        refreshSelectedRowsFlow()
+    }
 
     fun toggleRowSelectionAtPosition(position: Int) {
         val card = cards[position]
@@ -171,15 +188,28 @@ class CardBrowserViewModel(
         } else {
             checkedCards.add(card)
         }
+        refreshSelectedRowsFlow()
+    }
+
+    fun selectRowAtPosition(pos: Int) {
+        if (checkedCards.add(cards[pos])) {
+            refreshSelectedRowsFlow()
+        }
     }
 
     /**
      * Selects the cards between [startPos] and [endPos]
-     * @return whether the selection has changed
      */
-    fun selectRowsBetweenPositions(startPos: Int, endPos: Int): Boolean {
+    fun selectRowsBetweenPositions(startPos: Int, endPos: Int) {
         val cards = (min(startPos, endPos)..max(startPos, endPos)).map { cards[it] }
-        return checkedCards.addAll(cards)
+        if (checkedCards.addAll(cards)) {
+            refreshSelectedRowsFlow()
+        }
+    }
+
+    /** emits a new value in [selectedRowsFlow] */
+    private fun refreshSelectedRowsFlow() = viewModelScope.launch {
+        refreshSelectedRowsFlow.emit(Unit)
     }
 
     fun setColumn1Index(value: Int) = column1IndexFlow.update { value }

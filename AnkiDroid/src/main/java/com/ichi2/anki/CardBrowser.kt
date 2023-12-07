@@ -478,6 +478,11 @@ open class CardBrowser :
             .onEach { runOnUiThread { searchCards() } }
             .launchIn(lifecycleScope)
 
+        viewModel.selectedRowsFlow
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { runOnUiThread { onSelectionChanged() } }
+            .launchIn(lifecycleScope)
+
         viewModel.column1IndexFlow
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { index -> cardsAdapter.updateMapping { it[0] = COLUMN1_KEYS[index] } }
@@ -541,7 +546,7 @@ open class CardBrowser :
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
                 cb.toggle()
-                onCheck(position)
+                viewModel.selectRowAtPosition(position)
             } else {
                 // load up the card selected on the list
                 val clickedCardId = mCards[position].id
@@ -552,9 +557,7 @@ open class CardBrowser :
         @KotlinCleanup("helper function for min/max range")
         cardsListView.setOnItemLongClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (isInMultiSelectMode) {
-                if (viewModel.selectRowsBetweenPositions(mLastSelectedPosition, position)) {
-                    onSelectionChanged()
-                }
+                viewModel.selectRowsBetweenPositions(mLastSelectedPosition, position)
             } else {
                 mLastSelectedPosition = position
                 saveScrollingState(position)
@@ -563,7 +566,7 @@ open class CardBrowser :
                 // click on whole cell triggers select
                 val cb = view!!.findViewById<CheckBox>(R.id.card_checkbox)
                 cb.toggle()
-                onCheck(position)
+                viewModel.toggleRowSelectionAtPosition(position)
                 recenterListView(view)
                 cardsAdapter.notifyDataSetChanged()
             }
@@ -610,7 +613,7 @@ open class CardBrowser :
             KeyEvent.KEYCODE_A -> {
                 if (event.isCtrlPressed) {
                     Timber.i("Ctrl+A - Select All")
-                    onSelectAll()
+                    viewModel.selectAll()
                     return true
                 }
             }
@@ -1099,11 +1102,11 @@ open class CardBrowser :
                 return true
             }
             R.id.action_select_none -> {
-                onSelectNone()
+                viewModel.selectNone()
                 return true
             }
             R.id.action_select_all -> {
-                onSelectAll()
+                viewModel.selectAll()
                 return true
             }
             R.id.action_preview -> {
@@ -1615,7 +1618,7 @@ open class CardBrowser :
             // but this is only hit on a rare sad path and we'd need to rejig the data structures to allow an efficient
             // search
             Timber.w("Removing current selection due to unexpected removal of cards")
-            onSelectNone()
+            viewModel.selectNone()
         }
         updateList()
     }
@@ -1836,7 +1839,7 @@ open class CardBrowser :
                 checkBox.visibility = View.GONE
             }
             // change bg color on check changed
-            checkBox.setOnClickListener { onCheck(position) }
+            checkBox.setOnClickListener { viewModel.toggleRowSelectionAtPosition(position) }
             val column1 = v.findViewById<FixedTextView>(R.id.card_sfld)
             val column2 = v.findViewById<FixedTextView>(R.id.card_column2)
 
@@ -1893,23 +1896,6 @@ open class CardBrowser :
         init {
             mInflater = LayoutInflater.from(context)
         }
-    }
-
-    private fun onCheck(position: Int) {
-        viewModel.toggleRowSelectionAtPosition(position)
-        onSelectionChanged()
-    }
-
-    @VisibleForTesting
-    fun onSelectAll() {
-        viewModel.selectAll()
-        onSelectionChanged()
-    }
-
-    @VisibleForTesting
-    fun onSelectNone() {
-        viewModel.selectNone()
-        onSelectionChanged()
     }
 
     private fun onSelectionChanged() {

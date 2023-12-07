@@ -323,8 +323,8 @@ class CardBrowserTest : RobolectricTest() {
         )
 
         // deselect and select all cards
-        cardBrowser.onSelectNone()
-        cardBrowser.onSelectAll()
+        cardBrowser.viewModel.selectNone()
+        cardBrowser.viewModel.selectAll()
         // flag all the cards with flag = 3
         val flagForAll = 3
         cardBrowser.updateSelectedCardsFlag(flagForAll)
