@@ -27,7 +27,6 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.ichi2.anki.CardBrowser
 import com.ichi2.anki.R
 import com.ichi2.anki.browser.CardBrowserViewModel
 import com.ichi2.anki.model.CardsOrNotes
@@ -41,7 +40,7 @@ class BrowserOptionsDialog(private val cardsOrNotes: CardsOrNotes, private val i
         @IdRes val selectedButtonId = dialogView.findViewById<RadioGroup>(R.id.select_browser_mode).checkedRadioButtonId
         val newCardsOrNotes = if (selectedButtonId == R.id.select_cards_mode) CardsOrNotes.CARDS else CardsOrNotes.NOTES
         if (cardsOrNotes != newCardsOrNotes) {
-            (activity as CardBrowser).switchCardOrNote(newCardsOrNotes)
+            viewModel.setCardsOrNotes(newCardsOrNotes)
         }
         val newTruncate = dialogView.findViewById<CheckBox>(R.id.truncate_checkbox).isChecked
 

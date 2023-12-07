@@ -750,7 +750,7 @@ class CardBrowserTest : RobolectricTest() {
         browserWithNoNewCards.apply {
             searchAllDecks()
             assertThat("Result should contain 4 cards", cardCount, equalTo(4))
-            switchCardOrNote(newCardsMode = NOTES)
+            viewModel.setCardsOrNotes(NOTES)
             assertThat("Result should contain 2 cards (one per note)", cardCount, equalTo(2))
         }
     }
@@ -935,14 +935,14 @@ class CardBrowserTest : RobolectricTest() {
     fun checkCardsNotesMode() = runTest {
         val cardBrowser = getBrowserWithNotes(3, true)
 
-        cardBrowser.cardsOrNotes = CARDS
+        cardBrowser.viewModel.setCardsOrNotes(CARDS)
         cardBrowser.searchCards()
 
         advanceRobolectricUiLooper()
         // check if we get both cards of each note
         assertThat(cardBrowser.mCards.size(), equalTo(6))
 
-        cardBrowser.cardsOrNotes = NOTES
+        cardBrowser.viewModel.setCardsOrNotes(NOTES)
         cardBrowser.searchCards()
 
         // check if we get one card per note

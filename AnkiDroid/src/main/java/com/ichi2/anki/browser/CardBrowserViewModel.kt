@@ -23,13 +23,16 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ichi2.anki.AnkiDroidApp
 import com.ichi2.anki.CardBrowser
+import com.ichi2.anki.CollectionManager.withCol
 import com.ichi2.anki.model.CardsOrNotes
+import com.ichi2.anki.model.CardsOrNotes.*
 import com.ichi2.anki.model.SortType
 import com.ichi2.anki.pages.CardInfoDestination
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.libanki.CardId
 import com.ichi2.libanki.undoableOp
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Collections
@@ -44,7 +47,12 @@ class CardBrowserViewModel(
     var restrictOnDeck: String = ""
     var currentFlag = 0
 
-    var cardsOrNotes = CardsOrNotes.CARDS
+    /**
+     * Whether the browser is working in Cards mode or Notes mode.
+     * default: [CARDS]
+     * */
+    val cardsOrNotesFlow = MutableStateFlow(CARDS)
+    val cardsOrNotes get() = cardsOrNotesFlow.value
 
     // card that was clicked (not marked)
     var currentCardId: CardId = 0
@@ -72,6 +80,13 @@ class CardBrowserViewModel(
             val firstSelectedCard = selectedCardIds.firstOrNull() ?: return null
             return CardInfoDestination(firstSelectedCard)
         }
+
+    init {
+        viewModelScope.launch {
+            val cardsOrNotes = withCol { CardsOrNotes.fromCollection(this) }
+            cardsOrNotesFlow.update { cardsOrNotes }
+        }
+    }
 
     fun hasSelectedCards(): Boolean = checkedCards.isNotEmpty()
 
@@ -106,6 +121,14 @@ class CardBrowserViewModel(
      */
     suspend fun deleteSelectedNotes(): Int =
         undoableOp { removeNotes(cids = selectedCardIds) }.count
+
+    fun setCardsOrNotes(newValue: CardsOrNotes) = viewModelScope.launch {
+        withCol {
+            // Change this to only change the preference on a state change
+            newValue.saveToCollection(this)
+        }
+        cardsOrNotesFlow.update { newValue }
+    }
 
     fun setTruncated(value: Boolean) {
         viewModelScope.launch {
