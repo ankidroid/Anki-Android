@@ -762,7 +762,7 @@ class CardBrowserTest : RobolectricTest() {
             changeCardOrder(SortType.EASE) // order no. 7 corresponds to "cardEase"
             changeCardOrder(SortType.EASE) // reverse the list
 
-            cardsOrNotes == NOTES
+            viewModel.setCardsOrNotes(NOTES)
             searchCards()
 
             assertThat(
