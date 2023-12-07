@@ -9,6 +9,7 @@ on:
         type: string
   pull_request:
   push:
+  merge_group:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
