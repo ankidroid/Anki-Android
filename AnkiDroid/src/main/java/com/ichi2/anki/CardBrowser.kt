@@ -161,10 +161,6 @@ open class CardBrowser :
     private var mCurrentCardId
         get() = viewModel.currentCardId
         set(value) { viewModel.currentCardId = value }
-    private val mOrder
-        get() = viewModel.order
-    private val mOrderAsc
-        get() = viewModel.orderAsc
 
     // DEFECT: Doesn't need to be a local
     private var mTagsDialogListenerAction: TagsDialogListenerAction? = null
@@ -981,7 +977,13 @@ open class CardBrowser :
                 return true
             }
             R.id.action_sort_by_size -> {
-                showDialogFragment(CardBrowserOrderDialog.newInstance(mOrder, mOrderAsc, orderSingleChoiceDialogListener))
+                showDialogFragment(
+                    CardBrowserOrderDialog.newInstance(
+                        viewModel.order,
+                        viewModel.orderAsc,
+                        orderSingleChoiceDialogListener
+                    )
+                )
                 return true
             }
 
@@ -1404,7 +1406,7 @@ open class CardBrowser :
         mCards.reset()
         cardsAdapter.notifyDataSetChanged()
         val query = searchText!!
-        val order = mOrder.toSortOrder()
+        val order = viewModel.order.toSortOrder()
         launchCatchingTask {
             Timber.d("performing search")
             val cards = withProgress { searchForCards(query, order, viewModel.cardsOrNotes) }
