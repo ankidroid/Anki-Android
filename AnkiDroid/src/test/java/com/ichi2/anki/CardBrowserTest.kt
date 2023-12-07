@@ -999,7 +999,7 @@ class CardBrowserTest : RobolectricTest() {
 }
 
 fun CardBrowser.hasSelectedCardAtPosition(i: Int): Boolean =
-    viewModel.selectedCards.contains(mCards[i])
+    viewModel.selectedRows.contains(mCards[i])
 
 fun CardBrowser.replaceSelectionWith(positions: IntArray) {
     viewModel.selectNone()

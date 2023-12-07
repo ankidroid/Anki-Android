@@ -1251,7 +1251,7 @@ open class CardBrowser :
             getPreviewIntent(0, selectedCardIds.toLongArray())
         } else {
             // Preview all cards, starting from the one that is currently selected
-            val startIndex = viewModel.selectedCards.firstOrNull()?.position ?: 0
+            val startIndex = viewModel.selectedRows.firstOrNull()?.position ?: 0
             getPreviewIntent(startIndex, allCardIds)
         }
 
@@ -1840,7 +1840,7 @@ open class CardBrowser :
             // if in multi-select mode, be sure to show the checkboxes
             if (isInMultiSelectMode) {
                 checkBox.visibility = View.VISIBLE
-                checkBox.isChecked = viewModel.selectedCards.contains(card)
+                checkBox.isChecked = viewModel.selectedRows.contains(card)
                 // this prevents checkboxes from showing an animation from selected -> unselected when
                 // checkbox was selected, then selection mode was ended and now restarted
                 checkBox.jumpDrawablesToCurrentState()
