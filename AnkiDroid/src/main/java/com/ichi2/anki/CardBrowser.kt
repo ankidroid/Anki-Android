@@ -1897,7 +1897,7 @@ open class CardBrowser :
         }
     }
 
-    private fun onSelectionChanged() {
+    fun onSelectionChanged() {
         Timber.d("onSelectionChanged()")
         try {
             if (!isInMultiSelectMode && viewModel.hasSelectedCards()) {
@@ -2270,17 +2270,6 @@ open class CardBrowser :
         }
 
     @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-    fun checkCardsAtPositions(vararg positions: Int) {
-        positions.forEach { pos ->
-            check(pos < mCards.size()) {
-                "Attempted to check card at index $pos. ${mCards.size()} cards available"
-            }
-            viewModel.selectRowAtPosition(pos)
-        }
-        onSelectionChanged()
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     fun getPropertiesForCardId(cardId: CardId): CardCache {
         return mCards.find { c -> c.id == cardId } ?: throw IllegalStateException(String.format(Locale.US, "Card '%d' not found", cardId))
     }
@@ -2296,12 +2285,6 @@ open class CardBrowser :
     fun filterByFlag(flag: Int) {
         mCurrentFlag = flag
         filterByFlag()
-    }
-
-    @VisibleForTesting
-    fun replaceSelectionWith(positions: IntArray) {
-        viewModel.selectNone()
-        checkCardsAtPositions(*positions)
     }
 
     @VisibleForTesting

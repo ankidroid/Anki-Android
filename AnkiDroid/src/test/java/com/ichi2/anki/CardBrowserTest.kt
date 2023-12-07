@@ -1000,3 +1000,18 @@ class CardBrowserTest : RobolectricTest() {
 
 fun CardBrowser.hasCheckedCardAtPosition(i: Int): Boolean =
     viewModel.selectedCards.contains(mCards[i])
+
+fun CardBrowser.replaceSelectionWith(positions: IntArray) {
+    viewModel.selectNone()
+    checkCardsAtPositions(*positions)
+}
+
+fun CardBrowser.checkCardsAtPositions(vararg positions: Int) {
+    // PREF: inefficient as the card flow is updated each iteration
+    positions.forEach { pos ->
+        check(pos < mCards.size()) {
+            "Attempted to check card at index $pos. ${mCards.size()} cards available"
+        }
+        viewModel.selectRowAtPosition(pos)
+    }
+}
