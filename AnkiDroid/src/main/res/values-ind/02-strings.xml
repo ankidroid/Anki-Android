@@ -141,7 +141,7 @@
     <string name="card_editor_preview_card" comment="Button offering to preview some card(s)">Pratinjau</string>
     <string name="preview_progress_bar_text" comment="What card we are on out of how many in card previewer progress bar">%1$d dari %2$d</string>
     <string name="rename" comment="Confirm that the renaming action should be processed.">Ubah nama</string>
-    <string name="checks_action">Check</string>
+    <string name="checks_action">Periksa</string>
     <string name="check_db">Periksa basisdata</string>
     <string name="check_media">Periksa media</string>
     <string name="empty_cards">Kartu kosong</string>
@@ -152,7 +152,7 @@
     <string name="import_title">Mengimpor</string>
     <string name="import_message_add" comment="Adding a new deck to the collection (import)">Tambah</string>
     <string name="import_message_replace_confirm">Ini akan menghapus koleksimu yang ada dan menggantinya dengan data dari berkas %s</string>
-    <string name="import_dialog_message_add">Add “%s” to collection? This may take a long time</string>
+    <string name="import_dialog_message_add">Tambahkan “%s” ke dalam koleksi ? Mungkin memakan waktu yang lama</string>
     <string name="import_log_no_apkg">Ini bukan paket Anki yang valid</string>
     <string name="import_title_error" comment="Title of error dialog">Error</string>
     <string name="import_error_handle_exception">Gagal mengimpor file\n\n%s</string>
@@ -169,7 +169,7 @@
         <item quantity="other">Ekspor %d kartu terpilih sebagai file apkg?</item>
     </plurals>
     <plurals name="confirm_apkg_export_selected_notes">
-        <item quantity="other">Export %d selected notes as apkg file?</item>
+        <item quantity="other">Ekspor %d kartu terpilih sebagai file apkg ?</item>
     </plurals>
     <string name="export_preparation_in_progress">Mempersiapkan ekspor&#8230;</string>
     <string name="export_ready_title">Ekspor siap</string>
