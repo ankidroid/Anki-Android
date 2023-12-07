@@ -511,34 +511,36 @@ open class CardBrowser :
         mOrderAsc = col.config.get("sortBackwards") ?: false
         mCards.reset()
         // Create a spinner for column 1
-        val cardsColumn1Spinner = findViewById<Spinner>(R.id.browser_column1_spinner)
-        val column1Adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.browser_column1_headings,
-            android.R.layout.simple_spinner_item
-        )
-        column1Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
-        cardsColumn1Spinner.adapter = column1Adapter
-        cardsColumn1Spinner.onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
-            viewModel.setColumn1Index(pos)
+        findViewById<Spinner>(R.id.browser_column1_spinner).apply {
+            adapter = ArrayAdapter.createFromResource(
+                this@CardBrowser,
+                R.array.browser_column1_headings,
+                android.R.layout.simple_spinner_item
+            ).apply {
+                setDropDownViewResource(R.layout.spinner_custom_layout)
+            }
+            onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+                viewModel.setColumn1Index(pos)
+            }
+            setSelection(mColumn1Index)
         }
         // Setup the column 2 heading as a spinner so that users can easily change the column type
-        val cardsColumn2Spinner = findViewById<Spinner>(R.id.browser_column2_spinner)
-        val column2Adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.browser_column2_headings,
-            android.R.layout.simple_spinner_item
-        )
-        // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
-        column2Adapter.setDropDownViewResource(R.layout.spinner_custom_layout)
-        cardsColumn2Spinner.adapter = column2Adapter
-        // Create a new list adapter with updated column map any time the user changes the column
-        cardsColumn2Spinner.onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
-            viewModel.setColumn2Index(pos)
+        findViewById<Spinner>(R.id.browser_column2_spinner).apply {
+            adapter = ArrayAdapter.createFromResource(
+                this@CardBrowser,
+                R.array.browser_column2_headings,
+                android.R.layout.simple_spinner_item
+            ).apply {
+                // The custom layout for the adapter is used to prevent the overlapping of various interactive components on the screen
+                setDropDownViewResource(R.layout.spinner_custom_layout)
+            }
+            // Create a new list adapter with updated column map any time the user changes the column
+            onItemSelectedListener = BasicItemSelectedListener { pos, _ ->
+                viewModel.setColumn2Index(pos)
+            }
+            setSelection(mColumn2Index)
         }
-        // set the spinner index
-        cardsColumn1Spinner.setSelection(mColumn1Index)
-        cardsColumn2Spinner.setSelection(mColumn2Index)
+
         cardsListView.setOnItemClickListener { _: AdapterView<*>?, view: View?, position: Int, _: Long ->
             if (isInMultiSelectMode) {
                 // click on whole cell triggers select
