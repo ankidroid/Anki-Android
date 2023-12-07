@@ -249,11 +249,6 @@ open class CardBrowser :
      * Broadcast that informs us when the sd card is about to be unmounted
      */
     private var mUnmountReceiver: BroadcastReceiver? = null
-    private val orderSingleChoiceDialogListener: DialogInterface.OnClickListener =
-        DialogInterface.OnClickListener { dialog: DialogInterface, which: Int ->
-            dialog.dismiss()
-            changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
-        }
 
     init {
         ChangeManager.subscribe(this)
@@ -978,11 +973,11 @@ open class CardBrowser :
             }
             R.id.action_sort_by_size -> {
                 showDialogFragment(
-                    CardBrowserOrderDialog.newInstance(
-                        viewModel.order,
-                        viewModel.orderAsc,
-                        orderSingleChoiceDialogListener
-                    )
+                    // TODO: move this into the ViewModel
+                    CardBrowserOrderDialog.newInstance { dialog: DialogInterface, which: Int ->
+                        dialog.dismiss()
+                        changeCardOrder(SortType.fromCardBrowserLabelIndex(which))
+                    }
                 )
                 return true
             }
